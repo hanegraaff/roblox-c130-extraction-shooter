@@ -1,0 +1,3 @@
+# The scaffold only needs Rojo. Plan 01 pins additional tools with real runners.
+[tools]
+rojo = "rojo-rbx/rojo@7.7.1"

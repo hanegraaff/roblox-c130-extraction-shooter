@@ -1,0 +1,33 @@
+{
+  "name": "C130ExtractionShooterTests",
+  "globIgnorePaths": ["**/*.md"],
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Shared": {"$path": "src/shared"}
+    },
+    "ServerScriptService": {
+      "Server": {"$path": "src/server"}
+    },
+    "ServerStorage": {
+      "Assets": {"$path": "assets/models"},
+      "Tests": {
+        "$className": "Folder",
+        "Unit": {"$path": "tests/unit"},
+        "Integration": {"$path": "tests/integration"},
+        "Studio": {"$path": "tests/studio/server"},
+        "Fixtures": {"$path": "tests/fixtures"}
+      }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": {"$path": "src/client"},
+        "ClientTests": {"$path": "tests/studio/client"}
+      }
+    },
+    "Workspace": {
+      "$properties": {"StreamingEnabled": false},
+      "World": {"$path": "assets/world"}
+    }
+  }
+}

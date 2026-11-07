@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement next Roblox plan"
+  short_description: "Build, test, and document one Roblox capability"
+  default_prompt: "Use $implement-next-plan to implement the next eligible plan in this Roblox repository."

@@ -1,0 +1,18 @@
+# Generated places, reports, dependencies, and local tools.
+build/
+artifacts/
+Packages/
+ServerPackages/
+.tools/
+__pycache__/
+*.pyc
+*.rbxl.lock
+*.rbxlx.lock
+*.rbxl.autosave
+*.rbxlx.autosave
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Authored .rbxmx/.rbxm and world exports are intentionally versionable.
