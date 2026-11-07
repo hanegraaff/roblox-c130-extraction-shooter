@@ -11,8 +11,9 @@ Verified locally on 2026-11-07 on macOS arm64 with Python 3.10 and official Rojo
 - Skill Creator's `quick_validate.py`: passed. PyYAML was installed only in a temporary validation virtual environment.
 - All Python sources parsed; custom-agent TOML, tool TOML, workflow YAML and skill-interface YAML parsed successfully.
 - Negative probes rejected a missing repository file reference and an unsupported asset-manifest schema.
+- An isolated `git archive` of committed source rebuilt both places successfully using the same pinned Rojo; ignored local tools/build files were not part of the archive.
 - An independent read-only skill dry run covered initial plan selection, interrupted implementation with unavailable Studio evidence, a dependency living on an open PR branch, missing release authorization/ten-player evidence, and an isolated README correction. Review found and prompted fixes for cleared-blocker resumption, dependency-source resolution order and committing final status/evidence edits.
 
 The first build exposed a missing Folder class on the test-only Tests container; it was corrected and both builds passed afterward. Required Studio/gameplay checks are not applicable to this design-only delivery and were not run. They become acceptance gates starting in Plan 01. No Roblox experience was created or published.
 
-GitHub CI and final source provenance are recorded after initial source delivery; the containing Git history identifies the exact scaffold revision.
+The implementation baseline is [commit 315137f](https://github.com/hanegraaff/roblox-c130-extraction-shooter/commit/315137fb70b4c71643845d72a2bc1559a25b6dc8), pushed to `main`. [GitHub Actions run 42412623398](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42412623398) passed the repository/build gate on Ubuntu. The independent reviewer rechecked the corrected skill paragraphs and confirmed all three findings resolved. Subsequent documentation-only commits record these results; the containing Git history identifies that evidence revision.
