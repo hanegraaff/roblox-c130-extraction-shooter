@@ -8,7 +8,7 @@ A new player understands their role, controls, aircraft health, launcher availab
 
 ## Implementation
 
-Consolidate role-specific HUD/help, launcher ownership/recovery messages and weapon-specific zoom feedback, ammunition/cooldown/health, accessible result reasons and spectator target cycling. Add authored stylized art/audio/effects within the asset manifest. Important sounds have visible cues; color has text/icon equivalents. Add effect/camera-shake intensity controls. Keep full functionality at 1280×720 and 1920×1080 desktop viewports. Do not add touch/gamepad, purchases or progression.
+Consolidate role-specific HUD/help, launcher ownership/recovery messages, mouse-pan/recenter guidance, panel-damage progression and weapon-specific zoom feedback, ammunition/cooldown/health, accessible result reasons and spectator target cycling. Add readable stylized cues/audio/effects within the asset manifest, retaining simple greybox models where adequate. Full terrain/building/destruction mechanics already come from P13/P07; this plan does not postpone them or require refined assets. Higher-detail terrain, buildings, damage variants and equipment receive separate later asset-generation plans. Important sounds have visible cues; color has text/icon equivalents. Add effect/camera-shake intensity controls. Keep full functionality at 1280×720 and 1920×1080 desktop viewports. Do not add touch/gamepad, purchases or progression.
 
 ## Acceptance criteria
 
@@ -20,7 +20,7 @@ Consolidate role-specific HUD/help, launcher ownership/recovery messages and wea
 
 ## Focused human check
 
-Have a tester complete both roles from in-game instructions. Inspect thermal contrast, warning/impact frames, launcher ownership/reload, both weapon zoom levels, aircraft destruction and team-result states, defeat/spectate and two viewport sizes. Capture actual gameplay screenshots for the README only after reviewing them; label the build shown.
+Have a tester complete both roles from in-game instructions. Inspect thermal contrast, warning/impact frames, launcher ownership/reload, both weapon zoom levels while panning, building-panel stages and physical debris, aircraft destruction and team-result states, defeat/spectate and two viewport sizes. Capture actual gameplay screenshots for the README only after reviewing them; label the build shown.
 
 ## Documentation changes
 

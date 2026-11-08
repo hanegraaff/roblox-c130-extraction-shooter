@@ -117,7 +117,13 @@ After source changes, stop Play, rerun the host gate, verify Rojo delivered the 
 
 The planned combat loop gives every ground player an **M-7 rifle** and puts one **rocket launcher** at the gold marker. Use cover and coordinated fire to wear down the aircraft. Three direct rockets destroy a full-health plane; prior rifle damage can reduce the rockets still needed. Aircraft destruction will win for the whole ground team, including eliminated teammates. The launcher will be droppable and recoverable after its carrier dies or disconnects, with one rocket replenished per reload and no separate ammo pickups. These handling choices are [tuning defaults](docs/decisions.md).
 
-The operator's **30mm GAU-23/A Chain Gun** will provide faster precise fire; the **105mm M102 Howitzer** will provide slower heavy fire with a wider blast. Each will retain independent cooldown/reload state across switches. Solid cover will block damage as well as the current thermal highlighting. Selected walls and barricades will break while major buildings stay intact.
+The operator's **30mm GAU-23/A Chain Gun** will provide faster precise fire; the **105mm M102 Howitzer** will provide slower heavy fire with a wider blast. Each will retain independent cooldown/reload state across switches. Solid cover will block damage as well as the current thermal highlighting.
+
+The revised MVP will double the current battlefield diameter from 360 to 720 studs and add terrain plus two large buildings and one smaller building, each at least two stories with accessible upper floors. Mouse movement will pan the inward aircraft view while weapon zoom still applies.
+
+Building wall and roof panels will visibly progress: three direct heavy-cannon hits produce a roughly half-destroyed panel, and three more remove it; sustained on-panel 30mm fire takes nine seconds to damage it. Real bounded fragments will fall and collide with scenery while remaining floors/stairs/frames stay stable. These mechanics will work with simple graphics; refined assets are later work. See the [construction](plans/13-terrain-and-buildings.md), [panning](plans/14-aircraft-panning.md) and [destruction](plans/07-destruction.md) plans.
+
+The existing screenshot and controls show the smaller fixed-focus prototype, not these planned changes. The heavy weapon remains the 105mm M102, as confirmed for these new panel-damage rules.
 
 Planned combat bindings are left mouse to fire, ground right mouse to aim, **1 / 2** for M-7/held launcher, **R** to reload, **E** to acquire the launcher and **G** to drop it. Firing, damage, ammunition/reload, pickup/drop, cover destruction and Help controls are not implemented yet. There is no independent operator zoom or free flight.
 

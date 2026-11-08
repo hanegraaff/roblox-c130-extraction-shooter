@@ -131,7 +131,7 @@ Unit tests use observable invariants and boundary examples, not implementation-s
 - With an undamaged plane and no rifle fire, direct rocket hits one and two leave it alive; hit three commits destruction and one ground win. A duplicated impact never counts twice. Misses/near misses do not count as direct hits.
 - M-7 damage is positive and accumulates on that same health pool. Cover blocks shots, health never goes negative, and mixed rifle/rocket damage can require fewer remaining rockets.
 - Exactly one launcher is available or held per round. Simultaneous claims, death/disconnect/drop, invalid-position recovery and reset cannot duplicate it or refresh reload early.
-- The orbit follows the map perimeter at all sampled phases; camera look tracks map center while model heading follows the tangent. Both aircraft weapon FOVs keep targeting coherent, distinct and inward-facing.
+- The orbit follows the map perimeter at all sampled phases while model heading follows the tangent. The implemented camera tracks map center; the revised P14 camera tracks a bounded mouse-panned focus within the disk. Both aircraft weapon FOVs keep targeting coherent, distinct and inward-facing, including elevated surfaces.
 - Rapid 30mm/105mm switching cannot reset weapon timers, refill ammunition or bypass reload. Rejected/stale selection restores the correct weapon/FOV/reticle combination.
 - Deadline first, then aircraft destruction before ground elimination within the same pre-deadline step: test boundary/mutual-kill cases and late in-flight rockets explicitly.
 
@@ -181,3 +181,14 @@ An ordinary one-client Play in `PlayersVsC130Tests` automatically enters a label
 The explicit `ExecutePlayModeAsync({kind = "LobbyControls"})` scenario runs four TestEZ engine cases through `LocalTestControlsCheck`, then ends the session with structured results. Check `discovered = passed = 4`, no errors/failures/skips, and actual `clientCount = 1`. Focused operated WASD checks supplement unanchored-root assertions. No additional Studio client windows are required. [Fix evidence](evidence/lobby-preview.md) records actual execution.
 
 For human-control regression, run `ExecutePlayModeAsync({kind = "HumanTestControls"})` and require six discovered/passing cases, zero failures/skips/errors, one actual client. Then `ExecuteMultiplayerTestAsync(2, {kind = "HumanTestMultiplayer"})` requires four passing cases and two actual clients, covering conflicting choices, requested real roles, changing next-round settings without mutating an active round, and reset/start applying the new choices. Both sessions end themselves; verify the original document is back in Edit and close only the session you launched. Operated test-panel button checks supplement the server decoder tests.
+
+## Revised MVP level/destruction acceptance (planned)
+
+The existing P02/P04 counts and harnesses establish only the current 180-stud-radius, fixed-focus greybox. New [P13](../plans/13-terrain-and-buildings.md), [P14](../plans/14-aircraft-panning.md) and revised [P07](../plans/07-destruction.md) require new named suites; none ran as part of the documentation revision. R16 extends release traceability to authored terrain and three accessible multi-story buildings.
+
+- P13: source-built 720-stud disk/equal perimeter orbit, versioned terrain elevation/material reconstruction, building/story/panel registry, actual stairs/upper-floor navigation, supported anchors, separate lobby and two launcher routes.
+- P14: pointer/delta-time pan rules; full-orbit inward bounds and coverage at both zooms; elevated terrain/upper-floor projection, preserved focus under weapon selection, recenter and role cleanup with two actual clients.
+- P07: exact heavy-hit 3/6 boundaries, nine valid seconds of sustained 30mm fire and interruption/mixing defaults; visible interim progression, measured half-panel opening, pre-impact cover/thermal rays, actual fragment falling/static contact/ownership and collision exclusions, late join and repeated reset during damage/fragmentation.
+- P11/P12: expanded-map travel/visibility and simultaneous fragment workloads in frame/memory/latency/soak measurements; repeat the revised level/panning/destruction demonstrations in real 6- and 10-player acceptance.
+
+Record numeric tolerances and chosen defaults before running each suite. Test doubles cannot prove terrain loading, residual collision, camera coverage, rigid-body contact or replication. Earlier engine reports must not be relabeled as evidence for this expanded scope.
