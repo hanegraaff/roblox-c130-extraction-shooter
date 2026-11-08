@@ -45,6 +45,22 @@ return function()
             assert(owner.validate(), "expected owner.validate()")
             local map = world.Battlefield
             local disk = map.GroundDisk
+            assert(
+                (disk.Position - Vector3.new(0, -2, 0)).Magnitude < 0.01,
+                "disk translation must survive file load"
+            )
+            assert(
+                math.abs(disk.CFrame.RightVector:Dot(Vector3.yAxis)) > 0.999,
+                "disk cylinder axis must load vertical"
+            )
+            assert(
+                (map.GroundSpawn.Position - Vector3.new(0, 0.05, 120)).Magnitude < 0.01,
+                "spawn transform must survive file load"
+            )
+            assert(
+                (map.Permanent.ShelterRoof.Position - Vector3.new(0, 14, 114)).Magnitude < 0.01,
+                "cover transform must survive file load"
+            )
             local size = disk.Size
             disk.Size = Vector3.new(4, 350, 350)
             assert(not owner.validate(), "mismatched authored radius must reject")
