@@ -35,15 +35,15 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-`main` includes the integrated round prototype and Studio human-testing controls. **To review the aircraft and thermal-view increment described here, select `plan/04-aircraft-and-thermal` while its PR is unmerged:**
+`main` includes the round prototype, perimeter aircraft, inward thermal view, weapon-linked zoom and Studio human-testing controls. Select and update the integrated source before building:
 
 ```sh
 git fetch origin
-git switch plan/04-aircraft-and-thermal
-git pull --ff-only origin plan/04-aircraft-and-thermal
+git switch main
+git pull --ff-only origin main
 ```
 
-For the integrated version instead, use `git switch main` and `git pull --ff-only origin main`. Once P04 merges, `main` can supply this capability too.
+Use a PR's head branch only when reviewing an unmerged change.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
