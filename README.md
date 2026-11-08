@@ -29,11 +29,7 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Choose the branch you intend to test before building. `main` contains merged work; use the PR's head branch to review unmerged changes. The greybox shown above is currently awaiting integration in [PR #4](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4). Until it is merged, select its branch:
-
-```sh
-git switch plan/02-warzone-map
-```
+Choose the branch you intend to test before building. `main` contains the current integrated greybox; use the PR's head branch to review unmerged changes.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
