@@ -10,7 +10,27 @@ The local development build is a small shell: your avatar spawns on a temporary 
 
 The battlefield, aircraft, roles, weapons, rounds, spectating and results are still planned. The shell uses normal Roblox character behavior; the intended no-respawn round rules are not implemented yet. There is no published Roblox play link.
 
-To try the shell locally, follow the [development guide](docs/development.md). It builds separate development and test places for Roblox Studio. The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
+The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
+
+## Test in Roblox Studio
+
+From the repository root, install dependencies on your first run and build the places:
+
+```sh
+python3 scripts/setup.py  # First-time setup
+python3 scripts/verify.py
+```
+
+See the [development guide](docs/development.md) for prerequisites and source synchronization.
+
+1. In Studio, use **File → Open from File** and select this repository’s `build/game.rbxlx`. This local build is separate from an existing cloud place such as “C130 - Shootout.”
+2. Click **Play**. Your avatar should spawn on the temporary platform, with **Development** and **Bootstrap running** in the status panel.
+3. Try **WASD** movement, **Space** to jump, and the mouse to control the camera.
+4. Click **Stop**, then **Play** again. Confirm you still have exactly one status panel.
+5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and check that **14 server tests and 2 client tests pass**, with zero failures or skipped cases.
+6. Stop and restart the test place to confirm the suites pass again and the panel is not duplicated. Click **Stop** when finished.
+
+After source changes, stop Play, rerun `python3 scripts/verify.py`, and reopen the generated builds. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. These checks cover the current shell; aircraft and combat arrive in later plans.
 
 ## Planned roles
 
