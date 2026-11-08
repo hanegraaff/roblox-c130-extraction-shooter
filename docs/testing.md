@@ -14,7 +14,7 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 | Unit rules | `lune run scripts/run_tests.luau unit` |
 | Lifecycle integration | `lune run scripts/run_tests.luau integration` |
 | Release/test builds | `rojo build default.project.json --output build/game.rbxlx` and `rojo build test.project.json --output build/tests.rbxlx` |
-| Artifact isolation | `python3 scripts/inspect_build.py` |
+| Authored geometry, corruption probes and artifact isolation | `python3 scripts/inspect_build.py` |
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
@@ -22,7 +22,9 @@ The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. Update the allowlist deliberately when adding runtime modules. Build success and standalone tests do not establish engine behavior.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The current assets contribute 112 checked parts per build. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts.
+
+Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
 ## Run the Studio smoke suites
 
@@ -47,7 +49,7 @@ Artifact inspection parses the generated XML, checks the runtime-script allowlis
 
 The server runner loads all 14 shared unit cases and two lifecycle cases through actual Instance requires, plus two foundation engine cases and five map engine cases (23 expected total). Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
 
-- Reject invalid anchor identity/count, exterior/below-ground/floating/blocked anchors, then restore validity.
+- Assert actual loaded disk/spawn/roof transforms, then reject invalid disk dimensions, anchor identity/count and exterior/below-ground/floating/blocked anchors before restoring validity.
 - Sample both launcher approaches every 0.5 stud with a 4×6×4-stud upright envelope and downward floor rays. This recorded envelope is a clearance fixture, not an avatar compatibility claim.
 - Raycast permanent/breakable cover, all nine sheltered anchors and firing positions toward eight future perimeter aircraft samples.
 - Correct exterior/below-threshold characters, preserve legal disk/station positions, and disconnect containment on stop.

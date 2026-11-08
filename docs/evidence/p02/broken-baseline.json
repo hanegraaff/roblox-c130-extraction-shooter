@@ -1,0 +1,66 @@
+{
+  "candidate": "9b5e7aa",
+  "test_build_sha256": "72ab93292948d823ace9d889bdab2e94d957bdc6e92c773f8552806a59685eac",
+  "studio_id": "cc341aae-47b9-43b5-a3c0-11e96d2f935e",
+  "document": "p02-tests-72ab93292948.rbxlx",
+  "place_id": 0,
+  "studio_version": "0.746.0.7461269",
+  "actual_client_count": 1,
+  "observations": {
+    "GroundDisk": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "orientation": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        4,
+        360,
+        360
+      ]
+    },
+    "GroundSpawn": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "orientation": [
+        0,
+        0,
+        0
+      ]
+    },
+    "ShelterRoof": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "orientation": [
+        0,
+        0,
+        0
+      ]
+    },
+    "bootstrap_status_exists": false,
+    "server_test_report": null
+  },
+  "console": [
+    "ServerScriptService.Server:23: ground geometry does not match circle configuration",
+    "ServerScriptService.ServerTests:10: server bootstrap timeout",
+    "Players.KingKunkank.PlayerScripts.Client:9: server bootstrap unavailable"
+  ],
+  "capture": "broken-baseline.jpg",
+  "capture_dimensions": [
+    1886,
+    1080
+  ],
+  "result": "startup rejected; no test suite counts available",
+  "cleanup": "Stopped Play; local document Edit; cloud place untouched"
+}

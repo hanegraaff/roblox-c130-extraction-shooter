@@ -62,5 +62,33 @@
     "documentationEvidenceCommit": "8214d7067cd178b54421ecd2d27f15eb74fa9871",
     "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42511523878",
     "ciConclusion": "success"
+  },
+  "currentCorrection": {
+    "sourceCommit": "8147d1cc433a92396a04a7141f991c8619bce84d",
+    "sourceTree": "fc5d6c356cb0b54bd7a2747447af6158830d2fc8",
+    "baselineEngineReport": "broken-baseline.json",
+    "baselineResult": "one actual client; startup rejected map because serialized Position/Orientation aliases loaded as identity CFrames",
+    "fix": "All112authored parts use canonical CFrame; generated artifact comparisons and5geometry fault probes pass",
+    "testBuild": {
+      "file": "build/p02-tests-5c809beff70b.rbxlx",
+      "sha256": "5c809beff70bb0997df60b1321673faf697b999ce95bee4f89c5b6778280717e"
+    },
+    "gameBuild": {
+      "file": "build/p02-game-26622dbbb953.rbxlx",
+      "sha256": "26622dbbb9530c827210126e7ba2217d64bc86ae7939f1f5fb949168b4ceae7b"
+    },
+    "correctedEngineStatus": "pending; new01c3e5f9-86c4-46d5-901a-22b98004c052instance unnamed, Place is not open; manual File/Open requested",
+    "correctedServerReport": null,
+    "correctedClientReport": null,
+    "correctedActualClientCount": null,
+    "hostGate": {
+      "unitPassed": 14,
+      "integrationPassed": 2,
+      "geometryPartsEachBuild": 112,
+      "geometryFaultProbesRejected": 5
+    },
+    "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42512058874",
+    "ciConclusion": "success",
+    "cloudPlaceMutated": false
   }
 }

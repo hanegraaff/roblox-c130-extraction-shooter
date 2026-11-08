@@ -1,6 +1,6 @@
 # Static battlefield source
 
-Rojo maps this folder to `Workspace.World`. [`Battlefield.model.json`](Battlefield.model.json) reconstructs the entire original primitive greybox without a cloud asset or unsaved Studio edit. [`manifest.json`](../manifest.json) records its provenance. `MapService` owns runtime attributes, containment and pristine rebuild; static source stays here.
+Rojo maps this folder to `Workspace.World`. [`Battlefield.model.json`](Battlefield.model.json) reconstructs the entire original primitive greybox without a cloud asset or unsaved Studio edit. [`manifest.json`](../manifest.json) records its provenance. `MapService` owns runtime attributes, containment and pristine rebuild; static source stays here. Every part uses the twelve-component canonical `CFrame` described in the [asset authoring rules](../README.md). `Position`/`Orientation` aliases are forbidden in these model files. Generated XML property checks and actual Studio loaded-transform assertions are separate gates.
 
 ## Coordinates and anchors
 

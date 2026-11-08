@@ -26,7 +26,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs formatting, lint, strict type analysis, deterministic unit/service tests, intentional rejection probes, both builds and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently the greybox development build) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs formatting, lint, strict type analysis, deterministic unit/service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently the greybox development build) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -72,6 +72,8 @@ Source files drive managed scripts. Studio-built models/world changes must be ex
 [`Battlefield.model.json`](../assets/world/Battlefield.model.json) owns `Workspace.World.Battlefield`; [`MapRules`](../src/shared/MapRules.luau) owns its shared circle/orbit settings. The defaults are center/focus `(0, 0, 0)`, radius 180 studs, aircraft altitude 140 studs above ground, and recovery threshold Y = −30 studs. No aircraft is instantiated yet. Update geometry and settings together: startup rejects a disk whose pose or radius differs from the configured circle.
 
 [`MapService`](../src/server/MapService.luau) validates unique descendant names, `Ground01`–`Ground09`, one `Launcher` anchor, lobby/operator anchors, solid cover, clearance and floor support. Ground/launcher anchor centers are three studs above ground. Startup keeps a private pristine snapshot and connects server Heartbeat containment; `rebuild()` replaces the map subtree from that snapshot. Runtime cover receives `CoverId` and `CoverKind` attributes. These labels reserve future destruction behavior and do not make cover destructible.
+
+For `.model.json` authoring, encode every part pose as a twelve-component `CFrame` (X/Y/Z translation, then the nine rotation-matrix components in row order). Never use `Position` or `Orientation` aliases: generated XML may retain them even though Studio ignores them on load. See the [asset authoring rules and example](../assets/README.md). The artifact inspector checks all authored parts in both builds against canonical transforms, positive dimensions, shape and collision/query/touch flags, with intentional corruption probes proving rejection. A successful or repeatable build still needs Studio loaded-transform assertions and world tests.
 
 Keep both painted routes and the launcher marker clear. The Studio suite samples a 4×6×4-stud upright avatar envelope every 0.5 stud, checks floor support, rays from nine protected anchors to eight perimeter phases, and two exact rebuilds. Run it in the separate test place using the [testing procedure](testing.md#run-the-studio-smoke-suites), then walk both routes and review the boundary and sight lines. Passing host tests or exporting geometry does not establish those engine/playability results.
 

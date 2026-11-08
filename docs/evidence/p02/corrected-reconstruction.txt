@@ -1,0 +1,18 @@
+Source8147d1cc433a92396a04a7141f991c8619bce84d: git archive into disposable directory; installed locked Packages dependency copied.
++ rojo build default.project.json --output build/game.rbxlx
+Building project 'PlayersVsC130'
+Built project to game.rbxlx
+game SHA256 26622dbbb9530c827210126e7ba2217d64bc86ae7939f1f5fb949168b4ceae7b; identical to corrected candidate
++ rojo build test.project.json --output build/tests.rbxlx
+Building project 'PlayersVsC130Tests'
+Built project to tests.rbxlx
+tests SHA256 5c809beff70bb0997df60b1321673faf697b999ce95bee4f89c5b6778280717e; identical to corrected candidate
++ python3 scripts/inspect_build.py
+Expected geometry rejection (alias): Noncanonical serialized pose alias: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (pose): Authored CFrame reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (size): Authored size reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (nonfinite): Nonfinite CFrame: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (missing): Missing canonical CFrame: Workspace/World/Battlefield/GroundDisk
+Authored geometry reconstruction passed: 112 release/112 test part transforms, dimensions, shape and collision flags.
+Artifact isolation passed: 138 release Instances, 176 test Instances; 10 runtime scripts only in release.
+PASS: both builds reconstruct from committed source; no Studio/working source copied.
