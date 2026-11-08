@@ -53,5 +53,14 @@
       "file": "build/p02-tests-72ab93292948.rbxlx",
       "sha256": "72ab93292948d823ace9d889bdab2e94d957bdc6e92c773f8552806a59685eac"
     }
+  },
+  "userFollowup": "User confirmed sign-in, then reported Studio still cannot open the file. Exact error text requested.",
+  "startupObservation": "Newer local Studio logs repeatedly fail to acquire RobloxStudioPluginOTADownloadLock. Possible startup blocker only; root cause unproven. User advised to save/quit/reopen; no process terminated or settings changed.",
+  "delivery": {
+    "pullRequest": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4",
+    "draft": true,
+    "documentationEvidenceCommit": "8214d7067cd178b54421ecd2d27f15eb74fa9871",
+    "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42511523878",
+    "ciConclusion": "success"
   }
 }
