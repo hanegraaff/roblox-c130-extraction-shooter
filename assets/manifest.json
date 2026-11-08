@@ -4,12 +4,34 @@
     {
       "id": "battlefield-greybox",
       "kind": "world",
-      "source": "Original Roblox primitives authored in this repository; no external assets or scripts",
+      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts",
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/world/Battlefield.model.json",
       "roblox_asset_id": null,
-      "upload_owner": null
+      "upload_owner": null,
+      "terrain_recipe": {
+        "version": 1,
+        "seed": 0,
+        "descriptor_path": "TerrainRecipe",
+        "owner_module": "src/server/TerrainRecipe.luau",
+        "voxel_resolution_studs": 4,
+        "bounds_min": [
+          -368,
+          -112,
+          -368
+        ],
+        "bounds_max": [
+          368,
+          32,
+          368
+        ],
+        "hill_count": 8,
+        "materials": [
+          "Grass",
+          "Rock"
+        ]
+      }
     },
     {
       "id": "cover-panel",

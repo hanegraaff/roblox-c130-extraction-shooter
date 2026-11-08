@@ -1,6 +1,6 @@
 --!strict
 --[=[
-    MapRules: public, pure circle/orbit geometry contract for P02. Depends on Validation.
+    MapRules: public, pure circle/orbit geometry contract for the expanded battlefield. Depends on Validation.
     Coordinates and distances are studs, phases are radians. No engine calls or yielding.
     Authoritative movement decisions belong to the server MapService.
 ]=]
@@ -26,10 +26,10 @@ MapRules.defaults = table.freeze({
     centerX = 0,
     centerZ = 0,
     groundY = 0,
-    radiusStuds = 180,
+    radiusStuds = 360,
     orbitCenterX = 0,
     orbitCenterZ = 0,
-    orbitRadiusStuds = 180,
+    orbitRadiusStuds = 360,
     focusX = 0,
     focusY = 0,
     focusZ = 0,
@@ -92,7 +92,7 @@ function MapRules.inside(settings: Settings, x: number, z: number): boolean
         and (x - settings.centerX) ^ 2 + (z - settings.centerZ) ^ 2 <= settings.radiusStuds ^ 2
 end
 
--- Samples canonical future orbit; no aircraft is spawned by P02. Caller supplies finite phase.
+-- Samples the canonical perimeter orbit. Caller supplies finite phase.
 function MapRules.orbit(settings: Settings, angleRadians: number): (number, number, number)
     return settings.centerX + math.cos(angleRadians) * settings.radiusStuds,
         settings.groundY + settings.altitudeStuds,

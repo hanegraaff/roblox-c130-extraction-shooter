@@ -1,11 +1,13 @@
 --!strict
 --[=[
-    MapService: server-only ownership of the authored P02 map and ground containment.
+    MapService: server-only ownership of the expanded authored map and bounded terrain and ground containment.
     Depends on shared MapRules, Workspace queries, and injected characters/Heartbeat.
     Retains a private pristine clone; rebuild removes all runtime descendants and restores it.
     Does not spawn roles, weapons, aircraft, or round state. All public calls are nonyielding.
 ]=]
 local MapRules = require(game:GetService("ReplicatedStorage").Shared.MapRules)
+local TerrainRecipe = require(script.Parent.TerrainRecipe)
+local BuildingGeometry = require(script.Parent.BuildingGeometry)
 local MapService = {}
 
 -- Query/step adapters let tests exercise actual Instance behavior without fake services.
@@ -21,7 +23,7 @@ export type Controller = {
 }
 
 -- Validates identity, anchor counts, disk membership, floor support and avatar clearance.
--- Anchor clearance is a 4x5.5x4-stud upright envelope above the authored ground surface.
+-- Anchor clearance is a 4x6x4-stud upright envelope above the authored ground surface.
 function MapService.validateMap(map: Model, settings: MapRules.Settings): (boolean, string?)
     local ids: { [string]: boolean } = {}
     local anchors = map:FindFirstChild("Anchors")
@@ -41,6 +43,25 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         or math.abs(disk.CFrame.RightVector:Dot(Vector3.yAxis)) < 0.999
     then
         return false, "ground geometry does not match circle configuration"
+    end
+    local stations = map:FindFirstChild("LobbyStation")
+    local deck = if stations then stations:FindFirstChild("LobbyDeck") else nil
+    if not deck or not deck:IsA("BasePart") or deck.CFrame.UpVector:Dot(Vector3.yAxis) < 0.999 then
+        return false, "missing upright protected lobby deck"
+    end
+    -- Closest point of the oriented deck rectangle to the map center. Checking
+    -- corners alone would miss an edge crossing the disk while all corners lie out.
+    local relative =
+        deck.CFrame:PointToObjectSpace(Vector3.new(settings.centerX, deck.Position.Y, settings.centerZ))
+    local nearest = deck.CFrame:PointToWorldSpace(
+        Vector3.new(
+            math.clamp(relative.X, -deck.Size.X / 2, deck.Size.X / 2),
+            0,
+            math.clamp(relative.Z, -deck.Size.Z / 2, deck.Size.Z / 2)
+        )
+    )
+    if MapRules.inside(settings, nearest.X, nearest.Z) then
+        return false, "protected lobby deck overlaps playable disk"
     end
     local groundCount, launcherCount = 0, 0
     local overlap = OverlapParams.new()
@@ -74,6 +95,12 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         if ground or item.Name == "Launcher" or item.Name == "Lobby" or item.Name == "Operator" then
             local position = item.Position
             if
+                (item.Name == "Lobby" or item.Name == "Operator")
+                and MapRules.inside(settings, position.X, position.Z)
+            then
+                return false, "protected station inside playable disk: " .. item.Name
+            end
+            if
                 (ground or item.Name == "Launcher")
                 and (
                     not MapRules.inside(settings, position.X, position.Z)
@@ -82,7 +109,13 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             then
                 return false, "anchor outside safe disk: " .. item.Name
             end
-            if #workspace:GetPartBoundsInBox(CFrame.new(position), Vector3.new(4, 5.5, 4), overlap) > 0 then
+            if
+                #workspace:GetPartBoundsInBox(
+                    CFrame.new(position + Vector3.new(0, 0.2, 0)),
+                    Vector3.new(4, 6, 4),
+                    overlap
+                ) > 0
+            then
                 return false, "blocked avatar clearance: " .. item.Name
             end
             if not workspace:Raycast(position, Vector3.new(0, -4, 0), rays) then
@@ -115,7 +148,7 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             end
         end
     end
-    return true, nil
+    return BuildingGeometry.validate(map, overlap, rays)
 end
 
 -- Creates an owner for World.Battlefield. Invalid authoring returns nil/reason, without writes.
@@ -132,6 +165,14 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
     local valid, mapReason = MapService.validateMap(authored, settings)
     if not valid then
         return nil, mapReason
+    end
+    local recipe = authored:FindFirstChild("TerrainRecipe")
+    if not recipe then
+        return nil, "missing terrain recipe"
+    end
+    local recipeValid, recipeReason = TerrainRecipe.validate(recipe)
+    if not recipeValid then
+        return nil, recipeReason
     end
     local snapshot = authored:Clone()
     local map = authored
@@ -160,6 +201,9 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
                 end
             end
         end
+        BuildingGeometry.decorate(map)
+        map:SetAttribute("TerrainRecipeVersion", 1)
+        map:SetAttribute("TerrainSeed", 0)
         map:SetAttribute("RadiusStuds", settings.radiusStuds)
         map:SetAttribute("AircraftAltitudeStuds", settings.altitudeStuds)
     end
@@ -209,6 +253,11 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             if not ok then
                 return false, errorReason
             end
+            local terrainValid, terrainReason =
+                TerrainRecipe.restore(workspace.Terrain, snapshot:FindFirstChild("TerrainRecipe") :: Instance)
+            if not terrainValid then
+                return false, terrainReason
+            end
             decorate()
             heartbeat = adapters.heartbeat:Connect(enforce)
             return true, nil
@@ -222,6 +271,11 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             if destroyed then
                 return false, "map owner destroyed"
             end
+            local terrainValid, terrainReason =
+                TerrainRecipe.restore(workspace.Terrain, snapshot:FindFirstChild("TerrainRecipe") :: Instance)
+            if not terrainValid then
+                return false, terrainReason
+            end
             map:Destroy()
             map = snapshot:Clone()
             map.Parent = world
@@ -233,6 +287,13 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
                 return
             end
             stop()
+            -- Teardown restores authored terrain and geometry, including removal of
+            -- transient panels. Consumers must reacquire Instances after teardown.
+            TerrainRecipe.restore(workspace.Terrain, snapshot:FindFirstChild("TerrainRecipe") :: Instance)
+            map:Destroy()
+            map = snapshot:Clone()
+            map.Parent = world
+            decorate()
             snapshot:Destroy()
             destroyed = true
         end,

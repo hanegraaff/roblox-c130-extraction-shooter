@@ -85,7 +85,7 @@ return function()
                         "model heading is not tangent"
                     )
                     assert(
-                        math.abs(Vector2.new(actual.X, actual.Z).Magnitude - 180) < 0.01
+                        math.abs(Vector2.new(actual.X, actual.Z).Magnitude - 360) < 0.01
                             and math.abs(actual.Y - 140) < 0.01,
                         "orbit perimeter/altitude drift"
                     )
@@ -105,18 +105,33 @@ return function()
             setTime(0)
             local endpoint = Vector3.new(0, 40, 0)
             assert(owner.aimAllowed(endpoint), "exposed elevated endpoint should be clear")
-            assert(not owner.aimAllowed(Vector3.new(181, 0, 0)), "outside disk accepted")
+            assert(not owner.aimAllowed(Vector3.new(361, 0, 0)), "outside disk accepted")
             assert(not owner.aimAllowed(Vector3.new(0 / 0, 0, 0)), "nonfinite aim accepted")
             local wall = Instance.new("Part")
             wall.Name = "P04SolidSightFixture"
             wall.Anchored = true
             wall.Size = Vector3.new(10, 24, 24)
-            wall.Position = Vector3.new(90, 90, 0)
+            wall.Position = Vector3.new(180, 90, 0)
             wall.Parent = workspace.World.Battlefield
             local blocked = not owner.aimAllowed(endpoint)
             wall:Destroy()
             assert(blocked, "solid cover did not block server sight line")
             assert(owner.aimAllowed(endpoint), "removed wall left stale obstruction")
+            -- Terrain is outside Battlefield's Instance subtree, but must still block
+            -- the server sight-line seam. Preserve and restore this disposable region.
+            local terrain = workspace.Terrain
+            local region = Region3.new(Vector3.new(168, 76, -12), Vector3.new(192, 100, 12)):ExpandToGrid(4)
+            local materials, occupancies = terrain:ReadVoxels(region, 4)
+            local ok, failure = pcall(function()
+                terrain:FillBlock(CFrame.new(180, 90, 0), Vector3.new(20, 20, 20), Enum.Material.Rock)
+                local deadline = os.clock() + 5
+                while owner.aimAllowed(endpoint) and os.clock() < deadline do
+                    task.wait()
+                end
+                assert(not owner.aimAllowed(endpoint), "solid terrain did not block server aim")
+            end)
+            terrain:WriteVoxels(region, 4, materials, occupancies)
+            assert(ok, tostring(failure))
         end)
     end)
 end

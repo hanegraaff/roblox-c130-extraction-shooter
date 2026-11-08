@@ -1,0 +1,117 @@
+{
+  "source": "ea9cd4ee567e28d205841b093180cad3d0921110",
+  "renderedProduct": "b157e8423ad8d745e97043fbc7bb8f6673e6d516",
+  "viewport": "1081x619",
+  "savedQuality": "Automatic",
+  "renderingQuality": "Automatic",
+  "wasd": {
+    "key": "W",
+    "durationSeconds": 0.7,
+    "from": [
+      0,
+      3.098,
+      120
+    ],
+    "to": [
+      0,
+      2.998,
+      108.2668
+    ]
+  },
+  "hill04": {
+    "from": [
+      0,
+      3,
+      -205
+    ],
+    "to": [
+      0,
+      20.905935,
+      -259.158386
+    ],
+    "state": "Running",
+    "navigation": "Studio MCP character_navigation at speed1"
+  },
+  "launcherRoutes": {
+    "west": [
+      [
+        -24,
+        3,
+        92
+      ],
+      [
+        -24,
+        3,
+        65
+      ],
+      [
+        -60,
+        3,
+        65
+      ],
+      [
+        -60,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        0
+      ]
+    ],
+    "east": [
+      [
+        24,
+        3,
+        92
+      ],
+      [
+        24,
+        3,
+        65
+      ],
+      [
+        60,
+        3,
+        65
+      ],
+      [
+        60,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        0
+      ]
+    ],
+    "result": "all8actualnavigationcalls succeeded; staged only at each outside route start"
+  },
+  "reticleSingle": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"1\":{\"role\":\"Gunship\",\"pixels\":\"918.849976, 393\",\"fov\":35,\"viewport\":\"1081, 619\",\"cross\":\"{0, 918}, {0, 393}\",\"weapon\":\"GAU23\"},\"3\":{\"role\":\"Gunship\",\"pixels\":\"918.849976, 393\",\"fov\":35,\"viewport\":\"1081, 619\",\"cross\":\"{0, 918}, {0, 393}\",\"weapon\":\"GAU23\"},\"2\":{\"role\":\"Gunship\",\"pixels\":\"918.849976, 393\",\"fov\":35,\"viewport\":\"1081, 619\",\"cross\":\"{0, 918}, {0, 393}\",\"weapon\":\"GAU23\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "capture": {
+    "file": "build/p13-current-progress.jpg",
+    "stage": "Actual Edit-mode inspection overview; production TerrainRecipe invoked on current Git-authored world; original owned terrain/camera preserved and restored afterward",
+    "camera": [
+      480,
+      410,
+      510
+    ],
+    "lookAt": [
+      0,
+      0,
+      0
+    ],
+    "fovDegrees": 55,
+    "date": "2026-11-08"
+  }
+}

@@ -26,5 +26,6 @@ assert(
 )
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
+require(script.ExpandedMapHarness).run()
 local stopTestPanel = require(script.HumanTestPanel).start()
 script.Destroying:Connect(stopTestPanel)

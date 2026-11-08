@@ -53,7 +53,7 @@ function AircraftHarness.run()
                     assert(model and model:IsA("Model"), "replicated aircraft missing")
                     local pose = model:GetPivot()
                     assert(
-                        math.abs(Vector2.new(pose.X, pose.Z).Magnitude - 180) < 0.02
+                        math.abs(Vector2.new(pose.X, pose.Z).Magnitude - 360) < 0.02
                             and math.abs(pose.Y - 140) < 0.02,
                         "client perimeter/altitude mismatch"
                     )

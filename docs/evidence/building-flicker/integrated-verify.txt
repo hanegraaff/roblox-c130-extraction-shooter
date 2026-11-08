@@ -1,0 +1,144 @@
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/check_repository.py
+Repository checks passed: 58 Markdown files, 41 JSON files.
+Rojo 7.7.1
+stylua 2.6.0
+selene 0.32.0
+lune 0.11.1
+wally 0.3.2
+1.70.1
++ stylua --check src tests scripts/run_tests.luau
++ selene src tests scripts/run_tests.luau
+ERROR: There was an error generating a new Roblox standard library: error when getting API dump
+Using the cached one instead.
+Results:
+0 errors
+0 warnings
+0 parse errors
++ rojo sourcemap test.project.json --output build/sourcemap.json
+Created sourcemap at build/sourcemap.json
++ luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau src tests scripts/run_tests.luau
+[INFO] Loading definitions file: @roblox - .tools/globalTypes.d.luau
+[WARN] client does not allow didChangeWatchedFiles registration - automatic updating on sourcemap changes disabled
+[INFO] Loading Luau configuration from /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.luaurc
++ lune run scripts/run_tests.luau unit
+PASS orbit is periodic with negative/positive phase wrap and exact altitude
+PASS all sampled poses have map perimeter radius and unit perpendicular tangent
+PASS orbit rejects nonfinite time, invalid map and derived overflow
+PASS zoom config decodes finite distinct ordered profiles without mutating input
+PASS zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+PASS aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+PASS BuildingLayout accepts two larger and one smaller two-story panel registry
+PASS BuildingLayout rejects missing buildings stories stairs and size distinctions
+PASS BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+PASS default and valid endpoints decode without aliasing
+PASS malformed and nonfinite config reject without mutation
+PASS ExpandedMapRules defaults decode to independent matching circle and ground focus
+PASS ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+PASS ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+PASS ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+PASS burst exhausts and exact refill boundary accepts
+PASS bad time rejects without mutation and valid requests still succeed
+PASS invalid bucket configuration rejects
+PASS production rosters reject five and eleven players without mutation
+PASS six and ten players receive exactly one operator and one united ground roster
+PASS seeded ties are repeatable independent of incoming join order
+PASS longest waiting alternative gets operator without repeating previous operator
+PASS two and three player server fixtures are supported and duplicate ids reject
+PASS unsafe seeds reject and accepted seed boundaries always assign one operator
+PASS only documented phase edges and deployment cancellation are legal
+PASS deadline equality beats destruction and last ground elimination
+PASS pre-deadline aircraft destruction beats mutual ground elimination
+PASS empty server and no participants never award a competitive winner
+PASS finite values include zero and numeric boundaries
+PASS NaN infinities and nonnumbers reject
+PASS payload bound configuration rejects nonfinite negative and fractional values
+PASS flat payload accepts exact field and byte boundaries
+PASS payload rejects oversized nested cyclic metatable and malformed data
+{"discovered":33,"failed":0,"passed":33,"skipped":0,"suite":"unit"}
++ lune run scripts/run_tests.luau integration
+PASS accepted aircraft profile switches atomically and reset restores initial profile
+PASS wrong role, life, phase and deadline eligibility reject without mutation
+PASS malformed, oversized, stale and unknown profile payloads reject without sequence consumption
+PASS duplicate, fractional and nonfinite selection sequences reject without mutation
+PASS two start stop cycles own one listener and task and clean both
+PASS partial initialization rolls back in reverse order and can retry
+PASS constructor rejects overflowing seed instead of deploying a roster without operator
+PASS deployment waits for every roster member and cancellation clears partial readiness
+PASS ground departure during deployment also cancels without partial members
+PASS exact injected deadline commits timeout once and late proposals cannot change it
+PASS mutual destruction batch gives ground win and terminal cleanup suppresses recovery
+PASS death releases one owned life once after nonterminal batch and cannot revive on rejoin
+PASS operator departure followed by immediate reconnect still forfeits assigned round
+PASS last ground departure wins for remaining operator with no weapon recovery
+PASS both participant departures with a late spectator produce no competitive winner
+PASS wrong role stale replay malformed and spectator commands reject without revision mutation
+PASS three accelerated rounds clear roster result and deadline while rotating operator
+PASS snapshots cannot mutate authoritative members or committed results
+{"discovered":18,"failed":0,"passed":18,"skipped":0,"suite":"integration"}
++ lune run scripts/run_tests.luau unit
+PASS orbit is periodic with negative/positive phase wrap and exact altitude
+PASS all sampled poses have map perimeter radius and unit perpendicular tangent
+PASS orbit rejects nonfinite time, invalid map and derived overflow
+PASS zoom config decodes finite distinct ordered profiles without mutating input
+PASS zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+PASS aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+PASS BuildingLayout accepts two larger and one smaller two-story panel registry
+PASS BuildingLayout rejects missing buildings stories stairs and size distinctions
+PASS BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+PASS default and valid endpoints decode without aliasing
+PASS malformed and nonfinite config reject without mutation
+PASS ExpandedMapRules defaults decode to independent matching circle and ground focus
+PASS ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+PASS ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+PASS ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+PASS burst exhausts and exact refill boundary accepts
+PASS bad time rejects without mutation and valid requests still succeed
+PASS invalid bucket configuration rejects
+PASS production rosters reject five and eleven players without mutation
+PASS six and ten players receive exactly one operator and one united ground roster
+PASS seeded ties are repeatable independent of incoming join order
+PASS longest waiting alternative gets operator without repeating previous operator
+PASS two and three player server fixtures are supported and duplicate ids reject
+PASS unsafe seeds reject and accepted seed boundaries always assign one operator
+PASS only documented phase edges and deployment cancellation are legal
+PASS deadline equality beats destruction and last ground elimination
+PASS pre-deadline aircraft destruction beats mutual ground elimination
+PASS empty server and no participants never award a competitive winner
+FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-ydc6whvq/tests/unit/Validation.spec:2: deliberate failure
+{"discovered":29,"failed":1,"passed":28,"skipped":0,"suite":"unit"}
+Expected rejection observed: exit 1
++ lune run scripts/run_tests.luau unit
+/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-ydc6whvq/scripts/run_tests:50: empty required suite: unit
+[Stack Begin]
+    Script '[C]' - function 'error'
+    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-ydc6whvq/scripts/run_tests', Line 50
+[Stack End]
+
+Expected rejection observed: exit 1
++ luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/build/StrictTypeProbe.luau
+[INFO] Loading definitions file: @roblox - .tools/globalTypes.d.luau
+[WARN] client does not allow didChangeWatchedFiles registration - automatic updating on sourcemap changes disabled
+[INFO] Loading Luau configuration from /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.luaurc
+build/StrictTypeProbe.luau(3,17): TypeError: Expected this to be 'boolean', but got 'string'
+build/StrictTypeProbe.luau(4,1): TypeError: Expected this to be 'number', but got 'string'
+Expected rejection observed: exit 1
++ rojo build default.project.json --output build/game.rbxlx
+Building project 'PlayersVsC130'
+Built project to game.rbxlx
++ rojo build test.project.json --output build/tests.rbxlx
+Building project 'PlayersVsC130Tests'
+Built project to tests.rbxlx
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/inspect_build.py
+Expected building surface rejection (ground): building floor overlaps the Y=0 battlefield surface
+Expected building surface rejection (frame): coplanar building faces: Foundry_UpperMain / Foundry_BeamEast9, axis 1
+Expected building surface rejection (duplicate): coplanar building faces: Foundry_S01_North_02 / Foundry_S01_North_02_Duplicate, axis 1
+Building surface separation passed: 7146 part pairs, no exposed coplanar overlaps.
+Expanded world source contract passed: 720-stud diameter, 8 deterministic terrain hills, 3 two-story buildings, 111 stable panel pivots.
+Expected geometry rejection (alias): Noncanonical serialized pose alias: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (pose): Authored CFrame reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (size): Authored size reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (nonfinite): Nonfinite CFrame: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (missing): Missing canonical CFrame: Workspace/World/Battlefield/GroundDisk
+Authored geometry reconstruction passed: 351 release/351 test part transforms, dimensions, shape and collision flags.
+Artifact isolation passed: 410 release Instances, 470 test Instances; 24 runtime scripts only in release.
+All non-Studio gates passed. Studio server/client smoke and visual review require separate evidence.

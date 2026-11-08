@@ -69,7 +69,7 @@ return function()
             local original = anchor.Position
             for _, position in
                 {
-                    Vector3.new(181, 3, 0),
+                    Vector3.new(361, 3, 0),
                     Vector3.new(0, -31, 0),
                     Vector3.new(0, 8, 0),
                     Vector3.new(35, 3, 120),
@@ -130,49 +130,43 @@ return function()
             end
         end)
     end)
-    test(
-        "cover queries protect all nine spawns and expose firing angles to eight perimeter samples",
-        function()
-            fixture(function(world, owner)
-                assert(owner.start(), "expected owner.start()")
-                local map = world.Battlefield
-                local rays = RaycastParams.new()
-                rays.FilterType = Enum.RaycastFilterType.Include
-                rays.FilterDescendantsInstances = { map }
-                rays.RespectCanCollide = true
-                for _, kind in { "Permanent", "Breakable" } do
-                    local part = map[kind]:GetChildren()[1] :: BasePart
-                    assert(
-                        part:GetAttribute("CoverKind") == kind and part:GetAttribute("CoverId") == part.Name,
-                        'expected part:GetAttribute("CoverKind") == kind and part:GetAttribute("CoverId") == part.Name'
-                    )
-                    local hit =
-                        workspace:Raycast(part.Position + Vector3.new(0, 30, 0), Vector3.new(0, -31, 0), rays)
-                    assert(hit and hit.Instance == part, kind .. " must block ray")
-                end
-                for i = 0, 7 do
-                    local x, y, z = MapRules.orbit(MapRules.defaults, i * math.pi / 4)
-                    local aircraft = Vector3.new(x, y, z)
-                    for _, anchor in map.Anchors:GetChildren() do
-                        if string.match(anchor.Name, "^Ground") then
-                            local point = (anchor :: BasePart).Position
-                            local hit = workspace:Raycast(point, aircraft - point, rays)
-                            assert(
-                                hit and hit.Instance:IsDescendantOf(map.Permanent),
-                                "spawn unprotected: " .. anchor.Name .. " phase " .. i
-                            )
-                        end
+    test("cover queries protect all nine spawns and expose firing angles to 64 perimeter samples", function()
+        fixture(function(world, owner)
+            assert(owner.start(), "expected owner.start()")
+            local map = world.Battlefield
+            local rays = RaycastParams.new()
+            rays.FilterType = Enum.RaycastFilterType.Include
+            rays.FilterDescendantsInstances = { map }
+            rays.RespectCanCollide = true
+            for _, kind in { "Permanent", "Breakable" } do
+                local part = map[kind]:GetChildren()[1] :: BasePart
+                assert(
+                    part:GetAttribute("CoverKind") == kind and part:GetAttribute("CoverId") == part.Name,
+                    'expected part:GetAttribute("CoverKind") == kind and part:GetAttribute("CoverId") == part.Name'
+                )
+                local hit =
+                    workspace:Raycast(part.Position + Vector3.new(0, 30, 0), Vector3.new(0, -31, 0), rays)
+                assert(hit and hit.Instance == part, kind .. " must block ray")
+            end
+            for i = 0, 63 do
+                local x, y, z = MapRules.orbit(MapRules.defaults, i * math.pi / 32)
+                local aircraft = Vector3.new(x, y, z)
+                for _, anchor in map.Anchors:GetChildren() do
+                    if string.match(anchor.Name, "^Ground") then
+                        local point = (anchor :: BasePart).Position
+                        local hit = workspace:Raycast(point, aircraft - point, rays)
+                        assert(
+                            hit and hit.Instance:IsDescendantOf(map.Permanent),
+                            "spawn unprotected: " .. anchor.Name .. " phase " .. i
+                        )
                     end
-                    local muzzle =
-                        Vector3.new(math.cos(i * math.pi / 4) * 60, 5, math.sin(i * math.pi / 4) * 60)
-                    assert(
-                        not workspace:Raycast(muzzle, aircraft - muzzle, rays),
-                        "blocked firing angle " .. i
-                    )
                 end
-            end)
-        end
-    )
+                local muzzle =
+                    Vector3.new(math.cos(i * math.pi / 32) * 330, 5, math.sin(i * math.pi / 32) * 330)
+                assert(not workspace:Raycast(muzzle, aircraft - muzzle, rays), "blocked firing angle " .. i)
+            end
+        end)
+    end)
     test(
         "server corrects exterior and below kill plane while preserving disk and station positions",
         function()
@@ -191,10 +185,10 @@ return function()
                 assert(owner.start(), "expected owner.start()")
                 for _, position in
                     {
-                        Vector3.new(181, 3, 0),
-                        Vector3.new(-220, 3, 0),
+                        Vector3.new(361, 3, 0),
+                        Vector3.new(-400, 3, 0),
                         Vector3.new(0, -31, 0),
-                        Vector3.new(400, 30, 0),
+                        Vector3.new(520, 30, 0),
                     }
                 do
                     root.CFrame = CFrame.new(position)
@@ -205,16 +199,16 @@ return function()
                         "expected (root.Position - (world.Battlefield.Anchors.Ground05 :: BasePart).Position).Magnitude                             < 0.01"
                     )
                 end
-                for _, position in { Vector3.new(0, 3, 0), Vector3.new(170, 3, 0), Vector3.new(400, 3, 0) } do
+                for _, position in { Vector3.new(0, 3, 0), Vector3.new(170, 3, 0), Vector3.new(520, 3, 0) } do
                     root.CFrame = CFrame.new(position)
                     owner.enforce()
                     assert(root.Position == position, "expected root.Position == position")
                 end
                 owner.stop()
                 owner.stop()
-                root.CFrame = CFrame.new(220, 3, 0)
+                root.CFrame = CFrame.new(500, 3, 0)
                 step:Fire()
-                assert(root.Position.X == 220, "stopped owner retained heartbeat")
+                assert(root.Position.X == 500, "stopped owner retained heartbeat")
             end)
         end
     )

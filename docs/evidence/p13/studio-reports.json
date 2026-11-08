@@ -1,0 +1,142 @@
+{
+  "diagnostic": {
+    "success": true
+  },
+  "p04": {
+    "success": true,
+    "result": {
+      "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":67,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":67}",
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.AircraftHarness:89: Players.Player1.PlayerScripts.ClientTests.AircraftHarness:135: reticle escaped view bounds"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.AircraftHarness:74: ServerScriptService.ServerTests.AircraftHarness:89: Players.Player1.PlayerScripts.ClientTests.AircraftHarness:135: reticle escaped view bounds"
+        }
+      ],
+      "passed": 0,
+      "clientBaselines": [
+        {
+          "passed": true,
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        },
+        {
+          "passed": true,
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        }
+      ],
+      "orbitSeconds": 90,
+      "observations": [],
+      "clientCount": 2,
+      "environment": "Studio",
+      "poseToleranceStuds": 8,
+      "suite": "P04-multiplayer",
+      "failed": 2,
+      "discovered": 2
+    }
+  },
+  "p13": {
+    "success": true,
+    "result": {
+      "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":67,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":67}",
+      "skipped": 0,
+      "passed": 3,
+      "cases": [
+        {
+          "passed": true,
+          "name": "ExpandedMapReplication two actual clients agree on source geometry terrain panels and aircraft"
+        },
+        {
+          "passed": true,
+          "name": "ExpandedMapNavigation actual ground avatar enters every building and walks every upper floor"
+        },
+        {
+          "passed": true,
+          "name": "ExpandedMapReplication two perturbed round resets restore terrain geometry IDs and panels"
+        },
+        {
+          "name": "ExpandedMapReplication actual late third client observes rebuilt map and stays spectator",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:20: P13 timeout: actual late join"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:121: ServerScriptService.ServerTests.ExpandedMapHarness:20: P13 timeout: actual late join"
+        }
+      ],
+      "initialClientCount": 2,
+      "observations": [
+        {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+          "userId": -1,
+          "detail": "geometry/terrain/aircraft observed"
+        },
+        {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+          "userId": -2,
+          "detail": "geometry/terrain/aircraft observed"
+        },
+        {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+          "userId": -1,
+          "detail": "geometry/terrain/aircraft observed"
+        },
+        {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+          "userId": -2,
+          "detail": "geometry/terrain/aircraft observed"
+        },
+        {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+          "userId": -1,
+          "detail": "geometry/terrain/aircraft observed"
+        },
+        {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+          "userId": -2,
+          "detail": "geometry/terrain/aircraft observed"
+        }
+      ],
+      "walkedBuildings": [
+        "Foundry",
+        "Warehouse",
+        "Outpost"
+      ],
+      "environment": "Studio",
+      "clientCount": 2,
+      "suite": "P13-multiplayer",
+      "failed": 2,
+      "discovered": 5
+    }
+  },
+  "human": {
+    "success": true,
+    "result": {
+      "clientCount": 1,
+      "suite": "HumanTestControls",
+      "errors": 0,
+      "skipped": 0,
+      "discovered": 6,
+      "failed": 0,
+      "passed": 6
+    }
+  },
+  "lobby": {
+    "success": true,
+    "result": {
+      "clientCount": 1,
+      "suite": "LobbyControls",
+      "errors": 0,
+      "skipped": 0,
+      "discovered": 4,
+      "failed": 0,
+      "passed": 4
+    }
+  }
+}

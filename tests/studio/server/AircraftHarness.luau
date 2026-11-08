@@ -2,7 +2,7 @@
 --[=[
     AircraftHarness: P04 automated acceptance against actual GameRuntime and two
     distinct Studio network clients. Samples a full 90-second production orbit;
-    8-stud convergence bound allows <=0.64s replication age at 12.57 studs/second.
+    8-stud convergence bound allows <=0.32s replication age at 25.13 studs/second on the expanded map.
     No local visual shell or secondary hitbox exists. Test-only transport is excluded
     from release. All waits are bounded; failures remain in EndTest's structured report.
 ]=]

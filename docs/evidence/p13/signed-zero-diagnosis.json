@@ -1,0 +1,48 @@
+{
+  "sourceCommit": "b157e8423ad8d745e97043fbc7bb8f6673e6d516",
+  "numericComparison": {
+    "component": 4,
+    "maxDelta": 4.525482654571533e-05,
+    "zeros": {
+      "1": {
+        "component": 5,
+        "equal": true,
+        "client": "-0",
+        "delta": 0,
+        "server": "0"
+      },
+      "2": {
+        "component": 9,
+        "equal": true,
+        "client": "-0",
+        "delta": 0,
+        "server": "0"
+      }
+    },
+    "part": "Boundary33"
+  },
+  "signedZeroAffectedPartCount": 15,
+  "affectedParts": [
+    "Boundary17",
+    "Boundary18",
+    "Boundary19",
+    "Boundary20",
+    "Boundary21",
+    "Boundary22",
+    "Boundary23",
+    "Boundary24",
+    "Boundary25",
+    "Boundary26",
+    "Boundary27",
+    "Boundary28",
+    "Boundary29",
+    "Boundary30",
+    "Boundary31"
+  ],
+  "example": {
+    "expected": "Boundary31:-358.267:12.000:35.286:0.098:0.000:-0.995:0.000:1.000:0.000:0.995:0.000:0.098:36.000:24.000:3.000",
+    "name": "Boundary31",
+    "actual": "Boundary31:-358.267:12.000:35.286:0.098:-0.000:-0.995:0.000:1.000:-0.000:0.995:0.000:0.098:36.000:24.000:3.000"
+  },
+  "resolution": "Replace raw formatted-string equality with bounded numeric CFrame/size comparisons; no product pose change."
+}
