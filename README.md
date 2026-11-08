@@ -12,6 +12,17 @@ Not yet. This repository contains the game design, architecture, implementation 
 
 Follow the [roadmap](roadmap.md) for progress. The first foundation introduces a greybox battlefield and roles; gunship combat, ground fire, and the special launcher follow in later phases.
 
+## Run the project in Roblox Studio
+
+**Roblox Studio and its built-in MCP server are required for this project's supported local development and playtest workflow.** Studio runs the place; MCP lets Codex connect to the open place for inspection and testing. The [Rojo](https://rojo.space/) plugin syncs the files in this repository into Studio. MCP alone does not sync source files.
+
+1. Install [Roblox Studio](https://create.roblox.com/docs/studio/setup) on a Mac or Windows computer and sign in to your Roblox account. Open a local development place; a Baseplate is enough to check the connection.
+2. In Studio, open **Assistant → … → Settings → MCP Servers** (or **… → Manage MCP Servers** in older versions). Turn on **Enable Studio as MCP server**. Under **Quick Connect**, turn on **ChatGPT (codex)** if available.
+3. Start a new Codex thread or restart the ChatGPT desktop app so the Studio tools load. Ask it to **continue Roblox setup**. It should find the open place with `list_roblox_studios`. If Quick Connect is unavailable, follow the [manual MCP connection steps](docs/development.md#connect-roblox-studio-mcp).
+4. Install the [official Rojo Studio plugin](https://rojo.space/docs/v7/getting-started/installation/) and the pinned Rojo CLI. From this repository, run `rokit install`, then `rojo serve default.project.json`. Connect the Rojo plugin in the development place to that server. See the [development guide](docs/development.md#sync-this-repository-with-studio) for builds and the separate test place.
+
+The current scaffold opens as an empty place; gameplay is still planned. A local place is sufficient for development and does not require publishing a Roblox experience.
+
 ## Two ways to play
 
 ### C-130 operator
