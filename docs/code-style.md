@@ -17,30 +17,28 @@ This illustrates the convention, not an implemented module:
 ```luau
 --!strict
 --[=[
-    ExtractionRules: pure server-side eligibility rules for one ground player.
+    WeaponRules: pure server-side readiness checks shared by aircraft weapons.
     No engine access, network calls or yielding. Time is injected in seconds.
-    A completed dwell is valid only strictly before the round deadline.
+    Each weapon retains its own next-fire time across weapon selection changes.
 ]=]
 
-local ExtractionRules = {}
+local WeaponRules = {}
 
 --[=[
-    Reports whether an uninterrupted dwell has completed before the deadline.
-    The caller has already validated that the player is alive and in the zone.
-    All inputs are finite monotonic seconds; durationSeconds must be positive.
-    Returns false at or after deadlineSeconds. Does not mutate state or yield.
+    Reports whether this weapon's cooldown has ended before the round deadline.
+    The caller separately validates role, ownership, ammunition and aim.
+    All inputs are finite monotonic seconds. Returns false at the deadline.
+    Does not mutate state or yield; switching weapons never changes these inputs.
 ]=]
-function ExtractionRules.isComplete(
-    enteredAtSeconds: number,
+function WeaponRules.canFire(
+    nextFireAtSeconds: number,
     nowSeconds: number,
-    durationSeconds: number,
     deadlineSeconds: number
 ): boolean
-    return nowSeconds < deadlineSeconds
-        and nowSeconds - enteredAtSeconds >= durationSeconds
+    return nowSeconds < deadlineSeconds and nowSeconds >= nextFireAtSeconds
 end
 
-return ExtractionRules
+return WeaponRules
 ```
 
 Use Luau block comments for module and API contracts; Moonwave-style tags may be added if generated API docs become useful, but a documentation generator is not required for MVP. Document exported records/unions and their invariants. For stateful objects, document construction, start/stop/destroy behavior, event ownership and idempotency.
@@ -49,6 +47,6 @@ Private functions need comments when they contain a non-obvious algorithm, timin
 
 ## Tests and prose
 
-Give every suite a short purpose/requirement header. Names describe observations such as “rejects extraction at the round deadline” rather than “test 4.” Explain tolerances and fixture seeds. Group setup so the action and expected result remain easy to see.
+Give every suite a short purpose/requirement header. Names describe observations such as “rejects a rocket hit at the round deadline” rather than “test 4.” Explain tolerances and fixture seeds. Group setup so the action and expected result remain easy to see.
 
 Keep the player README cohesive: update current behavior in place, remove stale descriptions, and label unimplemented targets. Contributor details belong in the development guide. History, check outputs and feature-specific completion facts belong in plans, not a growing list of README announcements.

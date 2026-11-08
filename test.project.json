@@ -1,5 +1,5 @@
 {
-  "name": "C130ExtractionShooterTests",
+  "name": "PlayersVsC130Tests",
   "globIgnorePaths": ["**/*.md"],
   "tree": {
     "$className": "DataModel",

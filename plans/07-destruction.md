@@ -14,9 +14,9 @@ Add a small authored set of Intact/Damaged/Destroyed templates with stable cover
 
 - **A1:** Full gate passes; unit tests cover threshold boundaries, monotonic state, permanent-cover immunity, repeated impacts and idempotent destruction.
 - **A2:** Engine tests verify collision/query geometry for each state, consistent IDs after swaps and a traversable opening after destruction.
-- **A3:** A target behind a wall destroyed by the same blast remains protected from that blast; a subsequent shot through the opening can hit. Thermal occlusion updates with the new geometry.
+- **A3:** A target behind a wall destroyed by the same blast remains protected from that blast; a subsequent shot through the opening can hit. Exercise both 30mm and 105mm damage profiles. Thermal occlusion updates with the new geometry.
 - **A4:** Two clients and a late-joining spectator reconstruct the same state without replaying old debris. Client-side effect changes cannot alter authoritative collision.
-- **A5:** Multiple reset cycles restore all initial cover and remove debris/temporary connections. Objectives/spawns remain reachable without requiring destruction.
+- **A5:** Multiple reset cycles restore all initial cover and remove debris/temporary connections. The launcher anchor and spawns remain reachable without requiring destruction.
 
 ## Focused human check
 

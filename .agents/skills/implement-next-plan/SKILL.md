@@ -1,6 +1,6 @@
 ---
 name: implement-next-plan
-description: Implement one eligible roadmap plan for this Roblox C-130 extraction shooter using developer, tester, and technical-writer subagents, with automated and Studio evidence and GitHub delivery. Use for the full next-feature loop, not design-only work, isolated edits, or review-only requests.
+description: Implement one eligible roadmap plan for this Roblox players-versus-C-130 game using developer, tester, and technical-writer subagents, with automated and Studio evidence and GitHub delivery. Use for the full next-feature loop, not design-only work, isolated edits, or review-only requests.
 ---
 
 # Implement the next plan
