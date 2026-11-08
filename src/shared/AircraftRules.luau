@@ -35,7 +35,8 @@ function AircraftRules.validate(value: unknown): (Settings?, string?)
     return table.clone(config), nil
 end
 
--- Samples the CCW perimeter using injected elapsed seconds; negative elapsed wraps too.
+-- Samples increasing phase from positive X toward positive Z with injected elapsed
+-- seconds; negative elapsed wraps too.
 -- Returns nil for invalid time/config, including overflow. Position tolerance is 1e-6
 -- studs in pure tests; engine CFrames require 0.01 studs due to float serialization.
 function AircraftRules.pose(map: typeof(MapRules.defaults), settings: Settings, elapsedSeconds: number): Pose?

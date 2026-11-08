@@ -257,7 +257,7 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
             caption.Text = (if preview then "Studio preview • " else "")
                 .. AircraftRules.names[weapon]
                 .. string.format(
-                    " • %d° FOV\nMove mouse to aim • 1 / 2 select • Firing arrives in P05",
+                    " • %d° FOV\nMove mouse to aim • 1 / 2 select • Firing is planned",
                     fov
                 )
             -- Observable projection commit used by engine tests and accessibility tooling.
