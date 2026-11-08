@@ -38,7 +38,11 @@ Use this conventional uppercase filename for Codex discovery. Do not create a se
 - Solid cover blocks thermal highlighting and damage according to the explicit rules in `game-design.md`. Client effects cannot change collision, health, or launcher ownership. Spectators cannot act in the round.
 - Keep server-only rules and assets out of ReplicatedStorage. Do not mistake replicated data for a security boundary.
 
-The plane carries the 30mm GAU-23/A Chain Gun and 105mm M102 Howitzer. Weapon selection changes zoom without resetting cooldowns; the aircraft view always faces inward toward the map. Ground wins on aircraft destruction; the C-130 wins on ground-team elimination or timeout. Do not reintroduce collection/escape mechanics.
+The plane carries the 30mm GAU-23/A Chain Gun and 105mm M102 Howitzer; the user confirmed that the new heavy-panel damage rules apply to the existing 105mm weapon (D31). Weapon selection changes zoom without resetting cooldowns or panning focus; mouse movement pans the aircraft view across the battlefield while keeping it inward-facing.
+
+The revised MVP doubles the current map diameter to 720 studs and requires terrain plus two large buildings and one smaller building, all at least two stories with usable upper floors. Building wall and roof panels must visibly progress to roughly half-destroyed after three direct heavy-cannon hits and disappear after three more; nine seconds of sustained on-panel 30mm fire must damage a panel. Actual bounded fragment physics and authoritative openings are MVP work, even with primitive art. Keep stable supporting structure; refined assets are later work. Proposed interruption/mixed-fire/debris defaults belong in decisions, not disguised as user-selected rules.
+
+Ground wins on aircraft destruction; the C-130 wins on ground-team elimination or timeout. Do not reintroduce collection/escape mechanics.
 
 ## Tests and evidence
 

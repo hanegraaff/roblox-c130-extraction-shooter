@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-The current source contains the foundation, circular greybox map, authoritative rounds and P04 perimeter aircraft with inward thermal view and weapon-linked zoom. Server-only rules assign roles, retain UserId membership, evaluate deadlines/results and reset the round; engine adapters own characters, teams, map rebuilds and replicated presentation attributes. The client displays round state, sends surrender intent and follows living teammates after elimination. [P03](plans/03-rounds-and-roles.md) records the candidate's verification evidence and limits; [P02](plans/02-warzone-map.md) records prior map acceptance. [P04](plans/04-aircraft-and-thermal.md) records aircraft/view acceptance. Combat, aircraft health/damage and launcher systems below remain target architecture introduced incrementally by the [roadmap](roadmap.md).
+The current source contains the foundation, circular greybox map, authoritative rounds and P04 perimeter aircraft with inward thermal view and weapon-linked zoom. Server-only rules assign roles, retain UserId membership, evaluate deadlines/results and reset the round; engine adapters own characters, teams, map rebuilds and replicated presentation attributes. The client displays round state, sends surrender intent and follows living teammates after elimination. [P03](plans/03-rounds-and-roles.md) records the candidate's verification evidence and limits; [P02](plans/02-warzone-map.md) records prior map acceptance. [P04](plans/04-aircraft-and-thermal.md) records aircraft/view acceptance. The larger terrain/building map (P13), panned targeting (P14), combat, panel/fragment physics, aircraft health/damage and launcher systems below remain target architecture introduced incrementally by the [roadmap](roadmap.md).
 
 Use a single Roblox place for lobby and battlefield, Luau for game code, and Git-first editing with Rojo for supported source/world synchronization. Roblox hosts the running experience; GitHub stores reconstructable source. No external application backend, persistent player inventory, or cross-server matchmaking is needed for the MVP.
 
@@ -110,14 +110,14 @@ The release project excludes tests, test dependencies, fixtures and development 
 | --- | --- | --- |
 | `Bootstrap`, shared validation and lifecycle | Implemented shell wiring, cleanup, structural decoding/rate helpers | P01 |
 | Named remote adapters | Implemented surrender and aircraft-selection shape/role/life/round/replay/rate checks; firing/equipment validation added with combat | P03 onward |
-| `MapService` | Implemented geometry/anchor validation, containment and pristine map rebuild | P02 |
+| `MapService` | Implemented geometry/anchor validation, containment and pristine map rebuild; P13 extends to terrain, multi-story buildings and stable panel registry | P02; expanded P13 |
 | `MatchService`, `RoleService`, `RoundRules` | Implemented roster, phase/deadline, round identity, assignment and outcome policy | P03 |
 | `GameRuntime`, `MatchRuntime`, `CharacterOwner` | Implemented map/round composition, character ownership, replication and cleanup | P03 |
 | `RoundPanel` | Implemented basic round HUD, surrender intent and teammate spectating | P03; presentation improved in P10 |
 | `AircraftService`, `AircraftSelection`, `AircraftRules` | Implemented canonical perimeter orbit, validated aim geometry and authoritative targeting-profile selection; health/destruction remain planned | P04; health in P06 |
-| `ThermalCameraController` | Implemented inward-facing camera, acknowledged weapon-linked zoom, occluded highlights and cleanup | P04 |
+| `ThermalCameraController` | Implemented fixed-focus inward camera/zoom/occlusion; P14 adds bounded mouse pan, recenter and geometry-aware reticle projection | P04; panning P14 |
 | `CombatService` with weapon rules | Validate intent, ammo/cooldown, flight/impact, damage resolution | P05–P06 |
-| `DestructionService` | Health/state and authoritative collision swaps | P07 |
+| `DestructionService` | Per-panel heavy/sustained-fire progress, monotonic states, authoritative residual colliders and bounded server-owned fragment physics | P07 |
 | `LauncherService` | One launcher identity, atomic ownership, drop/recovery and reload continuity | P08 |
 | `MatchService` outcome integration | Aircraft destruction, ground elimination, timeout and forfeit resolution | P09 (basic outcomes P03/P06) |
 | `GroundController`, `HUDController`, `SpectatorController` | Role-specific controls and complete player feedback | Introduced with features; completed P10 |
@@ -163,7 +163,13 @@ Server-only `AircraftSelection` owns selected weapon, revision and accepted per-
 
 Local color correction supplies grayscale/high contrast and `Highlight.DepthMode = Occluded` lets solid cover hide player highlights. Active living ground characters and explicitly tagged thermal fixtures are presented; clients gain no damage or visibility authority. Role loss or owner removal destroys thermal GUI/effects/highlights and role input listeners, restoring captured camera/FOV/mouse settings. `RoundPanel` resumes ground, teammate spectator or lobby view. A labelled test-only solo Operator preview permits cosmetic profile choices while its player remains Waiting in Lobby.
 
-For the bounded MVP map, `Workspace.StreamingEnabled` is explicitly false (D11). This avoids a remote camera looking at absent scenery. If profiling forces streaming, treat that as a deliberate architecture revision: persistent aircraft, controlled replication focus, target-area acquisition/loading states, re-stream-safe effects and 10-player visibility tests. Projectile swept collision, damage, health and cosmetic destruction remain later combat work.
+For the bounded MVP map, `Workspace.StreamingEnabled` is explicitly false (D11). This avoids a remote camera looking at absent scenery. If profiling forces streaming, treat that as a deliberate architecture revision: persistent aircraft, controlled replication focus, target-area acquisition/loading states, re-stream-safe effects and 10-player visibility tests. Projectile swept collision, damage, health, panel openings and physical fragments remain later combat/destruction work.
+
+## Revised map and panned targeting target (P13/P14)
+
+P13 changes the authored radius to 360 studs (diameter 720), keeps the orbit on that perimeter and constructs terrain plus two large buildings and one smaller building, each at least two stories. Define terrain as a versioned export or deterministic, versioned recipe with a fixed seed and bounds; MapService owns loading/clearing only that terrain region. Rebuild restores identical elevations/materials and anchors, without erasing unrelated Studio terrain. Building definitions contain stable building/story/panel IDs, intact/damaged pivots and dimensions, residual collision shapes and destructible roof panels and persistent floor/stair/frame geometry. Extend current whole-map snapshot ownership to include terrain reconstruction; cloning the Battlefield subtree alone does not restore Terrain voxels. Record all new sources in the manifest.
+
+P14 keeps the camera position at the canonical aircraft but derives orientation from a bounded, mouse-panned battlefield focus, initialized/recentered to map center. Inject delta time and pointer input into pure pan rules. Preserve world-space focus across orbit motion and acknowledged zoom changes; clamp every update and revalidate on role/round/map changes. Height-aware projection must hit actual terrain/building surfaces instead of assuming every target is Y = 0. The server retains its own disk/height/range and muzzle-obstruction checks; local pan is presentation, not authority or a high-rate pan remote. Restore input/camera settings and clear pan state at teardown. P13/P14 explicitly supersede the prototype's fixed-focus/flat-ground assumptions; the implemented section above describes current source only.
 
 ## Weapon, launcher and result invariants
 
@@ -183,7 +189,11 @@ Each authored Part/SpawnLocation in `.model.json` uses a twelve-component canoni
 
 Static map files and server-cloned templates have separate ownership. Do not synchronize a live simulation back as authored source. Studio edits to managed objects must be exported to the mapped source and verified with a clean build. Avoid mixed ownership of the same Instance subtree.
 
-Breakable props use predefined health thresholds and collision states. Keep stable cover IDs across model swaps. Resolve one impact against a pre-impact world view, then apply damage and cover transitions once. Late joiners reconstruct current state from the server, not a replay of missed cosmetic effects. Reset reconstructs the original map deterministically.
+DestructionService owns a server-only record keyed by stable panel ID and round generation: Intact/Damaged/Destroyed stage, persistent heavy-hit credit, uncommitted sustained-30mm credit, last valid on-panel impact time and applied shot IDs. Do not derive structural damage from player-health damage or accept client panel/hit-duration claims. CombatService supplies deduplicated server-resolved direct impacts using the configured weapon cadence. Use a normalized stage budget of three heavy hits or nine seconds of valid 30mm fire; D33 defines proposed mixing/interruption behavior. P05 must expose enough shot identity/time/profile/impact data to integrate P07 without reimplementing projectile authority.
+
+At each stage boundary, atomically swap prefabricated residual geometry at the same pivot/ID; Damaged opens roughly half the original face and Destroyed removes all panel colliders. Replicate authoritative stage/progress for simple visible hit cues and late-join reconstruction. Resolve the whole damage batch against pre-impact geometry before any swaps, so a new opening cannot amplify its creating blast. Remaining solids block weapon/thermal queries; holes do not. Static frames/floors/stairs preserve upper-floor access without structural simulation.
+
+Separate authoritative residual geometry from bounded unanchored physics fragments. Server ownership and collision groups let fragments fall and contact static scenery, while excluding characters, other debris and combat/thermal queries. Enforce bounded impulses, live-fragment cap and lifetime; cap overflow can omit older debris without changing panel state. Physical trajectories are presentation; only server panel geometry determines cover, damage and movement. Validate actual falling/contact and ownership in Studio, not with a particle screenshot. Teardown cancels work, clears fragments, disconnects listeners and rebuilds terrain/structures/panel progress exactly. Late joiners reconstruct current panel state rather than replaying old fragment bursts.
 
 ## Tooling and verification
 

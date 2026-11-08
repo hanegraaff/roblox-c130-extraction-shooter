@@ -2,6 +2,8 @@
 
 **Milestone:** M2. **Dependencies:** P03. **Requirements:** R05, R06, R12, R15. Status: [roadmap](../roadmap.md).
 
+The 2026-11-08 mouse-panning revision is a follow-up in [P14](14-aircraft-panning.md). This plan and its completion record retain the fixed-center camera acceptance; they do not establish panning or the expanded map.
+
 ## Capability and player experience
 
 Ground players see a C-130 circle the map's perimeter. The operator's thermal view always faces inward toward the main map. Choosing the 30mm or 105mm profile changes zoom; live firing arrives in P05.
@@ -74,4 +76,4 @@ Source `b27f738` and documentation/evidence commit `7d9e200c7fcf687445562b77fe54
 
 The final PR head passed [GitHub Verify 42526346654](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42526346654). Its tree matches the merge exactly. A fresh integrated full host gate passes 30 unit / 18 integration tests, and both build hashes match the final Studio-reviewed candidate. [Integration evidence](../docs/evidence/p04-integration.md) records exact source/build identities and the retained engine-evidence scope.
 
-P05 is the next eligible increment; it has not been implemented. Its dependency source is now integrated, so it can branch from `main`. No Roblox publication occurred.
+At integration P05 was the next eligible increment; the later level revision inserts P13/P14 first (see the current roadmap). P05 has not been implemented. Its dependency source is now integrated, so it can branch from `main`. No Roblox publication occurred.

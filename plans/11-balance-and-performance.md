@@ -1,6 +1,6 @@
 # P11 — Balance, performance and resilience
 
-**Milestone:** M6. **Dependencies:** P10. **Requirements:** R03, R05–R14, R15. Status: [roadmap](../roadmap.md).
+**Milestone:** M6. **Dependencies:** P10. **Requirements:** R03, R05–R14, R15, R16. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience
 
@@ -8,7 +8,7 @@ Repeated rounds remain responsive and clean. The gunship has threatening firepow
 
 ## Implementation
 
-Create deterministic combat/soak fixtures and bounded diagnostics for request rates, projectile/effect counts, cleanup and frame/memory metrics. Record reference desktop, resolution, graphics setting and sampling procedure before profiling. Tune only named configuration values with written reasons. Preserve three direct rockets from full health, positive M-7 chip damage, one launcher and the two weapon-linked zoom profiles. Optimize demonstrated bottlenecks; do not add a framework or enable streaming without evidence and the required architecture/test revision.
+Create deterministic combat/soak fixtures and bounded diagnostics for request rates, projectile/effect counts, cleanup and frame/memory metrics. Record reference desktop, resolution, graphics setting and sampling procedure before profiling. Tune only named configuration values with written reasons. Preserve three direct rockets from full health, positive M-7 chip damage, one launcher, the two weapon-linked zoom profiles with mouse panning, 720-stud diameter/three multi-story buildings, and selected panel thresholds (3 + 3 heavy hits; nine seconds sustained 30mm to damage). Tune cadence/gaps and fragment caps without silently changing those selected rules. Optimize demonstrated bottlenecks; do not add a framework or enable streaming without evidence and the required architecture/test revision.
 
 ## Acceptance criteria
 
@@ -16,7 +16,7 @@ Create deterministic combat/soak fixtures and bounded diagnostics for request ra
 - **A2:** Five accelerated rounds return owned temporary instances/connections to baseline with no stale state. A 30-minute soak meets the ≤10% retained-memory growth criterion in `docs/testing.md`.
 - **A3:** The scripted workload meets p95 client ≤33.3 ms and server ≤16.7 ms targets on the recorded environment. Report actual client count and metrics; ten fake roster entries are not a ten-client benchmark.
 - **A4:** A measured/simulated near-150 ms RTT scenario converges to correct health/launcher-ownership/selected-weapon/result state without duplicate damage or pickups. Timeouts fail clearly rather than hanging.
-- **A5:** Record multiplayer balance observations at the available supported local client count, including launcher acquisition/recovery, time to destroy the aircraft, use of both gunship weapons, cover/counterfire and role engagement. Every tuning change preserves rule invariants and has rerun relevant tests.
+- **A5:** Record multiplayer balance observations at the available supported local client count, including launcher acquisition/recovery, time to destroy the aircraft, use of both gunship weapons, cover/counterfire and role engagement. Include enlarged-map travel/launcher-access times, upper-floor counterplay, pan reach at both zooms, mixed-weapon panel exposure and fragment-physics load. Every tuning change preserves rule invariants and has rerun relevant tests.
 
 ## Focused human check
 

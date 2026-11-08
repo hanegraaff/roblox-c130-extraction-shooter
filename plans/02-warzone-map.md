@@ -2,6 +2,8 @@
 
 **Milestone:** M1. **Dependencies:** P01. **Requirements:** R01, R05, R10, R15. Status: [roadmap](../roadmap.md).
 
+The 2026-11-08 larger-level revision is a new construction increment in [P13](13-terrain-and-buildings.md): this plan and its completion record retain the original 180-stud-radius greybox acceptance, without claiming the new terrain/buildings are implemented.
+
 ## Capability and player experience
 
 Walk a circular industrial warzone with protected indoor cover, exposed firing positions and at least two approaches to a single future rocket-launcher location. The map boundary and overhead perimeter orbit are designed together.
