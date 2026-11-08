@@ -1,0 +1,134 @@
+{
+  "sourceCommit": "b27f738e84c2f87eb25ff402c235b7a91ad82458",
+  "sourceTree": "13617b93d55381683ebbdaae027b08e7c32cbae9",
+  "environment": {
+    "os": "macOS arm64",
+    "studioVersion": "0.746.0.7461269",
+    "placeId": 0,
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "project": "PlayersVsC130Tests",
+    "syncPort": 34872,
+    "actualClientCount": 1,
+    "viewport": [
+      1081,
+      619
+    ],
+    "graphics": "Automatic"
+  },
+  "sourceSync": {
+    "version": "0.746.0.7461269",
+    "name": "p02-tests-5c809beff70b.rbxlx",
+    "failures": [],
+    "placeId": 0,
+    "checked": 51
+  },
+  "serverBaseline": {
+    "suite": "P01-server",
+    "discovered": 57,
+    "passed": 57,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1
+  },
+  "clientBaseline": {
+    "suite": "P01-client",
+    "discovered": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "clientSlot": 1,
+    "environment": "Studio",
+    "seed": 1
+  },
+  "operatedInput": [
+    {
+      "action": "actual Role button twice: Auto to Ground to Operator",
+      "observed": "Gunship solo preview, Scriptable, GAU23, 35 degrees"
+    },
+    {
+      "action": "actual keyboard Two",
+      "weapon": "M102",
+      "fov": 60,
+      "inwardDot": 1
+    },
+    {
+      "action": "actual keyboard One",
+      "weapon": "GAU23",
+      "fov": 35,
+      "inwardDot": 1.0000001192092896
+    },
+    {
+      "action": "actual M102 GUI button",
+      "weapon": "M102",
+      "fov": 60,
+      "inwardDot": 1.0000001192092896
+    },
+    {
+      "action": "actual GAU23 GUI button",
+      "weapon": "GAU23",
+      "fov": 35,
+      "inwardDot": 1.0000001192092896
+    },
+    {
+      "action": "actual Role button: Operator to Auto/Ground",
+      "observed": {
+        "mouseBehavior": "Enum.MouseBehavior.Default",
+        "highlights": 0,
+        "cameraType": "Enum.CameraType.Custom",
+        "thermalEffect": false,
+        "mouseIcon": true,
+        "preview": "Ground",
+        "fov": 70,
+        "thermalHUD": false
+      }
+    }
+  ],
+  "renderedOcclusion": {
+    "fixture": "Disposable two tagged body Models plus opaque five-sided enclosure, under Battlefield; removed before stop",
+    "before": {
+      "exposedFirstRayHit": "P04IndependentExposed.Body",
+      "coveredFirstRayHit": "WallS",
+      "observed": "Exposed body white; enclosed covered target invisible through solid geometry",
+      "capture": "p04-thermal-occlusion.jpg"
+    },
+    "after": {
+      "coveredFirstRayHit": "P04IndependentCovered.Body",
+      "remainingTargets": 2,
+      "observed": "Both bodies rendered white after enclosure removal",
+      "capture": "p04-thermal-cover-removed.jpg"
+    }
+  },
+  "groundInspection": {
+    "cameraPositionStuds": [
+      0,
+      8,
+      0
+    ],
+    "cameraControlledForInspection": true,
+    "HUDTemporarilyHidden": true,
+    "capture": "p04-ground-aircraft-inspection.jpg",
+    "observed": "Actual replicated primitive aircraft visible against sky from map ground level",
+    "limitation": "Controlled inspection confirms rendering; it is not an assertion about normal player camera framing"
+  },
+  "representativeCapture": {
+    "path": "p04-current-progress.jpg",
+    "stage": "Actual Operator solo preview with final source, before disposable render fixtures",
+    "chatHiddenOnlyForCapture": true
+  },
+  "remainingPresentationLimits": [
+    "Own aircraft strip visible only in upper-left sky at wide FOV; no central battlefield/reticle blockage observed across sampled orbit phases",
+    "Round HUD obscures upper battlefield and Studio human panel overlaps some thermal controls at small viewport; remaining controls and central/lower aiming region usable"
+  ],
+  "sessionHygiene": {
+    "temporaryFixturesRemoved": true,
+    "inspectionRenderStepUnbound": true,
+    "HUDRestoredBeforeStop": true,
+    "playStopped": true,
+    "finalInventory": "Only original confirmed Studio instance, Edit"
+  },
+  "openMaterialDefects": []
+}

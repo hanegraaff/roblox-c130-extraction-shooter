@@ -1,0 +1,69 @@
+local AircraftRules = require('../src/shared/AircraftRules')
+local MapRules = require('../src/shared/MapRules')
+local AircraftSelection = require('../src/server/AircraftSelection')
+local serde = require('@lune/serde')
+local fs = require('@lune/fs')
+local results = {}
+local function probe(name, fn)
+    local ok, reason = pcall(fn)
+    table.insert(results, {name=name, passed=ok, reason=if ok then nil else tostring(reason)})
+end
+probe('translated elevated map follows canonical radius, altitude and forward heading', function()
+    local map = table.clone(MapRules.defaults)
+    map.centerX, map.orbitCenterX, map.focusX = 431,431,431
+    map.centerZ, map.orbitCenterZ, map.focusZ = -913,-913,-913
+    map.groundY, map.focusY, map.killY = 37,37,0
+    assert(MapRules.validate(map))
+    for i=0,128 do
+        local elapsed=i*90/128
+        local pose=AircraftRules.pose(map,AircraftRules.defaults,elapsed)
+        local nextPose=AircraftRules.pose(map,AircraftRules.defaults,elapsed+0.001)
+        assert(pose and nextPose)
+        assert(math.abs(math.sqrt((pose.x-431)^2+(pose.z+913)^2)-180)<1e-6)
+        assert(pose.y==177)
+        local dx,dz=nextPose.x-pose.x,nextPose.z-pose.z
+        local magnitude=math.sqrt(dx*dx+dz*dz)
+        assert((dx*pose.tangentX+dz*pose.tangentZ)/magnitude>0.999999)
+    end
+end)
+probe('finite extreme times still produce bounded canonical poses', function()
+    for _,elapsed in {1e308,-1e308,1e20,-1e20} do
+        local pose=AircraftRules.pose(MapRules.defaults,AircraftRules.defaults,elapsed)
+        assert(pose and pose.x==pose.x and pose.z==pose.z)
+        assert(math.abs(pose.x)<=180 and math.abs(pose.z)<=180 and pose.y==140)
+    end
+end)
+probe('profile boundary configurations remain finite and strictly ordered',function()
+    local c=assert(AircraftRules.validate({periodSeconds=10,fov30mm=1,fov105mm=120}))
+    assert(AircraftRules.fov(c,'GAU23')==1 and AircraftRules.fov(c,'M102')==120)
+    assert(not AircraftRules.validate({periodSeconds=10,fov30mm=1,fov105mm=120,extra=true}))
+    assert(not AircraftRules.validate({periodSeconds=10,fov30mm=1,wrong=120}))
+end)
+probe('cyclic and wide malformed selection payloads reject with authority unchanged',function()
+    local owner=AircraftSelection.new();owner.reset(8)
+    local cyclic={roundId=8,sequence=1};cyclic.weapon=cyclic
+    local wide={roundId=8,sequence=1,weapon='M102'}
+    for i=1,10000 do wide['bad'..i]=i end
+    for _,payload in {cyclic,wide,{roundId=8,sequence=1,weapon=string.rep('x',100000)}} do
+        local prior=owner.snapshot()
+        assert(not owner.command(1,payload,true))
+        local after=owner.snapshot()
+        assert(after.revision==prior.revision and after.weapon==prior.weapon)
+    end
+    assert(owner.command(1,{roundId=8,sequence=1,weapon='M102'},true))
+end)
+probe('forced same-round reset restores initial profile and fresh monotonic sequence',function()
+    local owner=AircraftSelection.new();owner.reset(8)
+    assert(owner.command(1,{roundId=8,sequence=100,weapon='M102'},true))
+    owner.reset(8,true)
+    assert(owner.snapshot().weapon=='GAU23')
+    assert(owner.command(1,{roundId=8,sequence=1,weapon='M102'},true))
+    assert(not owner.command(1,{roundId=8,sequence=2,weapon='GAU23'},false))
+    assert(owner.snapshot().weapon=='M102')
+end)
+local passed=0
+for _,result in results do if result.passed then passed+=1 end end
+local report={suite='P04-independent-adversarial',discovered=#results,passed=passed,failed=#results-passed,skipped=0,cases=results}
+local encoded=serde.encode('json',report,true)
+print(encoded);fs.writeFile('build/p04-adversarial-results.json',encoded)
+assert(passed==#results,'independent adversarial probe failed')

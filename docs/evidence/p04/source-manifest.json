@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "b27f738e84c2f87eb25ff402c235b7a91ad82458",
+  "sourceTree": "13617b93d55381683ebbdaae027b08e7c32cbae9",
+  "environment": {
+    "date": "2026-11-08",
+    "os": "macOS",
+    "architecture": "arm64",
+    "studioVersion": "0.746.0.7461269",
+    "placeId": 0,
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "project": "PlayersVsC130Tests",
+    "syncPort": 34872
+  },
+  "artifacts": {
+    "game.rbxlx": "4dfdb6b66c75b7c08f380f9d56218ba2322e726381c494ca525e8a24c8bad54c",
+    "tests.rbxlx": "1cafbb6b85a01d87c5369c441d72c7188490e176a83a49d0661a3f6a7f2ab487"
+  },
+  "note": "Source commit identifies tested gameplay/config/tests; subsequent prose and evidence changes are recorded separately. The document filename predates this candidate; mapped source checks establish actual content.",
+  "orbitHarnessSourceCommit": "33e7b1da953809c57a42bf4c47166eaca917d753",
+  "sourceDelta": "Two UI strings and module contract comments only; orbit, selection, camera logic, model, tests and project mappings unchanged after full two-client harness."
+}

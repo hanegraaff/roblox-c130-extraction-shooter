@@ -1,0 +1,468 @@
+{
+  "sourceCommit": "33e7b1da953809c57a42bf4c47166eaca917d753",
+  "sourceTree": "f3b5db0a210617104e64519c63e4e95bfd42ef9f",
+  "serverBaseline": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 57,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 57
+  },
+  "skipped": 0,
+  "cases": [
+    {
+      "passed": true,
+      "name": "A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward"
+    },
+    {
+      "passed": true,
+      "name": "A4 stale malformed wrong-role duplicate and unknown selections preserve acknowledged view"
+    },
+    {
+      "passed": true,
+      "name": "A5 exposed and covered real geometry uses occluded thermal rendering"
+    },
+    {
+      "passed": true,
+      "name": "A2/A3 two actual clients converge at nine samples spanning a complete production orbit"
+    },
+    {
+      "passed": true,
+      "name": "A2/A5 result and reset restore initial profile camera input and effects"
+    },
+    {
+      "passed": true,
+      "name": "A5 actual operator disconnect forfeits and server teardown removes all aircraft ownership"
+    }
+  ],
+  "passed": 6,
+  "clientBaselines": [
+    {
+      "clientSlot": 1,
+      "passed": true,
+      "baseline": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      }
+    },
+    {
+      "clientSlot": 2,
+      "passed": true,
+      "baseline": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      }
+    }
+  ],
+  "orbitSeconds": 90,
+  "observations": [
+    {
+      "observations": {
+        "fov": 35,
+        "reticlePixels": [
+          534,
+          98.69999694824219
+        ],
+        "weapon": "GAU23"
+      },
+      "kind": "Profile",
+      "clientSlot": 1
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "fov": 60,
+        "reticlePixels": [
+          534,
+          98.69999694824219
+        ],
+        "weapon": "M102"
+      },
+      "kind": "Profile",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          179.6866912841797,
+          140,
+          10.615574836730957
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 2
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "fov": 60,
+        "reticlePixels": [
+          534,
+          98.69999694824219
+        ],
+        "weapon": "M102"
+      },
+      "kind": "Profile",
+      "clientSlot": 1
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "fov": 35,
+        "reticlePixels": [
+          534,
+          98.69999694824219
+        ],
+        "weapon": "GAU23"
+      },
+      "kind": "Profile",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "highlights": 3
+      },
+      "kind": "Thermal",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          175.90516662597656,
+          140,
+          38.175575256347656
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.4119895398616791,
+        "position": [
+          175.81732177734375,
+          140,
+          38.57809066772461
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          97.21734619140625,
+          140,
+          151.4885711669922
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.4134388566017151,
+        "position": [
+          96.869140625,
+          140,
+          151.7114715576172
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          -38.573585510253906,
+          140,
+          175.8183135986328
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.41232922673225403,
+        "position": [
+          -38.976234436035156,
+          140,
+          175.7294921875
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          -151.48187255859375,
+          140,
+          97.227783203125
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.4198574423789978,
+        "position": [
+          -151.708251953125,
+          140,
+          96.87418365478516
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          -175.8218994140625,
+          140,
+          -38.55725860595703
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.4231773018836975,
+        "position": [
+          -175.7307586669922,
+          140,
+          -38.97050476074219
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": [],
+      "kind": "Send",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "fov": 60,
+        "reticlePixels": [
+          407,
+          360
+        ],
+        "weapon": "M102"
+      },
+      "kind": "Profile",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          -97.2336654663086,
+          140,
+          -151.4781036376953
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.408873051404953,
+        "position": [
+          -96.88932800292969,
+          140,
+          -151.69857788085938
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          38.54887771606445,
+          140,
+          -175.82373046875
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.41542965173721313,
+        "position": [
+          38.954566955566406,
+          140,
+          -175.7342987060547
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          151.46803283691406,
+          140,
+          -97.24933624267578
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.4237336218357086,
+        "position": [
+          151.69654846191406,
+          140,
+          -96.89250183105469
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          175.8265838623047,
+          140,
+          38.5358772277832
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0.4210502505302429,
+        "position": [
+          175.7359619140625,
+          140,
+          38.947059631347656
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": [],
+      "kind": "Restored",
+      "clientSlot": 1
+    },
+    {
+      "observations": [],
+      "kind": "Restored",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "fov": 35,
+        "reticlePixels": [
+          387,
+          438
+        ],
+        "weapon": "GAU23"
+      },
+      "kind": "Profile",
+      "clientSlot": 2
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          179.90464782714844,
+          140,
+          5.8582234382629395
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 1
+    },
+    {
+      "observations": {
+        "poseErrorStuds": 0,
+        "position": [
+          179.890625,
+          140,
+          6.27384614944458
+        ]
+      },
+      "kind": "Pose",
+      "clientSlot": 2
+    },
+    {
+      "observations": [],
+      "kind": "Leave",
+      "clientSlot": 2
+    }
+  ],
+  "clientCount": 2,
+  "environment": "Studio",
+  "poseToleranceStuds": 8,
+  "suite": "P04-multiplayer",
+  "failed": 0,
+  "discovered": 6
+}

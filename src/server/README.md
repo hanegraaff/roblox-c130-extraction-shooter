@@ -4,7 +4,7 @@ Rojo maps this package to `ServerScriptService.Server`. Rules and authority stay
 
 ## Composition and character ownership
 
-`GameRuntime.start(settings)` starts one `MapService` and one `MatchRuntime`, returning `{ rounds, stop }` or `nil, reason`. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops rounds and destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
+`GameRuntime.start(settings)` starts one `MapService`, one `MatchRuntime` and one `AircraftService`, returning `{ rounds, aircraft, stop }` or `nil, reason`. Partial startup rolls back acquired owners. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops aircraft, rounds and then destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
 
 `MatchRuntime.new(map, settings)` creates an inactive adapter exposing `start()`, `stop()`, `match` and `resources()`. `automaticDeployment` defaults true; false keeps Lobby until an authoritative explicit deploy. Settings use seconds: production defaults are minimum 6, duration 600, lobby 8, deployment 15, results 5 and seed 1. `start()` rejects conflicting round/team/collision ownership or earlier character work still draining. It disables automatic respawns and owns teams, a noncolliding character group, heartbeat, player listeners and `RoundState.Surrender`. `stop()` invalidates character work, removes owned replication/teams/listeners and returns the service to Lobby. In-flight avatar loads must drain before ownership and automatic spawning policy can safely transfer. `resources()` exposes owned connection/load counts for tests.
 
@@ -33,6 +33,23 @@ Rojo maps this package to `ServerScriptService.Server`. Rules and authority stay
 | `snapshot()` | Return fresh member/result records; callers cannot mutate authority. |
 
 Batch callers submit accepted events, call `step()`, then publish. Deadline equality is too late for destruction; otherwise destruction wins a same-step mutual elimination. Cleanup adapters must not throw, yield or reenter. Current cleanup removes equipment; P08 connects actual launcher ownership/recovery.
+
+## Aircraft ownership and selection
+
+`AircraftService.start(match, clock?)` clones the versioned C-130 template to one `Workspace.Aircraft`, creates `ReplicatedStorage.AircraftState` and owns three connections. It rejects an existing aircraft/state owner or missing model/Hitbox with `nil, reason`. Production clock uses `GetServerTimeNow`; engine fixtures may inject finite monotonic seconds. `match` remains caller-owned. Calls do not yield.
+
+| API | Contract |
+| --- | --- |
+| `sample(elapsedSeconds)` | Return canonical tangent-facing CFrame from map geometry and AircraftRules. Invalid trusted time asserts. |
+| `aimAllowed(endpoint)` | Reject nonfinite/exterior/invalid-height points, then raycast actual solid Battlefield geometry from the server Hitbox. Endpoints at the first surface allow 0.5-stud tolerance. No shot or damage is created. |
+| `resources()` | Return owned live connection count for repeated-round/teardown checks. |
+| `stop()` | Idempotently disconnect all ownership, destroy aircraft/state/remote and clear request budgets. |
+
+The default 90-second orbit shares map radius/altitude, starts at phase zero and resets at deployment/Lobby. Results/Resetting freeze motion. Hitbox is the sole queryable canonical pose; named `GAU23Muzzle`/`M102Muzzle` attachments reserve server firing origins. See the [model contract](../../assets/models/README.md). No cosmetic interpolation shell, health or damage exists yet.
+
+`AircraftSelection.new()` is a server-only deterministic owner exposing `reset(roundId, force?)`, `command(userId, payload, eligible)` and copied `snapshot()` records. It owns round/revision/weapon and per-user accepted sequence. Same-ID reset is normally a no-op; forced Lobby reset restores GAU23 and clears sequences. Commands require exactly `{ roundId, sequence, weapon }`, current positive round, bounded increasing integral sequence and `GAU23`/`M102`. Expected rejection returns `false, reason` without mutation. The engine adapter derives living connected Active/unexpired operator eligibility and applies a six-token bucket refilling four/second before calling it.
+
+`AircraftState.Selection` atomically publishes JSON round/revision/weapon. Clients never choose canonical pose or origin, and profile selection creates no cooldown/ammunition state. P05 connects firing and must retain independent weapon readiness.
 
 ## MapService
 

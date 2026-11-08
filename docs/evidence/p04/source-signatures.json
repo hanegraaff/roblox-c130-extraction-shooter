@@ -1,0 +1,580 @@
+[
+  {
+    "file": "tests/studio/specs-client/Foundation.spec.luau",
+    "path": [
+      "ReplicatedStorage",
+      "ClientSpecs",
+      "Foundation.spec"
+    ],
+    "bytes": 3113,
+    "adler32": 2671950393,
+    "sha256": "5252b590c91e7d16ca543c54fa9dcb87b8891a415586e8e14402093cb35c2651"
+  },
+  {
+    "file": "src/shared/AircraftRules.luau",
+    "path": [
+      "ReplicatedStorage",
+      "Shared",
+      "AircraftRules"
+    ],
+    "bytes": 4026,
+    "adler32": 913450939,
+    "sha256": "05c37605b929237362d05c592caf385f4382a1388adc2ac7a1055614ac864c91"
+  },
+  {
+    "file": "src/shared/Config.luau",
+    "path": [
+      "ReplicatedStorage",
+      "Shared",
+      "Config"
+    ],
+    "bytes": 1713,
+    "adler32": 1168262821,
+    "sha256": "86cfa53d23b317cc943fa694e4798ca09135eec362eb64bc25f6ea201beb119d"
+  },
+  {
+    "file": "src/shared/Lifecycle.luau",
+    "path": [
+      "ReplicatedStorage",
+      "Shared",
+      "Lifecycle"
+    ],
+    "bytes": 1525,
+    "adler32": 1875695948,
+    "sha256": "98f939cf04eec21ae00498a441818733e0cb4abea7edafee72267844d01e1255"
+  },
+  {
+    "file": "src/shared/MapRules.luau",
+    "path": [
+      "ReplicatedStorage",
+      "Shared",
+      "MapRules"
+    ],
+    "bytes": 3462,
+    "adler32": 3154857652,
+    "sha256": "2b981f7336e81b2c8fa7584979b3ecf7f09e5dbf2020cf9ff266f66a56656b52"
+  },
+  {
+    "file": "src/shared/RateLimit.luau",
+    "path": [
+      "ReplicatedStorage",
+      "Shared",
+      "RateLimit"
+    ],
+    "bytes": 1791,
+    "adler32": 2725074718,
+    "sha256": "57305bbbbd840a662a5d87b7855b0c7ed9e78fbbbaf8a538d7bee50d3ca1b537"
+  },
+  {
+    "file": "src/shared/Validation.luau",
+    "path": [
+      "ReplicatedStorage",
+      "Shared",
+      "Validation"
+    ],
+    "bytes": 2404,
+    "adler32": 2363753218,
+    "sha256": "0285f008d424b9400e3a300304cafd2ecfd8d9d73d7b13687c96a2b7c6d6c59e"
+  },
+  {
+    "file": "src/server/init.server.luau",
+    "path": [
+      "ServerScriptService",
+      "Server"
+    ],
+    "bytes": 925,
+    "adler32": 3015986375,
+    "sha256": "0dd25efa3eb3f1d987d7fee90f3e17fbeb204c436f4338ba5cd3128ca144b129"
+  },
+  {
+    "file": "src/server/AircraftSelection.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "AircraftSelection"
+    ],
+    "bytes": 2965,
+    "adler32": 3612177064,
+    "sha256": "a9e0766826a0b3a63e0b9d5feb127ed0916eed188a2617d54a7b5b56081ccf71"
+  },
+  {
+    "file": "src/server/AircraftService.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "AircraftService"
+    ],
+    "bytes": 7459,
+    "adler32": 492914807,
+    "sha256": "ea2210f04ea61c08d91f78d88dc12dc91098a7461cae31040c52e219c737e094"
+  },
+  {
+    "file": "src/server/Bootstrap.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "Bootstrap"
+    ],
+    "bytes": 1691,
+    "adler32": 627254334,
+    "sha256": "c0365a5516ef6ead74739927ae92952ce3a899a926b42f1218e1a5c02220ac47"
+  },
+  {
+    "file": "src/server/CharacterOwner.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "CharacterOwner"
+    ],
+    "bytes": 7194,
+    "adler32": 3790711136,
+    "sha256": "69094419ff7bcd1ff8b6173554dc9f87b3c16dc694b1284647fedfda5ebf2f73"
+  },
+  {
+    "file": "src/server/GameRuntime.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "GameRuntime"
+    ],
+    "bytes": 2276,
+    "adler32": 1940571220,
+    "sha256": "7ce3037ae920878dee4957c907c1fddf356c556664b06d752eb725e06c746c6e"
+  },
+  {
+    "file": "src/server/MapService.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "MapService"
+    ],
+    "bytes": 9988,
+    "adler32": 1173213899,
+    "sha256": "fd743a8d48749198965ba6cc8a86afa78cf7b27a9ebcfc47dbcb1f19a262da58"
+  },
+  {
+    "file": "src/server/MatchRuntime.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "MatchRuntime"
+    ],
+    "bytes": 16257,
+    "adler32": 4222079832,
+    "sha256": "176a8623be08600537bd8b3c13e72d212a1169a504a014527a976252742f956e"
+  },
+  {
+    "file": "src/server/MatchService.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "MatchService"
+    ],
+    "bytes": 13827,
+    "adler32": 309015646,
+    "sha256": "b9238d9a57859319b729d59d461014723f9b2165aefeaf3d71ec5318e481ed3b"
+  },
+  {
+    "file": "src/server/RoleService.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "RoleService"
+    ],
+    "bytes": 2912,
+    "adler32": 3817316501,
+    "sha256": "f20f38b73f69593520ea2df3761d9085b053f61c5a66456842ebc56fd7d320c3"
+  },
+  {
+    "file": "src/server/RoundRules.luau",
+    "path": [
+      "ServerScriptService",
+      "Server",
+      "RoundRules"
+    ],
+    "bytes": 1940,
+    "adler32": 1759147692,
+    "sha256": "14407c812e16a176bf7cabde077fd9166ce031d8308178bb57206ef2083cfc45"
+  },
+  {
+    "file": "tests/studio/server/init.server.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests"
+    ],
+    "bytes": 1781,
+    "adler32": 3920849027,
+    "sha256": "b1454ca04c34b3fbaa14dd099b8b75931574f9522c1b237c44c979a24f660b88"
+  },
+  {
+    "file": "tests/studio/server/AircraftHarness.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "AircraftHarness"
+    ],
+    "bytes": 14640,
+    "adler32": 709676279,
+    "sha256": "999ed3cb793d2c907ed54bc16bab0fef5d6f673b89f31238f78dfcb924def8e6"
+  },
+  {
+    "file": "tests/studio/server/CharacterCleanup.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "CharacterCleanup"
+    ],
+    "bytes": 2825,
+    "adler32": 3017589868,
+    "sha256": "61db76ad8a500442e2b1d6a689e72638bf76454df09fc23c7be067a934fe04c0"
+  },
+  {
+    "file": "tests/studio/server/HumanTestCheck.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "HumanTestCheck"
+    ],
+    "bytes": 1033,
+    "adler32": 1299276076,
+    "sha256": "d4ec505ce8aca2a3cdd98611715d1a95426bd59263eb04e9b567d6a87bdc7671"
+  },
+  {
+    "file": "tests/studio/server/HumanTestSession.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "HumanTestSession"
+    ],
+    "bytes": 12310,
+    "adler32": 473119048,
+    "sha256": "6f6b813c7435bdee8e91c244ae2b6fb92ee7edb892afc3553dac15a6153f3a3c"
+  },
+  {
+    "file": "tests/studio/server/HumanTestSession.spec.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "HumanTestSession.spec"
+    ],
+    "bytes": 12522,
+    "adler32": 1172028865,
+    "sha256": "a9404d9188c2a21cbeeb9dabf1bd71c3e6b742c2c6ad12df9e57b9de8fcadddf"
+  },
+  {
+    "file": "tests/studio/server/LocalTestControls.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "LocalTestControls"
+    ],
+    "bytes": 6595,
+    "adler32": 2268795501,
+    "sha256": "6a8f55bfa1cab5cba688a198cf0c0459e5e75e5a759e44e7a1ec5332d4d5f3c0"
+  },
+  {
+    "file": "tests/studio/server/LocalTestControls.spec.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "LocalTestControls.spec"
+    ],
+    "bytes": 4026,
+    "adler32": 3929335739,
+    "sha256": "6d7b673da4d24b2f471794dd8d86f626ee72e6118cf36469ad2dc54c17f63fe5"
+  },
+  {
+    "file": "tests/studio/server/LocalTestControlsCheck.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "LocalTestControlsCheck"
+    ],
+    "bytes": 1053,
+    "adler32": 485517591,
+    "sha256": "2fd6cab070cf3d5b877b70f2c97d55602b4cd3f0ad09217fc1eefc6e4d339246"
+  },
+  {
+    "file": "tests/studio/server/RoundHarness.luau",
+    "path": [
+      "ServerScriptService",
+      "ServerTests",
+      "RoundHarness"
+    ],
+    "bytes": 19001,
+    "adler32": 1910351891,
+    "sha256": "ec8c2c961b68a00f04c5e3b27a91a0009d15af438edb8ec821c4299bb59be427"
+  },
+  {
+    "file": "tests/fixtures/DevelopmentSettings.luau",
+    "path": [
+      "ServerStorage",
+      "DevelopmentSettings"
+    ],
+    "bytes": 148,
+    "adler32": 2025010491,
+    "sha256": "2179ebc6da84d661a82e7d2d5ad58c172cd5a3a20e833b292e3a4192a9ab0eed"
+  },
+  {
+    "file": "tests/fixtures/DevelopmentSettings.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Fixtures",
+      "DevelopmentSettings"
+    ],
+    "bytes": 148,
+    "adler32": 2025010491,
+    "sha256": "2179ebc6da84d661a82e7d2d5ad58c172cd5a3a20e833b292e3a4192a9ab0eed"
+  },
+  {
+    "file": "tests/integration/AircraftSelection.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Integration",
+      "AircraftSelection.spec"
+    ],
+    "bytes": 5196,
+    "adler32": 187423747,
+    "sha256": "4236b0dc2bcf7b295670c449bc25b46bfd9b014d01af9920e697c24b223ff395"
+  },
+  {
+    "file": "tests/integration/Lifecycle.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Integration",
+      "Lifecycle.spec"
+    ],
+    "bytes": 2197,
+    "adler32": 2932232254,
+    "sha256": "e2b73b19e6545267931fa4e11cb7dd5aae815bb91185a8386d0742b93b530e9b"
+  },
+  {
+    "file": "tests/integration/MatchService.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Integration",
+      "MatchService.spec"
+    ],
+    "bytes": 13509,
+    "adler32": 1557061984,
+    "sha256": "906c5a1b9ed1d6430ea49d02acc3d6927f42554c217c9a73225980359153e7c8"
+  },
+  {
+    "file": "tests/studio/specs-server/Aircraft.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Studio",
+      "Aircraft.spec"
+    ],
+    "bytes": 5693,
+    "adler32": 3139713539,
+    "sha256": "3fa0c8a9959df9091423d18a9182e7650323cda5643ccef3d2b2f84162d58a7b"
+  },
+  {
+    "file": "tests/studio/specs-server/Foundation.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Studio",
+      "Foundation.spec"
+    ],
+    "bytes": 3217,
+    "adler32": 2511080255,
+    "sha256": "ce6be324947c968767d66b0594a66a740fbaf4e98b241629c07521e50f2ee08c"
+  },
+  {
+    "file": "tests/studio/specs-server/Map.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Studio",
+      "Map.spec"
+    ],
+    "bytes": 11956,
+    "adler32": 2284177525,
+    "sha256": "ba7482b1fb4c27e90a041ddd6ddfedde6d0e26034b34e4742d0661965a59fdab"
+  },
+  {
+    "file": "tests/unit/AircraftRules.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "AircraftRules.spec"
+    ],
+    "bytes": 5825,
+    "adler32": 1896777760,
+    "sha256": "f5c0c760670c1474aedcef5250d187a6a3532ededbe43acf91dfa3c751e7f3d9"
+  },
+  {
+    "file": "tests/unit/Config.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "Config.spec"
+    ],
+    "bytes": 2447,
+    "adler32": 2875192124,
+    "sha256": "0f243a1e8340048306741c759760c3a9f4cecad36562249309a274c962990e7c"
+  },
+  {
+    "file": "tests/unit/MapRules.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "MapRules.spec"
+    ],
+    "bytes": 4606,
+    "adler32": 1783836541,
+    "sha256": "0c4fa46c99d7b9d5088d4f11216c1e8339676344a14dfd32d692621ab3610f1f"
+  },
+  {
+    "file": "tests/unit/RateLimit.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "RateLimit.spec"
+    ],
+    "bytes": 2299,
+    "adler32": 4276927665,
+    "sha256": "34979b2e676b93a87eb2d337451f5134a765cc73e2ee61e301b681dc31dac846"
+  },
+  {
+    "file": "tests/unit/RoleService.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "RoleService.spec"
+    ],
+    "bytes": 3727,
+    "adler32": 507208003,
+    "sha256": "1563927c44e8c1cfa5ca0b93018d2a8a887807aebc30db7fa8951ec13399a1f5"
+  },
+  {
+    "file": "tests/unit/RoundRules.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "RoundRules.spec"
+    ],
+    "bytes": 2936,
+    "adler32": 820794794,
+    "sha256": "9afed5dfbf404da051611fea2843c6678c29877010cfd8efec24e26d30917b3c"
+  },
+  {
+    "file": "tests/unit/Validation.spec.luau",
+    "path": [
+      "ServerStorage",
+      "Tests",
+      "Unit",
+      "Validation.spec"
+    ],
+    "bytes": 3073,
+    "adler32": 1187349944,
+    "sha256": "7344d2d7548b88e80935c5098d99f30eb4719b8ca2c85d67be3cacf3cc77763e"
+  },
+  {
+    "file": "src/client/init.client.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "Client"
+    ],
+    "bytes": 1708,
+    "adler32": 2205829339,
+    "sha256": "5e25644df2a9238d894421e6138b8e16686fbb8741b53a7c08b5ab18a9c18bbc"
+  },
+  {
+    "file": "src/client/RoundPanel.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "Client",
+      "RoundPanel"
+    ],
+    "bytes": 8295,
+    "adler32": 2319567507,
+    "sha256": "ea6f417e68268e7908141184c08f65a3f50c9134a23571e3311108caf2ee3622"
+  },
+  {
+    "file": "src/client/StatusPanel.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "Client",
+      "StatusPanel"
+    ],
+    "bytes": 2031,
+    "adler32": 801466101,
+    "sha256": "93a16d1cfb403876618dd59db82152e292739977d58c289948bd00ef54ead619"
+  },
+  {
+    "file": "src/client/ThermalCameraController.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "Client",
+      "ThermalCameraController"
+    ],
+    "bytes": 12890,
+    "adler32": 3460224043,
+    "sha256": "5797ee829028cc633af04a7cfafa1d10e7a6c71cb2b661448f5859d5cec75213"
+  },
+  {
+    "file": "tests/studio/client/init.client.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "ClientTests"
+    ],
+    "bytes": 1446,
+    "adler32": 2447243398,
+    "sha256": "0d87cc9ad5fb1ebb196c29371fca9b6bec2f83c1b570604bc9e47985a61bbab3"
+  },
+  {
+    "file": "tests/studio/client/AircraftHarness.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "ClientTests",
+      "AircraftHarness"
+    ],
+    "bytes": 12945,
+    "adler32": 4196031034,
+    "sha256": "4f38505be5022c8814234404468ad46a6cba034e1f1d25427fed8b38e49859ce"
+  },
+  {
+    "file": "tests/studio/client/HumanTestPanel.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "ClientTests",
+      "HumanTestPanel"
+    ],
+    "bytes": 6129,
+    "adler32": 2693660380,
+    "sha256": "e8da985455271e5abde54fcc2a475a5b73154c155fba609a814376093ffa3123"
+  },
+  {
+    "file": "tests/studio/client/RoundHarness.luau",
+    "path": [
+      "StarterPlayer",
+      "StarterPlayerScripts",
+      "ClientTests",
+      "RoundHarness"
+    ],
+    "bytes": 5892,
+    "adler32": 211590150,
+    "sha256": "3ab60fac76b82844686e8bdcb6ebfe9bc1222e03e085113bb4b247b0e0a145b0"
+  }
+]

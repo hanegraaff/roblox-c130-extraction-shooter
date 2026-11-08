@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-The current local place contains the circular greybox and a round prototype with lobby/ground/operator assignment, explicit character lives, surrender, teammate spectating, timed results and map reset. The operator uses a protected placeholder station; aircraft, combat and launcher gameplay remain planned. [P03](../plans/03-rounds-and-roles.md) records round verification and [P02](../plans/02-warzone-map.md) records prior map acceptance.
+The current P04 candidate contains the circular greybox, a server-owned perimeter aircraft, inward thermal view and named weapon-linked zoom, alongside lobby/round assignment, explicit character lives, surrender, teammate spectating, timed results and map reset. Firing, aircraft health/damage and launcher gameplay remain planned. Select `plan/04-aircraft-and-thermal` to review this increment until its PR merges; `main` supplies the integrated P03/human-testing source. The [root setup guide](../README.md#set-up-locally) gives branch/build commands. [P04](../plans/04-aircraft-and-thermal.md), [P03](../plans/03-rounds-and-roles.md) and [P02](../plans/02-warzone-map.md) record their separate verification scopes.
 
 Prerequisites are Git, Python 3.10 or newer, system `curl`, and network access to GitHub tool releases and the Wally registry/CDN. The setup script supports macOS and Linux on arm64/aarch64 and x86_64. Roblox Studio itself runs on supported Mac/Windows computers; the repository’s automated setup does not currently support Windows.
 
@@ -26,7 +26,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs formatting, lint, strict type analysis, 24 deterministic unit and 14 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development round prototype) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs formatting, lint, strict type analysis, 30 deterministic unit and 18 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development aircraft/round prototype) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -87,13 +87,13 @@ See the official [Rojo live-sync workflow](https://rojo.space/docs/v7/getting-st
 
 The development mapping labels its panel **Development** and starts the production round runtime with a six-player minimum and 600-second rounds. A solo Play session waits at the protected lobby. The test mapping labels it **Test** and starts server/client TestEZ runners automatically. After the foundation/map suites finish, its server runner starts a two-player-minimum runtime with human controls (default next round: 60 seconds). One client automatically previews the map; multiplayer tests start explicitly through the test panel. Use Studio **Server & Clients** with two clients to play both roles or three to test teammate spectating. This override and every test helper are absent from the release mapping.
 
-Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites) and [three-round harness](testing.md#run-the-p03-multiplayer-harness) to collect actual reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
+Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites), [aircraft harness](testing.md#run-the-p04-aircraft-harness) and [three-round harness](testing.md#run-the-p03-multiplayer-harness) to collect actual reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
 
 Source files drive managed scripts. Studio-built models/world changes must be exported into `assets/` and entered in the manifest, then rebuilt from a clean checkout. Stop simulation before authoring/exporting. Do not preserve transient playtest objects as authored assets.
 
 ## Author and validate the battlefield
 
-[`Battlefield.model.json`](../assets/world/Battlefield.model.json) owns `Workspace.World.Battlefield`; [`MapRules`](../src/shared/MapRules.luau) owns its shared circle/orbit settings. The defaults are center/focus `(0, 0, 0)`, radius 180 studs, aircraft altitude 140 studs above ground, and recovery threshold Y = −30 studs. No aircraft is instantiated yet. Update geometry and settings together: startup rejects a disk whose pose or radius differs from the configured circle.
+[`Battlefield.model.json`](../assets/world/Battlefield.model.json) owns `Workspace.World.Battlefield`; [`MapRules`](../src/shared/MapRules.luau) owns its shared circle/orbit settings. The defaults are center/focus `(0, 0, 0)`, radius 180 studs, aircraft altitude 140 studs above ground, and recovery threshold Y = −30 studs. The server instantiates one anchored aircraft from the versioned C-130 template and flies it around this matching perimeter. Update geometry and settings together: startup rejects a disk whose pose or radius differs from the configured circle.
 
 [`MapService`](../src/server/MapService.luau) validates unique descendant names, `Ground01`–`Ground09`, one `Launcher` anchor, lobby/operator anchors, solid cover, clearance and floor support. Ground/launcher anchor centers are three studs above ground. Startup keeps a private pristine snapshot and connects server Heartbeat containment; `rebuild()` replaces the map subtree from that snapshot. Runtime cover receives `CoverId` and `CoverKind` attributes. These labels reserve future destruction behavior and do not make cover destructible.
 
@@ -102,6 +102,14 @@ Source files drive managed scripts. Studio-built models/world changes must be ex
 For `.model.json` authoring, encode every part pose as a twelve-component `CFrame` (X/Y/Z translation, then the nine rotation-matrix components in row order). Never use `Position` or `Orientation` aliases: generated XML may retain them even though Studio ignores them on load. See the [asset authoring rules and example](../assets/README.md). The artifact inspector checks all authored parts in both builds against canonical transforms, positive dimensions, shape and collision/query/touch flags, with intentional corruption probes proving rejection. A successful or repeatable build still needs Studio loaded-transform assertions and world tests.
 
 Keep both painted routes and the launcher marker clear. The Studio suite samples a 4×6×4-stud upright avatar envelope every 0.5 stud, checks floor support, rays from nine protected anchors to eight perimeter phases, and two exact rebuilds. Run it in the separate test place using the [testing procedure](testing.md#run-the-studio-smoke-suites), then walk both routes and review the boundary and sight lines. Passing host tests or exporting geometry does not establish those engine/playability results.
+
+## Aircraft model and view contracts
+
+[`C130.model.json`](../assets/models/C130.model.json) is the original primitive server-only template. `AircraftService` clones it to `Workspace.Aircraft`; `Hitbox` is its PrimaryPart, pivot and sole queryable gameplay volume. The model faces its travel tangent, while the camera at that canonical position independently faces ground-level map center. `GAU23Muzzle` and `M102Muzzle` are Hitbox attachments reserved for later server-derived firing origins. Decorative parts are anchored, noncolliding, nonqueryable and nontouching. There is no client smoothing shell or second hitbox.
+
+Defaults are a 90-second orbit, 35° GAU23 FOV and 60° M102 FOV, with reticle coordinates limited to 15–85% of each viewport dimension. The server owns profile selection; its acknowledged atomic `AircraftState.Selection` string supplies round/revision/weapon together. The client updates the weapon name, FOV and reticle projection from that acknowledgement. No fire remote exists yet. `AircraftService.aimAllowed()` is a server-only disk/height/solid-sight-line seam for later combat, not a damage path.
+
+`RoundPanel` yields camera ownership to `ThermalCameraController` for an active living operator or labelled test-only solo Operator preview. Ground/spectator/lobby cameras remain round-owned. Role loss removes thermal HUD, post-processing, highlights and role input listeners, restoring captured FOV/mouse state. Normal round reset returns the aircraft epoch and selection to their initial state. See [package contracts](../src/client/README.md) and the [P04 testing procedure](testing.md#run-the-p04-aircraft-harness).
 
 ## Implement the next capability
 
@@ -135,4 +143,4 @@ Player data is not stored in Git. The MVP has no persistent inventory/progressio
 
 ### One-client map exploration
 
-For solo inspection, use the test mapping on port 34872 and ordinary **Play** in the existing document. After foundational suites, the single client automatically previews the map with normal walking. Production still waits for six players; the isolated test preview does not start a competitive round. Use the root README's [human testing instructions](../README.md#run-local-automated-tests) for the in-game role/duration/start/reset/preview panel. No Command Bar workflow is required.
+For solo inspection, use the test mapping on port 34872 and ordinary **Play** in the existing document. After foundational suites, the single client automatically previews the map with normal walking; choosing Operator in the test panel enters the thermal view and allows cosmetic profile switching. Production still waits for six players; the isolated test preview does not start a competitive round. Use the root README's [human testing instructions](../README.md#run-local-automated-tests) for the in-game role/duration/start/reset/preview panel. No Command Bar workflow is required.
