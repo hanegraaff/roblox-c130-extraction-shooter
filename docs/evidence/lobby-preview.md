@@ -1,6 +1,6 @@
 # Lobby movement and human test controls
 
-2026-11-08. User-directed follow-up to P03 on `fix/human-test-controls`, based on the unmerged P03 source `038684c`. The user requested lobby walking, solo exploration and convenient role/settings controls for human testing. This task does not implement P04 or change roadmap status.
+2026-11-08. User-directed follow-up to P03 on `fix/human-test-controls`, based on the then-unmerged P03 source `038684c`. The user requested lobby walking, solo exploration and convenient role/settings controls for human testing. This task does not implement P04 or change roadmap status.
 
 ## Implemented behavior
 
@@ -36,4 +36,4 @@ Operator preview is the current protected avatar station; aircraft/thermal targe
 
 ## GitHub delivery
 
-Source, documentation, verified capture and bounded evidence are pushed in `bbe2c9485df7113aed38ae31317bb44af4ffa911` on `origin/fix/human-test-controls`. [PR #7](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/7) is open and unmerged, stacked on the still-unmerged P03 branch because that source is required. [GitHub Verify run 42523454928](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42523454928) passes on that pushed candidate. Final link records are documentation-only and pass the repository checker/diff check. No merge or Roblox publication occurred.
+Source, documentation, verified capture and bounded evidence are pushed in `bbe2c9485df7113aed38ae31317bb44af4ffa911` on `origin/fix/human-test-controls`. [PR #7](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/7) was initially stacked on P03. After P03 PR #6 merged at `031c7dc`, PR #7 was retargeted to `main` and merged with user authorization at `6cf0f1ee29e4c122f2d7d68164a2d93ff2408238` on 2026-11-08. [GitHub Verify run 42523454928](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42523454928) passes on that pushed candidate. Final link records are documentation-only and pass the repository checker/diff check. [Post-merge verification](p03-integration.md) confirms identical tested content and passing integrated host gates. No Roblox publication occurred.
