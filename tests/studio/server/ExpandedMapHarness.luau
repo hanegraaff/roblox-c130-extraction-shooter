@@ -10,6 +10,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StudioTestService = game:GetService("StudioTestService")
 local GameRuntime = require(game.ServerScriptService.Server.GameRuntime)
 local Harness = {}
+local HttpService = game:GetService("HttpService")
 type Case = { name: string, passed: boolean, detail: string? }
 local function awaitCondition(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 20)
@@ -18,18 +19,63 @@ local function awaitCondition(predicate: () -> boolean, label: string, seconds: 
     end
     assert(predicate(), "P13 timeout: " .. label)
 end
+-- Clients compare numeric components with a 0.001-stud/component tolerance,
+-- without rounded-string boundaries. Sorted names keep observations reviewable.
+local function observationsJSON(): string
+    local values: {
+        {
+            name: string,
+            className: string,
+            shape: string,
+            pose: { number },
+            size: { number },
+            anchored: boolean,
+            collide: boolean,
+            query: boolean,
+            touch: boolean,
+        }
+    } =
+        {}
+    for _, item in workspace.World.Battlefield:GetDescendants() do
+        if item:IsA("BasePart") then
+            table.insert(values, {
+                name = item.Name,
+                className = item.ClassName,
+                shape = if item:IsA("Part") then item.Shape.Name else item.ClassName,
+                pose = { item.CFrame:GetComponents() },
+                size = { item.Size.X, item.Size.Y, item.Size.Z },
+                anchored = item.Anchored,
+                collide = item.CanCollide,
+                query = item.CanQuery,
+                touch = item.CanTouch,
+            })
+        end
+    end
+    table.sort(values, function(first, second)
+        return first.name < second.name
+    end)
+    return HttpService:JSONEncode(values)
+end
+
+-- Same-server reset equality has no network float conversion. Explicitly ordered
+-- fields avoid relying on JSON object-key serialization order for exact comparisons.
 local function signature(): string
     local values: { string } = {}
     for _, item in workspace.World.Battlefield:GetDescendants() do
         if item:IsA("BasePart") then
-            local components: { string } = { item.Name }
-            for _, value in { item.CFrame:GetComponents() } do
-                table.insert(components, string.format("%.3f", value))
-            end
-            for _, value in { item.Size.X, item.Size.Y, item.Size.Z } do
-                table.insert(components, string.format("%.3f", value))
-            end
-            table.insert(values, table.concat(components, ":"))
+            table.insert(
+                values,
+                table.concat({
+                    item.Name,
+                    item.ClassName,
+                    tostring(item.CFrame),
+                    tostring(item.Size),
+                    tostring(item.Anchored),
+                    tostring(item.CanCollide),
+                    tostring(item.CanQuery),
+                    tostring(item.CanTouch),
+                }, ":")
+            )
         end
     end
     table.sort(values)
@@ -82,7 +128,7 @@ function Harness.run()
             serial += 1
             local token = serial
             replies[token] = {}
-            remote:FireClient(player, token, signature())
+            remote:FireClient(player, token, observationsJSON())
             awaitCondition(function()
                 return replies[token][player] ~= nil
             end, "replicated world", 16)
