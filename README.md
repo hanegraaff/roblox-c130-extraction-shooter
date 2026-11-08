@@ -35,15 +35,13 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The expanded terrain/building candidate, including the merged building surface-flicker fix, is on `plan/13-terrain-and-buildings`; `main` still contains the smaller map while P13 acceptance is open. After a fresh clone, select the candidate before building:
+The expanded terrain/building source and building surface-flicker fix are integrated on `main`. P13 engine acceptance still has open checks recorded in its plan. Select and update the integrated source before building:
 
 ```sh
 git fetch origin
-git switch --track origin/plan/13-terrain-and-buildings
-git pull --ff-only origin plan/13-terrain-and-buildings
+git switch main
+git pull --ff-only origin main
 ```
-
-If that local branch already exists, use `git switch plan/13-terrain-and-buildings` instead of creating it again. To inspect the integrated prototype, select and update `main`.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 

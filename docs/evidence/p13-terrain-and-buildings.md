@@ -111,3 +111,7 @@ P13 is not Complete; P14 has not started. No merge or Roblox publication occurre
 ## Subsequent building-flicker integration
 
 PR #13 merged into the P13 candidate at `4d329a0c28e33a709321755b89a7a46af2d362b3` with user authorization. [The integration record](building-flicker.md#merge-and-integration--2026-11-08) preserves reviewed-tree equality, fresh host verification and unchanged engine-source coverage. The original `b78abbab64fb` artifact above is historical; current prepared fresh-load artifact is `build/p13-tests-0a374bff6bb1.rbxlx`, SHA-256 `0a374bff6bb144ef5049ec708449ebac4b7f79417c728daa37e01bdc214c6780`. P13's required open checks remain unresolved; this merge does not make P13 Complete.
+
+## Source integration on main
+
+With explicit user authorization, PR #12 merged into `main` at `19b70082b69f00f3901359403f39ba51b67a0506`. Its full tree equals checked head `2e3e4d5`; a fresh main full host gate passes 33 unit / 18 integration, all 351 transforms per artifact and 7,146 surface-pair checks. [Main integration evidence](p13-integration.md) records source/build identities and unchanged-source engine-evidence limits. This supersedes the earlier draft/branch-selection state, not the recorded failed or unavailable acceptance checks. P13 is integrated but not Complete; P14 remains unimplemented.

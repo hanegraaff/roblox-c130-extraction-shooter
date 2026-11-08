@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-08",
+  "pullRequest": 12,
+  "mergeCommit": "19b70082b69f00f3901359403f39ba51b67a0506",
+  "reviewedHead": "2e3e4d55a8b0e480ae08f637f261a7f3236e777b",
+  "integratedAndReviewedTree": "e659c9073870975a9d148a19fbd047c8927bb7b3",
+  "headAndMergeContentIdentical": true,
+  "sourceVerifyRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42536588227",
+  "hostGate": {
+    "command": "python3 scripts/verify.py > build/p13-main-integrated-verify.txt 2>&1",
+    "exitCode": 0,
+    "unit": 33,
+    "integration": 18,
+    "authoredPartsPerArtifact": 351,
+    "buildingPanels": 111,
+    "buildingSurfacePairs": 7146
+  },
+  "newStudioRun": false,
+  "acceptance": "Required P13 engine checks remain open; source integration is not plan completion.",
+  "builds": {
+    "game": {
+      "sha256": "ec90c71046a1f9a7434b00848792100a58edc58931ec320c9949009d69372c14",
+      "bytes": 562499,
+      "matchesPreviouslyCheckedBuild": true
+    },
+    "tests": {
+      "sha256": "0a374bff6bb144ef5049ec708449ebac4b7f79417c728daa37e01bdc214c6780",
+      "bytes": 835077,
+      "matchesPreviouslyCheckedBuild": true
+    }
+  }
+}
