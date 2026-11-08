@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-08",
+  "platform": "macOS arm64",
+  "studioVersion": "0.746.0.7461269",
+  "rojoVersion": "7.7.1",
+  "studioId": "21f6fc11-4429-4148-9764-89a36987e5e9",
+  "studioPid": 73836,
+  "initialLaunch": {
+    "beforePids": [],
+    "afterPids": [
+      73836
+    ],
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "mode": "Edit",
+    "pluginLoadedInEdit": true
+  },
+  "launcherGuards": [
+    {
+      "target": "build/p02-tests-5c809beff70b.rbxlx",
+      "exitCode": 2,
+      "studioPidsUnchanged": true,
+      "message": "Studio is already running (PIDs [73836]); no launch attempted. Reuse its MCP studio_id and Rojo sync."
+    },
+    {
+      "target": "README.md",
+      "exitCode": 1,
+      "studioPidsUnchanged": true,
+      "message": "Studio launch refused or failed: Choose an existing .rbxl or .rbxlx place file"
+    },
+    {
+      "target": "build/nonexistent-session-test.rbxlx",
+      "exitCode": 1,
+      "studioPidsUnchanged": true,
+      "message": "Studio launch refused or failed: [Errno 2] No such file or directory: 'build/nonexistent-session-test.rbxlx'"
+    }
+  ],
+  "liveSync": {
+    "editObserved": true,
+    "editMethod": "apply_patch",
+    "probeBytes": 3501,
+    "probeAdler32": 3332136112,
+    "restoredBytes": 3462,
+    "restoredAdler32": 3154857652,
+    "restoredSourceSha256": "2b981f7336e81b2c8fa7584979b3ecf7f09e5dbf2020cf9ff266f66a56656b52",
+    "sameStudioId": true,
+    "newStudioProcesses": 0
+  },
+  "postSyncPlay": {
+    "server": {
+      "discovered": 23,
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "client": {
+      "discovered": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "actualClients": 1,
+    "newStudioProcesses": 0,
+    "finalMode": "Edit"
+  },
+  "localServer": {
+    "address": "127.0.0.1",
+    "port": 34872,
+    "project": "PlayersVsC130Tests"
+  },
+  "publication": false
+}

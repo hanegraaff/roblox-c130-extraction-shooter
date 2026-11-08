@@ -32,7 +32,7 @@ See the [development guide](docs/development.md) for prerequisites and source sy
 5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. The current map has passed these suites locally; rerun them for your generated build.
 6. Stop and restart the test place to confirm the suites pass again and the panel is not duplicated. Click **Stop** when finished.
 
-After source changes, stop Play, rerun `python3 scripts/verify.py`, and reopen the generated builds. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. The server suites include map clearance, cover raycasts, boundary correction and two map rebuilds. Aircraft and combat arrive in later plans.
+After source changes, stop Play, rerun `python3 scripts/verify.py`, and use [Rojo live sync](docs/development.md#sync-this-repository-with-studio) to update the same local document before a fresh Play session. Open a newly generated artifact separately when checking file-load reconstruction. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. The server suites include map clearance, cover raycasts, boundary correction and two map rebuilds. Aircraft and combat arrive in later plans.
 
 ## Planned roles
 

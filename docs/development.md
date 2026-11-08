@@ -55,13 +55,35 @@ Signing in gives Studio the account context; the MCP connection is to a local op
 
 ## Sync this repository with Studio
 
-For iterative source synchronization, install the matching official Rojo plugin and open a disposable local development place. After setup, add Rokit’s tools to PATH as above, then run:
+For iterative source synchronization, keep one local development document and one separate local test document. Use Rojo live sync to update their managed content rather than opening a new hash-named build after each edit. Install the plugin from the pinned CLI once:
 
 ```sh
-rojo serve default.project.json
+rojo plugin install
 ```
 
-Connect the Studio Rojo plugin to the local server. Verify the target place before syncing. For engine tests, use a separate test place and `rojo serve test.project.json`; never publish that test place as the game.
+After setup, add Rokit’s tools to PATH as above. For the local test document, start:
+
+```sh
+rojo serve test.project.json --address 127.0.0.1 --port 34872
+```
+
+Stop Play in the intended local test document. Open **Plugins → Rojo**, connect to `localhost:34872`, and verify the project is **PlayersVsC130Tests** before applying its mapping. For a development document instead, serve `default.project.json` on a different explicit port, such as `34873`. Keep test and development connections separate; never connect the test mapping to the cloud/release place. On first plugin installation, save work and restart Studio if the toolbar button is missing in Edit mode or appears only during Play. Load the plugin in Edit before connecting.
+
+If Connect reports **Http requests can only be executed by game server**, inspect the Studio mode first. A Play session with the Client view focused can produce this error. Stop Play, confirm the Edit DataModel is available, then reconnect; do not open another Studio instance to work around it.
+
+For subsequent edits, keep the same confirmed MCP `studio_id`, edit repository source, let Rojo sync, inspect the expected source/world change through MCP, and start a fresh Play session. Stop Play before syncing the next candidate. A document's old hash-bearing filename does not prove which source it now contains: record the actual synced source commit, project and observed engine state. If a criterion specifically requires loading a generated place artifact, do that as a deliberate separate file-load check.
+
+For the first launch with Studio fully closed on macOS, use the guarded helper:
+
+```sh
+python3 scripts/launch_studio.py build/tests.rbxlx
+```
+
+It validates the file, serializes concurrent launch attempts and uses the documented Studio `--task EditFile --localPlaceFile` arguments. If any Studio process is already running, it exits with status 2 and performs no launch. Resolve an existing/blocked session through MCP instead of retrying the launcher. Logs stay in ignored `build/studio-launch.log`.
+
+On this Mac, even an Open Documents request addressed to an existing Studio PID created another Studio process. The earlier `open -a RobloxStudio <file>` commands were OS launches, not MCP file-open calls; the current MCP toolset has no local-place opener. Do not repeat these commands when refreshing an existing project or when a new unnamed instance reports **Place is not open**. Reuse the connected document with Rojo. If a genuinely new local document is required, make one deliberate open attempt, inspect it through MCP, and resolve any blocked launch before trying again. Preserve unsaved work and leave closing extra Studio windows to their owner.
+
+See the official [Rojo live-sync workflow](https://rojo.space/docs/v7/getting-started/new-game/#live-syncing-into-studio) and [plugin installation](https://rojo.space/docs/v7/getting-started/installation/#installing-the-plugin).
 
 The development mapping labels its panel **Development**. The test mapping labels it **Test** and starts the server/client TestEZ runners automatically during Play. Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites) and inspect both reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
 
