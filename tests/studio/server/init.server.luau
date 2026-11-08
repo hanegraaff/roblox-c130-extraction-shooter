@@ -32,3 +32,5 @@ assert(
     count > 0 and report.failed == 0 and report.skipped == 0 and report.errors == 0,
     "server suite failed or empty"
 )
+-- Explicit ownership avoids round map rebuilds racing the foundational map suites.
+require(script.RoundHarness).run()

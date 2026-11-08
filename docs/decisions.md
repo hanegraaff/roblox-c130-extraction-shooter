@@ -1,6 +1,6 @@
 # Decisions, defaults, and open release details
 
-Updated 2026-11-08 for the greybox map defaults, following the user's players-versus-C-130 revision and confirmation that M-7 fire damages the plane. “Selected” records user choices; “Default” records concrete initial implementation/tuning choices that can be revised. Stable IDs are retained; superseded choices are described in the change record below.
+Updated 2026-11-08 for the round prototype and greybox defaults, following the user's players-versus-C-130 revision and confirmation that M-7 fire damages the plane. “Selected” records user choices; “Default” records concrete initial implementation/tuning choices that can be revised. Stable IDs are retained; superseded choices are described in the change record below.
 
 | ID | State | Decision and reason | Revisit when |
 | --- | --- | --- | --- |
@@ -16,7 +16,7 @@ Updated 2026-11-08 for the greybox map defaults, following the user's players-ve
 | D10 | Default | Git-first Luau/Rojo, strict readable code, automated tests separate from release place | Tooling evidence warrants change |
 | D11 | Default | Streaming disabled for bounded circular map so airborne and ground views remain complete | Measured performance needs streaming and its additional tests |
 | D12 | Default | Deadline wins at exact expiry; otherwise plane destruction wins a same-step mutual kill | Product feedback changes tie handling |
-| D13 | Default | Seeded fair operator rotation; late joins/rejoins wait for next round | Party/preference systems are added |
+| D13 | Default | Operator rotation prefers the most completed rounds waited, excludes the previous operator when alternatives exist and uses a seeded tie-break over sorted UserIds; late joins/rejoins cannot restore an active life | Party/preference systems are added |
 | D14 | Default | No friendly fire; direct-fire rockets without homing; stylized non-graphic effects | User changes combat tone |
 | D15 | Selected / default mapping | Switching aircraft weapons changes zoom; default 30mm is tighter than 105mm, no independent zoom control | Playtests tune FOVs or user changes mapping |
 | D16 | Default | One fixed reachable launcher anchor; single carrier; drop/recover on death or disconnect; relocate invalid drops | Playtests change placement/transfer rules |
@@ -24,6 +24,8 @@ Updated 2026-11-08 for the greybox map defaults, following the user's players-ve
 | D18 | Default | Ten-minute round; exact rifle damage, cadence, reload, FOV and orbit speed are tunable | Multiplayer tests justify tuning |
 | D19 | Default | Operator disconnect is ground win by forfeit; invalid/empty match aborts | Product changes disconnect policy |
 | D20 | Default | Greybox center/focus (0,0,0), radius 180 studs, altitude 140 studs above ground, recovery threshold Y = −30; sheltered southern anchors and two painted center approaches | Required Studio clearance/sight-line review or later balance tests justify changes |
+| D21 | Default | Production lobby waits eight seconds before attempting deployment, deployment has a fifteen-second readiness limit, and results last five seconds; the test mapping uses separate accelerated settings | Multiplayer review warrants timing changes |
+| D22 | Default | Basic spectators follow the lowest-UserId living ground teammate automatically; use a fixed map overview if no target exists. Ground surrender is an explicit on-screen action | P10 improves spectator controls and feedback |
 
 Aircraft health is derived as three times direct rocket damage. Rifle damage is positive and small; previous rifle hits may reduce the further rockets needed. First and second rockets alone do not destroy a pristine plane. These are hard test invariants, not tuning defaults. Each C-130 weapon retains its independent cooldown/reload across switching.
 

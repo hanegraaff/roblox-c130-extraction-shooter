@@ -28,7 +28,7 @@ function StatusPanel.new(playerGui: PlayerGui, status: Instance): Lifecycle.Cont
             label.Parent = gui
             local function update()
                 label.Text = string.format(
-                    "Players vs C-130 • %s\nBootstrap %s • Development shell\nCombat and rounds are planned.",
+                    "Players vs C-130 • %s\nBootstrap %s • Round prototype\nAircraft, weapons and combat are planned.",
                     tostring(status:GetAttribute("Environment")),
                     if status:GetAttribute("Running") then "running" else "stopped"
                 )

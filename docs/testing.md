@@ -2,7 +2,7 @@
 
 ## Current host checks
 
-Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation and current map source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
+Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map and round source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
 
 | Gate | Command used by the verifier |
 | --- | --- |
@@ -18,7 +18,7 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites exercise finite numbers, flat bounded payloads, configuration, injected-time rate limits and the pure map/orbit contract (14 cases across four spec modules). Integration tests exercise the real lifecycle controller with controlled resource adapters (two cases). They load the production modules, not copies of their rules.
+The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites have 24 cases across six modules: finite/payload/config/rate checks, map/orbit rules, roster boundaries/seeded rotation and phase/outcome policy. The 14 integration cases exercise the real lifecycle controller and `MatchService` with controlled time and life-cleanup adapters. Server-only role/round modules load from `src/server`, without replicating authoritative code to make it testable. The suites load production modules, not copies of their rules.
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
@@ -30,7 +30,7 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
 
 1. Build with the full verifier. Open `build/tests.rbxlx` as a separate local Studio document, or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
 2. Through Studio MCP, list connected instances, select the intended test document and inspect its state. Consult the connected server’s relevant skill guidance. Confirm that `ServerScriptService.ServerTests`, `StarterPlayer.StarterPlayerScripts.ClientTests`, `ReplicatedStorage.TestPackages` and `ServerStorage.DevelopmentSettings` belong to the test mapping.
-3. Start **Play** with one actual client for the foundation and P02 map suites. The mapped server and client runners execute TestEZ automatically. The server requires a player within ten seconds. Startup waits in the smoke specs are bounded; a missing report or timeout is a failure requiring investigation.
+3. Start **Play** with one actual client for the foundational TestEZ suites. The mapped server and client runners execute automatically. The server requires a player within ten seconds. Startup waits are bounded; a missing report or timeout is a failure requiring investigation. The round runtime starts only after the server suites pass, avoiding map rebuild/character races. Solo Play then waits for the test minimum of two players.
 4. Read both structured JSON reports and the Studio Output log. In the **server** context:
 
    ```luau
@@ -43,11 +43,11 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The current candidate has 23 server cases and two client cases. Both suites have passed in local one-client Studio acceptance; consult the [P02 record](../plans/02-warzone-map.md) for tested source, repeated runs, environment and limits. For each new run, confirm those totals and collect fresh reports. Each report must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Report fields also include `suite`, `environment = "Studio"` and deterministic fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. The aggregate suite labels remain `P01-server` and `P01-client`; the server runner discovers both Foundation and Map specs. Check actual contexts/client count instead of assuming a report proves a multiplayer session.
-6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus` and one local `PlayerGui.FoundationStatus`, with no leftover `EntrypointStatus` or `EntrypointPanel`. The suites also exercise two explicit stop/start cycles of the server runtime and status controller.
-7. Open `build/game.rbxlx` separately. Play, confirm an avatar spawns in the southern shelter and the panel reads **Development** / **Bootstrap running**. The test build reads **Test**. Review readability in the actual viewport and inspect Output. Stop Play when finished.
+5. The current candidate expects 45 server cases and two client cases; consult the [P03 record](../plans/03-rounds-and-roles.md) for actual execution evidence. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation and Map specs plus the P03 shared cases. A report's client count and context must match the claim being made.
+6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
+7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
-The server runner loads all 14 shared unit cases and two lifecycle cases through actual Instance requires, plus two foundation engine cases and five map engine cases (23 expected total). Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
+The server runner loads all 24 unit and 14 integration cases through actual Instance requires, plus two foundation and five map engine cases (45 expected total). Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
 
 - Assert actual loaded disk/spawn/roof transforms, then reject invalid disk dimensions, anchor identity/count and exterior/below-ground/floating/blocked anchors before restoring validity.
 - Sample both launcher approaches every 0.5 stud with a 4×6×4-stud upright envelope and downward floor rays. This recorded envelope is a clearance fixture, not an avatar compatibility claim.
@@ -55,11 +55,32 @@ The server runner loads all 14 shared unit cases and two lifecycle cases through
 - Correct exterior/below-threshold characters, preserve legal disk/station positions, and disconnect containment on stop.
 - Rebuild twice after removed cover and transient debris; compare descendant counts, stable part names and poses, then exercise idempotent destruction.
 
-The client suite checks replicated status, character availability and GUI/controller cleanup. One-server/one-client checks do not prove gameplay replication between two players, combat, no-respawn rounds, camera feel, device compatibility or release capacity. The current P02 source has passed its map cases and focused walking/visual review locally. A new geometry candidate still requires those checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
+The client TestEZ suite checks replicated bootstrap status, initial character availability and status GUI/controller cleanup. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
 
 For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. There is no launcher pickup, aircraft or combat to exercise yet.
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
+
+## Run the P03 multiplayer harness
+
+Use the same confirmed local test document in Edit, with `test.project.json` fully synced and Play stopped. The normal MCP Play tool starts one client. For the P03 scenario, use `StudioTestService.ExecuteMultiplayerTestAsync` from MCP's Edit/plugin context to start **three actual clients** with arguments `{ kind = "P03" }`. It yields until the server calls `EndTest`, so launch it in a task and preserve its return value in the Edit DataModel:
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(3, { kind = "P03" })
+    workspace:SetAttribute("P03LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P03 multiplayer test started"
+```
+
+Inspect Studio state and Output while it runs. After it ends, read `workspace:GetAttribute("P03LastReport")` in Edit. Missing evidence, timeout, failure or a client that never acknowledges is incomplete acceptance. The return report identifies `P03-multiplayer`, initial/peak client counts, completed round IDs and nine named case outcomes. Check that every case passes, no case is skipped and all three round IDs are nonzero/distinct. Capture the separate baseline server/client TestEZ reports as well.
+
+The test-only server [RoundHarness](../tests/studio/server/RoundHarness.luau) starts the actual `GameRuntime` with a two-player minimum, 30-second rounds, eight-second lobby and two-second results. Three initial clients provide an operator and two ground players, allowing one eliminated player to follow a living teammate. `AddPlayers(1)` adds a fourth actual client during Active to test late-join spectating. The client [RoundHarness](../tests/studio/client/RoundHarness.luau) reports its actual attributes, round HUD and CameraSubject, sends production surrender requests and uses `LeaveTest` for real disconnects. Its separate transport is excluded from release artifacts.
+
+The named scenarios target replicated roles/phase/deadline/UI; characterless late-join spectating; death without respawn and teammate camera; wrong-role/stale/eliminated command rejection; protected operator reset; elimination, timeout and operator-forfeit outcomes; ground departure while a teammate remains; three map/camera/roster resets; stable connections and draining-load teardown. Each round perturbs cover and adds transient map content before checking pristine restoration. Deterministic service tests separately cover deployment departures, reconnect tombstones, exact deadlines and result conflicts. The [P03 record](../plans/03-rounds-and-roles.md) distinguishes which engine scenarios actually ran and any open gaps.
+
+For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, three-second lobby and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator view is a protected avatar placeholder; aircraft, thermal view, weapons and launcher are unavailable. Record readability and camera observations separately from automated pass counts. End the test session when finished.
 
 ## Required test levels
 

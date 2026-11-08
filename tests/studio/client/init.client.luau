@@ -24,3 +24,4 @@ assert(
     count > 0 and report.failed == 0 and report.skipped == 0 and report.errors == 0,
     "client suite failed or empty"
 )
+require(script.RoundHarness).run()

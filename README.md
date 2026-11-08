@@ -4,17 +4,21 @@
 
 The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
-![Current circular greybox battlefield with two marked launcher approaches, a sheltered spawn and orange perimeter](docs/evidence/p02/final/overview.jpg)
+![Active ground player in the greybox shelter with role, round timer, surviving ground count and Surrender / spectate button](docs/evidence/p03/current-progress.jpg)
 
-*Current progress: P02 greybox battlefield, captured in Roblox Studio on 2026-11-08. Aircraft and combat are still planned.*
+*Current progress: P03 active ground round prototype, captured in a local Roblox Studio multiplayer test on 2026-11-08 with chat hidden. Aircraft and combat are planned.*
 
 ## What you can play today
 
-The local build contains a circular greybox battlefield. Your avatar starts in its southern shelter. Follow the teal western route or ochre eastern route toward the gold marker at the center; that marker reserves the future rocket-launcher location. Industrial walls and roofed cover separate the routes from exposed areas, and an orange perimeter marks the battlefield edge. The launcher marker cannot be picked up, and cover cannot be destroyed yet.
+The local build is a round prototype on a circular greybox battlefield. Players wait on a protected lobby deck. With 6–10 players, the server selects one operator and sends everyone else to sheltered ground positions. Operator turns rotate between eligible players, preferring those who have waited more rounds. The operator currently stays at a protected station with a normal avatar camera; the flying aircraft and its targeting view are planned.
 
-Use standard Roblox desktop controls: **WASD** to move, **Space** to jump, and the mouse to control the view. The server is configured to return characters that leave the battlefield or fall below it to the shelter. A separate lobby/operator deck is authored outside the battlefield; role assignment and transport to it are still planned.
+Ground players use **WASD**, **Space** and the mouse to explore. Follow the teal western route or ochre eastern route toward the gold center marker. Industrial walls and roofs provide cover, and an orange perimeter marks the edge. Leaving the battlefield or falling below it returns an active ground player to shelter. The marker reserves the future launcher location; there is no pickup or destructible cover yet.
 
-A status panel shows **Bootstrap running** with a **Development** or **Test** label. Aircraft, roles, weapons, rounds, spectating and results remain planned. Normal Roblox respawning still applies. There is no published Roblox play link. The map has passed host checks and local Studio clearance, cover, boundary, rebuild and walking checks with one client. [P02](plans/02-warzone-map.md) records the evidence and limits; this does not establish multiplayer combat or support for every avatar size.
+A round panel shows phase, role, life state, remaining time and surviving ground players. Ground players can click **Surrender / spectate** or reset their character to give up their life. Death and reset do not respawn them during that round: they watch a living ground teammate instead. Late arrivals and reconnecting players wait for the next round. Resetting the operator's placeholder character retains the assignment and deadline.
+
+The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Weapons, aircraft damage, thermal view and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. See [P03](plans/03-rounds-and-roles.md) for verification evidence and limits, and [P02](plans/02-warzone-map.md) for map evidence.
+
+The HUD is a prototype; Roblox's open team-chat panel can overlap its left side at smaller viewport sizes. Full player guidance and presentation polish are planned for P10.
 
 The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
 
@@ -29,7 +33,12 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Choose the branch you intend to test before building. `main` contains the current integrated greybox; use the PR's head branch to review unmerged changes.
+Choose the branch you intend to test before building. Use `main` for integrated source or the PR's head branch for an unmerged candidate. To review this roles/rounds increment, fetch and select its task branch:
+
+```sh
+git fetch origin
+git switch plan/03-rounds-and-roles
+```
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
@@ -42,7 +51,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install      # Install the matching Studio plugin once
 ```
 
-The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. A successful host run currently includes **14 unit and 2 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It does not run Roblox Studio. The dependency and build directories are generated and stay out of Git.
+The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. A successful host run currently includes **24 unit and 14 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It does not run Roblox Studio. The dependency and build directories are generated and stay out of Git.
 
 ## Play and develop locally with Rojo
 
@@ -56,8 +65,8 @@ rojo serve default.project.json --address 127.0.0.1 --port 34873
 
 1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local development document. Reuse it if it is already open.
 2. Keep **Play stopped**. Open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the project is **PlayersVsC130** before applying the mapping. If the newly installed toolbar button is absent in Edit mode, save work and restart Studio once. If only the panel is hidden, reopen it with the Rojo toolbar button; Play is not needed.
-3. Click **Play**. You should spawn in the southern shelter, with **Development** and **Bootstrap running** in one status panel.
-4. Use **WASD**, **Space** and the mouse to walk both colored routes to the gold marker and inspect cover and the orange boundary. The marker is not a working launcher pickup yet.
+3. Click **Play**. The status panel reads **Development** / **Bootstrap running**, and the round panel shows a lobby waiting for six players. Your lobby character is protected and stationary. A solo client cannot start a production round.
+4. For a small local round, use the separate test mapping below. Its server-only two-player minimum permits role testing with two clients; use three to watch teammate spectating while another ground player remains alive.
 5. Click **Stop** before editing repository files. Let Rojo sync changes into this same document, inspect the expected change, and start a fresh Play session. Reopening a new build after every edit is unnecessary.
 
 If Rojo reports **Http requests can only be executed by game server**, stop Play and reconnect in Edit mode. Keep a separate test document for the test mapping below. The [development guide](docs/development.md#sync-this-repository-with-studio) covers the guarded macOS launcher, MCP connection and further troubleshooting.
@@ -79,8 +88,11 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
 2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
-3. Open Studio's **Output** panel. Expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. These suites cover current rules, status/character behavior, map clearance, cover raycasts, boundary correction and two rebuilds.
-4. Click **Stop**, then **Play** again. Check fresh passing reports and exactly one status panel, then stop when finished. The current map passed this sequence with one client; this does not establish multiplayer combat or capacity.
+3. Open Studio's **Output** panel. Expect **45 server tests and 2 client tests**, with zero failures, skipped cases or errors. These cover rules, service lifecycle, status/character behavior, map queries, boundary correction and rebuilds. After those suites pass, the test runner starts the round runtime. A solo client waits for a second player.
+4. Click **Stop**, then **Play** again. Check fresh passing reports and one status panel plus one round panel. Stop before changing the mapping or source.
+5. To play both roles locally, select Studio's **Server & Clients** testing mode, choose **2 clients** (or **3** for teammate spectating), and start the session. The test mapping uses a three-second lobby delay and sixty-second rounds. Ground players can move, surrender or reset; operator movement is locked at the placeholder station. Watch the timer, result and return to lobby, then use **End Session** to close the test clients.
+
+The [P03 multiplayer harness](docs/testing.md#run-the-p03-multiplayer-harness) separately starts three clients, adds a late spectator and drives three accelerated rounds. A single-client TestEZ pass does not establish replicated round behavior, and local rounds do not establish combat or release capacity.
 
 After source changes, stop Play, rerun the host gate, verify Rojo delivered the candidate and start a fresh session. Open a generated artifact separately when checking file-load reconstruction. For a documentation-only change, `python3 scripts/check_repository.py` checks local links, JSON, mappings and assets. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for structured server/client reports and required evidence.
 
@@ -111,11 +123,11 @@ The planned launcher can be dropped and recovered after its carrier dies or disc
 4. **Resolve:** aircraft destruction wins for ground; total ground elimination or timeout wins for the C-130.
 5. **Replay:** a clear result leads back to the lobby and a fresh round.
 
-The initial round-length default is ten minutes. There will be no respawns during a round. Eliminated ground players spectate living teammates; late arrivals wait for the next round.
+The initial round-length default is ten minutes. The current prototype already enforces no respawns, teammate spectating and late-arrival waiting; the weapons, aircraft and launcher in this full flow remain planned.
 
 ## Planned controls
 
-These bindings are proposals to validate as the corresponding features arrive. Only standard avatar movement and camera controls work in the current map build.
+These combat bindings are proposals to validate as the corresponding features arrive. The current prototype supports standard ground movement/camera controls and the on-screen **Surrender / spectate** button during an active ground life.
 
 | Action | Ground player | C-130 operator |
 | --- | --- | --- |

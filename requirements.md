@@ -1,6 +1,6 @@
 # Requirements and test traceability
 
-These requirements describe the MVP target. The current source includes the executable foundation, circular greybox assets, pure map/orbit configuration and a server map adapter. Host verification covers the foundation portions of R01/R13/R15 and the pure P02 rules; local Studio map queries, containment, rebuild and focused walking checks cover P02's engine portions. These are one-client map checks, with evidence and limits recorded in P02. R05's aircraft and R10's launcher lifecycle are still planned. Plan completion records link concrete tests and observed results; this table states each requirement's full behavior and intended test level.
+These requirements describe the MVP target. The current source includes the executable foundation, circular greybox and authoritative role/round prototype: deployment, no-respawn lives, spectating, deadlines, basic results and reset. Host suites cover roster boundaries, transition/outcome conflicts, reconnect and command rejection; the [P03 record](plans/03-rounds-and-roles.md) distinguishes its actual host, engine and multiplayer evidence. [P02](plans/02-warzone-map.md) records prior one-client map/walking checks. Aircraft, combat and the launcher lifecycle remain planned. Plan records link concrete tests and observed results; this table states each requirement's full behavior and intended test level.
 
 | ID | Requirement | Plans | Required automated evidence |
 | --- | --- | --- | --- |

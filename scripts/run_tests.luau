@@ -35,7 +35,9 @@ do
                             "../tests/" .. category .. "/" .. string.gsub(name, "%.luau$", "")
                         ) :: unknown
                     ) :: ((string, () -> ()) -> (), unknown) -> ()
-                    local rules = loadModule("../src/shared/" .. moduleName)
+                    local serverModules = { RoleService = true, RoundRules = true, MatchService = true }
+                    local area = if serverModules[moduleName] then "server" else "shared"
+                    local rules = loadModule("../src/" .. area .. "/" .. moduleName)
                     cases(test, rules)
                 end
             end

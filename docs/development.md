@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-The current local place contains the circular greybox battlefield, a ground spawn, cover and location markers, server containment, and the bootstrap status panel. [P02](../plans/02-warzone-map.md) records its host, local Studio and focused walking acceptance evidence and limits; aircraft, combat and roles remain future work.
+The current local place contains the circular greybox and a round prototype with lobby/ground/operator assignment, explicit character lives, surrender, teammate spectating, timed results and map reset. The operator uses a protected placeholder station; aircraft, combat and launcher gameplay remain planned. [P03](../plans/03-rounds-and-roles.md) records round verification and [P02](../plans/02-warzone-map.md) records prior map acceptance.
 
 Prerequisites are Git, Python 3.10 or newer, system `curl`, and network access to GitHub tool releases and the Wally registry/CDN. The setup script supports macOS and Linux on arm64/aarch64 and x86_64. Roblox Studio itself runs on supported Mac/Windows computers; the repository’s automated setup does not currently support Windows.
 
@@ -26,7 +26,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs formatting, lint, strict type analysis, deterministic unit/service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently the greybox development build) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs formatting, lint, strict type analysis, 24 deterministic unit and 14 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development round prototype) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -85,7 +85,9 @@ On this Mac, even an Open Documents request addressed to an existing Studio PID 
 
 See the official [Rojo live-sync workflow](https://rojo.space/docs/v7/getting-started/new-game/#live-syncing-into-studio) and [plugin installation](https://rojo.space/docs/v7/getting-started/installation/#installing-the-plugin).
 
-The development mapping labels its panel **Development**. The test mapping labels it **Test** and starts the server/client TestEZ runners automatically during Play. Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites) and inspect both reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
+The development mapping labels its panel **Development** and starts the production round runtime with a six-player minimum and 600-second rounds. A solo Play session waits at the protected lobby. The test mapping labels it **Test** and starts server/client TestEZ runners automatically. After the foundation/map suites finish, its server runner starts a two-player-minimum runtime with 60-second rounds. Use Studio **Server & Clients** with two clients to play both roles or three to test teammate spectating. This override and every test helper are absent from the release mapping.
+
+Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites) and [three-round harness](testing.md#run-the-p03-multiplayer-harness) to collect actual reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
 
 Source files drive managed scripts. Studio-built models/world changes must be exported into `assets/` and entered in the manifest, then rebuilt from a clean checkout. Stop simulation before authoring/exporting. Do not preserve transient playtest objects as authored assets.
 
@@ -94,6 +96,8 @@ Source files drive managed scripts. Studio-built models/world changes must be ex
 [`Battlefield.model.json`](../assets/world/Battlefield.model.json) owns `Workspace.World.Battlefield`; [`MapRules`](../src/shared/MapRules.luau) owns its shared circle/orbit settings. The defaults are center/focus `(0, 0, 0)`, radius 180 studs, aircraft altitude 140 studs above ground, and recovery threshold Y = −30 studs. No aircraft is instantiated yet. Update geometry and settings together: startup rejects a disk whose pose or radius differs from the configured circle.
 
 [`MapService`](../src/server/MapService.luau) validates unique descendant names, `Ground01`–`Ground09`, one `Launcher` anchor, lobby/operator anchors, solid cover, clearance and floor support. Ground/launcher anchor centers are three studs above ground. Startup keeps a private pristine snapshot and connects server Heartbeat containment; `rebuild()` replaces the map subtree from that snapshot. Runtime cover receives `CoverId` and `CoverKind` attributes. These labels reserve future destruction behavior and do not make cover destructible.
+
+`GameRuntime` passes only active living ground characters to containment and disables the lobby-station exemption for them. `MatchRuntime` rebuilds the map at round reset, so consumers must reacquire anchor/cover Instances afterward. Lobby/operator characters are explicitly loaded at protected, anchored stations; ground characters cannot use the external lobby as an active hiding area.
 
 For `.model.json` authoring, encode every part pose as a twelve-component `CFrame` (X/Y/Z translation, then the nine rotation-matrix components in row order). Never use `Position` or `Orientation` aliases: generated XML may retain them even though Studio ignores them on load. See the [asset authoring rules and example](../assets/README.md). The artifact inspector checks all authored parts in both builds against canonical transforms, positive dimensions, shape and collision/query/touch flags, with intentional corruption probes proving rejection. A successful or repeatable build still needs Studio loaded-transform assertions and world tests.
 

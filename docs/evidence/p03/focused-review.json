@@ -1,0 +1,110 @@
+{
+  "sourceCommit": "e0d285723399535677b64335dccca11f4cfd1d19",
+  "server": {
+    "actualClients": 2,
+    "baseline": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 45,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 45
+    },
+    "phase": "Active",
+    "kind": "P03Focused",
+    "roundId": 5
+  },
+  "clients": [
+    {
+      "clientSlot": 1,
+      "observations": {
+        "camera": "Enum.CameraType.Custom",
+        "role": "Ground",
+        "transitions": [
+          {
+            "phase": "Active",
+            "role": "Gunship",
+            "life": "Alive",
+            "label": "Active \u2022 Gunship / Alive\n0:58 remaining \u2022 1 ground alive\nProtected operator station \u2022 Aircraft and combat are planned"
+          },
+          {
+            "phase": "Results",
+            "role": "Gunship",
+            "life": "Eliminated",
+            "label": "Results \u2022 Gunship / Eliminated\nGunship \u2022 GroundEliminated\nProtected operator station \u2022 Aircraft and combat are planned"
+          },
+          {
+            "phase": "Lobby",
+            "role": "Waiting",
+            "life": "Waiting",
+            "label": "Lobby \u2022 Waiting / Waiting\nWaiting for 2 players\nRound prototype \u2022 Combat and launcher are planned"
+          },
+          {
+            "phase": "Deploying",
+            "role": "Ground",
+            "life": "Deploying",
+            "label": "Deploying \u2022 Ground / Deploying\nPreparing characters\u2026\nRound prototype \u2022 Combat and launcher are planned"
+          },
+          {
+            "phase": "Active",
+            "role": "Ground",
+            "life": "Alive",
+            "label": "Active \u2022 Ground / Alive\n1:00 remaining \u2022 1 ground alive\nRound prototype \u2022 Combat and launcher are planned"
+          }
+        ],
+        "phase": "Active",
+        "viewport": "1081, 658",
+        "chatDisabled": true,
+        "ownHumanoid": true,
+        "quality": "Enum.QualityLevel.Automatic"
+      }
+    },
+    {
+      "clientSlot": 2,
+      "observations": {
+        "camera": "Enum.CameraType.Custom",
+        "role": "Gunship",
+        "transitions": [
+          {
+            "phase": "Active",
+            "role": "Ground",
+            "life": "Alive",
+            "label": "Active \u2022 Ground / Alive\n0:58 remaining \u2022 1 ground alive\nRound prototype \u2022 Combat and launcher are planned"
+          },
+          {
+            "phase": "Results",
+            "role": "Ground",
+            "life": "Eliminated",
+            "label": "Results \u2022 Ground / Eliminated\nGunship \u2022 GroundEliminated\nRound prototype \u2022 Combat and launcher are planned"
+          },
+          {
+            "phase": "Lobby",
+            "role": "Waiting",
+            "life": "Waiting",
+            "label": "Lobby \u2022 Waiting / Waiting\nWaiting for 2 players\nRound prototype \u2022 Combat and launcher are planned"
+          },
+          {
+            "phase": "Deploying",
+            "role": "Gunship",
+            "life": "Deploying",
+            "label": "Deploying \u2022 Gunship / Deploying\nPreparing characters\u2026\nProtected operator station \u2022 Aircraft and combat are planned"
+          },
+          {
+            "phase": "Active",
+            "role": "Gunship",
+            "life": "Alive",
+            "label": "Active \u2022 Gunship / Alive\n1:00 remaining \u2022 1 ground alive\nProtected operator station \u2022 Aircraft and combat are planned"
+          }
+        ],
+        "phase": "Active",
+        "viewport": "1081, 658",
+        "chatDisabled": true,
+        "ownHumanoid": true,
+        "quality": "Enum.QualityLevel.Automatic"
+      }
+    }
+  ]
+}
