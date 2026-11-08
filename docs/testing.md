@@ -44,7 +44,7 @@ Character movement is client-simulated in normal Roblox play. Include implausibl
 
 ## Studio execution and evidence
 
-P01 must provide an explicit server runner and client runner in `test.project.json`, excluded from `default.project.json`. Run through the available Studio integration if connected; discover its actual capabilities before using it. Otherwise use documented Studio steps and a human-assisted run. Do not claim that Lune or a generated place simulated a real server.
+P01 must provide an explicit server runner and client runner in `test.project.json`, excluded from `default.project.json`. Use the Roblox Studio MCP connection as the primary way to inspect and operate the test place and supported playtests; identify the intended Studio instance and discover its actual capabilities first. If the required operation is unavailable, use documented Studio steps and a human-assisted run where possible. Do not claim that Lune or a generated place simulated a real server; an unavailable required engine check remains open.
 
 Record for each required run:
 

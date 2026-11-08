@@ -13,6 +13,13 @@ Use this conventional uppercase filename for Codex discovery. Do not create a se
 - Keep roadmap status in `roadmap.md` only. Record implementation and validation evidence in the plan's completion record. Do not mark incomplete work complete or automatically start another plan.
 - This initial repository is a design and build scaffold. Plan 01 establishes executable Luau and Studio tests; their absence must not be described as passing game tests.
 
+## Roblox Studio MCP and source ownership
+
+- Use Roblox Studio's built-in MCP server as the primary way to inspect the open place, operate Studio, run supported playtests, and collect engine evidence. Check `list_roblox_studios` and use the intended instance/place ID before making changes; if several places are open and the target is unclear, ask which one. Consult the connected Studio server's `skill` tool for relevant version-specific guidance.
+- MCP controls a live Studio session; it does not link GitHub to a Roblox account or replace source synchronization. Git is the source of truth. Edit Rojo-managed scripts/definitions in the repository and sync them into Studio. Export intended Studio-authored world/assets to their managed paths and manifest; never leave an MCP-created change solely in Studio or assume it synchronized back to Git.
+- Coordinate agents that share a Studio instance: only one may mutate a given place at a time, and the tester must exercise the candidate the developer actually delivered. Preserve unsaved work, use a separate test place for test mappings, and confirm the target before syncing or writing.
+- If Studio MCP is unavailable, follow [the setup guide](docs/development.md#connect-roblox-studio-mcp) and continue independent repository work. Do not claim real-engine checks passed or mark a plan complete when its required Studio evidence is unavailable.
+
 ## Human-readable Luau
 
 - Use `--!strict` in first-party Luau. Prefer small cohesive modules, explicit types, descriptive names, straightforward control flow, and composition over inheritance. Avoid service locators, generic frameworks, circular dependencies, and giant scripts.

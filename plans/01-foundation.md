@@ -10,7 +10,7 @@ Turn the empty source scaffold into a runnable development place with a safe tem
 
 1. Add minimal server/client bootstraps with explicit component start/stop, cleanup ownership and strict types. Establish typed configuration validation and reusable finite-number/payload/rate validation needed by later network adapters; avoid speculative remotes.
 2. Pin StyLua, Selene, Lune and Roblox-aware Luau analysis; record exact versions and commands. Add Wally/TestEZ with its lockfile for engine tests. Prove actual module loading in standalone and Instance-based runtimes rather than assuming compatible `require` paths.
-3. Expand `scripts/verify.py` and CI with formatting, lint, type analysis, deterministic unit/service suites and both builds. Zero discovered tests and failures must return failure. Add a test-only Studio server/client bootstrap and a structured result report.
+3. Expand `scripts/verify.py` and CI with formatting, lint, type analysis, deterministic unit/service suites and both builds. Zero discovered tests and failures must return failure. Add a test-only Studio server/client bootstrap and a structured result report. Use the connected Roblox Studio MCP as the primary interactive test interface; verify the target place and actual tool capabilities before running it.
 4. Keep test dependencies, fixtures, development settings and test runners out of the release DataModel. Add a build inspection assertion. The two-player override is test-only and cannot be enabled by a client.
 5. Document setup from a clean clone, exact Studio run steps, tool versions, result interpretation and module contracts.
 
