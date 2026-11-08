@@ -21,7 +21,7 @@ export type Controller = {
 }
 
 -- Validates identity, anchor counts, disk membership, floor support and avatar clearance.
--- Clearance is a 4x6x4-stud upright envelope above the authored ground surface.
+-- Anchor clearance is a 4x5.5x4-stud upright envelope above the authored ground surface.
 function MapService.validateMap(map: Model, settings: MapRules.Settings): (boolean, string?)
     local ids: { [string]: boolean } = {}
     local anchors = map:FindFirstChild("Anchors")

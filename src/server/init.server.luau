@@ -1,5 +1,9 @@
 --!strict
---[=[ Server entrypoint: owns one foundation Bootstrap. Test settings are absent in release builds. ]=]
+--[=[
+    Server entrypoint: owns one foundation Bootstrap and one server MapService.
+    Wires character/Heartbeat adapters and shuts down both owners at close.
+    Test settings are absent in release builds.
+]=]
 local ServerStorage = game:GetService("ServerStorage")
 local Bootstrap = require(script.Bootstrap)
 local MapService = require(script.MapService)
