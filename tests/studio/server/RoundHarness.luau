@@ -48,7 +48,10 @@ function RoundHarness.run()
     local runtime, reason = GameRuntime.start({
         minimumPlayers = 2,
         durationSeconds = if automated then 30 else 60,
-        lobbySeconds = if automated then 8 else 3,
+        lobbySeconds = if automated
+            then 8
+            elseif type(args) == "table" and args.kind == "LobbyControls" then 600
+            else 3,
         deploymentSeconds = 25,
         resultsSeconds = if automated then 2 else 3,
         seed = 1,
@@ -56,6 +59,14 @@ function RoundHarness.run()
     assert(runtime, reason)
     game:BindToClose(runtime.stop)
     if not automated then
+        local stopControls = require(script.Parent.LocalTestControls).start(runtime.rounds)
+        game:BindToClose(stopControls)
+        if type(args) == "table" and args.kind == "LobbyControls" then
+            local report = require(script.Parent.LocalTestControlsCheck).run()
+            stopControls()
+            runtime.stop()
+            StudioTestService:EndTest(report)
+        end
         return
     end
     local cases: { Case } = {}

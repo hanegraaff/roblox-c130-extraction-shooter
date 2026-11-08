@@ -71,6 +71,8 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
                     detail = "Preparing characters…"
                 elseif phase == "Resetting" then
                     detail = "Restoring battlefield…"
+                elseif phase == "Lobby" and player:GetAttribute("LocalMapPreview") == true then
+                    detail = "Studio solo map preview • Use WASD to explore"
                 end
                 label.Text = string.format(
                     "%s • %s / %s\n%s\n%s",
