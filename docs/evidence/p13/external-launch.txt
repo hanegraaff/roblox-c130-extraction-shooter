@@ -1,0 +1,10 @@
+Bounded standalone AddPlayers diagnostic was attempted after the P13 late-join timeout.
+ExecuteMultiplayerTestAsync(2,{kind='P13Diagnostic'}) launched owned StartServer PID22880,
+parent PID73836, but no server/client MCP connection became available. No AddPlayers
+request could be issued in this diagnostic. Original document remained connected/Edit.
+Latest local log 0.746.0.7461269_20261108T230004Z_Studio_3194e_last.log reports:
+BackendConfigFetcher: Failed to fetch meta data with code -1 and message Request timed out (tries2–4).
+HttpError Timedout for https://apis.roblox.com/oauth/.well-known/openid-configuration.
+LoginController: Failed to fetch meta data with code -1 and message Request timed out.
+Only owned diagnostic test server PID22880 was terminated with SIGTERM; originalStudio73836 preserved.
+This supports an external launch/network gap; it does not prove a second AddPlayers failure.

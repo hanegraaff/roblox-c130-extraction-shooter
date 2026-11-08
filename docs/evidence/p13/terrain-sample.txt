@@ -1,0 +1,26 @@
+local recipe=workspace.World.Battlefield.TerrainRecipe
+local hills={}
+for _,hill in recipe:GetChildren() do if hill:IsA('Part') and hill.Name~='TerrainBounds' then table.insert(hills,hill) end end
+table.sort(hills,function(a,b)return a.Name<b.Name end)
+local entries={}
+local samples=0
+local apices={}
+local rays=RaycastParams.new()
+rays.FilterType=Enum.RaycastFilterType.Include
+rays.FilterDescendantsInstances={workspace.Terrain}
+for _,hill in hills do
+    local center=hill.Position+Vector3.new(0,hill.Size.Y/2-8,0)
+    local region=Region3.new(center-Vector3.new(8,16,8),center+Vector3.new(8,16,8)):ExpandToGrid(4)
+    local materials,occupancies=workspace.Terrain:ReadVoxels(region,4)
+    table.insert(entries,hill.Name)
+    for x=1,#materials do for y=1,#materials[x] do for z=1,#materials[x][y] do
+        table.insert(entries,materials[x][y][z].Name..':'..string.format('%.9g',occupancies[x][y][z]))
+        samples+=1
+    end end end
+    local hit=workspace:Raycast(Vector3.new(hill.Position.X,80,hill.Position.Z),Vector3.new(0,-150,0),rays)
+    table.insert(apices,{name=hill.Name,material=hit and hit.Material.Name,y=hit and hit.Position.Y})
+end
+local source=table.concat(entries,'|')
+local a,b=1,0
+for index=1,#source do a=(a+string.byte(source,index))%65521 b=(b+a)%65521 end
+return {sampleCount=samples,hillCount=#hills,bytes=#source,adler32=b*65536+a,apices=apices,version=version()}

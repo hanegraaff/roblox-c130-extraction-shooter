@@ -1,0 +1,49 @@
+{
+  "bytes": 9513,
+  "adler32": 2054186319,
+  "apices": {
+    "1": {
+      "y": 17.921871185302734,
+      "material": "Grass",
+      "name": "TerrainHill00"
+    },
+    "8": {
+      "y": 17.274303436279297,
+      "material": "Rock",
+      "name": "TerrainHill07"
+    },
+    "3": {
+      "y": 17.890625,
+      "material": "Grass",
+      "name": "TerrainHill02"
+    },
+    "2": {
+      "y": 17.05660629272461,
+      "material": "Rock",
+      "name": "TerrainHill01"
+    },
+    "5": {
+      "y": 17.937496185302734,
+      "material": "Grass",
+      "name": "TerrainHill04"
+    },
+    "4": {
+      "y": 17.407928466796875,
+      "material": "Rock",
+      "name": "TerrainHill03"
+    },
+    "7": {
+      "y": 17.90625,
+      "material": "Grass",
+      "name": "TerrainHill06"
+    },
+    "6": {
+      "y": 17.99999237060547,
+      "material": "Rock",
+      "name": "TerrainHill05"
+    }
+  },
+  "sampleCount": 1152,
+  "version": "0.746.0.7461269",
+  "hillCount": 8
+}

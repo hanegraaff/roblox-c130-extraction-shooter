@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-08",
+  "sourceCommit": "ea9cd4ee567e28d205841b093180cad3d0921110",
+  "sourceTree": "654ce450241698cc00353d9209a07a3e188654f8",
+  "productGeometryUnchangedSince": "b157e8423ad8d745e97043fbc7bb8f6673e6d516",
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.10.4",
+    "studio": "0.746.0.7461269"
+  },
+  "studio": {
+    "id": "21f6fc11-4429-4148-9764-89a36987e5e9",
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "placeId": 0,
+    "rojoProject": "test.project.json",
+    "syncPort": 34872
+  },
+  "mappedSources": 58,
+  "hostGate": {
+    "command": "python3 scripts/verify.py > build/p13-final-current-verify.txt 2>&1",
+    "exitCode": 0,
+    "unit": 33,
+    "integration": 18,
+    "authoredPartsPerBuild": 351,
+    "buildingPanels": 111,
+    "releaseRuntimeScripts": 24,
+    "log": "final-verify.txt"
+  },
+  "builds": {
+    "game": {
+      "bytes": 561789,
+      "sha256": "04361780b42e2cf63f9ece356732361b3563dfd5534fe6311edef4f65c47d5d6"
+    },
+    "tests": {
+      "bytes": 834367,
+      "sha256": "b78abbab64fb7adb3b6715340eec27e88de806ad8ab2900deb25052360cc8ea2"
+    }
+  }
+}

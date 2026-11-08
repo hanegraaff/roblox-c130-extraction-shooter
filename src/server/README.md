@@ -41,7 +41,7 @@ Batch callers submit accepted events, call `step()`, then publish. Deadline equa
 | API | Contract |
 | --- | --- |
 | `sample(elapsedSeconds)` | Return canonical tangent-facing CFrame from map geometry and AircraftRules. Invalid trusted time asserts. |
-| `aimAllowed(endpoint)` | Reject nonfinite/exterior/invalid-height points, then raycast actual solid Battlefield geometry from the server Hitbox. Endpoints at the first surface allow 0.5-stud tolerance. No shot or damage is created. |
+| `aimAllowed(endpoint)` | Reject nonfinite/exterior/invalid-height points, then raycast actual solid Battlefield geometry and Terrain from the server Hitbox. Endpoints at the first surface allow 0.5-stud tolerance. No shot or damage is created. |
 | `resources()` | Return owned live connection count for repeated-round/teardown checks. |
 | `stop()` | Idempotently disconnect all ownership, destroy aircraft/state/remote and clear request budgets. |
 
@@ -53,17 +53,21 @@ The default 90-second orbit shares map radius/altitude, starts at phase zero and
 
 ## MapService
 
-`MapService.new(world, adapters)` expects an authored Battlefield Model under `world`, following the [world contract](../../assets/world/README.md). Adapters provide `characters(): {Model}`, Heartbeat and optional `allowStations`. Construction validates `MapRules.defaults` and actual geometry/anchors with Workspace queries, then retains a private unparented pristine clone. Invalid authoring returns `nil, reason` without writing the map. `validateMap(map, settings)` uses validated settings and returns `boolean, reason?`. All public calls are nonyielding.
+`MapService.new(world, adapters)` expects an authored Battlefield Model under `world`, following the [world contract](../../assets/world/README.md). Adapters provide `characters(): {Model}`, Heartbeat and optional `allowStations`. Construction validates `MapRules.defaults`, actual geometry/anchors, the separate lobby, buildings and terrain descriptors with Workspace queries, then retains a private unparented pristine clone. Invalid authoring returns `nil, reason` without writing the map. `validateMap(map, settings)` uses validated settings and returns `boolean, reason?`. All public calls are nonyielding.
 
 | API | Responsibility |
 | --- | --- |
-| `start()` | Validate, assign cover/circle attributes and connect containment. Repeated starts are safe; invalid/destroyed owners reject. |
+| `start()` | Validate, reconstruct bounded terrain, assign cover/building/panel/circle attributes and connect containment. Repeated starts are safe; invalid/destroyed owners reject. |
 | `enforce()` | Return exterior/below-threshold living characters to Ground05 and clear velocities. The optional bounded lobby-deck exception is disabled for active ground players. |
 | `stop()` / `validate()` | Disconnect containment while retaining the snapshot / query current geometry validity. |
-| `rebuild()` | Replace Battlefield from the pristine snapshot and validate. Round reset invokes this; consumers must reacquire Instances. |
-| `destroy()` | Stop containment and destroy the private snapshot idempotently. Keep world geometry; later start/rebuild rejects. |
+| `rebuild()` | Restore bounded terrain, replace Battlefield from the pristine snapshot and validate. Round reset invokes this; consumers must reacquire Instances. |
+| `destroy()` | Stop containment, restore pristine map/terrain and destroy the private snapshot idempotently. Later start/rebuild rejects. |
 
-One owner controls each Battlefield subtree. Rebuild removes transient descendants inside it. Permanent and Breakable cover remain solid; IDs reserve future destruction behavior. Containment is not a general movement anti-cheat system.
+One owner controls each Battlefield subtree and its manifest-defined terrain volume. Rebuild/teardown remove transient descendants and restore source geometry. Permanent/Breakable cover and all 111 building panels remain solid; IDs reserve future destruction behavior. Containment is not a general movement anti-cheat system.
+
+`BuildingGeometry.validate(map, overlap, rays)` is a nonyielding server adapter over real loaded Parts. It returns `false, reason` for malformed floors/stairs/markers/rooms, obstructed entry routes or invalid registries; it does not create Instances or own events. `decorate(map)` applies stable public building IDs, building-scoped `StoryId` (`01`/`02`), globally unique panel IDs, Intact state/pivot and variant metadata after validation. A story identity is the pair `(BuildingId, StoryId)`. Its pure count/dimension/pivot dependency is shared `BuildingLayout`.
+
+`TerrainRecipe.validate(recipe)` checks the fixed, unrotated voxel-aligned ownership bounds, eight contained sphere descriptors and Grass/Rock material contract. `restore(terrain, recipe)` returns `false, reason` without writes for invalid authoring; otherwise it clears only the owned box and writes eight spheres. It owns no connections or tasks and does not yield. Actual collision/raycast readiness can follow later; callers needing physics evidence must wait for bounded engine convergence. See the [world contract](../../assets/world/README.md).
 
 ## Bootstrap and verification
 

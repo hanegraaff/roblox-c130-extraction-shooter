@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "ea9cd4ee567e28d205841b093180cad3d0921110",
+  "sourceTree": "654ce450241698cc00353d9209a07a3e188654f8",
+  "environment": "macOS arm64; clean git archive; existing pinned Wally dependencies copied; pinned Rojo 7.7.1",
+  "commands": [
+    "git archive --format=tar ea9cd4ee567e28d205841b093180cad3d0921110",
+    "python3 scripts/check_repository.py",
+    "rojo build default.project.json --output build/game.rbxlx",
+    "rojo build test.project.json --output build/tests.rbxlx"
+  ],
+  "builds": [
+    {
+      "project": "default.project.json",
+      "sha256": "04361780b42e2cf63f9ece356732361b3563dfd5534fe6311edef4f65c47d5d6",
+      "bytes": 561789,
+      "matchesCandidate": true
+    },
+    {
+      "project": "test.project.json",
+      "sha256": "b78abbab64fb7adb3b6715340eec27e88de806ad8ab2900deb25052360cc8ea2",
+      "bytes": 834367,
+      "matchesCandidate": true
+    }
+  ]
+}
