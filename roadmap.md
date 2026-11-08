@@ -9,7 +9,7 @@ The current source includes the development shell, verification tooling, circula
 | M1 — Playable foundation | [P01: Executable foundation and tests](plans/01-foundation.md) | Complete | — | Open a development place, spawn, and see an explicit test/boot status |
 | M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Complete | P01 | Walk the circular warzone and both approaches to the launcher anchor |
 | M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Complete | P02 | Join a lobby, receive a role, enter a round, spectate and return |
-| M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Ready | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
+| M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | In progress | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Planned | P04 | Operator fires both named weapons, switching zoom while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Planned | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Partial destruction](plans/07-destruction.md) | Planned | P06 | Selected cover breaks consistently and changes safe routes |

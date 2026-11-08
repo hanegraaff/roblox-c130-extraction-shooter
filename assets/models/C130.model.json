@@ -1,0 +1,623 @@
+{
+  "ClassName": "Model",
+  "Children": [
+    {
+      "Name": "Hitbox",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          12,
+          10,
+          46
+        ],
+        "CFrame": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": true,
+        "CanTouch": false,
+        "Color": [
+          0.24,
+          0.28,
+          0.31
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 1
+      },
+      "Children": [
+        {
+          "Name": "GAU23Muzzle",
+          "ClassName": "Attachment",
+          "Properties": {
+            "CFrame": [
+              -5,
+              -2,
+              -7,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "Name": "M102Muzzle",
+          "ClassName": "Attachment",
+          "Properties": {
+            "CFrame": [
+              -5,
+              -2,
+              6,
+              1,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Fuselage",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          10,
+          9,
+          38
+        ],
+        "CFrame": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.25,
+          0.29,
+          0.32
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Cockpit",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          9,
+          7,
+          10
+        ],
+        "CFrame": [
+          0,
+          -1,
+          -22,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.31,
+          0.35,
+          0.36
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Windshield",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          8,
+          2,
+          1
+        ],
+        "CFrame": [
+          0,
+          1,
+          -27.1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.06,
+          0.15,
+          0.19
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Wing",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          58,
+          1.8,
+          11
+        ],
+        "CFrame": [
+          0,
+          2,
+          -2,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.3,
+          0.34,
+          0.36
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "TailBoom",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          6,
+          6,
+          14
+        ],
+        "CFrame": [
+          0,
+          1,
+          23,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.27,
+          0.31,
+          0.33
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Tailplane",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          24,
+          1.5,
+          7
+        ],
+        "CFrame": [
+          0,
+          4,
+          26,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.3,
+          0.34,
+          0.36
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "TailFin",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          1.5,
+          12,
+          10
+        ],
+        "CFrame": [
+          0,
+          8,
+          24,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.32,
+          0.36,
+          0.38
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "EngineL22",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          4,
+          4,
+          9
+        ],
+        "CFrame": [
+          -22,
+          0,
+          -6,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.2,
+          0.24,
+          0.26
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "PropellerL22",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          8,
+          0.6,
+          0.8
+        ],
+        "CFrame": [
+          -22,
+          0,
+          -11,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.07,
+          0.08,
+          0.08
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "EngineL12",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          4,
+          4,
+          9
+        ],
+        "CFrame": [
+          -12,
+          0,
+          -6,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.2,
+          0.24,
+          0.26
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "PropellerL12",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          8,
+          0.6,
+          0.8
+        ],
+        "CFrame": [
+          -12,
+          0,
+          -11,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.07,
+          0.08,
+          0.08
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Engine12",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          4,
+          4,
+          9
+        ],
+        "CFrame": [
+          12,
+          0,
+          -6,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.2,
+          0.24,
+          0.26
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Propeller12",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          8,
+          0.6,
+          0.8
+        ],
+        "CFrame": [
+          12,
+          0,
+          -11,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.07,
+          0.08,
+          0.08
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Engine22",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          4,
+          4,
+          9
+        ],
+        "CFrame": [
+          22,
+          0,
+          -6,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.2,
+          0.24,
+          0.26
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    },
+    {
+      "Name": "Propeller22",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          8,
+          0.6,
+          0.8
+        ],
+        "CFrame": [
+          22,
+          0,
+          -11,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Color": [
+          0.07,
+          0.08,
+          0.08
+        ],
+        "Material": "SmoothPlastic",
+        "Transparency": 0
+      }
+    }
+  ]
+}

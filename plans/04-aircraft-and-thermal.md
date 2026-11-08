@@ -28,4 +28,8 @@ Update named weapons, selection-linked zoom, inward-facing view, controls and or
 
 ## Completion record
 
-Not implemented. Record A1–A5, source, both-client/zoom evidence and interpolation choices if any.
+### Selection and verification scope
+
+2026-11-08: selected P04 on `plan/04-aircraft-and-thermal` from integrated `main` commit `27f488e`. P03 and the human-testing controls are already integrated; no dependency branch is required. The workspace was clean and GitHub had no open plan PR at selection.
+
+Required evidence is the full host gate, real-engine canonical pose/camera/reset checks, two actual client contexts with measured pose convergence, both weapon profiles and rejected-selection coherence, exposed/covered thermal fixtures, bounded aim rejection, and repeated role/controller cleanup. Focused full-orbit review and a representative actual playtest capture supplement the automated gates. Source implementation, independent tester findings and final delivery facts follow when verified.
