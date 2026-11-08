@@ -10,7 +10,7 @@ The local build contains a circular greybox battlefield. Your avatar starts in i
 
 Use standard Roblox desktop controls: **WASD** to move, **Space** to jump, and the mouse to control the view. The server is configured to return characters that leave the battlefield or fall below it to the shelter. A separate lobby/operator deck is authored outside the battlefield; role assignment and transport to it are still planned.
 
-A status panel shows **Bootstrap running** with a **Development** or **Test** label. Aircraft, roles, weapons, rounds, spectating and results remain planned. Normal Roblox respawning still applies. There is no published Roblox play link. The map builds and host checks pass; its required Studio clearance, cover, boundary, rebuild and walking checks still need recorded evidence in [P02](plans/02-warzone-map.md).
+A status panel shows **Bootstrap running** with a **Development** or **Test** label. Aircraft, roles, weapons, rounds, spectating and results remain planned. Normal Roblox respawning still applies. There is no published Roblox play link. The map has passed host checks and local Studio clearance, cover, boundary, rebuild and walking checks with one client. [P02](plans/02-warzone-map.md) records the evidence and limits; this does not establish multiplayer combat or support for every avatar size.
 
 The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
 
@@ -29,7 +29,7 @@ See the [development guide](docs/development.md) for prerequisites and source sy
 2. Click **Play**. Your avatar should spawn in the southern shelter, with **Development** and **Bootstrap running** in the status panel.
 3. Walk both colored routes to the gold center marker. Inspect the cover and orange perimeter using **WASD**, **Space**, and the mouse.
 4. Click **Stop**, then **Play** again. Confirm you still have exactly one status panel.
-5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. These are expected totals for this candidate, not a record that the map suites have passed.
+5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. The current map has passed these suites locally; rerun them for your generated build.
 6. Stop and restart the test place to confirm the suites pass again and the panel is not duplicated. Click **Stop** when finished.
 
 After source changes, stop Play, rerun `python3 scripts/verify.py`, and reopen the generated builds. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. The server suites include map clearance, cover raycasts, boundary correction and two map rebuilds. Aircraft and combat arrive in later plans.

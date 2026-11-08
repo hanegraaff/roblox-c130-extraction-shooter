@@ -7,7 +7,7 @@ The executable development shell and verification tooling are complete. Circular
 | Milestone | Plan / capability | Status | Depends on | What a human can experience afterward |
 | --- | --- | --- | --- | --- |
 | M1 — Playable foundation | [P01: Executable foundation and tests](plans/01-foundation.md) | Complete | — | Open a development place, spawn, and see an explicit test/boot status |
-| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Blocked | P01 | Walk the circular warzone and both approaches to the launcher anchor |
+| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | In progress | P01 | Walk the circular warzone and both approaches to the launcher anchor |
 | M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Planned | P02 | Join a lobby, receive a role, enter a round, spectate and return |
 | M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Planned | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Planned | P04 | Operator fires both named weapons, switching zoom while cover protects players |

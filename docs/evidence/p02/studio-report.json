@@ -1,94 +1,481 @@
 {
   "plan": "P02",
-  "date": "2026-11-08",
-  "sourceCommit": "028fe388cf3d92a57bea75f49cb585ff991e75e9",
-  "sourceTree": "648f2411c5ac39d93cd5a1dcc9d7320e7ef87ecd",
-  "runtimeSourceManifest": "source-manifest.json",
-  "runtimeSourceManifestSha256": "7a4b671db736301d214f25026641163fe9750ce739df670d8f8bd50f2cbcd8d1",
-  "builds": {
-    "release": {
-      "file": "build/p02-game-5546db9cf6e4.rbxlx",
-      "sha256": "5546db9cf6e4051ee00b9d2726d9fd8b3ab0da873a2e2287c6ee312b6ba6f9dc"
+  "candidateCommit": "8147d1cc433a92396a04a7141f991c8619bce84d",
+  "candidateTree": "fc5d6c356cb0b54bd7a2747447af6158830d2fc8",
+  "testBuildSha256": "5c809beff70bb0997df60b1321673faf697b999ce95bee4f89c5b6778280717e",
+  "releaseBuildSha256": "26622dbbb9530c827210126e7ba2217d64bc86ae7939f1f5fb949168b4ceae7b",
+  "studio": {
+    "instanceId": "574c4eb0-6eaf-4f2e-beb3-8666a0066bda",
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "placeId": 0,
+    "version": "0.746.0.7461269",
+    "seed": 1,
+    "viewport": [
+      1081,
+      619
+    ],
+    "captureDimensions": [
+      1886,
+      1080
+    ],
+    "graphicsQuality": "Automatic"
+  },
+  "cycle1": {
+    "server": {
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 23,
+        "clientCount": 1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 23
+      },
+      "playerCount": 1,
+      "bootstrap": {
+        "UptimeSeconds": 10,
+        "Running": true,
+        "Environment": "Test"
+      },
+      "fixtures": 0,
+      "mapDescendants": 117
     },
-    "test": {
-      "file": "build/p02-tests-4846d5e71ad3.rbxlx",
-      "sha256": "4846d5e71ad3516955df120c7db4cd9b77a4a890f7419ff9f06d07b6673ebdbd"
+    "client": {
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "health": 100,
+      "position": "0, 3.09802508354187, 120",
+      "viewport": "1081, 619",
+      "statusText": "Players vs C-130 \u2022 Test\nBootstrap running \u2022 Development shell\nCombat and rounds are planned.",
+      "guiCount": 1,
+      "quality": "Enum.QualityLevel.Automatic",
+      "context": "one actual Studio client; player identifier omitted"
+    },
+    "console": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Test results:\n[+] Studio\n   [+] Foundation\n      [+] bad time rejects without mutation and valid requests still succeed\n      [+] burst exhausts and exact refill boundary accepts\n      [+] default and valid endpoints decode without aliasing\n      [+] finite values include zero and numeric boundaries\n      [+] flat payload accepts exact field and byte boundaries\n      [+] ground spawn is solid anchored and reachable\n      [+] invalid bucket configuration rejects\n      [+] malformed and nonfinite config reject without mutation\n      [+] NaN infinities and nonnumbers reject\n      [+] partial initialization rolls back in reverse order and can retry\n      [+] payload bound configuration rejects nonfinite negative and fractional values\n      [+] payload rejects oversized nested cyclic metatable and malformed data\n      [+] server bootstrap stops and starts twice without duplicate resources\n      [+] two start stop cycles own one listener and task and clean both\n   [+] Map\n      [+] authored anchors validate and malformed identity count clearance and elevations reject\n      [+] cover queries protect all nine spawns and expose firing angles to eight perimeter samples\n      [+] disk includes exact edge but rejects exterior and nonfinite positions\n      [+] map config rejects invalid finite values and circle focus mismatches without mutation\n      [+] map defaults decode to independent matching circle and ground focus\n      [+] sampled future orbit follows matching perimeter and altitude\n      [+] server corrects exterior and below kill plane while preserving disk and station positions\n      [+] two launcher approaches clear a 4x6x4 stud upright avatar and have continuous floor\n      [+] two rebuilds restore exact geometry IDs poses counts and remove transient content\n23 passed, 0 failed, 0 skipped\nTest results:\n[+] ClientSpecs\n   [+] Foundation\n      [+] client receives server status and a spawned character\n      [+] panel renders environment and restarts twice with one GUI\n2 passed, 0 failed, 0 skipped"
+        }
+      ],
+      "isError": false
     }
   },
-  "engine": {
-    "status": "unavailable",
-    "studioVersion": null,
-    "placeId": null,
-    "clientCount": null,
+  "cycle2": {
+    "server": {
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 23,
+        "clientCount": 1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 23
+      },
+      "playerCount": 1,
+      "statuses": 1,
+      "fixtures": 0,
+      "mapDescendants": 117
+    },
+    "client": {
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "hipHeight": 1.9980254173278809,
+      "extents": "4.228424072265625, 6.365917682647705, 2.915489912033081",
+      "rootSize": "2, 2, 1",
+      "health": 100,
+      "position": "0, 3.09802508354187, 120",
+      "viewport": "1081, 619",
+      "guiCount": 1,
+      "rig": "Enum.HumanoidRigType.R15",
+      "quality": "Enum.QualityLevel.Automatic",
+      "context": "one actual Studio client; player identifier omitted"
+    },
+    "console": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Test results:\n[+] Studio\n   [+] Foundation\n      [+] bad time rejects without mutation and valid requests still succeed\n      [+] burst exhausts and exact refill boundary accepts\n      [+] default and valid endpoints decode without aliasing\n      [+] finite values include zero and numeric boundaries\n      [+] flat payload accepts exact field and byte boundaries\n      [+] ground spawn is solid anchored and reachable\n      [+] invalid bucket configuration rejects\n      [+] malformed and nonfinite config reject without mutation\n      [+] NaN infinities and nonnumbers reject\n      [+] partial initialization rolls back in reverse order and can retry\n      [+] payload bound configuration rejects nonfinite negative and fractional values\n      [+] payload rejects oversized nested cyclic metatable and malformed data\n      [+] server bootstrap stops and starts twice without duplicate resources\n      [+] two start stop cycles own one listener and task and clean both\n   [+] Map\n      [+] authored anchors validate and malformed identity count clearance and elevations reject\n      [+] cover queries protect all nine spawns and expose firing angles to eight perimeter samples\n      [+] disk includes exact edge but rejects exterior and nonfinite positions\n      [+] map config rejects invalid finite values and circle focus mismatches without mutation\n      [+] map defaults decode to independent matching circle and ground focus\n      [+] sampled future orbit follows matching perimeter and altitude\n      [+] server corrects exterior and below kill plane while preserving disk and station positions\n      [+] two launcher approaches clear a 4x6x4 stud upright avatar and have continuous floor\n      [+] two rebuilds restore exact geometry IDs poses counts and remove transient content\n23 passed, 0 failed, 0 skipped\nTest results:\n[+] ClientSpecs\n   [+] Foundation\n      [+] client receives server status and a spawned character\n      [+] panel renders environment and restarts twice with one GUI\n2 passed, 0 failed, 0 skipped"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "betweenCyclesCleanup": {
+    "players": 0,
+    "bootstrap": false,
     "serverReport": null,
-    "clientReport": null,
-    "seed": 1,
-    "expectedServerCases": 23,
-    "expectedClientCases": 2,
-    "reason": "MCP lists instances with null names; get_studio_state, skill and execute_luau return Place is not open, including after opening the local candidate.",
-    "instanceIds": [
-      "4b6ae435-0060-4f42-b6fa-2ada6f17d931",
-      "cc341aae-47b9-43b5-a3c0-11e96d2f935e",
-      "eb029242-c828-4781-b342-5957b612ed43"
+    "fixtures": false,
+    "mapDescendants": 117
+  },
+  "eastReverseNavigation": [
+    {
+      "target": [
+        60,
+        3,
+        0
+      ],
+      "elapsedMs": 4079,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        60,
+        3,
+        65
+      ],
+      "elapsedMs": 4365,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        24,
+        3,
+        65
+      ],
+      "elapsedMs": 2484,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        24,
+        3,
+        108
+      ],
+      "elapsedMs": 2945,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        20,
+        3,
+        108
+      ],
+      "elapsedMs": 337,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        0,
+        3,
+        120
+      ],
+      "elapsedMs": 1637,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "eastForwardNavigation": [
+    {
+      "target": [
+        20,
+        3,
+        108
+      ],
+      "elapsedMs": 1549,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        24,
+        3,
+        108
+      ],
+      "elapsedMs": 311,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        24,
+        3,
+        65
+      ],
+      "elapsedMs": 2938,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        60,
+        3,
+        65
+      ],
+      "elapsedMs": 2462,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        60,
+        3,
+        0
+      ],
+      "elapsedMs": 4315,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "elapsedMs": 4080,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "westForwardNavigation": {
+    "targets": [
+      [
+        -20,
+        3,
+        108
+      ],
+      [
+        -24,
+        3,
+        108
+      ],
+      [
+        -24,
+        3,
+        65
+      ],
+      [
+        -60,
+        3,
+        65
+      ],
+      [
+        -60,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        0
+      ]
     ],
-    "unrun": [
-      "mapped server/client suites",
-      "anchor and route clearance with 4x6x4-stud envelope",
-      "cover and spawn/perimeter raycasts",
-      "containment and cleanup",
-      "two teardown/rebuild cycles",
-      "walk both routes and inspect boundary/sight lines"
+    "results": [
+      "Success",
+      "Success",
+      "Success",
+      "Success",
+      "Success",
+      "Success"
+    ],
+    "batchWallSeconds": 16.4,
+    "batchIncludesCaptureAndQueries": true,
+    "launcherEndPosition": [
+      -0.8488326072692871,
+      2.99802565574646,
+      0.012271789833903313
     ]
   },
-  "publication": false,
-  "finalSourceCommit": "9b5e7aa818fddd33d8d171a8938ed5a706abec26",
-  "finalSourceTree": "df03853f249408a7b443278a1ae8025bdff4d767",
-  "finalChange": "Source comments only; coordinator full host gate passed again. No engine run observed.",
-  "finalBuilds": {
-    "release": {
-      "file": "build/p02-game-fb969754a1ed.rbxlx",
-      "sha256": "fb969754a1ed0e37a5ee3a4a9b4a822de74f7e3c72856958005125b36aa57bea"
+  "physicalBoundaryProbe": {
+    "method": "Navigate to170,3,0 then actual Humanoid MoveTo195,3,0; observe after2seconds",
+    "before": [
+      169.27243041992188,
+      2.99802565574646,
+      0.12778395414352417
+    ],
+    "after": [
+      177.94898986816406,
+      2.995393991470337,
+      0.026169219985604286
+    ],
+    "health": 100
+  },
+  "authoritativeReturnProbe": {
+    "injected": "195, 3, 0",
+    "health": 100,
+    "returned": "0, 3, 120",
+    "observedAfterSeconds": 0.25
+  },
+  "finalCleanup": {
+    "fixtures": false,
+    "players": 0,
+    "bootstrap": false,
+    "diskPosition": "0, -2, 0",
+    "mapDescendants": 117
+  },
+  "captures": [
+    {
+      "name": "spawn",
+      "path": "final/spawn.jpg"
     },
-    "test": {
-      "file": "build/p02-tests-72ab93292948.rbxlx",
-      "sha256": "72ab93292948d823ace9d889bdab2e94d957bdc6e92c773f8552806a59685eac"
+    {
+      "name": "west-lane",
+      "path": "final/west-lane.jpg"
+    },
+    {
+      "name": "east-lane",
+      "path": "final/east-lane.jpg"
+    },
+    {
+      "name": "launcher-marker",
+      "path": "final/launcher-marker.jpg"
+    },
+    {
+      "name": "boundary-contact",
+      "path": "final/boundary-contact.jpg"
+    },
+    {
+      "name": "overview",
+      "path": "final/overview.jpg"
+    },
+    {
+      "name": "orbit-east",
+      "path": "final/orbit-east.jpg"
+    },
+    {
+      "name": "orbit-north",
+      "path": "final/orbit-north.jpg"
+    },
+    {
+      "name": "orbit-south",
+      "path": "final/orbit-south.jpg"
+    },
+    {
+      "name": "orbit-west",
+      "path": "final/orbit-west.jpg"
     }
-  },
-  "userFollowup": "User confirmed sign-in, then reported Studio still cannot open the file. Exact error text requested.",
-  "startupObservation": "Newer local Studio logs repeatedly fail to acquire RobloxStudioPluginOTADownloadLock. Possible startup blocker only; root cause unproven. User advised to save/quit/reopen; no process terminated or settings changed.",
-  "delivery": {
-    "pullRequest": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4",
-    "draft": true,
-    "documentationEvidenceCommit": "8214d7067cd178b54421ecd2d27f15eb74fa9871",
-    "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42511523878",
-    "ciConclusion": "success"
-  },
-  "currentCorrection": {
-    "sourceCommit": "8147d1cc433a92396a04a7141f991c8619bce84d",
-    "sourceTree": "fc5d6c356cb0b54bd7a2747447af6158830d2fc8",
-    "baselineEngineReport": "broken-baseline.json",
-    "baselineResult": "one actual client; startup rejected map because serialized Position/Orientation aliases loaded as identity CFrames",
-    "fix": "All112authored parts use canonical CFrame; generated artifact comparisons and5geometry fault probes pass",
-    "testBuild": {
-      "file": "build/p02-tests-5c809beff70b.rbxlx",
-      "sha256": "5c809beff70bb0997df60b1321673faf697b999ce95bee4f89c5b6778280717e"
-    },
-    "gameBuild": {
-      "file": "build/p02-game-26622dbbb953.rbxlx",
-      "sha256": "26622dbbb9530c827210126e7ba2217d64bc86ae7939f1f5fb949168b4ceae7b"
-    },
-    "correctedEngineStatus": "pending; new01c3e5f9-86c4-46d5-901a-22b98004c052instance unnamed, Place is not open; manual File/Open requested",
-    "correctedServerReport": null,
-    "correctedClientReport": null,
-    "correctedActualClientCount": null,
-    "hostGate": {
-      "unitPassed": 14,
-      "integrationPassed": 2,
-      "geometryPartsEachBuild": 112,
-      "geometryFaultProbesRejected": 5
-    },
-    "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42512058874",
-    "ciConclusion": "success",
-    "cloudPlaceMutated": false
-  }
+  ],
+  "subjectiveObservations": [
+    "Both shelter doorways and colored west/east lanes were readable at the observed viewport; the gold launcher marker joins the two routes.",
+    "Actual R15 avatar walked both approaches without jumping, destruction or ammunition. Recorded avatar/accessory visual extents differ from the automated4x6x4-stud clearance fixture; this does not prove every possible avatar fits.",
+    "The orange24-stud boundary is visually distinct and physically stopped walking; server correction returned a deliberately outside actual character to the protected anchor.",
+    "Four cardinal perimeter views at altitude140studs, focused on map center, showed clear open firing lanes and stable shelter/ruin silhouettes. Eight-phase ray assertions are the automated sight-line evidence."
+  ],
+  "resolvedDefects": [
+    {
+      "severity": "material",
+      "description": "Position/Orientation aliases serialized but did not load as intended transforms; map stacked at origin and bootstrap rejected startup.",
+      "resolution": "Canonical CFrame assets and artifact reconstruction gate; loaded disk/spawn transforms correct and all final engine cases pass."
+    }
+  ],
+  "remainingMaterialFindings": [],
+  "requiredEngineGaps": [],
+  "limitations": [
+    "One actual Studio client per fresh Play session; no multiplayer/combat/capacity/performance claim.",
+    "No separate release-document Play run; release reconstruction and isolation checked by host gate.",
+    "No aircraft, thermal camera, combat, launcher pickup, destruction or rounds in P02; perimeter positions are canonical future orbit samples.",
+    "Original cloud place and prior broken document untouched; final corrected local test document stopped in Edit."
+  ],
+  "redactions": [
+    "Client userId omitted from client reports; counts and other test fields unchanged."
+  ]
 }

@@ -54,7 +54,7 @@
   "console": [
     "ServerScriptService.Server:23: ground geometry does not match circle configuration",
     "ServerScriptService.ServerTests:10: server bootstrap timeout",
-    "Players.KingKunkank.PlayerScripts.Client:9: server bootstrap unavailable"
+    "Players.[test-client].PlayerScripts.Client:9: server bootstrap unavailable"
   ],
   "capture": "broken-baseline.jpg",
   "capture_dimensions": [

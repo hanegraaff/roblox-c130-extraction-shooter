@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-The current source contains the development foundation and a circular greybox map: authored spawn/cover/anchors, pure circle/orbit rules, a server map owner with containment and rebuild, a server bootstrap status Folder, a client status panel, and separate standalone/Studio runners. The map's host gate passes; its required Studio map and walking evidence is recorded separately in [P02](plans/02-warzone-map.md). There are no gameplay remotes, roles, rounds or combat yet. Gameplay systems below describe the **target architecture** introduced incrementally by the [roadmap](roadmap.md); create each component when its behavior is needed.
+The current source contains the development foundation and a circular greybox map: authored spawn/cover/anchors, pure circle/orbit rules, a server map owner with containment and rebuild, a server bootstrap status Folder, a client status panel, and separate standalone/Studio runners. The map's host gate and local one-client Studio map/walking checks pass; [P02](plans/02-warzone-map.md) records source, engine evidence and limits. There are no gameplay remotes, roles, rounds or combat yet. Gameplay systems below describe the **target architecture** introduced incrementally by the [roadmap](roadmap.md); create each component when its behavior is needed.
 
 Use a single Roblox place for lobby and battlefield, Luau for game code, and Git-first editing with Rojo for supported source/world synchronization. Roblox hosts the running experience; GitHub stores reconstructable source. No external application backend, persistent player inventory, or cross-server matchmaking is needed for the MVP.
 

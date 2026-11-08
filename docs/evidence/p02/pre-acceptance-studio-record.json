@@ -1,0 +1,94 @@
+{
+  "plan": "P02",
+  "date": "2026-11-08",
+  "sourceCommit": "028fe388cf3d92a57bea75f49cb585ff991e75e9",
+  "sourceTree": "648f2411c5ac39d93cd5a1dcc9d7320e7ef87ecd",
+  "runtimeSourceManifest": "source-manifest.json",
+  "runtimeSourceManifestSha256": "7a4b671db736301d214f25026641163fe9750ce739df670d8f8bd50f2cbcd8d1",
+  "builds": {
+    "release": {
+      "file": "build/p02-game-5546db9cf6e4.rbxlx",
+      "sha256": "5546db9cf6e4051ee00b9d2726d9fd8b3ab0da873a2e2287c6ee312b6ba6f9dc"
+    },
+    "test": {
+      "file": "build/p02-tests-4846d5e71ad3.rbxlx",
+      "sha256": "4846d5e71ad3516955df120c7db4cd9b77a4a890f7419ff9f06d07b6673ebdbd"
+    }
+  },
+  "engine": {
+    "status": "unavailable",
+    "studioVersion": null,
+    "placeId": null,
+    "clientCount": null,
+    "serverReport": null,
+    "clientReport": null,
+    "seed": 1,
+    "expectedServerCases": 23,
+    "expectedClientCases": 2,
+    "reason": "MCP lists instances with null names; get_studio_state, skill and execute_luau return Place is not open, including after opening the local candidate.",
+    "instanceIds": [
+      "4b6ae435-0060-4f42-b6fa-2ada6f17d931",
+      "cc341aae-47b9-43b5-a3c0-11e96d2f935e",
+      "eb029242-c828-4781-b342-5957b612ed43"
+    ],
+    "unrun": [
+      "mapped server/client suites",
+      "anchor and route clearance with 4x6x4-stud envelope",
+      "cover and spawn/perimeter raycasts",
+      "containment and cleanup",
+      "two teardown/rebuild cycles",
+      "walk both routes and inspect boundary/sight lines"
+    ]
+  },
+  "publication": false,
+  "finalSourceCommit": "9b5e7aa818fddd33d8d171a8938ed5a706abec26",
+  "finalSourceTree": "df03853f249408a7b443278a1ae8025bdff4d767",
+  "finalChange": "Source comments only; coordinator full host gate passed again. No engine run observed.",
+  "finalBuilds": {
+    "release": {
+      "file": "build/p02-game-fb969754a1ed.rbxlx",
+      "sha256": "fb969754a1ed0e37a5ee3a4a9b4a822de74f7e3c72856958005125b36aa57bea"
+    },
+    "test": {
+      "file": "build/p02-tests-72ab93292948.rbxlx",
+      "sha256": "72ab93292948d823ace9d889bdab2e94d957bdc6e92c773f8552806a59685eac"
+    }
+  },
+  "userFollowup": "User confirmed sign-in, then reported Studio still cannot open the file. Exact error text requested.",
+  "startupObservation": "Newer local Studio logs repeatedly fail to acquire RobloxStudioPluginOTADownloadLock. Possible startup blocker only; root cause unproven. User advised to save/quit/reopen; no process terminated or settings changed.",
+  "delivery": {
+    "pullRequest": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4",
+    "draft": true,
+    "documentationEvidenceCommit": "8214d7067cd178b54421ecd2d27f15eb74fa9871",
+    "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42511523878",
+    "ciConclusion": "success"
+  },
+  "currentCorrection": {
+    "sourceCommit": "8147d1cc433a92396a04a7141f991c8619bce84d",
+    "sourceTree": "fc5d6c356cb0b54bd7a2747447af6158830d2fc8",
+    "baselineEngineReport": "broken-baseline.json",
+    "baselineResult": "one actual client; startup rejected map because serialized Position/Orientation aliases loaded as identity CFrames",
+    "fix": "All112authored parts use canonical CFrame; generated artifact comparisons and5geometry fault probes pass",
+    "testBuild": {
+      "file": "build/p02-tests-5c809beff70b.rbxlx",
+      "sha256": "5c809beff70bb0997df60b1321673faf697b999ce95bee4f89c5b6778280717e"
+    },
+    "gameBuild": {
+      "file": "build/p02-game-26622dbbb953.rbxlx",
+      "sha256": "26622dbbb9530c827210126e7ba2217d64bc86ae7939f1f5fb949168b4ceae7b"
+    },
+    "correctedEngineStatus": "pending; new01c3e5f9-86c4-46d5-901a-22b98004c052instance unnamed, Place is not open; manual File/Open requested",
+    "correctedServerReport": null,
+    "correctedClientReport": null,
+    "correctedActualClientCount": null,
+    "hostGate": {
+      "unitPassed": 14,
+      "integrationPassed": 2,
+      "geometryPartsEachBuild": 112,
+      "geometryFaultProbesRejected": 5
+    },
+    "ciRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42512058874",
+    "ciConclusion": "success",
+    "cloudPlaceMutated": false
+  }
+}

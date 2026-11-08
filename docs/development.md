@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-The current local place contains the circular greybox battlefield, a ground spawn, cover and location markers, server containment, and the bootstrap status panel. [P02](../plans/02-warzone-map.md) records its acceptance evidence and remaining Studio checks; aircraft, combat and roles remain future work.
+The current local place contains the circular greybox battlefield, a ground spawn, cover and location markers, server containment, and the bootstrap status panel. [P02](../plans/02-warzone-map.md) records its host, local Studio and focused walking acceptance evidence and limits; aircraft, combat and roles remain future work.
 
 Prerequisites are Git, Python 3.10 or newer, system `curl`, and network access to GitHub tool releases and the Wally registry/CDN. The setup script supports macOS and Linux on arm64/aarch64 and x86_64. Roblox Studio itself runs on supported Mac/Windows computers; the repository’s automated setup does not currently support Windows.
 
