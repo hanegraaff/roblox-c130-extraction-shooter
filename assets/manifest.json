@@ -20,6 +20,16 @@
       "local_path": "assets/models/CoverPanel.model.json",
       "roblox_asset_id": null,
       "upload_owner": null
+    },
+    {
+      "id": "c130-greybox",
+      "kind": "model",
+      "source": "Original C-130-inspired Roblox primitive silhouette authored in this repository; no external assets or scripts",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/models/C130.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null
     }
   ]
 }

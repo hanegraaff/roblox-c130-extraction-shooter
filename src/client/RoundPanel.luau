@@ -9,6 +9,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local Lifecycle = require(game:GetService("ReplicatedStorage").Shared.Lifecycle)
 local RoundPanel = {}
+local ThermalCameraController = require(script.Parent.ThermalCameraController)
 
 -- Creates a controller for existing player/status owners; start/stop are idempotent.
 function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): Lifecycle.Controller
@@ -42,6 +43,7 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
             surrender.Parent = gui
             local sequence = 0
             local oldRoundId = -1
+            local thermal = ThermalCameraController.new(player, playerGui, state)
             local function update()
                 local roundId = state:GetAttribute("RoundId")
                 local phase = tostring(state:GetAttribute("Phase"))
@@ -73,7 +75,7 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
                     detail = "Restoring battlefield…"
                 elseif phase == "Lobby" and player:GetAttribute("LocalMapPreview") == true then
                     detail = if player:GetAttribute("LocalPreviewRole") == "Gunship"
-                        then "Studio Operator preview • Protected placeholder station"
+                        then "Studio Operator preview • Inward thermal aircraft view"
                         else "Studio Ground preview • Use WASD to explore"
                 end
                 local heading = phase .. " • " .. role .. " / " .. life
@@ -90,12 +92,12 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
                     heading,
                     detail,
                     if role == "Gunship"
-                        then "Protected operator station • Aircraft and combat are planned"
+                        then "Inward thermal view • 1 / 2 selects weapon zoom • Firing is planned"
                         else "Round prototype • Combat and launcher are planned"
                 )
                 surrender.Visible = phase == "Active" and role == "Ground" and life == "Alive"
                 local camera = workspace.CurrentCamera
-                if camera then
+                if camera and not thermal.ownsCamera() then
                     camera.CameraType = Enum.CameraType.Custom
                     local target: Humanoid? = nil
                     if phase == "Active" and (life == "Eliminated" or role == "Spectator") then
@@ -148,6 +150,7 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
                 heartbeat:Disconnect()
                 click:Disconnect()
                 destroyed:Disconnect()
+                thermal.stop()
                 gui:Destroy()
                 local camera = workspace.CurrentCamera
                 if camera then

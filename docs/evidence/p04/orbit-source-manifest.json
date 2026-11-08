@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "33e7b1da953809c57a42bf4c47166eaca917d753",
+  "sourceTree": "f3b5db0a210617104e64519c63e4e95bfd42ef9f",
+  "environment": {
+    "date": "2026-11-08",
+    "os": "macOS",
+    "architecture": "arm64",
+    "studioVersion": "0.746.0.7461269",
+    "placeId": 0,
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "project": "PlayersVsC130Tests",
+    "syncPort": 34872
+  },
+  "artifacts": {
+    "game.rbxlx": "a0de488a4273f205446dd2c328fd12fcfa8ae4b99bb13846e4378ec58bb5a68f",
+    "tests.rbxlx": "95fdd1b3f3331f15f8dd260b1fc1d0929526931b8df573c76cd7643c9565d088"
+  },
+  "note": "Source commit identifies tested gameplay/config/tests; subsequent prose and evidence changes are recorded separately. The document filename predates this candidate; mapped source checks establish actual content."
+}

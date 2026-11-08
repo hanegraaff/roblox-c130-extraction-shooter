@@ -1,14 +1,20 @@
 --!strict
 --[=[
-    GameRuntime: server composition root for map and round owners. Depends on engine
-    Players/Heartbeat plus explicit MatchRuntime settings. Test runner owns a runtime
-    after foundation suites without a global registry. stop destroys the map snapshot.
+    GameRuntime: server composition root for map, round and aircraft owners. Depends
+    on engine Players/Heartbeat plus explicit MatchRuntime settings. Test runner owns
+    a runtime after foundation suites without a global registry. stop tears down the
+    aircraft and round owners, then destroys the map snapshot.
 ]=]
 local Players = game:GetService("Players")
 local MapService = require(script.Parent.MapService)
 local MatchRuntime = require(script.Parent.MatchRuntime)
+local AircraftService = require(script.Parent.AircraftService)
 local GameRuntime = {}
-export type Controller = { rounds: MatchRuntime.Controller, stop: () -> () }
+export type Controller = {
+    rounds: MatchRuntime.Controller,
+    aircraft: AircraftService.Controller,
+    stop: () -> (),
+}
 
 -- Starts one map/round runtime or rejects startup without leaked ownership.
 function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, string?)
@@ -43,9 +49,17 @@ function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, strin
         map.destroy()
         return nil, roundReason
     end
+    local aircraft, aircraftReason = AircraftService.start(rounds.match)
+    if not aircraft then
+        rounds.stop()
+        map.destroy()
+        return nil, aircraftReason
+    end
     return {
         rounds = rounds,
+        aircraft = aircraft,
         stop = function()
+            aircraft.stop()
             rounds.stop()
             map.destroy()
         end,

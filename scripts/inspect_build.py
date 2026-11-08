@@ -170,6 +170,9 @@ def main() -> None:
     expected_scripts.add("ServerScriptService/Server/MapService")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
+    expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection")}
+    expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")

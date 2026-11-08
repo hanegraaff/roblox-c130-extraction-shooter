@@ -13,6 +13,11 @@ return function()
     require(ServerStorage.Tests.Unit["RoleService.spec"])(test, require(Server.RoleService))
     require(ServerStorage.Tests.Unit["RoundRules.spec"])(test, require(Server.RoundRules))
     require(ServerStorage.Tests.Integration["MatchService.spec"])(test, require(Server.MatchService))
+    require(ServerStorage.Tests.Unit["AircraftRules.spec"])(test, require(Shared.AircraftRules))
+    require(ServerStorage.Tests.Integration["AircraftSelection.spec"])(
+        test,
+        require(Server.AircraftSelection)
+    )
     test("server bootstrap stops and starts twice without duplicate resources", function()
         local status = game:GetService("ReplicatedStorage"):FindFirstChild("BootstrapStatus")
         assert(

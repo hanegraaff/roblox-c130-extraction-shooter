@@ -1,6 +1,6 @@
 # Decisions, defaults, and open release details
 
-Updated 2026-11-08 for the round prototype and greybox defaults, following the user's players-versus-C-130 revision and confirmation that M-7 fire damages the plane. “Selected” records user choices; “Default” records concrete initial implementation/tuning choices that can be revised. Stable IDs are retained; superseded choices are described in the change record below.
+Updated 2026-11-08 for the aircraft/view prototype and greybox defaults, following the user's players-versus-C-130 revision and confirmation that M-7 fire damages the plane. “Selected” records user choices; “Default” records concrete initial implementation/tuning choices that can be revised. Stable IDs are retained; superseded choices are described in the change record below.
 
 | ID | State | Decision and reason | Revisit when |
 | --- | --- | --- | --- |
@@ -28,6 +28,8 @@ Updated 2026-11-08 for the round prototype and greybox defaults, following the u
 | D22 | Default | Basic spectators follow the lowest-UserId living ground teammate automatically; use a fixed map overview if no target exists. Ground surrender is an explicit on-screen action | P10 improves spectator controls and feedback |
 | D23 | Selected | Waiting players can walk in the protected lobby; human testing supports solo exploration, role choice, immediate start and settings controls isolated from release builds | User changes human-testing workflow |
 | D24 | Default | Solo test Play opens Ground preview; role cycles Auto/Ground/Operator, next-round durations are 30/60/180/600 seconds (default 60), and preferences last for the local session/reset only | Human testing needs more settings or different defaults |
+| D25 | Default | Orbit period 90 seconds, increasing phase from positive X toward positive Z; use the server canonical anchored model with ordinary replication and no cosmetic shell | Measured visual stepping or balance warrants a bounded smoothing/tuning change |
+| D26 | Default | GAU23 FOV 35°, M102 FOV 60°; reticle limited to the central 70% of each viewport dimension; keys 1/2 or named buttons select acknowledged profiles | Focused readability and camera-feel evidence warrants tuning |
 
 Aircraft health is derived as three times direct rocket damage. Rifle damage is positive and small; previous rifle hits may reduce the further rockets needed. First and second rockets alone do not destroy a pristine plane. These are hard test invariants, not tuning defaults. Each C-130 weapon retains its independent cooldown/reload across switching.
 

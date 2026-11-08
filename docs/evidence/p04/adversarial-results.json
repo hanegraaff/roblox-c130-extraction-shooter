@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "name": "translated elevated map follows canonical radius, altitude and forward heading",
+      "passed": true
+    },
+    {
+      "name": "finite extreme times still produce bounded canonical poses",
+      "passed": true
+    },
+    {
+      "name": "profile boundary configurations remain finite and strictly ordered",
+      "passed": true
+    },
+    {
+      "name": "cyclic and wide malformed selection payloads reject with authority unchanged",
+      "passed": true
+    },
+    {
+      "name": "forced same-round reset restores initial profile and fresh monotonic sequence",
+      "passed": true
+    }
+  ],
+  "discovered": 5,
+  "failed": 0,
+  "passed": 5,
+  "skipped": 0,
+  "suite": "P04-independent-adversarial"
+}

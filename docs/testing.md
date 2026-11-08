@@ -2,7 +2,7 @@
 
 ## Current host checks
 
-Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map and round source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
+Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map, round and aircraft/view source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
 
 | Gate | Command used by the verifier |
 | --- | --- |
@@ -18,11 +18,11 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites have 24 cases across six modules: finite/payload/config/rate checks, map/orbit rules, roster boundaries/seeded rotation and phase/outcome policy. The 14 integration cases exercise the real lifecycle controller and `MatchService` with controlled time and life-cleanup adapters. Server-only role/round modules load from `src/server`, without replicating authoritative code to make it testable. The suites load production modules, not copies of their rules.
+The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites have 30 cases across seven modules: finite/payload/config/rate checks, map/aircraft orbit and zoom/aim rules, roster boundaries/seeded rotation and phase/outcome policy. The 18 integration cases exercise the real lifecycle controller, `MatchService` and server-only `AircraftSelection` with controlled time/life-cleanup/eligibility boundaries. Server-only role/round modules load from `src/server`, without replicating authoritative code to make it testable. The suites load production modules, not copies of their rules.
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The current assets contribute 112 checked parts per build. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The current assets contribute 128 checked parts per build. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
@@ -30,7 +30,7 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
 
 1. Build with the full verifier. Open `build/tests.rbxlx` as a separate local Studio document, or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
 2. Through Studio MCP, list connected instances, select the intended test document and inspect its state. Consult the connected server’s relevant skill guidance. Confirm that `ServerScriptService.ServerTests`, `StarterPlayer.StarterPlayerScripts.ClientTests`, `ReplicatedStorage.TestPackages` and `ServerStorage.DevelopmentSettings` belong to the test mapping.
-3. Start **Play** with one actual client for the foundational TestEZ suites. The mapped server and client runners execute automatically. The server requires a player within ten seconds. Startup waits are bounded; a missing report or timeout is a failure requiring investigation. The round runtime starts only after the server suites pass, avoiding map rebuild/character races. Solo Play then waits for the test minimum of two players.
+3. Start **Play** with one actual client for the foundational TestEZ suites. The mapped server and client runners execute automatically. The server requires a player within ten seconds. Startup waits are bounded; a missing report or timeout is a failure requiring investigation. The round runtime starts only after the server suites pass, avoiding map rebuild/character races. Ordinary solo Play then enters labelled map preview; real test rounds still require at least two actual players and an explicit start.
 4. Read both structured JSON reports and the Studio Output log. In the **server** context:
 
    ```luau
@@ -43,11 +43,11 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The current candidate expects 45 server cases and two client cases; consult the [P03 record](../plans/03-rounds-and-roles.md) for actual execution evidence. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation and Map specs plus the P03 shared cases. A report's client count and context must match the claim being made.
+5. The current candidate expects 57 server cases and two client cases; consult the [P04 record](../plans/04-aircraft-and-thermal.md) for actual execution evidence. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation, Map and Aircraft specs plus the shared unit/service cases. A report's client count and context must match the claim being made.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
-The server runner loads all 24 unit and 14 integration cases through actual Instance requires, plus two foundation and five map engine cases (45 expected total). Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
+The server runner loads all 30 unit and 18 integration cases through actual Instance requires, plus two foundation, five map and two aircraft engine cases (57 expected total). Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
 
 - Assert actual loaded disk/spawn/roof transforms, then reject invalid disk dimensions, anchor identity/count and exterior/below-ground/floating/blocked anchors before restoring validity.
 - Sample both launcher approaches every 0.5 stud with a 4×6×4-stud upright envelope and downward floor rays. This recorded envelope is a clearance fixture, not an avatar compatibility claim.
@@ -57,7 +57,7 @@ The server runner loads all 24 unit and 14 integration cases through actual Inst
 
 The client TestEZ suite checks replicated bootstrap status, initial character availability and status GUI/controller cleanup. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
 
-For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. There is no launcher pickup, aircraft or combat to exercise yet.
+For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. Watch the perimeter aircraft from the ground and inspect the inward thermal view in solo Operator preview or a real two-client round. Launcher pickup and live combat remain unavailable.
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
 
@@ -80,7 +80,30 @@ The test-only server [RoundHarness](../tests/studio/server/RoundHarness.luau) st
 
 The named scenarios target replicated roles/phase/deadline/UI; characterless late-join spectating; death without respawn and teammate camera; wrong-role/stale/eliminated command rejection; protected operator reset; elimination, timeout and operator-forfeit outcomes; ground departure while a teammate remains; three map/camera/roster resets; stable connections and draining-load teardown. Each round perturbs cover and adds transient map content before checking pristine restoration. Deterministic service tests separately cover deployment departures, reconnect tombstones, exact deadlines and result conflicts. The [P03 record](../plans/03-rounds-and-roles.md) distinguishes which engine scenarios actually ran and any open gaps.
 
-For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator view is a protected avatar placeholder; aircraft, thermal view, weapons and launcher are unavailable. Record readability and camera observations separately from automated pass counts. End the test session when finished.
+For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 35°/60° profiles, then confirm role loss restores the normal camera. Firing, damage and launcher gameplay remain unavailable. Record readability and camera observations separately from automated pass counts. End the test session when finished.
+
+## Run the P04 aircraft harness
+
+Use the same confirmed local test document in Edit, with `test.project.json` fully synced and Play stopped. Start **two actual clients** through `StudioTestService` from MCP's Edit/plugin context. Preserve the yielded result without blocking the MCP call:
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(2, { kind = "P04" })
+    workspace:SetAttribute("P04LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P04 aircraft test started"
+```
+
+The [server AircraftHarness](../tests/studio/server/AircraftHarness.luau) starts actual `GameRuntime` and the [client harness](../tests/studio/client/AircraftHarness.luau) observes each real client through excluded test transport. Allow approximately two minutes: it samples a complete production-speed **90-second orbit** at nine points on both clients and runs two rounds. The six named scenarios cover initial canonical pose/both profiles; rejected selection coherence and valid traffic afterward; exposed/covered thermal fixtures; both-client pose convergence/inward view/tangent model; reset/reentry/singleton HUD/effect/input restoration; and actual operator disconnect with complete server teardown.
+
+After the self-ending session returns to Edit, inspect `workspace:GetAttribute("P04LastReport")`. Require the inner `P04-multiplayer` report to have `clientCount = 2`, `discovered = passed = 6`, zero failed/skipped cases, and passing baseline reports of 57 server and 2 per actual client. A failure can append a failed harness-completion case; never treat an early exit or missing client acknowledgement as six passing scenarios. Keep actual baseline client counts distinct from the harness's two-client count: the baseline server may finish while clients are still joining.
+
+The pose convergence bound is **8 studs** (approximately 0.64 seconds of motion at 12.57 studs/second), measured against the server pose sent to each client. Engine canonical tests use **0.01 studs** and heading dot tolerance `1e-5` for CFrame precision; the live server comparison permits **2 studs** between Heartbeat updates. Record observed errors separately from these permitted bounds. There is no smoothing shell or second gameplay pose.
+
+`Aircraft.spec.luau` additionally samples 17 canonical phases using injected engine time, verifies Hitbox/attachment/collision/query contracts and reset, and tests actual clear/solid-obstructed/exterior/nonfinite aim endpoints. Those two engine cases contribute to the 57-case baseline. Thermal automation combines real obstruction rays with occluded Highlight configuration. It must be supplemented by actual rendered review of exposed and fully covered targets, both FOVs, reticle stability, full-orbit ground visibility and role-loss cleanup. A screenshot or Highlight property alone cannot establish correct visual occlusion.
+
+Use the [P04 record](../plans/04-aircraft-and-thermal.md) for the tested source, actual reports, captures and remaining presentation limits. Ordinary Play supports solo Operator preview for inspection, but that cosmetic preview is not two-client replication evidence. Keep unrelated sessions untouched and return the session you launched to Edit.
 
 ## Required test levels
 
@@ -153,7 +176,7 @@ The [Roblox testing documentation](https://create.roblox.com/docs/studio/testing
 
 ## Solo exploration and lobby movement regression
 
-An ordinary one-client Play in `PlayersVsC130Tests` automatically enters a labelled solo map preview after the 45 server / 2 client foundational cases. WASD works in both the preview and the protected lobby. The preview keeps the player Waiting and the phase Lobby; it does not fabricate an operator, active life or match result. With two or more clients, use the human panel to choose roles and explicitly start the real round loop. See the [root guide](../README.md#run-local-automated-tests) for human test panel controls.
+An ordinary one-client Play in `PlayersVsC130Tests` automatically enters a labelled solo map preview after the 57 server / 2 client foundational cases. WASD works in both the preview and the protected lobby. The preview keeps the player Waiting and the phase Lobby; it does not fabricate an operator, active life or match result. With two or more clients, use the human panel to choose roles and explicitly start the real round loop. See the [root guide](../README.md#run-local-automated-tests) for human test panel controls.
 
 The explicit `ExecutePlayModeAsync({kind = "LobbyControls"})` scenario runs four TestEZ engine cases through `LocalTestControlsCheck`, then ends the session with structured results. Check `discovered = passed = 4`, no errors/failures/skips, and actual `clientCount = 1`. Focused operated WASD checks supplement unanchored-root assertions. No additional Studio client windows are required. [Fix evidence](evidence/lobby-preview.md) records actual execution.
 
