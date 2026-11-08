@@ -1,14 +1,14 @@
 # Roadmap to MVP
 
-The executable development shell and verification tooling are complete. Circular greybox source is delivered with host checks passing, while required Studio acceptance remains open; **rounds and combat are still planned**. Build one complete, tested capability at a time. Each plan explains the player experience, implementation boundaries and objective acceptance criteria. See [game design](game-design.md) for the complete intended game.
+The executable development shell, verification tooling and circular greybox battlefield are complete, with host and local one-client Studio acceptance; **rounds and combat are still planned**. Build one complete, tested capability at a time. Each plan explains the player experience, implementation boundaries and objective acceptance criteria. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
 | Milestone | Plan / capability | Status | Depends on | What a human can experience afterward |
 | --- | --- | --- | --- | --- |
 | M1 — Playable foundation | [P01: Executable foundation and tests](plans/01-foundation.md) | Complete | — | Open a development place, spawn, and see an explicit test/boot status |
-| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | In progress | P01 | Walk the circular warzone and both approaches to the launcher anchor |
-| M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Planned | P02 | Join a lobby, receive a role, enter a round, spectate and return |
+| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Complete | P01 | Walk the circular warzone and both approaches to the launcher anchor |
+| M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Ready | P02 | Join a lobby, receive a role, enter a round, spectate and return |
 | M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Planned | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Planned | P04 | Operator fires both named weapons, switching zoom while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Planned | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
@@ -57,3 +57,5 @@ Future ideas belong in a separate post-MVP proposal: additional weapons or maps,
 2026-11-08 resumption: the user opened the exact P02 local test document, clearing the open-place blocker. Engine inspection found a material asset serialization defect: authored Position/Orientation values were absent from the loaded CFrames. P02 is resumed for correction and required engine validation; the existing host checks did not detect this defect. P03 remains Planned.
 
 2026-11-08 correction: `8147d1c` replaces all 112 authored part poses with canonical CFrame and adds artifact geometry comparisons plus five corruption probes. Independent full host verification and GitHub Verify pass. The old candidate’s actual Studio startup failure is preserved in evidence. Corrected engine acceptance is blocked until `p02-tests-5c809beff70b.rbxlx` is accessible; automated open still yields an unnamed/unavailable instance and the user has been asked to open it manually. PR #4 stays draft; P03 remains Planned.
+
+2026-11-08 completion: P02’s corrected source `8147d1c` passes independent host gates and two fresh Studio sessions (23 server / 2 client cases each, one actual client, no failures/skips/errors), actual walking on both approaches, physical boundary contact/recovery and clean rebuild/restart checks. Material serialization findings are resolved. Evidence and documentation are pushed in `7ac678e`; [PR #4](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4) is ready for review and remains unmerged. The [P02 record](plans/02-warzone-map.md) links exact source/build/report facts. P03 is Ready but has not been implemented; its future branch must include the open P02 source. No Roblox publication occurred.
