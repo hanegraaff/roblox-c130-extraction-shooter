@@ -158,11 +158,14 @@ def check_expanded_world_contract() -> None:
             previous_z, previous_top = step["CFrame"][2], top
         assert previous_top == 10, "stairs reach upper floor"
         assert len(contents[name+"_Navigation"]["Children"]) == 5, "operated navigation route"
+        if floor["Size"][0] == 64:
+            rooms = contents[name+"_Rooms"]["Children"]
+            assert len(rooms) == 2 and all(room["Properties"]["Size"] == [32,8,48] for room in rooms), "representative two-panel-wide rooms"
         stories, roof = set(), False
         for panel in contents[name+"_Panels"]["Children"]:
             assert panel["Name"] not in ids, "stable unique panel IDs"
             ids.add(panel["Name"])
-            match = __import__("re").match(r".+_S(01|02)_(North|South|West|East|Roof)_", panel["Name"])
+            match = __import__("re").match(r".+_S(01|02)_(North|South|West|East|Roof|Interior)_", panel["Name"])
             assert match, "building/story/panel ID contract"
             if match[2] == "Roof":
                 roof = True

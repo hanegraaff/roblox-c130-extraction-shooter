@@ -44,6 +44,25 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
     then
         return false, "ground geometry does not match circle configuration"
     end
+    local stations = map:FindFirstChild("LobbyStation")
+    local deck = if stations then stations:FindFirstChild("LobbyDeck") else nil
+    if not deck or not deck:IsA("BasePart") or deck.CFrame.UpVector:Dot(Vector3.yAxis) < 0.999 then
+        return false, "missing upright protected lobby deck"
+    end
+    -- Closest point of the oriented deck rectangle to the map center. Checking
+    -- corners alone would miss an edge crossing the disk while all corners lie out.
+    local relative =
+        deck.CFrame:PointToObjectSpace(Vector3.new(settings.centerX, deck.Position.Y, settings.centerZ))
+    local nearest = deck.CFrame:PointToWorldSpace(
+        Vector3.new(
+            math.clamp(relative.X, -deck.Size.X / 2, deck.Size.X / 2),
+            0,
+            math.clamp(relative.Z, -deck.Size.Z / 2, deck.Size.Z / 2)
+        )
+    )
+    if MapRules.inside(settings, nearest.X, nearest.Z) then
+        return false, "protected lobby deck overlaps playable disk"
+    end
     local groundCount, launcherCount = 0, 0
     local overlap = OverlapParams.new()
     overlap.FilterType = Enum.RaycastFilterType.Include
@@ -75,6 +94,12 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         end
         if ground or item.Name == "Launcher" or item.Name == "Lobby" or item.Name == "Operator" then
             local position = item.Position
+            if
+                (item.Name == "Lobby" or item.Name == "Operator")
+                and MapRules.inside(settings, position.X, position.Z)
+            then
+                return false, "protected station inside playable disk: " .. item.Name
+            end
             if
                 (ground or item.Name == "Launcher")
                 and (

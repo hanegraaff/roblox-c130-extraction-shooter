@@ -36,6 +36,7 @@ function BuildingGeometry.validate(
                 id = panel.Name,
                 story = tonumber(string.match(panel.Name, "_S(%d%d)_")) or 0,
                 roof = string.find(panel.Name, "_Roof_", 1, true) ~= nil,
+                interior = string.find(panel.Name, "_Interior_", 1, true) ~= nil,
                 pivot = { panel.CFrame:GetComponents() },
             })
         end
@@ -54,6 +55,14 @@ function BuildingGeometry.validate(
         then
             return false, "missing usable upper floor, landing or navigation"
         end
+        -- Validate every named marker before casts or route interpolation. Malformed
+        -- authoring is an expected rejection, never a missing-Instance exception.
+        for index = 1, 5 do
+            local marker = nav:FindFirstChild(string.format("%s_Walk%02d", building.Name, index))
+            if not marker or not marker:IsA("BasePart") then
+                return false, "missing numbered building navigation marker"
+            end
+        end
         local floorTop = floor.Position.Y + floor.Size.Y / 2
         local upperTop = upper.Position.Y + upper.Size.Y / 2
         if
@@ -63,6 +72,47 @@ function BuildingGeometry.validate(
             or math.abs(landing.Position.Y + landing.Size.Y / 2 - upperTop) > 0.01
         then
             return false, "invalid floor separation or usable area"
+        end
+        if floor.Size.X == 64 then
+            local rooms = building:FindFirstChild(building.Name .. "_Rooms")
+            if not rooms or #rooms:GetChildren() ~= 2 then
+                return false, "missing representative room bounds"
+            end
+            for story = 1, 2 do
+                local room = rooms:FindFirstChild(string.format("%s_S%02d_RoomEast", building.Name, story))
+                if
+                    not room
+                    or not room:IsA("BasePart")
+                    or room.Size ~= Vector3.new(32, 8, 48)
+                    or room.Position ~= Vector3.new(
+                        floor.Position.X + 16,
+                        4 + (story - 1) * 10,
+                        floor.Position.Z
+                    )
+                    or room.CanCollide
+                    or room.CanQuery
+                then
+                    return false, "representative room must be two panels wide and one tall"
+                end
+                for index = 1, 2 do
+                    local divider = panels:FindFirstChild(
+                        string.format("%s_S%02d_Interior_%02d", building.Name, story, index)
+                    )
+                    if
+                        not divider
+                        or not divider:IsA("BasePart")
+                        or divider.Size ~= Vector3.new(1, 8, 16)
+                        or divider.Position
+                            ~= Vector3.new(
+                                floor.Position.X,
+                                4 + (story - 1) * 10,
+                                floor.Position.Z + (if index == 1 then -8 else 8)
+                            )
+                    then
+                        return false, "room divider panels do not match room boundaries"
+                    end
+                end
+            end
         end
         local steps = 0
         for _, support in supports:GetChildren() do

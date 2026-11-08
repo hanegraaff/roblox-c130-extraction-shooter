@@ -212,9 +212,9 @@ return function()
                 end
                 owner.stop()
                 owner.stop()
-                root.CFrame = CFrame.new(220, 3, 0)
+                root.CFrame = CFrame.new(500, 3, 0)
                 step:Fire()
-                assert(root.Position.X == 220, "stopped owner retained heartbeat")
+                assert(root.Position.X == 500, "stopped owner retained heartbeat")
             end)
         end
     )

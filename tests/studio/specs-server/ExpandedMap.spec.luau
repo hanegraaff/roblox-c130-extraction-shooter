@@ -136,6 +136,55 @@ return function()
             assert(not owner.validate(), "blocked entrance accepted")
             blocker:Destroy()
             assert(owner.validate(), "valid route did not recover after rejection")
+            local nav = building:FindFirstChild("Foundry_Navigation") :: Folder
+            for _, suffix in { "Walk03", "Walk04" } do
+                local marker = nav:FindFirstChild("Foundry_" .. suffix) :: BasePart
+                local name = marker.Name
+                marker.Name = "P13RenamedMarker"
+                local valid, reason = owner.validate()
+                assert(
+                    not valid and reason == "missing numbered building navigation marker",
+                    "renamed marker accepted or threw"
+                )
+                marker.Name = name
+                marker.Parent = nil
+                assert(not owner.validate(), "missing marker accepted")
+                marker.Parent = nav
+            end
+            local rooms = building:FindFirstChild("Foundry_Rooms") :: Folder
+            local room = rooms:GetChildren()[1] :: BasePart
+            local size = room.Size
+            room.Size = Vector3.new(64, 8, 48)
+            assert(not owner.validate(), "four-panel-wide room accepted")
+            room.Size = size
+            assert(owner.validate(), "valid room/marker contract did not recover")
+        end)
+    end)
+    test("ExpandedMapNavigation rejects lobby deck overlap and combat-zone station anchors", function()
+        fixture(function(map, owner)
+            local stations = map:FindFirstChild("LobbyStation") :: Folder
+            local deck = stations:FindFirstChild("LobbyDeck") :: BasePart
+            local original = deck.CFrame
+            deck.CFrame = CFrame.new(370, -1, 0)
+            local valid, reason = owner.validate()
+            assert(
+                not valid and reason == "protected lobby deck overlaps playable disk",
+                "partly overlapping lobby accepted"
+            )
+            deck.CFrame = original
+            local anchors = map:FindFirstChild("Anchors") :: Folder
+            for _, name in { "Lobby", "Operator" } do
+                local anchor = anchors:FindFirstChild(name) :: BasePart
+                local pose = anchor.CFrame
+                anchor.CFrame = CFrame.new(0, 3, 0)
+                local stationValid, stationReason = owner.validate()
+                assert(
+                    not stationValid and stationReason == "protected station inside playable disk: " .. name,
+                    "combat-zone protected station accepted"
+                )
+                anchor.CFrame = pose
+            end
+            assert(owner.validate(), "valid protected lobby rejected after restoration")
         end)
     end)
     test(

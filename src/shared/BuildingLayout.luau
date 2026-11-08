@@ -5,7 +5,7 @@
     Static stairs/floors stay separate from panel states. P07 owns damage and variant swaps.
 ]=]
 local BuildingLayout = {}
-export type Panel = { id: string, story: number, roof: boolean, pivot: { number } }
+export type Panel = { id: string, story: number, roof: boolean, interior: boolean?, pivot: { number } }
 export type Building = {
     id: string,
     width: number,
@@ -48,6 +48,7 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
         end
         local stories: { [number]: number } = { [1] = 0, [2] = 0 }
         local roof = 0
+        local interior: { [number]: number } = { [1] = 0, [2] = 0 }
         for _, panel in building.panels do
             if ids[panel.id] or panel.id == "" then
                 return false, "duplicate/empty panel ID"
@@ -65,13 +66,19 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
                 end
             end
             if panel.roof then
-                if panel.story ~= 2 then
+                if panel.story ~= 2 or panel.interior then
                     return false, "roof must belong to top story"
                 end
                 roof += 1
+            elseif panel.interior then
+                interior[panel.story] += 1
             else
                 stories[panel.story] += 1
             end
+        end
+        local interiorCount = if building.width == 64 then 2 else 0
+        if interior[1] ~= interiorCount or interior[2] ~= interiorCount then
+            return false, "large buildings require panelized room dividers on both stories"
         end
         local wallCount = 2 * (building.width / 16 + building.depth / 16)
         if

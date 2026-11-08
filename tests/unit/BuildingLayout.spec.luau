@@ -1,6 +1,6 @@
 --!strict
 -- P13 A2: pure building/registry acceptance and rejection. Engine traversal is separate.
-type Panel = { id: string, story: number, roof: boolean, pivot: { number } }
+type Panel = { id: string, story: number, roof: boolean, interior: boolean?, pivot: { number } }
 type Building = {
     id: string,
     width: number,
@@ -30,6 +30,20 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                         roof = false,
                         pivot = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 },
                     })
+                end
+            end
+            if width == 64 then
+                for story = 1, 2 do
+                    for _ = 1, 2 do
+                        serial += 1
+                        table.insert(panels, {
+                            id = tostring(i) .. "_" .. tostring(serial),
+                            story = story,
+                            roof = false,
+                            interior = true,
+                            pivot = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 },
+                        })
+                    end
                 end
             end
             for _ = 1, (width / 16) * 3 do
