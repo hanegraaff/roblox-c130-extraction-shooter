@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-08",
+  "pullRequest": 13,
+  "mergeCommit": "4d329a0c28e33a709321755b89a7a46af2d362b3",
+  "targetBranch": "plan/13-terrain-and-buildings",
+  "reviewedHead": "3f949c76b263249135e87d534ff3722e806d3c12",
+  "integratedAndReviewedTree": "28b5cbecbabcf09f34a0f72518cb2af65f159034",
+  "headAndMergeContentIdentical": true,
+  "sourceVerifyRun": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42535053767",
+  "hostGate": {
+    "command": "python3 scripts/verify.py > build/flicker-integrated-verify.txt 2>&1",
+    "exitCode": 0,
+    "unit": 33,
+    "integration": 18,
+    "authoredPartsPerArtifact": 351,
+    "buildingSurfacePairs": 7146
+  },
+  "studioEvidence": "Existing fix validation applies to identical runtime/assets/tests; no new Studio run claimed.",
+  "builds": {
+    "game": {
+      "sha256": "ec90c71046a1f9a7434b00848792100a58edc58931ec320c9949009d69372c14",
+      "bytes": 562499
+    },
+    "tests": {
+      "sha256": "0a374bff6bb144ef5049ec708449ebac4b7f79417c728daa37e01bdc214c6780",
+      "bytes": 835077
+    }
+  },
+  "freshLoadArtifact": "build/p13-tests-0a374bff6bb1.rbxlx"
+}

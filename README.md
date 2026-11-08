@@ -35,15 +35,15 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The building surface-flicker fix is on `fix/building-surface-flicker`, based on the unmerged `plan/13-terrain-and-buildings` candidate; `main` still contains the smaller map. After a fresh clone, select the candidate before building:
+The expanded terrain/building candidate, including the merged building surface-flicker fix, is on `plan/13-terrain-and-buildings`; `main` still contains the smaller map while P13 acceptance is open. After a fresh clone, select the candidate before building:
 
 ```sh
 git fetch origin
-git switch --track origin/fix/building-surface-flicker
-git pull --ff-only origin fix/building-surface-flicker
+git switch --track origin/plan/13-terrain-and-buildings
+git pull --ff-only origin plan/13-terrain-and-buildings
 ```
 
-If that local branch already exists, use `git switch fix/building-surface-flicker` instead of creating it again. To inspect the integrated prototype, select and update `main`.
+If that local branch already exists, use `git switch plan/13-terrain-and-buildings` instead of creating it again. To inspect the integrated prototype, select and update `main`.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 

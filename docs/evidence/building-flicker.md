@@ -31,7 +31,7 @@ The new exact rectangle-subtraction guard checks **7,146 opaque building-part
 pairs**, permitting opposing contact faces, edge joins and overlaps concealed by
 another opaque support. Three corruption probes reject ground-plane overlap,
 overlapping frame/floor faces and duplicate wall panels. A separate invocation
-against the original `origin/plan/13-terrain-and-buildings` world rejects the
+against the original `588a500` world (the dependency head at test time) rejects the
 reported Y=0 floor defect. [Full host log](building-flicker/verify.txt).
 
 Studio 0.746.0.7461269, macOS arm64, local place 0, same existing document
@@ -57,7 +57,21 @@ No additional Studio process or document was launched.
   document and temporary capture state was cleared.
 
 [Structured engine/source/geometry report](building-flicker/studio-report.json).
-Documentation and the representative README image describe the current fix branch.
+Documentation and the representative README image describe the fix.
 P13's previously recorded multiplayer/fresh-load gates remain open; this targeted
-fix does not change roadmap status or claim those checks. No merge or Roblox
-publication occurred.
+fix does not change roadmap status or claim those checks.
+
+## Merge and integration — 2026-11-08
+
+With user authorization, PR #13 merged into `plan/13-terrain-and-buildings` at
+`4d329a0c28e33a709321755b89a7a46af2d362b3`. Its full tree is identical to checked
+PR head `3f949c7` (tree `28b5cbecbabcf09f34a0f72518cb2af65f159034`), which passed
+[GitHub Verify 42535053767](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42535053767).
+A fresh full host gate on the merged source passes 33 unit / 18 integration,
+351 transforms per artifact and all 7,146 surface-pair checks. See the
+[integrated log](building-flicker/integrated-verify.txt) and
+[merge/build manifest](building-flicker/integration.json). Existing Studio evidence
+applies to identical source/assets/tests; this integration does not claim a new
+engine session. The root setup guide now selects the P13 branch containing the fix.
+P13 PR #12 stays draft, P13 acceptance remains open and P14 has not started.
+No Roblox publication occurred.
