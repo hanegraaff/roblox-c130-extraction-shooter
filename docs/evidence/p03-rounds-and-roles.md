@@ -132,3 +132,7 @@ Client report identities are replaced by report slots in durable structured
 evidence. No runtime player data or generated place files are committed.
 These local four-client checks do not establish release capacity, combat,
 aircraft visibility/thermal presentation or balance.
+
+## GitHub delivery
+
+[PR #6](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/6) is open and unmerged against `main`. Candidate `b798a029a8058fd6dfeb784bfc1a0b258c61e438` pushes the source, independent evidence, representative image and current documentation. [GitHub Verify run 42518634591](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42518634591) passes on that candidate. Final roadmap/status/link records are documentation-only and checked separately; runtime/test source remains `e0d2857`. No Roblox publication occurred.
