@@ -33,15 +33,16 @@ def main() -> None:
         "ServerScriptService/Server/Bootstrap": "ModuleScript",
         "StarterPlayer/StarterPlayerScripts/Client": "LocalScript",
         "StarterPlayer/StarterPlayerScripts/Client/StatusPanel": "ModuleScript",
-        "Workspace/World/FoundationSpawn": "SpawnLocation",
+        "Workspace/World/Battlefield/GroundSpawn": "SpawnLocation",
     }
     for name, class_name in expected.items():
         if release.get(name) != class_name or tests.get(name) != class_name:
             raise RuntimeError(f"Missing mapped runtime Instance: {name}")
     # Only runtime-authored modules/scripts may occur in the release mapping.
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
-    expected_scripts = set(expected) - {"Workspace/World/FoundationSpawn"}
-    expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle")}
+    expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
+    expected_scripts.add("ServerScriptService/Server/MapService")
+    expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")
     for name in release:
@@ -50,7 +51,7 @@ def main() -> None:
     for name in ("ServerScriptService/ServerTests", "StarterPlayer/StarterPlayerScripts/ClientTests", "ReplicatedStorage/TestPackages/TestEZ", "ServerStorage/DevelopmentSettings"):
         if name not in tests:
             raise RuntimeError(f"Test mapping missing {name}")
-    print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; 8 runtime scripts only in release.")
+    print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; {len(allowed_scripts)} runtime scripts only in release.")
 
 
 if __name__ == "__main__":

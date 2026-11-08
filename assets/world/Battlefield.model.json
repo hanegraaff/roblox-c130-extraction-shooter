@@ -1,0 +1,3198 @@
+{
+  "ClassName": "Model",
+  "Children": [
+    {
+      "Name": "GroundDisk",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": true,
+        "Size": [
+          4,
+          360,
+          360
+        ],
+        "Position": [
+          0,
+          -2,
+          0
+        ],
+        "Color": [
+          0.22,
+          0.24,
+          0.23
+        ],
+        "TopSurface": "Smooth",
+        "BottomSurface": "Smooth",
+        "Shape": "Cylinder",
+        "Orientation": [
+          0,
+          0,
+          90
+        ]
+      }
+    },
+    {
+      "Name": "GroundSpawn",
+      "ClassName": "SpawnLocation",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": true,
+        "Size": [
+          8,
+          0.1,
+          8
+        ],
+        "Position": [
+          0,
+          0.05,
+          120
+        ],
+        "Color": [
+          0.2,
+          0.5,
+          0.35
+        ],
+        "TopSurface": "Smooth",
+        "BottomSurface": "Smooth",
+        "Neutral": true,
+        "Duration": 0
+      }
+    },
+    {
+      "Name": "Boundary",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "Boundary00",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              180.0,
+              12,
+              0.0
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              90.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              179.13325080099546,
+              12,
+              17.64308525932091
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              84.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              176.54135047258148,
+              12,
+              35.116257962903084
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              78.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              172.24926043179758,
+              12,
+              52.25124190580322
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              73.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              166.2983158520316,
+              12,
+              68.88301782571617
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              67.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              158.7458275827039,
+              12,
+              84.85141262867957
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              61.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              149.66453021445815,
+              12,
+              100.00264194352839
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              56.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              139.14188160529267,
+              12,
+              114.19079114945619
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              50.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary08",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              127.27922061357856,
+              12,
+              127.27922061357854
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              45.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary09",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              114.19079114945619,
+              12,
+              139.14188160529267
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              39.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary10",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              100.00264194352842,
+              12,
+              149.66453021445815
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              33.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary11",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              84.85141262867961,
+              12,
+              158.7458275827039
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              28.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary12",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              68.88301782571617,
+              12,
+              166.2983158520316
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              22.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary13",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              52.25124190580322,
+              12,
+              172.24926043179758
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              16.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary14",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              35.1162579629031,
+              12,
+              176.54135047258148
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              11.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary15",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              17.643085259320937,
+              12,
+              179.13325080099543
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              5.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary16",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              1.1021821192326179e-14,
+              12,
+              180.0
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              0.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary17",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -17.643085259320916,
+              12,
+              179.13325080099546
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -5.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary18",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -35.11625796290308,
+              12,
+              176.54135047258148
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -11.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary19",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -52.25124190580319,
+              12,
+              172.2492604317976
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -16.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary20",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -68.88301782571615,
+              12,
+              166.2983158520316
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -22.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary21",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -84.85141262867958,
+              12,
+              158.7458275827039
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -28.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary22",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -100.00264194352835,
+              12,
+              149.66453021445815
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -33.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary23",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -114.19079114945617,
+              12,
+              139.14188160529267
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -39.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary24",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -127.27922061357854,
+              12,
+              127.27922061357856
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -45.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary25",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -139.14188160529267,
+              12,
+              114.19079114945619
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -50.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary26",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -149.66453021445815,
+              12,
+              100.00264194352839
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -56.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary27",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -158.7458275827039,
+              12,
+              84.85141262867961
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -61.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary28",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -166.2983158520316,
+              12,
+              68.88301782571618
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -67.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary29",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -172.24926043179758,
+              12,
+              52.25124190580323
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -73.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary30",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -176.54135047258148,
+              12,
+              35.11625796290315
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -78.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary31",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -179.13325080099543,
+              12,
+              17.643085259320948
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -84.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary32",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -180.0,
+              12,
+              2.2043642384652358e-14
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -90.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary33",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -179.13325080099546,
+              12,
+              -17.643085259320905
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -95.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary34",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -176.54135047258148,
+              12,
+              -35.116257962903106
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -101.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary35",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -172.2492604317976,
+              12,
+              -52.25124190580318
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -106.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary36",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -166.29831585203164,
+              12,
+              -68.88301782571614
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -112.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary37",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -158.7458275827039,
+              12,
+              -84.85141262867957
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -118.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary38",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -149.66453021445818,
+              12,
+              -100.00264194352835
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -123.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary39",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -139.14188160529267,
+              12,
+              -114.19079114945615
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -129.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary40",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -127.27922061357859,
+              12,
+              -127.27922061357854
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -135.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary41",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -114.19079114945625,
+              12,
+              -139.1418816052926
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -140.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary42",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -100.00264194352839,
+              12,
+              -149.66453021445815
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -146.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary43",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -84.85141262867963,
+              12,
+              -158.7458275827039
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -151.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary44",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -68.88301782571627,
+              12,
+              -166.29831585203158
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -157.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary45",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -52.25124190580324,
+              12,
+              -172.24926043179758
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -163.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary46",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -35.11625796290316,
+              12,
+              -176.54135047258146
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -168.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary47",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -17.64308525932088,
+              12,
+              -179.13325080099546
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -174.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary48",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              -3.3065463576978534e-14,
+              12,
+              -180.0
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -180.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary49",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              17.643085259320817,
+              12,
+              -179.13325080099546
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -185.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary50",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              35.11625796290309,
+              12,
+              -176.54135047258148
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -191.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary51",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              52.25124190580317,
+              12,
+              -172.2492604317976
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -196.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary52",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              68.8830178257162,
+              12,
+              -166.2983158520316
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -202.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary53",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              84.85141262867957,
+              12,
+              -158.7458275827039
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -208.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary54",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              100.00264194352833,
+              12,
+              -149.66453021445818
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -213.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary55",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              114.1907911494562,
+              12,
+              -139.14188160529264
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -219.375,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary56",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              127.27922061357852,
+              12,
+              -127.27922061357859
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -225.0,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary57",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              139.1418816052926,
+              12,
+              -114.19079114945627
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -230.625,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary58",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              149.66453021445815,
+              12,
+              -100.00264194352839
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -236.25,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary59",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              158.74582758270387,
+              12,
+              -84.85141262867964
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -241.875,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary60",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              166.29831585203158,
+              12,
+              -68.88301782571627
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -247.5,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary61",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              172.24926043179758,
+              12,
+              -52.25124190580325
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -253.125,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary62",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              176.54135047258146,
+              12,
+              -35.11625796290317
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -258.75,
+              0
+            ]
+          }
+        },
+        {
+          "Name": "Boundary63",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              18.0,
+              24,
+              3
+            ],
+            "Position": [
+              179.13325080099546,
+              12,
+              -17.64308525932089
+            ],
+            "Color": [
+              0.62,
+              0.39,
+              0.12
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Orientation": [
+              0,
+              -264.375,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Permanent",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "ShelterRoof",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              72,
+              2,
+              68
+            ],
+            "Position": [
+              0,
+              14,
+              114
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "ShelterWest",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              14,
+              56
+            ],
+            "Position": [
+              -35,
+              7,
+              120
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "ShelterEast",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              14,
+              56
+            ],
+            "Position": [
+              35,
+              7,
+              120
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "ShelterBack",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              72,
+              14,
+              2
+            ],
+            "Position": [
+              0,
+              7,
+              147
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "ShelterFrontCenter",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              32,
+              14,
+              2
+            ],
+            "Position": [
+              0,
+              7,
+              93
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "ShelterFrontWest",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              4,
+              14,
+              2
+            ],
+            "Position": [
+              -34,
+              7,
+              93
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "ShelterFrontEast",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              4,
+              14,
+              2
+            ],
+            "Position": [
+              34,
+              7,
+              93
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinWall0",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              14,
+              3
+            ],
+            "Position": [
+              -105,
+              7,
+              -65
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinRoof0",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              15
+            ],
+            "Position": [
+              -105,
+              14,
+              -59
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinWall1",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              14,
+              3
+            ],
+            "Position": [
+              100,
+              7,
+              -60
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinRoof1",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              15
+            ],
+            "Position": [
+              100,
+              14,
+              -54
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinWall2",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              14,
+              3
+            ],
+            "Position": [
+              -110,
+              7,
+              45
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinRoof2",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              15
+            ],
+            "Position": [
+              -110,
+              14,
+              51
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinWall3",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              14,
+              3
+            ],
+            "Position": [
+              105,
+              7,
+              50
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinRoof3",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              15
+            ],
+            "Position": [
+              105,
+              14,
+              56
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinWall4",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              14,
+              3
+            ],
+            "Position": [
+              -30,
+              7,
+              -85
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinRoof4",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              15
+            ],
+            "Position": [
+              -30,
+              14,
+              -79
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinWall5",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              14,
+              3
+            ],
+            "Position": [
+              35,
+              7,
+              -125
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "RuinRoof5",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              15
+            ],
+            "Position": [
+              35,
+              14,
+              -119
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Breakable",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "PanelWest",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              8,
+              2
+            ],
+            "Position": [
+              -85,
+              4,
+              -20
+            ],
+            "Color": [
+              0.4,
+              0.28,
+              0.2
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "PanelEast",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              8,
+              2
+            ],
+            "Position": [
+              85,
+              4,
+              10
+            ],
+            "Color": [
+              0.4,
+              0.28,
+              0.2
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Anchors",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "Ground01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              -20,
+              3,
+              108
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              0,
+              3,
+              108
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              20,
+              3,
+              108
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              -20,
+              3,
+              120
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              0,
+              3,
+              120
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              20,
+              3,
+              120
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              -20,
+              3,
+              132
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground08",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              0,
+              3,
+              132
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Ground09",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              20,
+              3,
+              132
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Launcher",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              0,
+              3,
+              0
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Lobby",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              400,
+              3,
+              0
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "Operator",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Position": [
+              400,
+              3,
+              -15
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Routes",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "WestEntry",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              10,
+              0.04,
+              24
+            ],
+            "Position": [
+              -24,
+              0.03,
+              80
+            ],
+            "Color": [
+              0.22,
+              0.42,
+              0.44
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "WestCross",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              46,
+              0.04,
+              10
+            ],
+            "Position": [
+              -42,
+              0.03,
+              65
+            ],
+            "Color": [
+              0.22,
+              0.42,
+              0.44
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "WestLane",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              10,
+              0.04,
+              76
+            ],
+            "Position": [
+              -60,
+              0.03,
+              32
+            ],
+            "Color": [
+              0.22,
+              0.42,
+              0.44
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "WestFinish",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              60,
+              0.04,
+              10
+            ],
+            "Position": [
+              -30.0,
+              0.03,
+              0
+            ],
+            "Color": [
+              0.22,
+              0.42,
+              0.44
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "EastEntry",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              10,
+              0.04,
+              24
+            ],
+            "Position": [
+              24,
+              0.03,
+              80
+            ],
+            "Color": [
+              0.5,
+              0.43,
+              0.22
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "EastCross",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              46,
+              0.04,
+              10
+            ],
+            "Position": [
+              42,
+              0.03,
+              65
+            ],
+            "Color": [
+              0.5,
+              0.43,
+              0.22
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "EastLane",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              10,
+              0.04,
+              76
+            ],
+            "Position": [
+              60,
+              0.03,
+              32
+            ],
+            "Color": [
+              0.5,
+              0.43,
+              0.22
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "EastFinish",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              60,
+              0.04,
+              10
+            ],
+            "Position": [
+              30.0,
+              0.03,
+              0
+            ],
+            "Color": [
+              0.5,
+              0.43,
+              0.22
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        },
+        {
+          "Name": "LauncherMarker",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              12,
+              0.08,
+              12
+            ],
+            "Position": [
+              0,
+              0.05,
+              0
+            ],
+            "Color": [
+              0.8,
+              0.6,
+              0.13
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CanQuery": false,
+            "CanTouch": false
+          }
+        }
+      ]
+    },
+    {
+      "Name": "LobbyStation",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "LobbyDeck",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              60,
+              2,
+              60
+            ],
+            "Position": [
+              400,
+              -1,
+              0
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "OperatorCanopy",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              2,
+              16
+            ],
+            "Position": [
+              400,
+              12,
+              -15
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        },
+        {
+          "Name": "OperatorBack",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              20,
+              12,
+              2
+            ],
+            "Position": [
+              400,
+              6,
+              -23
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth"
+          }
+        }
+      ]
+    }
+  ]
+}

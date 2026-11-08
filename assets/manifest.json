@@ -2,12 +2,22 @@
   "schema_version": 1,
   "assets": [
     {
-      "id": "foundation-spawn",
+      "id": "battlefield-greybox",
       "kind": "world",
-      "source": "Original primitive authored in this repository",
+      "source": "Original Roblox primitives authored in this repository; no external assets or scripts",
       "author": "Project contributors",
       "license": "Project license",
-      "local_path": "assets/world/FoundationSpawn.model.json",
+      "local_path": "assets/world/Battlefield.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "cover-panel",
+      "kind": "model",
+      "source": "Original Roblox primitives authored in this repository; no external assets or scripts",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/models/CoverPanel.model.json",
       "roblox_asset_id": null,
       "upload_owner": null
     }

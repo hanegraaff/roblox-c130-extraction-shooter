@@ -35,8 +35,8 @@ return function()
         end
         status.Name = "BootstrapStatus"
     end)
-    test("temporary spawn is solid anchored and reachable", function()
-        local spawn = workspace.World.FoundationSpawn
+    test("ground spawn is solid anchored and reachable", function()
+        local spawn = workspace.World.Battlefield.GroundSpawn
         assert(
             spawn:IsA("SpawnLocation") and spawn.Anchored and spawn.CanCollide,
             'expected spawn:IsA("SpawnLocation") and spawn.Anchored and spawn.CanCollide'

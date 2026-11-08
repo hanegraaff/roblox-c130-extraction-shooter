@@ -1,24 +1,24 @@
 {
-  "ClassName": "SpawnLocation",
+  "ClassName": "Part",
   "Properties": {
     "Anchored": true,
     "CanCollide": true,
-    "Neutral": true,
     "Size": [
-      64,
-      2,
-      64
+      16,
+      8,
+      2
     ],
     "Position": [
       0,
-      0,
+      4,
       0
     ],
     "Color": [
-      0.16,
-      0.2,
-      0.25
+      0.4,
+      0.28,
+      0.2
     ],
-    "Duration": 0
+    "TopSurface": "Smooth",
+    "BottomSurface": "Smooth"
   }
 }
