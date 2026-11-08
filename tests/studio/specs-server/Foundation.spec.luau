@@ -9,6 +9,10 @@ return function()
     require(ServerStorage.Tests.Unit["Config.spec"])(test, require(Shared.Config))
     require(ServerStorage.Tests.Unit["RateLimit.spec"])(test, require(Shared.RateLimit))
     require(ServerStorage.Tests.Integration["Lifecycle.spec"])(test, require(Shared.Lifecycle))
+    local Server = game:GetService("ServerScriptService").Server
+    require(ServerStorage.Tests.Unit["RoleService.spec"])(test, require(Server.RoleService))
+    require(ServerStorage.Tests.Unit["RoundRules.spec"])(test, require(Server.RoundRules))
+    require(ServerStorage.Tests.Integration["MatchService.spec"])(test, require(Server.MatchService))
     test("server bootstrap stops and starts twice without duplicate resources", function()
         local status = game:GetService("ReplicatedStorage"):FindFirstChild("BootstrapStatus")
         assert(

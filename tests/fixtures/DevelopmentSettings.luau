@@ -1,3 +1,3 @@
 --!strict
--- Server-only test mapping. Future roster tests may use this override; no release mapping references it.
+-- Server-only test mapping. The test runner starts min-two rounds after foundational suites.
 return table.freeze({ minimumPlayers = 2 })

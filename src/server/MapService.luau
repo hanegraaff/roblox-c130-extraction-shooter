@@ -9,7 +9,7 @@ local MapRules = require(game:GetService("ReplicatedStorage").Shared.MapRules)
 local MapService = {}
 
 -- Query/step adapters let tests exercise actual Instance behavior without fake services.
-export type Adapters = { characters: () -> { Model }, heartbeat: RBXScriptSignal }
+export type Adapters = { characters: () -> { Model }, heartbeat: RBXScriptSignal, allowStations: boolean? }
 -- Owns one heartbeat while started and one unparented snapshot until destroy.
 export type Controller = {
     start: () -> (boolean, string?),
@@ -174,7 +174,8 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
                 local position = root.Position
                 -- Explicit noncombat station exemption only within the authored lobby deck.
                 local stationPosition = lobbyPose:PointToObjectSpace(position)
-                local inLobby = math.abs(stationPosition.X) <= lobbySize.X / 2 - 2
+                local inLobby = adapters.allowStations ~= false
+                    and math.abs(stationPosition.X) <= lobbySize.X / 2 - 2
                     and math.abs(stationPosition.Z) <= lobbySize.Z / 2 - 2
                     and stationPosition.Y >= lobbySize.Y / 2
                     and stationPosition.Y <= lobbySize.Y / 2 + 20
