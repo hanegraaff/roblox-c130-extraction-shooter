@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-The current source contains the development foundation and a circular greybox map: authored spawn/cover/anchors, pure circle/orbit rules, a server map owner with containment and rebuild, a server bootstrap status Folder, a client status panel, and separate standalone/Studio runners. The map's host gate and local one-client Studio map/walking checks pass; [P02](plans/02-warzone-map.md) records source, engine evidence and limits. There are no gameplay remotes, roles, rounds or combat yet. Gameplay systems below describe the **target architecture** introduced incrementally by the [roadmap](roadmap.md); create each component when its behavior is needed.
+The current source contains the foundation, circular greybox map and authoritative round prototype. Server-only rules assign roles, retain UserId membership, evaluate deadlines/results and reset the round; engine adapters own characters, teams, map rebuilds and replicated presentation attributes. The client displays round state, sends surrender intent and follows living teammates after elimination. [P03](plans/03-rounds-and-roles.md) records the candidate's verification evidence and limits; [P02](plans/02-warzone-map.md) records prior map acceptance. Aircraft, combat and launcher systems below remain target architecture introduced incrementally by the [roadmap](roadmap.md).
 
 Use a single Roblox place for lobby and battlefield, Luau for game code, and Git-first editing with Rojo for supported source/world synchronization. Roblox hosts the running experience; GitHub stores reconstructable source. No external application backend, persistent player inventory, or cross-server matchmaking is needed for the MVP.
 
@@ -14,11 +14,11 @@ MCP and Rojo have different responsibilities. Rojo maps repository-owned Luau an
 
 ## Implemented foundation
 
-`ServerScriptService.Server` first constructs and starts `MapService`, then starts `Bootstrap`, which validates public defaults and owns one `ReplicatedStorage.BootstrapStatus` Folder plus a Heartbeat connection. Its cleanup disconnects the listener and destroys the Folder. Server-only `DevelopmentSettings` exists only in the test mapping and selects the **Test** environment label; its future two-player minimum is not used by the current shell. The release mapping selects **Development**.
+`ServerScriptService.Server` starts `Bootstrap`, which validates public defaults and owns one `ReplicatedStorage.BootstrapStatus` Folder plus a Heartbeat connection. The release mapping then starts `GameRuntime` with production defaults: 6–10 players and 600-second rounds. Server-only `DevelopmentSettings` exists only in the test mapping, selects the **Test** label and defers gameplay startup to the test runner. That runner completes foundational TestEZ suites before starting the two-player-minimum test runtime, so map tests and round rebuilds do not race. The release label remains **Development**; no cloud publication is implied.
 
-The client entrypoint waits for PlayerGui and server status, then starts `StatusPanel`. That controller owns one `FoundationStatus` ScreenGui and one attribute listener; stopping it disconnects and destroys both. `Lifecycle` composes nonyielding components with idempotent start/stop and rollback on partial start failure. Component cleanup callbacks must not throw or reenter the controller.
+The client entrypoint waits for PlayerGui and server status, then starts `StatusPanel`. It also attaches one `RoundPanel` to `ReplicatedStorage.RoundState` and replaces it when the server owner changes. The controllers own their GUIs and listeners; stopping disconnects them and restores the local camera. `Lifecycle` composes nonyielding components with idempotent start/stop and rollback on partial start failure. Component cleanup callbacks must not throw or reenter the controller.
 
-`Validation` accepts finite numbers and bounded flat scalar payloads. `Config` decodes validated public defaults, and `RateLimit` consumes a deterministic token bucket using caller-supplied monotonic seconds. These helpers do not implement role, replay, ownership or world checks. Future server adapters must add those checks at each action boundary. Shared modules contain no secret authority state.
+`Validation` accepts finite numbers and bounded flat scalar payloads. `Config` decodes validated public defaults, and `RateLimit` consumes a deterministic token bucket using caller-supplied monotonic seconds. `MatchService.command` adds active-ground role/life, round and sequence validation for surrender; `MatchRuntime` rate-limits its RemoteEvent. Future weapon adapters add equipment and world checks. Shared modules contain no secret authority state.
 
 Pure modules with dependencies choose an explicit Instance require when `script` exists and a relative filesystem require under Lune. Standalone specs receive the actual rule module as a parameter; TestEZ wrappers pass actual mapped ModuleScripts to the same cases. This keeps one implementation usable in both runtimes without a virtual filesystem. See the [shared package](src/shared/README.md) for contracts.
 
@@ -26,9 +26,19 @@ Pure modules with dependencies choose an explicit Instance require when `script`
 
 `Workspace.World.Battlefield` comes entirely from the versioned [world definition](assets/world/Battlefield.model.json). `MapRules` validates the shared map/orbit contract: finite coordinates, radius greater than eight studs, altitude greater than sixteen studs, kill threshold below ground, matching map/orbit centers and radii, and a focus at the ground-level center. Defaults are center `(0, 0, 0)`, radius 180 studs, altitude 140 studs and kill threshold Y = −30. `orbit(settings, phaseRadians)` only samples a future aircraft position; P02 has no moving aircraft or targeting camera.
 
-Server-only `MapService` uses real Workspace overlap/raycast queries to validate geometry and anchors, retains an unparented pristine clone, and assigns stable `CoverId`/`CoverKind` attributes to Permanent/Breakable cover. Its injected character provider and Heartbeat signal keep orchestration explicit. While started, a living character outside the disk or below the kill threshold is returned to authored `Ground05` and its velocities are cleared. The authored lobby deck has a bounded station exception; role-specific access and deployment arrive with P03. This is containment, not a general movement-exploit detector.
+Server-only `MapService` uses real Workspace overlap/raycast queries to validate geometry and anchors, retains an unparented pristine clone, and assigns stable `CoverId`/`CoverKind` attributes to Permanent/Breakable cover. Its injected character provider and Heartbeat signal keep orchestration explicit. `GameRuntime` supplies only active living ground characters and disables the optional lobby-station exception. Exterior or below-threshold ground characters return to authored `Ground05` with velocities cleared. Lobby/operator characters are protected station occupants owned by `CharacterOwner`. This is containment, not a general movement-exploit detector.
 
-`stop()` disconnects Heartbeat while retaining the map and snapshot for restart. `rebuild()` destroys the owned Battlefield subtree, clones the snapshot and validates the replacement. `destroy()` is idempotent, stops containment and destroys the private snapshot; static authored geometry remains. No current round controller invokes rebuild, and external consumers must reacquire Instances after replacement. The [server package](src/server/README.md) documents the public adapter/lifecycle contract.
+`stop()` disconnects Heartbeat while retaining the map and snapshot for restart. `rebuild()` destroys the owned Battlefield subtree, clones the snapshot and validates the replacement. `MatchRuntime` invokes it during Resetting; external consumers must reacquire Instances after replacement. `destroy()` is idempotent, stops containment and destroys the private snapshot; static authored geometry remains. The [server package](src/server/README.md) documents the public adapter/lifecycle contract.
+
+## Implemented round ownership
+
+`RoleService` selects one operator from unique eligible UserIds, excluding the previous operator when alternatives exist. It prefers the largest completed-round wait counter and breaks sorted ties deterministically from a seed. `RoundRules` owns legal phase edges and result ordering. `MatchService` composes them with injected monotonic time and life-cleanup callbacks; it has no Instances or network access. Snapshots copy members and results so callers cannot mutate authority.
+
+The phase loop is Lobby → Deploying → Active → Results → Resetting → Lobby. Deployment waits for all assigned character loads, cancels to Lobby when an assigned player leaves, and aborts on dead/incomplete characters or timeout. Active membership remains keyed by UserId: departure removes the life, rejoin cannot restore it, and late joins are spectators. Deadline equality wins before destruction proposals; before expiry, aircraft destruction wins a mutual elimination. P03 provides the server-only destruction proposal seam; later combat supplies real damage.
+
+`MatchRuntime` owns teams, noncolliding character groups, one heartbeat and the `RoundState.Surrender` RemoteEvent. `CharacterOwner` serializes yielding avatar loads, invalidates queued requests with tokens and uses a per-player load lease to keep an older runtime from destroying a newer character. Ground death/reset/surrender eliminates; operator reset replaces only the protected placeholder body. `GameRuntime` composes the map and round owners explicitly and stops both. See package contracts for cleanup and load-drain behavior.
+
+`RoundPanel` reads replicated phase/role/life/deadline/result attributes and computes its timer using `GetServerTimeNow`. Eliminated players and late spectators follow the lowest-UserId living ground teammate, falling back to a fixed overview when no target exists. Lobby restores the local character camera. There is no manual spectator target selector or aircraft camera yet.
 
 ## Target layers and dependencies
 
@@ -90,7 +100,7 @@ build/                    Generated artifacts; ignored by Git
 | `tests/studio/server` | `ServerScriptService.ServerTests` in test project only | Automatic server TestEZ runner |
 | `tests/studio/client` | `StarterPlayerScripts.ClientTests` in test project only | Automatic client TestEZ runner |
 | `tests/studio/specs-client`, `Packages` | `ReplicatedStorage.ClientSpecs`, `ReplicatedStorage.TestPackages` in test project only | Client specs and locked TestEZ dependency |
-| `tests/fixtures/DevelopmentSettings.luau` | `ServerStorage.DevelopmentSettings` in test project only | Server-only test label/future roster fixture |
+| `tests/fixtures/DevelopmentSettings.luau` | `ServerStorage.DevelopmentSettings` in test project only | Server-only test label and deferred gameplay startup marker |
 
 The release project excludes tests, test dependencies, fixtures and development overrides by construction, with generated-artifact inspection enforcing the boundary. Bootstrap must not run server-only modules on clients.
 
@@ -99,9 +109,11 @@ The release project excludes tests, test dependencies, fixtures and development 
 | Component | Responsibility | First plan |
 | --- | --- | --- |
 | `Bootstrap`, shared validation and lifecycle | Implemented shell wiring, cleanup, structural decoding/rate helpers | P01 |
-| Named remote adapters | Add action-specific role/replay/world validation when gameplay actions exist | P03 onward |
+| Named remote adapters | Implemented surrender role/life/round/replay/rate checks; weapon/world validation added with combat | P03 onward |
 | `MapService` | Implemented geometry/anchor validation, containment and pristine map rebuild | P02 |
-| `MatchService` and `RoleService` | Roster, phase/deadline, round identity, fair assignment, player lifecycle | P03 |
+| `MatchService`, `RoleService`, `RoundRules` | Implemented roster, phase/deadline, round identity, assignment and outcome policy | P03 |
+| `GameRuntime`, `MatchRuntime`, `CharacterOwner` | Implemented map/round composition, character ownership, replication and cleanup | P03 |
+| `RoundPanel` | Implemented basic round HUD, surrender intent and teammate spectating | P03; presentation improved in P10 |
 | `AircraftService` | Canonical perimeter orbit pose, aircraft health and destruction | P04; health in P06 |
 | `ThermalCameraController` | Inward-facing camera, weapon-linked zoom, occluded highlights, cleanup | P04 |
 | `CombatService` with weapon rules | Validate intent, ammo/cooldown, flight/impact, damage resolution | P05–P06 |
@@ -126,6 +138,7 @@ Use a small named RemoteEvent surface, not an unrestricted generic RPC dispatche
 
 | Direction / intent | Minimal payload | Server derivation and validation |
 | --- | --- | --- |
+| Client → surrender (implemented) | round ID, sequence, `action = "Surrender"` | Exact three-field shape, active connected ground life, current round, increasing bounded integral sequence, deadline and per-player rate budget |
 | Client → fire | round ID, sequence, weapon ID, bounded aim direction/point | Role/life, equipment, ammo, cooldown, finite values, origin, range, aim envelope, obstruction |
 | Client → reload/select | round ID, sequence, owned/role-authorized weapon ID | Role, ammo/reload phase, independent cooldowns; acknowledge weapon/zoom together |
 | Client → pickup/drop launcher | round ID, sequence, launcher ID | Existence, reach, life, current ownership, valid ground position, active phase |

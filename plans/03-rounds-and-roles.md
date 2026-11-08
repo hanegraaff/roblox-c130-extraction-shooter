@@ -29,4 +29,33 @@ Describe role assignment, no-respawn behavior, reconnect rules and actual develo
 
 ## Completion record
 
-Not implemented. Record A1–A6 mappings, source, client count, Studio output and cleanup evidence.
+### Implemented capability and source
+
+2026-11-08: implemented deterministic server-only `RoleService`, `RoundRules` and `MatchService`; engine `GameRuntime`, `MatchRuntime` and `CharacterOwner`; and client `RoundPanel`. Normal matches require 6–10 players, assign one protected placeholder operator and one ground team, enforce explicit no-respawn lives, and resolve timeout/elimination/forfeit before resetting. Reconnect tombstones prevent restored lives; late arrivals spectate. The ground surrender button sends bounded, rate-limited server intent. Actual aircraft, combat and launcher ownership remain future plans; P03 provides server result/cleanup seams without claiming those features.
+
+Tested source: `e0d285723399535677b64335dccca11f4cfd1d19`, Git tree `b17441df12625a0ef5eaea6c58c5f00638d66a8b`. Subsequent documentation/evidence edits do not alter tested runtime or test source. The branch is `plan/03-rounds-and-roles`, based on `b4fa902`, which contains integrated P01/P02 dependencies. See [durable evidence](../docs/evidence/p03-rounds-and-roles.md), [structured Studio results](../docs/evidence/p03/studio-report.json), [independent host log](../docs/evidence/p03/independent-verify.txt) and [source signatures](../docs/evidence/p03/source-signatures.json).
+
+### Acceptance mapping
+
+| Criterion | Named automated evidence and actual result |
+| --- | --- |
+| A1 | `python3 scripts/verify.py` passes 24 unit / 14 integration cases plus all static, rejection, build, geometry and isolation gates. `RoleService.spec` checks 5/11 rejection, 6/10 exactly-one-operator assignment, seeded join-order independence, longest-waiting alternative and 2/3-player fixtures. Safe-integer seed regressions reject overflow configuration. |
+| A2 | `RoundRules.spec` exhausts phase pairs and tests exact-deadline and mutual-elimination ordering. `MatchService.spec` checks readiness, cancellation, single terminal commit and injected exact-time expiry. All pass in Lune and through actual Instance requires in Studio. |
+| A3 | `MatchService.spec` checks once-only deferred life release, rejoin tombstones, immediate operator reconnect/forfeit and deployment departures. Actual multiplayer cases verify death without respawn, teammate camera spectating, and a newly added fourth client remaining a characterless spectator unable to surrender. Cleanup is a seam for P08; there is no held launcher to recover in P03. |
+| A4 | `MatchService.spec` rejects malformed, nonfinite, oversized-action, wrong-role, stale-round, spectator and replay commands without revision mutation. Six additional independent adversarial probes pass. Actual clients send wrong-role/stale/eliminated/spectator requests through the production remote without changing match revision. Generated release inspection excludes test settings, runners and packages; production minimum is six. |
+| A5 | Actual Studio multi-client run: initial three clients receive correct roles, phase/deadline and HUD; a fourth joins during Active. All four client baseline suites pass 2/2. The operator is anchored/protected; an eliminated ground client follows a living teammate and rejected requests cannot interact. |
+| A6 | Three actual accelerated rounds (IDs 1, 2, 3) exercise elimination, timeout and operator forfeit, with ground departure, operator reset, camera/roster restoration, stable connection counts and exact map signatures after intentionally removed cover/added transient debris each round. The ninth engine case stops during real `LoadCharacterAsync`, verifies truthful pending accounting/global ownership, rejects premature acquisition, drains and reacquires cleanly. Both deployment departure roles, last-ground/both-participant departure and empty/spectator policies also pass deterministic integration tests. |
+
+### Environments and counts
+
+Independent tester ran `python3 scripts/verify.py > build/p03-host-independent-final.log 2>&1` on macOS arm64 with pinned tools: 24/24 unit and 14/14 integration, zero failures/skips. Both builds pass; geometry inspection checks 112 authored parts in each; the release artifact contains only its 17 allowlisted runtime scripts. Six disposable adversarial probes pass against the actual service modules. The initial large-seed failure and asynchronous cleanup findings were corrected and rechecked; no material automated finding remains open.
+
+Studio 0.746.0.7461269 used the existing local test document `p02-tests-5c809beff70b.rbxlx`, place ID 0, with Rojo `PlayersVsC130Tests` on port 34872. All 35 mapped first-party sources matched repository byte counts/Adler32 before fresh execution. The server baseline passes 45/45 with zero errors/skips; it completed while one client had connected. Each of the four actual clients passes its 2/2 baseline cases. The separate `StudioTestService:ExecuteMultiplayerTestAsync(3, {kind = "P03"})` scenario records initial three / peak four clients, rounds 1–3 and 9/9 passing multiplayer cases, zero failures/skips. These distinct counts must not be conflated.
+
+Release build SHA256: `dc27f977409398b36f01f5c21e1d70685eed2e3e86c8b163d352ce4860394096`. Test build SHA256: `d90c5cb523a6588d8a20e1c44294e6bc0af8d630cfdeecaa4fdf19f5787dc140`. These identify generated artifacts from tested source; Studio acceptance used verified live synchronization rather than assuming the document's original filename identifies its current content.
+
+### Documentation and scope
+
+Focused two-client review additionally observed both role views and Active → Results (`GroundEliminated`) → Lobby/Waiting → Deploying → Active, with role rotation, understandable result labels and each client's Custom camera restored to its own Humanoid. Its baseline again passed 45 server / 2 per client. [Focused observations](../docs/evidence/p03/focused-review.json), [ground result](../docs/evidence/p03/ground-result.jpg) and [operator result](../docs/evidence/p03/operator-result.jpg) supplement the automated reports. Chat was hidden only in the capture clients; the original test document returned to Edit, and unrelated live test contexts were preserved.
+
+Independent technical writer updated the whole player README/local setup guide, architecture/current requirements, development/testing/decision records and package/test READMEs. The root representative screenshot is an actual P03 active-ground multiplayer capture from 2026-11-08. Aircraft, thermal targeting, weapons, damage and launcher behavior stay explicitly planned. Open team chat can overlap the prototype HUD at the tested viewport; this is documented presentation polish for P10. Local tests do not establish 6/10-player release capacity, balance or combat readiness. No Roblox publication or PR merge occurred.

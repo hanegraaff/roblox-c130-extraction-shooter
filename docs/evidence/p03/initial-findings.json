@@ -1,0 +1,76 @@
+{
+  "sourceCommit": "1586e4b925538ac52f5770d5e967520410998acb",
+  "sourceTree": "a6a116b2e6bfa5010b07318757f3fbc65e9916ae",
+  "environment": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "hostCommand": "python3 scripts/verify.py > build/p03-host-independent.log 2>&1",
+  "host": {
+    "passed": true,
+    "unit": 23,
+    "integration": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifactSha256": {
+    "build/game.rbxlx": "6ec403a3d6950f0d8c0d1b341b5ea39bc75e5529744d3b61f5a16d310699d294",
+    "build/tests.rbxlx": "a208b738aa250b103c7b659f939942c6cbb8a7ff07e22bdcbf4135f2604ff35a"
+  },
+  "adversarial": [
+    {
+      "name": "rejected sequence extremes preserve state and do not poison valid traffic",
+      "passed": true
+    },
+    {
+      "name": "snapshot results and member tables are isolated from caller writes",
+      "passed": true
+    },
+    {
+      "name": "operator departure dominates reconnect despite additional spectator",
+      "passed": true
+    },
+    {
+      "name": "last ground departure and aircraft proposal batch prioritize ground destruction",
+      "passed": true
+    },
+    {
+      "name": "cancelled deployment invalidates queued readiness after new round begins",
+      "passed": true
+    },
+    {
+      "detail": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/build/p03-adversarial:33: expected explicit seed rejection",
+      "name": "very large finite seed rejects explicitly rather than corrupting assignment",
+      "passed": false
+    }
+  ],
+  "confirmedDefects": [
+    {
+      "severity": "P1",
+      "criterion": "A6",
+      "name": "Stopped runtime hides still-draining character loads",
+      "status": "Awaiting correction",
+      "evidence": "Read MatchRuntime.stop/resources and CharacterOwner loading lifecycle; developer confirms."
+    },
+    {
+      "severity": "P2",
+      "criterion": "A1",
+      "name": "Very large finite seed yields zero operator assignment",
+      "reproduction": "MatchService.new minimum2 duration10 seed1e308; join1,2; deploy",
+      "actual": {
+        "accepted": true,
+        "operators": 0,
+        "ground": 2
+      },
+      "expected": "Invalid configuration rejects before valid roster assignment",
+      "status": "Awaiting correction"
+    }
+  ],
+  "studio": {
+    "id": "21f6fc11-4429-4148-9764-89a36987e5e9",
+    "place": "p02-tests-5c809beff70b.rbxlx",
+    "mode": "Edit",
+    "candidateSourceSignaturesMatched": true,
+    "playStarted": false
+  }
+}

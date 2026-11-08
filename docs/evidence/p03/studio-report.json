@@ -1,0 +1,166 @@
+{
+  "sourceCommit": "e0d285723399535677b64335dccca11f4cfd1d19",
+  "sourceTree": "b17441df12625a0ef5eaea6c58c5f00638d66a8b",
+  "environment": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "studioVersion": "0.746.0.7461269",
+    "placeId": 0,
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "project": "PlayersVsC130Tests",
+    "syncPort": 34872
+  },
+  "sourceSync": {
+    "checked": 35,
+    "failures": [],
+    "version": "0.746.0.7461269",
+    "name": "p02-tests-5c809beff70b.rbxlx"
+  },
+  "baselineServer": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 45,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 45
+  },
+  "baselineClients": [
+    {
+      "clientSlot": 1,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "observed": {
+        "role": "Gunship",
+        "viewport": "1081, 658",
+        "life": "Alive",
+        "quality": "Enum.QualityLevel.Automatic"
+      }
+    },
+    {
+      "clientSlot": 2,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "observed": {
+        "role": "Ground",
+        "viewport": "1081, 658",
+        "life": "Alive",
+        "quality": "Enum.QualityLevel.Automatic"
+      }
+    },
+    {
+      "clientSlot": 3,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "observed": {
+        "role": "Ground",
+        "viewport": "1081, 658",
+        "life": "Alive",
+        "quality": "Enum.QualityLevel.Automatic"
+      }
+    },
+    {
+      "clientSlot": 4,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "observed": {
+        "role": "Waiting",
+        "viewport": "1081, 658",
+        "life": "Waiting",
+        "quality": "Enum.QualityLevel.Automatic"
+      }
+    }
+  ],
+  "multiplayer": {
+    "initialClientCount": 3,
+    "skipped": 0,
+    "passed": 9,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A5 three actual clients receive assigned roles, phase, deadline and UI"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 actual late join remains a characterless spectator and cannot act"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 death does not respawn; teammate spectating and command rejection"
+      },
+      {
+        "passed": true,
+        "name": "A6 first reset restores lobby camera, roster and perturbed map"
+      },
+      {
+        "passed": true,
+        "name": "A5/A6 operator reset retains assignment and timeout is authoritative"
+      },
+      {
+        "passed": true,
+        "name": "A6 second reset restores roster, camera and map"
+      },
+      {
+        "passed": true,
+        "name": "A6 actual ground departure removes life; operator departure forfeits"
+      },
+      {
+        "passed": true,
+        "name": "A6 third reset restores camera, map and complete runtime teardown"
+      },
+      {
+        "passed": true,
+        "name": "A6 pending actual avatar loads retain ownership and accounting until drained"
+      }
+    ],
+    "clientCount": 4,
+    "environment": "Studio",
+    "completedRoundIds": [
+      1,
+      2,
+      3
+    ],
+    "suite": "P03-multiplayer",
+    "failed": 0,
+    "discovered": 9
+  },
+  "artifacts": {
+    "game.rbxlx": "dc27f977409398b36f01f5c21e1d70685eed2e3e86c8b163d352ce4860394096",
+    "tests.rbxlx": "d90c5cb523a6588d8a20e1c44294e6bc0af8d630cfdeecaa4fdf19f5787dc140"
+  },
+  "note": "Client identities replaced with report slots. Server baseline count records connection count when its runner completed; multiplayer client counts are independently recorded by the harness."
+}

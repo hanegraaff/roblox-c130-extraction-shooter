@@ -1,6 +1,6 @@
 # Deterministic fixtures
 
-`DevelopmentSettings.luau` is a frozen server-only test record with `minimumPlayers = 2`, reserved for future roster tests. The current shell uses only the presence of the separately mapped `ServerStorage.DevelopmentSettings` ModuleScript to choose its **Test** label; no round or minimum-player logic exists yet.
+`DevelopmentSettings.luau` is a frozen server-only test record with `minimumPlayers = 2`. Its separately mapped presence selects the **Test** bootstrap label and defers gameplay startup to the test runner. The current RoundHarness supplies the two-player runtime settings explicitly after baseline suites finish; production starts from MatchRuntime defaults and requires six players.
 
 The fixture is mapped under `ServerStorage.Tests.Fixtures` and separately as `ServerStorage.DevelopmentSettings` in the test project. Neither copy is in the release build or replicated to clients. Artifact inspection enforces that exclusion. Never use this record to relax a published build’s player requirements.
 

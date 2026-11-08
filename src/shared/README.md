@@ -1,6 +1,6 @@
 # Shared rules and lifecycle modules
 
-Rojo maps this package to `ReplicatedStorage.Shared`. Its modules are strict, deterministic and nonyielding. They depend only on each other, with no services, global clock or mutable singleton authority state. Replication makes their code public; future server adapters must still validate every action.
+Rojo maps this package to `ReplicatedStorage.Shared`. Its modules are strict, deterministic and nonyielding. They depend only on each other, with no services, global clock or mutable singleton authority state. Replication makes their code public; server adapters must still validate every action. Authoritative role/round services live in the [server package](../server/README.md).
 
 | Module / API | Contract |
 | --- | --- |
@@ -19,4 +19,4 @@ Lifecycle components are nonyielding functions that return nonthrowing cleanup c
 
 `Config`, `RateLimit` and `MapRules` import `Validation` through `script.Parent` in Studio and a relative path under Lune. This explicit two-runtime branch is limited to dependency loading. The same [unit cases](../../tests/unit) run against filesystem-loaded modules in Lune and Instance-loaded modules in the Studio server wrapper. [Lifecycle integration cases](../../tests/integration/Lifecycle.spec.luau) use controlled resource adapters.
 
-These helpers provide structural guards and rate accounting. They do not establish role, life state, round identity, sequence freshness, equipment ownership, range or line of sight; future gameplay adapters own those checks.
+These helpers provide structural guards and rate accounting. MatchService/MatchRuntime add role, life, round, sequence and rate checks for surrender. Future weapon adapters add equipment, range and line-of-sight checks; shared code is never a security boundary.

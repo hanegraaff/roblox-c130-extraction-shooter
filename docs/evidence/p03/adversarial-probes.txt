@@ -1,0 +1,35 @@
+local Match = require('../src/server/MatchService')
+local Roles = require('../src/server/RoleService')
+local serde = require('@lune/serde')
+local cases={}
+local function check(name,fn) local ok,detail=pcall(fn) table.insert(cases,{name=name,passed=ok,detail=if ok then nil else tostring(detail)}) end
+local function fixture(count)
+ local t=100 local releases={} local m=Match.new({minimumPlayers=2,durationSeconds=10,seed=1},{now=function()return t end,releaseLife=function(id,r,recover)table.insert(releases,{id=id,roundId=r,recover=recover})end})
+ for id=1,count do m.join(id)end assert(m.deploy()) local s=m.snapshot() local operator local ground={}
+ for id,v in s.members do assert(m.ready(id,s.roundId)) if v.role=='Gunship'then operator=id else table.insert(ground,id)end end
+ assert(m.activate()) return m,operator,ground,releases,function(x)t=x end
+end
+check('rejected sequence extremes preserve state and do not poison valid traffic',function()
+ local m,op,g=fixture(3) local s=m.snapshot() local rev=s.revision
+ for _,seq in {-math.huge,0/0,1.5,-1,2147483648}do assert(not m.command(g[1],{roundId=s.roundId,sequence=seq,action='Surrender'}))end
+ assert(m.snapshot().revision==rev) assert(m.command(g[1],{roundId=s.roundId,sequence=1,action='Surrender'}))
+end)
+check('snapshot results and member tables are isolated from caller writes',function()
+ local m,op,g=fixture(3) local s=m.snapshot() s.members[op].role='Ground' s.members[g[1]]=nil
+ assert(m.snapshot().members[op].role=='Gunship' and m.snapshot().members[g[1]])
+end)
+check('operator departure dominates reconnect despite additional spectator',function()
+ local m,op,g,releases=fixture(3) m.join(99) m.leave(op) m.join(op) m.step() local s=m.snapshot()
+ assert(s.result.reason=='OperatorForfeit' and s.result.winner=='Ground') for _,r in releases do assert(not r.recover)end
+end)
+check('last ground departure and aircraft proposal batch prioritize ground destruction',function()
+ local m,op,g,releases=fixture(2) local s=m.snapshot() m.leave(g[1]) assert(m.proposeAircraftDestroyed(s.roundId)) m.step()
+ assert(m.snapshot().result.winner=='Ground') for _,r in releases do assert(not r.recover)end
+end)
+check('cancelled deployment invalidates queued readiness after new round begins',function()
+ local m=Match.new({minimumPlayers=2,durationSeconds=10,seed=1},{now=function()return 0 end,releaseLife=function()end})m.join(1)m.join(2)assert(m.deploy())local old=m.snapshot().roundId m.leave(1)m.join(1)assert(m.deploy())assert(not m.ready(1,old))assert(not m.activate())
+end)
+check('very large finite seed rejects explicitly rather than corrupting assignment',function()
+ local accepted=pcall(function()return Match.new({minimumPlayers=2,durationSeconds=10,seed=1e308},{now=function()return 0 end,releaseLife=function()end})end) assert(not accepted,'expected invalid configuration to reject before assignment')
+end)
+print(serde.encode('json',cases))

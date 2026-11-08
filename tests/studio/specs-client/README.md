@@ -4,4 +4,4 @@
 
 It checks real replicated **Test** status, character/HumanoidRootPart availability and environment text in the status GUI. It exercises two explicit start/stop cycles of an independent StatusPanel while preserving the entrypoint panel, then restores the original name. Readiness waits are bounded.
 
-These are P01/R01 shell checks. They do not prove role-specific cameras, combat input, thermal occlusion, no-respawn rounds or multiple-player state convergence. Follow the [testing guide](../../../docs/testing.md) for actual client-context reports and separate stop/restart runs.
+These two cases are P01/R01 shell checks. P03 role/deadline/UI replication, no-respawn behavior and spectator camera observations live in the separate client RoundHarness after these specs; combat and thermal checks remain planned. Follow the [testing guide](../../../docs/testing.md) for actual client-context reports and separate stop/restart runs.
