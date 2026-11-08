@@ -33,11 +33,12 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Choose the branch you intend to test before building. Use `main` for integrated source or the PR's head branch for an unmerged candidate. To use the latest lobby movement and solo-preview fix, fetch and select its task branch (which includes the P03 source):
+`main` includes the roles/rounds prototype, walkable lobby and Studio human-testing panel. Select and update the integrated source before building; use a PR's head branch only when reviewing an unmerged change:
 
 ```sh
 git fetch origin
-git switch fix/human-test-controls
+git switch main
+git pull --ff-only
 ```
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
