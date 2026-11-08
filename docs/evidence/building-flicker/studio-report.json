@@ -1,0 +1,65 @@
+{
+  "date": "2026-11-08",
+  "sourceCommit": "45e19963cfa5d4c7bdcf43ed01eddc77ec417a74",
+  "server": {
+    "studioVersion": "0.746.0.7461269",
+    "baseline": {
+      "errors": 0,
+      "clientCount": 1,
+      "passed": 67,
+      "environment": "Studio",
+      "seed": 1,
+      "discovered": 67,
+      "suite": "P01-server",
+      "failed": 0,
+      "skipped": 0
+    },
+    "navigation": {
+      "clientCount": 1,
+      "passed": true,
+      "walked": {
+        "1": {
+          "upperY": 13.123024940490723,
+          "building": "Foundry"
+        },
+        "2": {
+          "upperY": 13.123024940490723,
+          "building": "Warehouse"
+        },
+        "3": {
+          "upperY": 13.123024940490723,
+          "building": "Outpost"
+        }
+      }
+    }
+  },
+  "client": {
+    "viewport": "1081, 619",
+    "baseline": {
+      "environment": "Studio",
+      "failed": 0,
+      "discovered": 2,
+      "errors": 0,
+      "skipped": 0,
+      "suite": "P01-client",
+      "passed": 2,
+      "seed": 1
+    },
+    "savedQuality": "Automatic"
+  },
+  "loadedGeometry": {
+    "version": "0.746.0.7461269",
+    "checked": 351,
+    "placeId": 0,
+    "maximumCFrameErrorStuds": 0.000014292654839209717,
+    "failures": [],
+    "tolerance": 0.001
+  },
+  "syncedSource": {
+    "version": "0.746.0.7461269",
+    "name": "p02-tests-5c809beff70b.rbxlx",
+    "failures": [],
+    "placeId": 0,
+    "checked": 58
+  }
+}

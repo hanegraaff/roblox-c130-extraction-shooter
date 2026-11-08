@@ -67,7 +67,7 @@ function BuildingGeometry.validate(
         local upperTop = upper.Position.Y + upper.Size.Y / 2
         if
             math.abs(upperTop - floorTop - 10) > 0.01
-            or upper.Size.X < 20
+            or upper.Size.X < 19
             or upper.Size.Z < 32
             or math.abs(landing.Position.Y + landing.Size.Y / 2 - upperTop) > 0.01
         then
@@ -86,7 +86,7 @@ function BuildingGeometry.validate(
                     or room.Size ~= Vector3.new(32, 8, 48)
                     or room.Position ~= Vector3.new(
                         floor.Position.X + 16,
-                        4 + (story - 1) * 10,
+                        floorTop + 4 + (story - 1) * 10,
                         floor.Position.Z
                     )
                     or room.CanCollide
@@ -105,7 +105,7 @@ function BuildingGeometry.validate(
                         or divider.Position
                             ~= Vector3.new(
                                 floor.Position.X,
-                                4 + (story - 1) * 10,
+                                floorTop + 4 + (story - 1) * 10,
                                 floor.Position.Z + (if index == 1 then -8 else 8)
                             )
                     then

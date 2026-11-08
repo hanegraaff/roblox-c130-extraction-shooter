@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import json
 import math
 import tempfile
+import copy
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -117,6 +118,95 @@ def check_authored_geometry(path: Path) -> int:
     return count
 
 
+def check_building_surfaces(world: dict) -> int:
+    """Reject overlapping, same-facing visible faces in the axis-aligned buildings.
+
+    Ordinary edge joins and opposing contact faces are valid. A third opaque solid
+    may hide a coplanar overlap (for example wall corners inside columns). Subtract
+    its projected rectangle exactly, rather than sampling and missing small slivers.
+    This guards authored z-fighting, not every renderer or shadow artifact.
+    """
+    buildings = next(item for item in world["Children"] if item["Name"] == "Buildings")
+    count = 0
+    for building in buildings["Children"]:
+        solids = []
+        for group in building["Children"]:
+            for part in group.get("Children", []):
+                properties = part.get("Properties", {})
+                if part["ClassName"] not in PART_CLASSES or properties.get("Transparency", 0) >= 1:
+                    continue
+                pose, size = properties["CFrame"], properties["Size"]
+                assert pose[3:] == [1, 0, 0, 0, 1, 0, 0, 0, 1], "surface guard requires axis-aligned buildings"
+                low = [pose[axis] - size[axis]/2 for axis in range(3)]
+                high = [pose[axis] + size[axis]/2 for axis in range(3)]
+                solids.append((part["Name"], low, high))
+                if part["Name"].endswith("_GroundFloor"):
+                    assert high[1] >= 0.125, "building floor overlaps the Y=0 battlefield surface"
+        for index, (first_name, first_low, first_high) in enumerate(solids):
+            for second_index in range(index + 1, len(solids)):
+                second_name, second_low, second_high = solids[second_index]
+                for axis in range(3):
+                    u, v = [other for other in range(3) if other != axis]
+                    rectangle = (max(first_low[u], second_low[u]), max(first_low[v], second_low[v]),
+                                 min(first_high[u], second_high[u]), min(first_high[v], second_high[v]))
+                    if rectangle[2] - rectangle[0] <= 1e-6 or rectangle[3] - rectangle[1] <= 1e-6:
+                        continue
+                    for sign, first_face, second_face in ((-1, first_low[axis], second_low[axis]),
+                                                         (1, first_high[axis], second_high[axis])):
+                        if abs(first_face - second_face) > 1e-5:
+                            continue
+                        uncovered = [rectangle]
+                        outside = first_face + sign * 1e-4
+                        for other_index, (_, low, high) in enumerate(solids):
+                            if other_index in (index, second_index) or not low[axis] < outside < high[axis]:
+                                continue
+                            remaining = []
+                            for left, bottom, right, top in uncovered:
+                                cut_left, cut_bottom = max(left, low[u]), max(bottom, low[v])
+                                cut_right, cut_top = min(right, high[u]), min(top, high[v])
+                                if cut_left >= cut_right or cut_bottom >= cut_top:
+                                    remaining.append((left, bottom, right, top))
+                                    continue
+                                for piece in ((left, bottom, cut_left, top), (cut_right, bottom, right, top),
+                                              (cut_left, bottom, cut_right, cut_bottom), (cut_left, cut_top, cut_right, top)):
+                                    if piece[2] - piece[0] > 1e-6 and piece[3] - piece[1] > 1e-6:
+                                        remaining.append(piece)
+                            uncovered = remaining
+                            if not uncovered:
+                                break
+                        assert not uncovered, f"coplanar building faces: {first_name} / {second_name}, axis {axis}"
+                count += 1
+    return count
+
+
+def building_surface_rejection_probes(world: dict) -> None:
+    """The guard must reject the reported ground/frame defects and duplicate walls."""
+    for fault in ("ground", "frame", "duplicate"):
+        fixture = copy.deepcopy(world)
+        building = next(item for item in fixture["Children"] if item["Name"] == "Buildings")["Children"][0]
+        supports = building["Children"][0]["Children"]
+        if fault == "ground":
+            floor = next(item["Properties"] for item in supports if item["Name"].endswith("_GroundFloor"))
+            floor["CFrame"][1] = -floor["Size"][1]/2
+        elif fault == "frame":
+            beam = next(item["Properties"] for item in supports if item["Name"].endswith("_BeamEast9"))
+            beam["Size"][2] += 2
+            floor = next(item["Properties"] for item in supports if item["Name"].endswith("_UpperMain"))
+            floor["Size"][0] += 1
+            floor["CFrame"][0] += 0.5
+        else:
+            panels = next(item for item in building["Children"] if item["Name"].endswith("_Panels"))
+            duplicate = copy.deepcopy(panels["Children"][1])
+            duplicate["Name"] += "_Duplicate"
+            panels["Children"].append(duplicate)
+        try:
+            check_building_surfaces(fixture)
+        except AssertionError as error:
+            print(f"Expected building surface rejection ({fault}): {error}")
+        else:
+            raise RuntimeError(f"Building surface probe accepted {fault}")
+
+
 def check_expanded_world_contract() -> None:
     """Check deterministic terrain/source metadata and real authored floor/stair/panel poses.
 
@@ -125,6 +215,9 @@ def check_expanded_world_contract() -> None:
     terrain generation, avatar walking and network replication.
     """
     world = json.loads((ROOT / "assets/world/Battlefield.model.json").read_text())
+    face_pairs = check_building_surfaces(world)
+    building_surface_rejection_probes(world)
+    print(f"Building surface separation passed: {face_pairs} part pairs, no exposed coplanar overlaps.")
     children = {item["Name"]: item for item in world["Children"]}
     assert children["GroundDisk"]["Properties"]["Size"] == [4, 720, 720], "ExpandedMapRules diameter"
     # The doubled radius lowers approach angles. Check that all nine protected spawn
@@ -160,8 +253,9 @@ def check_expanded_world_contract() -> None:
         supports = {item["Name"]: item["Properties"] for item in contents[name+"_Static"]["Children"]}
         floor = supports[name+"_GroundFloor"]
         areas.append(floor["Size"][0] * floor["Size"][2])
-        assert supports[name+"_UpperMain"]["Size"][0] >= 20, "usable upper floor"
-        previous_top = 0
+        assert supports[name+"_UpperMain"]["Size"][0] >= 19, "usable upper floor inside frame"
+        floor_top = floor["CFrame"][1] + floor["Size"][1]/2
+        previous_top = floor_top
         previous_z = None
         for index in range(1, 17):
             step = supports[f"{name}_Step{index:02}"]
@@ -170,7 +264,7 @@ def check_expanded_world_contract() -> None:
             if previous_z is not None:
                 assert previous_z-step["CFrame"][2] == 2, "contiguous stair run"
             previous_z, previous_top = step["CFrame"][2], top
-        assert previous_top == 10, "stairs reach upper floor"
+        assert previous_top == floor_top + 10, "stairs reach upper floor"
         assert len(contents[name+"_Navigation"]["Children"]) == 5, "operated navigation route"
         if floor["Size"][0] == 64:
             rooms = contents[name+"_Rooms"]["Children"]

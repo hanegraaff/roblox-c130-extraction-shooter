@@ -4,9 +4,9 @@
 
 The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
-![Studio Edit overview of the circular expanded map with grass and rock hills, three roofed buildings, two marked launcher routes and an outside lobby deck](docs/evidence/p13/current-progress.jpg)
+![Two-story building with separated floor surfaces and clean structural frame joins](docs/evidence/building-flicker/current-progress.jpg)
 
-*Current progress: expanded-map Edit inspection in Studio, captured on 2026-11-08 with terrain reconstructed from the versioned recipe. This overview uses an inspection camera; panning, firing and panel destruction remain planned.*
+*Current progress: actual Studio Edit inspection after the building surface-flicker fix, captured 2026-11-08. Terrain was reconstructed from the source recipe for inspection. This is not the operator gameplay camera; firing and damage remain planned.*
 
 ## What you can play today
 
@@ -35,15 +35,15 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The expanded terrain/building candidate is on `plan/13-terrain-and-buildings`; `main` still contains the smaller map until this increment is merged. After a fresh clone, select the candidate before building:
+The building surface-flicker fix is on `fix/building-surface-flicker`, based on the unmerged `plan/13-terrain-and-buildings` candidate; `main` still contains the smaller map. After a fresh clone, select the candidate before building:
 
 ```sh
 git fetch origin
-git switch --track origin/plan/13-terrain-and-buildings
-git pull --ff-only origin plan/13-terrain-and-buildings
+git switch --track origin/fix/building-surface-flicker
+git pull --ff-only origin fix/building-surface-flicker
 ```
 
-If that local branch already exists, use `git switch plan/13-terrain-and-buildings` instead of creating it again. To inspect the integrated prototype, select and update `main`.
+If that local branch already exists, use `git switch fix/building-surface-flicker` instead of creating it again. To inspect the integrated prototype, select and update `main`.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
