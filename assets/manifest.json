@@ -1,4 +1,15 @@
 {
   "schema_version": 1,
-  "assets": []
+  "assets": [
+    {
+      "id": "foundation-spawn",
+      "kind": "world",
+      "source": "Original primitive authored in this repository",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/world/FoundationSpawn.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    }
+  ]
 }

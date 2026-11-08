@@ -1,10 +1,53 @@
 # Testing and acceptance
 
-## What runs today
+## Current foundation checks
 
-`python3 scripts/verify.py` validates repository links, JSON, mapped paths, and asset-manifest file references, then builds release and test place artifacts with pinned Rojo. `python3 scripts/check_repository.py` runs only the repository checks. Neither command currently tests gameplay. No gameplay code or game tests exist yet.
+Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the implemented development shell. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
 
-Plan 01 turns `verify.py` into the full non-Studio gate and establishes the Studio test runner. Later plans must not invent a new command instead of extending that gate. Tool versions and exact commands become part of the implementation evidence.
+| Gate | Command used by the verifier |
+| --- | --- |
+| Repository inputs | `python3 scripts/check_repository.py` |
+| Format | `stylua --check src tests scripts/run_tests.luau` |
+| Lint | `selene src tests scripts/run_tests.luau` |
+| Roblox sourcemap | `rojo sourcemap test.project.json --output build/sourcemap.json` |
+| Strict types | `luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau src tests scripts/run_tests.luau` |
+| Unit rules | `lune run scripts/run_tests.luau unit` |
+| Lifecycle integration | `lune run scripts/run_tests.luau integration` |
+| Release/test builds | `rojo build default.project.json --output build/game.rbxlx` and `rojo build test.project.json --output build/tests.rbxlx` |
+| Artifact isolation | `python3 scripts/inspect_build.py` |
+
+Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
+
+The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites exercise finite numbers, flat bounded payloads, configuration and injected-time rate limits. Integration tests exercise the real lifecycle controller with controlled resource adapters. They load the production modules, not copies of their rules.
+
+The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
+
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. Update the allowlist deliberately when adding runtime modules. Build success and standalone tests do not establish engine behavior.
+
+## Run the Studio smoke suites
+
+1. Build with the full verifier. Open `build/tests.rbxlx` as a separate local Studio document, or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
+2. Through Studio MCP, list connected instances, select the intended test document and inspect its state. Consult the connected server’s relevant skill guidance. Confirm that `ServerScriptService.ServerTests`, `StarterPlayer.StarterPlayerScripts.ClientTests`, `ReplicatedStorage.TestPackages` and `ServerStorage.DevelopmentSettings` belong to the test mapping.
+3. Start **Play** with one actual client for the P01 smoke gate. The mapped server and client runners execute TestEZ automatically. The server requires a player within ten seconds. Startup waits in the smoke specs are bounded; a missing report or timeout is a failure requiring investigation.
+4. Read both structured JSON reports and the Studio Output log. In the **server** context:
+
+   ```luau
+   return workspace:GetAttribute("ServerTestReport")
+   ```
+
+   In the **client** context:
+
+   ```luau
+   return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
+   ```
+
+5. Each report must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Report fields also include `suite`, `environment = "Studio"` and deterministic fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Check actual contexts/client count instead of assuming a report proves a multiplayer session.
+6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus` and one local `PlayerGui.FoundationStatus`, with no leftover `EntrypointStatus` or `EntrypointPanel`. The suites also exercise two explicit stop/start cycles of the server runtime and status controller.
+7. Open `build/game.rbxlx` separately. Play, confirm an avatar spawns on the temporary platform and the panel reads **Development** / **Bootstrap running**. The test build reads **Test**. Review readability in the actual viewport and inspect Output. Stop Play when finished.
+
+The server suite loads the shared unit/integration cases through actual Instance-based requires and checks bootstrap ownership plus a real raycast at the anchored spawn. The client suite checks replicated status, character availability and GUI/controller cleanup. P01’s one-server/one-client smoke does not prove gameplay replication between two players, combat, no-respawn rounds, camera feel, device compatibility or release capacity.
+
+Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
 
 ## Required test levels
 
@@ -14,7 +57,7 @@ Plan 01 turns `verify.py` into the full non-Studio gate and establishes the Stud
 | Unit | Rules: transitions, timers, damage, ammo, circular orbit math, weapon-linked zoom, single-launcher ownership | Standalone Luau under Lune; deterministic clock/random inputs |
 | Service integration | Real services connected through fakes for transport, clock and world queries | Lune where engine-independent; TestEZ in Studio for Instance-dependent adapters |
 | Engine integration | Raycast/cover, Humanoid death, collision swaps, Instances, camera state | TestEZ in the test place, with assertions and a structured pass/fail summary |
-| Multiplayer | Replication, roles, input rejection, late joins, visibility, cleanup | Server with two distinct client contexts initially; 6/10 roster fixtures plus real capacity sessions later |
+| Multiplayer | Replication, roles, input rejection, late joins, visibility, cleanup | Two distinct client contexts for gameplay claims; P01 only requires its one-client smoke; actual 6/10 capacity sessions arrive later |
 | Experience | Readability, camera feel, sound, balance, fairness | Focused operated playtest and captured observations; supplements automated evidence |
 
 Unit tests use observable invariants and boundary examples, not implementation-specific call order unless order is the contract. Integration tests use real services and fake boundaries, not fake services calling each other. Engine checks assert real world state. A client screenshot cannot establish server authority.
@@ -44,7 +87,7 @@ Character movement is client-simulated in normal Roblox play. Include implausibl
 
 ## Studio execution and evidence
 
-P01 must provide an explicit server runner and client runner in `test.project.json`, excluded from `default.project.json`. Use the Roblox Studio MCP connection as the primary way to inspect and operate the test place and supported playtests; identify the intended Studio instance and discover its actual capabilities first. If the required operation is unavailable, use documented Studio steps and a human-assisted run where possible. Do not claim that Lune or a generated place simulated a real server; an unavailable required engine check remains open.
+The explicit P01 server/client runners are mapped only by `test.project.json` and excluded from `default.project.json`. Use the Roblox Studio MCP connection as the primary way to inspect and operate the test place and supported playtests; identify the intended Studio instance and discover its actual capabilities first. If the required operation is unavailable, use documented Studio steps and a human-assisted run where possible. Do not claim that Lune or a generated place simulated a real server; an unavailable required engine check remains open.
 
 Record for each required run:
 

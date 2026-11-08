@@ -1,0 +1,130 @@
+{
+  "plan": "P01",
+  "date": "2026-11-08",
+  "source_tree": "490df5b6844ee898d50bb24f5d8836e9fd9ecdf8",
+  "host": "macOS-26.6.2-arm64-arm-64bit",
+  "python": "3.10.4",
+  "studio_version": "0.746.0.7461269",
+  "seed": 1,
+  "fixture": "Workspace.World.FoundationSpawn",
+  "test_studio": "a848de82-e636-465a-bb35-8965796043a6",
+  "development_studio": "87b74d0b-6915-425e-83bf-0a4a3983f79d",
+  "place_id": 0,
+  "build_sha256": {
+    "game": "7475bc8887a563185eb592be52127b223979b002884fc98affa02adeb0ed06d0",
+    "tests": "6c380eeb82954d9ee0e571d0974117cd964767587168cd76978aa51e8e2b8c08"
+  },
+  "non_studio": {
+    "command": "python3 scripts/verify.py",
+    "exit_code": 0,
+    "unit": {
+      "discovered": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "discovered": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "negative_probe_exit_codes": {
+      "failing_fixture": 1,
+      "empty_unit_suite": 1,
+      "strict_engine_type_error": 1
+    },
+    "release_instances": 18,
+    "test_instances": 54,
+    "release_runtime_scripts": 8,
+    "log": "independent-verify.txt"
+  },
+  "test_play_cycles": [
+    {
+      "cycle": 1,
+      "actual_clients": 1,
+      "server": {
+        "discovered": 14,
+        "passed": 14,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      },
+      "client": {
+        "discovered": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      },
+      "status_folders": 1,
+      "status_guis": 1,
+      "label_environment": "Test",
+      "character_spawned": true
+    },
+    {
+      "cycle": 2,
+      "actual_clients": 1,
+      "server": {
+        "discovered": 14,
+        "passed": 14,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      },
+      "client": {
+        "discovered": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      },
+      "status_folders": 1,
+      "status_guis": 1,
+      "label_environment": "Test",
+      "character_spawned": true
+    }
+  ],
+  "between_cycles": {
+    "edit_runtime_status_absent": true,
+    "edit_players": 0,
+    "test_report_absent": true
+  },
+  "development_play": {
+    "actual_clients": 1,
+    "status_folders": 1,
+    "status_guis": 1,
+    "label_environment": "Development",
+    "test_packages_absent": true,
+    "test_settings_absent": true,
+    "server_test_runner_absent": true,
+    "client_test_runner_absent": true,
+    "health": 100,
+    "floor_material": "Plastic",
+    "console_errors": 0
+  },
+  "visual": {
+    "viewport": [
+      1081,
+      619
+    ],
+    "graphics_quality": "Automatic",
+    "saved_quality": "Automatic",
+    "label_size": [
+      400,
+      86
+    ],
+    "label_text_fits": true,
+    "observations": "High-contrast three-line panel readable and environment label distinguishes mappings. Avatar stands on temporary spawn platform. Core chat help sits above panel text; no panel text overlap.",
+    "captures": [
+      "test-play.jpg",
+      "development-play.jpg"
+    ]
+  },
+  "findings": [],
+  "limitations": [
+    "P01 shell only; no gameplay or multiplayer capacity validation.",
+    "Visual review is at recorded viewport and Automatic quality; no performance claim.",
+    "Clean exported checkout install evidence is supplied separately by primary."
+  ]
+}

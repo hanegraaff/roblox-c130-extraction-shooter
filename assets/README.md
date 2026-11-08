@@ -1,6 +1,6 @@
 # Authored assets
 
-This directory is initially empty of game assets. `world/` maps to `Workspace.World`; `models/` maps to server-only templates. Keep game-critical source here so a clean Git checkout can rebuild the place.
+The current authored asset is the original primitive [foundation spawn](world/FoundationSpawn.model.json), recorded in [manifest.json](manifest.json). It provides the development shell’s temporary platform; it is not the planned battlefield. `world/` maps to `Workspace.World`; `models/` reserves server-only templates. Keep game-critical source here so a clean Git checkout can rebuild the place.
 
 Prefer `.model.json` for simple primitives and text `.rbxmx` exports for Studio-authored models. Export only authored objects after stopping play mode. Keep scripts in `src/`; inspect imported models for unintended scripts. For meshes, textures, animations and audio, retain original sources when rights and size permit, and record uploaded asset references and ownership.
 
