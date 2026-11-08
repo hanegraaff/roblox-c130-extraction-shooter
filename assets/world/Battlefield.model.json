@@ -2265,9 +2265,9 @@
             "Anchored": true,
             "CanCollide": true,
             "Size": [
-              72,
+              108,
               2,
-              68
+              96
             ],
             "Color": [
               0.3,

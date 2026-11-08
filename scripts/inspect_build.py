@@ -127,6 +127,20 @@ def check_expanded_world_contract() -> None:
     world = json.loads((ROOT / "assets/world/Battlefield.model.json").read_text())
     children = {item["Name"]: item for item in world["Children"]}
     assert children["GroundDisk"]["Properties"]["Size"] == [4, 720, 720], "ExpandedMapRules diameter"
+    # The doubled radius lowers approach angles. Check that all nine protected spawn
+    # rays intersect the enlarged canopy, including the old southwest/north failures.
+    roof = next(item["Properties"] for item in children["Permanent"]["Children"] if item["Name"] == "ShelterRoof")
+    for anchor in children["Anchors"]["Children"]:
+        if not anchor["Name"].startswith("Ground"):
+            continue
+        ax, ay, az = anchor["Properties"]["CFrame"][:3]
+        t = (roof["CFrame"][1] - roof["Size"][1]/2 - ay)/(140-ay)
+        for phase in range(64):
+            angle = phase * math.pi/32
+            x = ax + (math.cos(angle)*360 - ax)*t
+            z = az + (math.sin(angle)*360 - az)*t
+            assert abs(x-roof["CFrame"][0]) < roof["Size"][0]/2 - 1, "spawn canopy misses full-orbit X protection"
+            assert abs(z-roof["CFrame"][2]) < roof["Size"][2]/2 - 1, "spawn canopy misses full-orbit Z protection"
     manifest = json.loads((ROOT / "assets/manifest.json").read_text())
     recipe_contract = next(asset for asset in manifest["assets"] if asset["id"] == "battlefield-greybox")["terrain_recipe"]
     assert recipe_contract == {"version": 1, "seed": 0, "descriptor_path": "TerrainRecipe", "owner_module": "src/server/TerrainRecipe.luau", "voxel_resolution_studs": 4, "bounds_min": [-368, -112, -368], "bounds_max": [368, 32, 368], "hill_count": 8, "materials": ["Grass", "Rock"]}, "terrain manifest contract"
