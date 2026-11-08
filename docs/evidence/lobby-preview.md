@@ -33,3 +33,7 @@ Every launched test ended. The final connected inventory contains only the origi
 ## Limits
 
 Operator preview is the current protected avatar station; aircraft/thermal targeting/combat are still planned. Solo preview does not supply a real opponent or establish multiplayer combat. Settings last for the local session and across its resets, not a new Play session. Real rounds still require at least two test clients; production requires 6–10. These checks do not establish release capacity or balance.
+
+## GitHub delivery
+
+Source, documentation, verified capture and bounded evidence are pushed in `bbe2c9485df7113aed38ae31317bb44af4ffa911` on `origin/fix/human-test-controls`. [PR #7](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/7) is open and unmerged, stacked on the still-unmerged P03 branch because that source is required. [GitHub Verify run 42523454928](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42523454928) passes on that pushed candidate. Final link records are documentation-only and pass the repository checker/diff check. No merge or Roblox publication occurred.
