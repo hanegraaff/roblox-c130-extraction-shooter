@@ -1,0 +1,12 @@
+Source: 9b5e7aa818fddd33d8d171a8938ed5a706abec26; git archive to disposable directory; locked installed Packages dependency copied.
++ rojo build default.project.json --output build/game.rbxlx
+Building project 'PlayersVsC130'
+Built project to game.rbxlx
+game SHA256 fb969754a1ed0e37a5ee3a4a9b4a822de74f7e3c72856958005125b36aa57bea; identical to final working build
++ rojo build test.project.json --output build/tests.rbxlx
+Building project 'PlayersVsC130Tests'
+Built project to tests.rbxlx
+tests SHA256 72ab93292948d823ace9d889bdab2e94d957bdc6e92c773f8552806a59685eac; identical to final working build
++ python3 scripts/inspect_build.py
+Artifact isolation passed: 138 release Instances, 176 test Instances; 10 runtime scripts only in release.
+PASS: no Studio edits or working source copied; both source reconstruction builds match.

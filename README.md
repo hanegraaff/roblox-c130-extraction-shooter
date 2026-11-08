@@ -6,9 +6,11 @@ The intended game puts one C-130 operator above a circular industrial battlefiel
 
 ## What you can play today
 
-The local development build is a small shell: your avatar spawns on a temporary platform, and a status panel shows **Bootstrap running** with a **Development** or **Test** label. Use the standard Roblox desktop controls: WASD to move, Space to jump, and the mouse to control the view.
+The local build contains a circular greybox battlefield. Your avatar starts in its southern shelter. Follow the teal western route or ochre eastern route toward the gold marker at the center; that marker reserves the future rocket-launcher location. Industrial walls and roofed cover separate the routes from exposed areas, and an orange perimeter marks the battlefield edge. The launcher marker cannot be picked up, and cover cannot be destroyed yet.
 
-The battlefield, aircraft, roles, weapons, rounds, spectating and results are still planned. The shell uses normal Roblox character behavior; the intended no-respawn round rules are not implemented yet. There is no published Roblox play link.
+Use standard Roblox desktop controls: **WASD** to move, **Space** to jump, and the mouse to control the view. The server is configured to return characters that leave the battlefield or fall below it to the shelter. A separate lobby/operator deck is authored outside the battlefield; role assignment and transport to it are still planned.
+
+A status panel shows **Bootstrap running** with a **Development** or **Test** label. Aircraft, roles, weapons, rounds, spectating and results remain planned. Normal Roblox respawning still applies. There is no published Roblox play link. The map has passed host checks and local Studio clearance, cover, boundary, rebuild and walking checks with one client. [P02](plans/02-warzone-map.md) records the evidence and limits; this does not establish multiplayer combat or support for every avatar size.
 
 The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
 
@@ -24,13 +26,13 @@ python3 scripts/verify.py
 See the [development guide](docs/development.md) for prerequisites and source synchronization.
 
 1. In Studio, use **File → Open from File** and select this repository’s `build/game.rbxlx`. This local build is separate from an existing cloud place such as “C130 - Shootout.”
-2. Click **Play**. Your avatar should spawn on the temporary platform, with **Development** and **Bootstrap running** in the status panel.
-3. Try **WASD** movement, **Space** to jump, and the mouse to control the camera.
+2. Click **Play**. Your avatar should spawn in the southern shelter, with **Development** and **Bootstrap running** in the status panel.
+3. Walk both colored routes to the gold center marker. Inspect the cover and orange perimeter using **WASD**, **Space**, and the mouse.
 4. Click **Stop**, then **Play** again. Confirm you still have exactly one status panel.
-5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and check that **14 server tests and 2 client tests pass**, with zero failures or skipped cases.
+5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. The current map has passed these suites locally; rerun them for your generated build.
 6. Stop and restart the test place to confirm the suites pass again and the panel is not duplicated. Click **Stop** when finished.
 
-After source changes, stop Play, rerun `python3 scripts/verify.py`, and reopen the generated builds. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. These checks cover the current shell; aircraft and combat arrive in later plans.
+After source changes, stop Play, rerun `python3 scripts/verify.py`, and use [Rojo live sync](docs/development.md#sync-this-repository-with-studio) to update the same local document before a fresh Play session. Open a newly generated artifact separately when checking file-load reconstruction. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. The server suites include map clearance, cover raycasts, boundary correction and two map rebuilds. Aircraft and combat arrive in later plans.
 
 ## Planned roles
 
@@ -63,7 +65,7 @@ The initial round-length default is ten minutes. There will be no respawns durin
 
 ## Planned controls
 
-These bindings are proposals to validate as the corresponding features arrive. Only standard avatar movement and camera controls work in the current shell.
+These bindings are proposals to validate as the corresponding features arrive. Only standard avatar movement and camera controls work in the current map build.
 
 | Action | Ground player | C-130 operator |
 | --- | --- | --- |

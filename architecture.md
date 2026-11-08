@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-The implemented foundation is a runnable development shell: an authored temporary spawn, a server bootstrap status Folder, a client status panel, pure validation/configuration/rate/lifecycle modules, and separate standalone/Studio runners. There are no gameplay remotes, roles, rounds or combat yet. Gameplay systems below describe the **target architecture** introduced incrementally by the [roadmap](roadmap.md); create each component when its behavior is needed.
+The current source contains the development foundation and a circular greybox map: authored spawn/cover/anchors, pure circle/orbit rules, a server map owner with containment and rebuild, a server bootstrap status Folder, a client status panel, and separate standalone/Studio runners. The map's host gate and local one-client Studio map/walking checks pass; [P02](plans/02-warzone-map.md) records source, engine evidence and limits. There are no gameplay remotes, roles, rounds or combat yet. Gameplay systems below describe the **target architecture** introduced incrementally by the [roadmap](roadmap.md); create each component when its behavior is needed.
 
 Use a single Roblox place for lobby and battlefield, Luau for game code, and Git-first editing with Rojo for supported source/world synchronization. Roblox hosts the running experience; GitHub stores reconstructable source. No external application backend, persistent player inventory, or cross-server matchmaking is needed for the MVP.
 
@@ -14,13 +14,21 @@ MCP and Rojo have different responsibilities. Rojo maps repository-owned Luau an
 
 ## Implemented foundation
 
-`ServerScriptService.Server` starts `Bootstrap`, which validates public defaults and owns one `ReplicatedStorage.BootstrapStatus` Folder plus a Heartbeat connection. Its cleanup disconnects the listener and destroys the Folder. Server-only `DevelopmentSettings` exists only in the test mapping and selects the **Test** environment label; its future two-player minimum is not used by the current shell. The release mapping selects **Development**.
+`ServerScriptService.Server` first constructs and starts `MapService`, then starts `Bootstrap`, which validates public defaults and owns one `ReplicatedStorage.BootstrapStatus` Folder plus a Heartbeat connection. Its cleanup disconnects the listener and destroys the Folder. Server-only `DevelopmentSettings` exists only in the test mapping and selects the **Test** environment label; its future two-player minimum is not used by the current shell. The release mapping selects **Development**.
 
 The client entrypoint waits for PlayerGui and server status, then starts `StatusPanel`. That controller owns one `FoundationStatus` ScreenGui and one attribute listener; stopping it disconnects and destroys both. `Lifecycle` composes nonyielding components with idempotent start/stop and rollback on partial start failure. Component cleanup callbacks must not throw or reenter the controller.
 
 `Validation` accepts finite numbers and bounded flat scalar payloads. `Config` decodes validated public defaults, and `RateLimit` consumes a deterministic token bucket using caller-supplied monotonic seconds. These helpers do not implement role, replay, ownership or world checks. Future server adapters must add those checks at each action boundary. Shared modules contain no secret authority state.
 
 Pure modules with dependencies choose an explicit Instance require when `script` exists and a relative filesystem require under Lune. Standalone specs receive the actual rule module as a parameter; TestEZ wrappers pass actual mapped ModuleScripts to the same cases. This keeps one implementation usable in both runtimes without a virtual filesystem. See the [shared package](src/shared/README.md) for contracts.
+
+## Implemented map boundary
+
+`Workspace.World.Battlefield` comes entirely from the versioned [world definition](assets/world/Battlefield.model.json). `MapRules` validates the shared map/orbit contract: finite coordinates, radius greater than eight studs, altitude greater than sixteen studs, kill threshold below ground, matching map/orbit centers and radii, and a focus at the ground-level center. Defaults are center `(0, 0, 0)`, radius 180 studs, altitude 140 studs and kill threshold Y = −30. `orbit(settings, phaseRadians)` only samples a future aircraft position; P02 has no moving aircraft or targeting camera.
+
+Server-only `MapService` uses real Workspace overlap/raycast queries to validate geometry and anchors, retains an unparented pristine clone, and assigns stable `CoverId`/`CoverKind` attributes to Permanent/Breakable cover. Its injected character provider and Heartbeat signal keep orchestration explicit. While started, a living character outside the disk or below the kill threshold is returned to authored `Ground05` and its velocities are cleared. The authored lobby deck has a bounded station exception; role-specific access and deployment arrive with P03. This is containment, not a general movement-exploit detector.
+
+`stop()` disconnects Heartbeat while retaining the map and snapshot for restart. `rebuild()` destroys the owned Battlefield subtree, clones the snapshot and validates the replacement. `destroy()` is idempotent, stops containment and destroys the private snapshot; static authored geometry remains. No current round controller invokes rebuild, and external consumers must reacquire Instances after replacement. The [server package](src/server/README.md) documents the public adapter/lifecycle contract.
 
 ## Target layers and dependencies
 
@@ -92,7 +100,7 @@ The release project excludes tests, test dependencies, fixtures and development 
 | --- | --- | --- |
 | `Bootstrap`, shared validation and lifecycle | Implemented shell wiring, cleanup, structural decoding/rate helpers | P01 |
 | Named remote adapters | Add action-specific role/replay/world validation when gameplay actions exist | P03 onward |
-| `MapService` | Validate tags/anchors, spawn map content, restore initial state | P02 |
+| `MapService` | Implemented geometry/anchor validation, containment and pristine map rebuild | P02 |
 | `MatchService` and `RoleService` | Roster, phase/deadline, round identity, fair assignment, player lifecycle | P03 |
 | `AircraftService` | Canonical perimeter orbit pose, aircraft health and destruction | P04; health in P06 |
 | `ThermalCameraController` | Inward-facing camera, weapon-linked zoom, occluded highlights, cleanup | P04 |
@@ -153,13 +161,15 @@ P03/P06 establish basic win proposals; P09 validates their combined timing/disco
 
 Prefer text `.rbxmx` model exports and `.model.json` definitions for reviewable assets; retain source meshes/textures or their reproducible provenance when practical. Large binary exports require a documented storage/LFS decision. `assets/manifest.json` records stable internal IDs, source/author/license, local file, Roblox asset ID if any, and upload owner when known.
 
+Each authored Part/SpawnLocation in `.model.json` uses a twelve-component canonical `CFrame` (translation followed by row-major rotation). `Position`/`Orientation` aliases are forbidden because their presence in generated XML does not ensure Studio loads the intended pose. Artifact inspection compares every authored part's finite pose, positive dimensions, shape and collision/query/touch flags in both builds, with five deliberate corruption probes. Studio loaded-transform assertions and world queries remain required: reproducible serialization alone does not prove engine reconstruction.
+
 Static map files and server-cloned templates have separate ownership. Do not synchronize a live simulation back as authored source. Studio edits to managed objects must be exported to the mapped source and verified with a clean build. Avoid mixed ownership of the same Instance subtree.
 
 Breakable props use predefined health thresholds and collision states. Keep stable cover IDs across model swaps. Resolve one impact against a pre-impact world view, then apply damage and cover transitions once. Late joiners reconstruct current state from the server, not a replay of missed cosmetic effects. Reset reconstructs the original map deterministically.
 
 ## Tooling and verification
 
-Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository checks, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
+Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository checks, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds, canonical authored-geometry/corruption checks and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
 
 The test mapping runs separate server and client TestEZ bootstraps in real Studio Play contexts and publishes structured JSON reports. Those runs establish mapped imports and engine behavior separately from the host gate. Ordinary Linux CI runs the host gate and cannot replace required Studio evidence.
 

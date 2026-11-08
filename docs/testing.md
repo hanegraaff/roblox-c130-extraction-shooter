@@ -1,8 +1,8 @@
 # Testing and acceptance
 
-## Current foundation checks
+## Current host checks
 
-Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the implemented development shell. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
+Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation and current map source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
 
 | Gate | Command used by the verifier |
 | --- | --- |
@@ -14,21 +14,23 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 | Unit rules | `lune run scripts/run_tests.luau unit` |
 | Lifecycle integration | `lune run scripts/run_tests.luau integration` |
 | Release/test builds | `rojo build default.project.json --output build/game.rbxlx` and `rojo build test.project.json --output build/tests.rbxlx` |
-| Artifact isolation | `python3 scripts/inspect_build.py` |
+| Authored geometry, corruption probes and artifact isolation | `python3 scripts/inspect_build.py` |
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites exercise finite numbers, flat bounded payloads, configuration and injected-time rate limits. Integration tests exercise the real lifecycle controller with controlled resource adapters. They load the production modules, not copies of their rules.
+The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The current unit suites exercise finite numbers, flat bounded payloads, configuration, injected-time rate limits and the pure map/orbit contract (14 cases across four spec modules). Integration tests exercise the real lifecycle controller with controlled resource adapters (two cases). They load the production modules, not copies of their rules.
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. Update the allowlist deliberately when adding runtime modules. Build success and standalone tests do not establish engine behavior.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The current assets contribute 112 checked parts per build. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts.
+
+Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
 ## Run the Studio smoke suites
 
 1. Build with the full verifier. Open `build/tests.rbxlx` as a separate local Studio document, or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
 2. Through Studio MCP, list connected instances, select the intended test document and inspect its state. Consult the connected server’s relevant skill guidance. Confirm that `ServerScriptService.ServerTests`, `StarterPlayer.StarterPlayerScripts.ClientTests`, `ReplicatedStorage.TestPackages` and `ServerStorage.DevelopmentSettings` belong to the test mapping.
-3. Start **Play** with one actual client for the P01 smoke gate. The mapped server and client runners execute TestEZ automatically. The server requires a player within ten seconds. Startup waits in the smoke specs are bounded; a missing report or timeout is a failure requiring investigation.
+3. Start **Play** with one actual client for the foundation and P02 map suites. The mapped server and client runners execute TestEZ automatically. The server requires a player within ten seconds. Startup waits in the smoke specs are bounded; a missing report or timeout is a failure requiring investigation.
 4. Read both structured JSON reports and the Studio Output log. In the **server** context:
 
    ```luau
@@ -41,11 +43,21 @@ Artifact inspection parses the generated XML, checks the runtime-script allowlis
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. Each report must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Report fields also include `suite`, `environment = "Studio"` and deterministic fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Check actual contexts/client count instead of assuming a report proves a multiplayer session.
+5. The current candidate has 23 server cases and two client cases. Both suites have passed in local one-client Studio acceptance; consult the [P02 record](../plans/02-warzone-map.md) for tested source, repeated runs, environment and limits. For each new run, confirm those totals and collect fresh reports. Each report must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Report fields also include `suite`, `environment = "Studio"` and deterministic fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. The aggregate suite labels remain `P01-server` and `P01-client`; the server runner discovers both Foundation and Map specs. Check actual contexts/client count instead of assuming a report proves a multiplayer session.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus` and one local `PlayerGui.FoundationStatus`, with no leftover `EntrypointStatus` or `EntrypointPanel`. The suites also exercise two explicit stop/start cycles of the server runtime and status controller.
-7. Open `build/game.rbxlx` separately. Play, confirm an avatar spawns on the temporary platform and the panel reads **Development** / **Bootstrap running**. The test build reads **Test**. Review readability in the actual viewport and inspect Output. Stop Play when finished.
+7. Open `build/game.rbxlx` separately. Play, confirm an avatar spawns in the southern shelter and the panel reads **Development** / **Bootstrap running**. The test build reads **Test**. Review readability in the actual viewport and inspect Output. Stop Play when finished.
 
-The server suite loads the shared unit/integration cases through actual Instance-based requires and checks bootstrap ownership plus a real raycast at the anchored spawn. The client suite checks replicated status, character availability and GUI/controller cleanup. P01’s one-server/one-client smoke does not prove gameplay replication between two players, combat, no-respawn rounds, camera feel, device compatibility or release capacity.
+The server runner loads all 14 shared unit cases and two lifecycle cases through actual Instance requires, plus two foundation engine cases and five map engine cases (23 expected total). Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
+
+- Assert actual loaded disk/spawn/roof transforms, then reject invalid disk dimensions, anchor identity/count and exterior/below-ground/floating/blocked anchors before restoring validity.
+- Sample both launcher approaches every 0.5 stud with a 4×6×4-stud upright envelope and downward floor rays. This recorded envelope is a clearance fixture, not an avatar compatibility claim.
+- Raycast permanent/breakable cover, all nine sheltered anchors and firing positions toward eight future perimeter aircraft samples.
+- Correct exterior/below-threshold characters, preserve legal disk/station positions, and disconnect containment on stop.
+- Rebuild twice after removed cover and transient debris; compare descendant counts, stable part names and poses, then exercise idempotent destruction.
+
+The client suite checks replicated status, character availability and GUI/controller cleanup. One-server/one-client checks do not prove gameplay replication between two players, combat, no-respawn rounds, camera feel, device compatibility or release capacity. The current P02 source has passed its map cases and focused walking/visual review locally. A new geometry candidate still requires those checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
+
+For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. There is no launcher pickup, aircraft or combat to exercise yet.
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
 
@@ -87,7 +99,7 @@ Character movement is client-simulated in normal Roblox play. Include implausibl
 
 ## Studio execution and evidence
 
-The explicit P01 server/client runners are mapped only by `test.project.json` and excluded from `default.project.json`. Use the Roblox Studio MCP connection as the primary way to inspect and operate the test place and supported playtests; identify the intended Studio instance and discover its actual capabilities first. If the required operation is unavailable, use documented Studio steps and a human-assisted run where possible. Do not claim that Lune or a generated place simulated a real server; an unavailable required engine check remains open.
+The explicit server/client runners are mapped only by `test.project.json` and excluded from `default.project.json`. Use the Roblox Studio MCP connection as the primary way to inspect and operate the test place and supported playtests; identify the intended Studio instance and discover its actual capabilities first. If the required operation is unavailable, use documented Studio steps and a human-assisted run where possible. Do not claim that Lune or a generated place simulated a real server; an unavailable required engine check remains open.
 
 Record for each required run:
 

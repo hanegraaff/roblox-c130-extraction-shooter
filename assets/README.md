@@ -1,8 +1,16 @@
 # Authored assets
 
-The current authored asset is the original primitive [foundation spawn](world/FoundationSpawn.model.json), recorded in [manifest.json](manifest.json). It provides the development shell’s temporary platform; it is not the planned battlefield. `world/` maps to `Workspace.World`; `models/` reserves server-only templates. Keep game-critical source here so a clean Git checkout can rebuild the place.
+The current assets are the original primitive [greybox battlefield](world/Battlefield.model.json) and [cover panel template](models/CoverPanel.model.json), recorded in [manifest.json](manifest.json). They require no cloud asset IDs or external scripts. `world/` maps to `Workspace.World`; `models/` maps to server-only `ServerStorage.Assets`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under both directories, excluding Markdown.
 
 Prefer `.model.json` for simple primitives and text `.rbxmx` exports for Studio-authored models. Export only authored objects after stopping play mode. Keep scripts in `src/`; inspect imported models for unintended scripts. For meshes, textures, animations and audio, retain original sources when rights and size permit, and record uploaded asset references and ownership.
+
+Author every Part/SpawnLocation pose in `.model.json` with a twelve-component `CFrame`: translation X/Y/Z followed by the 3×3 rotation matrix in row order. Use finite values and a valid rotation matrix. For example, an unrotated panel at `(0,4,0)` uses:
+
+```json
+"CFrame": [0, 4, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1]
+```
+
+Do not author `Position` or `Orientation` properties in these files. They are runtime aliases rather than the canonical serialized pose and can be ignored when Studio loads the generated place. Rojo build success or byte-identical rebuilds alone cannot establish that Studio interpreted the map correctly. The [artifact checker](../scripts/inspect_build.py) compares every authored part's canonical pose, dimensions, shape and collision/query/touch flags in both builds; actual loaded transforms and world behavior still require Studio checks.
 
 Add every imported/authored asset to `manifest.json`. The schema is version 1; each asset entry uses these fields:
 

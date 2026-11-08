@@ -73,6 +73,13 @@ def check_manifest(manifest: dict) -> None:
         if asset["roblox_asset_id"] and not asset["roblox_asset_id"].isdigit():
             raise ValueError(f"asset {asset['id']} has a nonnumeric Roblox ID")
 
+    authored = {str(path.relative_to(ROOT)) for directory in ("world", "models")
+                for path in (ROOT / "assets" / directory).rglob("*")
+                if path.is_file() and path.suffix != ".md"}
+    recorded = {asset["local_path"] for asset in manifest["assets"] if asset["local_path"]}
+    if authored != recorded:
+        raise ValueError(f"asset manifest coverage mismatch: {authored ^ recorded}")
+
 
 def main() -> int:
     """Report all discovered file-level failures and return a CI-friendly status."""
