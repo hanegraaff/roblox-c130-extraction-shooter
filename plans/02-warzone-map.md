@@ -28,4 +28,18 @@ Document circle/orbit coordinates, radius/altitude units, anchor contracts and a
 
 ## Completion record
 
-Not implemented. Record A1–A5 evidence, source, Studio report and geometry/route review.
+2026-11-08: source implementation and independent host verification are delivered on `plan/02-warzone-map`. Required Studio and focused walking evidence remain unavailable; this is not a completion claim. See the [P02 evidence record](../docs/evidence/p02-warzone-map.md) and [independent tester report](../docs/evidence/p02/tester-report.md).
+
+Independent tester implementation commit: `028fe388cf3d92a57bea75f49cb585ff991e75e9`, tree `648f2411c5ac39d93cd5a1dcc9d7320e7ef87ecd`. Final source `9b5e7aa818fddd33d8d171a8938ed5a706abec26` adds only two source-comment corrections, with the full host gate rerun successfully by the coordinator. The candidate adds the circular authored battlefield, nine protected ground anchors, one future launcher anchor, separate stations, tagged cover, deterministic map/orbit configuration, server containment and pristine rebuild ownership. No roles, aircraft, weapons, launcher pickup or destruction are implemented.
+
+| Criterion | Test / command and environment | Observed result |
+| --- | --- | --- |
+| A1 | Independent `python3 scripts/verify.py`, macOS arm64 / Python 3.10.4 / pinned tools; coordinator clean `git archive` reconstruction with installed locked TestEZ | Host gate passes: 14 unit, 2 integration, zero failures/skips; both clean builds hash-identical; release isolation passes with 138 release / 176 test Instances and 10 runtime scripts. |
+| A2 | `tests/unit/MapRules.spec.luau`, four cases through Lune; `tests/studio/specs-server/Map.spec.luau` anchor/configuration/geometry validation | Four unit cases pass. Real Instance validation of numbered anchors, clearance and support is unrun. |
+| A3 | Map.spec “two launcher approaches clear a 4x6x4 stud upright avatar and have continuous floor”; 0.5-stud sampling with overlap queries and downward rays | Required Studio clearance/navigation and anchor cases unrun. Actual walking review unrun. |
+| A4 | Map.spec cover queries at eight orbit phases, all nine spawn anchors, eight firing positions; server containment/cleanup case | Required engine raycasts, containment and boundary review unrun. |
+| A5 | Manifest coverage checker plus four independent rejection probes; Map.spec two pristine rebuilds comparing IDs, poses, counts and temporary cleanup | Manifest checks pass. Required two-rebuild engine evidence is unrun. |
+
+External blocker: Studio MCP lists null-name instances, but `get_studio_state`, `execute_luau` and `skill` return **Place is not open**, including after opening the hash-labeled candidate. The user confirmed sign-in and offered to dismiss dialogs; subsequent checks still failed. A manual open of the exact test file has been requested. No live place was mutated, no engine suite/client count was observed, and no screenshot or multiplayer claim is made. Resume with the candidate open and identifiable, then run mapped server/client suites and focused route/boundary/sight-line review. Expected 23 server / 2 client cases are expectations only.
+
+The independent tester found no material reproducible source defects. Source is pushed in [draft PR #4](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4); documentation review and final delivery facts are recorded in the linked evidence record. P03 remains Planned until P02 satisfies its required gates. No Roblox publication occurred.

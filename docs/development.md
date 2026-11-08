@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-The current place is a development shell with a temporary spawn and bootstrap status panel. [Plan 01](../plans/01-foundation.md) defines its acceptance criteria; combat, roles and the circular battlefield remain future work.
+The current local place contains the circular greybox battlefield, a ground spawn, cover and location markers, server containment, and the bootstrap status panel. [P02](../plans/02-warzone-map.md) records its acceptance evidence and remaining Studio checks; aircraft, combat and roles remain future work.
 
 Prerequisites are Git, Python 3.10 or newer, system `curl`, and network access to GitHub tool releases and the Wally registry/CDN. The setup script supports macOS and Linux on arm64/aarch64 and x86_64. Roblox Studio itself runs on supported Mac/Windows computers; the repository’s automated setup does not currently support Windows.
 
@@ -26,7 +26,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs formatting, lint, strict type analysis, deterministic unit/service tests, intentional rejection probes, both builds and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently the development shell) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs formatting, lint, strict type analysis, deterministic unit/service tests, intentional rejection probes, both builds and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently the greybox development build) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -40,7 +40,7 @@ For documentation-only changes:
 python3 scripts/check_repository.py
 ```
 
-This checks local file links, JSON, mapped paths and asset-manifest references. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
+This checks local file links, JSON, mapped paths, asset-manifest references and coverage of every authored file under `assets/world` and `assets/models`. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
 
 ## Connect Roblox Studio MCP
 
@@ -66,6 +66,14 @@ Connect the Studio Rojo plugin to the local server. Verify the target place befo
 The development mapping labels its panel **Development**. The test mapping labels it **Test** and starts the server/client TestEZ runners automatically during Play. Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites) and inspect both reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
 
 Source files drive managed scripts. Studio-built models/world changes must be exported into `assets/` and entered in the manifest, then rebuilt from a clean checkout. Stop simulation before authoring/exporting. Do not preserve transient playtest objects as authored assets.
+
+## Author and validate the battlefield
+
+[`Battlefield.model.json`](../assets/world/Battlefield.model.json) owns `Workspace.World.Battlefield`; [`MapRules`](../src/shared/MapRules.luau) owns its shared circle/orbit settings. The defaults are center/focus `(0, 0, 0)`, radius 180 studs, aircraft altitude 140 studs above ground, and recovery threshold Y = −30 studs. No aircraft is instantiated yet. Update geometry and settings together: startup rejects a disk whose pose or radius differs from the configured circle.
+
+[`MapService`](../src/server/MapService.luau) validates unique descendant names, `Ground01`–`Ground09`, one `Launcher` anchor, lobby/operator anchors, solid cover, clearance and floor support. Ground/launcher anchor centers are three studs above ground. Startup keeps a private pristine snapshot and connects server Heartbeat containment; `rebuild()` replaces the map subtree from that snapshot. Runtime cover receives `CoverId` and `CoverKind` attributes. These labels reserve future destruction behavior and do not make cover destructible.
+
+Keep both painted routes and the launcher marker clear. The Studio suite samples a 4×6×4-stud upright avatar envelope every 0.5 stud, checks floor support, rays from nine protected anchors to eight perimeter phases, and two exact rebuilds. Run it in the separate test place using the [testing procedure](testing.md#run-the-studio-smoke-suites), then walk both routes and review the boundary and sight lines. Passing host tests or exporting geometry does not establish those engine/playability results.
 
 ## Implement the next capability
 

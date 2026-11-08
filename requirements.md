@@ -1,6 +1,6 @@
 # Requirements and test traceability
 
-These requirements describe the MVP target. The current development shell implements the foundation portions of R01, R13 and R15: reconstructable bootstraps/spawn, validation helpers and executable verification. Gameplay actions, authority checks and the remaining game systems are still planned. Plan completion records link concrete tests and observed results; this table states each requirement’s full behavior and intended test level.
+These requirements describe the MVP target. The current source includes the executable foundation, circular greybox assets, pure map/orbit configuration and a server map adapter. Host verification covers the foundation portions of R01/R13/R15 and the pure P02 rules; P02's required engine and walking evidence remains separate. R05's aircraft and R10's launcher lifecycle are still planned. Plan completion records link concrete tests and observed results; this table states each requirement's full behavior and intended test level.
 
 | ID | Requirement | Plans | Required automated evidence |
 | --- | --- | --- | --- |

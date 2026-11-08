@@ -1,5 +1,5 @@
 # Server-owned model templates
 
-Aircraft, the M-7, the single rocket launcher and destructible-cover variants will live here when their plans implement them. Rojo maps this folder to `ServerStorage.Assets`; services clone only the world objects clients need.
+Rojo maps this folder to `ServerStorage.Assets`. [`CoverPanel.model.json`](CoverPanel.model.json) is an original anchored, collidable 16×8×2-stud primitive panel, centered at `(0,4,0)`. It reserves a template for later cover replacement; no current service clones or damages it. Its provenance is recorded in the [asset manifest](../manifest.json), with no external asset or script dependency.
 
-Document origin/license in the asset manifest. Keep stable pivots, hitboxes, damage anchors, attachment names and cover IDs documented beside each model. Use deterministic fixtures to verify those contracts.
+Aircraft, M-7, launcher and destructible-cover state variants remain planned. Services will clone only the world representations clients need. Document origin/license in the manifest and stable pivots, hitboxes, damage anchors, attachment names and cover IDs beside each model. Use deterministic fixtures and real-engine checks to verify those contracts.

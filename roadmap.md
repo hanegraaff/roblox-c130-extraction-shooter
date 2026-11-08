@@ -1,13 +1,13 @@
 # Roadmap to MVP
 
-The executable development shell and its verification tooling are implemented; **rounds and combat are still planned**. Build one complete, tested capability at a time. Each plan explains the player experience, implementation boundaries and objective acceptance criteria. See [game design](game-design.md) for the complete intended game.
+The executable development shell and verification tooling are complete. Circular greybox source is delivered with host checks passing, while required Studio acceptance remains open; **rounds and combat are still planned**. Build one complete, tested capability at a time. Each plan explains the player experience, implementation boundaries and objective acceptance criteria. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
 | Milestone | Plan / capability | Status | Depends on | What a human can experience afterward |
 | --- | --- | --- | --- | --- |
 | M1 — Playable foundation | [P01: Executable foundation and tests](plans/01-foundation.md) | Complete | — | Open a development place, spawn, and see an explicit test/boot status |
-| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Ready | P01 | Walk the circular warzone and both approaches to the launcher anchor |
+| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Blocked | P01 | Walk the circular warzone and both approaches to the launcher anchor |
 | M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Planned | P02 | Join a lobby, receive a role, enter a round, spectate and return |
 | M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Planned | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Planned | P04 | Operator fires both named weapons, switching zoom while cover protects players |
@@ -48,6 +48,8 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 
 2026-11-07 gameplay revision: changed the design to Players vs C-130, a circular battlefield/perimeter orbit, inward weapon-linked camera zoom, 30mm/105mm aircraft weapons, M-7 rifles and one recoverable launcher. P08/P09 replace their previous collection/escape scope while retaining IDs; no implementation status changes. The user confirmed rifle chip damage plus three direct rockets from full aircraft health.
 
-2026-11-08: P01 delivered the executable shell with passing clean-install, static/unit/service/build/isolation gates, independent Studio server/client restart evidence and current documentation. [PR #3](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/3) was merged into `main` with user authorization at `b62f6132ea0998d880daab2d1a5d86b7ab6cd95d`, including the main README’s Studio play/test instructions. See the [P01 completion record](plans/01-foundation.md). P02 is eligible and its prerequisite source is now on `main`; P02 has not been implemented. No Roblox publication occurred.
+2026-11-08: P01 delivered the executable shell with passing clean-install, static/unit/service/build/isolation gates, independent Studio server/client restart evidence and current documentation. [PR #3](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/3) was merged into `main` with user authorization at `b62f6132ea0998d880daab2d1a5d86b7ab6cd95d`, including the main README’s Studio play/test instructions. See the [P01 completion record](plans/01-foundation.md). P02’s prerequisite source is now on `main`; its subsequent implementation record follows. No Roblox publication occurred.
 
 Future ideas belong in a separate post-MVP proposal: additional weapons or maps, touch/gamepad, progression, matchmaking, vehicles or richer destruction. They must not silently enter the current plans.
+
+2026-11-08: P02 source implementation and independent host verification are delivered in [draft PR #4](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4). The full host gate passes (14 unit / 2 integration), and clean reconstruction matches both candidate build hashes. Required Studio map/route/cover/boundary/rebuild and walking evidence is blocked: MCP lists null-name instances but reports **Place is not open** after local-file open attempts and a dialog recheck. See the [P02 record](plans/02-warzone-map.md). P02 is not Complete; P03 remains Planned. No merge or Roblox publication occurred.

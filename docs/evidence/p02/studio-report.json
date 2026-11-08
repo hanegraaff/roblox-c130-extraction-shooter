@@ -1,0 +1,57 @@
+{
+  "plan": "P02",
+  "date": "2026-11-08",
+  "sourceCommit": "028fe388cf3d92a57bea75f49cb585ff991e75e9",
+  "sourceTree": "648f2411c5ac39d93cd5a1dcc9d7320e7ef87ecd",
+  "runtimeSourceManifest": "source-manifest.json",
+  "runtimeSourceManifestSha256": "7a4b671db736301d214f25026641163fe9750ce739df670d8f8bd50f2cbcd8d1",
+  "builds": {
+    "release": {
+      "file": "build/p02-game-5546db9cf6e4.rbxlx",
+      "sha256": "5546db9cf6e4051ee00b9d2726d9fd8b3ab0da873a2e2287c6ee312b6ba6f9dc"
+    },
+    "test": {
+      "file": "build/p02-tests-4846d5e71ad3.rbxlx",
+      "sha256": "4846d5e71ad3516955df120c7db4cd9b77a4a890f7419ff9f06d07b6673ebdbd"
+    }
+  },
+  "engine": {
+    "status": "unavailable",
+    "studioVersion": null,
+    "placeId": null,
+    "clientCount": null,
+    "serverReport": null,
+    "clientReport": null,
+    "seed": 1,
+    "expectedServerCases": 23,
+    "expectedClientCases": 2,
+    "reason": "MCP lists instances with null names; get_studio_state, skill and execute_luau return Place is not open, including after opening the local candidate.",
+    "instanceIds": [
+      "4b6ae435-0060-4f42-b6fa-2ada6f17d931",
+      "cc341aae-47b9-43b5-a3c0-11e96d2f935e",
+      "eb029242-c828-4781-b342-5957b612ed43"
+    ],
+    "unrun": [
+      "mapped server/client suites",
+      "anchor and route clearance with 4x6x4-stud envelope",
+      "cover and spawn/perimeter raycasts",
+      "containment and cleanup",
+      "two teardown/rebuild cycles",
+      "walk both routes and inspect boundary/sight lines"
+    ]
+  },
+  "publication": false,
+  "finalSourceCommit": "9b5e7aa818fddd33d8d171a8938ed5a706abec26",
+  "finalSourceTree": "df03853f249408a7b443278a1ae8025bdff4d767",
+  "finalChange": "Source comments only; coordinator full host gate passed again. No engine run observed.",
+  "finalBuilds": {
+    "release": {
+      "file": "build/p02-game-fb969754a1ed.rbxlx",
+      "sha256": "fb969754a1ed0e37a5ee3a4a9b4a822de74f7e3c72856958005125b36aa57bea"
+    },
+    "test": {
+      "file": "build/p02-tests-72ab93292948.rbxlx",
+      "sha256": "72ab93292948d823ace9d889bdab2e94d957bdc6e92c773f8552806a59685eac"
+    }
+  }
+}
