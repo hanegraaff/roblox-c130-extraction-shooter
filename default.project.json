@@ -1,5 +1,5 @@
 {
-  "name": "C130ExtractionShooter",
+  "name": "PlayersVsC130",
   "globIgnorePaths": ["**/*.md", "**/*.spec.luau", "**/*.test.luau"],
   "tree": {
     "$className": "DataModel",

@@ -40,7 +40,7 @@ src/shared/               Replicated types, public config and pure common rules
 src/server/               Authoritative services, server-only rules and adapters
 src/client/               Input, cameras, UI, audio and effects
 assets/world/             Reconstructable static world definitions/exports
-assets/models/            Templates for aircraft, cover and mission items
+assets/models/            Templates for aircraft, cover and the single rocket launcher
 assets/manifest.json      Provenance and cloud asset references
 tests/unit/               Pure rules and boundary cases
 tests/integration/        Service workflows with controlled adapters
@@ -74,21 +74,21 @@ Source directories hold a README now; executable modules arrive with their plans
 | `Bootstrap` and `RemoteGateway` | Dependency wiring, lifecycle, bounded input decoding/rate limits | P01 |
 | `MapService` | Validate tags/anchors, spawn map content, restore initial state | P02 |
 | `MatchService` and `RoleService` | Roster, phase/deadline, round identity, fair assignment, player lifecycle | P03 |
-| `AircraftService` | Canonical orbit pose, aircraft health/state, disablement | P04; health in P06 |
-| `ThermalCameraController` | Operator camera, zoom, occluded highlights, camera cleanup | P04 |
+| `AircraftService` | Canonical perimeter orbit pose, aircraft health and destruction | P04; health in P06 |
+| `ThermalCameraController` | Inward-facing camera, weapon-linked zoom, occluded highlights, cleanup | P04 |
 | `CombatService` with weapon rules | Validate intent, ammo/cooldown, flight/impact, damage resolution | P05–P06 |
 | `DestructionService` | Health/state and authoritative collision swaps | P07 |
-| `ObjectiveService` | Seeded placement, atomic shared collection, progress | P08 |
-| `ExtractionService` | Zone eligibility and per-player dwell; propose result to MatchService | P09 |
+| `LauncherService` | One launcher identity, atomic ownership, drop/recovery and reload continuity | P08 |
+| `MatchService` outcome integration | Aircraft destruction, ground elimination, timeout and forfeit resolution | P09 (basic outcomes P03/P06) |
 | `GroundController`, `HUDController`, `SpectatorController` | Role-specific controls and complete player feedback | Introduced with features; completed P10 |
 
 Use one combat orchestration boundary with weapon-specific modules rather than three independent damage systems. `MatchService` alone commits outcomes. Other services propose changes through explicit calls/events; they never independently set the winner. Keep reset and cleanup centralized while each component owns its resources.
 
 ## Authoritative state and timing
 
-Use typed data records for round ID, phase, phase revision, roster by UserId, role/life state, deadline, aircraft state, objective set, extraction dwell, and result. Instance Attributes can expose view state but are not the internal transaction mechanism.
+Use typed data records for round ID, phase, phase revision, roster by UserId, role/life state, deadline, aircraft health/state, per-weapon readiness, selected weapon, launcher ownership/location/reload state, and result. Instance Attributes can expose view state but are not the internal transaction mechanism.
 
-Inject a monotonic clock and seeded random source into rules/services. Client HUDs derive countdowns from a replicated server deadline and synchronize with the platform's server clock. Never accept client timestamps to award extraction or damage. Deterministic tests advance a fake clock without real sleeps.
+Inject a monotonic clock and seeded random source into rules/services. Client HUDs derive countdowns from a replicated server deadline and synchronize with the platform's server clock. Never accept client timestamps to award hits, pickups or results. Deterministic tests advance a fake clock without real sleeps.
 
 Each active-round command carries the current round ID and a per-player monotonic sequence. Reject commands from old rounds and repeated sequences. A result is committed once; subsequent commands observe a terminal phase. Follow the conflict order in [game-design.md](game-design.md). Teardown invalidates queued work with a generation/round token so an old projectile cannot damage the next round.
 
@@ -99,25 +99,35 @@ Use a small named RemoteEvent surface, not an unrestricted generic RPC dispatche
 | Direction / intent | Minimal payload | Server derivation and validation |
 | --- | --- | --- |
 | Client → fire | round ID, sequence, weapon ID, bounded aim direction/point | Role/life, equipment, ammo, cooldown, finite values, origin, range, aim envelope, obstruction |
-| Client → reload/select | round ID, sequence, owned weapon ID | Role, ammo reserve, reload phase, cooldown |
-| Client → interact | round ID, sequence, known objective ID | Item existence, player position, reach, availability, active phase |
+| Client → reload/select | round ID, sequence, owned/role-authorized weapon ID | Role, ammo/reload phase, independent cooldowns; acknowledge weapon/zoom together |
+| Client → pickup/drop launcher | round ID, sequence, launcher ID | Existence, reach, life, current ownership, valid ground position, active phase |
 | Client → sync request | bounded request token | Per-player rate budget; return only that role's permitted snapshot |
 | Server → snapshot/update | round ID, revision, permitted state | Immutable view model; client discards stale rounds/revisions |
 | Server → effects | round ID, shot/event ID, bounded effect data | Cosmetic only; client deduplicates and caps lifetime/count |
 
-Extraction is evaluated from server-observed character positions and state; a client never sends “I extracted.” Validate server-observed movement for implausible travel before rewarding interactions/extraction; reject or correct suspicious movement without automatically banning from a single noisy observation. Roblox character network ownership does not make client movement authoritative for rewards.
+Aircraft destruction is computed from server-resolved damage, never a client win claim or rocket-hit count. Validate server-observed movement for implausible travel before granting launcher pickup or accepting a ground firing origin; reject or correct suspicious movement without automatically banning from a single noisy observation. Roblox character network ownership does not make client movement authoritative for rewards.
 
 Apply cheap shape/size checks and per-player/per-action budgets before expensive raycasts. Bound strings, tables, vectors, shot counts and queued work. Tests cover NaN, infinity, malformed nested payloads, unknown IDs, replay, stale round IDs, floods, spectators and eliminated players. Rejected requests must leave state unchanged.
 
 ## Aircraft, camera and physics
 
-Compute orbit position and tangent from configuration plus server elapsed time. The server moves an anchored aircraft model and uses its canonical pose for hit detection and muzzle position. The operator is assigned a protected noncombat station; the ground character and the operator's avatar are not interchangeable damage targets.
+Compute a circular orbit from the authored map center, playable radius, aircraft altitude and server elapsed time. The horizontal orbit radius equals the map radius so flight follows its perimeter; the model faces the orbit tangent. The server moves an anchored aircraft model and uses its canonical pose for hit detection and muzzle position. The operator is assigned a protected noncombat station; the ground character and the operator's avatar are not interchangeable damage targets.
 
 Begin with ordinary server replication. If visual stepping needs smoothing, interpolate a local visual shell without introducing another collidable hitbox or a second gameplay pose. Test the visual/canonical error bound and never let clients choose authoritative aircraft position. Projectile integration uses swept raycasts between steps to avoid tunneling.
 
-Use a Scriptable operator camera, local color correction, occluded target highlighting, constrained zoom/aim, and explicit restoration on role changes. Building geometry blocks targeting and damage; rendering and server obstruction rules must agree in fixtures.
+Use a Scriptable operator camera whose central look direction always tracks a ground-level focus at the map center, independently of the tangent-facing aircraft model. The mouse controls a reticle within that inward view; validate aircraft aim endpoints against the playable disk and weapon sight lines. Local color correction and occluded highlights provide thermal presentation. The 30mm GAU-23/A Chain Gun selects a narrower FOV than the 105mm M102 Howitzer; there is no independent free zoom. Configure finite, distinct FOVs and update selected weapon, FOV and reticle projection coherently. Restore camera/input state on role changes. Building geometry blocks targeting and damage; presentation and server obstruction rules must agree in fixtures.
 
 For the bounded MVP map, `Workspace.StreamingEnabled` is explicitly false (D11). This avoids a remote camera looking at absent scenery. If profiling forces streaming, treat that as a deliberate architecture revision: persistent aircraft, controlled replication focus, target-area acquisition/loading states, re-stream-safe effects and 10-player visibility tests. Do not just enable the property.
+
+## Weapon, launcher and result invariants
+
+Use explicit weapon configurations for `GAU23`, `M102`, `M7` and `RocketLauncher`, with the exact player-facing names from the design. Aircraft weapons are role equipment; every ground player spawns with the M-7, while only the launcher carrier can fire rockets. Keep readiness by weapon ID; selection cannot reset cooldown, reload progress or ammunition. Store launcher reload state on the round-owned launcher identity, not the current holder.
+
+Derive integer aircraft maximum health as three times direct rocket damage. Apply each direct rocket impact once, with no duplicate splash to the same aircraft; first/second hits alone leave a pristine plane alive and the third destroys it. M-7 damage is small and positive, reducing the same health pool. No regeneration, falloff or armor modifier can break the three-hit contract. AircraftService proposes destruction to MatchService; MatchService alone commits the immediate team result and cancels pending combat.
+
+LauncherService transitions one identity between Available, Held and Recovering; it never creates one copy per player. A short atomic non-yielding claim prevents raced pickups. Death/disconnect/drop preserves reload timing and makes it recoverable; invalid positions return it to the authored anchor. Replenishing one-round reload is the current supply default. Reset disposes the old identity and creates exactly one new launcher.
+
+P03/P06 establish basic win proposals; P09 validates their combined timing/disconnect behavior. Follow game-design.md for deadline precedence, same-step mutual kills, forfeits and late projectiles. There is no collectible-progress or escape-zone service.
 
 ## Assets, destruction and reconstruction
 

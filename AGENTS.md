@@ -2,7 +2,7 @@
 
 ## Purpose and sources of truth
 
-Build the Roblox asymmetric extraction shooter described in [game-design.md](game-design.md): one player operates an orbiting C-130-style gunship while 5–9 ground players collect three shared objectives and extract. Read that document, [requirements.md](requirements.md), [architecture.md](architecture.md), [roadmap.md](roadmap.md), and the selected plan before implementation.
+Build the Roblox players-versus-C-130 game described in [game-design.md](game-design.md): one operator circles a circular battlefield while one team of 5–9 M-7-equipped ground players tries to destroy the plane. One rocket launcher is placed on the map; three direct hits destroy an undamaged plane, and rifle fire also chips away at its health. Read that document, [requirements.md](requirements.md), [architecture.md](architecture.md), [roadmap.md](roadmap.md), and the selected plan before implementation.
 
 Use this conventional uppercase filename for Codex discovery. Do not create a second, case-only `agents.md` file. User instructions take precedence; update the affected design and plans when the user changes direction. Distinguish decisions from tuning defaults in [docs/decisions.md](docs/decisions.md).
 
@@ -24,10 +24,12 @@ Use this conventional uppercase filename for Codex discovery. Do not create a se
 
 ## Authority and fair play
 
-- The server owns roles, round deadlines, ammunition, cooldowns, damage, objectives, destruction, extraction, and results. Clients send bounded intent, never authoritative hits, damage amounts, inventory totals, or victory claims.
-- Validate every remote at runtime: payload shape and size, finite numbers, role, round ID, life state, item ownership, rate, range, and line of sight as applicable. Reject stale/replayed requests and test rejection without mutation.
-- Solid cover blocks thermal highlighting and damage according to the explicit rules in `game-design.md`. Client effects cannot change collision, health, or objective state. Spectators cannot act in the round.
+- The server owns roles, round deadlines, ammunition, cooldowns, damage, launcher ownership, cover/aircraft destruction, weapon selection, and results. Clients send bounded intent, never authoritative hits, damage amounts, rocket-hit totals, or victory claims.
+- Validate every remote at runtime: payload shape and size, finite numbers, role, round ID, life state, weapon ownership, rate, range, and line of sight as applicable. Reject stale/replayed requests and test rejection without mutation.
+- Solid cover blocks thermal highlighting and damage according to the explicit rules in `game-design.md`. Client effects cannot change collision, health, or launcher ownership. Spectators cannot act in the round.
 - Keep server-only rules and assets out of ReplicatedStorage. Do not mistake replicated data for a security boundary.
+
+The plane carries the 30mm GAU-23/A Chain Gun and 105mm M102 Howitzer. Weapon selection changes zoom without resetting cooldowns; the aircraft view always faces inward toward the map. Ground wins on aircraft destruction; the C-130 wins on ground-team elimination or timeout. Do not reintroduce collection/escape mechanics.
 
 ## Tests and evidence
 

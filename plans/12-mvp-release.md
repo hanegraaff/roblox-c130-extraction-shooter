@@ -4,7 +4,7 @@
 
 ## Capability and player experience
 
-The verified game runs in a named, explicitly authorized Roblox experience. Players can complete repeated 6- and 10-player matches with both roles, destruction, objectives, extraction, spectating and results. The README supplies the real play link and accurate availability.
+The verified game runs in a named, explicitly authorized Roblox experience. Players can complete repeated 6- and 10-player matches with both roles, both aircraft weapons/zoom levels, M-7 fire, the single launcher, cover/aircraft destruction, spectating and results. The README supplies the real play link and accurate availability.
 
 ## Implementation
 
@@ -15,7 +15,7 @@ Prepare a clean-checkout release candidate using the release mapping. Record sou
 - **A1:** Full gate passes from a clean checkout. Artifact contents match the committed source and manifest; test dependencies, runners and two-player override are absent. Build hash and source commit are recorded.
 - **A2:** Final Studio engine/multiplayer suite passes; every R01–R15 requirement links to actual test/evidence, with no required skipped or zero-count suite.
 - **A3:** Exact experience/place/audience and explicit authorization are recorded before publication. Cloud asset permissions are verified for that owner. A published build/version is confirmed by the platform, not inferred from a tool attempt.
-- **A4:** Real Roblox-client sessions at 6 and 10 players complete repeated extraction, elimination and timeout paths. Verify both roles, cover/destruction, reconnect/late join, disabled aircraft and round reset; record actual participants/client counts without personal data.
+- **A4:** Real Roblox-client sessions at 6 and 10 players complete repeated aircraft-destruction, ground-elimination and timeout paths. Verify both roles, cover/destruction, reconnect/late join, launcher transfer, three-rocket guarantee, inward perimeter camera, weapon-switch timing and round reset; record actual participants/client counts without personal data.
 - **A5:** The 10-player candidate meets the performance/soak budgets in `docs/testing.md`, with logs/metrics and no unresolved material gameplay/replication defects. Studio's smaller simulated-client run is not a substitute.
 - **A6:** Player README links to the actual authorized experience and states tested devices/current limitations. Release record identifies rollback steps and the verified candidate. Source and evidence are pushed and a reviewable PR is available.
 

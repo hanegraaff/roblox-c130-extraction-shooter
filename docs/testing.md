@@ -11,7 +11,7 @@ Plan 01 turns `verify.py` into the full non-Studio gate and establishes the Stud
 | Level | Purpose | Execution / evidence |
 | --- | --- | --- |
 | Static | Format, lint, strict Luau types, module boundaries | Pinned tools in local/CI gate; Roblox-aware definitions for engine code |
-| Unit | Rules: transitions, timers, damage, ammo, orbit math, placement, dwell | Standalone Luau under Lune; deterministic clock/random inputs |
+| Unit | Rules: transitions, timers, damage, ammo, circular orbit math, weapon-linked zoom, single-launcher ownership | Standalone Luau under Lune; deterministic clock/random inputs |
 | Service integration | Real services connected through fakes for transport, clock and world queries | Lune where engine-independent; TestEZ in Studio for Instance-dependent adapters |
 | Engine integration | Raycast/cover, Humanoid death, collision swaps, Instances, camera state | TestEZ in the test place, with assertions and a structured pass/fail summary |
 | Multiplayer | Replication, roles, input rejection, late joins, visibility, cleanup | Server with two distinct client contexts initially; 6/10 roster fixtures plus real capacity sessions later |
@@ -21,17 +21,26 @@ Unit tests use observable invariants and boundary examples, not implementation-s
 
 ## Determinism and fixtures
 
-- Inject the clock and seed; use a tiny map fixture with one exposed target, one solid wall, one breakable wall, a clear projectile path and an extraction zone.
+- Inject the clock and seed; use a tiny map fixture with one exposed target, one solid wall, one breakable wall, a clear projectile path, circular map bounds and one launcher anchor.
 - Include minimum/maximum population, a two-client development fixture, and seeded 10-player roster data. Ten fake player records do not count as ten network clients.
-- Include source/target inside and outside every boundary, exact deadlines, duplicate messages, two pickups in one step, death during extraction, disconnect/reconnect, and a stale projectile after reset.
+- Include source/target inside and outside every boundary, exact deadlines, duplicate messages, two launcher claims in one step, carrier death during reload, simultaneous aircraft/last-player destruction, disconnect/reconnect, and a stale projectile after reset.
 - Every suite states which requirement it proves, which values are fixtures, and why tolerances exist. Keep random balance tests reproducible by printing their seed.
 - Avoid real-time sleeps in rule tests. Engine tests may wait for bounded replication/physics conditions with explicit timeout and useful diagnostics.
 
+## Core gameplay invariants
+
+- With an undamaged plane and no rifle fire, direct rocket hits one and two leave it alive; hit three commits destruction and one ground win. A duplicated impact never counts twice. Misses/near misses do not count as direct hits.
+- M-7 damage is positive and accumulates on that same health pool. Cover blocks shots, health never goes negative, and mixed rifle/rocket damage can require fewer remaining rockets.
+- Exactly one launcher is available or held per round. Simultaneous claims, death/disconnect/drop, invalid-position recovery and reset cannot duplicate it or refresh reload early.
+- The orbit follows the map perimeter at all sampled phases; camera look tracks map center while model heading follows the tangent. Both aircraft weapon FOVs keep targeting coherent, distinct and inward-facing.
+- Rapid 30mm/105mm switching cannot reset weapon timers, refill ammunition or bypass reload. Rejected/stale selection restores the correct weapon/FOV/reticle combination.
+- Deadline first, then aircraft destruction before ground elimination within the same pre-deadline step: test boundary/mutual-kill cases and late in-flight rockets explicitly.
+
 ## Negative network tests
 
-For each mutating action, exercise malformed payloads, NaN/infinity, oversized data, unknown weapon/item IDs, unowned equipment, wrong role, spectator/eliminated state, excessive rate, stale round ID, repeated sequence, impossible range/origin and blocked line of sight. Assert rejection **and unchanged ammo/health/objective/result state**. Valid traffic must still succeed after a rejected request.
+For each mutating action, exercise malformed payloads, NaN/infinity, oversized data, unknown weapon/launcher IDs, unowned equipment, wrong role, spectator/eliminated state, excessive rate, stale round ID, repeated sequence, impossible range/origin and blocked line of sight. Assert rejection **and unchanged ammo/health/launcher-ownership/result state**. Valid traffic must still succeed after a rejected request.
 
-Character movement is client-simulated in normal Roblox play. Include implausible travel/teleport requests around pickup and extraction; an authoritative proximity check alone does not prove a movement exploit is prevented.
+Character movement is client-simulated in normal Roblox play. Include implausible travel/teleport requests around launcher pickup and ground firing origins; an authoritative proximity check alone does not prove a movement exploit is prevented.
 
 ## Studio execution and evidence
 
@@ -53,7 +62,7 @@ These are initial engineering targets; P11 records a named reference desktop bef
 
 - Test at 1920×1080 with a recorded graphics quality. Target client frame time p95 ≤33.3 ms for both roles during a scripted five-minute combat workload.
 - Target server frame time p95 ≤16.7 ms for the same workload. Record the sampling method, active clients, projectile/cover/effect counts and Studio/cloud environment.
-- Complete five consecutive accelerated deterministic rounds with no stale damage, objectives, results, listeners or map state. Server-owned temporary instance/connection counts must return to the baseline after each reset.
+- Complete five consecutive accelerated deterministic rounds with no stale damage, launcher ownership, results, listeners or map state. Server-owned temporary instance/connection counts must return to the baseline after each reset.
 - Run a 30-minute multiplayer soak. After warmup and equivalent reset points, retained memory growth must be ≤10%, with no monotonic leak; record actual samples and separate engine caches from owned allocations.
 - Exercise a controlled latency scenario near 150 ms round-trip, recording actual simulator settings/measurements, and confirm state converges without duplicated damage/rewards.
 - Run actual 6-player and 10-player sessions before release. Studio supports up to eight locally simulated clients per current documentation; use an authorized Roblox test experience for the ten-player case. Recheck the platform limit if tooling changes.

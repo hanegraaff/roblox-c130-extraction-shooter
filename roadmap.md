@@ -7,15 +7,15 @@ The initial design and repository scaffold are prepared; **gameplay has not star
 | Milestone | Plan / capability | Status | Depends on | What a human can experience afterward |
 | --- | --- | --- | --- | --- |
 | M1 — Playable foundation | [P01: Executable foundation and tests](plans/01-foundation.md) | Ready | — | Open a development place, spawn, and see an explicit test/boot status |
-| M1 | [P02: Industrial greybox battlefield](plans/02-warzone-map.md) | Planned | P01 | Walk protected and exposed routes through the test district |
+| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Planned | P01 | Walk the circular warzone and both approaches to the launcher anchor |
 | M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Planned | P02 | Join a lobby, receive a role, enter a round, spectate and return |
-| M2 — Gunship | [P04: Orbiting aircraft and thermal view](plans/04-aircraft-and-thermal.md) | Planned | P03 | Ground sees the moving aircraft; operator surveys the same battlefield |
-| M3 — Combat slice | [P05: Cannon and authoritative damage](plans/05-gunship-combat.md) | Planned | P04 | Operator can engage exposed players; solid cover protects them |
-| M3 | [P06: Ground weapons and aircraft disablement](plans/06-ground-combat.md) | Planned | P05 | Ground players coordinate rifle/anti-air fire against the aircraft |
+| M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Planned | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
+| M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Planned | P04 | Operator fires both named weapons, switching zoom while cover protects players |
+| M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Planned | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Partial destruction](plans/07-destruction.md) | Planned | P06 | Selected cover breaks consistently and changes safe routes |
-| M5 — Extraction loop | [P08: Shared mission objectives](plans/08-objectives.md) | Planned | P07 | Recover three items and see team progress persist through losses |
-| M5 | [P09: Extraction and complete outcomes](plans/09-extraction.md) | Planned | P08 | Win by extracting or preventing escape; replay a clean next round |
-| M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, danger, objective, elimination and result without developer help |
+| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Planned | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
+| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
+| M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 
@@ -39,11 +39,13 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 
 - After **P04**, check the two-role experience: both views describe the same world and cover works visually.
 - After **P06**, test whether attacking and counterattacking are enjoyable before adding more content.
-- After **P09**, play the complete survival-to-extraction loop and inspect win/loss edge cases.
+- After **P09**, play the complete team-versus-plane loop and inspect destruction/elimination/timeout conflicts.
 - After **P12**, the MVP is ready only with the recorded gates and authorized publication; “code written” is not release completion.
 
 ## Initial delivery record
 
 2026-11-07: established design, architecture, requirements, twelve plans, repository-local feature loop, role instructions, source/test/asset boundaries and build verification. [Scaffold evidence](docs/evidence/bootstrap.md) records checks. No gameplay plan is complete.
 
-Future ideas belong in a separate post-MVP proposal: second cannon type, additional maps, touch/gamepad, progression, matchmaking, vehicles or richer destruction. They must not silently enter the current plans.
+2026-11-07 gameplay revision: changed the design to Players vs C-130, a circular battlefield/perimeter orbit, inward weapon-linked camera zoom, 30mm/105mm aircraft weapons, M-7 rifles and one recoverable launcher. P08/P09 replace their previous collection/escape scope while retaining IDs; no implementation status changes. The user confirmed rifle chip damage plus three direct rockets from full aircraft health.
+
+Future ideas belong in a separate post-MVP proposal: additional weapons or maps, touch/gamepad, progression, matchmaking, vehicles or richer destruction. They must not silently enter the current plans.
