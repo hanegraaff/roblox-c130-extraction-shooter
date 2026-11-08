@@ -21,7 +21,18 @@ python3 scripts/check_repository.py
 
 This checks repository structure and local file links. It does not check remote website availability or Markdown heading anchors. The full verification entrypoint also builds both project mappings and fails if Rojo is missing.
 
-## Roblox Studio workflow
+## Connect Roblox Studio MCP
+
+The preferred interactive workflow uses Roblox Studio's **built-in MCP server** with Codex or the ChatGPT desktop app on the same Mac/Windows machine. MCP lets the agent inspect the open place and use available Studio editing and playtest tools; it does not by itself sync this repository or create a Roblox experience. Follow the [official connection guide](https://create.roblox.com/docs/studio/mcp) for the current UI and tool capabilities.
+
+1. Open Roblox Studio, sign in to the intended Roblox account yourself, and open a place. A disposable Baseplate is sufficient for the initial connection; a local place does not need a cloud place ID.
+2. Open **Assistant → … → Settings → MCP Servers** (older Studio versions use **… → Manage MCP Servers**). Enable **Studio as MCP server**. Under **Quick Connect**, enable **ChatGPT (codex)** if it is available. Studio's setting is per account.
+3. If Quick Connect is unavailable, use the Roblox setup skill's manual registration instructions. Check for an existing `Roblox_Studio` entry first and do not add a duplicate. On macOS the Studio-supplied command is `/Applications/RobloxStudio.app/Contents/MacOS/StudioMCP` when installed in `/Applications`; it is not a project script or a credential.
+4. Open a new Codex thread or restart the ChatGPT desktop app so the server's tools load. Ask the agent to continue Roblox setup; it should call `list_roblox_studios`, select the intended instance and inspect the place. If multiple Studio instances are open, identify the intended one before any write.
+
+Signing in gives Studio the account context; the MCP connection is to a local open Studio instance, not a permanent link between GitHub and a Roblox account. A local place is enough for early development. Creating or publishing an experience in Roblox Cloud requires an authorized account/owner and the separate release approval in this repository's instructions. Do not put Roblox passwords, tokens, or other credentials in Git.
+
+## Sync this repository with Studio
 
 Install Roblox Studio and the matching official Rojo plugin when you start implementation. Open a disposable local development place, then run:
 
@@ -31,7 +42,7 @@ rojo serve default.project.json
 
 Connect the Studio Rojo plugin to the local server. Verify the target place before syncing. For engine tests, use a separate test place and `rojo serve test.project.json`; never publish that test place as the game.
 
-Plan 01 adds executable bootstraps, strict Luau/tooling pins, test dependencies, and instructions for running the engine suite. Until then there is no `test:studio` command and no playable scene. If Studio's Codex integration is needed, use the Roblox setup workflow to connect the installed Studio instance; do not assume the tool connection exists because Studio is installed.
+Plan 01 adds executable bootstraps, strict Luau/tooling pins, test dependencies, and instructions for running the engine suite. Until then there is no `test:studio` command and no playable scene. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as this project's chosen synchronization mechanism. Roblox also documents Script Sync, but do not enable both for the same instances without an explicit migration and ownership decision.
 
 Source files drive managed scripts. Studio-built models/world changes must be exported into `assets/` and entered in the manifest, then rebuilt from a clean checkout. Stop simulation before authoring/exporting. Do not preserve transient playtest objects as authored assets.
 
