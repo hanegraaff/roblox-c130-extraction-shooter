@@ -39,10 +39,10 @@ Pre-candidate review corrected derived orbit overflow and a same-round Lobby res
 
 The prototype round card covers part of the upper view. The 60° camera can include an opaque strip of the aircraft in the upper-left sky; the observed strip did not block the central battlefield/reticle. The test-only control panel also shares the lower-right screen area. These presentation limits are documented for later HUD work. Art is an original primitive model, and ordinary server replication has no smoothing shell.
 
-This evidence establishes local P04 behavior, not firing, damage, weapon cooldowns, launcher gameplay, balance, release capacity or cloud readiness. No Roblox publication, merge or production-player-data use occurred.
+This evidence establishes local P04 behavior, not firing, damage, weapon cooldowns, launcher gameplay, balance, release capacity or cloud readiness. Feature validation used no production player data and did not publish to Roblox; subsequent GitHub integration is recorded below.
 
 ## GitHub delivery
 
-Source `b27f738` and documentation/evidence `7d9e200c7fcf687445562b77fe541ef6873b4d0a` are pushed on `plan/04-aircraft-and-thermal`. [PR #9](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/9) is open for review against `main`, unmerged. Follow-up delivery records change prose only. The [roadmap](../../roadmap.md) owns status; P05 is eligible but unimplemented.
+Source `b27f738` and documentation/evidence `7d9e200c7fcf687445562b77fe541ef6873b4d0a` were delivered on `plan/04-aircraft-and-thermal`. With explicit user authorization, [PR #9](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/9) merged into `main` at `da1327ac60425c544b7f2804107bb318fe9490dd`. The [integration record](p04-integration.md) verifies identical checked/merged source and a fresh passing host gate with matching builds. Follow-up delivery records change prose only. The [roadmap](../../roadmap.md) owns status; P05 is eligible but unimplemented and can branch from `main`.
 
 [GitHub Verify run 42526282440](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42526282440) completed successfully on `7d9e200`. Repository and whitespace checks pass after the final link/status records.

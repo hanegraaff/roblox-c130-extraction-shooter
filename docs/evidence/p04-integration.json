@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-08",
+  "authorization": "User requested: merge the PR and complete the flow.",
+  "pullRequest": 9,
+  "pullRequestUrl": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/9",
+  "checkedHead": "2f6432f8b729d731650539ec3753f5ea06594557",
+  "checkedHeadTree": "11f9035608acb17703694190bee280072ca74f54",
+  "mergeCommit": "da1327ac60425c544b7f2804107bb318fe9490dd",
+  "mergeTree": "11f9035608acb17703694190bee280072ca74f54",
+  "identicalMergedTree": true,
+  "checkedHeadWorkflow": {
+    "id": 42526346654,
+    "conclusion": "success",
+    "url": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42526346654"
+  },
+  "reviews": {
+    "submissions": 0,
+    "unresolvedThreads": 0
+  },
+  "verification": {
+    "command": "python3 scripts/verify.py > build/p04-integrated-verify.txt 2>&1",
+    "environment": "macOS arm64, Python 3.10.4, pinned repository tools",
+    "unit": 30,
+    "integration": 18,
+    "failed": 0,
+    "skipped": 0,
+    "authoredPartsPerBuild": 128,
+    "releaseRuntimeScripts": 21,
+    "result": "passed"
+  },
+  "artifacts": {
+    "game.rbxlx": "4dfdb6b66c75b7c08f380f9d56218ba2322e726381c494ca525e8a24c8bad54c",
+    "tests.rbxlx": "1cafbb6b85a01d87c5369c441d72c7188490e176a83a49d0661a3f6a7f2ab487"
+  },
+  "matchesFinalStudioCandidateBuilds": true,
+  "studio": {
+    "newPlaytestsRun": false,
+    "existingDocument": "p02-tests-5c809beff70b.rbxlx",
+    "instance": "21f6fc11-4429-4148-9764-89a36987e5e9",
+    "observedState": "Edit",
+    "note": "Existing P04 engine evidence remains attributable to identical runtime/config/assets/tests; integration adds no new engine claims."
+  },
+  "publication": false,
+  "nextPlan": "P05 Ready, unimplemented"
+}
