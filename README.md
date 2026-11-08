@@ -4,13 +4,13 @@
 
 The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
-![Active ground player in the greybox shelter with role, round timer, surviving ground count and Surrender / spectate button](docs/evidence/p03/current-progress.jpg)
+![Solo Ground preview with a Studio testing panel for role, duration, start and reset controls](docs/evidence/lobby-preview/current-progress.jpg)
 
-*Current progress: P03 active ground round prototype, captured in a local Roblox Studio multiplayer test on 2026-11-08 with chat hidden. Aircraft and combat are planned.*
+*Current progress: human-testing panel and solo role preview on 2026-11-08, captured from the running test build with chat hidden. Aircraft and combat are planned.*
 
 ## What you can play today
 
-The local build is a round prototype on a circular greybox battlefield. Players wait on a protected lobby deck. With 6–10 players, the server selects one operator and sends everyone else to sheltered ground positions. Operator turns rotate between eligible players, preferring those who have waited more rounds. The operator currently stays at a protected station with a normal avatar camera; the flying aircraft and its targeting view are planned.
+The local build is a round prototype on a circular greybox battlefield. Players can walk around a protected lobby deck. With 6–10 players, the server selects one operator and sends everyone else to sheltered ground positions. Operator turns rotate between eligible players, preferring those who have waited more rounds. The operator currently stays at a protected station with a normal avatar camera; the flying aircraft and its targeting view are planned.
 
 Ground players use **WASD**, **Space** and the mouse to explore. Follow the teal western route or ochre eastern route toward the gold center marker. Industrial walls and roofs provide cover, and an orange perimeter marks the edge. Leaving the battlefield or falling below it returns an active ground player to shelter. The marker reserves the future launcher location; there is no pickup or destructible cover yet.
 
@@ -33,11 +33,11 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Choose the branch you intend to test before building. Use `main` for integrated source or the PR's head branch for an unmerged candidate. To review this roles/rounds increment, fetch and select its task branch:
+Choose the branch you intend to test before building. Use `main` for integrated source or the PR's head branch for an unmerged candidate. To use the latest lobby movement and solo-preview fix, fetch and select its task branch (which includes the P03 source):
 
 ```sh
 git fetch origin
-git switch plan/03-rounds-and-roles
+git switch fix/human-test-controls
 ```
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
@@ -65,8 +65,8 @@ rojo serve default.project.json --address 127.0.0.1 --port 34873
 
 1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local development document. Reuse it if it is already open.
 2. Keep **Play stopped**. Open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the project is **PlayersVsC130** before applying the mapping. If the newly installed toolbar button is absent in Edit mode, save work and restart Studio once. If only the panel is hidden, reopen it with the Rojo toolbar button; Play is not needed.
-3. Click **Play**. The status panel reads **Development** / **Bootstrap running**, and the round panel shows a lobby waiting for six players. Your lobby character is protected and stationary. A solo client cannot start a production round.
-4. For a small local round, use the separate test mapping below. Its server-only two-player minimum permits role testing with two clients; use three to watch teammate spectating while another ground player remains alive.
+3. Click **Play**. The status panel reads **Development** / **Bootstrap running**, and the round panel shows a lobby waiting for six players. Your lobby character is protected and can move with WASD. A solo client cannot start a production round.
+4. For solo exploration or a small local round, use the separate test mapping below. A single client automatically previews the battlefield. Two clients start real role/round testing; use three for teammate spectating while another ground player remains alive.
 5. Click **Stop** before editing repository files. Let Rojo sync changes into this same document, inspect the expected change, and start a fresh Play session. Reopening a new build after every edit is unnecessary.
 
 If Rojo reports **Http requests can only be executed by game server**, stop Play and reconnect in Edit mode. Keep a separate test document for the test mapping below. The [development guide](docs/development.md#sync-this-repository-with-studio) covers the guarded macOS launcher, MCP connection and further troubleshooting.
@@ -88,9 +88,15 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
 2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
-3. Open Studio's **Output** panel. Expect **45 server tests and 2 client tests**, with zero failures, skipped cases or errors. These cover rules, service lifecycle, status/character behavior, map queries, boundary correction and rebuilds. After those suites pass, the test runner starts the round runtime. A solo client waits for a second player.
+3. Open Studio's **Output** panel. Expect **45 server tests and 2 client tests**, with zero failures, skipped cases or errors. These cover rules, service lifecycle, status/character behavior, map queries, boundary correction and rebuilds. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
 4. Click **Stop**, then **Play** again. Check fresh passing reports and one status panel plus one round panel. Stop before changing the mapping or source.
-5. To play both roles locally, select Studio's **Server & Clients** testing mode, choose **2 clients** (or **3** for teammate spectating), and start the session. The test mapping uses a three-second lobby delay and sixty-second rounds. Ground players can move, surrender or reset; operator movement is locked at the placeholder station. Watch the timer, result and return to lobby, then use **End Session** to close the test clients.
+5. Use the **STUDIO TESTING** panel at the bottom right. Click **Role** to cycle Auto → Ground → Operator. With one client, the choice changes your solo preview immediately: Ground can walk, while Operator uses the protected placeholder station. Click **Next round** to cycle 30, 60, 180 or 600 seconds.
+6. For a real role/round test, use Studio **Server & Clients** with **2 clients** (or **3** for teammate spectating). Choose your roles, then click **Start round now** to bypass the lobby wait. Two Operator choices, or everyone choosing Ground, produces an explanation rather than silently changing a tester's choice. **Auto** fills the required operator when nobody explicitly requests it.
+7. **Reset test / apply settings** ends the local test and restores preview/lobby. Role and duration choices apply to the next explicit **Start round now**; they do not change an active role or deadline. Use **End Session** to close multiplayer test clients when finished.
+
+For **solo exploration**, just click **Play** in the test document; no **Server & Clients** windows are needed. If the panel says **Development**, stop Play and connect this document to the test server on `localhost:34872`, confirming **PlayersVsC130Tests**.
+
+Use **Return to lobby** to inspect the walkable lobby, or **Explore map (solo)** to return to preview. No Command Bar commands are required. Solo previews are clearly labelled and do not grant an active round life, opponent or weapons. The panel and all override/settings code are excluded from the release mapping; production still requires 6–10 players and uses its normal role selection. See [test-control evidence](docs/evidence/lobby-preview.md) for verified cases.
 
 The [P03 multiplayer harness](docs/testing.md#run-the-p03-multiplayer-harness) separately starts three clients, adds a late spectator and drives three accelerated rounds. A single-client TestEZ pass does not establish replicated round behavior, and local rounds do not establish combat or release capacity.
 

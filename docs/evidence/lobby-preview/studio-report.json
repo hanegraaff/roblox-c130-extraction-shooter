@@ -1,0 +1,100 @@
+{
+  "sourceCommit": "b2430906e96c86566a3207759604466a8d0b8763",
+  "sourceTree": "aa84114344bb3d0f4023a6cf52d30bec15303449",
+  "syncAndEngine": {
+    "solo": {
+      "ok": true,
+      "report": {
+        "clientCount": 1,
+        "suite": "HumanTestControls",
+        "errors": 0,
+        "skipped": 0,
+        "discovered": 6,
+        "failed": 0,
+        "passed": 6
+      }
+    },
+    "version": "0.746.0.7461269",
+    "multiplayer": {
+      "ok": true,
+      "report": {
+        "clientCount": 2,
+        "discovered": 4,
+        "errors": 0,
+        "skipped": 0,
+        "suite": "HumanTestControls",
+        "passed": 4,
+        "failed": 0
+      }
+    },
+    "movement": {
+      "ok": true,
+      "report": {
+        "clientCount": 1,
+        "suite": "LobbyControls",
+        "errors": 0,
+        "skipped": 0,
+        "discovered": 4,
+        "failed": 0,
+        "passed": 4
+      }
+    },
+    "failures": [],
+    "checked": 42,
+    "document": "p02-tests-5c809beff70b.rbxlx"
+  },
+  "baselineServer": {
+    "errors": 0,
+    "clientCount": 1,
+    "passed": 45,
+    "environment": "Studio",
+    "seed": 1,
+    "discovered": 45,
+    "suite": "P01-server",
+    "failed": 0,
+    "skipped": 0
+  },
+  "clientObservations": {
+    "panel": true,
+    "baseline": {
+      "environment": "Studio",
+      "failed": 0,
+      "discovered": 2,
+      "errors": 0,
+      "skipped": 0,
+      "suite": "P01-client",
+      "passed": 2,
+      "seed": 1
+    },
+    "phase": "Lobby",
+    "roleFits": true,
+    "duration": 60,
+    "choice": "Auto",
+    "durationFits": true,
+    "viewport": "1081, 619",
+    "preview": "Ground",
+    "actualRole": "Waiting",
+    "quality": "Enum.QualityLevel.Automatic"
+  },
+  "operatedUi": {
+    "clickedRoles": [
+      "Auto",
+      "Ground",
+      "Gunship",
+      "Auto"
+    ],
+    "operatorPreviewAnchored": true,
+    "durationChangedToSeconds": 180,
+    "soloRealRoundRejected": true,
+    "resetGenerationChangedFrom": 1,
+    "resetGenerationChangedTo": 2,
+    "guiSurvivedReset": true,
+    "cameraReturnedToOwnHumanoid": true,
+    "lobbyMovedStuds": 6.397430419921875,
+    "keyboard": {
+      "key": "D",
+      "durationSeconds": 0.4
+    }
+  },
+  "finalStudioState": "Original document in Edit; no extra simulated-client windows"
+}

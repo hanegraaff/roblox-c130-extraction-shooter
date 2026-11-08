@@ -115,7 +115,9 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                     end
                     table.insert(connections, character.DescendantAdded:Connect(collision))
                     if request.role ~= "Ground" then
-                        root.Anchored = true
+                        -- Waiting players can walk around the protected lobby. Only
+                        -- the assigned operator is fixed at the placeholder station.
+                        root.Anchored = request.role == "Gunship"
                         local protection = Instance.new("ForceField")
                         protection.Name = "StationProtection"
                         protection.Visible = false

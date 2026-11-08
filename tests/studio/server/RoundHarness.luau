@@ -39,6 +39,12 @@ end
 -- or immediately after starting an ordinary manually operated local test runtime.
 function RoundHarness.run()
     local args = StudioTestService:GetTestArgs()
+    if
+        type(args) == "table" and (args.kind == "HumanTestControls" or args.kind == "HumanTestMultiplayer")
+    then
+        StudioTestService:EndTest(require(script.Parent.HumanTestCheck).run())
+        return
+    end
     local automated = type(args) == "table" and args.kind == "P03"
     if automated then
         awaitCondition(function()
@@ -46,9 +52,10 @@ function RoundHarness.run()
         end, "three actual clients join", 30)
     end
     local runtime, reason = GameRuntime.start({
+        automaticDeployment = automated,
         minimumPlayers = 2,
         durationSeconds = if automated then 30 else 60,
-        lobbySeconds = if automated then 8 else 3,
+        lobbySeconds = if automated then 8 else 0,
         deploymentSeconds = 25,
         resultsSeconds = if automated then 2 else 3,
         seed = 1,
@@ -56,6 +63,16 @@ function RoundHarness.run()
     assert(runtime, reason)
     game:BindToClose(runtime.stop)
     if not automated then
+        if type(args) == "table" and args.kind == "LobbyControls" then
+            local stopControls = require(script.Parent.LocalTestControls).start(runtime.rounds)
+            local report = require(script.Parent.LocalTestControlsCheck).run()
+            stopControls()
+            runtime.stop()
+            StudioTestService:EndTest(report)
+        else
+            local session = require(script.Parent.HumanTestSession).start(runtime)
+            game:BindToClose(session.stop)
+        end
         return
     end
     local cases: { Case } = {}

@@ -25,3 +25,5 @@ assert(
     "client suite failed or empty"
 )
 require(script.RoundHarness).run()
+local stopTestPanel = require(script.HumanTestPanel).start()
+script.Destroying:Connect(stopTestPanel)

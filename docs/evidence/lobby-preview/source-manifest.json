@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "b2430906e96c86566a3207759604466a8d0b8763",
+  "sourceTree": "aa84114344bb3d0f4023a6cf52d30bec15303449",
+  "environment": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "studioVersion": "0.746.0.7461269"
+  },
+  "command": "python3 scripts/verify.py > build/human-test-controls-verify.log 2>&1",
+  "host": {
+    "passed": true,
+    "unit": 24,
+    "integration": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": {
+    "game.rbxlx": "171ba9d2c05ec854f333b5f58cf87df4d69bb0f6e2dd9f0357abf8397b3e22f8",
+    "tests.rbxlx": "0ed44846cfff237717cbf622fc27f4768372c4693734214145c874c76ba9702f"
+  }
+}
