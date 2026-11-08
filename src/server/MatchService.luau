@@ -53,7 +53,10 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     assert(settings.minimumPlayers >= 2 and settings.minimumPlayers <= 10, "invalid minimum")
     assert(settings.minimumPlayers % 1 == 0, "minimum must be integral")
     assert(settings.durationSeconds >= 1 and settings.durationSeconds <= 3600, "invalid duration")
-    assert(settings.seed == settings.seed and math.abs(settings.seed) < math.huge, "invalid seed")
+    assert(
+        settings.seed >= 0 and settings.seed <= 2147483647 and settings.seed % 1 == 0,
+        "seed must be a safe nonnegative integer"
+    )
     local state: Snapshot = {
         roundId = 0,
         revision = 0,
@@ -184,7 +187,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                 candidates,
                 settings.minimumPlayers,
                 previousOperator,
-                settings.seed + state.roundId
+                (settings.seed + state.roundId) % 2147483648
             )
             if not assignment then
                 return false, reason

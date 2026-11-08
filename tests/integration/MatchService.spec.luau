@@ -19,6 +19,19 @@ type Snapshot = {
 }
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local Match = candidate :: API
+    test("constructor rejects overflowing seed instead of deploying a roster without operator", function()
+        for _, seed in { 0 / 0, math.huge, -1, 0.5, 1e308, 2147483648 } do
+            local ok = pcall(function()
+                Match.new({ minimumPlayers = 2, durationSeconds = 10, seed = seed }, {
+                    now = function()
+                        return 0
+                    end,
+                    releaseLife = function() end,
+                })
+            end)
+            assert(not ok, "unsafe service seed accepted")
+        end
+    end)
     local function fixture(count: number?)
         local seconds = 100
         local released: { { id: number, roundId: number, recover: boolean } } = {}

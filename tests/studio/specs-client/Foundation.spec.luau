@@ -2,7 +2,7 @@
 -- P01 A6/R01: actual PlayerGui, replication and repeated StatusPanel lifecycle checks.
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
-    test("client receives server status and a spawned character", function()
+    test("client receives server status and an explicit character or late-spectator state", function()
         local player = game:GetService("Players").LocalPlayer
         local status = game:GetService("ReplicatedStorage"):WaitForChild("BootstrapStatus", 10)
         assert(
@@ -10,10 +10,19 @@ return function()
             'expected status and status:GetAttribute("Environment") == "Test" and status:GetAttribute("Running")'
         )
         local deadline = os.clock() + 10
-        while not player.Character and os.clock() < deadline do
+        while not player.Character and player:GetAttribute("Role") ~= "Spectator" and os.clock() < deadline do
             task.wait()
         end
         local character = player.Character
+        if player:GetAttribute("Role") == "Spectator" then
+            local roundState = game:GetService("ReplicatedStorage"):FindFirstChild("RoundState")
+            assert(
+                roundState and roundState:GetAttribute("Phase") ~= "Lobby",
+                "spectator without active round"
+            )
+            assert(not character, "late spectator gained a character")
+            return
+        end
         assert(character, "character unavailable after 10 seconds")
         assert(
             character:WaitForChild("HumanoidRootPart", 10),

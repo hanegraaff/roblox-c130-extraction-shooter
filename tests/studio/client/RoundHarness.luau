@@ -54,6 +54,9 @@ function RoundHarness.run()
                             and player:GetAttribute("Life") == request.life
                     end, "replicated role/phase/deadline")
                     assert(player.PlayerGui:FindFirstChild("RoundHUD"), "round UI missing")
+                    if request.role == "Spectator" then
+                        assert(player.Character == nil, "late spectator gained a character")
+                    end
                 elseif request.kind == "Spectate" then
                     awaitCondition(function()
                         local target = Players:GetPlayerByUserId(request.targetId or 0)
@@ -103,6 +106,7 @@ function RoundHarness.run()
                 end)
             end
         end)
+        remote:FireServer(0, { passed = true })
         removal = remote.AncestryChanged:Connect(function()
             if not remote:IsDescendantOf(ReplicatedStorage) then
                 if connection then

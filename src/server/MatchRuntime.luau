@@ -54,6 +54,8 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
     local folder: Folder? = nil
     local connections: { RBXScriptConnection } = {}
     local owners: { [Player]: PlayerOwner } = {}
+    local drainingOwners: { CharacterOwner.Controller } = {}
+    local restoringAutoLoads = false
     local ownedTeams: { Team } = {}
     local oldCharacterAutoLoads = Players.CharacterAutoLoads
     local phaseStarted = workspace:GetServerTimeNow()
@@ -86,6 +88,24 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             connection:Disconnect()
         end
         table.clear(list)
+    end
+    local function retire(owner: CharacterOwner.Controller)
+        owner.stop()
+        if owner.resources().spawnTasks > 0 then
+            table.insert(drainingOwners, owner)
+        end
+    end
+    local function drainCount(): number
+        local count = 0
+        for index = #drainingOwners, 1, -1 do
+            local pending = drainingOwners[index].resources().spawnTasks
+            if pending == 0 then
+                table.remove(drainingOwners, index)
+            else
+                count += pending
+            end
+        end
+        return count
     end
     local function teamFor(role: string): Team?
         for _, team in ownedTeams do
@@ -235,7 +255,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             match.finishReset()
         end
         for player, owner in owners do
-            owner.characters.stop()
+            retire(owner.characters)
             match.leave(player.UserId)
             player.Neutral = true
             for _, key in { "RoundId", "Role", "Life", "RoundRevision" } do
@@ -255,7 +275,23 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             PhysicsService:UnregisterCollisionGroup("RoundCharacters")
             collisionOwned = false
         end
-        Players.CharacterAutoLoads = oldCharacterAutoLoads
+        if drainCount() == 0 then
+            Players.CharacterAutoLoads = oldCharacterAutoLoads
+        else
+            -- A yielding engine load cannot be cancelled safely. Keep auto spawning
+            -- disabled until all old loads release their leases; account for this
+            -- teardown task and refuse a premature start instead of reporting zero.
+            restoringAutoLoads = true
+            task.spawn(function()
+                while drainCount() > 0 do
+                    task.wait()
+                end
+                if not ReplicatedStorage:FindFirstChild("RoundState") then
+                    Players.CharacterAutoLoads = oldCharacterAutoLoads
+                end
+                restoringAutoLoads = false
+            end)
+        end
     end
     return {
         match = match,
@@ -265,6 +301,9 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             end
             if ReplicatedStorage:FindFirstChild("RoundState") then
                 return false, "round runtime already owned"
+            end
+            if restoringAutoLoads or drainCount() > 0 then
+                return false, "previous character loads are still draining"
             end
             for _, player in Players:GetPlayers() do
                 if player:GetAttribute("RoundCharacterLoad") then
@@ -320,7 +359,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
                 Players.PlayerRemoving:Connect(function(player)
                     local owner = owners[player]
                     if owner then
-                        owner.characters.stop()
+                        retire(owner.characters)
                         owners[player] = nil
                     end
                     match.leave(player.UserId)
@@ -337,7 +376,8 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         end,
         stop = stop,
         resources = function()
-            local count, tasks = #connections, 0
+            local count = #connections
+            local tasks = drainCount() + if restoringAutoLoads then 1 else 0
             for _, owner in owners do
                 local resources = owner.characters.resources()
                 count += resources.connections

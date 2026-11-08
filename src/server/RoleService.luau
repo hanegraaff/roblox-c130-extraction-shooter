@@ -18,6 +18,12 @@ function RoleService.assign(
     previousOperatorId: number?,
     seed: number
 ): (Assignment?, string?)
+    if minimumPlayers < 2 or minimumPlayers > 10 or minimumPlayers % 1 ~= 0 then
+        return nil, "minimum must be an integer from two to ten"
+    end
+    if seed ~= seed or seed < 0 or seed > 2147483647 or seed % 1 ~= 0 then
+        return nil, "seed must be a safe nonnegative integer"
+    end
     if #candidates < minimumPlayers or #candidates > 10 then
         return nil, "population outside configured bounds"
     end
@@ -53,7 +59,7 @@ function RoleService.assign(
         return nil, "no eligible operator"
     end
     -- A small deterministic integer mix; no ambient math.random state is consumed.
-    local index = ((math.floor(seed) * 48271) % 2147483647) % #eligible + 1
+    local index = ((seed * 48271) % 2147483647) % #eligible + 1
     local operatorId = eligible[index]
     local groundIds: { number } = {}
     for _, candidate in sorted do

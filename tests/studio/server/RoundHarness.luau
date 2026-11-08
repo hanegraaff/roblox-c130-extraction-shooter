@@ -47,8 +47,8 @@ function RoundHarness.run()
     end
     local runtime, reason = GameRuntime.start({
         minimumPlayers = 2,
-        durationSeconds = if automated then 18 else 60,
-        lobbySeconds = if automated then 5 else 3,
+        durationSeconds = if automated then 30 else 60,
+        lobbySeconds = if automated then 8 else 3,
         deploymentSeconds = 25,
         resultsSeconds = if automated then 2 else 3,
         seed = 1,
@@ -71,7 +71,22 @@ function RoundHarness.run()
     end
     local initialMap = mapSignature()
     local initialConnections = 0
+    -- Change real map Instances so an unchanged signature after reset proves rebuild,
+    -- rather than merely observing a map which was never modified.
+    local function perturbMap()
+        local cover = workspace.World.Battlefield.Breakable:GetChildren()[1]
+        assert(cover, "missing breakable reset fixture")
+        cover:Destroy()
+        local debris = Instance.new("Part")
+        debris.Name = "P03TransientResetFixture"
+        debris.Anchored = true
+        debris.CanCollide = false
+        debris.Position = Vector3.new(0, 200, 0)
+        debris.Parent = workspace.World.Battlefield
+        assert(mapSignature() ~= initialMap, "map fixture failed to change geometry")
+    end
     local clients = Players:GetPlayers()
+    local peakClientCount = #clients
     table.sort(clients, function(a, b)
         return a.UserId < b.UserId
     end)
@@ -82,9 +97,14 @@ function RoundHarness.run()
     local testRemote = Instance.new("RemoteEvent")
     testRemote.Name = "P03Harness"
     local replies: { [number]: { [Player]: { [string]: unknown } } } = {}
+    local readyClients: { [Player]: boolean } = {}
     local serial = 0
     local connection = testRemote.OnServerEvent:Connect(
         function(player: Player, token: unknown, reply: unknown)
+            if token == 0 and slots[player] then
+                readyClients[player] = true
+                return
+            end
             if type(token) == "number" and replies[token] and slots[player] and type(reply) == "table" then
                 replies[token][player] = reply :: { [string]: unknown }
             end
@@ -100,6 +120,9 @@ function RoundHarness.run()
         assert(ok, tostring(message))
     end
     local function probe(player: Player, request: Probe)
+        awaitCondition(function()
+            return readyClients[player] == true
+        end, "client harness ready " .. tostring(slots[player]), 15)
         serial += 1
         local token = serial
         replies[token] = {}
@@ -161,12 +184,46 @@ function RoundHarness.run()
             local operator, ground = roles(state)
             assert(#ground == 2, "expected two actual ground players")
             replicated(state)
-            initialConnections = runtime.rounds.resources().connections
             local character = operator.Character
             assert(character, "operator character missing")
             local root = character:FindFirstChild("HumanoidRootPart")
             assert(root and root:IsA("BasePart") and root.Anchored, "operator must be anchored")
             assert(character:FindFirstChild("StationProtection"), "operator station protection missing")
+            perturbMap()
+        end)
+        check("A3/A4 actual late join remains a characterless spectator and cannot act", function()
+            StudioTestService:AddPlayers(1)
+            awaitCondition(function()
+                return #Players:GetPlayers() == 4
+            end, "actual late client joins")
+            peakClientCount = #Players:GetPlayers()
+            local late: Player? = nil
+            for _, player in Players:GetPlayers() do
+                if not slots[player] then
+                    late = player
+                    slots[player] = 4
+                end
+            end
+            assert(late, "late client identity missing")
+            local state = runtime.rounds.match.snapshot()
+            local member = state.members[late.UserId]
+            assert(
+                member and member.role == "Spectator" and member.life == "Spectating",
+                "late join gained an active role"
+            )
+            assert(late.Character == nil, "late join gained a character")
+            probe(late, {
+                kind = "Observe",
+                roundId = state.roundId,
+                role = "Spectator",
+                life = "Spectating",
+                phase = "Active",
+                deadlineSeconds = state.deadlineSeconds,
+            })
+            local before = runtime.rounds.match.snapshot().revision
+            probe(late, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
+            task.wait(0.3)
+            assert(runtime.rounds.match.snapshot().revision == before, "late spectator command mutated state")
         end)
         check("A3/A4 death does not respawn; teammate spectating and command rejection", function()
             local state = runtime.rounds.match.snapshot()
@@ -200,7 +257,7 @@ function RoundHarness.run()
                 "wrong elimination result"
             )
         end)
-        check("A6 first reset restores lobby camera, roster, map and stable resource count", function()
+        check("A6 first reset restores lobby camera, roster and perturbed map", function()
             awaitCondition(function()
                 return runtime.rounds.match.snapshot().phase == "Lobby"
             end, "first lobby reset")
@@ -214,10 +271,8 @@ function RoundHarness.run()
         check("A5/A6 operator reset retains assignment and timeout is authoritative", function()
             local state = activeAfter(firstRound)
             secondRound = state.roundId
-            assert(
-                runtime.rounds.resources().connections == initialConnections,
-                "connections accumulated between rounds"
-            )
+            initialConnections = runtime.rounds.resources().connections
+            perturbMap()
             local operator = roles(state)
             local original = operator.Character
             assert(original, "operator character missing")
@@ -244,7 +299,7 @@ function RoundHarness.run()
             replicated(runtime.rounds.match.snapshot())
             awaitCondition(function()
                 return runtime.rounds.match.snapshot().phase == "Results"
-            end, "round timeout", 25)
+            end, "round timeout", 35)
             local result = runtime.rounds.match.snapshot().result
             assert(
                 result and result.winner == "Gunship" and result.reason == "Timeout",
@@ -264,10 +319,15 @@ function RoundHarness.run()
         check("A6 actual ground departure removes life; operator departure forfeits", function()
             local state = activeAfter(secondRound)
             thirdRound = state.roundId
+            assert(
+                runtime.rounds.resources().connections == initialConnections,
+                "connections accumulated between populated rounds"
+            )
+            perturbMap()
             local operator, ground = roles(state)
             probe(ground[1], { kind = "Leave" })
             awaitCondition(function()
-                return #Players:GetPlayers() == 2
+                return #Players:GetPlayers() == 3
             end, "actual ground disconnect")
             local afterGround = runtime.rounds.match.snapshot()
             assert(afterGround.phase == "Active", "one departing ground ended a populated round")
@@ -290,15 +350,20 @@ function RoundHarness.run()
                 return runtime.rounds.match.snapshot().phase == "Lobby"
             end, "third lobby reset")
             local remaining = Players:GetPlayers()
-            assert(#remaining == 1, "expected one connected actual client")
+            assert(#remaining == 2, "expected two connected actual clients")
             replicated(runtime.rounds.match.snapshot())
-            probe(remaining[1], { kind = "LobbyCamera" })
+            for _, player in remaining do
+                probe(player, { kind = "LobbyCamera" })
+            end
             assert(mapSignature() == initialMap, "third reset changed authored map")
             runtime.stop()
             runtime.stop()
             local resources = runtime.rounds.resources()
             assert(resources.connections == 0 and resources.spawnTasks == 0, "runtime resources leaked")
             assert(not ReplicatedStorage:FindFirstChild("RoundState"), "round state survived teardown")
+        end)
+        check("A6 pending actual avatar loads retain ownership and accounting until drained", function()
+            require(script.Parent.CharacterCleanup).run()
         end)
     end)
     if not ok then
@@ -316,7 +381,8 @@ function RoundHarness.run()
     local report = {
         suite = "P03-multiplayer",
         environment = "Studio",
-        clientCount = #clients,
+        clientCount = peakClientCount,
+        initialClientCount = #clients,
         completedRoundIds = { firstRound, secondRound, thirdRound },
         discovered = #cases,
         passed = passed,

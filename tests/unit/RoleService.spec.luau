@@ -68,4 +68,13 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         values[2].userId = values[1].userId
         assert(not Roles.assign(values, 6, nil, 1), "expected not Roles.assign(values, 6, nil, 1)")
     end)
+    test("unsafe seeds reject and accepted seed boundaries always assign one operator", function()
+        for _, seed in { 0 / 0, math.huge, -1, 0.5, 1e308, 2147483648 } do
+            assert(not Roles.assign(roster(2), 2, nil, seed), "unsafe seed accepted")
+        end
+        for _, seed in { 0, 2147483647 } do
+            local assignment = Roles.assign(roster(2), 2, nil, seed)
+            assert(assignment and #assignment.groundIds == 1, "seed boundary lost operator")
+        end
+    end)
 end
