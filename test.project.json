@@ -1,33 +1,69 @@
 {
   "name": "PlayersVsC130Tests",
-  "globIgnorePaths": ["**/*.md"],
+  "globIgnorePaths": [
+    "**/*.md"
+  ],
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
-      "Shared": {"$path": "src/shared"}
+      "Shared": {
+        "$path": "src/shared"
+      },
+      "TestPackages": {
+        "$path": "Packages"
+      },
+      "ClientSpecs": {
+        "$path": "tests/studio/specs-client"
+      }
     },
     "ServerScriptService": {
-      "Server": {"$path": "src/server"}
+      "Server": {
+        "$path": "src/server"
+      },
+      "ServerTests": {
+        "$path": "tests/studio/server"
+      }
     },
     "ServerStorage": {
-      "Assets": {"$path": "assets/models"},
+      "Assets": {
+        "$path": "assets/models"
+      },
       "Tests": {
         "$className": "Folder",
-        "Unit": {"$path": "tests/unit"},
-        "Integration": {"$path": "tests/integration"},
-        "Studio": {"$path": "tests/studio/server"},
-        "Fixtures": {"$path": "tests/fixtures"}
+        "Unit": {
+          "$path": "tests/unit"
+        },
+        "Integration": {
+          "$path": "tests/integration"
+        },
+        "Studio": {
+          "$path": "tests/studio/specs-server"
+        },
+        "Fixtures": {
+          "$path": "tests/fixtures"
+        }
+      },
+      "DevelopmentSettings": {
+        "$path": "tests/fixtures/DevelopmentSettings.luau"
       }
     },
     "StarterPlayer": {
       "StarterPlayerScripts": {
-        "Client": {"$path": "src/client"},
-        "ClientTests": {"$path": "tests/studio/client"}
+        "Client": {
+          "$path": "src/client"
+        },
+        "ClientTests": {
+          "$path": "tests/studio/client"
+        }
       }
     },
     "Workspace": {
-      "$properties": {"StreamingEnabled": false},
-      "World": {"$path": "assets/world"}
+      "$properties": {
+        "StreamingEnabled": false
+      },
+      "World": {
+        "$path": "assets/world"
+      }
     }
   }
 }
