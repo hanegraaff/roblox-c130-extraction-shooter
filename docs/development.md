@@ -1,25 +1,46 @@
 # Development guide
 
-## Start with the current scaffold
+## Install and build from a clean clone
 
-This is a Git-first Roblox project. Gameplay implementation begins with [Plan 01](../plans/01-foundation.md). The current build creates an empty DataModel with explicit source/asset containers; it is not a playable level.
+The current place is a development shell with a temporary spawn and bootstrap status panel. [Plan 01](../plans/01-foundation.md) defines its acceptance criteria; combat, roles and the circular battlefield remain future work.
 
-Prerequisites: Git, Python 3.10 or newer, and the pinned Rojo CLI. Install [Rokit](https://github.com/rojo-rbx/rokit) using its official instructions, then run these commands from the repository root:
+Prerequisites are Git, Python 3.10 or newer, system `curl`, and network access to GitHub tool releases and the Wally registry/CDN. The setup script supports macOS and Linux on arm64/aarch64 and x86_64. Roblox Studio itself runs on supported Mac/Windows computers; the repository’s automated setup does not currently support Windows.
+
+From the repository root:
 
 ```sh
-rokit install
+python3 scripts/setup.py
 python3 scripts/verify.py
 ```
 
-`rokit.toml` pins Rojo 7.7.1. Alternatively install that release from [Rojo's releases](https://github.com/rojo-rbx/rojo/releases/tag/v7.7.1) and put `rojo` on PATH. The verifier checks the version. Builds are written to `build/game.rbxlx` and `build/tests.rbxlx`; they are ignored by Git.
+Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, installs TestEZ 0.4.1 through Wally with the committed lockfile, generates Lune type definitions, and downloads hash-checked Roblox engine definitions from the pinned luau-lsp release. It needs no Roblox account. Generated `.tools/`, `Packages/` and `build/` content stays out of Git. Rokit and Lune also maintain normal user-level tool/type caches.
 
-For documentation-only work, run:
+| Tool | Pin | Purpose |
+| --- | --- | --- |
+| Rojo | 7.7.1 | DataModel mapping, sourcemap and builds |
+| StyLua | 2.6.0 | Luau formatting |
+| Selene | 0.32.0 | Luau linting |
+| Lune | 0.11.1 | Deterministic standalone suites |
+| Wally | 0.3.2 | Locked TestEZ dependency |
+| luau-lsp | 1.70.1 | Strict analysis with actual Roblox definitions |
+
+[rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
+
+The full gate runs formatting, lint, strict type analysis, deterministic unit/service tests, intentional rejection probes, both builds and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently the development shell) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+
+For direct tool commands in a shell, add Rokit’s tool shims to PATH:
+
+```sh
+export PATH="$HOME/.rokit/bin:$PATH"
+```
+
+For documentation-only changes:
 
 ```sh
 python3 scripts/check_repository.py
 ```
 
-This checks repository structure and local file links. It does not check remote website availability or Markdown heading anchors. The full verification entrypoint also builds both project mappings and fails if Rojo is missing.
+This checks local file links, JSON, mapped paths and asset-manifest references. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
 
 ## Connect Roblox Studio MCP
 
@@ -34,7 +55,7 @@ Signing in gives Studio the account context; the MCP connection is to a local op
 
 ## Sync this repository with Studio
 
-Install Roblox Studio and the matching official Rojo plugin when you start implementation. Open a disposable local development place, then run:
+For iterative source synchronization, install the matching official Rojo plugin and open a disposable local development place. After setup, add Rokit’s tools to PATH as above, then run:
 
 ```sh
 rojo serve default.project.json
@@ -42,7 +63,7 @@ rojo serve default.project.json
 
 Connect the Studio Rojo plugin to the local server. Verify the target place before syncing. For engine tests, use a separate test place and `rojo serve test.project.json`; never publish that test place as the game.
 
-Plan 01 adds executable bootstraps, strict Luau/tooling pins, test dependencies, and instructions for running the engine suite. Until then there is no `test:studio` command and no playable scene. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as this project's chosen synchronization mechanism. Roblox also documents Script Sync, but do not enable both for the same instances without an explicit migration and ownership decision.
+The development mapping labels its panel **Development**. The test mapping labels it **Test** and starts the server/client TestEZ runners automatically during Play. Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites) and inspect both reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
 
 Source files drive managed scripts. Studio-built models/world changes must be exported into `assets/` and entered in the manifest, then rebuilt from a clean checkout. Stop simulation before authoring/exporting. Do not preserve transient playtest objects as authored assets.
 
@@ -62,7 +83,7 @@ Routine fixes can be requested directly. There is no need to run the full featur
 
 Use `plan/NN-short-name` for feature branches unless the user requests a name. Inspect uncommitted work and fetch before branching. Do not discard another person's changes. Each feature PR explains the player-visible result, plan/requirements, automated results, Studio evidence and limitations. Use the supplied PR template.
 
-The current GitHub workflow runs repository checks and both Rojo builds. P01 expands it to the full static/unit/integration gate. Ordinary CI does not run Roblox Studio; attach required engine evidence separately. CI green is necessary but does not waive engine acceptance.
+The GitHub workflow installs the pinned dependencies and runs the full non-Studio `verify.py` gate. Ordinary Linux CI does not run Roblox Studio; attach required engine evidence separately. CI green is necessary but does not waive engine acceptance.
 
 After verifying the final candidate, commit and push the source and evidence. Mark a plan Complete only under `AGENTS.md`'s definition of done; record whether its PR is still open. Before starting a dependent plan, use a branch containing the completed dependency; do not accidentally branch from an older main that lacks it.
 

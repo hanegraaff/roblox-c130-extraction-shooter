@@ -1,6 +1,6 @@
 # Requirements and test traceability
 
-These requirements describe the MVP target. **None are implemented by the initial design scaffold.** Plans add concrete test filenames and results to their completion records; this table states the required behavior and intended test level.
+These requirements describe the MVP target. The current development shell implements the foundation portions of R01, R13 and R15: reconstructable bootstraps/spawn, validation helpers and executable verification. Gameplay actions, authority checks and the remaining game systems are still planned. Plan completion records link concrete tests and observed results; this table states each requirement’s full behavior and intended test level.
 
 | ID | Requirement | Plans | Required automated evidence |
 | --- | --- | --- | --- |

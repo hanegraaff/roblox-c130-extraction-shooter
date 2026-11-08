@@ -33,4 +33,21 @@ Update development/testing guides, source/test package READMEs and the root READ
 
 ## Completion record
 
-Not implemented. Record A1–A6 → actual test files/commands/results, tested commit/tree, CI link, Studio report, tester findings and docs review. Record missing tools/access as a concrete blocker, never a passing substitute.
+Implemented the development shell with a Git-authored temporary spawn, server bootstrap status, client status panel, explicit idempotent lifecycle composition, finite/configuration/payload/rate rules, pinned tooling and separate standalone/Studio test adapters. There are no gameplay remotes, roles, combat or rounds in this increment.
+
+Tested source commit: `8337a79c70fc25f32fc37c65d877806f0677b80a`; tree: `490df5b6844ee898d50bb24f5d8836e9fd9ecdf8`. The [durable evidence report](../docs/evidence/p01-foundation.md) contains exact tool versions, commands, build hashes, bounded logs, captures and the machine-readable Studio report.
+
+| Criterion | Tests/commands and actual result |
+| --- | --- |
+| A1 | Fresh source export, `python3 scripts/setup.py` then `python3 scripts/verify.py`: both exit 0 on macOS/Python 3.10.4. Developer and independent tester also ran the full gate successfully. Both Rojo build hashes reproduce. |
+| A2 | `tests/unit/Validation.spec.luau`, `Config.spec.luau`, `RateLimit.spec.luau`: 10/10 under Lune; `tests/integration/Lifecycle.spec.luau`: 2/2. Finite/bounded inputs, no-mutation rejection, refill boundaries, repeated cleanup and rollback/retry pass. |
+| A3 | `verify.py:negative_probes`: intentionally failed test returns exit 1 (5 passed/1 failed); empty unit suite returns exit 1. Both require intended diagnostics; disposable fixtures removed. |
+| A4 | Strict Roblox-aware analysis of all first-party source/tests/runner passes with pinned genuine engine definitions. Disposable `Part.Anchored` boolean/string and number/string errors return exit 1; fixture removed. |
+| A5 | `python3 scripts/inspect_build.py`: release has 18 Instances/8 runtime scripts; test has 54 Instances. Bootstraps/spawn present; all test packages/runners/specs/settings/overrides excluded from release. |
+| A6 | Studio 0.746.0.7461269, local test build, seed 1, actual one server/one client: two full Play cycles each discover/pass server 14 and client 2, zero failures/skips/errors. Stop clears runtime state; restart retains one status Folder and one GUI. Separate development-build spawn/label/isolation review passes. |
+
+Independent feature tester found no material defects or open P01 acceptance gaps. Visual observations at 1081×619/Automatic quality confirm readable Test/Development labels, fitted three-line text and a healthy avatar standing on the temporary platform. Original Studio place preserved; candidate documents stopped in Edit. These smoke tests make no multiplayer-capacity, combat or performance claim.
+
+The technical writer reviewed the actual implementation/evidence and updated the player README, development/testing guides, architecture/current requirements, source/test package contracts and asset documentation. It reported no implementation contradiction or unresolved question. The coordinator reviewed those changes; subsequent prose is checked with `python3 scripts/check_repository.py` and `git diff --check`. No behavior changed after the tested source snapshot.
+
+GitHub delivery facts are recorded after the documentation/evidence commit. Roadmap status remains authoritative; this record does not authorize Roblox publication or PR merge.

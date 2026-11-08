@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-The repository currently contains design documents, source/package boundaries, Rojo mappings, and a scaffold verification workflow. It intentionally contains no gameplay implementation. The systems below are the **target architecture** introduced incrementally by the [roadmap](roadmap.md). Do not create empty service classes for every future component.
+The implemented foundation is a runnable development shell: an authored temporary spawn, a server bootstrap status Folder, a client status panel, pure validation/configuration/rate/lifecycle modules, and separate standalone/Studio runners. There are no gameplay remotes, roles, rounds or combat yet. Gameplay systems below describe the **target architecture** introduced incrementally by the [roadmap](roadmap.md); create each component when its behavior is needed.
 
 Use a single Roblox place for lobby and battlefield, Luau for game code, and Git-first editing with Rojo for supported source/world synchronization. Roblox hosts the running experience; GitHub stores reconstructable source. No external application backend, persistent player inventory, or cross-server matchmaking is needed for the MVP.
 
@@ -12,7 +12,17 @@ Roblox Studio's built-in MCP server is the primary interactive interface for ins
 
 MCP and Rojo have different responsibilities. Rojo maps repository-owned Luau and world definitions into Studio. MCP operates the live session but does not itself establish Git synchronization. Make script changes in the repository for managed paths, then sync and inspect in Studio; export deliberate Studio-authored models/world assets into the repository and manifest before considering an increment done. Do not let two agents mutate one live place simultaneously, and do not sync a test mapping into the release place. See [development setup](docs/development.md#connect-roblox-studio-mcp).
 
-## Layers and dependencies
+## Implemented foundation
+
+`ServerScriptService.Server` starts `Bootstrap`, which validates public defaults and owns one `ReplicatedStorage.BootstrapStatus` Folder plus a Heartbeat connection. Its cleanup disconnects the listener and destroys the Folder. Server-only `DevelopmentSettings` exists only in the test mapping and selects the **Test** environment label; its future two-player minimum is not used by the current shell. The release mapping selects **Development**.
+
+The client entrypoint waits for PlayerGui and server status, then starts `StatusPanel`. That controller owns one `FoundationStatus` ScreenGui and one attribute listener; stopping it disconnects and destroys both. `Lifecycle` composes nonyielding components with idempotent start/stop and rollback on partial start failure. Component cleanup callbacks must not throw or reenter the controller.
+
+`Validation` accepts finite numbers and bounded flat scalar payloads. `Config` decodes validated public defaults, and `RateLimit` consumes a deterministic token bucket using caller-supplied monotonic seconds. These helpers do not implement role, replay, ownership or world checks. Future server adapters must add those checks at each action boundary. Shared modules contain no secret authority state.
+
+Pure modules with dependencies choose an explicit Instance require when `script` exists and a relative filesystem require under Lune. Standalone specs receive the actual rule module as a parameter; TestEZ wrappers pass actual mapped ModuleScripts to the same cases. This keeps one implementation usable in both runtimes without a virtual filesystem. See the [shared package](src/shared/README.md) for contracts.
+
+## Target layers and dependencies
 
 ```mermaid
 flowchart TB
@@ -41,7 +51,7 @@ plans/*.md                One executable capability plan per file
 docs/                     Setup, testing, decisions, conventions, evidence
 .agents/skills/            Repository-local feature-loop skill
 .codex/agents/             Developer, tester and writer instructions
-.github/workflows/        Scaffold CI; expanded by Plan 01
+.github/workflows/        Full non-Studio verification CI
 src/shared/               Replicated types, public config and pure common rules
 src/server/               Authoritative services, server-only rules and adapters
 src/client/               Input, cameras, UI, audio and effects
@@ -68,16 +78,20 @@ build/                    Generated artifacts; ignored by Git
 | `src/client` | `StarterPlayer.StarterPlayerScripts.Client` | Per-player local controllers |
 | `assets/models` | `ServerStorage.Assets` | Templates cloned by server; only needed instances replicate |
 | `assets/world` | `Workspace.World` | Static map objects authored/exported under source control |
-| `tests/unit`, `tests/integration`, `tests/studio` | `ServerStorage.Tests` in test project only | Server/engine suites and fixture source |
-| `tests/studio/client` | `StarterPlayerScripts.ClientTests` in test project only | Client-side suites added in P01 |
+| `tests/unit`, `tests/integration`, `tests/studio/specs-server`, `tests/fixtures` | `ServerStorage.Tests` in test project only | Shared cases, server specs and fixtures |
+| `tests/studio/server` | `ServerScriptService.ServerTests` in test project only | Automatic server TestEZ runner |
+| `tests/studio/client` | `StarterPlayerScripts.ClientTests` in test project only | Automatic client TestEZ runner |
+| `tests/studio/specs-client`, `Packages` | `ReplicatedStorage.ClientSpecs`, `ReplicatedStorage.TestPackages` in test project only | Client specs and locked TestEZ dependency |
+| `tests/fixtures/DevelopmentSettings.luau` | `ServerStorage.DevelopmentSettings` in test project only | Server-only test label/future roster fixture |
 
-Source directories hold a README now; executable modules arrive with their plans. The release project excludes tests, test dependencies, fixtures and development overrides by construction. Bootstrap must not run server-only modules on clients.
+The release project excludes tests, test dependencies, fixtures and development overrides by construction, with generated-artifact inspection enforcing the boundary. Bootstrap must not run server-only modules on clients.
 
 ## Components to introduce as needed
 
 | Component | Responsibility | First plan |
 | --- | --- | --- |
-| `Bootstrap` and `RemoteGateway` | Dependency wiring, lifecycle, bounded input decoding/rate limits | P01 |
+| `Bootstrap`, shared validation and lifecycle | Implemented shell wiring, cleanup, structural decoding/rate helpers | P01 |
+| Named remote adapters | Add action-specific role/replay/world validation when gameplay actions exist | P03 onward |
 | `MapService` | Validate tags/anchors, spawn map content, restore initial state | P02 |
 | `MatchService` and `RoleService` | Roster, phase/deadline, round identity, fair assignment, player lifecycle | P03 |
 | `AircraftService` | Canonical perimeter orbit pose, aircraft health and destruction | P04; health in P06 |
@@ -145,11 +159,9 @@ Breakable props use predefined health thresholds and collision states. Keep stab
 
 ## Tooling and verification
 
-The scaffold uses pinned Rojo and Python's standard library for documentation/project checks. Run `python3 scripts/verify.py` for the current gate. It builds both release and test places; it does **not** run game tests.
+Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository checks, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
 
-P01 expands this same entrypoint with pinned StyLua formatting, Selene linting, Roblox-aware Luau static analysis, standalone deterministic Luau tests, and a real Studio test bootstrap. Use Lune for fast pure-rule/service execution and TestEZ for Roblox Instance suites. Pin TestEZ through Wally with a committed lockfile when added. Prove module imports in both environments with the real bootstrap; do not assume filesystem `require` paths automatically match Instance-based imports.
-
-Choose the smallest explicit adapter for cross-runtime imports. Shared rule modules can have injected collaborators; avoid a custom virtual filesystem or homegrown testing framework. P01 must establish the exact commands, versions and runner/report schemas before subsequent features depend on them. CI reports static/unit/service/build gates; Studio evidence is separately identified because ordinary Linux CI is not Roblox's engine.
+The test mapping runs separate server and client TestEZ bootstraps in real Studio Play contexts and publishes structured JSON reports. Those runs establish mapped imports and engine behavior separately from the host gate. Ordinary Linux CI runs the host gate and cannot replace required Studio evidence.
 
 See [testing](docs/testing.md) for acceptance levels and [development](docs/development.md) for source/release workflow. A tool change needs updated pins, commands and successful clean-build evidence.
 

@@ -1,101 +1,69 @@
 # Players vs C-130
 
-**An asymmetric Roblox game in development: one gunship against a united ground team.**
+**A Roblox game in development: one gunship against a united ground team.**
 
-A ruined industrial warzone fills a circular battlefield. One player operates a C-130 circling the map's perimeter. Everyone on the ground belongs to the same team, armed with an M-7 rifle and one goal: destroy the plane before it kills them all or the clock runs out.
+The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
-A single rocket launcher is placed on the map. Reaching it and protecting its carrier gives the team its strongest counterattack: three direct rocket hits destroy an undamaged plane. M-7 fire also chips away at aircraft health, so coordinated rifle fire matters.
+## What you can play today
 
-## Can I play it yet?
+The local development build is a small shell: your avatar spawns on a temporary platform, and a status panel shows **Bootstrap running** with a **Development** or **Test** label. Use the standard Roblox desktop controls: WASD to move, Space to jump, and the mouse to control the view.
 
-Not yet. This repository contains the game design, architecture, implementation plans, development skill, and a buildable empty Roblox place structure. It contains **no implemented gameplay** and has no published Roblox experience link. The descriptions below explain the intended MVP.
+The battlefield, aircraft, roles, weapons, rounds, spectating and results are still planned. The shell uses normal Roblox character behavior; the intended no-respawn round rules are not implemented yet. There is no published Roblox play link.
 
-Follow the [roadmap](roadmap.md) for progress. The first foundation introduces a greybox battlefield and roles; gunship combat, ground fire, and the special launcher follow in later phases.
+To try the shell locally, follow the [development guide](docs/development.md). It builds separate development and test places for Roblox Studio. The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
 
-## Run the project in Roblox Studio
-
-**Roblox Studio and its built-in MCP server are required for this project's supported local development and playtest workflow.** Studio runs the place; MCP lets Codex connect to the open place for inspection and testing. The [Rojo](https://rojo.space/) plugin syncs the files in this repository into Studio. MCP alone does not sync source files.
-
-1. Install [Roblox Studio](https://create.roblox.com/docs/studio/setup) on a Mac or Windows computer and sign in to your Roblox account. Open a local development place; a Baseplate is enough to check the connection.
-2. In Studio, open **Assistant → … → Settings → MCP Servers** (or **… → Manage MCP Servers** in older versions). Turn on **Enable Studio as MCP server**. Under **Quick Connect**, turn on **ChatGPT (codex)** if available.
-3. Start a new Codex thread or restart the ChatGPT desktop app so the Studio tools load. Ask it to **continue Roblox setup**. It should find the open place with `list_roblox_studios`. If Quick Connect is unavailable, follow the [manual MCP connection steps](docs/development.md#connect-roblox-studio-mcp).
-4. Install the [official Rojo Studio plugin](https://rojo.space/docs/v7/getting-started/installation/) and the pinned Rojo CLI. From this repository, run `rokit install`, then `rojo serve default.project.json`. Connect the Rojo plugin in the development place to that server. See the [development guide](docs/development.md#sync-this-repository-with-studio) for builds and the separate test place.
-
-The current scaffold opens as an empty place; gameplay is still planned. A local place is sufficient for development and does not require publishing a Roblox experience.
-
-## Two ways to play
+## Planned roles
 
 ### C-130 operator
 
-The plane flies automatically around the circular map's perimeter. Your thermal-style camera always points inward toward the main battlefield. Aim the reticle within that view and switch between:
+The aircraft flies automatically around the map perimeter. Your thermal-style view always faces inward toward the battlefield; move the aiming reticle within that view and choose between:
 
-- **30mm GAU-23/A Chain Gun:** faster, more precise fire with a tighter zoom.
-- **105mm M102 Howitzer:** slower heavy fire with a wider view and larger blast area.
+- **30mm GAU-23/A Chain Gun:** faster, precise fire with a tighter zoom.
+- **105mm M102 Howitzer:** slower heavy fire with a wider view and larger blast.
 
-Switching weapons changes the camera zoom automatically. Each weapon keeps its own cooldown/reload state; switching does not make it instantly ready. Watch aircraft health and the remaining ground players. You win by eliminating the entire ground team or surviving until time expires.
+Selecting a weapon changes zoom while preserving each weapon’s cooldown and reload state. Solid cover blocks thermal highlighting and damage. Selected walls and barricades can break, while major buildings remain stable protection.
 
-Thermal vision cannot see through solid cover. Selected walls and barricades can break, while major buildings remain useful protection.
+You win by eliminating every ground player or surviving until time expires.
 
 ### Ground team
 
-Every ground player starts with an **M-7 rifle**. Use cover and coordinated fire to wear down the aircraft. One player at a time can carry the map's **rocket launcher**; it is the only weapon pickup, and there are no mission items to collect.
+Every ground player starts with an **M-7 rifle**. Use cover and coordinated fire to wear down the aircraft. One player at a time can carry the map’s **rocket launcher**. Three direct hits destroy a full-health plane; prior rifle damage can reduce the rockets still needed. Aircraft destruction immediately wins for the whole ground team, including eliminated teammates.
 
-Three direct rocket hits are enough to destroy the plane from full health. Rifle damage can reduce how many further rockets are needed. Aircraft destruction immediately wins the round for the entire ground team.
+The planned launcher can be dropped and recovered after its carrier dies or disconnects. It reloads one rocket at a time with replenishing supply and no separate ammo pickups. These handling and reload choices are [tuning defaults](docs/decisions.md).
 
-The initial launcher handling rules let a teammate recover it if its carrier dies or disconnects. It reloads one rocket at a time, with no separate ammunition pickups. These handling/reload details are documented tuning defaults in [decisions](docs/decisions.md).
+## Planned round flow
 
-## A round from start to finish
+1. **Gather:** 6–10 players join, with one operator and 5–9 ground teammates.
+2. **Deploy:** the ground team enters the circular warzone with rifles; one launcher appears at its map anchor.
+3. **Fight:** the operator attacks from orbit while the team uses cover, rifles and rockets to destroy the plane.
+4. **Resolve:** aircraft destruction wins for ground; total ground elimination or timeout wins for the C-130.
+5. **Replay:** a clear result leads back to the lobby and a fresh round.
 
-1. **Gather:** 6–10 players join: one C-130 operator and 5–9 ground teammates.
-2. **Deploy:** ground players enter the circular warzone with M-7 rifles; one rocket launcher appears at its map location.
-3. **Fight:** the C-130 orbits and attacks while the team uses cover, rifle fire and the launcher to destroy it.
-4. **Win or lose:** the ground team wins on aircraft destruction; the C-130 wins on total ground-team elimination or timeout.
-5. **Debrief:** see the result, then return to the lobby for a fresh round.
-
-The initial round-length target is ten minutes. There are no respawns during a round. Eliminated players spectate living teammates; late arrivals wait for the next round.
-
-## Planned MVP content
-
-| Feature | First release scope |
-| --- | --- |
-| Battlefield | One circular industrial warzone with cover and routes to one launcher location |
-| Aircraft | One visible C-130 orbiting the perimeter; targeting view always faces the main map |
-| Aircraft weapons | 30mm GAU-23/A Chain Gun and 105mm M102 Howitzer, each with its own zoom |
-| Ground weapons | M-7 rifle for everyone; one shared, recoverable rocket launcher on the map |
-| Aircraft damage | Small rifle damage; three direct rockets destroy a full-health plane |
-| Destruction | Selected cover changes from intact to damaged to destroyed |
-| Survival | No respawns; spectating and a clear team result |
-| Progression | Each round starts fresh; no persistent inventory or economy |
-
-The initial input target is desktop keyboard and mouse. Touch and gamepad support are deferred unless the scope changes. This is a design default, not a claim that device compatibility has been tested.
+The initial round-length default is ten minutes. There will be no respawns during a round. Eliminated ground players spectate living teammates; late arrivals wait for the next round.
 
 ## Planned controls
 
-These are initial bindings to validate during implementation. In-game help will show the actual supported controls.
+These bindings are proposals to validate as the corresponding features arrive. Only standard avatar movement and camera controls work in the current shell.
 
 | Action | Ground player | C-130 operator |
 | --- | --- | --- |
-| Move / aim | WASD / mouse; Space to jump | Mouse moves the aiming reticle within the inward-facing view |
+| Move / aim | WASD / mouse; Space to jump | Mouse moves the reticle inside the inward-facing view |
 | Fire | Left mouse button | Left mouse button |
-| Aim / zoom | Right mouse button to aim | Zoom changes with selected weapon |
+| Aim / zoom | Right mouse button to aim | Zoom follows the selected weapon |
 | Select weapon | 1: M-7; 2: launcher if carrying it | 1: 30mm; 2: 105mm |
-| Reload | R | Per-weapon automatic cooldown/reload |
+| Reload | R | Independent automatic cooldown/reload |
 | Interact / drop | E near launcher / G to drop it | — |
 | Help | On-screen Help button | On-screen Help button |
 
-## What this game is aiming for
-
-The ground team must choose when to stay protected, when to expose itself to fire, and how to get the launcher into position. The operator balances focused 30mm fire with wider 105mm attacks while orbit motion changes sight lines. Both sides need useful cover, readable danger, and clear damage feedback.
-
-Exact damage, reload times, zoom angles and orbit speed will be tuned through playtests. The three-rocket full-health rule is a fixed requirement, not a balance value to quietly change. There is no escape zone or collection mission. The MVP also excludes free flight, full building collapse, vehicles, additional maps, crafting, ranking, purchases and persistent progression. Effects are stylized and non-graphic.
+The input target is desktop keyboard and mouse. Touch and gamepad support are deferred. Damage, cadence, reload timing, zoom and orbit speed need later playtesting; the three-rocket full-health rule is fixed. The MVP has one map, partial cover destruction and fresh equipment each round. Progression, purchases, vehicles, free flight and full building collapse are outside its scope.
 
 ## Follow development or contribute
 
-- [Game design](game-design.md) explains rules and edge cases.
-- [Roadmap](roadmap.md) shows each phase and the experience it delivers.
-- [Requirements](requirements.md) connects features to plans and test obligations.
-- [Development guide](docs/development.md) explains building the scaffold and the future Studio workflow.
-- [Architecture](architecture.md) describes how the systems will be organized.
-- [Testing strategy](docs/testing.md) covers automated checks and multiplayer validation.
+- [Game design](game-design.md): intended rules and edge cases.
+- [Roadmap](roadmap.md): capabilities and current status.
+- [Requirements](requirements.md): acceptance obligations.
+- [Development guide](docs/development.md): installation, builds, Studio and source synchronization.
+- [Architecture](architecture.md): implemented boundaries and future systems.
+- [Testing guide](docs/testing.md): automated gates and real-engine verification.
 
-The source remains in [hanegraaff/roblox-c130-extraction-shooter](https://github.com/hanegraaff/roblox-c130-extraction-shooter); the repository retains its original name. No public Roblox release is available yet.
+Source is maintained in [hanegraaff/roblox-c130-extraction-shooter](https://github.com/hanegraaff/roblox-c130-extraction-shooter). The repository retains its original name.
