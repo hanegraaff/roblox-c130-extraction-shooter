@@ -17,6 +17,8 @@ There are no collectible mission items, item quotas, escape zones or dwell count
 - Start normal matches with 6–10 eligible players; lock the roster at deployment. Exactly one operates the C-130, with everyone else on the same ground team. Maximum server occupancy is ten.
 - Prefer the longest-waiting eligible operator who did not just operate when alternatives exist, with a seeded tie-break.
 - A test-only two-player override permits one tester per role. It must be absent from the release build and inaccessible to clients.
+- Waiting players can walk around the protected lobby; only the assigned operator is locked at its placeholder station.
+- Local Studio tests may offer single-player map exploration without granting an active role or starting a competitive round. Human testers can select a solo preview role or request a role for a real local test round, choose the next test duration, start immediately and reset through a test-only panel. Conflicting requested roles must be explained rather than silently overridden. These conveniences are excluded from release builds; production population and fair rotation rules remain unchanged.
 - Late joins spectate until the next lobby. Retain round membership by UserId so disconnect/rejoin cannot restore an active life or equipment.
 - Eliminated ground players spectate living teammates and cannot fire, pick up or transfer equipment. Friendly fire is off. Player body collision cannot be used to block a teammate from the launcher or cover.
 
