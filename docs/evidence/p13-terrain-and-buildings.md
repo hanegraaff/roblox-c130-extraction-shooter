@@ -107,3 +107,7 @@ Source is pushed in [draft PR #12](https://github.com/hanegraaff/roblox-c130-ext
 passes on tested source `ea9cd4e`. The [plan criterion mapping](../../plans/13-terrain-and-buildings.md)
 records partial and missing evidence; only the [roadmap](../../roadmap.md) owns status.
 P13 is not Complete; P14 has not started. No merge or Roblox publication occurred.
+
+## Subsequent building-flicker integration
+
+PR #13 merged into the P13 candidate at `4d329a0c28e33a709321755b89a7a46af2d362b3` with user authorization. [The integration record](building-flicker.md#merge-and-integration--2026-11-08) preserves reviewed-tree equality, fresh host verification and unchanged engine-source coverage. The original `b78abbab64fb` artifact above is historical; current prepared fresh-load artifact is `build/p13-tests-0a374bff6bb1.rbxlx`, SHA-256 `0a374bff6bb144ef5049ec708449ebac4b7f79417c728daa37e01bdc214c6780`. P13's required open checks remain unresolved; this merge does not make P13 Complete.
