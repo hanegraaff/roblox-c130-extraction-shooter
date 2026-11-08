@@ -21,6 +21,7 @@ local MatchRuntime = {}
 
 -- Times are monotonic server-clock seconds. Test-only callers may shorten these settings.
 export type Settings = {
+    automaticDeployment: boolean?,
     minimumPlayers: number,
     durationSeconds: number,
     lobbySeconds: number,
@@ -29,6 +30,7 @@ export type Settings = {
     seed: number,
 }
 MatchRuntime.defaults = table.freeze({
+    automaticDeployment = true,
     minimumPlayers = Config.defaults.minPlayers,
     durationSeconds = Config.defaults.roundDurationSeconds,
     lobbySeconds = 8,
@@ -47,6 +49,10 @@ type PlayerOwner = { characters: CharacterOwner.Controller, bucket: RateLimit.Bu
 -- Creates an inactive adapter. Caller owns the supplied map; stop does not destroy it.
 -- releaseLife is currently equipment cleanup only; launcher recovery is connected in P08.
 function MatchRuntime.new(map: MapService.Controller, settings: Settings): Controller
+    assert(
+        settings.automaticDeployment == nil or type(settings.automaticDeployment) == "boolean",
+        "invalid deployment mode"
+    )
     assert(
         settings.lobbySeconds >= 0 and settings.deploymentSeconds > 0 and settings.resultsSeconds >= 0,
         "invalid phase durations"
@@ -219,7 +225,11 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             state = match.snapshot()
         end
         local elapsed = workspace:GetServerTimeNow() - phaseStarted
-        if state.phase == "Lobby" and elapsed >= settings.lobbySeconds then
+        if
+            state.phase == "Lobby"
+            and settings.automaticDeployment ~= false
+            and elapsed >= settings.lobbySeconds
+        then
             match.deploy()
         elseif state.phase == "Deploying" then
             local active = match.activate()

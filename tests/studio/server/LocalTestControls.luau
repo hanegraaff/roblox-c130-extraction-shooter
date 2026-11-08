@@ -23,6 +23,8 @@ function LocalTestControls.start(rounds: MatchRuntime.Controller): () -> ()
     local folder = Instance.new("Folder")
     folder.Name = "LocalTestControls"
     local preview: Player? = nil
+    local previewCharacter: Model? = nil
+    local previewRole = "Ground"
     local explored = false
     local running = true
     local function move(player: Player, anchor: string): (boolean, string?)
@@ -55,10 +57,21 @@ function LocalTestControls.start(rounds: MatchRuntime.Controller): () -> ()
         if #players ~= 1 then
             return false, "solo exploration requires one client"
         end
-        local ok, reason = move(players[1], "Ground05")
+        local selected = if players[1]:GetAttribute("LocalTestRoleChoice") == "Gunship"
+            then "Gunship"
+            else "Ground"
+        local ok, reason = move(players[1], if selected == "Gunship" then "Operator" else "Ground05")
         if ok then
             preview = players[1]
+            previewCharacter = players[1].Character
+            previewRole = selected
             players[1]:SetAttribute("LocalMapPreview", true)
+            players[1]:SetAttribute("LocalPreviewRole", selected)
+            local character = players[1].Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            if root and root:IsA("BasePart") then
+                root.Anchored = selected == "Gunship"
+            end
             explored = true
         end
         return ok, reason
@@ -71,6 +84,11 @@ function LocalTestControls.start(rounds: MatchRuntime.Controller): () -> ()
         local ok, reason = move(player, "Lobby")
         if ok then
             player:SetAttribute("LocalMapPreview", nil)
+            player:SetAttribute("LocalPreviewRole", nil)
+            local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+            if root and root:IsA("BasePart") then
+                root.Anchored = false
+            end
             preview = nil
         end
         return ok, reason
@@ -89,12 +107,23 @@ function LocalTestControls.start(rounds: MatchRuntime.Controller): () -> ()
         end
         if player.Parent ~= Players or rounds.match.snapshot().phase ~= "Lobby" then
             player:SetAttribute("LocalMapPreview", nil)
+            player:SetAttribute("LocalPreviewRole", nil)
             preview = nil
             return
         end
         local character = player.Character
+        local selected = if player:GetAttribute("LocalTestRoleChoice") == "Gunship"
+            then "Gunship"
+            else "Ground"
+        if character ~= previewCharacter or selected ~= previewRole then
+            local explore = folder:FindFirstChild("ExploreMap")
+            if explore and explore:IsA("BindableFunction") then
+                explore:Invoke()
+            end
+            return
+        end
         local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
-        if root and root:IsA("BasePart") then
+        if root and root:IsA("BasePart") and previewRole == "Ground" then
             local position = root.Position
             if
                 not MapRules.inside(MapRules.defaults, position.X, position.Z)
@@ -112,6 +141,7 @@ function LocalTestControls.start(rounds: MatchRuntime.Controller): () -> ()
         connection:Disconnect()
         if preview then
             preview:SetAttribute("LocalMapPreview", nil)
+            preview:SetAttribute("LocalPreviewRole", nil)
             preview = nil
         end
         folder:Destroy()

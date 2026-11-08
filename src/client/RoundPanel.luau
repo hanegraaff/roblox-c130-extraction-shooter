@@ -72,13 +72,22 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
                 elseif phase == "Resetting" then
                     detail = "Restoring battlefield…"
                 elseif phase == "Lobby" and player:GetAttribute("LocalMapPreview") == true then
-                    detail = "Studio solo map preview • Use WASD to explore"
+                    detail = if player:GetAttribute("LocalPreviewRole") == "Gunship"
+                        then "Studio Operator preview • Protected placeholder station"
+                        else "Studio Ground preview • Use WASD to explore"
+                end
+                local heading = phase .. " • " .. role .. " / " .. life
+                if phase == "Lobby" and player:GetAttribute("LocalMapPreview") == true then
+                    heading = "Studio preview • "
+                        .. (
+                            if player:GetAttribute("LocalPreviewRole") == "Gunship"
+                                then "Operator"
+                                else "Ground"
+                        )
                 end
                 label.Text = string.format(
-                    "%s • %s / %s\n%s\n%s",
-                    phase,
-                    role,
-                    life,
+                    "%s\n%s\n%s",
+                    heading,
                     detail,
                     if role == "Gunship"
                         then "Protected operator station • Aircraft and combat are planned"
