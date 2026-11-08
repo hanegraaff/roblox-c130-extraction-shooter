@@ -49,4 +49,4 @@ Private functions need comments when they contain a non-obvious algorithm, timin
 
 Give every suite a short purpose/requirement header. Names describe observations such as “rejects a rocket hit at the round deadline” rather than “test 4.” Explain tolerances and fixture seeds. Group setup so the action and expected result remain easy to see.
 
-Keep the player README cohesive: update current behavior in place, remove stale descriptions, and label unimplemented targets. Contributor details belong in the development guide. History, check outputs and feature-specific completion facts belong in plans, not a growing list of README announcements.
+Keep the player README cohesive: update current behavior in place, remove stale descriptions, and label unimplemented targets. Include one real, representative screenshot of current progress and a practical local setup/Rojo/play/test how-to. Keep advanced contributor details in the development guide. History, check outputs and feature-specific completion facts belong in plans, not a growing list of README announcements.

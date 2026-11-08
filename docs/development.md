@@ -67,7 +67,7 @@ After setup, add Rokit’s tools to PATH as above. For the local test document, 
 rojo serve test.project.json --address 127.0.0.1 --port 34872
 ```
 
-Stop Play in the intended local test document. Open **Plugins → Rojo**, connect to `localhost:34872`, and verify the project is **PlayersVsC130Tests** before applying its mapping. For a development document instead, serve `default.project.json` on a different explicit port, such as `34873`. Keep test and development connections separate; never connect the test mapping to the cloud/release place. On first plugin installation, save work and restart Studio if the toolbar button is missing in Edit mode or appears only during Play. Load the plugin in Edit before connecting.
+Stop Play in the intended local test document. Open **Plugins → Rojo**, connect to `localhost:34872`, and verify the project is **PlayersVsC130Tests** before applying its mapping. For a development document instead, serve `default.project.json` on a different explicit port, such as `34873`. Keep test and development connections separate; never connect the test mapping to the cloud/release place. If the Rojo panel is hidden in Edit mode, reopen it with the Rojo toolbar button; a hidden panel does not mean the plugin is missing. On first plugin installation, save work and restart Studio only if the toolbar button/plugin is absent in Edit mode. Load the plugin in Edit before connecting.
 
 If Connect reports **Http requests can only be executed by game server**, inspect the Studio mode first. A Play session with the Client view focused can produce this error. Stop Play, confirm the Edit DataModel is available, then reconnect; do not open another Studio instance to work around it.
 
@@ -113,7 +113,9 @@ Routine fixes can be requested directly. There is no need to run the full featur
 
 ## Branches, CI and review
 
-Use `plan/NN-short-name` for feature branches unless the user requests a name. Inspect uncommitted work and fetch before branching. Do not discard another person's changes. Each feature PR explains the player-visible result, plan/requirements, automated results, Studio evidence and limitations. Use the supplied PR template.
+Every user-assigned task gets a dedicated branch before editing, including fixes, tooling, refactors, documentation and steering work outside the roadmap. Use `plan/NN-short-name` for plan increments and a descriptive `fix/`, `chore/` or `docs/` name for other tasks, unless the user requests another name. Continue an existing branch only when resuming the same task. Never work directly on `main` or append a new task to an unrelated task branch. Delegated agents work within the primary agent's task branch under coordinated ownership.
+
+Inspect uncommitted work and fetch before branching; preserve another person's changes. Choose a base containing required dependencies. If a dependency exists only in an open PR, branch from that source and target the dependency branch for a focused stacked PR, recording the dependency and retargeting after integration. Each feature PR explains the player-visible result, plan/requirements, automated results, Studio evidence and limitations. Use the supplied PR template.
 
 The GitHub workflow installs the pinned dependencies and runs the full non-Studio `verify.py` gate. Ordinary Linux CI does not run Roblox Studio; attach required engine evidence separately. CI green is necessary but does not waive engine acceptance.
 
