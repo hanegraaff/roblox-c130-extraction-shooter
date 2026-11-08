@@ -4,6 +4,10 @@
 
 The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
+![Current circular greybox battlefield with two marked launcher approaches, a sheltered spawn and orange perimeter](docs/evidence/p02/final/overview.jpg)
+
+*Current progress: P02 greybox battlefield, captured in Roblox Studio on 2026-11-08. Aircraft and combat are still planned.*
+
 ## What you can play today
 
 The local build contains a circular greybox battlefield. Your avatar starts in its southern shelter. Follow the teal western route or ochre eastern route toward the gold marker at the center; that marker reserves the future rocket-launcher location. Industrial walls and roofed cover separate the routes from exposed areas, and an orange perimeter marks the battlefield edge. The launcher marker cannot be picked up, and cover cannot be destroyed yet.
@@ -14,25 +18,71 @@ A status panel shows **Bootstrap running** with a **Development** or **Test** la
 
 The [roadmap](roadmap.md) tracks progress; the game described below is the planned MVP.
 
-## Test in Roblox Studio
+## Set up locally
 
-From the repository root, install dependencies on your first run and build the places:
+For the complete local Studio workflow, use macOS with **Git**, **Python 3.10+**, system **curl**, and **Roblox Studio** installed. Sign in to Studio yourself and keep Play stopped while installing or connecting plugins. Setup downloads tools from GitHub and TestEZ from Wally, so network access is required. The setup/host checks also support Linux arm64/x86_64; automated Windows setup is not provided. See the [development guide](docs/development.md) for platform and tool details.
+
+Clone the source and enter the checkout:
 
 ```sh
-python3 scripts/setup.py  # First-time setup
+git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+cd roblox-c130-extraction-shooter
+```
+
+Choose the branch you intend to test before building. `main` contains the current integrated greybox; use the PR's head branch to review unmerged changes.
+
+If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
+
+Install the pinned tools and dependencies, run the complete host gate, and make the tool commands available in this terminal:
+
+```sh
+python3 scripts/setup.py  # First-time setup; rerun if tool/dependency checks request it
+python3 scripts/verify.py
+export PATH="$HOME/.rokit/bin:$PATH"
+rojo plugin install      # Install the matching Studio plugin once
+```
+
+The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. A successful host run currently includes **14 unit and 2 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It does not run Roblox Studio. The dependency and build directories are generated and stay out of Git.
+
+## Play and develop locally with Rojo
+
+Rojo's local server watches repository files and sends code/map changes to the Studio plugin. Keep the server terminal running while you work; **Ctrl+C** stops it. Reuse a matching server if it is already running.
+
+For the development place, run:
+
+```sh
+rojo serve default.project.json --address 127.0.0.1 --port 34873
+```
+
+1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local development document. Reuse it if it is already open.
+2. Keep **Play stopped**. Open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the project is **PlayersVsC130** before applying the mapping. If the newly installed toolbar button is absent in Edit mode, save work and restart Studio once. If only the panel is hidden, reopen it with the Rojo toolbar button; Play is not needed.
+3. Click **Play**. You should spawn in the southern shelter, with **Development** and **Bootstrap running** in one status panel.
+4. Use **WASD**, **Space** and the mouse to walk both colored routes to the gold marker and inspect cover and the orange boundary. The marker is not a working launcher pickup yet.
+5. Click **Stop** before editing repository files. Let Rojo sync changes into this same document, inspect the expected change, and start a fresh Play session. Reopening a new build after every edit is unnecessary.
+
+If Rojo reports **Http requests can only be executed by game server**, stop Play and reconnect in Edit mode. Keep a separate test document for the test mapping below. The [development guide](docs/development.md#sync-this-repository-with-studio) covers the guarded macOS launcher, MCP connection and further troubleshooting.
+
+## Run local automated tests
+
+Run the full host gate after code/configuration changes:
+
+```sh
 python3 scripts/verify.py
 ```
 
-See the [development guide](docs/development.md) for prerequisites and source synchronization.
+For real-engine tests, start the test sync server in another terminal with Rokit's tools on PATH:
 
-1. In Studio, use **File → Open from File** and select this repository’s `build/game.rbxlx`. This local build is separate from an existing cloud place such as “C130 - Shootout.”
-2. Click **Play**. Your avatar should spawn in the southern shelter, with **Development** and **Bootstrap running** in the status panel.
-3. Walk both colored routes to the gold center marker. Inspect the cover and orange perimeter using **WASD**, **Space**, and the mouse.
-4. Click **Stop**, then **Play** again. Confirm you still have exactly one status panel.
-5. For automated Studio tests, open `build/tests.rbxlx` as a separate document and click **Play**. The panel should read **Test**; the suites run automatically. Open Studio’s **Output** panel and expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. The current map has passed these suites locally; rerun them for your generated build.
-6. Stop and restart the test place to confirm the suites pass again and the panel is not duplicated. Click **Stop** when finished.
+```sh
+export PATH="$HOME/.rokit/bin:$PATH"
+rojo serve test.project.json --address 127.0.0.1 --port 34872
+```
 
-After source changes, stop Play, rerun `python3 scripts/verify.py`, and use [Rojo live sync](docs/development.md#sync-this-repository-with-studio) to update the same local document before a fresh Play session. Open a newly generated artifact separately when checking file-load reconstruction. The [testing guide](docs/testing.md#run-the-studio-smoke-suites) explains server/client reports and troubleshooting. The server suites include map clearance, cover raycasts, boundary correction and two map rebuilds. Aircraft and combat arrive in later plans.
+1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
+2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
+3. Open Studio's **Output** panel. Expect **23 server tests and 2 client tests**, with zero failures, skipped cases or errors. These suites cover current rules, status/character behavior, map clearance, cover raycasts, boundary correction and two rebuilds.
+4. Click **Stop**, then **Play** again. Check fresh passing reports and exactly one status panel, then stop when finished. The current map passed this sequence with one client; this does not establish multiplayer combat or capacity.
+
+After source changes, stop Play, rerun the host gate, verify Rojo delivered the candidate and start a fresh session. Open a generated artifact separately when checking file-load reconstruction. For a documentation-only change, `python3 scripts/check_repository.py` checks local links, JSON, mappings and assets. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for structured server/client reports and required evidence.
 
 ## Planned roles
 

@@ -5,6 +5,8 @@ Work after the candidate behavior is stable. Read AGENTS.md, the design, selecte
 
 Explain the whole current experience to a player first: both roles, how a round works, win conditions, weapon/launcher controls, survival, results, availability and limitations. Revise existing sections into a coherent narrative; remove stale or duplicative feature-by-feature announcements. Clearly distinguish implemented behavior from planned scope. Keep history and test execution records in the plans/roadmap owned by the primary agent.
 
+Keep one real, representative current-progress screenshot near the top of the root README, using a committed relative image path, useful alt text and a stage/date caption. Refresh it when visible behavior changes; reuse a still-current capture for nonvisual tasks. Maintain the root README as a self-contained local how-to for source selection, prerequisites, setup/build commands, Rojo server/plugin connection in Edit mode, local play and host/Studio tests. Put advanced details in the contributor guides.
+
 Keep contributor setup, exact commands, test-level limits, asset provenance and architecture contracts accurate. Review code comments for missing contracts and report deficiencies to the developer rather than editing its source concurrently. Flag design/implementation contradictions; do not silently change game rules or acceptance criteria.
 
 Never invent screenshots, successful tests, real client counts, release IDs, play links or authorization. Do not edit gameplay, tests, roadmap status, plan completion records, or GitHub/Roblox release state. Return documents changed, implementation facts checked and unresolved questions.
