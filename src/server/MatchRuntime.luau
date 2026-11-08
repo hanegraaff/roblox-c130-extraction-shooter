@@ -11,6 +11,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Teams = game:GetService("Teams")
 local PhysicsService = game:GetService("PhysicsService")
+local HttpService = game:GetService("HttpService")
 local MatchService = require(script.Parent.MatchService)
 local MapService = require(script.Parent.MapService)
 local CharacterOwner = require(script.Parent.CharacterOwner)
@@ -56,6 +57,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
     local owners: { [Player]: PlayerOwner } = {}
     local drainingOwners: { CharacterOwner.Controller } = {}
     local restoringAutoLoads = false
+    local teardownLease = HttpService:GenerateGUID(false)
     local ownedTeams: { Team } = {}
     local oldCharacterAutoLoads = Players.CharacterAutoLoads
     local phaseStarted = workspace:GetServerTimeNow()
@@ -282,12 +284,16 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             -- disabled until all old loads release their leases; account for this
             -- teardown task and refuse a premature start instead of reporting zero.
             restoringAutoLoads = true
+            Players:SetAttribute("RoundCharacterTeardown", teardownLease)
             task.spawn(function()
                 while drainCount() > 0 do
                     task.wait()
                 end
                 if not ReplicatedStorage:FindFirstChild("RoundState") then
                     Players.CharacterAutoLoads = oldCharacterAutoLoads
+                end
+                if Players:GetAttribute("RoundCharacterTeardown") == teardownLease then
+                    Players:SetAttribute("RoundCharacterTeardown", nil)
                 end
                 restoringAutoLoads = false
             end)
@@ -302,7 +308,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             if ReplicatedStorage:FindFirstChild("RoundState") then
                 return false, "round runtime already owned"
             end
-            if restoringAutoLoads or drainCount() > 0 then
+            if restoringAutoLoads or drainCount() > 0 or Players:GetAttribute("RoundCharacterTeardown") then
                 return false, "previous character loads are still draining"
             end
             for _, player in Players:GetPlayers() do
