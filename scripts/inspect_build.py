@@ -117,6 +117,63 @@ def check_authored_geometry(path: Path) -> int:
     return count
 
 
+def check_expanded_world_contract() -> None:
+    """Check deterministic terrain/source metadata and real authored floor/stair/panel poses.
+
+    Exact source-to-artifact transforms are checked separately for every part. This
+    rejects semantic layout/recipe regressions; Studio still proves actual collisions,
+    terrain generation, avatar walking and network replication.
+    """
+    world = json.loads((ROOT / "assets/world/Battlefield.model.json").read_text())
+    children = {item["Name"]: item for item in world["Children"]}
+    assert children["GroundDisk"]["Properties"]["Size"] == [4, 720, 720], "ExpandedMapRules diameter"
+    manifest = json.loads((ROOT / "assets/manifest.json").read_text())
+    recipe_contract = next(asset for asset in manifest["assets"] if asset["id"] == "battlefield-greybox")["terrain_recipe"]
+    assert recipe_contract == {"version": 1, "seed": 0, "descriptor_path": "TerrainRecipe", "owner_module": "src/server/TerrainRecipe.luau", "voxel_resolution_studs": 4, "bounds_min": [-368, -112, -368], "bounds_max": [368, 32, 368], "hill_count": 8, "materials": ["Grass", "Rock"]}, "terrain manifest contract"
+    recipe = {item["Name"]: item["Properties"] for item in children["TerrainRecipe"]["Children"]}
+    assert len(recipe) == 9 and recipe["TerrainBounds"]["Size"] == [736, 144, 736], "terrain bounds/count"
+    expected_hills = [(-260,-140,52),(-230,160,52),(240,-170,56),(240,150,52),(0,-260,60),(-110,-260,44),(120,260,44),(-260,0,48)]
+    for index, (x, z, radius) in enumerate(expected_hills):
+        hill = recipe[f"TerrainHill{index:02}"]
+        assert hill["CFrame"][:3] == [x, 16-radius, z] and hill["Size"] == [radius*2]*3, "terrain deterministic elevation recipe"
+        assert hill["Shape"] == "Ball" and hill["Material"] == ("Grass" if index % 2 == 0 else "Rock"), "terrain material recipe"
+        assert not hill["CanCollide"] and not hill["CanQuery"] and hill["Transparency"] == 1, "terrain descriptors must be inert"
+    areas = []
+    ids = set()
+    for building in children["Buildings"]["Children"]:
+        name = building["Name"]
+        contents = {item["Name"]: item for item in building["Children"]}
+        supports = {item["Name"]: item["Properties"] for item in contents[name+"_Static"]["Children"]}
+        floor = supports[name+"_GroundFloor"]
+        areas.append(floor["Size"][0] * floor["Size"][2])
+        assert supports[name+"_UpperMain"]["Size"][0] >= 20, "usable upper floor"
+        previous_top = 0
+        previous_z = None
+        for index in range(1, 17):
+            step = supports[f"{name}_Step{index:02}"]
+            top = step["CFrame"][1] + step["Size"][1]/2
+            assert top-previous_top == 0.625 and step["Size"][0] >= 8 and step["Size"][2] == 2, "connected avatar stairs"
+            if previous_z is not None:
+                assert previous_z-step["CFrame"][2] == 2, "contiguous stair run"
+            previous_z, previous_top = step["CFrame"][2], top
+        assert previous_top == 10, "stairs reach upper floor"
+        assert len(contents[name+"_Navigation"]["Children"]) == 5, "operated navigation route"
+        stories, roof = set(), False
+        for panel in contents[name+"_Panels"]["Children"]:
+            assert panel["Name"] not in ids, "stable unique panel IDs"
+            ids.add(panel["Name"])
+            match = __import__("re").match(r".+_S(01|02)_(North|South|West|East|Roof)_", panel["Name"])
+            assert match, "building/story/panel ID contract"
+            if match[2] == "Roof":
+                roof = True
+            else:
+                stories.add(match[1])
+                assert 8 in panel["Properties"]["Size"] and 16 in panel["Properties"]["Size"], "16x8 wall panels"
+        assert stories == {"01", "02"} and roof, "panels on each story and roof"
+    assert sorted(areas) == [1536, 3072, 3072], "two large and one smaller footprint"
+    print(f"Expanded world source contract passed: 720-stud diameter, 8 deterministic terrain hills, 3 two-story buildings, {len(ids)} stable panel pivots.")
+
+
 def geometry_rejection_probes() -> None:
     """Require the production geometry gate to reject the original defect and corruption."""
     with tempfile.TemporaryDirectory(prefix="c130-geometry-") as directory:
@@ -171,9 +228,9 @@ def main() -> None:
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
-    expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules")}
+    expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")
     for name in release:
@@ -182,6 +239,7 @@ def main() -> None:
     for name in ("ServerScriptService/ServerTests", "StarterPlayer/StarterPlayerScripts/ClientTests", "ReplicatedStorage/TestPackages/TestEZ", "ServerStorage/DevelopmentSettings"):
         if name not in tests:
             raise RuntimeError(f"Test mapping missing {name}")
+    check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")
     geometry_rejection_probes()

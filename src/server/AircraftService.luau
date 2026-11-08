@@ -142,7 +142,7 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
             local parameters = RaycastParams.new()
             parameters.RespectCanCollide = true
             parameters.FilterType = Enum.RaycastFilterType.Include
-            parameters.FilterDescendantsInstances = { workspace.World.Battlefield }
+            parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
             local origin = hitbox.Position
             local result = workspace:Raycast(origin, endpoint - origin, parameters)
             -- Surface endpoints are legal; earlier solid geometry blocks the sight line.

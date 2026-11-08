@@ -10,7 +10,7 @@ The integrated source on `main` includes the development shell, verification too
 | M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Complete | P01 | Walk the circular warzone and both approaches to the launcher anchor |
 | M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Complete | P02 | Join a lobby, receive a role, enter a round, spectate and return |
 | M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Complete | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
-| M2 — Level revision | [P13: Expanded terrain and multi-story buildings](plans/13-terrain-and-buildings.md) | Ready | P04 | Walk a 720-stud-diameter terrain map with two large buildings and one smaller one, each at least two stories |
+| M2 — Level revision | [P13: Expanded terrain and multi-story buildings](plans/13-terrain-and-buildings.md) | In progress | P04 | Walk a 720-stud-diameter terrain map with two large buildings and one smaller one, each at least two stories |
 | M2 — View revision | [P14: Mouse-panned aircraft targeting](plans/14-aircraft-panning.md) | Planned | P13 | Pan the inward view across the larger battlefield and upper floors while weapon zoom still applies |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Planned | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Planned | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |

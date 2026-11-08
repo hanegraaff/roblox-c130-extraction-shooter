@@ -39,6 +39,10 @@ end
 -- or immediately after starting an ordinary manually operated local test runtime.
 function RoundHarness.run()
     local args = StudioTestService:GetTestArgs()
+    if type(args) == "table" and args.kind == "P13" then
+        require(script.Parent.ExpandedMapHarness).run()
+        return
+    end
     if type(args) == "table" and args.kind == "P04" then
         require(script.Parent.AircraftHarness).run()
         return

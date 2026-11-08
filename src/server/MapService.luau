@@ -1,11 +1,13 @@
 --!strict
 --[=[
-    MapService: server-only ownership of the authored P02 map and ground containment.
+    MapService: server-only ownership of the expanded authored map and bounded terrain and ground containment.
     Depends on shared MapRules, Workspace queries, and injected characters/Heartbeat.
     Retains a private pristine clone; rebuild removes all runtime descendants and restores it.
     Does not spawn roles, weapons, aircraft, or round state. All public calls are nonyielding.
 ]=]
 local MapRules = require(game:GetService("ReplicatedStorage").Shared.MapRules)
+local TerrainRecipe = require(script.Parent.TerrainRecipe)
+local BuildingGeometry = require(script.Parent.BuildingGeometry)
 local MapService = {}
 
 -- Query/step adapters let tests exercise actual Instance behavior without fake services.
@@ -21,7 +23,7 @@ export type Controller = {
 }
 
 -- Validates identity, anchor counts, disk membership, floor support and avatar clearance.
--- Anchor clearance is a 4x5.5x4-stud upright envelope above the authored ground surface.
+-- Anchor clearance is a 4x6x4-stud upright envelope above the authored ground surface.
 function MapService.validateMap(map: Model, settings: MapRules.Settings): (boolean, string?)
     local ids: { [string]: boolean } = {}
     local anchors = map:FindFirstChild("Anchors")
@@ -82,7 +84,13 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             then
                 return false, "anchor outside safe disk: " .. item.Name
             end
-            if #workspace:GetPartBoundsInBox(CFrame.new(position), Vector3.new(4, 5.5, 4), overlap) > 0 then
+            if
+                #workspace:GetPartBoundsInBox(
+                    CFrame.new(position + Vector3.new(0, 0.2, 0)),
+                    Vector3.new(4, 6, 4),
+                    overlap
+                ) > 0
+            then
                 return false, "blocked avatar clearance: " .. item.Name
             end
             if not workspace:Raycast(position, Vector3.new(0, -4, 0), rays) then
@@ -115,7 +123,7 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             end
         end
     end
-    return true, nil
+    return BuildingGeometry.validate(map, overlap, rays)
 end
 
 -- Creates an owner for World.Battlefield. Invalid authoring returns nil/reason, without writes.
@@ -132,6 +140,14 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
     local valid, mapReason = MapService.validateMap(authored, settings)
     if not valid then
         return nil, mapReason
+    end
+    local recipe = authored:FindFirstChild("TerrainRecipe")
+    if not recipe then
+        return nil, "missing terrain recipe"
+    end
+    local recipeValid, recipeReason = TerrainRecipe.validate(recipe)
+    if not recipeValid then
+        return nil, recipeReason
     end
     local snapshot = authored:Clone()
     local map = authored
@@ -160,6 +176,9 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
                 end
             end
         end
+        BuildingGeometry.decorate(map)
+        map:SetAttribute("TerrainRecipeVersion", 1)
+        map:SetAttribute("TerrainSeed", 0)
         map:SetAttribute("RadiusStuds", settings.radiusStuds)
         map:SetAttribute("AircraftAltitudeStuds", settings.altitudeStuds)
     end
@@ -209,6 +228,11 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             if not ok then
                 return false, errorReason
             end
+            local terrainValid, terrainReason =
+                TerrainRecipe.restore(workspace.Terrain, snapshot:FindFirstChild("TerrainRecipe") :: Instance)
+            if not terrainValid then
+                return false, terrainReason
+            end
             decorate()
             heartbeat = adapters.heartbeat:Connect(enforce)
             return true, nil
@@ -222,6 +246,11 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             if destroyed then
                 return false, "map owner destroyed"
             end
+            local terrainValid, terrainReason =
+                TerrainRecipe.restore(workspace.Terrain, snapshot:FindFirstChild("TerrainRecipe") :: Instance)
+            if not terrainValid then
+                return false, terrainReason
+            end
             map:Destroy()
             map = snapshot:Clone()
             map.Parent = world
@@ -233,6 +262,13 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
                 return
             end
             stop()
+            -- Teardown restores authored terrain and geometry, including removal of
+            -- transient panels. Consumers must reacquire Instances after teardown.
+            TerrainRecipe.restore(workspace.Terrain, snapshot:FindFirstChild("TerrainRecipe") :: Instance)
+            map:Destroy()
+            map = snapshot:Clone()
+            map.Parent = world
+            decorate()
             snapshot:Destroy()
             destroyed = true
         end,
