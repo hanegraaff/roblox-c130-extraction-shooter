@@ -65,3 +65,11 @@ The [independent tester](../docs/evidence/p04/tester-report.md) found no remaini
 The technical writer reviewed actual source/tests and the current screenshot, updating 17 player/contributor/package documents. The root guide selects the unmerged P04 branch, describes both current role views and controls, preserves setup/test instructions, and labels combat/launcher scope as planned. Repository-link and whitespace checks pass after the prose updates.
 
 Observed prototype limits are upper-view HUD overlap and an aircraft strip in the upper-left sky at wide FOV; neither blocked the central targeting area in the review. The test panel occupies the lower-right screen. Full combat, damage, cooldowns/reload, launcher, balance and 6/10-player release capacity are outside P04 evidence. No merge or Roblox publication occurred.
+
+### GitHub delivery
+
+Source `b27f738` and documentation/evidence commit `7d9e200c7fcf687445562b77fe541ef6873b4d0a` are pushed to `origin/plan/04-aircraft-and-thermal`. [PR #9](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/9) targets `main` and is open for review, unmerged. Subsequent delivery/status/link edits are prose only and run the repository checker before commit/push. Tested runtime/configuration/assets remain unchanged after `b27f738`.
+
+[GitHub Verify run 42526282440](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42526282440) passes on pushed candidate `7d9e200`. The final local complete gate is preserved above; repository and whitespace checks also pass after the final delivery records.
+
+P05 is the next eligible increment; it has not been implemented. Until PR #9 is integrated, dependent source must include this branch rather than stale `main`. No Roblox publication occurred.
