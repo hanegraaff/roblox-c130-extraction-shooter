@@ -94,3 +94,9 @@ reconnection. Require all 58 source signatures to match before counting a run.
 Late join/reset/final teardown, P04 numeric diagnosis/full orbit and two-client
 human controls remain open. No acceptance completion, P14 implementation, merge or
 Roblox publication is claimed.
+
+The source/tests and interim evidence are pushed in
+[draft PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16)
+(candidate `e2e4e5`, evidence/docs `1dc880a`). The final documentation checker
+passes 61 Markdown / 47 JSON files; diff checks pass. The PR remains draft while
+the required synchronized-candidate engine scenarios are pending.

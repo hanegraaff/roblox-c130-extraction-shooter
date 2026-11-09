@@ -73,3 +73,12 @@ P14 has not started, and no merge or Roblox publication occurred.
 [bounded actual startup logs](p13-acceptance/startup-log.txt) preserve the failed
 run and the tester's native-load review. These are distinct from the corrected
 candidate's pending engine checks.
+
+## Delivery
+
+Source/test candidate `e2e4e5` and evidence/documentation commit `1dc880a` are
+pushed on `fix/p13-engine-acceptance` in
+[draft PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16).
+The PR targets unchanged main `d570b11`. The documentation checker passes
+61 Markdown / 47 JSON files, and `git diff --check` passes. The PR remains draft
+while the synchronized-candidate Studio scenarios above are pending.
