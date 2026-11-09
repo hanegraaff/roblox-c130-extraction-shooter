@@ -1,0 +1,30 @@
+{
+  "candidate": "e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0",
+  "version": "0.746.0.7461269",
+  "name": "p02-tests-5c809beff70b.rbxlx",
+  "failures": {
+    "1": {
+      "bytes": 3113,
+      "file": "tests/studio/specs-client/Foundation.spec.luau",
+      "adler32": 2671950393
+    },
+    "2": {
+      "bytes": 14660,
+      "file": "tests/studio/server/AircraftHarness.luau",
+      "adler32": 3642741779
+    },
+    "3": {
+      "bytes": 11731,
+      "file": "tests/studio/server/ExpandedMapHarness.luau",
+      "adler32": 3979366617
+    },
+    "4": {
+      "bytes": 12945,
+      "file": "tests/studio/client/AircraftHarness.luau",
+      "adler32": 4196162106
+    }
+  },
+  "placeId": 0,
+  "checked": 58,
+  "disposition": "Owned test ended immediately as P13-preflight-rejected; no candidate acceptance claimed"
+}

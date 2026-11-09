@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":67,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":67}",
+    "skipped": 0,
+    "passed": 0,
+    "cases": [
+      {
+        "name": "ExpandedMapReplication two actual clients agree on source geometry terrain panels and aircraft",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:20: P13 timeout: client ready"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:121: ServerScriptService.ServerTests.ExpandedMapHarness:20: P13 timeout: client ready"
+      }
+    ],
+    "initialClientCount": 2,
+    "observations": [],
+    "walkedBuildings": [],
+    "environment": "Studio",
+    "clientCount": 2,
+    "suite": "P13-multiplayer",
+    "failed": 2,
+    "discovered": 2
+  }
+}

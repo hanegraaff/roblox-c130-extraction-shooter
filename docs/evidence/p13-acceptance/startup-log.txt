@@ -1,0 +1,20 @@
+0.746.0.7461269_20261109T001113Z_Studio_8d0b5_last.log
+2026-11-09T00:11:30.124Z,16.124376,6f79f000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":4.856283041663119,"kind":"PlayerAdded","payload":{"userId":-1,"count":1}}
+2026-11-09T00:11:30.282Z,16.282288,6fbb7000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":5.014203083337634,"kind":"Population","payload":{"count":1}}
+2026-11-09T00:11:33.853Z,19.853020,6f79f000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":8.584913708327804,"kind":"PlayerAdded","payload":{"userId":-2,"count":2}}
+2026-11-09T00:11:35.299Z,21.299438,6fbb7000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":10.031351166660898,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:11:40.315Z,26.315262,6f9ab000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":15.04715258332726,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:11:45.331Z,31.331865,6f79f000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":20.063787583334489,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:11:50.348Z,36.348141,6f9ab000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":25.080055500002346,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:11:55.364Z,41.364456,6f79f000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":30.09636487500393,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:12:00.364Z,46.364815,6fdc3000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":35.09672708333528,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:12:05.380Z,51.380955,6ffcf000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":40.11285929166479,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:12:10.397Z,56.397366,6fdc3000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":45.129285250004617,"kind":"Population","payload":{"count":2}}
+2026-11-09T00:12:14.467Z,60.467949,6f9ab000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":49.1997845833248,"kind":"PlayerRemoving","payload":{"userId":-1,"count":2}}
+2026-11-09T00:12:14.468Z,60.468227,6f9ab000,6,Info [FLog::CreatorOutput] P13_ACCEPTANCE_OBSERVER {"elapsed":49.20012941666937,"kind":"PlayerRemoving","payload":{"userId":-2,"count":2}}
+0.746.0.7461269_20261109T001125Z_Studio_2da7f_last.log
+2026-11-09T00:11:39.279Z,14.279930,6e177000,6,Error [FLog::CreatorError] Error: TestService: ReplicatedStorage.ClientSpecs.Foundation.spec:26: character unavailable after 10 seconds
+2026-11-09T00:11:39.280Z,14.280214,6e177000,6,Error [FLog::CreatorError] Error: Players.Player1.PlayerScripts.ClientTests:23: client suite failed or empty
+0.746.0.7461269_20261109T001126Z_Studio_63f9f_last.log
+2026-11-09T00:11:43.233Z,17.233059,6be7b000,6,Error [FLog::CreatorError] Error: TestService: ReplicatedStorage.ClientSpecs.Foundation.spec:26: character unavailable after 10 seconds
+2026-11-09T00:11:43.233Z,17.233225,6be7b000,6,Error [FLog::CreatorError] Error: Players.Player2.PlayerScripts.ClientTests:23: client suite failed or empty

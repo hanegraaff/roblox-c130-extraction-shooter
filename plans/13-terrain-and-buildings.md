@@ -65,3 +65,32 @@ The earlier `b78abbab64fb` artifact belongs to the original candidate. Current f
 With explicit user authorization, [PR #12](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/12) merged into `main` at `19b70082b69f00f3901359403f39ba51b67a0506`, including the building surface-flicker fix. Its full tree equals reviewed head `2e3e4d5`, which passed [GitHub Verify 42536588227](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42536588227). The fresh main `python3 scripts/verify.py` gate passes 33 unit / 18 integration, 351 authored transforms, 111 panel pivots and 7,146 surface-pair checks. [Main integration record](../docs/evidence/p13-integration.md) preserves source/build hashes and exact limits. The setup guide now uses `main`; no dependency branch is required for this source.
 
 This user-authorized merge integrates source without closing acceptance. No new Studio session is claimed: runtime/assets/tests are unchanged from the checked source. Required late join/final teardown, P04 reticle/full-orbit, two-client human controls and fresh serialized-place evidence remain open, so P13 is not Complete and P14 has not started. The prepared `build/p13-tests-0a374bff6bb1.rbxlx` artifact remains current. No Roblox publication occurred.
+
+### Engine acceptance resumption on a dedicated branch — 2026-11-08
+
+The user's correction keeps further work on `fix/p13-engine-acceptance`, branched
+from main `d570b11236dd7f71146d220a0848ffc2090b059f`. Candidate
+`e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0`, tree
+`912f4c5202d6de6e620cc8f226dc52d543de054a`, fixes test-startup synchronization,
+retains failed P04 numeric diagnostics, independently checks P13 teardown, and adds
+a reproducible native-world probe builder. Production gameplay/world source is
+unchanged. Full host verification passes 33 unit / 18 integration, both builds,
+351 authored transforms, 111 panel pivots and 7,146 surface-pair checks.
+
+**A3 now passes:** a fresh source-built native `.rbxm` is deserialized in the
+existing Studio Edit document. All 5 named cases pass: 334 world parts / 357 nodes,
+initial terrain signature, two perturbed rebuilds with unrelated-voxel preservation,
+and clean double teardown/restoration. The independent tester reviewed the actual
+result and accepted this as A3's fresh native-world load. It is not a new-place
+boot claim. [Acceptance evidence](../docs/evidence/p13-acceptance.md) preserves
+exact artifact/probe/source hashes, actual results and the independent review.
+
+A new two-client launch exposed the old ten-second avatar-startup assumption;
+67 server cases passed, but both client baselines failed and no P13 gameplay case
+passed. The candidate corrects staged readiness without removing assertions.
+Its engine rerun remains pending: four mapped test scripts were stale, the stopped
+Rojo server was restarted on localhost:34872, and the existing plugin still needs
+reconnection. Require all 58 source signatures to match before counting a run.
+Late join/reset/final teardown, P04 numeric diagnosis/full orbit and two-client
+human controls remain open. No acceptance completion, P14 implementation, merge or
+Roblox publication is claimed.
