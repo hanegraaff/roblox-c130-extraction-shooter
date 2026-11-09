@@ -44,6 +44,12 @@ function Harness.run()
         entry:Destroy() -- Existing Destroying cleanup restores state before fixture ownership.
         local goal: Vector3? = nil
         local aimPoint: Vector3? = nil
+        local pointingFrameBefore: number? = nil
+        local pointingPixels: Vector2? = nil
+        local arrivalErrorStuds = 0
+        local function arrived(current: Vector3, destination: Vector3): boolean
+            return Vector2.new(current.X - destination.X, current.Z - destination.Z).Magnitude <= 0.25
+        end
         local pendingWeapon: string? = nil
         local recenter = false
         local forcedBlocked = false
@@ -66,7 +72,7 @@ function Harness.run()
                 local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
                 if typeof(focus) == "Vector3" and root and root:IsA("BasePart") then
                     local difference = goal - focus
-                    if Vector2.new(difference.X, difference.Z).Magnitude > 0.1 then
+                    if not arrived(focus, goal) then
                         local radial = Vector2.new(root.Position.X, root.Position.Z).Unit
                         local right = difference.X * radial.Y - difference.Z * radial.X
                         local up = -difference.X * radial.X - difference.Z * radial.Y
@@ -78,11 +84,31 @@ function Harness.run()
                             return if value > 0 then 0.88 + 0.12 * command else 0.12 - 0.12 * command
                         end
                         pointer = Vector2.new(fraction(right) * viewport.X, fraction(-up) * viewport.Y)
-                    elseif aimPoint and workspace.CurrentCamera then
-                        local pixel = workspace.CurrentCamera:WorldToViewportPoint(aimPoint)
-                        pointer = Vector2.new(pixel.X, pixel.Y)
                     end
                 end
+            elseif aimPoint and current and workspace.CurrentCamera then
+                -- The pointer is sampled before the production controller commits
+                -- this render's camera. Predict target pixels from the current
+                -- canonical origin and held focus, rather than the previous frame's
+                -- camera (which can be several studs old on a slow Studio client).
+                local aircraft = workspace:FindFirstChild("Aircraft")
+                local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+                local heldFocus = current:GetAttribute("PanFocus")
+                assert(
+                    root and root:IsA("BasePart") and typeof(heldFocus) == "Vector3",
+                    "pointing geometry missing"
+                )
+                local nextFrame = CameraController.frame(root.Position, heldFocus)
+                assert(nextFrame, "pointing camera basis rejected")
+                local relative = nextFrame:PointToObjectSpace(aimPoint)
+                assert(relative.Z < 0, "pointing target is behind the camera")
+                local scale = viewport.Y
+                    / (-2 * relative.Z * math.tan(math.rad(workspace.CurrentCamera.FieldOfView) / 2))
+                pointer =
+                    Vector2.new(viewport.X * 0.5 + relative.X * scale, viewport.Y * 0.5 - relative.Y * scale)
+                local previousFrame = current:GetAttribute("ProjectionFrame")
+                pointingFrameBefore = if type(previousFrame) == "number" then previousFrame else nil
+                pointingPixels = pointer
             end
             local weapon = pendingWeapon
             pendingWeapon = nil
@@ -119,14 +145,37 @@ function Harness.run()
             assert(typeof(value) == "Vector3", "panned focus missing")
             return value
         end
+        -- Arrival is one consistent input-driven neighborhood. Enter a separate
+        -- pointing stage once reached: continuing edge steering after arrival races
+        -- the target assertion, especially below 30Hz. No focus is assigned here.
         local function moveTo(point: Vector3)
             aimPoint = nil
-            goal = Vector3.new(point.X, 0, point.Z)
+            pointingFrameBefore = nil
+            pointingPixels = nil
+            local destination = Vector3.new(point.X, 0, point.Z)
+            goal = destination
             waitFor(function()
-                return (focus() - (goal :: Vector3)).Magnitude < 0.25
+                return arrived(focus(), destination)
             end, "input-driven focus", 12)
+            arrivalErrorStuds = (focus() - destination).Magnitude
+            local current = hud()
+            assert(current, "arrival HUD disappeared")
+            local transitionFrame = current:GetAttribute("ProjectionFrame")
+            assert(type(transitionFrame) == "number", "arrival frame missing")
+            goal = nil -- Stop steering; subsequent input is target pointing only.
             aimPoint = point
-            task.wait(0.12)
+            waitFor(function()
+                local rendered = hud()
+                local frame = if rendered then rendered:GetAttribute("ProjectionFrame") else nil
+                local raw = if rendered then rendered:GetAttribute("RawPointer") else nil
+                return type(frame) == "number"
+                    and pointingFrameBefore ~= nil
+                    and pointingFrameBefore > transitionFrame
+                    and frame > pointingFrameBefore
+                    and pointingPixels ~= nil
+                    and typeof(raw) == "Vector2"
+                    and (raw - pointingPixels).Magnitude < 0.01
+            end, "committed pointing frame", 4)
         end
         local function sample(expected: Request?): { [string]: unknown }
             local current = hud()
@@ -201,6 +250,9 @@ function Harness.run()
                 targetSurfaceErrorStuds = if expected and expected.point
                     then (endpoint - expected.point).Magnitude
                     else nil,
+                arrivalErrorStuds = arrivalErrorStuds,
+                pointingInputFrame = pointingFrameBefore,
+                pointingCommitted = goal == nil and aimPoint ~= nil,
                 normal = { hit.Normal.X, hit.Normal.Y, hit.Normal.Z },
                 pixelError = pixelError,
                 frame = current:GetAttribute("ProjectionFrame"),
@@ -299,6 +351,10 @@ function Harness.run()
                     end
                     moveTo(request.point)
                     observations = sample(request)
+                    assert(
+                        goal == nil and aimPoint ~= nil,
+                        "projection sampled while edge steering remained active"
+                    )
                     local current = hud()
                     assert(
                         current and current:GetAttribute("AimAllowed") == true,

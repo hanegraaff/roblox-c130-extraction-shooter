@@ -29,7 +29,7 @@ local function waitFor(predicate: () -> boolean, label: string, seconds: number?
     end
     assert(predicate(), "P14 server timeout: " .. label)
 end
-function Harness.run()
+function Harness.run(arrivalRegression: boolean?)
     waitFor(function()
         return #Players:GetPlayers() == 2
     end, "two actual clients", 30)
@@ -146,6 +146,25 @@ function Harness.run()
     local ok, failure = pcall(function()
         deploy()
         local operator, ground = roles()
+        if arrivalRegression then
+            check(
+                "P14 arrival regression transitions from input-driven steering to a committed target-pointing frame",
+                function()
+                    probe(
+                        operator,
+                        { kind = "Projection", point = surface(0, 0), weapon = "GAU23", category = "Ground" }
+                    )
+                    probe(operator, {
+                        kind = "Projection",
+                        point = surface(220, 220),
+                        weapon = "GAU23",
+                        category = "Ground",
+                    })
+                    probe(ground, { kind = "Ground" })
+                end
+            )
+            return true
+        end
         check(
             "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
             function()
@@ -251,6 +270,7 @@ function Harness.run()
                 probe(ground, { kind = "Normal" })
             end
         )
+        return true
     end)
     if not ok then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })
@@ -291,7 +311,7 @@ function Harness.run()
         end
     end
     StudioTestService:EndTest({
-        suite = "P14-multiplayer",
+        suite = if arrivalRegression then "P14-arrival-regression" else "P14-multiplayer",
         environment = "Studio",
         clientCount = 2,
         discovered = #cases,
@@ -304,7 +324,7 @@ function Harness.run()
         clientBaselines = baselines,
         projectionPixelTolerance = 1,
         projectionWorldToleranceStuds = 0.5,
-        orbitSecondsPerWeapon = 90,
+        orbitSecondsPerWeapon = if arrivalRegression then 0 else 90,
     })
 end
 return Harness
