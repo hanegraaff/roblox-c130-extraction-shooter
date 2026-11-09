@@ -1,0 +1,96 @@
+[
+  {
+    "log": "0.746.0.7461269_20261109T005348Z_Studio_072e4_last.log",
+    "lineCount": 156,
+    "startClientLines": [
+      6,
+      25
+    ],
+    "errors": [
+      {
+        "line": 29,
+        "text": "2026-11-09T00:53:53.369Z,4.369974,6ef63000,12 [DFLog::HttpTraceError] HttpResponse(#2 0x11cfe0700) time:2999.8ms (net:2999.7ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 33,
+        "text": "2026-11-09T00:53:53.372Z,4.372634,6eed7000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 1 try"
+      },
+      {
+        "line": 136,
+        "text": "2026-11-09T00:53:56.372Z,7.372170,6f07b000,12 [DFLog::HttpTraceError] HttpResponse(#5 0x11e570700) time:2999.4ms (net:2999.4ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 138,
+        "text": "2026-11-09T00:53:56.372Z,7.372360,6de77000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 2 try"
+      },
+      {
+        "line": 142,
+        "text": "2026-11-09T00:53:59.371Z,10.371029,6ef63000,12 [DFLog::HttpTraceError] HttpResponse(#8 0x11cfe1300) time:2998.5ms (net:2998.5ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 144,
+        "text": "2026-11-09T00:53:59.371Z,10.371134,6dc6b000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 3 try"
+      },
+      {
+        "line": 146,
+        "text": "2026-11-09T00:54:02.370Z,13.370675,6f107000,12 [DFLog::HttpTraceError] HttpResponse(#9 0x11f6a3d00) time:2999.4ms (net:2999.4ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 148,
+        "text": "2026-11-09T00:54:02.370Z,13.370753,6dc6b000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 4 try"
+      },
+      {
+        "line": 150,
+        "text": "2026-11-09T00:54:02.371Z,13.371162,f9fb2180,6,Error [FLog::LoginController] Failed to fetch meta data with code -1 and message Request timed out"
+      }
+    ],
+    "gameConnectionMarkers": []
+  },
+  {
+    "log": "0.746.0.7461269_20261109T005349Z_Studio_fff76_last.log",
+    "lineCount": 156,
+    "startClientLines": [
+      6,
+      25
+    ],
+    "errors": [
+      {
+        "line": 29,
+        "text": "2026-11-09T00:53:54.357Z,4.357689,6d52b000,12 [DFLog::HttpTraceError] HttpResponse(#2 0x11c890700) time:2999.1ms (net:2999.1ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 33,
+        "text": "2026-11-09T00:53:54.360Z,4.360463,6d49f000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 1 try"
+      },
+      {
+        "line": 136,
+        "text": "2026-11-09T00:53:57.358Z,7.358996,6d5b7000,12 [DFLog::HttpTraceError] HttpResponse(#5 0x11de40700) time:2998.4ms (net:2998.4ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 138,
+        "text": "2026-11-09T00:53:57.359Z,7.359108,6c43f000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 2 try"
+      },
+      {
+        "line": 142,
+        "text": "2026-11-09T00:54:00.358Z,10.358430,6d52b000,12 [DFLog::HttpTraceError] HttpResponse(#8 0x11c891300) time:2999.2ms (net:2999.2ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 144,
+        "text": "2026-11-09T00:54:00.358Z,10.358535,6c43f000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 3 try"
+      },
+      {
+        "line": 146,
+        "text": "2026-11-09T00:54:03.357Z,13.357064,6d5b7000,12 [DFLog::HttpTraceError] HttpResponse(#9 0x11c891300) time:2998.4ms (net:2998.4ms timeInRetryQueue:0.0ms) error:5 message:HttpError: Timedout url:{ \"https://apis.roblox.com/oauth/.well-known/openid-configuration\" } ip: external:0 numberOfTimesRetried:0"
+      },
+      {
+        "line": 148,
+        "text": "2026-11-09T00:54:03.357Z,13.357141,6c233000,6,Error [FLog::BackendConfigFetcher] Failed to fetch meta data with code -1 and message Request timed out for 4 try"
+      },
+      {
+        "line": 150,
+        "text": "2026-11-09T00:54:03.357Z,13.357449,f9fb2180,6,Error [FLog::LoginController] Failed to fetch meta data with code -1 and message Request timed out"
+      }
+    ],
+    "gameConnectionMarkers": []
+  }
+]

@@ -43,7 +43,7 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The current candidate expects 67 server cases and two client cases; consult the [P13 record](../plans/13-terrain-and-buildings.md) for current execution evidence and remaining gaps. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation, Map, Aircraft and ExpandedMap specs plus the shared unit/service cases. A report's client count and context must match the claim being made.
+5. The current candidate expects 67 server cases and two client cases; consult the [P13 record](../plans/13-terrain-and-buildings.md) for current execution evidence and scope. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation, Map, Aircraft and ExpandedMap specs plus the shared unit/service cases. A report's client count and context must match the claim being made.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
@@ -103,7 +103,7 @@ The pose convergence bound is **8 studs** (approximately 0.32 seconds of motion 
 
 `Aircraft.spec.luau` additionally samples 17 canonical phases using injected engine time, verifies Hitbox/attachment/collision/query contracts and reset, and tests actual clear/solid-obstructed/exterior/nonfinite aim endpoints. Those two engine cases contribute to the 67-case baseline. Thermal automation combines real obstruction rays with occluded Highlight configuration. It must be supplemented by actual rendered review of exposed and fully covered targets, both FOVs, reticle stability, full-orbit ground visibility and role-loss cleanup. A screenshot or Highlight property alone cannot establish correct visual occlusion.
 
-Use the [P04 record](../plans/04-aircraft-and-thermal.md) for the tested source, actual reports, captures and remaining presentation limits. Ordinary Play supports solo Operator preview for inspection, but that cosmetic preview is not two-client replication evidence. Keep unrelated sessions untouched and return the session you launched to Edit.
+Use the [P04 record](../plans/04-aircraft-and-thermal.md) for original aircraft acceptance and the [P13 record](../plans/13-terrain-and-buildings.md) for the expanded-map regression source, reports and scope. Ordinary Play supports solo Operator preview for inspection, but that cosmetic preview is not two-client replication evidence. Keep unrelated sessions untouched and return the session you launched to Edit.
 
 ## Run the P13 expanded-map harness
 
@@ -132,7 +132,7 @@ For focused review, operate the actual avatar along both launcher routes, onto t
 
 ## Check a fresh native world load
 
-The helper is available on the `fix/p13-engine-acceptance` branch while that tooling change is under review. After pinned dependency setup, run from the checkout:
+The latest acceptance startup fixes and this helper are on `fix/p13-engine-acceptance` in unmerged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16); `main` already contains the same production world/game source. After pinned dependency setup, run from the checkout:
 
 ```sh
 python3 scripts/build_studio_world_probe.py
@@ -233,7 +233,7 @@ For human-control regression, run `ExecutePlayModeAsync({kind = "HumanTestContro
 
 ## Expanded-map acceptance and planned panning/destruction
 
-Historical P02/P04 evidence establishes the prior 180-stud-radius, fixed-focus prototype. [P13](../plans/13-terrain-and-buildings.md) adds the current 360-stud-radius terrain/building candidate and its named suites; consult its record for actual results and remaining acceptance gaps. [P14](../plans/14-aircraft-panning.md) panning and revised [P07](../plans/07-destruction.md) destruction remain planned. R16 extends release traceability to authored terrain and three accessible multi-story buildings.
+Historical P02/P04 evidence establishes the prior 180-stud-radius, fixed-focus prototype. [P13](../plans/13-terrain-and-buildings.md) supplies the current 360-stud-radius terrain/building source and its named suites; consult its record for actual results and validation scope. [P14](../plans/14-aircraft-panning.md) panning and revised [P07](../plans/07-destruction.md) destruction remain planned. R16 extends release traceability to authored terrain and three accessible multi-story buildings.
 
 - P13: source-built 720-stud disk/equal perimeter orbit, versioned terrain elevation/material reconstruction, building/story/panel registry, actual stairs/upper-floor navigation, supported anchors, separate lobby and two launcher routes.
 - P14: pointer/delta-time pan rules; full-orbit inward bounds and coverage at both zooms; elevated terrain/upper-floor projection, preserved focus under weapon selection, recenter and role cleanup with two actual clients.

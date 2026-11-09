@@ -1,0 +1,667 @@
+{
+  "success": true,
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":67,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":67}",
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward"
+      },
+      {
+        "passed": true,
+        "name": "A4 stale malformed wrong-role duplicate and unknown selections preserve acknowledged view"
+      },
+      {
+        "passed": true,
+        "name": "A5 exposed and covered real geometry uses occluded thermal rendering"
+      },
+      {
+        "passed": true,
+        "name": "A2/A3 two actual clients converge at nine samples spanning a complete production orbit"
+      },
+      {
+        "passed": true,
+        "name": "A2/A5 result and reset restore initial profile camera input and effects"
+      },
+      {
+        "passed": true,
+        "name": "A5 actual operator disconnect forfeits and server teardown removes all aircraft ownership"
+      }
+    ],
+    "passed": 6,
+    "clientBaselines": [
+      {
+        "passed": true,
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+      },
+      {
+        "passed": true,
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+      }
+    ],
+    "orbitSeconds": 90,
+    "observations": [
+      {
+        "observations": {
+          "renderedFrames": 1,
+          "lastRenderSeconds": 7.240274249998038,
+          "reticlePixels": [
+            162.14999389648438,
+            98.69999694824219
+          ],
+          "crossAbsolutePosition": [
+            145,
+            23
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            658
+          ],
+          "roundId": 1,
+          "projectionViewport": "nil",
+          "life": "Alive",
+          "role": "Gunship",
+          "crossOffset": [
+            162,
+            98
+          ],
+          "fov": 35,
+          "viewport": [
+            1081,
+            658
+          ],
+          "sampleSeconds": 7.255804125001305,
+          "projectionFrame": "nil",
+          "weapon": "GAU23"
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "renderedFrames": 7,
+          "lastRenderSeconds": 7.452080333343474,
+          "reticlePixels": [
+            162.14999389648438,
+            98.69999694824219
+          ],
+          "crossAbsolutePosition": [
+            145,
+            23
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            658
+          ],
+          "roundId": 1,
+          "projectionViewport": "nil",
+          "life": "Alive",
+          "role": "Gunship",
+          "crossOffset": [
+            162,
+            98
+          ],
+          "fov": 60,
+          "viewport": [
+            1081,
+            658
+          ],
+          "sampleSeconds": 7.478806791667012,
+          "projectionFrame": "nil",
+          "weapon": "M102"
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            359.0626525878906,
+            140,
+            25.961557388305664
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "renderedFrames": 45,
+          "lastRenderSeconds": 8.085978333343519,
+          "reticlePixels": [
+            162.14999389648438,
+            98.69999694824219
+          ],
+          "crossAbsolutePosition": [
+            145,
+            23
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            658
+          ],
+          "roundId": 1,
+          "projectionViewport": "nil",
+          "life": "Alive",
+          "role": "Gunship",
+          "crossOffset": [
+            162,
+            98
+          ],
+          "fov": 60,
+          "viewport": [
+            1081,
+            658
+          ],
+          "sampleSeconds": 8.101980250008637,
+          "projectionFrame": "nil",
+          "weapon": "M102"
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "renderedFrames": 81,
+          "lastRenderSeconds": 8.686480666670832,
+          "reticlePixels": [
+            162.14999389648438,
+            98.69999694824219
+          ],
+          "crossAbsolutePosition": [
+            145,
+            23
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            658
+          ],
+          "roundId": 1,
+          "projectionViewport": "nil",
+          "life": "Alive",
+          "role": "Gunship",
+          "crossOffset": [
+            162,
+            98
+          ],
+          "fov": 35,
+          "viewport": [
+            1081,
+            658
+          ],
+          "sampleSeconds": 8.703241458337288,
+          "projectionFrame": "nil",
+          "weapon": "GAU23"
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "highlights": 3
+        },
+        "passed": true,
+        "kind": "Thermal",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            355.43212890625,
+            140,
+            57.16639709472656
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.828198254108429,
+          "position": [
+            355.2996826171875,
+            140,
+            57.98393630981445
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            210.237548828125,
+            140,
+            292.23309326171875
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 1.6772691011428833,
+          "position": [
+            208.87371826171875,
+            140,
+            293.20941162109375
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            -57.541748046875,
+            140,
+            355.3715515136719
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8402119278907776,
+          "position": [
+            -58.371002197265625,
+            140,
+            355.2362976074219
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            -292.2211608886719,
+            140,
+            210.25413513183594
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8328554034233093,
+          "position": [
+            -292.706787109375,
+            140,
+            209.5775146484375
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            -355.3736877441406,
+            140,
+            -57.52859878540039
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8524537086486816,
+          "position": [
+            -355.2364807128906,
+            140,
+            -58.369937896728516
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "renderedFrames": 2789,
+          "lastRenderSeconds": 53.91849037499924,
+          "reticlePixels": [
+            162.14999389648438,
+            98.69999694824219
+          ],
+          "crossAbsolutePosition": [
+            145,
+            23
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            658
+          ],
+          "roundId": 1,
+          "projectionViewport": "nil",
+          "life": "Alive",
+          "role": "Gunship",
+          "crossOffset": [
+            162,
+            98
+          ],
+          "fov": 60,
+          "viewport": [
+            1081,
+            658
+          ],
+          "sampleSeconds": 53.93485837501066,
+          "projectionFrame": "nil",
+          "weapon": "M102"
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            -210.27369689941406,
+            140,
+            -292.2070617675781
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8463399410247803,
+          "position": [
+            -209.58615112304688,
+            140,
+            -292.7005920410156
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            57.51614761352539,
+            140,
+            -355.3757019042969
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8343496322631836,
+          "position": [
+            58.33962631225586,
+            140,
+            -355.241455078125
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            292.19610595703125,
+            140,
+            -210.2889404296875
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8437750935554504,
+          "position": [
+            292.68817138671875,
+            140,
+            -209.60350036621094
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            355.37811279296875,
+            140,
+            57.501304626464844
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0.8388826847076416,
+          "position": [
+            355.2431640625,
+            140,
+            58.329261779785156
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Restored",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Restored",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "renderedFrames": 5709,
+          "lastRenderSeconds": 102.81004100000428,
+          "reticlePixels": [
+            162.14999389648438,
+            98.69999694824219
+          ],
+          "crossAbsolutePosition": [
+            145,
+            23
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            658
+          ],
+          "roundId": 2,
+          "projectionViewport": "nil",
+          "life": "Alive",
+          "role": "Gunship",
+          "crossOffset": [
+            162,
+            98
+          ],
+          "fov": 35,
+          "viewport": [
+            1081,
+            658
+          ],
+          "sampleSeconds": 102.81518591666827,
+          "projectionFrame": "nil",
+          "weapon": "GAU23"
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            357.106201171875,
+            140,
+            45.55394744873047
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "poseErrorStuds": 0,
+          "position": [
+            356.9998779296875,
+            140,
+            46.37975311279297
+          ]
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Leave",
+        "userId": -2,
+        "detail": "observed"
+      }
+    ],
+    "clientCount": 2,
+    "environment": "Studio",
+    "poseToleranceStuds": 8,
+    "suite": "P04-multiplayer",
+    "failed": 0,
+    "discovered": 6
+  }
+}

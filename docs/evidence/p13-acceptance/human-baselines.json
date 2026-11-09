@@ -1,0 +1,35 @@
+[
+  {
+    "log": "0.746.0.7461269_20261109T010202Z_Studio_99eb3_last.log",
+    "testEZCounts": [
+      {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "discovered": 4
+      }
+    ]
+  },
+  {
+    "log": "0.746.0.7461269_20261109T010210Z_Studio_b55b8_last.log",
+    "testEZCounts": [
+      {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "discovered": 2
+      }
+    ]
+  },
+  {
+    "log": "0.746.0.7461269_20261109T010211Z_Studio_f2a2a_last.log",
+    "testEZCounts": [
+      {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "discovered": 2
+      }
+    ]
+  }
+]

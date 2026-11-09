@@ -1,0 +1,41 @@
+{
+  "candidate": "e8b245dc4a3b73cd1e72215b77a89ae2bde7a628",
+  "testedCode": "e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0",
+  "preflight": {
+    "source": {
+      "version": "0.746.0.7461269",
+      "name": "PlayersVsC130Tests",
+      "failures": [],
+      "placeId": 0,
+      "checked": 58
+    },
+    "geometry": {
+      "version": "0.746.0.7461269",
+      "checked": 351,
+      "placeId": 0,
+      "maximumCFrameErrorStuds": 0.000014292654839209717,
+      "failures": [],
+      "tolerance": 0.001
+    }
+  },
+  "launch": {
+    "success": true,
+    "result": {
+      "serverClockSeconds": 125.1107062916708,
+      "environment": "Studio",
+      "actualClientCount": 0,
+      "suite": "P13-launch-failure",
+      "passed": false,
+      "detail": "No real clients connected after more than90seconds; server suite aborted at10second startup guard; Studio cloud feature/plugin requests timed out. No gameplay acceptance executed."
+    }
+  },
+  "console": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Failed to load beta features from cloud: Request timed out\nContentId: rbxassetid://203785492 failed due to: Asset type does not match requested type\nFailed to load installed plugins from cloud: Request timed out\nServerScriptService.ServerTests:16: server smoke requires a real client within 10 seconds\nStack Begin\nScript 'ServerScriptService.ServerTests', Line 16\nStack End"
+      }
+    ],
+    "isError": false
+  }
+}

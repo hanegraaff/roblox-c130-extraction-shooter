@@ -1,0 +1,73 @@
+{
+  "branch": "fix/p13-engine-acceptance",
+  "testedCodeCommit": "e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0",
+  "testedDocumentationHead": "e8b245dc4a3b73cd1e72215b77a89ae2bde7a628",
+  "environment": {
+    "studioVersion": "0.746.0.7461269",
+    "originalStudioId": "21f6fc11-4429-4148-9764-89a36987e5e9",
+    "document": "p02-tests-5c809beff70b.rbxlx",
+    "dataModelName": "PlayersVsC130Tests",
+    "placeId": 0,
+    "rojoPort": 34872
+  },
+  "sourcePreflight": {
+    "version": "0.746.0.7461269",
+    "name": "PlayersVsC130Tests",
+    "failures": [],
+    "placeId": 0,
+    "checked": 58
+  },
+  "loadedGeometry": {
+    "version": "0.746.0.7461269",
+    "checked": 351,
+    "placeId": 0,
+    "maximumCFrameErrorStuds": 1.4292654839209717e-05,
+    "failures": [],
+    "tolerance": 0.001
+  },
+  "checks": {
+    "freshNativeWorld": {
+      "passed": 5,
+      "failed": 0,
+      "evidence": "docs/evidence/p13-acceptance/fresh-world-report.json"
+    },
+    "p13": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "initialActualClients": 2,
+      "peakActualClients": 3,
+      "evidence": "docs/evidence/p13-acceptance/p13-report.json"
+    },
+    "p04": {
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "actualClients": 2,
+      "orbitSeconds": 90,
+      "orbitSamplesPerClient": 9,
+      "maxPoseErrorStuds": 1.6772691011428833,
+      "evidence": "docs/evidence/p13-acceptance/p04-report.json"
+    },
+    "humanMultiplayer": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "actualClients": 2,
+      "evidence": "docs/evidence/p13-acceptance/human-report.json"
+    }
+  },
+  "finalStudioState": {
+    "soleOriginalInstance": true,
+    "mode": "Edit",
+    "ownedTestSessions": 0,
+    "disposableObserverInstances": 0,
+    "worldOrTerrainFixtures": 0
+  },
+  "remainingMaterialFindings": [],
+  "limitations": [
+    "Native world load is not a fresh full-place boot.",
+    "P13 does not implement combat, panning, destruction or real 6/10-player release acceptance."
+  ]
+}
