@@ -31,3 +31,31 @@ Update current controls, actual pan/recenter bindings, view/aim contracts, camer
 ## Completion record
 
 No implementation or validation performed by the steering revision. Record A1–A5 → tests/commands → actual counts/results, source/build, two-client/full-orbit reports, controls/viewport review, tester findings and CI/PR when implemented.
+
+### Implementation start — 2026-11-09
+
+Dependency P13 and its passing engine evidence are integrated on main `10327b4`.
+Implementation uses dedicated branch `plan/14-aircraft-panning`. The original
+Studio test document remains connected in Edit; its actual synced project is
+PlayersVsC130Tests, place 0, with test Rojo on localhost:34872.
+
+Initial tuning defaults, declared before candidate testing: raw-pointer edge
+zone 12% on each side, maximum pan speed 120 studs/second, per-update delta-time
+cap 0.1 seconds and **R** to recenter. Retain acknowledged 35°/60° weapon FOVs and
+central-70% displayed reticle; raw edge input drives pan before that display
+clamp. UI hover/text focus suspends pan. An authored maximum aim elevation of
+32 studs covers the current roof/hill geometry. These are implementation defaults,
+not additional user-selected rules; validation may justify documented tuning.
+No acceptance result is claimed at implementation start.
+
+Declared engine tolerances before testing: reticle projection agreement at most
+1 pixel / 0.5 studs at the hit surface; horizontal inward dot at least −0.000001
+(zero is permitted directly below the aircraft at the disk edge); live canonical
+camera-origin agreement within 2 studs between replication/Heartbeat updates.
+Use an explicit stable camera basis for that near-vertical edge case. The authored
+aim envelope will use numeric values rather than additional visible geometry.
+
+Automated edge-input steering must reach a target neighborhood within 3 studs;
+this control-steering tolerance is separate from the tighter 1-pixel / 0.5-stud
+same-frame projection agreement. Surface assertions still require an actual
+nonflat Terrain slope or the requested building's StoryId `02` panel, as applicable.

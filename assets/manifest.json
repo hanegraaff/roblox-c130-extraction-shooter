@@ -31,6 +31,12 @@
           "Grass",
           "Rock"
         ]
+      },
+      "aim_envelope": {
+        "descriptor_path": "AimEnvelope",
+        "minimum_y_studs": -1,
+        "maximum_y_studs": 32,
+        "owner_module": "src/server/AircraftService.luau"
       }
     },
     {

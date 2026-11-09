@@ -81,9 +81,13 @@ function AircraftHarness.run()
                             "operator camera not Scriptable"
                         )
                         assert(
-                            camera.CFrame.LookVector:Dot((Vector3.zero - camera.CFrame.Position).Unit)
-                                > 0.99999,
-                            "camera central look not inward"
+                            camera.CFrame.LookVector:Dot(
+                                (
+                                    (player.PlayerGui.ThermalHUD:GetAttribute("PanFocus") :: Vector3)
+                                    - camera.CFrame.Position
+                                ).Unit
+                            ) > 0.99999,
+                            "camera does not track its bounded panned focus"
                         )
                         assert(
                             (camera.CFrame.Position - pose.Position).Magnitude < 2,
@@ -138,8 +142,10 @@ function AircraftHarness.run()
                         "profile label disagrees with selection"
                     )
                     assert(
-                        camera.CFrame.LookVector:Dot((-camera.CFrame.Position).Unit) > 0.99999,
-                        "zoom turned camera away from map"
+                        camera.CFrame.LookVector:Dot(
+                            ((gui:GetAttribute("PanFocus") :: Vector3) - camera.CFrame.Position).Unit
+                        ) > 0.99999,
+                        "zoom disagrees with bounded panned camera focus"
                     )
                     local pixels = gui:GetAttribute("ReticlePixels")
                     local cross = gui:FindFirstChild("Reticle")
@@ -157,7 +163,7 @@ function AircraftHarness.run()
                     details.role = tostring(player:GetAttribute("Role"))
                     details.roundId = player:GetAttribute("RoundId")
                     details.life = player:GetAttribute("Life")
-                    details.projectionViewport = tostring(gui:GetAttribute("ProjectionViewportSize"))
+                    details.projectionViewport = tostring(gui:GetAttribute("ProjectionViewport"))
                     details.projectionFrame = tostring(gui:GetAttribute("ProjectionFrame"))
                     details.reticlePixels = if typeof(pixels) == "Vector2"
                         then { pixels.X, pixels.Y }
