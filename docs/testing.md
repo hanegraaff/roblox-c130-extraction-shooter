@@ -132,7 +132,7 @@ For focused review, operate the actual avatar along both launcher routes, onto t
 
 ## Check a fresh native world load
 
-The latest acceptance startup fixes and this helper are on `fix/p13-engine-acceptance` in unmerged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16); `main` already contains the same production world/game source. After pinned dependency setup, run from the checkout:
+The acceptance startup fixes, helper and passing engine evidence are integrated on `main` through merged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). After updating `main` and completing pinned dependency setup, run from the checkout:
 
 ```sh
 python3 scripts/build_studio_world_probe.py

@@ -1,0 +1,24 @@
+{
+  "mergeCommit": "de1eb9b3bcf400dc0168067a1e2d9694e26ca22f",
+  "reviewedHead": "545e6cd62016d7efaf91b2b04d4342f89c6f5976",
+  "mergedTree": "2b330414db5c1e2bd89bbf86f9968b41e419dc57",
+  "reviewedTree": "2b330414db5c1e2bd89bbf86f9968b41e419dc57",
+  "fullTreeMatches": true,
+  "verificationCommand": "python3 scripts/verify.py > build/p13-acceptance-main-verify.txt 2>&1",
+  "verificationExitCode": 0,
+  "unitPassed": 33,
+  "integrationPassed": 18,
+  "authoredPartsPerArtifact": 351,
+  "panelPivots": 111,
+  "surfacePairs": 7146,
+  "builds": {
+    "game": {
+      "bytes": 562499,
+      "sha256": "ec90c71046a1f9a7434b00848792100a58edc58931ec320c9949009d69372c14"
+    },
+    "tests": {
+      "bytes": 841675,
+      "sha256": "690b108e9867de0c10cef80201fe3ece47554c3bd53e67d191dc66254edf9a1c"
+    }
+  }
+}

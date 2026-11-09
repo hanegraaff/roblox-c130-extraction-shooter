@@ -18,7 +18,7 @@ Ground players use **WASD**, **Space** and the mouse to explore and watch the ai
 
 A round panel shows phase, role, life state, remaining time and surviving ground players. Ground players can click **Surrender / spectate** or reset their character to give up their life. Death and reset do not respawn them during that round: they watch a living ground teammate instead. Late arrivals and reconnecting players wait for the next round. Resetting the operator's protected station character retains the assignment, aircraft and deadline. Leaving the operator role restores the normal camera and removes thermal effects.
 
-The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Firing, aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. Expanded-map engine acceptance is verified on the `fix/p13-engine-acceptance` review branch. See [P13](plans/13-terrain-and-buildings.md) for its validation record and scope, [P04](plans/04-aircraft-and-thermal.md) for the earlier aircraft/view evidence, and [P03](plans/03-rounds-and-roles.md) for rounds.
+The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Firing, aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. Expanded-map engine acceptance is verified and its tooling/evidence are integrated on `main`. See [P13](plans/13-terrain-and-buildings.md) for its validation record and scope, [P04](plans/04-aircraft-and-thermal.md) for the earlier aircraft/view evidence, and [P03](plans/03-rounds-and-roles.md) for rounds.
 
 The camera still tracks map center; mouse panning across the larger battlefield is planned for P14. The HUD is a prototype: the round card covers part of the upper view, and Roblox's open team-chat panel can overlap its left side at smaller viewport sizes. The wider operator view can include an aircraft strip in the upper-left sky. Full player guidance and presentation polish are planned for P10.
 
@@ -35,21 +35,13 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The expanded terrain/building source and building surface-flicker fix are integrated on `main`. The latest test-startup fixes and native world-load probe remain on `fix/p13-engine-acceptance` in unmerged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). Select and update the integrated game source before building:
+The expanded map, building surface-flicker fix, test-startup fixes and native world-load probe are integrated on `main` through merged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). Select and update that source before building:
 
 ```sh
 git fetch origin
 git switch main
 git pull --ff-only origin main
 ```
-
-To reproduce the latest Studio acceptance, select the review branch instead before the setup/build steps:
-
-```sh
-git switch --track origin/fix/p13-engine-acceptance
-```
-
-If that local branch already exists, use `git switch fix/p13-engine-acceptance` and `git pull --ff-only origin fix/p13-engine-acceptance`.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
@@ -113,7 +105,7 @@ The [P13 map harness](docs/testing.md#run-the-p13-expanded-map-harness) starts t
 
 After source changes, stop Play, rerun the host gate, confirm Rojo is connected to **PlayersVsC130Tests** on `localhost:34872`, verify it delivered the candidate and start a fresh session. If the sync server was restarted, reconnect the existing document's Rojo plugin in Edit before testing.
 
-For fresh serialized-world acceptance through Studio MCP, use the review branch selected above and build its probe:
+For fresh serialized-world acceptance through Studio MCP, build the probe from the updated `main` checkout:
 
 ```sh
 python3 scripts/build_studio_world_probe.py

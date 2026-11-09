@@ -150,3 +150,16 @@ pushed in `c5cb7ff4d238fb9b00ac9480c99724a1613a03ab`;
 [GitHub Verify 42544499355](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42544499355)
 passes. PR #16 is open, ready for review and unmerged. Final repository checks
 pass 61 Markdown / 56 JSON files and `git diff --check`. Main remains `d570b11`.
+
+### Acceptance integration on main — 2026-11-08 local / 2026-11-09 UTC
+
+With the user's explicit authorization, [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16)
+merged into main at `de1eb9b3bcf400dc0168067a1e2d9694e26ca22f`. The merged
+tree equals reviewed/CI-passing head `545e6cd` exactly. A fresh integrated full
+host gate passes 33 unit / 18 integration and all static/build/351-transform,
+111-pivot and 7,146 surface-pair checks. Existing passing engine reports apply
+to unchanged source; no new Studio session is claimed. The
+[acceptance integration record](../docs/evidence/p13-acceptance-integration.md)
+preserves exact tree/build hashes and the full host log. Routine local setup and
+the native-world probe now use updated main. P14 is not implemented, and no
+Roblox publication occurred.

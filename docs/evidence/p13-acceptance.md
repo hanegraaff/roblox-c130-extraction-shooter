@@ -6,7 +6,7 @@ synced candidate in Studio 0.746.0.7461269 and returned the original document to
 Edit. [Source manifest](p13-acceptance/source-manifest.json) records the exact
 commit/tree, 58 mapped source signatures and Studio identity. This acceptance
 work is delivered through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16);
-main remains `d570b11`, and Roblox publication has not occurred.
+the [integration record](p13-acceptance-integration.md) identifies its subsequent merge into main. Roblox publication has not occurred.
 
 | Required check | Actual result and evidence |
 | --- | --- |
