@@ -7,6 +7,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local AircraftHarness = {}
+local RunService = game:GetService("RunService")
 type Request = {
     kind: string,
     position: Vector3?,
@@ -34,6 +35,16 @@ function AircraftHarness.run()
         if not transport or not transport:IsA("RemoteEvent") then
             return
         end
+        -- Count only while this diagnostic harness owns its real transport.
+        local renderedFrames = 0
+        local lastRenderSeconds = 0
+        local frames = RunService.RenderStepped:Connect(function()
+            renderedFrames += 1
+            lastRenderSeconds = os.clock()
+        end)
+        script.Destroying:Once(function()
+            frames:Disconnect()
+        end)
         local player = Players.LocalPlayer
         local listener: RBXScriptConnection? = nil
         local removal: RBXScriptConnection? = nil
@@ -131,15 +142,38 @@ function AircraftHarness.run()
                         "zoom turned camera away from map"
                     )
                     local pixels = gui:GetAttribute("ReticlePixels")
+                    local cross = gui:FindFirstChild("Reticle")
+                    -- Capture failures before assertions; no render wait or bound is
+                    -- changed by diagnostics. Missing commit metadata stays explicit.
+                    details.weapon = weapon
+                    details.fov = camera.FieldOfView
+                    details.viewport = { camera.ViewportSize.X, camera.ViewportSize.Y }
+                    details.guiAbsoluteSize = { gui.AbsoluteSize.X, gui.AbsoluteSize.Y }
+                    details.renderedFrames = renderedFrames
+                    details.lastRenderSeconds = lastRenderSeconds
+                    details.sampleSeconds = os.clock()
+                    local round = ReplicatedStorage:FindFirstChild("RoundState")
+                    details.phase = if round then tostring(round:GetAttribute("Phase")) else "absent"
+                    details.role = tostring(player:GetAttribute("Role"))
+                    details.roundId = player:GetAttribute("RoundId")
+                    details.life = player:GetAttribute("Life")
+                    details.projectionViewport = tostring(gui:GetAttribute("ProjectionViewportSize"))
+                    details.projectionFrame = tostring(gui:GetAttribute("ProjectionFrame"))
+                    details.reticlePixels = if typeof(pixels) == "Vector2"
+                        then { pixels.X, pixels.Y }
+                        else tostring(pixels)
+                    if cross and cross:IsA("TextLabel") then
+                        details.crossOffset = { cross.Position.X.Offset, cross.Position.Y.Offset }
+                        details.crossAbsolutePosition = { cross.AbsolutePosition.X, cross.AbsolutePosition.Y }
+                    end
                     assert(typeof(pixels) == "Vector2", "reticle projection missing")
                     assert(
                         pixels.X >= camera.ViewportSize.X * 0.15 - 1
                             and pixels.X <= camera.ViewportSize.X * 0.85 + 1
                             and pixels.Y >= camera.ViewportSize.Y * 0.15 - 1
                             and pixels.Y <= camera.ViewportSize.Y * 0.85 + 1,
-                        "reticle escaped view bounds"
+                        "reticle escaped view bounds: " .. game:GetService("HttpService"):JSONEncode(details)
                     )
-                    local cross = gui:FindFirstChild("Reticle")
                     assert(
                         cross
                             and cross:IsA("TextLabel")
@@ -239,6 +273,7 @@ function AircraftHarness.run()
         end)
         removal = transport.AncestryChanged:Connect(function()
             if not transport:IsDescendantOf(ReplicatedStorage) then
+                frames:Disconnect()
                 if listener then
                     listener:Disconnect()
                 end
