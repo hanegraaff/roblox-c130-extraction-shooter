@@ -86,11 +86,15 @@ function AircraftHarness.run()
         end, "client " .. request.kind, 12)
         local reply = replies[token][player]
         replies[token] = nil
+        -- Preserve numeric snapshots for failed assertions as well as successful probes.
+        table.insert(observations, {
+            kind = request.kind,
+            userId = player.UserId,
+            passed = reply.passed,
+            detail = reply.detail,
+            observations = reply.observations,
+        })
         assert(reply.passed == true, tostring(reply.detail))
-        table.insert(
-            observations,
-            { kind = request.kind, userId = player.UserId, observations = reply.observations }
-        )
     end
     local function selection(): { roundId: number, revision: number, weapon: string }
         local encoded = ReplicatedStorage.AircraftState:GetAttribute("Selection")

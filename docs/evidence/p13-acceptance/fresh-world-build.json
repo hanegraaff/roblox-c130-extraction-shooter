@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "d570b11236dd7f71146d220a0848ffc2090b059f",
+  "worldSource": "assets/world/Battlefield.model.json",
+  "worldSourceSha256": "9d27fa7afbdc5c0caa18d690c6bb1f5f1ed012c3e008472686e58e4ed877e74b",
+  "binarySha256": "1d6e62e81677182aab4f5d2f4c57825cced46443342ef96af8d921d08ac48fb2",
+  "binaryBytes": 7141,
+  "worldParts": 334,
+  "worldNodes": 357,
+  "probe": "build/studio-world-probe.luau",
+  "probeSha256": "2f2f116c2484b2ccf4c06814ecff8f40d87a2ccb8fe6c61e1fd6abdebaa0ed6d",
+  "procedure": "Native in-process world load; separate runtime baseline required; no fresh-place boot claim"
+}

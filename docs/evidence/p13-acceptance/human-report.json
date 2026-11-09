@@ -1,0 +1,21 @@
+{
+  "codeCommit": "e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0",
+  "invocation": "ExecuteMultiplayerTestAsync(2,{kind='HumanTestMultiplayer'})",
+  "sourceProof": {
+    "version": "0.746.0.7461269",
+    "name": "PlayersVsC130Tests",
+    "failures": [],
+    "placeId": 0,
+    "checked": 58
+  },
+  "success": true,
+  "result": {
+    "clientCount": 2,
+    "discovered": 4,
+    "errors": 0,
+    "skipped": 0,
+    "suite": "HumanTestControls",
+    "passed": 4,
+    "failed": 0
+  }
+}

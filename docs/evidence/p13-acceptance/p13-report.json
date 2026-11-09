@@ -1,0 +1,88 @@
+{
+  "success": true,
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":67,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":67}",
+    "skipped": 0,
+    "passed": 5,
+    "cases": [
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication two actual clients agree on source geometry terrain panels and aircraft"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapNavigation actual ground avatar enters every building and walks every upper floor"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication two perturbed round resets restore terrain geometry IDs and panels"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication actual late third client observes rebuilt map and stays spectator"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapCleanup repeated teardown releases round aircraft transport ownership"
+      }
+    ],
+    "initialClientCount": 2,
+    "observations": [
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}",
+        "userId": -3,
+        "detail": "geometry/terrain/aircraft observed"
+      }
+    ],
+    "walkedBuildings": [
+      "Foundry",
+      "Warehouse",
+      "Outpost"
+    ],
+    "environment": "Studio",
+    "clientCount": 3,
+    "suite": "P13-multiplayer",
+    "failed": 0,
+    "discovered": 5
+  }
+}

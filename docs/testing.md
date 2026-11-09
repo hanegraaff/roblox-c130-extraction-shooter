@@ -30,7 +30,7 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
 
 1. Build with the full verifier. Open `build/tests.rbxlx` as a separate local Studio document, or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
 2. Through Studio MCP, list connected instances, select the intended test document and inspect its state. Consult the connected server’s relevant skill guidance. Confirm that `ServerScriptService.ServerTests`, `StarterPlayer.StarterPlayerScripts.ClientTests`, `ReplicatedStorage.TestPackages` and `ServerStorage.DevelopmentSettings` belong to the test mapping.
-3. Start **Play** with one actual client for the foundational TestEZ suites. The mapped server and client runners execute automatically. The server requires a player within ten seconds. Startup waits are bounded; a missing report or timeout is a failure requiring investigation. The round runtime starts only after the server suites pass, avoiding map rebuild/character races. Ordinary solo Play then enters labelled map preview; real test rounds still require at least two actual players and an explicit start.
+3. Start **Play** with one actual client for the foundational TestEZ suites. The mapped server and client runners execute automatically. The server requires a player within ten seconds. Startup waits are bounded; a missing report or timeout is a failure requiring investigation. The client first waits up to 60 seconds for a successful server fixture report, then up to 35 seconds for RoundState and role rendezvous, then up to 25 seconds for an actual ready avatar or explicit characterless late-spectator state. These are separate test-only stages; timeout diagnostics retain phase, role, life, load lease and character/root presence. The round runtime starts only after the server suites pass, avoiding map rebuild/character races. Ordinary solo Play then enters labelled map preview; real test rounds still require at least two actual players and an explicit start.
 4. Read both structured JSON reports and the Studio Output log. In the **server** context:
 
    ```luau
@@ -43,7 +43,7 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The current candidate expects 67 server cases and two client cases; consult the [P13 record](../plans/13-terrain-and-buildings.md) for current execution evidence and remaining gaps. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation, Map, Aircraft and ExpandedMap specs plus the shared unit/service cases. A report's client count and context must match the claim being made.
+5. The current candidate expects 67 server cases and two client cases; consult the [P13 record](../plans/13-terrain-and-buildings.md) for current execution evidence and scope. For each run, collect fresh reports. Each must have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports include `suite`, `environment = "Studio"` and fixture `seed = 1`; the server adds actual `clientCount`, and the client adds its `userId`. Aggregate labels remain `P01-server` and `P01-client`; server discovery includes Foundation, Map, Aircraft and ExpandedMap specs plus the shared unit/service cases. A report's client count and context must match the claim being made.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
@@ -103,7 +103,7 @@ The pose convergence bound is **8 studs** (approximately 0.32 seconds of motion 
 
 `Aircraft.spec.luau` additionally samples 17 canonical phases using injected engine time, verifies Hitbox/attachment/collision/query contracts and reset, and tests actual clear/solid-obstructed/exterior/nonfinite aim endpoints. Those two engine cases contribute to the 67-case baseline. Thermal automation combines real obstruction rays with occluded Highlight configuration. It must be supplemented by actual rendered review of exposed and fully covered targets, both FOVs, reticle stability, full-orbit ground visibility and role-loss cleanup. A screenshot or Highlight property alone cannot establish correct visual occlusion.
 
-Use the [P04 record](../plans/04-aircraft-and-thermal.md) for the tested source, actual reports, captures and remaining presentation limits. Ordinary Play supports solo Operator preview for inspection, but that cosmetic preview is not two-client replication evidence. Keep unrelated sessions untouched and return the session you launched to Edit.
+Use the [P04 record](../plans/04-aircraft-and-thermal.md) for original aircraft acceptance and the [P13 record](../plans/13-terrain-and-buildings.md) for the expanded-map regression source, reports and scope. Ordinary Play supports solo Operator preview for inspection, but that cosmetic preview is not two-client replication evidence. Keep unrelated sessions untouched and return the session you launched to Edit.
 
 ## Run the P13 expanded-map harness
 
@@ -120,15 +120,39 @@ return "P13 expanded-map test started"
 
 The test-only server/client `ExpandedMapHarness` expects five scenarios: initial two-client map/terrain/panel/aircraft agreement; a real ground Humanoid walking from outside entry through every building's stairs into its upper room; two perturbed round resets; an actual third late client observing the rebuilt map as a characterless spectator; and idempotent teardown of owned round/aircraft/transport resources. It places the avatar at each building's outside starting marker, then uses normal Humanoid movement between that entry and the upper floor; it does not teleport between route waypoints.
 
-Read `workspace:GetAttribute("P13LastReport")` after the session self-ends in Edit. Require five discovered/passing scenarios, zero failures/skips, two initial actual clients, peak three actual clients and all three named buildings in the walked list. Collect the separate baseline reports (67 server, 2 per actual client); their actual startup client counts can differ from the harness count. A first-case failure or harness-completion error is not a partially passing acceptance run.
+Read `workspace:GetAttribute("P13LastReport")` after the session self-ends in Edit. Require five discovered/passing scenarios, zero failures/skips, two initial actual clients, peak three actual clients and all three named buildings in the walked list. Collect the separate baseline reports (67 server, 2 per actual client); their actual startup client counts can differ from the harness count. A first-case failure or harness-completion error is incomplete acceptance. The teardown/resource assertion runs independently after earlier scenario failure, including a failed third-client launch; its own result is retained without erasing that earlier failure.
 
 Static map replication compares exact part identities, classes, shapes, collision/query/touch flags and counts, with a 0.001 tolerance for numeric CFrame components and sizes. Numeric comparison avoids treating signed zero as world divergence. Each client also checks stable panel IDs/Intact state, eight actual terrain apex material/elevation queries and canonical aircraft presence on the expanded perimeter. The full-time P04 harness remains a separate camera/selection/orbit regression.
 
 The baseline `ExpandedMap.spec.luau` adds `BuildingLayout`, `TerrainReconstruction`, `ExpandedMapNavigation`, `ExpandedMapSightLines` and cleanup checks. These inspect loaded floor/stair/room/panel geometry, reject malformed markers and lobby overlap, compare sampled voxel materials/occupancies through two mutations/rebuilds while preserving unrelated terrain, test invalid recipes without writes, and sample 64 protected/exposed orbit angles. Terrain queries may take up to five seconds after writes to converge; nominal apex Y=16 permits three studs of four-stud voxel surface tolerance. Future 750-stud full-disk range feasibility is a construction budget, not a firing feature.
 
-Separately load a freshly source-built test artifact using Studio **File → Open from File**, confirm its identity, and collect fresh loaded-transform/terrain reconstruction and server/client reports. Live sync or byte-identical builds do not establish file-load interpretation. Preserve unrelated unsaved work; do not repeatedly launch Studio when a document is unavailable.
+For A3 serialized-world interpretation, use the [fresh native world-load probe](#check-a-fresh-native-world-load) in the existing Edit session. It loads a newly built binary world rather than cloning the live map. A full fresh-place boot, if separately required, remains a distinct **File → Open from File** check with its own runtime/server/client reports. Live sync and byte-identical builds alone establish neither native world interpretation nor fresh-place startup.
 
 For focused review, operate the actual avatar along both launcher routes, onto terrain and into all upper floors; inspect building scale, room/stair clearance, ground/aircraft cover readability and travel time. Record viewport/graphics settings and capture the actual candidate. Fixture clearance, Humanoid automation and subjective operated review are distinct evidence. Current fixed-center framing is an interim limitation until P14; panning, firing and physical panel damage are not established by these suites.
+
+## Check a fresh native world load
+
+The latest acceptance startup fixes and this helper are on `fix/p13-engine-acceptance` in unmerged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16); `main` already contains the same production world/game source. After pinned dependency setup, run from the checkout:
+
+```sh
+python3 scripts/build_studio_world_probe.py
+```
+
+It uses pinned Rojo to build the versioned battlefield into a native `.rbxm` and writes these ignored artifacts:
+
+| File | Purpose |
+| --- | --- |
+| `build/studio-world-probe.project.json` | Temporary world-only Rojo mapping. |
+| `build/studio-world-probe.rbxm` | Fresh serialized world, independent of the live map. |
+| `build/studio-world-probe.expected.json` | Every authored node identity/class and part pose/size/shape/flag contract. |
+| `build/studio-world-probe.luau` | Complete MCP probe, embedding the binary bytes and source expectations. |
+| `build/studio-world-probe.json` | Source commit, world-source/binary/probe SHA-256 values, sizes and expected counts. |
+
+Select the intended existing test Studio instance, confirm **Edit** mode and that its production MapService modules match the candidate, then call Studio MCP `execute_luau` with that confirmed `studio_id`, `datamodel_type = "Edit"` and `code` equal to the generated `.luau` file contents. Preserve its returned structured JSON alongside the metadata. The script uses `SerializationService:DeserializeInstancesAsync` to interpret the fresh binary natively, parents a temporary `P13AcceptanceFreshWorld` fixture and exercises the real MapService. It does not launch Studio or publish an asset.
+
+Require `passed = true`, five passing named cases, `fixtureRemoved = true` and an empty `cleanupErrors` array. The current world contract is 334 authored world parts and 357 nodes, checked for exact identities/classes/flags and numeric poses/sizes within 0.001. Initial terrain and two perturbed rebuilds must each reproduce eight hills and the fixed 1152-voxel sample (9513 encoded bytes, Adler-32 2054186319), with matching apex materials/elevations. Each rebuild removes a deleted-panel/transient mutation, restores source geometry and preserves an unrelated terrain fixture exactly. Teardown is idempotent; cleanup restores the saved terrain volume, unrelated fixture voxels and removes all probe models.
+
+The [recorded native-load report](evidence/p13-acceptance/fresh-world-report.json) identifies the actual source hashes, engine version and results. This proves fresh source-built **world** interpretation and A3 terrain reconstruction in the existing process. It does not prove a fresh **place boot**, player startup, the 67-server/2-client runtime baseline, multiplayer replication or full-orbit camera behavior; collect those through their separate procedures.
 
 ## Required test levels
 
@@ -209,7 +233,7 @@ For human-control regression, run `ExecutePlayModeAsync({kind = "HumanTestContro
 
 ## Expanded-map acceptance and planned panning/destruction
 
-Historical P02/P04 evidence establishes the prior 180-stud-radius, fixed-focus prototype. [P13](../plans/13-terrain-and-buildings.md) adds the current 360-stud-radius terrain/building candidate and its named suites; consult its record for actual results and remaining acceptance gaps. [P14](../plans/14-aircraft-panning.md) panning and revised [P07](../plans/07-destruction.md) destruction remain planned. R16 extends release traceability to authored terrain and three accessible multi-story buildings.
+Historical P02/P04 evidence establishes the prior 180-stud-radius, fixed-focus prototype. [P13](../plans/13-terrain-and-buildings.md) supplies the current 360-stud-radius terrain/building source and its named suites; consult its record for actual results and validation scope. [P14](../plans/14-aircraft-panning.md) panning and revised [P07](../plans/07-destruction.md) destruction remain planned. R16 extends release traceability to authored terrain and three accessible multi-story buildings.
 
 - P13: source-built 720-stud disk/equal perimeter orbit, versioned terrain elevation/material reconstruction, building/story/panel registry, actual stairs/upper-floor navigation, supported anchors, separate lobby and two launcher routes.
 - P14: pointer/delta-time pan rules; full-orbit inward bounds and coverage at both zooms; elevated terrain/upper-floor projection, preserved focus under weapon selection, recenter and role cleanup with two actual clients.

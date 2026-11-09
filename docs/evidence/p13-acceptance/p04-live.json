@@ -1,0 +1,91 @@
+{
+  "codeCommit": "e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0",
+  "sourceProof": {
+    "version": "0.746.0.7461269",
+    "name": "PlayersVsC130Tests",
+    "failures": [],
+    "placeId": 0,
+    "checked": 58
+  },
+  "actualLiveObservations": [
+    {
+      "count": 2,
+      "baseline": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 67,
+        "clientCount": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 67
+      }
+    },
+    {
+      "baseline": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "pixels": "162.149994, 98.6999969",
+      "viewport": "1081, 658",
+      "role": "Gunship",
+      "userId": -1,
+      "readiness": {
+        "elapsedSeconds": 1.9407019166683313,
+        "avatarSeconds": 0.00001750000228639692,
+        "state": {
+          "phase": "Active",
+          "roundState": true,
+          "hasRoot": true,
+          "role": "Gunship",
+          "hasCharacter": true,
+          "loadLease": "nil",
+          "elapsedSeconds": 1.9407025833352236,
+          "life": "Alive",
+          "stage": "ready",
+          "serverBaselineComplete": true
+        }
+      }
+    },
+    {
+      "baseline": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 2,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 2
+      },
+      "readiness": {
+        "elapsedSeconds": 2.101067208321183,
+        "avatarSeconds": 0.000018458333215676248,
+        "state": {
+          "phase": "Active",
+          "roundState": true,
+          "hasRoot": true,
+          "role": "Ground",
+          "hasCharacter": true,
+          "loadLease": "nil",
+          "elapsedSeconds": 2.1010679166647606,
+          "life": "Alive",
+          "stage": "ready",
+          "serverBaselineComplete": true
+        }
+      },
+      "viewport": "1081, 658",
+      "userId": -2,
+      "role": "Ground"
+    }
+  ]
+}

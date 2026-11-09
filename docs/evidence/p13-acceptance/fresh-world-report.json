@@ -1,0 +1,185 @@
+{
+  "sourceCommit": "d570b11236dd7f71146d220a0848ffc2090b059f",
+  "worldSourceSha256": "9d27fa7afbdc5c0caa18d690c6bb1f5f1ed012c3e008472686e58e4ed877e74b",
+  "binarySha256": "1d6e62e81677182aab4f5d2f4c57825cced46443342ef96af8d921d08ac48fb2",
+  "binaryBytes": 7141,
+  "method": "SerializationService.DeserializeInstancesAsync in existing Studio Edit session; native fresh world, not fresh place boot",
+  "result": {
+    "maximumCFrameComponentError": 0.000014292654839209717,
+    "fixtureRemoved": true,
+    "worldNodes": 357,
+    "passed": true,
+    "artifacts": 1,
+    "version": "0.746.0.7461269",
+    "worldParts": 334,
+    "cleanupErrors": [],
+    "cases": {
+      "1": {
+        "name": "Fresh native binary world load matches all authored identities and geometry",
+        "passed": true
+      },
+      "2": {
+        "name": "Fresh source-built terrain matches original eight-hill sample",
+        "passed": true
+      },
+      "3": {
+        "name": "Fresh world perturbed rebuild 1 restores geometry terrain and unrelated voxels",
+        "passed": true
+      },
+      "4": {
+        "name": "Fresh world perturbed rebuild 2 restores geometry terrain and unrelated voxels",
+        "passed": true
+      },
+      "5": {
+        "name": "Fresh loaded world idempotent teardown restores pristine model",
+        "passed": true
+      }
+    },
+    "sampleHistory": {
+      "1": {
+        "bytes": 9513,
+        "adler32": 2054186319,
+        "apices": {
+          "1": {
+            "y": 17.921871185302734,
+            "material": "Grass",
+            "name": "TerrainHill00"
+          },
+          "2": {
+            "y": 17.05660629272461,
+            "material": "Rock",
+            "name": "TerrainHill01"
+          },
+          "3": {
+            "y": 17.890625,
+            "material": "Grass",
+            "name": "TerrainHill02"
+          },
+          "4": {
+            "y": 17.407928466796875,
+            "material": "Rock",
+            "name": "TerrainHill03"
+          },
+          "5": {
+            "y": 17.937496185302734,
+            "material": "Grass",
+            "name": "TerrainHill04"
+          },
+          "6": {
+            "y": 17.99999237060547,
+            "material": "Rock",
+            "name": "TerrainHill05"
+          },
+          "7": {
+            "y": 17.90625,
+            "material": "Grass",
+            "name": "TerrainHill06"
+          },
+          "8": {
+            "y": 17.274303436279297,
+            "material": "Rock",
+            "name": "TerrainHill07"
+          }
+        },
+        "sampleCount": 1152,
+        "hillCount": 8
+      },
+      "2": {
+        "bytes": 9513,
+        "adler32": 2054186319,
+        "apices": {
+          "1": {
+            "y": 17.921871185302734,
+            "material": "Grass",
+            "name": "TerrainHill00"
+          },
+          "2": {
+            "y": 17.05660629272461,
+            "material": "Rock",
+            "name": "TerrainHill01"
+          },
+          "3": {
+            "y": 17.890625,
+            "material": "Grass",
+            "name": "TerrainHill02"
+          },
+          "4": {
+            "y": 17.407928466796875,
+            "material": "Rock",
+            "name": "TerrainHill03"
+          },
+          "5": {
+            "y": 17.937496185302734,
+            "material": "Grass",
+            "name": "TerrainHill04"
+          },
+          "6": {
+            "y": 17.99999237060547,
+            "material": "Rock",
+            "name": "TerrainHill05"
+          },
+          "7": {
+            "y": 17.90625,
+            "material": "Grass",
+            "name": "TerrainHill06"
+          },
+          "8": {
+            "y": 17.274303436279297,
+            "material": "Rock",
+            "name": "TerrainHill07"
+          }
+        },
+        "sampleCount": 1152,
+        "hillCount": 8
+      },
+      "3": {
+        "bytes": 9513,
+        "adler32": 2054186319,
+        "apices": {
+          "1": {
+            "y": 17.921871185302734,
+            "material": "Grass",
+            "name": "TerrainHill00"
+          },
+          "2": {
+            "y": 17.05660629272461,
+            "material": "Rock",
+            "name": "TerrainHill01"
+          },
+          "3": {
+            "y": 17.890625,
+            "material": "Grass",
+            "name": "TerrainHill02"
+          },
+          "4": {
+            "y": 17.407928466796875,
+            "material": "Rock",
+            "name": "TerrainHill03"
+          },
+          "5": {
+            "y": 17.937496185302734,
+            "material": "Grass",
+            "name": "TerrainHill04"
+          },
+          "6": {
+            "y": 17.99999237060547,
+            "material": "Rock",
+            "name": "TerrainHill05"
+          },
+          "7": {
+            "y": 17.90625,
+            "material": "Grass",
+            "name": "TerrainHill06"
+          },
+          "8": {
+            "y": 17.274303436279297,
+            "material": "Rock",
+            "name": "TerrainHill07"
+          }
+        },
+        "sampleCount": 1152,
+        "hillCount": 8
+      }
+    }
+  }
+}

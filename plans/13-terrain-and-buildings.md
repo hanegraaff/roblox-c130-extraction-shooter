@@ -65,3 +65,88 @@ The earlier `b78abbab64fb` artifact belongs to the original candidate. Current f
 With explicit user authorization, [PR #12](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/12) merged into `main` at `19b70082b69f00f3901359403f39ba51b67a0506`, including the building surface-flicker fix. Its full tree equals reviewed head `2e3e4d5`, which passed [GitHub Verify 42536588227](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42536588227). The fresh main `python3 scripts/verify.py` gate passes 33 unit / 18 integration, 351 authored transforms, 111 panel pivots and 7,146 surface-pair checks. [Main integration record](../docs/evidence/p13-integration.md) preserves source/build hashes and exact limits. The setup guide now uses `main`; no dependency branch is required for this source.
 
 This user-authorized merge integrates source without closing acceptance. No new Studio session is claimed: runtime/assets/tests are unchanged from the checked source. Required late join/final teardown, P04 reticle/full-orbit, two-client human controls and fresh serialized-place evidence remain open, so P13 is not Complete and P14 has not started. The prepared `build/p13-tests-0a374bff6bb1.rbxlx` artifact remains current. No Roblox publication occurred.
+
+### Engine acceptance resumption on a dedicated branch — 2026-11-08
+
+The user's correction keeps further work on `fix/p13-engine-acceptance`, branched
+from main `d570b11236dd7f71146d220a0848ffc2090b059f`. Candidate
+`e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0`, tree
+`912f4c5202d6de6e620cc8f226dc52d543de054a`, fixes test-startup synchronization,
+retains failed P04 numeric diagnostics, independently checks P13 teardown, and adds
+a reproducible native-world probe builder. Production gameplay/world source is
+unchanged. Full host verification passes 33 unit / 18 integration, both builds,
+351 authored transforms, 111 panel pivots and 7,146 surface-pair checks.
+
+**A3 now passes:** a fresh source-built native `.rbxm` is deserialized in the
+existing Studio Edit document. All 5 named cases pass: 334 world parts / 357 nodes,
+initial terrain signature, two perturbed rebuilds with unrelated-voxel preservation,
+and clean double teardown/restoration. The independent tester reviewed the actual
+result and accepted this as A3's fresh native-world load. It is not a new-place
+boot claim. [Acceptance evidence](../docs/evidence/p13-acceptance.md) preserves
+exact artifact/probe/source hashes, actual results and the independent review.
+
+A new two-client launch exposed the old ten-second avatar-startup assumption;
+67 server cases passed, but both client baselines failed and no P13 gameplay case
+passed. The candidate corrects staged readiness without removing assertions.
+Its engine rerun remains pending: four mapped test scripts were stale, the stopped
+Rojo server was restarted on localhost:34872, and the existing plugin still needs
+reconnection. Require all 58 source signatures to match before counting a run.
+Late join/reset/final teardown, P04 numeric diagnosis/full orbit and two-client
+human controls remain open. No acceptance completion, P14 implementation, merge or
+Roblox publication is claimed.
+
+The source/tests and interim evidence are pushed in
+[draft PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16)
+(candidate `e2e4e5`, evidence/docs `1dc880a`). The final documentation checker
+passes 61 Markdown / 47 JSON files; diff checks pass. The PR remains draft while
+the required synchronized-candidate engine scenarios are pending.
+
+### Acceptance closure — 2026-11-08 local / 2026-11-09 UTC
+
+The independent tester exercised source
+`e2e4e54c5d9fb0d2195b1e2b7720b409a2d888f0`, tree
+`912f4c5202d6de6e620cc8f226dc52d543de054a`, at documentation head
+`e8b245dc4a3b73cd1e72215b77a89ae2bde7a628`. Every run first matched all 58
+mapped source signatures in the existing Studio 0.746.0.7461269 test document;
+351 loaded authored parts match within 0.001 (maximum error 0.00001429265).
+Production gameplay/world source remains unchanged from integrated main.
+
+| Criterion | Final acceptance evidence |
+| --- | --- |
+| A1 | Full current host gate passes 33 unit / 18 integration, strict/static checks, both builds, 351 transforms, 111 panel pivots and 7,146 surface-pair checks. Earlier clean-archive reconstruction remains applicable to unchanged gameplay/world source. [CI Verify 42540612044](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42540612044) passes on `e8b245d`. |
+| A2 | Existing BuildingLayout/panel tests plus renewed actual Humanoid traversal pass for Foundry, Warehouse and Outpost upper floors. |
+| A3 | Fresh native source-built world load passes all five named cases, including initial signature, two perturbed rebuilds, unrelated-voxel preservation and clean double teardown/restoration. Native world interpretation is verified; no separate full-place boot is claimed or required by this criterion. |
+| A4 | Existing supported routes/anchors, lobby separation, containment and focused human review remain valid for unchanged geometry. Renewed actual ground-avatar upper-floor traversal passes in every building. |
+| A5 | P13 passes 5/5 with two initial clients and an actual third late spectator; nine real-client observations agree initially, after two resets and on late join. P04 passes 6/6 with two actual clients, nine samples over the full 90-second orbit and two rounds; maximum observed pose error is 1.6772691 studs against the 8-stud bound. Both numeric reticle/zoom profiles, selection rejection and thermal cover pass. |
+| A6 | Both perturbed round resets and independent repeated runtime/aircraft teardown pass. The two-client human-controls regression passes 4/4, including role conflicts, exact requested roles, next-round settings and reset/restart. No owned test fixtures remain; the sole original document is back in Edit. |
+
+The successful P04 baseline reports 67/67 server cases with two actual clients,
+and 2/2 per client, zero failures/errors/skips. P13's server baseline reports
+67/67 while the first client is present; its separate multiplayer harness then
+proves two initial and three peak actual clients. All nine P13 observations
+include passing 2/2 client baselines, including the characterless late spectator.
+The historical reticle failure was not reproduced; retained numeric diagnostics
+now precede the unchanged bound assertion. No production camera fix is claimed.
+
+Rojo reconnection resolved the stale-source gap. One subsequent native client
+launch failed before gameplay on Roblox OAuth metadata timeouts; that failed
+launch is preserved separately. A successful read-only endpoint probe supplied
+new availability evidence, then the bounded retry and subsequent required suites
+passed. Assertions were not weakened to bypass that failure.
+
+[Final acceptance evidence](../docs/evidence/p13-acceptance.md),
+[structured tester closure](../docs/evidence/p13-acceptance/final-summary.json),
+[independent report](../docs/evidence/p13-acceptance/tester-report.md) and
+[source manifest](../docs/evidence/p13-acceptance/source-manifest.json) preserve
+commands, source hashes, actual reports and scope. The technical writer updated
+the player/setup/testing narrative and confirmed the representative screenshot
+still matches unchanged visible progress. No material tester findings remain.
+Delivery stays on [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16),
+with integration separate from acceptance. P14 has not been implemented; no merge
+or Roblox publication occurred.
+
+Final passing reports and experience/roadmap documentation are committed and
+pushed in `c5cb7ff4d238fb9b00ac9480c99724a1613a03ab`;
+[GitHub Verify 42544499355](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42544499355)
+passes. PR #16 is open, ready for review and unmerged. Final repository checks
+pass 61 Markdown / 56 JSON files and `git diff --check`. Main remains `d570b11`.

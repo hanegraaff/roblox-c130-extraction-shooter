@@ -10,7 +10,7 @@ The intended game puts one C-130 operator above a circular industrial battlefiel
 
 ## What you can play today
 
-The expanded-map candidate has a **720-stud-diameter battlefield**, eight grass/rock hills, two large buildings and one smaller building, an orbiting C-130 and a round loop. All three buildings have two usable floors connected by stairs. Their walls and roofs provide solid cover today; damage and falling fragments remain planned. Players can walk around a protected lobby deck. With 6–10 players, the server selects one operator and sends everyone else to sheltered ground positions. Operator turns rotate between eligible players, preferring those who have waited more rounds.
+The local development build has a **720-stud-diameter battlefield**, eight grass/rock hills, two large buildings and one smaller building, an orbiting C-130 and a round loop. All three buildings have two usable floors connected by stairs. Their walls and roofs provide solid cover today; damage and falling fragments remain planned. Players can walk around a protected lobby deck. With 6–10 players, the server selects one operator and sends everyone else to sheltered ground positions. Operator turns rotate between eligible players, preferring those who have waited more rounds.
 
 The C-130 circles the perimeter automatically. The operator looks inward toward map center through a grayscale thermal view, with solid cover occluding player highlights. Move the mouse to place the reticle within the view. Press **1** or click **30mm GAU-23/A Chain Gun** for the tighter **35°** view; press **2** or click **105mm M102 Howitzer** for the wider **60°** view. The camera keeps facing inward while you aim and switch profiles. These are targeting profiles: firing is not available yet.
 
@@ -18,7 +18,7 @@ Ground players use **WASD**, **Space** and the mouse to explore and watch the ai
 
 A round panel shows phase, role, life state, remaining time and surviving ground players. Ground players can click **Surrender / spectate** or reset their character to give up their life. Death and reset do not respawn them during that round: they watch a living ground teammate instead. Late arrivals and reconnecting players wait for the next round. Resetting the operator's protected station character retains the assignment, aircraft and deadline. Leaving the operator role restores the normal camera and removes thermal effects.
 
-The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Firing, aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. This expanded-map candidate is still undergoing engine acceptance; the plan records the checks that remain open. See [P13](plans/13-terrain-and-buildings.md) for expanded-map validation and remaining acceptance work, [P04](plans/04-aircraft-and-thermal.md) for the earlier aircraft/view evidence, and [P03](plans/03-rounds-and-roles.md) for rounds.
+The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Firing, aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. Expanded-map engine acceptance is verified on the `fix/p13-engine-acceptance` review branch. See [P13](plans/13-terrain-and-buildings.md) for its validation record and scope, [P04](plans/04-aircraft-and-thermal.md) for the earlier aircraft/view evidence, and [P03](plans/03-rounds-and-roles.md) for rounds.
 
 The camera still tracks map center; mouse panning across the larger battlefield is planned for P14. The HUD is a prototype: the round card covers part of the upper view, and Roblox's open team-chat panel can overlap its left side at smaller viewport sizes. The wider operator view can include an aircraft strip in the upper-left sky. Full player guidance and presentation polish are planned for P10.
 
@@ -35,13 +35,21 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The expanded terrain/building source and building surface-flicker fix are integrated on `main`. P13 engine acceptance still has open checks recorded in its plan. Select and update the integrated source before building:
+The expanded terrain/building source and building surface-flicker fix are integrated on `main`. The latest test-startup fixes and native world-load probe remain on `fix/p13-engine-acceptance` in unmerged [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). Select and update the integrated game source before building:
 
 ```sh
 git fetch origin
 git switch main
 git pull --ff-only origin main
 ```
+
+To reproduce the latest Studio acceptance, select the review branch instead before the setup/build steps:
+
+```sh
+git switch --track origin/fix/p13-engine-acceptance
+```
+
+If that local branch already exists, use `git switch fix/p13-engine-acceptance` and `git pull --ff-only origin fix/p13-engine-acceptance`.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
@@ -103,7 +111,17 @@ Use **Return to lobby** to inspect the walkable lobby, or **Explore map (solo)**
 
 The [P13 map harness](docs/testing.md#run-the-p13-expanded-map-harness) starts two actual clients, walks a ground avatar into all three upper floors, perturbs and resets the map twice, then requests a third actual late client to check rebuilt-map replication. The [P04 multiplayer harness](docs/testing.md#run-the-p04-aircraft-harness) uses two actual clients to sample a full 90-second orbit, check both zoom profiles and rejected selections, test thermal fixtures, reset/reentry and operator departure. The [P03 multiplayer harness](docs/testing.md#run-the-p03-multiplayer-harness) separately starts three clients, adds a late spectator and drives three accelerated rounds. A single-client TestEZ pass does not establish replicated round behavior, and local rounds do not establish combat or release capacity.
 
-After source changes, stop Play, rerun the host gate, verify Rojo delivered the candidate and start a fresh session. Open a generated artifact separately when checking file-load reconstruction. For a documentation-only change, `python3 scripts/check_repository.py` checks local links, JSON, mappings and assets. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for structured server/client reports and required evidence.
+After source changes, stop Play, rerun the host gate, confirm Rojo is connected to **PlayersVsC130Tests** on `localhost:34872`, verify it delivered the candidate and start a fresh session. If the sync server was restarted, reconnect the existing document's Rojo plugin in Edit before testing.
+
+For fresh serialized-world acceptance through Studio MCP, use the review branch selected above and build its probe:
+
+```sh
+python3 scripts/build_studio_world_probe.py
+```
+
+Run the generated `build/studio-world-probe.luau` through MCP in the existing **Edit** document. It loads a newly built native world artifact, verifies source geometry and terrain restoration, then removes its fixture and restores prior terrain. This world-load check needs no new Studio process; normal Play server/client tests remain separate. See the [fresh-world procedure](docs/testing.md#check-a-fresh-native-world-load) for generated files, report checks and source identity.
+
+For a documentation-only change, `python3 scripts/check_repository.py` checks local links, JSON, mappings and assets. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for structured server/client reports and required evidence.
 
 ## Current controls and planned combat
 
@@ -117,7 +135,7 @@ The planned combat loop gives every ground player an **M-7 rifle** and puts one 
 
 The operator's **30mm GAU-23/A Chain Gun** will provide faster precise fire; the **105mm M102 Howitzer** will provide slower heavy fire with a wider blast. Each will retain independent cooldown/reload state across switches. Solid cover will block damage as well as the current thermal highlighting.
 
-The current candidate supplies the expanded terrain and three two-story buildings. Mouse movement will later pan the inward aircraft view while weapon zoom still applies.
+The current build supplies the expanded terrain and three two-story buildings. Mouse movement will later pan the inward aircraft view while weapon zoom still applies.
 
 Building wall and roof panels will visibly progress: three direct heavy-cannon hits produce a roughly half-destroyed panel, and three more remove it; sustained on-panel 30mm fire takes nine seconds to damage it. Real bounded fragments will fall and collide with scenery while remaining floors/stairs/frames stay stable. These mechanics will work with simple graphics; refined assets are later work. See the [construction](plans/13-terrain-and-buildings.md), [panning](plans/14-aircraft-panning.md) and [destruction](plans/07-destruction.md) plans.
 
