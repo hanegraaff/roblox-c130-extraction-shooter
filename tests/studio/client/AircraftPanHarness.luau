@@ -10,6 +10,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Input = game:GetService("UserInputService")
+local GuiService = game:GetService("GuiService")
 local Harness = {}
 type Request = {
     kind: string,
@@ -193,6 +194,14 @@ function Harness.run()
                 "projection metadata missing"
             )
             assert((camera.ViewportSize - viewport).Magnitude < 0.01, "viewport changed during sample")
+            local cross = current:FindFirstChild("Reticle")
+            assert(cross and cross:IsA("TextLabel"), "drawn reticle missing")
+            -- AbsolutePosition is GUI-content space. Convert its drawn centre back
+            -- into raw viewport space before comparing it with the camera ray.
+            local inset = GuiService:GetGuiInset()
+            local drawnCenter = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + inset
+            local drawnPixelError = (drawnCenter - pixels).Magnitude
+            assert(drawnPixelError <= 1, "drawn reticle centre disagrees with ray pixels")
             local projected = camera:WorldToViewportPoint(endpoint)
             local pixelError = (Vector2.new(projected.X, projected.Y) - pixels).Magnitude
             assert(pixelError <= 1, "reticle/world pixel error exceeds one pixel")
@@ -255,6 +264,9 @@ function Harness.run()
                 pointingCommitted = goal == nil and aimPoint ~= nil,
                 normal = { hit.Normal.X, hit.Normal.Y, hit.Normal.Z },
                 pixelError = pixelError,
+                drawnPixelError = drawnPixelError,
+                drawnCenter = { drawnCenter.X, drawnCenter.Y },
+                guiInset = { inset.X, inset.Y },
                 frame = current:GetAttribute("ProjectionFrame"),
                 fov = camera.FieldOfView,
                 weapon = current:GetAttribute("Weapon"),

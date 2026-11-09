@@ -187,6 +187,13 @@ function AircraftHarness.run()
                                 < 1,
                         "reticle coordinates disagree"
                     )
+                    assert(cross and cross:IsA("TextLabel"), "drawn profile reticle missing")
+                    local inset = game:GetService("GuiService"):GetGuiInset()
+                    local drawnCenter = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + inset
+                    local drawnError = (drawnCenter - pixels).Magnitude
+                    assert(drawnError <= 1, "actual drawn reticle centre disagrees with projection pixels")
+                    details.drawnPixelError = drawnError
+                    details.guiInset = { inset.X, inset.Y }
                     local effect = camera:FindFirstChild("OperatorThermal")
                     assert(
                         effect and effect:IsA("ColorCorrectionEffect") and effect.Saturation == -1,

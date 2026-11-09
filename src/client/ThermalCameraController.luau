@@ -14,6 +14,7 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local HttpService = game:GetService("HttpService")
 local CollectionService = game:GetService("CollectionService")
+local GuiService = game:GetService("GuiService")
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
 local AircraftPanRules = require(ReplicatedStorage.Shared.AircraftPanRules)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
@@ -65,6 +66,31 @@ function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFram
     return CFrame.fromMatrix(position, right, right:Cross(look), -look)
 end
 
+-- Samples the production pointer/UI boundary without yielding. pointer is the raw
+-- GetMouseLocation viewport position; windowFocused comes from the owned focus
+-- listeners. Only GetGuiObjectsAtPosition uses GUI-content coordinates, so subtract
+-- the current top-left GuiInset for that query alone. Returned pointer pixels are
+-- unchanged for edge pan, reticle drawing and camera rays. Invalid pixels fail closed.
+function ThermalCameraController.input(
+    playerGui: PlayerGui,
+    pointer: Vector2,
+    windowFocused: boolean
+): InputFrame
+    local blocked = not windowFocused or UserInputService:GetFocusedTextBox() ~= nil
+    if not Validation.isFinite(pointer.X) or not Validation.isFinite(pointer.Y) then
+        return { position = pointer, blocked = true }
+    end
+    local inset = GuiService:GetGuiInset()
+    local query = pointer - inset
+    for _, object in playerGui:GetGuiObjectsAtPosition(math.floor(query.X), math.floor(query.Y)) do
+        if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
+            blocked = true
+            break
+        end
+    end
+    return { position = pointer, blocked = blocked }
+end
+
 -- Role gate is presentation only. The production server independently authorizes
 -- selection. RoundPanel calls ownsCamera before writing any spectator/character view.
 function ThermalCameraController.new(
@@ -91,15 +117,7 @@ function ThermalCameraController.new(
     local frameNumber = 0
     local windowFocused = true
     local function sampleInput(_viewport: Vector2): InputFrame
-        local pointer = UserInputService:GetMouseLocation()
-        local blocked = not windowFocused or UserInputService:GetFocusedTextBox() ~= nil
-        for _, object in playerGui:GetGuiObjectsAtPosition(math.floor(pointer.X), math.floor(pointer.Y)) do
-            if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
-                blocked = true
-                break
-            end
-        end
-        return { position = pointer, blocked = blocked }
+        return ThermalCameraController.input(playerGui, UserInputService:GetMouseLocation(), windowFocused)
     end
     local function eligible(): boolean
         return running
