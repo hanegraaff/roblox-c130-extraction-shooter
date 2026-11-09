@@ -1,0 +1,41 @@
+local Pan = require('../src/shared/AircraftPanRules')
+local Map = require('../src/shared/MapRules')
+local serde = require('@lune/serde')
+local function finite(n) return n==n and math.abs(n)<math.huge end
+local values={0,1e10,-1e10,1e150,-1e150,1e200,-1e200,1e308,-1e308,1.7976931348623157e308,-1.7976931348623157e308}
+local radii={360,1e10,1e150,1e200,1e308}
+local checked,rejected,nonfiniteCount,boundCount=0,0,0,0
+local firstNonfinite=nil
+local maxScaled=0
+local failures={}
+for _,cx in values do
+ for _,cz in values do
+  for _,radius in radii do
+   local map=table.clone(Map.defaults)
+   map.centerX=cx map.centerZ=cz map.orbitCenterX=cx map.orbitCenterZ=cz map.focusX=cx map.focusZ=cz
+   map.radiusStuds=radius map.orbitRadiusStuds=radius
+   for _,x in values do
+    for _,z in values do
+     checked+=1
+     local out=Pan.clamp(map,x,z)
+     if out then
+      if not finite(out.x) or not finite(out.z) then
+       nonfiniteCount+=1
+       if not firstNonfinite then firstNonfinite={cx=cx,cz=cz,radius=radius,x=x,z=z,outX=tostring(out.x),outZ=tostring(out.z)} end
+       if #failures<12 then table.insert(failures,{kind='nonfinite',cx=cx,cz=cz,radius=radius,x=x,z=z,outX=tostring(out.x),outZ=tostring(out.z)}) end
+      else
+       local dx,dz=(out.x-cx)/radius,(out.z-cz)/radius
+       local scaled=dx*dx+dz*dz
+       maxScaled=math.max(maxScaled,scaled)
+       if not finite(scaled) or scaled>1+1e-12 then
+        boundCount+=1
+        if #failures<12 then table.insert(failures,{kind='bound',cx=cx,cz=cz,radius=radius,x=x,z=z,outX=out.x,outZ=out.z,scaled=tostring(scaled)}) end
+       end
+      end
+     else rejected+=1 end
+    end
+   end
+  end
+ end
+end
+print(serde.encode('json',{checked=checked,rejected=rejected,nonfiniteCount=nonfiniteCount,boundCount=boundCount,maxScaled=tostring(maxScaled),firstNonfinite=firstNonfinite,failures=failures}))

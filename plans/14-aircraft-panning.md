@@ -59,3 +59,49 @@ Automated edge-input steering must reach a target neighborhood within 3 studs;
 this control-steering tolerance is separate from the tighter 1-pixel / 0.5-stud
 same-frame projection agreement. Surface assertions still require an actual
 nonflat Terrain slope or the requested building's StoryId `02` panel, as applicable.
+
+### Candidate delivery and acceptance gap — 2026-11-09
+
+Source `a32613376599b38f787fe6484dc3e93a840ba935`, tree
+`6cd40a2507d554dc12fa7a731e121783314cde63`, is pushed in
+[draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18).
+It implements bounded raw-edge pan, persistent world-space focus, R recenter,
+stable inward camera framing, geometry-aware projection and selected-muzzle
+server aim validation against the authored −1..32-stud envelope. Production has
+one existing camera owner and no pan remote or firing implementation. A normal
+optional constructor input boundary drives deterministic engine fixtures; a
+fresh ordinary default-input session remains required for native wiring/feel.
+
+| Criterion | Actual evidence and pending checks |
+| --- | --- |
+| A1 | Full `python3 scripts/verify.py` exits zero: 43 unit / 18 integration, format/lint/strict types, rejection probes, both builds, 351 transforms, 111 pivots, 7,146 surface pairs and release isolation (25 runtime scripts; 414 release / 477 test Instances). Ten new pan unit cases pass. Native 585-CFrame engine samples remain unrun. |
+| A2 | Authored envelope and selected-muzzle seam, same-frame ray metadata, terrain slope/upper-floor and full-orbit projection fixtures are implemented and compile; actual Studio projection/envelope/obstruction results are unavailable. |
+| A3 | A six-case two-client P14 harness is implemented for aircraft/Ground-camera isolation and focus/FOV/selection coherence; no actual client session has run. |
+| A4 | Native mouse/key/button, rendered thermal/UI, 1280×720 / 1920×1080 layout, comfort and refreshed gameplay capture remain required. The accurately captioned existing world image is not panning evidence. |
+| A5 | Reset/new-round/operator departure/teardown fixtures and adapted P04 focus assertions compile; required real lifecycle, preview reentry and regression sessions remain unrun. |
+
+The independent tester read the frozen production/harness source and found no
+material source defect. Its independent Lune probe exercises 73,205 clamp
+combinations: 9,360 explicit rejections and zero nonfinite output. Tiny roundoff
+overshoot on extremely translated maps is documented; the current origin map is
+unaffected. This review does not replace engine acceptance. The developer's exact
+full host gate is reused on unchanged source; later prose is checked separately.
+[GitHub Verify 42720211427](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42720211427)
+passes on the candidate.
+
+The original Studio document disconnected during development. MCP now exposes
+only unnamed instance `3115533b-a162-4a3b-a453-24ba1a187070`; state and Edit
+execution both report **Place is not open**. Rojo is confirmed listening on
+localhost:34872 for PlayersVsC130Tests. The user confirmed signed-in/open/Rojo
+connection, but the MCP failure persists; enabling Studio MCP/ChatGPT Quick
+Connect in that loaded document is requested and pending. No new Studio process
+was launched, and no P14 engine test was started. After recovery, first identify
+the project and verify all candidate sources before Play. Expected 79 server /
+2 client baseline and six P14 scenarios are not passing evidence.
+
+[Candidate evidence](../docs/evidence/p14-aircraft-panning.md),
+[host log](../docs/evidence/p14/host-verify.txt),
+[source/build manifest](../docs/evidence/p14/source-manifest.json) and
+[independent report](../docs/evidence/p14/tester-report.md) preserve exact scope.
+Required engine evidence remains open; P05 has not started. No merge or Roblox
+publication occurred.

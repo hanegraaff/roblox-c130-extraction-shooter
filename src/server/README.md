@@ -36,16 +36,16 @@ Batch callers submit accepted events, call `step()`, then publish. Deadline equa
 
 ## Aircraft ownership and selection
 
-`AircraftService.start(match, clock?)` clones the versioned C-130 template to one `Workspace.Aircraft`, creates `ReplicatedStorage.AircraftState` and owns three connections. It rejects an existing aircraft/state owner or missing model/Hitbox with `nil, reason`. Production clock uses `GetServerTimeNow`; engine fixtures may inject finite monotonic seconds. `match` remains caller-owned. Calls do not yield.
+`AircraftService.start(match, clock?)` clones the versioned C-130 template to one `Workspace.Aircraft`, creates `ReplicatedStorage.AircraftState` and owns three connections. It rejects an existing aircraft/state owner, missing model/Hitbox or invalid authored AimEnvelope with `nil, reason`. Startup requires Battlefield/AimEnvelope MinimumY/MaximumY NumberValues containing ground height, with valid finite increasing limits between ground−4 and aircraft altitude; it captures those values for this owner. Production clock uses `GetServerTimeNow`; engine fixtures may inject finite monotonic seconds. `match` remains caller-owned. Calls do not yield.
 
 | API | Contract |
 | --- | --- |
 | `sample(elapsedSeconds)` | Return canonical tangent-facing CFrame from map geometry and AircraftRules. Invalid trusted time asserts. |
-| `aimAllowed(endpoint)` | Reject nonfinite/exterior/invalid-height points, then raycast actual solid Battlefield geometry and Terrain from the server Hitbox. Endpoints at the first surface allow 0.5-stud tolerance. No shot or damage is created. |
+| `aimAllowed(endpoint)` | Reject nonfinite/exterior/invalid-height points, then raycast actual solid Battlefield geometry and Terrain from the currently acknowledged selected weapon’s server-owned muzzle attachment. Endpoints at the first surface allow 0.5-stud tolerance. No shot or damage is created. |
 | `resources()` | Return owned live connection count for repeated-round/teardown checks. |
 | `stop()` | Idempotently disconnect all ownership, destroy aircraft/state/remote and clear request budgets. |
 
-The default 90-second orbit shares map radius/altitude, starts at phase zero and resets at deployment/Lobby. Results/Resetting freeze motion. Hitbox is the sole queryable canonical pose; named `GAU23Muzzle`/`M102Muzzle` attachments reserve server firing origins. See the [model contract](../../assets/models/README.md). No cosmetic interpolation shell, health or damage exists yet.
+The default 90-second orbit shares map radius/altitude, starts at phase zero and resets at deployment/Lobby. Results/Resetting freeze motion. Hitbox is the sole queryable canonical pose; named `GAU23Muzzle`/`M102Muzzle` attachments supply selected-weapon obstruction origins and reserve later firing origins. See the [model contract](../../assets/models/README.md). No cosmetic interpolation shell, health or damage exists yet.
 
 `AircraftSelection.new()` is a server-only deterministic owner exposing `reset(roundId, force?)`, `command(userId, payload, eligible)` and copied `snapshot()` records. It owns round/revision/weapon and per-user accepted sequence. Same-ID reset is normally a no-op; forced Lobby reset restores GAU23 and clears sequences. Commands require exactly `{ roundId, sequence, weapon }`, current positive round, bounded increasing integral sequence and `GAU23`/`M102`. Expected rejection returns `false, reason` without mutation. The engine adapter derives living connected Active/unexpired operator eligibility and applies a six-token bucket refilling four/second before calling it.
 
