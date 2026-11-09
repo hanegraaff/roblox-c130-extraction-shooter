@@ -43,3 +43,6 @@ integration are both recorded; no combat, panning, destruction, 6/10-player rele
 acceptance or Roblox publication is claimed by this merge.
 
 Integration documentation passes `python3 scripts/check_repository.py` (62 Markdown / 57 JSON files) and `git diff --check`. The full host gate above ran before these prose/evidence-only changes; runtime, world, tests and build tooling are unchanged.
+
+The dedicated documentation/evidence follow-up is
+[PR #17](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/17).
