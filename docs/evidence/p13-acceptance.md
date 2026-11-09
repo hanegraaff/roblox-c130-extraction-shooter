@@ -131,3 +131,9 @@ and `git diff --check`. The technical writer reviewed the whole experience/setup
 narrative, updated three documents and retained the still-current representative
 Studio screenshot. Integration is separate from acceptance; no merge or Roblox
 publication is part of this branch's delivery.
+
+Passing engine reports and final experience/roadmap documentation are pushed in
+`c5cb7ff4d238fb9b00ac9480c99724a1613a03ab`.
+[GitHub Verify 42544499355](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42544499355)
+passes on that commit. PR #16 is ready for review (not draft), open and unmerged.
+Remote verification confirms main remains `d570b11236dd7f71146d220a0848ffc2090b059f`.

@@ -144,3 +144,9 @@ still matches unchanged visible progress. No material tester findings remain.
 Delivery stays on [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16),
 with integration separate from acceptance. P14 has not been implemented; no merge
 or Roblox publication occurred.
+
+Final passing reports and experience/roadmap documentation are committed and
+pushed in `c5cb7ff4d238fb9b00ac9480c99724a1613a03ab`;
+[GitHub Verify 42544499355](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42544499355)
+passes. PR #16 is open, ready for review and unmerged. Final repository checks
+pass 61 Markdown / 56 JSON files and `git diff --check`. Main remains `d570b11`.
