@@ -112,4 +112,47 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             "degenerate pan basis accepted"
         )
     end)
+    test(
+        "AircraftPanRules raster shares round-nearest integer ray and draw pixels for fractional XY",
+        function()
+            local result = rules.raster(540.995, 309.995, 1081, 618)
+            assert(result and result.x == 541 and result.y == 310, "fractional XY raster disagrees")
+            local center = rules.raster(540.5, 309, 1081, 618)
+            assert(center and center.x == 541 and center.y == 309, "odd-viewport center raster disagrees")
+        end
+    )
+    test("AircraftPanRules raster preserves exact central bounds at odd viewports and edges", function()
+        for _, viewport in { { 1081, 618 }, { 1279, 719 }, { 1280, 720 }, { 1920, 1080 } } do
+            local width, height = viewport[1], viewport[2]
+            for _, point in
+                {
+                    { 0, 0 },
+                    { width, height },
+                    { width * 0.15, height * 0.85 },
+                    { width * 0.85, height * 0.15 },
+                }
+            do
+                local result = rules.raster(point[1], point[2], width, height)
+                assert(result, "valid raster rejected")
+                assert(result.x % 1 == 0 and result.y % 1 == 0, "reticle is not integer-rasterized")
+                assert(
+                    result.x >= width * 0.15
+                        and result.x <= width * 0.85
+                        and result.y >= height * 0.15
+                        and result.y <= height * 0.85,
+                    "raster escaped central bounds"
+                )
+            end
+        end
+    end)
+    test("AircraftPanRules raster rejects nonfinite pointer and invalid viewport without mutation", function()
+        for _, bad in { 0 / 0, math.huge, -math.huge } do
+            assert(not rules.raster(bad, 1, 1280, 720), "nonfinite X accepted")
+            assert(not rules.raster(1, bad, 1280, 720), "nonfinite Y accepted")
+            assert(not rules.raster(1, 1, bad, 720), "nonfinite viewport accepted")
+        end
+        for _, size in { -1, 0, 1 } do
+            assert(not rules.raster(1, 1, size, 720), "invalid viewport accepted")
+        end
+    end)
 end

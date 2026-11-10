@@ -191,9 +191,10 @@ function AircraftHarness.run()
                     local inset = game:GetService("GuiService"):GetGuiInset()
                     local drawnCenter = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + inset
                     local drawnError = (drawnCenter - pixels).Magnitude
-                    assert(drawnError <= 1, "actual drawn reticle centre disagrees with projection pixels")
                     details.drawnPixelError = drawnError
                     details.guiInset = { inset.X, inset.Y }
+                    details.drawnCenter = { drawnCenter.X, drawnCenter.Y }
+                    assert(drawnError <= 1, "actual drawn reticle centre disagrees with projection pixels")
                     local effect = camera:FindFirstChild("OperatorThermal")
                     assert(
                         effect and effect:IsA("ColorCorrectionEffect") and effect.Saturation == -1,

@@ -1,8 +1,8 @@
 --!strict
 --[=[
-    AircraftPanRules: deterministic local camera-focus integration. Depends only on
+    AircraftPanRules: deterministic local focus integration and reticle rasterization. Depends only on
     MapRules/Validation; no Instances, transport, clock or yielding. Focus is a
-    world-space X/Z point in studs. Pointer coordinates are viewport fractions.
+    world-space X/Z point in studs. step uses pointer viewport fractions; raster uses pixels.
     Invalid/nonfinite inputs return nil without mutation; blocked input holds focus.
 ]=]
 local MapRules = if script then require(script.Parent.MapRules) else require("./MapRules")
@@ -11,6 +11,29 @@ local AircraftPanRules = {}
 export type Focus = { x: number, z: number }
 AircraftPanRules.defaults =
     table.freeze({ edgeFraction = 0.12, speedStudsPerSecond = 120, maximumDeltaSeconds = 0.1 })
+
+export type Pixels = { x: number, y: number }
+
+-- Rasterizes once for both the actual GUI offset and camera ray. UDim offsets
+-- store integers, so passing fractional rays while drawing truncated offsets can
+-- disagree by more than one pixel across two axes. Keep integer coordinates inside
+-- the central 70% even for odd viewport dimensions; invalid inputs return nil.
+function AircraftPanRules.raster(pointerX: number, pointerY: number, width: number, height: number): Pixels?
+    for _, value in { pointerX, pointerY, width, height } do
+        if not Validation.isFinite(value) then
+            return nil
+        end
+    end
+    if width < 2 or height < 2 then
+        return nil
+    end
+    local function coordinate(pointer: number, size: number): number
+        local minimum = math.ceil(size * 0.15)
+        local maximum = math.floor(size * 0.85)
+        return math.clamp(math.floor(math.clamp(pointer, minimum, maximum) + 0.5), minimum, maximum)
+    end
+    return { x = coordinate(pointerX, width), y = coordinate(pointerY, height) }
+end
 
 -- Returns a fresh center focus, used at role/new-round entry and explicit recenter.
 function AircraftPanRules.recenter(map: typeof(MapRules.defaults)): Focus

@@ -378,8 +378,9 @@ function ThermalCameraController.new(
         UserInputService.MouseIconEnabled = false
         local mouse = pointer
         -- Raw edge input drives focus; only the displayed reticle is central-70%.
-        local x = math.clamp(mouse.X, viewport.X * 0.15, viewport.X * 0.85)
-        local y = math.clamp(mouse.Y, viewport.Y * 0.15, viewport.Y * 0.85)
+        local pixels = AircraftPanRules.raster(mouse.X, mouse.Y, viewport.X, viewport.Y)
+        assert(pixels, "finite viewport and pointer must define raster reticle pixels")
+        local x, y = pixels.x, pixels.y
         local ray = camera:ViewportPointToRay(x, y)
         local parameters = RaycastParams.new()
         parameters.FilterType = Enum.RaycastFilterType.Include

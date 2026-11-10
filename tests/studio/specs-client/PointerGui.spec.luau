@@ -1,7 +1,8 @@
 --!strict
 -- P14 A4/R06/R12: actual GUI hit queries through the production default-input
 -- adapter. Raw pointer coordinates retain viewport space; normal/full-bleed GUIs
--- use current GuiInset only for hit testing. This is not an injected blocked flag.
+-- use current GuiInset only for hit testing. Actual UDim draw centres also match
+-- the production integer-raster helper. This is not an injected blocked flag.
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test(
@@ -13,6 +14,8 @@ return function()
             local GuiService = game:GetService("GuiService")
             local RunService = game:GetService("RunService")
             local Input = game:GetService("UserInputService")
+            local HttpService = game:GetService("HttpService")
+            local PanRules = require(game:GetService("ReplicatedStorage").Shared.AircraftPanRules)
             local containers: { ScreenGui } = {}
             local function screen(name: string, ignoreInset: boolean): ScreenGui
                 local gui = Instance.new("ScreenGui")
@@ -59,6 +62,56 @@ return function()
                 end
                 local camera = workspace.CurrentCamera
                 assert(camera, "viewport absent")
+                -- Actual UDim/GUI regression for the independently reproduced
+                -- .995/.995 truncation mismatch. The same production raster helper
+                -- supplies both the draw offset and ray pixel coordinate.
+                local probe = Instance.new("TextLabel")
+                probe.Name = "RasterReticleRegression"
+                probe.Size = UDim2.fromOffset(34, 34)
+                probe.AnchorPoint = Vector2.new(0.5, 0.5)
+                probe.Text = "+"
+                probe.BackgroundTransparency = 1
+                probe.Parent = containers[2]
+                local viewport = camera.ViewportSize
+                local rasterSamples: { unknown } = {}
+                for _, raw in
+                    {
+                        Vector2.new(540.995, 309.995),
+                        viewport * 0.5,
+                        Vector2.new(viewport.X * 0.15, viewport.Y * 0.85),
+                        Vector2.new(viewport.X * 0.85, viewport.Y * 0.15),
+                    }
+                do
+                    local raster = PanRules.raster(raw.X, raw.Y, viewport.X, viewport.Y)
+                    assert(raster, "valid fractional reticle rejected")
+                    probe.Position = UDim2.fromOffset(raster.x, raster.y)
+                    RunService.RenderStepped:Wait()
+                    RunService.RenderStepped:Wait()
+                    local actualInset = GuiService:GetGuiInset()
+                    local drawn = probe.AbsolutePosition + probe.AbsoluteSize * 0.5 + actualInset
+                    local rayPixels = Vector2.new(raster.x, raster.y)
+                    local errorPixels = (drawn - rayPixels).Magnitude
+                    table.insert(rasterSamples, {
+                        raw = { raw.X, raw.Y },
+                        ray = { raster.x, raster.y },
+                        storedOffset = { probe.Position.X.Offset, probe.Position.Y.Offset },
+                        drawn = { drawn.X, drawn.Y },
+                        inset = { actualInset.X, actualInset.Y },
+                        errorPixels = errorPixels,
+                    })
+                    player.PlayerScripts.ClientTests:SetAttribute(
+                        "ReticleRasterProbe",
+                        HttpService:JSONEncode({
+                            viewport = { viewport.X, viewport.Y },
+                            samples = rasterSamples,
+                        })
+                    )
+                    assert(
+                        probe.Position.X.Offset == raster.x and probe.Position.Y.Offset == raster.y,
+                        "GUI truncated raster reticle coordinates"
+                    )
+                    assert(errorPixels <= 1, "actual raster reticle centre differs from ray pixels")
+                end
                 local openPointer = Vector2.new(camera.ViewportSize.X * 0.92, camera.ViewportSize.Y * 0.5)
                 assert(
                     not CameraController.input(playerGui, openPointer, true).blocked,

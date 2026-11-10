@@ -178,14 +178,50 @@ function Harness.run()
                     and (raw - pointingPixels).Magnitude < 0.01
             end, "committed pointing frame", 4)
         end
-        local function sample(expected: Request?): { [string]: unknown }
+        -- Mutate the caller-owned diagnostics before assertions. Failed samples
+        -- must retain actual drawn/content/ray coordinates rather than losing the
+        -- snapshot when the function throws before returning.
+        local function sample(expected: Request?, diagnostics: { [string]: unknown }?): { [string]: unknown }
+            local result: { [string]: unknown } = diagnostics or {}
+            local function packed(value: unknown): unknown
+                if typeof(value) == "Vector2" then
+                    return { value.X, value.Y }
+                elseif typeof(value) == "Vector3" then
+                    return { value.X, value.Y, value.Z }
+                elseif typeof(value) == "CFrame" then
+                    return { value:GetComponents() }
+                end
+                return tostring(value)
+            end
             local current = hud()
             local camera = workspace.CurrentCamera
+            result.sampleSeconds = os.clock()
+            result.hudPresent = current ~= nil
+            result.cameraPresent = camera ~= nil
             assert(current and camera, "operator view missing")
             local viewport = current:GetAttribute("ProjectionViewport")
             local pixels = current:GetAttribute("ReticlePixels")
             local endpoint = current:GetAttribute("AimEndpoint")
             local frame = current:GetAttribute("ProjectionCamera")
+            result.viewport = packed(viewport)
+            result.cameraViewport = packed(camera.ViewportSize)
+            result.pixels = packed(pixels)
+            result.endpoint = packed(endpoint)
+            result.rawPointer = packed(current:GetAttribute("RawPointer"))
+            result.focus = packed(current:GetAttribute("PanFocus"))
+            result.frame = current:GetAttribute("ProjectionFrame")
+            result.projectionTime = current:GetAttribute("ProjectionTime")
+            result.projectionCamera = packed(frame)
+            result.cameraFrame = packed(camera.CFrame)
+            result.guiPosition = packed(current.AbsolutePosition)
+            result.guiSize = packed(current.AbsoluteSize)
+            result.fov = camera.FieldOfView
+            result.weapon = current:GetAttribute("Weapon")
+            result.expectedPoint = if expected then packed(expected.point) else "none"
+            result.arrivalErrorStuds = arrivalErrorStuds
+            result.pointingInputFrame = pointingFrameBefore
+            result.pointingCommitted = goal == nil and aimPoint ~= nil
+            result.inputBoundary = "injected raw pointer; actual production controller/raycast"
             assert(
                 typeof(viewport) == "Vector2"
                     and typeof(pixels) == "Vector2"
@@ -195,23 +231,43 @@ function Harness.run()
             )
             assert((camera.ViewportSize - viewport).Magnitude < 0.01, "viewport changed during sample")
             local cross = current:FindFirstChild("Reticle")
+            result.reticlePresent = cross ~= nil
             assert(cross and cross:IsA("TextLabel"), "drawn reticle missing")
-            -- AbsolutePosition is GUI-content space. Convert its drawn centre back
-            -- into raw viewport space before comparing it with the camera ray.
             local inset = GuiService:GetGuiInset()
-            local drawnCenter = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + inset
+            local contentCenter = cross.AbsolutePosition + cross.AbsoluteSize * 0.5
+            local drawnCenter = contentCenter + inset
             local drawnPixelError = (drawnCenter - pixels).Magnitude
-            assert(drawnPixelError <= 1, "drawn reticle centre disagrees with ray pixels")
             local projected = camera:WorldToViewportPoint(endpoint)
             local pixelError = (Vector2.new(projected.X, projected.Y) - pixels).Magnitude
-            assert(pixelError <= 1, "reticle/world pixel error exceeds one pixel")
+            result.guiInset = packed(inset)
+            result.reticleAbsolutePosition = packed(cross.AbsolutePosition)
+            result.reticleAbsoluteSize = packed(cross.AbsoluteSize)
+            result.reticleOffset = { cross.Position.X.Offset, cross.Position.Y.Offset }
+            result.reticleScale = { cross.Position.X.Scale, cross.Position.Y.Scale }
+            result.contentCenter = packed(contentCenter)
+            result.drawnCenter = packed(drawnCenter)
+            result.drawnPixelError = drawnPixelError
+            result.projectedEndpoint = packed(projected)
+            result.pixelError = pixelError
+            result.targetSurfaceErrorStuds = if expected and expected.point
+                then (endpoint - expected.point).Magnitude
+                else nil
             local ray = camera:ViewportPointToRay(pixels.X, pixels.Y)
             local parameters = RaycastParams.new()
             parameters.FilterType = Enum.RaycastFilterType.Include
             parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
             parameters.RespectCanCollide = true
             local hit = workspace:Raycast(ray.Origin, ray.Direction * 1500, parameters)
-            assert(hit and (hit.Position - endpoint).Magnitude <= 0.5, "geometry ray disagreement")
+            local worldError = if hit then (hit.Position - endpoint).Magnitude else nil
+            result.hit = if hit then hit.Instance:GetFullName() else "no hit"
+            result.normal = if hit then packed(hit.Normal) else "no hit"
+            result.raySurfaceErrorStuds = worldError
+            result.rayOrigin = packed(ray.Origin)
+            result.rayDirection = packed(ray.Direction)
+            -- Retain all diagnostics above even when any strict comparison fails.
+            assert(drawnPixelError <= 1, "drawn reticle centre disagrees with ray pixels")
+            assert(pixelError <= 1, "reticle/world pixel error exceeds one pixel")
+            assert(hit and worldError and worldError <= 0.5, "geometry ray disagreement")
             if expected and expected.category == "TerrainSlope" then
                 assert(
                     hit.Instance == workspace.Terrain and hit.Position.Y > 0.5 and hit.Normal.Y < 0.999,
@@ -234,6 +290,8 @@ function Harness.run()
             local radial = Vector3.new(-frame.X, 0, -frame.Z)
             assert(frame.LookVector:Dot(radial) >= -1e-6, "camera looked out of inward half-space")
             local aircraft = workspace.Aircraft:GetPivot()
+            result.cameraPosition = packed(frame.Position)
+            result.time = os.clock()
             assert(
                 (frame.Position - aircraft.Position).Magnitude <= 2,
                 "camera moved from canonical aircraft"
@@ -250,30 +308,7 @@ function Harness.run()
                 end
             end
             assert(hudCount == 1 and effects == 1, "duplicate controller effects/HUD")
-            return {
-                focus = { center.X, center.Y, center.Z },
-                viewport = { viewport.X, viewport.Y },
-                pixels = { pixels.X, pixels.Y },
-                endpoint = { endpoint.X, endpoint.Y, endpoint.Z },
-                hit = hit.Instance:GetFullName(),
-                targetSurfaceErrorStuds = if expected and expected.point
-                    then (endpoint - expected.point).Magnitude
-                    else nil,
-                arrivalErrorStuds = arrivalErrorStuds,
-                pointingInputFrame = pointingFrameBefore,
-                pointingCommitted = goal == nil and aimPoint ~= nil,
-                normal = { hit.Normal.X, hit.Normal.Y, hit.Normal.Z },
-                pixelError = pixelError,
-                drawnPixelError = drawnPixelError,
-                drawnCenter = { drawnCenter.X, drawnCenter.Y },
-                guiInset = { inset.X, inset.Y },
-                frame = current:GetAttribute("ProjectionFrame"),
-                fov = camera.FieldOfView,
-                weapon = current:GetAttribute("Weapon"),
-                cameraPosition = { frame.X, frame.Y, frame.Z },
-                time = os.clock(),
-                inputBoundary = "injected raw pointer; actual production controller/raycast",
-            }
+            return result
         end
         local orbitStats: {
             [string]: {
@@ -362,7 +397,7 @@ function Harness.run()
                         end, "weapon acknowledgement")
                     end
                     moveTo(request.point)
-                    observations = sample(request)
+                    observations = sample(request, observations)
                     assert(
                         goal == nil and aimPoint ~= nil,
                         "projection sampled while edge steering remained active"
@@ -449,7 +484,7 @@ function Harness.run()
                         return current ~= nil and current:GetAttribute("Weapon") == request.weapon
                     end, "zoom without recenter")
                     assert((focus() - previous).Magnitude < 0.01, "zoom reset pan focus")
-                    observations = sample()
+                    observations = sample(nil, observations)
                 elseif request.kind == "Reject" then
                     goal = nil
                     aimPoint = nil
@@ -468,7 +503,7 @@ function Harness.run()
                         "invalid selection changed commit"
                     )
                     assert((focus() - previous).Magnitude < 0.01, "rejected selection reset pan")
-                    observations = sample()
+                    observations = sample(nil, observations)
                 elseif request.kind == "Blocked" then
                     local previous = focus()
                     aimPoint = nil
@@ -486,7 +521,7 @@ function Harness.run()
                     waitFor(function()
                         return focus().Magnitude < 0.01
                     end, "recenter")
-                    observations = sample()
+                    observations = sample(nil, observations)
                 elseif request.kind == "ResetInput" then
                     goal = nil
                     aimPoint = nil
@@ -494,7 +529,7 @@ function Harness.run()
                     waitFor(function()
                         return focus().Magnitude < 0.01
                     end, "default focus")
-                    observations = sample()
+                    observations = sample(nil, observations)
                 elseif request.kind == "Normal" then
                     waitFor(function()
                         return hud() == nil
@@ -513,7 +548,7 @@ function Harness.run()
                     physical = true
                     observations = { physicalInput = true }
                 elseif request.kind == "Snapshot" then
-                    observations = sample()
+                    observations = sample(nil, observations)
                 else
                     error("unknown P14 client probe")
                 end
