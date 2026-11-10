@@ -22,6 +22,24 @@ type Request = {
     payload: unknown?,
 }
 type Case = { name: string, passed: boolean, detail: string? }
+-- The completion payload is identical for SDK and human-started runs. Keeping
+-- the delivery boundary injected avoids calling EndTest outside an SDK-owned test.
+export type Report = {
+    suite: string,
+    environment: string,
+    clientCount: number,
+    discovered: number,
+    passed: number,
+    failed: number,
+    skipped: number,
+    cases: { Case },
+    observations: { unknown },
+    serverBaseline: unknown,
+    clientBaselines: { unknown },
+    projectionPixelTolerance: number,
+    projectionWorldToleranceStuds: number,
+    orbitSecondsPerWeapon: number,
+}
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 25)
     while not predicate() and os.clock() < deadline do
@@ -29,7 +47,11 @@ local function waitFor(predicate: () -> boolean, label: string, seconds: number?
     end
     assert(predicate(), "P14 server timeout: " .. label)
 end
-function Harness.run(arrivalRegression: boolean?)
+-- Runs actual clients and yields through the bounded fixtures/orbits. Optional
+-- finish receives the same report after owned cleanup; it must not yield. Omitted
+-- finish preserves StudioTestService.EndTest for SDK-owned tests. The short arrival
+-- regression remains an explicitly separate two-case suite, never full acceptance.
+function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
     waitFor(function()
         return #Players:GetPlayers() == 2
     end, "two actual clients", 30)
@@ -310,7 +332,7 @@ function Harness.run(arrivalRegression: boolean?)
             passed += 1
         end
     end
-    StudioTestService:EndTest({
+    local report: Report = {
         suite = if arrivalRegression then "P14-arrival-regression" else "P14-multiplayer",
         environment = "Studio",
         clientCount = 2,
@@ -325,6 +347,11 @@ function Harness.run(arrivalRegression: boolean?)
         projectionPixelTolerance = 1,
         projectionWorldToleranceStuds = 0.5,
         orbitSecondsPerWeapon = if arrivalRegression then 0 else 90,
-    })
+    }
+    if finish then
+        finish(report)
+    else
+        StudioTestService:EndTest(report)
+    end
 end
 return Harness
