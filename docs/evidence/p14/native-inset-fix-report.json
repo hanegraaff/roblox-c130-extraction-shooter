@@ -1,0 +1,317 @@
+{
+  "codeCommit": "25b44e77fb5a3b90471fbf014cab0ab85e1d17d1",
+  "codeTree": "7a43bb7fcc4a42b5c6d54fbb62c61342a4017ca1",
+  "studioId": "ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5",
+  "source": {
+    "version": "0.746.0.7461269",
+    "name": "PlayersVsC130Tests",
+    "failures": [],
+    "placeId": 0,
+    "checked": 63
+  },
+  "geometry": {
+    "version": "0.746.0.7461269",
+    "checked": 351,
+    "placeId": 0,
+    "maximumCFrameErrorStuds": 0.000014292654839209717,
+    "failures": [],
+    "tolerance": 0.001
+  },
+  "baseline": {
+    "server": {
+      "discovered": 79,
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "actualClientCount": 1
+    },
+    "client": {
+      "discovered": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "actualGuiInset": [
+        0,
+        58
+      ]
+    }
+  },
+  "inputMode": "Original production entrypoint, ordinary solo preview/default UserInputService, native MCP mouse and keyboard",
+  "nativeSamples": {
+    "hover720": {
+      "raw": "495, 674",
+      "drawnCenter": "495, 612",
+      "drawnPixelError": 0,
+      "pixels": "495, 612",
+      "blocked": true,
+      "viewport": "1280, 720",
+      "focus": "-0.40284252166748047, 0, 0.3451891243457794",
+      "inset": "0, 58",
+      "weapon": "GAU23"
+    },
+    "heldHover720": {
+      "raw": "495, 674",
+      "time": 947.4061617083353,
+      "focus": "-0.40284252166748047, 0, 0.3451891243457794",
+      "blocked": true,
+      "weapon": "GAU23"
+    },
+    "pan": {
+      "raw": "640, 360",
+      "time": 952.1557815833366,
+      "focus": "-79.19453430175781, 0, 62.43464660644531",
+      "blocked": false,
+      "weapon": "GAU23"
+    },
+    "keyTwoPreservesFocus": {
+      "focus": "-79.19453430175781, 0, 62.43464660644531",
+      "fov": 60,
+      "time": 955.1728299583338,
+      "weapon": "M102"
+    },
+    "buttonGAU23PreservesFocus": {
+      "action": "native GAU23 button",
+      "fov": 35,
+      "focusDelta": 0,
+      "blocked": true,
+      "focus": "0, 0, 0",
+      "weapon": "GAU23"
+    },
+    "recenterButton": {
+      "raw": "1189, 32",
+      "action": "native recenter button",
+      "blocked": true,
+      "focus": "0, 0, 0",
+      "weapon": "M102"
+    },
+    "textFocusBlocksEdgeAndKeys": {
+      "raw": "1260, 360",
+      "action": "native TextBox focus then edge mouse and Two/R keys",
+      "blocked": true,
+      "focus": "0, 0, 0",
+      "textFocused": true,
+      "weapon": "GAU23"
+    },
+    "leavePreview": {
+      "action": "native return to lobby",
+      "localPreview": false,
+      "cameraType": "Custom",
+      "fov": 70,
+      "mouse": "Default",
+      "remainingThermalEffects": 0,
+      "icon": true,
+      "thermalHUD": false
+    },
+    "reenterPreview": {
+      "thermalHUDs": 1,
+      "action": "native explore reentry",
+      "focus": "0, 0, 0",
+      "viewport": "1920, 1080",
+      "thermalEffects": 1,
+      "previewRole": "Gunship",
+      "weapon": "GAU23"
+    }
+  },
+  "layout1080": {
+    "viewport": {
+      "1": 1920,
+      "2": 1080
+    },
+    "drawnPixelError": 0,
+    "inset": {
+      "1": 0,
+      "2": 58
+    },
+    "controls": {
+      "Recenter": {
+        "visible": true,
+        "textFits": true,
+        "position": {
+          "1": 1754,
+          "2": 16
+        },
+        "inBounds": true,
+        "size": {
+          "1": 150,
+          "2": 32
+        }
+      },
+      "GAU23": {
+        "visible": true,
+        "textFits": true,
+        "position": {
+          "1": 675,
+          "2": 1016
+        },
+        "inBounds": true,
+        "size": {
+          "1": 280,
+          "2": 36
+        }
+      },
+      "M102": {
+        "visible": true,
+        "textFits": true,
+        "position": {
+          "1": 965,
+          "2": 1016
+        },
+        "inBounds": true,
+        "size": {
+          "1": 280,
+          "2": 36
+        }
+      },
+      "Profile": {
+        "visible": true,
+        "textFits": true,
+        "position": {
+          "1": 670,
+          "2": 948
+        },
+        "inBounds": true,
+        "size": {
+          "1": 580,
+          "2": 60
+        }
+      }
+    }
+  },
+  "remaining": [
+    "Full native both-FOV motion comfort and rendered thermal review require actual foreground; WindowFocus guard correctly paused input.",
+    "Full two-client P14 harness and relevant regressions still pending."
+  ],
+  "status": "Native GUI/selection/preview/layout checks verified; later focus/rendered review unavailable; full acceptance not claimed",
+  "nativeM102Button1080": {
+    "action": "native M102 button at1920x1080",
+    "focus": "-29.898151397705078, 0, 40.05690383911133",
+    "viewport": "1920, 1080",
+    "fov": 60,
+    "blocked": true,
+    "weapon": "M102"
+  },
+  "secondPreviewCycle": {
+    "thermalHUDs": 1,
+    "action": "second native lobby/explore cycle",
+    "focus": "0, 0, 0",
+    "thermalEffects": 1,
+    "previewRole": "Gunship",
+    "weapon": "GAU23"
+  },
+  "partialOrbitDiagnostics": {
+    "disclaimer": "Camera/input observations only; actual OS foreground unavailable during later pan/rendered review, not a full native comfort or thermal pass.",
+    "profiles": {
+      "M102": {
+        "last": 1932.7673366249946,
+        "bins": {
+          "6": true,
+          "8": true,
+          "9": true
+        },
+        "maximumOriginError": 0,
+        "first": 1647.8313397916645,
+        "maximumDrawnPixelError": 1.1786890029907227,
+        "frames": 123,
+        "minimumInward": 0.9170078635215759
+      },
+      "GAU23": {
+        "last": 1940.0994470416626,
+        "bins": {
+          "0": true,
+          "1": true,
+          "2": true,
+          "3": true,
+          "4": true,
+          "5": true,
+          "6": true,
+          "7": true,
+          "8": true,
+          "9": true,
+          "10": true,
+          "11": true,
+          "12": true,
+          "13": true,
+          "14": true,
+          "15": true
+        },
+        "maximumOriginError": 0,
+        "first": 1361.1225015833334,
+        "maximumDrawnPixelError": 1.399735689163208,
+        "frames": 15375,
+        "minimumInward": 0.000004170811735093594
+      }
+    },
+    "observerRemoved": true
+  },
+  "cleanup": {
+    "thermalFixtureModelsDestroyed": true,
+    "restoredAuthoredRoofPanels": 1,
+    "observerDisconnected": true,
+    "device": "default",
+    "orientation": "LandscapeRight",
+    "scaling": "ScaleToPhysicalSize",
+    "mode": "Edit"
+  },
+  "layout720": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "inset": [
+      0,
+      58
+    ],
+    "controls": {
+      "Recenter": {
+        "position": [
+          1114,
+          16
+        ],
+        "size": [
+          150,
+          32
+        ],
+        "textFits": true,
+        "inBounds": true
+      },
+      "GAU23": {
+        "position": [
+          355,
+          656
+        ],
+        "size": [
+          280,
+          36
+        ],
+        "textFits": true,
+        "inBounds": true
+      },
+      "M102": {
+        "position": [
+          645,
+          656
+        ],
+        "size": [
+          280,
+          36
+        ],
+        "textFits": true,
+        "inBounds": true
+      },
+      "Profile": {
+        "position": [
+          350,
+          588
+        ],
+        "size": [
+          580,
+          60
+        ],
+        "textFits": true,
+        "inBounds": true
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "codeCommit": "25b44e77fb5a3b90471fbf014cab0ab85e1d17d1",
+  "codeTree": "7a43bb7fcc4a42b5c6d54fbb62c61342a4017ca1",
+  "sourcePreflight": {
+    "version": "0.746.0.7461269",
+    "name": "tests.rbxlx",
+    "failures": [],
+    "placeId": 0,
+    "checked": 63
+  },
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P14'})",
+  "requestedClients": 2,
+  "actualConnectedClients": 0,
+  "actualServerDataModel": false,
+  "acceptedScenarioResults": false,
+  "originalStudioId": "ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5",
+  "ownedFailedChild": {
+    "studioId": "b0016537-2b4e-4a7d-97bf-6befa8e5e587",
+    "pid": 90498,
+    "parentPid": 77293,
+    "launchIntent": "StartServer",
+    "actualMode": "Edit",
+    "actualProject": "tests.rbxlx",
+    "getTestArgsResult": "nil"
+  },
+  "nativeLog": "build/p14-25b-full-launch-log.json",
+  "detail": "StartServer native launch switched into EditFile at3.786 seconds before Server DataModel, test args or client startup. Metadata/login succeeded. No P14 gameplay or new baseline ran in this launch.",
+  "cleanup": {
+    "ordinaryFixturesAndSettingsAlreadyRestored": true,
+    "EndTestAttempt": "rejected: only running server DataModel supported",
+    "ownedChildSIGTERMRequested": true,
+    "ownedChildExitConfirmed": false,
+    "originalProcessPreserved": 77293,
+    "parentOwnsRemainingCleanup": true
+  },
+  "coordinatorReport": "No result: original asynchronous ExecuteMultiplayerTestAsync still awaiting native child at handoff"
+}

@@ -1,0 +1,235 @@
+{
+  "codeCommit": "f16e6950ce2cf5d9d0f09551c9d8956cd5b8dccd",
+  "studioId": "ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5",
+  "source": {
+    "version": "0.746.0.7461269",
+    "name": "tests.rbxlx",
+    "failures": [],
+    "placeId": 0,
+    "checked": 62
+  },
+  "geometry": {
+    "version": "0.746.0.7461269",
+    "checked": 351,
+    "placeId": 0,
+    "maximumCFrameErrorStuds": 0.000014292654839209717,
+    "failures": [],
+    "tolerance": 0.001
+  },
+  "inputMode": "ordinary production entrypoint and default UserInputService; native MCP input; no provider injection",
+  "requestedResolution": [
+    1280,
+    720
+  ],
+  "initialActualViewport": [
+    1279,
+    720
+  ],
+  "actualViewportAfterActualResolution": [
+    1280,
+    720
+  ],
+  "initialDeviceState": {
+    "device": "default",
+    "orientation": "LandscapeRight",
+    "scaling": "ScaleToPhysicalSize"
+  },
+  "hoverReproduction": {
+    "before": {
+      "raw": "640, 360",
+      "time": 325.74750149999454,
+      "focus": "0, 0, 0",
+      "viewport": "1280, 720",
+      "blocked": false,
+      "weapon": "GAU23"
+    },
+    "after": {
+      "screenPosition": "0, -58",
+      "insetAdjustedHitTest": {
+        "1": {
+          "class": "TextButton",
+          "name": "GAU23",
+          "active": true
+        }
+      },
+      "buttonSize": "280, 36",
+      "rawHitTest": [],
+      "focus": "-145.9695587158203, 0, -105.12551879882812",
+      "blocked": false,
+      "time": 329.26467483333545,
+      "buttonPosition": "355, 598",
+      "viewport": "1280, 720",
+      "raw": "495, 674",
+      "inset": "0, 58",
+      "weapon": "GAU23"
+    }
+  },
+  "nativePartialObservations": {
+    "previewRole": "Gunship",
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":79,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":79}",
+    "started": 248.55122295832552,
+    "clientBaseline": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 2
+    },
+    "samples": {
+      "1": {
+        "action": "native key Two",
+        "fov": 60,
+        "viewport": "1280, 720",
+        "focus": "-83.62423706054688, 0, -79.70486450195312",
+        "blocked": false,
+        "weapon": "M102"
+      },
+      "2": {
+        "raw": "495, 674",
+        "action": "native GAU23 button",
+        "fov": 35,
+        "focus": "-47.63702392578125, 0, -252.57342529296875",
+        "blocked": false,
+        "weapon": "GAU23"
+      }
+    },
+    "profiles": {
+      "M102": {
+        "last": 253.000637249992,
+        "bins": {
+          "11": true,
+          "12": true
+        },
+        "maximumOriginError": 2.1473865509033203,
+        "frames": 66,
+        "first": 248.66689754166873,
+        "positions": {
+          "11": {
+            "1": -64.30126190185547,
+            "2": 140,
+            "3": -354.21087646484375
+          },
+          "12": {
+            "1": 0.6893142461776733,
+            "2": 140,
+            "3": -359.99932861328125
+          }
+        },
+        "minimumInward": 0.8516537547111511
+      },
+      "GAU23": {
+        "last": 332.930548583332,
+        "bins": {
+          "0": true,
+          "1": true,
+          "2": true,
+          "3": true,
+          "4": true,
+          "5": true,
+          "6": true,
+          "7": true,
+          "8": true,
+          "9": true,
+          "10": true,
+          "11": true,
+          "12": true,
+          "13": true,
+          "14": true,
+          "15": true
+        },
+        "maximumOriginError": 2.216954231262207,
+        "frames": 1200,
+        "first": 248.60099262499716,
+        "positions": {
+          "0": {
+            "1": 359.998291015625,
+            "2": 140,
+            "3": 1.112829327583313
+          },
+          "1": {
+            "1": 332.4210510253906,
+            "2": 140,
+            "3": 138.18914794921875
+          },
+          "2": {
+            "1": 253.50003051757812,
+            "2": 140,
+            "3": 255.61245727539062
+          },
+          "3": {
+            "1": 136.97320556640625,
+            "2": 140,
+            "3": 332.9239196777344
+          },
+          "4": {
+            "1": -0.6444033980369568,
+            "2": 140,
+            "3": 359.9994201660156
+          },
+          "5": {
+            "1": -137.787353515625,
+            "2": 140,
+            "3": 332.5877990722656
+          },
+          "6": {
+            "1": -255.30174255371094,
+            "2": 140,
+            "3": 253.81295776367188
+          },
+          "7": {
+            "1": -332.7578430175781,
+            "2": 140,
+            "3": 137.37619018554688
+          },
+          "8": {
+            "1": -359.9983215332031,
+            "2": 140,
+            "3": -1.095434308052063
+          },
+          "9": {
+            "1": -332.27911376953125,
+            "2": 140,
+            "3": -138.53013610839844
+          },
+          "10": {
+            "1": -253.5279998779297,
+            "2": 140,
+            "3": -255.58473205566406
+          },
+          "11": {
+            "1": -65.9355239868164,
+            "2": 140,
+            "3": -353.9103088378906
+          },
+          "12": {
+            "1": 45.476009368896484,
+            "2": 140,
+            "3": -357.1161193847656
+          },
+          "13": {
+            "1": 138.9947509765625,
+            "2": 140,
+            "3": -332.08502197265625
+          },
+          "14": {
+            "1": 255.3716583251953,
+            "2": 140,
+            "3": -253.74261474609375
+          },
+          "15": {
+            "1": 332.7951965332031,
+            "2": 140,
+            "3": -137.28570556640625
+          }
+        },
+        "minimumInward": 0.17885321378707886
+      }
+    },
+    "role": "Waiting",
+    "phase": "Lobby",
+    "finalViewport": "1280, 720"
+  }
+}

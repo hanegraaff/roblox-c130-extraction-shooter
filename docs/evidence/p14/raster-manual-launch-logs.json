@@ -1,0 +1,64 @@
+[
+  {
+    "log": "0.746.0.7461269_20261110T004626Z_Studio_7d4fd_last.log",
+    "lineCount": 1327,
+    "selected": [
+      {
+        "line": 24,
+        "text": "2026-11-10T00:46:26.659Z,0.659040,f9fb2180,6,Warning [FLog::Output] Studio Launch Intent is StartClient"
+      },
+      {
+        "line": 129,
+        "text": "2026-11-10T00:46:27.075Z,1.075133,f9fb2180,6,Info [FLog::LoginController] Obtained meta data result with 0 ms"
+      },
+      {
+        "line": 224,
+        "text": "2026-11-10T00:46:27.592Z,1.592938,f9fb2180,6,Info [FLog::LoginController] Login ready to enter User scope"
+      },
+      {
+        "line": 237,
+        "text": "2026-11-10T00:46:27.638Z,1.638655,f9fb2180,6,Info [FLog::LoginController] Login got Standalone DM ready to enter User scope"
+      },
+      {
+        "line": 263,
+        "text": "2026-11-10T00:46:27.654Z,1.654152,f9fb2180,6,Info [FLog::PlaceManager] PlaceManager::createAndShowIDEDoc with task StartClient"
+      },
+      {
+        "line": 722,
+        "text": "2026-11-10T00:46:30.655Z,4.655830,6c0fb000,6,Info [DFLog::NetworkClient] Connection accepted from 127.0.0.1|55524"
+      }
+    ]
+  },
+  {
+    "log": "0.746.0.7461269_20261110T004626Z_Studio_5c32d_last.log",
+    "lineCount": 717,
+    "selected": [
+      {
+        "line": 25,
+        "text": "2026-11-10T00:46:28.271Z,1.271744,f9fb2180,6,Warning [FLog::Output] Studio Launch Intent is StartClient"
+      },
+      {
+        "line": 129,
+        "text": "2026-11-10T00:46:28.683Z,1.683518,f9fb2180,6,Info [FLog::LoginController] Obtained meta data result with 0 ms"
+      },
+      {
+        "line": 234,
+        "text": "2026-11-10T00:46:29.366Z,2.366094,f9fb2180,6,Info [FLog::LoginController] Login got Standalone DM ready to enter User scope"
+      },
+      {
+        "line": 345,
+        "text": "2026-11-10T00:46:29.832Z,2.832300,f9fb2180,6,Info [FLog::LoginController] Login ready to enter User scope"
+      },
+      {
+        "line": 372,
+        "text": "2026-11-10T00:46:29.890Z,2.890808,f9fb2180,6,Info [FLog::PlaceManager] PlaceManager::createAndShowIDEDoc with task StartClient"
+      }
+    ],
+    "joiningEvidence": [
+      {
+        "line": 717,
+        "text": "2026-11-10T00:46:31.766Z,4.766373,709b3000,6 [FLog::Output] ! Joining game '00000000-0000-0000-0000-000000000000' place 0 at localhost"
+      }
+    ]
+  }
+]

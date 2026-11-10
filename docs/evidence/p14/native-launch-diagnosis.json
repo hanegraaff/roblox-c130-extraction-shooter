@@ -1,0 +1,98 @@
+[
+  {
+    "sourceArtifact": "build/p14-f16-launch-logs.json",
+    "log": "0.746.0.7461269_20261109T233821Z_Studio_80b35_last.log",
+    "sourceLineCount": 6070,
+    "selected": [
+      {
+        "line": 24,
+        "text": "2026-11-09T23:38:21.480Z,0.480304,f9fb2180,6,Warning [FLog::Output] Studio Launch Intent is StartClient"
+      },
+      {
+        "line": 129,
+        "text": "2026-11-09T23:38:21.735Z,0.735681,f9fb2180,6,Info [FLog::LoginController] Obtained meta data result with 0 ms"
+      },
+      {
+        "line": 373,
+        "text": "2026-11-09T23:38:22.427Z,1.427990,f9fb2180,6,Info [FLog::PlaceManager] PlaceManager::createAndShowIDEDoc with task StartClient"
+      },
+      {
+        "line": 730,
+        "text": "2026-11-09T23:38:25.015Z,4.015503,6df13000,6,Info [DFLog::NetworkClient] Connection accepted from 127.0.0.1|62705"
+      },
+      {
+        "line": 2774,
+        "text": "2026-11-09T23:39:02.664Z,41.664669,6dd07000,6,Error [FLog::CreatorError] Error: TestService: ReplicatedStorage.ClientSpecs.Foundation.spec:34: client startup timeout: {\"phase\":\"absent\",\"roundState\":false,\"hasRoot\":true,\"role\":\"nil\",\"hasCharacter\":true,\"loadLease\":\"nil\",\"elapsedSeconds\":37.28752749999694,\"life\":\"nil\",\"stage\":\"deferred round runtime\",\"serverBaselineComplete\":true}"
+      }
+    ]
+  },
+  {
+    "sourceArtifact": "build/p14-f16-launch-logs.json",
+    "log": "0.746.0.7461269_20261109T233822Z_Studio_97f23_last.log",
+    "sourceLineCount": 1540,
+    "selected": [
+      {
+        "line": 24,
+        "text": "2026-11-09T23:38:24.512Z,1.512388,f9fb2180,6,Warning [FLog::Output] Studio Launch Intent is StartClient"
+      },
+      {
+        "line": 129,
+        "text": "2026-11-09T23:38:25.368Z,2.368814,f9fb2180,6,Info [FLog::LoginController] Obtained meta data result with 1 ms"
+      }
+    ]
+  },
+  {
+    "sourceArtifact": "build/p14-f16-launch-logs.json",
+    "log": "0.746.0.7461269_20261109T233817Z_Studio_dbb69_last.log",
+    "sourceLineCount": 1805,
+    "selected": [
+      {
+        "line": 33,
+        "text": "2026-11-09T23:38:17.759Z,0.759176,f9fb2180,6,Warning [FLog::Output] Studio Launch Intent is StartServer"
+      },
+      {
+        "line": 138,
+        "text": "2026-11-09T23:38:17.925Z,0.925906,f9fb2180,6,Info [FLog::LoginController] Obtained meta data result with 1 ms"
+      },
+      {
+        "line": 377,
+        "text": "2026-11-09T23:38:18.628Z,1.628568,f9fb2180,6,Info [FLog::PlaceManager] PlaceManager::createAndShowIDEDoc with task StartServer"
+      },
+      {
+        "line": 1297,
+        "text": "2026-11-09T23:38:56.708Z,39.708294,6d88b000,6,Error [FLog::CreatorError] Error: ServerScriptService.ServerTests.AircraftPanHarness:30: P14 server timeout: two actual clients"
+      }
+    ]
+  },
+  {
+    "sourceArtifact": "build/p14-f16-sequential-launch-log.json",
+    "log": "0.746.0.7461269_20261109T234102Z_Studio_1b3e9_last.log",
+    "sourceLineCount": 2134,
+    "selected": [
+      {
+        "line": 33,
+        "text": "2026-11-09T23:41:02.834Z,0.834757,f9fb2180,6,Warning [FLog::Output] Studio Launch Intent is StartServer"
+      },
+      {
+        "line": 138,
+        "text": "2026-11-09T23:41:02.999Z,0.999920,f9fb2180,6,Info [FLog::LoginController] Obtained meta data result with 0 ms"
+      },
+      {
+        "line": 372,
+        "text": "2026-11-09T23:41:03.691Z,1.691815,f9fb2180,6,Info [FLog::PlaceManager] PlaceManager::createAndShowIDEDoc with task EditFile"
+      },
+      {
+        "line": 374,
+        "text": "2026-11-09T23:41:03.692Z,1.692998,f9fb2180,6,Warning [FLog::PlaceManager] We are already trying to open the place"
+      },
+      {
+        "line": 1570,
+        "text": "2026-11-09T23:41:11.731Z,9.731477,7047b000,6,Info [FLog::AssetDataModelManager] shutdownDataModels gst=StudioGameStateType_Edit begin"
+      },
+      {
+        "line": 1741,
+        "text": "2026-11-09T23:41:12.006Z,10.006648,70893000,6,Info [FLog::AssetDataModelManager] shutdownDataModels gst=StudioGameStateType_Edit finished"
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "launchInitialClients": 1,
+  "additionalActualClients": 1,
+  "invocationOK": true,
+  "launchMethod": "Sequential supported native clients; AddPlayers(1) during initial two-client rendezvous",
+  "interpretation": {
+    "completed": false,
+    "resultMissing": true,
+    "actualAddPlayersCalls": 0,
+    "actualAdditionalClients": 0,
+    "wrapperAdditionalClientsWasPlannedNotObserved": true,
+    "detail": "Native server process exited before Server DataModel and before AddPlayers could be called; invocation returned nil with no acceptance report."
+  }
+}

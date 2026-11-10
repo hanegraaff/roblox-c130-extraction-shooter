@@ -1,5 +1,5 @@
 + /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/check_repository.py
-Repository checks passed: 62 Markdown files, 57 JSON files.
+Repository checks passed: 64 Markdown files, 73 JSON files.
 Rojo 7.7.1
 stylua 2.6.0
 selene 0.32.0
@@ -31,6 +31,9 @@ PASS AircraftPanRules rejects outside-viewport negative-time and nonfinite input
 PASS AircraftPanRules holds world-space focus under orbit motion and inward disk constraints
 PASS AircraftPanRules recenter returns independent center state
 PASS AircraftPanRules rejects invalid map and degenerate aircraft basis
+PASS AircraftPanRules raster shares round-nearest integer ray and draw pixels for fractional XY
+PASS AircraftPanRules raster preserves exact central bounds at odd viewports and edges
+PASS AircraftPanRules raster rejects nonfinite pointer and invalid viewport without mutation
 PASS orbit is periodic with negative/positive phase wrap and exact altitude
 PASS all sampled poses have map perimeter radius and unit perpendicular tangent
 PASS orbit rejects nonfinite time, invalid map and derived overflow
@@ -64,7 +67,7 @@ PASS NaN infinities and nonnumbers reject
 PASS payload bound configuration rejects nonfinite negative and fractional values
 PASS flat payload accepts exact field and byte boundaries
 PASS payload rejects oversized nested cyclic metatable and malformed data
-{"discovered":43,"failed":0,"passed":43,"skipped":0,"suite":"unit"}
+{"discovered":46,"failed":0,"passed":46,"skipped":0,"suite":"unit"}
 + lune run scripts/run_tests.luau integration
 PASS accepted aircraft profile switches atomically and reset restores initial profile
 PASS wrong role, life, phase and deadline eligibility reject without mutation
@@ -96,6 +99,9 @@ PASS AircraftPanRules rejects outside-viewport negative-time and nonfinite input
 PASS AircraftPanRules holds world-space focus under orbit motion and inward disk constraints
 PASS AircraftPanRules recenter returns independent center state
 PASS AircraftPanRules rejects invalid map and degenerate aircraft basis
+PASS AircraftPanRules raster shares round-nearest integer ray and draw pixels for fractional XY
+PASS AircraftPanRules raster preserves exact central bounds at odd viewports and edges
+PASS AircraftPanRules raster rejects nonfinite pointer and invalid viewport without mutation
 PASS orbit is periodic with negative/positive phase wrap and exact altitude
 PASS all sampled poses have map perimeter radius and unit perpendicular tangent
 PASS orbit rejects nonfinite time, invalid map and derived overflow
@@ -124,14 +130,14 @@ PASS only documented phase edges and deployment cancellation are legal
 PASS deadline equality beats destruction and last ground elimination
 PASS pre-deadline aircraft destruction beats mutual ground elimination
 PASS empty server and no participants never award a competitive winner
-FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-2up_6t_z/tests/unit/Validation.spec:2: deliberate failure
-{"discovered":39,"failed":1,"passed":38,"skipped":0,"suite":"unit"}
+FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-f_1png_o/tests/unit/Validation.spec:2: deliberate failure
+{"discovered":42,"failed":1,"passed":41,"skipped":0,"suite":"unit"}
 Expected rejection observed: exit 1
 + lune run scripts/run_tests.luau unit
-/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-2up_6t_z/scripts/run_tests:50: empty required suite: unit
+/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-f_1png_o/scripts/run_tests:50: empty required suite: unit
 [Stack Begin]
     Script '[C]' - function 'error'
-    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-2up_6t_z/scripts/run_tests', Line 50
+    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-f_1png_o/scripts/run_tests', Line 50
 [Stack End]
 
 Expected rejection observed: exit 1
@@ -160,5 +166,5 @@ Expected geometry rejection (size): Authored size reconstruction mismatch: Works
 Expected geometry rejection (nonfinite): Nonfinite CFrame: Workspace/World/Battlefield/GroundDisk
 Expected geometry rejection (missing): Missing canonical CFrame: Workspace/World/Battlefield/GroundDisk
 Authored geometry reconstruction passed: 351 release/351 test part transforms, dimensions, shape and collision flags.
-Artifact isolation passed: 414 release Instances, 477 test Instances; 25 runtime scripts only in release.
+Artifact isolation passed: 414 release Instances, 478 test Instances; 25 runtime scripts only in release.
 All non-Studio gates passed. Studio server/client smoke and visual review require separate evidence.

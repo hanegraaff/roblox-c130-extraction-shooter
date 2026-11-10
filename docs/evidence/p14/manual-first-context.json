@@ -1,0 +1,62 @@
+{
+  "codeCommit": "e6ff4e781a5e6c1623bbf601cdf3501c2f50e1e1",
+  "codeTree": "8f1b0adf730c5b1ab6b61057772fc3d35fe87a98",
+  "manualInvocation": {
+    "requestedClients": 2,
+    "harness": "P14",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P14",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "serverStudioId": "fcc106f3-febc-4e5d-acdb-7ad2b42c8ce6",
+  "serverGetTestArgs": null,
+  "serverManualSelector": "P14",
+  "actualClientCount": 2,
+  "serverBaseline": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 79,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 79
+  },
+  "clients": [
+    {
+      "studioId": "aafe6eaa-3664-4bb3-8011-372b3a2ad11b",
+      "testUserId": -2,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "viewport": [
+        1081,
+        618
+      ],
+      "guiInset": [
+        0,
+        58
+      ]
+    },
+    {
+      "studioId": "f62c4edc-d77d-4ae3-8c1d-bb2d727e4174",
+      "testUserId": -1,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "viewport": [
+        1081,
+        618
+      ],
+      "guiInset": [
+        0,
+        58
+      ]
+    }
+  ],
+  "result": "full P14 failed first drawn-reticle assertion; independent teardown passed; numeric thrown-before-return diagnostics need correction"
+}

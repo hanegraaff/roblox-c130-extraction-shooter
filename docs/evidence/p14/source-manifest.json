@@ -1,37 +1,51 @@
 {
-  "candidateCommit": "a32613376599b38f787fe6484dc3e93a840ba935",
-  "candidateTree": "6cd40a2507d554dc12fa7a731e121783314cde63",
+  "candidateCommit": "8bbab8e50f8d177a06910851f1afcc423486aa74",
+  "candidateTree": "c445a376c14645868a52f81868c59730955b9f6d",
   "baseCommit": "10327b43638897aeacc6bc86187d8a31a392ce38",
   "branch": "plan/14-aircraft-panning",
   "host": {
-    "command": "python3 scripts/verify.py > build/p14-developer-verify.txt 2>&1",
+    "command": "python3 scripts/verify.py > build/p14-raster-fix-verify.txt 2>&1",
     "exitCode": 0,
-    "unitPassed": 43,
+    "unitPassed": 46,
     "integrationPassed": 18,
     "authoredPartsPerBuild": 351,
     "panelPivots": 111,
     "surfacePairs": 7146,
-    "runtimeScriptsInRelease": 25
+    "runtimeScriptsInRelease": 25,
+    "releaseInstances": 414,
+    "testInstances": 478
   },
   "builds": {
     "game": {
-      "bytes": 575651,
-      "sha256": "a638ff2d07d097387225f303bfbc8a821a312c725246852ed827f78e849df7e1"
+      "bytes": 577641,
+      "sha256": "36c2bfa7ab466e156e1a7ceb87660905e411733e57055098c146ce053ae9112f"
     },
     "tests": {
-      "bytes": 899923,
-      "sha256": "b1ed32f651fd2751b8da2a439ba00320cee59ce88de9621b348a6a6f74a1a198"
+      "bytes": 922732,
+      "sha256": "1c92704a5c22cc1ce8f73af2c4c3bf049c8ac726e33fb7044cb1667082768e35"
     }
   },
   "engine": {
-    "requiredStatus": "not run",
-    "expectedServerBaseline": 79,
-    "expectedClientBaseline": 2,
+    "requiredStatus": "incomplete: current two-client full suite and rendered/native full-orbit review unavailable",
+    "studioVersion": "0.746.0.7461269",
+    "availableStudioId": "ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5",
+    "lastObservedMode": "Edit",
+    "manualHarnessRestoredNil": true,
+    "lastVerifiedSourceCount": 63,
+    "lastVerifiedAuthoredParts": 351,
+    "currentOrdinaryServerPassed": 82,
+    "currentOrdinaryClientPassed": 3,
+    "currentOrdinaryActualClients": 1,
+    "currentRasterSamples": 4,
+    "currentRasterErrorPixels": 0,
     "expectedP14Cases": 6,
     "requiredActualClients": 2,
-    "connectionState": "Place is not open",
-    "lastObservedStudioId": "3115533b-a162-4a3b-a453-24ba1a187070",
-    "originalDisconnectedStudioId": "21f6fc11-4429-4148-9764-89a36987e5e9"
+    "currentFullScenarioCasesExecuted": 0,
+    "historicalNativeCameraSamplesPassed": 585,
+    "historicalFocusedArrivalCasesPassed": 2,
+    "historicalFocusedArrivalActualClients": 2,
+    "currentFullLaunchActualClients": 1,
+    "manualSequentialAddPlayersRejected": true
   },
   "worldSourceSHA256": "5abf505bc5578ec7fe6f842d567109a1a377cbc59277fcf2f9523a090d3b3ea9"
 }

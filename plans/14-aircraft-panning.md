@@ -30,7 +30,7 @@ Update current controls, actual pan/recenter bindings, view/aim contracts, camer
 
 ## Completion record
 
-No implementation or validation performed by the steering revision. Record A1–A5 → tests/commands → actual counts/results, source/build, two-client/full-orbit reports, controls/viewport review, tester findings and CI/PR when implemented.
+The steering revision itself made no implementation claim. The implementation and actual verification follow; required acceptance remains incomplete.
 
 ### Implementation start — 2026-11-09
 
@@ -62,46 +62,50 @@ nonflat Terrain slope or the requested building's StoryId `02` panel, as applica
 
 ### Candidate delivery and acceptance gap — 2026-11-09
 
-Source `a32613376599b38f787fe6484dc3e93a840ba935`, tree
-`6cd40a2507d554dc12fa7a731e121783314cde63`, is pushed in
+Current source `8bbab8e50f8d177a06910851f1afcc423486aa74`, tree
+`c445a376c14645868a52f81868c59730955b9f6d`, is pushed in
 [draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18).
-It implements bounded raw-edge pan, persistent world-space focus, R recenter,
-stable inward camera framing, geometry-aware projection and selected-muzzle
-server aim validation against the authored −1..32-stud envelope. Production has
-one existing camera owner and no pan remote or firing implementation. A normal
-optional constructor input boundary drives deterministic engine fixtures; a
-fresh ordinary default-input session remains required for native wiring/feel.
+It implements the pan/focus/projection/envelope contracts above. Three engine
+findings are corrected: fixture steering-to-pointing sequencing (`f16e695`),
+real GUI-inset hover blocking (`25b44e7`) and fractional reticle raster agreement
+(`8bbab8e`). Excluded test-only native UI invocation support is `e6ff4e7`.
+Raw pan input, declared tolerances and the two-player requirement remain intact.
 
-| Criterion | Actual evidence and pending checks |
+| Criterion | Actual result / required remainder |
 | --- | --- |
-| A1 | Full `python3 scripts/verify.py` exits zero: 43 unit / 18 integration, format/lint/strict types, rejection probes, both builds, 351 transforms, 111 pivots, 7,146 surface pairs and release isolation (25 runtime scripts; 414 release / 477 test Instances). Ten new pan unit cases pass. Native 585-CFrame engine samples remain unrun. |
-| A2 | Authored envelope and selected-muzzle seam, same-frame ray metadata, terrain slope/upper-floor and full-orbit projection fixtures are implemented and compile; actual Studio projection/envelope/obstruction results are unavailable. |
-| A3 | A six-case two-client P14 harness is implemented for aircraft/Ground-camera isolation and focus/FOV/selection coherence; no actual client session has run. |
-| A4 | Native mouse/key/button, rendered thermal/UI, 1280×720 / 1920×1080 layout, comfort and refreshed gameplay capture remain required. The accurately captioned existing world image is not panning evidence. |
-| A5 | Reset/new-round/operator departure/teardown fixtures and adapted P04 focus assertions compile; required real lifecycle, preview reentry and regression sessions remain unrun. |
+| A1 | Full `python3 scripts/verify.py` exits zero: **46 unit / 18 integration**, static/rejection/build gates, 351 transforms, 111 pivots, 7,146 surface pairs; 414 release/478 test Instances, 25 runtime scripts. 13 pure pan cases. 585 native CFrames pass on earlier full attempts; current ordinary smoke passes 82 server / 3 client, one actual client. Full current phase-aligned suite remains open. |
+| A2 | Earlier focused arrival regression passes 2/2 with two actual clients, zero world error and 0.000153 px at the original failing target. Current actual production raster probes draw/ray/store with 0 px error. Server envelope/muzzle baseline passes. Full 28-target/both-90-second-orbit/slope/upper-floor and rendered coverage remains open. |
+| A3 | Native solo weapon keys/buttons preserve focus; authoritative zoom coherence is observed. Current two-client isolation/selection/rejection and applicable P04/human multiplayer regressions remain open. |
+| A4 | Native hover/text blocking and recenter pass; numeric 1280×720/1920×1080 layout checks pass; real panned preview is refreshed. Complete rendered thermal cover, both-FOV full-orbit comfort and operated viewport review remain open after native viewport-focus loss. |
+| A5 | Two preview exit/reentry cycles restore normal camera/input and singleton ownership; historical teardown checks pass. Full current reset/new-round/operator-departure/kick and multiplayer lifecycle regressions remain open. |
 
-The independent tester read the frozen production/harness source and found no
-material source defect. Its independent Lune probe exercises 73,205 clamp
-combinations: 9,360 explicit rejections and zero nonfinite output. Tiny roundoff
-overshoot on extremely translated maps is documented; the current origin map is
-unaffected. This review does not replace engine acceptance. The developer's exact
-full host gate is reused on unchanged source; later prose is checked separately.
-[GitHub Verify 42720211427](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42720211427)
-passes on the candidate.
-
-The original Studio document disconnected during development. MCP now exposes
-only unnamed instance `3115533b-a162-4a3b-a453-24ba1a187070`; state and Edit
-execution both report **Place is not open**. Rojo is confirmed listening on
-localhost:34872 for PlayersVsC130Tests. The user confirmed signed-in/open/Rojo
-connection, but the MCP failure persists; enabling Studio MCP/ChatGPT Quick
-Connect in that loaded document is requested and pending. No new Studio process
-was launched, and no P14 engine test was started. After recovery, first identify
-the project and verify all candidate sources before Play. Expected 79 server /
-2 client baseline and six P14 scenarios are not passing evidence.
-
-[Candidate evidence](../docs/evidence/p14-aircraft-panning.md),
-[host log](../docs/evidence/p14/host-verify.txt),
+The [evidence record](../docs/evidence/p14-aircraft-panning.md) links actual
+reports, commands, invocation/client counts, declared tolerances, source hashes
+and chronological failures. [Host log](../docs/evidence/p14/host-verify.txt),
 [source/build manifest](../docs/evidence/p14/source-manifest.json) and
-[independent report](../docs/evidence/p14/tester-report.md) preserve exact scope.
-Required engine evidence remains open; P05 has not started. No merge or Roblox
-publication occurred.
+[independent tester report](../docs/evidence/p14/tester-report.md) are durable.
+Independent 73,205-combination probe has 9,360 explicit rejections and zero
+nonfinite outputs; tiny extreme translated-map boundary roundoff is retained as
+a limitation of no current-map impact. Source/harness review and engine retests
+leave no reproduced material production defect unresolved, while missing
+required acceptance remains blocking. The exact source passes
+[GitHub Verify 42729968970](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42729968970).
+
+The original unnamed-place connection blocker is resolved. Current native UI
+requests two clients but only one connects; SDK full launches also fail before a
+usable two-player session. A final distinct native one-client + AddPlayers(1) attempt is
+rejected because the manual session is not SDK-owned. No P14 scenario executes
+on these current launch failures. Earlier two-client partial results are not a
+full six-case pass. No further launch variants are attempted.
+
+All owned simulations are ended. Only original Studio
+`ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5` remains in Edit, with the temporary
+ManualHarness restored nil. Fixtures/device state are restored. The technical
+writer updated current player/contributor/package documentation, public raster
+API, actual counts and guarded manual invocation/cleanup; final prose/evidence
+is checked separately from unchanged source: repository checker passes 64 Markdown / 78 JSON files and `git diff --check` passes. The real README image is a labelled
+Waiting/Lobby preview, not multiplayer acceptance.
+
+Required engine/native evidence remains open; roadmap P14 is Blocked and P05
+remains Planned. Source and evidence are delivered on this task branch; PR #18
+stays draft. Main is unchanged, with no merge or Roblox publication.

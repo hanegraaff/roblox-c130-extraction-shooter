@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "8bbab8e50f8d177a06910851f1afcc423486aa74",
+  "sourceTree": "c445a376c14645868a52f81868c59730955b9f6d",
+  "mode": "native-ui initial1 then supported AddPlayers(1) once",
+  "serverStudioId": "0447e726-e766-4a5e-a551-acab4edd2e1c",
+  "clientStudioId": "799c169a-c223-4c94-b364-dacb50f99ec9",
+  "initialUiRequestedClients": 1,
+  "addPlayersCalls": 1,
+  "addPlayersAccepted": false,
+  "error": "AddPlayers: can only be called from the server DataModel of a running Studio test session",
+  "before": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":1,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":82,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":82}\",\"invocation\":\"{\\\"requestedClients\\\":2,\\\"harness\\\":\\\"P14\\\",\\\"studioOnly\\\":true,\\\"mode\\\":\\\"manual-server-clients\\\",\\\"selectorValue\\\":\\\"P14\\\",\\\"selector\\\":\\\"ServerStorage.DevelopmentSettings.ManualHarness\\\"}\",\"clock\":31.02421104167297,\"selector\":\"P14\"}"
+      }
+    ],
+    "isError": false
+  },
+  "after": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":1,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":82,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":82}\",\"invocation\":\"{\\\"requestedClients\\\":2,\\\"harness\\\":\\\"P14\\\",\\\"studioOnly\\\":true,\\\"mode\\\":\\\"manual-server-clients\\\",\\\"selectorValue\\\":\\\"P14\\\",\\\"selector\\\":\\\"ServerStorage.DevelopmentSettings.ManualHarness\\\"}\",\"clock\":166.26964087500529,\"roundState\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "fullP14CasesPassed": 0
+}

@@ -1,0 +1,37 @@
+{
+  "candidateCommit": "a32613376599b38f787fe6484dc3e93a840ba935",
+  "candidateTree": "6cd40a2507d554dc12fa7a731e121783314cde63",
+  "baseCommit": "10327b43638897aeacc6bc86187d8a31a392ce38",
+  "branch": "plan/14-aircraft-panning",
+  "host": {
+    "command": "python3 scripts/verify.py > build/p14-developer-verify.txt 2>&1",
+    "exitCode": 0,
+    "unitPassed": 43,
+    "integrationPassed": 18,
+    "authoredPartsPerBuild": 351,
+    "panelPivots": 111,
+    "surfacePairs": 7146,
+    "runtimeScriptsInRelease": 25
+  },
+  "builds": {
+    "game": {
+      "bytes": 575651,
+      "sha256": "a638ff2d07d097387225f303bfbc8a821a312c725246852ed827f78e849df7e1"
+    },
+    "tests": {
+      "bytes": 899923,
+      "sha256": "b1ed32f651fd2751b8da2a439ba00320cee59ce88de9621b348a6a6f74a1a198"
+    }
+  },
+  "engine": {
+    "requiredStatus": "not run",
+    "expectedServerBaseline": 79,
+    "expectedClientBaseline": 2,
+    "expectedP14Cases": 6,
+    "requiredActualClients": 2,
+    "connectionState": "Place is not open",
+    "lastObservedStudioId": "3115533b-a162-4a3b-a453-24ba1a187070",
+    "originalDisconnectedStudioId": "21f6fc11-4429-4148-9764-89a36987e5e9"
+  },
+  "worldSourceSHA256": "5abf505bc5578ec7fe6f842d567109a1a377cbc59277fcf2f9523a090d3b3ea9"
+}
