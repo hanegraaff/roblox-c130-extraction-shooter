@@ -78,4 +78,9 @@ release feel, both zoom profiles at operated map edges, the six-case two-client
 full-orbit harness and rendered cover/thermal review. The earlier manual
 second-client connection and SDK AddPlayers restrictions are documented in the
 P14 record; no repeat launch is counted as acceptance. P14 stays **Blocked**.
-Commit/tree and PR integration will be recorded after delivery.
+The implementation/evidence commit is
+[`4b91ea9`](https://github.com/hanegraaff/roblox-c130-extraction-shooter/commit/4b91ea9897b6cfbcafd44b391e1398a1159c2fd0)
+(tree `25c4d3ac4db94b4cf4effcb610c6711be8be6364`).
+[Draft PR #19](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/19)
+targets the unmerged P14 branch, not `main`; neither PR is an accepted P14
+completion or Roblox publication.

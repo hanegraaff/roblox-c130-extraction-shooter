@@ -35,7 +35,7 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The integrated P13 map and fixed-focus aircraft baseline are on `main`. To try the directional P14 candidate, select its dedicated branch before building. It contains the unmerged P14 source from [draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18):
+The integrated P13 map and fixed-focus aircraft baseline are on `main`. To try the directional P14 candidate in [draft PR #19](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/19), select its dedicated branch before building. It contains the unmerged P14 source from [draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18):
 
 ```sh
 git fetch origin

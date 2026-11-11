@@ -45,7 +45,7 @@ demolition stay shared. [P15](15-interchangeable-levels.md) owns implementing
 level interchange after the MVP. This revision does not claim a second level.
 
 The follow-up work is on `fix/p14-keyboard-mobile-pan`, branched from the unmerged
-P14 candidate `5ab4d19`; source, host and Studio results are recorded in
+P14 candidate `5ab4d19` and delivered as [draft PR #19](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/19); source, host and Studio results are recorded in
 [the revision evidence](../docs/evidence/p14-directional-revision.md). The old
 mouse-edge results below remain historical evidence for the earlier candidate,
 not acceptance of this changed control scheme. P14 stays Blocked until all
