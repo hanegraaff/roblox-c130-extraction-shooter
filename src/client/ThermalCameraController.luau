@@ -23,7 +23,14 @@ local ThermalCameraController = {}
 export type Controller = { ownsCamera: () -> boolean, stop: () -> () }
 -- Optional deterministic input boundary for accessibility/adapters and engine fixtures.
 -- Position is raw viewport pixels. Providers must not yield; invalid values hold focus.
-export type InputFrame = { position: Vector2, blocked: boolean, recenter: boolean?, weapon: string? }
+export type InputFrame = {
+    position: Vector2,
+    blocked: boolean,
+    panRight: number?,
+    panUp: number?,
+    recenter: boolean?,
+    weapon: string?,
+}
 export type InputProvider = (Vector2) -> InputFrame
 type SavedCamera = {
     camera: Camera,
@@ -70,7 +77,7 @@ end
 -- GetMouseLocation viewport position; windowFocused comes from the owned focus
 -- listeners. Only GetGuiObjectsAtPosition uses GUI-content coordinates, so subtract
 -- the current top-left GuiInset for that query alone. Returned pointer pixels are
--- unchanged for edge pan, reticle drawing and camera rays. Invalid pixels fail closed.
+-- unchanged for reticle drawing and camera rays. Invalid pixels fail closed.
 function ThermalCameraController.input(
     playerGui: PlayerGui,
     pointer: Vector2,
@@ -91,6 +98,22 @@ function ThermalCameraController.input(
     return { position = pointer, blocked = blocked }
 end
 
+-- Converts camera viewport pixels to the owning ScreenGui's local offset.
+-- Device safe areas can shift a full-screen GUI relative to the camera even
+-- when IgnoreGuiInset is true. The caller measures the GUI origin in the same
+-- frame; invalid coordinates reject without changing the camera or GUI.
+function ThermalCameraController.guiOffset(pixels: Vector2, guiOrigin: Vector2): UDim2?
+    for _, value in { pixels.X, pixels.Y, guiOrigin.X, guiOrigin.Y } do
+        if not Validation.isFinite(value) then
+            return nil
+        end
+    end
+    return UDim2.fromOffset(
+        math.floor(pixels.X - guiOrigin.X + 0.5),
+        math.floor(pixels.Y - guiOrigin.Y + 0.5)
+    )
+end
+
 -- Role gate is presentation only. The production server independently authorizes
 -- selection. RoundPanel calls ownsCamera before writing any spectator/character view.
 function ThermalCameraController.new(
@@ -103,8 +126,10 @@ function ThermalCameraController.new(
     local active = false
     local saved: SavedCamera? = nil
     local gui: ScreenGui? = nil
+    local touchControlsGui: ScreenGui? = nil
     local label: TextLabel? = nil
     local reticle: TextLabel? = nil
+    local projectionOrigin: Frame? = nil
     local correction: ColorCorrectionEffect? = nil
     local highlights: { [Model]: Highlight } = {}
     local buttons: { RBXScriptConnection } = {}
@@ -116,8 +141,35 @@ function ThermalCameraController.new(
     local recenterRequested = false
     local frameNumber = 0
     local windowFocused = true
-    local function sampleInput(_viewport: Vector2): InputFrame
-        return ThermalCameraController.input(playerGui, UserInputService:GetMouseLocation(), windowFocused)
+    local heldPad: { [InputObject]: Vector2 } = {}
+    local aimTouch: InputObject? = nil
+    local touchAim: Vector2? = nil
+    local function padDirection(): Vector2
+        local result = Vector2.zero
+        for _, direction in heldPad do
+            result += direction
+        end
+        return Vector2.new(math.clamp(result.X, -1, 1), math.clamp(result.Y, -1, 1))
+    end
+    local function sampleInput(viewport: Vector2): InputFrame
+        local keyboardRight = (if UserInputService:IsKeyDown(Enum.KeyCode.D) then 1 else 0)
+            - (if UserInputService:IsKeyDown(Enum.KeyCode.A) then 1 else 0)
+        local keyboardUp = (if UserInputService:IsKeyDown(Enum.KeyCode.W) then 1 else 0)
+            - (if UserInputService:IsKeyDown(Enum.KeyCode.S) then 1 else 0)
+        if UserInputService.TouchEnabled then
+            local direction = padDirection()
+            return {
+                position = touchAim or viewport * 0.5,
+                blocked = not windowFocused or UserInputService:GetFocusedTextBox() ~= nil,
+                panRight = math.clamp(direction.X + keyboardRight, -1, 1),
+                panUp = math.clamp(direction.Y + keyboardUp, -1, 1),
+            }
+        end
+        local frame =
+            ThermalCameraController.input(playerGui, UserInputService:GetMouseLocation(), windowFocused)
+        frame.panRight = keyboardRight
+        frame.panUp = keyboardUp
+        return frame
     end
     local function eligible(): boolean
         return running
@@ -155,8 +207,16 @@ function ThermalCameraController.new(
             gui:Destroy()
             gui = nil
         end
+        if touchControlsGui then
+            touchControlsGui:Destroy()
+            touchControlsGui = nil
+        end
         label = nil
         reticle = nil
+        projectionOrigin = nil
+        table.clear(heldPad)
+        aimTouch = nil
+        touchAim = nil
         local previous = saved
         if previous then
             previous.camera.CameraType = previous.kind
@@ -188,9 +248,13 @@ function ThermalCameraController.new(
     end
     local function enter(camera: Camera)
         active = true
+        local touchControls = UserInputService.TouchEnabled
         previewWeapon = "GAU23"
         focus = AircraftPanRules.recenter(map)
         recenterRequested = false
+        table.clear(heldPad)
+        aimTouch = nil
+        touchAim = nil
         saved = {
             camera = camera,
             kind = camera.CameraType,
@@ -205,31 +269,54 @@ function ThermalCameraController.new(
         screen.ScreenInsets = Enum.ScreenInsets.None
         screen.ClipToDeviceSafeArea = false
         screen.ResetOnSpawn = false
+        -- The projection HUD uses the full viewport so reticle pixels and ray
+        -- coordinates agree. Touch buttons use a separate safe-area GUI below.
+        local buttonParent: ScreenGui = screen
+        if touchControls then
+            local safeControls = Instance.new("ScreenGui")
+            safeControls.Name = "OperatorTouchControls"
+            safeControls.DisplayOrder = 1
+            safeControls.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
+            safeControls.ClipToDeviceSafeArea = true
+            safeControls.ResetOnSpawn = false
+            safeControls.Parent = playerGui
+            touchControlsGui = safeControls
+            buttonParent = safeControls
+        end
         local caption = Instance.new("TextLabel")
         caption.Name = "Profile"
-        caption.AnchorPoint = Vector2.new(0.5, 1)
-        caption.Position = UDim2.new(0.5, 0, 1, -72)
-        caption.Size = UDim2.fromOffset(580, 60)
+        caption.AnchorPoint = if touchControls then Vector2.new(0.5, 0) else Vector2.new(0.5, 1)
+        caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 60) else UDim2.new(0.5, 0, 1, -72)
+        caption.Size = if touchControls then UDim2.new(1, -24, 0, 68) else UDim2.fromOffset(580, 60)
         caption.BackgroundColor3 = Color3.fromRGB(12, 15, 16)
         caption.BackgroundTransparency = 0.15
         caption.TextColor3 = Color3.new(1, 1, 1)
-        caption.TextSize = 17
+        caption.TextSize = if touchControls then 14 else 17
         caption.TextWrapped = true
         caption.Font = Enum.Font.Gotham
         caption.Parent = screen
         label = caption
+        local origin = Instance.new("Frame")
+        origin.Name = "ProjectionOrigin"
+        origin.Size = UDim2.fromOffset(0, 0)
+        origin.BackgroundTransparency = 1
+        origin.Parent = screen
+        projectionOrigin = origin
         for index, weapon in { "GAU23", "M102" } do
             local button = Instance.new("TextButton")
             button.Name = weapon
             button.AnchorPoint = Vector2.new(0.5, 1)
-            button.Position = UDim2.new(0.5, (index - 1.5) * 290, 1, -28)
-            button.Size = UDim2.fromOffset(280, 36)
-            button.Text = tostring(index) .. " • " .. AircraftRules.names[weapon]
+            button.Position = UDim2.new(0.5, (index - 1.5) * (if touchControls then 144 else 290), 1, -28)
+            button.Size =
+                UDim2.fromOffset(if touchControls then 136 else 280, if touchControls then 44 else 36)
+            button.Text = if touchControls
+                then (if weapon == "GAU23" then "30mm" else "105mm")
+                else tostring(index) .. " • " .. AircraftRules.names[weapon]
             button.Font = Enum.Font.Gotham
             button.TextSize = 16
             button.BackgroundColor3 = Color3.fromRGB(30, 38, 42)
             button.TextColor3 = Color3.new(1, 1, 1)
-            button.Parent = screen
+            button.Parent = buttonParent
             table.insert(
                 buttons,
                 button.Activated:Connect(function()
@@ -241,19 +328,97 @@ function ThermalCameraController.new(
         recenter.Name = "Recenter"
         recenter.AnchorPoint = Vector2.new(1, 0)
         recenter.Position = UDim2.new(1, -16, 0, 16)
-        recenter.Size = UDim2.fromOffset(150, 32)
-        recenter.Text = "R • Recenter"
+        recenter.Size = UDim2.fromOffset(if touchControls then 140 else 150, if touchControls then 48 else 32)
+        recenter.Text = if touchControls then "Recenter" else "R • Recenter"
         recenter.Font = Enum.Font.Gotham
         recenter.TextSize = 16
         recenter.BackgroundColor3 = Color3.fromRGB(30, 38, 42)
         recenter.TextColor3 = Color3.new(1, 1, 1)
-        recenter.Parent = screen
+        recenter.Parent = buttonParent
         table.insert(
             buttons,
             recenter.Activated:Connect(function()
                 recenterRequested = true
             end)
         )
+        if touchControls then
+            -- Touch controls are owned by this camera only. Distinct InputObjects
+            -- allow a held pan direction and a separate aiming finger at once.
+            for _, control in
+                {
+                    { name = "PanUp", glyph = "▲", x = 84, y = -180, right = 0, up = 1 },
+                    { name = "PanLeft", glyph = "◀", x = 24, y = -120, right = -1, up = 0 },
+                    { name = "PanDown", glyph = "▼", x = 84, y = -120, right = 0, up = -1 },
+                    { name = "PanRight", glyph = "▶", x = 144, y = -120, right = 1, up = 0 },
+                }
+            do
+                local button = Instance.new("TextButton")
+                button.Name = control.name
+                button.Position = UDim2.new(0, control.x, 1, control.y)
+                button.Size = UDim2.fromOffset(56, 56)
+                button.Text = control.glyph
+                button.Font = Enum.Font.GothamBold
+                button.TextSize = 28
+                button.BackgroundColor3 = Color3.fromRGB(30, 38, 42)
+                button.BackgroundTransparency = 0.15
+                button.TextColor3 = Color3.new(1, 1, 1)
+                button.Parent = buttonParent
+                local direction = Vector2.new(control.right, control.up)
+                table.insert(
+                    buttons,
+                    button.InputBegan:Connect(function(event)
+                        if event.UserInputType == Enum.UserInputType.Touch then
+                            heldPad[event] = direction
+                        end
+                    end)
+                )
+                table.insert(
+                    buttons,
+                    button.InputEnded:Connect(function(event)
+                        heldPad[event] = nil
+                    end)
+                )
+            end
+            table.insert(
+                buttons,
+                UserInputService.InputEnded:Connect(function(event)
+                    heldPad[event] = nil
+                    if event == aimTouch then
+                        aimTouch = nil
+                    end
+                end)
+            )
+            table.insert(
+                buttons,
+                UserInputService.InputBegan:Connect(function(event)
+                    if event.UserInputType ~= Enum.UserInputType.Touch or aimTouch ~= nil then
+                        return
+                    end
+                    local inset = GuiService:GetGuiInset()
+                    local point = Vector2.new(event.Position.X, event.Position.Y)
+                    for _, object in
+                        playerGui:GetGuiObjectsAtPosition(
+                            math.floor(point.X - inset.X),
+                            math.floor(point.Y - inset.Y)
+                        )
+                    do
+                        if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
+                            return
+                        end
+                    end
+                    aimTouch = event
+                    touchAim = point
+                end)
+            )
+            table.insert(
+                buttons,
+                UserInputService.InputChanged:Connect(function(event)
+                    if event == aimTouch then
+                        touchAim = Vector2.new(event.Position.X, event.Position.Y)
+                    end
+                end)
+            )
+        end
         local cross = Instance.new("TextLabel")
         cross.Name = "Reticle"
         cross.Size = UDim2.fromOffset(34, 34)
@@ -362,8 +527,8 @@ function ThermalCameraController.new(
                 focus,
                 hitbox.Position.X,
                 hitbox.Position.Z,
-                pointer.X / viewport.X,
-                pointer.Y / viewport.Y,
+                input.panRight or 0,
+                input.panUp or 0,
                 deltaSeconds,
                 blocked
             ) or focus
@@ -407,13 +572,19 @@ function ThermalCameraController.new(
         local cross = reticle
         local caption = label
         local screen = gui
-        if cross and caption and screen then
-            cross.Position = UDim2.fromOffset(x, y)
+        local origin = projectionOrigin
+        if cross and caption and screen and origin then
+            local guiOrigin = origin.AbsolutePosition + GuiService:GetGuiInset()
+            local guiPosition = ThermalCameraController.guiOffset(Vector2.new(x, y), guiOrigin)
+            assert(guiPosition, "finite projection pixels and GUI origin must define a reticle offset")
+            cross.Position = guiPosition
             cross.TextColor3 = if validAim then Color3.new(1, 1, 1) else Color3.fromRGB(255, 140, 90)
             caption.Text = (if preview then "Studio preview • " else "")
                 .. AircraftRules.names[weapon]
                 .. string.format(
-                    " • %d° FOV\nMouse edges pan • R recenter • 1 / 2 select • Firing is planned",
+                    if UserInputService.TouchEnabled
+                        then " • %d° FOV\nArrows pan • drag view to aim • Recenter • Firing planned"
+                        else " • %d° FOV\nWASD pan • mouse aims • R recenter • 1 / 2 select • Firing planned",
                     fov
                 )
             -- Observable projection commit used by engine tests and accessibility tooling.
@@ -422,9 +593,11 @@ function ThermalCameraController.new(
             screen:SetAttribute("AimAllowed", validAim)
             screen:SetAttribute("AimEndpoint", endpoint)
             screen:SetAttribute("ReticlePixels", Vector2.new(x, y))
+            screen:SetAttribute("ProjectionGuiOrigin", guiOrigin)
             screen:SetAttribute("PanFocus", cameraFocus)
             screen:SetAttribute("RawPointer", mouse)
             screen:SetAttribute("InputBlocked", blocked)
+            screen:SetAttribute("PanDirection", Vector2.new(input.panRight or 0, input.panUp or 0))
             screen:SetAttribute("ProjectionViewport", viewport)
             screen:SetAttribute("ProjectionFrame", frameNumber)
             screen:SetAttribute("ProjectionTime", os.clock())

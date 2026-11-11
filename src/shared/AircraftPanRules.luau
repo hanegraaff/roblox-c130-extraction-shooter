@@ -2,15 +2,15 @@
 --[=[
     AircraftPanRules: deterministic local focus integration and reticle rasterization. Depends only on
     MapRules/Validation; no Instances, transport, clock or yielding. Focus is a
-    world-space X/Z point in studs. step uses pointer viewport fractions; raster uses pixels.
+    world-space X/Z point in studs. step uses camera-relative directional axes;
+    raster uses pixels.
     Invalid/nonfinite inputs return nil without mutation; blocked input holds focus.
 ]=]
 local MapRules = if script then require(script.Parent.MapRules) else require("./MapRules")
 local Validation = if script then require(script.Parent.Validation) else require("./Validation")
 local AircraftPanRules = {}
 export type Focus = { x: number, z: number }
-AircraftPanRules.defaults =
-    table.freeze({ edgeFraction = 0.12, speedStudsPerSecond = 120, maximumDeltaSeconds = 0.1 })
+AircraftPanRules.defaults = table.freeze({ speedStudsPerSecond = 120, maximumDeltaSeconds = 0.1 })
 
 export type Pixels = { x: number, y: number }
 
@@ -67,26 +67,25 @@ function AircraftPanRules.clamp(map: typeof(MapRules.defaults), x: number, z: nu
     return { x = map.centerX + rx, z = map.centerZ + rz }
 end
 
--- Integrates raw pointer edges before the display reticle clamp. Speed ramps from
--- zero at the edge-zone boundary to the declared speed at the viewport edge.
--- Camera-relative horizontal axes use the canonical aircraft radial direction,
--- remaining stable even when focus lies directly underneath the aircraft.
+-- Integrates desktop WASD or touch-pad direction in camera-relative horizontal
+-- axes. Both components must be within [-1, 1]; diagonal input is normalized.
+-- The canonical radial basis remains stable directly beneath the aircraft.
 function AircraftPanRules.step(
     map: typeof(MapRules.defaults),
     focus: Focus,
     aircraftX: number,
     aircraftZ: number,
-    pointerX: number,
-    pointerY: number,
+    right: number,
+    up: number,
     deltaSeconds: number,
     blocked: boolean
 ): Focus?
-    for _, value in { focus.x, focus.z, aircraftX, aircraftZ, pointerX, pointerY, deltaSeconds } do
+    for _, value in { focus.x, focus.z, aircraftX, aircraftZ, right, up, deltaSeconds } do
         if not Validation.isFinite(value) then
             return nil
         end
     end
-    if deltaSeconds < 0 or pointerX < 0 or pointerX > 1 or pointerY < 0 or pointerY > 1 then
+    if deltaSeconds < 0 or math.abs(right) > 1 or math.abs(up) > 1 then
         return nil
     end
     local current = AircraftPanRules.clamp(map, focus.x, focus.z)
@@ -101,16 +100,6 @@ function AircraftPanRules.step(
     if not Validation.isFinite(radius) or radius < 1e-6 then
         return nil
     end
-    local function axis(fraction: number): number
-        local edge = AircraftPanRules.defaults.edgeFraction
-        if fraction < edge then
-            return (fraction - edge) / edge
-        elseif fraction > 1 - edge then
-            return (fraction - (1 - edge)) / edge
-        end
-        return 0
-    end
-    local right, up = axis(pointerX), -axis(pointerY)
     local magnitude = math.max(1, math.sqrt(right * right + up * up))
     right /= magnitude
     up /= magnitude

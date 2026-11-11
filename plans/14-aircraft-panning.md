@@ -1,36 +1,55 @@
-# P14 — Mouse-panned aircraft targeting
+# P14 — Directional aircraft targeting
 
 **Milestone:** M2 / level revision. **Dependencies:** P13. **Requirements:** R05, R06, R12, R13, R15. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience
 
-The operator moves the mouse to pan across the enlarged battlefield and its multi-story buildings while retaining each weapon's distinct zoom. The aircraft stays on its perimeter orbit and its view stays inward-facing. Panning works in labelled solo preview and an assigned operator round; firing follows in P05.
+The operator uses WASD on desktop or an on-screen directional pad on mobile to pan across the enlarged battlefield and its multi-story buildings while retaining each weapon's distinct zoom. Mouse movement only aims the reticle; a separate touch can aim while holding the pad. Focus reaches the current level boundary and stops there. The aircraft stays on its perimeter orbit and its view stays inward-facing. Panning works in labelled solo preview and an assigned operator round; firing follows in P05.
 
 ## Implementation
 
-Extend the existing thermal camera rather than creating a second owner. Implement pure bounded pan rules with injected pointer/delta time, a world-space battlefield focus and explicit recenter. Default to a viewport edge zone with bounded speed; reconcile it with the current central-70% reticle clamp so edge input can actually pan. Preserve focus across orbit motion and acknowledged weapon changes; selection changes FOV without recentering or resetting readiness. Reset pan on new-round/role entry. Camera position remains the canonical aircraft position; clamp focus inside the playable disk and enforce an inward look at every orbit phase, without free flight or independent zoom.
+Extend the existing thermal camera rather than creating a second owner. Implement pure bounded pan rules with injected signed directional axes/delta time, a world-space battlefield focus and explicit recenter. Desktop WASD and mobile pad holds feed the same core rule; pointer/touch coordinates aim independently and the central-70% display reticle clamp remains. Preserve focus across orbit motion and acknowledged weapon changes; selection changes FOV without recentering or resetting readiness. Reset pan on new-round/role entry. Camera position remains the canonical aircraft position; clamp focus inside the current playable disk and enforce an inward look at every orbit phase, without free flight or independent zoom. Ground WASD movement remains unchanged.
 
-Project reticle rays onto actual terrain/building geometry, supporting elevated floors and a map-authored vertical aim envelope. Reconcile server aim-envelope checks with the expanded map; local camera orientation does not override muzzle obstruction or authorize hits. Avoid a high-rate pan remote. Restore mouse/camera/input/UI state and disconnect every owned listener on role loss/teardown. Record chosen edge-zone/speed/recenter binding and FOV values as defaults.
+Project reticle rays onto actual terrain/building geometry, supporting elevated floors and a map-authored vertical aim envelope. Reconcile server aim-envelope checks with the expanded map; local camera orientation does not override muzzle obstruction or authorize hits. Avoid a high-rate pan remote. Restore mouse/camera/input/UI state and disconnect every owned listener on role loss/teardown. Record chosen speed/recenter binding and FOV values as defaults.
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes. Named `AircraftPanRules` tests cover center/edge input, frame-rate independence, finite bounds, huge delta time, NaN/infinity, world-space focus under orbit motion, recenter and exact disk-edge clamping. At sampled phases, camera origin follows aircraft and look remains inward.
+- **A1:** Full gate passes. Named `AircraftPanRules` tests cover neutral/four-direction/diagonal input, frame-rate independence, differing level bounds, huge delta time, NaN/infinity, world-space focus under orbit motion, recenter and exact disk-edge clamping. At sampled phases, camera origin follows aircraft and look remains inward.
 - **A2:** Studio/client `PannedTargetProjection` fixtures reach center, all quadrants, useful near-boundary surfaces, terrain slopes and each building's upper-floor panels over a full orbit at both weapon FOVs. Reticle/world projection agrees within a declared tolerance; no hard-coded ground-plane intersection or permanent blind strip hides a required combat area. Server rejects out-of-disk/vertical-envelope and solid muzzle-obstructed endpoints.
-- **A3:** Two actual clients verify the operator pan does not change aircraft pose or the ground client's camera. Switching keys/buttons preserves focus and acknowledged FOV/label/reticle coherence; rejected/stale selections do not reset pan or readiness. P05 later verifies firing/cooldown behavior through this seam.
-- **A4:** Engine/rendered checks cover occluded highlights on slopes and upper floors, inward pan limits at both zooms and recenter. UI hover/focus cannot accidentally fire or trap mouse control; layout remains usable at 1280×720 and 1920×1080.
+- **A3:** Two actual clients verify operator WASD/touch pan does not change aircraft pose or the ground client's camera/movement. Switching keys/buttons preserves focus and acknowledged FOV/label/reticle coherence; rejected/stale selections do not reset pan or readiness. P05 later verifies firing/cooldown behavior through this seam.
+- **A4:** Engine/rendered checks cover occluded highlights on slopes and upper floors, inward pan limits at both zooms and recenter. Native WASD and a mobile emulator or device prove held, simultaneous and released directional-pad inputs; a second touch can aim independently. Text/window focus cannot pan or trap control. Layout remains usable at 1280×720 and 1920×1080 plus representative mobile safe areas.
 - **A5:** Reset, new round, operator departure and repeated preview/role entry restore default focus or normal camera as appropriate, with exactly one controller and no duplicate listeners/effects. Existing orbit/selection/round/preview tests remain valid after adapting fixed-center expectations only where this revision changes the contract.
 
 ## Focused human check
 
-Operate a full orbit at both zooms. Pan to near/far terrain and upper-floor targets, switch weapons while panned and recenter. Record sensitivity, edge responsiveness, motion comfort and readable thermal/reticle/UI behavior. A screenshot alone does not prove coverage or panning feel.
+Operate a full orbit at both zooms on desktop and mobile. Pan with WASD or the touch pad to left/right/top/bottom bounds, reach near/far terrain and upper-floor targets, switch weapons while panned and recenter. Verify mouse movement aims without moving the camera; verify a second touch can aim while holding the pad. Record sensitivity, release/diagonal behavior, motion comfort and readable thermal/reticle/UI behavior. A screenshot alone does not prove coverage or panning feel.
 
 ## Documentation changes
 
-Update current controls, actual pan/recenter bindings, view/aim contracts, camera defaults, preview instructions and representative actual gameplay capture. Label combat as planned until P05.
+Update current desktop/mobile controls, actual pan/recenter bindings, view/aim contracts, camera defaults, preview instructions and representative actual gameplay capture. Label combat as planned until P05. Link the future interchangeable-level contract in P15 without claiming a second playable level.
 
 ## Completion record
 
-The steering revision itself made no implementation claim. The implementation and actual verification follow; required acceptance remains incomplete.
+The 2026-11-10 control revision has implementation and focused host/Studio evidence below; required P14 acceptance remains incomplete.
+
+### Control and future-level revision — 2026-11-10
+
+The user replaced mouse-edge camera panning with operator WASD and an on-screen
+mobile directional pad, confirmed that “planning” meant panning, and chose mouse
+movement as reticle aim only. The existing 720-stud circular level still supplies
+the playable bound; directional focus reaches its edge but never exceeds it.
+Weapon zoom, world-space focus, recenter and authoritative aim remain core rules.
+The user also selected a future architecture in which every interchangeable
+level has a circling C-130 while camera pan/zoom, combat damage and building
+demolition stay shared. [P15](15-interchangeable-levels.md) owns implementing
+level interchange after the MVP. This revision does not claim a second level.
+
+The follow-up work is on `fix/p14-keyboard-mobile-pan`, branched from the unmerged
+P14 candidate `5ab4d19`; source, host and Studio results are recorded in
+[the revision evidence](../docs/evidence/p14-directional-revision.md). The old
+mouse-edge results below remain historical evidence for the earlier candidate,
+not acceptance of this changed control scheme. P14 stays Blocked until all
+applicable keyboard, mobile, multiplayer and rendered acceptance checks pass.
 
 ### Implementation start — 2026-11-09
 
@@ -39,7 +58,7 @@ Implementation uses dedicated branch `plan/14-aircraft-panning`. The original
 Studio test document remains connected in Edit; its actual synced project is
 PlayersVsC130Tests, place 0, with test Rojo on localhost:34872.
 
-Initial tuning defaults, declared before candidate testing: raw-pointer edge
+Historical initial tuning defaults, declared before the 2026-11-10 control revision: raw-pointer edge
 zone 12% on each side, maximum pan speed 120 studs/second, per-update delta-time
 cap 0.1 seconds and **R** to recenter. Retain acknowledged 35°/60° weapon FOVs and
 central-70% displayed reticle; raw edge input drives pan before that display
@@ -62,7 +81,7 @@ nonflat Terrain slope or the requested building's StoryId `02` panel, as applica
 
 ### Candidate delivery and acceptance gap — 2026-11-09
 
-Current source `8bbab8e50f8d177a06910851f1afcc423486aa74`, tree
+Previous mouse-edge source `8bbab8e50f8d177a06910851f1afcc423486aa74`, tree
 `c445a376c14645868a52f81868c59730955b9f6d`, is pushed in
 [draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18).
 It implements the pan/focus/projection/envelope contracts above. Three engine

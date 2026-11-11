@@ -6,6 +6,14 @@ Rojo maps this package to `ServerScriptService.Server`. Rules and authority stay
 
 `GameRuntime.start(settings)` starts one `MapService`, one `MatchRuntime` and one `AircraftService`, returning `{ rounds, aircraft, stop }` or `nil, reason`. Partial startup rolls back acquired owners. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops aircraft, rounds and then destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
 
+The current runtime owns one fixed battlefield. The future
+[level contract](../../architecture.md#level-interchange-boundary-target-architecture)
+will make a validated active level definition an explicit input to map, aircraft,
+combat and destruction services. Every level retains one circling C-130; weapon,
+health, panel progress and fragment rules stay shared rather than being copied
+into level scripts. P15 owns selection/switch/reset/late-join behavior for a
+second playable level.
+
 `MatchRuntime.new(map, settings)` creates an inactive adapter exposing `start()`, `stop()`, `match` and `resources()`. `automaticDeployment` defaults true; false keeps Lobby until an authoritative explicit deploy. Settings use seconds: production defaults are minimum 6, duration 600, lobby 8, deployment 15, results 5 and seed 1. `start()` rejects conflicting round/team/collision ownership or earlier character work still draining. It disables automatic respawns and owns teams, a noncolliding character group, heartbeat, player listeners and `RoundState.Surrender`. `stop()` invalidates character work, removes owned replication/teams/listeners and returns the service to Lobby. In-flight avatar loads must drain before ownership and automatic spawning policy can safely transfer. `resources()` exposes owned connection/load counts for tests.
 
 `CharacterOwner.new(player, match)` owns explicit avatar loading for one Player. Its nonyielding `request(anchor, role, roundId)` queues the newest intent while a serialized `LoadCharacterAsync` finishes. Tokens reject stale completions and a load lease guards handoff between runtime owners. `clear()` invalidates queued intent, disconnects listeners and destroys the body; idempotent `stop()` prevents new work. An already-yielding engine load still has to drain. Ground death/reset removes the active life; deployment death aborts; operator reset replaces only the protected placeholder body. Waiting bodies can walk and retain ForceField protection; only Gunship station bodies are anchored. All character parts use the noncolliding round group.

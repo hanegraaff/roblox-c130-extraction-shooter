@@ -10,6 +10,12 @@ The operator can engage exposed ground players with the 30mm GAU-23/A Chain Gun 
 
 Introduce common combat orchestration, explicit configurations for both aircraft weapons, validated selection/fire intent, per-weapon readiness, server-derived muzzle paths and bounded swept projectile collision. The 30mm offers faster precise fire with tighter view; the 105mm offers slower heavy shells with wider view and readable warning/travel time. Resolve blast against pre-impact geometry; keep breakable cover intact until P07. Switching never resets ammo, cooldown or reload. Add health/elimination and deduplicated cosmetic feedback. Expose a typed server-resolved impact seam with round/shot ID, weapon profile, hit position/panel identity and server timing for P07; do not award panel damage yet. Record and test cadence assumptions so nine seconds of sustained valid 30mm fire is achievable without a forced reload interruption. Revalidate weapon range/travel limits against the enlarged map; use authored maximum target height instead of a flat-ground aim restriction. Use the confirmed 105mm M102 name and its new P07 panel-damage contract (D31).
 
+Keep weapon/damage rules in the core combat modules. Obtain playable bounds,
+aim envelope, queryable cover and panel identities from the active level context
+rather than embedding this industrial map's coordinates in shot logic. P05 tests
+the current level and an injected alternate boundary; P15 later validates two
+fully playable level packages without changing the weapon rules.
+
 ## Acceptance criteria
 
 - **A1:** Full gate passes. For both named weapons, tests cover damage/cadence/reload boundaries, bounded flight lifetime, clamping and one damage award per shot/target.

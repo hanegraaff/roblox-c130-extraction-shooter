@@ -2,7 +2,7 @@
 --[=[
     P14 actual-client fixtures. Replaces the ordinary local entrypoint only inside
     this test session, after invoking its owned teardown, then starts the same
-    production RoundPanel with a deterministic pointer/keyboard-intent boundary.
+    production RoundPanel with a deterministic pointer/directional-intent boundary.
     No focus setter or replicated camera authority exists. Geometry/camera/rays are
     actual engine queries. Actual MCP mouse/button review is separate wiring evidence.
 ]=]
@@ -62,6 +62,7 @@ function Harness.run()
         end
         local function provider(viewport: Vector2)
             local pointer = viewport * 0.5
+            local pan = Vector2.zero
             local current = hud()
             if physical then
                 pointer = Input:GetMouseLocation()
@@ -77,14 +78,7 @@ function Harness.run()
                         local radial = Vector2.new(root.Position.X, root.Position.Z).Unit
                         local right = difference.X * radial.Y - difference.Z * radial.X
                         local up = -difference.X * radial.X - difference.Z * radial.Y
-                        local function fraction(value: number): number
-                            if math.abs(value) < 0.02 then
-                                return 0.5
-                            end
-                            local command = math.clamp(math.abs(value) / 6, 0.02, 1)
-                            return if value > 0 then 0.88 + 0.12 * command else 0.12 - 0.12 * command
-                        end
-                        pointer = Vector2.new(fraction(right) * viewport.X, fraction(-up) * viewport.Y)
+                        pan = Vector2.new(math.clamp(right / 6, -1, 1), math.clamp(up / 6, -1, 1))
                     end
                 end
             elseif aimPoint and current and workspace.CurrentCamera then
@@ -115,7 +109,14 @@ function Harness.run()
             pendingWeapon = nil
             local shouldRecenter = recenter
             recenter = false
-            return { position = pointer, blocked = forcedBlocked, recenter = shouldRecenter, weapon = weapon }
+            return {
+                position = pointer,
+                blocked = forcedBlocked,
+                panRight = pan.X,
+                panUp = pan.Y,
+                recenter = shouldRecenter,
+                weapon = weapon,
+            }
         end
         local panel: { start: () -> (boolean, string?), stop: () -> () }? = nil
         local function attach(state: Instance)
@@ -147,7 +148,7 @@ function Harness.run()
             return value
         end
         -- Arrival is one consistent input-driven neighborhood. Enter a separate
-        -- pointing stage once reached: continuing edge steering after arrival races
+        -- pointing stage once reached: continuing directional steering after arrival races
         -- the target assertion, especially below 30Hz. No focus is assigned here.
         local function moveTo(point: Vector3)
             aimPoint = nil
@@ -221,7 +222,7 @@ function Harness.run()
             result.arrivalErrorStuds = arrivalErrorStuds
             result.pointingInputFrame = pointingFrameBefore
             result.pointingCommitted = goal == nil and aimPoint ~= nil
-            result.inputBoundary = "injected raw pointer; actual production controller/raycast"
+            result.inputBoundary = "injected directional pan and raw aim pointer; production camera/raycast"
             assert(
                 typeof(viewport) == "Vector2"
                     and typeof(pixels) == "Vector2"
@@ -400,7 +401,7 @@ function Harness.run()
                     observations = sample(request, observations)
                     assert(
                         goal == nil and aimPoint ~= nil,
-                        "projection sampled while edge steering remained active"
+                        "projection sampled while directional steering remained active"
                     )
                     local current = hud()
                     assert(
@@ -515,7 +516,7 @@ function Harness.run()
                     goal = nil
                     outside = true
                     task.wait(0.25)
-                    assert((focus() - previous).Magnitude < 0.01, "outside viewport moved focus")
+                    assert((focus() - previous).Magnitude < 0.01, "neutral direction moved focus")
                     outside = false
                     recenter = true
                     waitFor(function()
