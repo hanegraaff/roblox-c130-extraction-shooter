@@ -1,0 +1,17 @@
+{
+  "raw": "400, 218",
+  "screenRayAngle": 0,
+  "fingerToReticle": 0,
+  "event": {
+    "y": 160,
+    "x": 400,
+    "mouse": "400, 218",
+    "inset": "0, 58",
+    "processed": false
+  },
+  "pixels": "400, 218",
+  "absoluteReticleCenter": "400, 160",
+  "mouse": "400, 218",
+  "projectionError": 4.31583721365314e-05,
+  "inset": "0, 58"
+}

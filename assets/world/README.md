@@ -6,7 +6,7 @@ This folder currently authors one level. The future [level contract](../../archi
 
 ## Coordinates and anchors
 
-Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initializes/recenters the local camera focus there, then pans its world-space X/Z within the disk at ground height. Playable/orbit radius is 360, diameter 720, aircraft altitude 140 and recovery threshold Y=−30. These construction defaults live in `MapRules.defaults`; change matching geometry/settings together. The orange boundary is 24 studs high.
+Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initializes and recenters the camera to a safe inward focus in the aircraft's orbit-local frame, then rotates that held focus with the aircraft while panning remains bounded by the level and viewport. Playable/orbit radius is 360, diameter 720, aircraft altitude 140 and recovery threshold Y=−30. These construction defaults live in `MapRules.defaults`; change matching geometry/settings together. The orange boundary is 24 studs high.
 
 | Authored object | Contract |
 | --- | --- |

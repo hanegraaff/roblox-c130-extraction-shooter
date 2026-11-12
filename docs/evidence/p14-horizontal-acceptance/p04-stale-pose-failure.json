@@ -1,0 +1,149 @@
+{
+  "ok": true,
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":86,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":86}",
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftHarness:97: Players.Player2.PlayerScripts.ClientTests.AircraftHarness:25: client P04 timeout: canonical pose convergence within 8 studs"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftHarness:74: ServerScriptService.ServerTests.AircraftHarness:97: Players.Player2.PlayerScripts.ClientTests.AircraftHarness:25: client P04 timeout: canonical pose convergence within 8 studs"
+      }
+    ],
+    "passed": 0,
+    "clientBaselines": [
+      {
+        "passed": true,
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":3,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":3}"
+      },
+      {
+        "passed": true,
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":3,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":3}"
+      }
+    ],
+    "orbitSeconds": 90,
+    "observations": [
+      {
+        "observations": {
+          "lastRenderSeconds": 0,
+          "drawnCenter": [
+            541,
+            309
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 5.914726041664835,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 0,
+          "reticlePixels": [
+            541,
+            309
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            618
+          ],
+          "crossAbsolutePosition": [
+            524,
+            234
+          ],
+          "weapon": "GAU23",
+          "drawnPixelError": 0,
+          "life": "Alive",
+          "crossOffset": [
+            541,
+            309
+          ],
+          "fov": 30,
+          "viewport": [
+            1081,
+            618
+          ],
+          "projectionViewport": "1081, 618",
+          "projectionFrame": "12",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 6.052455791679677,
+          "drawnCenter": [
+            541,
+            309
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 6.0840904583455995,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 3,
+          "reticlePixels": [
+            541,
+            309
+          ],
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            618
+          ],
+          "crossAbsolutePosition": [
+            524,
+            234
+          ],
+          "weapon": "M102",
+          "drawnPixelError": 0,
+          "life": "Alive",
+          "crossOffset": [
+            541,
+            309
+          ],
+          "fov": 40,
+          "viewport": [
+            1081,
+            618
+          ],
+          "projectionViewport": "1081, 618",
+          "projectionFrame": "15",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": false,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "Players.Player2.PlayerScripts.ClientTests.AircraftHarness:25: client P04 timeout: canonical pose convergence within 8 studs"
+      }
+    ],
+    "clientCount": 2,
+    "environment": "Studio",
+    "poseToleranceStuds": 8,
+    "suite": "P04-multiplayer",
+    "failed": 2,
+    "discovered": 2
+  }
+}

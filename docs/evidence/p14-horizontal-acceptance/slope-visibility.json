@@ -1,0 +1,93 @@
+{
+  "candidate": "f6c27bb630f878191f42e2c050bfad14f41f8ee9",
+  "method": "Roblox Studio Edit: actual AircraftPanRules.step, worldFocus and ThermalCameraController.frame, 10 Hz, 30 degree FOV, 1081/618 aspect, 90 second orbit; initialized from final successful SDK slope observation",
+  "target": [
+    135,
+    15.2968826,
+    260
+  ],
+  "starting_focus": [
+    204.128463745,
+    142.701889039
+  ],
+  "starting_phase_degrees": -167.0510921493,
+  "visibility_window": [
+    0.17,
+    0.83
+  ],
+  "samples": [
+    {
+      "seconds": 0,
+      "local_focus": [
+        204.128463745,
+        142.701889039
+      ],
+      "u": 2.2503082474,
+      "v": -1.3214915188
+    },
+    {
+      "seconds": 3,
+      "local_focus": [
+        24.490411485,
+        -43.974333563
+      ],
+      "u": 0.6850976673,
+      "v": 0.1554812503
+    },
+    {
+      "seconds": 6,
+      "local_focus": [
+        24.490411485,
+        -43.974333563
+      ],
+      "u": 0.5853436687,
+      "v": 0.1317030748
+    },
+    {
+      "seconds": 9,
+      "local_focus": [
+        24.490411485,
+        -43.974333563
+      ],
+      "u": 0.4855273138,
+      "v": 0.1156408131
+    },
+    {
+      "seconds": 12,
+      "local_focus": [
+        1.9669171975,
+        -9.2549605238
+      ],
+      "u": 0.4877707163,
+      "v": 0.1527204939
+    },
+    {
+      "seconds": 15,
+      "local_focus": [
+        1.7988755407,
+        0.9380724355
+      ],
+      "u": 0.4157943491,
+      "v": 0.1556614844
+    },
+    {
+      "seconds": 18,
+      "local_focus": [
+        1.7988755407,
+        0.9380724355
+      ],
+      "u": 0.3146249543,
+      "v": 0.1655241717
+    },
+    {
+      "seconds": 19,
+      "local_focus": [
+        1.7988755407,
+        0.9380724355
+      ],
+      "phase_degrees": -91.0510921493,
+      "u": 0.2805092133,
+      "v": 0.1705132015
+    }
+  ]
+}

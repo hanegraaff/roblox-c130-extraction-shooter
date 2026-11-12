@@ -1,0 +1,90 @@
+{
+  "invalid": 0,
+  "minCornerDown": 0.22071662545204163,
+  "frames": 1410,
+  "minInward": 0.6728811860084534,
+  "inset": {
+    "1": 0,
+    "2": 58
+  },
+  "center": {
+    "1": 850,
+    "2": 358
+  },
+  "layout": {
+    "Recenter": {
+      "visible": true,
+      "size": {
+        "1": 150,
+        "2": 32
+      },
+      "position": {
+        "1": 1114,
+        "2": -42
+      }
+    },
+    "GAU23": {
+      "visible": true,
+      "size": {
+        "1": 280,
+        "2": 36
+      },
+      "position": {
+        "1": 355,
+        "2": 598
+      }
+    },
+    "M102": {
+      "visible": true,
+      "size": {
+        "1": 280,
+        "2": 36
+      },
+      "position": {
+        "1": 645,
+        "2": 598
+      }
+    },
+    "Reticle": {
+      "visible": true,
+      "size": {
+        "1": 34,
+        "2": 34
+      },
+      "position": {
+        "1": 833,
+        "2": 283
+      }
+    },
+    "Profile": {
+      "visible": true,
+      "size": {
+        "1": 580,
+        "2": 60
+      },
+      "position": {
+        "1": 350,
+        "2": 530
+      }
+    }
+  },
+  "bins": 16,
+  "reticle": {
+    "1": 850,
+    "2": 358
+  },
+  "focusDrift": 0,
+  "viewport": {
+    "1": 1280,
+    "2": 720
+  },
+  "elapsed": 94.0158366249816,
+  "fov": 40,
+  "lookDrift": 1.9082797564351495e-7,
+  "done": true,
+  "startFocus": {
+    "1": 220,
+    "2": -63.94649887084961
+  },
+  "weapon": "M102"
+}

@@ -30,7 +30,30 @@ Update current desktop/mobile controls, actual pan/recenter bindings, view/aim c
 
 ## Completion record
 
-The 2026-11-10 control revision has implementation and focused host/Studio evidence below; required P14 acceptance remains incomplete.
+The current control revision and acceptance evidence are recorded below; P14's
+remaining operated checks are not yet complete.
+
+### Horizontal controls and acceptance resumption — 2026-11-12
+
+On `fix/p14-horizontal-controls-acceptance`, A and the mobile left arrow now pan
+toward the actual camera left; D and the right arrow pan right. Native desktop
+and iPhone direction checks pass. During acceptance, real two-finger testing
+revealed and resolved a pad/aim ownership error and a GUI-inset touch offset;
+the same two-contact and finger/reticle tests now pass.
+
+| Criterion | Actual current result |
+| --- | --- |
+| A1 | Full host gate passes 50 unit / 18 integration; 325 native CFrame samples, horizontal direction tests across 65 phases, and two 90-second P14 orbit summaries pass. |
+| A2 | Two actual clients pass all 28 initial target projections at both FOVs, including nonflat slopes and second-story panels in all three buildings. Maximum target error across all 30 projection observations is 1.145 studs; reticle/world error is at most 0.000329 pixel and same-ray surface disagreement is zero. |
+| A3 | Real Gunship and Ground clients panned and walked concurrently for 2.99 seconds; the Ground camera remained Custom and attached to its Humanoid, and the canonical orbit remained within the two-stud check. Zoom/rejection and the 4/4 HumanTestMultiplayer regression pass. |
+| A4 | Native A/D, mobile left/right, release/recenter, real pad-plus-world two-touch input, and rendered slope/upper-floor occlusion at both FOVs pass. Desktop full orbits at both FOVs and mobile 30° full orbit pass. The mobile 40° sample was interrupted by a Studio rendering stall; a continuous 90-second rerun, two simultaneous directional arrows, and actual 1920×1080 layout review remain open. |
+| A5 | P14 SDK passes role reset, fresh-operator default focus, actual operator departure and idempotent teardown; the separate P04 6/6 regression verifies per-client camera/input restoration and operator departure. |
+
+The independent tester's findings, source revisions, durable reports, visual
+comparisons and known Studio limitation are in
+[horizontal acceptance evidence](../docs/evidence/p14-horizontal-acceptance.md).
+The user has been asked to foreground the existing test viewport so the three
+remaining A4 observations can be retried. No Roblox publication occurred.
 
 ### Edge visibility revision — 2026-11-12
 

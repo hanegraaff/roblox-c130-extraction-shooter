@@ -1,0 +1,214 @@
+{
+  "last": {
+    "direction": {
+      "1": 1,
+      "2": 0
+    },
+    "first": {
+      "1": 188,
+      "2": 225
+    },
+    "frame": 539,
+    "pointer": {
+      "1": 163.80322265625,
+      "2": 200.4193115234375
+    },
+    "second": {
+      "1": 165.6304931640625,
+      "2": 141.73406982421875
+    }
+  },
+  "buttons": {
+    "1": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 172,
+        "2": 231
+      }
+    }
+  },
+  "releasedDirection": "0, 0",
+  "first": {
+    "direction": {
+      "1": 1,
+      "2": 0
+    },
+    "first": {
+      "1": 172,
+      "2": 231
+    },
+    "frame": 510,
+    "pointer": {
+      "1": 147.80322265625,
+      "2": 206.4193115234375
+    },
+    "second": {
+      "1": 147.80322265625,
+      "2": 148.4193115234375
+    }
+  },
+  "traceCount": 30,
+  "objects": 2,
+  "focus": "220, -139.970673",
+  "changes": {
+    "1": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 175.5850067138672,
+        "2": 229.6556396484375
+      }
+    },
+    "2": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 151.3882293701172,
+        "2": 147.074951171875
+      }
+    },
+    "3": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 179.09718322753906,
+        "2": 228.33856201171875
+      }
+    },
+    "4": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 154.90040588378906,
+        "2": 145.75787353515625
+      }
+    },
+    "5": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 182.6044921875,
+        "2": 227.0233154296875
+      }
+    },
+    "6": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 158.40771484375,
+        "2": 144.442626953125
+      }
+    },
+    "7": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 186.1727294921875,
+        "2": 225.68524169921875
+      }
+    },
+    "8": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 161.9759521484375,
+        "2": 143.10455322265625
+      }
+    },
+    "9": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 188,
+        "2": 225
+      }
+    },
+    "10": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 163.80322265625,
+        "2": 142.4193115234375
+      }
+    },
+    "11": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 165.6304931640625,
+        "2": 141.73406982421875
+      }
+    }
+  },
+  "ends": {
+    "1": {
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "pos": {
+        "1": 188,
+        "2": 225
+      }
+    },
+    "2": {
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "pos": {
+        "1": 165.6304931640625,
+        "2": 141.73406982421875
+      }
+    }
+  },
+  "begins": {
+    "1": {
+      "pos": {
+        "1": 172,
+        "2": 231
+      },
+      "id": 1,
+      "adjustedHits": [],
+      "rawHits": {
+        "1": "LocalPlayer.PlayerGui.OperatorTouchControls.PanRight"
+      },
+      "processed": true
+    },
+    "2": {
+      "pos": {
+        "1": 147.80322265625,
+        "2": 148.4193115234375
+      },
+      "id": 2,
+      "adjustedHits": [],
+      "rawHits": [],
+      "processed": false
+    }
+  }
+}

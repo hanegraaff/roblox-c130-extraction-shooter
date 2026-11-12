@@ -1,0 +1,355 @@
+[
+  {
+    "source": "91e7cc4",
+    "suite": "P14-multiplayer",
+    "clientCount": 2,
+    "discovered": 3,
+    "passed": 1,
+    "failed": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:113: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:345: required terrain slope was not reached"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:89: ServerScriptService.ServerTests.AircraftPanHarness:113: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:345: required terrain slope was not reached"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "failedObservations": [
+      {
+        "observations": {
+          "drawnCenter": [
+            793,
+            106
+          ],
+          "guiPosition": [
+            0,
+            -58
+          ],
+          "localFocus": [
+            20.57240104675293,
+            -39.118385314941406
+          ],
+          "pixelError": 0.00014395112521015108,
+          "pointingCommitted": true,
+          "sampleSeconds": 55.208000291662756,
+          "projectionTime": 55.19140291668009,
+          "projectionCamera": [
+            -336.1255187988281,
+            140,
+            -128.91720581054688,
+            -0.4475310742855072,
+            0.35601162910461426,
+            -0.8203485012054443,
+            0.04039543867111206,
+            0.9244520664215088,
+            0.37915274500846863,
+            0.893355667591095,
+            0.13654430210590363,
+            -0.42810216546058655
+          ],
+          "drawnPixelError": 0,
+          "reticleOffset": [
+            793,
+            106
+          ],
+          "pixels": [
+            793,
+            106
+          ],
+          "hit": "Workspace.World.Battlefield.Boundary.Boundary10",
+          "arrivalErrorStuds": 285.5316162109375,
+          "rawPointer": [
+            793.248779296875,
+            106.22460174560547
+          ],
+          "pointingInputFrame": 2934,
+          "cameraFrame": [
+            -336.1255187988281,
+            140,
+            -128.91720581054688,
+            -0.4475310742855072,
+            0.35601162910461426,
+            -0.8203485012054443,
+            0.04039543867111206,
+            0.9244520664215088,
+            0.37915274500846863,
+            0.893355667591095,
+            0.13654430210590363,
+            -0.42810216546058655
+          ],
+          "cameraPresent": true,
+          "projectedEndpoint": [
+            793.0001220703125,
+            105.99992370605469,
+            669.3555908203125
+          ],
+          "reticleScale": [
+            0,
+            0
+          ],
+          "rayDirection": [
+            0.7557690143585205,
+            -0.19983871281147003,
+            0.6236006021499634
+          ],
+          "cameraViewport": [
+            1081,
+            618
+          ],
+          "focus": [
+            -33.21650314331055,
+            0,
+            29.15708351135254
+          ],
+          "contentCenter": [
+            793,
+            48
+          ],
+          "cornerGround": [
+            [
+              0,
+              0,
+              716.876953125
+            ],
+            [
+              1081,
+              0,
+              1111.571533203125
+            ],
+            [
+              0,
+              618,
+              189.7220458984375
+            ],
+            [
+              1081,
+              618,
+              224.9960479736328
+            ]
+          ],
+          "reticleAbsoluteSize": [
+            34,
+            34
+          ],
+          "guiInset": [
+            0,
+            58
+          ],
+          "normal": [
+            -0.5555984973907471,
+            0,
+            -0.8314507007598877
+          ],
+          "guiSize": [
+            1081,
+            618
+          ],
+          "endpoint": [
+            189.3376922607422,
+            1.0582275390625,
+            304.65338134765625
+          ],
+          "frame": 2935,
+          "expectedPoint": [
+            135,
+            15.296882629394531,
+            260
+          ],
+          "reticlePresent": true,
+          "rayOrigin": [
+            -336.0470275878906,
+            139.979248046875,
+            -128.85243225097656
+          ],
+          "reticleAbsolutePosition": [
+            776,
+            31
+          ],
+          "innerGround": [
+            [
+              270.25,
+              309,
+              50.192604064941406
+            ],
+            [
+              810.75,
+              309,
+              130.005859375
+            ],
+            [
+              540.5,
+              154.5,
+              181.6477813720703
+            ],
+            [
+              540.5,
+              463.5,
+              121.98384857177734
+            ]
+          ],
+          "raySurfaceErrorStuds": 0,
+          "inputBoundary": "injected directional pan and raw aim pointer; production camera/raycast",
+          "fov": 30,
+          "viewport": [
+            1081,
+            618
+          ],
+          "targetSurfaceErrorStuds": 71.75826263427734,
+          "hudPresent": true,
+          "weapon": "GAU23"
+        },
+        "detail": "Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:345: required terrain slope was not reached",
+        "target": "TerrainSlope",
+        "request": "Projection",
+        "userId": -1,
+        "passed": false,
+        "weapon": "GAU23"
+      }
+    ]
+  },
+  {
+    "source": "f6c27bb",
+    "suite": "P14-multiplayer",
+    "clientCount": 2,
+    "discovered": 3,
+    "passed": 1,
+    "failed": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:115: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:33: P14 client timeout: input-driven target visibility"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:91: ServerScriptService.ServerTests.AircraftPanHarness:115: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:33: P14 client timeout: input-driven target visibility"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "failedObservations": [
+      {
+        "observations": {
+          "pointingSearch": {
+            "tested": 1,
+            "predicted": [
+              669.9779663085938,
+              513.7781982421875
+            ],
+            "identityHits": 1,
+            "nearestStuds": 0.08398309350013733,
+            "selected": [
+              670,
+              514
+            ],
+            "lastHit": "Workspace.Terrain"
+          }
+        },
+        "detail": "Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:33: P14 client timeout: input-driven target visibility",
+        "target": "TerrainSlope",
+        "request": "Projection",
+        "userId": -1,
+        "passed": false,
+        "weapon": "GAU23"
+      }
+    ]
+  },
+  {
+    "source": "1766c41",
+    "suite": "P14-multiplayer",
+    "clientCount": 2,
+    "discovered": 3,
+    "passed": 1,
+    "failed": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:115: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:760: orbit camera drift/inward violation"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:91: ServerScriptService.ServerTests.AircraftPanHarness:115: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:760: orbit camera drift/inward violation"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "failedObservations": [
+      {
+        "observations": [],
+        "detail": "Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:760: orbit camera drift/inward violation",
+        "request": "OrbitSummary",
+        "userId": -1,
+        "passed": false,
+        "weapon": "GAU23"
+      }
+    ]
+  },
+  {
+    "source": "1bf20b1",
+    "suite": "P14-multiplayer",
+    "clientCount": 2,
+    "discovered": 7,
+    "passed": 5,
+    "failed": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits"
+      },
+      {
+        "passed": true,
+        "name": "P14 acknowledged zoom and rejected selection preserve world-space pan and ground camera"
+      },
+      {
+        "passed": true,
+        "name": "P14 blocked UI outside-window input and recenter retain bounded ownership"
+      },
+      {
+        "passed": true,
+        "name": "P14 slope and upper-floor targets retain actual occluded thermal configuration"
+      },
+      {
+        "name": "P14 result role loss and new-round operator entry reset focus without duplicate ownership",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:115: Players.Player2.PlayerScripts.ClientTests.AircraftPanHarness:281: orbit-local pan focus missing"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:91: ServerScriptService.ServerTests.AircraftPanHarness:115: Players.Player2.PlayerScripts.ClientTests.AircraftPanHarness:281: orbit-local pan focus missing"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "failedObservations": [
+      {
+        "observations": [],
+        "request": "ResetInput",
+        "passed": false,
+        "userId": -2,
+        "detail": "Players.Player2.PlayerScripts.ClientTests.AircraftPanHarness:281: orbit-local pan focus missing"
+      }
+    ]
+  }
+]

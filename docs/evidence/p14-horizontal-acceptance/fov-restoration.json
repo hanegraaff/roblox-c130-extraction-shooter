@@ -1,0 +1,18 @@
+{
+  "after": {
+    "hud": false,
+    "sameCamera": true,
+    "icon": true,
+    "effect": false,
+    "type": "Custom",
+    "mouse": "Default",
+    "backdrop": false,
+    "fov": 57
+  },
+  "before": {
+    "type": "Custom",
+    "mouse": "Default",
+    "icon": true,
+    "fov": 57
+  }
+}
