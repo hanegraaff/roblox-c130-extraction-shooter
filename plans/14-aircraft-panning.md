@@ -35,7 +35,7 @@ remaining operated checks are not yet complete.
 
 ### Horizontal controls and acceptance resumption — 2026-11-12
 
-On `fix/p14-horizontal-controls-acceptance`, A and the mobile left arrow now pan
+On `fix/p14-horizontal-controls-acceptance` ([draft PR #22](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/22)), A and the mobile left arrow now pan
 toward the actual camera left; D and the right arrow pan right. Native desktop
 and iPhone direction checks pass. During acceptance, real two-finger testing
 revealed and resolved a pad/aim ownership error and a GUI-inset touch offset;
