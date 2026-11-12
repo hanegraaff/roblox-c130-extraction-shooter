@@ -6,16 +6,28 @@
 ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MapRules = require(ReplicatedStorage.Shared.MapRules)
+local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+local Validation = require(ReplicatedStorage.Shared.Validation)
 local AircraftHarness = {}
 local RunService = game:GetService("RunService")
 type Request = {
     kind: string,
     position: Vector3?,
+    snapshotServerTime: number?,
+    periodSeconds: number?,
     weapon: string?,
     sequence: number?,
     roundId: number?,
     role: string?,
     payload: unknown?,
+}
+type CameraBaseline = {
+    camera: Camera,
+    fieldOfView: number,
+    mouseBehavior: Enum.MouseBehavior,
+    mouseIconEnabled: boolean,
+    capturedAt: number,
 }
 local function awaitCondition(predicate: () -> boolean, message: string)
     local untilTime = os.clock() + 8
@@ -24,12 +36,90 @@ local function awaitCondition(predicate: () -> boolean, message: string)
     end
     assert(predicate(), "client P04 timeout: " .. message)
 end
+
+-- Projects one captured server pivot to a synchronized client time. This is
+-- test-only: validate the snapshot and bounded age rather than trusting a stale
+-- transport payload or changing the real replicated aircraft. The 0.25-second
+-- future allowance accommodates small server-clock synchronization differences.
+local function predictSnapshot(
+    position: unknown,
+    snapshotTime: unknown,
+    sampleTime: unknown,
+    period: unknown
+): (Vector3?, number?, string?)
+    if typeof(position) ~= "Vector3" then
+        return nil, nil, "snapshot position missing"
+    end
+    for _, value in { position.X, position.Y, position.Z } do
+        if not Validation.isFinite(value) then
+            return nil, nil, "nonfinite snapshot position"
+        end
+    end
+    if
+        type(snapshotTime) ~= "number"
+        or not Validation.isFinite(snapshotTime)
+        or type(sampleTime) ~= "number"
+        or not Validation.isFinite(sampleTime)
+        or type(period) ~= "number"
+        or not Validation.isFinite(period)
+        or period ~= AircraftRules.defaults.periodSeconds
+    then
+        return nil, nil, "invalid snapshot time or period"
+    end
+    local age = sampleTime - snapshotTime
+    if not Validation.isFinite(age) or age < -0.25 or age > 20 then
+        return nil, nil, "snapshot age outside bounded test window"
+    end
+    local map = MapRules.defaults
+    local dx, dz = position.X - map.centerX, position.Z - map.centerZ
+    local radius = math.sqrt(dx * dx + dz * dz)
+    if
+        not Validation.isFinite(radius)
+        or math.abs(radius - map.radiusStuds) >= 0.02
+        or math.abs(position.Y - (map.groundY + map.altitudeStuds)) >= 0.02
+    then
+        return nil, nil, "snapshot is not on the canonical orbit"
+    end
+    local phase = (math.atan2(dz, dx) + age * (2 * math.pi / period)) % (2 * math.pi)
+    if not Validation.isFinite(phase) then
+        return nil, nil, "nonfinite projected phase"
+    end
+    return Vector3.new(
+        map.centerX + radius * math.cos(phase),
+        position.Y,
+        map.centerZ + radius * math.sin(phase)
+    ),
+        phase,
+        nil
+end
+
+-- Test the time-alignment arithmetic independently of network arrivals.
+local function checkSnapshotPrediction()
+    local map = MapRules.defaults
+    local initial = Vector3.new(map.centerX + map.radiusStuds, map.groundY + map.altitudeStuds, map.centerZ)
+    local same, initialPhase = predictSnapshot(initial, 10, 10, 90)
+    assert(same and (same - initial).Magnitude < 1e-4 and initialPhase == 0, "initial snapshot changed")
+    local angle = math.rad(359)
+    local beforeWrap = Vector3.new(
+        map.centerX + map.radiusStuds * math.cos(angle),
+        map.groundY + map.altitudeStuds,
+        map.centerZ + map.radiusStuds * math.sin(angle)
+    )
+    local wrapped, phase = predictSnapshot(beforeWrap, 10, 11, 90)
+    assert(wrapped and phase and math.abs(phase - math.rad(3)) < 1e-6, "snapshot phase did not wrap")
+    assert(not predictSnapshot(initial, 0 / 0, 0, 90), "NaN snapshot time accepted")
+    assert(not predictSnapshot(initial, 0, math.huge, 90), "infinite sample time accepted")
+    assert(not predictSnapshot(initial, 0, 1, math.huge), "infinite period accepted")
+    assert(not predictSnapshot(initial, 0, 1, 0), "zero period accepted")
+    assert(not predictSnapshot(Vector3.new(math.huge, 140, 0), 0, 1, 90), "nonfinite position accepted")
+    assert(not predictSnapshot(Vector3.new(1, 140, 0), 0, 1, 90), "off-orbit snapshot accepted")
+    assert(not predictSnapshot(Vector3.new(360, 141, 0), 0, 1, 90), "wrong-altitude snapshot accepted")
+    assert(not predictSnapshot(initial, 0, -1, 90), "future snapshot accepted")
+    assert(not predictSnapshot(initial, 0, 21, 90), "expired snapshot accepted")
+end
 -- Installs one owned test listener; returns immediately in ordinary human sessions.
 function AircraftHarness.run()
     local initialInput = game:GetService("UserInputService")
-    local initialBehavior = initialInput.MouseBehavior
-    local initialIcon = initialInput.MouseIconEnabled
-    local initialFov = if workspace.CurrentCamera then workspace.CurrentCamera.FieldOfView else 70
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P04Harness", 120)
         if not transport or not transport:IsA("RemoteEvent") then
@@ -46,23 +136,200 @@ function AircraftHarness.run()
             frames:Disconnect()
         end)
         local player = Players.LocalPlayer
+        local baseline: CameraBaseline? = nil
         local listener: RBXScriptConnection? = nil
         local removal: RBXScriptConnection? = nil
         listener = transport.OnClientEvent:Connect(function(token: number, request: Request)
             local details: { [string]: unknown } = {}
             local ok, failure = pcall(function()
-                if request.kind == "Pose" then
-                    local expected = request.position
-                    assert(expected, "server expected pose missing")
+                if request.kind == "CaptureBaseline" then
+                    assert(not baseline, "normal camera baseline already captured")
+                    local stableCamera: Camera? = nil
+                    local stableFov: number? = nil
+                    local stableBehavior: Enum.MouseBehavior? = nil
+                    local stableIcon: boolean? = nil
+                    local stableSince: number? = nil
+                    local readiness: { [string]: unknown } = {}
+                    details.baselineReadiness = readiness
                     awaitCondition(function()
+                        local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local phase = if round then round:GetAttribute("Phase") else nil
+                        local role = player:GetAttribute("Role")
+                        local camera = workspace.CurrentCamera
+                        local character = player.Character
+                        local humanoid = if character
+                            then character:FindFirstChildOfClass("Humanoid")
+                            else nil
+                        local thermalHud = player.PlayerGui:FindFirstChild("ThermalHUD")
+                        local effect = if camera then camera:FindFirstChild("OperatorThermal") else nil
+                        local backdrop = if camera
+                            then camera:FindFirstChild("OperatorGroundBackdrop")
+                            else nil
+                        local now = os.clock()
+                        readiness.latest = {
+                            time = now,
+                            phase = phase or "missing",
+                            role = role or "missing",
+                            camera = if camera then camera:GetFullName() else "missing",
+                            cameraType = if camera then camera.CameraType.Name else "missing",
+                            fieldOfView = if camera then camera.FieldOfView else "missing",
+                            mouseBehavior = initialInput.MouseBehavior.Name,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                            ownHumanoid = humanoid ~= nil,
+                            ownSubject = camera ~= nil
+                                and humanoid ~= nil
+                                and camera.CameraSubject == humanoid,
+                            thermalHud = thermalHud ~= nil,
+                            thermalEffect = effect ~= nil,
+                            backdrop = backdrop ~= nil,
+                        }
+                        if
+                            phase ~= "Lobby"
+                            or role ~= "Waiting"
+                            or not camera
+                            or camera.CameraType ~= Enum.CameraType.Custom
+                            or not Validation.isFinite(camera.FieldOfView)
+                            or not humanoid
+                            or camera.CameraSubject ~= humanoid
+                            or thermalHud
+                            or effect
+                            or backdrop
+                        then
+                            stableCamera, stableFov, stableBehavior, stableIcon, stableSince =
+                                nil, nil, nil, nil, nil
+                            return false
+                        end
+                        if
+                            camera ~= stableCamera
+                            or camera.FieldOfView ~= stableFov
+                            or initialInput.MouseBehavior ~= stableBehavior
+                            or initialInput.MouseIconEnabled ~= stableIcon
+                        then
+                            stableCamera = camera
+                            stableFov = camera.FieldOfView
+                            stableBehavior = initialInput.MouseBehavior
+                            stableIcon = initialInput.MouseIconEnabled
+                            stableSince = now
+                            return false
+                        end
+                        if not stableSince or now - stableSince < 0.1 then
+                            return false
+                        end
+                        baseline = {
+                            camera = camera,
+                            fieldOfView = camera.FieldOfView,
+                            mouseBehavior = initialInput.MouseBehavior,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                            capturedAt = now,
+                        }
+                        details.baseline = {
+                            capturedAt = now,
+                            camera = camera:GetFullName(),
+                            cameraType = camera.CameraType.Name,
+                            fieldOfView = camera.FieldOfView,
+                            mouseBehavior = initialInput.MouseBehavior.Name,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                        }
+                        return true
+                    end, "stable lobby camera baseline")
+                elseif request.kind == "Pose" then
+                    local snapshot = request.position
+                    local snapshotTime = request.snapshotServerTime
+                    local period = request.periodSeconds
+                    local roundId = request.roundId
+                    local validSnapshot = snapshot ~= nil
+                        and Validation.isFinite(snapshot.X)
+                        and Validation.isFinite(snapshot.Y)
+                        and Validation.isFinite(snapshot.Z)
+                    details.snapshotPosition = if validSnapshot and snapshot
+                        then { snapshot.X, snapshot.Y, snapshot.Z }
+                        else tostring(snapshot)
+                    details.snapshotServerTime = if type(snapshotTime) == "number"
+                            and Validation.isFinite(snapshotTime)
+                        then snapshotTime
+                        else tostring(snapshotTime)
+                    details.periodSeconds = if type(period) == "number" and Validation.isFinite(period)
+                        then period
+                        else tostring(period)
+                    details.expectedRoundId = if type(roundId) == "number"
+                            and Validation.isFinite(roundId)
+                        then roundId
+                        else tostring(roundId)
+                    details.expectedRole = request.role or "missing"
+                    if validSnapshot and snapshot then
+                        details.snapshotPhaseRadians = math.atan2(
+                            snapshot.Z - MapRules.defaults.centerZ,
+                            snapshot.X - MapRules.defaults.centerX
+                        ) % (2 * math.pi)
+                    end
+                    checkSnapshotPrediction()
+                    details.predictionSelfTest = "passed"
+                    assert(
+                        type(roundId) == "number"
+                            and Validation.isFinite(roundId)
+                            and roundId >= 0
+                            and roundId % 1 == 0,
+                        "invalid snapshot round"
+                    )
+                    local samples = 0
+                    local closest = math.huge
+                    local capturedPose: CFrame? = nil
+                    awaitCondition(function()
+                        samples += 1
+                        local sampleTime = workspace:GetServerTimeNow()
+                        local predicted, phase, reason =
+                            predictSnapshot(snapshot, snapshotTime, sampleTime, period)
+                        details.sampleCount = samples
+                        details.sampleServerTime = sampleTime
+                        details.snapshotAgeSeconds = if type(snapshotTime) == "number"
+                                and Validation.isFinite(snapshotTime)
+                            then sampleTime - snapshotTime
+                            else "missing"
+                        details.predictionError = reason or "none"
+                        assert(
+                            predicted and phase,
+                            "invalid timestamped orbit snapshot: " .. tostring(reason)
+                        )
+                        details.predictedPhaseRadians = phase
+                        details.predictedPosition = { predicted.X, predicted.Y, predicted.Z }
+                        local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local actualRound = if round then round:GetAttribute("RoundId") else nil
+                        local actualPhase = if round then round:GetAttribute("Phase") else nil
+                        local actualRole = player:GetAttribute("Role")
+                        details.actualRoundId = actualRound or "missing"
+                        details.actualPhase = actualPhase or "missing"
+                        details.actualRole = actualRole or "missing"
                         local model = workspace:FindFirstChild("Aircraft")
-                        return model ~= nil
-                            and model:IsA("Model")
-                            and (model:GetPivot().Position - expected).Magnitude <= 8
+                        if not model or not model:IsA("Model") then
+                            details.modelPresent = false
+                            return false
+                        end
+                        details.modelPresent = true
+                        local actual = model:GetPivot()
+                        local position = actual.Position
+                        details.position = { position.X, position.Y, position.Z }
+                        if
+                            not Validation.isFinite(position.X)
+                            or not Validation.isFinite(position.Y)
+                            or not Validation.isFinite(position.Z)
+                        then
+                            details.predictionError = "nonfinite replicated position"
+                            return false
+                        end
+                        local distance = (position - predicted).Magnitude
+                        closest = math.min(closest, distance)
+                        details.poseErrorStuds = distance
+                        details.closestPoseErrorStuds = closest
+                        capturedPose = actual
+                        return actualRound == roundId
+                            and actualPhase == "Active"
+                            and actualRole == request.role
+                            and distance <= 8
                     end, "canonical pose convergence within 8 studs")
                     local model = workspace:FindFirstChild("Aircraft")
                     assert(model and model:IsA("Model"), "replicated aircraft missing")
-                    local pose = model:GetPivot()
+                    local pose = capturedPose
+                    assert(pose, "paired replicated pose missing")
                     assert(
                         math.abs(Vector2.new(pose.X, pose.Z).Magnitude - 360) < 0.02
                             and math.abs(pose.Y - 140) < 0.02,
@@ -99,7 +366,6 @@ function AircraftHarness.run()
                             "ground received thermal HUD"
                         )
                     end
-                    details.poseErrorStuds = (pose.Position - expected).Magnitude
                     details.position = { pose.X, pose.Y, pose.Z }
                 elseif request.kind == "Profile" then
                     local weapon = request.weapon
@@ -116,6 +382,10 @@ function AircraftHarness.run()
                     local gui = player.PlayerGui:FindFirstChild("ThermalHUD")
                     local camera = workspace.CurrentCamera
                     assert(gui and camera, "profile view missing")
+                    local expectedBaseline = baseline
+                    assert(expectedBaseline, "normal camera baseline missing")
+                    details.cameraSameAsBaseline = camera == expectedBaseline.camera
+                    assert(camera == expectedBaseline.camera, "camera replaced after normal baseline")
                     local hudCount = 0
                     local effectCount = 0
                     for _, child in player.PlayerGui:GetChildren() do
@@ -256,26 +526,75 @@ function AircraftHarness.run()
                     assert(exposed and covered, "thermal fixtures missing their occluded effects")
                     details.highlights = count
                 elseif request.kind == "Restored" then
+                    local expectedBaseline = baseline
+                    assert(expectedBaseline, "normal camera baseline missing")
+                    local restored: { [string]: unknown } = {
+                        baseline = {
+                            capturedAt = expectedBaseline.capturedAt,
+                            camera = expectedBaseline.camera:GetFullName(),
+                            fieldOfView = expectedBaseline.fieldOfView,
+                            mouseBehavior = expectedBaseline.mouseBehavior.Name,
+                            mouseIconEnabled = expectedBaseline.mouseIconEnabled,
+                        },
+                    }
+                    details.restoration = restored
                     awaitCondition(function()
                         local camera = workspace.CurrentCamera
+                        local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local character = player.Character
+                        local humanoid = if character
+                            then character:FindFirstChildOfClass("Humanoid")
+                            else nil
+                        local role = player:GetAttribute("Role")
+                        local phase = if round then round:GetAttribute("Phase") else nil
+                        local thermalHud = player.PlayerGui:FindFirstChild("ThermalHUD")
+                        local effect = if camera then camera:FindFirstChild("OperatorThermal") else nil
+                        local backdrop = if camera
+                            then camera:FindFirstChild("OperatorGroundBackdrop")
+                            else nil
+                        restored.latest = {
+                            time = os.clock(),
+                            role = role or "missing",
+                            phase = phase or "missing",
+                            camera = if camera then camera:GetFullName() else "missing",
+                            sameCamera = camera == expectedBaseline.camera,
+                            cameraType = if camera then camera.CameraType.Name else "missing",
+                            fieldOfView = if camera then camera.FieldOfView else "missing",
+                            mouseBehavior = initialInput.MouseBehavior.Name,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                            ownHumanoid = humanoid ~= nil,
+                            ownSubject = camera ~= nil
+                                and humanoid ~= nil
+                                and camera.CameraSubject == humanoid,
+                            thermalHud = thermalHud ~= nil,
+                            thermalEffect = effect ~= nil,
+                            backdrop = backdrop ~= nil,
+                        }
                         return player:GetAttribute("Role") == "Waiting"
-                            and not player.PlayerGui:FindFirstChild("ThermalHUD")
+                            and phase == "Lobby"
+                            and not thermalHud
                             and camera ~= nil
                             and camera.CameraType == Enum.CameraType.Custom
-                            and not camera:FindFirstChild("OperatorThermal")
-                            and not camera:FindFirstChild("OperatorGroundBackdrop")
+                            and humanoid ~= nil
+                            and camera.CameraSubject == humanoid
+                            and not effect
+                            and not backdrop
                     end, "role-loss camera/effect restoration")
                     local camera = workspace.CurrentCamera
                     assert(
-                        camera and math.abs(camera.FieldOfView - initialFov) < 0.01,
+                        camera and camera == expectedBaseline.camera,
+                        "camera replaced after normal baseline"
+                    )
+                    assert(
+                        math.abs(camera.FieldOfView - expectedBaseline.fieldOfView) < 0.01,
                         "original FOV not restored"
                     )
                     for _, child in camera:GetChildren() do
                         assert(not child:IsA("Highlight"), "thermal highlights leaked on role loss")
                     end
                     assert(
-                        initialInput.MouseIconEnabled == initialIcon
-                            and initialInput.MouseBehavior == initialBehavior,
+                        initialInput.MouseIconEnabled == expectedBaseline.mouseIconEnabled
+                            and initialInput.MouseBehavior == expectedBaseline.mouseBehavior,
                         "mouse icon/behavior not restored"
                     )
                 elseif request.kind == "Leave" then

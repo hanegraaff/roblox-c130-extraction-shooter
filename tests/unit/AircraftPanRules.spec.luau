@@ -43,9 +43,10 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local rx, ry, rz = -fx * fz / rightLength, -fy * fz / rightLength, rightLength
         local ux, uy, uz = fy * rz - fz * ry, fz * rx - fx * rz, fx * ry - fy * rx
         local vertical = math.tan(math.rad(fov) / 2)
-        local x = fx + u * aspect * vertical * rx + v * vertical * ux
-        local y = fy + u * aspect * vertical * ry + v * vertical * uy
-        local z = fz + u * aspect * vertical * rz + v * vertical * uz
+        -- The camera's projected right vector opposes the local orbit tangent.
+        local x = fx - u * aspect * vertical * rx + v * vertical * ux
+        local y = fy - u * aspect * vertical * ry + v * vertical * uy
+        local z = fz - u * aspect * vertical * rz + v * vertical * uz
         assert(y < 0, "screen ray points above the horizon")
         local distance = (map.altitudeStuds + (depth or 0)) / -y
         return math.sqrt((map.radiusStuds + distance * x) ^ 2 + (distance * z) ^ 2)
@@ -60,8 +61,8 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     test("AircraftPanRules WASD and touch axes move in the orbit-local view", function()
         for _, direction in
             {
-                { 1, 0, 0, 12 },
-                { -1, 0, 0, -12 },
+                { 1, 0, 0, -12 },
+                { -1, 0, 0, 12 },
                 { 0, 1, -12, 0 },
                 { 0, -1, 12, 0 },
             }
@@ -71,6 +72,22 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(result, "valid directional step rejected")
             assert(near(result.x - start.x, direction[3], 1e-8), "vertical pan direction disagrees")
             assert(near(result.z - start.z, direction[4], 1e-8), "horizontal pan direction disagrees")
+        end
+    end)
+    test("AircraftPanRules horizontal input follows camera right throughout orbit", function()
+        local origin = home()
+        for _, input in { -1, 1 } do
+            local moved = assert(rules.step(map, origin, input, 0, 0.1, false, aspect, wide))
+            for i = 0, 64 do
+                local phase = i / 64 * 2 * math.pi
+                local rx, rz = math.cos(phase), math.sin(phase)
+                local before =
+                    assert(rules.worldFocus(map, origin, map.radiusStuds * rx, map.radiusStuds * rz))
+                local after = assert(rules.worldFocus(map, moved, map.radiusStuds * rx, map.radiusStuds * rz))
+                -- ThermalCameraController's canonical screen-right is (rz, -rx).
+                local screenRightMotion = (after.x - before.x) * rz - (after.z - before.z) * rx
+                assert(near(screenRightMotion, 12 * input, 1e-7), "horizontal input moved opposite screen")
+            end
         end
     end)
     test("AircraftPanRules frame-rate independence holds away from view limits", function()

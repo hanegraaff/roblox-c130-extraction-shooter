@@ -1,0 +1,81 @@
+{
+  "pan": "0, 0",
+  "events": {
+    "1": {
+      "processed": true,
+      "time": 26788.796273583313,
+      "position": {
+        "1": 162,
+        "2": 231
+      },
+      "id": 1,
+      "kind": "began",
+      "hits": {
+        "1": "PanRight",
+        "2": "DynamicThumbstickFrame",
+        "3": "TouchControlFrame"
+      },
+      "pan": "0, 0"
+    },
+    "2": {
+      "processed": true,
+      "time": 26788.796624166658,
+      "position": {
+        "1": 138,
+        "2": 148.45452880859375
+      },
+      "id": 2,
+      "kind": "began",
+      "hits": {
+        "1": "PanUp",
+        "2": "Round",
+        "3": "DynamicThumbstickFrame",
+        "4": "TouchControlFrame"
+      },
+      "pan": "0, 0"
+    },
+    "3": {
+      "processed": true,
+      "time": 26798.923269333318,
+      "position": {
+        "1": 162,
+        "2": 231
+      },
+      "id": 1,
+      "kind": "ended",
+      "hits": {
+        "1": "PanRight",
+        "2": "DynamicThumbstickFrame",
+        "3": "TouchControlFrame"
+      },
+      "pan": "1, 1"
+    },
+    "4": {
+      "processed": true,
+      "time": 26798.923550958338,
+      "position": {
+        "1": 138,
+        "2": 148.45452880859375
+      },
+      "id": 2,
+      "kind": "ended",
+      "hits": {
+        "1": "PanUp",
+        "2": "Round",
+        "3": "DynamicThumbstickFrame",
+        "4": "TouchControlFrame"
+      },
+      "pan": "1, 1"
+    }
+  },
+  "focus": "112.539391, -108.371849",
+  "actions": [
+    "move pointer to (449,184)",
+    "hold LeftAlt and LeftShift",
+    "move pointer to (224,251)",
+    "hold mouse left 500 ms",
+    "release mouse left, then release LeftShift and LeftAlt"
+  ],
+  "observedHeldPan": "1, 1",
+  "candidate": "a64676ef5cea9e3701df21d9e6e7722f4f8b07e9"
+}

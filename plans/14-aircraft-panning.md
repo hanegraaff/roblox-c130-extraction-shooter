@@ -30,7 +30,37 @@ Update current desktop/mobile controls, actual pan/recenter bindings, view/aim c
 
 ## Completion record
 
-The 2026-11-10 control revision has implementation and focused host/Studio evidence below; required P14 acceptance remains incomplete.
+The current control revision and acceptance evidence are recorded below. The
+required host, two-client, rendered and operated checks have passed; see the
+[roadmap](../roadmap.md) for delivery status.
+
+### Horizontal controls and acceptance resumption — 2026-11-12
+
+On `fix/p14-horizontal-controls-acceptance` ([PR #22](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/22)), A and the mobile left arrow now pan
+toward the actual camera left; D and the right arrow pan right. Native desktop
+and iPhone direction checks pass. During acceptance, real two-finger testing
+revealed and resolved a pad/aim ownership error and a GUI-inset touch offset;
+the same two-contact and finger/reticle tests now pass.
+
+| Criterion | Actual current result |
+| --- | --- |
+| A1 | Full host gate passes 50 unit / 18 integration; 325 native CFrame samples, horizontal direction tests across 65 phases, and two 90-second P14 orbit summaries pass. |
+| A2 | Two actual clients pass all 28 initial target projections at both FOVs, including nonflat slopes and second-story panels in all three buildings. Maximum target error across all 30 projection observations is 1.145 studs; reticle/world error is at most 0.000329 pixel and same-ray surface disagreement is zero. |
+| A3 | Real Gunship and Ground clients panned and walked concurrently for 2.99 seconds; the Ground camera remained Custom and attached to its Humanoid, and the canonical orbit remained within the two-stud check. Zoom/rejection and the 4/4 HumanTestMultiplayer regression pass. |
+| A4 | Native A/D, mobile left/right, release/recenter, real pad-plus-world two-touch input, two simultaneous directional arrows, and rendered slope/upper-floor occlusion at both FOVs pass. Desktop and mobile full orbits pass at both FOVs; an interrupted mobile 40° sample was rerun after the user restored the viewport. Actual 1280×720 and 1920×1080 layout reviews pass. |
+| A5 | P14 SDK passes role reset, fresh-operator default focus, actual operator departure and idempotent teardown; the separate P04 6/6 regression verifies per-client camera/input restoration and operator departure. |
+
+The independent tester's findings, source revisions, durable reports, visual
+comparisons and known Studio limitation are in
+[horizontal acceptance evidence](../docs/evidence/p14-horizontal-acceptance.md).
+The user foregrounded the existing test viewport after it stalled, enabling the
+phone 40° rerun. The independent tester reports the last three A4 observations
+passed and left Studio in Edit. The successful production source and P14 fixture
+are `ca1d91a`; P04's corrected test fixtures are `64e6a18`, and the final operated
+checks used `a64676e`, which changed documentation only. The final operated
+evidence and documentation are committed and pushed in `8cec062`. PR #22 is
+stacked on the unmerged edge adjustment PR #21; integration into `main` remains
+separate. No Roblox publication occurred.
 
 ### Edge visibility revision — 2026-11-12
 
@@ -40,8 +70,8 @@ level edges, suggesting about 25% of the viewport. Dedicated branch
 each centerline, retains the zoom-preserved relative angle, and supplies a
 camera-only visual ground backdrop outside the playable disk. Focused host and
 desktop/mobile Studio results are recorded in the
-[edge evidence](../docs/evidence/p14-edge-overscan.md). The full P14 two-client
-and operated acceptance gates remain open.
+[edge evidence](../docs/evidence/p14-edge-overscan.md). At that earlier stage the full P14 two-client and operated acceptance gates
+remained open.
 
 ### Orbit-relative view correction — 2026-11-11
 
@@ -59,8 +89,8 @@ orbit is untouched. To leave useful pan range with the 140-stud orbit altitude,
 the 30mm/105mm view defaults are tuned from 35°/60° to 30°/40°; D40 records this
 as tuning, not a new weapon rule. Current host verification, the corrected
 phone focus transition, and focused desktop/mobile Studio observations are recorded in
-[the correction evidence](../docs/evidence/p14-orbit-relative-view.md). P14 remains
-Blocked until the updated two-client and full operated acceptance gates pass.
+[the correction evidence](../docs/evidence/p14-orbit-relative-view.md). At that
+stage the updated two-client and full operated acceptance gates remained open.
 
 ### Control and future-level revision — 2026-11-10
 
@@ -79,8 +109,8 @@ The follow-up work is on `fix/p14-keyboard-mobile-pan`, branched from the unmerg
 P14 candidate `5ab4d19` and delivered as [draft PR #19](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/19); source, host and Studio results are recorded in
 [the revision evidence](../docs/evidence/p14-directional-revision.md). The old
 mouse-edge results below remain historical evidence for the earlier candidate,
-not acceptance of this changed control scheme. P14 stays Blocked until all
-applicable keyboard, mobile, multiplayer and rendered acceptance checks pass.
+not acceptance of this changed control scheme. At that stage keyboard, mobile,
+multiplayer and rendered acceptance checks remained open.
 
 ### Implementation start — 2026-11-09
 
@@ -156,6 +186,6 @@ API, actual counts and guarded manual invocation/cleanup; final prose/evidence
 is checked separately from unchanged source: repository checker passes 64 Markdown / 78 JSON files and `git diff --check` passes. The real README image is a labelled
 Waiting/Lobby preview, not multiplayer acceptance.
 
-Required engine/native evidence remains open; roadmap P14 is Blocked and P05
-remains Planned. Source and evidence are delivered on this task branch; PR #18
-stays draft. Main is unchanged, with no merge or Roblox publication.
+At that earlier delivery, required engine/native evidence remained open; PR #18
+was draft and P05 remained planned. Main was unchanged, with no merge or Roblox
+publication.

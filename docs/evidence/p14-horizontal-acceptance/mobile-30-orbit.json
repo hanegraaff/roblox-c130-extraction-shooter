@@ -1,0 +1,21 @@
+{
+  "invalid": 0,
+  "elapsed": 94.01286408334272,
+  "done": true,
+  "frames": 1410,
+  "minCornerDown": 0.2716796398162842,
+  "focusDrift": 0,
+  "bins": 16,
+  "minInward": 0.6361559629440308,
+  "fov": 30,
+  "lookDrift": 0.001500429236330092,
+  "viewport": {
+    "1": 750,
+    "2": 381
+  },
+  "startFocus": {
+    "1": 220,
+    "2": -96.08116912841797
+  },
+  "weapon": "GAU23"
+}

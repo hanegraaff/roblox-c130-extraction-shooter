@@ -22,6 +22,9 @@ type Request = {
     weapon: string?,
     position: Vector3?,
     payload: unknown?,
+    startTime: number?,
+    duration: number?,
+    expectFresh: boolean?,
 }
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 15)
@@ -47,8 +50,11 @@ function Harness.run()
         entry:Destroy() -- Existing Destroying cleanup restores state before fixture ownership.
         local goal: Vector3? = nil
         local aimPoint: Vector3? = nil
+        local aimRequest: Request? = nil
         local pointingFrameBefore: number? = nil
         local pointingPixels: Vector2? = nil
+        local pointingSearch: { [string]: unknown } = {}
+        local visibilityDiagnostics: { [string]: unknown } = {}
         local arrivalErrorStuds = 0
         local function visible(point: Vector3): boolean
             local camera = workspace.CurrentCamera
@@ -66,16 +72,23 @@ function Harness.run()
         local pendingWeapon: string? = nil
         local recenter = false
         local forcedBlocked = false
+        local forcedPan: Vector2? = nil
         local physical = false
         local outside = false
         local function hud(): ScreenGui?
             local result = playerGui:FindFirstChild("ThermalHUD")
             return if result and result:IsA("ScreenGui") then result else nil
         end
+        -- Installed after the fixture's state is constructed. The provider runs
+        -- inside the same nonyielding production render that commits the camera.
+        local scheduleOrbitSample: ((ScreenGui) -> ())? = nil
         local function provider(viewport: Vector2)
             local pointer = viewport * 0.5
-            local pan = Vector2.zero
+            local pan = forcedPan or Vector2.zero
             local current = hud()
+            if current and scheduleOrbitSample then
+                scheduleOrbitSample(current)
+            end
             if physical then
                 pointer = Input:GetMouseLocation()
             elseif outside then
@@ -90,7 +103,7 @@ function Harness.run()
                         local localX = radial.X * goal.X + radial.Y * goal.Z
                         local localZ = -radial.Y * goal.X + radial.X * goal.Z
                         pan = Vector2.new(
-                            math.clamp((localZ - focus.Y) / 6, -1, 1),
+                            math.clamp((focus.Y - localZ) / 6, -1, 1),
                             math.clamp((focus.X - localX) / 6, -1, 1)
                         )
                     end
@@ -102,22 +115,124 @@ function Harness.run()
                 -- camera (which can be several studs old on a slow Studio client).
                 local aircraft = workspace:FindFirstChild("Aircraft")
                 local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
-                local heldFocus = current:GetAttribute("PanFocus")
+                local heldFocus = current:GetAttribute("PanLocalFocus")
                 assert(
-                    root and root:IsA("BasePart") and typeof(heldFocus) == "Vector3",
+                    root and root:IsA("BasePart") and typeof(heldFocus) == "Vector2",
                     "pointing geometry missing"
                 )
-                local nextFrame = CameraController.frame(root.Position, heldFocus)
+                local worldFocus = PanRules.worldFocus(
+                    MapRules.defaults,
+                    { x = heldFocus.X, z = heldFocus.Y },
+                    root.Position.X,
+                    root.Position.Z
+                )
+                assert(worldFocus, "pointing orbit focus rejected")
+                local nextFrame = CameraController.frame(
+                    root.Position,
+                    Vector3.new(worldFocus.x, MapRules.defaults.groundY, worldFocus.z)
+                )
                 assert(nextFrame, "pointing camera basis rejected")
                 local relative = nextFrame:PointToObjectSpace(aimPoint)
                 assert(relative.Z < 0, "pointing target is behind the camera")
-                local scale = viewport.Y
-                    / (-2 * relative.Z * math.tan(math.rad(workspace.CurrentCamera.FieldOfView) / 2))
+                local vertical = math.tan(math.rad(workspace.CurrentCamera.FieldOfView) / 2)
+                local scale = viewport.Y / (-2 * relative.Z * vertical)
                 pointer =
                     Vector2.new(viewport.X * 0.5 + relative.X * scale, viewport.Y * 0.5 - relative.Y * scale)
+                -- The exact projected point may fall between pixels at the
+                -- silhouette of a voxel slope or panel. Search a small, bounded
+                -- integer neighborhood using the predicted next camera. Only a
+                -- real first hit on the required surface within the unchanged
+                -- three-stud target tolerance is eligible; the production
+                -- controller still performs its own rasterization and raycast.
+                local raster = PanRules.raster(pointer.X, pointer.Y, viewport.X, viewport.Y)
+                local parameters = RaycastParams.new()
+                parameters.FilterType = Enum.RaycastFilterType.Include
+                parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+                parameters.RespectCanCollide = true
+                local selected: Vector2? = nil
+                local tested = 0
+                local identityHits = 0
+                local nearestDistance = math.huge
+                local lastHit = "no hit"
+                if raster then
+                    for radius = 0, 3 do
+                        for dx = -radius, radius do
+                            for dy = -radius, radius do
+                                if math.max(math.abs(dx), math.abs(dy)) == radius then
+                                    local px, py = raster.x + dx, raster.y + dy
+                                    local bounded = PanRules.raster(px, py, viewport.X, viewport.Y)
+                                    if bounded and bounded.x == px and bounded.y == py then
+                                        local horizontal = (2 * px / viewport.X - 1)
+                                            * (viewport.X / viewport.Y)
+                                            * vertical
+                                        local height = (1 - 2 * py / viewport.Y) * vertical
+                                        local direction = (
+                                            nextFrame.LookVector
+                                            + nextFrame.RightVector * horizontal
+                                            + nextFrame.UpVector * height
+                                        ).Unit
+                                        local hit = workspace:Raycast(
+                                            nextFrame.Position,
+                                            direction * 1500,
+                                            parameters
+                                        )
+                                        tested += 1
+                                        if hit then
+                                            lastHit = hit.Instance:GetFullName()
+                                            local correct = true
+                                            if aimRequest and aimRequest.category == "TerrainSlope" then
+                                                correct = hit.Instance == workspace.Terrain
+                                                    and hit.Position.Y > 0.5
+                                                    and hit.Normal.Y < 0.999
+                                            elseif aimRequest and aimRequest.building then
+                                                local building =
+                                                    workspace.World.Battlefield.Buildings:FindFirstChild(
+                                                        aimRequest.building
+                                                    )
+                                                correct = building ~= nil
+                                                    and hit.Instance:IsDescendantOf(building)
+                                                    and hit.Instance:GetAttribute("StoryId") == "02"
+                                                    and type(hit.Instance:GetAttribute("PanelId"))
+                                                        == "string"
+                                            end
+                                            if correct then
+                                                identityHits += 1
+                                                local distance = (hit.Position - aimPoint).Magnitude
+                                                nearestDistance = math.min(nearestDistance, distance)
+                                                if distance < 2.9 then
+                                                    selected = Vector2.new(px, py)
+                                                    break
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            if selected then
+                                break
+                            end
+                        end
+                        if selected then
+                            break
+                        end
+                    end
+                end
+                pointingSearch = {
+                    predicted = { pointer.X, pointer.Y },
+                    tested = tested,
+                    identityHits = identityHits,
+                    nearestStuds = if nearestDistance < math.huge then nearestDistance else "none",
+                    lastHit = lastHit,
+                    selected = if selected then { selected.X, selected.Y } else "none",
+                }
                 local previousFrame = current:GetAttribute("ProjectionFrame")
-                pointingFrameBefore = if type(previousFrame) == "number" then previousFrame else nil
-                pointingPixels = pointer
+                pointingFrameBefore = if selected and type(previousFrame) == "number"
+                    then previousFrame
+                    else nil
+                pointingPixels = selected
+                if selected then
+                    pointer = selected
+                end
             end
             local weapon = pendingWeapon
             pendingWeapon = nil
@@ -177,18 +292,99 @@ function Harness.run()
             assert(home, "reset view unavailable")
             return Vector2.new(home.x, home.z)
         end
+        -- Shared server time lets the two independent clients prove their
+        -- movement windows overlapped. Every request is bounded and test-only.
+        local function movementWindow(request: Request): (number, number)
+            local starts, duration = request.startTime, request.duration
+            assert(
+                type(starts) == "number"
+                    and starts == starts
+                    and math.abs(starts) < math.huge
+                    and type(duration) == "number"
+                    and duration >= 1
+                    and duration <= 5,
+                "invalid movement probe window"
+            )
+            local now = workspace:GetServerTimeNow()
+            assert(starts - now <= 10 and starts + duration > now, "movement probe window expired")
+            return starts, starts + duration
+        end
         -- Arrival is one consistent input-driven neighborhood. Enter a separate
         -- pointing stage once reached: continuing directional steering after arrival races
         -- the target assertion, especially below 30Hz. No focus is assigned here.
-        local function moveTo(point: Vector3)
+        local function moveTo(point: Vector3, request: Request)
             aimPoint = nil
+            aimRequest = nil
             pointingFrameBefore = nil
             pointingPixels = nil
+            pointingSearch = {}
             local destination = Vector3.new(point.X, 0, point.Z)
             goal = point
+            local started = os.clock()
+            local visibilityTimeout = AircraftRules.defaults.periodSeconds + 5
+            local samples = 0
+            local closestMiss = math.huge
+            visibilityDiagnostics = {
+                goal = { point.X, point.Y, point.Z },
+                timeoutSeconds = visibilityTimeout,
+                orbitPeriodSeconds = AircraftRules.defaults.periodSeconds,
+            }
             waitFor(function()
+                local camera = workspace.CurrentCamera
+                local current = hud()
+                local aircraft = workspace:FindFirstChild("Aircraft")
+                local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+                samples += 1
+                visibilityDiagnostics.samples = samples
+                visibilityDiagnostics.elapsedSeconds = os.clock() - started
+                if camera then
+                    local viewport = camera.ViewportSize
+                    local projected = camera:WorldToViewportPoint(point)
+                    local position = camera.CFrame.Position
+                    local localValue = if current then current:GetAttribute("PanLocalFocus") else nil
+                    local panValue = if current then current:GetAttribute("PanDirection") else nil
+                    local snapshot: { [string]: unknown } = {
+                        elapsedSeconds = os.clock() - started,
+                        goal = { point.X, point.Y, point.Z },
+                        projectedPixels = { projected.X, projected.Y, projected.Z },
+                        viewportPixels = { viewport.X, viewport.Y },
+                        cameraPosition = { position.X, position.Y, position.Z },
+                        projectionFrame = if current
+                            then current:GetAttribute("ProjectionFrame")
+                            else "missing",
+                        inputBlocked = if current then current:GetAttribute("InputBlocked") else "missing",
+                        localFocus = if typeof(localValue) == "Vector2"
+                            then { localValue.X, localValue.Y }
+                            else "missing",
+                        panDirection = if typeof(panValue) == "Vector2"
+                            then { panValue.X, panValue.Y }
+                            else "missing",
+                    }
+                    if root and root:IsA("BasePart") then
+                        local aircraftPosition = root.Position
+                        snapshot.aircraftPosition =
+                            { aircraftPosition.X, aircraftPosition.Y, aircraftPosition.Z }
+                        snapshot.aircraftPhaseRadians = math.atan2(
+                            aircraftPosition.Z - MapRules.defaults.centerZ,
+                            aircraftPosition.X - MapRules.defaults.centerX
+                        )
+                    end
+                    if not visibilityDiagnostics.initial then
+                        visibilityDiagnostics.initial = snapshot
+                    end
+                    visibilityDiagnostics.latest = snapshot
+                    if viewport.X > 0 and viewport.Y > 0 and projected.Z > 0 then
+                        local u, v = projected.X / viewport.X, projected.Y / viewport.Y
+                        local miss = math.max(0, 0.17 - u, u - 0.83, 0.17 - v, v - 0.83)
+                        if miss < closestMiss then
+                            closestMiss = miss
+                            snapshot.normalizedMiss = miss
+                            visibilityDiagnostics.closest = snapshot
+                        end
+                    end
+                end
                 return visible(point)
-            end, "input-driven target visibility", 12)
+            end, "input-driven target visibility through one orbit", visibilityTimeout)
             arrivalErrorStuds = (focus() - destination).Magnitude
             local current = hud()
             assert(current, "arrival HUD disappeared")
@@ -196,6 +392,7 @@ function Harness.run()
             assert(type(transitionFrame) == "number", "arrival frame missing")
             goal = nil -- Stop steering; subsequent input is target pointing only.
             aimPoint = point
+            aimRequest = request
             waitFor(function()
                 local rendered = hud()
                 local frame = if rendered then rendered:GetAttribute("ProjectionFrame") else nil
@@ -207,7 +404,7 @@ function Harness.run()
                     and pointingPixels ~= nil
                     and typeof(raw) == "Vector2"
                     and (raw - pointingPixels).Magnitude < 0.01
-            end, "committed pointing frame", 4)
+            end, "committed pointing frame with nearby required surface", 18)
         end
         -- Mutate the caller-owned diagnostics before assertions. Failed samples
         -- must retain actual drawn/content/ray coordinates rather than losing the
@@ -391,45 +588,165 @@ function Harness.run()
                 bins: { [number]: boolean },
                 minimumInward: number,
                 maximumOriginError: number,
+                maximumCommittedOriginError: number,
+                minimumInwardSample: { [string]: unknown }?,
+                maximumOriginErrorSample: { [string]: unknown }?,
+                maximumCommittedOriginErrorSample: { [string]: unknown }?,
+                lastProjectionFrame: number?,
             },
         } =
             {}
-        local renderStats = RunService.RenderStepped:Connect(function()
-            local current = hud()
-            local camera = workspace.CurrentCamera
+        local orbitSamplingActive = true
+        local pairingFailures = 0
+        local lastPairingFailure: { [string]: unknown }? = nil
+        scheduleOrbitSample = function(current: ScreenGui)
             local aircraft = workspace:FindFirstChild("Aircraft")
-            if not current or not camera or not aircraft or not aircraft:IsA("Model") then
-                return
-            end
-            local weapon = current:GetAttribute("Weapon")
-            if type(weapon) ~= "string" then
-                return
-            end
-            local now = os.clock()
-            local stats = orbitStats[weapon]
-            if not stats then
-                stats = {
-                    first = now,
-                    last = now,
-                    frames = 0,
-                    bins = {},
-                    minimumInward = 1,
-                    maximumOriginError = 0,
+            local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+            local camera = workspace.CurrentCamera
+            if
+                not camera
+                or not aircraft
+                or not aircraft:IsA("Model")
+                or not hitbox
+                or not hitbox:IsA("BasePart")
+            then
+                pairingFailures += 1
+                local missing: { [string]: unknown } = {
+                    reason = "aircraft, hitbox or camera missing before projection",
                 }
-                orbitStats[weapon] = stats
+                lastPairingFailure = missing
+                return
             end
-            stats.last = now
-            stats.frames += 1
-            local position = aircraft:GetPivot().Position
-            local angle = math.atan2(position.Z, position.X) % (2 * math.pi)
-            stats.bins[math.floor(angle / (2 * math.pi) * 16)] = true
-            stats.minimumInward = math.min(
-                stats.minimumInward,
-                camera.CFrame.LookVector:Dot(Vector3.new(-position.X, 0, -position.Z).Unit)
-            )
-            stats.maximumOriginError =
-                math.max(stats.maximumOriginError, (camera.CFrame.Position - position).Magnitude)
-        end)
+            -- The production controller samples this hitbox after the provider
+            -- returns in the same nonyielding render callback. Capture its pose
+            -- here, then defer until that callback has committed its projection.
+            local pivot = aircraft:GetPivot()
+            local capturedHitbox = hitbox.CFrame
+            local capturedTime = os.clock()
+            local prior = current:GetAttribute("ProjectionFrame")
+            local expectedFrame = if type(prior) == "number" then prior + 1 else 1
+            task.defer(function()
+                if not orbitSamplingActive then
+                    return
+                end
+                local ok, failure = pcall(function()
+                    local projectionFrame = current:GetAttribute("ProjectionFrame")
+                    local projectionTime = current:GetAttribute("ProjectionTime")
+                    local projectionCamera = current:GetAttribute("ProjectionCamera")
+                    local weapon = current:GetAttribute("Weapon")
+                    assert(
+                        type(projectionFrame) == "number"
+                            and projectionFrame == expectedFrame
+                            and type(projectionTime) == "number"
+                            and typeof(projectionCamera) == "CFrame"
+                            and type(weapon) == "string"
+                            and workspace.CurrentCamera == camera,
+                        "missing or mismatched projection commit"
+                    )
+                    local now = os.clock()
+                    local stats = orbitStats[weapon]
+                    if not stats then
+                        stats = {
+                            first = now,
+                            last = now,
+                            frames = 0,
+                            bins = {},
+                            minimumInward = 1,
+                            maximumOriginError = 0,
+                            maximumCommittedOriginError = 0,
+                        }
+                        orbitStats[weapon] = stats
+                    end
+                    stats.last = now
+                    stats.frames += 1
+                    local position = pivot.Position
+                    local angle = math.atan2(position.Z, position.X) % (2 * math.pi)
+                    stats.bins[math.floor(angle / (2 * math.pi) * 16)] = true
+                    local cameraFrame = camera.CFrame
+                    local inward = cameraFrame.LookVector:Dot(Vector3.new(-position.X, 0, -position.Z).Unit)
+                    local originError = (cameraFrame.Position - position).Magnitude
+                    local committedOriginError = (projectionCamera.Position - position).Magnitude
+                    local previousFrame = stats.lastProjectionFrame
+                    local newInwardWorst = stats.frames == 1 or inward < stats.minimumInward
+                    local newOriginWorst = stats.frames == 1 or originError > stats.maximumOriginError
+                    local newCommittedWorst = stats.frames == 1
+                        or committedOriginError > stats.maximumCommittedOriginError
+                    if newInwardWorst or newOriginWorst or newCommittedWorst then
+                        local localFocusValue = current:GetAttribute("PanLocalFocus")
+                        local worldFocusValue = current:GetAttribute("PanFocus")
+                        local pan = current:GetAttribute("PanDirection")
+                        local snapshot: { [string]: unknown } = {
+                            time = now,
+                            serverTime = workspace:GetServerTimeNow(),
+                            capturedTime = capturedTime,
+                            deferredDelaySeconds = now - capturedTime,
+                            sampledFrame = stats.frames,
+                            ordering = "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+                            aircraftPivot = { pivot:GetComponents() },
+                            hitboxFrame = { capturedHitbox:GetComponents() },
+                            cameraFrame = { cameraFrame:GetComponents() },
+                            cameraType = camera.CameraType.Name,
+                            inward = inward,
+                            originError = originError,
+                            committedOriginError = committedOriginError,
+                            projectionFrame = projectionFrame,
+                            expectedProjectionFrame = expectedFrame,
+                            providerPreviousFrame = if type(prior) == "number" then prior else "missing",
+                            previousProjectionFrame = if previousFrame then previousFrame else "missing",
+                            projectionAdvanced = previousFrame ~= nil and projectionFrame > previousFrame,
+                            projectionTime = projectionTime,
+                            projectionAge = now - projectionTime,
+                            projectionCamera = { projectionCamera:GetComponents() },
+                            localFocus = if typeof(localFocusValue) == "Vector2"
+                                then { localFocusValue.X, localFocusValue.Y }
+                                else "missing",
+                            worldFocus = if typeof(worldFocusValue) == "Vector3"
+                                then { worldFocusValue.X, worldFocusValue.Y, worldFocusValue.Z }
+                                else "missing",
+                            panDirection = if typeof(pan) == "Vector2" then { pan.X, pan.Y } else "missing",
+                            inputBlocked = current:GetAttribute("InputBlocked"),
+                        }
+                        snapshot.cameraToProjectionStuds = (cameraFrame.Position - projectionCamera.Position).Magnitude
+                        snapshot.cameraProjectionLookDot =
+                            cameraFrame.LookVector:Dot(projectionCamera.LookVector)
+                        snapshot.cameraToHitboxStuds = (cameraFrame.Position - capturedHitbox.Position).Magnitude
+                        snapshot.pivotToHitboxStuds = (position - capturedHitbox.Position).Magnitude
+                        local liveHitbox = hitbox.CFrame
+                        local livePivot = aircraft:GetPivot()
+                        snapshot.liveHitboxFrame = { liveHitbox:GetComponents() }
+                        snapshot.liveAircraftPivot = { livePivot:GetComponents() }
+                        snapshot.liveToCapturedHitboxStuds = (liveHitbox.Position - capturedHitbox.Position).Magnitude
+                        if newInwardWorst then
+                            stats.minimumInwardSample = snapshot
+                        end
+                        if newOriginWorst then
+                            stats.maximumOriginErrorSample = snapshot
+                        end
+                        if newCommittedWorst then
+                            stats.maximumCommittedOriginErrorSample = snapshot
+                        end
+                    end
+                    stats.minimumInward = math.min(stats.minimumInward, inward)
+                    stats.maximumOriginError = math.max(stats.maximumOriginError, originError)
+                    stats.maximumCommittedOriginError =
+                        math.max(stats.maximumCommittedOriginError, committedOriginError)
+                    stats.lastProjectionFrame = projectionFrame
+                end)
+                if not ok then
+                    pairingFailures += 1
+                    local failed: { [string]: unknown } = {
+                        reason = tostring(failure),
+                        capturedTime = capturedTime,
+                        providerPreviousFrame = if type(prior) == "number" then prior else "missing",
+                        expectedProjectionFrame = expectedFrame,
+                        actualProjectionFrame = current:GetAttribute("ProjectionFrame"),
+                        aircraftPivot = { pivot:GetComponents() },
+                        hitboxFrame = { capturedHitbox:GetComponents() },
+                    }
+                    lastPairingFailure = failed
+                end
+            end)
+        end
         local listener = remote.OnClientEvent:Connect(function(token: number, request: Request)
             local observations: { [string]: unknown } = {}
             local ok, failure = pcall(function()
@@ -476,6 +793,31 @@ function Harness.run()
                                 frame.LookVector:Dot((target - origin).Unit) > 0.99999,
                                 "held view rotated"
                             )
+                            if direction[1] == 0 and direction[2] == 0 then
+                                -- Actual engine camera-right, not a copied sign
+                                -- convention, decides what left/right means.
+                                for _, horizontalInput in { -1, 1 } do
+                                    local moved = PanRules.step(
+                                        MapRules.defaults,
+                                        held,
+                                        horizontalInput,
+                                        0,
+                                        0.1,
+                                        false,
+                                        16 / 9,
+                                        AircraftRules.defaults.fov105mm
+                                    )
+                                    assert(moved, "horizontal direction rejected")
+                                    local movedPoint = PanRules.worldFocus(MapRules.defaults, moved, x, z)
+                                    assert(movedPoint, "horizontal orbit focus rejected")
+                                    local movement =
+                                        Vector3.new(movedPoint.x - point.x, 0, movedPoint.z - point.z)
+                                    assert(
+                                        movement:Dot(frame.RightVector) * horizontalInput > 0,
+                                        "horizontal direction opposes actual camera right"
+                                    )
+                                end
+                            end
                             local radial = Vector3.new(math.cos(phase), 0, math.sin(phase))
                             local tangent = Vector3.new(-math.sin(phase), 0, math.cos(phase))
                             local localLook = Vector3.new(
@@ -514,7 +856,7 @@ function Harness.run()
                             return current ~= nil and current:GetAttribute("Weapon") == request.weapon
                         end, "weapon acknowledgement")
                     end
-                    moveTo(request.point)
+                    moveTo(request.point, request)
                     observations = sample(request, observations)
                     assert(
                         goal == nil and aimPoint ~= nil,
@@ -538,14 +880,8 @@ function Harness.run()
                     for _ in stats.bins do
                         bins += 1
                     end
-                    assert(
-                        stats.last - stats.first >= 89.5 and bins == 16,
-                        "full orbit at selected FOV not observed"
-                    )
-                    assert(
-                        stats.minimumInward >= -1e-6 and stats.maximumOriginError <= 2,
-                        "orbit camera drift/inward violation"
-                    )
+                    -- Preserve measured extrema even when an acceptance assertion
+                    -- fails. Each worst snapshot is bounded to one actual frame.
                     observations = {
                         weapon = request.weapon,
                         seconds = stats.last - stats.first,
@@ -553,7 +889,24 @@ function Harness.run()
                         phaseBins = bins,
                         minimumInward = stats.minimumInward,
                         maximumOriginError = stats.maximumOriginError,
+                        maximumCommittedOriginError = stats.maximumCommittedOriginError,
+                        minimumInwardSample = stats.minimumInwardSample,
+                        maximumOriginErrorSample = stats.maximumOriginErrorSample,
+                        maximumCommittedOriginErrorSample = stats.maximumCommittedOriginErrorSample,
+                        pairingFailures = pairingFailures,
+                        lastPairingFailure = lastPairingFailure,
                     }
+                    assert(pairingFailures == 0, "projection frame was missing or mismatched")
+                    assert(
+                        stats.last - stats.first >= 89.5 and bins == 16,
+                        "full orbit at selected FOV not observed"
+                    )
+                    assert(
+                        stats.minimumInward >= -1e-6
+                            and stats.maximumOriginError <= 2
+                            and stats.maximumCommittedOriginError <= 2,
+                        "orbit camera drift/inward violation"
+                    )
                 elseif request.kind == "Thermal" then
                     local camera = workspace.CurrentCamera
                     assert(camera, "camera absent")
@@ -592,6 +945,146 @@ function Harness.run()
                         role = player:GetAttribute("Role"),
                         baseline = script.Parent:GetAttribute("ClientTestReport"),
                     }
+                elseif request.kind == "PanHold" then
+                    local starts, ends = movementWindow(request)
+                    goal = nil
+                    aimPoint = nil
+                    physical = false
+                    outside = false
+                    forcedBlocked = false
+                    recenter = true
+                    local okPan, failurePan = pcall(function()
+                        waitFor(function()
+                            return (localFocus() - resetFocus()).Magnitude < 0.01
+                        end, "pan probe recenter", 3)
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= starts
+                        end, "pan probe start", 10)
+                        local before = localFocus()
+                        local started = workspace:GetServerTimeNow()
+                        local startHud = hud()
+                        assert(startHud, "pan probe HUD disappeared before start")
+                        local firstFrame = startHud:GetAttribute("ProjectionFrame")
+                        forcedPan = Vector2.new(1, 0)
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= ends
+                        end, "pan probe end", 6)
+                        forcedPan = nil
+                        local stopped = workspace:GetServerTimeNow()
+                        local after = localFocus()
+                        local current = hud()
+                        assert(current, "pan probe HUD disappeared")
+                        local lastFrame = current:GetAttribute("ProjectionFrame")
+                        local rightMotion = before.Y - after.Y
+                        observations = {
+                            startTime = started,
+                            endTime = stopped,
+                            startFocus = { before.X, before.Y },
+                            endFocus = { after.X, after.Y },
+                            rightMotionStuds = rightMotion,
+                            startFrame = firstFrame,
+                            endFrame = lastFrame,
+                        }
+                        assert(rightMotion > 1, "operator did not pan right during the movement window")
+                        assert(
+                            type(firstFrame) == "number"
+                                and type(lastFrame) == "number"
+                                and lastFrame > firstFrame,
+                            "operator projection did not advance"
+                        )
+                    end)
+                    forcedPan = nil
+                    if not okPan then
+                        error(failurePan)
+                    end
+                elseif request.kind == "GroundMove" then
+                    local starts, ends = movementWindow(request)
+                    assert(not hud(), "ground movement probe received operator HUD")
+                    local camera = workspace.CurrentCamera
+                    local character = player.Character
+                    local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+                    local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+                    assert(
+                        camera
+                            and camera.CameraType == Enum.CameraType.Custom
+                            and humanoid
+                            and camera.CameraSubject == humanoid
+                            and root
+                            and root:IsA("BasePart"),
+                        "ground movement probe lacks its own live character camera"
+                    )
+                    local parameters = RaycastParams.new()
+                    parameters.FilterType = Enum.RaycastFilterType.Include
+                    parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+                    parameters.RespectCanCollide = true
+                    local direction = Vector3.zero
+                    local clearance = 0
+                    for _, candidate in { Vector3.xAxis, -Vector3.xAxis, Vector3.zAxis, -Vector3.zAxis } do
+                        local hit = workspace:Raycast(root.Position, candidate * 30, parameters)
+                        local free = if hit then hit.Distance else 30
+                        if free > clearance then
+                            direction, clearance = candidate, free
+                        end
+                    end
+                    assert(clearance > 4, "no clear direction for ground movement")
+                    local binding = "P14GroundMove_" .. tostring(player.UserId)
+                    local frames, cameraChanged = 0, false
+                    local okMove, failureMove = pcall(function()
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= starts
+                        end, "ground movement probe start", 10)
+                        local before = root.Position
+                        local started = workspace:GetServerTimeNow()
+                        RunService:BindToRenderStep(binding, Enum.RenderPriority.Input.Value + 1, function()
+                            humanoid:Move(direction, false)
+                            frames += 1
+                            if
+                                camera.CameraType ~= Enum.CameraType.Custom
+                                or camera.CameraSubject ~= humanoid
+                            then
+                                cameraChanged = true
+                            end
+                        end)
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= ends
+                        end, "ground movement probe end", 6)
+                        RunService:UnbindFromRenderStep(binding)
+                        humanoid:Move(Vector3.zero, false)
+                        local stopped = workspace:GetServerTimeNow()
+                        local after = root.Position
+                        local distance = (Vector3.new(after.X, 0, after.Z) - Vector3.new(
+                            before.X,
+                            0,
+                            before.Z
+                        )).Magnitude
+                        local progress = (after - before):Dot(direction)
+                        observations = {
+                            startTime = started,
+                            endTime = stopped,
+                            startPosition = { before.X, before.Y, before.Z },
+                            endPosition = { after.X, after.Y, after.Z },
+                            direction = { direction.X, direction.Y, direction.Z },
+                            clearanceStuds = clearance,
+                            displacementStuds = distance,
+                            forwardStuds = progress,
+                            frames = frames,
+                            cameraType = camera.CameraType.Name,
+                            cameraSubjectMatches = camera.CameraSubject == humanoid,
+                            cameraChanged = cameraChanged,
+                        }
+                        assert(frames > 0 and distance > 2 and progress > 1, "ground humanoid did not move")
+                        assert(
+                            not cameraChanged
+                                and camera.CameraType == Enum.CameraType.Custom
+                                and camera.CameraSubject == humanoid,
+                            "operator pan changed ground camera ownership"
+                        )
+                    end)
+                    RunService:UnbindFromRenderStep(binding)
+                    humanoid:Move(Vector3.zero, false)
+                    if not okMove then
+                        error(failureMove)
+                    end
                 elseif request.kind == "Coherence" then
                     goal = nil
                     aimPoint = nil
@@ -643,10 +1136,117 @@ function Harness.run()
                 elseif request.kind == "ResetInput" then
                     goal = nil
                     aimPoint = nil
-                    recenter = true
+                    aimRequest = nil
+                    forcedPan = nil
+                    forcedBlocked = false
+                    physical = false
+                    outside = false
+                    recenter = false
+                    local resetStart = os.clock()
+                    local resetDiagnostics: { [string]: unknown } = {
+                        expectFresh = request.expectFresh == true,
+                        stage = "waiting for active operator projection",
+                    }
+                    observations.resetInput = resetDiagnostics
+                    local readyHud: ScreenGui? = nil
+                    local readyFrame: number? = nil
                     waitFor(function()
-                        return (localFocus() - resetFocus()).Magnitude < 0.01
-                    end, "default focus")
+                        local current = hud()
+                        local camera = workspace.CurrentCamera
+                        local roundStateValue = ReplicatedStorage:FindFirstChild("RoundState")
+                        local role = player:GetAttribute("Role")
+                        local life = player:GetAttribute("Life")
+                        local phase = if roundStateValue then roundStateValue:GetAttribute("Phase") else nil
+                        local value = if current then current:GetAttribute("PanLocalFocus") else nil
+                        local frame = if current then current:GetAttribute("ProjectionFrame") else nil
+                        local projectionTime = if current then current:GetAttribute("ProjectionTime") else nil
+                        local projectionCamera = if current
+                            then current:GetAttribute("ProjectionCamera")
+                            else nil
+                        local viewport = if camera then camera.ViewportSize else Vector2.zero
+                        resetDiagnostics.latest = {
+                            elapsedSeconds = os.clock() - resetStart,
+                            role = role or "missing",
+                            life = life or "missing",
+                            phase = phase or "missing",
+                            hudPresent = current ~= nil,
+                            projectionFrame = if type(frame) == "number" then frame else "missing",
+                            projectionTime = if type(projectionTime) == "number"
+                                then projectionTime
+                                else "missing",
+                            projectionCamera = if typeof(projectionCamera) == "CFrame"
+                                then { projectionCamera:GetComponents() }
+                                else "missing",
+                            localFocus = if typeof(value) == "Vector2"
+                                then { value.X, value.Y }
+                                else "missing",
+                            cameraType = if camera then camera.CameraType.Name else "missing",
+                            viewport = { viewport.X, viewport.Y },
+                        }
+                        if
+                            role == "Gunship"
+                            and life == "Alive"
+                            and phase == "Active"
+                            and current ~= nil
+                            and camera ~= nil
+                            and camera.CameraType == Enum.CameraType.Scriptable
+                            and viewport.X > 1
+                            and viewport.Y > 1
+                            and typeof(value) == "Vector2"
+                            and value.X == value.X
+                            and value.Y == value.Y
+                            and math.abs(value.X) < math.huge
+                            and math.abs(value.Y) < math.huge
+                            and type(frame) == "number"
+                            and frame > 0
+                            and type(projectionTime) == "number"
+                            and typeof(projectionCamera) == "CFrame"
+                        then
+                            readyHud = current
+                            readyFrame = frame
+                            return true
+                        end
+                        return false
+                    end, "active operator HUD and committed projection", 12)
+                    local entryHud = readyHud
+                    local entryFrame = readyFrame
+                    assert(entryHud and entryFrame, "operator projection readiness lost")
+                    local entryFocus = entryHud:GetAttribute("PanLocalFocus")
+                    assert(typeof(entryFocus) == "Vector2", "ready operator focus disappeared")
+                    local expected = resetFocus()
+                    resetDiagnostics.stage = "ready before recenter"
+                    resetDiagnostics.entryFrame = entryFrame
+                    resetDiagnostics.entryFocus = { entryFocus.X, entryFocus.Y }
+                    resetDiagnostics.expectedFocus = { expected.X, expected.Y }
+                    if request.expectFresh then
+                        assert(
+                            (entryFocus - expected).Magnitude < 0.01,
+                            "new operator did not enter at default focus"
+                        )
+                    end
+                    recenter = true
+                    resetDiagnostics.stage = "waiting for recenter commit"
+                    waitFor(function()
+                        local current = hud()
+                        local value = if current then current:GetAttribute("PanLocalFocus") else nil
+                        local frame = if current then current:GetAttribute("ProjectionFrame") else nil
+                        resetDiagnostics.postRequest = {
+                            elapsedSeconds = os.clock() - resetStart,
+                            sameHud = current == entryHud,
+                            inputPending = recenter,
+                            projectionFrame = if type(frame) == "number" then frame else "missing",
+                            localFocus = if typeof(value) == "Vector2"
+                                then { value.X, value.Y }
+                                else "missing",
+                        }
+                        return current == entryHud
+                            and not recenter
+                            and type(frame) == "number"
+                            and frame > entryFrame
+                            and typeof(value) == "Vector2"
+                            and (value - expected).Magnitude < 0.01
+                    end, "committed default focus after recenter", 5)
+                    resetDiagnostics.stage = "recenter committed"
                     observations = sample(nil, observations)
                 elseif request.kind == "Normal" then
                     waitFor(function()
@@ -672,6 +1272,18 @@ function Harness.run()
                     error("unknown P14 client probe")
                 end
             end)
+            if request.kind == "Projection" then
+                observations.pointingSearch = pointingSearch
+                observations.visibility = visibilityDiagnostics
+                if not ok then
+                    goal = nil
+                    aimPoint = nil
+                    aimRequest = nil
+                end
+            end
+            if request.kind == "ResetInput" and not ok then
+                recenter = false
+            end
             remote:FireServer(token, {
                 passed = ok,
                 detail = if ok then "observed" else tostring(failure),
@@ -684,7 +1296,8 @@ function Harness.run()
                 listener:Disconnect()
                 added:Disconnect()
                 removed:Disconnect()
-                renderStats:Disconnect()
+                orbitSamplingActive = false
+                scheduleOrbitSample = nil
                 if ancestry then
                     ancestry:Disconnect()
                 end

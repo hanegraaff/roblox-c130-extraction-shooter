@@ -1,0 +1,26 @@
+{
+  "candidate": "64e6a181e9cb208b82cfd32481194d48802d1120",
+  "status": "incomplete - rendered viewport froze during late capture",
+  "measurement": {
+    "invalid": 0,
+    "elapsed": 94.0120685416623,
+    "done": true,
+    "frames": 1257,
+    "minCornerDown": 0.15503528714179993,
+    "focusDrift": 0,
+    "bins": 16,
+    "minInward": 0.6361559629440308,
+    "fov": 40,
+    "lookDrift": 2.0647654253025394e-7,
+    "viewport": {
+      "1": 750,
+      "2": 381
+    },
+    "startFocus": {
+      "1": 220,
+      "2": -96.08116912841797
+    },
+    "weapon": "M102"
+  },
+  "details": "Late screenshot request stalled around 83 seconds; final 1257 frames over 94.012 s do not establish a continuous full orbit. Subsequent Play restart had no ThermalHUD; 1080p simulator Play reported viewport 1x1. Native 2-arrow gesture and actual 1080p layout unverified. Edit restored, simulator default, ManualHarness attribute absent."
+}

@@ -98,6 +98,43 @@ function ThermalCameraController.input(
     return { position = pointer, blocked = blocked }
 end
 
+-- Converts touch InputObject.Position from GUI-content coordinates to the
+-- viewport coordinates used by the camera ray. Invalid coordinates reject;
+-- the current inset is sampled on each begin/change without yielding.
+function ThermalCameraController.touchViewportPosition(point: Vector2): Vector2?
+    if not Validation.isFinite(point.X) or not Validation.isFinite(point.Y) then
+        return nil
+    end
+    local result = point + GuiService:GetGuiInset()
+    if not Validation.isFinite(result.X) or not Validation.isFinite(result.Y) then
+        return nil
+    end
+    return result
+end
+
+-- Touch InputObject.Position uses GUI-content coordinates for hit-testing,
+-- unlike GetMouseLocation. Returns viewport coordinates for a valid point.
+-- Processed, focused-text and actionable GUI touches cannot claim world aiming.
+-- Invalid coordinates fail closed. This helper does not own input state.
+function ThermalCameraController.touchInput(
+    playerGui: PlayerGui,
+    point: Vector2,
+    processed: boolean
+): InputFrame
+    local position = ThermalCameraController.touchViewportPosition(point)
+    if not position then
+        return { position = point, blocked = true }
+    end
+    local blocked = processed or UserInputService:GetFocusedTextBox() ~= nil
+    for _, object in playerGui:GetGuiObjectsAtPosition(math.floor(point.X), math.floor(point.Y)) do
+        if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
+            blocked = true
+            break
+        end
+    end
+    return { position = position, blocked = blocked }
+end
+
 -- Converts camera viewport pixels to the owning ScreenGui's local offset.
 -- Device safe areas can shift a full-screen GUI relative to the camera even
 -- when IgnoreGuiInset is true. The caller measures the GUI origin in the same
@@ -147,6 +184,7 @@ function ThermalCameraController.new(
     local heldPad: { [InputObject]: Vector2 } = {}
     local aimTouch: InputObject? = nil
     local touchAim: Vector2? = nil
+    local touchAimBeforeCapture: Vector2? = nil
     local function padDirection(): Vector2
         local result = Vector2.zero
         for _, direction in heldPad do
@@ -224,6 +262,7 @@ function ThermalCameraController.new(
         table.clear(heldPad)
         aimTouch = nil
         touchAim = nil
+        touchAimBeforeCapture = nil
         lastAspect = nil
         cachedWidestFov = nil
         local previous = saved
@@ -264,6 +303,7 @@ function ThermalCameraController.new(
         table.clear(heldPad)
         aimTouch = nil
         touchAim = nil
+        touchAimBeforeCapture = nil
         saved = {
             camera = camera,
             kind = camera.CameraType,
@@ -410,6 +450,13 @@ function ThermalCameraController.new(
                             -- A fresh touch on the active viewport restores focus
                             -- after Studio/device-simulator window transitions.
                             windowFocused = true
+                            -- GUI and global input callbacks can run in either
+                            -- order. A pad finger can never own the aim slot.
+                            if aimTouch == event then
+                                aimTouch = nil
+                                touchAim = touchAimBeforeCapture
+                                touchAimBeforeCapture = nil
+                            end
                             heldPad[event] = direction
                         end
                     end)
@@ -427,36 +474,39 @@ function ThermalCameraController.new(
                     heldPad[event] = nil
                     if event == aimTouch then
                         aimTouch = nil
+                        touchAimBeforeCapture = nil
                     end
                 end)
             )
             table.insert(
                 buttons,
-                UserInputService.InputBegan:Connect(function(event)
-                    if event.UserInputType ~= Enum.UserInputType.Touch or aimTouch ~= nil then
+                UserInputService.InputBegan:Connect(function(event, processed)
+                    if
+                        event.UserInputType ~= Enum.UserInputType.Touch
+                        or aimTouch ~= nil
+                        or heldPad[event]
+                    then
                         return
                     end
-                    local inset = GuiService:GetGuiInset()
                     local point = Vector2.new(event.Position.X, event.Position.Y)
-                    for _, object in
-                        playerGui:GetGuiObjectsAtPosition(
-                            math.floor(point.X - inset.X),
-                            math.floor(point.Y - inset.Y)
-                        )
-                    do
-                        if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
-                            return
-                        end
+                    local frame = ThermalCameraController.touchInput(playerGui, point, processed)
+                    if frame.blocked then
+                        return
                     end
+                    touchAimBeforeCapture = touchAim
                     aimTouch = event
-                    touchAim = point
+                    touchAim = frame.position
                 end)
             )
             table.insert(
                 buttons,
                 UserInputService.InputChanged:Connect(function(event)
                     if event == aimTouch then
-                        touchAim = Vector2.new(event.Position.X, event.Position.Y)
+                        local point = Vector2.new(event.Position.X, event.Position.Y)
+                        local position = ThermalCameraController.touchViewportPosition(point)
+                        if position then
+                            touchAim = position
+                        end
                     end
                 end)
             )
@@ -715,6 +765,9 @@ function ThermalCameraController.new(
     end)
     local unfocused = UserInputService.WindowFocusReleased:Connect(function()
         windowFocused = false
+        table.clear(heldPad)
+        aimTouch = nil
+        touchAimBeforeCapture = nil
     end)
     render(0)
     return {

@@ -1,0 +1,24 @@
+{
+  "minCornerDown": 0.05411606281995773,
+  "bins": 16,
+  "lookDrift": 1.884864389012364e-7,
+  "invalid": 0,
+  "elapsed": 97.00503808332724,
+  "done": true,
+  "frames": 1455,
+  "phaseDegrees": 387.7879328152438,
+  "focusDrift": 0,
+  "fov": 40,
+  "minInward": 0.5773904323577881,
+  "frameGaps": [],
+  "viewport": {
+    "1": 750,
+    "2": 381
+  },
+  "maxFrameGap": 0.07358954165829346,
+  "startFocus": {
+    "1": 220,
+    "2": -139.97067260742188
+  },
+  "weapon": "M102"
+}

@@ -1,0 +1,25 @@
+{
+  "last": 24184.52526574998,
+  "invalid": 0,
+  "elapsed": 93.96307558333501,
+  "stopped": 24184.574389708316,
+  "frames": 1410,
+  "minInward": 0.6726986765861511,
+  "focus": {
+    "1": 220,
+    "2": 64.12995147705078
+  },
+  "platform": "desktop",
+  "started": 24090.562190166645,
+  "done": true,
+  "focusDrift": 0,
+  "minCornerDown": 0.31507617235183716,
+  "fov": 30,
+  "viewport": {
+    "1": 1153,
+    "2": 579
+  },
+  "lookDrift": 2.6656007889869215e-7,
+  "bins": 16,
+  "weapon": "GAU23"
+}

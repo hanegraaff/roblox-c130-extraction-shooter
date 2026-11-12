@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "result": {
+    "clientCount": 2,
+    "discovered": 4,
+    "errors": 0,
+    "skipped": 0,
+    "suite": "HumanTestControls",
+    "passed": 4,
+    "failed": 0
+  }
+}

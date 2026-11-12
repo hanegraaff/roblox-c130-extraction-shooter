@@ -1,0 +1,20 @@
+{
+  "screenVsViewportAngle": 4.435794986092485,
+  "mouseNow": "400, 218",
+  "screenVsPlusAngle": 0,
+  "drawnWithInset": "400, 160",
+  "event": {
+    "y": 160,
+    "x": 400,
+    "mouse": "400, 218",
+    "inset": "0, 58",
+    "processed": false
+  },
+  "guiOrigin": "-62, -20",
+  "pixels": "400, 160",
+  "viewport": "750, 381",
+  "absoluteReticleCenter": "400, 102",
+  "raw": "400, 160",
+  "inset": "0, 58",
+  "screenVsMinusAngle": 8.852926354970686
+}
