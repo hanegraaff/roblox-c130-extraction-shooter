@@ -1,6 +1,6 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft and verified WASD/mobile panning with weapon-linked zoom. **Combat and aircraft damage remain planned.** P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 combat and P07 panel/fragment physics remain later work. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft and verified WASD/mobile panning with weapon-linked zoom. **Gunship combat is verified on the unmerged P05 branch; aircraft damage remains planned.** P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is available in [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 panel/fragment physics remain later work. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
@@ -12,8 +12,8 @@ The integrated source on `main` includes the development shell, verification too
 | M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Complete | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
 | M2 — Level revision | [P13: Expanded terrain and multi-story buildings](plans/13-terrain-and-buildings.md) | Complete | P04 | Walk a 720-stud-diameter terrain map with two large buildings and one smaller one, each at least two stories |
 | M2 — View revision | [P14: Directional aircraft targeting](plans/14-aircraft-panning.md) | Complete | P13 | Pan the aircraft view with WASD or mobile arrows, aim independently and retain the view through the orbit |
-| M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Ready | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
-| M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Planned | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
+| M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
+| M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Ready | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Planned | P06, P13, P14 | See panels degrade: 3 heavy hits → half destroyed, 3 more → gone; 9 seconds sustained 30mm → damage, with real falling fragments |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Planned | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
@@ -21,6 +21,16 @@ The integrated source on `main` includes the development shell, verification too
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
+
+2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
+host gate, 104 server and 3 per-client Studio smoke, and the eight-case
+two-client P05 harness. Operated desktop and simulated-phone checks verify
+firing, panning and simultaneous touch controls; the independent review's
+material presentation and collision findings were fixed and rechecked.
+[PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
+is unmerged, so P06 must branch from source containing P05 or wait for integration.
+The [P05 plan](plans/05-gunship-combat.md) and [evidence](docs/evidence/p05-gunship-combat.md)
+record tested source, remaining limitations and prior failures.
 
 ## How plans move
 

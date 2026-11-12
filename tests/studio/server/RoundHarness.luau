@@ -78,6 +78,10 @@ function RoundHarness.run()
         require(script.Parent.ExpandedMapHarness).run()
         return
     end
+    if type(args) == "table" and args.kind == "P05" then
+        require(script.Parent.CombatHarness).run()
+        return
+    end
     if type(args) == "table" and args.kind == "P04" then
         require(script.Parent.AircraftHarness).run()
         return

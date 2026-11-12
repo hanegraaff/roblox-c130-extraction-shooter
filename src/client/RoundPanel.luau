@@ -92,14 +92,23 @@ function RoundPanel.new(
                                 else "Ground"
                         )
                 end
-                label.Text = string.format(
-                    "%s\n%s\n%s",
-                    heading,
-                    detail,
-                    if role == "Gunship"
-                        then "Inward thermal view • 1 / 2 selects weapon zoom • Firing is planned"
-                        else "Round prototype • Combat and launcher are planned"
-                )
+                if thermal.ownsCamera() then
+                    label.AnchorPoint = Vector2.zero
+                    label.Position = UDim2.fromOffset(12, 8)
+                    label.Size = UDim2.fromOffset(210, 38)
+                    label.TextSize = 14
+                    label.Text = if phase == "Active" then detail else "Operator preview"
+                else
+                    label.AnchorPoint = Vector2.new(0.5, 0)
+                    label.Position = UDim2.new(0.5, 0, 0, 112)
+                    label.Size = UDim2.fromOffset(540, 102)
+                    label.TextSize = 18
+                    label.Text = string.format(
+                        "%s\n%s\nRound prototype • Ground weapons and launcher are planned",
+                        heading,
+                        detail
+                    )
+                end
                 surrender.Visible = phase == "Active" and role == "Ground" and life == "Alive"
                 local camera = workspace.CurrentCamera
                 if camera and not thermal.ownsCamera() then

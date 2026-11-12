@@ -5,6 +5,7 @@
     Pure presentation: cannot modify server authority. Construction/start do not yield.
 ]=]
 local Lifecycle = require(game:GetService("ReplicatedStorage").Shared.Lifecycle)
+local Players = game:GetService("Players")
 local StatusPanel = {}
 
 -- Creates a panel controller for an existing PlayerGui and replicated BootstrapStatus.
@@ -27,17 +28,25 @@ function StatusPanel.new(playerGui: PlayerGui, status: Instance): Lifecycle.Cont
             label.TextWrapped = true
             label.Parent = gui
             local function update()
+                local player = Players.LocalPlayer
+                local operator = player:GetAttribute("Role") == "Gunship"
+                    and player:GetAttribute("Life") == "Alive"
+                local preview = player:GetAttribute("LocalMapPreview") == true
+                    and player:GetAttribute("LocalPreviewRole") == "Gunship"
+                gui.Enabled = not operator and not preview
                 label.Text = string.format(
-                    "Players vs C-130 • %s\nBootstrap %s • Aircraft and thermal view\nCombat and launcher are planned.",
+                    "Players vs C-130 • %s\nBootstrap %s • Gunship weapons available\nGround weapons and launcher are planned.",
                     tostring(status:GetAttribute("Environment")),
                     if status:GetAttribute("Running") then "running" else "stopped"
                 )
             end
             local changed = status.AttributeChanged:Connect(update)
+            local playerChanged = Players.LocalPlayer.AttributeChanged:Connect(update)
             update()
             gui.Parent = playerGui
             return function()
                 changed:Disconnect()
+                playerChanged:Disconnect()
                 gui:Destroy()
             end
         end,

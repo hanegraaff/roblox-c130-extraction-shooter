@@ -1,0 +1,100 @@
+{
+  "source_commit": "000ebe31ca5b88cb5e9add6d110a974d92dd32c1",
+  "multiplayer": {
+    "ok": true,
+    "result": {
+      "skipped": 0,
+      "passed": 5,
+      "observations": [
+        {
+          "endpoint": [
+            4.433722496032715,
+            30,
+            -8.96337604522705
+          ],
+          "targetRoot": [
+            0,
+            30,
+            0
+          ],
+          "afterHealth": 75,
+          "preflightRayHit": false,
+          "beforeImpact": "{\"y\":30.652254104614259,\"x\":1.9878802299499512,\"z\":0.9535609483718872,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "fixtureMuzzle": [
+            327.2073974609375,
+            138,
+            161.85272216796875
+          ],
+          "afterImpact": "{\"y\":30.652254104614259,\"x\":1.9878802299499512,\"z\":0.9535609483718872,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "beforeHealth": 75
+        },
+        {
+          "target": [
+            -264.0000305175781,
+            13.56488037109375,
+            -160
+          ],
+          "kind": "terrain-slope",
+          "impact": [
+            -263.999267578125,
+            13.565017700195312,
+            -159.99977111816406
+          ],
+          "weapon": "GAU23"
+        },
+        {
+          "panelId": "Foundry_S02_South_01",
+          "target": [
+            -190.010009765625,
+            14.571334838867188,
+            -79.5
+          ],
+          "kind": "upper-panel",
+          "impact": [
+            -190.0100555419922,
+            14.571318626403809,
+            -79.5
+          ],
+          "weapon": "GAU23"
+        }
+      ],
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 rejected client traffic leaves readiness intact"
+        },
+        {
+          "passed": true,
+          "name": "A4 swept muzzle path hits thin cover before the visible target"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged airborne endpoint cannot create damage or an impact"
+        },
+        {
+          "passed": true,
+          "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+        },
+        {
+          "passed": true,
+          "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots"
+        },
+        {
+          "name": "A4 both profiles strike real terrain slopes and authored second-story panels",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.CombatHarness:16: P05 timeout: terrain or upper-floor actual impact"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.CombatHarness:55: ServerScriptService.ServerTests.CombatHarness:16: P05 timeout: terrain or upper-floor actual impact"
+        }
+      ],
+      "environment": "Studio",
+      "clientCount": 2,
+      "suite": "P05-multiplayer",
+      "failed": 2,
+      "discovered": 7
+    }
+  }
+}

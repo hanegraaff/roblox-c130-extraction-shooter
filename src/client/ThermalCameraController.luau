@@ -164,6 +164,8 @@ function ThermalCameraController.new(
     local saved: SavedCamera? = nil
     local gui: ScreenGui? = nil
     local touchControlsGui: ScreenGui? = nil
+    local hiddenTouchGui: ScreenGui? = nil
+    local previousTouchGuiEnabled: boolean? = nil
     local label: TextLabel? = nil
     local reticle: TextLabel? = nil
     local projectionOrigin: Frame? = nil
@@ -172,6 +174,9 @@ function ThermalCameraController.new(
     local highlights: { [Model]: Highlight } = {}
     local buttons: { RBXScriptConnection } = {}
     local sequence = 0
+    local fireSequence = 0
+    local fireHeld = false
+    local nextFireRequest = 0
     local lastRound = -1
     local previewWeapon = "GAU23"
     local map = MapRules.defaults
@@ -232,6 +237,7 @@ function ThermalCameraController.new(
             return
         end
         active = false
+        fireHeld = false
         for _, connection in buttons do
             connection:Disconnect()
         end
@@ -256,6 +262,11 @@ function ThermalCameraController.new(
             touchControlsGui:Destroy()
             touchControlsGui = nil
         end
+        if hiddenTouchGui and previousTouchGuiEnabled ~= nil then
+            hiddenTouchGui.Enabled = previousTouchGuiEnabled
+        end
+        hiddenTouchGui = nil
+        previousTouchGuiEnabled = nil
         label = nil
         reticle = nil
         projectionOrigin = nil
@@ -361,16 +372,43 @@ function ThermalCameraController.new(
             safeControls.Parent = playerGui
             touchControlsGui = safeControls
             buttonParent = safeControls
+            local fire = Instance.new("TextButton")
+            fire.Name = "Fire"
+            fire.AnchorPoint = Vector2.new(1, 1)
+            fire.Position = UDim2.new(1, -24, 1, -96)
+            fire.Size = UDim2.fromOffset(76, 76)
+            fire.Text = "FIRE"
+            fire.Font = Enum.Font.GothamBold
+            fire.TextSize = 18
+            fire.BackgroundColor3 = Color3.fromRGB(110, 45, 35)
+            fire.TextColor3 = Color3.new(1, 1, 1)
+            fire.Parent = buttonParent
+            table.insert(
+                buttons,
+                fire.InputBegan:Connect(function(event)
+                    if event.UserInputType == Enum.UserInputType.Touch then
+                        fireHeld = true
+                    end
+                end)
+            )
+            table.insert(
+                buttons,
+                fire.InputEnded:Connect(function(event)
+                    if event.UserInputType == Enum.UserInputType.Touch then
+                        fireHeld = false
+                    end
+                end)
+            )
         end
         local caption = Instance.new("TextLabel")
         caption.Name = "Profile"
         caption.AnchorPoint = if touchControls then Vector2.new(0.5, 0) else Vector2.new(0.5, 1)
-        caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 60) else UDim2.new(0.5, 0, 1, -72)
-        caption.Size = if touchControls then UDim2.new(1, -24, 0, 68) else UDim2.fromOffset(580, 60)
+        caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 8) else UDim2.new(0.5, 0, 1, -72)
+        caption.Size = if touchControls then UDim2.fromOffset(260, 42) else UDim2.fromOffset(580, 60)
         caption.BackgroundColor3 = Color3.fromRGB(12, 15, 16)
         caption.BackgroundTransparency = 0.15
         caption.TextColor3 = Color3.new(1, 1, 1)
-        caption.TextSize = if touchControls then 14 else 17
+        caption.TextSize = if touchControls then 12 else 17
         caption.TextWrapped = true
         caption.Font = Enum.Font.Gotham
         caption.Parent = screen
@@ -407,7 +445,7 @@ function ThermalCameraController.new(
         recenter.Name = "Recenter"
         recenter.AnchorPoint = Vector2.new(1, 0)
         recenter.Position = UDim2.new(1, -16, 0, 16)
-        recenter.Size = UDim2.fromOffset(if touchControls then 140 else 150, if touchControls then 48 else 32)
+        recenter.Size = UDim2.fromOffset(if touchControls then 96 else 150, if touchControls then 42 else 32)
         recenter.Text = if touchControls then "Recenter" else "R • Recenter"
         recenter.Font = Enum.Font.Gotham
         recenter.TextSize = 16
@@ -528,7 +566,9 @@ function ThermalCameraController.new(
             buttons,
             UserInputService.InputBegan:Connect(function(event, processed)
                 if not processed and eligible() then
-                    if event.KeyCode == Enum.KeyCode.One then
+                    if event.UserInputType == Enum.UserInputType.MouseButton1 then
+                        fireHeld = true
+                    elseif event.KeyCode == Enum.KeyCode.One then
                         selectWeapon("GAU23")
                     elseif event.KeyCode == Enum.KeyCode.Two then
                         selectWeapon("M102")
@@ -538,11 +578,19 @@ function ThermalCameraController.new(
                 end
             end)
         )
+        table.insert(
+            buttons,
+            UserInputService.InputEnded:Connect(function(event)
+                if event.UserInputType == Enum.UserInputType.MouseButton1 then
+                    fireHeld = false
+                end
+            end)
+        )
         local effect = Instance.new("ColorCorrectionEffect")
         effect.Name = "OperatorThermal"
         effect.Saturation = -1
-        effect.Contrast = 0.35
-        effect.Brightness = 0.04
+        effect.Contrast = -0.15
+        effect.Brightness = 0.2
         effect.Parent = camera
         correction = effect
     end
@@ -561,9 +609,22 @@ function ThermalCameraController.new(
         if not active then
             enter(camera)
         end
+        if hiddenTouchGui and hiddenTouchGui.Parent ~= playerGui then
+            hiddenTouchGui = nil
+            previousTouchGuiEnabled = nil
+        end
+        if UserInputService.TouchEnabled and not hiddenTouchGui then
+            local touchGui = playerGui:FindFirstChild("TouchGui")
+            if touchGui and touchGui:IsA("ScreenGui") then
+                hiddenTouchGui = touchGui
+                previousTouchGuiEnabled = touchGui.Enabled
+                touchGui.Enabled = false
+            end
+        end
         local roundId = roundState:GetAttribute("RoundId")
         if type(roundId) == "number" and roundId ~= lastRound then
             sequence = 0
+            fireSequence = 0
             lastRound = roundId
             focus = nil
         end
@@ -685,6 +746,26 @@ function ThermalCameraController.new(
                 if type(minimum) == "number" then minimum else nil,
                 if type(maximum) == "number" then maximum else nil
             )
+        if fireHeld and not preview and validAim and not blocked and os.clock() >= nextFireRequest then
+            local remote = state:FindFirstChild("FireWeapon")
+            if remote and remote:IsA("RemoteEvent") then
+                fireSequence += 1
+                remote:FireServer({
+                    roundId = roundId,
+                    sequence = fireSequence,
+                    weapon = weapon,
+                    x = endpoint.X,
+                    y = endpoint.Y,
+                    z = endpoint.Z,
+                    focusX = currentFocus.x,
+                    focusZ = currentFocus.z,
+                    aspect = aspect,
+                    cameraX = hitbox.Position.X,
+                    cameraZ = hitbox.Position.Z,
+                })
+                nextFireRequest = os.clock() + (if weapon == "GAU23" then 0.16 else 0.2)
+            end
+        end
         frameNumber += 1
         local cross = reticle
         local caption = label
@@ -696,12 +777,33 @@ function ThermalCameraController.new(
             assert(guiPosition, "finite projection pixels and GUI origin must define a reticle offset")
             cross.Position = guiPosition
             cross.TextColor3 = if validAim then Color3.new(1, 1, 1) else Color3.fromRGB(255, 140, 90)
+            local readinessText = ""
+            local readinessJson = state:GetAttribute("Readiness")
+            if not preview and type(readinessJson) == "string" then
+                local ok, decoded = pcall(function()
+                    return HttpService:JSONDecode(readinessJson)
+                end)
+                local readiness = if ok and type(decoded) == "table" then decoded[weapon] else nil
+                if
+                    type(readiness) == "table"
+                    and type(readiness.ammo) == "number"
+                    and type(readiness.reloadUntil) == "number"
+                then
+                    local remaining = math.max(0, readiness.reloadUntil - workspace:GetServerTimeNow())
+                    readinessText = if remaining > 0
+                        then string.format(" • Reload %.1fs", remaining)
+                        else string.format(" • %d rounds", readiness.ammo)
+                end
+            end
             caption.Text = (if preview then "Studio preview • " else "")
-                .. AircraftRules.names[weapon]
+                .. (if UserInputService.TouchEnabled
+                    then (if weapon == "GAU23" then "30mm GAU-23/A" else "105mm M102")
+                    else AircraftRules.names[weapon])
+                .. readinessText
                 .. string.format(
                     if UserInputService.TouchEnabled
-                        then " • %d° FOV\nArrows pan • drag view to aim • Recenter • Firing planned"
-                        else " • %d° FOV\nWASD pan • mouse aims • R recenter • 1 / 2 select • Firing planned",
+                        then " • %d° FOV\nPan • drag to aim • hold FIRE"
+                        else " • %d° FOV\nWASD pan • mouse aims • hold click to fire • R recenter • 1 / 2 select",
                     fov
                 )
             -- Observable projection commit used by engine tests and accessibility tooling.
@@ -765,6 +867,7 @@ function ThermalCameraController.new(
     end)
     local unfocused = UserInputService.WindowFocusReleased:Connect(function()
         windowFocused = false
+        fireHeld = false
         table.clear(heldPad)
         aimTouch = nil
         touchAimBeforeCapture = nil

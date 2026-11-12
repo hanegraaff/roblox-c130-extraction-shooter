@@ -24,6 +24,7 @@ assert(
     count > 0 and report.failed == 0 and report.skipped == 0 and report.errors == 0,
     "client suite failed or empty"
 )
+require(script.CombatHarness).run()
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
 require(script.AircraftPanHarness).run()
