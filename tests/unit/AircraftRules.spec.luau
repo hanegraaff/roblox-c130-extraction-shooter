@@ -76,8 +76,8 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local narrow = rules.fov(config, "GAU23")
         local wide = rules.fov(config, "M102")
         assert(
-            narrow and wide and narrow < wide and narrow == 35 and wide == 60,
-            "expected narrow and wide and narrow < wide and narrow == 35 and wide == 60"
+            narrow and wide and narrow < wide and narrow == 30 and wide == 40,
+            "expected narrow and wide and narrow < wide and narrow == 30 and wide == 40"
         )
         assert(rules.fov(config, "M7") == nil, 'expected rules.fov(config, "M7") == nil')
     end)

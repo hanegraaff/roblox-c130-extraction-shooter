@@ -137,10 +137,12 @@ function ThermalCameraController.new(
     local lastRound = -1
     local previewWeapon = "GAU23"
     local map = MapRules.defaults
-    local focus = AircraftPanRules.recenter(map)
+    local focus: { x: number, z: number }? = nil
     local recenterRequested = false
     local frameNumber = 0
     local windowFocused = true
+    local lastAspect: number? = nil
+    local cachedWidestFov: number? = nil
     local heldPad: { [InputObject]: Vector2 } = {}
     local aimTouch: InputObject? = nil
     local touchAim: Vector2? = nil
@@ -217,6 +219,8 @@ function ThermalCameraController.new(
         table.clear(heldPad)
         aimTouch = nil
         touchAim = nil
+        lastAspect = nil
+        cachedWidestFov = nil
         local previous = saved
         if previous then
             previous.camera.CameraType = previous.kind
@@ -250,7 +254,7 @@ function ThermalCameraController.new(
         active = true
         local touchControls = UserInputService.TouchEnabled
         previewWeapon = "GAU23"
-        focus = AircraftPanRules.recenter(map)
+        focus = nil
         recenterRequested = false
         table.clear(heldPad)
         aimTouch = nil
@@ -473,7 +477,7 @@ function ThermalCameraController.new(
         if type(roundId) == "number" and roundId ~= lastRound then
             sequence = 0
             lastRound = roundId
-            focus = AircraftPanRules.recenter(map)
+            focus = nil
         end
         local preview = roundState:GetAttribute("Phase") == "Lobby"
         local weapon = previewWeapon
@@ -495,11 +499,30 @@ function ThermalCameraController.new(
             end
             weapon = decoded.weapon
         end
-        local fov = AircraftRules.fov(AircraftRules.defaults, weapon)
-        assert(fov, "acknowledged aircraft profile")
+        local selectedFov = AircraftRules.fov(AircraftRules.defaults, weapon)
+        assert(selectedFov, "acknowledged aircraft profile")
         local viewport = camera.ViewportSize
         if viewport.X <= 1 or viewport.Y <= 1 then
             return -- Wait for an actual render viewport before committing projection.
+        end
+        local aspect = viewport.X / viewport.Y
+        if lastAspect ~= aspect then
+            lastAspect = aspect
+            cachedWidestFov = AircraftPanRules.supportedFov(map, aspect, AircraftRules.defaults.fov105mm)
+        end
+        local widestFov = cachedWidestFov
+        assert(widestFov, "level and viewport must support an inward ground-only camera")
+        local fov = math.min(selectedFov, widestFov)
+        local currentFocus = focus
+            or assert(
+                AircraftPanRules.recenter(map, aspect, widestFov),
+                "validated view must have a reset focus"
+            )
+        if not AircraftPanRules.viewFits(map, currentFocus, aspect, widestFov) then
+            currentFocus = assert(
+                AircraftPanRules.recenter(map, aspect, widestFov),
+                "validated view must have a reset focus"
+            )
         end
         local input: InputFrame
         if inputProvider then
@@ -519,21 +542,27 @@ function ThermalCameraController.new(
         local pointer = if pointerValid then input.position else viewport * 0.5
         local blocked = input.blocked or not pointerValid
         if recenterRequested or input.recenter == true then
-            focus = AircraftPanRules.recenter(map)
+            currentFocus = assert(
+                AircraftPanRules.recenter(map, aspect, widestFov),
+                "validated view must have a reset focus"
+            )
             recenterRequested = false
         else
-            focus = AircraftPanRules.step(
+            currentFocus = AircraftPanRules.step(
                 map,
-                focus,
-                hitbox.Position.X,
-                hitbox.Position.Z,
+                currentFocus,
                 input.panRight or 0,
                 input.panUp or 0,
                 deltaSeconds,
-                blocked
-            ) or focus
+                blocked,
+                aspect,
+                widestFov
+            ) or currentFocus
         end
-        local cameraFocus = Vector3.new(focus.x, map.groundY, focus.z)
+        focus = currentFocus
+        local point = AircraftPanRules.worldFocus(map, currentFocus, hitbox.Position.X, hitbox.Position.Z)
+        assert(point, "canonical aircraft must rotate a finite orbit-local focus")
+        local cameraFocus = Vector3.new(point.x, map.groundY, point.z)
         local cameraFrame = ThermalCameraController.frame(hitbox.Position, cameraFocus)
         assert(cameraFrame, "canonical aircraft and bounded focus must define a finite inward basis")
         camera.CameraType = Enum.CameraType.Scriptable
@@ -542,7 +571,7 @@ function ThermalCameraController.new(
         UserInputService.MouseBehavior = Enum.MouseBehavior.Default
         UserInputService.MouseIconEnabled = false
         local mouse = pointer
-        -- Raw edge input drives focus; only the displayed reticle is central-70%.
+        -- Aim input is independent of pan; the displayed reticle is central-70%.
         local pixels = AircraftPanRules.raster(mouse.X, mouse.Y, viewport.X, viewport.Y)
         assert(pixels, "finite viewport and pointer must define raster reticle pixels")
         local x, y = pixels.x, pixels.y
@@ -595,6 +624,7 @@ function ThermalCameraController.new(
             screen:SetAttribute("ReticlePixels", Vector2.new(x, y))
             screen:SetAttribute("ProjectionGuiOrigin", guiOrigin)
             screen:SetAttribute("PanFocus", cameraFocus)
+            screen:SetAttribute("PanLocalFocus", Vector2.new(currentFocus.x, currentFocus.z))
             screen:SetAttribute("RawPointer", mouse)
             screen:SetAttribute("InputBlocked", blocked)
             screen:SetAttribute("PanDirection", Vector2.new(input.panRight or 0, input.panUp or 0))

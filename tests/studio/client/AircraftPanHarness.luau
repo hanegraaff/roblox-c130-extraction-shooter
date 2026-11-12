@@ -11,6 +11,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Input = game:GetService("UserInputService")
 local GuiService = game:GetService("GuiService")
+local PanRules = require(ReplicatedStorage.Shared.AircraftPanRules)
+local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
 local Harness = {}
 type Request = {
     kind: string,
@@ -48,8 +50,18 @@ function Harness.run()
         local pointingFrameBefore: number? = nil
         local pointingPixels: Vector2? = nil
         local arrivalErrorStuds = 0
-        local function arrived(current: Vector3, destination: Vector3): boolean
-            return Vector2.new(current.X - destination.X, current.Z - destination.Z).Magnitude <= 0.25
+        local function visible(point: Vector3): boolean
+            local camera = workspace.CurrentCamera
+            if not camera then
+                return false
+            end
+            local projection = camera:WorldToViewportPoint(point)
+            local viewport = camera.ViewportSize
+            return projection.Z > 0
+                and projection.X >= viewport.X * 0.17
+                and projection.X <= viewport.X * 0.83
+                and projection.Y >= viewport.Y * 0.17
+                and projection.Y <= viewport.Y * 0.83
         end
         local pendingWeapon: string? = nil
         local recenter = false
@@ -69,16 +81,18 @@ function Harness.run()
             elseif outside then
                 pointer = Vector2.new(viewport.X + 100, viewport.Y * 0.5)
             elseif goal and current then
-                local focus = current:GetAttribute("PanFocus")
+                local focus = current:GetAttribute("PanLocalFocus")
                 local aircraft = workspace:FindFirstChild("Aircraft")
                 local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
-                if typeof(focus) == "Vector3" and root and root:IsA("BasePart") then
-                    local difference = goal - focus
-                    if not arrived(focus, goal) then
+                if typeof(focus) == "Vector2" and root and root:IsA("BasePart") then
+                    if not visible(goal) then
                         local radial = Vector2.new(root.Position.X, root.Position.Z).Unit
-                        local right = difference.X * radial.Y - difference.Z * radial.X
-                        local up = -difference.X * radial.X - difference.Z * radial.Y
-                        pan = Vector2.new(math.clamp(right / 6, -1, 1), math.clamp(up / 6, -1, 1))
+                        local localX = radial.X * goal.X + radial.Y * goal.Z
+                        local localZ = -radial.Y * goal.X + radial.X * goal.Z
+                        pan = Vector2.new(
+                            math.clamp((localZ - focus.Y) / 6, -1, 1),
+                            math.clamp((focus.X - localX) / 6, -1, 1)
+                        )
                     end
                 end
             elseif aimPoint and current and workspace.CurrentCamera then
@@ -147,6 +161,22 @@ function Harness.run()
             assert(typeof(value) == "Vector3", "panned focus missing")
             return value
         end
+        local function localFocus(): Vector2
+            local current = hud()
+            local value = if current then current:GetAttribute("PanLocalFocus") else nil
+            assert(typeof(value) == "Vector2", "orbit-local pan focus missing")
+            return value
+        end
+        local function resetFocus(): Vector2
+            local camera = workspace.CurrentCamera
+            assert(camera, "camera unavailable for reset view")
+            local aspect = camera.ViewportSize.X / camera.ViewportSize.Y
+            local widest = PanRules.supportedFov(MapRules.defaults, aspect, AircraftRules.defaults.fov105mm)
+            assert(widest, "reset lens unavailable")
+            local home = PanRules.recenter(MapRules.defaults, aspect, widest)
+            assert(home, "reset view unavailable")
+            return Vector2.new(home.x, home.z)
+        end
         -- Arrival is one consistent input-driven neighborhood. Enter a separate
         -- pointing stage once reached: continuing directional steering after arrival races
         -- the target assertion, especially below 30Hz. No focus is assigned here.
@@ -155,10 +185,10 @@ function Harness.run()
             pointingFrameBefore = nil
             pointingPixels = nil
             local destination = Vector3.new(point.X, 0, point.Z)
-            goal = destination
+            goal = point
             waitFor(function()
-                return arrived(focus(), destination)
-            end, "input-driven focus", 12)
+                return visible(point)
+            end, "input-driven target visibility", 12)
             arrivalErrorStuds = (focus() - destination).Magnitude
             local current = hud()
             assert(current, "arrival HUD disappeared")
@@ -210,6 +240,7 @@ function Harness.run()
             result.endpoint = packed(endpoint)
             result.rawPointer = packed(current:GetAttribute("RawPointer"))
             result.focus = packed(current:GetAttribute("PanFocus"))
+            result.localFocus = packed(current:GetAttribute("PanLocalFocus"))
             result.frame = current:GetAttribute("ProjectionFrame")
             result.projectionTime = current:GetAttribute("ProjectionTime")
             result.projectionCamera = packed(frame)
@@ -231,6 +262,24 @@ function Harness.run()
                 "projection metadata missing"
             )
             assert((camera.ViewportSize - viewport).Magnitude < 0.01, "viewport changed during sample")
+            local cornerGround: { unknown } = {}
+            for _, corner in
+                {
+                    Vector2.new(0, 0),
+                    Vector2.new(viewport.X, 0),
+                    Vector2.new(0, viewport.Y),
+                    viewport,
+                }
+            do
+                local cornerRay = camera:ViewportPointToRay(corner.X, corner.Y)
+                assert(cornerRay.Direction.Y < -1e-9, "camera corner includes sky")
+                local distance = (MapRules.defaults.groundY - cornerRay.Origin.Y) / cornerRay.Direction.Y
+                local groundHit = cornerRay.Origin + cornerRay.Direction * distance
+                local radius = Vector2.new(groundHit.X, groundHit.Z).Magnitude
+                table.insert(cornerGround, { corner.X, corner.Y, radius })
+                assert(radius <= MapRules.defaults.radiusStuds - 1, "camera corner escaped level")
+            end
+            result.cornerGround = cornerGround
             local cross = current:FindFirstChild("Reticle")
             result.reticlePresent = cross ~= nil
             assert(cross and cross:IsA("TextLabel"), "drawn reticle missing")
@@ -363,31 +412,76 @@ function Harness.run()
             local ok, failure = pcall(function()
                 if request.kind == "EdgeFrames" then
                     local checked = 0
-                    for i = 0, 64 do
-                        local x, y, z = MapRules.orbit(MapRules.defaults, i / 64 * 2 * math.pi)
-                        local origin = Vector3.new(x, y, z)
-                        for j = 0, 8 do
-                            local angle = j / 8 * 2 * math.pi
-                            local target = if j == 8
-                                then Vector3.zero
-                                else Vector3.new(math.cos(angle) * 360, 0, math.sin(angle) * 360)
+                    for _, direction in { { 0, 0 }, { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } } do
+                        local held =
+                            PanRules.recenter(MapRules.defaults, 16 / 9, AircraftRules.defaults.fov105mm)
+                        assert(held, "safe orbit view unavailable")
+                        for _ = 1, 180 do
+                            held = PanRules.step(
+                                MapRules.defaults,
+                                held,
+                                direction[1],
+                                direction[2],
+                                0.1,
+                                false,
+                                16 / 9,
+                                AircraftRules.defaults.fov105mm
+                            ) or held
+                        end
+                        local baselineLook: Vector3? = nil
+                        local baselineRight: Vector3? = nil
+                        for i = 0, 64 do
+                            local phase = i / 64 * 2 * math.pi
+                            local x, y, z = MapRules.orbit(MapRules.defaults, phase)
+                            local origin = Vector3.new(x, y, z)
+                            local point = PanRules.worldFocus(MapRules.defaults, held, x, z)
+                            assert(point, "orbit-local focus transformation rejected")
+                            local target = Vector3.new(point.x, MapRules.defaults.groundY, point.z)
                             local frame = CameraController.frame(origin, target)
-                            assert(frame, "exact disk-edge frame rejected")
+                            assert(frame, "bounded orbit view frame rejected")
                             for _, value in { frame:GetComponents() } do
                                 assert(
                                     value == value and math.abs(value) < math.huge,
-                                    "nonfinite edge camera"
+                                    "nonfinite camera frame"
                                 )
                             end
-                            assert((frame.Position - origin).Magnitude < 0.001, "edge camera origin moved")
+                            assert(
+                                (frame.Position - origin).Magnitude < 0.001,
+                                "camera origin moved from aircraft"
+                            )
                             assert(
                                 frame.LookVector:Dot((target - origin).Unit) > 0.99999,
-                                "edge camera focus changed"
+                                "held view rotated"
                             )
+                            local radial = Vector3.new(math.cos(phase), 0, math.sin(phase))
+                            local tangent = Vector3.new(-math.sin(phase), 0, math.cos(phase))
+                            local localLook = Vector3.new(
+                                frame.LookVector:Dot(radial),
+                                frame.LookVector.Y,
+                                frame.LookVector:Dot(tangent)
+                            )
+                            local localRight = Vector3.new(
+                                frame.RightVector:Dot(radial),
+                                frame.RightVector.Y,
+                                frame.RightVector:Dot(tangent)
+                            )
+                            if baselineLook and baselineRight then
+                                assert(
+                                    (localLook - baselineLook).Magnitude < 1e-5,
+                                    "orbit altered held look angle"
+                                )
+                                assert(
+                                    (localRight - baselineRight).Magnitude < 1e-5,
+                                    "orbit rolled held view"
+                                )
+                            else
+                                baselineLook = localLook
+                                baselineRight = localRight
+                            end
                             checked += 1
                         end
                     end
-                    observations = { engineFrames = checked, exactDiskEdge = true }
+                    observations = { engineFrames = checked, viewInsideLevel = true }
                 elseif request.kind == "Projection" then
                     assert(request.point, "projection point missing")
                     if request.weapon then
@@ -478,18 +572,18 @@ function Harness.run()
                 elseif request.kind == "Coherence" then
                     goal = nil
                     aimPoint = nil
-                    local previous = focus()
+                    local previous = localFocus()
                     pendingWeapon = request.weapon
                     waitFor(function()
                         local current = hud()
                         return current ~= nil and current:GetAttribute("Weapon") == request.weapon
                     end, "zoom without recenter")
-                    assert((focus() - previous).Magnitude < 0.01, "zoom reset pan focus")
+                    assert((localFocus() - previous).Magnitude < 0.01, "zoom reset pan focus")
                     observations = sample(nil, observations)
                 elseif request.kind == "Reject" then
                     goal = nil
                     aimPoint = nil
-                    local previous = focus()
+                    local previous = localFocus()
                     local selection = ReplicatedStorage.AircraftState:GetAttribute("Selection")
                     local remoteSelection =
                         ReplicatedStorage.AircraftState:FindFirstChild("SelectWeapon") :: RemoteEvent
@@ -503,24 +597,24 @@ function Harness.run()
                         ReplicatedStorage.AircraftState:GetAttribute("Selection") == selection,
                         "invalid selection changed commit"
                     )
-                    assert((focus() - previous).Magnitude < 0.01, "rejected selection reset pan")
+                    assert((localFocus() - previous).Magnitude < 0.01, "rejected selection reset pan")
                     observations = sample(nil, observations)
                 elseif request.kind == "Blocked" then
-                    local previous = focus()
+                    local previous = localFocus()
                     aimPoint = nil
                     goal = Vector3.new(300, 0, 300)
                     forcedBlocked = true
                     task.wait(0.25)
-                    assert((focus() - previous).Magnitude < 0.01, "UI blocked input moved focus")
+                    assert((localFocus() - previous).Magnitude < 0.01, "UI blocked input moved focus")
                     forcedBlocked = false
                     goal = nil
                     outside = true
                     task.wait(0.25)
-                    assert((focus() - previous).Magnitude < 0.01, "neutral direction moved focus")
+                    assert((localFocus() - previous).Magnitude < 0.01, "neutral direction moved focus")
                     outside = false
                     recenter = true
                     waitFor(function()
-                        return focus().Magnitude < 0.01
+                        return (localFocus() - resetFocus()).Magnitude < 0.01
                     end, "recenter")
                     observations = sample(nil, observations)
                 elseif request.kind == "ResetInput" then
@@ -528,7 +622,7 @@ function Harness.run()
                     aimPoint = nil
                     recenter = true
                     waitFor(function()
-                        return focus().Magnitude < 0.01
+                        return (localFocus() - resetFocus()).Magnitude < 0.01
                     end, "default focus")
                     observations = sample(nil, observations)
                 elseif request.kind == "Normal" then
