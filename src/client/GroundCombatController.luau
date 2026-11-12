@@ -86,10 +86,10 @@ function GroundCombatController.new(
             local hitMarker = Instance.new("TextLabel")
             hitMarker.Name = "AircraftHit"
             hitMarker.AnchorPoint = Vector2.new(0.5, 0)
-            hitMarker.Size = UDim2.fromOffset(120, 24)
+            hitMarker.Size = UDim2.fromOffset(180, 26)
             hitMarker.BackgroundTransparency = 1
-            hitMarker.Text = "HIT  −5"
-            hitMarker.TextSize = 18
+            hitMarker.Text = "AIRCRAFT HIT  −5"
+            hitMarker.TextSize = 20
             hitMarker.Font = Enum.Font.GothamBold
             hitMarker.TextColor3 = Color3.fromRGB(255, 215, 80)
             hitMarker.TextStrokeTransparency = 0
@@ -126,6 +126,7 @@ function GroundCombatController.new(
             local nextAttempt = 0
             local lastShot: string? = nil
             local hitUntil = 0
+            local shotUntil = 0
             local function clearTool()
                 held = false
                 fireTouch = nil
@@ -278,12 +279,17 @@ function GroundCombatController.new(
                             and type(value) == "table"
                             and value.userId == player.UserId
                             and value.roundId == round
-                            and value.aircraftHit == true
                         then
-                            hitUntil = now + 0.6
+                            shotUntil = now + 0.2
+                            if value.aircraftHit == true then
+                                hitUntil = now + 1.2
+                            end
                         end
                     end
                     hitMarker.Visible = now < hitUntil
+                    reticle.TextColor3 = if now < shotUntil
+                        then Color3.fromRGB(255, 205, 55)
+                        else Color3.new(1, 1, 1)
                     if not held or now < nextAttempt then
                         return
                     end

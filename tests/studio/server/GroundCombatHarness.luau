@@ -84,6 +84,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local fireDecisions: { unknown } = {}
     local shotObservations: { unknown } = {}
     local tracerObservations: { { endpoint: Vector3, visualEnd: Vector3, length: number } } = {}
+    local lastHitName = ""
     local started, runtimeOrFailure = pcall(function()
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
@@ -112,8 +113,16 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             end,
             observeShot = function(shot)
                 if traceEnabled then
+                    lastHitName = shot.hitName
                     local effects = workspace:FindFirstChild("GroundCombatEffects")
-                    local tracer = if effects then effects:FindFirstChild("M7Tracer") else nil
+                    local tracer: Instance? = nil
+                    if effects then
+                        for _, child in effects:GetChildren() do
+                            if child.Name == "M7Tracer" then
+                                tracer = child
+                            end
+                        end
+                    end
                     if tracer and tracer:IsA("BasePart") then
                         table.insert(tracerObservations, {
                             endpoint = shot.hitPosition,
@@ -634,6 +643,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             wall.Position = hitbox().Position - Vector3.new(0, 12, 0)
             wall.Parent = fixture
             target = hitbox().Position
+            target = head.Position + (target - head.Position).Unit * 3
             sample("before-solid-cover-shot", target)
             probe(
                 ground,
@@ -647,6 +657,10 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             sample("after-solid-cover-shot", nil)
             wall:Destroy()
             task.wait(0.2)
+            local aircraftModel = workspace:FindFirstChild("Aircraft")
+            local wing = if aircraftModel then aircraftModel:FindFirstChild("Wing") else nil
+            assert(wing and wing:IsA("BasePart"), "visible wing missing")
+            local wingTarget = wing.CFrame:PointToWorldSpace(Vector3.new(20, 0, 2))
             local teammateHumanoid: Humanoid? = nil
             local teammateModel: Model? = nil
             if expected >= 3 then
@@ -665,7 +679,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                             "teammate fixture missing"
                         )
                         teammateRoot.Anchored = true
-                        teammateRoot.CFrame = CFrame.new(head.Position:Lerp(hitbox().Position, 0.55))
+                        teammateRoot.CFrame = CFrame.new(head.Position:Lerp(wingTarget, 0.55))
                         assert(
                             runtime.groundCombat.trustCorrection(player),
                             "trusted teammate fixture placement failed"
@@ -676,14 +690,19 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 task.wait(0.1)
             end
             local teammateHealth = if teammateHumanoid then teammateHumanoid.Health else 0
-            target = hitbox().Position
+            wingTarget = wing.CFrame:PointToWorldSpace(Vector3.new(20, 0, 2))
+            target = wingTarget
+            -- A client-sampled point can be before the aircraft's current
+            -- surface. Verify the server casts beyond the direction point,
+            -- while the preceding real-cover case still blocks first.
+            target = head.Position + (target - head.Position).Unit * 12
             sample("before-exposed-shot", target)
             if teammateModel then
                 local filter = RaycastParams.new()
                 filter.FilterType = Enum.RaycastFilterType.Include
                 filter.FilterDescendantsInstances = { teammateModel }
                 assert(
-                    workspace:Raycast(head.Position, target - head.Position, filter),
+                    workspace:Raycast(head.Position, (wingTarget - head.Position), filter),
                     "rifle path did not cross teammate"
                 )
             end
@@ -703,12 +722,16 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             end
             sample("after-exposed-shot", nil)
             assert(health() == 295, "real rifle hit aircraft failed: " .. HttpService:JSONEncode(diagnostic))
+            assert(
+                string.find(lastHitName, "Aircraft.Wing", 1, true),
+                "shot missed visible wing: " .. lastHitName
+            )
             local latestTracer = tracerObservations[#tracerObservations]
             assert(
                 latestTracer and (latestTracer.visualEnd - latestTracer.endpoint).Magnitude < 0.01,
                 "tracer endpoint disagrees with authoritative hit"
             )
-            assert(latestTracer.length <= 12.01, "tracer exceeds terminal segment")
+            assert(latestTracer.length <= 50.01, "tracer exceeds terminal segment")
             if teammateHumanoid then
                 assert(teammateHumanoid.Health == teammateHealth, "rifle damaged a ground teammate")
             end

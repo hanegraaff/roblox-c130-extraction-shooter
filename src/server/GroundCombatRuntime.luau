@@ -290,16 +290,12 @@ function GroundCombatRuntime.start(
             end
             params.FilterDescendantsInstances = roots
             params.RespectCanCollide = false
-            -- A camera-picked target can lie exactly on a surface. Continue a
-            -- bounded half stud beyond it to avoid endpoint precision missing
-            -- that surface; every award still requires a real server ray hit.
+            -- The target establishes direction, not a claimed hit. Cast the
+            -- entire bounded range so a moving aircraft can still intersect
+            -- beyond its previously sampled surface; server cover wins first.
             local delta = target - origin
-            local hit = workspace:Raycast(
-                origin,
-                delta.Unit * math.min(delta.Magnitude + 0.5, GroundCombatService.range),
-                params
-            )
-            local endpoint = if hit then hit.Position else target
+            local hit = workspace:Raycast(origin, delta.Unit * GroundCombatService.range, params)
+            local endpoint = if hit then hit.Position else origin + delta.Unit * GroundCombatService.range
             local tracer = Instance.new("Part")
             tracer.Name = "M7Tracer"
             tracer.Anchored = true
@@ -308,15 +304,15 @@ function GroundCombatRuntime.start(
             tracer.CanQuery = false
             tracer.Material = Enum.Material.Neon
             tracer.Color = Color3.fromRGB(255, 220, 120)
-            -- Display only the terminal section of the resolved server ray.
+            -- Display the terminal section of the resolved server ray.
             -- A full head-to-target beam appears displaced in a third-person
             -- camera even when its endpoint agrees with the aiming point.
-            local length = math.min((endpoint - origin).Magnitude, 12)
+            local length = math.min((endpoint - origin).Magnitude, 50)
             local start = endpoint - delta.Unit * length
-            tracer.Size = Vector3.new(0.12, 0.12, math.max(length, 0.01))
+            tracer.Size = Vector3.new(0.4, 0.4, math.max(length, 0.01))
             tracer.CFrame = CFrame.lookAt((start + endpoint) / 2, endpoint)
             tracer.Parent = effects
-            Debris:AddItem(tracer, 0.1)
+            Debris:AddItem(tracer, 0.4)
             local state = match.snapshot()
             local healthBefore = health.snapshot().health
             local applied = false

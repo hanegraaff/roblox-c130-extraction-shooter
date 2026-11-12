@@ -36,7 +36,8 @@ export type Controller = {
 
 -- Starts from phase zero. Orbit runs in lobby for solo inspection, resets at each
 -- deployment/lobby transition, and freezes in Results. Model pivot/Hitbox is the sole
--- gameplay pose; decorative parts do not collide/query/touch. No smoothing shell.
+-- gameplay pose; visible parts participate in shot queries but do not collide or
+-- touch. No smoothing shell.
 -- Optional clock supplies finite monotonic seconds for engine fixtures; production
 -- uses GetServerTimeNow. match remains owned by GameRuntime, never destroyed here.
 function AircraftService.start(match: MatchService.Controller, clock: (() -> number)?): (Controller?, string?)

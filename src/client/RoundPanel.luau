@@ -38,8 +38,8 @@ function RoundPanel.new(
             label.Parent = gui
             local healthLabel = Instance.new("TextLabel")
             healthLabel.Name = "AircraftHealth"
-            healthLabel.AnchorPoint = Vector2.new(0.5, 0)
-            healthLabel.Position = UDim2.new(0.5, 0, 0, 55)
+            healthLabel.AnchorPoint = Vector2.zero
+            healthLabel.Position = UDim2.fromOffset(12, 55)
             healthLabel.Size = UDim2.fromOffset(250, 34)
             healthLabel.BackgroundColor3 = Color3.fromRGB(72, 28, 25)
             healthLabel.BackgroundTransparency = 0.05
