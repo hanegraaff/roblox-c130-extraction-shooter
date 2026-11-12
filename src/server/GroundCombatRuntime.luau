@@ -18,15 +18,20 @@ local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
--- Server-composition boundary for a nonyielding terrain query adapter. Production
--- omits this dependency and uses the authoritative Terrain query directly.
-export type Dependencies = { terrainQuery: ((Vector3) -> boolean)? }
+-- Server-composition boundaries must not yield, throw, or mutate combat state.
+-- Production omits both and uses the authoritative Terrain query directly.
+export type Dependencies = {
+    terrainQuery: ((Vector3) -> boolean)?,
+    observeFire: ((number, string, number) -> ())?,
+}
 export type Controller = {
     stop: () -> (),
     rocketImpact: (number, string, boolean) -> boolean,
     rocketSweep: (number, string, Vector3, Vector3) -> boolean,
     -- Only a trusted server owner may acknowledge its own spawn/correction.
     trustCorrection: (Player) -> boolean,
+    -- Fresh readiness copy for a server-owned diagnostic, at server time.
+    readiness: (Player) -> GroundCombatService.Readiness,
     resources: () -> { connections: number, tools: number },
 }
 -- match is the sole result owner. rocketImpact is a server-only fixture seam;
@@ -59,6 +64,11 @@ function GroundCombatRuntime.start(
     local connections: { RBXScriptConnection } = {}
     local running = true
     local lastRound = -1
+    local function observe(player: Player, decision: string, now: number)
+        if dependencies and dependencies.observeFire then
+            dependencies.observeFire(player.UserId, decision, now)
+        end
+    end
     local function track(player: Player, now: number, trustedCorrection: boolean): boolean
         local character = player.Character
         local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
@@ -167,31 +177,47 @@ function GroundCombatRuntime.start(
         connections,
         fire.OnServerEvent:Connect(function(player: Player, payload: unknown)
             local now = workspace:GetServerTimeNow()
-            if not spendBudget(player, now) or not active(player, now) or not ownedEquipped(player) then
+            if not spendBudget(player, now) then
+                observe(player, "rate", now)
+                return
+            end
+            if not active(player, now) then
+                observe(player, "inactive", now)
+                return
+            end
+            if not ownedEquipped(player) then
+                observe(player, "not-equipped", now)
                 return
             end
             local character = player.Character
             local head = if character then character:FindFirstChild("Head") else nil
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
             if not head or not head:IsA("BasePart") or not root or not root:IsA("BasePart") then
+                observe(player, "body-missing", now)
                 return
             end
             local origin = head.Position
             -- Reject malformed, replayed, out-of-range or cooldown requests
             -- before the movement, voxel, overlap and world-ray checks.
             if not rifles.preflight(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z) then
+                observe(player, "preflight", now)
                 return
             end
             if not track(player, now, false) then
+                observe(player, "movement", now)
                 return
             end
-            if not originGeometry.allows(root, head) then
+            local allowed, originReason = originGeometry.allows(root, head)
+            if not allowed then
+                observe(player, "origin:" .. tostring(originReason), now)
                 return
             end
             local intent = rifles.fire(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z)
             if not intent then
+                observe(player, "fire-rejected", now)
                 return
             end
+            observe(player, "accepted", now)
             publishRifle(player, now)
             local target = Vector3.new(intent.x, intent.y, intent.z)
             local params = RaycastParams.new()
@@ -310,6 +336,9 @@ function GroundCombatRuntime.start(
     )
     publish()
     return {
+        readiness = function(player)
+            return rifles.readiness(player.UserId, workspace:GetServerTimeNow())
+        end,
         trustCorrection = function(player)
             return running and track(player, workspace:GetServerTimeNow(), true)
         end,

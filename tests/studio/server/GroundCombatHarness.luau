@@ -80,6 +80,8 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     end
     local faultArmed = false
     local queryFailures = 0
+    local traceEnabled = false
+    local fireDecisions: { unknown } = {}
     local started, runtimeOrFailure = pcall(function()
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
@@ -97,6 +99,14 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                     error("injected terrain query failure")
                 end
                 return GroundOriginGeometry.clearTerrain(position)
+            end,
+            observeFire = function(userId, decision, serverTime)
+                if traceEnabled then
+                    table.insert(
+                        fireDecisions,
+                        { userId = userId, decision = decision, serverTime = serverTime }
+                    )
+                end
             end,
         })
         assert(owner, reason)
@@ -626,9 +636,10 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             local _, ground = roles()
             local character = ground.Character
             local head = if character then character:FindFirstChild("Head") else nil
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
             local tool = if character then character:FindFirstChild("M-7 rifle") else nil
             assert(
-                head and head:IsA("BasePart") and tool and tool:IsA("Tool"),
+                head and head:IsA("BasePart") and root and root:IsA("BasePart") and tool and tool:IsA("Tool"),
                 "equipped rifle fixture missing"
             )
             local target = head.Position + Vector3.new(0, 0, 30)
@@ -640,31 +651,87 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 y = target.Y,
                 z = target.Z,
             }
+            local samples: { unknown } = {}
+            local diagnostic = {
+                kind = "terrain-query-recovery",
+                command = command,
+                userId = ground.UserId,
+                decisions = fireDecisions,
+                samples = samples,
+            }
+            table.insert(observations, diagnostic)
+            local function sample(stage: string)
+                local state = runtime.rounds.match.snapshot()
+                local member = state.members[ground.UserId]
+                local readiness = runtime.groundCombat.readiness(ground)
+                table.insert(samples, {
+                    stage = stage,
+                    serverTime = workspace:GetServerTimeNow(),
+                    readiness = readiness,
+                    toolAmmo = tool:GetAttribute("Ammo"),
+                    health = health(),
+                    phase = state.phase,
+                    actualRoundId = state.roundId,
+                    role = if member then member.role else "missing",
+                    life = if member then member.life else "missing",
+                    toolEquipped = tool.Parent == ground.Character,
+                    root = { root.Position.X, root.Position.Y, root.Position.Z },
+                    head = { head.Position.X, head.Position.Y, head.Position.Z },
+                    queryFailures = queryFailures,
+                    faultArmed = faultArmed,
+                })
+            end
+            sample("before-readiness-wait")
+            -- The preceding correction probe spent seq 2. Wait on the actual
+            -- server readiness deadline rather than assuming event timing.
+            waitFor(function()
+                local readiness = runtime.groundCombat.readiness(ground)
+                return readiness.ammo == 29
+                    and readiness.reloadUntil == 0
+                    and workspace:GetServerTimeNow() >= readiness.nextFire
+            end, "actual rifle readiness before terrain fault", 5)
+            sample("ready-before-fault")
             local beforeAmmo = tool:GetAttribute("Ammo")
             local beforeHealth = health()
+            assert(beforeAmmo == 29, "unexpected ammunition before query failure")
+            traceEnabled = true
             faultArmed = true
             probe(ground, "Fire", command)
-            waitFor(function()
-                return queryFailures == 1
-            end, "injected query failure")
+            local deadline = os.clock() + 5
+            local nextSample = 0
+            while queryFailures == 0 and os.clock() < deadline do
+                if os.clock() >= nextSample then
+                    sample("waiting-for-injection")
+                    nextSample = os.clock() + 0.25
+                end
+                task.wait(0.03)
+            end
+            sample("after-fault-attempt")
+            assert(
+                queryFailures == 1,
+                "injected query failure not reached: " .. HttpService:JSONEncode(diagnostic)
+            )
             assert(
                 tool:GetAttribute("Ammo") == beforeAmmo and health() == beforeHealth,
-                "failed terrain query mutated combat"
+                "failed terrain query mutated combat: " .. HttpService:JSONEncode(diagnostic)
             )
             probe(ground, "Fire", command)
-            waitFor(function()
-                return tool:GetAttribute("Ammo") == 28
-            end, "same valid sequence after query recovery")
+            local recoveryDeadline = os.clock() + 5
+            nextSample = 0
+            while tool:GetAttribute("Ammo") ~= 28 and os.clock() < recoveryDeadline do
+                if os.clock() >= nextSample then
+                    sample("waiting-for-recovery")
+                    nextSample = os.clock() + 0.25
+                end
+                task.wait(0.03)
+            end
+            sample("after-recovery-attempt")
+            traceEnabled = false
+            assert(
+                tool:GetAttribute("Ammo") == 28,
+                "same valid sequence failed after recovery: " .. HttpService:JSONEncode(diagnostic)
+            )
             assert(health() == beforeHealth, "horizontal recovery shot damaged aircraft")
-            table.insert(observations, {
-                kind = "terrain-query-recovery",
-                beforeAmmo = beforeAmmo,
-                afterFailureAmmo = beforeAmmo,
-                afterRecoveryAmmo = tool:GetAttribute("Ammo"),
-                beforeHealth = beforeHealth,
-                afterHealth = health(),
-                queryFailures = queryFailures,
-            })
         end)
         if expected == 2 then
             check(
