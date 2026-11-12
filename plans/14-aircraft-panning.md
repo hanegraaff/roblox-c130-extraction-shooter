@@ -36,7 +36,7 @@ required host, two-client, rendered and operated checks have passed; see the
 
 ### Horizontal controls and acceptance resumption — 2026-11-12
 
-On `fix/p14-horizontal-controls-acceptance` ([draft PR #22](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/22)), A and the mobile left arrow now pan
+On `fix/p14-horizontal-controls-acceptance` ([PR #22](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/22)), A and the mobile left arrow now pan
 toward the actual camera left; D and the right arrow pan right. Native desktop
 and iPhone direction checks pass. During acceptance, real two-finger testing
 revealed and resolved a pad/aim ownership error and a GUI-inset touch offset;
@@ -57,8 +57,10 @@ The user foregrounded the existing test viewport after it stalled, enabling the
 phone 40° rerun. The independent tester reports the last three A4 observations
 passed and left Studio in Edit. The successful production source and P14 fixture
 are `ca1d91a`; P04's corrected test fixtures are `64e6a18`, and the final operated
-checks used `a64676e`, which changed documentation only. No Roblox publication
-occurred.
+checks used `a64676e`, which changed documentation only. The final operated
+evidence and documentation are committed and pushed in `8cec062`. PR #22 is
+stacked on the unmerged edge adjustment PR #21; integration into `main` remains
+separate. No Roblox publication occurred.
 
 ### Edge visibility revision — 2026-11-12
 
