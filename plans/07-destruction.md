@@ -12,6 +12,11 @@ Build Intact/Damaged/Destroyed templates using the P13 building/story/panel regi
 
 DestructionService owns state, deduplicated shot IDs and stage progress. Heavy thresholds are 3/6 direct hits from pristine. Nine seconds of server-validated same-panel 30mm fire must advance Intact → Damaged, never early; D33 defaults specify another nine seconds for Destroyed, cadence-aware gap tolerance, interrupted-fire reset of uncommitted 30mm contribution and proportional mixed-fire credit. Choose and record numeric cadence/gap/rounding tolerances before testing; no elapsed credit before the first accepted impact or across rejected/missed/off-target shots. Keep structural direct-impact credit separate from player blast damage. No client panel ID/duration/damage claim is authoritative.
 
+Panel damage and fragment limits are core rules. Read stable panel IDs, pivots,
+variants and supporting geometry from the active level registry; do not fork the
+thresholds or service per map. P07 proves this contract on the MVP level. P15
+later verifies reconstruction and identical rules on a second playable level.
+
 Apply damage against pre-impact batch geometry, then atomically transition panel/colliders at the stable pivot and ID. Only later shots can exploit new holes. Replicate current stage/progress for late joiners; don't replay old debris bursts. Generate a capped set of server-owned unanchored fragments with bounded impulses/lifetime, actual gravity and collision against static scenery. Collision groups exclude characters and debris; combat/thermal queries ignore fragments. Fragments cannot harm/push players, block required routes, chain-destroy panels or become structural supports (D34 defaults). Overflow may retire older fragments without changing cover state. Reset cancels work, removes fragments/listeners and restores all terrain/panels/progress.
 
 ## Acceptance criteria

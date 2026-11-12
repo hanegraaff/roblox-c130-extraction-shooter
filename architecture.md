@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-The source integrated on `main` contains the foundation, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative rounds and P04 perimeter aircraft with inward thermal view and weapon-linked zoom. Server-only rules assign roles, retain UserId membership, evaluate deadlines/results and reset the round; engine adapters own characters, teams, map rebuilds and replicated presentation attributes. The client displays round state, sends surrender intent and follows living teammates after elimination. [P03](plans/03-rounds-and-roles.md) records the candidate's verification evidence and limits; [P02](plans/02-warzone-map.md) records prior map acceptance. [P04](plans/04-aircraft-and-thermal.md) records aircraft/view acceptance. P13 owns the completed construction/validation record for the expanded map. The P14 development branch adds bounded mouse panning and geometry-aware projection; its required engine/operated acceptance remains pending. Combat, panel/fragment physics, aircraft health/damage and launcher systems below remain target architecture introduced incrementally by the [roadmap](roadmap.md).
+The source integrated on `main` contains the foundation, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative rounds and P04 perimeter aircraft with inward thermal view and weapon-linked zoom. Server-only rules assign roles, retain UserId membership, evaluate deadlines/results and reset the round; engine adapters own characters, teams, map rebuilds and replicated presentation attributes. The client displays round state, sends surrender intent and follows living teammates after elimination. [P03](plans/03-rounds-and-roles.md) records the candidate's verification evidence and limits; [P02](plans/02-warzone-map.md) records prior map acceptance. [P04](plans/04-aircraft-and-thermal.md) records aircraft/view acceptance. P13 owns the completed construction/validation record for the expanded map. The unmerged P14 candidate adds bounded directional camera panning, touch controls and geometry-aware projection; its required engine/operated acceptance remains pending. Combat, panel/fragment physics, aircraft health/damage and launcher systems below remain target architecture introduced incrementally by the [roadmap](roadmap.md).
 
 Use a single Roblox place for lobby and battlefield, Luau for game code, and Git-first editing with Rojo for supported source/world synchronization. Roblox hosts the running experience; GitHub stores reconstructable source. No external application backend, persistent player inventory, or cross-server matchmaking is needed for the MVP.
 
@@ -25,6 +25,38 @@ Pure modules with dependencies choose an explicit Instance require when `script`
 ## Implemented map and terrain ownership
 
 `Workspace.World.Battlefield` comes entirely from the versioned [world definition](assets/world/Battlefield.model.json). `MapRules` validates finite coordinates, radius greater than eight studs, altitude greater than sixteen studs, kill threshold below ground, matching map/orbit centers and radii, and ground-level center focus. Defaults are center `(0,0,0)`, radius 360 studs, altitude 140 studs and recovery Y=−30. `orbit(settings, phaseRadians)` supplies the common perimeter geometry; `AircraftService` owns the actual moving model.
+
+### Level interchange boundary (target architecture)
+
+The MVP has one level and its current `MapRules.defaults`, `TerrainRecipe` and
+`Workspace.World.Battlefield` are fixed to it. They do **not** yet provide a level
+selector or a second level. P15 will replace these single-level constants with a
+validated, immutable `LevelDefinition` chosen by the server at a lobby/reset
+boundary. One active level owns one generation token. Clients receive only the
+public level ID, bounds and presentation metadata; the server retains authoritative
+geometry, panel and spawn state.
+
+| Level-owned definition | Shared consumer and invariant |
+| --- | --- |
+| Stable level ID/version, world/terrain recipe and asset provenance | `MapService` validates, constructs, resets and reconstructs one active level; late joiners receive its current geometry/state. |
+| Playable horizontal footprint and recovery bounds | Ground containment, client pan clamp, server aim validation, launcher placement and range checks use the same footprint. The current implementation is a disk; later footprints may differ. |
+| Orbit center, radius, altitude and phase origin | `AircraftService` always places exactly one C-130 on a circular orbit enclosing the playable footprint. Camera origin follows its canonical pose and remains inward-facing. |
+| Aim height envelope, queryable cover and target surface registry | Camera projection, server muzzle obstruction, thermal occlusion and combat queries share level geometry but retain their own authority boundaries. |
+| Spawn/station/launcher anchors and stable building/panel IDs with Intact/Damaged/Destroyed variants | Role deployment and launcher/cover lifecycle validate level data. `DestructionService` applies the same heavy/30mm thresholds and fragment limits to every level. |
+
+`AircraftPanRules` and zoom profiles stay in core shared/client modules. The
+client samples WASD or a touch directional pad into the same signed camera axes;
+the level footprint bounds world-space focus. Mouse/touch aiming supplies reticle
+pixels independently. Combat resolves every shot and panel hit against the active
+level generation, then the shared damage/destruction rules decide state changes.
+Level packages contain geometry and parameters, not duplicate weapon, health,
+pan, zoom or demolition implementations.
+
+P15 must test at least two distinct definitions (including a nonidentical size
+or shape), repeated switch/reset, stale event rejection, panel reconstruction,
+aim/cover consistency, two-client replication and late join. Moving from the
+current equal-radius circular `MapRules` validator to a general footprint/orbit
+contract is part of that work; this document does not claim it already exists.
 
 Server-only `MapService` validates geometry, supported/clear anchors and lobby separation with actual Workspace queries, then retains an unparented pristine clone. Its injected character provider and Heartbeat keep orchestration explicit. `GameRuntime` supplies only active living ground characters and disables the optional station exception. Exterior or below-threshold ground characters return to `Ground05` with velocities cleared. The protected lobby lies outside the disk at X=520; Waiting bodies can walk and only the assigned operator placeholder is anchored. Containment is not a general movement-exploit detector.
 
@@ -53,6 +85,8 @@ flowchart TB
     Services --> Rules[Pure Luau rules and types]
     Services --> Engine[Roblox world, characters and raycasts]
     Services --> State[Authoritative round state]
+    Level[Validated active level definition] --> Services
+    Level --> Engine
     State -->|snapshots and ordered updates| Input
     Engine -->|replication| Presentation[Client world presentation and effects]
     Assets[Versioned world and asset sources] --> Engine
@@ -119,7 +153,7 @@ The release project excludes tests, test dependencies, fixtures and development 
 | `GameRuntime`, `MatchRuntime`, `CharacterOwner` | Implemented map/round composition, character ownership, replication and cleanup | P03 |
 | `RoundPanel` | Implemented basic round HUD, surrender intent and teammate spectating | P03; presentation improved in P10 |
 | `AircraftService`, `AircraftSelection`, `AircraftRules` | Implemented canonical perimeter orbit, validated aim geometry and authoritative targeting-profile selection; health/destruction remain planned | P04; health in P06 |
-| `ThermalCameraController`, `AircraftPanRules` | P14 candidate implements bounded inward mouse pan, recenter, acknowledged zoom and actual-surface reticle projection; required engine acceptance remains pending | P04; panning P14 |
+| `ThermalCameraController`, `AircraftPanRules` | P14 candidate implements bounded inward WASD/touch pad pan, recenter, acknowledged zoom and actual-surface reticle projection; required engine acceptance remains pending | P04; panning P14 |
 | `CombatService` with weapon rules | Validate intent, ammo/cooldown, flight/impact, damage resolution | P05–P06 |
 | `DestructionService` | Per-panel heavy/sustained-fire progress, monotonic states, authoritative residual colliders and bounded server-owned fragment physics | P07 |
 | `LauncherService` | One launcher identity, atomic ownership, drop/recovery and reload continuity | P08 |
@@ -163,9 +197,9 @@ Apply cheap shape/size checks and per-player/per-action budgets before expensive
 
 Server-only `AircraftSelection` owns selected weapon, revision and accepted per-user sequences. `AircraftState.Selection` publishes them as one JSON string so round/weapon/revision are acknowledged together. The client sends bounded selection intent and changes weapon label, FOV and reticle projection only from a valid acknowledgement for its current round. Unknown, malformed, stale, replayed, wrong-role or terminal requests leave selection unchanged. Returning to Lobby forces the initial GAU23 profile even when the round ID has not changed. No ammunition, reload or cooldown state exists in P04; later combat must preserve its independent per-weapon readiness across this selection seam.
 
-The P14 candidate’s `ThermalCameraController` places a Scriptable camera at the replicated canonical aircraft position and looks toward a world-space focus inside the disk. Pure `AircraftPanRules` integrates raw edge-pointer fractions with injected delta seconds, retaining focus across orbit motion and acknowledged 35° GAU23 / 60° M102 changes. R / Recenter and fresh role/round entry reset focus. A projected canonical-right basis remains finite when focus is directly beneath the aircraft. Keys 1/2 or named buttons retain the existing server selection protocol.
+The P14 candidate’s `ThermalCameraController` places a Scriptable camera at the replicated canonical aircraft position and looks toward a world-space focus inside the disk. Pure `AircraftPanRules` integrates signed camera-relative WASD/touch-pad axes with injected delta seconds, retaining focus across orbit motion and acknowledged 35° GAU23 / 60° M102 changes. R / Recenter and fresh role/round entry reset focus. A projected canonical-right basis remains finite when focus is directly beneath the aircraft. Keys 1/2 or named buttons retain the existing server selection protocol.
 
-Raw viewport-edge input drives pan first. `AircraftPanRules.raster` rounds/clamps the displayed reticle once to integer pixels inside the central 70%; the same integers drive GUI drawing, ray projection and published pixels, including odd viewports. Each rendered projection raycasts actual collidable Battlefield/Terrain geometry at the active FOV. One frame publishes focus, viewport, camera, reticle pixels, first hit and endpoint together for diagnostic/fixture observation. `Battlefield/AimEnvelope/MinimumY` and `MaximumY` NumberValues author the current Y=−1…32-stud bounds; AircraftService validates and captures them on startup and replicates presentation values. Its server-only `aimAllowed(endpoint)` checks the disk/envelope and actual solid-world obstruction from the acknowledged selected weapon’s muzzle attachment, allowing 0.5 studs at the first surface. A local aim indicator never authorizes hits; no firing or high-rate pan remote is introduced.
+Directional input drives pan independently of aim. `AircraftPanRules.raster` rounds/clamps the displayed mouse/touch reticle once to integer pixels inside the central 70%; the same viewport integers drive ray projection and published pixels; a measured ScreenGui origin converts them to GUI-local drawing offsets, including mobile safe-area shifts and odd viewports. Each rendered projection raycasts actual collidable Battlefield/Terrain geometry at the active FOV. One frame publishes focus, viewport, camera, reticle pixels, first hit and endpoint together for diagnostic/fixture observation. `Battlefield/AimEnvelope/MinimumY` and `MaximumY` NumberValues author the current Y=−1…32-stud bounds; AircraftService validates and captures them on startup and replicates presentation values. Its server-only `aimAllowed(endpoint)` checks the disk/envelope and actual solid-world obstruction from the acknowledged selected weapon’s muzzle attachment, allowing 0.5 studs at the first surface. A local aim indicator never authorizes hits; no firing or high-rate pan remote is introduced.
 
 Local color correction supplies grayscale/high contrast and `Highlight.DepthMode = Occluded` lets solid cover hide player highlights. Active living ground characters and explicitly tagged thermal fixtures are presented; clients gain no damage or visibility authority. Role loss or owner removal destroys thermal GUI/effects/highlights and role input listeners, restoring captured camera/FOV/mouse settings. `RoundPanel` resumes ground, teammate spectator or lobby view. A labelled test-only solo Operator preview permits cosmetic profile choices while its player remains Waiting in Lobby.
 
@@ -173,7 +207,7 @@ For the bounded MVP map, `Workspace.StreamingEnabled` is explicitly false (D11).
 
 ## Panned targeting candidate (P14)
 
-`AircraftPanRules` is shared deterministic presentation math, with no transport or hit authority. Defaults are a 12% edge zone, 120 studs/second, 0.1-second per-update cap and exact radial focus clamp. Invalid/nonfinite input rejects without mutation. The public nonyielding `ThermalCameraController.input` adapter preserves raw viewport pointer coordinates and subtracts current GuiInset only for GUI-content hit queries. The controller suspends pan over actionable UI, text focus, outside-viewport input and window focus loss; it restores captured camera/FOV/mouse state on role loss and disconnects all input/render observers at owner stop.
+`AircraftPanRules` is shared deterministic presentation math, with no transport or hit authority. Defaults are 120 studs/second, normalized diagonal motion, 0.1-second per-update cap and exact radial focus clamp for the current level. Invalid/nonfinite input rejects without mutation. The public nonyielding `ThermalCameraController.input` adapter preserves raw mouse viewport coordinates and subtracts current GuiInset only for GUI-content hit queries. Operator WASD and touch-pad holds drive the same signed axes; ground movement remains normal. On touch devices, a separate world-view finger aims while the pad is held. The controller suspends pan over actionable desktop UI, text focus and window focus loss; it restores captured camera/FOV/mouse state on role loss and disconnects all touch/input/render observers at owner stop.
 
 `ThermalCameraController.new` and `RoundPanel.new` accept an optional nonyielding input provider. Production omits it and uses UserInputService. Engine fixtures can inject raw pointer/recenter/profile intent through this normal boundary after stopping the original owner; they never assign focus or introduce a second active camera. Native mouse/keys/buttons, rendered occlusion, viewport usability and comfort still require separate operated evidence. The P14 source candidate has host evidence and an earlier candidate has partial native-preview observations/capture; the current input/raster correction passes an ordinary 82-server/3-client smoke and focused actual GUI/drawn-reticle probes. Full native/rendered/viewport/lifecycle acceptance remains pending. The representative README image shows the earlier native preview with unchanged visible layout/world, not verification of the input correction.
 

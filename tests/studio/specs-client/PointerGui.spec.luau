@@ -72,6 +72,12 @@ return function()
                 probe.Text = "+"
                 probe.BackgroundTransparency = 1
                 probe.Parent = containers[2]
+                local origin = Instance.new("Frame")
+                origin.Name = "ProjectionOrigin"
+                origin.Size = UDim2.fromOffset(0, 0)
+                origin.BackgroundTransparency = 1
+                origin.Parent = containers[2]
+                RunService.RenderStepped:Wait()
                 local viewport = camera.ViewportSize
                 local rasterSamples: { unknown } = {}
                 for _, raw in
@@ -84,12 +90,15 @@ return function()
                 do
                     local raster = PanRules.raster(raw.X, raw.Y, viewport.X, viewport.Y)
                     assert(raster, "valid fractional reticle rejected")
-                    probe.Position = UDim2.fromOffset(raster.x, raster.y)
+                    local rayPixels = Vector2.new(raster.x, raster.y)
+                    local guiOrigin = origin.AbsolutePosition + GuiService:GetGuiInset()
+                    local offset = CameraController.guiOffset(rayPixels, guiOrigin)
+                    assert(offset, "valid GUI projection offset rejected")
+                    probe.Position = offset
                     RunService.RenderStepped:Wait()
                     RunService.RenderStepped:Wait()
                     local actualInset = GuiService:GetGuiInset()
                     local drawn = probe.AbsolutePosition + probe.AbsoluteSize * 0.5 + actualInset
-                    local rayPixels = Vector2.new(raster.x, raster.y)
                     local errorPixels = (drawn - rayPixels).Magnitude
                     table.insert(rasterSamples, {
                         raw = { raw.X, raw.Y },
@@ -97,6 +106,7 @@ return function()
                         storedOffset = { probe.Position.X.Offset, probe.Position.Y.Offset },
                         drawn = { drawn.X, drawn.Y },
                         inset = { actualInset.X, actualInset.Y },
+                        guiOrigin = { guiOrigin.X, guiOrigin.Y },
                         errorPixels = errorPixels,
                     })
                     player.PlayerScripts.ClientTests:SetAttribute(
@@ -107,8 +117,9 @@ return function()
                         })
                     )
                     assert(
-                        probe.Position.X.Offset == raster.x and probe.Position.Y.Offset == raster.y,
-                        "GUI truncated raster reticle coordinates"
+                        probe.Position.X.Offset == offset.X.Offset
+                            and probe.Position.Y.Offset == offset.Y.Offset,
+                        "GUI truncated converted reticle coordinates"
                     )
                     assert(errorPixels <= 1, "actual raster reticle centre differs from ray pixels")
                 end

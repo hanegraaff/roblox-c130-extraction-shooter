@@ -2,6 +2,8 @@
 
 Rojo maps this folder to `Workspace.World`. [`Battlefield.model.json`](Battlefield.model.json) reconstructs the expanded primitive map, three buildings, invisible terrain recipe and anchors without cloud assets or unsaved Studio edits. [`manifest.json`](../manifest.json) records provenance and terrain ownership. Every authored part uses a twelve-component canonical `CFrame`; `Position`/`Orientation` aliases are forbidden. Artifact reconstruction and actual Studio loaded-transform/world checks remain separate gates.
 
+This folder currently authors one level. The future [level contract](../../architecture.md#level-interchange-boundary-target-architecture) will package each level's footprint, orbit, aim envelope, world/terrain, anchors and panel identities separately while reusing core pan, zoom, combat and demolition rules. No second playable level or level switch is implemented yet.
+
 ## Coordinates and anchors
 
 Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initializes/recenters the local camera focus there, then pans its world-space X/Z within the disk at ground height. Playable/orbit radius is 360, diameter 720, aircraft altitude 140 and recovery threshold Y=−30. These construction defaults live in `MapRules.defaults`; change matching geometry/settings together. The orange boundary is 24 studs high.

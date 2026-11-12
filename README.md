@@ -4,23 +4,23 @@
 
 The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
-![Panned inward thermal Operator preview over buildings and terrain, with weapon and Recenter controls](docs/evidence/p14/current-progress.jpg)
+![Mobile Operator preview with a four-direction camera pad, weapon buttons, Recenter and a thermal reticle over the current map](docs/evidence/p14-directional/current-progress.jpg)
 
-*Current progress: actual Studio Operator preview (Waiting/Lobby), captured 2026-11-09 with a 1280×720 game viewport (1920×1080 capture raster). Panning acceptance is still pending; firing and damage remain planned.*
+*Current progress: actual iPhone 17 Pro Studio simulator Operator preview, captured 2026-11-10 in landscape during a solo test-place Play session. The directional pad and weapon controls are visible; full two-client P14 acceptance, firing and damage remain pending.*
 
 ## What you can play today
 
 The local development build has a **720-stud-diameter battlefield**, eight grass/rock hills, two large buildings and one smaller building, an orbiting C-130 and a round loop. All three buildings have two usable floors connected by stairs. Their walls and roofs provide solid cover today; damage and falling fragments remain planned. Players can walk around a protected lobby deck. With 6–10 players, the server selects one operator and sends everyone else to sheltered ground positions. Operator turns rotate between eligible players, preferring those who have waited more rounds.
 
-The C-130 circles the perimeter automatically. On the P14 development branch, the operator looks inward through a grayscale thermal view and moves the mouse into a viewport edge to pan across the battlefield. Moving away from the edge holds the focus in world space as the plane orbits. Press **R** or click **Recenter** to return to map center. Solid cover occludes player highlights. Press **1** or click **30mm GAU-23/A Chain Gun** for the tighter **35°** view; press **2** or click **105mm M102 Howitzer** for the wider **60°** view. Switching profiles preserves the panned focus. These are targeting profiles: firing is not available yet.
+The C-130 circles the perimeter automatically. On the P14 directional development branch, the operator looks inward through a grayscale thermal view and holds **WASD** to pan across the battlefield. On a touch device, use the on-screen arrow pad; a separate touch can aim at the world while the pad is held. Mouse movement aims the reticle without panning. Releasing a direction holds focus in world space as the plane orbits. Pan reaches the level edge but stops there. Press **R** or tap **Recenter** to return to center. Solid cover occludes player highlights. Press **1** or tap **30mm GAU-23/A Chain Gun** for the tighter **35°** view; press **2** or tap **105mm M102 Howitzer** for the wider **60°** view. Switching profiles preserves focus. These are targeting profiles: firing is not available yet.
 
 Ground players use **WASD**, **Space** and the mouse to explore and watch the aircraft overhead. Follow the teal western route or ochre eastern route toward the gold center marker. Industrial walls, roofs and terrain provide cover, and an orange perimeter marks the edge. Explore the stairs and upper rooms in the two large buildings and the smaller outpost. Leaving the battlefield or falling below it returns an active ground player to shelter. The marker reserves the future launcher location; there is no pickup or destructible cover yet.
 
 A round panel shows phase, role, life state, remaining time and surviving ground players. Ground players can click **Surrender / spectate** or reset their character to give up their life. Death and reset do not respawn them during that round: they watch a living ground teammate instead. Late arrivals and reconnecting players wait for the next round. Resetting the operator's protected station character retains the assignment, aircraft and deadline. Leaving the operator role restores the normal camera and removes thermal effects.
 
-The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Firing, aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. Expanded-map engine acceptance is integrated on `main`; the P14 panning candidate on `plan/14-aircraft-panning` still requires complete two-client real-engine and operated-view acceptance. See [P14](plans/14-aircraft-panning.md) for that candidate’s evidence and open checks, [P13](plans/13-terrain-and-buildings.md) for map validation, [P04](plans/04-aircraft-and-thermal.md) for the earlier aircraft/view evidence, and [P03](plans/03-rounds-and-roles.md) for rounds.
+The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Firing, aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. Expanded-map engine acceptance is integrated on `main`; the P14 directional candidate on `fix/p14-keyboard-mobile-pan` has native desktop and simulated-phone input checks but still requires complete two-client/operated acceptance. See [P14](plans/14-aircraft-panning.md) for the current candidate, [P13](plans/13-terrain-and-buildings.md) for map validation, [P04](plans/04-aircraft-and-thermal.md) for the earlier aircraft/view evidence, and [P03](plans/03-rounds-and-roles.md) for rounds.
 
-The panning candidate keeps focus inside the battlefield and the camera at the orbiting aircraft. Hovering actionable UI, typing in a text box, leaving the viewport or losing window focus pauses panning. The HUD is a prototype: the round card covers part of the upper view, and Roblox's open team-chat panel can overlap its left side at smaller viewport sizes. The wider operator view can include an aircraft strip in the upper-left sky. Full player guidance and presentation polish are planned for P10.
+The panning candidate keeps focus inside the battlefield and the camera at the orbiting aircraft. Typing in a text box or losing window focus pauses panning; hovering actionable desktop UI blocks the keyboard pan. The HUD is a prototype: the round card covers part of the upper view, and Roblox's open team-chat panel can overlap its left side at smaller viewport sizes. The wider operator view can include an aircraft strip in the upper-left sky. Full player guidance and presentation polish are planned for P10.
 
 The [roadmap](roadmap.md) tracks progress; the combat section below describes the planned MVP.
 
@@ -35,12 +35,12 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-The integrated P13 map and fixed-focus aircraft baseline are on `main`. To try the P14 panning candidate in [draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18), select its dedicated branch before building:
+The integrated P13 map and fixed-focus aircraft baseline are on `main`. To try the directional P14 candidate in [draft PR #19](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/19), select its dedicated branch before building. It contains the unmerged P14 source from [draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18):
 
 ```sh
 git fetch origin
-git switch plan/14-aircraft-panning
-git pull --ff-only origin plan/14-aircraft-panning
+git switch fix/p14-keyboard-mobile-pan
+git pull --ff-only origin fix/p14-keyboard-mobile-pan
 ```
 
 On a fresh clone, Git creates the local branch from its matching remote branch. Use `git switch main` and `git pull --ff-only origin main` for the integrated baseline instead. Do not discard local edits when switching source.
@@ -56,7 +56,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install      # Install the matching Studio plugin once
 ```
 
-The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. A successful host run currently includes **46 unit and 18 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It does not run Roblox Studio. The dependency and build directories are generated and stay out of Git.
+The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. A successful host run currently includes **47 unit and 18 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It does not run Roblox Studio. The dependency and build directories are generated and stay out of Git.
 
 ## Play and develop locally with Rojo
 
@@ -93,9 +93,9 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
 2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
-3. Open Studio's **Output** panel. The P14 candidate expects **82 server tests and 3 client tests**, with zero failures, skipped cases or errors. These cover rules, selection rejection, service lifecycle, status/character behavior, actual GUI-hover/text-focus blocking, building/story/panel geometry, terrain reconstruction, supported routes, canonical aircraft poses, solid sight lines, boundary correction and pristine resets. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
+3. Open Studio's **Output** panel. The P14 candidate expects **83 server tests and 3 client tests**, with zero failures, skipped cases or errors. These cover rules, selection rejection, service lifecycle, status/character behavior, actual GUI-hover/text-focus blocking, building/story/panel geometry, terrain reconstruction, supported routes, canonical aircraft poses, solid sight lines, boundary correction and pristine resets. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
 4. Click **Stop**, then **Play** again. Check fresh passing reports and one status panel plus one round panel. Stop before changing the mapping or source.
-5. Use the **STUDIO TESTING** panel at the bottom right. Click **Role** to cycle Auto → Ground → Operator. With one client, the choice changes your solo preview immediately: Ground can walk, while Operator previews the inward thermal view. Move the mouse to an edge to pan, use **R / Recenter** to center the view, and use **1 / 2** or the named buttons to inspect both zoom profiles. Solo selection is cosmetic and does not grant an active role. Click **Next round** to cycle 30, 60, 180 or 600 seconds.
+5. Use the **STUDIO TESTING** panel at the bottom right. Click **Role** to cycle Auto → Ground → Operator. With one client, the choice changes your solo preview immediately: Ground can walk, while Operator previews the inward thermal view. Hold **WASD** to pan and move the mouse to aim, or use the touch directional pad and a separate aiming touch. Use **R / Recenter** to center the view, and **1 / 2** or the named buttons to inspect both zoom profiles. Solo selection is cosmetic and does not grant an active role. Click **Next round** to cycle 30, 60, 180 or 600 seconds.
 6. For a real role/round test, use Studio **Server & Clients** with **2 clients** (or **3** for teammate spectating). Choose your roles, then click **Start round now** to bypass the lobby wait. Two Operator choices, or everyone choosing Ground, produces an explanation rather than silently changing a tester's choice. **Auto** fills the required operator when nobody explicitly requests it.
 7. **Reset test / apply settings** ends the local test and restores preview/lobby. Role and duration choices apply to the next explicit **Start round now**; they do not change an active role or deadline. Use **End Session** to close multiplayer test clients when finished.
 
@@ -121,7 +121,7 @@ For a documentation-only change, `python3 scripts/check_repository.py` checks lo
 
 | Action available now | Ground player | C-130 operator |
 | --- | --- | --- |
-| Move / aim | WASD and mouse; Space to jump | Mouse moves the reticle; viewport edges pan the inward view |
+| Move / aim | WASD and mouse; Space to jump | WASD pans on desktop; touch arrows pan on mobile; mouse or a separate touch aims the reticle |
 | Recenter view | — | R / Recenter button |
 | Select targeting profile | — | 1 / named 30mm button; 2 / named 105mm button |
 | Surrender / spectate | On-screen button during an active ground life | — |
@@ -130,7 +130,7 @@ The planned combat loop gives every ground player an **M-7 rifle** and puts one 
 
 The operator's **30mm GAU-23/A Chain Gun** will provide faster precise fire; the **105mm M102 Howitzer** will provide slower heavy fire with a wider blast. Each will retain independent cooldown/reload state across switches. Solid cover will block damage as well as the current thermal highlighting.
 
-The current branch adds inward mouse panning to the expanded terrain and three two-story buildings. Panning acceptance remains pending; combat and physical cover damage are separate later capabilities.
+The current branch changes the operator to directional panning on the expanded terrain and three two-story buildings. Simulated-phone pad input works in solo Play; simultaneous two-finger aiming and full multiplayer panning acceptance remain pending. Combat and physical cover damage are separate later capabilities.
 
 Building wall and roof panels will visibly progress: three direct heavy-cannon hits produce a roughly half-destroyed panel, and three more remove it; sustained on-panel 30mm fire takes nine seconds to damage it. Real bounded fragments will fall and collide with scenery while remaining floors/stairs/frames stay stable. These mechanics will work with simple graphics; refined assets are later work. See the [construction](plans/13-terrain-and-buildings.md), [panning](plans/14-aircraft-panning.md) and [destruction](plans/07-destruction.md) plans.
 
@@ -140,7 +140,7 @@ Planned combat bindings are left mouse to fire, ground right mouse to aim, **1 /
 
 The intended complete round is gather → deploy → fight → team result → reset. The current prototype already handles roles, the orbit/view, no respawns, teammate spectating, late-arrival waiting, timeout/elimination/forfeit results and replay. Combat will add aircraft destruction as a playable ground victory path. The default round lasts ten minutes.
 
-The input target is desktop keyboard and mouse; touch and gamepad are deferred. Damage, cadence, reload, zoom and orbit speed need later balance testing; the three-rocket full-health rule is fixed. The MVP has one map and partial cover destruction. Progression, purchases, vehicles and full building collapse are outside its scope.
+Operator desktop keyboard/mouse and mobile touch panning are current targets; gamepad and full mobile combat controls are future work. Damage, cadence, reload, zoom and orbit speed need later balance testing; the three-rocket full-health rule is fixed. The MVP has one map and planned physical cover destruction. [Future levels](plans/15-interchangeable-levels.md) will keep a circling C-130 and the same pan, zoom, combat and demolition systems while changing level geometry. Progression, purchases, vehicles and full building collapse are outside MVP scope.
 
 ## Follow development or contribute
 
