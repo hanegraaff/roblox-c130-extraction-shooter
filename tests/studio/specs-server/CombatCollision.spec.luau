@@ -32,6 +32,16 @@ return function()
             local target = Vector3.new(-263.99924, 13.56503, -159.99977)
             local direction = (target - origin).Unit
             local travel = (target - origin).Magnitude + 0.25
+            local deadline = os.clock() + 5
+            local preflight = workspace:Raycast(origin, direction * travel, params)
+            while (not preflight or (preflight.Position - target).Magnitude >= 1) and os.clock() < deadline do
+                task.wait()
+                preflight = workspace:Raycast(origin, direction * travel, params)
+            end
+            assert(
+                preflight and (preflight.Position - target).Magnitude < 1,
+                "terrain query did not converge to the reproduced surface"
+            )
             for _, weapon in { "GAU23", "M102" } do
                 local position = origin
                 local remaining = travel
@@ -66,7 +76,29 @@ return function()
         local params = RaycastParams.new()
         params.FilterType = Enum.RaycastFilterType.Include
         params.FilterDescendantsInstances = { wall }
+        local overlap = OverlapParams.new()
+        overlap.FilterType = Enum.RaycastFilterType.Include
+        overlap.FilterDescendantsInstances = { wall }
+        local probe = Instance.new("Part")
+        probe.Anchored = true
+        probe.Shape = Enum.PartType.Ball
+        probe.Size = Vector3.one * 0.1
+        probe.CanCollide = false
+        probe.CanTouch = false
+        probe.CanQuery = false
+        probe.Transparency = 1
+        probe.Position = Vector3.new(0, 120, 0)
+        probe.Parent = workspace
         local ok, failure = pcall(function()
+            assert(
+                CombatRuntime.initialOverlap(probe, overlap, workspace) == wall,
+                "muzzle inside solid cover bypassed initial overlap"
+            )
+            probe.Position = Vector3.new(-2, 120, 0)
+            assert(
+                not CombatRuntime.initialOverlap(probe, overlap, workspace),
+                "clear muzzle falsely marked obstructed"
+            )
             for _, profile in { CombatService.profiles.GAU23, CombatService.profiles.M102 } do
                 local hit = CombatRuntime.sweep(
                     Vector3.new(-10, 120, 0),
@@ -86,6 +118,7 @@ return function()
                 )
             end
         end)
+        probe:Destroy()
         wall:Destroy()
         assert(ok, tostring(failure))
     end)

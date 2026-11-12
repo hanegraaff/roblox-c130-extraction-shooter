@@ -549,6 +549,36 @@ function CombatHarness.run()
             point, panelId = upper("M102")
             fireAndObserve("M102", point, panelId)
         end)
+        check("A4 muzzle starting inside solid cover resolves that cover before flight", function()
+            local op = roles()
+            waitFor(function()
+                return ammo("M102") == 1
+            end, "heavy reload before overlapping-muzzle case", 8)
+            local muzzle = runtime.aircraft.muzzle("M102")
+            assert(muzzle, "muzzle missing for overlap case")
+            local wall = Instance.new("Part")
+            wall.Name = "P05MuzzleOverlap"
+            wall.Anchored = true
+            wall.Size = Vector3.one * 10
+            wall.Position = muzzle
+            wall:SetAttribute("PanelId", "P05MuzzleOverlap")
+            wall.Parent = workspace.World.Battlefield
+            local before = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+            local overlapOk, overlapReason = pcall(function()
+                probe(op, "Fire", payload(5, "M102", Vector3.new(0, 30, 0)))
+                waitFor(function()
+                    local impact = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                    return type(impact) == "string" and impact ~= before
+                end, "initial solid-cover impact", 6)
+                local hit = snapshot("Impact")
+                assert(
+                    hit.panelId == "P05MuzzleOverlap" and hit.shotId == 5,
+                    "shot bypassed cover containing muzzle"
+                )
+            end)
+            wall:Destroy()
+            assert(overlapOk, tostring(overlapReason))
+        end)
         check("A1 actual projectile survives exact lifetime and expires cleanly afterward", function()
             local op = roles()
             runtime.combat.stop()

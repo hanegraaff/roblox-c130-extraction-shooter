@@ -58,6 +58,28 @@ function CombatRuntime.sweep(
     return workspace:Spherecast(origin, radius, displacement, params)
 end
 
+-- Spherecast does not report parts already intersecting its starting volume.
+-- This exact overlap query uses an owned, invisible spherical probe at the muzzle;
+-- solid cover is prioritized over characters if both intersect simultaneously.
+-- The caller parents/positions the probe in Workspace and owns its cleanup.
+function CombatRuntime.initialOverlap(
+    probe: BasePart,
+    params: OverlapParams,
+    battlefield: Instance
+): BasePart?
+    local characterHit: BasePart? = nil
+    for _, part in workspace:GetPartsInPart(probe, params) do
+        if part:IsDescendantOf(battlefield) then
+            if part.CanCollide then
+                return part
+            end
+        elseif not characterHit then
+            characterHit = part
+        end
+    end
+    return characterHit
+end
+
 -- Starts one engine owner. optional onImpact is called synchronously after resolution;
 -- it must not yield or reenter the owner. A valid callback is not a destruction award.
 -- Optional monotonic clock and heartbeat are injected boundaries; production defaults
@@ -81,6 +103,16 @@ function CombatRuntime.start(
     local effects = Instance.new("Folder")
     effects.Name = "CombatEffects"
     effects.Parent = workspace
+    local muzzleProbe = Instance.new("Part")
+    muzzleProbe.Name = "CombatMuzzleProbe"
+    muzzleProbe.Shape = Enum.PartType.Ball
+    muzzleProbe.Size = Vector3.one * 0.1
+    muzzleProbe.Transparency = 1
+    muzzleProbe.Anchored = true
+    muzzleProbe.CanCollide = false
+    muzzleProbe.CanTouch = false
+    muzzleProbe.CanQuery = false
+    muzzleProbe.Parent = workspace
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local connections: { RBXScriptConnection } = {}
     local projectiles: { Projectile } = {}
@@ -287,7 +319,7 @@ function CombatRuntime.start(
             marker.CanQuery = false
             marker.CFrame = CFrame.new(target + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.pi / 2)
             marker.Parent = effects
-            table.insert(projectiles, {
+            local projectile: Projectile = {
                 shot = shot,
                 position = muzzle,
                 direction = delta.Unit,
@@ -298,7 +330,24 @@ function CombatRuntime.start(
                 visual = visual,
                 marker = marker,
                 awards = DamageRules.new(),
-            })
+            }
+            muzzleProbe.Position = muzzle
+            local overlap = OverlapParams.new()
+            overlap.FilterType = Enum.RaycastFilterType.Include
+            overlap.FilterDescendantsInstances = rayParameters(true).FilterDescendantsInstances
+            overlap.RespectCanCollide = false
+            local battlefield = workspace.World:FindFirstChild("Battlefield")
+            local initialHit = if battlefield
+                then CombatRuntime.initialOverlap(muzzleProbe, overlap, battlefield)
+                else nil
+            if initialHit then
+                if not impact(projectile, muzzle, initialHit, time) then
+                    marker:Destroy()
+                end
+                visual:Destroy()
+            else
+                table.insert(projectiles, projectile)
+            end
             publish(time)
         end)
     )
@@ -388,6 +437,7 @@ function CombatRuntime.start(
             table.clear(connections)
             clear()
             remote:Destroy()
+            muzzleProbe:Destroy()
             effects:Destroy()
             aircraftState:SetAttribute("Readiness", nil)
             aircraftState:SetAttribute("Impact", nil)
