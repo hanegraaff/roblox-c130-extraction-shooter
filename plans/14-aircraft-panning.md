@@ -4,25 +4,25 @@
 
 ## Capability and player experience
 
-The operator uses WASD on desktop or an on-screen directional pad on mobile to pan across the enlarged battlefield and its multi-story buildings while retaining each weapon's distinct zoom. Mouse movement only aims the reticle; a separate touch can aim while holding the pad. Focus reaches the current level boundary and stops there. The aircraft stays on its perimeter orbit and its view stays inward-facing. Panning works in labelled solo preview and an assigned operator round; firing follows in P05.
+The operator uses WASD on desktop or an on-screen directional pad on mobile to pan across the enlarged battlefield and its multi-story buildings while retaining each weapon's distinct zoom. Mouse movement only aims the reticle; a separate touch can aim while holding the pad. The complete camera view stops at the current level boundary, without sky/outside ground or a straight-down look. A held view angle stays fixed relative to the C-130 as it circles, revealing a changing part of the level with steady orbital motion. Panning works in labelled solo preview and an assigned operator round; firing follows in P05.
 
 ## Implementation
 
-Extend the existing thermal camera rather than creating a second owner. Implement pure bounded pan rules with injected signed directional axes/delta time, a world-space battlefield focus and explicit recenter. Desktop WASD and mobile pad holds feed the same core rule; pointer/touch coordinates aim independently and the central-70% display reticle clamp remains. Preserve focus across orbit motion and acknowledged weapon changes; selection changes FOV without recentering or resetting readiness. Reset pan on new-round/role entry. Camera position remains the canonical aircraft position; clamp focus inside the current playable disk and enforce an inward look at every orbit phase, without free flight or independent zoom. Ground WASD movement remains unchanged.
+Extend the existing thermal camera rather than creating a second owner. Implement pure bounded pan rules with injected signed directional axes/delta time and an orbit-local held view offset. Desktop WASD and mobile pad holds feed the same core rule; pointer/touch coordinates aim independently and the central-70% displayed reticle clamp remains. Preserve the relative camera angle across orbit motion and acknowledged weapon changes; selection changes FOV without resetting readiness. R/new-round/role entry returns to the default safe view. Camera position remains the canonical aircraft position; all four viewport corners must intersect the current playable disk with a small inset at both zooms, enforcing an inward, ground-only look throughout the orbit. Ground WASD movement remains unchanged.
 
 Project reticle rays onto actual terrain/building geometry, supporting elevated floors and a map-authored vertical aim envelope. Reconcile server aim-envelope checks with the expanded map; local camera orientation does not override muzzle obstruction or authorize hits. Avoid a high-rate pan remote. Restore mouse/camera/input/UI state and disconnect every owned listener on role loss/teardown. Record chosen speed/recenter binding and FOV values as defaults.
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes. Named `AircraftPanRules` tests cover neutral/four-direction/diagonal input, frame-rate independence, differing level bounds, huge delta time, NaN/infinity, world-space focus under orbit motion, recenter and exact disk-edge clamping. At sampled phases, camera origin follows aircraft and look remains inward.
-- **A2:** Studio/client `PannedTargetProjection` fixtures reach center, all quadrants, useful near-boundary surfaces, terrain slopes and each building's upper-floor panels over a full orbit at both weapon FOVs. Reticle/world projection agrees within a declared tolerance; no hard-coded ground-plane intersection or permanent blind strip hides a required combat area. Server rejects out-of-disk/vertical-envelope and solid muzzle-obstructed endpoints.
+- **A1:** Full gate passes. Named `AircraftPanRules` tests cover neutral/four-direction/diagonal input, frame-rate independence, differing level bounds, huge delta time, NaN/infinity, held orbit-local orientation, safe recenter and four-corner whole-view clamping at both zooms. At sampled phases, camera origin follows aircraft without changing its path, and its local orientation remains steady when input is released.
+- **A2:** Studio/client `PannedTargetProjection` fixtures reach useful near-boundary surfaces, terrain slopes and each building's upper-floor panels when that portion is visible during the full orbit at both weapon FOVs. Actual camera corner rays stay inside the level at the pan limits, while reticle/world projection agrees within a declared tolerance. No hard-coded ground-plane intersection or permanent blind strip hides a required combat area. Server rejects out-of-disk/vertical-envelope and solid muzzle-obstructed endpoints.
 - **A3:** Two actual clients verify operator WASD/touch pan does not change aircraft pose or the ground client's camera/movement. Switching keys/buttons preserves focus and acknowledged FOV/label/reticle coherence; rejected/stale selections do not reset pan or readiness. P05 later verifies firing/cooldown behavior through this seam.
-- **A4:** Engine/rendered checks cover occluded highlights on slopes and upper floors, inward pan limits at both zooms and recenter. Native WASD and a mobile emulator or device prove held, simultaneous and released directional-pad inputs; a second touch can aim independently. Text/window focus cannot pan or trap control. Layout remains usable at 1280×720 and 1920×1080 plus representative mobile safe areas.
-- **A5:** Reset, new round, operator departure and repeated preview/role entry restore default focus or normal camera as appropriate, with exactly one controller and no duplicate listeners/effects. Existing orbit/selection/round/preview tests remain valid after adapting fixed-center expectations only where this revision changes the contract.
+- **A4:** Engine/rendered checks cover occluded highlights on slopes and upper floors, all-four-corner ground-only pan limits at both zooms, smooth relative orientation through the full orbit, and recenter. Native WASD and a mobile emulator or device prove held, simultaneous and released directional-pad inputs; a second touch can aim independently. Text/window focus cannot pan or trap control. Layout remains usable at 1280×720 and 1920×1080 plus representative mobile safe areas.
+- **A5:** Reset, new round, operator departure and repeated preview/role entry restore the safe default view or normal camera as appropriate, with exactly one controller and no duplicate listeners/effects. Existing orbit/selection/round/preview tests remain valid after adapting prior world-focus and FOV defaults where this revision changes the contract.
 
 ## Focused human check
 
-Operate a full orbit at both zooms on desktop and mobile. Pan with WASD or the touch pad to left/right/top/bottom bounds, reach near/far terrain and upper-floor targets, switch weapons while panned and recenter. Verify mouse movement aims without moving the camera; verify a second touch can aim while holding the pad. Record sensitivity, release/diagonal behavior, motion comfort and readable thermal/reticle/UI behavior. A screenshot alone does not prove coverage or panning feel.
+Operate a full orbit at both zooms on desktop and mobile. Pan with WASD or the touch pad to left/right/top/bottom view limits; check that the complete frame contains level ground, no sky and no straight-down pose. Release input and confirm the view angle stays fixed relative to the plane while scenery changes smoothly through the orbit. Reach terrain and upper-floor targets visible in each sector, switch weapons while panned and recenter. Verify mouse movement aims without moving the camera; verify a second touch can aim while holding the pad. Record sensitivity, release/diagonal behavior, motion comfort and readable thermal/reticle/UI behavior. A screenshot alone does not prove coverage or panning feel.
 
 ## Documentation changes
 
@@ -32,13 +32,29 @@ Update current desktop/mobile controls, actual pan/recenter bindings, view/aim c
 
 The 2026-11-10 control revision has implementation and focused host/Studio evidence below; required P14 acceptance remains incomplete.
 
+### Orbit-relative view correction — 2026-11-11
+
+The user confirmed that pan should stop when the **whole camera view** reaches
+the level edge and that a held angle should remain fixed **relative to the
+circling plane**. The previous world-fixed ground focus caused an apparent spin
+as the aircraft passed near it. Dedicated branch
+`fix/p14-camera-view-bounds-orbit` changes pan to an aircraft-local offset and
+clips all viewport corner rays to the current level disk. The canonical server
+orbit is untouched. To leave useful pan range with the 140-stud orbit altitude,
+the 30mm/105mm view defaults are tuned from 35°/60° to 30°/40°; D40 records this
+as tuning, not a new weapon rule. Current host verification, the corrected
+phone focus transition, and focused desktop/mobile Studio observations are recorded in
+[the correction evidence](../docs/evidence/p14-orbit-relative-view.md). P14 remains
+Blocked until the updated two-client and full operated acceptance gates pass.
+
 ### Control and future-level revision — 2026-11-10
 
 The user replaced mouse-edge camera panning with operator WASD and an on-screen
 mobile directional pad, confirmed that “planning” meant panning, and chose mouse
 movement as reticle aim only. The existing 720-stud circular level still supplies
-the playable bound; directional focus reaches its edge but never exceeds it.
-Weapon zoom, world-space focus, recenter and authoritative aim remain core rules.
+the playable bound; that stage clamped a world-space focus point to the disk.
+The 2026-11-11 correction above supersedes that framing. Weapon zoom, recenter
+and authoritative aim remain core rules.
 The user also selected a future architecture in which every interchangeable
 level has a circling C-130 while camera pan/zoom, combat damage and building
 demolition stay shared. [P15](15-interchangeable-levels.md) owns implementing

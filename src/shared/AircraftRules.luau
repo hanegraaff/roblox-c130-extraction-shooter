@@ -10,7 +10,7 @@ local AircraftRules = {}
 
 export type Settings = { periodSeconds: number, fov30mm: number, fov105mm: number }
 export type Pose = { x: number, y: number, z: number, tangentX: number, tangentZ: number, phase: number }
-AircraftRules.defaults = table.freeze({ periodSeconds = 90, fov30mm = 35, fov105mm = 60 })
+AircraftRules.defaults = table.freeze({ periodSeconds = 90, fov30mm = 30, fov105mm = 40 })
 AircraftRules.names = table.freeze({ GAU23 = "30mm GAU-23/A Chain Gun", M102 = "105mm M102 Howitzer" })
 
 -- Validates a complete bounded config and returns a copy. FOV uses degrees as Roblox does.

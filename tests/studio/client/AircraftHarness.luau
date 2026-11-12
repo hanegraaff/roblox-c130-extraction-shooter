@@ -103,7 +103,7 @@ function AircraftHarness.run()
                     details.position = { pose.X, pose.Y, pose.Z }
                 elseif request.kind == "Profile" then
                     local weapon = request.weapon
-                    local fov = if weapon == "GAU23" then 35 else 60
+                    local fov = if weapon == "GAU23" then 30 else 40
                     awaitCondition(function()
                         local gui = player.PlayerGui:FindFirstChild("ThermalHUD")
                         local camera = workspace.CurrentCamera
