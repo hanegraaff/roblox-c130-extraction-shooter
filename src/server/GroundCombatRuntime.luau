@@ -163,9 +163,6 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
             if not spendBudget(player, now) or not active(player, now) or not ownedEquipped(player) then
                 return
             end
-            if not track(player, now, false) then
-                return
-            end
             local character = player.Character
             local head = if character then character:FindFirstChild("Head") else nil
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
@@ -173,6 +170,14 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
                 return
             end
             local origin = head.Position
+            -- Reject malformed, replayed, out-of-range or cooldown requests
+            -- before the movement, voxel, overlap and world-ray checks.
+            if not rifles.preflight(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z) then
+                return
+            end
+            if not track(player, now, false) then
+                return
+            end
             if not originGeometry.allows(root, head) then
                 return
             end

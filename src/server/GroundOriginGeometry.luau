@@ -10,7 +10,7 @@
 local Validation = require(game:GetService("ReplicatedStorage").Shared.Validation)
 local GroundOriginGeometry = {}
 export type Controller = {
-    allows: (BasePart, BasePart) -> boolean,
+    allows: (BasePart, BasePart) -> (boolean, string?),
     destroy: () -> (),
 }
 local VOXEL = 4
@@ -32,8 +32,9 @@ local function clearTerrain(position: Vector3): boolean
 end
 -- Creates a lifecycle-owned server probe. Parent must be in Workspace. The
 -- function rejects missing battlefield and nonfinite/displaced body parts rather
--- than guessing; root-to-head queries exclude character and noncollidable art.
-function GroundOriginGeometry.new(parent: Instance): Controller
+-- than guessing; body queries exclude characters and noncollidable art. The
+-- optional nonyielding terrain query is an injection boundary for failure tests.
+function GroundOriginGeometry.new(parent: Instance, terrainQuery: ((Vector3) -> boolean)?): Controller
     local probe = Instance.new("Part")
     probe.Name = "GroundOriginProbe"
     probe.Anchored = true
@@ -44,10 +45,11 @@ function GroundOriginGeometry.new(parent: Instance): Controller
     probe.Transparency = 1
     probe.Parent = parent
     local running = true
+    local query: (Vector3) -> boolean = if terrainQuery then terrainQuery else clearTerrain
     return {
         allows = function(root, head)
             if not running then
-                return false
+                return false, "stopped"
             end
             local body, muzzle = root.Position, head.Position
             local displacement = muzzle - body
@@ -62,12 +64,21 @@ function GroundOriginGeometry.new(parent: Instance): Controller
                 or displacement.Magnitude < 0.1
                 or displacement.Magnitude > 8
             then
-                return false
+                return false, "invalid body geometry"
             end
             local world = workspace:FindFirstChild("World")
             local battlefield = if world then world:FindFirstChild("Battlefield") else nil
-            if not battlefield or not clearTerrain(muzzle) then
-                return false
+            if not battlefield then
+                return false, "battlefield unavailable"
+            end
+            local queried, clear = pcall(function()
+                return query(muzzle)
+            end)
+            if not queried then
+                return false, "terrain query failed"
+            end
+            if not clear then
+                return false, "muzzle terrain voxel occupied"
             end
             local overlaps = OverlapParams.new()
             overlaps.FilterType = Enum.RaycastFilterType.Include
@@ -78,14 +89,22 @@ function GroundOriginGeometry.new(parent: Instance): Controller
                 #workspace:GetPartsInPart(probe, overlaps) > 0
                 or #workspace:GetPartsInPart(head, overlaps) > 0
             then
-                return false
+                return false, "body overlaps cover"
             end
             local ray = RaycastParams.new()
             ray.FilterType = Enum.RaycastFilterType.Include
             ray.FilterDescendantsInstances = { battlefield, workspace.Terrain }
             ray.RespectCanCollide = true
             ray.IgnoreWater = true
-            return workspace:Raycast(body, displacement, ray) == nil
+            -- Test both directions: Roblox may not report a solid containing
+            -- the starting point. If the root is in Terrain but the head is
+            -- outside, the head-to-root ray enters and detects that Terrain.
+            if
+                workspace:Raycast(body, displacement, ray) or workspace:Raycast(muzzle, -displacement, ray)
+            then
+                return false, "solid cover between body and muzzle"
+            end
+            return true, nil
         end,
         destroy = function()
             if not running then

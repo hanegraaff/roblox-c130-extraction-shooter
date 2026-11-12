@@ -58,6 +58,9 @@ return function()
             root.Position = Vector3.new(2050, 12, 0)
             head.Position = Vector3.new(2050, 14, 0)
             assert(not owner.allows(root, head), "head buried in terrain accepted")
+            root.Position = Vector3.new(2050, 23, 0)
+            head.Position = Vector3.new(2050, 25, 0)
+            assert(not owner.allows(root, head), "root inside Terrain with exposed head accepted")
             root.Position = Vector3.new(2050, 27, 0)
             head.Position = Vector3.new(2050, 29, 0)
             assert(owner.allows(root, head), "standing above terrain rejected")
@@ -69,6 +72,38 @@ return function()
         root:Destroy()
         head:Destroy()
         terrain:FillBlock(CFrame.new(center), size, Enum.Material.Air)
+        assert(ok, tostring(reason))
+    end)
+    test("terrain-query failure rejects explicitly and a later valid request recovers", function()
+        local root = Instance.new("Part")
+        root.Anchored = true
+        root.CanCollide = false
+        root.Position = Vector3.new(2000, 50, 0)
+        root.Parent = workspace
+        local head = Instance.new("Part")
+        head.Anchored = true
+        head.CanCollide = false
+        head.Position = root.Position + Vector3.new(0, 2, 0)
+        head.Parent = workspace
+        local calls = 0
+        local owner = geometry.new(workspace, function(_position)
+            calls += 1
+            if calls == 1 then
+                error("injected query failure")
+            end
+            return true
+        end)
+        local ok, reason = pcall(function()
+            local allowed, rejection = owner.allows(root, head)
+            assert(
+                not allowed and rejection == "terrain query failed",
+                "query failure did not reject explicitly"
+            )
+            assert(owner.allows(root, head), "valid query did not recover")
+        end)
+        owner.destroy()
+        root:Destroy()
+        head:Destroy()
         assert(ok, tostring(reason))
     end)
     test("permits normal standing above a sloped Terrain surface", function()
