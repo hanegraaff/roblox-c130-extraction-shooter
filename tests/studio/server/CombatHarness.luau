@@ -460,11 +460,61 @@ function CombatHarness.run()
             local function fireAndObserve(weapon: string, target: Vector3, panelId: string?)
                 shotSequence += 1
                 local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
-                probe(op, "Fire", payload(shotSequence, weapon, target))
-                waitFor(function()
-                    local value = ReplicatedStorage.AircraftState:GetAttribute("Impact")
-                    return type(value) == "string" and value ~= previous
-                end, "terrain or upper-floor actual impact", 8)
+                local shotPayload = payload(shotSequence, weapon, target)
+                local muzzle = runtime.aircraft.muzzle(weapon)
+                assert(muzzle, "diagnostic muzzle missing")
+                local ray = target - muzzle
+                local preflight = workspace:Raycast(muzzle, ray.Unit * (ray.Magnitude + 0.25), rayParams())
+                local samples: { unknown } = {}
+                local diagnostic = {
+                    kind = "geometry-flight-diagnostic",
+                    payload = shotPayload,
+                    expectedPanelId = panelId,
+                    sampledMuzzle = { muzzle.X, muzzle.Y, muzzle.Z },
+                    preflightHit = if preflight then preflight.Instance:GetFullName() else "none",
+                    preflightPosition = if preflight
+                        then { preflight.Position.X, preflight.Position.Y, preflight.Position.Z }
+                        else nil,
+                    previousImpact = previous,
+                    samples = samples,
+                }
+                table.insert(observations, diagnostic)
+                local start = os.clock()
+                probe(op, "Fire", shotPayload)
+                local deadline = os.clock() + 8
+                local nextSample = 0
+                local value = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                while (type(value) ~= "string" or value == previous) and os.clock() < deadline do
+                    local elapsed = os.clock() - start
+                    if elapsed >= nextSample then
+                        local effects: { unknown } = {}
+                        for _, item in workspace.CombatEffects:GetChildren() do
+                            if item:IsA("BasePart") then
+                                table.insert(effects, {
+                                    name = item.Name,
+                                    weapon = item:GetAttribute("Weapon"),
+                                    position = { item.Position.X, item.Position.Y, item.Position.Z },
+                                })
+                            end
+                        end
+                        local liveMuzzle = runtime.aircraft.muzzle(weapon)
+                        table.insert(samples, {
+                            elapsed = elapsed,
+                            selected = ReplicatedStorage.AircraftState:GetAttribute("Selection"),
+                            readiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness"),
+                            impact = value,
+                            muzzle = if liveMuzzle then { liveMuzzle.X, liveMuzzle.Y, liveMuzzle.Z } else nil,
+                            effects = effects,
+                        })
+                        nextSample = elapsed + 0.5
+                    end
+                    task.wait(0.03)
+                    value = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                end
+                assert(
+                    type(value) == "string" and value ~= previous,
+                    "terrain or upper-floor actual impact: " .. HttpService:JSONEncode(diagnostic)
+                )
                 local hit = snapshot("Impact")
                 assert(
                     hit.weapon == weapon and hit.shotId == shotSequence,
