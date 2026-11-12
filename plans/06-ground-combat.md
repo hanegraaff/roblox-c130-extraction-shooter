@@ -65,8 +65,11 @@ timing and outcome before asserting. Its real two-client run showed actual
 aircraft-first callbacks within one simulation step and the correct Ground
 result; the fixture failed its requested ground-first ordering because Roblox
 executed callbacks in reverse registration order. `bdb1de1` calibrates actual
-callback scheduling while retaining strict order/step/outcome assertions;
-ground-first remains open pending its manual two-client run.
+callback scheduling while retaining strict order/step/outcome assertions. Its
+manual two-client P06 run passed 10/10, including both actual same-step orders
+and Ground/AircraftDestroyed; the manual forfeit used server-kick. Its manual
+P06Team run passed 7/7 with three actual clients. The test-only manual P05
+regression route on `dae58a4` and the operated review remain open in Studio.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,

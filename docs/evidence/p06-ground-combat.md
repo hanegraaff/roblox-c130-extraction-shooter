@@ -230,3 +230,32 @@ and Ground/AircraftDestroyed result. Calibration and actual timeline are
 recorded before assertions; a scheduler change remains an explicit failure, not
 a pass. Independent full host verification passed 50 unit / 43 integration.
 The test-only manual two-client run is prepared but its Studio result is pending.
+
+The user launched the prepared manual two-client run on `bdb1de1`. Fresh
+server smoke passed 118/118 with both clients present, each client passed 3/3,
+and P06 passed all 10 cases with no failures or skips. Both requested
+mutual-destruction orders occurred as recorded within a shared Stepped epoch
+and Heartbeat delta, with no callback errors; aircraft health reached zero and
+the result was Ground/AircraftDestroyed in each. The forfeit case used an actual
+server kick, leaving one player at report collection; it was not a client
+`LeaveTest`. The [full report](p06-manual-bdb1.json) preserves the observations.
+The tester ended the session via Server `EndTest`, cleared P06, then prepared
+the separate P06Team selector for the three-client run.
+
+The user then launched the manual P06Team run on the same source. All 7/7
+scenarios passed with three actual players, server smoke 118/118 and 3/3 on
+each client, with no failures/skips. Three live rocket sweeps after a rifle hit
+reduced aircraft health 295→195→95→0; the separate two-client run established
+pristine 300→200→100→0. [The report](p06-manual-team-bdb1.json) preserves the
+actual teammate, friendly-fire and replicated result checks. Server `EndTest`
+closed the session and the P06Team selector was cleared in original Edit.
+
+Candidate `dae58a4` adds a test-mapping-only manual P05 regression route so
+the existing gunship assertions can run without the stalled multiplayer SDK.
+An independent source review confirms the exact `P05` selector is server-only,
+requires Studio and nil SDK arguments, checks two actual players and preserves
+the existing case body; startup failures are reported after at least one client
+reaches the outer bootstrap. The original SDK path continues to use `EndTest`.
+Release isolation includes deliberate missing/leaked-fixture probes. Its actual
+manual two-client regression and a reciprocal native control review remain
+pending.

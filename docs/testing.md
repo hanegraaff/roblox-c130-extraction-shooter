@@ -97,6 +97,30 @@ return "P05 gunship test started"
 
 After the self-ending session returns to Edit, inspect `workspace:GetAttribute("P05LastReport")`. Confirm two actual clients connected, all eight named P05 cases ran and passed, and no case or harness completion failed or skipped. A launch timeout, missing result, early exit or zero discovered cases is not a pass. Preserve the actual report, source commit/tree, Studio environment and separate server/client baseline reports; the server baseline may complete while clients are still joining. The harness uses a test-only transport and disposable fixtures. It targets forged/stale/nonfinite/flood requests, actual swept cover, collisionless flight, weapon-switch reload, replicated combat observations, terminal/next-round cleanup and terrain/upper-floor geometry; consult the current test source and [P05 plan](../plans/05-gunship-combat.md) for exact coverage and observed results.
 
+### Manual Studio Server & Clients fallback for P05 regression
+
+The SDK route above remains the default. When it cannot launch the requested clients, the P06 test mapping supplies a separate test-only native route for the P05 regression; it does not guarantee client connection or a passing result. The selector is absent from Git defaults and release artifacts and cannot be set by a client remote.
+
+1. In the confirmed, synced `tests.rbxlx` **Edit** document, with Play stopped, verify the selector is absent and set it to `"P05"`:
+
+   ```luau
+   local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+   assert(settings and settings:IsA("ModuleScript"), "test settings unavailable")
+   assert(settings:GetAttribute("ManualHarness") == nil, "selector already in use")
+   settings:SetAttribute("ManualHarness", "P05")
+   return settings:GetAttribute("ManualHarness")
+   ```
+
+2. Start Studio's native **Server & Clients** mode with **2 clients**. Confirm both actual clients connect and collect fresh server/client smoke reports. Once at least one client has joined, a missing second client yields a structured harness-startup failure. With no clients, the outer smoke may fail its ten-second bootstrap before the harness runs; neither case is a pass.
+3. Before ending the session, read and preserve `workspace:GetAttribute("ManualP05Invocation")` and `workspace:GetAttribute("ManualP05Report")` from the actual **Server** DataModel, together with the candidate commit/tree, mode, actual client count and smoke reports. The manual report is not the Edit document's SDK `P05LastReport`. Require two actual clients, all eight P05 cases and zero failures/skips; a missing report or early error remains incomplete.
+4. After preserving the report, end the owned manual session from the actual **Server** context:
+
+   ```luau
+   game:GetService("StudioTestService"):EndTest({ reason = "P05 manual cleanup after report collection" })
+   ```
+
+   Confirm the original document returns to Edit. In that original **Edit** document, clear the temporary `ServerStorage.DevelopmentSettings.ManualHarness` attribute and verify it is nil. Do not carry it into ordinary testing or a cloud/release place. This fallback is available on the current P06 source; the actual P05 regression result must be recorded separately and is not claimed by the route's existence.
+
 The harness does not substitute for operating native desktop and touch controls. In an ordinary real two-client round, fire each weapon while aiming and panning, switch away and back during reload, and inspect warnings, impacts, exposed/covered targets, both thermal views and mobile layout. Record actual device, view and observed behavior, then stop the owned session. Do not infer successful replication or playability from a screenshot.
 
 ## Run the P06 ground-combat harness
@@ -143,7 +167,7 @@ If the SDK launcher cannot establish the required clients, the test-only runner 
 
    Repeat with the other selector and requested client count if both P06 variants are required. Never apply this test-only selector to a cloud or release place.
 
-This fallback is under evaluation for the current candidate; do not claim a successful run without its actual report. Earlier terrain-origin source `a4d53f3` passed Studio smoke 118/3 and a bounded 154/154 real slope/standing/jumping sample, but those observations do not establish current-candidate multiplayer acceptance.
+On source `bdb1de1`, manual P06 passed 10/10 with two actual clients and manual P06Team passed 7/7 with three actual clients; the server smoke passed 118/118 and each actual client passed 3/3. The two-client operator-forfeit case used a server kick, not SDK client `LeaveTest`. Earlier terrain-origin source `a4d53f3` passed Studio smoke 118/3 and a bounded 154/154 real slope/standing/jumping sample. These source-specific observations do not establish a P05 regression or operated desktop/phone review on the later candidate; collect those separately.
 
 Separately operate both sides of a real test round: equip the M-7, aim at the moving C-130, fire and reload; inspect aircraft health, cover and the team result. On a phone/simulator, check reticle-to-ray alignment, FIRE/RELOAD and ground movement alongside HUD legibility. Check the gunship P05 harness after changes to shared outcome handling. Keep test-only controls out of release and never interpret a solo preview as a real match.
 
