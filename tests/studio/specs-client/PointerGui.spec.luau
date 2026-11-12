@@ -1,12 +1,12 @@
 --!strict
--- P14 A4/R06/R12: actual GUI hit queries through the production default-input
--- adapter. Raw pointer coordinates retain viewport space; normal/full-bleed GUIs
--- use current GuiInset only for hit testing. Actual UDim draw centres also match
+-- P14 A4/R06/R12: actual GUI hit queries through the production mouse/touch
+-- input adapters. Mouse coordinates use GuiInset for GUI hit testing; touch
+-- coordinates are already GUI-relative. Actual UDim draw centres also match
 -- the production integer-raster helper. This is not an injected blocked flag.
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test(
-        "P14 default pointer input blocks actual normal and full-bleed GUI buttons with current inset",
+        "P14 mouse and touch input classify normal, full-bleed and safe-area GUI buttons with current inset",
         function()
             local player = game:GetService("Players").LocalPlayer
             local playerGui = player.PlayerGui
@@ -41,6 +41,9 @@ return function()
             end
             local normal = button(screen("PointerNormalGui", false), 240)
             local full = button(screen("PointerFullBleedGui", true), 340)
+            local deviceSafe = screen("PointerDeviceSafeGui", false)
+            deviceSafe.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
+            local safe = button(deviceSafe, 140)
             local box = Instance.new("TextBox")
             box.Name = "PointerFocusRegression"
             box.Position = UDim2.fromOffset(24, 440)
@@ -50,7 +53,7 @@ return function()
                 RunService.RenderStepped:Wait()
                 RunService.RenderStepped:Wait()
                 local inset = GuiService:GetGuiInset()
-                for _, control in { normal, full } do
+                for _, control in { normal, full, safe } do
                     assert(
                         control.AbsoluteSize.X > 0 and control.AbsoluteSize.Y > 0,
                         "GUI layout did not render"
@@ -59,6 +62,10 @@ return function()
                     local frame = CameraController.input(playerGui, raw, true)
                     assert(frame.blocked, "actual GUI button did not block edge-pan input")
                     assert(frame.position == raw, "GUI conversion changed raw camera/pan coordinates")
+                    local touch = control.AbsolutePosition + control.AbsoluteSize * 0.5
+                    local touchFrame = CameraController.touchInput(playerGui, touch, false)
+                    assert(touchFrame.blocked, "actual GUI button did not block touch aiming")
+                    assert(touchFrame.position == touch + inset, "touch GUI-to-viewport offset is wrong")
                 end
                 local camera = workspace.CurrentCamera
                 assert(camera, "viewport absent")
@@ -128,6 +135,30 @@ return function()
                     not CameraController.input(playerGui, openPointer, true).blocked,
                     "empty viewport falsely blocked"
                 )
+                local openTouch = openPointer - inset
+                local openTouchFrame = CameraController.touchInput(playerGui, openTouch, false)
+                assert(not openTouchFrame.blocked, "empty world touch falsely blocked")
+                assert(openTouchFrame.position == openPointer, "world touch missed viewport inset")
+                local screenRay = camera:ScreenPointToRay(openTouch.X, openTouch.Y)
+                local viewportRay =
+                    camera:ViewportPointToRay(openTouchFrame.position.X, openTouchFrame.position.Y)
+                assert(
+                    (screenRay.Origin - viewportRay.Origin).Magnitude < 1e-4
+                        and (screenRay.Direction - viewportRay.Direction).Magnitude < 1e-6,
+                    "touch GUI and converted viewport rays disagree"
+                )
+                assert(
+                    CameraController.touchInput(playerGui, openTouch, true).blocked,
+                    "processed world touch claimed aim"
+                )
+                assert(
+                    CameraController.touchInput(playerGui, Vector2.new(math.huge, 0), false).blocked,
+                    "nonfinite touch accepted"
+                )
+                assert(
+                    CameraController.touchViewportPosition(Vector2.new(math.huge, 0)) == nil,
+                    "nonfinite touch viewport conversion accepted"
+                )
                 assert(
                     CameraController.input(playerGui, openPointer, false).blocked,
                     "window focus loss did not block"
@@ -142,9 +173,14 @@ return function()
                     CameraController.input(playerGui, openPointer, true).blocked,
                     "actual text focus did not block"
                 )
+                assert(
+                    CameraController.touchInput(playerGui, openTouch, false).blocked,
+                    "actual text focus did not block world touch"
+                )
                 box:ReleaseFocus()
                 containers[1].Enabled = false
                 containers[2].Enabled = false
+                containers[3].Enabled = false
                 RunService.RenderStepped:Wait()
                 assert(
                     not CameraController.input(playerGui, openPointer, true).blocked,
