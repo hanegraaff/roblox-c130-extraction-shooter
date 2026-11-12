@@ -94,7 +94,8 @@ aircraft and user-time shot alignment could not be reconstructed. These
 player-facing findings require correction and a fresh operated review.
 `6613375` makes visible aircraft surfaces queryable, brightens and extends
 server-resolved shot feedback, and moves health away from the center. Its host
-gate and fresh 118/6 Studio smoke pass, but multiplayer and user review are
+gate, fresh 118/6 Studio smoke and manual P06 10/10 pass; the real Wing hit
+and cover cases passed. Current-source user review and P05/P14 regressions are
 not yet complete. [GitHub Verify 43329198860](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43329198860)
 passed on `4860aaede85ae384671207ba0d6ba1165594528c`; it does not replace the
 prepared current-source native two-client and user review. The

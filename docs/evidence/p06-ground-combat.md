@@ -392,6 +392,16 @@ camera regressions and user perception remain unverified on this source. These
 changes are a candidate response, not proof that the user's aim or feedback
 concerns have been resolved.
 
+The user launched the manual two-client P06 run on `6613375`. All 10/10
+cases passed, server smoke passed 118/118 (one client present at its sampling)
+and each client passed 6/6. The [actual report](p06-manual-661.json) records
+an intended direction point only three studs away still stopping at solid cover
+without damage, followed by an exposed direction point hitting the visible
+aircraft Wing and health decreasing 300→295; tracer endpoint checks passed.
+The forfeit case server-kicked the operator, and the tester then ended the
+session and cleared the selector. Current-source user perception and P05/P14
+regression remain outstanding.
+
 Candidate `23e053c` responds to the user review with a server-created primitive
 rifle (Handle and welded barrel/stock/magazine), a dedicated replicated-health
 HUD, and a shooter-only `HIT −5` indicator driven by server-confirmed aircraft
