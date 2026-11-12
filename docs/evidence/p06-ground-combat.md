@@ -152,3 +152,13 @@ timing needed to prove this. The temporary selector was cleared in Edit.
 The Studio stop tool returned success but did not close the actual manual
 simulation windows; the user was asked to use End Session. The failure must be
 diagnosed and the current-source tests rerun, not treated as a pass.
+
+The user ended the owned simulation. Candidate `60aa623` makes the query-error
+fixture wait for the server-owned rifle readiness and records each remote
+decision, time, sequence, ammunition, health and injection count. It preserves
+the original no-mutation and same-sequence recovery assertions. The optional
+decision observer is server-composition-only and omitted in production; the
+independent tester verified readiness returns a copy. Independent full host
+verification passed 50 unit / 43 integration, and fresh Studio smoke passed
+118/118 server and 3/3 client. The temporary test-only P06 selector is set in
+the sole Edit document for a manual two-client rerun; its outcome is pending.

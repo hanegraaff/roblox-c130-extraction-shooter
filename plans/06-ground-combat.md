@@ -52,8 +52,10 @@ remain open. The test-only manual fallback on `e55a961` reached two actual
 clients and passed 118/118 server and 3/3 per-client smoke, but its P06 suite
 timed out at the query-failure case after five passing cases. A possible cadence
 race is being diagnosed; the actual failure and incomplete suite are recorded.
-The owned manual session awaits the user's End Session action before the
-fixture can be revised and the tests rerun. A real current-P06
+The user ended that session. Candidate `60aa623` waits for actual server
+readiness and adds bounded rejection diagnostics; its fresh host gate and
+118/3 Studio smoke pass. The manual two-client rerun is prepared and awaiting
+launch. A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
 documented separately in decisions. The movement guard permits a 45-stud burst
