@@ -12,11 +12,11 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local Debris = game:GetService("Debris")
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
-local Validation = require(ReplicatedStorage.Shared.Validation)
 local MatchService = require(script.Parent.MatchService)
 local AircraftHealth = require(script.Parent.AircraftHealth)
 local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
+local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
 export type Controller = {
     stop: () -> (),
@@ -42,6 +42,7 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
     local effects = Instance.new("Folder")
     effects.Name = "GroundCombatEffects"
     effects.Parent = workspace
+    local originGeometry = GroundOriginGeometry.new(effects)
     local health = AircraftHealth.new()
     local lastPhase = ""
     local rifles = GroundCombatService.new()
@@ -172,17 +173,7 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
                 return
             end
             local origin = head.Position
-            local headOffset = (origin - root.Position).Magnitude
-            if not Validation.isFinite(headOffset) or headOffset > 8 then
-                return
-            end
-            -- Rays starting inside solid cover can leave it without reporting a
-            -- hit. Reject fire while the authoritative muzzle overlaps a wall.
-            local overlap = OverlapParams.new()
-            overlap.FilterType = Enum.RaycastFilterType.Include
-            overlap.FilterDescendantsInstances = { workspace.World.Battlefield }
-            overlap.RespectCanCollide = true
-            if #workspace:GetPartsInPart(head, overlap) > 0 then
+            if not originGeometry.allows(root, head) then
                 return
             end
             local intent = rifles.fire(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z)
@@ -353,6 +344,7 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
             table.clear(movement)
             fire:Destroy()
             reload:Destroy()
+            originGeometry.destroy()
             effects:Destroy()
             aircraftState:SetAttribute("Health", nil)
             aircraftState:SetAttribute("MaxHealth", nil)

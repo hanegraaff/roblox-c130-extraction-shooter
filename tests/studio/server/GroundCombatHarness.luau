@@ -324,6 +324,20 @@ function Harness.run(expectedClients: number?)
             task.wait(0.3)
             assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "embedded cover allowed fire")
             embedded:Destroy()
+            local bodyWall = Instance.new("Part")
+            bodyWall.Name = "P06BodySegmentCover"
+            bodyWall.Anchored = true
+            bodyWall.Size = Vector3.new(8, 0.2, 8)
+            bodyWall.Position = root.Position:Lerp(head.Position, 0.5)
+            bodyWall.Parent = fixture
+            probe(
+                ground,
+                "Fire",
+                { roundId = roundId, sequence = 1, weapon = "M7", x = target.X, y = target.Y, z = target.Z }
+            )
+            task.wait(0.3)
+            assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "body-to-head cover allowed fire")
+            bodyWall:Destroy()
             local wall = Instance.new("Part")
             wall.Name = "P06Cover"
             wall.Anchored = true
