@@ -82,6 +82,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local queryFailures = 0
     local traceEnabled = false
     local fireDecisions: { unknown } = {}
+    local shotObservations: { unknown } = {}
     local started, runtimeOrFailure = pcall(function()
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
@@ -106,6 +107,30 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                         fireDecisions,
                         { userId = userId, decision = decision, serverTime = serverTime }
                     )
+                end
+            end,
+            observeShot = function(shot)
+                if traceEnabled then
+                    local aircraftPosition = shot.aircraftPosition
+                    table.insert(shotObservations, {
+                        userId = shot.userId,
+                        sequence = shot.sequence,
+                        serverTime = shot.serverTime,
+                        origin = { shot.origin.X, shot.origin.Y, shot.origin.Z },
+                        requestedTarget = {
+                            shot.requestedTarget.X,
+                            shot.requestedTarget.Y,
+                            shot.requestedTarget.Z,
+                        },
+                        hitPosition = { shot.hitPosition.X, shot.hitPosition.Y, shot.hitPosition.Z },
+                        hitName = shot.hitName,
+                        aircraftPosition = if aircraftPosition
+                            then { aircraftPosition.X, aircraftPosition.Y, aircraftPosition.Z }
+                            else nil,
+                        healthBefore = shot.healthBefore,
+                        healthAfter = shot.healthAfter,
+                        applied = shot.applied,
+                    })
                 end
             end,
         })
@@ -385,11 +410,51 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             local tool = if character then character:FindFirstChild("M-7 rifle") else nil
             assert(root and root:IsA("BasePart") and tool and tool:IsA("Tool"), "equipped ground missing")
             root.Anchored = true
-            root.CFrame = CFrame.new(hitbox().Position - Vector3.new(0, 25, 0))
+            local level = runtime.aircraft.level()
+            local aircraftPosition = hitbox().Position
+            local radial =
+                Vector3.new(aircraftPosition.X - level.centerX, 0, aircraftPosition.Z - level.centerZ)
+            assert(radial.Magnitude > 0, "aircraft radial direction missing")
+            -- The canonical orbit is exactly on the playable boundary. Give the
+            -- trusted fixture a 20-stud inward margin so float rounding cannot
+            -- trigger the legitimate MapService boundary correction mid-shot.
+            root.CFrame = CFrame.new(aircraftPosition - radial.Unit * 20 - Vector3.new(0, 25, 0))
             task.wait(0.15)
             assert(runtime.groundCombat.trustCorrection(ground), "trusted geometry-fixture placement failed")
             local head = character and character:FindFirstChild("Head")
             assert(head and head:IsA("BasePart"), "ground head missing")
+            traceEnabled = true
+            local samples: { unknown } = {}
+            local diagnostic = {
+                kind = "rifle-cover-and-open-shot",
+                userId = ground.UserId,
+                inwardMarginStuds = 20,
+                decisions = fireDecisions,
+                shots = shotObservations,
+                samples = samples,
+            }
+            table.insert(observations, diagnostic)
+            local function sample(stage: string, requested: Vector3?)
+                local state = runtime.rounds.match.snapshot()
+                local member = state.members[ground.UserId]
+                local plane = hitbox().Position
+                table.insert(samples, {
+                    stage = stage,
+                    serverTime = workspace:GetServerTimeNow(),
+                    roundId = state.roundId,
+                    phase = state.phase,
+                    role = if member then member.role else "missing",
+                    life = if member then member.life else "missing",
+                    readiness = runtime.groundCombat.readiness(ground),
+                    ammo = tool:GetAttribute("Ammo"),
+                    health = health(),
+                    root = { root.Position.X, root.Position.Y, root.Position.Z },
+                    head = { head.Position.X, head.Position.Y, head.Position.Z },
+                    aircraftPosition = { plane.X, plane.Y, plane.Z },
+                    requestedTarget = if requested then { requested.X, requested.Y, requested.Z } else nil,
+                })
+            end
+            sample("trusted-position", nil)
             local embedded = Instance.new("Part")
             embedded.Name = "P06EmbeddedCover"
             embedded.Anchored = true
@@ -398,6 +463,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             embedded.Parent = fixture
             local roundId = runtime.rounds.match.snapshot().roundId
             local target = hitbox().Position
+            sample("before-embedded-shot", target)
             probe(
                 ground,
                 "Fire",
@@ -405,6 +471,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             )
             task.wait(0.3)
             assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "embedded cover allowed fire")
+            sample("after-embedded-shot", nil)
             embedded:Destroy()
             local bodyWall = Instance.new("Part")
             bodyWall.Name = "P06BodySegmentCover"
@@ -412,6 +479,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             bodyWall.Size = Vector3.new(8, 0.2, 8)
             bodyWall.Position = root.Position:Lerp(head.Position, 0.5)
             bodyWall.Parent = fixture
+            sample("before-body-wall-shot", target)
             probe(
                 ground,
                 "Fire",
@@ -419,6 +487,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             )
             task.wait(0.3)
             assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "body-to-head cover allowed fire")
+            sample("after-body-wall-shot", nil)
             bodyWall:Destroy()
             local wall = Instance.new("Part")
             wall.Name = "P06Cover"
@@ -427,6 +496,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             wall.Position = hitbox().Position - Vector3.new(0, 12, 0)
             wall.Parent = fixture
             target = hitbox().Position
+            sample("before-solid-cover-shot", target)
             probe(
                 ground,
                 "Fire",
@@ -436,6 +506,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 return tool:GetAttribute("Ammo") == 29
             end, "blocked shot")
             assert(health() == 300, "cover failed to block damage")
+            sample("after-solid-cover-shot", nil)
             wall:Destroy()
             task.wait(0.2)
             local teammateHumanoid: Humanoid? = nil
@@ -468,6 +539,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             end
             local teammateHealth = if teammateHumanoid then teammateHumanoid.Health else 0
             target = hitbox().Position
+            sample("before-exposed-shot", target)
             if teammateModel then
                 local filter = RaycastParams.new()
                 filter.FilterType = Enum.RaycastFilterType.Include
@@ -482,14 +554,25 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 "Fire",
                 { roundId = roundId, sequence = 2, weapon = "M7", x = target.X, y = target.Y, z = target.Z }
             )
-            waitFor(function()
-                return health() == 295
-            end, "real rifle hit aircraft", 8)
+            local deadline = os.clock() + 8
+            local nextSample = 0
+            while health() ~= 295 and os.clock() < deadline do
+                if os.clock() >= nextSample then
+                    sample("waiting-exposed-shot", nil)
+                    nextSample = os.clock() + 0.25
+                end
+                task.wait(0.03)
+            end
+            sample("after-exposed-shot", nil)
+            assert(health() == 295, "real rifle hit aircraft failed: " .. HttpService:JSONEncode(diagnostic))
             if teammateHumanoid then
                 assert(teammateHumanoid.Health == teammateHealth, "rifle damaged a ground teammate")
             end
             probe(op, "Observe", { health = 295, shotSequence = 2 })
             probe(ground, "Observe", { health = 295, shotSequence = 2 })
+            traceEnabled = false
+            fireDecisions = {}
+            shotObservations = {}
         end)
         check("A2 direct swept rocket fixtures destroy once", function()
             local roundId = runtime.rounds.match.snapshot().roundId

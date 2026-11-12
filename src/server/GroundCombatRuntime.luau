@@ -18,11 +18,26 @@ local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
+-- Server-only, nonauthoritative diagnostics for an already resolved shot.
+export type ShotObservation = {
+    userId: number,
+    sequence: number,
+    serverTime: number,
+    origin: Vector3,
+    requestedTarget: Vector3,
+    hitPosition: Vector3,
+    hitName: string,
+    aircraftPosition: Vector3?,
+    healthBefore: number,
+    healthAfter: number,
+    applied: boolean,
+}
 -- Server-composition boundaries must not yield, throw, or mutate combat state.
--- Production omits both and uses the authoritative Terrain query directly.
+-- Production omits these and uses the authoritative Terrain query directly.
 export type Dependencies = {
     terrainQuery: ((Vector3) -> boolean)?,
     observeFire: ((number, string, number) -> ())?,
+    observeShot: ((ShotObservation) -> ())?,
 }
 export type Controller = {
     stop: () -> (),
@@ -268,8 +283,31 @@ function GroundCombatRuntime.start(
                     z = endpoint.Z,
                 })
             )
+            local healthBefore = health.snapshot().health
+            local applied = false
             if hit and aircraft and hit.Instance:IsDescendantOf(aircraft) then
-                award(state.roundId, tostring(player.UserId) .. ":" .. tostring(intent.sequence), "M7", true)
+                applied = award(
+                    state.roundId,
+                    tostring(player.UserId) .. ":" .. tostring(intent.sequence),
+                    "M7",
+                    true
+                )
+            end
+            if dependencies and dependencies.observeShot then
+                local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+                dependencies.observeShot({
+                    userId = player.UserId,
+                    sequence = intent.sequence,
+                    serverTime = now,
+                    origin = origin,
+                    requestedTarget = target,
+                    hitPosition = endpoint,
+                    hitName = if hit then hit.Instance:GetFullName() else "none",
+                    aircraftPosition = if hitbox and hitbox:IsA("BasePart") then hitbox.Position else nil,
+                    healthBefore = healthBefore,
+                    healthAfter = health.snapshot().health,
+                    applied = applied,
+                })
             end
         end)
     )
