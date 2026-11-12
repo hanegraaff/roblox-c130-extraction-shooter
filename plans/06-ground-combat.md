@@ -55,3 +55,6 @@ that every short relocation is impossible.
 [Draft PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27)
 contains the pushed candidate and its current evidence. It is not ready to merge
 until the required current-source Studio and operated checks are complete.
+[GitHub Verify 43306825870](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43306825870)
+passed on `a8bc57a89413b1ae79bbabd0576e58ef416c04a1`; this does not replace
+the missing real-engine evidence.
