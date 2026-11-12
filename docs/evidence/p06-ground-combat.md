@@ -402,6 +402,23 @@ The forfeit case server-kicked the operator, and the tester then ended the
 session and cleared the selector. Current-source user perception and P05/P14
 regression remain outstanding.
 
+The user reviewed `6613375` and reported the visible rifle still produced no
+visible bullets toward the plane, a thick nearby laser-like streak toward
+ground, and no apparent aircraft damage. Read-only [live samples](p06-user-661.json)
+showed health still 300 at sampled sequence 116 with the latest shot marked
+`aircraftHit=false`; current post-shot camera/plane samples could not establish
+the shot-time aiming cause. The [actual Ground capture](p06-presentation/user-661-before.jpg)
+preserves the user's build. The terminal-only trace is drawn in the final
+50 studs of a 1200-stud miss, so it can be remote from the shooter while a
+nearby ground hit produces a large visible segment; that concretely explains
+why static terminal presentation can be unreadable, but does not explain all
+aimed aircraft misses. A first short same-shot capture observed no new user
+requests and returned no valid correlation; it is not evidence for a hit or
+aim diagnosis. A subsequent bounded read-only client/server observer was armed
+for up to 600 seconds, retaining at most 12 requests and 120 render frames, to
+compare an actual user shot's camera target and server collision without
+changing gameplay. Its outcome is pending.
+
 Candidate `23e053c` responds to the user review with a server-created primitive
 rifle (Handle and welded barrel/stock/magazine), a dedicated replicated-health
 HUD, and a shooter-only `HIT −5` indicator driven by server-confirmed aircraft

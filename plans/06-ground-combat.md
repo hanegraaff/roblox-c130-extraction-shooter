@@ -101,7 +101,10 @@ passed on `4860aaede85ae384671207ba0d6ba1165594528c`; it does not replace the
 prepared current-source native two-client and user review. The
 automated Studio launcher is unreliable, so manual Server & Clients is the
 established fallback. The current P06 manual suite passed; ordinary user
-aiming/bullet-visibility review and current P05/P14 regression remain required.
+aiming/bullet-visibility review on `6613375` still failed: the user saw a
+laser-like nearby ground streak but no visible plane shots or damage. A bounded
+same-shot observer is prepared to diagnose actual camera and server geometry.
+These user findings and current P05/P14 regression remain required work.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
