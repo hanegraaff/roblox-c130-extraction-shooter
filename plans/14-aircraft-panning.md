@@ -42,10 +42,10 @@ as the aircraft passed near it. Dedicated branch
 clips all viewport corner rays to the current level disk. The canonical server
 orbit is untouched. To leave useful pan range with the 140-stud orbit altitude,
 the 30mm/105mm view defaults are tuned from 35°/60° to 30°/40°; D40 records this
-as tuning, not a new weapon rule. Current host verification and pending Studio
-observations are recorded in
+as tuning, not a new weapon rule. Current host verification, the corrected
+phone focus transition, and focused desktop/mobile Studio observations are recorded in
 [the correction evidence](../docs/evidence/p14-orbit-relative-view.md). P14 remains
-Blocked until the updated two-client and operated acceptance gates pass.
+Blocked until the updated two-client and full operated acceptance gates pass.
 
 ### Control and future-level revision — 2026-11-10
 

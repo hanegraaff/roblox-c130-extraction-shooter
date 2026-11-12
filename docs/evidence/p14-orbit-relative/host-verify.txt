@@ -132,14 +132,14 @@ PASS only documented phase edges and deployment cancellation are legal
 PASS deadline equality beats destruction and last ground elimination
 PASS pre-deadline aircraft destruction beats mutual ground elimination
 PASS empty server and no participants never award a competitive winner
-FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-2sj03_hk/tests/unit/Validation.spec:2: deliberate failure
+FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-bz1jblj2/tests/unit/Validation.spec:2: deliberate failure
 {"discovered":43,"failed":1,"passed":42,"skipped":0,"suite":"unit"}
 Expected rejection observed: exit 1
 + lune run scripts/run_tests.luau unit
-/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-2sj03_hk/scripts/run_tests:50: empty required suite: unit
+/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-bz1jblj2/scripts/run_tests:50: empty required suite: unit
 [Stack Begin]
     Script '[C]' - function 'error'
-    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-2sj03_hk/scripts/run_tests', Line 50
+    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-bz1jblj2/scripts/run_tests', Line 50
 [Stack End]
 
 Expected rejection observed: exit 1

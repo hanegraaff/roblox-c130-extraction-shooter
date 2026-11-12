@@ -372,6 +372,9 @@ function ThermalCameraController.new(
                     buttons,
                     button.InputBegan:Connect(function(event)
                         if event.UserInputType == Enum.UserInputType.Touch then
+                            -- A fresh touch on the active viewport restores focus
+                            -- after Studio/device-simulator window transitions.
+                            windowFocused = true
                             heldPad[event] = direction
                         end
                     end)
