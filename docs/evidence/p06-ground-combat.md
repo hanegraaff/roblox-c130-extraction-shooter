@@ -259,3 +259,39 @@ reaches the outer bootstrap. The original SDK path continues to use `EndTest`.
 Release isolation includes deliberate missing/leaked-fixture probes. Its actual
 manual two-client regression and a reciprocal native control review remain
 pending.
+
+The user launched the prepared manual P05 regression on `dae58a4`. All 8/8
+gunship cases passed with two actual players present at report, zero failures
+or skips; server smoke passed 118/118 (one client had joined at its sampling)
+and both client smokes passed 3/3. The [full report](p06-p05-regression-dae58a4.json)
+preserves actual invocation, observations and results. This verifies the shared
+outcome and cleanup changes against P05 on this source; operated P06 controls
+are reviewed separately.
+
+In the same two-client session after P05 owners stopped, an independently owned
+normal GameRuntime/HumanTestSession exercised native controls. Ground key 1
+equipped the M-7; a desktop click spent ammo, R reloaded, and ground W moved out
+of the building. Operator 1/2 selected GAU23/M102 with 30°/40° FOV and each
+fired an actual server-resolved terrain impact. On simulated iPhone 17 Pro
+landscape 750×381, real simulated Touch held FIRE (ammo 23→18), RELOAD restored
+30/107, and a separate world swipe moved the camera. The simulator is not a
+physical device and the native moving-aircraft hit was not established.
+
+The tester reproduced a material desktop aim mismatch: mouse input at viewport
+`(540,160)`, GUI inset Y=58 and visible reticle center `(540,160)` corresponded
+to raw `GetMouseLocation=(540,218)`. The actual GroundShot matched the ray
+through `(540,218)`; the ray through the visible reticle landed approximately
+11.3 studs away. The [operated record](p06-operated-dae58a4.json) preserves the
+measurements. A moving-plane burst missed but the exact role of this mismatch
+in that miss was not established. A correction and fresh native input review
+are required. The tester removed all test owners, restored the simulator,
+ended the server session and cleared the Edit selector.
+
+Candidate `9adf5d5` corrects the desktop mouse-to-viewport inset conversion and
+uses one rounded viewport pixel for both the reticle and firing ray; touch keeps
+the viewport-center aim. A new actual-client GUI/ray spec checks desktop and
+touch positions using the real GUI inset and camera. The independent tester
+confirmed both source files match the Studio document, the full host gate
+passed 50 unit / 43 integration, and fresh Studio smoke passed 118/118 server
+and 4/4 client cases with zero failures/skips/errors. The real operated
+moving-aircraft aim check and current representative capture remain pending.

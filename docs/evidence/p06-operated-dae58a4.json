@@ -1,0 +1,75 @@
+{
+  "source": "dae58a460dcf1c44f59e50bd705bcd3169d68965",
+  "scenario": "desktop real mouse and server-replicated shot in active two-client session",
+  "inputViewport": [
+    540,
+    160
+  ],
+  "mouseLocation": [
+    540,
+    218
+  ],
+  "guiInset": [
+    0,
+    58
+  ],
+  "reticleAbsoluteTopLeft": [
+    528,
+    148
+  ],
+  "reticleSize": [
+    24,
+    24
+  ],
+  "reticleCenter": [
+    540,
+    160
+  ],
+  "groundShot": {
+    "x": -4.334621429443359,
+    "y": 0,
+    "z": 66.0137939453125,
+    "sequence": 16,
+    "userId": -2,
+    "roundId": 1
+  },
+  "rayThroughRawMouse": [
+    -4.334621429443359,
+    0,
+    66.0137939453125
+  ],
+  "rayThroughReticle": [
+    6.791524887084961,
+    0,
+    64.04150390625
+  ],
+  "phone": {
+    "device": "iPhone 17 Pro",
+    "viewport": [
+      750,
+      381
+    ],
+    "touchEnabled": true,
+    "fireTouch": [
+      683,
+      160
+    ],
+    "fireProcessed": true,
+    "ammoBefore": 23,
+    "ammoAfter": 18,
+    "reloadTouch": [
+      683,
+      95
+    ],
+    "reloadProcessed": true,
+    "reloadAmmo": 30,
+    "reserve": 107,
+    "swipeTouch": [
+      408,
+      180
+    ],
+    "swipeProcessed": false,
+    "cameraBefore": "1, 0, 0, 0, 0.965925813, 0.258819044, 0, -0.258819044, 0.965925813",
+    "cameraAfter": "0.173648238, 0.58583796, -0.791606128, 0, 0.803817928, 0.594875455, 0.98480773, -0.103299074, 0.139581576"
+  }
+}

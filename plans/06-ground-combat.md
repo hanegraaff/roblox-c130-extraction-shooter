@@ -69,7 +69,11 @@ callback scheduling while retaining strict order/step/outcome assertions. Its
 manual two-client P06 run passed 10/10, including both actual same-step orders
 and Ground/AircraftDestroyed; the manual forfeit used server-kick. Its manual
 P06Team run passed 7/7 with three actual clients. The test-only manual P05
-regression route on `dae58a4` and the operated review remain open in Studio.
+regression on `dae58a4` passed 8/8 with two actual clients. The operated review
+found a desktop reticle/ray inset mismatch, measured at about 11.3 studs on
+the sampled ground surface. The `9adf5d5` fix passes host and 118 server /
+4 client Studio smoke including an actual GUI/ray spec; the native moving-plane
+check remains required.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
