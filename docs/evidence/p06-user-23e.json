@@ -1,0 +1,79 @@
+{
+  "source": "23e053c188190437d3547b396db7636a4492e3b6",
+  "method": "non-simultaneous read-only user-operated live session snapshots; no intervention",
+  "session": {
+    "server": "c59fe9fb-f991-4b59-9b2b-4c92da1cdea1",
+    "groundClient": "e0738b0b-f7f2-416b-8784-1779b689a0ec",
+    "operatorClient": "0a46ea04-c8d2-4b2a-9f24-6fb0615adf9f",
+    "players": 2,
+    "serverSmoke": "118/118 (2 at sampling)",
+    "eachClientSmoke": "6/6"
+  },
+  "observations": [
+    {
+      "time": 1794525814.97958,
+      "health": 300,
+      "shot": {
+        "sequence": 19,
+        "aircraftHit": false,
+        "endpoint": [
+          -10.487637519836426,
+          14.77457046508789,
+          66
+        ]
+      },
+      "groundAmmo": 13
+    },
+    {
+      "time": 1794525831.46585,
+      "health": 295,
+      "shot": {
+        "sequence": 85,
+        "aircraftHit": false,
+        "endpoint": [
+          -613.5943603515625,
+          414.0763244628906,
+          643.3927612304688
+        ]
+      },
+      "planeProjection": [
+        849.2655,
+        66.5992,
+        265.1274
+      ],
+      "reticleRect": [
+        829,
+        17,
+        24,
+        24
+      ],
+      "healthHudRect": [
+        415.5,
+        55,
+        250,
+        34
+      ],
+      "cameraRayHit": "none; at observation time, not necessarily shot time"
+    },
+    {
+      "time": 1794525846.615003,
+      "health": 295,
+      "shot": {
+        "sequence": 93,
+        "aircraftHit": false
+      },
+      "reticleCenter": [
+        923,
+        0
+      ],
+      "shotProjection": [
+        926.586,
+        -12.26,
+        658.273
+      ],
+      "note": "not necessarily same camera or instant; last-shot alignment cannot be concluded"
+    }
+  ],
+  "screenshot": "/private/tmp/p06-user-23e-ground.jpg",
+  "notes": "User reported cannot see bullets and no damage. Snapshot confirms at least one real damage event 300→295 and held rifle; initial screenshot shows health label and aircraft overlapping. Source creates 12-stud terminal neon segment with 0.1s lifetime. Exact instantaneous crosshair/trace relation and player-perceived HIT were not captured."
+}

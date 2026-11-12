@@ -378,6 +378,20 @@ aim/tracer behavior and reset clearing require correction and fresh tests.
 The actual Server `EndTest` closed the session after capture; the sole Studio
 document returned to Edit with selectors nil.
 
+Candidate `6613375` makes the 15 visible authored aircraft parts queryable,
+while keeping them anchored, noncolliding and nontouching and retaining the
+canonical Hitbox as primary. The M-7 server ray continues along the intended
+direction to its validated bounded range and still resolves the first actual
+solid, including level cover. The resolved terminal tracer was enlarged to
+50 studs long / 0.4 studs thick / 0.4 seconds; accepted shots flash the
+reticle, confirmed aircraft hits display `AIRCRAFT HIT −5` for 1.2 seconds,
+and aircraft health moved out of the center aiming area. New Studio fixtures
+target actual wing/tail/fin/engine surfaces and preserve cover assertions.
+The developer's full host gate passed 50 unit / 43 integration; real engine,
+camera regressions and user perception remain unverified on this source. These
+changes are a candidate response, not proof that the user's aim or feedback
+concerns have been resolved.
+
 Candidate `23e053c` responds to the user review with a server-created primitive
 rifle (Handle and welded barrel/stock/magazine), a dedicated replicated-health
 HUD, and a shooter-only `HIT −5` indicator driven by server-confirmed aircraft
@@ -392,6 +406,20 @@ client cases. The visible rifle grip, both-role health display, shooter-only
 indicator and user-reported aim alignment are not yet accepted: a real
 two-client and operated review is prepared. In particular, the shorter tracer
 is not by itself proof that shots or impacts align with the user's crosshair.
+
+The user reviewed `23e053c` and reported the rifle looked good, ammunition and
+reload worked, but bullets were not visible and they perceived no damage. The
+independent tester's [read-only samples](p06-user-23e.json) showed at least one
+actual hit (300→295), while other sampled shots missed; the difference between
+the user's perception and server state is a real feedback problem, not evidence
+that damage universally failed. The [actual Ground capture](p06-presentation/user-23e-before.jpg)
+shows the health label overlapping the aircraft's upper-center flight path.
+The terminal tracer was not captured during the review. The tester could not
+reconstruct past shot/reticle alignment from separately timed moving-camera
+samples. The user reported a material playability failure; the visible aircraft
+geometry, shot presentation, health HUD placement and confirmed-hit feedback
+require revision and current-source user review. The tester ended the session
+after it returned to Lobby; the original test document remained in Edit.
 
 The manual P06 two-client run on `23e053c` passed all 10 cases, with fresh
 server smoke 118/118 and 6/6 on each client. The fixtures exercise the equipped

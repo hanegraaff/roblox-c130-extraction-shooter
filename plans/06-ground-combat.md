@@ -87,10 +87,16 @@ held rifle, dedicated health HUD, server-confirmed shooter hit indicator,
 terminal server-impact tracer and reset shot clearing. Host and 118/6 Studio
 smoke pass; the manual two-client P06 suite passed 10/10 with 118/6 smoke and
 fixture assertions for the equipped rifle, health, hit feedback and reset.
-The user's assessment of rifle pose, feedback readability and reported aim
-alignment remains pending in a prepared ordinary two-client review. The
-automated Studio launcher is unreliable; the prepared review requires a native
-Server & Clients launch and the user's operated assessment.
+In the user's ordinary two-client review, the rifle looked good but shots were
+not visible and no damage was apparent; server samples showed at least one
+actual hit (300→295) and other misses. The health label overlapped the passing
+aircraft and user-time shot alignment could not be reconstructed. These
+player-facing findings require correction and a fresh operated review.
+`6613375` makes visible aircraft surfaces queryable, brightens and extends
+server-resolved shot feedback, and moves health away from the center. Its host
+gate passes, but real engine and user review are not yet complete. The
+automated Studio launcher is unreliable, so manual Server & Clients is the
+established fallback.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
