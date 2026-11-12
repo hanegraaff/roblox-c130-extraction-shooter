@@ -34,8 +34,22 @@ Document both weapon contracts, per-weapon timing, zoom mapping, blast cover app
 
 ## Completion record
 
-Implementation started on `plan/05-gunship-combat` from integrated main
-`79336f17d76717408351978b4a9925418361670e`. A1–A5 remain unverified.
-Acceptance requires the full host gate, real Studio geometry and two-client
-replication checks, and an operated weapon/cover/thermal review. Record the
-candidate source, exact test results and observations here as they become available.
+The candidate is on `plan/05-gunship-combat`, based on integrated main
+`79336f17d76717408351978b4a9925418361670e`. The developer implemented
+server-authorized gunship firing, per-weapon readiness, swept collision and
+cover-limited damage; the independent tester found an endpoint-airburst defect,
+which was corrected before the narrow engine probe below. Full acceptance and
+player-feel review remain open.
+
+| Criterion | Evidence and remaining work |
+| --- | --- |
+| A1 | Full host `python3 scripts/verify.py` passed 50 unit and 28 integration cases on `f1982bb`; an independent integration run also passes 28/28. Tests cover both lifetime boundaries, distance clamp, cadence/reload, damage clamps and per-shot/target deduplication. Live projectile expiry and actual Humanoid damage remain unverified on the latest source. |
+| A2 | Host tests exercise independent weapon readiness and switch-away/switch-back. The expanded two-client switching scenario exists but has not completed on the corrected candidate. |
+| A3 | Host tests reject forged fields, stale round/sequence, wrong role, nonfinite and outside bounds. On `03eaacf`, a one-client real-engine probe confirmed a collisionless endpoint caused no impact. Flood/recovery, impossible view, and the expanded multiplayer probes remain open. |
+| A4 | The first two-client candidate exercised narrow cover scenarios; it predates the collision correction. On `03eaacf`, a disposable Part probe verified the 0.25-stud surface continuation. Both-profile real slopes, second floors, panned aiming, muzzle obstruction and damage/cover cases still need a current-candidate run. |
+| A5 | The updated two-client fixture includes result, no-respawn, terminal projectile and next-round cases but has not finished on the corrected candidate. Consistent replicated shot, health and result, reset cleanup and operated play remain unverified. |
+
+The [detailed record](../docs/evidence/p05-gunship-combat.md) identifies
+source-specific runs, the earlier test failure, the pending Studio SDK launch,
+and the independent tester's actual observations. A real current-combat
+screenshot and operated desktop/touch weapon and thermal review are outstanding.
