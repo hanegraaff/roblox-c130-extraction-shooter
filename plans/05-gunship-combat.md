@@ -38,7 +38,9 @@ The source under review is `232889f04a848f145231009e2be21c0ffcb6442e`
 (tree `b29b274f2c612ede1855dd056f6da012b3960274`) on
 `plan/05-gunship-combat`, based on integrated main `79336f17d76717408351978b4a9925418361670e`.
 [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
-contains the candidate; it has not been merged or published.
+merged into `main` as `5cc7de828edf2e21ea4add81637ca3cdb33e888c`; the
+[integration record](../docs/evidence/p05-integration.md) records the matching
+tree and fresh main verification. No Roblox publication occurred.
 GitHub [Verify run 43291579432](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43291579432)
 passed on delivery commit `182e601e75999dab76b2ef36078b4108a9bc589f`, which
 contains the tested source and the documentation and status records.

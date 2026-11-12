@@ -1,10 +1,11 @@
 # P05 combat candidate: verification record
 
-These observations concern the unmerged P05 branch and do not establish plan
-acceptance. The independent tester used the existing local `tests.rbxlx` Studio
-document (`2e0d8288-c6fb-428d-9b98-a2ab2110c775`) and two actual clients when
-the multiplayer launcher successfully connected both. Source hashes below are
-candidate commits, not claims about later changes.
+These source-specific observations trace P05's development, including failed
+intermediate candidates and the independently verified final source. The
+independent tester used local `tests.rbxlx` Studio documents and two actual
+clients when the multiplayer launcher successfully connected both. The
+[integration record](p05-integration.md) records the merge and fresh main gate;
+the candidate hashes below describe the source actually tested in each run.
 
 ## Host and Studio observations
 
