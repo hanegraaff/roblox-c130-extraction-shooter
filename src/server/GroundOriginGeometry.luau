@@ -4,8 +4,9 @@
     Depends on actual Battlefield BaseParts and Terrain voxels; never yields. Owns one
     invisible noninteractive probe, which must be destroyed by its caller on teardown.
     Rejects a root or head inside BasePart cover, any solid between root and head,
-    and a head in a nonempty solid Terrain voxel. This conservative voxel policy can
-    reject fire near terrain edges; it never moves or penalizes a character.
+    and a head inside solid Terrain. Terrain uses engine collision probes and a
+    voxel fallback because smoothed collision can extend beyond nonempty voxels.
+    The conservative policy never moves or penalizes a character.
 ]=]
 local Validation = require(game:GetService("ReplicatedStorage").Shared.Validation)
 local GroundOriginGeometry = {}
@@ -14,9 +15,11 @@ export type Controller = {
     destroy: () -> (),
 }
 local VOXEL = 4
--- Conservative check: any non-air, non-water solid in the head's 4-stud voxel
--- forbids firing, including partial occupancy where exact point membership is not
--- available from ReadVoxels. The current character head stands above ground level.
+-- Terrain's smoothed surface can extend beyond a voxel reported as Air. For each
+-- axis, compare collision queries into and out of the point: a hit only while
+-- approaching the point indicates that the opposite ray starts inside solid.
+-- The solid-voxel fallback catches deep interiors where all short rays start inside.
+-- This is conservative, not an exact signed-distance query for arbitrary caves.
 function GroundOriginGeometry.clearTerrain(position: Vector3): boolean
     local cell = Vector3.new(
         math.floor(position.X / VOXEL) * VOXEL,
@@ -26,9 +29,35 @@ function GroundOriginGeometry.clearTerrain(position: Vector3): boolean
     local region = Region3.new(cell, cell + Vector3.one * VOXEL)
     local material, occupancy = workspace.Terrain:ReadVoxels(region, VOXEL)
     local voxelMaterial = material[1][1][1]
-    return voxelMaterial == Enum.Material.Air
-        or voxelMaterial == Enum.Material.Water
-        or occupancy[1][1][1] <= 0
+    local solidVoxel = voxelMaterial ~= Enum.Material.Air
+        and voxelMaterial ~= Enum.Material.Water
+        and occupancy[1][1][1] > 0
+    local params = RaycastParams.new()
+    params.FilterType = Enum.RaycastFilterType.Include
+    params.FilterDescendantsInstances = { workspace.Terrain }
+    params.RespectCanCollide = true
+    params.IgnoreWater = true
+    local hasOutgoingHit = false
+    for _, offset in
+        {
+            Vector3.new(8, 0, 0),
+            Vector3.new(-8, 0, 0),
+            Vector3.new(0, 8, 0),
+            Vector3.new(0, -8, 0),
+            Vector3.new(0, 0, 8),
+            Vector3.new(0, 0, -8),
+        }
+    do
+        local entering = workspace:Raycast(position + offset, -offset, params)
+        local outgoing = workspace:Raycast(position, offset, params)
+        if entering and not outgoing then
+            return false
+        end
+        if outgoing then
+            hasOutgoingHit = true
+        end
+    end
+    return not solidVoxel or hasOutgoingHit
 end
 -- Creates a lifecycle-owned server probe. Parent must be in Workspace. The
 -- function rejects missing battlefield and nonfinite/displaced body parts rather

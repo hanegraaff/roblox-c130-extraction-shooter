@@ -60,6 +60,26 @@ return function()
             assert(not owner.allows(root, head), "head buried in terrain accepted")
             root.Position = Vector3.new(2050, 23, 0)
             head.Position = Vector3.new(2050, 25, 0)
+            local terrainOnly = RaycastParams.new()
+            terrainOnly.FilterType = Enum.RaycastFilterType.Include
+            terrainOnly.FilterDescendantsInstances = { terrain }
+            local sample =
+                workspace:Raycast(head.Position + Vector3.new(0, 8, 0), Vector3.new(0, -8, 0), terrainOnly)
+            local deadline = os.clock() + 5
+            while not sample and os.clock() < deadline do
+                task.wait(0.05)
+                sample = workspace:Raycast(
+                    head.Position + Vector3.new(0, 8, 0),
+                    Vector3.new(0, -8, 0),
+                    terrainOnly
+                )
+            end
+            assert(
+                sample and sample.Position.Y > head.Position.Y,
+                "smoothed embedded-head fixture was not inside Terrain"
+            )
+            assert(not owner.allows(root, head), "head inside smoothed Terrain surface accepted")
+            head.Position = Vector3.new(2050, 26.5, 0)
             assert(not owner.allows(root, head), "root inside Terrain with exposed head accepted")
             root.Position = Vector3.new(2050, 27, 0)
             head.Position = Vector3.new(2050, 29, 0)
@@ -120,9 +140,18 @@ return function()
         head.Parent = workspace
         local owner = geometry.new(workspace)
         local ok, reason = pcall(function()
+            local params = RaycastParams.new()
+            params.FilterType = Enum.RaycastFilterType.Include
+            params.FilterDescendantsInstances = { terrain }
             for _, x in { -8, -4, 0, 4, 8 } do
-                local cast = workspace:Raycast(Vector3.new(center.X + x, 60, 0), Vector3.new(0, -60, 0))
-                assert(cast and cast.Instance == terrain, "sloped terrain sample missing")
+                local sampleOrigin = Vector3.new(center.X + x, 60, 0)
+                local deadline = os.clock() + 5
+                local cast = workspace:Raycast(sampleOrigin, Vector3.new(0, -60, 0), params)
+                while not cast and os.clock() < deadline do
+                    task.wait(0.05)
+                    cast = workspace:Raycast(sampleOrigin, Vector3.new(0, -60, 0), params)
+                end
+                assert(cast and cast.Instance == terrain, "sloped terrain sample missing at x=" .. x)
                 root.Position = cast.Position + Vector3.new(0, 3, 0)
                 head.Position = cast.Position + Vector3.new(0, 4.5, 0)
                 assert(owner.allows(root, head), "normal slope stance rejected at x=" .. x)
