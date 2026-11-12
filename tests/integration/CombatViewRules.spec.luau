@@ -107,4 +107,25 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         command.z = 0
         assert(view.validate(command, map, "M102", 360, 0), "legal vertical reticle was rejected")
     end)
+    test("P05 adaptive ultra-wide FOV cache is exact, reusable and bounded", function()
+        local widest = assert(pan.supportedFov(map, 10, 40), "ultra-wide view unsupported")
+        local focus = assert(pan.recenter(map, 10, widest), "ultra-wide focus missing")
+        local command = request("M102", 0, focus)
+        command.aspect = 10
+        assert(view.validate(command, map, "M102", 360, 0), "legitimate adaptive ultra-wide view rejected")
+        local before = view.cacheStats()
+        for _ = 1, 8 do
+            assert(view.validate(command, map, "M102", 360, 0), "cached ultra-wide view rejected")
+        end
+        local after = view.cacheStats()
+        assert(
+            after.hits >= before.hits + 8 and after.misses == before.misses,
+            "repeated aspect recalculated adaptive FOV"
+        )
+        for i = 1, 70 do
+            command.aspect = 7 + i * 0.01
+            view.validate(command, map, "M102", 360, 0)
+        end
+        assert(view.cacheStats().entries <= 64, "view cache grew beyond its configured bound")
+    end)
 end

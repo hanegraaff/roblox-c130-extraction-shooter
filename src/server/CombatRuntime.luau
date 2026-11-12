@@ -284,6 +284,11 @@ function CombatRuntime.start(
                 and member.connected
                 and member.role == "Gunship"
                 and member.life == "Alive"
+            -- Reject spectators, stale phases and deadline expiry before any
+            -- camera geometry search or world query.
+            if not eligible then
+                return
+            end
             local weapon = aircraft.weapon()
             local muzzle = aircraft.muzzle(weapon)
             if not muzzle then

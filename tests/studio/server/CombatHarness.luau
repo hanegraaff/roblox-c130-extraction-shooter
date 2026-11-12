@@ -137,6 +137,13 @@ function CombatHarness.run()
         end
         return nil
     end
+    local function centeredGroundTarget(): Vector3
+        local camera = runtime.aircraft.position()
+        local home = assert(Pan.recenter(MapRules.defaults, 16 / 9, 40), "fixture camera home missing")
+        local point =
+            assert(Pan.worldFocus(MapRules.defaults, home, camera.X, camera.Z), "fixture focus missing")
+        return Vector3.new(point.x, MapRules.defaults.groundY, point.z)
+    end
     local function checkEffects(weapon: string)
         local folder = workspace:FindFirstChild("CombatEffects")
         local projectile = if folder then folder:FindFirstChild("Projectile") else nil
@@ -183,7 +190,15 @@ function CombatHarness.run()
             local forged = payload(1, "GAU23", pos)
             forged.damage = 10000
             probe(op, "Fire", forged)
-            probe(ground, "Fire", payload(1, "GAU23", pos))
+            local groundRequest = payload(1, "GAU23", pos)
+            local beforeGround = CombatViewRules.cacheStats()
+            probe(ground, "Fire", groundRequest)
+            task.wait(0.2)
+            local afterGround = CombatViewRules.cacheStats()
+            assert(
+                afterGround.hits == beforeGround.hits and afterGround.misses == beforeGround.misses,
+                "wrong role reached view-validation work"
+            )
             local outside = payload(1, "GAU23", pos)
             outside.x = 500
             probe(op, "Fire", outside)
@@ -379,10 +394,7 @@ function CombatHarness.run()
             waitFor(function()
                 return snapshot("Selection").weapon == "M102"
             end, "second heavy selection")
-            local muzzle = runtime.aircraft.muzzle("M102")
-            assert(muzzle, "second heavy muzzle missing")
-            local radial = Vector3.new(muzzle.X, 0, muzzle.Z).Unit
-            local target = -radial * 300 + Vector3.new(0, 30, 0)
+            local target = centeredGroundTarget()
             probe(op, "Fire", payload(1, "M102", target))
             waitFor(function()
                 return runtime.combat.resources().projectiles > 0
@@ -407,7 +419,7 @@ function CombatHarness.run()
             assert(nextHumanoid, "new-round ground life missing")
             local beforeHealth = nextHumanoid.Health
             local beforeAmmo = ammo("GAU23")
-            local stale = payload(1, "GAU23", target)
+            local stale = payload(1, "GAU23", centeredGroundTarget())
             stale.roundId = previousRound
             probe(nextOp, "Fire", stale)
             task.wait(0.5)
@@ -461,7 +473,12 @@ function CombatHarness.run()
                                     and visible.Instance == workspace.Terrain
                                     and (visible.Position - surface.Position).Magnitude < 1
                                 then
-                                    return visible.Position
+                                    local reachable = pcall(function()
+                                        return payload(1, weapon, visible.Position)
+                                    end)
+                                    if reachable then
+                                        return visible.Position
+                                    end
                                 end
                             end
                         end
@@ -490,7 +507,12 @@ function CombatHarness.run()
                                     and type(id) == "string"
                                     and runtime.aircraft.aimAllowed(visible.Position)
                                 then
-                                    return visible.Position, id
+                                    local reachable = pcall(function()
+                                        return payload(1, weapon, visible.Position)
+                                    end)
+                                    if reachable then
+                                        return visible.Position, id
+                                    end
                                 end
                             end
                         end

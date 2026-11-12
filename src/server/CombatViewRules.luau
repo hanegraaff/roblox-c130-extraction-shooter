@@ -34,6 +34,53 @@ CombatViewRules.maximumPoseAgeSeconds = 1.25
 CombatViewRules.orbitToleranceStuds = 1
 CombatViewRules.projectionMargin = 0.02
 
+-- Exact aspect/level keys preserve the production camera's adaptive FOV without
+-- quantizing valid unusual viewports. FIFO capacity bounds memory even if the
+-- operator changes claimed aspects every shot. The transport rate budget bounds
+-- expensive cache misses; wrong-role requests never reach this module.
+local cache: { [string]: number | boolean } = {}
+local cacheOrder: { string } = {}
+local cacheHits, cacheMisses = 0, 0
+local cacheCapacity = 64
+local function supportedFov(map: typeof(MapRules.defaults), aspect: number): number?
+    local key = string.format(
+        "%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g/%.17g",
+        map.centerX,
+        map.centerZ,
+        map.groundY,
+        map.radiusStuds,
+        map.orbitCenterX,
+        map.orbitCenterZ,
+        map.orbitRadiusStuds,
+        map.focusX,
+        map.focusY,
+        map.focusZ,
+        map.altitudeStuds,
+        map.killY,
+        aspect
+    )
+    local existing = cache[key]
+    if existing ~= nil then
+        cacheHits += 1
+        return if type(existing) == "number" then existing else nil
+    end
+    cacheMisses += 1
+    local result = Pan.supportedFov(map, aspect, Aircraft.defaults.fov105mm)
+    if #cacheOrder >= cacheCapacity then
+        local oldest = assert(table.remove(cacheOrder, 1), "nonempty cache order")
+        cache[oldest] = nil
+    end
+    table.insert(cacheOrder, key)
+    cache[key] = result or false
+    return result
+end
+
+-- Snapshot of bounded cache use for operational diagnostics; never exposes data
+-- about clients and does not change acceptance or authority.
+function CombatViewRules.cacheStats(): { entries: number, hits: number, misses: number }
+    return { entries = #cacheOrder, hits = cacheHits, misses = cacheMisses }
+end
+
 -- Authorizes exactly eleven flat scalar fields. cameraX/Z describe the replicated
 -- canonical aircraft position used by the client, never the muzzle. Its radius and
 -- distance from the current server pose must be within the stated bounded lag.
@@ -108,7 +155,7 @@ function CombatViewRules.validate(
     then
         return nil, "aircraft pose outside bounded replication age"
     end
-    local widest = Pan.supportedFov(map, aspect, Aircraft.defaults.fov105mm)
+    local widest = supportedFov(map, aspect)
     local selectedFov = Aircraft.fov(Aircraft.defaults, selected)
     local focus = { x = focusX, z = focusZ }
     if not widest or not selectedFov or not Pan.viewFits(map, focus, aspect, widest) then
