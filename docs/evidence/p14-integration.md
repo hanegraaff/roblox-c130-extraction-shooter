@@ -11,8 +11,9 @@ stack was merged into `main` in dependency order using merge commits:
 | [#21](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/21) | Visible level edges and visual backdrop | `8eb940afbd3ae2785537f9dd4ba67cb4af466793` |
 | [#22](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/22) | Correct left/right and mobile aim, complete acceptance | `169cecd6f10f82569526c57d5c1aa30c178e3ffe` |
 
-The final integrated `main` tree `00499790b5707dbf4a4f9e4a69ee3efed60fd980`
-is identical to the verified PR #22 head
+The P14 game stack at main merge commit
+`169cecd6f10f82569526c57d5c1aa30c178e3ffe` has tree
+`00499790b5707dbf4a4f9e4a69ee3efed60fd980`, identical to the verified PR #22 head
 `50236e687a87ef9ae21952250d1befabc75d663f`. That head passed
 [GitHub Verify 43273342746](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43273342746).
 The independently reviewed real-engine results remain applicable to the
@@ -31,6 +32,7 @@ the [full log](p14-integration/host-verify.txt) include expected failing child
 test output; the overall verification exited zero. No Studio test is implied
 by that host command; the engine evidence is linked above.
 
-The follow-up documentation branch updates routine setup to `main` and records
-these facts. P14 remains Complete; P05 is Ready and has not been implemented.
-No Roblox experience was published.
+The [documentation follow-up PR #23](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/23)
+merged at `4e43fe64155ad6db2c43c57f7fe1ce8371fd8e18` and updated routine setup
+to `main` without changing game or test source. P14 remains Complete; P05 is
+Ready and has not been implemented. No Roblox experience was published.
