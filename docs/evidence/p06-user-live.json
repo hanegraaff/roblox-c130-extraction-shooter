@@ -1,0 +1,139 @@
+{
+  "source": "0003fe4cef9b5b4a252706059c69037124b909f8",
+  "method": "read-only, non-simultaneous observations of user-operated native session",
+  "earlier": [
+    {
+      "context": "Server",
+      "health": 300,
+      "phase": "Active",
+      "note": "initial sample before subsequent GroundShots"
+    },
+    {
+      "context": "Server",
+      "health": 270,
+      "phase": "Active",
+      "groundSequence": 34,
+      "note": "after user fired"
+    },
+    {
+      "context": "Server",
+      "health": 255,
+      "time": 1794524819.490144,
+      "groundSequence": 64
+    },
+    {
+      "context": "Ground client",
+      "health": 250,
+      "time": 1794524825.117385,
+      "groundSequence": 76
+    },
+    {
+      "context": "Gunship client",
+      "health": 250,
+      "time": 1794524822.330302,
+      "groundSequence": 76
+    },
+    {
+      "context": "Server",
+      "health": 250,
+      "time": 1794524833.090707,
+      "groundSequence": 76
+    },
+    {
+      "context": "Ground client",
+      "health": 250,
+      "time": 1794524835.949976,
+      "groundSequence": 76
+    },
+    {
+      "context": "Gunship client",
+      "health": 250,
+      "time": 1794524838.686333,
+      "groundSequence": 87
+    }
+  ],
+  "current": [
+    {
+      "studioId": "68df5d9f-d003-4f26-905d-e8b01737b951",
+      "observation": {
+        "players": {
+          "1": {
+            "id": -1,
+            "life": "Waiting",
+            "name": "Player1",
+            "role": "Waiting"
+          },
+          "2": {
+            "id": -2,
+            "life": "Waiting",
+            "name": "Player2",
+            "role": "Waiting"
+          }
+        },
+        "time": 1794524892.291261,
+        "round": {
+          "RoundId": 1,
+          "Revision": 9,
+          "MinimumPlayers": 2,
+          "Reason": "",
+          "Phase": "Lobby",
+          "DeadlineSeconds": 0,
+          "Winner": "",
+          "GroundAlive": 0
+        },
+        "groundShot": "{\"y\":298.97467041015627,\"x\":-668.08642578125,\"sequence\":87,\"z\":-607.051513671875,\"userId\":-2,\"roundId\":1}",
+        "destroyed": false,
+        "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":118,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":118}",
+        "health": 300
+      }
+    },
+    {
+      "studioId": "886b60db-3cc0-4cd3-b6b9-41914d18e584",
+      "observation": {
+        "groundShot": "{\"y\":298.97467041015627,\"x\":-668.08642578125,\"sequence\":87,\"z\":-607.051513671875,\"userId\":-2,\"roundId\":1}",
+        "destroyed": false,
+        "health": 300,
+        "life": "Waiting",
+        "name": "Player2",
+        "role": "Waiting",
+        "clientSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":6,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":6}",
+        "round": {
+          "GroundAlive": 0,
+          "Revision": 9,
+          "MinimumPlayers": 2,
+          "RoundId": 1,
+          "Phase": "Lobby",
+          "Winner": "",
+          "DeadlineSeconds": 0,
+          "Reason": ""
+        },
+        "time": 1794524898.414809,
+        "id": -2
+      }
+    },
+    {
+      "studioId": "fb27c17c-63ab-4a64-a596-d668f8ef58ce",
+      "observation": {
+        "groundShot": "{\"y\":298.97467041015627,\"x\":-668.08642578125,\"sequence\":87,\"z\":-607.051513671875,\"userId\":-2,\"roundId\":1}",
+        "destroyed": false,
+        "health": 300,
+        "life": "Waiting",
+        "name": "Player1",
+        "role": "Waiting",
+        "clientSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":6,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":6}",
+        "round": {
+          "GroundAlive": 0,
+          "Revision": 9,
+          "MinimumPlayers": 2,
+          "RoundId": 1,
+          "Phase": "Lobby",
+          "Winner": "",
+          "DeadlineSeconds": 0,
+          "Reason": ""
+        },
+        "time": 1794524895.651657,
+        "id": -1
+      }
+    }
+  ]
+}

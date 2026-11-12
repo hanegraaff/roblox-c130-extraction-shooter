@@ -351,3 +351,44 @@ focus or game behavior) was not established. No injected hit or success is
 claimed. The user was asked to try ordinary camera tracking and firing; this
 is a playability gap and possible acquisition concern, not a proven defect.
 The simulator and owned session stopped, and selector/SDK args were cleared.
+
+## User-operated reciprocal review
+
+The user then operated a fresh ordinary two-client session with the Ground
+rifle. Read-only Server observations saw aircraft health fall from 300 through
+270 and 255 to 250 during rifle fire; the server and both clients subsequently
+reported 250 while the round was Active. [Samples](p06-user-live.json) record
+their separate times; they are not claimed simultaneous. Health restored to
+300 in Lobby. The user reported that the aircraft could be hit but the health
+decrease was not visibly apparent, the rifle appeared to shoot above the
+crosshair, and the avatar had no visible gun. Those are material player-facing
+findings even though the health mutation replicated.
+
+Inspection confirms the Tool was created without a handle or visible rifle,
+and health appeared only as a small number embedded in RoundHUD; neither
+addresses the user's feedback. The tracer was a short-lived line from the
+server character head to its resolved endpoint, while the reticle came from
+the camera. This parallax may explain a visual difference, but the prior
+camera-ray check did not establish the tracer's screen projection, and the
+user's reported high shots are not yet reproduced. The user's round ended
+before a tracer capture. The observed `GroundShot` attribute also remained
+present in Lobby after health reset, though it cleared on the next round ID or
+runtime stop. Visible rifle, unambiguous server-confirmed hit/health feedback,
+aim/tracer behavior and reset clearing require correction and fresh tests.
+The actual Server `EndTest` closed the session after capture; the sole Studio
+document returned to Edit with selectors nil.
+
+Candidate `23e053c` responds to the user review with a server-created primitive
+rifle (Handle and welded barrel/stock/magazine), a dedicated replicated-health
+HUD, and a shooter-only `HIT −5` indicator driven by server-confirmed aircraft
+damage. The authoritative muzzle ray and cover remain unchanged; the visual
+tracer now shows a short terminal segment ending at the actual resolved point.
+The replicated `GroundShot` is cleared on Resetting and Lobby. The independent
+source review confirmed the optional hit indicator is derived from the server
+award, player/round identity is checked, the rifle parts are noncolliding and
+nonqueryable, and cleanup remains owner-scoped. Full host verification passed
+50 unit / 43 integration and fresh Studio smoke passed 118/118 server and 6/6
+client cases. The visible rifle grip, both-role health display, shooter-only
+indicator and user-reported aim alignment are not yet accepted: a real
+two-client and operated review is prepared. In particular, the shorter tracer
+is not by itself proof that shots or impacts align with the user's crosshair.

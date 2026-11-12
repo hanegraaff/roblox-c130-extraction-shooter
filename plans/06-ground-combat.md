@@ -78,8 +78,15 @@ panel overlapped the centered reticle. `0003fe4` adjusts the touch HUD and
 handles device-mode transitions; independent host and Studio smoke pass
 (118 server / 6 client). Actual two-client desktop ray alignment and simulated
 phone layout, touch fire/reload/swipe pass on `0003fe4`. The native tester could
-not acquire and hit the moving plane; user-operated aiming/health feedback
-remains required and is not represented as a pass.
+not acquire and hit the moving plane. The user subsequently hit it in a real
+two-client round and health replicated 300→250, but reported no visible health
+feedback, shots appearing above the reticle and no gun in the avatar's hands.
+These player-facing findings and stale Lobby shot state require fixes and a
+fresh review; they are not represented as a pass. `23e053c` adds a primitive
+held rifle, dedicated health HUD, server-confirmed shooter hit indicator,
+terminal server-impact tracer and reset shot clearing. Host and 118/6 Studio
+smoke pass, but actual rifle pose, feedback readability and reported aim
+alignment remain pending two-client and operated review.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
