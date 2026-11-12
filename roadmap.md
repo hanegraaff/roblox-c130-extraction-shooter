@@ -25,8 +25,9 @@ The integrated source on `main` includes the development shell, verification too
 2026-11-12 P05 candidate: the dedicated branch adds gunship combat and passes
 the 50-unit / 28-integration host gate. P05 is blocked on current-source Studio
 acceptance: a two-client SDK launch stalled, and the remaining real-engine,
-replication and operated checks have not passed. See the [P05 plan](plans/05-gunship-combat.md)
-and [evidence](docs/evidence/p05-gunship-combat.md) for source-specific results.
+replication and operated checks have not passed. [Draft PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25),
+the [P05 plan](plans/05-gunship-combat.md) and [evidence](docs/evidence/p05-gunship-combat.md)
+record the candidate and source-specific results.
 
 ## How plans move
 

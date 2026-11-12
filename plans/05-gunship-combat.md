@@ -39,7 +39,8 @@ The candidate is on `plan/05-gunship-combat`, based on integrated main
 server-authorized gunship firing, per-weapon readiness, swept collision and
 cover-limited damage; the independent tester found an endpoint-airburst defect,
 which was corrected before the narrow engine probe below. Full acceptance and
-player-feel review remain open.
+player-feel review remain open. [Draft PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
+contains the candidate and is not an integration or publication claim.
 
 | Criterion | Evidence and remaining work |
 | --- | --- |
