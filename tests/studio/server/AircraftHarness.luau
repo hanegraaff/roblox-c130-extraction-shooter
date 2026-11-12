@@ -12,10 +12,14 @@ local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
 local CollectionService = game:GetService("CollectionService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
+local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+local Validation = require(ReplicatedStorage.Shared.Validation)
 local AircraftHarness = {}
 type Request = {
     kind: string,
     position: Vector3?,
+    snapshotServerTime: number?,
+    periodSeconds: number?,
     weapon: string?,
     sequence: number?,
     roundId: number?,
@@ -115,6 +119,32 @@ function AircraftHarness.run()
         assert(operator and ground, "actual roles missing")
         return operator, ground
     end
+    -- The caller captures position/time together without yielding. Both clients
+    -- in a paired probe receive the identical snapshot and project from its
+    -- phase to their own synchronized server time; the server remains authoritative.
+    local function poseRequest(
+        position: Vector3,
+        snapshotTime: number,
+        role: string,
+        roundId: number
+    ): Request
+        local period = ReplicatedStorage.AircraftState:GetAttribute("PeriodSeconds")
+        assert(
+            Validation.isFinite(snapshotTime)
+                and type(period) == "number"
+                and Validation.isFinite(period)
+                and period == AircraftRules.defaults.periodSeconds,
+            "invalid server pose timestamp or orbit period"
+        )
+        return {
+            kind = "Pose",
+            position = position,
+            snapshotServerTime = snapshotTime,
+            periodSeconds = period,
+            role = role,
+            roundId = roundId,
+        }
+    end
     local function deploy()
         assert(runtime.rounds.match.deploy(), "manual harness deployment failed")
         awaitCondition(function()
@@ -164,10 +194,9 @@ function AircraftHarness.run()
                 return selection().weapon == "M102"
             end, "wide selection acknowledged")
             probe(operator, { kind = "Profile", weapon = "M102" })
-            probe(
-                ground,
-                { kind = "Pose", position = workspace.Aircraft:GetPivot().Position, role = "Ground" }
-            )
+            local firstPose = workspace.Aircraft:GetPivot()
+            local firstPoseTime = workspace:GetServerTimeNow()
+            probe(ground, poseRequest(firstPose.Position, firstPoseTime, "Ground", firstRound))
         end)
         check(
             "A4 stale malformed wrong-role duplicate and unknown selections preserve acknowledged view",
@@ -224,16 +253,18 @@ function AircraftHarness.run()
                         return os.clock() - started >= sample * 90 / 8
                     end, "next full-orbit sample", 14)
                     local pose = workspace.Aircraft:GetPivot()
+                    local poseTime = workspace:GetServerTimeNow()
                     local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
                     assert(type(epoch) == "number", "orbit epoch missing")
-                    local expected = runtime.aircraft.sample(workspace:GetServerTimeNow() - epoch)
+                    local expected = runtime.aircraft.sample(poseTime - epoch)
                     assert(
                         (pose.Position - expected.Position).Magnitude < 2,
                         "server canonical orbit drift beyond heartbeat budget"
                     )
                     assert(pose.LookVector:Dot(expected.LookVector) > 0.9999, "server tangent drift")
-                    probe(operator, { kind = "Pose", position = pose.Position, role = "Gunship" })
-                    probe(ground, { kind = "Pose", position = pose.Position, role = "Ground" })
+                    local sampleRound = runtime.rounds.match.snapshot().roundId
+                    probe(operator, poseRequest(pose.Position, poseTime, "Gunship", sampleRound))
+                    probe(ground, poseRequest(pose.Position, poseTime, "Ground", sampleRound))
                     if sample == 4 then
                         probe(
                             operator,
@@ -261,12 +292,19 @@ function AircraftHarness.run()
             local nextOperator = roles()
             probe(nextOperator, { kind = "Profile", weapon = "GAU23" })
             local hudCount = 0
+            local secondPose = workspace.Aircraft:GetPivot()
+            local secondPoseTime = workspace:GetServerTimeNow()
+            local secondRound = runtime.rounds.match.snapshot().roundId
             for _, player in Players:GetPlayers() do
-                probe(player, {
-                    kind = "Pose",
-                    position = workspace.Aircraft:GetPivot().Position,
-                    role = tostring(player:GetAttribute("Role")),
-                })
+                probe(
+                    player,
+                    poseRequest(
+                        secondPose.Position,
+                        secondPoseTime,
+                        tostring(player:GetAttribute("Role")),
+                        secondRound
+                    )
+                )
                 if player:GetAttribute("Role") == "Gunship" then
                     hudCount += 1
                 end

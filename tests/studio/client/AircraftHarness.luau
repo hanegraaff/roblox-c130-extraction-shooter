@@ -6,11 +6,16 @@
 ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MapRules = require(ReplicatedStorage.Shared.MapRules)
+local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+local Validation = require(ReplicatedStorage.Shared.Validation)
 local AircraftHarness = {}
 local RunService = game:GetService("RunService")
 type Request = {
     kind: string,
     position: Vector3?,
+    snapshotServerTime: number?,
+    periodSeconds: number?,
     weapon: string?,
     sequence: number?,
     roundId: number?,
@@ -23,6 +28,87 @@ local function awaitCondition(predicate: () -> boolean, message: string)
         task.wait(0.03)
     end
     assert(predicate(), "client P04 timeout: " .. message)
+end
+
+-- Projects one captured server pivot to a synchronized client time. This is
+-- test-only: validate the snapshot and bounded age rather than trusting a stale
+-- transport payload or changing the real replicated aircraft. The 0.25-second
+-- future allowance accommodates small server-clock synchronization differences.
+local function predictSnapshot(
+    position: unknown,
+    snapshotTime: unknown,
+    sampleTime: unknown,
+    period: unknown
+): (Vector3?, number?, string?)
+    if typeof(position) ~= "Vector3" then
+        return nil, nil, "snapshot position missing"
+    end
+    for _, value in { position.X, position.Y, position.Z } do
+        if not Validation.isFinite(value) then
+            return nil, nil, "nonfinite snapshot position"
+        end
+    end
+    if
+        type(snapshotTime) ~= "number"
+        or not Validation.isFinite(snapshotTime)
+        or type(sampleTime) ~= "number"
+        or not Validation.isFinite(sampleTime)
+        or type(period) ~= "number"
+        or not Validation.isFinite(period)
+        or period ~= AircraftRules.defaults.periodSeconds
+    then
+        return nil, nil, "invalid snapshot time or period"
+    end
+    local age = sampleTime - snapshotTime
+    if not Validation.isFinite(age) or age < -0.25 or age > 20 then
+        return nil, nil, "snapshot age outside bounded test window"
+    end
+    local map = MapRules.defaults
+    local dx, dz = position.X - map.centerX, position.Z - map.centerZ
+    local radius = math.sqrt(dx * dx + dz * dz)
+    if
+        not Validation.isFinite(radius)
+        or math.abs(radius - map.radiusStuds) >= 0.02
+        or math.abs(position.Y - (map.groundY + map.altitudeStuds)) >= 0.02
+    then
+        return nil, nil, "snapshot is not on the canonical orbit"
+    end
+    local phase = (math.atan2(dz, dx) + age * (2 * math.pi / period)) % (2 * math.pi)
+    if not Validation.isFinite(phase) then
+        return nil, nil, "nonfinite projected phase"
+    end
+    return Vector3.new(
+        map.centerX + radius * math.cos(phase),
+        position.Y,
+        map.centerZ + radius * math.sin(phase)
+    ),
+        phase,
+        nil
+end
+
+-- Test the time-alignment arithmetic independently of network arrivals.
+local function checkSnapshotPrediction()
+    local map = MapRules.defaults
+    local initial = Vector3.new(map.centerX + map.radiusStuds, map.groundY + map.altitudeStuds, map.centerZ)
+    local same, initialPhase = predictSnapshot(initial, 10, 10, 90)
+    assert(same and (same - initial).Magnitude < 1e-4 and initialPhase == 0, "initial snapshot changed")
+    local angle = math.rad(359)
+    local beforeWrap = Vector3.new(
+        map.centerX + map.radiusStuds * math.cos(angle),
+        map.groundY + map.altitudeStuds,
+        map.centerZ + map.radiusStuds * math.sin(angle)
+    )
+    local wrapped, phase = predictSnapshot(beforeWrap, 10, 11, 90)
+    assert(wrapped and phase and math.abs(phase - math.rad(3)) < 1e-6, "snapshot phase did not wrap")
+    assert(not predictSnapshot(initial, 0 / 0, 0, 90), "NaN snapshot time accepted")
+    assert(not predictSnapshot(initial, 0, math.huge, 90), "infinite sample time accepted")
+    assert(not predictSnapshot(initial, 0, 1, math.huge), "infinite period accepted")
+    assert(not predictSnapshot(initial, 0, 1, 0), "zero period accepted")
+    assert(not predictSnapshot(Vector3.new(math.huge, 140, 0), 0, 1, 90), "nonfinite position accepted")
+    assert(not predictSnapshot(Vector3.new(1, 140, 0), 0, 1, 90), "off-orbit snapshot accepted")
+    assert(not predictSnapshot(Vector3.new(360, 141, 0), 0, 1, 90), "wrong-altitude snapshot accepted")
+    assert(not predictSnapshot(initial, 0, -1, 90), "future snapshot accepted")
+    assert(not predictSnapshot(initial, 0, 21, 90), "expired snapshot accepted")
 end
 -- Installs one owned test listener; returns immediately in ordinary human sessions.
 function AircraftHarness.run()
@@ -52,17 +138,103 @@ function AircraftHarness.run()
             local details: { [string]: unknown } = {}
             local ok, failure = pcall(function()
                 if request.kind == "Pose" then
-                    local expected = request.position
-                    assert(expected, "server expected pose missing")
+                    local snapshot = request.position
+                    local snapshotTime = request.snapshotServerTime
+                    local period = request.periodSeconds
+                    local roundId = request.roundId
+                    local validSnapshot = snapshot ~= nil
+                        and Validation.isFinite(snapshot.X)
+                        and Validation.isFinite(snapshot.Y)
+                        and Validation.isFinite(snapshot.Z)
+                    details.snapshotPosition = if validSnapshot and snapshot
+                        then { snapshot.X, snapshot.Y, snapshot.Z }
+                        else tostring(snapshot)
+                    details.snapshotServerTime = if type(snapshotTime) == "number"
+                            and Validation.isFinite(snapshotTime)
+                        then snapshotTime
+                        else tostring(snapshotTime)
+                    details.periodSeconds = if type(period) == "number" and Validation.isFinite(period)
+                        then period
+                        else tostring(period)
+                    details.expectedRoundId = if type(roundId) == "number"
+                            and Validation.isFinite(roundId)
+                        then roundId
+                        else tostring(roundId)
+                    details.expectedRole = request.role or "missing"
+                    if validSnapshot and snapshot then
+                        details.snapshotPhaseRadians = math.atan2(
+                            snapshot.Z - MapRules.defaults.centerZ,
+                            snapshot.X - MapRules.defaults.centerX
+                        ) % (2 * math.pi)
+                    end
+                    checkSnapshotPrediction()
+                    details.predictionSelfTest = "passed"
+                    assert(
+                        type(roundId) == "number"
+                            and Validation.isFinite(roundId)
+                            and roundId >= 0
+                            and roundId % 1 == 0,
+                        "invalid snapshot round"
+                    )
+                    local samples = 0
+                    local closest = math.huge
+                    local capturedPose: CFrame? = nil
                     awaitCondition(function()
+                        samples += 1
+                        local sampleTime = workspace:GetServerTimeNow()
+                        local predicted, phase, reason =
+                            predictSnapshot(snapshot, snapshotTime, sampleTime, period)
+                        details.sampleCount = samples
+                        details.sampleServerTime = sampleTime
+                        details.snapshotAgeSeconds = if type(snapshotTime) == "number"
+                                and Validation.isFinite(snapshotTime)
+                            then sampleTime - snapshotTime
+                            else "missing"
+                        details.predictionError = reason or "none"
+                        assert(
+                            predicted and phase,
+                            "invalid timestamped orbit snapshot: " .. tostring(reason)
+                        )
+                        details.predictedPhaseRadians = phase
+                        details.predictedPosition = { predicted.X, predicted.Y, predicted.Z }
+                        local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local actualRound = if round then round:GetAttribute("RoundId") else nil
+                        local actualPhase = if round then round:GetAttribute("Phase") else nil
+                        local actualRole = player:GetAttribute("Role")
+                        details.actualRoundId = actualRound or "missing"
+                        details.actualPhase = actualPhase or "missing"
+                        details.actualRole = actualRole or "missing"
                         local model = workspace:FindFirstChild("Aircraft")
-                        return model ~= nil
-                            and model:IsA("Model")
-                            and (model:GetPivot().Position - expected).Magnitude <= 8
+                        if not model or not model:IsA("Model") then
+                            details.modelPresent = false
+                            return false
+                        end
+                        details.modelPresent = true
+                        local actual = model:GetPivot()
+                        local position = actual.Position
+                        details.position = { position.X, position.Y, position.Z }
+                        if
+                            not Validation.isFinite(position.X)
+                            or not Validation.isFinite(position.Y)
+                            or not Validation.isFinite(position.Z)
+                        then
+                            details.predictionError = "nonfinite replicated position"
+                            return false
+                        end
+                        local distance = (position - predicted).Magnitude
+                        closest = math.min(closest, distance)
+                        details.poseErrorStuds = distance
+                        details.closestPoseErrorStuds = closest
+                        capturedPose = actual
+                        return actualRound == roundId
+                            and actualPhase == "Active"
+                            and actualRole == request.role
+                            and distance <= 8
                     end, "canonical pose convergence within 8 studs")
                     local model = workspace:FindFirstChild("Aircraft")
                     assert(model and model:IsA("Model"), "replicated aircraft missing")
-                    local pose = model:GetPivot()
+                    local pose = capturedPose
+                    assert(pose, "paired replicated pose missing")
                     assert(
                         math.abs(Vector2.new(pose.X, pose.Z).Magnitude - 360) < 0.02
                             and math.abs(pose.Y - 140) < 0.02,
@@ -99,7 +271,6 @@ function AircraftHarness.run()
                             "ground received thermal HUD"
                         )
                     end
-                    details.poseErrorStuds = (pose.Position - expected).Magnitude
                     details.position = { pose.X, pose.Y, pose.Z }
                 elseif request.kind == "Profile" then
                     local weapon = request.weapon
