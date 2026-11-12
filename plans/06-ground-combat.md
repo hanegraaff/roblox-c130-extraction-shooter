@@ -44,9 +44,15 @@ current-source Studio and operated review.
 The [verification record](../docs/evidence/p06-ground-combat.md) preserves
 source-specific results, tester findings and the stalled Studio launch. Latest
 host gate was 50 unit / 43 integration on `644a90d` with independent source
-review; current Studio execution is blocked by a stalled SDK launch and two
-test Edit windows that need to be closed before a clean reopen. A real
-current-P06 screenshot and operated desktop/mobile combat review are also
+review. On `a4d53f3` a fresh Studio run passed 118/118 server and 3/3 client
+cases after correcting the reproduced smoothed-Terrain bypass; a bounded real
+slope probe accepted 154/154 normal standing/jumping samples. The next two-client
+SDK launch stalled before Play, so current multiplayer/P05 regression checks
+remain open. The test-only manual fallback on `e55a961` passes the host gate but
+has not run in Studio. A fresh test document is prepared with the temporary P06
+selector; it awaits a native Server & Clients launch with two actual clients.
+A real current-P06
+screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
 documented separately in decisions. The movement guard permits a 45-stud burst
 and does not sweep intervening walls; it bounds movement but does not establish

@@ -93,3 +93,50 @@ remote failure/recovery scenario and the current origin/slope fixtures remain
 unrun in Studio. The two stale Studio Edit windows from the pending SDK launch
 must be closed before safely reopening the rebuilt test document and resuming
 the two-/three-client suites, P05 regression and operated control checks.
+
+## Fresh Studio check on `644a90d`
+
+After the user closed the stalled windows, the guarded launcher reopened a
+single `tests.rbxlx` document. Candidate source signatures matched. Fresh
+ordinary Play discovered 118 server cases, passing 116 with two errors and no
+skips; the client passed 2/3 because its server fixture failed. The errors were
+`root inside Terrain with exposed head accepted` and `sloped terrain sample
+missing`. No multiplayer scenario was launched after the failed baseline.
+
+The independent tester reproduced the first as an actual origin-geometry
+defect. A disposable Rock block centered at `(2050, 16, 0)` with size
+`(32, 16, 32)` gave a real Terrain surface at Y=`25.466398`. Root Y=23 and
+head Y=25 were below that surface, yet the head's `ReadVoxels` cell reported
+Air/zero occupancy and the guard allowed firing because both segment rays
+started inside solid Terrain. Disposable geometry was removed afterward. The
+same five slope samples passed in a separate direct engine rerun, but that
+does not explain or erase the earlier failed fresh smoke. Both findings need
+correction and a fresh candidate run.
+
+## Terrain correction on `a4d53f3`
+
+Independent host `python3 scripts/verify.py` passed 50 unit / 43 integration
+and all non-Studio gates. Fresh Studio smoke passed all 118 server and 3 client
+cases, with zero failures, skips or errors, including the prior smoothed buried
+root/head cases and the slope fixture. A separate real-Terrain probe accepted
+154/154 bounded standing/jumping positions on a spherical slope and one clear
+stance in an air pocket between a Terrain floor and roof. These finite samples
+are not proof for all future terrain or cave geometries. Fixtures were removed.
+
+The subsequent two-client SDK launch stalled before Play, created one additional
+read-only Edit document, and returned no P06 report. No current P06/P06Team/P05
+multiplayer scenarios, real-client query-failure/recovery or operated rifle
+checks ran. A test-only manual Server & Clients fallback is being prepared to
+avoid relying solely on the stalled launcher; it is not yet engine-validated.
+
+Candidate `e55a961` adds the P06/P06Team manual route only to the Studio test
+mapping. Its `ManualHarness` selector is server-only and temporary; actual
+server reports must be captured before ending the manual session and the
+selector cleared afterward. The test assertions are shared with the SDK path.
+Manual P06 uses an actual server-initiated player kick for the forfeit scenario,
+whereas SDK P06 uses client `LeaveTest`; P06Team does not exercise departure.
+After at least one client joins, failure to reach the requested count produces
+a bounded report; a zero-client launch can fail in the outer bootstrap before
+the harness emits one. Independent host verification on `9e12210` and a fresh
+full host gate on `e55a961` each passed 50 unit / 43 integration, including
+test/release isolation probes. This fallback has not yet run in Studio.

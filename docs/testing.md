@@ -114,6 +114,37 @@ return "P06 started"
 
 After the owned session returns to Edit, collect `P06LastReport`, actual client counts and fresh 118-server/3-per-client smoke reports. Require discovered cases to be nonzero and all passing with zero failures, skips and errors; a launch timeout or a harness-completion error is not a pass. Run the companion three-client fixture with `ExecuteMultiplayerTestAsync(3, { kind = "P06Team" })` and store its separate result to verify teammate/friendly-fire scenarios. These fixtures exercise server-only rocket seams; they do not add a launcher to player inventory or prove native input by themselves. Follow [P06](../plans/06-ground-combat.md) for source-specific evidence and remaining gaps.
 
+### Manual Studio Server & Clients fallback for P06
+
+If the SDK launcher cannot establish the required clients, the test-only runner also supports a native **Server & Clients** route. It invokes the same P06 cases through a temporary server-only selector, with no client authority over the selector and no change to release mapping. The SDK route above remains the default. A manual launch does not guarantee client connection or establish a passing result.
+
+1. In the confirmed test document's **Edit** DataModel, with Play stopped and the candidate fully synced, verify `ServerStorage.DevelopmentSettings` is the test ModuleScript and its `ManualHarness` attribute is nil. Set it to `"P06"` for the two-client suite, or `"P06Team"` for the three-client suite. For example, through Studio MCP in Edit:
+
+   ```luau
+   local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+   assert(settings and settings:IsA("ModuleScript"), "test settings unavailable")
+   assert(settings:GetAttribute("ManualHarness") == nil, "selector already in use")
+   settings:SetAttribute("ManualHarness", "P06") -- use P06Team for the separate three-client run
+   return settings:GetAttribute("ManualHarness")
+   ```
+
+2. In Studio's Play dropdown, choose **Server & Clients**, select **2 clients** for `P06` or **3 clients** for `P06Team`, and start Play. Wait for the actual server and requested number of real simulated clients; collect their fresh server/client smoke reports. Once at least one client has joined, a missing required client is reported as a structured harness startup failure. With zero clients, the outer server smoke may fail its ten-second bootstrap before the harness starts; either outcome is incomplete acceptance.
+3. Before ending the session, read the actual **Server** DataModel's workspace attributes `ManualP06Invocation` and `ManualP06Report`, or `ManualP06TeamInvocation` and `ManualP06TeamReport` for the companion run. Preserve their JSON, candidate commit/tree, actual client counts, mode, departure method and separate smoke reports. Require the requested client count, nonzero discovery, all cases passing and zero failures/skips; a missing report, failed startup, early exit or completion error is not a pass.
+4. The manual two-client operator-departure case uses a **server kick** to cause actual Player removal; the SDK route uses the client's `LeaveTest`. Record that difference. The three-client team variant does **not** exercise operator departure. Do not treat it as evidence of SDK departure behavior.
+5. After collecting the result, use **End Session** to stop the owned simulation. In the original **Edit** document, clear the selector and verify it is nil before starting any other session:
+
+   ```luau
+   local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+   assert(settings and settings:IsA("ModuleScript"), "test settings unavailable")
+   settings:SetAttribute("ManualHarness", nil)
+   assert(settings:GetAttribute("ManualHarness") == nil, "selector not cleared")
+   return "P06 manual selector cleared"
+   ```
+
+   Repeat with the other selector and requested client count if both P06 variants are required. Never apply this test-only selector to a cloud or release place.
+
+This fallback is under evaluation for the current candidate; do not claim a successful run without its actual report. Earlier terrain-origin source `a4d53f3` passed Studio smoke 118/3 and a bounded 154/154 real slope/standing/jumping sample, but those observations do not establish current-candidate multiplayer acceptance.
+
 Separately operate both sides of a real test round: equip the M-7, aim at the moving C-130, fire and reload; inspect aircraft health, cover and the team result. On a phone/simulator, check reticle-to-ray alignment, FIRE/RELOAD and ground movement alongside HUD legibility. Check the gunship P05 harness after changes to shared outcome handling. Keep test-only controls out of release and never interpret a solo preview as a real match.
 
 ## Run the P04 aircraft harness
