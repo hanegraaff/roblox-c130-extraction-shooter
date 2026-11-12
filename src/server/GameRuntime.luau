@@ -1,9 +1,9 @@
 --!strict
 --[=[
-    GameRuntime: server composition root for map, round and aircraft owners. Depends
+    GameRuntime: server composition root for map, round, aircraft and combat owners. Depends
     on engine Players/Heartbeat plus explicit MatchRuntime settings. Test runner owns
     a runtime after foundation suites without a global registry. stop tears down the
-    aircraft and round owners, then destroys the map snapshot.
+    combat, aircraft and round owners, then destroys the map snapshot.
 ]=]
 local Players = game:GetService("Players")
 local MapService = require(script.Parent.MapService)

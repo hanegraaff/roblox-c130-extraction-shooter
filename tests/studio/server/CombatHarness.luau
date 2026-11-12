@@ -342,6 +342,127 @@ function CombatHarness.run()
             )
             assert(runtime.combat.resources().projectiles == 0, "old projectile survived round reset")
         end)
+        check("A4 both profiles strike real terrain slopes and authored second-story panels", function()
+            local op, ground = roles()
+            local character = ground.Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            assert(root and root:IsA("BasePart"), "third-round ground root missing")
+            root.Anchored = true
+            root.CFrame = CFrame.new(0, 30, 0)
+            local roundId = runtime.rounds.match.snapshot().roundId
+            local shotSequence = 0
+            local function rayParams(): RaycastParams
+                local params = RaycastParams.new()
+                params.FilterType = Enum.RaycastFilterType.Include
+                params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+                params.RespectCanCollide = true
+                return params
+            end
+            local function slope(weapon: string): Vector3
+                local muzzle = runtime.aircraft.muzzle(weapon)
+                assert(muzzle, "slope muzzle missing")
+                for _, location in { Vector2.new(-240, -140), Vector2.new(135, 260) } do
+                    for dx = -24, 24, 4 do
+                        for dz = -24, 24, 4 do
+                            local surface = workspace:Raycast(
+                                Vector3.new(location.X + dx, 80, location.Y + dz),
+                                Vector3.new(0, -100, 0),
+                                rayParams()
+                            )
+                            if
+                                surface
+                                and surface.Instance == workspace.Terrain
+                                and surface.Normal.Y > 0.2
+                                and surface.Normal.Y < 0.94
+                                and runtime.aircraft.aimAllowed(surface.Position)
+                            then
+                                local visible = workspace:Raycast(
+                                    muzzle,
+                                    (surface.Position - muzzle) * 1.001,
+                                    rayParams()
+                                )
+                                if
+                                    visible
+                                    and visible.Instance == workspace.Terrain
+                                    and (visible.Position - surface.Position).Magnitude < 1
+                                then
+                                    return visible.Position
+                                end
+                            end
+                        end
+                    end
+                end
+                error("no visible authored sloped terrain within aim envelope")
+            end
+            local function upper(weapon: string): (Vector3, string)
+                local muzzle = runtime.aircraft.muzzle(weapon)
+                assert(muzzle, "upper-floor muzzle missing")
+                for _, building in workspace.World.Battlefield.Buildings:GetChildren() do
+                    local panels = building:FindFirstChild(building.Name .. "_Panels")
+                    if panels then
+                        for _, panel in panels:GetChildren() do
+                            if
+                                panel:IsA("BasePart")
+                                and panel:GetAttribute("StoryId") == "02"
+                                and not string.find(panel.Name, "Roof", 1, true)
+                            then
+                                local visible =
+                                    workspace:Raycast(muzzle, panel.Position - muzzle, rayParams())
+                                local id = panel:GetAttribute("PanelId")
+                                if
+                                    visible
+                                    and visible.Instance == panel
+                                    and type(id) == "string"
+                                    and runtime.aircraft.aimAllowed(visible.Position)
+                                then
+                                    return visible.Position, id
+                                end
+                            end
+                        end
+                    end
+                end
+                error("no visible authored upper-story panel within aim envelope")
+            end
+            local function fireAndObserve(weapon: string, target: Vector3, panelId: string?)
+                shotSequence += 1
+                local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                probe(op, "Fire", payload(shotSequence, weapon, target))
+                waitFor(function()
+                    local value = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                    return type(value) == "string" and value ~= previous
+                end, "terrain or upper-floor actual impact", 8)
+                local hit = snapshot("Impact")
+                assert(
+                    hit.weapon == weapon and hit.shotId == shotSequence,
+                    "impact identity/profile disagrees"
+                )
+                if panelId then
+                    assert(hit.panelId == panelId, "upper-floor shot hit a different panel")
+                end
+                local actual = Vector3.new(hit.x :: number, hit.y :: number, hit.z :: number)
+                assert((actual - target).Magnitude < 5, "impact missed sampled terrain/panel")
+                table.insert(observations, {
+                    kind = if panelId then "upper-panel" else "terrain-slope",
+                    weapon = weapon,
+                    panelId = panelId,
+                    target = { target.X, target.Y, target.Z },
+                    impact = { actual.X, actual.Y, actual.Z },
+                })
+            end
+            fireAndObserve("GAU23", slope("GAU23"), nil)
+            local point, panelId = upper("GAU23")
+            fireAndObserve("GAU23", point, panelId)
+            probe(op, "Select", { roundId = roundId, sequence = 1, weapon = "M102" })
+            waitFor(function()
+                return snapshot("Selection").weapon == "M102"
+            end, "third-round heavy selected")
+            fireAndObserve("M102", slope("M102"), nil)
+            waitFor(function()
+                return ammo("M102") == 1
+            end, "heavy geometry reload", 8)
+            point, panelId = upper("M102")
+            fireAndObserve("M102", point, panelId)
+        end)
     end)
     if not ok then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })

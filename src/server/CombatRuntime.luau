@@ -173,6 +173,7 @@ function CombatRuntime.start(
                 x = position.X,
                 y = position.Y,
                 z = position.Z,
+                panelId = panelId,
             })
         )
         projectile.marker.Name = "Impact"
@@ -254,7 +255,10 @@ function CombatRuntime.start(
                 shot = shot,
                 position = muzzle,
                 direction = delta.Unit,
-                remaining = delta.Magnitude,
+                -- Camera raycast endpoints lie on surfaces. Allow a small bounded
+                -- continuation so floating-point rounding does not end the server
+                -- sweep just short of that surface; only actual hits can detonate.
+                remaining = math.min(delta.Magnitude + 0.25, CombatService.profiles[weapon].range),
                 visual = visual,
                 marker = marker,
             })
