@@ -12,6 +12,23 @@ local GuiService = game:GetService("GuiService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local GroundCombatController = {}
 
+-- Converts desktop screen-space mouse coordinates to viewport pixels. Touch aim
+-- remains centered in the viewport. The same rounded pixel drives the ray and
+-- the reticle; origin is the measured GUI-content position, in pixels.
+-- Pure and nonyielding; all arguments are sampled by the caller each frame.
+function GroundCombatController.projectAim(
+    viewport: Vector2,
+    mouse: Vector2,
+    touch: boolean,
+    inset: Vector2,
+    origin: Vector2
+): (Vector2, UDim2)
+    local input = if touch then viewport * 0.5 else mouse - inset
+    local pixels = Vector2.new(math.floor(input.X + 0.5), math.floor(input.Y + 0.5))
+    return pixels,
+        UDim2.fromOffset(math.floor(pixels.X - origin.X + 0.5), math.floor(pixels.Y - origin.Y + 0.5))
+end
+
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
 function GroundCombatController.new(
     player: Player,
@@ -204,14 +221,14 @@ function GroundCombatController.new(
                     if not camera then
                         return
                     end
-                    local point = if UserInputService.TouchEnabled
-                        then camera.ViewportSize / 2
-                        else UserInputService:GetMouseLocation()
-                    local origin = projectionOrigin.AbsolutePosition + GuiService:GetGuiInset()
-                    reticle.Position = UDim2.fromOffset(
-                        math.floor(point.X - origin.X + 0.5),
-                        math.floor(point.Y - origin.Y + 0.5)
+                    local point, offset = GroundCombatController.projectAim(
+                        camera.ViewportSize,
+                        UserInputService:GetMouseLocation(),
+                        UserInputService.TouchEnabled,
+                        GuiService:GetGuiInset(),
+                        projectionOrigin.AbsolutePosition
                     )
+                    reticle.Position = offset
                     local now = os.clock()
                     if not held or now < nextAttempt then
                         return
