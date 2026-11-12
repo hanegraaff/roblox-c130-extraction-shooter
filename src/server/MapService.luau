@@ -11,7 +11,12 @@ local BuildingGeometry = require(script.Parent.BuildingGeometry)
 local MapService = {}
 
 -- Query/step adapters let tests exercise actual Instance behavior without fake services.
-export type Adapters = { characters: () -> { Model }, heartbeat: RBXScriptSignal, allowStations: boolean? }
+export type Adapters = {
+    characters: () -> { Model },
+    heartbeat: RBXScriptSignal,
+    allowStations: boolean?,
+    corrected: ((Model) -> ())?,
+}
 -- Owns one heartbeat while started and one unparented snapshot until destroy.
 export type Controller = {
     start: () -> (boolean, string?),
@@ -231,6 +236,9 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
                     character:PivotTo(returnPose)
                     root.AssemblyLinearVelocity = Vector3.zero
                     root.AssemblyAngularVelocity = Vector3.zero
+                    if adapters.corrected then
+                        adapters.corrected(character)
+                    end
                 end
             end
         end

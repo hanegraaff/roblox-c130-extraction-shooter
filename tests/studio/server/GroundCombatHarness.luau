@@ -7,6 +7,11 @@ local StudioTestService = game:GetService("StudioTestService")
 local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local Harness = {}
+-- Fixture-only ballistic default; the production launcher and its final tuning
+-- arrive in P08. A 1/6-second step at 300 studs/second sweeps 50 studs.
+local FIXTURE_ROCKET_SPEED = 300
+local FIXTURE_ROCKET_STEP_SECONDS = 1 / 6
+local FIXTURE_ROCKET_STEP = Vector3.new(0, -FIXTURE_ROCKET_SPEED * FIXTURE_ROCKET_STEP_SECONDS, 0)
 type Case = { name: string, passed: boolean, detail: string? }
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 15)
@@ -34,6 +39,7 @@ function Harness.run(expectedClients: number?)
     transport.Name = "P06Harness"
     local ready: { [Player]: boolean } = {}
     local replies: { [number]: { ok: boolean, message: string } } = {}
+    local observations: { unknown } = {}
     local sequence = 0
     local listener = transport.OnServerEvent:Connect(
         function(player: Player, token: unknown, ok: unknown, message: unknown)
@@ -90,6 +96,25 @@ function Harness.run(expectedClients: number?)
     local function mutualBatch(ground: Player, roundId: number, aircraftFirst: boolean, prefix: string)
         local callbacks = 0
         local callbackFailure: string? = nil
+        local frame = 0
+        local names: { string } = {}
+        local frames: { number } = {}
+        local deltas: { number } = {}
+        local aircraftPositions: { { number } } = {}
+        -- Register a persistent frame marker first and establish its counter
+        -- before scheduling the two independent callbacks under test.
+        local frameMarker = RunService.Heartbeat:Connect(function()
+            frame += 1
+        end)
+        waitFor(function()
+            return frame > 0
+        end, "heartbeat marker")
+        local beforeFrame = frame
+        local function record(name: string, dt: number)
+            table.insert(names, name)
+            table.insert(frames, frame)
+            table.insert(deltas, dt)
+        end
         local function checked(action: () -> ())
             local passed, callbackError = pcall(function()
                 action()
@@ -100,7 +125,8 @@ function Harness.run(expectedClients: number?)
             end
             callbacks += 1
         end
-        local function eliminate()
+        local function eliminate(dt: number)
+            record("ground", dt)
             checked(function()
                 assert(
                     runtime.rounds.match.eliminate(ground.UserId, roundId),
@@ -108,13 +134,15 @@ function Harness.run(expectedClients: number?)
                 )
             end)
         end
-        local function destroyAircraft()
+        local function destroyAircraft(dt: number)
+            record("aircraft", dt)
             checked(function()
                 local part = hitbox()
                 local origin = part.Position + Vector3.new(0, 25, 0)
+                table.insert(aircraftPositions, { part.Position.X, part.Position.Y, part.Position.Z })
                 for n = 1, 3 do
                     assert(
-                        runtime.groundCombat.rocketSweep(roundId, prefix .. n, origin, Vector3.new(0, -50, 0)),
+                        runtime.groundCombat.rocketSweep(roundId, prefix .. n, origin, FIXTURE_ROCKET_STEP),
                         "swept batch rocket rejected"
                     )
                     assert(health() == 300 - n * 100, "pristine rocket damage boundary failed")
@@ -137,6 +165,25 @@ function Harness.run(expectedClients: number?)
         waitFor(function()
             return callbacks == 2
         end, "same-heartbeat combat callbacks")
+        frameMarker:Disconnect()
+        assert(
+            frames[1] == frames[2] and frames[1] > beforeFrame,
+            "callbacks did not share the recorded Heartbeat"
+        )
+        assert(deltas[1] == deltas[2], "callbacks observed different Heartbeat intervals")
+        local firstExpected = if aircraftFirst then "aircraft" else "ground"
+        local secondExpected = if aircraftFirst then "ground" else "aircraft"
+        assert(names[1] == firstExpected and names[2] == secondExpected, "actual callback order differs")
+        table.insert(observations, {
+            kind = "mutual-batch",
+            order = names,
+            heartbeatFrames = frames,
+            heartbeatDeltas = deltas,
+            fixtureRocketSpeedStudsPerSecond = FIXTURE_ROCKET_SPEED,
+            fixtureRocketStepSeconds = FIXTURE_ROCKET_STEP_SECONDS,
+            sweptDistanceStuds = FIXTURE_ROCKET_STEP.Magnitude,
+            aircraftPositions = aircraftPositions,
+        })
         assert(callbackFailure == nil, tostring(callbackFailure))
         waitFor(function()
             return runtime.rounds.match.snapshot().phase == "Results"
@@ -229,6 +276,25 @@ function Harness.run(expectedClients: number?)
             probe(ground, "Flood", forged)
             task.wait(2)
             assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "forged fire mutated state")
+            local character = ground.Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            assert(root and root:IsA("BasePart"), "ground root missing")
+            local originalPose = root.CFrame
+            local wasAnchored = root.Anchored
+            root.Anchored = true
+            root.CFrame = originalPose + Vector3.new(0, 100, 0)
+            task.wait(0.2)
+            target = hitbox().Position
+            probe(
+                ground,
+                "Fire",
+                { roundId = roundId, sequence = 1, weapon = "M7", x = target.X, y = target.Y, z = target.Z }
+            )
+            task.wait(0.3)
+            assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "implausible origin mutated combat")
+            root.CFrame = originalPose
+            task.wait(0.2)
+            root.Anchored = wasAnchored
         end)
         check("A1 server raycast stops rifle at cover then damages aircraft", function()
             local op, ground = roles()
@@ -239,6 +305,7 @@ function Harness.run(expectedClients: number?)
             root.Anchored = true
             root.CFrame = CFrame.new(hitbox().Position - Vector3.new(0, 25, 0))
             task.wait(0.15)
+            assert(runtime.groundCombat.trustCorrection(ground), "trusted geometry-fixture placement failed")
             local head = character and character:FindFirstChild("Head")
             assert(head and head:IsA("BasePart"), "ground head missing")
             local embedded = Instance.new("Part")
@@ -294,6 +361,10 @@ function Harness.run(expectedClients: number?)
                         )
                         teammateRoot.Anchored = true
                         teammateRoot.CFrame = CFrame.new(head.Position:Lerp(hitbox().Position, 0.55))
+                        assert(
+                            runtime.groundCombat.trustCorrection(player),
+                            "trusted teammate fixture placement failed"
+                        )
                     end
                 end
                 assert(teammateHumanoid, "teammate missing")
@@ -361,20 +432,25 @@ function Harness.run(expectedClients: number?)
                 local part = hitbox()
                 local origin = part.Position + Vector3.new(0, 25, 0)
                 assert(
-                    runtime.groundCombat.rocketSweep(roundId, "rocket" .. n, origin, Vector3.new(0, -50, 0)),
+                    runtime.groundCombat.rocketSweep(roundId, "rocket" .. n, origin, FIXTURE_ROCKET_STEP),
                     "swept rocket missed aircraft"
                 )
+                table.insert(observations, {
+                    kind = "live-orbit-rocket-sweep",
+                    shot = n,
+                    aircraftPosition = { part.Position.X, part.Position.Y, part.Position.Z },
+                    origin = { origin.X, origin.Y, origin.Z },
+                    fixtureRocketSpeedStudsPerSecond = FIXTURE_ROCKET_SPEED,
+                    fixtureRocketStepSeconds = FIXTURE_ROCKET_STEP_SECONDS,
+                    sweptDistanceStuds = FIXTURE_ROCKET_STEP.Magnitude,
+                    healthAfter = health(),
+                })
                 if n < 3 then
                     assert(health() == 295 - n * 100, "incorrect rocket damage")
                 end
                 if n == 1 then
                     assert(
-                        not runtime.groundCombat.rocketSweep(
-                            roundId,
-                            "rocket1",
-                            origin,
-                            Vector3.new(0, -50, 0)
-                        ),
+                        not runtime.groundCombat.rocketSweep(roundId, "rocket1", origin, FIXTURE_ROCKET_STEP),
                         "duplicate hit accepted"
                     )
                 end
@@ -439,6 +515,26 @@ function Harness.run(expectedClients: number?)
                 runtime.groundCombat.resources().tools == expected - 1,
                 "duplicate rifle owner after reset"
             )
+            local root = if ground.Character then ground.Character:FindFirstChild("HumanoidRootPart") else nil
+            assert(root and root:IsA("BasePart"), "ground root missing for map correction")
+            root.CFrame = CFrame.new(1000, root.Position.Y, 0)
+            waitFor(function()
+                return math.abs(root.Position.X) < 360
+            end, "server boundary correction")
+            local head = if ground.Character then ground.Character:FindFirstChild("Head") else nil
+            assert(head and head:IsA("BasePart"), "corrected head missing")
+            target = head.Position + Vector3.new(0, 0, 30)
+            probe(ground, "Fire", {
+                roundId = runtime.rounds.match.snapshot().roundId,
+                sequence = 2,
+                weapon = "M7",
+                x = target.X,
+                y = target.Y,
+                z = target.Z,
+            })
+            waitFor(function()
+                return tool:GetAttribute("Ammo") == 29
+            end, "valid fire after server correction")
         end)
         if expected == 2 then
             check(
@@ -523,6 +619,7 @@ function Harness.run(expectedClients: number?)
         failed = #cases - passed,
         skipped = 0,
         cases = cases,
+        observations = observations,
     }
     workspace:SetAttribute("P06MultiplayerReport", HttpService:JSONEncode(report))
     StudioTestService:EndTest(report)

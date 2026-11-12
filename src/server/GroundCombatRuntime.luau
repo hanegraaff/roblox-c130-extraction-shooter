@@ -12,14 +12,18 @@ local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
 local Debris = game:GetService("Debris")
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
+local Validation = require(ReplicatedStorage.Shared.Validation)
 local MatchService = require(script.Parent.MatchService)
 local AircraftHealth = require(script.Parent.AircraftHealth)
 local GroundCombatService = require(script.Parent.GroundCombatService)
+local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundCombatRuntime = {}
 export type Controller = {
     stop: () -> (),
     rocketImpact: (number, string, boolean) -> boolean,
     rocketSweep: (number, string, Vector3, Vector3) -> boolean,
+    -- Only a trusted server owner may acknowledge its own spawn/correction.
+    trustCorrection: (Player) -> boolean,
     resources: () -> { connections: number, tools: number },
 }
 -- match is the sole result owner. rocketImpact is a server-only fixture seam;
@@ -42,10 +46,32 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
     local lastPhase = ""
     local rifles = GroundCombatService.new()
     local tools: { [Player]: Tool? } = {}
+    local movement: { [Player]: { character: Model, guard: GroundMovementGuard.Controller }? } = {}
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local connections: { RBXScriptConnection } = {}
     local running = true
     local lastRound = -1
+    local function track(player: Player, now: number, trustedCorrection: boolean): boolean
+        local character = player.Character
+        local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+        if not character or not root or not root:IsA("BasePart") then
+            return false
+        end
+        local current = movement[player]
+        local position = root.Position
+        if not current or current.character ~= character then
+            local guard = GroundMovementGuard.new()
+            if not guard.reset(position.X, position.Y, position.Z, now) then
+                return false
+            end
+            movement[player] = { character = character, guard = guard }
+            return true
+        end
+        if trustedCorrection then
+            return current.guard.reset(position.X, position.Y, position.Z, now)
+        end
+        return current.guard.sample(position.X, position.Y, position.Z, now)
+    end
     local function publish()
         local state = health.snapshot()
         aircraftState:SetAttribute("Health", state.health)
@@ -136,12 +162,20 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
             if not spendBudget(player, now) or not active(player, now) or not ownedEquipped(player) then
                 return
             end
+            if not track(player, now, false) then
+                return
+            end
             local character = player.Character
             local head = if character then character:FindFirstChild("Head") else nil
-            if not head or not head:IsA("BasePart") then
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            if not head or not head:IsA("BasePart") or not root or not root:IsA("BasePart") then
                 return
             end
             local origin = head.Position
+            local headOffset = (origin - root.Position).Magnitude
+            if not Validation.isFinite(headOffset) or headOffset > 8 then
+                return
+            end
             -- Rays starting inside solid cover can leave it without reporting a
             -- hit. Reject fire while the authoritative muzzle overlaps a wall.
             local overlap = OverlapParams.new()
@@ -229,6 +263,7 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
         Players.PlayerRemoving:Connect(function(player)
             removeTool(player)
             buckets[player] = nil
+            movement[player] = nil
         end)
     )
     table.insert(
@@ -246,10 +281,21 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
                 lastRound = state.roundId
                 health.reset(lastRound)
                 rifles.reset(lastRound)
+                table.clear(movement)
                 aircraftState:SetAttribute("GroundShot", nil)
                 publish()
             end
             for _, player in Players:GetPlayers() do
+                local member = state.members[player.UserId]
+                if
+                    member
+                    and member.role == "Ground"
+                    and (state.phase == "Deploying" or state.phase == "Active")
+                then
+                    track(player, now, false)
+                else
+                    movement[player] = nil
+                end
                 if active(player, now) then
                     ensureTool(player)
                     publishRifle(player, now)
@@ -261,6 +307,9 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
     )
     publish()
     return {
+        trustCorrection = function(player)
+            return running and track(player, workspace:GetServerTimeNow(), true)
+        end,
         rocketImpact = function(roundId, shotId, direct)
             return award(roundId, shotId, "RocketLauncher", direct)
         end,
@@ -301,6 +350,7 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
                 removeTool(player)
             end
             table.clear(buckets)
+            table.clear(movement)
             fire:Destroy()
             reload:Destroy()
             effects:Destroy()

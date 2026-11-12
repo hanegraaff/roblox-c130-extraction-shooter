@@ -23,6 +23,10 @@ return function()
         test,
         require(Server.GroundCombatService)
     )
+    require(ServerStorage.Tests.Integration["GroundMovementGuard.spec"])(
+        test,
+        require(Server.GroundMovementGuard)
+    )
     require(ServerStorage.Tests.Integration["AircraftSelection.spec"])(
         test,
         require(Server.AircraftSelection)
