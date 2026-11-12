@@ -8,6 +8,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
+local GuiService = game:GetService("GuiService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local GroundCombatController = {}
 
@@ -22,6 +23,12 @@ function GroundCombatController.new(
             local gui = Instance.new("ScreenGui")
             gui.Name = "GroundCombatHUD"
             gui.ResetOnSpawn = false
+            gui.IgnoreGuiInset = true
+            local projectionOrigin = Instance.new("Frame")
+            projectionOrigin.Name = "ProjectionOrigin"
+            projectionOrigin.BackgroundTransparency = 1
+            projectionOrigin.Size = UDim2.fromOffset(0, 0)
+            projectionOrigin.Parent = gui
             local label = Instance.new("TextLabel")
             label.Name = "RifleStatus"
             label.AnchorPoint = Vector2.new(0.5, 1)
@@ -193,19 +200,27 @@ function GroundCombatController.new(
                             tostring(ammo),
                             tostring(reserve)
                         )
+                    local camera = workspace.CurrentCamera
+                    if not camera then
+                        return
+                    end
+                    local point = if UserInputService.TouchEnabled
+                        then camera.ViewportSize / 2
+                        else UserInputService:GetMouseLocation()
+                    local origin = projectionOrigin.AbsolutePosition + GuiService:GetGuiInset()
+                    reticle.Position = UDim2.fromOffset(
+                        math.floor(point.X - origin.X + 0.5),
+                        math.floor(point.Y - origin.Y + 0.5)
+                    )
                     local now = os.clock()
                     if not held or now < nextAttempt then
                         return
                     end
                     local event = remote("GroundFire")
-                    local camera = workspace.CurrentCamera
-                    if not event or not camera then
+                    if not event then
                         return
                     end
                     nextAttempt = now + 0.15
-                    local point = if UserInputService.TouchEnabled
-                        then camera.ViewportSize / 2
-                        else UserInputService:GetMouseLocation()
                     local ray = camera:ViewportPointToRay(point.X, point.Y)
                     local params = RaycastParams.new()
                     params.FilterType = Enum.RaycastFilterType.Exclude

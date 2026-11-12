@@ -102,7 +102,8 @@ function RoundPanel.new(
                                 else "Ground"
                         )
                 end
-                if thermal.ownsCamera() then
+                local activeGround = phase == "Active" and role == "Ground" and life == "Alive"
+                if thermal.ownsCamera() or activeGround then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
                     label.Size = UDim2.fromOffset(300, 38)
@@ -120,6 +121,17 @@ function RoundPanel.new(
                     )
                 end
                 surrender.Visible = phase == "Active" and role == "Ground" and life == "Alive"
+                if activeGround then
+                    surrender.AnchorPoint = Vector2.new(1, 0)
+                    surrender.Position = UDim2.new(1, -12, 0, 8)
+                    surrender.Size = UDim2.fromOffset(150, 36)
+                    surrender.TextSize = 13
+                else
+                    surrender.AnchorPoint = Vector2.new(0.5, 0)
+                    surrender.Position = UDim2.new(0.5, 0, 0, 220)
+                    surrender.Size = UDim2.fromOffset(250, 36)
+                    surrender.TextSize = 18
+                end
                 local camera = workspace.CurrentCamera
                 if camera and not thermal.ownsCamera() then
                     camera.CameraType = Enum.CameraType.Custom

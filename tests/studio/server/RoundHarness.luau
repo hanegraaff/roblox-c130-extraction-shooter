@@ -82,6 +82,10 @@ function RoundHarness.run()
         require(script.Parent.GroundCombatHarness).run()
         return
     end
+    if type(args) == "table" and args.kind == "P06Team" then
+        require(script.Parent.GroundCombatHarness).run(3)
+        return
+    end
     if type(args) == "table" and args.kind == "P05" then
         require(script.Parent.CombatHarness).run()
         return

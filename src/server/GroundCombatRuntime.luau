@@ -126,7 +126,6 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
         publish()
         if destroyed then
             match.proposeAircraftDestroyed(roundId)
-            match.step()
         end
         return true
     end
