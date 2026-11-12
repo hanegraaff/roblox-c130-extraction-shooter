@@ -54,8 +54,11 @@ timed out at the query-failure case after five passing cases. A possible cadence
 race is being diagnosed; the actual failure and incomplete suite are recorded.
 The user ended that session. Candidate `60aa623` waits for actual server
 readiness and adds bounded rejection diagnostics; its fresh host gate and
-118/3 Studio smoke pass. The manual two-client rerun is prepared and awaiting
-launch. A real current-P06
+118/3 Studio smoke pass. The manual two-client rerun then timed out in an
+earlier live rifle-hit case, before the query-recovery case. Candidate `6c5a016`
+adds live-shot diagnostics and a safely inward fixture position; independent
+host and 118/3 Studio smoke pass, while its manual two-client result is pending.
+The preceding failure's cause remains unproven. A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
 documented separately in decisions. The movement guard permits a 45-stud burst

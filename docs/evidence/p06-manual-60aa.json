@@ -1,0 +1,96 @@
+{
+  "source": "60aa623a155622e41560701be349e0034a2a762a",
+  "server": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 118,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 118
+  },
+  "invocation": {
+    "requestedClients": 2,
+    "harness": "P06",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P06",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "report": {
+    "invocation": {
+      "requestedClients": 2,
+      "harness": "P06",
+      "studioOnly": true,
+      "mode": "manual-server-clients",
+      "selectorValue": "P06",
+      "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+    },
+    "result": {
+      "departureMethod": "server-kick",
+      "clientCount": 2,
+      "passed": 2,
+      "skipped": 0,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A1 ground receives one rifle and no launcher"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+        },
+        {
+          "passed": false,
+          "name": "A1 server raycast stops rifle at cover then damages aircraft",
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:36: P06 timeout: real rifle hit aircraft"
+        },
+        {
+          "passed": false,
+          "name": "Harness completion",
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:289: ServerScriptService.ServerTests.GroundCombatHarness:36: P06 timeout: real rifle hit aircraft"
+        }
+      ],
+      "observations": [],
+      "requestedClients": 2,
+      "environment": "Studio",
+      "discovered": 4,
+      "suite": "P06-multiplayer",
+      "failed": 2,
+      "mode": "manual-server-clients"
+    }
+  },
+  "players": 2,
+  "clients": [
+    {
+      "id": -1,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 3
+      }
+    },
+    {
+      "id": -2,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 3
+      }
+    }
+  ]
+}

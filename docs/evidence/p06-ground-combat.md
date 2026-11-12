@@ -162,3 +162,27 @@ independent tester verified readiness returns a copy. Independent full host
 verification passed 50 unit / 43 integration, and fresh Studio smoke passed
 118/118 server and 3/3 client. The temporary test-only P06 selector is set in
 the sole Edit document for a manual two-client rerun; its outcome is pending.
+
+The user launched the prepared manual two-client rerun on `60aa623`. Server
+smoke passed 118/118 and both clients passed 3/3. The P06 suite passed its
+loadout and adversarial cases, then timed out waiting for an actual rifle hit
+on the moving aircraft; harness completion failed as a consequence. The later
+Terrain-query recovery case did not run. The [manual report](p06-manual-60aa.json)
+and baselines preserve the result. The fixture had already destroyed its runtime
+before diagnostic values could be inspected, so neither a moving-target miss
+nor an origin/cadence rejection is established. The test is being instrumented.
+The selector was cleared, and a supported `StudioTestService:EndTest` call from
+the actual manual Server context closed all simulation windows, leaving the
+original document in Edit with selector and SDK arguments absent.
+
+Candidate `6c5a016` moves the trusted rifle fixture 20 studs inside the
+playable disk, rather than exactly on the moving aircraft's boundary, while
+preserving the live orbit, single-shot and solid-cover assertions. A server-only
+optional shot observer, absent in production startup, records authoritative
+origin, intended target, actual ray hit, aircraft position, time, health and
+damage alongside readiness and rejection diagnostics. No retry or aircraft
+freeze was added. The independent tester's full host gate passed 50 unit /
+43 integration, and fresh ordinary Studio smoke passed 118/118 server and
+3/3 client. The temporary P06 selector was set in Edit for a new manual
+two-client run; its outcome is pending. This revision does not establish the
+cause of the preceding rifle timeout without that real-client result.
