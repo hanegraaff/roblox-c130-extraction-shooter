@@ -51,3 +51,7 @@ required. Rifle/aircraft health and movement limits are tuning defaults,
 documented separately in decisions. The movement guard permits a 45-stud burst
 and does not sweep intervening walls; it bounds movement but does not establish
 that every short relocation is impossible.
+
+[Draft PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27)
+contains the pushed candidate and its current evidence. It is not ready to merge
+until the required current-source Studio and operated checks are complete.
