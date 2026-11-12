@@ -21,7 +21,10 @@ export type Controller = {
 }
 
 -- Starts one map/round runtime or rejects startup without leaked ownership.
-function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, string?)
+function GameRuntime.start(
+    settings: MatchRuntime.Settings,
+    groundDependencies: GroundCombatRuntime.Dependencies?
+): (Controller?, string?)
     local onCorrection: ((Model) -> ())? = nil
     local map, reason = MapService.new(workspace.World, {
         characters = function()
@@ -72,7 +75,7 @@ function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, strin
         map.destroy()
         return nil, combatReason
     end
-    local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match)
+    local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match, groundDependencies)
     if not groundCombat then
         combat.stop()
         aircraft.stop()

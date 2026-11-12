@@ -17,7 +17,7 @@ local VOXEL = 4
 -- Conservative check: any non-air, non-water solid in the head's 4-stud voxel
 -- forbids firing, including partial occupancy where exact point membership is not
 -- available from ReadVoxels. The current character head stands above ground level.
-local function clearTerrain(position: Vector3): boolean
+function GroundOriginGeometry.clearTerrain(position: Vector3): boolean
     local cell = Vector3.new(
         math.floor(position.X / VOXEL) * VOXEL,
         math.floor(position.Y / VOXEL) * VOXEL,
@@ -45,7 +45,9 @@ function GroundOriginGeometry.new(parent: Instance, terrainQuery: ((Vector3) -> 
     probe.Transparency = 1
     probe.Parent = parent
     local running = true
-    local query: (Vector3) -> boolean = if terrainQuery then terrainQuery else clearTerrain
+    local query: (Vector3) -> boolean = if terrainQuery
+        then terrainQuery
+        else GroundOriginGeometry.clearTerrain
     return {
         allows = function(root, head)
             if not running then

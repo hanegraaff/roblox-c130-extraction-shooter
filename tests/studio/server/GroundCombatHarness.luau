@@ -6,6 +6,7 @@ local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
 local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
+local GroundOriginGeometry = require(game:GetService("ServerScriptService").Server.GroundOriginGeometry)
 local Harness = {}
 -- Fixture-only ballistic default; the production launcher and its final tuning
 -- arrive in P08. A 1/6-second step at 300 studs/second sweeps 50 studs.
@@ -25,6 +26,8 @@ function Harness.run(expectedClients: number?)
     waitFor(function()
         return #Players:GetPlayers() == expected
     end, "actual clients", 35)
+    local faultArmed = false
+    local queryFailures = 0
     local runtime, reason = GameRuntime.start({
         automaticDeployment = false,
         minimumPlayers = 2,
@@ -33,6 +36,15 @@ function Harness.run(expectedClients: number?)
         deploymentSeconds = 25,
         resultsSeconds = 5,
         seed = 1,
+    }, {
+        terrainQuery = function(position)
+            if faultArmed then
+                faultArmed = false
+                queryFailures += 1
+                error("injected terrain query failure")
+            end
+            return GroundOriginGeometry.clearTerrain(position)
+        end,
     })
     assert(runtime, reason)
     local transport = Instance.new("RemoteEvent")
@@ -549,6 +561,50 @@ function Harness.run(expectedClients: number?)
             waitFor(function()
                 return tool:GetAttribute("Ammo") == 29
             end, "valid fire after server correction")
+        end)
+        check("A3 terrain-query failure rejects remote without mutation then recovers", function()
+            local _, ground = roles()
+            local character = ground.Character
+            local head = if character then character:FindFirstChild("Head") else nil
+            local tool = if character then character:FindFirstChild("M-7 rifle") else nil
+            assert(
+                head and head:IsA("BasePart") and tool and tool:IsA("Tool"),
+                "equipped rifle fixture missing"
+            )
+            local target = head.Position + Vector3.new(0, 0, 30)
+            local command = {
+                roundId = runtime.rounds.match.snapshot().roundId,
+                sequence = 3,
+                weapon = "M7",
+                x = target.X,
+                y = target.Y,
+                z = target.Z,
+            }
+            local beforeAmmo = tool:GetAttribute("Ammo")
+            local beforeHealth = health()
+            faultArmed = true
+            probe(ground, "Fire", command)
+            waitFor(function()
+                return queryFailures == 1
+            end, "injected query failure")
+            assert(
+                tool:GetAttribute("Ammo") == beforeAmmo and health() == beforeHealth,
+                "failed terrain query mutated combat"
+            )
+            probe(ground, "Fire", command)
+            waitFor(function()
+                return tool:GetAttribute("Ammo") == 28
+            end, "same valid sequence after query recovery")
+            assert(health() == beforeHealth, "horizontal recovery shot damaged aircraft")
+            table.insert(observations, {
+                kind = "terrain-query-recovery",
+                beforeAmmo = beforeAmmo,
+                afterFailureAmmo = beforeAmmo,
+                afterRecoveryAmmo = tool:GetAttribute("Ammo"),
+                beforeHealth = beforeHealth,
+                afterHealth = health(),
+                queryFailures = queryFailures,
+            })
         end)
         if expected == 2 then
             check(

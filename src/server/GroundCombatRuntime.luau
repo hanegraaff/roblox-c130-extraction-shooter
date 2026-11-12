@@ -18,6 +18,9 @@ local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
+-- Server-composition boundary for a nonyielding terrain query adapter. Production
+-- omits this dependency and uses the authoritative Terrain query directly.
+export type Dependencies = { terrainQuery: ((Vector3) -> boolean)? }
 export type Controller = {
     stop: () -> (),
     rocketImpact: (number, string, boolean) -> boolean,
@@ -28,7 +31,10 @@ export type Controller = {
 }
 -- match is the sole result owner. rocketImpact is a server-only fixture seam;
 -- directness must be established by the server's swept collision before invocation.
-function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?, string?)
+function GroundCombatRuntime.start(
+    match: MatchService.Controller,
+    dependencies: Dependencies?
+): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("GroundFire") then
         return nil, "ground combat transport unavailable or already owned"
@@ -42,7 +48,8 @@ function GroundCombatRuntime.start(match: MatchService.Controller): (Controller?
     local effects = Instance.new("Folder")
     effects.Name = "GroundCombatEffects"
     effects.Parent = workspace
-    local originGeometry = GroundOriginGeometry.new(effects)
+    local originGeometry =
+        GroundOriginGeometry.new(effects, if dependencies then dependencies.terrainQuery else nil)
     local health = AircraftHealth.new()
     local lastPhase = ""
     local rifles = GroundCombatService.new()
