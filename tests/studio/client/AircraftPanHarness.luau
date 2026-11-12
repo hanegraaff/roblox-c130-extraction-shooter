@@ -24,6 +24,7 @@ type Request = {
     payload: unknown?,
     startTime: number?,
     duration: number?,
+    expectFresh: boolean?,
 }
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 15)
@@ -1135,10 +1136,117 @@ function Harness.run()
                 elseif request.kind == "ResetInput" then
                     goal = nil
                     aimPoint = nil
-                    recenter = true
+                    aimRequest = nil
+                    forcedPan = nil
+                    forcedBlocked = false
+                    physical = false
+                    outside = false
+                    recenter = false
+                    local resetStart = os.clock()
+                    local resetDiagnostics: { [string]: unknown } = {
+                        expectFresh = request.expectFresh == true,
+                        stage = "waiting for active operator projection",
+                    }
+                    observations.resetInput = resetDiagnostics
+                    local readyHud: ScreenGui? = nil
+                    local readyFrame: number? = nil
                     waitFor(function()
-                        return (localFocus() - resetFocus()).Magnitude < 0.01
-                    end, "default focus")
+                        local current = hud()
+                        local camera = workspace.CurrentCamera
+                        local roundStateValue = ReplicatedStorage:FindFirstChild("RoundState")
+                        local role = player:GetAttribute("Role")
+                        local life = player:GetAttribute("Life")
+                        local phase = if roundStateValue then roundStateValue:GetAttribute("Phase") else nil
+                        local value = if current then current:GetAttribute("PanLocalFocus") else nil
+                        local frame = if current then current:GetAttribute("ProjectionFrame") else nil
+                        local projectionTime = if current then current:GetAttribute("ProjectionTime") else nil
+                        local projectionCamera = if current
+                            then current:GetAttribute("ProjectionCamera")
+                            else nil
+                        local viewport = if camera then camera.ViewportSize else Vector2.zero
+                        resetDiagnostics.latest = {
+                            elapsedSeconds = os.clock() - resetStart,
+                            role = role or "missing",
+                            life = life or "missing",
+                            phase = phase or "missing",
+                            hudPresent = current ~= nil,
+                            projectionFrame = if type(frame) == "number" then frame else "missing",
+                            projectionTime = if type(projectionTime) == "number"
+                                then projectionTime
+                                else "missing",
+                            projectionCamera = if typeof(projectionCamera) == "CFrame"
+                                then { projectionCamera:GetComponents() }
+                                else "missing",
+                            localFocus = if typeof(value) == "Vector2"
+                                then { value.X, value.Y }
+                                else "missing",
+                            cameraType = if camera then camera.CameraType.Name else "missing",
+                            viewport = { viewport.X, viewport.Y },
+                        }
+                        if
+                            role == "Gunship"
+                            and life == "Alive"
+                            and phase == "Active"
+                            and current ~= nil
+                            and camera ~= nil
+                            and camera.CameraType == Enum.CameraType.Scriptable
+                            and viewport.X > 1
+                            and viewport.Y > 1
+                            and typeof(value) == "Vector2"
+                            and value.X == value.X
+                            and value.Y == value.Y
+                            and math.abs(value.X) < math.huge
+                            and math.abs(value.Y) < math.huge
+                            and type(frame) == "number"
+                            and frame > 0
+                            and type(projectionTime) == "number"
+                            and typeof(projectionCamera) == "CFrame"
+                        then
+                            readyHud = current
+                            readyFrame = frame
+                            return true
+                        end
+                        return false
+                    end, "active operator HUD and committed projection", 12)
+                    local entryHud = readyHud
+                    local entryFrame = readyFrame
+                    assert(entryHud and entryFrame, "operator projection readiness lost")
+                    local entryFocus = entryHud:GetAttribute("PanLocalFocus")
+                    assert(typeof(entryFocus) == "Vector2", "ready operator focus disappeared")
+                    local expected = resetFocus()
+                    resetDiagnostics.stage = "ready before recenter"
+                    resetDiagnostics.entryFrame = entryFrame
+                    resetDiagnostics.entryFocus = { entryFocus.X, entryFocus.Y }
+                    resetDiagnostics.expectedFocus = { expected.X, expected.Y }
+                    if request.expectFresh then
+                        assert(
+                            (entryFocus - expected).Magnitude < 0.01,
+                            "new operator did not enter at default focus"
+                        )
+                    end
+                    recenter = true
+                    resetDiagnostics.stage = "waiting for recenter commit"
+                    waitFor(function()
+                        local current = hud()
+                        local value = if current then current:GetAttribute("PanLocalFocus") else nil
+                        local frame = if current then current:GetAttribute("ProjectionFrame") else nil
+                        resetDiagnostics.postRequest = {
+                            elapsedSeconds = os.clock() - resetStart,
+                            sameHud = current == entryHud,
+                            inputPending = recenter,
+                            projectionFrame = if type(frame) == "number" then frame else "missing",
+                            localFocus = if typeof(value) == "Vector2"
+                                then { value.X, value.Y }
+                                else "missing",
+                        }
+                        return current == entryHud
+                            and not recenter
+                            and type(frame) == "number"
+                            and frame > entryFrame
+                            and typeof(value) == "Vector2"
+                            and (value - expected).Magnitude < 0.01
+                    end, "committed default focus after recenter", 5)
+                    resetDiagnostics.stage = "recenter committed"
                     observations = sample(nil, observations)
                 elseif request.kind == "Normal" then
                     waitFor(function()
@@ -1172,6 +1280,9 @@ function Harness.run()
                     aimPoint = nil
                     aimRequest = nil
                 end
+            end
+            if request.kind == "ResetInput" and not ok then
+                recenter = false
             end
             remote:FireServer(token, {
                 passed = ok,

@@ -22,6 +22,7 @@ type Request = {
     payload: unknown?,
     startTime: number?,
     duration: number?,
+    expectFresh: boolean?,
 }
 type Case = { name: string, passed: boolean, detail: string? }
 -- The completion payload is identical for SDK and human-started runs. Keeping
@@ -363,7 +364,7 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
                 end, "reset lobby")
                 deploy()
                 operator, ground = roles()
-                probe(operator, { kind = "ResetInput" })
+                probe(operator, { kind = "ResetInput", expectFresh = true })
                 probe(ground, { kind = "Ground" })
                 probe(operator, { kind = "Projection", point = surface(-180, 180), weapon = "M102" })
                 operator:Kick("P14 actual operator departure")
