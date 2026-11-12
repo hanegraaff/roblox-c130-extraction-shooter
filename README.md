@@ -18,7 +18,7 @@ Ground players use **WASD**, **Space** and the mouse to explore and watch the ai
 
 A round panel shows phase, role, life state, remaining time and surviving ground players. Ground players can click **Surrender / spectate** or reset their character to give up their life. Death and reset do not respawn them during that round: they watch a living ground teammate instead. Late arrivals and reconnecting players wait for the next round. Resetting the operator's protected station character retains the assignment, aircraft and deadline. Leaving the operator role restores the normal camera and removes thermal effects.
 
-The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. This branch adds both gunship weapons and damage to exposed ground players. The P05 plan records the passing two-client, native desktop and simulated-phone combat checks. The P05 pull request is unmerged, so this capability is not yet on `main`. Aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. The expanded map and P14 camera are integrated on `main`; see [P14](plans/14-aircraft-panning.md), [P13](plans/13-terrain-and-buildings.md), [P04](plans/04-aircraft-and-thermal.md), and [P03](plans/03-rounds-and-roles.md) for their separate evidence. The [P05 plan](plans/05-gunship-combat.md) records combat verification and remaining limitations.
+The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Both gunship weapons and damage to exposed ground players are integrated on `main`. Aircraft damage and the launcher are planned, so ground cannot yet earn an aircraft-destruction win through play. There is no published Roblox play link. The [P05 plan](plans/05-gunship-combat.md) records passing two-client, native desktop and simulated-phone combat checks and remaining limitations; [P14](plans/14-aircraft-panning.md), [P13](plans/13-terrain-and-buildings.md), [P04](plans/04-aircraft-and-thermal.md), and [P03](plans/03-rounds-and-roles.md) record earlier capabilities.
 
 The panning system keeps focus inside the battlefield and the camera at the orbiting aircraft. Typing in a text box or losing desktop window focus pauses panning; hovering actionable desktop UI blocks the keyboard pan. A fresh touch on the mobile pad resumes touch input after a window transition. The HUD is a prototype; the ground view still has a large round panel on phones. Full player guidance and presentation polish are planned for P10.
 
@@ -35,15 +35,15 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Select the P05 candidate branch before building this version:
+Select the integrated `main` branch before building this version:
 
 ```sh
 git fetch origin
-git switch plan/05-gunship-combat
-git pull --ff-only origin plan/05-gunship-combat
+git switch main
+git pull --ff-only origin main
 ```
 
-The P05 branch contains the verified combat increment and its unmerged pull request; `main` contains the integrated game before P05. Do not discard local edits when switching source.
+`main` includes the verified P05 combat increment. Do not discard local edits when switching source.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
@@ -93,7 +93,7 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
 2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
-3. Open Studio's **Output** panel. The P05 branch expects **104 server tests and 3 client tests**, with zero failures, skipped cases or errors. These cover rules, selection rejection, service lifecycle, status/character behavior, actual GUI-hover/text-focus blocking, building/story/panel geometry, terrain reconstruction, supported routes, canonical aircraft poses, solid sight lines, boundary correction and pristine resets. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
+3. Open Studio's **Output** panel. The current source expects **104 server tests and 3 client tests**, with zero failures, skipped cases or errors. These cover rules, selection rejection, service lifecycle, status/character behavior, actual GUI-hover/text-focus blocking, building/story/panel geometry, terrain reconstruction, supported routes, canonical aircraft poses, solid sight lines, boundary correction and pristine resets. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
 4. Click **Stop**, then **Play** again. Check fresh passing reports and one status panel plus one round panel. Stop before changing the mapping or source.
 5. Use the **STUDIO TESTING** panel at the bottom right. Click **Role** to cycle Auto → Ground → Operator. With one client, the choice changes your solo preview immediately: Ground can walk, while Operator previews the inward thermal view. Hold **WASD** to pan and move the mouse to aim, or use the touch directional pad and a separate aiming touch. Use **R / Recenter** to reset the safe view, and **1 / 2** or the named buttons to inspect both zoom profiles. Solo selection is cosmetic and does not grant an active role. Click **Next round** to cycle 30, 60, 180 or 600 seconds.
 6. For a real role/round test, use Studio **Server & Clients** with **2 clients** (or **3** for teammate spectating). Choose your roles, then click **Start round now** to bypass the lobby wait. Two Operator choices, or everyone choosing Ground, produces an explanation rather than silently changing a tester's choice. **Auto** fills the required operator when nobody explicitly requests it.

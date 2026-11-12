@@ -1,6 +1,6 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft and verified WASD/mobile panning with weapon-linked zoom. **Gunship combat is verified on the unmerged P05 branch; aircraft damage remains planned.** P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is available in [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 panel/fragment physics remain later work. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom and gunship combat. **Aircraft damage remains planned.** P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 panel/fragment physics remain later work. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
@@ -28,9 +28,11 @@ two-client P05 harness. Operated desktop and simulated-phone checks verify
 firing, panning and simultaneous touch controls; the independent review's
 material presentation and collision findings were fixed and rechecked.
 [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
-is unmerged, so P06 must branch from source containing P05 or wait for integration.
+is integrated on `main` at `5cc7de8`; P06 can branch from updated `main`.
 The [P05 plan](plans/05-gunship-combat.md) and [evidence](docs/evidence/p05-gunship-combat.md)
-record tested source, remaining limitations and prior failures.
+record tested source, remaining limitations and prior failures; the
+[integration record](docs/evidence/p05-integration.md) records the matching tree
+and fresh main gate. P06 is Ready but has not been started.
 
 ## How plans move
 
