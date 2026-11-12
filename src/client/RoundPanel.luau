@@ -97,8 +97,8 @@ function RoundPanel.new(
                     heading,
                     detail,
                     if role == "Gunship"
-                        then "Inward thermal view • 1 / 2 selects weapon zoom • Firing is planned"
-                        else "Round prototype • Combat and launcher are planned"
+                        then "Inward thermal view • 1 / 2 selects weapon zoom • Firing available in an active round"
+                        else "Round prototype • Ground weapons and launcher are planned"
                 )
                 surrender.Visible = phase == "Active" and role == "Ground" and life == "Alive"
                 local camera = workspace.CurrentCamera

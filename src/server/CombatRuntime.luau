@@ -301,9 +301,8 @@ function CombatRuntime.start(
                 projectile.remaining -= distance
                 projectile.visual.Position = projectile.position
                 if hit or projectile.remaining <= 0 then
-                    if
-                        not impact(projectile, projectile.position, if hit then hit.Instance else nil, time)
-                    then
+                    -- Client endpoints bound travel only; they do not create impacts.
+                    if not hit or not impact(projectile, projectile.position, hit.Instance, time) then
                         projectile.marker:Destroy()
                     end
                     projectile.visual:Destroy()
