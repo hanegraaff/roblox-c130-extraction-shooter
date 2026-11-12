@@ -95,3 +95,6 @@ the missing real-engine evidence.
 [GitHub Verify 43310736534](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43310736534)
 also passed on `918296e9182f85edf82789f9ba398a297f9118ca`, containing the
 Terrain fix and manual fallback; current Studio acceptance remains open.
+[GitHub Verify 43324633959](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43324633959)
+passed on `4d8b56acb5df5fc8d44b143680e4b0fc113d45e8`, including the aim and
+reactive mobile HUD fixes. This does not replace the remaining operated review.
