@@ -9,6 +9,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local GuiService = game:GetService("GuiService")
+local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local GroundCombatController = {}
 
@@ -82,6 +83,18 @@ function GroundCombatController.new(
             reticle.TextColor3 = Color3.new(1, 1, 1)
             reticle.TextStrokeTransparency = 0
             reticle.Parent = gui
+            local hitMarker = Instance.new("TextLabel")
+            hitMarker.Name = "AircraftHit"
+            hitMarker.AnchorPoint = Vector2.new(0.5, 0)
+            hitMarker.Size = UDim2.fromOffset(120, 24)
+            hitMarker.BackgroundTransparency = 1
+            hitMarker.Text = "HIT  −5"
+            hitMarker.TextSize = 18
+            hitMarker.Font = Enum.Font.GothamBold
+            hitMarker.TextColor3 = Color3.fromRGB(255, 215, 80)
+            hitMarker.TextStrokeTransparency = 0
+            hitMarker.Visible = false
+            hitMarker.Parent = gui
             local fireButton = Instance.new("TextButton")
             fireButton.Name = "Fire"
             fireButton.AnchorPoint = Vector2.new(1, 1)
@@ -111,6 +124,8 @@ function GroundCombatController.new(
             local sequence = 0
             local round = -1
             local nextAttempt = 0
+            local lastShot: string? = nil
+            local hitUntil = 0
             local function clearTool()
                 held = false
                 fireTouch = nil
@@ -249,7 +264,26 @@ function GroundCombatController.new(
                         projectionOrigin.AbsolutePosition
                     )
                     reticle.Position = offset
+                    hitMarker.Position = offset + UDim2.fromOffset(0, 18)
                     local now = os.clock()
+                    local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
+                    local shot = if aircraftState then aircraftState:GetAttribute("GroundShot") else nil
+                    if type(shot) == "string" and shot ~= lastShot then
+                        lastShot = shot
+                        local parsed, value = pcall(function()
+                            return HttpService:JSONDecode(shot)
+                        end)
+                        if
+                            parsed
+                            and type(value) == "table"
+                            and value.userId == player.UserId
+                            and value.roundId == round
+                            and value.aircraftHit == true
+                        then
+                            hitUntil = now + 0.6
+                        end
+                    end
+                    hitMarker.Visible = now < hitUntil
                     if not held or now < nextAttempt then
                         return
                     end

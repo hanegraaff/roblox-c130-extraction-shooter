@@ -83,6 +83,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local traceEnabled = false
     local fireDecisions: { unknown } = {}
     local shotObservations: { unknown } = {}
+    local tracerObservations: { { endpoint: Vector3, visualEnd: Vector3, length: number } } = {}
     local started, runtimeOrFailure = pcall(function()
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
@@ -111,6 +112,15 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             end,
             observeShot = function(shot)
                 if traceEnabled then
+                    local effects = workspace:FindFirstChild("GroundCombatEffects")
+                    local tracer = if effects then effects:FindFirstChild("M7Tracer") else nil
+                    if tracer and tracer:IsA("BasePart") then
+                        table.insert(tracerObservations, {
+                            endpoint = shot.hitPosition,
+                            visualEnd = tracer.Position + tracer.CFrame.LookVector * tracer.Size.Z * 0.5,
+                            length = tracer.Size.Z,
+                        })
+                    end
                     local aircraftPosition = shot.aircraftPosition
                     table.insert(shotObservations, {
                         userId = shot.userId,
@@ -450,8 +460,8 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             local operatorBag = op:FindFirstChildOfClass("Backpack")
             assert(not operatorBag or not operatorBag:FindFirstChild("M-7 rifle"), "operator received rifle")
             assert(health() == 300, "aircraft health not full")
-            probe(op, "Observe", 300)
-            probe(ground, "Observe", 300)
+            probe(op, "Observe", { health = 300, hud = true })
+            probe(ground, "Observe", { health = 300, hud = true })
         end)
         check("A3 forged and wrong-role requests cannot mutate health or ammo", function()
             local op, ground = roles()
@@ -463,6 +473,23 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 else nil
             assert(humanoid, "ground humanoid missing")
             humanoid:EquipTool(tool)
+            waitFor(function()
+                return tool.Parent == ground.Character
+            end, "equipped visible rifle")
+            local handle = tool:FindFirstChild("Handle")
+            assert(handle and handle:IsA("BasePart"), "rifle handle missing")
+            for _, name in { "Barrel", "Stock", "Magazine" } do
+                local piece = tool:FindFirstChild(name)
+                assert(
+                    piece and piece:IsA("BasePart") and piece:FindFirstChildOfClass("WeldConstraint"),
+                    name .. " missing or unwelded"
+                )
+                assert(not piece.CanCollide and not piece.CanQuery, name .. " interferes with world")
+            end
+            waitFor(function()
+                local character = ground.Character
+                return character ~= nil and character:FindFirstChild("RightGrip", true) ~= nil
+            end, "equipped rifle grip")
             local roundId = runtime.rounds.match.snapshot().roundId
             local target = hitbox().Position
             local forged = {
@@ -676,11 +703,17 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             end
             sample("after-exposed-shot", nil)
             assert(health() == 295, "real rifle hit aircraft failed: " .. HttpService:JSONEncode(diagnostic))
+            local latestTracer = tracerObservations[#tracerObservations]
+            assert(
+                latestTracer and (latestTracer.visualEnd - latestTracer.endpoint).Magnitude < 0.01,
+                "tracer endpoint disagrees with authoritative hit"
+            )
+            assert(latestTracer.length <= 12.01, "tracer exceeds terminal segment")
             if teammateHumanoid then
                 assert(teammateHumanoid.Health == teammateHealth, "rifle damaged a ground teammate")
             end
-            probe(op, "Observe", { health = 295, shotSequence = 2 })
-            probe(ground, "Observe", { health = 295, shotSequence = 2 })
+            probe(op, "Observe", { health = 295, shotSequence = 2, shotAircraftHit = true, hud = true })
+            probe(ground, "Observe", { health = 295, shotSequence = 2, shotAircraftHit = true, hud = true })
             traceEnabled = false
             fireDecisions = {}
             shotObservations = {}
@@ -771,6 +804,13 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             waitFor(function()
                 return health() == 300
             end, "pristine health")
+            assert(
+                ReplicatedStorage.AircraftState:GetAttribute("GroundShot") == nil,
+                "stale shot survived reset"
+            )
+            for _, player in Players:GetPlayers() do
+                probe(player, "Observe", { health = 300, shotCleared = true })
+            end
             assert(runtime.groundCombat.resources().tools == 0, "rifle leaked into lobby")
             assert(runtime.rounds.match.deploy(), "second deployment failed")
             waitFor(function()

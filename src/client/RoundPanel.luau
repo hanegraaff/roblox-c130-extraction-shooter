@@ -36,6 +36,17 @@ function RoundPanel.new(
             label.Font = Enum.Font.Gotham
             label.TextWrapped = true
             label.Parent = gui
+            local healthLabel = Instance.new("TextLabel")
+            healthLabel.Name = "AircraftHealth"
+            healthLabel.AnchorPoint = Vector2.new(0.5, 0)
+            healthLabel.Position = UDim2.new(0.5, 0, 0, 55)
+            healthLabel.Size = UDim2.fromOffset(250, 34)
+            healthLabel.BackgroundColor3 = Color3.fromRGB(72, 28, 25)
+            healthLabel.BackgroundTransparency = 0.05
+            healthLabel.TextColor3 = Color3.fromRGB(255, 240, 210)
+            healthLabel.Font = Enum.Font.GothamBold
+            healthLabel.TextSize = 17
+            healthLabel.Parent = gui
             local surrender = Instance.new("TextButton")
             surrender.Name = "Surrender"
             surrender.AnchorPoint = Vector2.new(0.5, 0)
@@ -86,6 +97,13 @@ function RoundPanel.new(
                 local aircraftState = game:GetService("ReplicatedStorage"):FindFirstChild("AircraftState")
                 local aircraftHealth = if aircraftState then aircraftState:GetAttribute("Health") else nil
                 local aircraftMaximum = if aircraftState then aircraftState:GetAttribute("MaxHealth") else nil
+                healthLabel.Visible = phase == "Active"
+                    and type(aircraftHealth) == "number"
+                    and type(aircraftMaximum) == "number"
+                if healthLabel.Visible then
+                    healthLabel.Text =
+                        string.format("AIRCRAFT HEALTH  %d / %d", aircraftHealth, aircraftMaximum)
+                end
                 if
                     phase == "Active"
                     and type(aircraftHealth) == "number"

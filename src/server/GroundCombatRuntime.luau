@@ -148,9 +148,51 @@ function GroundCombatRuntime.start(
         removeTool(player)
         local tool = Instance.new("Tool")
         tool.Name = "M-7 rifle"
-        tool.RequiresHandle = false
+        tool.RequiresHandle = true
         tool.CanBeDropped = false
         tool.ToolTip = "M-7 rifle"
+        -- Primitive server-owned rifle; pieces are cosmetic and cannot block
+        -- collision or queries. Roblox's Tool grip owns the equipped Handle.
+        local handle = Instance.new("Part")
+        handle.Name = "Handle"
+        handle.Size = Vector3.new(0.35, 0.5, 1.4)
+        handle.Color = Color3.fromRGB(48, 52, 49)
+        handle.Material = Enum.Material.Metal
+        handle.CanCollide = false
+        handle.CanTouch = false
+        handle.CanQuery = false
+        handle.Massless = true
+        handle.Parent = tool
+        local function piece(name: string, size: Vector3, offset: Vector3, color: Color3)
+            local part = Instance.new("Part")
+            part.Name = name
+            part.Size = size
+            part.Color = color
+            part.Material = Enum.Material.Metal
+            part.CanCollide = false
+            part.CanTouch = false
+            part.CanQuery = false
+            part.Massless = true
+            part.CFrame = handle.CFrame * CFrame.new(offset)
+            part.Parent = tool
+            local weld = Instance.new("WeldConstraint")
+            weld.Part0 = handle
+            weld.Part1 = part
+            weld.Parent = part
+        end
+        piece(
+            "Barrel",
+            Vector3.new(0.18, 0.18, 1.25),
+            Vector3.new(0, 0.08, -1.25),
+            Color3.fromRGB(32, 34, 32)
+        )
+        piece("Stock", Vector3.new(0.3, 0.42, 0.8), Vector3.new(0, -0.05, 1.05), Color3.fromRGB(77, 75, 58))
+        piece(
+            "Magazine",
+            Vector3.new(0.26, 0.58, 0.38),
+            Vector3.new(0, -0.48, -0.15),
+            Color3.fromRGB(35, 38, 35)
+        )
         tool.Parent = backpack
         tools[player] = tool
     end
@@ -266,23 +308,16 @@ function GroundCombatRuntime.start(
             tracer.CanQuery = false
             tracer.Material = Enum.Material.Neon
             tracer.Color = Color3.fromRGB(255, 220, 120)
-            local length = (endpoint - origin).Magnitude
+            -- Display only the terminal section of the resolved server ray.
+            -- A full head-to-target beam appears displaced in a third-person
+            -- camera even when its endpoint agrees with the aiming point.
+            local length = math.min((endpoint - origin).Magnitude, 12)
+            local start = endpoint - delta.Unit * length
             tracer.Size = Vector3.new(0.12, 0.12, math.max(length, 0.01))
-            tracer.CFrame = CFrame.lookAt((origin + endpoint) / 2, endpoint)
+            tracer.CFrame = CFrame.lookAt((start + endpoint) / 2, endpoint)
             tracer.Parent = effects
             Debris:AddItem(tracer, 0.1)
             local state = match.snapshot()
-            aircraftState:SetAttribute(
-                "GroundShot",
-                HttpService:JSONEncode({
-                    roundId = state.roundId,
-                    userId = player.UserId,
-                    sequence = intent.sequence,
-                    x = endpoint.X,
-                    y = endpoint.Y,
-                    z = endpoint.Z,
-                })
-            )
             local healthBefore = health.snapshot().health
             local applied = false
             if hit and aircraft and hit.Instance:IsDescendantOf(aircraft) then
@@ -293,6 +328,18 @@ function GroundCombatRuntime.start(
                     true
                 )
             end
+            aircraftState:SetAttribute(
+                "GroundShot",
+                HttpService:JSONEncode({
+                    roundId = state.roundId,
+                    userId = player.UserId,
+                    sequence = intent.sequence,
+                    x = endpoint.X,
+                    y = endpoint.Y,
+                    z = endpoint.Z,
+                    aircraftHit = applied,
+                })
+            )
             if dependencies and dependencies.observeShot then
                 local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
                 dependencies.observeShot({
@@ -338,9 +385,13 @@ function GroundCombatRuntime.start(
         RunService.Heartbeat:Connect(function()
             local now = workspace:GetServerTimeNow()
             local state = match.snapshot()
+            if state.phase == "Resetting" and lastPhase ~= "Resetting" then
+                aircraftState:SetAttribute("GroundShot", nil)
+            end
             if state.phase == "Lobby" and lastPhase ~= "Lobby" then
                 health = AircraftHealth.new()
                 health.reset(state.roundId)
+                aircraftState:SetAttribute("GroundShot", nil)
                 publish()
             end
             lastPhase = state.phase

@@ -43,9 +43,24 @@ function Harness.run()
                         local shot = state:GetAttribute("GroundShot")
                         local decoded = if type(shot) == "string" then HttpService:JSONDecode(shot) else nil
                         local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local roundHud = Players.LocalPlayer.PlayerGui:FindFirstChild("RoundHUD")
+                        local healthLabel = if roundHud
+                            then roundHud:FindFirstChild("AircraftHealth")
+                            else nil
+                        local hudMatches = expected.hud ~= true
+                            or (
+                                healthLabel ~= nil
+                                and healthLabel:IsA("TextLabel")
+                                and healthLabel.Visible
+                                and string.find(healthLabel.Text, tostring(expected.health), 1, true)
+                                    ~= nil
+                            )
                         return state:GetAttribute("Health") == expected.health
+                            and hudMatches
                             and (expected.destroyed == nil or state:GetAttribute("Destroyed") == expected.destroyed)
                             and (expected.shotSequence == nil or (decoded and decoded.sequence == expected.shotSequence))
+                            and (expected.shotAircraftHit == nil or (decoded and decoded.aircraftHit == expected.shotAircraftHit))
+                            and (expected.shotCleared ~= true or shot == nil)
                             and (
                                 expected.winner == nil
                                 or (round and round:GetAttribute("Winner") == expected.winner)
