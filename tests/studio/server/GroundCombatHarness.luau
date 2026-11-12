@@ -14,6 +14,20 @@ local FIXTURE_ROCKET_SPEED = 300
 local FIXTURE_ROCKET_STEP_SECONDS = 1 / 6
 local FIXTURE_ROCKET_STEP = Vector3.new(0, -FIXTURE_ROCKET_SPEED * FIXTURE_ROCKET_STEP_SECONDS, 0)
 type Case = { name: string, passed: boolean, detail: string? }
+export type Report = {
+    suite: string,
+    environment: string,
+    mode: string,
+    departureMethod: string,
+    clientCount: number,
+    requestedClients: number,
+    discovered: number,
+    passed: number,
+    failed: number,
+    skipped: number,
+    cases: { Case },
+    observations: { unknown },
+}
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 15)
     while not predicate() and os.clock() < deadline do
@@ -21,32 +35,75 @@ local function waitFor(predicate: () -> boolean, label: string, seconds: number?
     end
     assert(predicate(), "P06 timeout: " .. label)
 end
-function Harness.run(expectedClients: number?)
+-- Manual mode invokes finish after complete cleanup; SDK mode uses EndTest.
+-- Both paths require the same real-client cases and preserve failures.
+function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local expected = expectedClients or 2
-    waitFor(function()
-        return #Players:GetPlayers() == expected
-    end, "actual clients", 35)
+    local mode = if finish then "manual-server-clients" else "sdk"
+    local departureMethod = if finish then "server-kick" else "client-leave"
+    local function deliver(report: Report)
+        workspace:SetAttribute("P06MultiplayerReport", HttpService:JSONEncode(report))
+        if finish then
+            finish(report)
+        else
+            StudioTestService:EndTest(report)
+        end
+    end
+    local function startupFailure(detail: string)
+        deliver({
+            suite = "P06-multiplayer",
+            environment = "Studio",
+            mode = mode,
+            departureMethod = departureMethod,
+            clientCount = #Players:GetPlayers(),
+            requestedClients = expected,
+            discovered = 1,
+            passed = 0,
+            failed = 1,
+            skipped = 0,
+            cases = { { name = "Harness startup", passed = false, detail = detail } },
+            observations = {},
+        })
+    end
+    local joined, joinFailure = pcall(function()
+        waitFor(function()
+            return #Players:GetPlayers() == expected
+        end, "actual clients", 35)
+        return true
+    end)
+    if not joined then
+        startupFailure(tostring(joinFailure))
+        return
+    end
     local faultArmed = false
     local queryFailures = 0
-    local runtime, reason = GameRuntime.start({
-        automaticDeployment = false,
-        minimumPlayers = 2,
-        durationSeconds = 120,
-        lobbySeconds = 0,
-        deploymentSeconds = 25,
-        resultsSeconds = 5,
-        seed = 1,
-    }, {
-        terrainQuery = function(position)
-            if faultArmed then
-                faultArmed = false
-                queryFailures += 1
-                error("injected terrain query failure")
-            end
-            return GroundOriginGeometry.clearTerrain(position)
-        end,
-    })
-    assert(runtime, reason)
+    local started, runtimeOrFailure = pcall(function()
+        local owner, reason = GameRuntime.start({
+            automaticDeployment = false,
+            minimumPlayers = 2,
+            durationSeconds = 120,
+            lobbySeconds = 0,
+            deploymentSeconds = 25,
+            resultsSeconds = 5,
+            seed = 1,
+        }, {
+            terrainQuery = function(position)
+                if faultArmed then
+                    faultArmed = false
+                    queryFailures += 1
+                    error("injected terrain query failure")
+                end
+                return GroundOriginGeometry.clearTerrain(position)
+            end,
+        })
+        assert(owner, reason)
+        return owner
+    end)
+    if not started then
+        startupFailure(tostring(runtimeOrFailure))
+        return
+    end
+    local runtime = runtimeOrFailure
     local transport = Instance.new("RemoteEvent")
     transport.Name = "P06Harness"
     local ready: { [Player]: boolean } = {}
@@ -642,7 +699,14 @@ function Harness.run(expectedClients: number?)
                     return runtime.rounds.match.snapshot().phase == "Active"
                 end, "forfeit active", 40)
                 local operator = roles()
-                probe(operator, "Leave", nil)
+                if finish then
+                    -- Manual Server & Clients has no SDK-owned LeaveTest.
+                    -- Kicking the simulated operator causes an actual player
+                    -- departure; report its method separately from SDK leave.
+                    operator:Kick("P06 manual disconnect fixture")
+                else
+                    probe(operator, "Leave", nil)
+                end
                 waitFor(function()
                     return #Players:GetPlayers() == 1
                 end, "actual operator departure", 15)
@@ -680,10 +744,13 @@ function Harness.run(expectedClients: number?)
             passed += 1
         end
     end
-    local report = {
+    local report: Report = {
         suite = "P06-multiplayer",
         environment = "Studio",
+        mode = mode,
+        departureMethod = departureMethod,
         clientCount = expected,
+        requestedClients = expected,
         discovered = #cases,
         passed = passed,
         failed = #cases - passed,
@@ -691,7 +758,6 @@ function Harness.run(expectedClients: number?)
         cases = cases,
         observations = observations,
     }
-    workspace:SetAttribute("P06MultiplayerReport", HttpService:JSONEncode(report))
-    StudioTestService:EndTest(report)
+    deliver(report)
 end
 return Harness

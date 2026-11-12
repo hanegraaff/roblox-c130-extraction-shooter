@@ -70,6 +70,31 @@ function RoundHarness.run()
         end)
         return
     end
+    local selector = if development and development:IsA("ModuleScript")
+        then development:GetAttribute("ManualHarness")
+        else nil
+    if RunService:IsStudio() and args == nil and (selector == "P06" or selector == "P06Team") then
+        local requested = if selector == "P06Team" then 3 else 2
+        local invocation = {
+            mode = "manual-server-clients",
+            harness = selector,
+            requestedClients = requested,
+            selector = "ServerStorage.DevelopmentSettings.ManualHarness",
+            selectorValue = selector,
+            studioOnly = true,
+        }
+        local invocationKey = "Manual" .. selector .. "Invocation"
+        local reportKey = "Manual" .. selector .. "Report"
+        workspace:SetAttribute(invocationKey, HttpService:JSONEncode(invocation))
+        workspace:SetAttribute(reportKey, nil)
+        require(script.Parent.GroundCombatHarness).run(requested, function(report)
+            workspace:SetAttribute(
+                reportKey,
+                HttpService:JSONEncode({ invocation = invocation, result = report })
+            )
+        end)
+        return
+    end
     if type(args) == "table" and (args.kind == "P14" or args.kind == "P14ArrivalRegression") then
         require(script.Parent.AircraftPanHarness).run(args.kind == "P14ArrivalRegression")
         return
