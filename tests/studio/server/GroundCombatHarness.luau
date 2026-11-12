@@ -198,43 +198,104 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
         assert(part and part:IsA("BasePart"), "aircraft hitbox missing")
         return part
     end
-    -- Fire two independent Heartbeat callbacks in a defined order; three real
-    -- swept fixture rockets resolve against the live moving aircraft hitbox.
+    -- Two independent Heartbeat callbacks carry ground death and real swept
+    -- rocket hits. A separate Stepped marker identifies the simulation epoch;
+    -- the Heartbeat marker is retained only to diagnose callback interleaving.
     local function mutualBatch(ground: Player, roundId: number, aircraftFirst: boolean, prefix: string)
         local callbacks = 0
-        local callbackFailure: string? = nil
-        local frame = 0
+        local callbackErrors: { string } = {}
+        local heartbeatFrame, simulationFrame, simulationTime = 0, 0, 0
         local names: { string } = {}
-        local frames: { number } = {}
+        local heartbeatFrames: { number } = {}
+        local simulationFrames: { number } = {}
+        local simulationTimes: { number } = {}
         local deltas: { number } = {}
         local aircraftPositions: { { number } } = {}
-        -- Register a persistent frame marker first and establish its counter
-        -- before scheduling the two independent callbacks under test.
-        local frameMarker = RunService.Heartbeat:Connect(function()
-            frame += 1
+        local events: { unknown } = {}
+        local captureMarkers = false
+        local diagnostic = {
+            kind = "mutual-batch",
+            requestedOrder = if aircraftFirst then "aircraft-first" else "ground-first",
+            order = names,
+            heartbeatFrames = heartbeatFrames,
+            simulationFrames = simulationFrames,
+            simulationTimes = simulationTimes,
+            heartbeatDeltas = deltas,
+            callbackErrors = callbackErrors,
+            events = events,
+            fixtureRocketSpeedStudsPerSecond = FIXTURE_ROCKET_SPEED,
+            fixtureRocketStepSeconds = FIXTURE_ROCKET_STEP_SECONDS,
+            sweptDistanceStuds = FIXTURE_ROCKET_STEP.Magnitude,
+            aircraftPositions = aircraftPositions,
+        }
+        -- Attach first: even marker/callback timeouts must survive in the report.
+        table.insert(observations, diagnostic)
+        local function trace(label: string, dt: number?)
+            if #events >= 60 then
+                return
+            end
+            local current = runtime.rounds.match.snapshot()
+            table.insert(events, {
+                label = label,
+                heartbeatFrame = heartbeatFrame,
+                simulationFrame = simulationFrame,
+                simulationTime = simulationTime,
+                heartbeatDelta = dt,
+                distributedGameTime = workspace.DistributedGameTime,
+                serverTime = workspace:GetServerTimeNow(),
+                clock = os.clock(),
+                phase = current.phase,
+                winner = if current.result then current.result.winner else "",
+                reason = if current.result then current.result.reason else "",
+                aircraftHealth = health(),
+            })
+        end
+        local stepMarker = RunService.Stepped:Connect(function(time)
+            simulationFrame += 1
+            simulationTime = time
+            if captureMarkers then
+                trace("stepped-marker", nil)
+            end
         end)
-        waitFor(function()
-            return frame > 0
-        end, "heartbeat marker")
-        local beforeFrame = frame
+        local frameMarker = RunService.Heartbeat:Connect(function(dt)
+            heartbeatFrame += 1
+            if captureMarkers then
+                trace("heartbeat-marker", dt)
+            end
+        end)
+        local markerDeadline = os.clock() + 5
+        while (simulationFrame == 0 or heartbeatFrame == 0) and os.clock() < markerDeadline do
+            task.wait(0.03)
+        end
+        if simulationFrame == 0 or heartbeatFrame == 0 then
+            stepMarker:Disconnect()
+            frameMarker:Disconnect()
+            error("P06 timeout: simulation/heartbeat markers")
+        end
+        captureMarkers = true
+        trace("callbacks-registered", nil)
         local function record(name: string, dt: number)
             table.insert(names, name)
-            table.insert(frames, frame)
+            table.insert(heartbeatFrames, heartbeatFrame)
+            table.insert(simulationFrames, simulationFrame)
+            table.insert(simulationTimes, simulationTime)
             table.insert(deltas, dt)
+            trace(name .. "-start", dt)
         end
-        local function checked(action: () -> ())
+        local function checked(name: string, action: () -> ())
             local passed, callbackError = pcall(function()
                 action()
                 return true
             end)
             if not passed then
-                callbackFailure = tostring(callbackError)
+                table.insert(callbackErrors, name .. ": " .. tostring(callbackError))
             end
             callbacks += 1
+            trace(name .. "-end", nil)
         end
         local function eliminate(dt: number)
             record("ground", dt)
-            checked(function()
+            checked("ground", function()
                 assert(
                     runtime.rounds.match.eliminate(ground.UserId, roundId),
                     "last ground elimination rejected"
@@ -243,7 +304,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
         end
         local function destroyAircraft(dt: number)
             record("aircraft", dt)
-            checked(function()
+            checked("aircraft", function()
                 local part = hitbox()
                 local origin = part.Position + Vector3.new(0, 25, 0)
                 table.insert(aircraftPositions, { part.Position.X, part.Position.Y, part.Position.Z })
@@ -269,36 +330,39 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             RunService.Heartbeat:Once(eliminate)
             RunService.Heartbeat:Once(destroyAircraft)
         end
-        waitFor(function()
-            return callbacks == 2
-        end, "same-heartbeat combat callbacks")
+        local deadline = os.clock() + 15
+        while callbacks < 2 and os.clock() < deadline do
+            task.wait(0.03)
+        end
+        trace("callbacks-complete-or-timeout", nil)
+        captureMarkers = false
+        stepMarker:Disconnect()
         frameMarker:Disconnect()
+        assert(callbacks == 2, "P06 timeout: combat callbacks: " .. HttpService:JSONEncode(diagnostic))
+        assert(#callbackErrors == 0, "combat callback failed: " .. HttpService:JSONEncode(diagnostic))
         assert(
-            frames[1] == frames[2] and frames[1] > beforeFrame,
-            "callbacks did not share the recorded Heartbeat"
+            simulationFrames[1] > 0
+                and simulationFrames[1] == simulationFrames[2]
+                and simulationTimes[1] == simulationTimes[2],
+            "callbacks crossed a recorded simulation step: " .. HttpService:JSONEncode(diagnostic)
         )
-        assert(deltas[1] == deltas[2], "callbacks observed different Heartbeat intervals")
+        assert(
+            deltas[1] == deltas[2],
+            "callbacks observed different Heartbeat intervals: " .. HttpService:JSONEncode(diagnostic)
+        )
         local firstExpected = if aircraftFirst then "aircraft" else "ground"
         local secondExpected = if aircraftFirst then "ground" else "aircraft"
-        assert(names[1] == firstExpected and names[2] == secondExpected, "actual callback order differs")
-        table.insert(observations, {
-            kind = "mutual-batch",
-            order = names,
-            heartbeatFrames = frames,
-            heartbeatDeltas = deltas,
-            fixtureRocketSpeedStudsPerSecond = FIXTURE_ROCKET_SPEED,
-            fixtureRocketStepSeconds = FIXTURE_ROCKET_STEP_SECONDS,
-            sweptDistanceStuds = FIXTURE_ROCKET_STEP.Magnitude,
-            aircraftPositions = aircraftPositions,
-        })
-        assert(callbackFailure == nil, tostring(callbackFailure))
+        assert(
+            names[1] == firstExpected and names[2] == secondExpected,
+            "actual callback order differs: " .. HttpService:JSONEncode(diagnostic)
+        )
         waitFor(function()
             return runtime.rounds.match.snapshot().phase == "Results"
         end, "batched result")
         local result = runtime.rounds.match.snapshot().result
         assert(
             result and result.winner == "Ground" and result.reason == "AircraftDestroyed",
-            "mutual batch chose wrong winner"
+            "mutual batch chose wrong winner: " .. HttpService:JSONEncode(diagnostic)
         )
     end
     local fixture = Instance.new("Folder")
