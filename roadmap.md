@@ -12,7 +12,7 @@ The integrated source on `main` includes the development shell, verification too
 | M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Complete | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
 | M2 — Level revision | [P13: Expanded terrain and multi-story buildings](plans/13-terrain-and-buildings.md) | Complete | P04 | Walk a 720-stud-diameter terrain map with two large buildings and one smaller one, each at least two stories |
 | M2 — View revision | [P14: Directional aircraft targeting](plans/14-aircraft-panning.md) | Complete | P13 | Pan the aircraft view with WASD or mobile arrows, aim independently and retain the view through the orbit |
-| M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Blocked | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
+| M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | In progress | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Planned | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Planned | P06, P13, P14 | See panels degrade: 3 heavy hits → half destroyed, 3 more → gone; 9 seconds sustained 30mm → damage, with real falling fragments |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Planned | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
@@ -22,10 +22,12 @@ The integrated source on `main` includes the development shell, verification too
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
-2026-11-12 P05 candidate: the dedicated branch adds gunship combat and passes
-the 50-unit / 28-integration host gate. P05 is blocked on current-source Studio
-acceptance: a two-client SDK launch stalled, and the remaining real-engine,
-replication and operated checks have not passed. [Draft PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25),
+2026-11-12 P05 candidate: the dedicated branch passes the 50-unit / 28-integration
+host gate and the six-case two-client Studio combat harness. Operated desktop
+and simulated mobile checks verified firing and simultaneous touch controls,
+but found material thermal/effect readability and HUD-overlap defects. P05
+remains in progress while those findings are corrected and rechecked.
+[Draft PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25),
 the [P05 plan](plans/05-gunship-combat.md) and [evidence](docs/evidence/p05-gunship-combat.md)
 record the candidate and source-specific results.
 

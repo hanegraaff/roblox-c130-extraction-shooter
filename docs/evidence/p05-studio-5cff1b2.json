@@ -1,0 +1,67 @@
+{
+  "source_commit": "5cff1b2491bc3b989413fbf6f23de642abcaf059",
+  "multiplayer": {
+    "ok": true,
+    "result": {
+      "skipped": 0,
+      "passed": 4,
+      "observations": [
+        {
+          "endpoint": [
+            4.353575706481934,
+            30,
+            -9.00257682800293
+          ],
+          "targetRoot": [
+            0,
+            30,
+            0
+          ],
+          "afterHealth": 75,
+          "preflightRayHit": false,
+          "beforeImpact": "{\"y\":30.661285400390626,\"x\":1.9843133687973023,\"z\":0.9536555409431458,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "fixtureMuzzle": [
+            328.6384582519531,
+            138,
+            158.927001953125
+          ],
+          "afterImpact": "{\"y\":30.661285400390626,\"x\":1.9843133687973023,\"z\":0.9536555409431458,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "beforeHealth": 75
+        }
+      ],
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 rejected client traffic leaves readiness intact"
+        },
+        {
+          "passed": true,
+          "name": "A4 swept muzzle path hits thin cover before the visible target"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged airborne endpoint cannot create damage or an impact"
+        },
+        {
+          "passed": true,
+          "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+        },
+        {
+          "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.CombatHarness:128: fixture target cannot be reached from any searched permitted view"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.CombatHarness:60: ServerScriptService.ServerTests.CombatHarness:128: fixture target cannot be reached from any searched permitted view"
+        }
+      ],
+      "environment": "Studio",
+      "clientCount": 2,
+      "suite": "P05-multiplayer",
+      "failed": 2,
+      "discovered": 6
+    }
+  }
+}

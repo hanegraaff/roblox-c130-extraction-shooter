@@ -34,23 +34,26 @@ Document both weapon contracts, per-weapon timing, zoom mapping, blast cover app
 
 ## Completion record
 
-The candidate is on `plan/05-gunship-combat`, based on integrated main
-`79336f17d76717408351978b4a9925418361670e`. The developer implemented
-server-authorized gunship firing, per-weapon readiness, swept collision and
-cover-limited damage; the independent tester found an endpoint-airburst defect,
-which was corrected before the narrow engine probe below. Full acceptance and
-player-feel review remain open. [Draft PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
-contains the candidate and is not an integration or publication claim.
+The source under review is `232889f04a848f145231009e2be21c0ffcb6442e`
+(tree `b29b274f2c612ede1855dd056f6da012b3960274`) on
+`plan/05-gunship-combat`, based on integrated main `79336f17d76717408351978b4a9925418361670e`.
+[PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
+contains the candidate; it has not been merged or published.
 
-| Criterion | Evidence and remaining work |
+| Criterion | Evidence |
 | --- | --- |
-| A1 | Full host `python3 scripts/verify.py` passed 50 unit and 28 integration cases on `f1982bb`; an independent integration run also passes 28/28. Tests cover both lifetime boundaries, distance clamp, cadence/reload, damage clamps and per-shot/target deduplication. Live projectile expiry and actual Humanoid damage remain unverified on the latest source. |
-| A2 | Host tests exercise independent weapon readiness and switch-away/switch-back. The expanded two-client switching scenario exists but has not completed on the corrected candidate. |
-| A3 | Host tests reject forged fields, stale round/sequence, wrong role, nonfinite and outside bounds. On `03eaacf`, a one-client real-engine probe confirmed a collisionless endpoint caused no impact. Flood/recovery, impossible view, and the expanded multiplayer probes remain open. |
-| A4 | The first two-client candidate exercised narrow cover scenarios; it predates the collision correction. On `03eaacf`, a disposable Part probe verified the 0.25-stud surface continuation. Both-profile real slopes, second floors, panned aiming, muzzle obstruction and damage/cover cases still need a current-candidate run. |
-| A5 | The updated two-client fixture includes result, no-respawn, terminal projectile and next-round cases but has not finished on the corrected candidate. Consistent replicated shot, health and result, reset cleanup and operated play remain unverified. |
+| A1 | `python3 scripts/verify.py`: 50 unit / 33 integration passed, including `CombatService.spec.luau` and `DamageRules.spec.luau` timing, reload, damage clamp, deduplication and bounded-flight cases. Studio `CombatCollision.spec.luau` plus the two-client injected-clock expiry case exercise real swept queries and Instance cleanup at the lifetime boundary. |
+| A2 | Host readiness tests and the two-client switch/reload case passed. Native desktop switching retained panning, acknowledged 30°/40° FOV and retained the heavy reload. |
+| A3 | Host view-intent and combat tests plus the two-client rejected-traffic and airburst cases passed for forged fields, role, sequences, nonfinite/outside targets, view claims and recovery. `CombatView.spec.luau` compares 600 actual CFrame rays across both zooms and orbit phases, including a valid downward-ray case. View claims are bounded rather than attested; the allowance is symmetric at 1.25 seconds of orbit travel. |
+| A4 | Studio smoke passed 104/104 server cases and 3/3 on each of two actual clients. The eight-case two-client suite passed thin-cover, embedded-cover player protection and both-profile real slope and Foundry second-story panel impacts. The M102 slope impact was 4.27 studs from target against the 5-stud limit. |
+| A5 | The two-client suite passed matching selected weapon, shot, health and result observations; lethal elimination, no respawn/result once, terminal cancellation, next-round stale requests and projectile expiry cleanup. |
 
-The [detailed record](../docs/evidence/p05-gunship-combat.md) identifies
-source-specific runs, the earlier test failure, the pending Studio SDK launch,
-and the independent tester's actual observations. A real current-combat
-screenshot and operated desktop/touch weapon and thermal review are outstanding.
+The [detailed record](../docs/evidence/p05-gunship-combat.md) preserves earlier
+failures, fixes and source-specific reports. The independent operated review
+exercised native desktop and iPhone-simulator multitouch, both weapons and their
+rendered effects. The rapid 30mm warning and projectile phases are difficult to
+separate during a burst, and the pre-existing ground HUD is large on a phone.
+For future levels, validate that voxel Terrain cannot intersect the aircraft
+muzzle or add Terrain-overlap handling; the present BasePart overlap guard does
+not cover voxels. The technical writer updated the player and contributor docs
+and captured current gameplay. No Roblox publication occurred.

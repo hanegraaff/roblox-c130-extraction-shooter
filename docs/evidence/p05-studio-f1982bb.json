@@ -1,0 +1,131 @@
+{
+  "source_commit": "f1982bb2200d35fdfc8ffc86ed657f48221d36fe",
+  "multiplayer": {
+    "ok": true,
+    "result": {
+      "skipped": 0,
+      "passed": 6,
+      "observations": [
+        {
+          "endpoint": [
+            3.9710421562194824,
+            30,
+            -9.177735328674316
+          ],
+          "targetRoot": [
+            0,
+            30,
+            0
+          ],
+          "afterHealth": 75,
+          "preflightRayHit": false,
+          "beforeImpact": "{\"y\":30.63771629333496,\"x\":1.9887163639068604,\"z\":0.8319522142410278,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "fixtureMuzzle": [
+            335.0326232910156,
+            138,
+            144.96263122558594
+          ],
+          "afterImpact": "{\"y\":30.63771629333496,\"x\":1.9887163639068604,\"z\":0.8319522142410278,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "beforeHealth": 75
+        },
+        {
+          "target": [
+            -264.00006103515625,
+            13.56488037109375,
+            -160.00001525878906
+          ],
+          "kind": "terrain-slope",
+          "impact": [
+            -263.999755859375,
+            13.564946174621582,
+            -159.99989318847656
+          ],
+          "weapon": "GAU23"
+        },
+        {
+          "panelId": "Foundry_S02_South_01",
+          "target": [
+            -189.9901123046875,
+            14.575614929199219,
+            -79.5
+          ],
+          "kind": "upper-panel",
+          "impact": [
+            -189.99012756347656,
+            14.575630187988281,
+            -79.5
+          ],
+          "weapon": "GAU23"
+        },
+        {
+          "target": [
+            -263.9998779296875,
+            11.898460388183594,
+            -163.99996948242188
+          ],
+          "kind": "terrain-slope",
+          "impact": [
+            -263.9994812011719,
+            11.898524284362793,
+            -163.9998321533203
+          ],
+          "weapon": "M102"
+        },
+        {
+          "panelId": "Foundry_S02_South_01",
+          "target": [
+            -190.951904296875,
+            14.376205444335938,
+            -79.5
+          ],
+          "kind": "upper-panel",
+          "impact": [
+            -190.95176696777344,
+            14.376229286193848,
+            -79.5
+          ],
+          "weapon": "M102"
+        }
+      ],
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 rejected client traffic leaves readiness intact"
+        },
+        {
+          "passed": true,
+          "name": "A4 swept muzzle path hits thin cover before the visible target"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged airborne endpoint cannot create damage or an impact"
+        },
+        {
+          "passed": true,
+          "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+        },
+        {
+          "passed": true,
+          "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots"
+        },
+        {
+          "passed": true,
+          "name": "A4 both profiles strike real terrain slopes and authored second-story panels"
+        }
+      ],
+      "environment": "Studio",
+      "clientCount": 2,
+      "suite": "P05-multiplayer",
+      "failed": 0,
+      "discovered": 6
+    }
+  },
+  "operated": {
+    "ok": true,
+    "result": {
+      "clientCount": 2,
+      "suite": "P05-operated-review",
+      "result": "reviewed; presentation defects reported"
+    }
+  }
+}
