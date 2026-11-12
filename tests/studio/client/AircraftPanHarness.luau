@@ -275,11 +275,34 @@ function Harness.run()
                 assert(cornerRay.Direction.Y < -1e-9, "camera corner includes sky")
                 local distance = (MapRules.defaults.groundY - cornerRay.Origin.Y) / cornerRay.Direction.Y
                 local groundHit = cornerRay.Origin + cornerRay.Direction * distance
-                local radius = Vector2.new(groundHit.X, groundHit.Z).Magnitude
+                local radius = Vector2.new(
+                    groundHit.X - MapRules.defaults.centerX,
+                    groundHit.Z - MapRules.defaults.centerZ
+                ).Magnitude
                 table.insert(cornerGround, { corner.X, corner.Y, radius })
-                assert(radius <= MapRules.defaults.radiusStuds - 1, "camera corner escaped level")
             end
             result.cornerGround = cornerGround
+            local innerGround: { unknown } = {}
+            for _, point in
+                {
+                    Vector2.new(viewport.X * 0.25, viewport.Y * 0.5),
+                    Vector2.new(viewport.X * 0.75, viewport.Y * 0.5),
+                    Vector2.new(viewport.X * 0.5, viewport.Y * 0.25),
+                    Vector2.new(viewport.X * 0.5, viewport.Y * 0.75),
+                }
+            do
+                local ray = camera:ViewportPointToRay(point.X, point.Y)
+                assert(ray.Direction.Y < -1e-9, "inner view ray includes sky")
+                local distance = (MapRules.defaults.groundY - ray.Origin.Y) / ray.Direction.Y
+                local groundHit = ray.Origin + ray.Direction * distance
+                local radius = Vector2.new(
+                    groundHit.X - MapRules.defaults.centerX,
+                    groundHit.Z - MapRules.defaults.centerZ
+                ).Magnitude
+                table.insert(innerGround, { point.X, point.Y, radius })
+                assert(radius <= MapRules.defaults.radiusStuds - 1, "inner view escaped level")
+            end
+            result.innerGround = innerGround
             local cross = current:FindFirstChild("Reticle")
             result.reticlePresent = cross ~= nil
             assert(cross and cross:IsA("TextLabel"), "drawn reticle missing")
@@ -632,6 +655,7 @@ function Harness.run()
                     local camera = workspace.CurrentCamera
                     assert(camera and camera.CameraType == Enum.CameraType.Custom, "camera remained trapped")
                     assert(not camera:FindFirstChild("OperatorThermal"), "thermal effect leaked")
+                    assert(not camera:FindFirstChild("OperatorGroundBackdrop"), "operator backdrop leaked")
                     observations = {
                         cameraType = camera.CameraType.Name,
                         mouse = Input.MouseBehavior.Name,

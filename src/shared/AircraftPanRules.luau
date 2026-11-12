@@ -5,8 +5,9 @@
     Focus is a ground point in the aircraft's rotating local map frame, in studs:
     +X is radial toward the aircraft, +Z is camera-right at orbit phase zero.
     Releasing input holds this relative view through the aircraft's full orbit.
-    All four viewport corner rays must land inside the playable disk; invalid
-    inputs return nil and no function mutates its arguments.
+    The level edge may enter the outer quarter of each viewport centerline.
+    All corner rays still point downward; invalid inputs return nil and no
+    function mutates its arguments.
 ]=]
 local MapRules = if script then require(script.Parent.MapRules) else require("./MapRules")
 local Validation = if script then require(script.Parent.Validation) else require("./Validation")
@@ -18,7 +19,21 @@ AircraftPanRules.defaults = table.freeze({
     maximumDeltaSeconds = 0.1,
     edgeInsetStuds = 2,
     homePitchRadians = math.rad(45),
+    maximumPitchRadians = math.rad(80),
+    edgeOverscanFraction = 0.25,
+    backdropDepthStuds = 4,
 })
+
+local function backdropExtent(map: typeof(MapRules.defaults)): number?
+    local extent = math.max(10240, map.radiusStuds * 4, map.altitudeStuds * 72)
+    return if Validation.isFinite(extent) then extent else nil
+end
+
+-- Size of the noninteractive operator-only ground backdrop, in studs. The
+-- inscribed disk covers the view at any aircraft phase; invalid maps reject.
+function AircraftPanRules.backdropHalfExtent(map: typeof(MapRules.defaults)): number?
+    return if MapRules.validate(map) then backdropExtent(map) else nil
+end
 
 -- One integer viewport pixel pair drives both the GUI reticle and camera ray.
 function AircraftPanRules.raster(pointerX: number, pointerY: number, width: number, height: number): Pixels?
@@ -38,14 +53,22 @@ function AircraftPanRules.raster(pointerX: number, pointerY: number, width: numb
     return { x = coordinate(pointerX, width), y = coordinate(pointerY, height) }
 end
 
--- The downward corner rays form a convex ground footprint. Because the disk is
--- convex, four contained corners also contain the entire projected viewport.
--- A small inset prevents perimeter-ring grazing under replication roundoff.
+-- The four centerline samples sit one quarter of the screen inward from each
+-- edge. Keeping them inside the disk lets the edge enter the outer quarter of
+-- each centerline; curved level boundaries can expose more at the corners.
+-- Corner rays must still point down and pitch stays short of vertical. A small
+-- disk inset prevents perimeter-ring grazing under replication roundoff.
 local function fits(map: typeof(MapRules.defaults), focus: Focus, aspect: number, fovDegrees: number): boolean
     local radius, altitude = map.radiusStuds, map.altitudeStuds
     local dx, dz = focus.x - radius, focus.z
     local length = math.sqrt(dx * dx + dz * dz + altitude * altitude)
-    if not Validation.isFinite(length) or length <= 0 or dx >= 0 then
+    local horizontalDistance = math.sqrt(dx * dx + dz * dz)
+    if
+        not Validation.isFinite(length)
+        or length <= 0
+        or dx >= 0
+        or horizontalDistance < altitude / math.tan(AircraftPanRules.defaults.maximumPitchRadians)
+    then
         return false
     end
     local fx, fy, fz = dx / length, -altitude / length, dz / length
@@ -62,22 +85,44 @@ local function fits(map: typeof(MapRules.defaults), focus: Focus, aspect: number
     if limit <= 0 then
         return false
     end
+    local extent = backdropExtent(map)
+    if not extent then
+        return false
+    end
     for _, side in { -1, 1 } do
         for _, top in { -1, 1 } do
-            local rayX = fx + side * horizontal * rx + top * vertical * ux
-            local rayY = fy + side * horizontal * ry + top * vertical * uy
-            local rayZ = fz + side * horizontal * rz + top * vertical * uz
-            if rayY >= -1e-9 then
+            local x = fx + side * horizontal * rx + top * vertical * ux
+            local y = fy + side * horizontal * ry + top * vertical * uy
+            local z = fz + side * horizontal * rz + top * vertical * uz
+            if y >= -1e-9 then
                 return false
             end
-            local distance = altitude / -rayY
-            local hitX, hitZ = radius + rayX * distance, rayZ * distance
-            if not Validation.isFinite(hitX) or not Validation.isFinite(hitZ) then
+            local distance = (altitude + AircraftPanRules.defaults.backdropDepthStuds) / -y
+            local backdropX, backdropZ = radius + x * distance, z * distance
+            if
+                not Validation.isFinite(backdropX)
+                or not Validation.isFinite(backdropZ)
+                or (backdropX / extent) ^ 2 + (backdropZ / extent) ^ 2 > 1
+            then
                 return false
             end
-            if hitX * hitX + hitZ * hitZ > limit * limit then
-                return false
-            end
+        end
+    end
+    local inner = 1 - 2 * AircraftPanRules.defaults.edgeOverscanFraction
+    for _, sample in { { -inner, 0 }, { inner, 0 }, { 0, -inner }, { 0, inner } } do
+        local rayX = fx + sample[1] * horizontal * rx + sample[2] * vertical * ux
+        local rayY = fy + sample[1] * horizontal * ry + sample[2] * vertical * uy
+        local rayZ = fz + sample[1] * horizontal * rz + sample[2] * vertical * uz
+        if rayY >= -1e-9 then
+            return false
+        end
+        local distance = altitude / -rayY
+        local hitX, hitZ = radius + rayX * distance, rayZ * distance
+        if not Validation.isFinite(hitX) or not Validation.isFinite(hitZ) then
+            return false
+        end
+        if hitX * hitX + hitZ * hitZ > limit * limit then
+            return false
         end
     end
     return true
@@ -103,7 +148,7 @@ function AircraftPanRules.viewFits(
 end
 
 -- Selects the safe default view nearest a 45-degree downward pitch.
--- Nil means no complete view fits the selected level, viewport and lens.
+-- Nil means no bounded view fits the selected level, viewport and lens.
 function AircraftPanRules.recenter(map: typeof(MapRules.defaults), aspect: number, fovDegrees: number): Focus?
     if
         not MapRules.validate(map)

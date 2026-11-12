@@ -200,6 +200,17 @@ function AircraftHarness.run()
                         effect and effect:IsA("ColorCorrectionEffect") and effect.Saturation == -1,
                         "thermal grayscale missing"
                     )
+                    local backdrop = camera:FindFirstChild("OperatorGroundBackdrop")
+                    assert(
+                        backdrop
+                            and backdrop:IsA("BasePart")
+                            and not backdrop.CanCollide
+                            and not backdrop.CanTouch
+                            and not backdrop.CanQuery
+                            and not backdrop.CastShadow,
+                        "operator backdrop missing or interactive"
+                    )
+                    assert(backdrop:FindFirstChildOfClass("SpecialMesh"), "operator backdrop mesh missing")
                     details.weapon = weapon
                     details.fov = camera.FieldOfView
                     details.reticlePixels = { pixels.X, pixels.Y }
@@ -252,6 +263,7 @@ function AircraftHarness.run()
                             and camera ~= nil
                             and camera.CameraType == Enum.CameraType.Custom
                             and not camera:FindFirstChild("OperatorThermal")
+                            and not camera:FindFirstChild("OperatorGroundBackdrop")
                     end, "role-loss camera/effect restoration")
                     local camera = workspace.CurrentCamera
                     assert(

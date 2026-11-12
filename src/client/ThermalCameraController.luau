@@ -6,7 +6,7 @@
     Selection sends bounded intent and only renders acknowledged production profiles;
     labelled Studio solo preview can choose cosmetic profiles without a real role.
     new/ownsCamera/stop never yield. stop restores captured camera/input state and
-    destroys all owned GUI/effects/highlights/listeners, including after role loss.
+    destroys all owned GUI/effects/backdrop/highlights/listeners, including after role loss.
 ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -131,6 +131,7 @@ function ThermalCameraController.new(
     local reticle: TextLabel? = nil
     local projectionOrigin: Frame? = nil
     local correction: ColorCorrectionEffect? = nil
+    local backdrop: BasePart? = nil
     local highlights: { [Model]: Highlight } = {}
     local buttons: { RBXScriptConnection } = {}
     local sequence = 0
@@ -205,6 +206,10 @@ function ThermalCameraController.new(
             correction:Destroy()
             correction = nil
         end
+        if backdrop then
+            backdrop:Destroy()
+            backdrop = nil
+        end
         if gui then
             gui:Destroy()
             gui = nil
@@ -267,6 +272,36 @@ function ThermalCameraController.new(
             mouse = UserInputService.MouseBehavior,
             icon = UserInputService.MouseIconEnabled,
         }
+        -- Visual ground outside the playable disk, owned by the operator camera.
+        -- It cannot collide, receive touch, cast shadows or participate in rays.
+        -- A scaled brick mesh extends beyond the engine's 2048-stud Part limit.
+        local extent = assert(AircraftPanRules.backdropHalfExtent(map), "valid backdrop extent")
+        local background = Instance.new("Part")
+        background.Name = "OperatorGroundBackdrop"
+        background.Anchored = true
+        background.CanCollide = false
+        background.CanTouch = false
+        background.CanQuery = false
+        background.CastShadow = false
+        background.Material = Enum.Material.SmoothPlastic
+        background.Size = Vector3.new(2048, 1, 2048)
+        background.Position = Vector3.new(
+            map.centerX,
+            map.groundY - AircraftPanRules.defaults.backdropDepthStuds - 0.5,
+            map.centerZ
+        )
+        local world = workspace:FindFirstChild("World")
+        local battlefield = if world then world:FindFirstChild("Battlefield") else nil
+        local ground = if battlefield then battlefield:FindFirstChild("GroundDisk") else nil
+        background.Color = if ground and ground:IsA("BasePart")
+            then ground.Color
+            else Color3.fromRGB(55, 60, 55)
+        local mesh = Instance.new("SpecialMesh")
+        mesh.MeshType = Enum.MeshType.Brick
+        mesh.Scale = Vector3.new(extent / 1024, 1, extent / 1024)
+        mesh.Parent = background
+        background.Parent = camera
+        backdrop = background
         local screen = Instance.new("ScreenGui")
         screen.Name = "ThermalHUD"
         screen.IgnoreGuiInset = true
