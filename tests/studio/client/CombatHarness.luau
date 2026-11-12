@@ -33,6 +33,57 @@ function CombatHarness.run()
                     else
                         target:FireServer(payload)
                     end
+                elseif kind == "OperatorPresentation" then
+                    local player = Players.LocalPlayer
+                    local gui = player.PlayerGui
+                    local roundHud = gui:FindFirstChild("RoundHUD")
+                    local banner = gui:FindFirstChild("FoundationStatus")
+                    local thermal = gui:FindFirstChild("ThermalHUD")
+                    local round = if roundHud then roundHud:FindFirstChild("Round") else nil
+                    local profile = if thermal then thermal:FindFirstChild("Profile") else nil
+                    assert(
+                        round and round:IsA("TextLabel") and profile and profile:IsA("TextLabel"),
+                        "operator labels missing"
+                    )
+                    assert(
+                        banner and banner:IsA("ScreenGui") and not banner.Enabled,
+                        "operator foundation banner obscures battlefield"
+                    )
+                    local camera = workspace.CurrentCamera
+                    assert(camera, "operator camera missing")
+                    local effect = camera:FindFirstChild("OperatorThermal")
+                    assert(
+                        effect
+                            and effect:IsA("ColorCorrectionEffect")
+                            and effect.Saturation == -1
+                            and effect.Brightness >= 0.18
+                            and effect.Contrast <= 0,
+                        "thermal settings too dark or not grayscale"
+                    )
+                    game:GetService("RunService").RenderStepped:Wait()
+                    local origin, size = round.AbsolutePosition, round.AbsoluteSize
+                    local center = camera.ViewportSize * 0.5
+                    assert(
+                        not (
+                                center.X >= origin.X
+                                and center.X <= origin.X + size.X
+                                and center.Y >= origin.Y
+                                and center.Y <= origin.Y + size.Y
+                            ),
+                        "round label covers center targeting"
+                    )
+                    if game:GetService("UserInputService").TouchEnabled then
+                        local touchGui = gui:FindFirstChild("TouchGui")
+                        assert(
+                            not touchGui or (touchGui:IsA("ScreenGui") and not touchGui.Enabled),
+                            "operator default movement joystick remains visible"
+                        )
+                        local controls = gui:FindFirstChild("OperatorTouchControls")
+                        assert(
+                            controls and controls:FindFirstChild("Fire") and controls:FindFirstChild("PanUp"),
+                            "operator touch controls missing"
+                        )
+                    end
                 elseif kind == "Observe" then
                     local round = ReplicatedStorage:FindFirstChild("RoundState")
                     local effects = workspace:FindFirstChild("CombatEffects")

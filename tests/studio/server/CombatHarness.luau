@@ -107,6 +107,37 @@ function CombatHarness.run()
         end
         return nil
     end
+    local function checkEffects(weapon: string)
+        local folder = workspace:FindFirstChild("CombatEffects")
+        local projectile = if folder then folder:FindFirstChild("Projectile") else nil
+        local warning = if folder then folder:FindFirstChild("ImpactWarning") else nil
+        assert(
+            projectile and projectile:IsA("Part") and warning and warning:IsA("Part"),
+            "flight or warning effect missing"
+        )
+        assert(
+            projectile:GetAttribute("Weapon") == weapon and warning:GetAttribute("Weapon") == weapon,
+            "effect weapon mismatch"
+        )
+        assert(
+            not projectile.CanCollide
+                and not projectile.CanQuery
+                and not warning.CanCollide
+                and not warning.CanQuery,
+            "cosmetic effect affects authoritative geometry"
+        )
+        if weapon == "M102" then
+            assert(
+                projectile.Shape == Enum.PartType.Ball and projectile.Size.X >= 4 and warning.Size.Y >= 20,
+                "heavy flight or warning lacks distinct silhouette"
+            )
+        else
+            assert(
+                projectile.Shape == Enum.PartType.Cylinder and projectile.Size.X >= 7 and warning.Size.Y <= 5,
+                "chain-gun flight or warning lacks distinct silhouette"
+            )
+        end
+    end
     local fixture = Instance.new("Folder")
     fixture.Name = "P05Fixture"
     fixture.Parent = workspace.World.Battlefield
@@ -139,6 +170,7 @@ function CombatHarness.run()
             assert(HttpService:JSONEncode(snapshot("Readiness")) == before, "rejected fire spent ammunition")
             probe(op, "Observe", nil)
             probe(ground, "Observe", nil)
+            probe(op, "OperatorPresentation", nil)
             task.wait(1.5) -- restore the finite server rate budget before valid traffic
         end)
         check("A4 swept muzzle path hits thin cover before the visible target", function()
@@ -169,6 +201,7 @@ function CombatHarness.run()
             waitFor(function()
                 return ammo("GAU23") == 99
             end, "blocked shot accepted")
+            checkEffects("GAU23")
             waitFor(function()
                 return #workspace.CombatEffects:GetChildren() == 0
             end, "projectile resolution", 6)
@@ -212,6 +245,7 @@ function CombatHarness.run()
             waitFor(function()
                 return ammo("M102") == 0
             end, "airburst request accepted")
+            checkEffects("M102")
             waitFor(function()
                 return #workspace.CombatEffects:GetChildren() == 0
             end, "airburst flight ended", 6)

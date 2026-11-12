@@ -164,6 +164,8 @@ function ThermalCameraController.new(
     local saved: SavedCamera? = nil
     local gui: ScreenGui? = nil
     local touchControlsGui: ScreenGui? = nil
+    local hiddenTouchGui: ScreenGui? = nil
+    local previousTouchGuiEnabled: boolean? = nil
     local label: TextLabel? = nil
     local reticle: TextLabel? = nil
     local projectionOrigin: Frame? = nil
@@ -260,6 +262,11 @@ function ThermalCameraController.new(
             touchControlsGui:Destroy()
             touchControlsGui = nil
         end
+        if hiddenTouchGui and previousTouchGuiEnabled ~= nil then
+            hiddenTouchGui.Enabled = previousTouchGuiEnabled
+        end
+        hiddenTouchGui = nil
+        previousTouchGuiEnabled = nil
         label = nil
         reticle = nil
         projectionOrigin = nil
@@ -396,12 +403,12 @@ function ThermalCameraController.new(
         local caption = Instance.new("TextLabel")
         caption.Name = "Profile"
         caption.AnchorPoint = if touchControls then Vector2.new(0.5, 0) else Vector2.new(0.5, 1)
-        caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 60) else UDim2.new(0.5, 0, 1, -72)
-        caption.Size = if touchControls then UDim2.new(1, -24, 0, 68) else UDim2.fromOffset(580, 60)
+        caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 8) else UDim2.new(0.5, 0, 1, -72)
+        caption.Size = if touchControls then UDim2.fromOffset(260, 42) else UDim2.fromOffset(580, 60)
         caption.BackgroundColor3 = Color3.fromRGB(12, 15, 16)
         caption.BackgroundTransparency = 0.15
         caption.TextColor3 = Color3.new(1, 1, 1)
-        caption.TextSize = if touchControls then 14 else 17
+        caption.TextSize = if touchControls then 12 else 17
         caption.TextWrapped = true
         caption.Font = Enum.Font.Gotham
         caption.Parent = screen
@@ -438,7 +445,7 @@ function ThermalCameraController.new(
         recenter.Name = "Recenter"
         recenter.AnchorPoint = Vector2.new(1, 0)
         recenter.Position = UDim2.new(1, -16, 0, 16)
-        recenter.Size = UDim2.fromOffset(if touchControls then 140 else 150, if touchControls then 48 else 32)
+        recenter.Size = UDim2.fromOffset(if touchControls then 96 else 150, if touchControls then 42 else 32)
         recenter.Text = if touchControls then "Recenter" else "R • Recenter"
         recenter.Font = Enum.Font.Gotham
         recenter.TextSize = 16
@@ -582,8 +589,8 @@ function ThermalCameraController.new(
         local effect = Instance.new("ColorCorrectionEffect")
         effect.Name = "OperatorThermal"
         effect.Saturation = -1
-        effect.Contrast = 0.35
-        effect.Brightness = 0.04
+        effect.Contrast = -0.15
+        effect.Brightness = 0.2
         effect.Parent = camera
         correction = effect
     end
@@ -601,6 +608,18 @@ function ThermalCameraController.new(
         end
         if not active then
             enter(camera)
+        end
+        if hiddenTouchGui and hiddenTouchGui.Parent ~= playerGui then
+            hiddenTouchGui = nil
+            previousTouchGuiEnabled = nil
+        end
+        if UserInputService.TouchEnabled and not hiddenTouchGui then
+            local touchGui = playerGui:FindFirstChild("TouchGui")
+            if touchGui and touchGui:IsA("ScreenGui") then
+                hiddenTouchGui = touchGui
+                previousTouchGuiEnabled = touchGui.Enabled
+                touchGui.Enabled = false
+            end
         end
         local roundId = roundState:GetAttribute("RoundId")
         if type(roundId) == "number" and roundId ~= lastRound then
@@ -772,11 +791,13 @@ function ThermalCameraController.new(
                 end
             end
             caption.Text = (if preview then "Studio preview • " else "")
-                .. AircraftRules.names[weapon]
+                .. (if UserInputService.TouchEnabled
+                    then (if weapon == "GAU23" then "30mm GAU-23/A" else "105mm M102")
+                    else AircraftRules.names[weapon])
                 .. readinessText
                 .. string.format(
                     if UserInputService.TouchEnabled
-                        then " • %d° FOV\nArrows pan • drag view to aim • hold FIRE"
+                        then " • %d° FOV\nPan • drag to aim • hold FIRE"
                         else " • %d° FOV\nWASD pan • mouse aims • hold click to fire • R recenter • 1 / 2 select",
                     fov
                 )

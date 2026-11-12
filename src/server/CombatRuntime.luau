@@ -187,8 +187,10 @@ function CombatRuntime.start(
             })
         )
         projectile.marker.Name = "Impact"
+        projectile.marker:SetAttribute("Stage", "Impact")
+        projectile.marker.Shape = Enum.PartType.Ball
         projectile.marker.Position = position
-        projectile.marker.Size = Vector3.one * (if projectile.shot.weapon == "M102" then 8 else 3)
+        projectile.marker.Size = Vector3.one * (if projectile.shot.weapon == "M102" then 18 else 4)
         projectile.marker.Transparency = 0.2
         Debris:AddItem(projectile.marker, 0.35)
         emit({
@@ -236,8 +238,10 @@ function CombatRuntime.start(
             local delta = target - muzzle
             local visual = Instance.new("Part")
             visual.Name = "Projectile"
-            visual.Size = Vector3.new(1, 1, 1) * (if weapon == "M102" then 2 else 0.6)
-            visual.Shape = Enum.PartType.Ball
+            visual:SetAttribute("Weapon", weapon)
+            visual:SetAttribute("Stage", "Flight")
+            visual.Size = if weapon == "M102" then Vector3.one * 4 else Vector3.new(7, 0.8, 0.8)
+            visual.Shape = if weapon == "M102" then Enum.PartType.Ball else Enum.PartType.Cylinder
             visual.Material = Enum.Material.Neon
             visual.Color = if weapon == "M102"
                 then Color3.fromRGB(255, 125, 35)
@@ -246,20 +250,22 @@ function CombatRuntime.start(
             visual.CanCollide = false
             visual.CanTouch = false
             visual.CanQuery = false
-            visual.Position = muzzle
+            visual.CFrame = CFrame.lookAt(muzzle, target) * CFrame.Angles(0, math.pi / 2, 0)
             visual.Parent = effects
             local marker = Instance.new("Part")
             marker.Name = "ImpactWarning"
-            marker.Shape = Enum.PartType.Ball
-            marker.Size = Vector3.new(2, 2, 2)
+            marker:SetAttribute("Weapon", weapon)
+            marker:SetAttribute("Stage", "Warning")
+            marker.Shape = Enum.PartType.Cylinder
+            marker.Size = if weapon == "M102" then Vector3.new(0.3, 22, 22) else Vector3.new(0.2, 5, 5)
             marker.Material = Enum.Material.Neon
             marker.Color = visual.Color
-            marker.Transparency = 0.35
+            marker.Transparency = 0.65
             marker.Anchored = true
             marker.CanCollide = false
             marker.CanTouch = false
             marker.CanQuery = false
-            marker.Position = target
+            marker.CFrame = CFrame.new(target + Vector3.new(0, 0.3, 0)) * CFrame.Angles(0, 0, math.pi / 2)
             marker.Parent = effects
             table.insert(projectiles, {
                 shot = shot,
