@@ -139,4 +139,16 @@ After at least one client joins, failure to reach the requested count produces
 a bounded report; a zero-client launch can fail in the outer bootstrap before
 the harness emits one. Independent host verification on `9e12210` and a fresh
 full host gate on `e55a961` each passed 50 unit / 43 integration, including
-test/release isolation probes. This fallback has not yet run in Studio.
+test/release isolation probes.
+
+After the user started native Server & Clients with two clients, the manual
+route on `e55a961` reached both actual clients. Fresh server smoke passed
+118/118 and each client passed 3/3. The P06 report then had 5 passing cases,
+one Terrain-query failure/recovery timeout and a corresponding harness-completion
+failure; see the [actual report](p06-manual-e55.json). The preceding shot's
+ammo had just decreased when the next request was sent, so the 0.15-second
+cadence may have rejected it before query injection; the report lacks the
+timing needed to prove this. The temporary selector was cleared in Edit.
+The Studio stop tool returned success but did not close the actual manual
+simulation windows; the user was asked to use End Session. The failure must be
+diagnosed and the current-source tests rerun, not treated as a pass.
