@@ -57,8 +57,12 @@ readiness and adds bounded rejection diagnostics; its fresh host gate and
 118/3 Studio smoke pass. The manual two-client rerun then timed out in an
 earlier live rifle-hit case, before the query-recovery case. Candidate `6c5a016`
 adds live-shot diagnostics and a safely inward fixture position; independent
-host and 118/3 Studio smoke pass, while its manual two-client result is pending.
-The preceding failure's cause remains unproven. A real current-P06
+host and 118/3 Studio smoke pass. Its two-client run passed actual cover,
+aircraft-hit and query-failure recovery, then failed the shared-Heartbeat
+assertion in the mutual-destruction case; callback values were not recorded
+before the assertion, so its cause remains unproven. `56495f9` records callback
+timing and outcome before asserting, and its real two-client run is prepared.
+A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
 documented separately in decisions. The movement guard permits a 45-stud burst

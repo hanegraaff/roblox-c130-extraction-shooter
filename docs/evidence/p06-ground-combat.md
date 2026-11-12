@@ -186,3 +186,26 @@ freeze was added. The independent tester's full host gate passed 50 unit /
 3/3 client. The temporary P06 selector was set in Edit for a new manual
 two-client run; its outcome is pending. This revision does not establish the
 cause of the preceding rifle timeout without that real-client result.
+
+The manual two-client run on `6c5a016` passed 118/118 server and 3/3 per
+client smoke. Its rifle test showed sequence 1 hitting the actual solid cover
+with ammo 30→29 and health unchanged, then sequence 2 hitting the actual
+aircraft Hitbox with ammo 29→28 and health 300→295. The real-client injected
+query failure occurred after the server's `nextFire` boundary, rejected with
+health/ammo unchanged, and accepted the same sequence after recovery with one
+ammo spent. Six P06 cases passed. The following mutual-destruction case failed
+`callbacks did not share the recorded Heartbeat`, causing one additional
+harness-completion failure. Its frame/order diagnostics were appended only
+after the assertion and thus were not retained, so the cause is unproven. The
+[actual report](p06-manual-6c5a.json) contains the shot and recovery details.
+The tester ended the owned session via server `EndTest` and cleared the selector.
+
+Candidate `56495f9` changes only the mutual-outcome fixture. It retains two
+separate real Heartbeat callbacks and the required actual callback order and
+Ground/AircraftDestroyed outcome, but records callback starts/ends, errors,
+Heartbeat marker, prior Stepped epoch/time, deltas, clocks, health and phase
+before assertions. Its same-frame assertion uses the recorded Stepped epoch
+and Heartbeat delta rather than assuming the independent Heartbeat marker runs
+before the callbacks. Independent host verification passed 50 unit / 43
+integration; the unchanged `6c5a016` Studio smoke remains applicable. Its real
+manual two-client outcome is pending.
