@@ -6,6 +6,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StudioTestService = game:GetService("StudioTestService")
 local HttpService = game:GetService("HttpService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
+local CombatRuntime = require(game:GetService("ServerScriptService").Server.CombatRuntime)
+local CombatService = require(game:GetService("ServerScriptService").Server.CombatService)
 local CombatHarness = {}
 type Case = { name: string, passed: boolean, detail: string? }
 local function waitFor(predicate: () -> boolean, message: string, timeout: number?)
@@ -546,6 +548,54 @@ function CombatHarness.run()
             end, "heavy geometry reload", 8)
             point, panelId = upper("M102")
             fireAndObserve("M102", point, panelId)
+        end)
+        check("A1 actual projectile survives exact lifetime and expires cleanly afterward", function()
+            local op = roles()
+            runtime.combat.stop()
+            local clock = workspace:GetServerTimeNow()
+            local pulse = Instance.new("BindableEvent")
+            local owner, startReason = CombatRuntime.start(
+                runtime.rounds.match,
+                runtime.aircraft,
+                nil,
+                function()
+                    return clock
+                end,
+                pulse.Event
+            )
+            assert(owner, startReason)
+            local expiryOk, expiryReason = pcall(function()
+                pulse:Fire(0)
+                task.wait(0.2) -- allow the actual client to receive replacement transport
+                probe(op, "Fire", payload(20, "M102", Vector3.new(0, 30, 0)))
+                waitFor(function()
+                    return owner.resources().projectiles == 1
+                end, "authorized real-client expiry shot")
+                local effects = workspace:FindFirstChild("CombatEffects")
+                assert(effects and #effects:GetChildren() == 2, "projectile/warning instances missing")
+                local previousImpact = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                clock += CombatService.profiles.M102.lifetime
+                pulse:Fire(0)
+                task.wait()
+                assert(
+                    owner.resources().projectiles == 1 and #effects:GetChildren() == 2,
+                    "projectile expired at the inclusive lifetime boundary"
+                )
+                clock += 0.01
+                pulse:Fire(0)
+                task.wait()
+                assert(
+                    owner.resources().projectiles == 0 and #effects:GetChildren() == 0,
+                    "expired projectile retained resources"
+                )
+                assert(
+                    ReplicatedStorage.AircraftState:GetAttribute("Impact") == previousImpact,
+                    "expired flight fabricated an impact"
+                )
+            end)
+            owner.stop()
+            pulse:Destroy()
+            assert(expiryOk, tostring(expiryReason))
         end)
     end)
     if not ok then

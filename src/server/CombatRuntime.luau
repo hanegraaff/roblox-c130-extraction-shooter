@@ -43,12 +43,31 @@ type Projectile = {
     awards: DamageRules.Controller,
 }
 
+-- Sweeps the finite shell radius through authoritative query geometry. A zero
+-- displacement cannot produce a collision. The caller supplies engine-owned
+-- query filters; this synchronous query never mutates the world or yields.
+function CombatRuntime.sweep(
+    origin: Vector3,
+    radius: number,
+    displacement: Vector3,
+    params: RaycastParams
+): RaycastResult?
+    if displacement.Magnitude == 0 then
+        return nil
+    end
+    return workspace:Spherecast(origin, radius, displacement, params)
+end
+
 -- Starts one engine owner. optional onImpact is called synchronously after resolution;
 -- it must not yield or reenter the owner. A valid callback is not a destruction award.
+-- Optional monotonic clock and heartbeat are injected boundaries; production defaults
+-- use synchronized server seconds and RunService.Heartbeat. Caller owns the signal.
 function CombatRuntime.start(
     match: MatchService.Controller,
     aircraft: AircraftService.Controller,
-    onImpact: ((Impact) -> ())?
+    onImpact: ((Impact) -> ())?,
+    clock: (() -> number)?,
+    heartbeat: RBXScriptSignal?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("FireWeapon") then
@@ -69,9 +88,10 @@ function CombatRuntime.start(
     local lastRound = -1
     local lastReadiness = ""
     local emit = onImpact or function(_impact: Impact) end
-    local function now(): number
+    local now: () -> number = clock or function(): number
         return workspace:GetServerTimeNow()
     end
+    local frameSignal = heartbeat or RunService.Heartbeat
     local function clear()
         for _, projectile in projectiles do
             projectile.visual:Destroy()
@@ -290,7 +310,7 @@ function CombatRuntime.start(
     )
     table.insert(
         connections,
-        RunService.Heartbeat:Connect(function(dt)
+        frameSignal:Connect(function(dt)
             local time = now()
             local state = match.snapshot()
             if state.roundId ~= lastRound then
@@ -325,7 +345,18 @@ function CombatRuntime.start(
                     continue
                 end
                 local step = projectile.direction * distance
-                local hit = workspace:Raycast(projectile.position, step, rayParameters(true))
+                -- Sweep the physical shell volume through each frame. The finite
+                -- radius catches shallow terrain contacts even when the aircraft
+                -- moves between client surface sampling and the server launch.
+                -- Empty-space endpoints still cannot create an impact.
+                local hit = if profile
+                    then CombatRuntime.sweep(
+                        projectile.position,
+                        profile.collisionRadius,
+                        step,
+                        rayParameters(true)
+                    )
+                    else nil
                 projectile.position = if hit then hit.Position else projectile.position + step
                 projectile.remaining -= distance
                 projectile.visual.Position = projectile.position

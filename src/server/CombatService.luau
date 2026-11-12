@@ -35,6 +35,7 @@ export type Profile = {
     range: number,
     damage: number,
     radius: number,
+    collisionRadius: number,
 }
 CombatService.profiles = table.freeze({
     GAU23 = table.freeze({
@@ -46,6 +47,7 @@ CombatService.profiles = table.freeze({
         range = 900,
         damage = 25,
         radius = 4,
+        collisionRadius = 0.5,
     }),
     M102 = table.freeze({
         capacity = 1,
@@ -56,6 +58,7 @@ CombatService.profiles = table.freeze({
         range = 900,
         damage = 100,
         radius = 18,
+        collisionRadius = 2,
     }),
 }) :: { [string]: Profile }
 export type Readiness = { ammo: number, nextFire: number, reloadUntil: number }
