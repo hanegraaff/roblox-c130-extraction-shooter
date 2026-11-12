@@ -76,9 +76,10 @@ the sampled ground surface. The `9adf5d5` fix passed host and 118 server /
 Simulated phone touch firing, reload and camera motion worked, but its ammo
 panel overlapped the centered reticle. `0003fe4` adjusts the touch HUD and
 handles device-mode transitions; independent host and Studio smoke pass
-(118 server / 6 client). A fresh operated phone-layout and native moving-plane
-check remain required; the test document is prepared and awaits a native
-two-client Server & Clients launch.
+(118 server / 6 client). Actual two-client desktop ray alignment and simulated
+phone layout, touch fire/reload/swipe pass on `0003fe4`. The native tester could
+not acquire and hit the moving plane; user-operated aiming/health feedback
+remains required and is not represented as a pass.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,

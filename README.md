@@ -4,9 +4,9 @@
 
 The intended game puts one C-130 operator above a circular industrial battlefield and 5–9 teammates on the ground. The ground team uses M-7 rifles and one recoverable rocket launcher to destroy the plane. Three direct rockets destroy an undamaged aircraft; rifle fire chips away at the same health pool.
 
-![Active operator thermal view showing a 105mm firing indicator, reload timer and weapon controls](docs/evidence/p05-presentation/current-progress.jpg)
+![Ground player in an active round with M-7 ammo, reticle and aircraft health visible](docs/evidence/p06-presentation/current-progress.jpg)
 
-*Earlier P05 combat stage: actual desktop Studio capture from an active two-client round on 2026-11-12. The 105mm weapon is reloading and its firing indicator is visible; the test-only control panel was hidden. This image predates the current P06 rifle candidate.*
+*P06 ground-combat candidate: actual desktop Studio capture from an active two-client round on 2026-11-12. The equipped M-7 and shared aircraft-health readout are visible; the test-only control panel was hidden.*
 
 ## What you can play today
 
@@ -140,7 +140,7 @@ Ground players currently equip the M-7 through the tool slot, aim with mouse or 
 
 The intended complete round is gather → deploy → fight → team result → reset. The current prototype already handles roles, the orbit/view, no respawns, teammate spectating, late-arrival waiting, timeout/elimination/forfeit results and replay. The P06 candidate adds aircraft destruction as a playable ground victory path; its remaining Studio acceptance and operated review are in progress. The default round lasts ten minutes.
 
-Operator desktop keyboard/mouse and touch controls are present; operated desktop firing and simulated-phone simultaneous aiming, panning and firing have been checked. Ground touch fire/reload and camera swiping were exercised on a simulated phone; the revised phone label layout and a native moving-aircraft hit still need final operated review. Gamepad support is future work. The two weapons have distinct size and cadence, though rapid 30mm effect phases are hard to distinguish. Damage, cadence, reload, zoom and orbit speed need later balance testing; the three-rocket full-health rule is fixed. The MVP has one map and planned physical cover destruction. [Future levels](plans/15-interchangeable-levels.md) will keep a circling C-130 and the same pan, zoom, combat and demolition systems while changing level geometry. Progression, purchases, vehicles and full building collapse are outside MVP scope.
+Operator desktop keyboard/mouse and touch controls are present; operated desktop firing and simulated-phone simultaneous aiming, panning and firing have been checked. Ground desktop mouse/ray alignment and simulated-phone layout, fire, reload and camera swiping were exercised in a two-client session; a native moving-aircraft hit and health-feedback feel still need operated review. Gamepad support is future work. The two weapons have distinct size and cadence, though rapid 30mm effect phases are hard to distinguish. Damage, cadence, reload, zoom and orbit speed need later balance testing; the three-rocket full-health rule is fixed. The MVP has one map and planned physical cover destruction. [Future levels](plans/15-interchangeable-levels.md) will keep a circling C-130 and the same pan, zoom, combat and demolition systems while changing level geometry. Progression, purchases, vehicles and full building collapse are outside MVP scope.
 
 ## Follow development or contribute
 

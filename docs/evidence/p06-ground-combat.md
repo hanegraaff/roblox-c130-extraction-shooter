@@ -322,3 +322,32 @@ Studio case covers desktop→touch→desktop and idempotent cleanup. Independent
 full host verification passed 50 unit / 43 integration, and fresh Studio smoke
 passed 118/118 server and 6/6 client with no failures/skips/errors. The final
 native two-client desktop/phone playability review is prepared, not yet passed.
+
+In an ordinary native two-client session on `0003fe4`, server smoke passed
+118/118 with both players present and each client passed 6/6. The tester used
+the actual Studio panel to choose Gunship and start an Active round. Native
+Ground key 1 equipped the M-7; W moved outside, a shot spent ammo and R
+reloaded 29→30/119. At viewport mouse `(540,160)` with GUI inset Y=58, the
+actual reticle and GroundShot ray matched within 0.0001 studs. Operator native
+selection/firing produced an M102 terrain impact. The [structured operated
+report](p06-operated-0003.json) records the exact source and observations.
+
+On the same active client, switching to simulated iPhone 17 Pro landscape
+750×381 yielded reticle `(363,179,24,24)`, ammo status `(245,267,260,36)`,
+FIRE `(636,123,90,70)`, RELOAD `(636,59,90,54)` and jump `(655,233,70,70)`;
+the production controls no longer overlap. Actual simulated touch FIRE spent
+30→25, RELOAD restored 30/114, and a world swipe rotated the camera. Returning
+to desktop restored the 330-wide status and hid touch buttons. The test-only
+Studio panel initially overlaid phone controls, so the tester hid only that
+panel for a [genuine phone capture](p06-presentation/mobile-after.jpg). The
+[current desktop capture](p06-presentation/current-progress.jpg) is an actual
+active Ground view. These simulated input checks are not physical-device tests.
+
+The native operated moving-aircraft hit and resulting health feedback remain
+unverified: after ordinary Ground movement and a 28-second projected-visibility
+watch, the aircraft did not enter the targetable viewport. A right-mouse drag
+in an earlier attempt did not rotate the camera, but its cause (automation,
+focus or game behavior) was not established. No injected hit or success is
+claimed. The user was asked to try ordinary camera tracking and firing; this
+is a playability gap and possible acquisition concern, not a proven defect.
+The simulator and owned session stopped, and selector/SDK args were cleared.
