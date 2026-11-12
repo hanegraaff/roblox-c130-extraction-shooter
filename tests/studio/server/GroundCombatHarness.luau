@@ -210,6 +210,10 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
         local simulationFrames: { number } = {}
         local simulationTimes: { number } = {}
         local deltas: { number } = {}
+        local calibrationOrder: { string } = {}
+        local calibrationFrames: { number } = {}
+        local calibrationTimes: { number } = {}
+        local calibrationDeltas: { number } = {}
         local aircraftPositions: { { number } } = {}
         local events: { unknown } = {}
         local captureMarkers = false
@@ -222,6 +226,12 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             simulationTimes = simulationTimes,
             heartbeatDeltas = deltas,
             callbackErrors = callbackErrors,
+            calibration = {
+                order = calibrationOrder,
+                simulationFrames = calibrationFrames,
+                simulationTimes = calibrationTimes,
+                heartbeatDeltas = calibrationDeltas,
+            },
             events = events,
             fixtureRocketSpeedStudsPerSecond = FIXTURE_ROCKET_SPEED,
             fixtureRocketStepSeconds = FIXTURE_ROCKET_STEP_SECONDS,
@@ -273,6 +283,41 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             error("P06 timeout: simulation/heartbeat markers")
         end
         captureMarkers = true
+        -- Observe this engine's scheduling of two independent callbacks before
+        -- registering the combat callbacks. Actual combat order and epoch are
+        -- still checked below; a change in scheduling between frames fails.
+        local function calibrate(name: string, dt: number)
+            table.insert(calibrationOrder, name)
+            table.insert(calibrationFrames, simulationFrame)
+            table.insert(calibrationTimes, simulationTime)
+            table.insert(calibrationDeltas, dt)
+            trace("calibration-" .. name, dt)
+        end
+        local firstCalibration = RunService.Heartbeat:Once(function(dt)
+            calibrate("first-registered", dt)
+        end)
+        local secondCalibration = RunService.Heartbeat:Once(function(dt)
+            calibrate("second-registered", dt)
+        end)
+        local calibrationDeadline = os.clock() + 5
+        while #calibrationOrder < 2 and os.clock() < calibrationDeadline do
+            task.wait(0.03)
+        end
+        firstCalibration:Disconnect()
+        secondCalibration:Disconnect()
+        local calibrationValid = #calibrationOrder == 2
+            and ((calibrationOrder[1] == "first-registered" and calibrationOrder[2] == "second-registered") or (calibrationOrder[1] == "second-registered" and calibrationOrder[2] == "first-registered"))
+            and calibrationFrames[1] > 0
+            and calibrationFrames[1] == calibrationFrames[2]
+            and calibrationTimes[1] == calibrationTimes[2]
+            and calibrationDeltas[1] == calibrationDeltas[2]
+        if not calibrationValid then
+            trace("calibration-invalid", nil)
+            captureMarkers = false
+            stepMarker:Disconnect()
+            frameMarker:Disconnect()
+            error("invalid callback calibration: " .. HttpService:JSONEncode(diagnostic))
+        end
         trace("callbacks-registered", nil)
         local function record(name: string, dt: number)
             table.insert(names, name)
@@ -323,12 +368,14 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 end
             end)
         end
-        if aircraftFirst then
-            RunService.Heartbeat:Once(destroyAircraft)
-            RunService.Heartbeat:Once(eliminate)
+        local firstAction = if aircraftFirst then destroyAircraft else eliminate
+        local secondAction = if aircraftFirst then eliminate else destroyAircraft
+        if calibrationOrder[1] == "second-registered" then
+            RunService.Heartbeat:Once(secondAction)
+            RunService.Heartbeat:Once(firstAction)
         else
-            RunService.Heartbeat:Once(eliminate)
-            RunService.Heartbeat:Once(destroyAircraft)
+            RunService.Heartbeat:Once(firstAction)
+            RunService.Heartbeat:Once(secondAction)
         end
         local deadline = os.clock() + 15
         while callbacks < 2 and os.clock() < deadline do
