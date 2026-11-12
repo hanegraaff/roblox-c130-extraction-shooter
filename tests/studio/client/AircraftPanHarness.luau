@@ -78,10 +78,16 @@ function Harness.run()
             local result = playerGui:FindFirstChild("ThermalHUD")
             return if result and result:IsA("ScreenGui") then result else nil
         end
+        -- Installed after the fixture's state is constructed. The provider runs
+        -- inside the same nonyielding production render that commits the camera.
+        local scheduleOrbitSample: ((ScreenGui) -> ())? = nil
         local function provider(viewport: Vector2)
             local pointer = viewport * 0.5
             local pan = forcedPan or Vector2.zero
             local current = hud()
+            if current and scheduleOrbitSample then
+                scheduleOrbitSample(current)
+            end
             if physical then
                 pointer = Input:GetMouseLocation()
             elseif outside then
@@ -581,111 +587,165 @@ function Harness.run()
                 bins: { [number]: boolean },
                 minimumInward: number,
                 maximumOriginError: number,
+                maximumCommittedOriginError: number,
                 minimumInwardSample: { [string]: unknown }?,
                 maximumOriginErrorSample: { [string]: unknown }?,
+                maximumCommittedOriginErrorSample: { [string]: unknown }?,
                 lastProjectionFrame: number?,
             },
         } =
             {}
-        local renderStats = RunService.RenderStepped:Connect(function(deltaSeconds)
-            local current = hud()
-            local camera = workspace.CurrentCamera
+        local orbitSamplingActive = true
+        local pairingFailures = 0
+        local lastPairingFailure: { [string]: unknown }? = nil
+        scheduleOrbitSample = function(current: ScreenGui)
             local aircraft = workspace:FindFirstChild("Aircraft")
-            if not current or not camera or not aircraft or not aircraft:IsA("Model") then
-                return
-            end
-            local weapon = current:GetAttribute("Weapon")
-            if type(weapon) ~= "string" then
-                return
-            end
-            local now = os.clock()
-            local stats = orbitStats[weapon]
-            if not stats then
-                stats = {
-                    first = now,
-                    last = now,
-                    frames = 0,
-                    bins = {},
-                    minimumInward = 1,
-                    maximumOriginError = 0,
+            local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+            local camera = workspace.CurrentCamera
+            if
+                not camera
+                or not aircraft
+                or not aircraft:IsA("Model")
+                or not hitbox
+                or not hitbox:IsA("BasePart")
+            then
+                pairingFailures += 1
+                local missing: { [string]: unknown } = {
+                    reason = "aircraft, hitbox or camera missing before projection",
                 }
-                orbitStats[weapon] = stats
+                lastPairingFailure = missing
+                return
             end
-            stats.last = now
-            stats.frames += 1
+            -- The production controller samples this hitbox after the provider
+            -- returns in the same nonyielding render callback. Capture its pose
+            -- here, then defer until that callback has committed its projection.
             local pivot = aircraft:GetPivot()
-            local position = pivot.Position
-            local angle = math.atan2(position.Z, position.X) % (2 * math.pi)
-            stats.bins[math.floor(angle / (2 * math.pi) * 16)] = true
-            local cameraFrame = camera.CFrame
-            local inward = cameraFrame.LookVector:Dot(Vector3.new(-position.X, 0, -position.Z).Unit)
-            local originError = (cameraFrame.Position - position).Magnitude
-            local projectionFrame = current:GetAttribute("ProjectionFrame")
-            local projectionTime = current:GetAttribute("ProjectionTime")
-            local projectionCamera = current:GetAttribute("ProjectionCamera")
-            local previousFrame = stats.lastProjectionFrame
-            local newInwardWorst = stats.frames == 1 or inward < stats.minimumInward
-            local newOriginWorst = stats.frames == 1 or originError > stats.maximumOriginError
-            if newInwardWorst or newOriginWorst then
-                local hitbox = aircraft:FindFirstChild("Hitbox")
-                local localFocusValue = current:GetAttribute("PanLocalFocus")
-                local worldFocusValue = current:GetAttribute("PanFocus")
-                local pan = current:GetAttribute("PanDirection")
-                local snapshot: { [string]: unknown } = {
-                    time = now,
-                    serverTime = workspace:GetServerTimeNow(),
-                    renderDeltaSeconds = deltaSeconds,
-                    sampledFrame = stats.frames,
-                    ordering = "RenderStepped observer; controller connection ordering is not guaranteed",
-                    aircraftPivot = { pivot:GetComponents() },
-                    cameraFrame = { cameraFrame:GetComponents() },
-                    cameraType = camera.CameraType.Name,
-                    inward = inward,
-                    originError = originError,
-                    projectionFrame = if type(projectionFrame) == "number"
-                        then projectionFrame
-                        else "missing",
-                    previousProjectionFrame = if previousFrame then previousFrame else "missing",
-                    projectionAdvanced = type(projectionFrame) == "number"
-                        and previousFrame ~= nil
-                        and projectionFrame > previousFrame,
-                    projectionTime = if type(projectionTime) == "number" then projectionTime else "missing",
-                    projectionAge = if type(projectionTime) == "number"
-                        then now - projectionTime
-                        else "missing",
-                    projectionCamera = if typeof(projectionCamera) == "CFrame"
-                        then { projectionCamera:GetComponents() }
-                        else "missing",
-                    localFocus = if typeof(localFocusValue) == "Vector2"
-                        then { localFocusValue.X, localFocusValue.Y }
-                        else "missing",
-                    worldFocus = if typeof(worldFocusValue) == "Vector3"
-                        then { worldFocusValue.X, worldFocusValue.Y, worldFocusValue.Z }
-                        else "missing",
-                    panDirection = if typeof(pan) == "Vector2" then { pan.X, pan.Y } else "missing",
-                    inputBlocked = current:GetAttribute("InputBlocked"),
-                }
-                if typeof(projectionCamera) == "CFrame" then
-                    snapshot.cameraToProjectionStuds = (cameraFrame.Position - projectionCamera.Position).Magnitude
-                    snapshot.cameraProjectionLookDot = cameraFrame.LookVector:Dot(projectionCamera.LookVector)
+            local capturedHitbox = hitbox.CFrame
+            local capturedTime = os.clock()
+            local prior = current:GetAttribute("ProjectionFrame")
+            local expectedFrame = if type(prior) == "number" then prior + 1 else 1
+            task.defer(function()
+                if not orbitSamplingActive then
+                    return
                 end
-                if hitbox and hitbox:IsA("BasePart") then
-                    local hitboxFrame = hitbox.CFrame
-                    snapshot.hitboxFrame = { hitboxFrame:GetComponents() }
-                    snapshot.cameraToHitboxStuds = (cameraFrame.Position - hitboxFrame.Position).Magnitude
-                    snapshot.pivotToHitboxStuds = (position - hitboxFrame.Position).Magnitude
+                local ok, failure = pcall(function()
+                    local projectionFrame = current:GetAttribute("ProjectionFrame")
+                    local projectionTime = current:GetAttribute("ProjectionTime")
+                    local projectionCamera = current:GetAttribute("ProjectionCamera")
+                    local weapon = current:GetAttribute("Weapon")
+                    assert(
+                        type(projectionFrame) == "number"
+                            and projectionFrame == expectedFrame
+                            and type(projectionTime) == "number"
+                            and typeof(projectionCamera) == "CFrame"
+                            and type(weapon) == "string"
+                            and workspace.CurrentCamera == camera,
+                        "missing or mismatched projection commit"
+                    )
+                    local now = os.clock()
+                    local stats = orbitStats[weapon]
+                    if not stats then
+                        stats = {
+                            first = now,
+                            last = now,
+                            frames = 0,
+                            bins = {},
+                            minimumInward = 1,
+                            maximumOriginError = 0,
+                            maximumCommittedOriginError = 0,
+                        }
+                        orbitStats[weapon] = stats
+                    end
+                    stats.last = now
+                    stats.frames += 1
+                    local position = pivot.Position
+                    local angle = math.atan2(position.Z, position.X) % (2 * math.pi)
+                    stats.bins[math.floor(angle / (2 * math.pi) * 16)] = true
+                    local cameraFrame = camera.CFrame
+                    local inward = cameraFrame.LookVector:Dot(Vector3.new(-position.X, 0, -position.Z).Unit)
+                    local originError = (cameraFrame.Position - position).Magnitude
+                    local committedOriginError = (projectionCamera.Position - position).Magnitude
+                    local previousFrame = stats.lastProjectionFrame
+                    local newInwardWorst = stats.frames == 1 or inward < stats.minimumInward
+                    local newOriginWorst = stats.frames == 1 or originError > stats.maximumOriginError
+                    local newCommittedWorst = stats.frames == 1
+                        or committedOriginError > stats.maximumCommittedOriginError
+                    if newInwardWorst or newOriginWorst or newCommittedWorst then
+                        local localFocusValue = current:GetAttribute("PanLocalFocus")
+                        local worldFocusValue = current:GetAttribute("PanFocus")
+                        local pan = current:GetAttribute("PanDirection")
+                        local snapshot: { [string]: unknown } = {
+                            time = now,
+                            serverTime = workspace:GetServerTimeNow(),
+                            capturedTime = capturedTime,
+                            deferredDelaySeconds = now - capturedTime,
+                            sampledFrame = stats.frames,
+                            ordering = "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+                            aircraftPivot = { pivot:GetComponents() },
+                            hitboxFrame = { capturedHitbox:GetComponents() },
+                            cameraFrame = { cameraFrame:GetComponents() },
+                            cameraType = camera.CameraType.Name,
+                            inward = inward,
+                            originError = originError,
+                            committedOriginError = committedOriginError,
+                            projectionFrame = projectionFrame,
+                            expectedProjectionFrame = expectedFrame,
+                            providerPreviousFrame = if type(prior) == "number" then prior else "missing",
+                            previousProjectionFrame = if previousFrame then previousFrame else "missing",
+                            projectionAdvanced = previousFrame ~= nil and projectionFrame > previousFrame,
+                            projectionTime = projectionTime,
+                            projectionAge = now - projectionTime,
+                            projectionCamera = { projectionCamera:GetComponents() },
+                            localFocus = if typeof(localFocusValue) == "Vector2"
+                                then { localFocusValue.X, localFocusValue.Y }
+                                else "missing",
+                            worldFocus = if typeof(worldFocusValue) == "Vector3"
+                                then { worldFocusValue.X, worldFocusValue.Y, worldFocusValue.Z }
+                                else "missing",
+                            panDirection = if typeof(pan) == "Vector2" then { pan.X, pan.Y } else "missing",
+                            inputBlocked = current:GetAttribute("InputBlocked"),
+                        }
+                        snapshot.cameraToProjectionStuds = (cameraFrame.Position - projectionCamera.Position).Magnitude
+                        snapshot.cameraProjectionLookDot =
+                            cameraFrame.LookVector:Dot(projectionCamera.LookVector)
+                        snapshot.cameraToHitboxStuds = (cameraFrame.Position - capturedHitbox.Position).Magnitude
+                        snapshot.pivotToHitboxStuds = (position - capturedHitbox.Position).Magnitude
+                        local liveHitbox = hitbox.CFrame
+                        local livePivot = aircraft:GetPivot()
+                        snapshot.liveHitboxFrame = { liveHitbox:GetComponents() }
+                        snapshot.liveAircraftPivot = { livePivot:GetComponents() }
+                        snapshot.liveToCapturedHitboxStuds = (liveHitbox.Position - capturedHitbox.Position).Magnitude
+                        if newInwardWorst then
+                            stats.minimumInwardSample = snapshot
+                        end
+                        if newOriginWorst then
+                            stats.maximumOriginErrorSample = snapshot
+                        end
+                        if newCommittedWorst then
+                            stats.maximumCommittedOriginErrorSample = snapshot
+                        end
+                    end
+                    stats.minimumInward = math.min(stats.minimumInward, inward)
+                    stats.maximumOriginError = math.max(stats.maximumOriginError, originError)
+                    stats.maximumCommittedOriginError =
+                        math.max(stats.maximumCommittedOriginError, committedOriginError)
+                    stats.lastProjectionFrame = projectionFrame
+                end)
+                if not ok then
+                    pairingFailures += 1
+                    local failed: { [string]: unknown } = {
+                        reason = tostring(failure),
+                        capturedTime = capturedTime,
+                        providerPreviousFrame = if type(prior) == "number" then prior else "missing",
+                        expectedProjectionFrame = expectedFrame,
+                        actualProjectionFrame = current:GetAttribute("ProjectionFrame"),
+                        aircraftPivot = { pivot:GetComponents() },
+                        hitboxFrame = { capturedHitbox:GetComponents() },
+                    }
+                    lastPairingFailure = failed
                 end
-                if newInwardWorst then
-                    stats.minimumInwardSample = snapshot
-                end
-                if newOriginWorst then
-                    stats.maximumOriginErrorSample = snapshot
-                end
-            end
-            stats.minimumInward = math.min(stats.minimumInward, inward)
-            stats.maximumOriginError = math.max(stats.maximumOriginError, originError)
-            stats.lastProjectionFrame = if type(projectionFrame) == "number" then projectionFrame else nil
-        end)
+            end)
+        end
         local listener = remote.OnClientEvent:Connect(function(token: number, request: Request)
             local observations: { [string]: unknown } = {}
             local ok, failure = pcall(function()
@@ -828,15 +888,22 @@ function Harness.run()
                         phaseBins = bins,
                         minimumInward = stats.minimumInward,
                         maximumOriginError = stats.maximumOriginError,
+                        maximumCommittedOriginError = stats.maximumCommittedOriginError,
                         minimumInwardSample = stats.minimumInwardSample,
                         maximumOriginErrorSample = stats.maximumOriginErrorSample,
+                        maximumCommittedOriginErrorSample = stats.maximumCommittedOriginErrorSample,
+                        pairingFailures = pairingFailures,
+                        lastPairingFailure = lastPairingFailure,
                     }
+                    assert(pairingFailures == 0, "projection frame was missing or mismatched")
                     assert(
                         stats.last - stats.first >= 89.5 and bins == 16,
                         "full orbit at selected FOV not observed"
                     )
                     assert(
-                        stats.minimumInward >= -1e-6 and stats.maximumOriginError <= 2,
+                        stats.minimumInward >= -1e-6
+                            and stats.maximumOriginError <= 2
+                            and stats.maximumCommittedOriginError <= 2,
                         "orbit camera drift/inward violation"
                     )
                 elseif request.kind == "Thermal" then
@@ -1118,7 +1185,8 @@ function Harness.run()
                 listener:Disconnect()
                 added:Disconnect()
                 removed:Disconnect()
-                renderStats:Disconnect()
+                orbitSamplingActive = false
+                scheduleOrbitSample = nil
                 if ancestry then
                     ancestry:Disconnect()
                 end
