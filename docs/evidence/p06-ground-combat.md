@@ -209,3 +209,24 @@ and Heartbeat delta rather than assuming the independent Heartbeat marker runs
 before the callbacks. Independent host verification passed 50 unit / 43
 integration; the unchanged `6c5a016` Studio smoke remains applicable. Its real
 manual two-client outcome is pending.
+
+The user launched the manual two-client run on `56495f9`: server smoke passed
+118/118 with two clients, and each client passed 3/3. Six P06 cases passed;
+the mutual-outcome case failed its requested ground-first order because Roblox
+executed the registered Heartbeat callbacks aircraft-first, producing one
+additional harness-completion failure. The [actual trace](p06-manual-56495.json)
+records both callbacks in the same Stepped epoch 2, equal Heartbeat delta,
+no callback errors, aircraft health 300→0, ground elimination while Active,
+then Results/Ground/AircraftDestroyed. This is positive evidence for the
+observed aircraft-first order only. Ground-first was not exercised; callback
+registration order alone cannot establish it. The manual session ended through
+the server `EndTest` API, and the original Edit selector was cleared.
+
+Candidate `bdb1de1` adds a bounded calibration using two harmless independent
+Heartbeat callbacks, then selects registration order for the two real combat
+callbacks. The fixture still requires the actual requested callback order, same
+Stepped epoch/time and Heartbeat delta, pristine swept-rocket damage boundaries
+and Ground/AircraftDestroyed result. Calibration and actual timeline are
+recorded before assertions; a scheduler change remains an explicit failure, not
+a pass. Independent full host verification passed 50 unit / 43 integration.
+The test-only manual two-client run is prepared but its Studio result is pending.

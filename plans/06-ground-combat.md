@@ -61,7 +61,12 @@ host and 118/3 Studio smoke pass. Its two-client run passed actual cover,
 aircraft-hit and query-failure recovery, then failed the shared-Heartbeat
 assertion in the mutual-destruction case; callback values were not recorded
 before the assertion, so its cause remains unproven. `56495f9` records callback
-timing and outcome before asserting, and its real two-client run is prepared.
+timing and outcome before asserting. Its real two-client run showed actual
+aircraft-first callbacks within one simulation step and the correct Ground
+result; the fixture failed its requested ground-first ordering because Roblox
+executed callbacks in reverse registration order. `bdb1de1` calibrates actual
+callback scheduling while retaining strict order/step/outcome assertions;
+ground-first remains open pending its manual two-client run.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
