@@ -59,6 +59,59 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         assert(not owner.fire(1, request(1, "GAU23"), "GAU23", true, 1, 360, 140, 0), "combat invariant")
         assert(assert(owner.readiness("GAU23", 1), "readiness").ammo == 99, "combat invariant")
     end)
+    test("P05 chain gun cadence and magazine reload exact boundaries", function()
+        local owner = fixture()
+        assert(owner.fire(1, request(1, "GAU23"), "GAU23", true, 0, 360, 140, 0))
+        assert(
+            not owner.fire(1, request(2, "GAU23"), "GAU23", true, 0.149, 360, 140, 0),
+            "early chain-gun cadence accepted"
+        )
+        assert(owner.fire(1, request(2, "GAU23"), "GAU23", true, 0.15, 360, 140, 0))
+        for i = 3, 100 do
+            assert(owner.fire(1, request(i, "GAU23"), "GAU23", true, (i - 1) * 0.151, 360, 140, 0))
+        end
+        local before = assert(owner.readiness("GAU23", 14.949), "readiness unavailable")
+        assert(before.ammo == 0 and before.reloadUntil > 14.949, "empty magazine did not start reload")
+        assert(
+            not owner.fire(1, request(101, "GAU23"), "GAU23", true, before.reloadUntil - 0.001, 360, 140, 0),
+            "reload completed early"
+        )
+        assert(owner.fire(1, request(101, "GAU23"), "GAU23", true, before.reloadUntil, 360, 140, 0))
+        assert(
+            assert(owner.readiness("GAU23", before.reloadUntil), "readiness unavailable").ammo == 99,
+            "reload boundary did not replenish once"
+        )
+    end)
+    test("P05 bounded range and weapon-specific readiness reject without sequence mutation", function()
+        local owner = fixture()
+        assert(
+            not owner.fire(1, request(1, "GAU23"), "GAU23", true, 0, 1000, 140, 0),
+            "out-of-range muzzle accepted"
+        )
+        assert(
+            not owner.fire(1, request(1, "GAU23"), "M102", true, 0, 360, 140, 0),
+            "unselected weapon fired"
+        )
+        local first = owner.fire(1, request(1, "GAU23"), "GAU23", true, 0, 360, 140, 0)
+        assert(first and first.shotId == 1, "valid shot did not recover")
+        owner.reset(2)
+        local stale = request(2, "GAU23")
+        assert(not owner.fire(1, stale, "GAU23", true, 1, 360, 140, 0), "old round fired after reset")
+        local nextShot = owner.fire(
+            1,
+            { roundId = 2, sequence = 1, weapon = "GAU23", x = 0, y = 0, z = 0 },
+            "GAU23",
+            true,
+            1,
+            360,
+            140,
+            0
+        )
+        assert(
+            nextShot and nextShot.shotId == 1 and nextShot.roundId == 2,
+            "new round did not reset shot identity/readiness"
+        )
+    end)
     test("P05 alternate level bounds replace industrial coordinates", function()
         local alternate = table.clone(defaults)
         alternate.centerX = 1000

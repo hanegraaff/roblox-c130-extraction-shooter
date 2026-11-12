@@ -15,6 +15,7 @@ local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
 local AircraftService = require(script.Parent.AircraftService)
 local MatchService = require(script.Parent.MatchService)
 local CombatService = require(script.Parent.CombatService)
+local DamageRules = require(script.Parent.DamageRules)
 local CombatRuntime = {}
 
 -- Impact is a server-resolved direct collision seam for the future panel service.
@@ -39,6 +40,7 @@ type Projectile = {
     remaining: number,
     visual: Part,
     marker: Part,
+    awards: DamageRules.Controller,
 }
 
 -- Starts one engine owner. optional onImpact is called synchronously after resolution;
@@ -156,9 +158,17 @@ function CombatRuntime.start(
                 if direct or delta.Magnitude <= profile.radius then
                     local obstruction = workspace:Raycast(visibilityOrigin, delta, rayParameters(false))
                     if direct or obstruction == nil then
-                        humanoid:TakeDamage(profile.damage)
-                        if humanoid.Health <= 0 then
-                            match.eliminate(player.UserId, state.roundId)
+                        local damage = projectile.awards.award(
+                            player.UserId,
+                            humanoid.Health,
+                            humanoid.MaxHealth,
+                            profile.damage
+                        )
+                        if damage then
+                            humanoid:TakeDamage(damage)
+                            if humanoid.Health <= 0 then
+                                match.eliminate(player.UserId, state.roundId)
+                            end
                         end
                     end
                 end
@@ -261,6 +271,7 @@ function CombatRuntime.start(
                 remaining = math.min(delta.Magnitude + 0.25, CombatService.profiles[weapon].range),
                 visual = visual,
                 marker = marker,
+                awards = DamageRules.new(),
             })
             publish(time)
         end)
