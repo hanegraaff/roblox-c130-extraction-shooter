@@ -1,0 +1,58 @@
+{
+  "source_commit": "888de26e0cecc8a59623f9a1b9711ca87bce27a8",
+  "initial": {
+    "ok": true,
+    "result": {
+      "clientCount": 1,
+      "failed": 1,
+      "discovered": 0,
+      "environment": "Studio",
+      "skipped": 0,
+      "suite": "P06-launch",
+      "passed": 0,
+      "reason": "timed out waiting for two clients"
+    }
+  },
+  "retry": {
+    "ok": true,
+    "result": {
+      "cases": [
+        {
+          "passed": true,
+          "name": "A1 ground receives one rifle and no launcher"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+        },
+        {
+          "passed": true,
+          "name": "A1 server raycast stops rifle at cover then damages aircraft"
+        },
+        {
+          "passed": true,
+          "name": "A2 direct swept rocket fixtures destroy once"
+        },
+        {
+          "passed": true,
+          "name": "A5 reset restores aircraft and no stale equipment"
+        }
+      ],
+      "discovered": 5,
+      "clientCount": 2,
+      "environment": "Studio",
+      "skipped": 0,
+      "suite": "P06-multiplayer",
+      "passed": 5,
+      "failed": 0
+    }
+  },
+  "human": {
+    "ok": true,
+    "result": {
+      "clientCount": 2,
+      "suite": "P06-operated-initial",
+      "result": "reviewed with defects"
+    }
+  }
+}

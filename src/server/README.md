@@ -4,7 +4,7 @@ Rojo maps this package to `ServerScriptService.Server`. Rules and authority stay
 
 ## Composition and character ownership
 
-`GameRuntime.start(settings)` starts one `MapService`, one `MatchRuntime` and one `AircraftService` and one `CombatRuntime`, returning `{ rounds, aircraft, combat, stop }` or `nil, reason`. Partial startup rolls back acquired owners. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops combat, aircraft, rounds and then destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
+`GameRuntime.start(settings)` starts one `MapService`, `MatchRuntime`, `AircraftService`, `CombatRuntime` and `GroundCombatRuntime`, returning `{ rounds, aircraft, combat, groundCombat, stop }` or `nil, reason`. Partial startup rolls back acquired owners. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops ground combat, gunship combat, aircraft and rounds, then destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
 
 The current runtime owns one fixed battlefield. The future
 [level contract](../../architecture.md#level-interchange-boundary-target-architecture)
@@ -33,14 +33,22 @@ second playable level.
 | `join(userId)` / `leave(userId)` | Track connections by UserId. Departure cancels assigned deployment or removes an active life. Rejoin retains a tombstone; mid-round arrivals spectate. |
 | `deploy()` / `ready(userId, roundId)` / `activate()` | Lock a valid roster, collect server character readiness, then activate everyone together with one deadline. Stale/duplicate readiness rejects. |
 | `eliminate(userId, roundId)` | Remove one living ground life before the deadline. Stale, duplicate and wrong-role calls reject. |
-| `proposeAircraftDestroyed(roundId)` | Queue a server destruction fact for the next pre-deadline batch. P03 has no damage source; later combat connects this seam. |
+| `proposeAircraftDestroyed(roundId)` | Queue a server destruction fact for the next pre-deadline batch. P06 connects this seam to authoritative aircraft health. |
 | `step()` | Commit at most one batch result and release life resources once. Terminal cleanup suppresses recovery; nonterminal loss may request recovery for the future launcher adapter. |
 | `abort(roundId, reason)` | Commit a noncompetitive setup/runtime abort only in Deploying or Active. |
 | `beginReset()` / `finishReset()` | Enforce reset transitions and clear roster/result/deadline, retaining rotation history and increasing round identities. |
 | `command(userId, payload)` | Validate surrender shape, role, life, round, sequence and deadline. Rejection preserves match state. |
 | `snapshot()` | Return fresh member/result records; callers cannot mutate authority. |
 
-Batch callers submit accepted events, call `step()`, then publish. Deadline equality is too late for destruction; otherwise destruction wins a same-step mutual elimination. Cleanup adapters must not throw, yield or reenter. Current cleanup removes equipment; P08 connects actual launcher ownership/recovery.
+Combat owners submit accepted events; `MatchRuntime` defers `step()` until its Heartbeat callbacks have submitted the current batch. Deadline equality is too late for destruction; otherwise destruction wins a same-step mutual elimination. Cleanup adapters must not throw, yield or reenter. Current cleanup removes equipment; P08 connects actual launcher ownership/recovery.
+
+## P06 ground combat
+
+`GroundCombatService.new()` owns independent per-user rifle readiness and accepted sequences for the current round. `fire(userId, payload, eligible, now, originX, originY, originZ)` validates an exact bounded intent and returns a target/sequence or rejection without spending ammunition. `preflight` checks the same bounded fire intent and readiness without spending ammunition or sequence, allowing malformed or cooldown traffic to be rejected before movement, voxel and ray queries. `reload` validates active ownership and transfers reserve after the configured server-time deadline. Defaults are 30 rounds, 120 reserve, 0.15-second cadence, 2-second reload and 1200-stud range; reset clears round-local state.
+
+`AircraftHealth.new()` owns round-scoped health and shot deduplication. Maximum health is three times direct rocket damage; current defaults are 300 and 100 units. Direct M-7 hits deal 5 units. Indirect rockets, duplicates, invalid/stale shots and post-destruction damage reject without mutation. `GroundCombatRuntime.start(match)` owns the rifle Tool per eligible living ground player, production fire/reload remotes, request budgets, engine world queries, shared health replication and effects. It derives the origin from the character, not the client; cover prevents aircraft damage and no ground friendly fire is awarded. `GroundMovementGuard.new()` samples the server-observed character root each Heartbeat and before fire; a 45-stud burst with 70 studs/second refill bounds displacement. A suspicious jump quarantines firing until the root returns within 8 studs of its last trusted point or a trusted server spawn/MapService correction resets the budget. The firing head must remain within 8 studs of the root. These are tunable defaults, not a ban or a complete movement anti-cheat; severe lag or unusual legitimate travel can temporarily block shots. `GroundOriginGeometry.new(parent)` owns an invisible nonqueryable probe; `allows(root, head)` rejects solid Battlefield BasePart overlaps at root or head, solid Battlefield/Terrain between them with rays in both directions, and a head in a nonempty solid 4-stud Terrain voxel. A failed Terrain query explicitly rejects firing. The conservative occupied-voxel rule can reject otherwise legitimate fire beside partial or steep voxels; the caller must destroy the probe, and actual Studio behavior and tuning remain to be verified. Its `rocketSweep` and `rocketImpact` are server-only fixture seams, not player launcher equipment. `stop()` disconnects and destroys owned tools, remotes and effects; callers must not assume late or duplicate impacts are accepted.
+
+These P06 capabilities are on the unmerged branch and require the current candidate's remaining Studio acceptance and operated review. See [P06](../../plans/06-ground-combat.md); the launcher arrives later in P08.
 
 ## Aircraft ownership and selection
 

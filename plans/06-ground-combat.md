@@ -29,7 +29,25 @@ Update named ground weapon, mixed-damage/three-rocket contract, destruction resu
 ## Completion record
 
 Implementation started on `plan/06-ground-combat` from integrated main
-`186def18af0a0dfcaba979d895afb08e3524d057`. A1–A5 remain unverified. Required
-evidence includes the full host gate, real Studio collision and two-client
-replication, and an operated reciprocal-combat review. Record the candidate
-source, exact results and tuning reasons as they become available.
+`186def18af0a0dfcaba979d895afb08e3524d057`. The candidate implements the
+server-owned M-7 and aircraft-health rules; acceptance remains open pending
+current-source Studio and operated review.
+
+| Criterion | Evidence and outstanding checks |
+| --- | --- |
+| A1 | Host rifle/health tests pass on earlier source; independent Studio smoke 110/110 server and 3/3 client passed on `275eb73`. Current origin geometry and normal steep-terrain stances still need engine and live-input checks. |
+| A2 | Host tests cover pristine three-rocket, mixed, miss and duplicate behavior. The latest fixture adds actual pristine rocket sweeps and measured speed, but has not run in Studio. |
+| A3 | Host tests cover bounded requests and movement; earlier actual two-/three-client fixtures exercised cover, rejection and friendly-fire. The latest origin-geometry and recovery fixtures are unrun. |
+| A4 | Two actual clients on `275eb73` passed both nonyielding mutual-kill proposal orders; three clients passed the eliminated-teammate case. Instrumented distinct Heartbeat callback order, shared frame, projectile sweeps and operator forfeit are unrun on the latest source. |
+| A5 | Two-client P06 7/7 and three-client P06Team 5/5 passed on `275eb73`. Latest repeated reset, stale-resource, reciprocal input and P05 regression checks remain open. |
+
+The [verification record](../docs/evidence/p06-ground-combat.md) preserves
+source-specific results, tester findings and the stalled Studio launch. Latest
+host gate was 50 unit / 43 integration on `644a90d` with independent source
+review; current Studio execution is blocked by a stalled SDK launch and two
+test Edit windows that need to be closed before a clean reopen. A real
+current-P06 screenshot and operated desktop/mobile combat review are also
+required. Rifle/aircraft health and movement limits are tuning defaults,
+documented separately in decisions. The movement guard permits a 45-stud burst
+and does not sweep intervening walls; it bounds movement but does not establish
+that every short relocation is impossible.
