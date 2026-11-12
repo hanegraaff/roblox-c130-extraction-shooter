@@ -90,7 +90,7 @@ function Harness.run()
                         local localX = radial.X * goal.X + radial.Y * goal.Z
                         local localZ = -radial.Y * goal.X + radial.X * goal.Z
                         pan = Vector2.new(
-                            math.clamp((localZ - focus.Y) / 6, -1, 1),
+                            math.clamp((focus.Y - localZ) / 6, -1, 1),
                             math.clamp((focus.X - localX) / 6, -1, 1)
                         )
                     end
@@ -476,6 +476,31 @@ function Harness.run()
                                 frame.LookVector:Dot((target - origin).Unit) > 0.99999,
                                 "held view rotated"
                             )
+                            if direction[1] == 0 and direction[2] == 0 then
+                                -- Actual engine camera-right, not a copied sign
+                                -- convention, decides what left/right means.
+                                for _, horizontalInput in { -1, 1 } do
+                                    local moved = PanRules.step(
+                                        MapRules.defaults,
+                                        held,
+                                        horizontalInput,
+                                        0,
+                                        0.1,
+                                        false,
+                                        16 / 9,
+                                        AircraftRules.defaults.fov105mm
+                                    )
+                                    assert(moved, "horizontal direction rejected")
+                                    local movedPoint = PanRules.worldFocus(MapRules.defaults, moved, x, z)
+                                    assert(movedPoint, "horizontal orbit focus rejected")
+                                    local movement =
+                                        Vector3.new(movedPoint.x - point.x, 0, movedPoint.z - point.z)
+                                    assert(
+                                        movement:Dot(frame.RightVector) * horizontalInput > 0,
+                                        "horizontal direction opposes actual camera right"
+                                    )
+                                end
+                            end
                             local radial = Vector3.new(math.cos(phase), 0, math.sin(phase))
                             local tangent = Vector3.new(-math.sin(phase), 0, math.cos(phase))
                             local localLook = Vector3.new(

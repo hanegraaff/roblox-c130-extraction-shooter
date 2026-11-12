@@ -3,7 +3,8 @@
     AircraftPanRules: deterministic orbit-local camera pan and reticle rasterization.
     Depends on MapRules/Validation; no Instances, transport, clock or yielding.
     Focus is a ground point in the aircraft's rotating local map frame, in studs:
-    +X is radial toward the aircraft, +Z is camera-right at orbit phase zero.
+    +X is radial toward the aircraft; +Z follows the orbit tangent at phase zero.
+    Camera-right points toward negative local Z.
     Releasing input holds this relative view through the aircraft's full orbit.
     The level edge may enter the outer quarter of each viewport centerline.
     All corner rays still point downward; invalid inputs return nil and no
@@ -72,7 +73,8 @@ local function fits(map: typeof(MapRules.defaults), focus: Focus, aspect: number
         return false
     end
     local fx, fy, fz = dx / length, -altitude / length, dz / length
-    -- Project the canonical orbit-right tangent into the look plane.
+    -- Project the orbit tangent into the look plane. Both signs are sampled,
+    -- so this basis has the same footprint as the camera's opposite right axis.
     local rightLength = math.sqrt(1 - fz * fz)
     if rightLength < 1e-6 then
         return false
@@ -222,7 +224,7 @@ local function clip(
     return { x = from.x + (desired.x - from.x) * lower, z = from.z + (desired.z - from.z) * lower }
 end
 
--- Integrates WASD/touch in the rotating camera plane. Right increases local Z;
+-- Integrates WASD/touch in the rotating camera plane. Right decreases local Z;
 -- up looks farther across the level (decreases local X). The widest enabled
 -- lens bounds both profiles so switching zoom preserves the relative pan state.
 function AircraftPanRules.step(
@@ -253,7 +255,7 @@ function AircraftPanRules.step(
     local distance = math.min(deltaSeconds, AircraftPanRules.defaults.maximumDeltaSeconds)
         * AircraftPanRules.defaults.speedStudsPerSecond
     local nextZ =
-        clip(map, focus, { x = focus.x, z = focus.z + right / normalized * distance }, aspect, fovDegrees)
+        clip(map, focus, { x = focus.x, z = focus.z - right / normalized * distance }, aspect, fovDegrees)
     return clip(map, nextZ, { x = nextZ.x - up / normalized * distance, z = nextZ.z }, aspect, fovDegrees)
 end
 
