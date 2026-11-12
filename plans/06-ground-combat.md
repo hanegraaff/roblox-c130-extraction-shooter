@@ -77,7 +77,8 @@ Simulated phone touch firing, reload and camera motion worked, but its ammo
 panel overlapped the centered reticle. `0003fe4` adjusts the touch HUD and
 handles device-mode transitions; independent host and Studio smoke pass
 (118 server / 6 client). A fresh operated phone-layout and native moving-plane
-check remain required.
+check remain required; the test document is prepared and awaits a native
+two-client Server & Clients launch.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
