@@ -14,6 +14,7 @@ return function()
     require(ServerStorage.Tests.Unit["RoundRules.spec"])(test, require(Server.RoundRules))
     require(ServerStorage.Tests.Integration["MatchService.spec"])(test, require(Server.MatchService))
     require(ServerStorage.Tests.Unit["AircraftRules.spec"])(test, require(Shared.AircraftRules))
+    require(ServerStorage.Tests.Unit["AircraftPanRules.spec"])(test, require(Shared.AircraftPanRules))
     require(ServerStorage.Tests.Integration["AircraftSelection.spec"])(
         test,
         require(Server.AircraftSelection)

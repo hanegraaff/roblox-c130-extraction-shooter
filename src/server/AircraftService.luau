@@ -53,6 +53,29 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
     model.PrimaryPart = hitbox
     local map = MapRules.defaults
     local config = AircraftRules.defaults
+    local envelope = workspace.World.Battlefield:FindFirstChild("AimEnvelope")
+    local minimum = if envelope then envelope:FindFirstChild("MinimumY") else nil
+    local maximum = if envelope then envelope:FindFirstChild("MaximumY") else nil
+    if
+        not minimum
+        or not minimum:IsA("NumberValue")
+        or not maximum
+        or not maximum:IsA("NumberValue")
+        or minimum.Value < map.groundY - 4
+        or maximum.Value > map.groundY + map.altitudeStuds
+        or not AircraftRules.aimAllowed(
+            map,
+            map.centerX,
+            map.groundY,
+            map.centerZ,
+            minimum.Value,
+            maximum.Value
+        )
+    then
+        model:Destroy()
+        return nil, "invalid authored aircraft aim envelope"
+    end
+    local minimumY, maximumY = minimum.Value, maximum.Value
     local focus = Vector3.new(map.focusX, map.focusY, map.focusZ)
     local function sample(elapsed: number): CFrame
         local pose = AircraftRules.pose(map, config, elapsed)
@@ -63,6 +86,8 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
     local status = Instance.new("Folder")
     status.Name = "AircraftState"
     status:SetAttribute("Focus", focus)
+    status:SetAttribute("AimMinimumY", minimumY)
+    status:SetAttribute("AimMaximumY", maximumY)
     status:SetAttribute("FOV30mm", config.fov30mm)
     status:SetAttribute("FOV105mm", config.fov105mm)
     status:SetAttribute("PeriodSeconds", config.periodSeconds)
@@ -136,14 +161,19 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
     return {
         sample = sample,
         aimAllowed = function(endpoint)
-            if not AircraftRules.aimAllowed(map, endpoint.X, endpoint.Y, endpoint.Z) then
+            if not AircraftRules.aimAllowed(map, endpoint.X, endpoint.Y, endpoint.Z, minimumY, maximumY) then
                 return false
             end
             local parameters = RaycastParams.new()
             parameters.RespectCanCollide = true
             parameters.FilterType = Enum.RaycastFilterType.Include
             parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
-            local origin = hitbox.Position
+            local weapon = selection.snapshot().weapon
+            local muzzle = hitbox:FindFirstChild(if weapon == "M102" then "M102Muzzle" else "GAU23Muzzle")
+            if not muzzle or not muzzle:IsA("Attachment") then
+                return false
+            end
+            local origin = muzzle.WorldPosition
             local result = workspace:Raycast(origin, endpoint - origin, parameters)
             -- Surface endpoints are legal; earlier solid geometry blocks the sight line.
             return result == nil or (result.Position - endpoint).Magnitude <= 0.5

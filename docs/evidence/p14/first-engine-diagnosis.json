@@ -1,0 +1,48 @@
+{
+  "candidate": "a32613376599b38f787fe6484dc3e93a840ba935",
+  "classification": "material acceptance-harness ordering defect; production target coverage not yet established",
+  "criterion": "P14 A2",
+  "required": "After input-driven focus reaches its neighborhood, switch to surface pointing and await a committed pointing frame before target assertion. Preserve <=1px/<=.5stud projection and <3stud target-neighborhood assertions.",
+  "observed": {
+    "actualClients": 2,
+    "serverBaselinePassed": 79,
+    "clientBaselinesPassedEach": 2,
+    "exactBoundaryFramesPassed": 585,
+    "failedTarget": [
+      220,
+      0,
+      220
+    ],
+    "focus": [
+      219.90823364257812,
+      0,
+      219.9208526611328
+    ],
+    "focusDistanceStuds": 0.12118319027091473,
+    "pixels": [
+      918.8499755859375,
+      98.69999694824219
+    ],
+    "endpoint": [
+      190.0196075439453,
+      0,
+      137.13406372070312
+    ],
+    "targetSurfaceErrorStuds": 88.12256622314453,
+    "pixelError": 0.0001258271950064227
+  },
+  "sourceEvidence": {
+    "moveToReturnsAtStuds": 0.25,
+    "providerSteersWhileAboveStuds": 0.1,
+    "minimumEdgeCommandFraction": 0.02,
+    "postArrivalWaitSeconds": 0.12
+  },
+  "finalState": "original Studio Edit, self-ended, teardown assertion passed",
+  "openChecks": [
+    "full-orbit P14 coverage/coherence/thermal/round lifecycle",
+    "P04 and relevant preview/human regressions",
+    "native default-UIS operated review",
+    "actual1280x720 and1920x1080 UI/rendered review",
+    "representative gameplay capture"
+  ]
+}

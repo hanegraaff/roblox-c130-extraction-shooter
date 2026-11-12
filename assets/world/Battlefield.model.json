@@ -12266,6 +12266,26 @@
           ]
         }
       ]
+    },
+    {
+      "Name": "AimEnvelope",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "MinimumY",
+          "ClassName": "NumberValue",
+          "Properties": {
+            "Value": -1
+          }
+        },
+        {
+          "Name": "MaximumY",
+          "ClassName": "NumberValue",
+          "Properties": {
+            "Value": 32
+          }
+        }
+      ]
     }
   ]
 }

@@ -66,8 +66,15 @@ function AircraftRules.fov(settings: Settings, weapon: string): number?
 end
 
 -- Future fire adapter seam: a finite endpoint must lie within the playable disk and
--- ground-to-aircraft vertical envelope. This is geometry only, not line-of-sight proof.
-function AircraftRules.aimAllowed(map: typeof(MapRules.defaults), x: number, y: number, z: number): boolean
+-- map-authored vertical envelope (defaults −1..32 studs). This is geometry only, not line-of-sight proof.
+function AircraftRules.aimAllowed(
+    map: typeof(MapRules.defaults),
+    x: number,
+    y: number,
+    z: number,
+    minimumY: number?,
+    maximumY: number?
+): boolean
     if
         not MapRules.validate(map)
         or not Validation.isFinite(x)
@@ -76,13 +83,16 @@ function AircraftRules.aimAllowed(map: typeof(MapRules.defaults), x: number, y: 
     then
         return false
     end
-    local upper = map.groundY + map.altitudeStuds
+    local lower = minimumY or map.groundY - 1
+    local upper = maximumY or map.groundY + 32
     local dx = (x - map.centerX) / map.radiusStuds
     local dz = (z - map.centerZ) / map.radiusStuds
-    return Validation.isFinite(upper)
+    return Validation.isFinite(lower)
+        and Validation.isFinite(upper)
+        and lower < upper
         and Validation.isFinite(dx)
         and Validation.isFinite(dz)
-        and y >= map.groundY - 1
+        and y >= lower
         and y <= upper
         and dx * dx + dz * dz <= 1
 end

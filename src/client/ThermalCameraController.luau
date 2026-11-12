@@ -14,10 +14,17 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local HttpService = game:GetService("HttpService")
 local CollectionService = game:GetService("CollectionService")
+local GuiService = game:GetService("GuiService")
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+local AircraftPanRules = require(ReplicatedStorage.Shared.AircraftPanRules)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
+local Validation = require(ReplicatedStorage.Shared.Validation)
 local ThermalCameraController = {}
 export type Controller = { ownsCamera: () -> boolean, stop: () -> () }
+-- Optional deterministic input boundary for accessibility/adapters and engine fixtures.
+-- Position is raw viewport pixels. Providers must not yield; invalid values hold focus.
+export type InputFrame = { position: Vector2, blocked: boolean, recenter: boolean?, weapon: string? }
+export type InputProvider = (Vector2) -> InputFrame
 type SavedCamera = {
     camera: Camera,
     kind: Enum.CameraType,
@@ -27,9 +34,71 @@ type SavedCamera = {
     icon: boolean,
 }
 
+-- Constructs the inward camera basis without a world-up singularity. Canonical
+-- orbit-right is projected onto the look plane, preserving finite orientation even
+-- when focus lies exactly below the aircraft. Invalid geometry returns nil.
+function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFrame?
+    for _, value in { position.X, position.Y, position.Z, focus.X, focus.Y, focus.Z } do
+        if not Validation.isFinite(value) then
+            return nil
+        end
+    end
+    local map = MapRules.defaults
+    if Vector2.new(focus.X - map.centerX, focus.Z - map.centerZ).Magnitude > map.radiusStuds + 0.001 then
+        return nil
+    end
+    local radial = Vector3.new(position.X - map.centerX, 0, position.Z - map.centerZ)
+    local direction = focus - position
+    if radial.Magnitude < 1e-6 or direction.Magnitude < 1e-6 then
+        return nil
+    end
+    local look = direction.Unit
+    radial = radial.Unit
+    if look:Dot(-radial) < -1e-6 then
+        return nil
+    end
+    local canonicalRight = Vector3.new(radial.Z, 0, -radial.X)
+    local right = canonicalRight - look * canonicalRight:Dot(look)
+    if right.Magnitude < 1e-6 then
+        return nil
+    end
+    right = right.Unit
+    return CFrame.fromMatrix(position, right, right:Cross(look), -look)
+end
+
+-- Samples the production pointer/UI boundary without yielding. pointer is the raw
+-- GetMouseLocation viewport position; windowFocused comes from the owned focus
+-- listeners. Only GetGuiObjectsAtPosition uses GUI-content coordinates, so subtract
+-- the current top-left GuiInset for that query alone. Returned pointer pixels are
+-- unchanged for edge pan, reticle drawing and camera rays. Invalid pixels fail closed.
+function ThermalCameraController.input(
+    playerGui: PlayerGui,
+    pointer: Vector2,
+    windowFocused: boolean
+): InputFrame
+    local blocked = not windowFocused or UserInputService:GetFocusedTextBox() ~= nil
+    if not Validation.isFinite(pointer.X) or not Validation.isFinite(pointer.Y) then
+        return { position = pointer, blocked = true }
+    end
+    local inset = GuiService:GetGuiInset()
+    local query = pointer - inset
+    for _, object in playerGui:GetGuiObjectsAtPosition(math.floor(query.X), math.floor(query.Y)) do
+        if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
+            blocked = true
+            break
+        end
+    end
+    return { position = pointer, blocked = blocked }
+end
+
 -- Role gate is presentation only. The production server independently authorizes
 -- selection. RoundPanel calls ownsCamera before writing any spectator/character view.
-function ThermalCameraController.new(player: Player, playerGui: PlayerGui, roundState: Instance): Controller
+function ThermalCameraController.new(
+    player: Player,
+    playerGui: PlayerGui,
+    roundState: Instance,
+    inputProvider: InputProvider?
+): Controller
     local running = true
     local active = false
     local saved: SavedCamera? = nil
@@ -42,6 +111,14 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
     local sequence = 0
     local lastRound = -1
     local previewWeapon = "GAU23"
+    local map = MapRules.defaults
+    local focus = AircraftPanRules.recenter(map)
+    local recenterRequested = false
+    local frameNumber = 0
+    local windowFocused = true
+    local function sampleInput(_viewport: Vector2): InputFrame
+        return ThermalCameraController.input(playerGui, UserInputService:GetMouseLocation(), windowFocused)
+    end
     local function eligible(): boolean
         return running
             and (
@@ -91,7 +168,7 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
         saved = nil
     end
     local function selectWeapon(weapon: string)
-        if not eligible() then
+        if (weapon ~= "GAU23" and weapon ~= "M102") or not eligible() then
             return
         end
         if player:GetAttribute("LocalMapPreview") == true and roundState:GetAttribute("Phase") == "Lobby" then
@@ -112,6 +189,8 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
     local function enter(camera: Camera)
         active = true
         previewWeapon = "GAU23"
+        focus = AircraftPanRules.recenter(map)
+        recenterRequested = false
         saved = {
             camera = camera,
             kind = camera.CameraType,
@@ -123,6 +202,8 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
         local screen = Instance.new("ScreenGui")
         screen.Name = "ThermalHUD"
         screen.IgnoreGuiInset = true
+        screen.ScreenInsets = Enum.ScreenInsets.None
+        screen.ClipToDeviceSafeArea = false
         screen.ResetOnSpawn = false
         local caption = Instance.new("TextLabel")
         caption.Name = "Profile"
@@ -156,6 +237,23 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
                 end)
             )
         end
+        local recenter = Instance.new("TextButton")
+        recenter.Name = "Recenter"
+        recenter.AnchorPoint = Vector2.new(1, 0)
+        recenter.Position = UDim2.new(1, -16, 0, 16)
+        recenter.Size = UDim2.fromOffset(150, 32)
+        recenter.Text = "R • Recenter"
+        recenter.Font = Enum.Font.Gotham
+        recenter.TextSize = 16
+        recenter.BackgroundColor3 = Color3.fromRGB(30, 38, 42)
+        recenter.TextColor3 = Color3.new(1, 1, 1)
+        recenter.Parent = screen
+        table.insert(
+            buttons,
+            recenter.Activated:Connect(function()
+                recenterRequested = true
+            end)
+        )
         local cross = Instance.new("TextLabel")
         cross.Name = "Reticle"
         cross.Size = UDim2.fromOffset(34, 34)
@@ -177,6 +275,8 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
                         selectWeapon("GAU23")
                     elseif event.KeyCode == Enum.KeyCode.Two then
                         selectWeapon("M102")
+                    elseif event.KeyCode == Enum.KeyCode.R then
+                        recenterRequested = true
                     end
                 end
             end)
@@ -189,7 +289,7 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
         effect.Parent = camera
         correction = effect
     end
-    local function render()
+    local function render(deltaSeconds: number)
         local state = ReplicatedStorage:FindFirstChild("AircraftState")
         local aircraft = workspace:FindFirstChild("Aircraft")
         local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
@@ -208,6 +308,7 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
         if type(roundId) == "number" and roundId ~= lastRound then
             sequence = 0
             lastRound = roundId
+            focus = AircraftPanRules.recenter(map)
         end
         local preview = roundState:GetAttribute("Phase") == "Lobby"
         local weapon = previewWeapon
@@ -231,23 +332,78 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
         end
         local fov = AircraftRules.fov(AircraftRules.defaults, weapon)
         assert(fov, "acknowledged aircraft profile")
-        local map = MapRules.defaults
+        local viewport = camera.ViewportSize
+        if viewport.X <= 1 or viewport.Y <= 1 then
+            return -- Wait for an actual render viewport before committing projection.
+        end
+        local input: InputFrame
+        if inputProvider then
+            input = inputProvider(viewport)
+        else
+            input = sampleInput(viewport)
+        end
+        if input.weapon then
+            selectWeapon(input.weapon)
+        end
+        local pointerValid = Validation.isFinite(input.position.X)
+            and Validation.isFinite(input.position.Y)
+            and input.position.X >= 0
+            and input.position.X <= viewport.X
+            and input.position.Y >= 0
+            and input.position.Y <= viewport.Y
+        local pointer = if pointerValid then input.position else viewport * 0.5
+        local blocked = input.blocked or not pointerValid
+        if recenterRequested or input.recenter == true then
+            focus = AircraftPanRules.recenter(map)
+            recenterRequested = false
+        else
+            focus = AircraftPanRules.step(
+                map,
+                focus,
+                hitbox.Position.X,
+                hitbox.Position.Z,
+                pointer.X / viewport.X,
+                pointer.Y / viewport.Y,
+                deltaSeconds,
+                blocked
+            ) or focus
+        end
+        local cameraFocus = Vector3.new(focus.x, map.groundY, focus.z)
+        local cameraFrame = ThermalCameraController.frame(hitbox.Position, cameraFocus)
+        assert(cameraFrame, "canonical aircraft and bounded focus must define a finite inward basis")
         camera.CameraType = Enum.CameraType.Scriptable
-        camera.CFrame = CFrame.lookAt(hitbox.Position, Vector3.new(map.focusX, map.focusY, map.focusZ))
+        camera.CFrame = cameraFrame
         camera.FieldOfView = fov
         UserInputService.MouseBehavior = Enum.MouseBehavior.Default
         UserInputService.MouseIconEnabled = false
-        local viewport = camera.ViewportSize
-        local mouse = UserInputService:GetMouseLocation()
-        -- The view never rotates. Reticle remains within the central 70% of viewport.
-        local x = math.clamp(mouse.X, viewport.X * 0.15, viewport.X * 0.85)
-        local y = math.clamp(mouse.Y, viewport.Y * 0.15, viewport.Y * 0.85)
+        local mouse = pointer
+        -- Raw edge input drives focus; only the displayed reticle is central-70%.
+        local pixels = AircraftPanRules.raster(mouse.X, mouse.Y, viewport.X, viewport.Y)
+        assert(pixels, "finite viewport and pointer must define raster reticle pixels")
+        local x, y = pixels.x, pixels.y
         local ray = camera:ViewportPointToRay(x, y)
-        local distance = if ray.Direction.Y < -1e-6
-            then (map.groundY - ray.Origin.Y) / ray.Direction.Y
-            else -1
-        local endpoint = ray.Origin + ray.Direction * math.max(0, distance)
-        local validAim = distance > 0 and AircraftRules.aimAllowed(map, endpoint.X, endpoint.Y, endpoint.Z)
+        local parameters = RaycastParams.new()
+        parameters.FilterType = Enum.RaycastFilterType.Include
+        parameters.RespectCanCollide = true
+        local world = workspace:FindFirstChild("World")
+        local battlefield = if world then world:FindFirstChild("Battlefield") else nil
+        parameters.FilterDescendantsInstances = if battlefield
+            then { battlefield, workspace.Terrain }
+            else { workspace.Terrain }
+        local hit = workspace:Raycast(ray.Origin, ray.Direction * 1500, parameters)
+        local endpoint = if hit then hit.Position else ray.Origin + ray.Direction * 1500
+        local minimum = state:GetAttribute("AimMinimumY")
+        local maximum = state:GetAttribute("AimMaximumY")
+        local validAim = hit ~= nil
+            and AircraftRules.aimAllowed(
+                map,
+                endpoint.X,
+                endpoint.Y,
+                endpoint.Z,
+                if type(minimum) == "number" then minimum else nil,
+                if type(maximum) == "number" then maximum else nil
+            )
+        frameNumber += 1
         local cross = reticle
         local caption = label
         local screen = gui
@@ -257,7 +413,7 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
             caption.Text = (if preview then "Studio preview • " else "")
                 .. AircraftRules.names[weapon]
                 .. string.format(
-                    " • %d° FOV\nMove mouse to aim • 1 / 2 select • Firing is planned",
+                    " • %d° FOV\nMouse edges pan • R recenter • 1 / 2 select • Firing is planned",
                     fov
                 )
             -- Observable projection commit used by engine tests and accessibility tooling.
@@ -266,6 +422,14 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
             screen:SetAttribute("AimAllowed", validAim)
             screen:SetAttribute("AimEndpoint", endpoint)
             screen:SetAttribute("ReticlePixels", Vector2.new(x, y))
+            screen:SetAttribute("PanFocus", cameraFocus)
+            screen:SetAttribute("RawPointer", mouse)
+            screen:SetAttribute("InputBlocked", blocked)
+            screen:SetAttribute("ProjectionViewport", viewport)
+            screen:SetAttribute("ProjectionFrame", frameNumber)
+            screen:SetAttribute("ProjectionTime", os.clock())
+            screen:SetAttribute("ProjectionCamera", camera.CFrame)
+            screen:SetAttribute("ProjectionHit", if hit then hit.Instance:GetFullName() else "")
         end
         local targets: { [Model]: boolean } = {}
         for _, other in Players:GetPlayers() do
@@ -305,7 +469,13 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
     end
     -- Runs after Roblox's camera update. RoundPanel's Heartbeat owns only other roles.
     local connection = RunService.RenderStepped:Connect(render)
-    render()
+    local focused = UserInputService.WindowFocused:Connect(function()
+        windowFocused = true
+    end)
+    local unfocused = UserInputService.WindowFocusReleased:Connect(function()
+        windowFocused = false
+    end)
+    render(0)
     return {
         ownsCamera = eligible,
         stop = function()
@@ -314,6 +484,8 @@ function ThermalCameraController.new(player: Player, playerGui: PlayerGui, round
             end
             running = false
             connection:Disconnect()
+            focused:Disconnect()
+            unfocused:Disconnect()
             leave()
         end,
     }

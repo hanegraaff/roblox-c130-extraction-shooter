@@ -1,0 +1,12 @@
+{
+  "result": {
+    "serverClockSeconds": 95.69133487499494,
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":79,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":79}",
+    "environment": "Studio",
+    "actualClientCount": 1,
+    "suite": "P14-launch-failure",
+    "passed": false,
+    "detail": "Only one of two requested actual clients joined; 30-second roster rendezvous aborted before GameRuntime and P14 scenarios. Deferred RoundState client failure is downstream of unavailable roster."
+  },
+  "invocationOK": true
+}

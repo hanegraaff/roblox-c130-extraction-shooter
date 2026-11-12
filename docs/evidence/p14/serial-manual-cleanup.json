@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "8bbab8e50f8d177a06910851f1afcc423486aa74",
+  "serverEndTestReturned": true,
+  "remainingStudioIds": [
+    "ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5"
+  ],
+  "selectorRestoration": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"argsNil\":true,\"restoredNil\":true,\"gameName\":\"tests.rbxlx\",\"placeId\":0,\"previous\":\"P14\"}"
+      }
+    ],
+    "isError": false
+  }
+}

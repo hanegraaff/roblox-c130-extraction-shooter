@@ -341,6 +341,7 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
+    expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")

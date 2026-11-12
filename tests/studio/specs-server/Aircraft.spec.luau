@@ -103,7 +103,7 @@ return function()
     test("server aim rejects exterior and actual solid cover while a clear endpoint succeeds", function()
         fixture(function(owner, _match, setTime)
             setTime(0)
-            local endpoint = Vector3.new(0, 40, 0)
+            local endpoint = Vector3.new(0, 30, 0)
             assert(owner.aimAllowed(endpoint), "exposed elevated endpoint should be clear")
             assert(not owner.aimAllowed(Vector3.new(361, 0, 0)), "outside disk accepted")
             assert(not owner.aimAllowed(Vector3.new(0 / 0, 0, 0)), "nonfinite aim accepted")
@@ -111,7 +111,7 @@ return function()
             wall.Name = "P04SolidSightFixture"
             wall.Anchored = true
             wall.Size = Vector3.new(10, 24, 24)
-            wall.Position = Vector3.new(180, 90, 0)
+            wall.Position = Vector3.new(180, 85, 0)
             wall.Parent = workspace.World.Battlefield
             local blocked = not owner.aimAllowed(endpoint)
             wall:Destroy()
@@ -132,6 +132,40 @@ return function()
             end)
             terrain:WriteVoxels(region, 4, materials, occupancies)
             assert(ok, tostring(failure))
+        end)
+    end)
+    test(
+        "PannedTargetProjection authored vertical envelope rejects above-roof and below-ground endpoints",
+        function()
+            fixture(function(owner, _match, setTime)
+                setTime(0)
+                assert(not owner.aimAllowed(Vector3.new(0, 33, 0)), "above authored envelope accepted")
+                assert(not owner.aimAllowed(Vector3.new(0, -1.01, 0)), "below authored envelope accepted")
+                assert(owner.aimAllowed(Vector3.new(0, 30, 0)), "useful elevated endpoint rejected")
+            end)
+        end
+    )
+    test("PannedTargetProjection selected muzzle obstruction rejects a clear camera ray", function()
+        fixture(function(owner, _match, setTime)
+            setTime(0)
+            local hitbox = workspace.Aircraft.Hitbox :: BasePart
+            local muzzle = hitbox:FindFirstChild("GAU23Muzzle") :: Attachment
+            local endpoint = Vector3.new(0, 30, 0)
+            local wall = Instance.new("Part")
+            wall.Name = "P14MuzzleOnlyObstruction"
+            wall.Anchored = true
+            wall.Size = Vector3.one
+            wall.Position = muzzle.WorldPosition + (endpoint - muzzle.WorldPosition).Unit * 2
+            wall.Parent = workspace.World.Battlefield
+            local parameters = RaycastParams.new()
+            parameters.FilterType = Enum.RaycastFilterType.Include
+            parameters.FilterDescendantsInstances = { wall }
+            local cameraHit = workspace:Raycast(hitbox.Position, endpoint - hitbox.Position, parameters)
+            local allowed = owner.aimAllowed(endpoint)
+            wall:Destroy()
+            assert(cameraHit == nil, "fixture also blocked camera ray")
+            assert(not allowed, "actual weapon muzzle obstruction accepted")
+            assert(owner.aimAllowed(endpoint), "removed muzzle blocker survived")
         end)
     end)
 end

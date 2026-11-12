@@ -4,7 +4,7 @@ Rojo maps this folder to `Workspace.World`. [`Battlefield.model.json`](Battlefie
 
 ## Coordinates and anchors
 
-Distances are studs, with Y up. Ground, map center and current camera focus are `(0,0,0)`. Playable/orbit radius is 360, diameter 720, aircraft altitude 140 and recovery threshold Y=−30. These construction defaults live in `MapRules.defaults`; change matching geometry/settings together. The orange boundary is 24 studs high.
+Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initializes/recenters the local camera focus there, then pans its world-space X/Z within the disk at ground height. Playable/orbit radius is 360, diameter 720, aircraft altitude 140 and recovery threshold Y=−30. These construction defaults live in `MapRules.defaults`; change matching geometry/settings together. The orange boundary is 24 studs high.
 
 | Authored object | Contract |
 | --- | --- |
@@ -18,6 +18,7 @@ Distances are studs, with Y up. Ground, map center and current camera focus are 
 | `Routes` | Teal western and ochre eastern launcher approaches through X=−60/+60. Both remain usable without destruction. |
 | `Buildings` | Foundry and Warehouse are 64×48 studs each; Outpost is 32×48. All have two usable floors and stairs. |
 | `TerrainRecipe` | Eight invisible sphere descriptors plus the exact `TerrainBounds` ownership box; `TerrainRecipe.restore` supplies actual smooth terrain at runtime. |
+| `AimEnvelope/MinimumY`, `MaximumY` | NumberValues authoring inclusive aircraft aim-height bounds in world studs, currently −1 and 32. These are configuration, not visible/colliding geometry. AircraftService validates/captures them and retains independent selected-muzzle obstruction checks. |
 
 All descendant names must be unique and authored BaseParts anchored. Ground/launcher anchor centers are ground+3. Anchor validation uses a 4×6×4-stud upright envelope centered 0.2 studs above the anchor to avoid contact with the spawn pad; floor support is checked separately. Launcher approaches use that envelope every 0.5 stud. Actual avatar walking is a separate required check, not implied by fixture clearance.
 
@@ -38,3 +39,5 @@ Edit the versioned descriptors and manifest together, update semantic/artifact t
 Do not export transient simulation state, projectiles or debris as authoring. Rebuild/teardown replace Battlefield from the private pristine snapshot, so consumers must reacquire its Instances. See [P13](../../plans/13-terrain-and-buildings.md) for actual acceptance results and gaps.
 
 Visible frame members join at column edges, and upper-floor slabs fit inside the frame opening. Avoid overlapping same-facing coplanar surfaces: they cause z-fighting while the camera moves. The artifact gate checks visible building faces, permits hidden intersections inside opaque supports, and rejects floor/map overlap and duplicate panels. Columns extend to ground; the 0.125-stud floor lift preserves relative room height and stair rise.
+
+The P14 world adds the AimEnvelope Folder and two NumberValues: 360 authored world nodes / 334 world Parts, with 351 authored Parts across all assets unchanged. Earlier P13 native-load evidence records its historical 357-node source; it must not be relabeled as the current artifact.

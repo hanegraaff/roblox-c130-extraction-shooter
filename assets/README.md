@@ -27,6 +27,6 @@ Add every imported/authored asset to `manifest.json`. The schema is version 1; e
 
 At least one of `local_path` and `roblox_asset_id` must exist for an entry. World geometry, collision and gameplay-critical models require local reconstruction sources, even if a decorative asset is cloud-only. Track changes to cloud references as source changes. Keep dependencies accessible to the experience owner; a working personal asset ID is not proof that a group-owned release can use it.
 
-The battlefield manifest also records its terrain recipe version, fixed seed, four-stud voxel resolution, descriptor path, server owner module, exact owned bounds, hill count and allowed materials. Terrain is reconstructed from these versioned descriptors at runtime; it is not an untracked Studio-only edit. See the [world contract](world/README.md) for reconstruction and panel metadata.
+The battlefield manifest also records the authored aircraft AimEnvelope values and its terrain recipe version, fixed seed, four-stud voxel resolution, descriptor path, server owner module, exact owned bounds, hill count and allowed materials. Terrain is reconstructed from these versioned descriptors at runtime; it is not an untracked Studio-only edit. See the [world contract](world/README.md) for reconstruction and panel metadata.
 
 Generated place builds belong in ignored `build/`. Do not blanket-ignore authored model/place exports needed for reconstruction. Choose Git LFS or another documented versioned store before adding large binary source assets.

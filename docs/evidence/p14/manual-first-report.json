@@ -1,0 +1,68 @@
+{
+  "invocation": {
+    "requestedClients": 2,
+    "harness": "P14",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P14",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":79,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":79}",
+    "projectionPixelTolerance": 1,
+    "clientCount": 2,
+    "clientBaselines": [
+      {
+        "userId": -1,
+        "report": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":3,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":3}"
+        }
+      }
+    ],
+    "passed": 1,
+    "skipped": 0,
+    "orbitSecondsPerWeapon": 90,
+    "observations": [
+      {
+        "observations": {
+          "engineFrames": 585,
+          "exactDiskEdge": true
+        },
+        "detail": "observed",
+        "passed": true,
+        "request": "EdgeFrames",
+        "userId": -1
+      },
+      {
+        "observations": [],
+        "detail": "Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:204: drawn reticle centre disagrees with ray pixels",
+        "passed": false,
+        "request": "Projection",
+        "target": "Ground",
+        "userId": -1,
+        "weapon": "GAU23"
+      }
+    ],
+    "cases": [
+      {
+        "passed": false,
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:113: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:204: drawn reticle centre disagrees with ray pixels"
+      },
+      {
+        "passed": false,
+        "name": "Harness completion",
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:89: ServerScriptService.ServerTests.AircraftPanHarness:113: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:204: drawn reticle centre disagrees with ray pixels"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "environment": "Studio",
+    "projectionWorldToleranceStuds": 0.5,
+    "suite": "P14-multiplayer",
+    "failed": 2,
+    "discovered": 3
+  }
+}

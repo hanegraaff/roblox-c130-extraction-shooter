@@ -10,6 +10,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StudioTestService = game:GetService("StudioTestService")
 local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local MatchService = require(game:GetService("ServerScriptService").Server.MatchService)
 local RoundHarness = {}
@@ -39,6 +40,40 @@ end
 -- or immediately after starting an ordinary manually operated local test runtime.
 function RoundHarness.run()
     local args = StudioTestService:GetTestArgs()
+    -- A trusted, temporary server-only invocation marker supports Studio's native
+    -- Server & Clients UI when the SDK spawn path is unavailable. It is absent from
+    -- Git defaults and the release mapping; no client remote can set it. Dispatch
+    -- before the ordinary HumanTestSession acquires its competing runtime owner.
+    local development = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+    if
+        RunService:IsStudio()
+        and args == nil
+        and development
+        and development:IsA("ModuleScript")
+        and development:GetAttribute("ManualHarness") == "P14"
+    then
+        local invocation = {
+            mode = "manual-server-clients",
+            harness = "P14",
+            requestedClients = 2,
+            selector = "ServerStorage.DevelopmentSettings.ManualHarness",
+            selectorValue = "P14",
+            studioOnly = true,
+        }
+        workspace:SetAttribute("ManualP14Invocation", HttpService:JSONEncode(invocation))
+        workspace:SetAttribute("ManualP14Report", nil)
+        require(script.Parent.AircraftPanHarness).run(false, function(report)
+            workspace:SetAttribute(
+                "ManualP14Report",
+                HttpService:JSONEncode({ invocation = invocation, result = report })
+            )
+        end)
+        return
+    end
+    if type(args) == "table" and (args.kind == "P14" or args.kind == "P14ArrivalRegression") then
+        require(script.Parent.AircraftPanHarness).run(args.kind == "P14ArrivalRegression")
+        return
+    end
     if type(args) == "table" and args.kind == "P13" then
         require(script.Parent.ExpandedMapHarness).run()
         return

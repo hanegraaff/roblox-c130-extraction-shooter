@@ -1,6 +1,6 @@
 # Decisions, defaults, and open release details
 
-Updated 2026-11-08 for the expanded MVP level, panning and physical panel destruction, following the user's players-versus-C-130 revision and confirmation that M-7 fire damages the plane. “Selected” records user choices; “Default” records concrete initial implementation/tuning choices that can be revised. Stable IDs are retained; superseded choices are described in the change record below.
+Updated 2026-11-09 for the P14 panning candidate and the expanded terrain/building and physical-destruction scope, following the user's players-versus-C-130 revision and confirmation that M-7 fire damages the plane. “Selected” records user choices; “Default” records concrete initial implementation/tuning choices that can be revised. Stable IDs are retained; superseded choices are described in the change record below.
 
 | ID | State | Decision and reason | Revisit when |
 | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Updated 2026-11-08 for the expanded MVP level, panning and physical panel destru
 | D23 | Selected | Waiting players can walk in the protected lobby; human testing supports solo exploration, role choice, immediate start and settings controls isolated from release builds | User changes human-testing workflow |
 | D24 | Default | Solo test Play opens Ground preview; role cycles Auto/Ground/Operator, next-round durations are 30/60/180/600 seconds (default 60), and preferences last for the local session/reset only | Human testing needs more settings or different defaults |
 | D25 | Default | Orbit period 90 seconds, increasing phase from positive X toward positive Z; use the server canonical anchored model with ordinary replication and no cosmetic shell | Measured visual stepping or balance warrants a bounded smoothing/tuning change |
-| D26 | Default | Implemented GAU23 FOV 35°, M102 FOV 60°, reticle central 70%, keys 1/2 or named buttons. P14 must reconcile reticle bounds with edge panning and preserve acknowledged zoom | P14 camera-feel/readability tests |
+| D26 | Default | GAU23 FOV 35°, M102 FOV 60°, reticle central 70% with one integer pixel pair shared by drawing/rays, keys 1/2 or named buttons. P14 integrates raw pointer input before the reticle clamp and preserves focus through acknowledged zoom | P14 camera-feel/readability tests |
 | D27 | Selected | Double implemented battlefield diameter: 360 → 720 studs; radius 180 → 360, four times the area; orbit continues matching the perimeter | User changes level scale |
 | D28 | Selected | Authored terrain, two large buildings and one smaller building, all at least two stories with usable upper floors; dedicated construction P13; primitive art is sufficient | User changes level content |
 | D29 | Selected / default control | Mouse movement pans the inward aircraft view while weapon zoom still applies. Default: bounded edge pan, world-space focus retained across orbit/zoom, explicit recenter, no independent zoom or manual flight | P14 operated review tunes control/speed/edge zone |
@@ -41,9 +41,11 @@ Updated 2026-11-08 for the expanded MVP level, panning and physical panel destru
 | D35 | Selected sequencing / default asset scope | Demonstrate full level/destruction mechanics with simple graphics in MVP. Refined assets get dedicated later plans; P10 handles readable presentation, not a mandatory high-detail art pass | A separately scoped post-MVP asset plan is approved |
 | D36 | Default | P13 construction uses Foundry/Warehouse 64×48 (3072 square studs each), Outpost 32×48 (1536); two floors with ground top Y=0.125, upper top Y=10.125, roof center Y=20.625, sixteen 0.625-rise / 2-run / 8-wide stair treads, 32-stud room bays and 111 wall/roof/interior panels. Eight fixed Grass/Rock caps use nominal apex Y=16, four-stud voxels and bounded recipe v1/seed 0. A future 750-stud range budget covers the full disk at altitude 140; it is feasibility evidence, not implemented weapon range | Navigation, visibility and later combat/balance tests justify tuning |
 
+| D37 | Default | P14 candidate: outer 12% viewport edge zone, speed ramps to 120 studs/second, per-update delta cap 0.1 seconds, R / Recenter button returns to center. Raw pointer input drives pan before the central-70% displayed reticle clamp; actionable UI/text focus, viewport exit and window focus loss suspend pan. Focus is world-space X/Z at ground height; new role/round entry resets it. Battlefield/AimEnvelope NumberValues bound aim to Y=−1…32 studs, covering current terrain/roofs. These defaults await operated engine review | P14 coverage, input/layout and comfort evidence warrants tuning |
+
 Aircraft health is derived as three times direct rocket damage. Rifle damage is positive and small; previous rifle hits may reduce the further rockets needed. First and second rockets alone do not destroy a pristine plane. These are hard test invariants, not tuning defaults. Each C-130 weapon retains its independent cooldown/reload across switching.
 
-The circular orbit uses the same center and horizontal radius as the map boundary. The model points along flight travel. The current expanded-map camera uses fixed map-center focus; P14 replaces it with a mouse-panned focus clamped within the disk, still inward-facing, preserving pan across weapon-linked zoom changes. Exact altitude/FOVs are adjustable, with validation that playable sight lines and weapon ranges remain viable.
+The circular orbit uses the same center and horizontal radius as the map boundary. The model points along flight travel. The P14 candidate uses a mouse-panned focus clamped within the disk, still inward-facing and retained across weapon-linked zoom changes; main’s earlier baseline uses fixed map-center focus. Exact altitude/FOVs are adjustable, with validation that playable sight lines and weapon ranges remain viable.
 
 ## Open details that do not block initial implementation
 

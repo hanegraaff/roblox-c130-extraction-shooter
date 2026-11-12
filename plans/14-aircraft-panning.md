@@ -30,4 +30,82 @@ Update current controls, actual pan/recenter bindings, view/aim contracts, camer
 
 ## Completion record
 
-No implementation or validation performed by the steering revision. Record A1–A5 → tests/commands → actual counts/results, source/build, two-client/full-orbit reports, controls/viewport review, tester findings and CI/PR when implemented.
+The steering revision itself made no implementation claim. The implementation and actual verification follow; required acceptance remains incomplete.
+
+### Implementation start — 2026-11-09
+
+Dependency P13 and its passing engine evidence are integrated on main `10327b4`.
+Implementation uses dedicated branch `plan/14-aircraft-panning`. The original
+Studio test document remains connected in Edit; its actual synced project is
+PlayersVsC130Tests, place 0, with test Rojo on localhost:34872.
+
+Initial tuning defaults, declared before candidate testing: raw-pointer edge
+zone 12% on each side, maximum pan speed 120 studs/second, per-update delta-time
+cap 0.1 seconds and **R** to recenter. Retain acknowledged 35°/60° weapon FOVs and
+central-70% displayed reticle; raw edge input drives pan before that display
+clamp. UI hover/text focus suspends pan. An authored maximum aim elevation of
+32 studs covers the current roof/hill geometry. These are implementation defaults,
+not additional user-selected rules; validation may justify documented tuning.
+No acceptance result is claimed at implementation start.
+
+Declared engine tolerances before testing: reticle projection agreement at most
+1 pixel / 0.5 studs at the hit surface; horizontal inward dot at least −0.000001
+(zero is permitted directly below the aircraft at the disk edge); live canonical
+camera-origin agreement within 2 studs between replication/Heartbeat updates.
+Use an explicit stable camera basis for that near-vertical edge case. The authored
+aim envelope will use numeric values rather than additional visible geometry.
+
+Automated edge-input steering must reach a target neighborhood within 3 studs;
+this control-steering tolerance is separate from the tighter 1-pixel / 0.5-stud
+same-frame projection agreement. Surface assertions still require an actual
+nonflat Terrain slope or the requested building's StoryId `02` panel, as applicable.
+
+### Candidate delivery and acceptance gap — 2026-11-09
+
+Current source `8bbab8e50f8d177a06910851f1afcc423486aa74`, tree
+`c445a376c14645868a52f81868c59730955b9f6d`, is pushed in
+[draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18).
+It implements the pan/focus/projection/envelope contracts above. Three engine
+findings are corrected: fixture steering-to-pointing sequencing (`f16e695`),
+real GUI-inset hover blocking (`25b44e7`) and fractional reticle raster agreement
+(`8bbab8e`). Excluded test-only native UI invocation support is `e6ff4e7`.
+Raw pan input, declared tolerances and the two-player requirement remain intact.
+
+| Criterion | Actual result / required remainder |
+| --- | --- |
+| A1 | Full `python3 scripts/verify.py` exits zero: **46 unit / 18 integration**, static/rejection/build gates, 351 transforms, 111 pivots, 7,146 surface pairs; 414 release/478 test Instances, 25 runtime scripts. 13 pure pan cases. 585 native CFrames pass on earlier full attempts; current ordinary smoke passes 82 server / 3 client, one actual client. Full current phase-aligned suite remains open. |
+| A2 | Earlier focused arrival regression passes 2/2 with two actual clients, zero world error and 0.000153 px at the original failing target. Current actual production raster probes draw/ray/store with 0 px error. Server envelope/muzzle baseline passes. Full 28-target/both-90-second-orbit/slope/upper-floor and rendered coverage remains open. |
+| A3 | Native solo weapon keys/buttons preserve focus; authoritative zoom coherence is observed. Current two-client isolation/selection/rejection and applicable P04/human multiplayer regressions remain open. |
+| A4 | Native hover/text blocking and recenter pass; numeric 1280×720/1920×1080 layout checks pass; real panned preview is refreshed. Complete rendered thermal cover, both-FOV full-orbit comfort and operated viewport review remain open after native viewport-focus loss. |
+| A5 | Two preview exit/reentry cycles restore normal camera/input and singleton ownership; historical teardown checks pass. Full current reset/new-round/operator-departure/kick and multiplayer lifecycle regressions remain open. |
+
+The [evidence record](../docs/evidence/p14-aircraft-panning.md) links actual
+reports, commands, invocation/client counts, declared tolerances, source hashes
+and chronological failures. [Host log](../docs/evidence/p14/host-verify.txt),
+[source/build manifest](../docs/evidence/p14/source-manifest.json) and
+[independent tester report](../docs/evidence/p14/tester-report.md) are durable.
+Independent 73,205-combination probe has 9,360 explicit rejections and zero
+nonfinite outputs; tiny extreme translated-map boundary roundoff is retained as
+a limitation of no current-map impact. Source/harness review and engine retests
+leave no reproduced material production defect unresolved, while missing
+required acceptance remains blocking. The exact source passes
+[GitHub Verify 42729968970](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42729968970).
+
+The original unnamed-place connection blocker is resolved. Current native UI
+requests two clients but only one connects; SDK full launches also fail before a
+usable two-player session. A final distinct native one-client + AddPlayers(1) attempt is
+rejected because the manual session is not SDK-owned. No P14 scenario executes
+on these current launch failures. Earlier two-client partial results are not a
+full six-case pass. No further launch variants are attempted.
+
+All owned simulations are ended. Only original Studio
+`ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5` remains in Edit, with the temporary
+ManualHarness restored nil. Fixtures/device state are restored. The technical
+writer updated current player/contributor/package documentation, public raster
+API, actual counts and guarded manual invocation/cleanup; final prose/evidence
+is checked separately from unchanged source: repository checker passes 64 Markdown / 78 JSON files and `git diff --check` passes. The real README image is a labelled
+Waiting/Lobby preview, not multiplayer acceptance.
+
+Required engine/native evidence remains open; roadmap P14 is Blocked and P05
+remains Planned. Source and evidence are delivered on this task branch; PR #18
+stays draft. Main is unchanged, with no merge or Roblox publication.

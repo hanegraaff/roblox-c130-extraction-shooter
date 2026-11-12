@@ -1,0 +1,34 @@
+{
+  "codeCommit": "8bbab8e50f8d177a06910851f1afcc423486aa74",
+  "codeTree": "c445a376c14645868a52f81868c59730955b9f6d",
+  "invocation": {
+    "requestedClients": 2,
+    "harness": "P14",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P14",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "actualConnectedClients": 1,
+  "serverClockSeconds": 114.5800264999998,
+  "serverBaseline": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 82,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 82
+  },
+  "clientObserved": {
+    "viewport": "1081, 618",
+    "baseline": "{\"errors\":1,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"discovered\":3}"
+  },
+  "manualP14ReportProduced": false,
+  "scenarioCasesExecuted": 0,
+  "acceptedFullResult": false,
+  "detail": "Two native client processes were actually requested; first connected, second logged Joining localhost without accepted network connection. Server two-client rendezvous timed out before GameRuntime and any P14 case. Client deferred runtime failure is downstream.",
+  "evidence": "docs/evidence/p14/raster-manual-launch-logs.json"
+}

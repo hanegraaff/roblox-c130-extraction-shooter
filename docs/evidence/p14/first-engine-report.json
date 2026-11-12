@@ -1,0 +1,150 @@
+{
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":79,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":79}",
+    "projectionPixelTolerance": 1,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:91: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:308: target hidden or reticle clamped away"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftPanHarness:67: ServerScriptService.ServerTests.AircraftPanHarness:91: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:308: target hidden or reticle clamped away"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "passed": 1,
+    "environment": "Studio",
+    "orbitSecondsPerWeapon": 90,
+    "observations": [
+      {
+        "observations": {
+          "engineFrames": 585,
+          "exactDiskEdge": true
+        },
+        "request": "EdgeFrames",
+        "passed": true,
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "cameraPosition": [
+            359.1766357421875,
+            140,
+            24.333927154541016
+          ],
+          "pixels": [
+            540.5,
+            328.9999694824219
+          ],
+          "focus": [
+            0,
+            0,
+            0
+          ],
+          "inputBoundary": "injected raw pointer; actual production controller/raycast",
+          "fov": 35,
+          "endpoint": [
+            -0.000030517578125,
+            0,
+            -0.000003814697265625
+          ],
+          "frame": 3,
+          "time": 6.001242708342033,
+          "hit": "Workspace.World.Battlefield.GroundDisk",
+          "viewport": [
+            1081,
+            658
+          ],
+          "targetSurfaceErrorStuds": 0.00003075507265748456,
+          "pixelError": 0,
+          "weapon": "GAU23"
+        },
+        "detail": "observed",
+        "target": "Ground",
+        "request": "Projection",
+        "userId": -1,
+        "passed": true,
+        "weapon": "GAU23"
+      },
+      {
+        "observations": {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "cameraPosition": [
+            346.3840637207031,
+            140,
+            98.07186126708984
+          ],
+          "pixels": [
+            918.8499755859375,
+            98.69999694824219
+          ],
+          "focus": [
+            219.90823364257812,
+            0,
+            219.9208526611328
+          ],
+          "inputBoundary": "injected raw pointer; actual production controller/raycast",
+          "fov": 35,
+          "endpoint": [
+            190.0196075439453,
+            0,
+            137.13406372070312
+          ],
+          "frame": 47,
+          "time": 8.936674208336626,
+          "hit": "Workspace.World.Battlefield.GroundDisk",
+          "viewport": [
+            1081,
+            658
+          ],
+          "targetSurfaceErrorStuds": 88.12256622314453,
+          "pixelError": 0.0001258271950064227,
+          "weapon": "GAU23"
+        },
+        "detail": "Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:308: target hidden or reticle clamped away",
+        "target": "Ground",
+        "request": "Projection",
+        "userId": -1,
+        "passed": false,
+        "weapon": "GAU23"
+      }
+    ],
+    "clientCount": 2,
+    "clientBaselines": [
+      {
+        "userId": -1,
+        "report": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        }
+      },
+      {
+        "userId": -2,
+        "report": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        }
+      }
+    ],
+    "projectionWorldToleranceStuds": 0.5,
+    "suite": "P14-multiplayer",
+    "failed": 2,
+    "discovered": 3
+  },
+  "invocationOK": true
+}

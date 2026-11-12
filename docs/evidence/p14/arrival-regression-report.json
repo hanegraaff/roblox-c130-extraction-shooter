@@ -1,0 +1,151 @@
+{
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":79,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":79}",
+    "projectionPixelTolerance": 1,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "P14 arrival regression transitions from input-driven steering to a committed target-pointing frame"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "passed": 2,
+    "environment": "Studio",
+    "orbitSecondsPerWeapon": 0,
+    "observations": [
+      {
+        "observations": {
+          "pointingInputFrame": 2,
+          "endpoint": [
+            0,
+            0,
+            0.0000019073486328125
+          ],
+          "time": 6.359511999995448,
+          "pointingCommitted": true,
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "cameraPosition": [
+            359.18255615234375,
+            140,
+            24.2465877532959
+          ],
+          "arrivalErrorStuds": 0,
+          "focus": [
+            0,
+            0,
+            0
+          ],
+          "frame": 3,
+          "fov": 35,
+          "pixelError": 0,
+          "pixels": [
+            540.5,
+            329
+          ],
+          "hit": "Workspace.World.Battlefield.GroundDisk",
+          "viewport": [
+            1081,
+            658
+          ],
+          "targetSurfaceErrorStuds": 0.0000019073486328125,
+          "inputBoundary": "injected raw pointer; actual production controller/raycast",
+          "weapon": "GAU23"
+        },
+        "detail": "observed",
+        "target": "Ground",
+        "request": "Projection",
+        "userId": -1,
+        "passed": true,
+        "weapon": "GAU23"
+      },
+      {
+        "observations": {
+          "pointingInputFrame": 46,
+          "endpoint": [
+            220,
+            0,
+            220
+          ],
+          "time": 9.367779958323808,
+          "pointingCommitted": true,
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "cameraPosition": [
+            345.8384704589844,
+            140,
+            99.97877502441406
+          ],
+          "arrivalErrorStuds": 0.21477822959423065,
+          "focus": [
+            220.21456909179688,
+            0,
+            220.0094757080078
+          ],
+          "frame": 47,
+          "fov": 35,
+          "pixelError": 0.000152587890625,
+          "pixels": [
+            540.6731567382812,
+            328.1722106933594
+          ],
+          "hit": "Workspace.World.Battlefield.GroundDisk",
+          "viewport": [
+            1081,
+            658
+          ],
+          "targetSurfaceErrorStuds": 0,
+          "inputBoundary": "injected raw pointer; actual production controller/raycast",
+          "weapon": "GAU23"
+        },
+        "detail": "observed",
+        "target": "Ground",
+        "request": "Projection",
+        "userId": -1,
+        "passed": true,
+        "weapon": "GAU23"
+      },
+      {
+        "observations": {
+          "role": "Ground",
+          "cameraType": "Custom",
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        },
+        "request": "Ground",
+        "passed": true,
+        "userId": -2,
+        "detail": "observed"
+      }
+    ],
+    "clientCount": 2,
+    "clientBaselines": [
+      {
+        "userId": -2,
+        "report": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        }
+      },
+      {
+        "userId": -1,
+        "report": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":2,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":2}"
+        }
+      }
+    ],
+    "projectionWorldToleranceStuds": 0.5,
+    "suite": "P14-arrival-regression",
+    "failed": 0,
+    "discovered": 2
+  },
+  "invocationOK": true
+}

@@ -12,7 +12,12 @@ local RoundPanel = {}
 local ThermalCameraController = require(script.Parent.ThermalCameraController)
 
 -- Creates a controller for existing player/status owners; start/stop are idempotent.
-function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): Lifecycle.Controller
+function RoundPanel.new(
+    player: Player,
+    playerGui: PlayerGui,
+    state: Instance,
+    inputProvider: ThermalCameraController.InputProvider?
+): Lifecycle.Controller
     return Lifecycle.new({
         function()
             assert(not playerGui:FindFirstChild("RoundHUD"), "round HUD already owned")
@@ -43,7 +48,7 @@ function RoundPanel.new(player: Player, playerGui: PlayerGui, state: Instance): 
             surrender.Parent = gui
             local sequence = 0
             local oldRoundId = -1
-            local thermal = ThermalCameraController.new(player, playerGui, state)
+            local thermal = ThermalCameraController.new(player, playerGui, state, inputProvider)
             local function update()
                 local roundId = state:GetAttribute("RoundId")
                 local phase = tostring(state:GetAttribute("Phase"))

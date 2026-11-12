@@ -1,0 +1,190 @@
+{
+  "codeCommit": "8bbab8e50f8d177a06910851f1afcc423486aa74",
+  "codeTree": "c445a376c14645868a52f81868c59730955b9f6d",
+  "studioId": "ab521a9d-50ef-49e7-a9c4-f56e2a88f5c5",
+  "sourcePreflight": {
+    "version": "0.746.0.7461269",
+    "name": "tests.rbxlx",
+    "failures": [],
+    "placeId": 0,
+    "checked": 63
+  },
+  "invocation": "ordinary in-process MCP Play with ManualHarness=nil; original production entrypoint and default UserInputService",
+  "server": {
+    "phase": "Lobby",
+    "baseline": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 82,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 82
+    },
+    "actualClientCount": 1
+  },
+  "client": {
+    "rasterProbe": {
+      "viewport": [
+        1081,
+        579
+      ],
+      "samples": [
+        {
+          "raw": [
+            540.9949951171875,
+            309.9949951171875
+          ],
+          "drawn": [
+            541,
+            310
+          ],
+          "storedOffset": [
+            541,
+            310
+          ],
+          "errorPixels": 0,
+          "inset": [
+            0,
+            58
+          ],
+          "ray": [
+            541,
+            310
+          ]
+        },
+        {
+          "raw": [
+            540.5,
+            289.5
+          ],
+          "drawn": [
+            541,
+            290
+          ],
+          "storedOffset": [
+            541,
+            290
+          ],
+          "errorPixels": 0,
+          "inset": [
+            0,
+            58
+          ],
+          "ray": [
+            541,
+            290
+          ]
+        },
+        {
+          "raw": [
+            162.14999389648438,
+            492.1499938964844
+          ],
+          "drawn": [
+            163,
+            492
+          ],
+          "storedOffset": [
+            163,
+            492
+          ],
+          "errorPixels": 0,
+          "inset": [
+            0,
+            58
+          ],
+          "ray": [
+            163,
+            492
+          ]
+        },
+        {
+          "raw": [
+            918.8499755859375,
+            86.8499984741211
+          ],
+          "drawn": [
+            918,
+            87
+          ],
+          "storedOffset": [
+            918,
+            87
+          ],
+          "errorPixels": 0,
+          "inset": [
+            0,
+            58
+          ],
+          "ray": [
+            918,
+            87
+          ]
+        }
+      ]
+    },
+    "role": "Waiting",
+    "viewport": "1081, 579",
+    "preview": "Ground",
+    "baseline": {
+      "environment": "Studio",
+      "failed": 0,
+      "discovered": 3,
+      "errors": 0,
+      "skipped": 0,
+      "suite": "P01-client",
+      "passed": 3,
+      "seed": 1
+    },
+    "guiInset": "0, 58"
+  },
+  "actualThermalFractionalProbe": {
+    "offset": {
+      "1": 541,
+      "2": 310
+    },
+    "rayPixelError": 0,
+    "drawnPixelError": 0,
+    "guiInset": {
+      "1": 0,
+      "2": 58
+    },
+    "drawn": {
+      "1": 541,
+      "2": 310
+    },
+    "raw": "540.994995, 309.994995",
+    "fov": 35,
+    "role": "Waiting",
+    "pixels": {
+      "1": 541,
+      "2": 310
+    },
+    "focus": "0, 0, 0",
+    "viewport": {
+      "1": 1081,
+      "2": 579
+    },
+    "preview": "Gunship",
+    "projectionFrame": 57,
+    "weapon": "GAU23"
+  },
+  "actualThermalOddCenterProbe": {
+    "raw": "540.5, 289.5",
+    "drawn": {
+      "1": 541,
+      "2": 290
+    },
+    "pixels": {
+      "1": 541,
+      "2": 290
+    },
+    "drawnPixelError": 0,
+    "viewport": "1081, 579"
+  },
+  "passed": true,
+  "limitations": "Focused raster/smoke proof only; not six-case full P14 multiplayer or rendered full-orbit comfort."
+}
