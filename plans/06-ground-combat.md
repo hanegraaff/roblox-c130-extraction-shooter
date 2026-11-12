@@ -100,7 +100,8 @@ not yet complete. [GitHub Verify 43329198860](https://github.com/hanegraaff/robl
 passed on `4860aaede85ae384671207ba0d6ba1165594528c`; it does not replace the
 prepared current-source native two-client and user review. The
 automated Studio launcher is unreliable, so manual Server & Clients is the
-established fallback.
+established fallback. The current P06 manual suite passed; ordinary user
+aiming/bullet-visibility review and current P05/P14 regression remain required.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
