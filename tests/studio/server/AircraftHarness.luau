@@ -185,6 +185,22 @@ function AircraftHarness.run()
     local firstRound = 0
     local ok, failure = pcall(function()
         check("A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward", function()
+            -- Capture each client's actual normal camera before role deployment;
+            -- client test discovery can otherwise lag behind operator entry.
+            awaitCondition(function()
+                if #Players:GetPlayers() ~= 2 then
+                    return false
+                end
+                for _, player in initialClients do
+                    if ready[player] == nil or player.Parent ~= Players then
+                        return false
+                    end
+                end
+                return true
+            end, "both clients ready before camera baseline", 35)
+            for _, player in initialClients do
+                probe(player, { kind = "CaptureBaseline" })
+            end
             deploy()
             firstRound = runtime.rounds.match.snapshot().roundId
             local operator, ground = roles()

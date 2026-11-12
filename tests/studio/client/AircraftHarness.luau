@@ -22,6 +22,13 @@ type Request = {
     role: string?,
     payload: unknown?,
 }
+type CameraBaseline = {
+    camera: Camera,
+    fieldOfView: number,
+    mouseBehavior: Enum.MouseBehavior,
+    mouseIconEnabled: boolean,
+    capturedAt: number,
+}
 local function awaitCondition(predicate: () -> boolean, message: string)
     local untilTime = os.clock() + 8
     while not predicate() and os.clock() < untilTime do
@@ -113,9 +120,6 @@ end
 -- Installs one owned test listener; returns immediately in ordinary human sessions.
 function AircraftHarness.run()
     local initialInput = game:GetService("UserInputService")
-    local initialBehavior = initialInput.MouseBehavior
-    local initialIcon = initialInput.MouseIconEnabled
-    local initialFov = if workspace.CurrentCamera then workspace.CurrentCamera.FieldOfView else 70
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P04Harness", 120)
         if not transport or not transport:IsA("RemoteEvent") then
@@ -132,12 +136,103 @@ function AircraftHarness.run()
             frames:Disconnect()
         end)
         local player = Players.LocalPlayer
+        local baseline: CameraBaseline? = nil
         local listener: RBXScriptConnection? = nil
         local removal: RBXScriptConnection? = nil
         listener = transport.OnClientEvent:Connect(function(token: number, request: Request)
             local details: { [string]: unknown } = {}
             local ok, failure = pcall(function()
-                if request.kind == "Pose" then
+                if request.kind == "CaptureBaseline" then
+                    assert(not baseline, "normal camera baseline already captured")
+                    local stableCamera: Camera? = nil
+                    local stableFov: number? = nil
+                    local stableBehavior: Enum.MouseBehavior? = nil
+                    local stableIcon: boolean? = nil
+                    local stableSince: number? = nil
+                    local readiness: { [string]: unknown } = {}
+                    details.baselineReadiness = readiness
+                    awaitCondition(function()
+                        local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local phase = if round then round:GetAttribute("Phase") else nil
+                        local role = player:GetAttribute("Role")
+                        local camera = workspace.CurrentCamera
+                        local character = player.Character
+                        local humanoid = if character
+                            then character:FindFirstChildOfClass("Humanoid")
+                            else nil
+                        local thermalHud = player.PlayerGui:FindFirstChild("ThermalHUD")
+                        local effect = if camera then camera:FindFirstChild("OperatorThermal") else nil
+                        local backdrop = if camera
+                            then camera:FindFirstChild("OperatorGroundBackdrop")
+                            else nil
+                        local now = os.clock()
+                        readiness.latest = {
+                            time = now,
+                            phase = phase or "missing",
+                            role = role or "missing",
+                            camera = if camera then camera:GetFullName() else "missing",
+                            cameraType = if camera then camera.CameraType.Name else "missing",
+                            fieldOfView = if camera then camera.FieldOfView else "missing",
+                            mouseBehavior = initialInput.MouseBehavior.Name,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                            ownHumanoid = humanoid ~= nil,
+                            ownSubject = camera ~= nil
+                                and humanoid ~= nil
+                                and camera.CameraSubject == humanoid,
+                            thermalHud = thermalHud ~= nil,
+                            thermalEffect = effect ~= nil,
+                            backdrop = backdrop ~= nil,
+                        }
+                        if
+                            phase ~= "Lobby"
+                            or role ~= "Waiting"
+                            or not camera
+                            or camera.CameraType ~= Enum.CameraType.Custom
+                            or not Validation.isFinite(camera.FieldOfView)
+                            or not humanoid
+                            or camera.CameraSubject ~= humanoid
+                            or thermalHud
+                            or effect
+                            or backdrop
+                        then
+                            stableCamera, stableFov, stableBehavior, stableIcon, stableSince =
+                                nil, nil, nil, nil, nil
+                            return false
+                        end
+                        if
+                            camera ~= stableCamera
+                            or camera.FieldOfView ~= stableFov
+                            or initialInput.MouseBehavior ~= stableBehavior
+                            or initialInput.MouseIconEnabled ~= stableIcon
+                        then
+                            stableCamera = camera
+                            stableFov = camera.FieldOfView
+                            stableBehavior = initialInput.MouseBehavior
+                            stableIcon = initialInput.MouseIconEnabled
+                            stableSince = now
+                            return false
+                        end
+                        if not stableSince or now - stableSince < 0.1 then
+                            return false
+                        end
+                        baseline = {
+                            camera = camera,
+                            fieldOfView = camera.FieldOfView,
+                            mouseBehavior = initialInput.MouseBehavior,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                            capturedAt = now,
+                        }
+                        details.baseline = {
+                            capturedAt = now,
+                            camera = camera:GetFullName(),
+                            cameraType = camera.CameraType.Name,
+                            fieldOfView = camera.FieldOfView,
+                            mouseBehavior = initialInput.MouseBehavior.Name,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                        }
+                        return true
+                    end, "stable lobby camera baseline")
+                elseif request.kind == "Pose" then
                     local snapshot = request.position
                     local snapshotTime = request.snapshotServerTime
                     local period = request.periodSeconds
@@ -287,6 +382,10 @@ function AircraftHarness.run()
                     local gui = player.PlayerGui:FindFirstChild("ThermalHUD")
                     local camera = workspace.CurrentCamera
                     assert(gui and camera, "profile view missing")
+                    local expectedBaseline = baseline
+                    assert(expectedBaseline, "normal camera baseline missing")
+                    details.cameraSameAsBaseline = camera == expectedBaseline.camera
+                    assert(camera == expectedBaseline.camera, "camera replaced after normal baseline")
                     local hudCount = 0
                     local effectCount = 0
                     for _, child in player.PlayerGui:GetChildren() do
@@ -427,26 +526,75 @@ function AircraftHarness.run()
                     assert(exposed and covered, "thermal fixtures missing their occluded effects")
                     details.highlights = count
                 elseif request.kind == "Restored" then
+                    local expectedBaseline = baseline
+                    assert(expectedBaseline, "normal camera baseline missing")
+                    local restored: { [string]: unknown } = {
+                        baseline = {
+                            capturedAt = expectedBaseline.capturedAt,
+                            camera = expectedBaseline.camera:GetFullName(),
+                            fieldOfView = expectedBaseline.fieldOfView,
+                            mouseBehavior = expectedBaseline.mouseBehavior.Name,
+                            mouseIconEnabled = expectedBaseline.mouseIconEnabled,
+                        },
+                    }
+                    details.restoration = restored
                     awaitCondition(function()
                         local camera = workspace.CurrentCamera
+                        local round = ReplicatedStorage:FindFirstChild("RoundState")
+                        local character = player.Character
+                        local humanoid = if character
+                            then character:FindFirstChildOfClass("Humanoid")
+                            else nil
+                        local role = player:GetAttribute("Role")
+                        local phase = if round then round:GetAttribute("Phase") else nil
+                        local thermalHud = player.PlayerGui:FindFirstChild("ThermalHUD")
+                        local effect = if camera then camera:FindFirstChild("OperatorThermal") else nil
+                        local backdrop = if camera
+                            then camera:FindFirstChild("OperatorGroundBackdrop")
+                            else nil
+                        restored.latest = {
+                            time = os.clock(),
+                            role = role or "missing",
+                            phase = phase or "missing",
+                            camera = if camera then camera:GetFullName() else "missing",
+                            sameCamera = camera == expectedBaseline.camera,
+                            cameraType = if camera then camera.CameraType.Name else "missing",
+                            fieldOfView = if camera then camera.FieldOfView else "missing",
+                            mouseBehavior = initialInput.MouseBehavior.Name,
+                            mouseIconEnabled = initialInput.MouseIconEnabled,
+                            ownHumanoid = humanoid ~= nil,
+                            ownSubject = camera ~= nil
+                                and humanoid ~= nil
+                                and camera.CameraSubject == humanoid,
+                            thermalHud = thermalHud ~= nil,
+                            thermalEffect = effect ~= nil,
+                            backdrop = backdrop ~= nil,
+                        }
                         return player:GetAttribute("Role") == "Waiting"
-                            and not player.PlayerGui:FindFirstChild("ThermalHUD")
+                            and phase == "Lobby"
+                            and not thermalHud
                             and camera ~= nil
                             and camera.CameraType == Enum.CameraType.Custom
-                            and not camera:FindFirstChild("OperatorThermal")
-                            and not camera:FindFirstChild("OperatorGroundBackdrop")
+                            and humanoid ~= nil
+                            and camera.CameraSubject == humanoid
+                            and not effect
+                            and not backdrop
                     end, "role-loss camera/effect restoration")
                     local camera = workspace.CurrentCamera
                     assert(
-                        camera and math.abs(camera.FieldOfView - initialFov) < 0.01,
+                        camera and camera == expectedBaseline.camera,
+                        "camera replaced after normal baseline"
+                    )
+                    assert(
+                        math.abs(camera.FieldOfView - expectedBaseline.fieldOfView) < 0.01,
                         "original FOV not restored"
                     )
                     for _, child in camera:GetChildren() do
                         assert(not child:IsA("Highlight"), "thermal highlights leaked on role loss")
                     end
                     assert(
-                        initialInput.MouseIconEnabled == initialIcon
-                            and initialInput.MouseBehavior == initialBehavior,
+                        initialInput.MouseIconEnabled == expectedBaseline.mouseIconEnabled
+                            and initialInput.MouseBehavior == expectedBaseline.mouseBehavior,
                         "mouse icon/behavior not restored"
                     )
                 elseif request.kind == "Leave" then
