@@ -112,6 +112,23 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             "new round did not reset shot identity/readiness"
         )
     end)
+    test("P05 each profile bounds swept distance and expires only after its exact lifetime", function()
+        for _, profile in { combat.profiles.GAU23, combat.profiles.M102 } do
+            local distance, expired = combat.flight(profile, profile.lifetime, 10, 10)
+            assert(not expired and distance == 10, "lifetime equality or remaining-distance clamp changed")
+            distance, expired = combat.flight(profile, profile.lifetime + 0.001, 10, 0.1)
+            assert(expired and distance == 0, "projectile flew past its bounded lifetime")
+            distance, expired = combat.flight(profile, 0.5, 100, 0.01)
+            assert(
+                not expired and math.abs(distance - profile.speed * 0.01) < 1e-9,
+                "frame step did not use configured speed"
+            )
+            distance, expired = combat.flight(profile, 0.5, 100, -1)
+            assert(not expired and distance == 0, "negative frame time advanced flight")
+            distance, expired = combat.flight(profile, math.huge, 100, 0.1)
+            assert(expired and distance == 0, "nonfinite elapsed time advanced flight")
+        end
+    end)
     test("P05 alternate level bounds replace industrial coordinates", function()
         local alternate = table.clone(defaults)
         alternate.centerX = 1000

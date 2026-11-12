@@ -74,6 +74,34 @@ export type Controller = {
     readiness: (string, number) -> Readiness?,
 }
 
+-- Computes a bounded swept distance in studs from caller-supplied elapsed/frame
+-- seconds. Flight expires strictly after its profile lifetime; equality remains
+-- live. Invalid numeric inputs expire rather than advancing. A negative frame
+-- delta advances zero, matching the engine adapter's clock-boundary behavior.
+function CombatService.flight(
+    profile: Profile,
+    elapsed: number,
+    remaining: number,
+    delta: number
+): (number, boolean)
+    if
+        not Validation.isFinite(elapsed)
+        or not Validation.isFinite(remaining)
+        or not Validation.isFinite(delta)
+        or not Validation.isFinite(profile.speed)
+        or not Validation.isFinite(profile.lifetime)
+        or profile.speed <= 0
+        or profile.lifetime <= 0
+        or remaining < 0
+    then
+        return 0, true
+    end
+    if elapsed > profile.lifetime then
+        return 0, true
+    end
+    return math.min(remaining, profile.speed * math.max(0, delta)), false
+end
+
 -- A copy of level geometry and its authored vertical envelope is supplied by the
 -- owner. Input coordinates are studs. now is monotonic server time in seconds.
 -- Requests are exactly six scalar fields; the caller establishes role/deadline and

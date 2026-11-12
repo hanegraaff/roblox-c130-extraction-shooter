@@ -303,13 +303,21 @@ function CombatRuntime.start(
             for i = #projectiles, 1, -1 do
                 local projectile = projectiles[i]
                 local profile = CombatService.profiles[projectile.shot.weapon]
-                if not profile or time - projectile.shot.firedAt > profile.lifetime then
+                local distance, expired = 0, true
+                if profile then
+                    distance, expired = CombatService.flight(
+                        profile,
+                        time - projectile.shot.firedAt,
+                        projectile.remaining,
+                        dt
+                    )
+                end
+                if expired then
                     projectile.visual:Destroy()
                     projectile.marker:Destroy()
                     table.remove(projectiles, i)
                     continue
                 end
-                local distance = math.min(projectile.remaining, profile.speed * math.max(0, dt))
                 local step = projectile.direction * distance
                 local hit = workspace:Raycast(projectile.position, step, rayParameters(true))
                 projectile.position = if hit then hit.Position else projectile.position + step
