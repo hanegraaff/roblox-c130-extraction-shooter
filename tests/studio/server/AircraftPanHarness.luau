@@ -20,6 +20,8 @@ type Request = {
     weapon: string?,
     position: Vector3?,
     payload: unknown?,
+    startTime: number?,
+    duration: number?,
 }
 type Case = { name: string, passed: boolean, detail: string? }
 -- The completion payload is identical for SDK and human-started runs. Keeping
@@ -98,7 +100,7 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
         remote:FireClient(player, token, request)
         waitFor(function()
             return replies[token][player] ~= nil
-        end, "client " .. request.kind, 20)
+        end, "client " .. request.kind, if request.kind == "Projection" then 35 else 20)
         local reply = replies[token][player]
         table.insert(observations, {
             userId = player.UserId,
@@ -111,6 +113,44 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
         })
         replies[token] = nil
         assert(reply.passed == true, tostring(reply.detail))
+        return reply
+    end
+    -- Dispatch both clients before waiting so their timestamped actions overlap.
+    -- Each probe retains its ordinary timeout, diagnostics and failure result.
+    local function concurrentProbes(
+        firstPlayer: Player,
+        firstRequest: Request,
+        secondPlayer: Player,
+        secondRequest: Request
+    ): ({ [string]: unknown }, { [string]: unknown })
+        local first: { [string]: unknown }? = nil
+        local second: { [string]: unknown }? = nil
+        local failures: { string } = {}
+        local completed = 0
+        task.spawn(function()
+            local ok, result = pcall(probe, firstPlayer, firstRequest)
+            if ok and type(result) == "table" then
+                first = result
+            else
+                table.insert(failures, tostring(result))
+            end
+            completed += 1
+        end)
+        task.spawn(function()
+            local ok, result = pcall(probe, secondPlayer, secondRequest)
+            if ok and type(result) == "table" then
+                second = result
+            else
+                table.insert(failures, tostring(result))
+            end
+            completed += 1
+        end)
+        waitFor(function()
+            return completed == 2
+        end, "concurrent operator and ground probes", 30)
+        assert(#failures == 0, table.concat(failures, "; "))
+        assert(first and second, "concurrent probe replies missing")
+        return first, second
     end
     local function roles(): (Player, Player)
         local operator: Player? = nil
@@ -237,6 +277,47 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
                 probe(operator, { kind = "Reject" })
                 probe(operator, { kind = "Coherence", weapon = "GAU23" })
                 probe(ground, { kind = "Ground" })
+                local function canonicalError(): number
+                    local state = ReplicatedStorage:FindFirstChild("AircraftState")
+                    local epoch = if state then state:GetAttribute("EpochSeconds") else nil
+                    assert(type(epoch) == "number", "aircraft epoch missing")
+                    local expected = runtime.aircraft.sample(workspace:GetServerTimeNow() - epoch)
+                    return (workspace.Aircraft:GetPivot().Position - expected.Position).Magnitude
+                end
+                local beforeError = canonicalError()
+                local starts = workspace:GetServerTimeNow() + 4
+                local operatorReply, groundReply = concurrentProbes(
+                    operator,
+                    { kind = "PanHold", startTime = starts, duration = 3 },
+                    ground,
+                    { kind = "GroundMove", startTime = starts, duration = 3 }
+                )
+                local panValue, movementValue = operatorReply.observations, groundReply.observations
+                assert(
+                    type(panValue) == "table" and type(movementValue) == "table",
+                    "movement observations missing"
+                )
+                local pan = panValue :: { [string]: unknown }
+                local movement = movementValue :: { [string]: unknown }
+                local panStart, panEnd = pan.startTime, pan.endTime
+                local groundStart, groundEnd = movement.startTime, movement.endTime
+                assert(
+                    type(panStart) == "number"
+                        and type(panEnd) == "number"
+                        and type(groundStart) == "number"
+                        and type(groundEnd) == "number",
+                    "movement timestamps missing"
+                )
+                local overlap = math.min(panEnd, groundEnd) - math.max(panStart, groundStart)
+                local afterError = canonicalError()
+                table.insert(observations, {
+                    request = "ConcurrentGroundPan",
+                    overlapSeconds = overlap,
+                    beforeOrbitErrorStuds = beforeError,
+                    afterOrbitErrorStuds = afterError,
+                })
+                assert(overlap >= 1, "ground movement did not overlap operator pan")
+                assert(beforeError <= 2 and afterError <= 2, "operator pan changed canonical aircraft orbit")
             end
         )
         check("P14 blocked UI outside-window input and recenter retain bounded ownership", function()

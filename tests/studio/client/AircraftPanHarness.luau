@@ -22,6 +22,8 @@ type Request = {
     weapon: string?,
     position: Vector3?,
     payload: unknown?,
+    startTime: number?,
+    duration: number?,
 }
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 15)
@@ -47,8 +49,10 @@ function Harness.run()
         entry:Destroy() -- Existing Destroying cleanup restores state before fixture ownership.
         local goal: Vector3? = nil
         local aimPoint: Vector3? = nil
+        local aimRequest: Request? = nil
         local pointingFrameBefore: number? = nil
         local pointingPixels: Vector2? = nil
+        local pointingSearch: { [string]: unknown } = {}
         local arrivalErrorStuds = 0
         local function visible(point: Vector3): boolean
             local camera = workspace.CurrentCamera
@@ -66,6 +70,7 @@ function Harness.run()
         local pendingWeapon: string? = nil
         local recenter = false
         local forcedBlocked = false
+        local forcedPan: Vector2? = nil
         local physical = false
         local outside = false
         local function hud(): ScreenGui?
@@ -74,7 +79,7 @@ function Harness.run()
         end
         local function provider(viewport: Vector2)
             local pointer = viewport * 0.5
-            local pan = Vector2.zero
+            local pan = forcedPan or Vector2.zero
             local current = hud()
             if physical then
                 pointer = Input:GetMouseLocation()
@@ -102,22 +107,124 @@ function Harness.run()
                 -- camera (which can be several studs old on a slow Studio client).
                 local aircraft = workspace:FindFirstChild("Aircraft")
                 local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
-                local heldFocus = current:GetAttribute("PanFocus")
+                local heldFocus = current:GetAttribute("PanLocalFocus")
                 assert(
-                    root and root:IsA("BasePart") and typeof(heldFocus) == "Vector3",
+                    root and root:IsA("BasePart") and typeof(heldFocus) == "Vector2",
                     "pointing geometry missing"
                 )
-                local nextFrame = CameraController.frame(root.Position, heldFocus)
+                local worldFocus = PanRules.worldFocus(
+                    MapRules.defaults,
+                    { x = heldFocus.X, z = heldFocus.Y },
+                    root.Position.X,
+                    root.Position.Z
+                )
+                assert(worldFocus, "pointing orbit focus rejected")
+                local nextFrame = CameraController.frame(
+                    root.Position,
+                    Vector3.new(worldFocus.x, MapRules.defaults.groundY, worldFocus.z)
+                )
                 assert(nextFrame, "pointing camera basis rejected")
                 local relative = nextFrame:PointToObjectSpace(aimPoint)
                 assert(relative.Z < 0, "pointing target is behind the camera")
-                local scale = viewport.Y
-                    / (-2 * relative.Z * math.tan(math.rad(workspace.CurrentCamera.FieldOfView) / 2))
+                local vertical = math.tan(math.rad(workspace.CurrentCamera.FieldOfView) / 2)
+                local scale = viewport.Y / (-2 * relative.Z * vertical)
                 pointer =
                     Vector2.new(viewport.X * 0.5 + relative.X * scale, viewport.Y * 0.5 - relative.Y * scale)
+                -- The exact projected point may fall between pixels at the
+                -- silhouette of a voxel slope or panel. Search a small, bounded
+                -- integer neighborhood using the predicted next camera. Only a
+                -- real first hit on the required surface within the unchanged
+                -- three-stud target tolerance is eligible; the production
+                -- controller still performs its own rasterization and raycast.
+                local raster = PanRules.raster(pointer.X, pointer.Y, viewport.X, viewport.Y)
+                local parameters = RaycastParams.new()
+                parameters.FilterType = Enum.RaycastFilterType.Include
+                parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+                parameters.RespectCanCollide = true
+                local selected: Vector2? = nil
+                local tested = 0
+                local identityHits = 0
+                local nearestDistance = math.huge
+                local lastHit = "no hit"
+                if raster then
+                    for radius = 0, 3 do
+                        for dx = -radius, radius do
+                            for dy = -radius, radius do
+                                if math.max(math.abs(dx), math.abs(dy)) == radius then
+                                    local px, py = raster.x + dx, raster.y + dy
+                                    local bounded = PanRules.raster(px, py, viewport.X, viewport.Y)
+                                    if bounded and bounded.x == px and bounded.y == py then
+                                        local horizontal = (2 * px / viewport.X - 1)
+                                            * (viewport.X / viewport.Y)
+                                            * vertical
+                                        local height = (1 - 2 * py / viewport.Y) * vertical
+                                        local direction = (
+                                            nextFrame.LookVector
+                                            + nextFrame.RightVector * horizontal
+                                            + nextFrame.UpVector * height
+                                        ).Unit
+                                        local hit = workspace:Raycast(
+                                            nextFrame.Position,
+                                            direction * 1500,
+                                            parameters
+                                        )
+                                        tested += 1
+                                        if hit then
+                                            lastHit = hit.Instance:GetFullName()
+                                            local correct = true
+                                            if aimRequest and aimRequest.category == "TerrainSlope" then
+                                                correct = hit.Instance == workspace.Terrain
+                                                    and hit.Position.Y > 0.5
+                                                    and hit.Normal.Y < 0.999
+                                            elseif aimRequest and aimRequest.building then
+                                                local building =
+                                                    workspace.World.Battlefield.Buildings:FindFirstChild(
+                                                        aimRequest.building
+                                                    )
+                                                correct = building ~= nil
+                                                    and hit.Instance:IsDescendantOf(building)
+                                                    and hit.Instance:GetAttribute("StoryId") == "02"
+                                                    and type(hit.Instance:GetAttribute("PanelId"))
+                                                        == "string"
+                                            end
+                                            if correct then
+                                                identityHits += 1
+                                                local distance = (hit.Position - aimPoint).Magnitude
+                                                nearestDistance = math.min(nearestDistance, distance)
+                                                if distance < 2.9 then
+                                                    selected = Vector2.new(px, py)
+                                                    break
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            if selected then
+                                break
+                            end
+                        end
+                        if selected then
+                            break
+                        end
+                    end
+                end
+                pointingSearch = {
+                    predicted = { pointer.X, pointer.Y },
+                    tested = tested,
+                    identityHits = identityHits,
+                    nearestStuds = if nearestDistance < math.huge then nearestDistance else "none",
+                    lastHit = lastHit,
+                    selected = if selected then { selected.X, selected.Y } else "none",
+                }
                 local previousFrame = current:GetAttribute("ProjectionFrame")
-                pointingFrameBefore = if type(previousFrame) == "number" then previousFrame else nil
-                pointingPixels = pointer
+                pointingFrameBefore = if selected and type(previousFrame) == "number"
+                    then previousFrame
+                    else nil
+                pointingPixels = selected
+                if selected then
+                    pointer = selected
+                end
             end
             local weapon = pendingWeapon
             pendingWeapon = nil
@@ -177,11 +284,29 @@ function Harness.run()
             assert(home, "reset view unavailable")
             return Vector2.new(home.x, home.z)
         end
+        -- Shared server time lets the two independent clients prove their
+        -- movement windows overlapped. Every request is bounded and test-only.
+        local function movementWindow(request: Request): (number, number)
+            local starts, duration = request.startTime, request.duration
+            assert(
+                type(starts) == "number"
+                    and starts == starts
+                    and math.abs(starts) < math.huge
+                    and type(duration) == "number"
+                    and duration >= 1
+                    and duration <= 5,
+                "invalid movement probe window"
+            )
+            local now = workspace:GetServerTimeNow()
+            assert(starts - now <= 10 and starts + duration > now, "movement probe window expired")
+            return starts, starts + duration
+        end
         -- Arrival is one consistent input-driven neighborhood. Enter a separate
         -- pointing stage once reached: continuing directional steering after arrival races
         -- the target assertion, especially below 30Hz. No focus is assigned here.
-        local function moveTo(point: Vector3)
+        local function moveTo(point: Vector3, request: Request)
             aimPoint = nil
+            aimRequest = nil
             pointingFrameBefore = nil
             pointingPixels = nil
             local destination = Vector3.new(point.X, 0, point.Z)
@@ -196,6 +321,7 @@ function Harness.run()
             assert(type(transitionFrame) == "number", "arrival frame missing")
             goal = nil -- Stop steering; subsequent input is target pointing only.
             aimPoint = point
+            aimRequest = request
             waitFor(function()
                 local rendered = hud()
                 local frame = if rendered then rendered:GetAttribute("ProjectionFrame") else nil
@@ -207,7 +333,7 @@ function Harness.run()
                     and pointingPixels ~= nil
                     and typeof(raw) == "Vector2"
                     and (raw - pointingPixels).Magnitude < 0.01
-            end, "committed pointing frame", 4)
+            end, "committed pointing frame with nearby required surface", 18)
         end
         -- Mutate the caller-owned diagnostics before assertions. Failed samples
         -- must retain actual drawn/content/ray coordinates rather than losing the
@@ -539,7 +665,7 @@ function Harness.run()
                             return current ~= nil and current:GetAttribute("Weapon") == request.weapon
                         end, "weapon acknowledgement")
                     end
-                    moveTo(request.point)
+                    moveTo(request.point, request)
                     observations = sample(request, observations)
                     assert(
                         goal == nil and aimPoint ~= nil,
@@ -617,6 +743,146 @@ function Harness.run()
                         role = player:GetAttribute("Role"),
                         baseline = script.Parent:GetAttribute("ClientTestReport"),
                     }
+                elseif request.kind == "PanHold" then
+                    local starts, ends = movementWindow(request)
+                    goal = nil
+                    aimPoint = nil
+                    physical = false
+                    outside = false
+                    forcedBlocked = false
+                    recenter = true
+                    local okPan, failurePan = pcall(function()
+                        waitFor(function()
+                            return (localFocus() - resetFocus()).Magnitude < 0.01
+                        end, "pan probe recenter", 3)
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= starts
+                        end, "pan probe start", 10)
+                        local before = localFocus()
+                        local started = workspace:GetServerTimeNow()
+                        local startHud = hud()
+                        assert(startHud, "pan probe HUD disappeared before start")
+                        local firstFrame = startHud:GetAttribute("ProjectionFrame")
+                        forcedPan = Vector2.new(1, 0)
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= ends
+                        end, "pan probe end", 6)
+                        forcedPan = nil
+                        local stopped = workspace:GetServerTimeNow()
+                        local after = localFocus()
+                        local current = hud()
+                        assert(current, "pan probe HUD disappeared")
+                        local lastFrame = current:GetAttribute("ProjectionFrame")
+                        local rightMotion = before.Y - after.Y
+                        observations = {
+                            startTime = started,
+                            endTime = stopped,
+                            startFocus = { before.X, before.Y },
+                            endFocus = { after.X, after.Y },
+                            rightMotionStuds = rightMotion,
+                            startFrame = firstFrame,
+                            endFrame = lastFrame,
+                        }
+                        assert(rightMotion > 1, "operator did not pan right during the movement window")
+                        assert(
+                            type(firstFrame) == "number"
+                                and type(lastFrame) == "number"
+                                and lastFrame > firstFrame,
+                            "operator projection did not advance"
+                        )
+                    end)
+                    forcedPan = nil
+                    if not okPan then
+                        error(failurePan)
+                    end
+                elseif request.kind == "GroundMove" then
+                    local starts, ends = movementWindow(request)
+                    assert(not hud(), "ground movement probe received operator HUD")
+                    local camera = workspace.CurrentCamera
+                    local character = player.Character
+                    local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+                    local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+                    assert(
+                        camera
+                            and camera.CameraType == Enum.CameraType.Custom
+                            and humanoid
+                            and camera.CameraSubject == humanoid
+                            and root
+                            and root:IsA("BasePart"),
+                        "ground movement probe lacks its own live character camera"
+                    )
+                    local parameters = RaycastParams.new()
+                    parameters.FilterType = Enum.RaycastFilterType.Include
+                    parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+                    parameters.RespectCanCollide = true
+                    local direction = Vector3.zero
+                    local clearance = 0
+                    for _, candidate in { Vector3.xAxis, -Vector3.xAxis, Vector3.zAxis, -Vector3.zAxis } do
+                        local hit = workspace:Raycast(root.Position, candidate * 30, parameters)
+                        local free = if hit then hit.Distance else 30
+                        if free > clearance then
+                            direction, clearance = candidate, free
+                        end
+                    end
+                    assert(clearance > 4, "no clear direction for ground movement")
+                    local binding = "P14GroundMove_" .. tostring(player.UserId)
+                    local frames, cameraChanged = 0, false
+                    local okMove, failureMove = pcall(function()
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= starts
+                        end, "ground movement probe start", 10)
+                        local before = root.Position
+                        local started = workspace:GetServerTimeNow()
+                        RunService:BindToRenderStep(binding, Enum.RenderPriority.Input.Value + 1, function()
+                            humanoid:Move(direction, false)
+                            frames += 1
+                            if
+                                camera.CameraType ~= Enum.CameraType.Custom
+                                or camera.CameraSubject ~= humanoid
+                            then
+                                cameraChanged = true
+                            end
+                        end)
+                        waitFor(function()
+                            return workspace:GetServerTimeNow() >= ends
+                        end, "ground movement probe end", 6)
+                        RunService:UnbindFromRenderStep(binding)
+                        humanoid:Move(Vector3.zero, false)
+                        local stopped = workspace:GetServerTimeNow()
+                        local after = root.Position
+                        local distance = (Vector3.new(after.X, 0, after.Z) - Vector3.new(
+                            before.X,
+                            0,
+                            before.Z
+                        )).Magnitude
+                        local progress = (after - before):Dot(direction)
+                        observations = {
+                            startTime = started,
+                            endTime = stopped,
+                            startPosition = { before.X, before.Y, before.Z },
+                            endPosition = { after.X, after.Y, after.Z },
+                            direction = { direction.X, direction.Y, direction.Z },
+                            clearanceStuds = clearance,
+                            displacementStuds = distance,
+                            forwardStuds = progress,
+                            frames = frames,
+                            cameraType = camera.CameraType.Name,
+                            cameraSubjectMatches = camera.CameraSubject == humanoid,
+                            cameraChanged = cameraChanged,
+                        }
+                        assert(frames > 0 and distance > 2 and progress > 1, "ground humanoid did not move")
+                        assert(
+                            not cameraChanged
+                                and camera.CameraType == Enum.CameraType.Custom
+                                and camera.CameraSubject == humanoid,
+                            "operator pan changed ground camera ownership"
+                        )
+                    end)
+                    RunService:UnbindFromRenderStep(binding)
+                    humanoid:Move(Vector3.zero, false)
+                    if not okMove then
+                        error(failureMove)
+                    end
                 elseif request.kind == "Coherence" then
                     goal = nil
                     aimPoint = nil
@@ -697,6 +963,9 @@ function Harness.run()
                     error("unknown P14 client probe")
                 end
             end)
+            if request.kind == "Projection" then
+                observations.pointingSearch = pointingSearch
+            end
             remote:FireServer(token, {
                 passed = ok,
                 detail = if ok then "observed" else tostring(failure),
