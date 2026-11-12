@@ -45,6 +45,7 @@ function CombatHarness.run()
     )
     transport.Parent = ReplicatedStorage
     local cases: { Case } = {}
+    local observations: { unknown } = {}
     local function check(name: string, callback: () -> ())
         local ok, failure = pcall(function()
             callback()
@@ -146,6 +147,12 @@ function CombatHarness.run()
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
             local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
             assert(root and root:IsA("BasePart") and humanoid, "ground character missing")
+            local regeneration = character and character:FindFirstChild("Health")
+            assert(
+                regeneration and regeneration:IsA("BaseScript"),
+                "test character regeneration script missing"
+            )
+            regeneration.Disabled = true -- Test-only: stabilize the previously wounded fixture.
             root.Anchored = true
             root.CFrame = CFrame.new(0, 30, 0)
             local target = root.Position
@@ -208,10 +215,26 @@ function CombatHarness.run()
             waitFor(function()
                 return #workspace.CombatEffects:GetChildren() == 0
             end, "airburst flight ended", 6)
-            assert(humanoid.Health == beforeHealth, "unobstructed endpoint awarded splash damage")
+            local afterHealth = humanoid.Health
+            local afterImpact = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+            local observation = {
+                fixtureMuzzle = { muzzle.X, muzzle.Y, muzzle.Z },
+                endpoint = { target.X, target.Y, target.Z },
+                targetRoot = { root.Position.X, root.Position.Y, root.Position.Z },
+                preflightRayHit = false,
+                beforeHealth = beforeHealth,
+                afterHealth = afterHealth,
+                beforeImpact = beforeImpact,
+                afterImpact = afterImpact,
+            }
+            table.insert(observations, observation)
             assert(
-                ReplicatedStorage.AircraftState:GetAttribute("Impact") == beforeImpact,
-                "unobstructed endpoint published an impact"
+                afterHealth == beforeHealth,
+                "airburst health changed: " .. HttpService:JSONEncode(observation)
+            )
+            assert(
+                afterImpact == beforeImpact,
+                "airburst published an impact: " .. HttpService:JSONEncode(observation)
             )
             waitFor(function()
                 return ammo("M102") == 1
@@ -342,6 +365,7 @@ function CombatHarness.run()
         failed = #cases - passed,
         skipped = 0,
         cases = cases,
+        observations = observations,
     }
     workspace:SetAttribute("P05MultiplayerReport", HttpService:JSONEncode(report))
     StudioTestService:EndTest(report)
