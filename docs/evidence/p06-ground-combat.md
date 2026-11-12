@@ -392,3 +392,13 @@ client cases. The visible rifle grip, both-role health display, shooter-only
 indicator and user-reported aim alignment are not yet accepted: a real
 two-client and operated review is prepared. In particular, the shorter tracer
 is not by itself proof that shots or impacts align with the user's crosshair.
+
+The manual P06 two-client run on `23e053c` passed all 10 cases, with fresh
+server smoke 118/118 and 6/6 on each client. The fixtures exercise the equipped
+rifle, replicated health, shooter-only confirmed hit feedback, authoritative
+terminal tracer and reset clearing, along with prior combat/round assertions;
+the [actual report](p06-manual-23e.json) records the run. Manual P06's forfeit
+case uses an actual server-initiated player kick, so the session ended with
+one player; the tester closed it and cleared the selector. These assertions do
+not prove that the user perceives the gun, health feedback or shot alignment
+as usable. A fresh ordinary two-client user review is prepared.

@@ -85,9 +85,12 @@ These player-facing findings and stale Lobby shot state require fixes and a
 fresh review; they are not represented as a pass. `23e053c` adds a primitive
 held rifle, dedicated health HUD, server-confirmed shooter hit indicator,
 terminal server-impact tracer and reset shot clearing. Host and 118/6 Studio
-smoke pass, but actual rifle pose, feedback readability and reported aim
-alignment remain pending two-client and operated review. The sole test document
-is prepared for a manual two-client P06 launch while the SDK remains unreliable.
+smoke pass; the manual two-client P06 suite passed 10/10 with 118/6 smoke and
+fixture assertions for the equipped rifle, health, hit feedback and reset.
+The user's assessment of rifle pose, feedback readability and reported aim
+alignment remains pending in a prepared ordinary two-client review. The
+automated Studio launcher is unreliable; the prepared review requires a native
+Server & Clients launch and the user's operated assessment.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
