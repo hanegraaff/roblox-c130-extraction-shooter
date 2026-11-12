@@ -28,4 +28,8 @@ Update named ground weapon, mixed-damage/three-rocket contract, destruction resu
 
 ## Completion record
 
-Not implemented. Record A1–A5 evidence, source, reciprocal combat review and tuning reasons.
+Implementation started on `plan/06-ground-combat` from integrated main
+`186def18af0a0dfcaba979d895afb08e3524d057`. A1–A5 remain unverified. Required
+evidence includes the full host gate, real Studio collision and two-client
+replication, and an operated reciprocal-combat review. Record the candidate
+source, exact results and tuning reasons as they become available.

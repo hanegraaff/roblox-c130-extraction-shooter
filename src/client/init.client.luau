@@ -4,6 +4,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StatusPanel = require(script.StatusPanel)
 local RoundPanel = require(script.RoundPanel)
+local GroundCombatController = require(script.GroundCombatController)
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui", 10)
 local status = ReplicatedStorage:WaitForChild("BootstrapStatus", 10)
 assert(playerGui and playerGui:IsA("PlayerGui"), "PlayerGui unavailable")
@@ -15,6 +16,7 @@ script.Destroying:Connect(runtime.stop)
 -- The test mapping starts rounds after its foundation suites. Reattach when the
 -- explicit server owner is replaced rather than retaining a stale status Folder.
 local rounds: { stop: () -> () }? = nil
+local ground: { stop: () -> () }? = nil
 local function attach(instance: Instance)
     if instance.Name ~= "RoundState" then
         return
@@ -22,6 +24,12 @@ local function attach(instance: Instance)
     if rounds then
         rounds.stop()
     end
+    if ground then
+        ground.stop()
+    end
+    local controller = GroundCombatController.new(Players.LocalPlayer, playerGui, instance)
+    assert(controller.start(), "expected ground controller.start()")
+    ground = controller
     local panel = RoundPanel.new(Players.LocalPlayer, playerGui, instance)
     assert(panel.start(), "expected panel.start()")
     rounds = panel
@@ -31,6 +39,10 @@ local removed = ReplicatedStorage.ChildRemoved:Connect(function(instance)
     if instance.Name == "RoundState" and rounds then
         rounds.stop()
         rounds = nil
+        if ground then
+            ground.stop()
+            ground = nil
+        end
     end
 end)
 local current = ReplicatedStorage:FindFirstChild("RoundState")
@@ -42,5 +54,8 @@ script.Destroying:Connect(function()
     removed:Disconnect()
     if rounds then
         rounds.stop()
+    end
+    if ground then
+        ground.stop()
     end
 end)

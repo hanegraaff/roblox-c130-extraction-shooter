@@ -18,6 +18,11 @@ return function()
     require(ServerStorage.Tests.Integration["CombatService.spec"])(test, require(Server.CombatService))
     require(ServerStorage.Tests.Integration["CombatViewRules.spec"])(test, require(Server.CombatViewRules))
     require(ServerStorage.Tests.Integration["DamageRules.spec"])(test, require(Server.DamageRules))
+    require(ServerStorage.Tests.Integration["AircraftHealth.spec"])(test, require(Server.AircraftHealth))
+    require(ServerStorage.Tests.Integration["GroundCombatService.spec"])(
+        test,
+        require(Server.GroundCombatService)
+    )
     require(ServerStorage.Tests.Integration["AircraftSelection.spec"])(
         test,
         require(Server.AircraftSelection)

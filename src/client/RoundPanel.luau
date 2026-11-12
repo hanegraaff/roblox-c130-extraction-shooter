@@ -83,6 +83,16 @@ function RoundPanel.new(
                         then "Studio Operator preview • Inward thermal aircraft view"
                         else "Studio Ground preview • Use WASD to explore"
                 end
+                local aircraftState = game:GetService("ReplicatedStorage"):FindFirstChild("AircraftState")
+                local aircraftHealth = if aircraftState then aircraftState:GetAttribute("Health") else nil
+                local aircraftMaximum = if aircraftState then aircraftState:GetAttribute("MaxHealth") else nil
+                if
+                    phase == "Active"
+                    and type(aircraftHealth) == "number"
+                    and type(aircraftMaximum) == "number"
+                then
+                    detail ..= string.format(" • Aircraft %d/%d", aircraftHealth, aircraftMaximum)
+                end
                 local heading = phase .. " • " .. role .. " / " .. life
                 if phase == "Lobby" and player:GetAttribute("LocalMapPreview") == true then
                     heading = "Studio preview • "
@@ -95,7 +105,7 @@ function RoundPanel.new(
                 if thermal.ownsCamera() then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
-                    label.Size = UDim2.fromOffset(210, 38)
+                    label.Size = UDim2.fromOffset(300, 38)
                     label.TextSize = 14
                     label.Text = if phase == "Active" then detail else "Operator preview"
                 else
@@ -104,7 +114,7 @@ function RoundPanel.new(
                     label.Size = UDim2.fromOffset(540, 102)
                     label.TextSize = 18
                     label.Text = string.format(
-                        "%s\n%s\nRound prototype • Ground weapons and launcher are planned",
+                        "%s\n%s\nM-7 available to living ground players • Launcher planned",
                         heading,
                         detail
                     )

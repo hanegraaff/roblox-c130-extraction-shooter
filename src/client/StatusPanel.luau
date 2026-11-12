@@ -35,7 +35,7 @@ function StatusPanel.new(playerGui: PlayerGui, status: Instance): Lifecycle.Cont
                     and player:GetAttribute("LocalPreviewRole") == "Gunship"
                 gui.Enabled = not operator and not preview
                 label.Text = string.format(
-                    "Players vs C-130 • %s\nBootstrap %s • Gunship weapons available\nGround weapons and launcher are planned.",
+                    "Players vs C-130 • %s\nBootstrap %s • Gunship weapons available\nGround M-7 available; launcher planned.",
                     tostring(status:GetAttribute("Environment")),
                     if status:GetAttribute("Running") then "running" else "stopped"
                 )

@@ -10,11 +10,13 @@ local MapService = require(script.Parent.MapService)
 local MatchRuntime = require(script.Parent.MatchRuntime)
 local AircraftService = require(script.Parent.AircraftService)
 local CombatRuntime = require(script.Parent.CombatRuntime)
+local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
     aircraft: AircraftService.Controller,
     combat: CombatRuntime.Controller,
+    groundCombat: GroundCombatRuntime.Controller,
     stop: () -> (),
 }
 
@@ -64,11 +66,21 @@ function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, strin
         map.destroy()
         return nil, combatReason
     end
+    local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match)
+    if not groundCombat then
+        combat.stop()
+        aircraft.stop()
+        rounds.stop()
+        map.destroy()
+        return nil, groundReason
+    end
     return {
+        groundCombat = groundCombat,
         rounds = rounds,
         aircraft = aircraft,
         combat = combat,
         stop = function()
+            groundCombat.stop()
             combat.stop()
             aircraft.stop()
             rounds.stop()
