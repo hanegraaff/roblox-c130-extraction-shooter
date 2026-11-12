@@ -757,6 +757,11 @@ function ThermalCameraController.new(
                     x = endpoint.X,
                     y = endpoint.Y,
                     z = endpoint.Z,
+                    focusX = currentFocus.x,
+                    focusZ = currentFocus.z,
+                    aspect = aspect,
+                    cameraX = hitbox.Position.X,
+                    cameraZ = hitbox.Position.Z,
                 })
                 nextFireRequest = os.clock() + (if weapon == "GAU23" then 0.16 else 0.2)
             end

@@ -8,6 +8,9 @@ local HttpService = game:GetService("HttpService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local CombatRuntime = require(game:GetService("ServerScriptService").Server.CombatRuntime)
 local CombatService = require(game:GetService("ServerScriptService").Server.CombatService)
+local CombatViewRules = require(game:GetService("ServerScriptService").Server.CombatViewRules)
+local MapRules = require(ReplicatedStorage.Shared.MapRules)
+local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local CombatHarness = {}
 type Case = { name: string, passed: boolean, detail: string? }
 local function waitFor(predicate: () -> boolean, message: string, timeout: number?)
@@ -90,14 +93,39 @@ function CombatHarness.run()
         return op, ground
     end
     local function payload(id: number, weapon: string, target: Vector3): { [string]: unknown }
-        return {
+        local map = MapRules.defaults
+        local camera = runtime.aircraft.position()
+        local radial = Vector2.new(camera.X - map.centerX, camera.Z - map.centerZ).Unit
+        local fraction = map.altitudeStuds / (camera.Y - target.Y)
+        local ground = camera + (target - camera) * fraction
+        local offset = Vector2.new(ground.X - map.centerX, ground.Z - map.centerZ)
+        local targetFocus =
+            { x = offset.X * radial.X + offset.Y * radial.Y, z = -offset.X * radial.Y + offset.Y * radial.X }
+        local home = assert(Pan.recenter(map, 16 / 9, 40), "fixture camera home missing")
+        local command: { [string]: unknown } = {
             roundId = runtime.rounds.match.snapshot().roundId,
             sequence = id,
             weapon = weapon,
             x = target.X,
             y = target.Y,
             z = target.Z,
+            focusX = home.x,
+            focusZ = home.z,
+            aspect = 16 / 9,
+            cameraX = camera.X,
+            cameraZ = camera.Z,
         }
+        -- Search from the target's ground projection toward recenter. Every
+        -- harness command is validated by the same production view contract.
+        for sample = 0, 100 do
+            local t = sample / 100
+            command.focusX = targetFocus.x + (home.x - targetFocus.x) * t
+            command.focusZ = targetFocus.z + (home.z - targetFocus.z) * t
+            if CombatViewRules.validate(command, map, weapon, camera.X, camera.Z) then
+                return command
+            end
+        end
+        error("fixture target cannot be reached from any searched permitted view")
     end
     local function ammo(weapon: string): number?
         local readiness = snapshot("Readiness")[weapon]
@@ -156,7 +184,8 @@ function CombatHarness.run()
             forged.damage = 10000
             probe(op, "Fire", forged)
             probe(ground, "Fire", payload(1, "GAU23", pos))
-            local outside = payload(1, "GAU23", Vector3.new(500, 0, 0))
+            local outside = payload(1, "GAU23", pos)
+            outside.x = 500
             probe(op, "Fire", outside)
             local oldRound = payload(1, "GAU23", pos)
             oldRound.roundId = runtime.rounds.match.snapshot().roundId - 1
@@ -167,6 +196,16 @@ function CombatHarness.run()
             local infinite = payload(1, "GAU23", pos)
             infinite.y = math.huge
             probe(op, "Fire", infinite)
+            local impossibleFocus = payload(1, "GAU23", pos)
+            impossibleFocus.focusX = 1000
+            probe(op, "Fire", impossibleFocus)
+            local impossibleCamera = payload(1, "GAU23", pos)
+            impossibleCamera.cameraX = 0
+            impossibleCamera.cameraZ = 0
+            probe(op, "Fire", impossibleCamera)
+            local staleWeapon = payload(1, "GAU23", pos)
+            staleWeapon.weapon = "M102"
+            probe(op, "Fire", staleWeapon)
             probe(op, "Flood", forged)
             task.wait(0.5)
             assert(HttpService:JSONEncode(snapshot("Readiness")) == before, "rejected fire spent ammunition")

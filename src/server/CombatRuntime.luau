@@ -15,6 +15,7 @@ local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
 local AircraftService = require(script.Parent.AircraftService)
 local MatchService = require(script.Parent.MatchService)
 local CombatService = require(script.Parent.CombatService)
+local CombatViewRules = require(script.Parent.CombatViewRules)
 local DamageRules = require(script.Parent.DamageRules)
 local CombatRuntime = {}
 
@@ -288,8 +289,13 @@ function CombatRuntime.start(
             if not muzzle then
                 return
             end
+            local camera = aircraft.position()
+            local command = CombatViewRules.validate(payload, map, weapon, camera.X, camera.Z)
+            if not command then
+                return
+            end
             local shot =
-                combat.fire(player.UserId, payload, weapon, eligible, time, muzzle.X, muzzle.Y, muzzle.Z)
+                combat.fire(player.UserId, command, weapon, eligible, time, muzzle.X, muzzle.Y, muzzle.Z)
             if not shot then
                 return
             end

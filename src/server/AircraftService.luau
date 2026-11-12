@@ -26,6 +26,8 @@ export type Controller = {
     -- Server-owned selected weapon and muzzle position, never supplied by a client.
     weapon: () -> string,
     muzzle: (string) -> Vector3?,
+    -- Current canonical camera origin used to bound client pose replication age.
+    position: () -> Vector3,
     -- Current active-level combat bounds and authored vertical aim envelope.
     level: () -> (MapRules.Settings, number, number),
     -- Current live owned connections, for teardown/repeated-round diagnostics.
@@ -167,6 +169,9 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
         sample = sample,
         weapon = function()
             return selection.snapshot().weapon
+        end,
+        position = function()
+            return hitbox.Position
         end,
         muzzle = function(weapon)
             if weapon ~= "GAU23" and weapon ~= "M102" then
