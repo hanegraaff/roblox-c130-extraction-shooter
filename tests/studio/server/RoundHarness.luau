@@ -73,6 +73,25 @@ function RoundHarness.run()
     local selector = if development and development:IsA("ModuleScript")
         then development:GetAttribute("ManualHarness")
         else nil
+    if RunService:IsStudio() and args == nil and selector == "P05" then
+        local invocation = {
+            mode = "manual-server-clients",
+            harness = "P05",
+            requestedClients = 2,
+            selector = "ServerStorage.DevelopmentSettings.ManualHarness",
+            selectorValue = "P05",
+            studioOnly = true,
+        }
+        workspace:SetAttribute("ManualP05Invocation", HttpService:JSONEncode(invocation))
+        workspace:SetAttribute("ManualP05Report", nil)
+        require(script.Parent.CombatHarness).run(function(report)
+            workspace:SetAttribute(
+                "ManualP05Report",
+                HttpService:JSONEncode({ invocation = invocation, result = report })
+            )
+        end)
+        return
+    end
     if RunService:IsStudio() and args == nil and (selector == "P06" or selector == "P06Team") then
         local requested = if selector == "P06Team" then 3 else 2
         local invocation = {

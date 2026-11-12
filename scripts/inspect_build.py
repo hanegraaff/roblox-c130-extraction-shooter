@@ -324,6 +324,12 @@ MANUAL_P06_TEST_ONLY = (
     "StarterPlayer/StarterPlayerScripts/ClientTests/GroundCombatHarness",
     "ServerStorage/DevelopmentSettings",
 )
+MANUAL_P05_TEST_ONLY = (
+    "ServerScriptService/ServerTests/RoundHarness",
+    "ServerScriptService/ServerTests/CombatHarness",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/CombatHarness",
+    "ServerStorage/DevelopmentSettings",
+)
 
 
 def check_manual_p06_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
@@ -331,6 +337,13 @@ def check_manual_p06_isolation(release: dict[str, str], tests: dict[str, str]) -
     for name in MANUAL_P06_TEST_ONLY:
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P06 manual fixture missing from tests or leaked to release: {name}")
+
+
+def check_manual_p05_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
+    """Require the manual P05 selector and both harnesses only in the test artifact."""
+    for name in MANUAL_P05_TEST_ONLY:
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P05 manual fixture missing from tests or leaked to release: {name}")
 
 
 def main() -> None:
@@ -383,6 +396,21 @@ def main() -> None:
             else:
                 raise RuntimeError(f"P06 manual isolation failed to reject {fault}: {name}")
     print("P06 manual fixture isolation passed, including eight deliberate corruption probes.")
+    check_manual_p05_isolation(release, tests)
+    for name in MANUAL_P05_TEST_ONLY:
+        for fault in ("missing", "leaked"):
+            altered_release, altered_tests = dict(release), dict(tests)
+            if fault == "missing":
+                del altered_tests[name]
+            else:
+                altered_release[name] = "ModuleScript"
+            try:
+                check_manual_p05_isolation(altered_release, altered_tests)
+            except RuntimeError:
+                pass
+            else:
+                raise RuntimeError(f"P05 manual isolation failed to reject {fault}: {name}")
+    print("P05 manual fixture isolation passed, including eight deliberate corruption probes.")
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")
