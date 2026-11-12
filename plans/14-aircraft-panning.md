@@ -4,25 +4,25 @@
 
 ## Capability and player experience
 
-The operator uses WASD on desktop or an on-screen directional pad on mobile to pan across the enlarged battlefield and its multi-story buildings while retaining each weapon's distinct zoom. Mouse movement only aims the reticle; a separate touch can aim while holding the pad. The complete camera view stops at the current level boundary, without sky/outside ground or a straight-down look. A held view angle stays fixed relative to the C-130 as it circles, revealing a changing part of the level with steady orbital motion. Panning works in labelled solo preview and an assigned operator round; firing follows in P05.
+The operator uses WASD on desktop or an on-screen directional pad on mobile to pan across the enlarged battlefield and its multi-story buildings while retaining each weapon's distinct zoom. Mouse movement only aims the reticle; a separate touch can aim while holding the pad. Pan reaches the level edge and allows roughly the outer quarter of the view beyond it in each direction, without sky or a straight-down look. A held view angle stays fixed relative to the C-130 as it circles, revealing a changing part of the level with steady orbital motion. Panning works in labelled solo preview and an assigned operator round; firing follows in P05.
 
 ## Implementation
 
-Extend the existing thermal camera rather than creating a second owner. Implement pure bounded pan rules with injected signed directional axes/delta time and an orbit-local held view offset. Desktop WASD and mobile pad holds feed the same core rule; pointer/touch coordinates aim independently and the central-70% displayed reticle clamp remains. Preserve the relative camera angle across orbit motion and acknowledged weapon changes; selection changes FOV without resetting readiness. R/new-round/role entry returns to the default safe view. Camera position remains the canonical aircraft position; all four viewport corners must intersect the current playable disk with a small inset at both zooms, enforcing an inward, ground-only look throughout the orbit. Ground WASD movement remains unchanged.
+Extend the existing thermal camera rather than creating a second owner. Implement pure bounded pan rules with injected signed directional axes/delta time and an orbit-local held view offset. Desktop WASD and mobile pad holds feed the same core rule; pointer/touch coordinates aim independently and the central-70% displayed reticle clamp remains. Preserve the relative camera angle across orbit motion and acknowledged weapon changes; selection changes FOV without resetting readiness. R/new-round/role entry returns to the default safe view. Camera position remains the canonical aircraft position. Limit the wide view by the disk intersections at the quarter-screen points on both centerlines, while keeping corner rays downward and pitch short of vertical. Ground WASD movement remains unchanged.
 
 Project reticle rays onto actual terrain/building geometry, supporting elevated floors and a map-authored vertical aim envelope. Reconcile server aim-envelope checks with the expanded map; local camera orientation does not override muzzle obstruction or authorize hits. Avoid a high-rate pan remote. Restore mouse/camera/input/UI state and disconnect every owned listener on role loss/teardown. Record chosen speed/recenter binding and FOV values as defaults.
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes. Named `AircraftPanRules` tests cover neutral/four-direction/diagonal input, frame-rate independence, differing level bounds, huge delta time, NaN/infinity, held orbit-local orientation, safe recenter and four-corner whole-view clamping at both zooms. At sampled phases, camera origin follows aircraft without changing its path, and its local orientation remains steady when input is released.
-- **A2:** Studio/client `PannedTargetProjection` fixtures reach useful near-boundary surfaces, terrain slopes and each building's upper-floor panels when that portion is visible during the full orbit at both weapon FOVs. Actual camera corner rays stay inside the level at the pan limits, while reticle/world projection agrees within a declared tolerance. No hard-coded ground-plane intersection or permanent blind strip hides a required combat area. Server rejects out-of-disk/vertical-envelope and solid muzzle-obstructed endpoints.
+- **A1:** Full gate passes. Named `AircraftPanRules` tests cover neutral/four-direction/diagonal input, frame-rate independence, differing level bounds, huge delta time, NaN/infinity, held orbit-local orientation, safe recenter and quarter-screen edge limits at both zooms. At sampled phases, camera origin follows aircraft without changing its path, and its local orientation remains steady when input is released.
+- **A2:** Studio/client `PannedTargetProjection` fixtures reach useful near-boundary surfaces, terrain slopes and each building's upper-floor panels when that portion is visible during the full orbit at both weapon FOVs. Actual camera centerline rays verify the quarter-screen limits, while reticle/world projection agrees within a declared tolerance. No hard-coded ground-plane intersection or permanent blind strip hides a required combat area. Server rejects out-of-disk/vertical-envelope and solid muzzle-obstructed endpoints.
 - **A3:** Two actual clients verify operator WASD/touch pan does not change aircraft pose or the ground client's camera/movement. Switching keys/buttons preserves focus and acknowledged FOV/label/reticle coherence; rejected/stale selections do not reset pan or readiness. P05 later verifies firing/cooldown behavior through this seam.
-- **A4:** Engine/rendered checks cover occluded highlights on slopes and upper floors, all-four-corner ground-only pan limits at both zooms, smooth relative orientation through the full orbit, and recenter. Native WASD and a mobile emulator or device prove held, simultaneous and released directional-pad inputs; a second touch can aim independently. Text/window focus cannot pan or trap control. Layout remains usable at 1280×720 and 1920×1080 plus representative mobile safe areas.
+- **A4:** Engine/rendered checks cover occluded highlights on slopes and upper floors, visible level edges at all four pan limits and both zooms, downward corner rays, smooth relative orientation through the full orbit, and recenter. Native WASD and a mobile emulator or device prove held, simultaneous and released directional-pad inputs; a second touch can aim independently. Text/window focus cannot pan or trap control. Layout remains usable at 1280×720 and 1920×1080 plus representative mobile safe areas.
 - **A5:** Reset, new round, operator departure and repeated preview/role entry restore the safe default view or normal camera as appropriate, with exactly one controller and no duplicate listeners/effects. Existing orbit/selection/round/preview tests remain valid after adapting prior world-focus and FOV defaults where this revision changes the contract.
 
 ## Focused human check
 
-Operate a full orbit at both zooms on desktop and mobile. Pan with WASD or the touch pad to left/right/top/bottom view limits; check that the complete frame contains level ground, no sky and no straight-down pose. Release input and confirm the view angle stays fixed relative to the plane while scenery changes smoothly through the orbit. Reach terrain and upper-floor targets visible in each sector, switch weapons while panned and recenter. Verify mouse movement aims without moving the camera; verify a second touch can aim while holding the pad. Record sensitivity, release/diagonal behavior, motion comfort and readable thermal/reticle/UI behavior. A screenshot alone does not prove coverage or panning feel.
+Operate a full orbit at both zooms on desktop and mobile. Pan with WASD or the touch pad to left/right/top/bottom view limits; check the level edge is visible with roughly a quarter-screen allowance at wide zoom, no sky and no straight-down pose. Release input and confirm the view angle stays fixed relative to the plane while scenery changes smoothly through the orbit. Reach terrain and upper-floor targets visible in each sector, switch weapons while panned and recenter. Verify mouse movement aims without moving the camera; verify a second touch can aim while holding the pad. Record sensitivity, release/diagonal behavior, motion comfort and readable thermal/reticle/UI behavior. A screenshot alone does not prove coverage or panning feel.
 
 ## Documentation changes
 
@@ -32,7 +32,22 @@ Update current desktop/mobile controls, actual pan/recenter bindings, view/aim c
 
 The 2026-11-10 control revision has implementation and focused host/Studio evidence below; required P14 acceptance remains incomplete.
 
+### Edge visibility revision — 2026-11-12
+
+The user approved the orbit behavior and asked to pan slightly past all four
+level edges, suggesting about 25% of the viewport. Dedicated branch
+`fix/p14-camera-edge-overscan` applies that allowance to the wide view along
+each centerline, retains the zoom-preserved relative angle, and supplies a
+camera-only visual ground backdrop outside the playable disk. Focused host and
+desktop/mobile Studio results are recorded in the
+[edge evidence](../docs/evidence/p14-edge-overscan.md). The full P14 two-client
+and operated acceptance gates remain open.
+
 ### Orbit-relative view correction — 2026-11-11
+
+The 2026-11-12 user revision supersedes the whole-viewport boundary described
+below: the level edge should enter about the outer 25% of the viewport in each
+direction. The fixed plane-relative angle and unchanged orbit remain selected.
 
 The user confirmed that pan should stop when the **whole camera view** reaches
 the level edge and that a held angle should remain fixed **relative to the

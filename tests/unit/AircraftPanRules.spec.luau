@@ -26,6 +26,30 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     local function near(a: number, b: number, tolerance: number): boolean
         return math.abs(a - b) <= tolerance
     end
+    -- Ground radius for a viewport centerline ray at the phase-zero aircraft.
+    -- u/v are signed screen coordinates from -1 to 1, independent of the
+    -- clipping API; used to verify the actual edge visible to the operator.
+    local function groundRadius(
+        focus: { x: number, z: number },
+        u: number,
+        v: number,
+        fov: number,
+        depth: number?
+    ): number
+        local dx, dz = focus.x - map.radiusStuds, focus.z
+        local length = math.sqrt(dx * dx + dz * dz + map.altitudeStuds ^ 2)
+        local fx, fy, fz = dx / length, -map.altitudeStuds / length, dz / length
+        local rightLength = math.sqrt(1 - fz * fz)
+        local rx, ry, rz = -fx * fz / rightLength, -fy * fz / rightLength, rightLength
+        local ux, uy, uz = fy * rz - fz * ry, fz * rx - fx * rz, fx * ry - fy * rx
+        local vertical = math.tan(math.rad(fov) / 2)
+        local x = fx + u * aspect * vertical * rx + v * vertical * ux
+        local y = fy + u * aspect * vertical * ry + v * vertical * uy
+        local z = fz + u * aspect * vertical * rz + v * vertical * uz
+        assert(y < 0, "screen ray points above the horizon")
+        local distance = (map.altitudeStuds + (depth or 0)) / -y
+        return math.sqrt((map.radiusStuds + distance * x) ^ 2 + (distance * z) ^ 2)
+    end
     test("AircraftPanRules recenter creates an independent safe inward view", function()
         local a, b = home(), home()
         assert(a ~= b and near(a.x, b.x, 1e-9) and a.z == 0, "reset focus shared or unstable")
@@ -68,14 +92,14 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local distance = math.sqrt((focus.x - start.x) ^ 2 + (focus.z - start.z) ^ 2)
         assert(near(distance, 12, 1e-6), "diagonal or stalled frame exceeded speed cap")
     end)
-    test("AircraftPanRules held pan reaches each view edge without escaping", function()
+    test("AircraftPanRules held pan reaches each view limit and stops", function()
         for _, input in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 } } do
             local focus = home()
             for _ = 1, 180 do
                 local nextFocus = rules.step(map, focus, input[1], input[2], 0.1, false, aspect, wide)
                 assert(
                     nextFocus and rules.viewFits(map, nextFocus, aspect, wide),
-                    "pan exposed outside ground"
+                    "pan escaped its view limit"
                 )
                 focus = nextFocus
             end
@@ -87,11 +111,48 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             )
         end
     end)
-    test("AircraftPanRules both zoom profiles fit all screen corners at common layouts", function()
+    test("AircraftPanRules shows level edge inside each outer quarter at both zooms", function()
+        for _, direction in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } } do
+            local focus = home()
+            for _ = 1, 180 do
+                focus = assert(rules.step(map, focus, direction[1], direction[2], 0.1, false, aspect, wide))
+            end
+            -- Camera-right and up map to the corresponding signed viewport axis.
+            local u, v = direction[1], direction[2]
+            local inner = groundRadius(focus, u * 0.5, v * 0.5, wide)
+            local outside = groundRadius(focus, u, v, wide)
+            assert(inner <= 358.01 and inner >= 357.9, "wide level edge missed the quarter-screen mark")
+            assert(outside > 360, "wide screen edge did not extend past the level")
+            assert(groundRadius(focus, u, v, 30) > 360, "narrow screen edge did not reach the level")
+            assert(rules.viewFits(map, focus, aspect, 30), "narrow zoom lost safe framing")
+        end
+    end)
+    test("AircraftPanRules keeps edge and diagonal views within the noninteractive backdrop", function()
+        local extent = assert(rules.backdropHalfExtent(map), "backdrop extent missing")
+        assert(extent == 10240, "unexpected backdrop extent")
+        for _, direction in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 }, { -1, -1 } } do
+            local focus = home()
+            for _ = 1, 180 do
+                focus = assert(rules.step(map, focus, direction[1], direction[2], 0.1, false, aspect, wide))
+            end
+            local horizontal = math.sqrt((focus.x - map.radiusStuds) ^ 2 + focus.z ^ 2)
+            assert(math.deg(math.atan2(map.altitudeStuds, horizontal)) <= 80.001, "view is straight down")
+            for _, corner in { { -1, -1 }, { 1, -1 }, { -1, 1 }, { 1, 1 } } do
+                assert(
+                    groundRadius(focus, corner[1], corner[2], wide, 4) <= extent + 0.01,
+                    "corner ray escaped the visual backdrop"
+                )
+            end
+        end
+        local invalid = table.clone(map)
+        invalid.orbitRadiusStuds = 1
+        assert(not rules.backdropHalfExtent(invalid), "invalid map accepted for backdrop")
+    end)
+    test("AircraftPanRules both zoom profiles retain safe framing at common layouts", function()
         for _, ratio in { 750 / 382, 1280 / 720, 1920 / 1080 } do
             local focus = rules.recenter(map, ratio, wide)
-            assert(focus and rules.viewFits(map, focus, ratio, wide), "wide reset escaped level")
-            assert(rules.viewFits(map, focus, ratio, 30), "narrow profile escaped level")
+            assert(focus and rules.viewFits(map, focus, ratio, wide), "wide reset invalid")
+            assert(rules.viewFits(map, focus, ratio, 30), "narrow profile invalid")
             for _, input in { { 1, 0 }, { 0, 1 }, { -1, -1 } } do
                 local nextFocus = rules.step(map, focus, input[1], input[2], 0.1, false, ratio, wide)
                 assert(nextFocus and rules.viewFits(map, nextFocus, ratio, wide), "zoom-safe step escaped")
@@ -102,9 +163,9 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     test("AircraftPanRules supported lens preserves normal FOV and adapts ultra-wide", function()
         assert(rules.supportedFov(map, aspect, 40) == 40, "normal wide lens changed")
         assert(rules.supportedFov(map, 750 / 382, 40) == 40, "phone wide lens changed")
-        local ultra = rules.supportedFov(map, 4, 40)
+        local ultra = rules.supportedFov(map, 8, 40)
         assert(ultra and ultra < 40 and ultra >= 15, "ultra-wide view did not adapt")
-        assert(rules.recenter(map, 4, ultra), "adapted ultra-wide view has no safe reset")
+        assert(rules.recenter(map, 8, ultra), "adapted ultra-wide view has no safe reset")
     end)
     test("AircraftPanRules held view rotates rigidly with aircraft orbit", function()
         local focus = rules.step(map, home(), 1, 1, 0.1, false, aspect, wide)
