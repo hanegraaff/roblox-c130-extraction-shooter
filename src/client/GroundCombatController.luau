@@ -29,6 +29,15 @@ function GroundCombatController.projectAim(
         UDim2.fromOffset(math.floor(pixels.X - origin.X + 0.5), math.floor(pixels.Y - origin.Y + 0.5))
 end
 
+-- Returns the rifle status position and size without yielding. Touch layouts
+-- keep the bottom-center ammunition display clear of the centered reticle.
+function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
+    if touch then
+        return UDim2.new(0.5, 0, 1, -20), UDim2.fromOffset(260, 36)
+    end
+    return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
+end
+
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
 function GroundCombatController.new(
     player: Player,
@@ -49,8 +58,7 @@ function GroundCombatController.new(
             local label = Instance.new("TextLabel")
             label.Name = "RifleStatus"
             label.AnchorPoint = Vector2.new(0.5, 1)
-            label.Position = UDim2.new(0.5, 0, 1, -100)
-            label.Size = UDim2.fromOffset(330, 36)
+            label.Position, label.Size = GroundCombatController.statusLayout(UserInputService.TouchEnabled)
             label.BackgroundColor3 = Color3.fromRGB(16, 23, 31)
             label.BackgroundTransparency = 0.2
             label.TextColor3 = Color3.new(1, 1, 1)
