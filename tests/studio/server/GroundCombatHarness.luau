@@ -4,6 +4,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
+local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local Harness = {}
 type Case = { name: string, passed: boolean, detail: string? }
@@ -83,6 +84,68 @@ function Harness.run(expectedClients: number?)
         local part = if model then model:FindFirstChild("Hitbox") else nil
         assert(part and part:IsA("BasePart"), "aircraft hitbox missing")
         return part
+    end
+    -- Fire two independent Heartbeat callbacks in a defined order; three real
+    -- swept fixture rockets resolve against the live moving aircraft hitbox.
+    local function mutualBatch(ground: Player, roundId: number, aircraftFirst: boolean, prefix: string)
+        local callbacks = 0
+        local callbackFailure: string? = nil
+        local function checked(action: () -> ())
+            local passed, callbackError = pcall(function()
+                action()
+                return true
+            end)
+            if not passed then
+                callbackFailure = tostring(callbackError)
+            end
+            callbacks += 1
+        end
+        local function eliminate()
+            checked(function()
+                assert(
+                    runtime.rounds.match.eliminate(ground.UserId, roundId),
+                    "last ground elimination rejected"
+                )
+            end)
+        end
+        local function destroyAircraft()
+            checked(function()
+                local part = hitbox()
+                local origin = part.Position + Vector3.new(0, 25, 0)
+                for n = 1, 3 do
+                    assert(
+                        runtime.groundCombat.rocketSweep(roundId, prefix .. n, origin, Vector3.new(0, -50, 0)),
+                        "swept batch rocket rejected"
+                    )
+                    assert(health() == 300 - n * 100, "pristine rocket damage boundary failed")
+                    if n < 3 then
+                        assert(
+                            runtime.rounds.match.snapshot().phase == "Active",
+                            "aircraft destroyed before third rocket"
+                        )
+                    end
+                end
+            end)
+        end
+        if aircraftFirst then
+            RunService.Heartbeat:Once(destroyAircraft)
+            RunService.Heartbeat:Once(eliminate)
+        else
+            RunService.Heartbeat:Once(eliminate)
+            RunService.Heartbeat:Once(destroyAircraft)
+        end
+        waitFor(function()
+            return callbacks == 2
+        end, "same-heartbeat combat callbacks")
+        assert(callbackFailure == nil, tostring(callbackFailure))
+        waitFor(function()
+            return runtime.rounds.match.snapshot().phase == "Results"
+        end, "batched result")
+        local result = runtime.rounds.match.snapshot().result
+        assert(
+            result and result.winner == "Ground" and result.reason == "AircraftDestroyed",
+            "mutual batch chose wrong winner"
+        )
     end
     local fixture = Instance.new("Folder")
     fixture.Name = "P06Fixture"
@@ -335,6 +398,7 @@ function Harness.run(expectedClients: number?)
             probe(ground, "Observe", { health = 0, destroyed = true, winner = "Ground" })
         end)
         check("A5 reset restores aircraft and no stale equipment", function()
+            local previousRound = runtime.rounds.match.snapshot().roundId
             waitFor(function()
                 return runtime.rounds.match.snapshot().phase == "Lobby"
             end, "lobby reset", 25)
@@ -353,6 +417,28 @@ function Harness.run(expectedClients: number?)
                 return tool ~= nil and tool:GetAttribute("Ammo") == 30
             end, "fresh rifle")
             assert(health() == 300, "fresh round not pristine")
+            local backpack = assert(ground:FindFirstChildOfClass("Backpack"), "fresh backpack missing")
+            local tool = backpack:FindFirstChild("M-7 rifle")
+            local humanoid = if ground.Character
+                then ground.Character:FindFirstChildOfClass("Humanoid")
+                else nil
+            assert(tool and tool:IsA("Tool") and humanoid, "fresh rifle or humanoid missing")
+            humanoid:EquipTool(tool)
+            local target = hitbox().Position
+            probe(ground, "Fire", {
+                roundId = previousRound,
+                sequence = 1,
+                weapon = "M7",
+                x = target.X,
+                y = target.Y,
+                z = target.Z,
+            })
+            task.wait(0.2)
+            assert(health() == 300 and tool:GetAttribute("Ammo") == 30, "old-round shot mutated new round")
+            assert(
+                runtime.groundCombat.resources().tools == expected - 1,
+                "duplicate rifle owner after reset"
+            )
         end)
         if expected == 2 then
             check(
@@ -360,21 +446,7 @@ function Harness.run(expectedClients: number?)
                 function()
                     local _, ground = roles()
                     local roundId = runtime.rounds.match.snapshot().roundId
-                    assert(
-                        runtime.rounds.match.eliminate(ground.UserId, roundId),
-                        "last ground elimination rejected"
-                    )
-                    for n = 1, 3 do
-                        assert(
-                            runtime.groundCombat.rocketImpact(roundId, "batchA" .. n, true),
-                            "batch rocket rejected"
-                        )
-                    end
-                    waitFor(function()
-                        return runtime.rounds.match.snapshot().phase == "Results"
-                    end, "batched result")
-                    local result = runtime.rounds.match.snapshot().result
-                    assert(result and result.winner == "Ground", "last-ground-first batch chose wrong winner")
+                    mutualBatch(ground, roundId, false, "batchA")
                 end
             )
             check(
@@ -392,24 +464,42 @@ function Harness.run(expectedClients: number?)
                     waitFor(function()
                         return health() == 300
                     end, "batch pristine health")
-                    for n = 1, 3 do
-                        assert(
-                            runtime.groundCombat.rocketImpact(roundId, "batchB" .. n, true),
-                            "batch rocket rejected"
-                        )
-                    end
-                    assert(
-                        runtime.rounds.match.eliminate(ground.UserId, roundId),
-                        "last ground elimination rejected"
-                    )
-                    waitFor(function()
-                        return runtime.rounds.match.snapshot().phase == "Results"
-                    end, "batched result")
-                    local result = runtime.rounds.match.snapshot().result
-                    assert(result and result.winner == "Ground", "aircraft-first batch chose wrong winner")
+                    mutualBatch(ground, roundId, true, "batchB")
                 end
             )
+            check("A4 actual operator disconnect has separate forfeit reason", function()
+                waitFor(function()
+                    return runtime.rounds.match.snapshot().phase == "Lobby"
+                end, "forfeit lobby", 25)
+                assert(runtime.rounds.match.deploy(), "forfeit deployment failed")
+                waitFor(function()
+                    return runtime.rounds.match.snapshot().phase == "Active"
+                end, "forfeit active", 40)
+                local operator = roles()
+                probe(operator, "Leave", nil)
+                waitFor(function()
+                    return #Players:GetPlayers() == 1
+                end, "actual operator departure", 15)
+                waitFor(function()
+                    return runtime.rounds.match.snapshot().phase == "Results"
+                end, "forfeit result")
+                local result = runtime.rounds.match.snapshot().result
+                assert(
+                    result and result.winner == "Ground" and result.reason == "OperatorForfeit",
+                    "wrong operator departure reason"
+                )
+            end)
         end
+        check("A5 repeated-round teardown releases tools and listeners", function()
+            runtime.stop()
+            assert(
+                runtime.groundCombat.resources().connections == 0
+                    and runtime.groundCombat.resources().tools == 0,
+                "ground combat resources leaked"
+            )
+            assert(not workspace:FindFirstChild("GroundCombatEffects"), "rifle effects leaked")
+            assert(not ReplicatedStorage:FindFirstChild("AircraftState"), "aircraft transport leaked")
+        end)
     end)
     if not ok then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })

@@ -3,6 +3,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
+local StudioTestService = game:GetService("StudioTestService")
 local Harness = {}
 function Harness.run()
     task.spawn(function()
@@ -54,11 +55,18 @@ function Harness.run()
                         task.wait(0.03)
                     end
                     assert(matches(), "aircraft state or result replication mismatch")
+                elseif kind == "Leave" then
+                    assert(StudioTestService:CanLeaveTest(), "actual client cannot leave test")
                 else
                     error("unknown P06 probe")
                 end
             end)
             transport:FireServer(token, ok, if ok then "ok" else tostring(reason), Players.LocalPlayer.UserId)
+            if ok and kind == "Leave" then
+                task.delay(0.2, function()
+                    StudioTestService:LeaveTest()
+                end)
+            end
         end)
         transport.AncestryChanged:Connect(function()
             if not transport:IsDescendantOf(ReplicatedStorage) then
