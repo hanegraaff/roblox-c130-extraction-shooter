@@ -40,7 +40,10 @@ end
 function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local expected = expectedClients or 2
     local mode = if finish then "manual-server-clients" else "sdk"
-    local departureMethod = if finish then "server-kick" else "client-leave"
+    local departureMethod = if expected >= 3
+        then "not-exercised"
+        elseif finish then "server-kick"
+        else "client-leave"
     local function deliver(report: Report)
         workspace:SetAttribute("P06MultiplayerReport", HttpService:JSONEncode(report))
         if finish then
