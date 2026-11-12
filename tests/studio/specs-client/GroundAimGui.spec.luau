@@ -121,4 +121,51 @@ return function()
         gui:Destroy()
         assert(ok, tostring(failure))
     end)
+    test("P06 existing ground HUD follows input capability changes and cleans up", function()
+        local player = game:GetService("Players").LocalPlayer
+        local runService = game:GetService("RunService")
+        local controllerModule = require(player.PlayerScripts.Client.GroundCombatController)
+        local before: { [Instance]: boolean } = {}
+        for _, child in player.PlayerGui:GetChildren() do
+            before[child] = true
+        end
+        local state = Instance.new("Folder")
+        local touch = false
+        local owner = controllerModule.new(player, player.PlayerGui, state, function()
+            return touch
+        end)
+        local started, reason = owner.start()
+        assert(started, reason)
+        local owned: ScreenGui? = nil
+        for _, child in player.PlayerGui:GetChildren() do
+            if not before[child] and child.Name == "GroundCombatHUD" and child:IsA("ScreenGui") then
+                owned = child
+            end
+        end
+        local ok, failure = pcall(function()
+            assert(owned, "controller did not create HUD")
+            local status = owned:FindFirstChild("RifleStatus")
+            local fire = owned:FindFirstChild("Fire")
+            local reload = owned:FindFirstChild("Reload")
+            assert(status and status:IsA("TextLabel"), "rifle status missing")
+            assert(fire and fire:IsA("TextButton") and reload and reload:IsA("TextButton"), "buttons missing")
+            for _, mode in { false, true, false } do
+                touch = mode
+                runService.RenderStepped:Wait()
+                runService.RenderStepped:Wait()
+                local position, size = controllerModule.statusLayout(mode)
+                assert(
+                    status.Position == position and status.Size == size,
+                    "status failed to follow input mode"
+                )
+                assert(fire.Visible == mode and reload.Visible == mode, "buttons failed to follow input mode")
+                assert(status.Parent == owned, "input mode rebuilt the status")
+            end
+        end)
+        owner.stop()
+        owner.stop()
+        state:Destroy()
+        assert(not owned or owned.Parent == nil, "controller stop retained HUD")
+        assert(ok, tostring(failure))
+    end)
 end

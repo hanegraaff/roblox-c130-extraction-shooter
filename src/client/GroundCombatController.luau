@@ -39,10 +39,13 @@ function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
 end
 
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
+-- Optional nonyielding touch provider supports alternate input environments and
+-- tests; absent it, input capability is sampled from UserInputService per frame.
 function GroundCombatController.new(
     player: Player,
     playerGui: PlayerGui,
-    roundState: Instance
+    roundState: Instance,
+    touchProvider: (() -> boolean)?
 ): Lifecycle.Controller
     return Lifecycle.new({
         function()
@@ -58,7 +61,11 @@ function GroundCombatController.new(
             local label = Instance.new("TextLabel")
             label.Name = "RifleStatus"
             label.AnchorPoint = Vector2.new(0.5, 1)
-            label.Position, label.Size = GroundCombatController.statusLayout(UserInputService.TouchEnabled)
+            local function touchEnabled(): boolean
+                return if touchProvider then touchProvider() else UserInputService.TouchEnabled
+            end
+            local lastTouch = touchEnabled()
+            label.Position, label.Size = GroundCombatController.statusLayout(lastTouch)
             label.BackgroundColor3 = Color3.fromRGB(16, 23, 31)
             label.BackgroundTransparency = 0.2
             label.TextColor3 = Color3.new(1, 1, 1)
@@ -174,6 +181,11 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 RunService.RenderStepped:Connect(function()
+                    local touch = touchEnabled()
+                    if touch ~= lastTouch then
+                        lastTouch = touch
+                        label.Position, label.Size = GroundCombatController.statusLayout(touch)
+                    end
                     local roundId = roundState:GetAttribute("RoundId")
                     if type(roundId) == "number" and roundId ~= round then
                         round = roundId
@@ -206,8 +218,8 @@ function GroundCombatController.new(
                         and player:GetAttribute("Life") == "Alive"
                         and roundState:GetAttribute("Phase") == "Active"
                     gui.Enabled = visible
-                    fireButton.Visible = UserInputService.TouchEnabled
-                    reloadButton.Visible = UserInputService.TouchEnabled
+                    fireButton.Visible = touch
+                    reloadButton.Visible = touch
                     if not visible then
                         held = false
                         return
@@ -232,7 +244,7 @@ function GroundCombatController.new(
                     local point, offset = GroundCombatController.projectAim(
                         camera.ViewportSize,
                         UserInputService:GetMouseLocation(),
-                        UserInputService.TouchEnabled,
+                        touch,
                         GuiService:GetGuiInset(),
                         projectionOrigin.AbsolutePosition
                     )
