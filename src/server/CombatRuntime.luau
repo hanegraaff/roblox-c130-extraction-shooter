@@ -169,7 +169,13 @@ function CombatRuntime.start(
     end
     -- Resolve the entire impact against unchanged cover; no destructible mutation is
     -- performed here. One iteration per player ensures no direct-plus-splash award.
-    local function impact(projectile: Projectile, position: Vector3, hit: Instance?, time: number): boolean
+    local function impact(
+        projectile: Projectile,
+        position: Vector3,
+        hit: Instance?,
+        time: number,
+        embeddedInCover: boolean?
+    ): boolean
         local state = match.snapshot()
         if
             state.phase ~= "Active"
@@ -196,7 +202,8 @@ function CombatRuntime.start(
             local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
             if
-                member
+                not embeddedInCover
+                and member
                 and member.connected
                 and member.role == "Ground"
                 and member.life == "Alive"
@@ -341,7 +348,11 @@ function CombatRuntime.start(
                 then CombatRuntime.initialOverlap(muzzleProbe, overlap, battlefield)
                 else nil
             if initialHit then
-                if not impact(projectile, muzzle, initialHit, time) then
+                -- A ray starting inside a solid can leave it without reporting an
+                -- intersection. Conservatively suppress all splash for this rare
+                -- embedded-cover impact rather than granting damage through cover.
+                local embeddedInCover = battlefield ~= nil and initialHit:IsDescendantOf(battlefield)
+                if not impact(projectile, muzzle, initialHit, time, embeddedInCover) then
                     marker:Destroy()
                 end
                 visual:Destroy()

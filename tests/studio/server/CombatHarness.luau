@@ -550,12 +550,21 @@ function CombatHarness.run()
             fireAndObserve("M102", point, panelId)
         end)
         check("A4 muzzle starting inside solid cover resolves that cover before flight", function()
-            local op = roles()
+            local op, ground = roles()
             waitFor(function()
                 return ammo("M102") == 1
             end, "heavy reload before overlapping-muzzle case", 8)
             local muzzle = runtime.aircraft.muzzle("M102")
             assert(muzzle, "muzzle missing for overlap case")
+            local character = ground.Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+            assert(root and root:IsA("BasePart") and humanoid, "ground target missing for overlap case")
+            local originalFrame = root.CFrame
+            local direction = (Vector3.new(0, 30, 0) - muzzle).Unit
+            root.Anchored = true
+            root.CFrame = CFrame.new(muzzle + direction * 8)
+            local beforeHealth = humanoid.Health
             local wall = Instance.new("Part")
             wall.Name = "P05MuzzleOverlap"
             wall.Anchored = true
@@ -575,8 +584,20 @@ function CombatHarness.run()
                     hit.panelId == "P05MuzzleOverlap" and hit.shotId == 5,
                     "shot bypassed cover containing muzzle"
                 )
+                task.wait(0.2)
+                assert(
+                    humanoid.Health == beforeHealth,
+                    "embedded-cover blast damaged a real target on the far side"
+                )
+                assert(
+                    runtime.rounds.match.snapshot().phase == "Active",
+                    "embedded-cover blast ended the round"
+                )
             end)
             wall:Destroy()
+            if root.Parent then
+                root.CFrame = originalFrame
+            end
             assert(overlapOk, tostring(overlapReason))
         end)
         check("A1 actual projectile survives exact lifetime and expires cleanly afterward", function()
@@ -625,6 +646,7 @@ function CombatHarness.run()
             end)
             owner.stop()
             pulse:Destroy()
+            assert(not workspace:FindFirstChild("CombatMuzzleProbe"), "muzzle probe survived combat teardown")
             assert(expiryOk, tostring(expiryReason))
         end)
     end)

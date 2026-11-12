@@ -90,6 +90,20 @@ return function()
         probe.Position = Vector3.new(0, 120, 0)
         probe.Parent = workspace
         local ok, failure = pcall(function()
+            local ownRay = RaycastParams.new()
+            ownRay.FilterType = Enum.RaycastFilterType.Include
+            ownRay.FilterDescendantsInstances = { probe }
+            assert(
+                not workspace:Raycast(Vector3.new(-1, 120, 0), Vector3.new(2, 0, 0), ownRay),
+                "invisible muzzle probe was ray-queryable"
+            )
+            local ownOverlap = OverlapParams.new()
+            ownOverlap.FilterType = Enum.RaycastFilterType.Include
+            ownOverlap.FilterDescendantsInstances = { probe }
+            assert(
+                #workspace:GetPartBoundsInRadius(probe.Position, 1, ownOverlap) == 0,
+                "invisible muzzle probe appeared in normal spatial queries"
+            )
             assert(
                 CombatRuntime.initialOverlap(probe, overlap, workspace) == wall,
                 "muzzle inside solid cover bypassed initial overlap"
