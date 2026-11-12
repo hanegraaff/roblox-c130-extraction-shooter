@@ -53,6 +53,7 @@ function Harness.run()
         local pointingFrameBefore: number? = nil
         local pointingPixels: Vector2? = nil
         local pointingSearch: { [string]: unknown } = {}
+        local visibilityDiagnostics: { [string]: unknown } = {}
         local arrivalErrorStuds = 0
         local function visible(point: Vector3): boolean
             local camera = workspace.CurrentCamera
@@ -309,11 +310,74 @@ function Harness.run()
             aimRequest = nil
             pointingFrameBefore = nil
             pointingPixels = nil
+            pointingSearch = {}
             local destination = Vector3.new(point.X, 0, point.Z)
             goal = point
+            local started = os.clock()
+            local visibilityTimeout = AircraftRules.defaults.periodSeconds + 5
+            local samples = 0
+            local closestMiss = math.huge
+            visibilityDiagnostics = {
+                goal = { point.X, point.Y, point.Z },
+                timeoutSeconds = visibilityTimeout,
+                orbitPeriodSeconds = AircraftRules.defaults.periodSeconds,
+            }
             waitFor(function()
+                local camera = workspace.CurrentCamera
+                local current = hud()
+                local aircraft = workspace:FindFirstChild("Aircraft")
+                local root = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+                samples += 1
+                visibilityDiagnostics.samples = samples
+                visibilityDiagnostics.elapsedSeconds = os.clock() - started
+                if camera then
+                    local viewport = camera.ViewportSize
+                    local projected = camera:WorldToViewportPoint(point)
+                    local position = camera.CFrame.Position
+                    local localValue = if current then current:GetAttribute("PanLocalFocus") else nil
+                    local panValue = if current then current:GetAttribute("PanDirection") else nil
+                    local snapshot: { [string]: unknown } = {
+                        elapsedSeconds = os.clock() - started,
+                        goal = { point.X, point.Y, point.Z },
+                        projectedPixels = { projected.X, projected.Y, projected.Z },
+                        viewportPixels = { viewport.X, viewport.Y },
+                        cameraPosition = { position.X, position.Y, position.Z },
+                        projectionFrame = if current
+                            then current:GetAttribute("ProjectionFrame")
+                            else "missing",
+                        inputBlocked = if current then current:GetAttribute("InputBlocked") else "missing",
+                        localFocus = if typeof(localValue) == "Vector2"
+                            then { localValue.X, localValue.Y }
+                            else "missing",
+                        panDirection = if typeof(panValue) == "Vector2"
+                            then { panValue.X, panValue.Y }
+                            else "missing",
+                    }
+                    if root and root:IsA("BasePart") then
+                        local aircraftPosition = root.Position
+                        snapshot.aircraftPosition =
+                            { aircraftPosition.X, aircraftPosition.Y, aircraftPosition.Z }
+                        snapshot.aircraftPhaseRadians = math.atan2(
+                            aircraftPosition.Z - MapRules.defaults.centerZ,
+                            aircraftPosition.X - MapRules.defaults.centerX
+                        )
+                    end
+                    if not visibilityDiagnostics.initial then
+                        visibilityDiagnostics.initial = snapshot
+                    end
+                    visibilityDiagnostics.latest = snapshot
+                    if viewport.X > 0 and viewport.Y > 0 and projected.Z > 0 then
+                        local u, v = projected.X / viewport.X, projected.Y / viewport.Y
+                        local miss = math.max(0, 0.17 - u, u - 0.83, 0.17 - v, v - 0.83)
+                        if miss < closestMiss then
+                            closestMiss = miss
+                            snapshot.normalizedMiss = miss
+                            visibilityDiagnostics.closest = snapshot
+                        end
+                    end
+                end
                 return visible(point)
-            end, "input-driven target visibility", 12)
+            end, "input-driven target visibility through one orbit", visibilityTimeout)
             arrivalErrorStuds = (focus() - destination).Magnitude
             local current = hud()
             assert(current, "arrival HUD disappeared")
@@ -965,6 +1029,12 @@ function Harness.run()
             end)
             if request.kind == "Projection" then
                 observations.pointingSearch = pointingSearch
+                observations.visibility = visibilityDiagnostics
+                if not ok then
+                    goal = nil
+                    aimPoint = nil
+                    aimRequest = nil
+                end
             end
             remote:FireServer(token, {
                 passed = ok,

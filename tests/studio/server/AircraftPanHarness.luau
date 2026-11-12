@@ -100,7 +100,7 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
         remote:FireClient(player, token, request)
         waitFor(function()
             return replies[token][player] ~= nil
-        end, "client " .. request.kind, if request.kind == "Projection" then 35 else 20)
+        end, "client " .. request.kind, if request.kind == "Projection" then 125 else 20)
         local reply = replies[token][player]
         table.insert(observations, {
             userId = player.UserId,
