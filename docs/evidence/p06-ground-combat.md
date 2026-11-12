@@ -295,3 +295,30 @@ confirmed both source files match the Studio document, the full host gate
 passed 50 unit / 43 integration, and fresh Studio smoke passed 118/118 server
 and 4/4 client cases with zero failures/skips/errors. The real operated
 moving-aircraft aim check and current representative capture remain pending.
+
+The manual two-client P05 regression on `9adf5d5` passed all 8/8 cases, with
+118/118 server smoke and 4/4 on each actual client; see the [report](p06-p05-regression-9ad.json).
+An operated desktop check at viewport `(540,160)` with GUI inset Y=58 found
+the displayed reticle centered at `(540,160)` and the replicated GroundShot
+exactly matching a fresh `ViewportPointToRay(540,160)` world query. The old
+raw-inset ray landed elsewhere, so the previously measured mismatch is fixed.
+Real simulated iPhone 17 Pro touch held FIRE (ammo 29→24), RELOAD restored
+30/114 and a world swipe rotated the camera; its reticle was centered within
+0.5 pixel. A moving-aircraft native hit was not established. The
+[operated record](p06-operated-9ad.json) preserves measurements.
+
+The phone review found a remaining layout defect: at 750×381 the reticle
+rectangle `(363,179,24,24)` overlapped RifleStatus `(210,187,330,36)`, shown
+in the [actual capture](p06-presentation/mobile-overlap-before.jpg). The
+test session, simulator and temporary owners were stopped and selector cleared.
+The phone HUD requires correction and a fresh layout/input check.
+
+Candidate `6b569ea` moved the touch-only ammunition label away from the
+center reticle; independent Studio smoke passed 118/118 server and 5/5 client.
+The tester identified that input-mode changes after HUD creation could retain
+the desktop layout. Candidate `0003fe4` samples touch capability in the owned
+render loop and updates the existing label on transitions. An actual-controller
+Studio case covers desktop→touch→desktop and idempotent cleanup. Independent
+full host verification passed 50 unit / 43 integration, and fresh Studio smoke
+passed 118/118 server and 6/6 client with no failures/skips/errors. The final
+native two-client desktop/phone playability review is prepared, not yet passed.

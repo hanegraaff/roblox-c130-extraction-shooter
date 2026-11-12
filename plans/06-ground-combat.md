@@ -71,9 +71,13 @@ and Ground/AircraftDestroyed; the manual forfeit used server-kick. Its manual
 P06Team run passed 7/7 with three actual clients. The test-only manual P05
 regression on `dae58a4` passed 8/8 with two actual clients. The operated review
 found a desktop reticle/ray inset mismatch, measured at about 11.3 studs on
-the sampled ground surface. The `9adf5d5` fix passes host and 118 server /
-4 client Studio smoke including an actual GUI/ray spec; the native moving-plane
-check remains required.
+the sampled ground surface. The `9adf5d5` fix passed host and 118 server /
+4 client Studio smoke, P05 8/8, and the operated desktop reticle/ray comparison.
+Simulated phone touch firing, reload and camera motion worked, but its ammo
+panel overlapped the centered reticle. `0003fe4` adjusts the touch HUD and
+handles device-mode transitions; independent host and Studio smoke pass
+(118 server / 6 client). A fresh operated phone-layout and native moving-plane
+check remain required.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,

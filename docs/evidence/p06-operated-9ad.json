@@ -1,0 +1,90 @@
+{
+  "source": "9adf5d564991025159dd5725b4bb1209c099d021",
+  "desktop": {
+    "inputViewport": [
+      540,
+      160
+    ],
+    "mouseLocation": [
+      540,
+      218
+    ],
+    "guiInset": [
+      0,
+      58
+    ],
+    "reticleAbsoluteTopLeft": [
+      528,
+      148
+    ],
+    "reticleSize": [
+      24,
+      24
+    ],
+    "reticleCenter": [
+      540,
+      160
+    ],
+    "groundShot": {
+      "x": -21.019922256469727,
+      "y": 68.33032989501953,
+      "z": -828.0964965820312,
+      "sequence": 1,
+      "userId": -2,
+      "roundId": 1
+    },
+    "rayThroughReticle": [
+      -21.019922256469727,
+      68.33032989501953,
+      -828.0964965820312
+    ],
+    "rayThroughRawMouse": [
+      -20.14692497253418,
+      4.76837158203125e-7,
+      -12.103828430175781
+    ]
+  },
+  "phone": {
+    "device": "iPhone 17 Pro",
+    "viewport": [
+      750,
+      381
+    ],
+    "touchEnabled": true,
+    "reticleBounds": [
+      363,
+      179,
+      387,
+      203
+    ],
+    "rifleStatusBounds": [
+      210,
+      187,
+      540,
+      223
+    ],
+    "fireTouch": [
+      683,
+      160
+    ],
+    "fireProcessed": true,
+    "ammoBefore": 29,
+    "ammoAfter": 24,
+    "reloadTouch": [
+      683,
+      95
+    ],
+    "reloadProcessed": true,
+    "reloadAmmo": 30,
+    "reserve": 114,
+    "swipeTouch": [
+      408,
+      180
+    ],
+    "swipeProcessed": false,
+    "cameraChanged": true,
+    "screenshot": "/private/tmp/p06-phone-9ad.jpg"
+  },
+  "movingAircraftHit": "not verified; could not align the moving plane within camera view in bounded attempt",
+  "desktopScreenshot": "/private/tmp/p06-current-final.jpg"
+}
