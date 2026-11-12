@@ -58,9 +58,19 @@ phone 40° rerun. The independent tester reports the last three A4 observations
 passed and left Studio in Edit. The successful production source and P14 fixture
 are `ca1d91a`; P04's corrected test fixtures are `64e6a18`, and the final operated
 checks used `a64676e`, which changed documentation only. The final operated
-evidence and documentation are committed and pushed in `8cec062`. PR #22 is
-stacked on the unmerged edge adjustment PR #21; integration into `main` remains
-separate. No Roblox publication occurred.
+evidence and documentation are committed and pushed in `8cec062`. At delivery,
+PR #22 was stacked on the unmerged edge adjustment PR #21. No Roblox publication
+occurred.
+
+### Main integration — 2026-11-12
+
+With user authorization, PRs #18–#22 were merged in dependency order into
+`main`, ending at `169cecd6f10f82569526c57d5c1aa30c178e3ffe`. Its tree matches
+the verified PR #22 head `50236e687a87ef9ae21952250d1befabc75d663f`; the fresh
+integrated host gate passes 50 unit / 18 integration and the build, static,
+geometry and isolation checks. The [integration record](../docs/evidence/p14-integration.md)
+identifies each merge and links the independently verified Studio evidence.
+P05 can now branch from integrated `main`; it has not been implemented.
 
 ### Edge visibility revision — 2026-11-12
 
