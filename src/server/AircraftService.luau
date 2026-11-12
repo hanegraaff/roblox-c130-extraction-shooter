@@ -23,6 +23,11 @@ export type Controller = {
     sample: (number) -> CFrame,
     -- Server-only finite disk/height and solid-world sight-line check; never fires.
     aimAllowed: (Vector3) -> boolean,
+    -- Server-owned selected weapon and muzzle position, never supplied by a client.
+    weapon: () -> string,
+    muzzle: (string) -> Vector3?,
+    -- Current active-level combat bounds and authored vertical aim envelope.
+    level: () -> (MapRules.Settings, number, number),
     -- Current live owned connections, for teardown/repeated-round diagnostics.
     resources: () -> { connections: number },
 }
@@ -160,6 +165,19 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
     table.insert(connections, RunService.Heartbeat:Connect(tick))
     return {
         sample = sample,
+        weapon = function()
+            return selection.snapshot().weapon
+        end,
+        muzzle = function(weapon)
+            if weapon ~= "GAU23" and weapon ~= "M102" then
+                return nil
+            end
+            local attachment = hitbox:FindFirstChild(if weapon == "M102" then "M102Muzzle" else "GAU23Muzzle")
+            return if attachment and attachment:IsA("Attachment") then attachment.WorldPosition else nil
+        end,
+        level = function()
+            return table.clone(map), minimumY, maximumY
+        end,
         aimAllowed = function(endpoint)
             if not AircraftRules.aimAllowed(map, endpoint.X, endpoint.Y, endpoint.Z, minimumY, maximumY) then
                 return false

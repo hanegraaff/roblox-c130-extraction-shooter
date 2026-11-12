@@ -40,6 +40,7 @@ do
                         RoundRules = true,
                         MatchService = true,
                         AircraftSelection = true,
+                        CombatService = true,
                     }
                     local area = if serverModules[moduleName] then "server" else "shared"
                     local rules = loadModule("../src/" .. area .. "/" .. moduleName)

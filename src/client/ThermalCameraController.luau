@@ -172,6 +172,9 @@ function ThermalCameraController.new(
     local highlights: { [Model]: Highlight } = {}
     local buttons: { RBXScriptConnection } = {}
     local sequence = 0
+    local fireSequence = 0
+    local fireHeld = false
+    local nextFireRequest = 0
     local lastRound = -1
     local previewWeapon = "GAU23"
     local map = MapRules.defaults
@@ -232,6 +235,7 @@ function ThermalCameraController.new(
             return
         end
         active = false
+        fireHeld = false
         for _, connection in buttons do
             connection:Disconnect()
         end
@@ -361,6 +365,33 @@ function ThermalCameraController.new(
             safeControls.Parent = playerGui
             touchControlsGui = safeControls
             buttonParent = safeControls
+            local fire = Instance.new("TextButton")
+            fire.Name = "Fire"
+            fire.AnchorPoint = Vector2.new(1, 1)
+            fire.Position = UDim2.new(1, -24, 1, -96)
+            fire.Size = UDim2.fromOffset(76, 76)
+            fire.Text = "FIRE"
+            fire.Font = Enum.Font.GothamBold
+            fire.TextSize = 18
+            fire.BackgroundColor3 = Color3.fromRGB(110, 45, 35)
+            fire.TextColor3 = Color3.new(1, 1, 1)
+            fire.Parent = buttonParent
+            table.insert(
+                buttons,
+                fire.InputBegan:Connect(function(event)
+                    if event.UserInputType == Enum.UserInputType.Touch then
+                        fireHeld = true
+                    end
+                end)
+            )
+            table.insert(
+                buttons,
+                fire.InputEnded:Connect(function(event)
+                    if event.UserInputType == Enum.UserInputType.Touch then
+                        fireHeld = false
+                    end
+                end)
+            )
         end
         local caption = Instance.new("TextLabel")
         caption.Name = "Profile"
@@ -528,13 +559,23 @@ function ThermalCameraController.new(
             buttons,
             UserInputService.InputBegan:Connect(function(event, processed)
                 if not processed and eligible() then
-                    if event.KeyCode == Enum.KeyCode.One then
+                    if event.UserInputType == Enum.UserInputType.MouseButton1 then
+                        fireHeld = true
+                    elseif event.KeyCode == Enum.KeyCode.One then
                         selectWeapon("GAU23")
                     elseif event.KeyCode == Enum.KeyCode.Two then
                         selectWeapon("M102")
                     elseif event.KeyCode == Enum.KeyCode.R then
                         recenterRequested = true
                     end
+                end
+            end)
+        )
+        table.insert(
+            buttons,
+            UserInputService.InputEnded:Connect(function(event)
+                if event.UserInputType == Enum.UserInputType.MouseButton1 then
+                    fireHeld = false
                 end
             end)
         )
@@ -564,6 +605,7 @@ function ThermalCameraController.new(
         local roundId = roundState:GetAttribute("RoundId")
         if type(roundId) == "number" and roundId ~= lastRound then
             sequence = 0
+            fireSequence = 0
             lastRound = roundId
             focus = nil
         end
@@ -685,6 +727,21 @@ function ThermalCameraController.new(
                 if type(minimum) == "number" then minimum else nil,
                 if type(maximum) == "number" then maximum else nil
             )
+        if fireHeld and not preview and validAim and not blocked and os.clock() >= nextFireRequest then
+            local remote = state:FindFirstChild("FireWeapon")
+            if remote and remote:IsA("RemoteEvent") then
+                fireSequence += 1
+                remote:FireServer({
+                    roundId = roundId,
+                    sequence = fireSequence,
+                    weapon = weapon,
+                    x = endpoint.X,
+                    y = endpoint.Y,
+                    z = endpoint.Z,
+                })
+                nextFireRequest = os.clock() + (if weapon == "GAU23" then 0.16 else 0.2)
+            end
+        end
         frameNumber += 1
         local cross = reticle
         local caption = label
@@ -696,12 +753,31 @@ function ThermalCameraController.new(
             assert(guiPosition, "finite projection pixels and GUI origin must define a reticle offset")
             cross.Position = guiPosition
             cross.TextColor3 = if validAim then Color3.new(1, 1, 1) else Color3.fromRGB(255, 140, 90)
+            local readinessText = ""
+            local readinessJson = state:GetAttribute("Readiness")
+            if not preview and type(readinessJson) == "string" then
+                local ok, decoded = pcall(function()
+                    return HttpService:JSONDecode(readinessJson)
+                end)
+                local readiness = if ok and type(decoded) == "table" then decoded[weapon] else nil
+                if
+                    type(readiness) == "table"
+                    and type(readiness.ammo) == "number"
+                    and type(readiness.reloadUntil) == "number"
+                then
+                    local remaining = math.max(0, readiness.reloadUntil - workspace:GetServerTimeNow())
+                    readinessText = if remaining > 0
+                        then string.format(" • Reload %.1fs", remaining)
+                        else string.format(" • %d rounds", readiness.ammo)
+                end
+            end
             caption.Text = (if preview then "Studio preview • " else "")
                 .. AircraftRules.names[weapon]
+                .. readinessText
                 .. string.format(
                     if UserInputService.TouchEnabled
-                        then " • %d° FOV\nArrows pan • drag view to aim • Recenter • Firing planned"
-                        else " • %d° FOV\nWASD pan • mouse aims • R recenter • 1 / 2 select • Firing planned",
+                        then " • %d° FOV\nArrows pan • drag view to aim • hold FIRE"
+                        else " • %d° FOV\nWASD pan • mouse aims • hold click to fire • R recenter • 1 / 2 select",
                     fov
                 )
             -- Observable projection commit used by engine tests and accessibility tooling.
@@ -765,6 +841,7 @@ function ThermalCameraController.new(
     end)
     local unfocused = UserInputService.WindowFocusReleased:Connect(function()
         windowFocused = false
+        fireHeld = false
         table.clear(heldPad)
         aimTouch = nil
         touchAimBeforeCapture = nil

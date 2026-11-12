@@ -34,4 +34,8 @@ Document both weapon contracts, per-weapon timing, zoom mapping, blast cover app
 
 ## Completion record
 
-Not implemented. Record A1–A5 tests, source, two-client/weapon-switch evidence and feel observations.
+Implementation started on `plan/05-gunship-combat` from integrated main
+`79336f17d76717408351978b4a9925418361670e`. A1–A5 remain unverified.
+Acceptance requires the full host gate, real Studio geometry and two-client
+replication checks, and an operated weapon/cover/thermal review. Record the
+candidate source, exact test results and observations here as they become available.
