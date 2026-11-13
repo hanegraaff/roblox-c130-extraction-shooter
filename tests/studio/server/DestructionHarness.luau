@@ -17,8 +17,22 @@ local CombatService = require(Server.CombatService)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+-- Only the non-yielding production basis function is used; no client controller
+-- is started on this server. Forecasts also respect Burst's stricter 0.7 inset.
+local Camera = require(game:GetService("StarterPlayer").StarterPlayerScripts.Client.ThermalCameraController)
 local Harness = {}
 type Case = { name: string, passed: boolean, detail: string? }
+type PanelExpectation = {
+    id: string,
+    stage: string,
+    progress: number,
+    appearance: string,
+    heavySeconds: number,
+    sustainedSeconds: number,
+    parts: number,
+    pivot: { number },
+    size: Vector3,
+}
 export type Report = {
     suite: string,
     environment: string,
@@ -261,7 +275,8 @@ function Harness.run(finish: ((Report) -> ())?)
         weapon: string,
         point: Vector3,
         sequence: number,
-        predictedCamera: Vector3?
+        predictedCamera: Vector3?,
+        burstView: boolean?
     ): { [string]: unknown }?
         local map = MapRules.defaults
         local camera = predictedCamera or runtime.aircraft.position()
@@ -285,10 +300,35 @@ function Harness.run(finish: ((Report) -> ())?)
         }
         for sample = 0, 100 do
             local t = sample / 100
-            payload.focusX = targetFocus.x + (home.x - targetFocus.x) * t
-            payload.focusZ = targetFocus.z + (home.z - targetFocus.z) * t
+            local focus = {
+                x = targetFocus.x + (home.x - targetFocus.x) * t,
+                z = targetFocus.z + (home.z - targetFocus.z) * t,
+            }
+            payload.focusX = focus.x
+            payload.focusZ = focus.z
             if CombatViewRules.validate(payload, map, weapon, camera.X, camera.Z) then
-                return payload
+                if not burstView then
+                    return payload
+                end
+                local worldFocus = assert(
+                    Pan.worldFocus(map, focus, camera.X, camera.Z),
+                    "valid fixture world focus unavailable"
+                )
+                local frame = assert(
+                    Camera.frame(camera, Vector3.new(worldFocus.x, map.groundY, worldFocus.z)),
+                    "valid fixture camera basis unavailable"
+                )
+                local widest = assert(Pan.supportedFov(map, 16 / 9, 40), "fixture lens unavailable")
+                local tangent = math.tan(math.rad(math.min(AircraftRules.defaults.fov30mm, widest)) / 2)
+                local localPoint = frame:PointToObjectSpace(point)
+                local depth = -localPoint.Z
+                if
+                    depth > 0
+                    and math.abs(localPoint.X / (depth * tangent * (16 / 9))) <= 0.7
+                    and math.abs(localPoint.Y / (depth * tangent)) <= 0.7
+                then
+                    return payload
+                end
             end
         end
         return nil
@@ -313,17 +353,23 @@ function Harness.run(finish: ((Report) -> ())?)
             else Vector3.new(0, size.Y / 2, -size.Z * 0.375)
         return pose(model.Name):PointToWorldSpace(offset)
     end
-    local function expected(ids: { string })
-        local result = {}
+    local function expected(ids: { string }): { PanelExpectation }
+        local result: { PanelExpectation } = {}
         for _, id in ids do
             local model = panel(id)
+            local state = assert(runtime.destruction.snapshot(id), "registered panel ledger unavailable")
+            local size = model:GetAttribute("IntactSize")
+            assert(typeof(size) == "Vector3", "registered panel size unavailable")
             table.insert(result, {
                 id = id,
-                stage = model:GetAttribute("PanelState"),
-                progress = model:GetAttribute("PanelProgress"),
-                appearance = model:GetAttribute("DamageAppearance"),
+                stage = ({ "Intact", "Damaged", "Destroyed" })[state.stage + 1],
+                progress = state.progress,
+                appearance = state.appearance,
+                heavySeconds = state.heavySeconds,
+                sustainedSeconds = state.sustainedSeconds,
                 parts = #model:GetChildren(),
                 pivot = { pose(id):GetComponents() },
+                size = size,
             })
         end
         return result
@@ -465,9 +511,148 @@ function Harness.run(finish: ((Report) -> ())?)
         })
         return selected, selectedPoint, selectedNormal
     end
+    -- A reset target must remain reachable through all three heavy reload/flight
+    -- steps and the following four-shot GAU burst. Prefer roofs near the level
+    -- center rather than an orbit-dependent current FOV edge. The point is on a
+    -- real residual strip and uses authored roof thickness; no collider is moved.
+    local function stableResetRoof(): (string, Vector3, RaycastParams)
+        awaitReady("M102")
+        local params = RaycastParams.new()
+        params.FilterType = Enum.RaycastFilterType.Include
+        params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+        params.RespectCanCollide = true
+        local candidates: { Model } = {}
+        local center = Vector3.new(MapRules.defaults.centerX, 0, MapRules.defaults.centerZ)
+        for _, item in workspace.World.Battlefield:GetDescendants() do
+            if
+                item:IsA("Model")
+                and string.find(item.Name, "Roof", 1, true)
+                and item:GetAttribute("PanelState") == "Intact"
+                and item:GetAttribute("PanelProgress") == 0
+            then
+                table.insert(candidates, item)
+            end
+        end
+        table.sort(candidates, function(a, b)
+            return (pose(a.Name).Position * Vector3.new(1, 0, 1) - center).Magnitude
+                < (pose(b.Name).Position * Vector3.new(1, 0, 1) - center).Magnitude
+        end)
+        local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
+        assert(type(epoch) == "number", "reset forecast epoch unavailable")
+        local aircraftFrame = workspace.Aircraft:GetPivot()
+        local relativeMuzzles: { [string]: Vector3 } = {}
+        for _, weapon in { "M102", "GAU23" } do
+            relativeMuzzles[weapon] = aircraftFrame:PointToObjectSpace(
+                assert(runtime.aircraft.muzzle(weapon), "reset forecast muzzle unavailable")
+            )
+        end
+        for candidateIndex, model in candidates do
+            local point = roofTarget(model)
+            local startedAt = workspace:GetServerTimeNow()
+            local clear = true
+            for step = 0, math.ceil(wallWindowSeconds / 0.5) do
+                local predicted = assert(
+                    AircraftRules.pose(
+                        MapRules.defaults,
+                        AircraftRules.defaults,
+                        startedAt - epoch + step * 0.5
+                    ),
+                    "reset forecast pose unavailable"
+                )
+                local camera = Vector3.new(predicted.x, predicted.y, predicted.z)
+                local frame =
+                    CFrame.lookAt(camera, camera + Vector3.new(predicted.tangentX, 0, predicted.tangentZ))
+                for _, weapon in { "M102", "GAU23" } do
+                    local first =
+                        aimHit(weapon, point, frame:PointToWorldSpace(relativeMuzzles[weapon]), params)
+                    if
+                        not first
+                        or runtime.destruction.identify(first.Instance) ~= model.Name
+                        or not command(weapon, point, fireSequence + 1, camera, weapon == "GAU23")
+                    then
+                        clear = false
+                        break
+                    end
+                end
+                if not clear then
+                    break
+                end
+                if step % 8 == 7 then
+                    task.wait() -- at most sixteen engine queries per uninterrupted batch
+                end
+            end
+            if clear then
+                table.insert(observations, {
+                    kind = "reset-roof-forecast",
+                    panelId = model.Name,
+                    windowSeconds = wallWindowSeconds,
+                    sampleIntervalSeconds = 0.5,
+                    candidateIndex = candidateIndex,
+                    startedAtServerSeconds = startedAt,
+                    selectedAtServerSeconds = workspace:GetServerTimeNow(),
+                })
+                return model.Name, point, params
+            end
+            task.wait()
+        end
+        error("no pristine roof has both profile views and first hits across reset reload/flight window")
+    end
+    -- Readiness may yield; view and actual first-hit checks therefore run AFTER
+    -- it, immediately before the next send. Forecasts never authorize a shot.
+    local function readyResetTarget(weapon: string, id: string, point: Vector3, params: RaycastParams)
+        awaitReady(weapon)
+        local payload = assert(
+            command(weapon, point, fireSequence + 1, nil, weapon == "GAU23"),
+            "reset target outside current " .. weapon .. " fixture view"
+        )
+        local first =
+            aimHit(weapon, point, assert(runtime.aircraft.muzzle(weapon), "reset muzzle missing"), params)
+        assert(
+            first and runtime.destruction.identify(first.Instance) == id,
+            "reset current " .. weapon .. " first hit is not the selected real panel"
+        )
+        return payload
+    end
     local op: Player? = nil
     local ground: Player? = nil
     local testedIds: { string } = {}
+    local allIds: { string } = {}
+    local originalPanels: { [string]: { pivot: CFrame, size: Vector3 } } = {}
+    local function allPanelStates(pristine: boolean): { PanelExpectation }
+        assert(#allIds == 187 and runtime.destruction.resources().panels == 187, "all-panel registry changed")
+        local entries = expected(allIds)
+        for _, entry in entries do
+            local model = panel(entry.id)
+            local original = assert(originalPanels[entry.id], "original panel identity missing")
+            assert(
+                model:GetAttribute("PanelState") == entry.stage
+                    and model:GetAttribute("PanelProgress") == entry.progress
+                    and model:GetAttribute("DamageAppearance") == entry.appearance
+                    and model:GetAttribute("HeavySeconds") == entry.heavySeconds
+                    and model:GetAttribute("SustainedSeconds") == entry.sustainedSeconds,
+                entry.id .. " ledger/publication disagreement"
+            )
+            assert(
+                pose(entry.id) == original.pivot
+                    and model:GetPivot() == original.pivot
+                    and entry.size == original.size,
+                entry.id .. " original pivot/size changed"
+            )
+            if pristine then
+                assert(
+                    entry.stage == "Intact"
+                        and entry.progress == 0
+                        and entry.appearance == "Pristine"
+                        and entry.heavySeconds == 0
+                        and entry.sustainedSeconds == 0
+                        and entry.parts == 1
+                        and not model:FindFirstChild("DamageVisuals"),
+                    entry.id .. " retained damage after reset"
+                )
+            end
+        end
+        return entries
+    end
     local ok, failure = pcall(function()
         check(
             "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation",
@@ -484,6 +669,16 @@ function Harness.run(finish: ((Report) -> ())?)
                     end
                 end
                 assert(op and ground, "roles missing")
+                for _, item in workspace.World.Battlefield:GetDescendants() do
+                    if item:IsA("Model") and item:GetAttribute("PanelId") == item.Name then
+                        local size = item:GetAttribute("IntactSize")
+                        assert(typeof(size) == "Vector3", "initial panel dimensions missing")
+                        table.insert(allIds, item.Name)
+                        originalPanels[item.Name] = { pivot = pose(item.Name), size = size }
+                    end
+                end
+                table.sort(allIds)
+                allPanelStates(true)
                 local roofIds: { string } = {}
                 for _, item in workspace.World.Battlefield:GetDescendants() do
                     if item:IsA("Model") and string.find(item.Name, "Roof", 1, true) then
@@ -815,10 +1010,18 @@ function Harness.run(finish: ((Report) -> ())?)
                 end, "accumulating panel")
                 task.wait(8.2)
                 assert(runtime.destruction.resources().fragments == 0, "prior debris still live")
+                local entries = allPanelStates(false)
                 for _, player in initialPlayers do
                     probe(player, "Panels", expected(testedIds))
+                    probe(player, "Panels", entries)
                     probe(player, "NoFragments", nil)
                 end
+                table.insert(observations, {
+                    kind = "all-panel-current-agreement",
+                    serverPanels = #entries,
+                    actualClients = #initialPlayers,
+                    perClientQueriedPanels = #entries,
+                })
             end
         )
         check("A6 reset during fragmentation and pending work restores panels through two rounds", function()
@@ -831,34 +1034,10 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
                 assert(currentOperator, "reset fixture has no active operator")
                 selectWeapon(currentOperator, "M102")
-                local freshId: string? = nil
-                local freshPoint: Vector3? = nil
-                for _, item in workspace.World.Battlefield:GetDescendants() do
-                    if
-                        item:IsA("Model")
-                        and string.find(item.Name, "Roof", 1, true)
-                        and item:GetAttribute("PanelState") == "Intact"
-                        and item:GetAttribute("PanelProgress") == 0
-                    then
-                        local point = roofTarget(item)
-                        if
-                            command("M102", point, fireSequence + 1)
-                            and command("GAU23", point, fireSequence + 1)
-                        then
-                            freshId = item.Name
-                            freshPoint = point
-                            break
-                        end
-                    end
-                end
-                assert(freshId and freshPoint, "fresh reachable reset panel unavailable")
-                local targetId = freshId
-                local targetPoint = freshPoint
+                local targetId, targetPoint, resetParams = stableResetRoof()
                 for hit = 1, 3 do
-                    awaitReady("M102")
+                    local payload = readyResetTarget("M102", targetId, targetPoint, resetParams)
                     fireSequence += 1
-                    local payload =
-                        assert(command("M102", targetPoint, fireSequence), "reset panel left view")
                     probe(currentOperator, "Fire", payload)
                     waitFor(function()
                         return panel(targetId):GetAttribute("PanelState")
@@ -869,6 +1048,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
                 assert(runtime.destruction.resources().fragments > 0, "reset did not overlap live fragments")
                 selectWeapon(currentOperator, "GAU23")
+                readyResetTarget("GAU23", targetId, targetPoint, resetParams)
                 local firstSequence = fireSequence + 1
                 fireSequence += 4
                 probe(currentOperator, "Burst", {
@@ -885,6 +1065,14 @@ function Harness.run(finish: ((Report) -> ())?)
                         and runtime.combat.resources().projectiles > 0
                         and runtime.destruction.resources().fragments > 0
                 end, "actual partial credit plus pending flight plus fragments", 8)
+                table.insert(observations, {
+                    kind = "reset-pre-abort-work",
+                    iteration = iteration,
+                    panelId = targetId,
+                    sustainedSeconds = assert(runtime.destruction.snapshot(targetId)).sustainedSeconds,
+                    pendingProjectiles = runtime.combat.resources().projectiles,
+                    liveFragments = runtime.destruction.resources().fragments,
+                })
                 local staleRound = runtime.rounds.match.snapshot().roundId
                 runtime.rounds.match.abort(runtime.rounds.match.snapshot().roundId, "P07 reset fixture")
                 assert(runtime.rounds.match.beginReset(), "reset start")
@@ -892,8 +1080,9 @@ function Harness.run(finish: ((Report) -> ())?)
                     return runtime.rounds.match.snapshot().phase == "Lobby"
                 end, "reset lobby")
                 waitFor(function()
-                    return panel(testedIds[1]):GetAttribute("PanelState") == "Intact"
+                    return panel(targetId):GetAttribute("PanelState") == "Intact"
                 end, "pristine panels")
+                local resetEntries = allPanelStates(true)
                 assert(not runtime.destruction.resolve({
                     roundId = staleRound,
                     shotId = 1,
@@ -903,13 +1092,22 @@ function Harness.run(finish: ((Report) -> ())?)
                 }), "stale pre-reset outcome accepted")
                 assert(
                     runtime.destruction.resources().fragments == 0
-                        and runtime.destruction.resources().pending == 0,
+                        and runtime.destruction.resources().pending == 0
+                        and runtime.combat.resources().projectiles == 0,
                     "reset work leaked"
                 )
                 for _, player in Players:GetPlayers() do
                     probe(player, "Panels", expected(testedIds))
+                    probe(player, "Panels", resetEntries)
                     probe(player, "NoFragments", nil)
                 end
+                table.insert(observations, {
+                    kind = "all-panel-pristine-reset-agreement",
+                    iteration = iteration,
+                    serverPanels = #resetEntries,
+                    actualClients = #Players:GetPlayers(),
+                    perClientQueriedPanels = #resetEntries,
+                })
                 if iteration == 1 then
                     assert(runtime.rounds.match.deploy(), "second deployment")
                     waitFor(function()
