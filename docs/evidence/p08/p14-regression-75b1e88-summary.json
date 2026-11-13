@@ -1,0 +1,87 @@
+{
+  "source": "75b1e882a33f73a4c4aa429cb0fb125648d75501",
+  "tree": "055b7664a60d1f0cef49615d8009b29cabde1f2b",
+  "summary": {
+    "bytes": 150533,
+    "serverBaseline": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 156,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 156
+    },
+    "skipped": 0,
+    "passed": 6,
+    "clientCount": 2,
+    "orbitSecondsPerWeapon": 90,
+    "observations": 49,
+    "ok": true,
+    "clientBaselines": {
+      "1": {
+        "report": {
+          "baseline": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 7,
+            "userId": -2,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "discovered": 7
+          }
+        },
+        "userId": -2
+      },
+      "2": {
+        "report": {
+          "baseline": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 7,
+            "userId": -1,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "discovered": 7
+          }
+        },
+        "userId": -1
+      }
+    },
+    "suite": "P14-multiplayer",
+    "discovered": 6,
+    "failed": 0,
+    "cases": {
+      "1": {
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits",
+        "passed": true
+      },
+      "3": {
+        "name": "P14 blocked UI outside-window input and recenter retain bounded ownership",
+        "passed": true
+      },
+      "2": {
+        "name": "P14 acknowledged zoom and rejected selection preserve world-space pan and ground camera",
+        "passed": true
+      },
+      "5": {
+        "name": "P14 result role loss and new-round operator entry reset focus without duplicate ownership",
+        "passed": true
+      },
+      "4": {
+        "name": "P14 slope and upper-floor targets retain actual occluded thermal configuration",
+        "passed": true
+      },
+      "6": {
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership",
+        "passed": true
+      }
+    }
+  }
+}

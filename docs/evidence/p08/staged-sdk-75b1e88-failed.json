@@ -1,0 +1,18 @@
+{
+  "source": "75b1e882a33f73a4c4aa429cb0fb125648d75501",
+  "launch": {
+    "method": "ExecuteMultiplayerTestAsync(2,{kind='P08'}) then actual SDK Server AddPlayers(1)",
+    "addAtClock": 21.191353375004837,
+    "actualBeforeAdd": 2,
+    "requestedTotal": 3
+  },
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ok\":true,\"result\":{\"requestedClients\":3,\"actualReconnectVerified\":false,\"peakClientCount\":2,\"cases\":[{\"name\":\"Harness startup\",\"passed\":false,\"detail\":\"ServerScriptService.ServerTests.LauncherHarness:40: P08 timeout: three actual clients\"}],\"skipped\":0,\"requiredUnverified\":[\"A5 actual same-identity reconnect\"],\"passed\":0,\"departureMethod\":\"client-leave\",\"discovered\":1,\"clientCount\":2,\"currentClientCount\":2,\"environment\":\"Studio\",\"initialClientCount\":2,\"suite\":\"P08-multiplayer\",\"failed\":1,\"mode\":\"sdk\"},\"launch\":{\"method\":\"SDK 2 then actual-server AddPlayers(1)\",\"initialRequest\":2,\"addedPlayers\":1,\"requestedTotal\":3}}"
+      }
+    ],
+    "isError": false
+  }
+}

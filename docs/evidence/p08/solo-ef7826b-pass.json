@@ -1,0 +1,29 @@
+{
+  "source": "ef7826bc80310c17be4bcde93fe7607620303289",
+  "tree": "db1f4e50296a2620d13e36839525c7562220a629",
+  "server": {
+    "count": 1,
+    "report": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 156,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 156
+    }
+  },
+  "client": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 7,
+    "userId": 2227341845,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-client",
+    "failed": 0,
+    "discovered": 7
+  }
+}

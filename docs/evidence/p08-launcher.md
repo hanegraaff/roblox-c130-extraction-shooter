@@ -1,5 +1,19 @@
 # P08 launcher verification
 
+[Draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
+contains the implementation, prose and source-bound evidence. Delivery head
+`5dae4b6206912f42ed2eeca00e7aed33dd57498d` has a passing
+[GitHub Verify run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43503117593).
+Acceptance remains open; CI does not replace actual multiplayer or operated
+checks.
+
+Latest verified runtime/test source is `ef7826b`: full host **55 unit / 65
+integration** and fresh solo Studio **156 server / 7 client** pass. The unchanged
+server/input core's source-bound two-client regressions on `75b1e88` pass P06
+**10/10**, P05 **8/8** and P14 **6/6**. Final phone layout/native-control review
+passes. The eleven-case three-client P08 harness and actual same-identity
+reconnect remain open at this checkpoint.
+
 ## Candidate and environment
 
 Work began on 2026-11-13 on `plan/08-rocket-launcher`, from integrated
@@ -27,12 +41,12 @@ evidence.
 
 | Criterion | Required evidence | Current evidence |
 | --- | --- | --- |
-| A1 | Full host gate; one identity/owner/representation under raced and repeated claims | Pending candidate |
-| A2 | Runtime role/life/round/shape/replay/rate/reach/movement rejection without mutation, then valid pickup; retained M-7 | Pending candidate |
-| A3 | Drop/death/reset/disconnect reload continuity, valid recovery/fallback, terminal precedence | Pending candidate |
-| A4 | Actual swept rockets: two nonlethal direct hits, third ground win; mixed rifle damage, cover/miss/duplicate rejection; feasible reload timing | Pending candidate |
-| A5 | Three actual clients: operator and two ground players, raced pickup, death/disconnect/recovery, replicated owner/readiness/health, reconnect authority | Pending Studio candidate |
-| A6 | Repeated pristine reset, one anchor launcher and no old tool/projectile/callback authority | Pending candidate |
+| A1 | Full host gate; one identity/owner/representation under raced and repeated claims | Host, deterministic claims and representation engine tests pass; actual three-client raced pickup remains open |
+| A2 | Runtime role/life/round/shape/replay/rate/reach/movement rejection without mutation, then valid pickup; retained M-7 | Deterministic rejection/retry and shared ground authority regressions pass; P08 three-client remote/ownership proof remains open |
+| A3 | Drop/death/reset/disconnect reload continuity, valid recovery/fallback, terminal precedence | Service rules, exact raw-character-destruction engine case and clean lifecycle baseline pass; actual P08 transfer/recovery remains open |
+| A4 | Actual swept rockets: two nonlethal direct hits, third ground win; mixed rifle damage, cover/miss/duplicate rejection; feasible reload timing | Rules, first-solid engine sweep/health seam and P06 regressions pass; real player-fired P08 sequence remains open |
+| A5 | Three actual clients: operator and two ground players, raced pickup, death/disconnect/recovery, replicated owner/readiness/health, reconnect authority | Both bounded SDK P08 launches connected only two; corrected native harness and actual same-identity reconnect remain open |
+| A6 | Repeated pristine reset, one anchor launcher and no old tool/projectile/callback authority | Deterministic terminal/next-round rules, engine baseline and P06 reset/teardown pass; P08 actual multiplayer reset remains open |
 
 Focused operated review must cover both approaches, pickup, M-7/launcher
 selection, firing/misses/reload, drop/recovery, desktop/touch controls and clear
@@ -129,6 +143,152 @@ avatar-restoration and semantic HUD rectangle regressions. The original test
 document returned to Edit without a stale bootstrap owner before preparing the
 native P08 selector. Three-client, operated and affected multiplayer regression
 results remain separate requirements.
+
+Fresh SDK two-client P06 regression on the unchanged runtime/test source passes
+**10/10**, including both mutual-kill event orders, actual operator LeaveTest,
+forfeit/reset and teardown ([report](p08/p06-regression-75b1e88.json)).
+The separate fresh SDK two-client P05 regression passes **8/8** with a
+156-server baseline and seven per actual client
+([report](p08/p05-regression-75b1e88.json)).
+Fresh SDK two-client P14 regression also passes **6/6**, including a full
+90-second orbit at each weapon FOV, role loss/new-round entry and drained
+teardown. Server baseline is 156/156 and both actual clients pass 7/7.
+The [bounded summary](p08/p14-regression-75b1e88-summary.json) and
+[full returned report](p08/p14-regression-75b1e88-raw.json) retain the original
+cases, populations and source; the passing report contains 49 observations.
+
+A single changed-condition P08 launch used the documented staged SDK route:
+`ExecuteMultiplayerTestAsync(2, {kind = "P08"})`, then actual-server
+`StudioTestService:AddPlayers(1)` once exactly two clients were present. The
+addition returned normally but never connected the third player within the
+harness's bounded wait. The [staged failed report](p08/staged-sdk-75b1e88-failed.json)
+records the initial request/addition and actual population: total requested
+three, peak two, zero passes and one failed startup case. This does not prove
+P08 gameplay. All owned children ended and the original document returned to
+Edit with no selector. No repeated three-client SDK launch was attempted under
+the same conditions. Native three-client acceptance remains open.
+
+## Ordinary three-client operated review
+
+The user's next native session started ordinary HumanTestSession on `75b1e88`
+with three actual players and no manual selector. It passed 156 server / seven
+per-client smoke cases. The
+[operated observations](p08/operated-75b1e88-partial.json) preserve actual role,
+input, route and GUI data. Native D moved a ground player 9.60 studs in 600 ms;
+both ground Humanoids then walked every authored east/west approach waypoint
+through controlled MoveTo, with no teleport or trusted-correction override.
+Parallel native E attempts produced one owner and one launcher Tool while
+both retained M-7. Native 1/2 selected the two real Tools. Actual enabled native
+desktop inventory slots remained clear of the readouts. The
+[earlier capture](p08/held-75b1e88.jpg) uses natural walking endpoints
+and the normal camera; its test panel is visible. The capture tool omits
+CoreGui inventory, which was measured separately.
+
+Actual simulated-phone M-7/ROCKET/DROP/PICK UP/FIRE touches worked after the
+MCP safe-area input offset was calibrated to (+62,+20). Native fire, drop and
+re-pick preserved the exact reload deadline, and early fire created no extra
+shot. The observed shot hit ground and left aircraft health at 300; this does
+not prove three player-fired aircraft hits. Actual carrier death during reload
+followed by teammate pickup retained one weapon identity/readiness, with all
+three clients agreeing and the dead player Eliminated/characterless.
+The separate [recovery report](p08/operated-recovery-75b1e88.json) adds exact raw
+Model:Destroy during reload and actual carrier Kick/recovery in fresh normal
+rounds. Raw destruction consumes the ground life; actual disconnect leaves
+two players, one ground life and an Active round. Each recovery preserves the
+same identity and exact deadline. These are current core behavior observations,
+not a report that the full eleven-case P08 harness ran.
+
+The phone review also found a material layout failure. At 750×381, visible
+native slots occupied (313,316,60,60) and (378,316,60,60), while ammo occupied
+(245,325,260,36); team status also overlapped the slots by one pixel. The
+[phone capture](p08/phone-overlap-75b1e88.jpg) omits CoreGui and is not by itself
+overlap proof; exact bounds are in the operated JSON. That earlier layout is
+not accepted. The phone-only correction is source
+`0cd65458b4afcdcf8e8b111c3b0adaed19c7652c`, tree
+`40748edb77e71d26e6e060bf2f941e532b88103c`: compact touch status rows above
+the reticle, with native inventory, reticle and active-round HUD exclusion
+regions in the GUI test. Server rules and input-send paths are unchanged from
+`75b1e88`; desktop geometry/image is unchanged. Primary's full
+`python3 scripts/verify.py` passes 55 unit / 65 integration and all gates
+([log](p08/host-0cd6545.txt)). Independent fresh ordinary solo on `0cd6545`
+passes **156 server / 7 client**, zero failures/skips/errors
+([report](p08/solo-0cd6545-pass.json)). Actual-phone recheck remains required.
+The old operated session ended through actual-server EndTest with
+all owned fixture connections cancelled; the original document was Edit with
+no selector/bootstrap owner and the simulator was restored to default.
+
+The actual `0cd6545` phone recheck **failed** despite the passing cloned-HUD
+test. The [inset diagnostic](p08/phone-inset-0cd6545-failed.json) and
+[actual capture](p08/phone-inset-0cd6545-failed.jpg) show different ScreenGui
+origins: GroundHUD uses IgnoreGuiInset/DeviceSafeInsets with origin (0,−58),
+while RoundHUD uses normal CoreUISafeInsets. With GuiInset=(0,58), the new team
+row actually occupied y36–60 and overlapped the round summary y8–46; weapon
+readiness occupied y62–86 and overlapped aircraft health y55–89. Native slots
+were clear, but the header collision is material. A same-origin clone/reserved
+rectangle test did not prove cross-ScreenGui behavior. Merely shifting rows
+down would also collide with the actual centered reticle, so this needs a
+cross-layer layout correction and actual nonzero-inset regression. The normal
+SDK invocation with nil args was rejected before any child launched; the
+supported `(2, {})` call started the ordinary review session. The failed
+session was ended, all owned fixture connections removed, simulator restored,
+and the original document returned to Edit with no manual selector/bootstrap.
+
+## Inset-aware phone correction
+
+Source `ef7826bc80310c17be4bcde93fe7607620303289`, tree
+`db1f4e50296a2620d13e36839525c7562220a629`, changes only client HUD layout,
+feedback presentation, inactive HUD wording and its GUI test. Active-ground
+touch uses a compact shared header: summary y8–30, a 32-pixel-high Surrender
+target y8–40, health/readiness y44–66 and left ownership y70–92 in common
+GUI-content coordinates. Readouts convert through the measured ScreenGui
+origin, and controls remain clear of native inventory/movement UI. Touch
+confirmed hits append HIT to weapon readiness rather than floating over the
+selectors; rifle shot acknowledgement retains its flash. Desktop/operator
+layouts and reticle/ray calculation remain unchanged. D58 records these as
+tuning defaults, not user-selected geometry.
+
+The updated production RoundPanel/Ground controller fixture uses distinct
+ScreenGuis and measured origins, includes confirmed rifle/rocket presentation,
+and restores its owned HUD/role/tool/camera/CoreGui changes. Primary's full
+`python3 scripts/verify.py` passes **55 unit / 65 integration** and all gates
+([log](p08/host-ef7826b.txt)). Fresh independent solo Studio passes **156 server /
+7 client**, zero failures/skips/errors
+([report](p08/solo-ef7826b-pass.json)). The ordinary two-client review also has
+fresh 156-server / seven-per-client baselines. Actual 750×381 and 568×320
+phone views at a measured 58-pixel inset pass the independent actual-GUI probe:
+zero HUD/native/header/reticle intersections, zero out-of-CoreSafe rectangles,
+fitting status text and zero-pixel drawn-reticle error. An actual 567×299 view
+also passes. None of the earlier phone failures becomes a pass retroactively.
+
+The [final phone review](p08/final-phone-review-ef7826b.json) records native
+M-7/ROCKET/DROP/PICK UP/FIRE/RELOAD touches at actual 568×320, preserved rocket
+reload across fire/drop/re-pick, rejected early fire, and rifle reload from
+25 to 30 rounds with reserve 120→115. HIT readability used an explicitly
+client-only GroundShot presentation fixture: inline text measured 160×14
+inside the 240×22 readout, the floating touch label stayed hidden, server
+aircraft health stayed 300 and actual last shot was not an aircraft hit.
+Two bounded QA-camera real rifle aiming attempts missed; they remain misses,
+not damage proof. Input conversion used measured `GetInsetArea` coordinates.
+The [750×381 capture](p08/phone-750-ef7826b.jpg) and
+[stricter 567×299 capture](p08/phone-567x299-ef7826b.jpg) show actual final UI;
+CoreGui inventory proof comes from the separately recorded bounds.
+
+The current [representative desktop capture](p08/current-held.jpg) is from the
+final source's ordinary two-client SDK session, normal camera/natural walking
+endpoint. Only the test panel was hidden for review and then restored; the
+capture tool omits native inventory. The initial three-client image remains
+historical. All material implementation/GUI findings have been fixed and
+rechecked; the writer's API/narrative review agrees with the source, including
+the difference between touch inline HIT and rifle reticle flash.
+
+After final review, the tester restored the default simulator, removed the
+owned custom device and all fixtures/connections, restored the test panel and
+ended the owned SDK session. The only instance was the original `tests.rbxlx`
+Edit document, not running, with no bootstrap owner. Its synced source
+signatures matched `ef7826b`. The tester then armed `ManualHarness = "P08"`
+for the user's stable native three-client handoff. No subsequent Studio
+mutation or competing launch is authorized by elapsed waiting time; the
+selector stays fixed until that handoff is exercised.
 
 ## Initial Studio availability
 

@@ -30,28 +30,43 @@ Explain the single launcher, recovery/default replenishment and actual controls.
 ## Completion record
 
 The launcher implementation is present on `plan/08-rocket-launcher`; acceptance
-is not complete. Tested runtime/test source is
-`75b1e882a33f73a4c4aa429cb0fb125648d75501`, tree
-`055b7664a60d1f0cef49615d8009b29cabde1f2b`, based on integrated P07 main
+is not complete. [Draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
+contains source and evidence pushed at `5dae4b6`; its
+[Verify CI run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43503117593)
+passes. Latest tested runtime/test source is
+`ef7826bc80310c17be4bcde93fe7607620303289`, tree
+`db1f4e50296a2620d13e36839525c7562220a629`, based on integrated P07 main
 `c7210be`. The [verification record](../docs/evidence/p08-launcher.md) preserves
 exact commands, source-bound reports, earlier failures and cleanup.
 
 | Criterion | Named tests / environment | Observed result and remaining work |
 | --- | --- | --- |
-| A1 | `LauncherService.spec` raced pickup/snapshot tests; full `python3 scripts/verify.py`; `Launcher.spec` representation engine case | Host gate passes 55 unit / 65 integration and all static/build/geometry/isolation gates; fresh solo engine baseline passes. Three-client raced representation proof remains pending |
+| A1 | `LauncherService.spec` raced pickup/snapshot tests; full `python3 scripts/verify.py`; `Launcher.spec` representation engine case; ordinary native three-client E race | Host gate passes 55 unit / 65 integration and all static/build/geometry/isolation gates; fresh solo engine baseline passes. Native three-client pickup produces one owner/Tool with both rifles retained; full P08 harness remains pending |
 | A2 | `LauncherService.spec` malformed/authority/reach/replay cases; shared movement/origin suites; P08 rejection harness | Deterministic rejection and shared engine checks pass. Actual three-client remote/ownership checks remain pending |
-| A3 | Reload/transfer/recovery service cases; actual-Player `CharacterOwner.spec`; P08 carrier death/removal/disconnect scenarios | Rule and fresh raw-character-destruction/cleanup engine tests pass. Three-client recovery and native control review remain pending |
+| A3 | Reload/transfer/recovery service cases; actual-Player `CharacterOwner.spec`; ordinary native three-client carrier death/removal/disconnect observations | Rules and fresh raw-character-destruction/cleanup engine tests pass. Actual death, raw Destroy and Kick followed by native teammate pickup preserve identity/reload, with replicated state agreement. Full P08 harness remains pending |
 | A4 | Existing aircraft-health rules; launcher timing case; `Launcher.spec` first-solid/three-deduplicated-impact case; P08 fired-rocket scenarios | Rules and real engine sweep/health seam pass; player-fired three-rocket and mixed-fire multiplayer scenarios remain pending |
-| A5 | Three-client `LauncherHarness`; real reconnect gate | Initial SDK requested three but connected only two and failed startup. Ordinary native first-candidate session confirmed three actual clients and reproduced defects; it is not the corrected P08 acceptance harness. Corrected native harness is prepared. Actual same-identity reconnect remains required and unavailable through current helpers |
+| A5 | Three-client `LauncherHarness`; real reconnect gate | Initial and staged SDK P08 launches connected only two and failed startup. Corrected ordinary native three-client observations verify raced acquisition and death/reset/disconnect recovery; they are separate from the full eleven-case harness. Actual same-identity reconnect remains required and unavailable through current helpers |
 | A6 | Terminal/next-round service case; runtime cleanup/representation engine checks; P08 reset/teardown scenarios | Deterministic and engine baseline checks pass; actual multiplayer reset/late-intent assertions remain pending |
 
-Independent fresh Studio 0.747.0.7471481 ordinary Play passes **156 server /
+Independent fresh Studio 0.747.0.7471481 ordinary Play on `ef7826b` passes **156 server /
 7 client** cases with one actual client, zero failures/skips/errors. The
 eleven-case P08 harness and focused operated checks are distinct requirements.
 The tester's original desktop HUD and raw character-removal defects are fixed
-with semantic layout/inventory-clearance and exact lifecycle regressions.
+with semantic layout/inventory-clearance and exact lifecycle regressions, plus
+actual three-client raw-destruction confirmation. An actual phone native-slot
+overlap and later cross-ScreenGui inset collision prompted the final compact
+touch header/common-coordinate correction. Actual 750×381, 568×320 and stricter
+567×299 phone views at a 58-pixel inset pass collision, safe-bounds, text and
+drawn-reticle checks. Native touch pickup/selection/fire/drop/re-pick/reload
+passes; touch HIT readability is explicitly a client-only fixture, not damage
+proof. Two bounded real rifle aiming attempts missed. Server/input rules are
+unchanged from `75b1e88`, whose
+fresh two-client P06/P05/P14 regressions pass 10/10, 8/8 and 6/6 respectively.
 The intermediate fixture-isolation failure is preserved rather than called a
 pass. The writer updated player/contributor/package docs and D55–D57 tuning
-defaults; the representative launcher capture and final evidence review remain
-pending. P09 has not started. No merge or Roblox publication is authorized by
+defaults (including D58) and refreshed the representative actual final-source
+launcher capture. All material tester findings are resolved. Full eleven-case
+P08 harness and actual same-identity reconnect remain pending; the original
+test document is prepared for the user's stable native three-client handoff.
+P09 has not started. No merge or Roblox publication is authorized by
 this implementation work.

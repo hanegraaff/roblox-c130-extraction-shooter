@@ -114,6 +114,20 @@ That checkpoint's late-join requirement is superseded by D50 and the active
 revision above. P08 remained Planned; no later plan started. Main was unchanged,
 and no P07 merge or Roblox publication occurred.
 
+2026-11-13 P08 candidate: [draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
+adds the recoverable launcher on `plan/08-rocket-launcher`. Tested runtime/test
+source `ef7826b` passes 55 unit / 65 integration host checks and fresh Studio
+156 server / 7 client smoke. Actual phone layout/input checks pass after fixing
+native-inventory and cross-ScreenGui conflicts; earlier ordinary native
+three-client observations verify raced pickup and death/reset/disconnect
+recovery on the unchanged server core. P06/P05/P14 two-client regressions pass
+10/10, 8/8 and 6/6 in their source-bound reports. Full eleven-case P08 harness
+and actual same-identity reconnect are still open; D50 does not waive P08's
+reconnect requirement. The [plan record](plans/08-rocket-launcher.md) and
+[evidence](docs/evidence/p08-launcher.md) preserve failures, fixes, counts and
+the stable native handoff. P09 remains unstarted. No merge or publication
+occurred.
+
 ## How plans move
 
 `Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. Only this table owns status; individual plans own implementation/evidence records.
