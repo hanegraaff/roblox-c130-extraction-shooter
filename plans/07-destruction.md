@@ -4,13 +4,15 @@
 
 ## Capability and player experience
 
-Shooting building panels visibly degrades them. Three direct heavy-cannon hits replace an intact panel with a roughly half-destroyed variant; three further hits remove it entirely. Sustained on-panel 30mm fire takes nine seconds to damage it. New openings change movement, protection and thermal visibility for every player. Real falling fragments demonstrate physics even with primitive art; static floors/stairs/frames preserve usable buildings without full collapse.
+Shooting any battlefield building, including the starting shelter, produces persistent and clearly distinct Light, Heavy and Total damage. Three direct heavy-cannon hits create roughly half destruction; three further hits remove the panel. Nine earned valid 30mm seconds create Heavy damage. Partial 30mm damage stays when fire stops; pauses do not add elapsed credit. New openings change movement, protection and thermal visibility. Real bounded fragments fall; supporting floors/stairs/frames remain usable.
 
 ## Implementation
 
 Build Intact/Damaged/Destroyed templates using the P13 building/story/panel registry and approximate two-panels-wide/one-panel-tall room proportions. Author the Damaged variant with actual holes exposing roughly half its original face (D32 tolerance); do not leave an invisible full collider. Include destructible wall panels on every story and roof panels on all three buildings; aircraft fire must be able to open overhead cover. Expose progressive chips/cracks or equivalent cues after individual heavy hits and during sustained 30mm accumulation, not only when swapping models.
 
-DestructionService owns state, deduplicated shot IDs and stage progress. Heavy thresholds are 3/6 direct hits from pristine. Nine seconds of server-validated same-panel 30mm fire must advance Intact → Damaged, never early; D33 defaults specify another nine seconds for Destroyed, cadence-aware gap tolerance, interrupted-fire reset of uncommitted 30mm contribution and proportional mixed-fire credit. Choose and record numeric cadence/gap/rounding tolerances before testing; no elapsed credit before the first accepted impact or across rejected/missed/off-target shots. Keep structural direct-impact credit separate from player blast damage. No client panel ID/duration/damage claim is authoritative.
+DestructionService owns state, deduplicated shot IDs and stage progress. Heavy thresholds remain 3/6 direct hits from pristine. Nine earned seconds of server-validated same-panel 30mm fire advance the first structural stage, never early; another nine advance the next. D51 preserves every panel's partial earned credit through stopping, misses, obstruction, target/weapon changes and reload. Break only the continuity anchor; the first resumed impact earns zero, with no paused/off-target elapsed credit. Keep proportional mixed-fire credit and ordered accepted outcomes/barriers. Keep structural impact credit separate from player blast damage. Clients cannot claim panel IDs, durations or damage.
+
+Publish Pristine/Light/Heavy/Total appearance independently of the retained structural Intact/Damaged/Destroyed state. Light must have visible persistent scars on both faces without fake holes; Heavy keeps its visibly stronger treatment and real 45–55% opening even when stage-local progress is zero. Marks cannot collide, enter gameplay queries or identify as structural colliders. D54 records tuning before tests. Register the starting shelter's entire exterior using the same core owner, remove the old duplicate colliders and preserve the original union/entrances/anchors. D53 proposes 76 shelter panels plus the existing 111; separate waiting-lobby geometry is unchanged.
 
 Panel damage and fragment limits are core rules. Read stable panel IDs, pivots,
 variants and supporting geometry from the active level registry; do not fork the
@@ -21,13 +23,13 @@ Apply damage against pre-impact batch geometry, then atomically transition panel
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes. Named `PanelDamageRules` tests trace heavy hits 0–6: 1/2 do not swap, 3 swaps to Damaged, 4/5 retain Damaged and 6 removes the panel. Duplicate/replayed events do not count twice; permanent structure is immune; states are monotonic and destruction idempotent.
-- **A2:** `SustainedPanelFire` deterministic tests cover just below/exactly/above nine valid seconds, second-stage nine seconds, no credit before the first impact, cadence/gap/rounding tolerance, misses/obstruction/target changes, weapon switch/reload gaps, rejected shots, operator disconnect, mixed credit, same-step impacts and stale-round cancellation. Mere trigger time and off-target fire cannot advance a panel. Uninterrupted valid P05 cadence can actually reach the threshold.
-- **A3:** Studio `PanelGeometryStates` measures 45–55% opening in the Damaged face; real raycasts/overlaps show remaining solids block shots/movement and holes permit appropriate rays. Destroyed has no panel collider, and a suitable authored opening is traversable. Stable panel IDs/pivots survive swaps on every story and roof of all three buildings; floors/stairs/frames stay usable.
-- **A4:** Studio `PreImpactCoverAndThermal` proves an impact creating a hole does not retroactively damage a protected target through it; a later shot can. Test both weapon profiles, intact/residual/hole/destroyed sight lines and actual rendered thermal occlusion from ground/operator viewpoints.
+- **A1:** Full gate passes. Named `PanelDamageRules` tests trace heavy hits 0–6: 0 is Pristine, 1/2 show persistent Light damage, 3 creates Heavy damage with a real opening, 4/5 stay Heavy and 6 removes the panel. Stage-local progress zero cannot restore pristine Heavy appearance. Duplicate/replayed events do not count twice; static supporting structure stays immune; progression is monotonic and destruction idempotent.
+- **A2:** `SustainedPanelFire` tests cover below/exactly/above nine earned seconds, second-stage nine seconds, zero first/resumed-impact credit, cadence/gap/rounding tolerance and persistent PER-PANEL credit across pauses, misses, obstruction, target changes, switches, reload and operator loss. Alternating panels cannot earn off-target time; rejected requests cannot mutate credit. Test mixed fire, ordered in-flight/barrier outcomes, terminal cancellation and pristine reset. Valid bursts accumulate to the threshold without healing, paused-time credit or duplicate awards.
+- **A3:** Studio `PanelGeometryStates` proves persistent Light/Heavy visual distinction and a 45–55% Heavy opening. Real raycasts/overlaps distinguish cosmetic marks, remaining solids and genuine holes. Total has no collider. Every wall/roof panel in all three multi-story buildings AND the battlefield starting shelter takes real fire. The shelter's old collider union/entrances/anchors are preserved without hidden duplicate solids. IDs/pivots survive swaps; floors/stairs/frames and both routes stay usable; an authored opening is traversable.
+- **A4:** Studio `PreImpactCoverAndThermal` proves an impact creating a hole does not retroactively damage a protected target through it; a later shot can. Test both weapon profiles, Pristine/Light/Heavy residual/hole/Total sight lines, cosmetic-query exclusion and actual rendered thermal occlusion from ground/operator viewpoints, including the starting shelter.
 - **A5:** Studio `PanelFragmentPhysics` observes unanchored fragments falling and contacting static scenery, server ownership, collision/query groups, bounded impulses/count/lifetime and cap behavior under repeated simultaneous destruction. Actual characters are not pushed/harmed or blocked; fragment placement cannot alter authoritative shot/thermal queries. A particle burst or mocked physics call does not satisfy this criterion.
-- **A6:** Two actual clients and a late-joining spectator agree on panel stage/progress/openings within declared replication bounds without replaying prior debris. Wrong-role/malformed/flooded requests cannot alter cover. Reset during active fragmentation/sustained fire removes work and restores exact terrain/building/panel state through multiple rounds; no old projectile advances a fresh panel.
-- **A7:** Actual fire with primitive assets visibly demonstrates per-hit/prolonged-fire progression, third/sixth heavy hits, nine-second 30mm damage, holes and falling fragments. Two launcher approaches and all required upper-floor access remain usable without requiring destruction. Record automated observations separately from operated readability review.
+- **A6:** Two actual clients agree on persistent stage/credit/appearance/openings within declared replication bounds. Wrong-role/malformed/flooded requests cannot alter cover. Reset during live fragmentation and partial/in-flight 30mm work restores pristine terrain/building/panel state through multiple rounds; old projectiles cannot advance fresh panels. Per user D50, a real late-joining-client scenario is not a P07 acceptance gate; runtime spectator restrictions remain.
+- **A7:** Actual native fire visibly demonstrates persistent Light/Heavy/Total damage on normal and thermal views, third/sixth heavy hits, earned 30mm damage across stopped/resumed bursts, real holes and falling fragments. Include the starting shelter and other battlefield buildings. Both launcher approaches and required upper-floor access remain usable without demolition. Record automated evidence separately from operated readability.
 
 ## Focused human check
 
@@ -38,6 +40,21 @@ Fire at each panel stage from operator and ground viewpoints, including an upper
 Document panel IDs/variants, heavy/sustained/mixed damage contracts, measured opening area, physics ownership/groups/caps, impact order, cleanup and player's cover cues. Refresh the representative README screenshot using actual implemented destruction. Add refined assets only through separately scoped later plans.
 
 ## Completion record
+
+### Active user revision — 2026-11-13
+
+The user explicitly removed real late joining from P07 acceptance and reported
+three remaining defects: insufficient Light/Heavy visual distinction, an
+immune battlefield starting shelter, and partial 30mm damage disappearing
+when firing stops. Work resumes on dedicated dependent branch
+`fix/p07-progressive-persistent-damage` from `ebf5bd4`; main remains unchanged.
+D50–D54 record the waiver, persistent credit, distinct appearance, full shelter
+coverage and proposed visual/construction defaults before new tests. The old
+passing/failing records below describe the earlier source and do not validate
+the revised behavior. The revised candidate must pass its own gates and
+operated review before completion.
+
+### Earlier candidate record (historical)
 
 Implementation started on 2026-11-13 on `plan/07-destruction`, based on
 integrated main `e4c6e3a2506a9e9ac5574bdf42242f77f8200650`, which contains

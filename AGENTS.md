@@ -46,6 +46,8 @@ The revised MVP doubles the current map diameter to 720 studs and requires terra
 
 Ground wins on aircraft destruction; the C-130 wins on ground-team elimination or timeout. Do not reintroduce collection/escape mechanics.
 
+The 2026-11-13 damage revision requires persistent, clearly different Light/Heavy/Total visuals. Earned 30mm damage stays on each panel when firing stops; interruptions break timing continuity without healing the panel or counting paused time. The battlefield starting shelter's walls/roof use the same damage rules as all three multi-story buildings. The separate outside waiting lobby remains protected. D50 removes a real late-joining-player scenario from current P07 acceptance; keep runtime spectator authority and two-actual-client replication/reset checks. Preserve older failed evidence as historical, not passing new evidence.
+
 ## Tests and evidence
 
 - Implement tests with each behavior change. Cover normal behavior, boundaries, invalid input, timing conflicts, disconnects, and cleanup as appropriate. Trace acceptance criteria to named tests.
