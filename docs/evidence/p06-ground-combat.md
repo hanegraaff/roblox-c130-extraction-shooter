@@ -3,6 +3,78 @@
 P06 is in progress on its dedicated branch. This record distinguishes actual
 engine runs, source-specific host tests, identified defects and unrun checks.
 
+## Same-shot user diagnosis on `6613375`
+
+The [matched user recording](p06-same-shot-user-661.json) contains 12 paired
+client/server shots (sequences 133–144). For aircraft shots 133–135, raw
+`GetMouseLocation()` Y was 144 and the actual aircraft center projected to
+viewport Y 143.7–144.7. Production subtracted the 58-pixel GUI inset before
+`ViewportPointToRay`, aiming at Y 86. Both the independently sampled client
+and server rays missed; aircraft health stayed 300. The client target and
+transmitted payload agreed within 0.001 studs, with paired frame times
+1.8–18 milliseconds before server receipt. The aircraft center was also
+12–20 pixels left of the pointer, so this recording does not establish that
+every corrected shot would hit its silhouette. Ground shots 137–144 hit the
+GroundDisk on both sides, as expected.
+
+Before ending the session, a separate native mouse-ray measurement returned
+raw mouse `(701,466)`, `Mouse.X/Y = (701,408)` and inset `(0,58)`.
+`Mouse.UnitRay.Direction` dotted with `ViewportPointToRay(raw).Direction`
+was 1; the inset-subtracted ray's dot was 0.993409276. This independently
+confirms that the subtraction displaced the firing direction. The earlier
+GroundAimGui test used the same subtraction for expected and actual values;
+its pass proved internal agreement, not agreement with the physical pointer.
+Its earlier alignment claims are superseded by this actual user evidence.
+
+[Roblox's camera reference](https://create.roblox.com/docs/reference/engine/classes/Camera.md)
+distinguishes viewport ray coordinates from GUI `AbsolutePosition`, which
+uses core UI coordinates. The correction must retain raw viewport pixels for
+desktop rays and convert only the drawn GUI offset using its measured origin
+and inset. New engine checks must use native mouse rays and independently
+projected world points rather than repeating the production conversion.
+
+The terminal-only cosmetic segment also explains the user's feedback: a sky
+miss placed its 50-stud streak 1150–1200 studs away, whereas a nearby ground
+hit showed a thick static segment. A moving cosmetic trace along the resolved
+path is being implemented without changing immediate server-authoritative
+hits or cover. This is a diagnosis and proposed correction, not acceptance of
+the revised presentation.
+
+Diagnostic observers and transport were removed. The session returned to
+Lobby, then server `StudioTestService:EndTest` closed it. MCP confirmed only
+the original `tests.rbxlx` document remained in Edit. Source changes and fresh
+engine/operated review can now proceed; no additional plan has begun.
+
+## Corrected native aim and moving trace: `59252c9`
+
+Source `59252c96d8774473cde642b50fc0ecd39e8bd5e3`, tree
+`edac5ce19179897ebde7269f896e1d6efbd41577`, restores raw desktop viewport
+aim and converts only GUI drawing offsets. A server-owned cosmetic tracer now
+travels along the already-resolved shot ray; damage still resolves immediately.
+The maximum visible segment is three studs, cosmetic speed is 1200 studs/second,
+travel lasts 0.15–1 seconds, and a 0.1-second terminal hold precedes removal.
+There is also a brief barrel flash. Reset and stop destroy owned effects.
+
+The developer's full `python3 scripts/verify.py` passed 50 unit / 43 integration
+cases and the other host gates. [GitHub Verify 43334404940](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43334404940)
+passed on that exact commit. The independent tester confirmed all four changed
+Studio sources were byte-identical and ran fresh Play smoke: 118/118 server,
+6/6 client, zero failures/skips. The [structured oracle report](p06-aim-592.json)
+preserves the actual reports and source-specific samples.
+
+After native pointer movement, actual raw mouse was `(500,258)` with inset
+`(0,58)`. Corrected ray/native `Mouse.UnitRay` direction dot was 1.00000012;
+the inset-subtracted comparison was 0.990908. An independently projected world
+point and actual drawn reticle center converted to viewport coordinates both
+equaled `(500,258)`. Touch projection rounded the center to `(577,290)` for
+a 1153×579 viewport. These checks establish the coordinate correction; they do
+not establish moving-plane user accuracy or network tracer readability.
+
+Studio returned to the sole original Edit document. P06Team with three actual
+clients is prepared for native launch. Current-source P06/P06Team, P05/P14
+regressions, moving-tracer observation, operated desktop/phone review and a
+current representative capture remain open; PR #27 remains draft.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration

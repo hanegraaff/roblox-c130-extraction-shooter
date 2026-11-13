@@ -35,11 +35,11 @@ current-source Studio and operated review.
 
 | Criterion | Evidence and outstanding checks |
 | --- | --- |
-| A1 | Host rifle/health tests pass on earlier source; independent Studio smoke 110/110 server and 3/3 client passed on `275eb73`. Current origin geometry and normal steep-terrain stances still need engine and live-input checks. |
-| A2 | Host tests cover pristine three-rocket, mixed, miss and duplicate behavior. The latest fixture adds actual pristine rocket sweeps and measured speed, but has not run in Studio. |
-| A3 | Host tests cover bounded requests and movement; earlier actual two-/three-client fixtures exercised cover, rejection and friendly-fire. The latest origin-geometry and recovery fixtures are unrun. |
-| A4 | Two actual clients on `275eb73` passed both nonyielding mutual-kill proposal orders; three clients passed the eliminated-teammate case. Instrumented distinct Heartbeat callback order, shared frame, projectile sweeps and operator forfeit are unrun on the latest source. |
-| A5 | Two-client P06 7/7 and three-client P06Team 5/5 passed on `275eb73`. Latest repeated reset, stale-resource, reciprocal input and P05 regression checks remain open. |
+| A1 | Developer full host gate on `59252c9` passes 50 unit / 43 integration cases; fresh Studio smoke passes 118/6 with independent native/world/GUI aiming oracles. Actual `6613375` two-client P06 10/10 includes equipped rifle, positive Wing damage and solid cover. Moving presentation and current-source multiplayer/operated checks remain open. |
+| A2 | Host tests cover pristine three-rocket, mixed, miss and duplicate behavior. Actual `6613375` P06 10/10 includes pristine rocket sweeps and measured speed. Current-source multiplayer regression remains open. |
+| A3 | Host tests cover bounded requests and movement. Actual `6613375` P06 includes origin/query rejection and same-sequence recovery, obstruction and friendly-fire assertions. The movement guard bounds endpoints without sweeping the path between them. Current-source regression remains open. |
+| A4 | Actual `6613375` P06 passes both measured same-step callback orders and separate operator-forfeit reason. Actual `bdb1de1` P06Team passes 7/7 with three clients, including the eliminated teammate's shared win. Current-source regression remains open. |
+| A5 | Actual `6613375` P06 passes 10/10 with two clients, shot/health feedback and reset assertions. Corrected aiming, moving-tracer replication, native desktop/phone playability, P05/P14 regressions and a current capture remain required. |
 
 The [verification record](../docs/evidence/p06-ground-combat.md) preserves
 source-specific results, tester findings and the stalled Studio launch. Latest
@@ -102,8 +102,17 @@ prepared current-source native two-client and user review. The
 automated Studio launcher is unreliable, so manual Server & Clients is the
 established fallback. The current P06 manual suite passed; ordinary user
 aiming/bullet-visibility review on `6613375` still failed: the user saw a
-laser-like nearby ground streak but no visible plane shots or damage. A bounded
-same-shot observer is prepared to diagnose actual camera and server geometry.
+laser-like nearby ground streak but no visible plane shots or damage. The
+subsequent matched 12-shot recording and independent native mouse ray identified
+a 58-pixel inset error in rifle aiming; the earlier `9adf5d5` alignment test
+mirrored that wrong assumption. Those alignment claims are superseded by the
+actual user evidence. `59252c9` restores raw viewport ray coordinates, converts
+only GUI drawing, and replaces the static terminal streak with a moving cosmetic
+tracer and muzzle flash. Damage remains immediate and server-resolved. Its full
+host gate passes 50 unit / 43 integration. Independent fresh Studio smoke passes
+118 server / 6 client, and native mouse ray, independent world projection and
+actual drawn reticle agree. [GitHub Verify 43334404940](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43334404940)
+passes on that exact source. Multiplayer tracer and operated checks remain open.
 These user findings and current P05/P14 regression remain required work.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
