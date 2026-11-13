@@ -1,0 +1,8 @@
+{
+  "file": "tests/studio/server/DestructionHarness.luau",
+  "sha256": "891f1dca2a976652f0f5e3d6580ce76f390a9f3c4273bf91d53a5f5bec1da675",
+  "change": "TEST ONLY: initial exactly2; mandatory first genuine post-checkpoint join; accept1or2lateplayers/total3or4; immutable first ID; actualarrival records; optional15s settle clamped original240s; ALLnewcurrent-round characterless/equipmentlessSpectator checks,currentpanel/no-old-debris/rejection probes; no game/clientchanges",
+  "focusedChecks": "stylua --check, selene, Roblox-aware luau-lsp analyze all exit0",
+  "sourceCommit": "ebca51e65ebd081b6c40698d90e6f9b0a5076899",
+  "sourceTree": "78d7d468511b988e615a45ff80bffad2616e159e"
+}

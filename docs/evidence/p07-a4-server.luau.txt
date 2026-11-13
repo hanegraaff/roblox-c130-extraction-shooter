@@ -1,0 +1,431 @@
+-- Disposable real-client A4 verification fixture; deliberately outside source mapping.
+assert(game:GetService("RunService"):IsRunning(), "requires existing real native server")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Http = game:GetService("HttpService")
+local Server = game.ServerScriptService.Server
+local GameRuntime = require(Server.GameRuntime)
+local View = require(Server.CombatViewRules)
+local Combat = require(Server.CombatRuntime)
+local Profiles = require(Server.CombatService).profiles
+local Map = require(ReplicatedStorage.Shared.MapRules).defaults
+local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
+local Aircraft = require(ReplicatedStorage.Shared.AircraftRules)
+assert(not ReplicatedStorage:FindFirstChild("P07QAControl"), "fixture already owned")
+assert(not ReplicatedStorage:FindFirstChild("RoundState"), "previous runtime must finish first")
+assert(#Players:GetPlayers() >= 2, "actual multiplayer clients required")
+local controller, reason = GameRuntime.start({
+	automaticDeployment = false,
+	minimumPlayers = 2,
+	durationSeconds = 600,
+	lobbySeconds = 0,
+	deploymentSeconds = 25,
+	resultsSeconds = 10,
+	seed = 1,
+})
+assert(controller, reason)
+local control = Instance.new("RemoteEvent")
+control.Name = "P07QAControl"
+local ready, replies, saved = {}, {}, {}
+local serial, fireSequence, selectSequence = 0, 0, 0
+local report = {
+	suite = "P07-A4-real-player-blast",
+	environment = "Studio",
+	version = version(),
+	cases = {},
+	observations = {},
+	actualUserIds = {},
+}
+for _, player in Players:GetPlayers() do
+	table.insert(report.actualUserIds, player.UserId)
+end
+local listener = control.OnServerEvent:Connect(function(player, token, ok, message)
+	if token == 0 then
+		ready[player] = true
+	elseif type(token) == "number" then
+		replies[token] = { player = player, ok = ok == true, message = tostring(message) }
+	end
+end)
+control.Parent = ReplicatedStorage
+local stop = Instance.new("BindableEvent")
+stop.Name = "P07QAStop"
+stop.Parent = workspace
+local observedCombat
+local actualImpacts = {}
+local trackedHumanoid
+local resolvedTimes = {}
+local observedRound, contiguous = -1, 0
+local disposed = false
+local function dispose()
+	if disposed then
+		return
+	end
+	disposed = true
+	for root, prior in saved do
+		if root.Parent then
+			root.Anchored = prior.anchored
+		end
+	end
+	listener:Disconnect()
+	control:Destroy()
+	if observedCombat then
+		observedCombat.stop()
+	end
+	controller.stop()
+	stop:Destroy()
+	workspace:SetAttribute("P07QAStage", "disposed")
+end
+stop.Event:Connect(dispose)
+local function stage(value)
+	workspace:SetAttribute("P07QAStage", value)
+end
+local function waitFor(predicate, label, budget)
+	local deadline = os.clock() + (budget or 15)
+	while not predicate() and os.clock() < deadline do
+		task.wait(0.03)
+	end
+	assert(predicate(), "P07 A4 timeout: " .. label)
+end
+local function request(player, kind, payload)
+	waitFor(function()
+		return ready[player]
+	end, "actual client armed", 120)
+	serial += 1
+	local token = serial
+	control:FireClient(player, token, kind, payload)
+	waitFor(function()
+		return replies[token] ~= nil
+	end, "actual client " .. kind, 20)
+	local reply = replies[token]
+	replies[token] = nil
+	assert(reply.player == player and reply.ok, reply.message)
+end
+local function command(weapon, point, camera)
+	camera = camera or controller.aircraft.position()
+	local radial = Vector2.new(camera.X, camera.Z).Unit
+	local ground = camera + (point - camera) * (Map.altitudeStuds / (camera.Y - point.Y))
+	local goal = { x = ground.X * radial.X + ground.Z * radial.Y, z = -ground.X * radial.Y + ground.Z * radial.X }
+	local home = assert(Pan.recenter(Map, 16 / 9, 40))
+	local payload = {
+		roundId = controller.rounds.match.snapshot().roundId,
+		sequence = fireSequence,
+		weapon = weapon,
+		x = point.X,
+		y = point.Y,
+		z = point.Z,
+		focusX = home.x,
+		focusZ = home.z,
+		aspect = 16 / 9,
+		cameraX = camera.X,
+		cameraZ = camera.Z,
+	}
+	for sample = 0, 100 do
+		local t = sample / 100
+		payload.focusX = goal.x + (home.x - goal.x) * t
+		payload.focusZ = goal.z + (home.z - goal.z) * t
+		if View.validate(payload, Map, weapon, camera.X, camera.Z) then
+			return payload
+		end
+	end
+	return nil
+end
+local function params()
+	local p = RaycastParams.new()
+	p.FilterType = Enum.RaycastFilterType.Include
+	p.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+	p.RespectCanCollide = true
+	return p
+end
+local function readyWeapon(weapon)
+	waitFor(function()
+		local raw = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+		if type(raw) ~= "string" then
+			return false
+		end
+		local state = Http:JSONDecode(raw)[weapon]
+		local now = workspace:GetServerTimeNow()
+		return state and state.ammo > 0 and now >= state.nextFire and now >= state.reloadUntil
+	end, "authoritative " .. weapon .. " readiness", 8)
+end
+local function select(operator, weapon)
+	selectSequence += 1
+	request(
+		operator,
+		"Select",
+		{ roundId = controller.rounds.match.snapshot().roundId, sequence = selectSequence, weapon = weapon }
+	)
+	waitFor(function()
+		return controller.aircraft.weapon() == weapon
+	end, "acknowledged profile")
+	readyWeapon(weapon)
+end
+local function fire(operator, weapon, point)
+	readyWeapon(weapon)
+	local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+	fireSequence += 1
+	request(operator, "Fire", assert(command(weapon, point), "permitted actual view unavailable"))
+	waitFor(function()
+		return ReplicatedStorage.AircraftState:GetAttribute("Impact") ~= previous
+	end, "actual impact", 8)
+	local impact = Http:JSONDecode(ReplicatedStorage.AircraftState:GetAttribute("Impact"))
+	assert(impact.weapon == weapon and impact.roundId == controller.rounds.match.snapshot().roundId, "wrong impact")
+	return impact
+end
+local function roles()
+	local operator, ground
+	for _, player in Players:GetPlayers() do
+		if player:GetAttribute("Role") == "Gunship" then
+			operator = player
+		elseif player:GetAttribute("Role") == "Ground" and not ground then
+			ground = player
+		end
+	end
+	assert(operator and ground, "actual roles missing")
+	return operator, ground
+end
+local function deploy()
+	assert(controller.rounds.match.deploy(), "actual deployment failed")
+	waitFor(function()
+		return controller.rounds.match.snapshot().phase == "Active"
+	end, "Active round", 35)
+end
+local function chooseWall(weapon)
+	local muzzle = assert(controller.aircraft.muzzle(weapon))
+	for _, item in workspace.World.Battlefield:GetDescendants() do
+		if
+			item:IsA("Model")
+			and item:GetAttribute("PanelId")
+			and item:GetAttribute("PanelState") == "Intact"
+			and string.find(item.Name, "_S01_", 1, true)
+			and not string.find(item.Name, "Interior", 1, true)
+			and not string.find(item.Name, "Roof", 1, true)
+		then
+			local solid = item:FindFirstChild("Solid")
+			if solid and solid:IsA("BasePart") then
+				local axis = if solid.Size.X < 2 then Vector3.xAxis else Vector3.zAxis
+				local outward = axis * (if (muzzle - solid.Position):Dot(axis) > 0 then 1 else -1)
+				local point = solid.Position + outward * 0.5
+				local step = point - muzzle
+				local hit = workspace:Raycast(muzzle, step.Unit * (step.Magnitude + 0.2), params())
+				if hit and hit.Instance == solid and command(weapon, point) then
+					return item, solid.CFrame, outward, point
+				end
+			end
+		end
+	end
+	error("no actual visible ground-story wall")
+end
+controller.combat.stop()
+observedCombat = assert(Combat.start(controller.rounds.match, controller.aircraft, function(impact)
+	if observedRound ~= impact.roundId then
+		observedRound = impact.roundId
+		contiguous = 0
+		table.clear(resolvedTimes)
+	end
+	resolvedTimes[impact.shotId] = impact.firedAt
+	while resolvedTimes[contiguous + 1] do
+		contiguous += 1
+	end
+	local state = if impact.panelId then controller.destruction.snapshot(impact.panelId) else nil
+	table.insert(
+		actualImpacts,
+		{
+			roundId = impact.roundId,
+			shotId = impact.shotId,
+			weapon = impact.weapon,
+			panelId = impact.panelId,
+			firedAt = impact.firedAt,
+			impactAt = impact.time,
+			stage = state and state.stage,
+			progress = state and state.progress,
+			scoredThroughFiredAt = resolvedTimes[contiguous],
+			groundHealth = trackedHumanoid and trackedHumanoid.Health,
+		}
+	)
+end, nil, nil, controller.destruction))
+controller.combat = observedCombat
+report.actualImpactFacts = actualImpacts
+stage("waiting-for-disposable-client-arms")
+task.spawn(function()
+	local ok, failure = pcall(function()
+		for _, player in Players:GetPlayers() do
+			waitFor(function()
+				return ready[player]
+			end, "all actual clients armed", 120)
+		end
+		for index, weapon in { "GAU23", "M102" } do
+			if index > 1 then
+				for root, prior in saved do
+					if root.Parent then
+						root.Anchored = prior.anchored
+					end
+				end
+				controller.rounds.match.abort(controller.rounds.match.snapshot().roundId, "P07 A4 between profiles")
+				assert(controller.rounds.match.beginReset(), "A4 reset begin failed")
+				waitFor(function()
+					return controller.rounds.match.snapshot().phase == "Lobby"
+				end, "A4 reset Lobby", 20)
+				fireSequence, selectSequence = 0, 0
+			end
+			deploy()
+			local operator, ground = roles()
+			select(operator, weapon)
+			local panel, pivot, normal, point = chooseWall(weapon)
+			local tangent = Vector3.yAxis:Cross(normal)
+			local character = assert(ground.Character)
+			local root = assert(character:FindFirstChild("HumanoidRootPart"))
+			local humanoid = assert(character:FindFirstChildOfClass("Humanoid"))
+			saved[root] = { anchored = root.Anchored }
+			root.Anchored = true
+			character:PivotTo(CFrame.new(pivot.Position - normal * 2 + tangent * 2.5))
+			assert(
+				not character:FindFirstChildWhichIsA("ForceField", true),
+				"Ground fixture has active damage protection"
+			)
+			trackedHumanoid = humanoid
+			local factsBefore = #actualImpacts
+			local baseline = humanoid.Health
+			local from = point - (point - assert(controller.aircraft.muzzle(weapon))).Unit * 0.1
+			local distance = (root.Position - from).Magnitude
+			assert(distance < Profiles[weapon].radius, "target outside actual blast radius")
+			assert(not Combat.coverAllows(from, root.Position, params()), "intact cover positive obstruction missing")
+			local overlap = OverlapParams.new()
+			overlap.FilterType = Enum.RaycastFilterType.Include
+			overlap.FilterDescendantsInstances = { panel }
+			overlap.RespectCanCollide = true
+			assert(#workspace:GetPartBoundsInBox(root.CFrame, root.Size, overlap) == 0, "real root intersects wall")
+			stage("creating-" .. weapon .. "-hole-with-protected-real-ground")
+			local creatingImpact
+			if weapon == "M102" then
+				for hit = 1, 3 do
+					creatingImpact = fire(operator, weapon, point)
+					assert(humanoid.Health == baseline, "creating/prior heavy blast penetrated intact wall")
+					waitFor(function()
+						return panel:GetAttribute("PanelState") == (if hit == 3 then "Damaged" else "Intact")
+					end, "heavy stage")
+				end
+			else
+				local first = workspace:GetServerTimeNow()
+				local firstSequence = fireSequence + 1
+				fireSequence += 61
+				request(
+					operator,
+					"Burst",
+					{
+						point = point,
+						roundId = controller.rounds.match.snapshot().roundId,
+						firstSequence = firstSequence,
+						count = 61,
+						cadence = 0.18,
+					}
+				)
+				waitFor(function()
+					return panel:GetAttribute("PanelState") == "Damaged"
+				end, "actual creating GAU23 impact", 10)
+				creatingImpact = Http:JSONDecode(ReplicatedStorage.AircraftState:GetAttribute("Impact"))
+				assert(workspace:GetServerTimeNow() - first >= 9, "GAU23 stage early")
+				assert(humanoid.Health == baseline, "creating/prior GAU23 blast penetrated intact wall")
+			end
+			assert(panel:GetAttribute("PanelState") == "Damaged", "creating impact did not open panel")
+			waitFor(function()
+				return controller.combat.resources().projectiles == 0
+			end, "accepted creating burst fully drained", 5)
+			assert(humanoid.Health == baseline, "accepted creating burst tail damaged protected fixture")
+			if weapon == "GAU23" then
+				local firstFact, transition
+				for i = factsBefore + 1, #actualImpacts do
+					local f = actualImpacts[i]
+					if f.weapon == "GAU23" and f.panelId == panel.Name then
+						firstFact = firstFact or f
+						if not transition and f.stage == 1 then
+							transition = f
+						end
+					end
+				end
+				assert(firstFact and firstFact.progress == 0, "first actual impact earned prior time")
+				assert(
+					transition and transition.scoredThroughFiredAt - firstFact.firedAt >= 9 - 1e-7,
+					"creating blast transitioned before nine accepted seconds"
+				)
+				report.gauTransitionSpanSeconds = transition.scoredThroughFiredAt - firstFact.firedAt
+			end
+			assert(Combat.coverAllows(from, root.Position, params()), "actual hole remains blocked")
+			local side = pivot.Position + tangent * 6
+			assert(not Combat.coverAllows(side + normal * 2, side - normal * 2, params()), "residual side lost cover")
+			-- A tiny permanent target shares the original impact plane. Its narrow
+			-- face leaves a real clear splash ray to the same actual root; this is
+			-- a same-distance unobstructed blast control, not an empty endpoint.
+			local marker = Instance.new("Part")
+			marker.Name = "P07A4LaterBlastTarget"
+			marker.Anchored = true
+			marker.Size = if math.abs(normal.X) > 0.5 then Vector3.new(1, 0.1, 0.1) else Vector3.new(0.1, 0.1, 1)
+			marker.CFrame = pivot
+			marker.CanCollide = true
+			marker.CanQuery = true
+			marker.CollisionGroup = "PanelStatic"
+			marker.Parent = workspace.World.Battlefield
+			assert(Combat.coverAllows(from, root.Position, params()), "positive-control target blocks splash ray")
+			stage("later-" .. weapon .. "-positive-blast-through-real-hole")
+			local later = fire(operator, weapon, point)
+			local actualPoint = Vector3.new(later.x, later.y, later.z)
+			local contact = marker.CFrame:PointToObjectSpace(actualPoint)
+			assert(
+				math.abs(contact.X) <= marker.Size.X / 2 + 0.1
+					and math.abs(contact.Y) <= marker.Size.Y / 2 + 0.1
+					and math.abs(contact.Z) <= marker.Size.Z / 2 + 0.1,
+				"later actual impact missed positive-control solid"
+			)
+			local actualFrom = actualPoint - (point - assert(controller.aircraft.muzzle(weapon))).Unit * 0.1
+			local actualDistance = (root.Position - actualFrom).Magnitude
+			assert(actualDistance < Profiles[weapon].radius, "later target outside actual blast radius")
+			waitFor(function()
+				return humanoid.Health == math.max(0, baseline - Profiles[weapon].damage)
+			end, "later actual blast damage", 3)
+			table.insert(report.cases, {
+				name = weapon .. " creating impact protects real player and later hole permits same-distance blast",
+				passed = true,
+			})
+			table.insert(report.observations, {
+				weapon = weapon,
+				panelId = panel.Name,
+				groundUserId = ground.UserId,
+				operatorUserId = operator.UserId,
+				baselineHealth = baseline,
+				creatingHealth = baseline,
+				laterHealth = humanoid.Health,
+				creatingImpact = creatingImpact,
+				laterImpact = later,
+				initialAnchorDistance = distance,
+				laterAnchorDistance = actualDistance,
+				radius = Profiles[weapon].radius,
+				residualBlocked = true,
+				rootOutsidePanel = true,
+				rootPosition = { root.Position.X, root.Position.Y, root.Position.Z },
+				impactTarget = { point.X, point.Y, point.Z },
+				positiveControl = "narrow anchored same-impact-plane actual solid; clear splash ray; actual production FireWeapon",
+			})
+			marker:Destroy()
+		end
+	end)
+	if not ok then
+		table.insert(report.cases, { name = "A4 fixture completion", passed = false, detail = tostring(failure) })
+	end
+	report.discovered = #report.cases
+	report.passed = 0
+	report.failed = 0
+	report.skipped = 0
+	for _, case in report.cases do
+		if case.passed then
+			report.passed += 1
+		else
+			report.failed += 1
+		end
+	end
+	workspace:SetAttribute("P07QAReport", Http:JSONEncode(report))
+	stage(if ok then "complete-retained-for-rendered-review" else "failed-retained-for-diagnosis")
+end)
+return {
+	started = true,
+	actualClients = #Players:GetPlayers(),
+	next = "arm each actual client with /tmp/p07-qa-a4-client.luau; use Workspace.P07QAStop:Fire() after evidence/review",
+}

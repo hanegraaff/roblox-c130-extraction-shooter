@@ -266,3 +266,103 @@ checkpoint retains the same Active round, exactly two initial clients and a
 240-second budget for a new third PlayerAdded. The primary agent sent the
 human add-player request immediately. Late join and the final report remain
 pending at this checkpoint; passing pre-checkpoint cases do not complete A6.
+
+The [e45 native report](p07-native-e45ef48-report.json) records the checkpoint
+expiring at 1794582447.791767, approximately 240.07 seconds after it started,
+with exactly two real clients and no new PlayerAdded. Six cases were
+discovered: five passed and the late-join case failed on timeout; the subsequent
+reset case was never discovered or passed. The user reported Studio's
+client-count control was grayed out. The fixture's runtime cleaned itself,
+while the same native server/client windows remained open. The timeout was
+not extended and no initial player was relabeled as a late spectator.
+
+Roblox staff previously documented a
+[Quick Open Actions workaround](https://devforum.roblox.com/t/unable-to-start-more-clients-when-test-server-is-active/3579798):
+on macOS, Option-Command-P, search Start and invoke that action. The staff
+report says it adds the original batch size, so an initial two-client session
+may receive two new clients. This route is not yet verified on the installed
+Studio 0.747 build. The normal guide's live-count statement appears in party
+simulation context and did not establish an executable route for this UI.
+The primary agent requested a read-only check of Start action availability
+before another actual join attempt.
+
+The planned fixture adaptation permits one or two actual new post-checkpoint
+clients (total three or four), records arrival identities/times and verifies
+every observed new spectator's state, character/equipment absence and shared
+panel reconstruction in the same Active round. An actual new third remains
+mandatory. Any optional batch settlement remains within the original
+240-second checkpoint deadline. This adapts to the documented launcher batch;
+it does not substitute initial clients, a restarted server or simulated joins.
+
+The [late-cohort fixture freeze](p07-late-freeze-ebca51e.json) is committed as
+`ebca51e65ebd081b6c40698d90e6f9b0a5076899`, tree
+`78d7d468511b988e615a45ff80bffad2616e159e`. Focused format/lint/strict
+checks passed. The independent `python3 scripts/verify.py` gate passed
+54 unit / 53 integration, zero candidate failures/skips and all non-Studio
+gates. Its new late-cohort path is still unrun pending usable Start action;
+the earlier e45 timeout remains failed evidence.
+
+## Actual-player creating-blast protection
+
+The independent tester ran a disposable actual-runtime probe on the retained
+two native clients, rotating real roles across two rounds. The
+[actual blast report](p07-a4-real-blast.json) passes both weapon profiles:
+two discovered, two passed, zero failures/skips. The production runtime and
+rules remained unchanged; fixture fire uses the validated delivery margin
+and current-send view, actual accepted timestamps and normal remotes.
+
+- GAU-23: creating transition after 9.182287 accepted seconds left the actual
+  protected target at 100 health. A later real same-plane control impact
+  through the hole reduced health 100→75 at 3.4991 studs, inside its 4-stud radius.
+- M102: the third creating impact left the actual protected target at 100.
+  A later control impact through the hole reduced health 100→0 at 3.5028 studs,
+  inside its 18-stud radius.
+
+Both profiles assert no ForceField, actual root separation from the panel,
+blocked intact/residual rays, clear hole/control rays, drained prior flights
+and an actual impact contained in the owned control solid. The positive control
+proves the same target was within the blast radius; it is not an empty former
+wall endpoint. QA runtime/transport were fully disposed afterward, preserving
+the native server/client windows. This establishes the player-health portion
+of A4; rendered thermal remains a separate unrun requirement.
+
+Exact disposable replay artifacts are retained as text, outside all Rojo/test
+source mappings: [server probe](p07-a4-server.luau.txt), SHA256
+`2656d92a3f77591a440240ab44d90d77f9711a52cd18fdf3bf2cae992588a8de`,
+and [client probe](p07-a4-client.luau.txt), SHA256
+`48fa02e27e6fdf0f988c42ea65d54726a88d1111ac7a10827969f3a8bfcd2248`.
+These imperative Studio-MCP evidence scripts are not release modules or
+automatically discovered suites. With no other runtime/transport owner active
+in an existing native session with two actual clients, execute the server
+artifact first, then the client artifact once in each actual client. Read
+Workspace `P07QAReport`, preserve it, and fire `P07QAStop` to dispose the owned
+runtime/transport. Never run these against a published place.
+
+## P05 actual multiplayer regression finding
+
+The [P05 regression report](p07-p05-regression.json) uses the same retained
+two-client session and the exact corrected server fixture (41,544 bytes,
+SHA256 `d322115d6233f99f1f8fcb2e159c7540ea6ecaeb769ac591f839e541233d4144`)
+plus unchanged 7,475-byte client fixture rearmed once per client. Seven cases
+were discovered, five passed and two failed: the geometry case plus its
+harness-completion entry. The first five rejection, cover, forged-endpoint,
+readiness, lethal and reset paths passed. The corrected muzzle-overlap case
+was not reached and is not claimed passing. Manual finish saved the report
+without ending the native session; runtime/transport cleaned themselves.
+
+The failed geometry request was M102 against real sloped Terrain; GAU terrain
+and upper-panel shots passed. Target was
+(-263.997925, 13.565300, -159.999237), sampled muzzle
+(358.536316, 138, 68.648956), and first projectile sample
+(358.370117, 138, 69.511086). The fixture did not retain the failed Impact
+before its assertion. A [read-only reconstruction](p07-p05-slope-reconstruction.json)
+on unchanged native Terrain found the sampled-muzzle ray 0.0294 studs from
+target, but the profile-radius spherecast 5.1666 studs away; the first-projectile
+origin spherecast was 5.2117 away. This reproduces the five-stud assertion
+failure path through grazing ray/profile disagreement; it does not establish
+the lost original Impact or a core gameplay defect.
+
+A minimal fixture correction is authorized to select real sloped Terrain with
+a stable non-grazing/profile guard while retaining the original five-stud
+remote-impact assertion and preserving actual Impact/path facts before
+assertion. Production collision/aim rules remain unchanged pending evidence.
