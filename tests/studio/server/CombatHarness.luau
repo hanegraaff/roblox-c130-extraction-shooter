@@ -685,8 +685,37 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             wall.Position = muzzle
             wall:SetAttribute("PanelId", "P05MuzzleOverlap")
             wall.Parent = workspace.World.Battlefield
+            local muzzleWitness = Instance.new("Part")
+            muzzleWitness.Name = "P05OverlapWitness"
+            muzzleWitness.Shape = Enum.PartType.Ball
+            muzzleWitness.Size = Vector3.one * 0.1
+            muzzleWitness.CFrame = CFrame.new(muzzle)
+            muzzleWitness.Anchored = true
+            muzzleWitness.CanCollide = false
+            muzzleWitness.CanTouch = false
+            muzzleWitness.CanQuery = false
+            muzzleWitness.Transparency = 1
+            muzzleWitness.Parent = workspace
+            local overlap = OverlapParams.new()
+            overlap.FilterType = Enum.RaycastFilterType.Include
+            local overlapRoots: { Instance } = { workspace.World.Battlefield }
+            if character then
+                table.insert(overlapRoots, character)
+            end
+            overlap.FilterDescendantsInstances = overlapRoots
             local before = ReplicatedStorage.AircraftState:GetAttribute("Impact")
             local overlapOk, overlapReason = pcall(function()
+                -- The real overlap result identifies the one containing solid;
+                -- its copied PanelId tag grants no registered structural identity.
+                local containing = workspace:GetPartsInPart(muzzleWitness, overlap)
+                assert(
+                    #containing == 1 and containing[1] == wall,
+                    "overlap positive control did not uniquely identify containing wall"
+                )
+                assert(
+                    CombatRuntime.initialOverlap(muzzleWitness, overlap, workspace.World.Battlefield) == wall,
+                    "production initial-overlap query did not identify containing wall"
+                )
                 probe(op, "Fire", payload(5, "M102", Vector3.new(0, 30, 0)))
                 waitFor(function()
                     local impact = ReplicatedStorage.AircraftState:GetAttribute("Impact")
@@ -694,8 +723,29 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                 end, "initial solid-cover impact", 6)
                 local hit = snapshot("Impact")
                 assert(
-                    hit.panelId == "P05MuzzleOverlap" and hit.shotId == 5,
-                    "shot bypassed cover containing muzzle"
+                    hit.panelId == nil and hit.shotId == 5 and hit.weapon == "M102",
+                    "overlap impact identity/profile or normalized structural ID disagrees"
+                )
+                local actual = Vector3.new(hit.x :: number, hit.y :: number, hit.z :: number)
+                local localImpact = wall.CFrame:PointToObjectSpace(actual)
+                -- The aircraft continues moving during the real client roundtrip.
+                -- An initial-overlap point may touch the wall within the 0.05 stud
+                -- probe radius; 0.1 stud covers engine float serialization as well.
+                -- A fixed 0.01 stud comparison to the earlier muzzle would instead
+                -- measure network delay and legitimate orbit movement.
+                assert(
+                    math.abs(localImpact.X) <= wall.Size.X / 2 + 0.1
+                        and math.abs(localImpact.Y) <= wall.Size.Y / 2 + 0.1
+                        and math.abs(localImpact.Z) <= wall.Size.Z / 2 + 0.1,
+                    "impact was outside the uniquely containing wall"
+                )
+                assert(
+                    (actual - muzzle).Magnitude <= wall.Size.Magnitude / 2 + 0.1,
+                    "initial impact escaped the bounded saved-muzzle fixture"
+                )
+                assert(
+                    runtime.combat.resources().projectiles == 0,
+                    "embedded shot entered a live projectile flight"
                 )
                 task.wait(0.2)
                 assert(
@@ -707,6 +757,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     "embedded-cover blast ended the round"
                 )
             end)
+            muzzleWitness:Destroy()
             wall:Destroy()
             if root.Parent then
                 root.CFrame = originalFrame

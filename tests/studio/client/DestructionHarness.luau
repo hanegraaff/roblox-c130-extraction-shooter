@@ -3,7 +3,74 @@
 -- Panel assertions inspect replicated current state/rays; they do not award damage.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
+local Aircraft = require(ReplicatedStorage.Shared.AircraftRules)
+local Map = require(ReplicatedStorage.Shared.MapRules)
+local Camera = require(Players.LocalPlayer.PlayerScripts.Client.ThermalCameraController)
 local Harness = {}
+
+-- Constructs bounded intent from the CURRENT canonical pose and production
+-- camera basis. This is request generation only: the server still validates
+-- view, role, cadence, ammunition, collision and structural credit independently.
+local function currentIntent(point: Vector3, roundId: number, sequence: number): { [string]: unknown }
+    local state = ReplicatedStorage:FindFirstChild("AircraftState")
+    local epoch = if state then state:GetAttribute("EpochSeconds") else nil
+    assert(type(epoch) == "number", "current canonical epoch unavailable")
+    local map = Map.defaults
+    local pose = assert(
+        Aircraft.pose(map, Aircraft.defaults, workspace:GetServerTimeNow() - epoch),
+        "current canonical pose unavailable"
+    )
+    local camera = Vector3.new(pose.x, pose.y, pose.z)
+    local radial = Vector2.new(camera.X - map.centerX, camera.Z - map.centerZ).Unit
+    local projected = camera + (point - camera) * (map.altitudeStuds / (camera.Y - point.Y))
+    local offset = Vector2.new(projected.X - map.centerX, projected.Z - map.centerZ)
+    local desired = {
+        x = offset.X * radial.X + offset.Y * radial.Y,
+        z = -offset.X * radial.Y + offset.Y * radial.X,
+    }
+    local aspect = 16 / 9
+    local widest = assert(
+        Pan.supportedFov(map, aspect, Aircraft.defaults.fov105mm),
+        "supported fixture lens unavailable"
+    )
+    local home = assert(Pan.recenter(map, aspect, widest), "current fixture home unavailable")
+    local tangent = math.tan(math.rad(math.min(Aircraft.defaults.fov30mm, widest)) / 2)
+    for sample = 0, 100 do
+        local t = sample / 100
+        local focus = { x = desired.x + (home.x - desired.x) * t, z = desired.z + (home.z - desired.z) * t }
+        if Pan.viewFits(map, focus, aspect, widest) then
+            local world =
+                assert(Pan.worldFocus(map, focus, camera.X, camera.Z), "valid focus projection unavailable")
+            local frame = assert(
+                Camera.frame(camera, Vector3.new(world.x, map.groundY, world.z)),
+                "production camera basis unavailable"
+            )
+            local localPoint = frame:PointToObjectSpace(point)
+            local depth = -localPoint.Z
+            if
+                depth > 0
+                and math.abs(localPoint.X / (depth * tangent * aspect)) <= 0.7
+                and math.abs(localPoint.Y / (depth * tangent)) <= 0.7
+            then
+                return {
+                    roundId = roundId,
+                    sequence = sequence,
+                    weapon = "GAU23",
+                    x = point.X,
+                    y = point.Y,
+                    z = point.Z,
+                    focusX = focus.x,
+                    focusZ = focus.z,
+                    aspect = aspect,
+                    cameraX = camera.X,
+                    cameraZ = camera.Z,
+                }
+            end
+        end
+    end
+    error("current sustained target outside permitted fixture view")
+end
 local function waitFor(predicate: () -> boolean, label: string)
     local deadline = os.clock() + 8
     while not predicate() and os.clock() < deadline do
@@ -35,19 +102,40 @@ function Harness.run()
                         end
                     elseif kind == "Burst" then
                         assert(type(payload) == "table", "burst fixture missing")
-                        local burst = payload :: { commands: { { [string]: unknown } }, cadence: number }
-                        assert(#burst.commands == 61 and burst.cadence == 0.151, "unbounded burst fixture")
+                        local burst = payload :: {
+                            point: Vector3,
+                            roundId: number,
+                            firstSequence: number,
+                            count: number,
+                            cadence: number,
+                        }
+                        assert(
+                            typeof(burst.point) == "Vector3" and burst.count == 61 and burst.cadence == 0.18,
+                            "unbounded burst fixture"
+                        )
                         local state = ReplicatedStorage:WaitForChild("AircraftState", 5)
                         local remote = if state then state:FindFirstChild("FireWeapon") else nil
                         assert(remote and remote:IsA("RemoteEvent"), "production fire remote missing")
+                        local sent: { { sequence: number, sentAt: number } } = {}
                         local nextAt = workspace:GetServerTimeNow()
-                        for _, command in burst.commands do
-                            while workspace:GetServerTimeNow() < nextAt do
-                                game:GetService("RunService").Heartbeat:Wait()
+                        local burstOk, burstFailure = pcall(function()
+                            for index = 1, burst.count do
+                                while workspace:GetServerTimeNow() < nextAt do
+                                    game:GetService("RunService").Heartbeat:Wait()
+                                end
+                                local sequence = burst.firstSequence + index - 1
+                                local command = currentIntent(burst.point, burst.roundId, sequence)
+                                local sentAt = workspace:GetServerTimeNow()
+                                table.insert(sent, { sequence = sequence, sentAt = sentAt })
+                                remote:FireServer(command)
+                                -- A 30ms test send margin protects the 0.15s server
+                                -- cadence without changing that rule or 0.225s gap.
+                                nextAt = sentAt + burst.cadence
                             end
-                            remote:FireServer(command)
-                            nextAt = workspace:GetServerTimeNow() + burst.cadence
-                        end
+                            return true
+                        end)
+                        transport:FireServer(token, "BurstTiming", sent)
+                        assert(burstOk, tostring(burstFailure))
                     elseif kind == "Panels" then
                         assert(type(payload) == "table", "expected panel observations")
                         local expected = payload :: {

@@ -13,6 +13,8 @@ local StudioTestService = game:GetService("StudioTestService")
 local Server = game:GetService("ServerScriptService").Server
 local GameRuntime = require(Server.GameRuntime)
 local CombatViewRules = require(Server.CombatViewRules)
+local CombatRuntime = require(Server.CombatRuntime)
+local CombatService = require(Server.CombatService)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
@@ -122,6 +124,105 @@ function Harness.run(finish: ((Report) -> ())?)
         deliver()
         return
     end
+    -- Observe the existing production impact seam on a fresh owner BEFORE any
+    -- deployment/fire. This records actual accepted firedAt values and rule
+    -- snapshots without authorizing a hit or changing production source.
+    local impactFacts: {
+        {
+            shotId: number,
+            weapon: string,
+            panelId: string?,
+            firedAt: number,
+            impactAt: number,
+            scoredThroughShotId: number,
+            scoredThroughFiredAt: number?,
+            stage: number?,
+            progress: number?,
+        }
+    } =
+        {}
+    local receipts: {
+        {
+            sequence: number?,
+            receivedAt: number,
+            viewValid: boolean,
+            viewReason: string?,
+            gauAmmo: number?,
+            gauNextFire: number?,
+        }
+    } =
+        {}
+    local resolvedTimes: { [number]: number } = {}
+    local observedRound, contiguousShotId = -1, 0
+    runtime.combat.stop()
+    local observedCombat, observerReason = CombatRuntime.start(
+        runtime.rounds.match,
+        runtime.aircraft,
+        function(impact)
+            if #impactFacts >= 192 then
+                return
+            end
+            if impact.roundId ~= observedRound then
+                observedRound, contiguousShotId = impact.roundId, 0
+                table.clear(resolvedTimes)
+            end
+            resolvedTimes[impact.shotId] = impact.firedAt
+            while resolvedTimes[contiguousShotId + 1] do
+                contiguousShotId += 1
+            end
+            local current = if impact.panelId then runtime.destruction.snapshot(impact.panelId) else nil
+            table.insert(impactFacts, {
+                shotId = impact.shotId,
+                weapon = impact.weapon,
+                panelId = impact.panelId,
+                firedAt = impact.firedAt,
+                impactAt = impact.time,
+                scoredThroughShotId = contiguousShotId,
+                scoredThroughFiredAt = resolvedTimes[contiguousShotId],
+                stage = if current then current.stage else nil,
+                progress = if current then current.progress else nil,
+            })
+        end,
+        nil,
+        nil,
+        runtime.destruction
+    )
+    if not observedCombat then
+        runtime.stop()
+        table.insert(cases, { name = "Impact observer startup", passed = false, detail = observerReason })
+        deliver()
+        return
+    end
+    runtime.combat = observedCombat
+    local fireRemote = ReplicatedStorage.AircraftState:FindFirstChild("FireWeapon")
+    assert(fireRemote and fireRemote:IsA("RemoteEvent"), "observed production remote unavailable")
+    local receiptListener = fireRemote.OnServerEvent:Connect(function(player: Player, payload: unknown)
+        if #receipts >= 192 then
+            return
+        end
+        local camera = runtime.aircraft.position()
+        local selected = runtime.aircraft.weapon()
+        local valid, why = CombatViewRules.validate(payload, MapRules.defaults, selected, camera.X, camera.Z)
+        local fields: { [string]: unknown } = if type(payload) == "table"
+            then payload :: { [string]: unknown }
+            else {}
+        local sequence = fields.sequence
+        local readiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+        local profile = if type(readiness) == "string" then HttpService:JSONDecode(readiness).GAU23 else nil
+        table.insert(receipts, {
+            sequence = if type(sequence) == "number"
+                    and sequence == sequence
+                    and math.abs(sequence) < math.huge
+                then sequence
+                else nil,
+            receivedAt = workspace:GetServerTimeNow(),
+            viewValid = valid ~= nil and player:GetAttribute("Role") == "Gunship",
+            viewReason = why,
+            gauAmmo = if profile then profile.ammo else nil,
+            gauNextFire = if profile then profile.nextFire else nil,
+        })
+    end)
+    local burstTiming: { [number]: unknown } = {}
     local transport = Instance.new("RemoteEvent")
     transport.Name = "P07Harness"
     local ready: { [Player]: boolean } = {}
@@ -131,6 +232,8 @@ function Harness.run(finish: ((Report) -> ())?)
         function(player: Player, id: unknown, ok: unknown, message: unknown)
             if id == 0 then
                 ready[player] = true
+            elseif type(id) == "number" and ok == "BurstTiming" and type(message) == "table" then
+                burstTiming[id] = message
             elseif type(id) == "number" then
                 replies[id] = { player = player, ok = ok == true, message = tostring(message) }
             end
@@ -150,6 +253,7 @@ function Harness.run(finish: ((Report) -> ())?)
         local reply = replies[current]
         replies[current] = nil
         assert(reply.player == player and reply.ok, reply.message)
+        return current
     end
     local function command(
         weapon: string,
@@ -238,6 +342,115 @@ function Harness.run(finish: ((Report) -> ())?)
         waitFor(function()
             return runtime.aircraft.weapon() == weapon
         end, "weapon selection")
+    end
+    -- Three ready M102 launches need two 4s reloads plus at most 4s final
+    -- flight. A 4s fixture scheduling margin makes a 16s observation window;
+    -- no extra blind waits inflate that budget. Forecasts only choose a fixture:
+    -- every actual shot still needs a fresh real first-hit and view guard.
+    local wallWindowSeconds = 2 * CombatService.profiles.M102.reload
+        + CombatService.profiles.M102.lifetime
+        + 4
+    local function aimHit(
+        weapon: string,
+        point: Vector3,
+        muzzle: Vector3,
+        params: RaycastParams
+    ): RaycastResult?
+        local delta = point - muzzle
+        return CombatRuntime.sweep(
+            muzzle,
+            CombatService.profiles[weapon].collisionRadius,
+            delta.Unit * math.min(delta.Magnitude + 0.25, CombatService.profiles[weapon].range),
+            params
+        )
+    end
+    local function stableExteriorWall(): (string, Vector3, Vector3)
+        awaitReady("M102")
+        local actualMuzzle = assert(runtime.aircraft.muzzle("M102"), "heavy muzzle unavailable")
+        local relativeMuzzle = workspace.Aircraft:GetPivot():PointToObjectSpace(actualMuzzle)
+        local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
+        assert(type(epoch) == "number", "wall forecast epoch unavailable")
+        local startedAt = workspace:GetServerTimeNow()
+        local params = RaycastParams.new()
+        params.FilterType = Enum.RaycastFilterType.Include
+        params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+        params.RespectCanCollide = true
+        local selected: string? = nil
+        local selectedPoint = Vector3.zero
+        local selectedNormal = Vector3.zero
+        local bestExposure = -math.huge
+        for _, building in workspace.World.Battlefield.Buildings:GetChildren() do
+            local supports = building:FindFirstChild(building.Name .. "_Static")
+            local floor = if supports then supports:FindFirstChild(building.Name .. "_GroundFloor") else nil
+            local registry = building:FindFirstChild(building.Name .. "_Panels")
+            assert(floor and floor:IsA("BasePart") and registry, "wall building contract unavailable")
+            for _, model in registry:GetChildren() do
+                if
+                    model:IsA("Model")
+                    and model:GetAttribute("PanelState") == "Intact"
+                    and model:GetAttribute("StoryId") == "01"
+                    and not string.find(model.Name, "Interior", 1, true)
+                    and not string.find(model.Name, "Roof", 1, true)
+                then
+                    local solid = model:FindFirstChild("Solid")
+                    if solid and solid:IsA("BasePart") then
+                        local axis = solid.CFrame:VectorToWorldSpace(
+                            if solid.Size.X < solid.Size.Z then Vector3.xAxis else Vector3.zAxis
+                        )
+                        -- The building floor determines true exterior. Choosing
+                        -- the side facing today's camera can select an interior
+                        -- sight line temporarily admitted by an earlier roof hole.
+                        local normal = axis
+                            * (if (solid.Position - floor.Position):Dot(axis) > 0 then 1 else -1)
+                        local point = solid.Position + normal * math.min(solid.Size.X, solid.Size.Z) / 2
+                        local exposure = 1
+                        local clear = true
+                        for step = 0, math.ceil(wallWindowSeconds / 0.5) do
+                            local offset = step * 0.5
+                            local poseValue = assert(
+                                AircraftRules.pose(
+                                    MapRules.defaults,
+                                    AircraftRules.defaults,
+                                    startedAt - epoch + offset
+                                ),
+                                "wall forecast pose unavailable"
+                            )
+                            local camera = Vector3.new(poseValue.x, poseValue.y, poseValue.z)
+                            local frame = CFrame.lookAt(
+                                camera,
+                                camera + Vector3.new(poseValue.tangentX, 0, poseValue.tangentZ)
+                            )
+                            local muzzle = frame:PointToWorldSpace(relativeMuzzle)
+                            local facing = (muzzle - point).Unit:Dot(normal)
+                            local hit = aimHit("M102", point, muzzle, params)
+                            if
+                                facing <= 0.15
+                                or not hit
+                                or runtime.destruction.identify(hit.Instance) ~= model.Name
+                                or (step % 8 == 0 and not command("M102", point, fireSequence + 1, camera))
+                            then
+                                clear = false
+                                break
+                            end
+                            exposure = math.min(exposure, facing)
+                        end
+                        if clear and exposure > bestExposure then
+                            selected, selectedPoint, selectedNormal, bestExposure =
+                                model.Name, point, normal, exposure
+                        end
+                    end
+                end
+            end
+            task.wait() -- bounded per-building fixture-query batches
+        end
+        assert(selected, "no exterior ground-story wall clear for bounded reload/flight window")
+        table.insert(observations, {
+            kind = "wall-forecast",
+            panelId = selected,
+            windowSeconds = wallWindowSeconds,
+            minimumExteriorExposure = bestExposure,
+        })
+        return selected, selectedPoint, selectedNormal
     end
     local op: Player? = nil
     local ground: Player? = nil
@@ -340,93 +553,133 @@ function Harness.run(finish: ((Report) -> ())?)
         check("A7 actual same-panel 30mm reaches nine valid seconds without first-hit time credit", function()
             selectWeapon(operator, "GAU23")
             local id = testedIds[2]
-            local firstFire = workspace:GetServerTimeNow()
-            local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
-            assert(type(epoch) == "number", "canonical orbit epoch missing")
-            local commands: { { [string]: unknown } } = {}
-            for impact = 1, 61 do
-                local predicted = assert(
-                    AircraftRules.pose(
-                        MapRules.defaults,
-                        AircraftRules.defaults,
-                        firstFire - epoch + (impact - 1) * 0.151
-                    ),
-                    "predicted orbit unavailable"
-                )
-                fireSequence += 1
-                local point = pose(id).Position + Vector3.new(-6, 0.5, 0)
-                local payload = assert(
-                    command("GAU23", point, fireSequence, Vector3.new(predicted.x, predicted.y, predicted.z)),
-                    "sustained target leaves permitted view"
-                )
-                table.insert(commands, payload)
-            end
-            -- One bounded client burst avoids a per-shot server/client RPC wait
-            -- becoming an artificial interruption of otherwise valid cadence.
-            probe(operator, "Burst", { commands = commands, cadence = 0.151 })
+            local firstSequence = fireSequence + 1
+            local factsBefore = #impactFacts
+            local receiptBefore = #receipts
+            local beforeReadiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+            assert(type(beforeReadiness) == "string", "GAU initial readiness unavailable")
+            local initialAmmo = HttpService:JSONDecode(beforeReadiness).GAU23.ammo
+            local diagnostic: { [string]: unknown } = {
+                kind = "actual-30mm",
+                panelId = id,
+                requested = 61,
+                sendIntervalSeconds = 0.18,
+                serverCadenceSeconds = CombatService.profiles.GAU23.cadence,
+                gapSeconds = 0.225,
+                impacts = impactFacts,
+                receipts = receipts,
+                clientTimingByToken = burstTiming,
+                firstFactIndex = factsBefore + 1,
+                firstReceiptIndex = receiptBefore + 1,
+            }
+            -- Insert BEFORE sending so any failure retains bounded actual facts.
+            table.insert(observations, diagnostic)
+            fireSequence += 61
+            local timingToken = probe(operator, "Burst", {
+                point = pose(id).Position + Vector3.new(-6, 0.5, 0),
+                roundId = runtime.rounds.match.snapshot().roundId,
+                firstSequence = firstSequence,
+                count = 61,
+                cadence = 0.18,
+            })
+            diagnostic.clientSends = burstTiming[timingToken]
+            burstTiming[timingToken] = nil
             waitFor(function()
-                return panel(id):GetAttribute("PanelState") == "Damaged"
-            end, "nine seconds of actual 30mm", 8)
-            assert(workspace:GetServerTimeNow() - firstFire >= 9, "nine-second threshold early")
+                return #impactFacts >= factsBefore + 61 and runtime.combat.resources().projectiles == 0
+            end, "61 actual sustained-fire impacts", 8)
+            diagnostic.lastFactIndex = #impactFacts
+            diagnostic.lastReceiptIndex = #receipts
+            local firstPhysical = impactFacts[factsBefore + 1]
+            assert(
+                firstPhysical
+                    and firstPhysical.weapon == "GAU23"
+                    and firstPhysical.panelId == id
+                    and firstPhysical.progress == 0,
+                "first real on-panel impact earned pre-first-impact credit"
+            )
+            local ordered: { typeof(firstPhysical) } = {}
+            local transition: typeof(firstPhysical)? = nil
+            for index = factsBefore + 1, #impactFacts do
+                local fact = impactFacts[index]
+                assert(
+                    fact.weapon == "GAU23" and fact.panelId == id,
+                    "sustained outcome missed or hit a different panel"
+                )
+                table.insert(ordered, fact)
+                if not transition and fact.stage == 1 then
+                    transition = fact
+                end
+            end
+            table.sort(ordered, function(a, b)
+                return a.shotId < b.shotId
+            end)
+            local first = ordered[1]
+            local previous = first
+            for index = 2, #ordered do
+                local fact = ordered[index]
+                local gap = fact.firedAt - previous.firedAt
+                assert(
+                    fact.shotId == previous.shotId + 1
+                        and gap + 1e-9 >= CombatService.profiles.GAU23.cadence
+                        and gap <= 0.225 + 1e-7,
+                    "actual accepted interval outside cadence/continuity bounds"
+                )
+                previous = fact
+            end
+            local finalReadiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+            assert(type(finalReadiness) == "string", "GAU final readiness unavailable")
+            local spent = initialAmmo - HttpService:JSONDecode(finalReadiness).GAU23.ammo
+            diagnostic.accepted = spent
+            diagnostic.actualSpanSeconds = previous.firedAt - first.firedAt
+            assert(
+                #impactFacts - factsBefore == 61 and spent == 61,
+                "not all 61 bounded requests became real accepted impacts"
+            )
+            assert(
+                transition
+                    and transition.scoredThroughFiredAt
+                    and transition.scoredThroughFiredAt - first.firedAt >= 9 - 1e-7,
+                "stage advanced before nine actual accepted on-panel seconds"
+            )
+            diagnostic.transitionSpanSeconds = (transition.scoredThroughFiredAt :: number) - first.firedAt
+            assert(
+                panel(id):GetAttribute("PanelState") == "Damaged",
+                "nine valid actual seconds did not damage panel"
+            )
+            -- Preserve transition facts above, then wait for the ordinary idle
+            -- barrier to clear incomplete second-stage credit before freezing a
+            -- progress snapshot for sequential real-client replication probes.
+            waitFor(function()
+                return runtime.combat.resources().projectiles == 0
+                    and panel(id):GetAttribute("SustainedSeconds") == 0
+            end, "sustained tail and idle-barrier settlement", 8)
             for _, player in initialPlayers do
                 probe(player, "Panels", expected({ id }))
             end
-            table.insert(observations, {
-                kind = "actual-30mm",
-                panelId = id,
-                elapsedSeconds = workspace:GetServerTimeNow() - firstFire,
-                final = expected({ id }),
-            })
         end)
         check("A3 actual ground Humanoid walks through an authored damaged wall opening", function()
             selectWeapon(operator, "M102")
-            -- A fresh wall is selected by an actual muzzle ray, not by accepting
-            -- a client panel ID. Primitive roofs/terrain may protect other walls.
-            local wallId: string? = nil
-            local wallPoint = Vector3.zero
-            local normal = Vector3.zero
-            local muzzle = runtime.aircraft.muzzle("M102")
-            assert(muzzle, "heavy muzzle missing")
+            local wallId, wallPoint, normal = stableExteriorWall()
             local params = RaycastParams.new()
             params.FilterType = Enum.RaycastFilterType.Include
             params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
             params.RespectCanCollide = true
-            for _, item in workspace.World.Battlefield:GetDescendants() do
-                if
-                    item:IsA("Model")
-                    and item:GetAttribute("PanelState") == "Intact"
-                    and item:GetAttribute("PanelId")
-                    and not string.find(item.Name, "Roof", 1, true)
-                    and string.find(item.Name, "_S01_", 1, true)
-                    and not string.find(item.Name, "Interior", 1, true)
-                then
-                    local solid = item:FindFirstChild("Solid")
-                    if solid and solid:IsA("BasePart") then
-                        local axis = if solid.Size.X < 2 then Vector3.xAxis else Vector3.zAxis
-                        local outward = axis * (if (muzzle - solid.Position):Dot(axis) > 0 then 1 else -1)
-                        local target = solid.Position + outward * 0.5
-                        local hit = workspace:Raycast(
-                            muzzle,
-                            (target - muzzle).Unit * ((target - muzzle).Magnitude + 0.2),
-                            params
-                        )
-                        if hit and hit.Instance == solid and command("M102", target, fireSequence + 1) then
-                            wallId, wallPoint, normal = item.Name, target, outward
-                            break
-                        end
-                    end
-                end
-            end
-            assert(wallId, "no exposed reachable ground-story wall")
             for hit = 1, 3 do
-                task.wait(4.05)
+                awaitReady("M102")
+                local muzzle = assert(runtime.aircraft.muzzle("M102"), "current wall muzzle unavailable")
+                local first = aimHit("M102", wallPoint, muzzle, params)
+                assert(
+                    first and runtime.destruction.identify(first.Instance) == wallId,
+                    "current real muzzle path no longer first-hits chosen exterior wall"
+                )
                 fireSequence += 1
-                local payload = assert(command("M102", wallPoint, fireSequence), "wall left permitted view")
+                local payload =
+                    assert(command("M102", wallPoint, fireSequence), "wall left permitted current view")
                 probe(operator, "Fire", payload)
                 waitFor(function()
-                    return panel(wallId :: string):GetAttribute("PanelState")
+                    return panel(wallId):GetAttribute("PanelState")
                             == (if hit == 3 then "Damaged" else "Intact")
-                        and panel(wallId :: string):GetAttribute("PanelProgress") :: number
+                        and panel(wallId):GetAttribute("PanelProgress") :: number
                             == (if hit == 3 then 0 else hit / 3)
                 end, "wall heavy progress")
             end
@@ -615,7 +868,9 @@ function Harness.run(finish: ((Report) -> ())?)
     checkpoint = false
     added:Disconnect()
     listener:Disconnect()
+    receiptListener:Disconnect()
     transport:Destroy()
+    observedCombat.stop()
     runtime.stop()
     deliver()
 end
