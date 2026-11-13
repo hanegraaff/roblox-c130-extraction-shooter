@@ -44,3 +44,11 @@ is reused only for unchanged production code and gameplay assertions.
 `git diff --check` passes. No production files or historical raw reports change.
 The only Luau change is the excluded harness report schema/metadata. P08's
 revised criteria are satisfied; P09 is Ready and unstarted in the roadmap.
+
+
+Revision source/evidence commit `0cd5ec8f7f81c0422f5446b9de09927c8f1e6894`
+is pushed. [PR #33](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/33)
+is open for review against `plan/08-rocket-launcher`, with PR #32 still unmerged.
+The final delivery-record follow-up changes documentation only and passes
+`python3 scripts/check_repository.py` and `git diff --check`. The full host
+log above applies to the unchanged test metadata and gameplay assertions.

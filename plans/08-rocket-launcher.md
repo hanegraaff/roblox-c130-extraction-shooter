@@ -46,7 +46,9 @@ The native run observed delivery head `c3b155d`, based on integrated P07 main
 [CI Verify](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43519154819).
 The D59 revision changes acceptance documentation and test-report metadata only;
 production code and the eleven gameplay assertions are unchanged. See the
-[scope revision](../docs/evidence/p08/studio-acceptance-revision.md).
+[scope revision](../docs/evidence/p08/studio-acceptance-revision.md), delivered in
+[PR #33](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/33)
+from verified revision commit `0cd5ec8`.
 
 | Criterion | Named tests / environment | Observed result |
 | --- | --- | --- |

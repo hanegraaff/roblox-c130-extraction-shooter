@@ -135,7 +135,8 @@ remain. Supported late joins, three-client sessions and explicit Roblox-client
 the source-bound evidence above. P08 is Complete on the combined
 `docs/studio-supported-acceptance` branch, P09 is Ready and unstarted. The
 [revision record](docs/evidence/p08/studio-acceptance-revision.md) records
-verification and GitHub delivery; PR #32 and its stacked revision remain
+verification and GitHub delivery; PR #32 and stacked
+[PR #33](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/33) remain
 unmerged. No Roblox publication occurred.
 
 ## How plans move
