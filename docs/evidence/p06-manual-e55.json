@@ -1,0 +1,163 @@
+{
+  "source": "e55a961273f0f46e8808ae9fef3467169327289a",
+  "server": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 118,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 118
+  },
+  "invocation": {
+    "requestedClients": 2,
+    "harness": "P06",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P06",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "report": {
+    "invocation": {
+      "requestedClients": 2,
+      "harness": "P06",
+      "studioOnly": true,
+      "mode": "manual-server-clients",
+      "selectorValue": "P06",
+      "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+    },
+    "result": {
+      "departureMethod": "server-kick",
+      "clientCount": 2,
+      "passed": 5,
+      "skipped": 0,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A1 ground receives one rifle and no launcher"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+        },
+        {
+          "passed": true,
+          "name": "A1 server raycast stops rifle at cover then damages aircraft"
+        },
+        {
+          "passed": true,
+          "name": "A2 direct swept rocket fixtures destroy once"
+        },
+        {
+          "passed": true,
+          "name": "A5 reset restores aircraft and no stale equipment"
+        },
+        {
+          "passed": false,
+          "name": "A3 terrain-query failure rejects remote without mutation then recovers",
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:36: P06 timeout: injected query failure"
+        },
+        {
+          "passed": false,
+          "name": "Harness completion",
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:279: ServerScriptService.ServerTests.GroundCombatHarness:36: P06 timeout: injected query failure"
+        }
+      ],
+      "observations": [
+        {
+          "healthAfter": 195,
+          "sweptDistanceStuds": 50,
+          "shot": 1,
+          "origin": [
+            299.689453125,
+            165,
+            199.46485900878906
+          ],
+          "fixtureRocketSpeedStudsPerSecond": 300,
+          "kind": "live-orbit-rocket-sweep",
+          "aircraftPosition": [
+            299.689453125,
+            140,
+            199.46485900878906
+          ],
+          "fixtureRocketStepSeconds": 0.16666666666666666
+        },
+        {
+          "healthAfter": 95,
+          "sweptDistanceStuds": 50,
+          "shot": 2,
+          "origin": [
+            299.689453125,
+            165,
+            199.46485900878906
+          ],
+          "fixtureRocketSpeedStudsPerSecond": 300,
+          "kind": "live-orbit-rocket-sweep",
+          "aircraftPosition": [
+            299.689453125,
+            140,
+            199.46485900878906
+          ],
+          "fixtureRocketStepSeconds": 0.16666666666666666
+        },
+        {
+          "healthAfter": 0,
+          "sweptDistanceStuds": 50,
+          "shot": 3,
+          "origin": [
+            299.689453125,
+            165,
+            199.46485900878906
+          ],
+          "fixtureRocketSpeedStudsPerSecond": 300,
+          "kind": "live-orbit-rocket-sweep",
+          "aircraftPosition": [
+            299.689453125,
+            140,
+            199.46485900878906
+          ],
+          "fixtureRocketStepSeconds": 0.16666666666666666
+        }
+      ],
+      "requestedClients": 2,
+      "environment": "Studio",
+      "discovered": 7,
+      "suite": "P06-multiplayer",
+      "failed": 2,
+      "mode": "manual-server-clients"
+    }
+  },
+  "players": 2,
+  "clients": [
+    {
+      "id": -1,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 3
+      }
+    },
+    {
+      "id": -2,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 3
+      }
+    }
+  ]
+}

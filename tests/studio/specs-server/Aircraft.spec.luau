@@ -59,13 +59,33 @@ return function()
                 for _, item in model:GetDescendants() do
                     if item:IsA("BasePart") then
                         assert(
-                            item.Anchored
-                                and not item.CanCollide
-                                and not item.CanTouch
-                                and item.CanQuery == (item == hitbox),
+                            item.Anchored and not item.CanCollide and not item.CanTouch and item.CanQuery,
                             "aircraft collision/query contract"
                         )
                     end
+                end
+                local parameters = RaycastParams.new()
+                parameters.FilterType = Enum.RaycastFilterType.Include
+                parameters.FilterDescendantsInstances = { model }
+                for _, sample in
+                    {
+                        { name = "Wing", point = Vector3.new(20, 2, 0) },
+                        { name = "Tailplane", point = Vector3.new(9, 4, 26) },
+                        { name = "TailFin", point = Vector3.new(0, 12, 27), fromAbove = true },
+                        { name = "EngineL22", point = Vector3.new(-22, 0, -6) },
+                    }
+                do
+                    local part = model:FindFirstChild(sample.name)
+                    assert(part and part:IsA("BasePart"), "visible aircraft part missing")
+                    local at = model:GetPivot():PointToWorldSpace(sample.point)
+                    local direction = model:GetPivot().UpVector
+                    local sign = if sample.fromAbove then -1 else 1
+                    local hit =
+                        workspace:Raycast(at - direction * (18 * sign), direction * (36 * sign), parameters)
+                    assert(
+                        hit and hit.Instance == part,
+                        "visible aircraft surface not ray-queryable: " .. sample.name
+                    )
                 end
                 for _, name in { "GAU23Muzzle", "M102Muzzle" } do
                     local attachment = hitbox:FindFirstChild(name)

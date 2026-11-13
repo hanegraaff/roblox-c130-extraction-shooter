@@ -1,0 +1,107 @@
+{
+  "source": "59252c96d8774473cde642b50fc0ecd39e8bd5e3",
+  "tree": "edac5ce19179897ebde7269f896e1d6efbd41577",
+  "server": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 118,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 118
+  },
+  "invocation": {
+    "requestedClients": 3,
+    "harness": "P06Team",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P06Team",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "report": {
+    "invocation": {
+      "requestedClients": 3,
+      "harness": "P06Team",
+      "studioOnly": true,
+      "mode": "manual-server-clients",
+      "selectorValue": "P06Team",
+      "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+    },
+    "result": {
+      "departureMethod": "not-exercised",
+      "clientCount": 3,
+      "passed": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "passed": false,
+          "name": "A1 ground receives one rifle and no launcher",
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:36: P06 timeout: client ready"
+        },
+        {
+          "passed": false,
+          "name": "Harness completion",
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:448: ServerScriptService.ServerTests.GroundCombatHarness:36: P06 timeout: client ready"
+        }
+      ],
+      "observations": [],
+      "requestedClients": 3,
+      "environment": "Studio",
+      "discovered": 2,
+      "suite": "P06-multiplayer",
+      "failed": 2,
+      "mode": "manual-server-clients"
+    }
+  },
+  "playersAtCollection": 3,
+  "clients": [
+    {
+      "name": "Player1",
+      "id": -1,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 6,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 6
+      }
+    },
+    {
+      "name": "Player2",
+      "id": -2,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 6,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 6
+      }
+    },
+    {
+      "name": "Player3",
+      "id": -3,
+      "report": {
+        "errors": 1,
+        "skipped": 0,
+        "passed": 5,
+        "userId": -3,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 1,
+        "discovered": 6
+      }
+    }
+  ],
+  "failedClientConsole": "Test results:\n[-] ClientSpecs\n   [+] Foundation\n      [+] client receives server status and an explicit character or late-spectator state\n      [+] panel renders environment and restarts twice with one GUI\n   [-] GroundAimGui\n      [+] P06 existing ground HUD follows input capability changes and cleans up\n      [-] P06 ground mouse and touch reticles agree with viewport rays\n      [+] P06 phone rifle status avoids the centered reticle and action buttons\n   [+] PointerGui\n      [+] P14 mouse and touch input classify normal, full-bleed and safe-area GUI buttons with current inset\n5 passed, 1 failed, 0 skipped\n1 test nodes reported failures.\nErrors reported by tests:\n\nTestService: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:76: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:55: ground ray misses independently projected world point\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:76\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nPlayers.Player3.PlayerScripts.ClientTests:9\n\n\nPlayers.Player3.PlayerScripts.ClientTests:23: client suite failed or empty\nStack Begin\nScript 'Players.Player3.PlayerScripts.ClientTests', Line 23\nStack End\nContentId: rbxassetid://203785492 failed due to: Asset type does not match requested type"
+}

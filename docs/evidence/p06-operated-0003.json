@@ -1,0 +1,134 @@
+{
+  "source": "0003fe4cef9b5b4a252706059c69037124b909f8",
+  "tree": "667d29f8fbe5a2ee46bc483c57b140b9631898a2",
+  "setup": {
+    "mode": "native Server & Clients",
+    "players": 2,
+    "serverSmoke": {
+      "passed": 118,
+      "failed": 0,
+      "skipped": 0,
+      "clientCount": 2
+    },
+    "clientSmoke": [
+      {
+        "userId": -1,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "userId": -2,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0
+      }
+    ],
+    "roles": "Player1 Gunship; Player2 Ground",
+    "start": "operated StudioTestPanel UI, duration 600"
+  },
+  "desktop": {
+    "inputViewport": [
+      540,
+      160
+    ],
+    "mouseLocation": [
+      540,
+      218
+    ],
+    "guiInset": [
+      0,
+      58
+    ],
+    "reticleAbsoluteTopLeft": [
+      528,
+      148
+    ],
+    "reticleCenter": [
+      540,
+      160
+    ],
+    "groundShot": {
+      "x": -21.019922256469727,
+      "y": 68.33033752441406,
+      "z": -877.1626586914062,
+      "sequence": 1
+    },
+    "rayThroughReticle": [
+      -21.019922256469727,
+      68.33032989501953,
+      -877.16259765625
+    ],
+    "rifleAmmoAfterFire": 29,
+    "afterReload": 30,
+    "reserveAfterReload": 119
+  },
+  "phone": {
+    "device": "iPhone 17 Pro",
+    "viewport": [
+      750,
+      381
+    ],
+    "reticleRect": [
+      363,
+      179,
+      24,
+      24
+    ],
+    "rifleStatusRect": [
+      245,
+      267,
+      260,
+      36
+    ],
+    "fireRect": [
+      636,
+      123,
+      90,
+      70
+    ],
+    "reloadRect": [
+      636,
+      59,
+      90,
+      54
+    ],
+    "jumpRect": [
+      655,
+      233,
+      70,
+      70
+    ],
+    "fireTouch": [
+      683,
+      160
+    ],
+    "ammoBefore": 30,
+    "ammoAfter": 25,
+    "reloadTouch": [
+      683,
+      95
+    ],
+    "reloadAmmo": 30,
+    "reserve": 114,
+    "swipeTouch": [
+      408,
+      180
+    ],
+    "cameraChanged": true,
+    "testOnlyPanel": "visually overlapped controls; hidden after start for review; FIRE was successful before hiding",
+    "screenshot": "/private/tmp/p06-phone-0003.jpg"
+  },
+  "operator": {
+    "selection": "M102",
+    "fov": 40,
+    "shotId": 1,
+    "impact": [
+      33.47119140625,
+      0,
+      235.87741088867188
+    ]
+  },
+  "movingAircraftHit": "Unverified: after native test-panel reset/start, M-7 equip and W movement to exposed ground, a 28-second live WorldToViewportPoint wait found no targetable aircraft in view; health remained 300.",
+  "desktopScreenshot": "/private/tmp/p06-current-final.jpg"
+}

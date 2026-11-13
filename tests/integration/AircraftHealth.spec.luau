@@ -1,0 +1,35 @@
+--!strict
+-- P06 A2/A4: aircraft health is round-scoped and duplicate direct impacts are idempotent.
+type API = typeof(require(game:GetService("ServerScriptService").Server.AircraftHealth))
+return function(test: (string, () -> ()) -> (), candidate: unknown)
+    local rules = candidate :: API
+    test("three direct rockets destroy pristine aircraft once", function()
+        local owner = rules.new()
+        owner.reset(1)
+        assert(owner.snapshot().health == 300, "P06 invariant")
+        local a, first = owner.impact(1, "r1", "RocketLauncher", true)
+        assert(a == 100 and not first and owner.snapshot().health == 200, "P06 invariant")
+        assert(not owner.impact(1, "r1", "RocketLauncher", true), "P06 invariant")
+        local b, second = owner.impact(1, "r2", "RocketLauncher", true)
+        assert(b == 100 and not second and owner.snapshot().health == 100, "P06 invariant")
+        local c, third = owner.impact(1, "r3", "RocketLauncher", true)
+        assert(c == 100 and third and owner.snapshot().destroyed, "P06 invariant")
+        assert(not owner.impact(1, "r4", "RocketLauncher", true), "P06 invariant")
+        assert(owner.snapshot().health == 0, "P06 invariant")
+    end)
+    test("misses and mixed damage obey health clamps and reset", function()
+        local owner = rules.new()
+        owner.reset(7)
+        assert(not owner.impact(7, "miss", "RocketLauncher", false), "P06 invariant")
+        assert(not owner.impact(8, "other", "M7", true), "P06 invariant")
+        for i = 1, 21 do
+            assert(owner.impact(7, tostring(i), "M7", true) == 5, "P06 invariant")
+        end
+        assert(owner.impact(7, "one", "RocketLauncher", true) == 100, "P06 invariant")
+        local amount, destroyed = owner.impact(7, "two", "RocketLauncher", true)
+        assert(amount == 95 and destroyed, "P06 invariant")
+        owner.reset(8)
+        assert(owner.snapshot().health == 300 and not owner.snapshot().destroyed, "P06 invariant")
+        assert(not owner.impact(7, "late", "M7", true), "P06 invariant")
+    end)
+end

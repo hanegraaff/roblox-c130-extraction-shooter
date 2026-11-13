@@ -1,0 +1,731 @@
+{
+  "source": "dae58a460dcf1c44f59e50bd705bcd3169d68965",
+  "tree": "b2377270e930bc823adce9ca44b2e8b72bc15695",
+  "server": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 118,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 118
+  },
+  "invocation": {
+    "requestedClients": 2,
+    "harness": "P05",
+    "studioOnly": true,
+    "mode": "manual-server-clients",
+    "selectorValue": "P05",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+  },
+  "report": {
+    "invocation": {
+      "requestedClients": 2,
+      "harness": "P05",
+      "studioOnly": true,
+      "mode": "manual-server-clients",
+      "selectorValue": "P05",
+      "selector": "ServerStorage.DevelopmentSettings.ManualHarness"
+    },
+    "result": {
+      "clientCount": 2,
+      "passed": 8,
+      "observations": [
+        {
+          "endpoint": [
+            4.531318187713623,
+            30,
+            -8.914435386657715
+          ],
+          "targetRoot": [
+            0,
+            30,
+            0
+          ],
+          "afterImpact": "{\"y\":30.668058395385743,\"x\":1.9868054389953614,\"z\":1.0044279098510743,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "preflightRayHit": false,
+          "afterHealth": 75,
+          "fixtureMuzzle": [
+            325.4207763671875,
+            138,
+            165.41542053222656
+          ],
+          "beforeImpact": "{\"y\":30.668058395385743,\"x\":1.9868054389953614,\"z\":1.0044279098510743,\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":1}",
+          "beforeHealth": 75
+        },
+        {
+          "preflightPosition": [
+            -264,
+            11.898445129394531,
+            -116.00000762939453
+          ],
+          "samples": [
+            {
+              "muzzle": [
+                363.6708984375,
+                138,
+                31.897045135498047
+              ],
+              "readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":99,\"nextFire\":1794523300.820892,\"reloadUntil\":0}}",
+              "elapsed": 0.04491220833733678,
+              "selected": "{\"revision\":8,\"weapon\":\"GAU23\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    363.6708984375,
+                    138,
+                    31.897045135498047
+                  ],
+                  "name": "Projectile",
+                  "weapon": "GAU23"
+                },
+                {
+                  "position": [
+                    -264.00006103515625,
+                    12.198430061340332,
+                    -116.0000228881836
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "GAU23"
+                }
+              ]
+            },
+            {
+              "muzzle": [
+                362.33404541015625,
+                138,
+                44.5869026184082
+              ],
+              "readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":99,\"nextFire\":1794523300.820892,\"reloadUntil\":0}}",
+              "elapsed": 0.5449324166693259,
+              "selected": "{\"revision\":8,\"weapon\":\"GAU23\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    52.82726287841797,
+                    75.55030059814453,
+                    -41.34651565551758
+                  ],
+                  "name": "Projectile",
+                  "weapon": "GAU23"
+                },
+                {
+                  "position": [
+                    -264.00006103515625,
+                    12.198430061340332,
+                    -116.0000228881836
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "GAU23"
+                }
+              ]
+            }
+          ],
+          "payload": {
+            "cameraX": 359.2437438964844,
+            "sequence": 1,
+            "focusZ": -38.81391668088976,
+            "focusX": 22.156313447768696,
+            "y": 11.898429870605469,
+            "x": -264.00006103515625,
+            "z": -116.0000228881836,
+            "cameraZ": 23.3223934173584,
+            "aspect": 1.7777777777777777,
+            "weapon": "GAU23",
+            "roundId": 3
+          },
+          "preflightHit": "Workspace.Terrain",
+          "kind": "geometry-flight-diagnostic",
+          "sampledMuzzle": [
+            363.77972412109375,
+            138,
+            30.631629943847656
+          ]
+        },
+        {
+          "target": [
+            -264.00006103515625,
+            11.898429870605469,
+            -116.0000228881836
+          ],
+          "kind": "terrain-slope",
+          "impact": [
+            -263.803466796875,
+            11.894075393676758,
+            -115.97866821289062
+          ],
+          "weapon": "GAU23"
+        },
+        {
+          "preflightPosition": [
+            -189.9991455078125,
+            14.57366943359375,
+            -79.49998474121094
+          ],
+          "samples": [
+            {
+              "muzzle": [
+                360.288818359375,
+                138,
+                58.87295913696289
+              ],
+              "readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 0.03235399999539368,
+              "selected": "{\"revision\":8,\"weapon\":\"GAU23\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    -263.803466796875,
+                    11.894075393676758,
+                    -115.97866821289062
+                  ],
+                  "name": "Impact",
+                  "weapon": "GAU23"
+                },
+                {
+                  "position": [
+                    349.931640625,
+                    135.66331481933594,
+                    55.879905700683594
+                  ],
+                  "name": "Projectile",
+                  "weapon": "GAU23"
+                },
+                {
+                  "position": [
+                    -189.9991455078125,
+                    14.873669624328613,
+                    -79.5
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "GAU23"
+                }
+              ],
+              "impact": "{\"y\":11.894075393676758,\"x\":-263.803466796875,\"z\":-115.97866821289063,\"weapon\":\"GAU23\",\"shotId\":1,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                358.0151062011719,
+                138,
+                71.40885925292969
+              ],
+              "readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 0.5324393750051968,
+              "selected": "{\"revision\":8,\"weapon\":\"GAU23\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    42.002593994140625,
+                    66.60442352294922,
+                    -21.32889747619629
+                  ],
+                  "name": "Projectile",
+                  "weapon": "GAU23"
+                },
+                {
+                  "position": [
+                    -189.9991455078125,
+                    14.873669624328613,
+                    -79.5
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "GAU23"
+                }
+              ],
+              "impact": "{\"y\":11.894075393676758,\"x\":-263.803466796875,\"z\":-115.97866821289063,\"weapon\":\"GAU23\",\"shotId\":1,\"roundId\":3}"
+            }
+          ],
+          "previousImpact": "{\"y\":11.894075393676758,\"x\":-263.803466796875,\"z\":-115.97866821289063,\"weapon\":\"GAU23\",\"shotId\":1,\"roundId\":3}",
+          "payload": {
+            "cameraX": 356.4524230957031,
+            "sequence": 2,
+            "focusZ": -25.010318048339357,
+            "focusX": 11.775837199645252,
+            "y": 14.57366943359375,
+            "x": -189.9991455078125,
+            "z": -79.5,
+            "cameraZ": 50.41489028930664,
+            "aspect": 1.7777777777777777,
+            "weapon": "GAU23",
+            "roundId": 3
+          },
+          "preflightHit": "Workspace.World.Battlefield.Buildings.Foundry.Foundry_Panels.Foundry_S02_South_01",
+          "kind": "geometry-flight-diagnostic",
+          "sampledMuzzle": [
+            360.4228210449219,
+            138,
+            58.0461311340332
+          ],
+          "expectedPanelId": "Foundry_S02_South_01"
+        },
+        {
+          "panelId": "Foundry_S02_South_01",
+          "target": [
+            -189.9991455078125,
+            14.57366943359375,
+            -79.5
+          ],
+          "kind": "upper-panel",
+          "impact": [
+            -189.79965209960938,
+            14.618404388427734,
+            -79.5
+          ],
+          "weapon": "GAU23"
+        },
+        {
+          "preflightPosition": [
+            -263.99993896484375,
+            13.56488037109375,
+            -119.99998474121094
+          ],
+          "samples": [
+            {
+              "muzzle": [
+                358.2125244140625,
+                138,
+                70.31951904296875
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523303.704156,\"reloadUntil\":1794523306.704156},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 0.03184462498757057,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    -189.79965209960938,
+                    14.618404388427734,
+                    -79.5
+                  ],
+                  "name": "Impact",
+                  "weapon": "GAU23"
+                },
+                {
+                  "position": [
+                    358.2125244140625,
+                    138,
+                    70.31951904296875
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -264,
+                    13.864880561828613,
+                    -120
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":14.618404388427735,\"x\":-189.79965209960938,\"z\":-79.5,\"panelId\":\"Foundry_S02_South_01\",\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                355.540771484375,
+                138,
+                82.77558898925781
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523303.704156,\"reloadUntil\":1794523306.704156},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 0.5321344999829307,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    217.36428833007812,
+                    109.8320083618164,
+                    27.237499237060547
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -264,
+                    13.864880561828613,
+                    -120
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":14.618404388427735,\"x\":-189.79965209960938,\"z\":-79.5,\"panelId\":\"Foundry_S02_South_01\",\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                352.2127990722656,
+                138,
+                95.95414733886719
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523303.704156,\"reloadUntil\":1794523306.704156},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 1.064507416653214,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    67.10655975341797,
+                    79.78224182128906,
+                    -18.7226505279541
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -264,
+                    13.864880561828613,
+                    -120
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":14.618404388427735,\"x\":-189.79965209960938,\"z\":-79.5,\"panelId\":\"Foundry_S02_South_01\",\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                348.642822265625,
+                138,
+                108.20890045166016
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523303.704156,\"reloadUntil\":1794523306.704156},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 1.5651170416676905,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    -74.03777313232422,
+                    51.5550422668457,
+                    -61.895240783691406
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -264,
+                    13.864880561828613,
+                    -120
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":14.618404388427735,\"x\":-189.79965209960938,\"z\":-79.5,\"panelId\":\"Foundry_S02_South_01\",\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                344.377197265625,
+                138,
+                121.10057830810547
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523303.704156,\"reloadUntil\":1794523306.704156},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 2.098541708342964,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    -224.19583129882812,
+                    21.525218963623047,
+                    -107.82489013671875
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -264,
+                    13.864880561828613,
+                    -120
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":14.618404388427735,\"x\":-189.79965209960938,\"z\":-79.5,\"panelId\":\"Foundry_S02_South_01\",\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":3}"
+            }
+          ],
+          "previousImpact": "{\"y\":14.618404388427735,\"x\":-189.79965209960938,\"z\":-79.5,\"panelId\":\"Foundry_S02_South_01\",\"weapon\":\"GAU23\",\"shotId\":2,\"roundId\":3}",
+          "payload": {
+            "cameraX": 352.2449951171875,
+            "sequence": 3,
+            "focusZ": -25.078878653202118,
+            "focusX": 14.050732211211255,
+            "y": 13.56488037109375,
+            "x": -264,
+            "z": -120,
+            "cameraZ": 74.3199691772461,
+            "aspect": 1.7777777777777777,
+            "weapon": "M102",
+            "roundId": 3
+          },
+          "preflightHit": "Workspace.Terrain",
+          "kind": "geometry-flight-diagnostic",
+          "sampledMuzzle": [
+            358.3759765625,
+            138,
+            69.48149108886719
+          ]
+        },
+        {
+          "target": [
+            -264,
+            13.56488037109375,
+            -120
+          ],
+          "kind": "terrain-slope",
+          "impact": [
+            -263.82318115234375,
+            13.55467700958252,
+            -119.96744537353516
+          ],
+          "weapon": "M102"
+        },
+        {
+          "preflightPosition": [
+            -190.95458984375,
+            14.375686645507812,
+            -79.5
+          ],
+          "samples": [
+            {
+              "muzzle": [
+                324.1744689941406,
+                138,
+                167.8450164794922
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523307.754069,\"reloadUntil\":1794523310.754069},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 0.03154320834437385,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    319.9850769042969,
+                    136.95419311523438,
+                    165.42686462402344
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -190.95465087890625,
+                    14.675671577453613,
+                    -79.50001525878906
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":13.55467700958252,\"x\":-263.82318115234377,\"z\":-119.96744537353516,\"weapon\":\"M102\",\"shotId\":3,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                317.70648193359375,
+                138,
+                179.78759765625
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523307.754069,\"reloadUntil\":1794523310.754069},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 0.5638765000039712,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    179.07908630371094,
+                    103.14971923828125,
+                    97.88141632080078
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -190.95465087890625,
+                    14.675671577453613,
+                    -79.50001525878906
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":13.55467700958252,\"x\":-263.82318115234377,\"z\":-119.96744537353516,\"weapon\":\"M102\",\"shotId\":3,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                311.2325134277344,
+                138,
+                190.7754669189453
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523307.754069,\"reloadUntil\":1794523310.754069},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 1.0645329166727606,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    46.760311126708984,
+                    71.40538024902344,
+                    34.45236587524414
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -190.95465087890625,
+                    14.675671577453613,
+                    -79.50001525878906
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":13.55467700958252,\"x\":-263.82318115234377,\"z\":-119.96744537353516,\"weapon\":\"M102\",\"shotId\":3,\"roundId\":3}"
+            },
+            {
+              "muzzle": [
+                304.38763427734375,
+                138,
+                201.5170135498047
+              ],
+              "readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1794523307.754069,\"reloadUntil\":1794523310.754069},\"GAU23\":{\"ammo\":98,\"nextFire\":1794523301.870876,\"reloadUntil\":0}}",
+              "elapsed": 1.5645344583317637,
+              "selected": "{\"revision\":9,\"weapon\":\"M102\",\"roundId\":3}",
+              "effects": [
+                {
+                  "position": [
+                    -85.38914489746094,
+                    39.701663970947266,
+                    -28.895523071289062
+                  ],
+                  "name": "Projectile",
+                  "weapon": "M102"
+                },
+                {
+                  "position": [
+                    -190.95465087890625,
+                    14.675671577453613,
+                    -79.50001525878906
+                  ],
+                  "name": "ImpactWarning",
+                  "weapon": "M102"
+                }
+              ],
+              "impact": "{\"y\":13.55467700958252,\"x\":-263.82318115234377,\"z\":-119.96744537353516,\"weapon\":\"M102\",\"shotId\":3,\"roundId\":3}"
+            }
+          ],
+          "previousImpact": "{\"y\":13.55467700958252,\"x\":-263.82318115234377,\"z\":-119.96744537353516,\"weapon\":\"M102\",\"shotId\":3,\"roundId\":3}",
+          "payload": {
+            "cameraX": 317.3304138183594,
+            "sequence": 4,
+            "focusZ": 9.855103226452629,
+            "focusX": 4.128088943827493,
+            "y": 14.37567138671875,
+            "x": -190.95465087890625,
+            "z": -79.50001525878906,
+            "cameraZ": 170.004150390625,
+            "aspect": 1.7777777777777777,
+            "weapon": "M102",
+            "roundId": 3
+          },
+          "preflightHit": "Workspace.World.Battlefield.Buildings.Foundry.Foundry_Panels.Foundry_S02_South_01",
+          "kind": "geometry-flight-diagnostic",
+          "sampledMuzzle": [
+            324.5711669921875,
+            138,
+            167.0764617919922
+          ],
+          "expectedPanelId": "Foundry_S02_South_01"
+        },
+        {
+          "panelId": "Foundry_S02_South_01",
+          "target": [
+            -190.95465087890625,
+            14.37567138671875,
+            -79.50001525878906
+          ],
+          "kind": "upper-panel",
+          "impact": [
+            -190.85037231445312,
+            14.400676727294922,
+            -79.5
+          ],
+          "weapon": "M102"
+        }
+      ],
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 rejected client traffic leaves readiness intact"
+        },
+        {
+          "passed": true,
+          "name": "A4 swept muzzle path hits thin cover before the visible target"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged airborne endpoint cannot create damage or an impact"
+        },
+        {
+          "passed": true,
+          "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+        },
+        {
+          "passed": true,
+          "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots"
+        },
+        {
+          "passed": true,
+          "name": "A4 both profiles strike real terrain slopes and authored second-story panels"
+        },
+        {
+          "passed": true,
+          "name": "A4 muzzle starting inside solid cover resolves that cover before flight"
+        },
+        {
+          "passed": true,
+          "name": "A1 actual projectile survives exact lifetime and expires cleanly afterward"
+        }
+      ],
+      "environment": "Studio",
+      "skipped": 0,
+      "suite": "P05-multiplayer",
+      "failed": 0,
+      "discovered": 8
+    }
+  },
+  "playersAtCollection": 2,
+  "clients": [
+    {
+      "name": "Player2",
+      "id": -2,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 3
+      }
+    },
+    {
+      "name": "Player1",
+      "id": -1,
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 3
+      }
+    }
+  ]
+}

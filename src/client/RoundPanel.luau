@@ -36,6 +36,17 @@ function RoundPanel.new(
             label.Font = Enum.Font.Gotham
             label.TextWrapped = true
             label.Parent = gui
+            local healthLabel = Instance.new("TextLabel")
+            healthLabel.Name = "AircraftHealth"
+            healthLabel.AnchorPoint = Vector2.zero
+            healthLabel.Position = UDim2.fromOffset(12, 55)
+            healthLabel.Size = UDim2.fromOffset(250, 34)
+            healthLabel.BackgroundColor3 = Color3.fromRGB(72, 28, 25)
+            healthLabel.BackgroundTransparency = 0.05
+            healthLabel.TextColor3 = Color3.fromRGB(255, 240, 210)
+            healthLabel.Font = Enum.Font.GothamBold
+            healthLabel.TextSize = 17
+            healthLabel.Parent = gui
             local surrender = Instance.new("TextButton")
             surrender.Name = "Surrender"
             surrender.AnchorPoint = Vector2.new(0.5, 0)
@@ -83,6 +94,23 @@ function RoundPanel.new(
                         then "Studio Operator preview • Inward thermal aircraft view"
                         else "Studio Ground preview • Use WASD to explore"
                 end
+                local aircraftState = game:GetService("ReplicatedStorage"):FindFirstChild("AircraftState")
+                local aircraftHealth = if aircraftState then aircraftState:GetAttribute("Health") else nil
+                local aircraftMaximum = if aircraftState then aircraftState:GetAttribute("MaxHealth") else nil
+                healthLabel.Visible = phase == "Active"
+                    and type(aircraftHealth) == "number"
+                    and type(aircraftMaximum) == "number"
+                if healthLabel.Visible then
+                    healthLabel.Text =
+                        string.format("AIRCRAFT HEALTH  %d / %d", aircraftHealth, aircraftMaximum)
+                end
+                if
+                    phase == "Active"
+                    and type(aircraftHealth) == "number"
+                    and type(aircraftMaximum) == "number"
+                then
+                    detail ..= string.format(" • Aircraft %d/%d", aircraftHealth, aircraftMaximum)
+                end
                 local heading = phase .. " • " .. role .. " / " .. life
                 if phase == "Lobby" and player:GetAttribute("LocalMapPreview") == true then
                     heading = "Studio preview • "
@@ -92,10 +120,11 @@ function RoundPanel.new(
                                 else "Ground"
                         )
                 end
-                if thermal.ownsCamera() then
+                local activeGround = phase == "Active" and role == "Ground" and life == "Alive"
+                if thermal.ownsCamera() or activeGround then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
-                    label.Size = UDim2.fromOffset(210, 38)
+                    label.Size = UDim2.fromOffset(300, 38)
                     label.TextSize = 14
                     label.Text = if phase == "Active" then detail else "Operator preview"
                 else
@@ -104,12 +133,23 @@ function RoundPanel.new(
                     label.Size = UDim2.fromOffset(540, 102)
                     label.TextSize = 18
                     label.Text = string.format(
-                        "%s\n%s\nRound prototype • Ground weapons and launcher are planned",
+                        "%s\n%s\nM-7 available to living ground players • Launcher planned",
                         heading,
                         detail
                     )
                 end
                 surrender.Visible = phase == "Active" and role == "Ground" and life == "Alive"
+                if activeGround then
+                    surrender.AnchorPoint = Vector2.new(1, 0)
+                    surrender.Position = UDim2.new(1, -12, 0, 8)
+                    surrender.Size = UDim2.fromOffset(150, 36)
+                    surrender.TextSize = 13
+                else
+                    surrender.AnchorPoint = Vector2.new(0.5, 0)
+                    surrender.Position = UDim2.new(0.5, 0, 0, 220)
+                    surrender.Size = UDim2.fromOffset(250, 36)
+                    surrender.TextSize = 18
+                end
                 local camera = workspace.CurrentCamera
                 if camera and not thermal.ownsCamera() then
                     camera.CameraType = Enum.CameraType.Custom

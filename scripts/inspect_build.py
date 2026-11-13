@@ -318,6 +318,34 @@ def geometry_rejection_probes() -> None:
                 raise RuntimeError(f"Geometry rejection probe incorrectly accepted {fault}")
 
 
+MANUAL_P06_TEST_ONLY = (
+    "ServerScriptService/ServerTests/RoundHarness",
+    "ServerScriptService/ServerTests/GroundCombatHarness",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/GroundCombatHarness",
+    "ServerStorage/DevelopmentSettings",
+)
+MANUAL_P05_TEST_ONLY = (
+    "ServerScriptService/ServerTests/RoundHarness",
+    "ServerScriptService/ServerTests/CombatHarness",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/CombatHarness",
+    "ServerStorage/DevelopmentSettings",
+)
+
+
+def check_manual_p06_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
+    """Require manual-test dispatcher and selector in the test artifact only."""
+    for name in MANUAL_P06_TEST_ONLY:
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P06 manual fixture missing from tests or leaked to release: {name}")
+
+
+def check_manual_p05_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
+    """Require the manual P05 selector and both harnesses only in the test artifact."""
+    for name in MANUAL_P05_TEST_ONLY:
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P05 manual fixture missing from tests or leaked to release: {name}")
+
+
 def main() -> None:
     """Assert bootstraps/spawn exist and all test-only Instances are absent from release."""
     release = paths(ROOT / "build/game.rbxlx")
@@ -339,7 +367,8 @@ def main() -> None:
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules")}
+    expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
@@ -351,6 +380,37 @@ def main() -> None:
     for name in ("ServerScriptService/ServerTests", "StarterPlayer/StarterPlayerScripts/ClientTests", "ReplicatedStorage/TestPackages/TestEZ", "ServerStorage/DevelopmentSettings"):
         if name not in tests:
             raise RuntimeError(f"Test mapping missing {name}")
+    # The P06 manual selector/runner is wholly test-mapped, never shipped.
+    check_manual_p06_isolation(release, tests)
+    for name in MANUAL_P06_TEST_ONLY:
+        for fault in ("missing", "leaked"):
+            altered_release, altered_tests = dict(release), dict(tests)
+            if fault == "missing":
+                del altered_tests[name]
+            else:
+                altered_release[name] = "ModuleScript"
+            try:
+                check_manual_p06_isolation(altered_release, altered_tests)
+            except RuntimeError:
+                pass
+            else:
+                raise RuntimeError(f"P06 manual isolation failed to reject {fault}: {name}")
+    print("P06 manual fixture isolation passed, including eight deliberate corruption probes.")
+    check_manual_p05_isolation(release, tests)
+    for name in MANUAL_P05_TEST_ONLY:
+        for fault in ("missing", "leaked"):
+            altered_release, altered_tests = dict(release), dict(tests)
+            if fault == "missing":
+                del altered_tests[name]
+            else:
+                altered_release[name] = "ModuleScript"
+            try:
+                check_manual_p05_isolation(altered_release, altered_tests)
+            except RuntimeError:
+                pass
+            else:
+                raise RuntimeError(f"P05 manual isolation failed to reject {fault}: {name}")
+    print("P05 manual fixture isolation passed, including eight deliberate corruption probes.")
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")

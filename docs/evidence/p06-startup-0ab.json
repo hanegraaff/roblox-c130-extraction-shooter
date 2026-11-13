@@ -1,0 +1,54 @@
+{
+  "source": "0ab360775bdd7d97a2654aa3b6857ddbc3d6157e",
+  "tree": "3d6bb3fd49629f66d12e31f921975a151607714f",
+  "solo": {
+    "startup": {
+      "status": "first-client-arrived",
+      "clientCount": 1,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 0.15210779165499844
+    },
+    "server": {
+      "suite": "P01-server",
+      "environment": "Studio",
+      "seed": 1,
+      "clientCount": 1,
+      "discovered": 118,
+      "passed": 118,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "client": {
+      "suite": "P01-client",
+      "environment": "Studio",
+      "seed": 1,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    }
+  },
+  "negative": {
+    "mode": "RunService:Run() from Edit, zero Players",
+    "startup": {
+      "status": "first-client-timeout",
+      "clientCount": 0,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 60.043791458330816
+    },
+    "server": {
+      "suite": "P01-server",
+      "environment": "Studio",
+      "clientCount": 0,
+      "discovered": 0,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "errors": 1
+    },
+    "meaning": "Expected explicit negative failure; not a passing server suite"
+  },
+  "limitation": "No delayed arrival >10s was tested; native 3-client run required."
+}

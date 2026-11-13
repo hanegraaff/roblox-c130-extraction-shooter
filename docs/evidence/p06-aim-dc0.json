@@ -1,0 +1,28 @@
+{
+  "source": "dc081f4363f9deb42994c9b3d59fa61d640c8c44",
+  "tree": "afc8b0780211b068bc45e25d0aefadbb16268544",
+  "mode": "fresh Studio solo Play",
+  "serverSmoke": {
+    "suite": "P01-server",
+    "environment": "Studio",
+    "seed": 1,
+    "clientCount": 1,
+    "discovered": 118,
+    "passed": 118,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "clientSmoke": {
+    "suite": "P01-client",
+    "environment": "Studio",
+    "seed": 1,
+    "discovered": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "sourceSync": "GroundAimGui.spec exact bytes",
+  "review": "Independent native mouse ray and world-point reprojection in viewport pixels, integer rounding <=1px; deliberate old 58px subtraction must exceed 40px; viewport bounded readiness; detailed failure diagnostic. Does not establish cause of prior startup failure or multiplayer pass."
+}

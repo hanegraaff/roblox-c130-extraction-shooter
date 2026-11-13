@@ -237,7 +237,15 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
                 match.abort(state.roundId, "DeploymentTimeout")
             end
         elseif state.phase == "Active" then
-            match.step()
+            -- Combat owners submit proposals during this Heartbeat. Commit only
+            -- after its callbacks have run so a same-step aircraft destruction
+            -- and last-ground death resolve together under RoundRules precedence.
+            local batchRound = state.roundId
+            task.defer(function()
+                if running and match.snapshot().roundId == batchRound then
+                    match.step()
+                end
+            end)
         elseif state.phase == "Results" and elapsed >= settings.resultsSeconds then
             match.beginReset()
         end

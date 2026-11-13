@@ -261,7 +261,6 @@ function CombatRuntime.start(
             panelId = panelId,
             time = time,
         })
-        match.step()
         return true
     end
     table.insert(

@@ -13,6 +13,17 @@ local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local CombatHarness = {}
 type Case = { name: string, passed: boolean, detail: string? }
+export type Report = {
+    suite: string,
+    environment: string,
+    clientCount: number,
+    discovered: number,
+    passed: number,
+    failed: number,
+    skipped: number,
+    cases: { Case },
+    observations: { unknown },
+}
 local function waitFor(predicate: () -> boolean, message: string, timeout: number?)
     local deadline = os.clock() + (timeout or 15)
     while not predicate() and os.clock() < deadline do
@@ -20,20 +31,57 @@ local function waitFor(predicate: () -> boolean, message: string, timeout: numbe
     end
     assert(predicate(), "P05 timeout: " .. message)
 end
-function CombatHarness.run()
-    waitFor(function()
-        return #Players:GetPlayers() == 2
-    end, "two actual clients", 35)
-    local runtime, reason = GameRuntime.start({
-        automaticDeployment = false,
-        minimumPlayers = 2,
-        durationSeconds = 120,
-        lobbySeconds = 0,
-        deploymentSeconds = 25,
-        resultsSeconds = 10,
-        seed = 1,
-    })
-    assert(runtime, reason)
+-- Manual completion receives the same report after cleanup; SDK mode uses EndTest.
+-- Startup waits are bounded and failure reports the observed client count.
+function CombatHarness.run(finish: ((Report) -> ())?)
+    local function deliver(report: Report)
+        workspace:SetAttribute("P05MultiplayerReport", HttpService:JSONEncode(report))
+        if finish then
+            finish(report)
+        else
+            StudioTestService:EndTest(report)
+        end
+    end
+    local function startupFailure(detail: string)
+        deliver({
+            suite = "P05-multiplayer",
+            environment = "Studio",
+            clientCount = #Players:GetPlayers(),
+            discovered = 1,
+            passed = 0,
+            failed = 1,
+            skipped = 0,
+            cases = { { name = "Harness startup", passed = false, detail = detail } },
+            observations = {},
+        })
+    end
+    local joined, joinFailure = pcall(function()
+        waitFor(function()
+            return #Players:GetPlayers() == 2
+        end, "two actual clients", 35)
+    end)
+    if not joined then
+        startupFailure(tostring(joinFailure))
+        return
+    end
+    local started, runtimeOrFailure = pcall(function()
+        local owner, reason = GameRuntime.start({
+            automaticDeployment = false,
+            minimumPlayers = 2,
+            durationSeconds = 120,
+            lobbySeconds = 0,
+            deploymentSeconds = 25,
+            resultsSeconds = 10,
+            seed = 1,
+        })
+        assert(owner, reason)
+        return owner
+    end)
+    if not started then
+        startupFailure(tostring(runtimeOrFailure))
+        return
+    end
+    local runtime = runtimeOrFailure
     local transport = Instance.new("RemoteEvent")
     transport.Name = "P05Harness"
     local ready: { [Player]: boolean } = {}
@@ -724,7 +772,7 @@ function CombatHarness.run()
             passed += 1
         end
     end
-    local report = {
+    local report: Report = {
         suite = "P05-multiplayer",
         environment = "Studio",
         clientCount = 2,
@@ -735,7 +783,6 @@ function CombatHarness.run()
         cases = cases,
         observations = observations,
     }
-    workspace:SetAttribute("P05MultiplayerReport", HttpService:JSONEncode(report))
-    StudioTestService:EndTest(report)
+    deliver(report)
 end
 return CombatHarness

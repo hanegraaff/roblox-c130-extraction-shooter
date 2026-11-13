@@ -1,0 +1,62 @@
+{
+  "source": "59252c96d8774473cde642b50fc0ecd39e8bd5e3",
+  "tree": "edac5ce19179897ebde7269f896e1d6efbd41577",
+  "mode": "fresh Studio solo Play",
+  "serverSmoke": {
+    "suite": "P01-server",
+    "environment": "Studio",
+    "seed": 1,
+    "clientCount": 1,
+    "discovered": 118,
+    "passed": 118,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "clientSmoke": {
+    "suite": "P01-client",
+    "environment": "Studio",
+    "seed": 1,
+    "discovered": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "nativeDesktopOracle": {
+    "nativeInput": "MCP user_mouse_input moveTo viewport (500,200)",
+    "uisMouse": [
+      500,
+      258
+    ],
+    "guiInset": [
+      0,
+      58
+    ],
+    "nativeMouseUnitRayDotRawViewportRay": 1.0000001192092896,
+    "nativeMouseUnitRayDotSubtractInsetRay": 0.9909079670906067,
+    "productionRayPoint": [
+      500,
+      258
+    ],
+    "measuredGuiReticleCenterPlusInset": [
+      500,
+      258
+    ],
+    "worldPointProjection": [
+      500,
+      258
+    ]
+  },
+  "touchProjectionOracle": {
+    "viewport": [
+      1153,
+      579
+    ],
+    "roundedProductionTouchPoint": [
+      577,
+      290
+    ]
+  },
+  "limitations": "Solo oracle tests actual native Mouse.UnitRay and measured GUI center; actual multiplayer Tool.Activated moving aircraft hit and subjective tracer feel remain unverified."
+}

@@ -31,11 +31,13 @@ function StatusPanel.new(playerGui: PlayerGui, status: Instance): Lifecycle.Cont
                 local player = Players.LocalPlayer
                 local operator = player:GetAttribute("Role") == "Gunship"
                     and player:GetAttribute("Life") == "Alive"
+                local activeGround = player:GetAttribute("Role") == "Ground"
+                    and player:GetAttribute("Life") == "Alive"
                 local preview = player:GetAttribute("LocalMapPreview") == true
                     and player:GetAttribute("LocalPreviewRole") == "Gunship"
-                gui.Enabled = not operator and not preview
+                gui.Enabled = not operator and not activeGround and not preview
                 label.Text = string.format(
-                    "Players vs C-130 • %s\nBootstrap %s • Gunship weapons available\nGround weapons and launcher are planned.",
+                    "Players vs C-130 • %s\nBootstrap %s • Gunship weapons available\nGround M-7 available; launcher planned.",
                     tostring(status:GetAttribute("Environment")),
                     if status:GetAttribute("Running") then "running" else "stopped"
                 )

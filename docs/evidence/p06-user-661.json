@@ -1,0 +1,74 @@
+{
+  "source": "66133755f04ac81cf7738e64e16c61dd99593420",
+  "method": "read-only non-simultaneous user-operated samples; no controls injected",
+  "server": {
+    "id": "6235e73d-4ffd-4566-96b0-14e0c9629e25",
+    "time": 1794527726.954828,
+    "phase": "Active",
+    "playerCount": 2,
+    "smoke": "118/118, 2 clients",
+    "aircraftHealth": 300,
+    "groundAmmo": 8,
+    "reserve": 60,
+    "groundHead": [
+      -13.212504386901855,
+      4.502964019775391,
+      13.279735565185547
+    ],
+    "shot": {
+      "sequence": 116,
+      "aircraftHit": false,
+      "endpoint": [
+        -1081.5445556640625,
+        545.4912109375,
+        90.3057632446289
+      ]
+    }
+  },
+  "client": {
+    "id": "f46dc510-7cc4-4d05-8646-7a431e3e92e1",
+    "role": "Ground",
+    "time": 1794527745.532398,
+    "mouse": [
+      1031,
+      280
+    ],
+    "inset": [
+      0,
+      58
+    ],
+    "reticleCenter": [
+      1031,
+      222
+    ],
+    "cameraOrigin": [
+      -2.085721969604492,
+      5.881606101989746,
+      7.900233745574951
+    ],
+    "cameraDirection": [
+      -0.9235641360282898,
+      0.05699368938803673,
+      -0.3791847229003906
+    ],
+    "cameraTarget": [
+      -879.4716186523438,
+      60.025611877441406,
+      -352.32525634765625
+    ],
+    "groundHead": [
+      -13.17432975769043,
+      4.508364200592041,
+      13.27987289428711
+    ],
+    "snapshotCameraHit": null,
+    "snapshotServerRayHit": null,
+    "aircraftOnscreen": false,
+    "health": 300,
+    "shotSequence": 116,
+    "note": "current reticle/head ray captured later than shot; cannot infer original aim"
+  },
+  "eachClientSmoke": "6/6",
+  "screenshot": "/private/tmp/p06-user-661.jpg",
+  "visualAnalysis": "User reports thick streak on ground and invisible horizontal/aircraft fire; implementation displays final 50 studs of a 1200-stud server ray for 0.4 sec; far no-hit endpoint makes the segment remote from the shooter. This is a plausible mechanism, not exact same-shot proof."
+}

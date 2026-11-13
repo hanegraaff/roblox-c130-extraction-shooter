@@ -25,6 +25,7 @@ assert(
     "client suite failed or empty"
 )
 require(script.CombatHarness).run()
+require(script.GroundCombatHarness).run()
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
 require(script.AircraftPanHarness).run()

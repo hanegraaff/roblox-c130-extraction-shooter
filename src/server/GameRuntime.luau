@@ -10,16 +10,22 @@ local MapService = require(script.Parent.MapService)
 local MatchRuntime = require(script.Parent.MatchRuntime)
 local AircraftService = require(script.Parent.AircraftService)
 local CombatRuntime = require(script.Parent.CombatRuntime)
+local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
     aircraft: AircraftService.Controller,
     combat: CombatRuntime.Controller,
+    groundCombat: GroundCombatRuntime.Controller,
     stop: () -> (),
 }
 
 -- Starts one map/round runtime or rejects startup without leaked ownership.
-function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, string?)
+function GameRuntime.start(
+    settings: MatchRuntime.Settings,
+    groundDependencies: GroundCombatRuntime.Dependencies?
+): (Controller?, string?)
+    local onCorrection: ((Model) -> ())? = nil
     local map, reason = MapService.new(workspace.World, {
         characters = function()
             local characters: { Model } = {}
@@ -36,6 +42,11 @@ function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, strin
         end,
         heartbeat = game:GetService("RunService").Heartbeat,
         allowStations = false,
+        corrected = function(character)
+            if onCorrection then
+                onCorrection(character)
+            end
+        end,
     })
     if not map then
         return nil, reason
@@ -64,11 +75,28 @@ function GameRuntime.start(settings: MatchRuntime.Settings): (Controller?, strin
         map.destroy()
         return nil, combatReason
     end
+    local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match, groundDependencies)
+    if not groundCombat then
+        combat.stop()
+        aircraft.stop()
+        rounds.stop()
+        map.destroy()
+        return nil, groundReason
+    end
+    onCorrection = function(character)
+        local player = Players:GetPlayerFromCharacter(character)
+        if player then
+            groundCombat.trustCorrection(player)
+        end
+    end
     return {
+        groundCombat = groundCombat,
         rounds = rounds,
         aircraft = aircraft,
         combat = combat,
         stop = function()
+            onCorrection = nil
+            groundCombat.stop()
             combat.stop()
             aircraft.stop()
             rounds.stop()
