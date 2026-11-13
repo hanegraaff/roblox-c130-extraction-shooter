@@ -131,8 +131,24 @@ zero-discovery report on timeout. It preserves the real client requirement and
 every smoke, roster and gameplay assertion. Its developer full host gate passes
 50 unit / 43 integration. The prior ten-second failure remains recorded; a
 fresh native run must establish actual startup and gameplay results. A
-deliberately delayed arrival and the complete sixty-second no-client timeout
-have not yet been exercised in Studio.
+deliberately delayed arrival has not yet been exercised in Studio.
+
+The independent tester confirmed exact server-source sync and collected fresh
+solo smoke on `0ab3607`: 118/118 server and 6/6 client, zero failures/skips/errors.
+`ServerTestStartup` recorded first actual client arrival at 0.152108 seconds.
+The [startup report](p06-startup-0ab.json) also preserves a separate actual
+zero-client simulation started through `RunService:Run()` in the same document:
+after 60.043791 seconds, status was `first-client-timeout`, client count zero,
+and the emitted report was explicitly failed with zero discovered/passed,
+one failure and one error. This is the expected negative-path result, not a
+passing smoke suite. `RunService:Stop()` ended it; the tester verified
+`IsRunning() == false`, sole original Edit document, and prepared P06Team.
+No additional Studio process or SDK multiplayer launcher was used for that
+negative check. [GitHub Verify 43337322900](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43337322900)
+passed on `a24f60b38a2a703ca9950c533c4f0dce7871616b`, containing this source
+and its setup/failure documentation. Native three-client gameplay, delayed
+arrival beyond ten seconds and the remaining operated/regression checks remain
+unverified.
 
 ## Initial candidate `888de26`
 

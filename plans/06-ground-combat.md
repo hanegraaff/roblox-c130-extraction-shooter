@@ -130,8 +130,12 @@ That rerun did not reach the suites: the server's ten-second first-client wait
 expired before native clients connected. All three clients later passed the new
 aiming check but failed Foundation while waiting for missing server smoke. This
 is an unavailable P06Team run, with its startup failure preserved. A test-only
-sixty-second client-arrival budget and explicit startup diagnostics are prepared;
-roster/gameplay timeouts and production code are unchanged.
+sixty-second client-arrival budget and explicit startup diagnostics are in
+`0ab3607`; roster/gameplay timeouts and production code are unchanged. Fresh
+independent solo smoke passes 118/6. An actual zero-client Run simulation emits
+the expected failed zero-discovery report after 60.044 seconds and stops cleanly.
+The current-source three-client gameplay rerun is prepared; delayed first-client
+arrival beyond ten seconds has not yet been demonstrated.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
