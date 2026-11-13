@@ -145,3 +145,11 @@ at `d72fc6764ac89f2313addc94ba9f1077ca5d5068`. PR #27 was then marked ready
 for review. The roadmap records implementation completion separately from
 integration and promotes P07 without starting it. The last Studio state is
 the sole original test document in Edit with temporary settings cleared.
+
+With the user's later authorization, PR #27 merged into `main` at
+`1d71c63a4d8daea5d3f1526f3e02e6be6de6d2c6`. Its tree exactly matches the
+final reviewed head. A fresh integrated full host gate passes 50 unit / 43
+integration and all other required host checks. The [integration record](../docs/evidence/p06-integration.md)
+links exact hashes, builds and the retained Studio acceptance; it does not
+claim another engine run. Routine setup now uses `main`. P07 remains unstarted
+and no Roblox publication occurred.

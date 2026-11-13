@@ -6,7 +6,7 @@ The intended game puts one C-130 operator above a circular industrial battlefiel
 
 ![Ground player in an active round with M-7 ammo, reticle and aircraft health visible](docs/evidence/p06-presentation/current-progress.jpg)
 
-*P06 ground-combat candidate: actual desktop Studio capture from an active three-client round on 2026-11-12, after the user’s firing review. The held primitive M-7, ammunition and shared aircraft-health readout are visible; the aircraft is outside this frame.*
+*P06 ground-combat prototype: actual desktop Studio capture from an active three-client round on 2026-11-12, after the user’s firing review. The held primitive M-7, ammunition and shared aircraft-health readout are visible; the aircraft is outside this frame.*
 
 ## What you can play today
 
@@ -18,9 +18,9 @@ Ground players use **WASD**, **Space** and the mouse to move, and receive an **M
 
 A round panel shows phase, role, life state, remaining time and surviving ground players. Both roles also see a dedicated aircraft-health readout. A confirmed M-7 aircraft hit displays **AIRCRAFT HIT −5** for its shooter; the reticle flashes for a server-resolved shot, and a short visual tracer travels toward its endpoint. Damage is resolved by the server immediately. Ground players can click **Surrender / spectate** or reset their character to give up their life. Death and reset do not respawn them during that round: they watch a living ground teammate instead. Late arrivals and reconnecting players wait for the next round. Resetting the operator's protected station character retains the assignment, aircraft and deadline. Leaving the operator role restores the normal camera and removes thermal effects.
 
-The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Both gunship weapons and damage to exposed ground players are integrated on `main`. The P06 branch adds the M-7 and shared aircraft health: destroying the aircraft awards the ground team victory. The map launcher remains planned. The verified P06 increment is available on unmerged [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27). There is no published Roblox play link. The [P05 plan](plans/05-gunship-combat.md) records passing two-client, native desktop and simulated-phone combat checks and remaining limitations; [P14](plans/14-aircraft-panning.md), [P13](plans/13-terrain-and-buildings.md), [P04](plans/04-aircraft-and-thermal.md), and [P03](plans/03-rounds-and-roles.md) record earlier capabilities.
+The operator wins when all ground lives are gone or the timer expires; an operator disconnect gives the remaining ground team a forfeit win. Results lead to a restored map and a fresh lobby. Production defaults are ten-minute rounds. Both gunship weapons, M-7 ground fire and shared aircraft health are integrated on `main`; destroying the aircraft awards the ground team victory. The map launcher remains planned. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) merged the verified P06 increment; the [integration record](docs/evidence/p06-integration.md) identifies its source and checks. There is no published Roblox play link. The [P05 plan](plans/05-gunship-combat.md) records passing two-client, native desktop and simulated-phone combat checks and remaining limitations; [P14](plans/14-aircraft-panning.md), [P13](plans/13-terrain-and-buildings.md), [P04](plans/04-aircraft-and-thermal.md), and [P03](plans/03-rounds-and-roles.md) record earlier capabilities.
 
-The panning system keeps focus inside the battlefield and the camera at the orbiting aircraft. Typing in a text box or losing desktop window focus pauses panning; hovering actionable desktop UI blocks the keyboard pan. A fresh touch on the mobile pad resumes touch input after a window transition. The HUD is a prototype; the current ground-combat candidate uses a compact active-round display. Full player guidance and presentation polish are planned for P10.
+The panning system keeps focus inside the battlefield and the camera at the orbiting aircraft. Typing in a text box or losing desktop window focus pauses panning; hovering actionable desktop UI blocks the keyboard pan. A fresh touch on the mobile pad resumes touch input after a window transition. The HUD is a prototype with a compact active-round display. Full player guidance and presentation polish are planned for P10.
 
 The [roadmap](roadmap.md) tracks progress; the controls and planned combat section below distinguishes current features from later work.
 
@@ -35,15 +35,15 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Select the P06 candidate branch before building this version:
+Select updated `main` before building this version:
 
 ```sh
 git fetch origin
-git switch plan/06-ground-combat
-git pull --ff-only origin plan/06-ground-combat
+git switch main
+git pull --ff-only origin main
 ```
 
-`main` includes the verified P05 gunship combat increment; the P06 branch adds the current unmerged ground-combat candidate. Do not discard local edits when switching source.
+`main` includes verified gunship and M-7 ground combat, aircraft health and ground-team victory on aircraft destruction. Do not discard local edits when switching source.
 
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
@@ -128,7 +128,7 @@ For a documentation-only change, `python3 scripts/check_repository.py` checks lo
 | Reload | R or touch **RELOAD** while equipped | — |
 | Surrender / spectate | On-screen button during an active ground life | — |
 
-The P06 candidate gives each active ground player one **M-7 rifle**. Its initial tuning is 5 damage per hit, a 30-round magazine, 120 reserve rounds, 0.15-second cadence and 2-second reload. Aircraft maximum health is 300. Use cover and coordinated fire to wear it down; destruction wins for the whole ground team, including eliminated teammates. The future **rocket launcher** will appear at the gold marker. Server-only test fixtures establish that three direct 100-damage rockets destroy a pristine plane and rifle damage can reduce that number; the launcher is not yet a player item. The launcher will be droppable and recoverable after its carrier dies or disconnects, with one rocket replenished per reload and no separate ammo pickups. These handling choices are [tuning defaults](docs/decisions.md).
+The P06 implementation gives each active ground player one **M-7 rifle**. Its initial tuning is 5 damage per hit, a 30-round magazine, 120 reserve rounds, 0.15-second cadence and 2-second reload. Aircraft maximum health is 300. Use cover and coordinated fire to wear it down; destruction wins for the whole ground team, including eliminated teammates. The future **rocket launcher** will appear at the gold marker. Server-only test fixtures establish that three direct 100-damage rockets destroy a pristine plane and rifle damage can reduce that number; the launcher is not yet a player item. The launcher will be droppable and recoverable after its carrier dies or disconnects, with one rocket replenished per reload and no separate ammo pickups. These handling choices are [tuning defaults](docs/decisions.md).
 
 The operator's **30mm GAU-23/A Chain Gun** fires faster with a tighter view; the **105mm M102 Howitzer** fires a heavier, slower shot with a wider blast and view. The prototype defaults are 100 rounds per 30mm magazine, 0.15-second minimum cadence and five-second automatic reload; the 105mm holds one round and reloads automatically after four seconds. Switching retains each weapon's own ammunition and timing. Projectile and impact markers warn of incoming fire. Damage uses server-side swept sphere collision, then checks whether cover blocks the path from impact to each ground player's damage anchor. The values and visual presentation are tuning defaults, not final balance.
 
@@ -138,7 +138,7 @@ The heavy weapon remains the 105mm M102, as confirmed for the planned panel-dama
 
 Ground players currently equip the M-7 through the tool slot, aim with mouse or camera, hold left mouse / **FIRE** and reload with **R** / **RELOAD**. Launcher selection, pickup/drop, cover destruction and Help controls are planned. There is no independent operator zoom or free flight.
 
-The intended complete round is gather → deploy → fight → team result → reset. The current prototype already handles roles, the orbit/view, no respawns, teammate spectating, late-arrival waiting, timeout/elimination/forfeit results and replay. The unmerged P06 increment adds aircraft destruction as a playable ground victory path. The default round lasts ten minutes.
+The intended complete round is gather → deploy → fight → team result → reset. The current prototype already handles roles, the orbit/view, no respawns, teammate spectating, late-arrival waiting, timeout/elimination/forfeit results and replay. Aircraft destruction supplies the ground victory path. The default round lasts ten minutes.
 
 Operator desktop keyboard/mouse and touch controls are present; operated desktop firing and simulated-phone simultaneous aiming, panning and firing have been checked. The user reviewed corrected native desktop aim and visible aircraft damage in a three-client session. On a simulated iPhone 17 Pro, centered reticle, layout, touch fire, reload and camera swiping were also exercised; a physical device has not been checked. Current-source two-client P06, P05 and P14 checks passed. Gamepad support is future work. The two weapons have distinct size and cadence, though rapid 30mm effect phases are hard to distinguish. Damage, cadence, reload, zoom and orbit speed need later balance testing; the three-rocket full-health rule is fixed. The MVP has one map and planned physical cover destruction. [Future levels](plans/15-interchangeable-levels.md) will keep a circling C-130 and the same pan, zoom, combat and demolition systems while changing level geometry. Progression, purchases, vehicles and full building collapse are outside MVP scope.
 
