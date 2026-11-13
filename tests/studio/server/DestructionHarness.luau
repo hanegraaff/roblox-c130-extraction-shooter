@@ -542,9 +542,8 @@ function Harness.run(finish: ((Report) -> ())?)
         local aircraftFrame = workspace.Aircraft:GetPivot()
         local relativeMuzzles: { [string]: Vector3 } = {}
         for _, weapon in { "M102", "GAU23" } do
-            relativeMuzzles[weapon] = aircraftFrame:PointToObjectSpace(
-                assert(runtime.aircraft.muzzle(weapon), "reset forecast muzzle unavailable")
-            )
+            local muzzle = assert(runtime.aircraft.muzzle(weapon), "reset forecast muzzle unavailable")
+            relativeMuzzles[weapon] = aircraftFrame:PointToObjectSpace(muzzle)
         end
         for candidateIndex, model in candidates do
             local point = roofTarget(model)
