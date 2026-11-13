@@ -124,7 +124,8 @@ Test-only `dc081f4` measures the existing one-pixel raster contract against
 independent world/native-ray projections, samples the pointer immediately,
 waits for a ready current camera and logs detailed failures. Gameplay source
 remains `59252c9`. Its developer full host gate passes 50 unit / 43 integration;
-fresh engine and three-client checks remain open.
+independent fresh solo Studio smoke passes 118 server / 6 client with zero
+failures/skips/errors. The three-client rerun and gameplay checks remain open.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,

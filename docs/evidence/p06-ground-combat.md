@@ -106,6 +106,14 @@ passed 50 unit / 43 integration. The original Player3 failure remains
 unexplained; this test revision is not a retrospective pass for it and needs
 fresh actual three-client validation.
 
+The independent tester confirmed the revised spec was exactly synced and
+reviewed the independent native/world pixel oracles and deliberate inset-error
+probe. Fresh solo Studio smoke on `dc081f4` passed 118/118 server and 6/6 client,
+zero failures/skips/errors; the [actual report](p06-aim-dc0.json) identifies
+the source and tree. The tester returned the original document to Edit and
+prepared P06Team for three actual clients. This passing solo run does not
+replace the failed prior team run or prove that the new multiplayer run passes.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration
