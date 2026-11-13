@@ -689,23 +689,59 @@ function Harness.run(finish: ((Report) -> ())?)
             local root = character:FindFirstChild("HumanoidRootPart")
             assert(root and root:IsA("BasePart"), "Ground root missing")
             local original = character:GetPivot()
+            local originalServerPosition = root.Position
             local groundY = wallPoint.Y - 1
             local start = Vector3.new(wallPoint.X, groundY, wallPoint.Z) + normal * 6
             local goal = Vector3.new(wallPoint.X, groundY, wallPoint.Z) - normal * 6
             character:PivotTo(CFrame.new(start))
             root.AssemblyLinearVelocity = Vector3.zero
+            local function coordinates(point: Vector3): { number }
+                return { point.X, point.Y, point.Z }
+            end
+            local walkObservation: { [string]: unknown } = {
+                kind = "actual-humanoid-opening",
+                panelId = wallId,
+                userId = groundPlayer.UserId,
+                serverObservationBudgetSeconds = 2,
+                originalPositionStuds = coordinates(originalServerPosition),
+                requestedStartPositionStuds = coordinates(start),
+                startServerPositionStuds = coordinates(root.Position),
+                goalPositionStuds = coordinates(goal),
+            }
+            -- Preserve actual positions even if either the client movement or
+            -- bounded server-replication observation fails. Never place at goal.
+            table.insert(observations, walkObservation)
+            local startedAt = os.clock()
+            local observationStartedAt: number? = nil
             local walked, walkFailure = pcall(function()
                 probe(groundPlayer, "Walk", goal)
-                assert((root.Position - goal).Magnitude < 2, "server did not observe traversal")
+                walkObservation.clientReplyAfterSeconds = os.clock() - startedAt
+                walkObservation.clientReplyServerPositionStuds = coordinates(root.Position)
+                observationStartedAt = os.clock()
+                -- Client completion can precede its network-owned avatar's next
+                -- server physics update. Require the real server state within a
+                -- separate two-second fixture budget; timeout remains a failure.
+                waitFor(function()
+                    return root:IsDescendantOf(workspace) and (root.Position - goal).Magnitude < 2
+                end, "actual server Ground traversal replication", 2)
                 return true
             end)
-            character:PivotTo(original)
-            root.AssemblyLinearVelocity = Vector3.zero
+            walkObservation.finalServerPositionStuds = coordinates(root.Position)
+            walkObservation.finalServerDistanceStuds = (root.Position - goal).Magnitude
+            walkObservation.serverRootPresent = root:IsDescendantOf(workspace)
+            walkObservation.elapsedSeconds = os.clock() - startedAt
+            walkObservation.serverObservationElapsedSeconds = if observationStartedAt
+                then os.clock() - observationStartedAt
+                else nil
+            walkObservation.passed = walked
+            walkObservation.failure = if walked then nil else tostring(walkFailure)
+            -- Restore only after collecting the final actual observation, for
+            -- both success and failure. Cleanup cannot make traversal pass.
+            if character.Parent and root.Parent then
+                character:PivotTo(original)
+                root.AssemblyLinearVelocity = Vector3.zero
+            end
             assert(walked, tostring(walkFailure))
-            table.insert(
-                observations,
-                { kind = "actual-humanoid-opening", panelId = wallId, userId = groundPlayer.UserId }
-            )
         end)
         check(
             "A6 current state reaches both initial clients and prior fragments expire before late join",
