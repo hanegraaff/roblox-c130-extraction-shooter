@@ -15,8 +15,8 @@ The integrated source on `main` includes the development shell, verification too
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
-| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Blocked | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
-| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
+| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
+| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Ready | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
@@ -123,13 +123,20 @@ produce 300→200→100→0/Ground victory; mixed rifle/rocket damage, in-flight
 post-death impact, recovery, rejection and reset all pass. Initial/peak count
 is three, final two after the intentional carrier Kick. Actual phone/input
 checks and source-bound P06/P05/P14 regressions (10/10, 8/8, 6/6) pass.
-**Blocked only by A5's required actual same-identity reconnect evidence**:
-current Studio helpers add another identity rather than reconnecting the same
-one. Runtime tombstone rules pass, but cannot substitute for that network
-scenario; D50 is P07-only. The [plan record](plans/08-rocket-launcher.md) and
-[evidence](docs/evidence/p08-launcher.md) preserve the sole remaining gate,
-historical failures, current reports and clean Edit teardown. P09 remains
-Planned/unstarted. No merge or publication occurred.
+At this delivery checkpoint, A5's actual same-identity reconnect evidence was
+still required and unverified. The following user revision supersedes that
+acceptance blocker; historical reports remain unchanged.
+
+2026-11-13 Studio acceptance revision (D59): the user explicitly requested
+removal of unsupported Studio acceptance scenarios. Actual same-identity
+reconnect is excluded; runtime no-respawn/rejoin authority and service tests
+remain. Supported late joins, three-client sessions and explicit Roblox-client
+6/10-player release checks stay required. All revised P08 criteria pass using
+the source-bound evidence above. P08 is Complete on the combined
+`docs/studio-supported-acceptance` branch, P09 is Ready and unstarted. The
+[revision record](docs/evidence/p08/studio-acceptance-revision.md) records
+verification and GitHub delivery; PR #32 and its stacked revision remain
+unmerged. No Roblox publication occurred.
 
 ## How plans move
 

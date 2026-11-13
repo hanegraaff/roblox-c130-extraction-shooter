@@ -4,8 +4,9 @@
 contains the implementation, prose and source-bound evidence. Verified delivery
 `370aff49b986ac3b1a70f52b643afc6a81c71277` has a passing
 [GitHub Verify run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43519154819).
-Acceptance remains open; CI does not replace actual multiplayer or operated
-checks.
+D59 removes the unsupported same-identity reconnect gate. Revised acceptance
+is satisfied on the combined source branch; GitHub integration remains pending.
+See the [acceptance revision](p08/studio-acceptance-revision.md).
 
 Verified production runtime is `ef7826b`: full host **55 unit / 65
 integration** and fresh solo Studio **156 server / 7 client** pass. The
@@ -13,9 +14,10 @@ subsequent test-only harness revision `07e77ea` passes the full host gate and
 the fresh native P08 suite **11/11** with three actual initial clients. The unchanged
 server/input core's source-bound two-client regressions on `75b1e88` pass P06
 **10/10**, P05 **8/8** and P14 **6/6**. Final phone layout/native-control review
-passes. Actual same-identity reconnect is the sole remaining required
-validation gap; its explicit `requiredUnverified` entry prevents full P08
-acceptance.
+passes. The user-directed D59 revision excludes unsupported actual
+same-identity reconnect from acceptance. It remains unverified; historical raw
+reports and the independent pre-revision review are preserved unchanged.
+Detailed checkpoint narratives below describe their original acceptance scope.
 
 ## Candidate and environment
 
@@ -48,7 +50,7 @@ evidence.
 | A2 | Runtime role/life/round/shape/replay/rate/reach/movement rejection without mutation, then valid pickup; retained M-7 | Pass: host rejection/retry and actual P08 malformed/wrong-role/stale/flood/impossible-travel and later valid pickup |
 | A3 | Drop/death/reset/disconnect reload continuity, valid recovery/fallback, terminal precedence | Pass: deterministic/engine rules, actual drop/switch/transfer/death/raw-reset/Kick/recovery and in-flight post-death hit |
 | A4 | Actual swept rockets: two nonlethal direct hits, third ground win; mixed rifle damage, cover/miss/duplicate rejection; feasible reload timing | Pass: engine obstruction/deduplication plus actual P08 pristine 300→200→100→0 and mixed 300→195→95→0/Results |
-| A5 | Three actual clients: operator and two ground players, raced pickup, death/disconnect/recovery, replicated owner/readiness/health, reconnect authority | Three-client behavior/replication passes; actual same-identity reconnect remains required and unverified |
+| A5 | Three actual clients: operator and two ground players, raced pickup, death/disconnect/recovery, replicated owner/readiness/health, reconnect authority | Pass under D59: supported three-client behavior/replication. Actual same-identity reconnect is excluded and remains unverified; deterministic service tests retain runtime policy |
 | A6 | Repeated pristine reset, one anchor launcher and no old tool/projectile/callback authority | Pass: actual P08 reset/old-intent and teardown plus deterministic/engine cancellation and current regressions |
 
 Focused operated review must cover both approaches, pickup, M-7/launcher

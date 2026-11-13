@@ -14,7 +14,7 @@ Implement pure phase/roster rules and MatchService/RoleService adapters. Enforce
 
 - **A1:** Full gate passes. Boundary tests at 5/6/10/11 players reject invalid rosters and assign exactly one operator and place every other player on one ground team for valid rosters; tie-break/rotation is deterministic with a seed.
 - **A2:** Transition tests reject illegal phase changes and commit one result only. Fake-time tests reach the deadline exactly; cancelled deployment returns to lobby without partial active players.
-- **A3:** Death/manual reset does not create a fresh active character. Rejoin/late join cannot gain an active role or new gear in the same round; departure cleanup can release a held weapon without duplicating ownership.
+- **A3:** Death/manual reset does not create a fresh active character. Service tests verify rejoin cannot gain an active role or new gear in the same round; supported Studio late joins verify the same restriction (D59); departure cleanup can release a held weapon without duplicating ownership.
 - **A4:** Wrong-role, stale-round, replayed and spectator commands reject without state change. Test-only population override is absent from the release build.
 - **A5:** Two real Studio client contexts receive their correct roles, phase and deadline. Operator remains protected; an eliminated ground player spectates and cannot interact.
 - **A6:** Three accelerated rounds restore roster, camera, map, connections and phase state. Tests cover operator/ground departures during deployment and Active, using the design's distinct policies.
