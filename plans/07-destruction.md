@@ -39,4 +39,17 @@ Document panel IDs/variants, heavy/sustained/mixed damage contracts, measured op
 
 ## Completion record
 
-No implementation or validation performed by the steering revision. Record A1–A7 → actual tests/commands → environment/counts/results, source/build, geometry/thermal/physical-fragment reports, two-client/late-join evidence, operated demonstration, tester findings and CI/PR when implemented.
+Implementation started on 2026-11-13 on `plan/07-destruction`, based on
+integrated main `e4c6e3a2506a9e9ac5574bdf42242f77f8200650`, which contains
+P06, P13 and P14. Acceptance requires A1–A7: deterministic progression and
+sustained-fire rules, real residual geometry and pre-impact cover, actual bounded
+fragment physics, two-client/late-join/reset evidence and operated readability.
+The [verification record](../docs/evidence/p07-destruction.md) will distinguish
+source-specific checks from the earlier baseline. No P07 test pass is claimed
+at selection; no later plan has started.
+
+Before new tests, D46–D48 record the initial continuity/numeric, geometry and
+fragment defaults: 0.225-second accepted-shot gap, first impact zero credit,
+1e-7 threshold tolerance, 50% central opening, four fragments per transition,
+48 live fragments, eight-second lifetime and bounded 12-stud/second / 4-radian/
+second launch. These are tunable defaults, not newly selected user rules.
