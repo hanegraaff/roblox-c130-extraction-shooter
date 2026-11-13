@@ -75,6 +75,37 @@ clients is prepared for native launch. Current-source P06/P06Team, P05/P14
 regressions, moving-tracer observation, operated desktop/phone review and a
 current representative capture remain open; PR #27 remains draft.
 
+The subsequent native three-client P06Team run did **not** pass. Its
+[report and client console](p06-team-592.json) show 118/118 server smoke
+(two clients present at that sampling), 6/6 smoke on Player1 and Player2,
+and 5/6 with one error on Player3. Player3 failed the new independent world
+projection assertion; it therefore never announced harness readiness. With
+three actual players present, the team harness timed out at client readiness
+and reported 0/2. No gameplay/team case is accepted from that run.
+
+The assertion did not log its original viewport or camera values, so its
+cause is not established. A [later same-client probe](p06-team-592-probe.json)
+at 1081×618 / FOV 70 produced a passing rounded-world-ray dot of 0.999999702
+and raw/native mouse ray dot of 1. That later reconstruction neither reproduces
+nor explains the original failure. The test also captured its native mouse
+sample before two render-frame waits; improving sample timing and diagnostic
+precision is required without dropping the independent oracle. The tester
+ended the session, cleared the selector and confirmed the original Edit
+document before releasing it for investigation.
+
+Test-only follow-up `dc081f4363f9deb42994c9b3d59fa61d640c8c44`, tree
+`afc8b0780211b068bc45e25d0aefadbb16268544`, keeps the gameplay source from
+`59252c9`. It waits up to ten seconds for a current camera and at least a
+200×200 viewport, samples native pointer/ray together, and measures the actual
+production ray against independent world and native-ray projections within
+one pixel. The tolerance expresses the existing integer-raster contract
+without a viewport-dependent angular assumption. An injected 58-pixel error
+must fail that independent projection. Failure details now include viewport,
+inset, camera/FOV, world point and ray samples. The developer's full host gate
+passed 50 unit / 43 integration. The original Player3 failure remains
+unexplained; this test revision is not a retrospective pass for it and needs
+fresh actual three-client validation.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration

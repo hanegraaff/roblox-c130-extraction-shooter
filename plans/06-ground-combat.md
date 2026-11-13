@@ -114,6 +114,17 @@ host gate passes 50 unit / 43 integration. Independent fresh Studio smoke passes
 actual drawn reticle agree. [GitHub Verify 43334404940](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43334404940)
 passes on that exact source. Multiplayer tracer and operated checks remain open.
 These user findings and current P05/P14 regression remain required work.
+The following native three-client P06Team run failed before gameplay readiness:
+Player3 failed the new independent world-projection client assertion (5/6),
+while the other clients passed 6/6 and server smoke passed 118/118. The team
+harness timed out and reported 0/2. A later passing same-client probe does not
+establish the original cause; the test needs source-specific investigation and
+better same-frame diagnostics. This failed run does not satisfy A4/A5.
+Test-only `dc081f4` measures the existing one-pixel raster contract against
+independent world/native-ray projections, samples the pointer immediately,
+waits for a ready current camera and logs detailed failures. Gameplay source
+remains `59252c9`. Its developer full host gate passes 50 unit / 43 integration;
+fresh engine and three-client checks remain open.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,
