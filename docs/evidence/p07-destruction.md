@@ -302,6 +302,18 @@ checks passed. The independent `python3 scripts/verify.py` gate passed
 gates. Its new late-cohort path is still unrun pending usable Start action;
 the earlier e45 timeout remains failed evidence.
 
+The user subsequently confirmed Quick Open Actions does list Start, but it is
+also disabled because the server is already running. Both suggested native UI
+routes are therefore unavailable in this installed manual session. MCP exposes
+no native toolbar action; game keyboard/mouse input does not control Studio's
+menus, and native CUA is disabled. Earlier SDK-owned multiplayer launch retries
+and manual-session AddPlayers rejection are preserved in prior evidence; no
+unchanged-state retry was made here. No new client arrived, and the native
+two-player session is preserved for all independent checks. A working way to
+join a real client mid-round remains the specific external capability needed
+to verify late reconstruction; stopping and starting with three clients does
+not provide that evidence.
+
 ## Actual-player creating-blast protection
 
 The independent tester ran a disposable actual-runtime probe on the retained
@@ -366,3 +378,13 @@ A minimal fixture correction is authorized to select real sloped Terrain with
 a stable non-grazing/profile guard while retaining the original five-stud
 remote-impact assertion and preserving actual Impact/path facts before
 assertion. Production collision/aim rules remain unchanged pending evidence.
+
+The corrected fixture is frozen at
+`873f0f690bfb76803c81f46e0b49390090e2be97`, tree
+`b16fb42007179a852c71565beab6b87fc5973001`; its
+[source record](p07-p05-freeze-873f0f6.json) retains the exact file SHA256.
+Focused format/lint/Roblox strict checks passed. Independent full
+`python3 scripts/verify.py` completed with 54 unit / 53 integration and all
+non-Studio gates passing. The actual P05 rerun remains pending while the
+same native session is used for rendered review; no gameplay/core source
+changed in this correction.

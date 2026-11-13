@@ -1,0 +1,8 @@
+{
+  "file": "tests/studio/server/CombatHarness.luau",
+  "sha256": "0bcf1db36f8223b4861b7a411dd52e0ab553120b2c76481a1b885c04bdad36dc",
+  "change": "TEST ONLY P05 Terrain fixture: actual-profile Spherecast, incidence>=0.25, contact<=1.5stud atcanonicalorbit offsets\u00b10.25s/current; original actual remote<5stud assertion retained. Target/muzzle/path/profilepreflight/actualImpact preserved before assertions.",
+  "focusedChecks": "stylua --check, selene, Roblox-aware luau-lsp analyze all exit0; no native/fullhost run claimed",
+  "sourceCommit": "873f0f690bfb76803c81f46e0b49390090e2be97",
+  "sourceTree": "b16fb42007179a852c71565beab6b87fc5973001"
+}

@@ -65,7 +65,33 @@ environments and scope limits.
 
 [Draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
 is open from `plan/07-destruction` to `main`, initially at documentation head
-`18c28e9a6f2d333b90e74a6a96da4a06d40d57d1`. Native two-client/late-join,
-actual-player blast, rendered thermal/readability, multiplayer regressions
-and the new README capture remain required. The roadmap remains In progress;
-P08 has not started. No P07 merge or Roblox publication is authorized or claimed.
+`18c28e9a6f2d333b90e74a6a96da4a06d40d57d1`. Subsequent fixture snapshots
+and actual results are preserved in the verification record; runtime/core/assets
+remain unchanged from `cb530a0`. P08 has not started. No P07 merge or Roblox
+publication is authorized or claimed.
+
+| Criterion | Recorded evidence and current limit |
+| --- | --- |
+| A1 | `PanelDamageRules` and full independent host gates pass 54 unit / 53 integration; native actual M102 hits 1–6 produce the required stages/progress. |
+| A2 | Named `SustainedPanelFire` integration cases cover thresholds, accepted-shot ordering, interruptions, invalid/stale inputs and cleanup. Actual native 61-shot fire proves zero first-hit credit and a transition after at least nine accepted seconds. The initial failed timing fixture and causal reproduction are retained separately. |
+| A3 | Studio `PanelGeometryStates` checks all 111 panels, 50% residual opening, real rays/overlaps, identity/pivots and static supports. The e45 native run also passed actual client-and-server-observed Ground Humanoid traversal. |
+| A4 | `PreImpactCoverAndThermal` engine geometry checks pass. Separate actual-player blast checks pass both profiles, protecting health on the creating impact and damaging the same in-radius target through the later hole. Rendered thermal/cover review is still required. |
+| A5 | Real Studio `PanelFragmentPhysics` passes fall/contact, server ownership, groups/query controls, actual-avatar exclusion, mass/velocity, cap/lifetime and cleanup assertions. |
+| A6 | Two actual clients passed role/rejection, stage/progress/opening agreement and debris-expiry checks. The e45 run discovered six cases: five passed and late join timed out without a third PlayerAdded. Its later reset case was never discovered; a separate actual two-client reset check remains required. |
+| A7 | Automated actual heavy/30mm progression and real wall traversal passed. Operated readability, rendered views, stable-route review and the representative P07 capture remain required. |
+
+The specific late-join capability gap is confirmed in the installed Studio
+0.747 manual session: both the client-count control and Quick Open Actions →
+Start are disabled while the native server runs. The historical staff
+workaround could not be used here. The SDK launcher previously stalled and
+AddPlayers rejected manual sessions; those attempts were not repeated without
+changed conditions. Restarting with three initial clients does not prove a
+genuine post-damage join. A working mid-round join route is needed to finish
+that required evidence; no acceptance waiver or fake spectator is substituted.
+
+The new bounded late-cohort fixture (`ebca51e`, full host gate passing) supports
+one or two real late clients in the same Active round, within the original
+240-second deadline. Its optional batch path remains unrun. P05 regression
+found a grazing Terrain fixture mismatch; `873f0f6` retains the original
+five-stud actual-impact assertion while selecting a stable sloped scenario.
+Its actual rerun and P14 regression remain required at this checkpoint.
