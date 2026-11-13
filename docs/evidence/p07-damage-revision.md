@@ -435,3 +435,19 @@ Git inputs, 97 live script Sources and 403 authored Battlefield Parts.
 The refreshed [independent review](p07-revision-final-review.md) reports
 passing A1–A7 with no known unresolved production defect or required validation
 gap. Historical fixture failures and limited GPU captures remain preserved.
+
+## Delivery and integration facts
+
+All acceptance source/evidence and reviewed documentation were pushed in
+`8642ec0bb9fc6751f10c768434adbe49d79386c3`, tree
+`a072b9fc866f227ef2fcc9a7ebdce45498d0406e`.
+[GitHub Verify run 273](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43490866381)
+passes on that delivery, and the final local repository/whitespace checks pass
+with 80 Markdown / 189 JSON files. Relevant executable/test inputs remain 8053.
+GitHub confirms PR #30 is open, ready for review and unmerged, based on the
+original P07 branch. `git ls-remote --heads origin main plan/07-destruction
+fix/p07-progressive-persistent-damage` matches the delivery head and confirms
+main `e4c6e3a2506a9e9ac5574bdf42242f77f8200650` and dependency
+`ebf5bd4d19a1237ccc346479c0d5dea282616058` are unchanged. PR #29 remains draft
+until it includes this revision. P07 acceptance is complete; P08 is Ready and
+unstarted. Neither GitHub integration nor Roblox publication was performed.

@@ -86,6 +86,15 @@ occurred. The current README uses an actual revised Heavy capture and labels
 its QA camera/marker setup. Final cleanup retains the original Edit document
 and Rojo connection with no QA runtime/camera pollution.
 
+Source, reviewed documentation and full acceptance evidence were committed and
+pushed at `8642ec0bb9fc6751f10c768434adbe49d79386c3` (tree
+`a072b9fc866f227ef2fcc9a7ebdce45498d0406e`). GitHub Verify run 273 passes;
+the final local repository/whitespace checks pass (80 Markdown / 189 JSON).
+PR #30 is open, ready for review and unmerged, targeting `plan/07-destruction`.
+Remote verification confirms main remains `e4c6e3a` and the original dependency
+branch remains `ebf5bd4`; PR #29 stays draft until the follow-up integrates.
+This delivery records complete acceptance independently of main integration.
+
 ### Earlier candidate record (historical)
 
 Implementation started on 2026-11-13 on `plan/07-destruction`, based on
