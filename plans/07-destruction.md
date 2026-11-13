@@ -53,3 +53,19 @@ fragment defaults: 0.225-second accepted-shot gap, first impact zero credit,
 1e-7 threshold tolerance, 50% central opening, four fragments per transition,
 48 live fragments, eight-second lifetime and bounded 12-stud/second / 4-radian/
 second launch. These are tunable defaults, not newly selected user rules.
+
+
+The corrected source candidate is `cb530a0175f683f933d93fa7546b377614788c39`
+(tree `9bfcf88f9c52dbfd57db77858ed7ad56ebc337eb`). Developer and independent
+full gates pass 54 unit / 53 integration tests, and clean actual solo Studio
+runs pass 137 server / 6 client tests. Independent review's four initial
+findings were corrected and affected deterministic/engine paths rechecked.
+See the verification record for hashes, failed first-candidate evidence,
+environments and scope limits.
+
+[Draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
+is open from `plan/07-destruction` to `main`, initially at documentation head
+`18c28e9a6f2d333b90e74a6a96da4a06d40d57d1`. Native two-client/late-join,
+actual-player blast, rendered thermal/readability, multiplayer regressions
+and the new README capture remain required. The roadmap remains In progress;
+P08 has not started. No P07 merge or Roblox publication is authorized or claimed.

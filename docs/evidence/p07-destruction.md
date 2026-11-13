@@ -130,3 +130,13 @@ P05/P14 multiplayer regressions, operated readability and the new representative
 capture remain pending. The same original Edit document was returned clean,
 then armed with test-only `ManualHarness='P07'` for the requested native launch.
 No P07 completion, merge or Roblox publication is claimed.
+
+
+## Delivery checkpoint
+
+[Draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
+was created on 2026-11-13 from `plan/07-destruction` at
+`18c28e9a6f2d333b90e74a6a96da4a06d40d57d1`, with the pending checks stated
+in its description. Remote main remained
+`e4c6e3a2506a9e9ac5574bdf42242f77f8200650`. This draft delivery does not
+mark P07 complete or integrate it.
