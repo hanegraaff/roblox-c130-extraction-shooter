@@ -410,7 +410,6 @@ function Harness.run(finish: ((Report) -> ())?)
                 assert(character, "carrier character missing before removal")
                 -- Remove the actual owned character without Humanoid.Died, exercising
                 -- the character-reset/removal boundary separately from combat death.
-                carrier.Character = nil
                 character:Destroy()
                 waitFor(function()
                     return carrier:GetAttribute("Life") == "Eliminated"

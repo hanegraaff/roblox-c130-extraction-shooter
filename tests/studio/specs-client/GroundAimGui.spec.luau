@@ -237,10 +237,6 @@ return function()
                     launcherStatus.Size == UDim2.fromOffset(if mode then 260 else 360, 28),
                     "launcher status failed to follow input mode"
                 )
-                assert(
-                    launcherStatus.Position == UDim2.new(0.5, 0, 1, -64),
-                    "launcher team status overlaps weapon readiness"
-                )
             end
         end)
         owner.stop()
@@ -295,6 +291,16 @@ return function()
                         child:Clone().Parent = viewport
                     end
                 end
+                -- Reserve the full bottom 96 desktop pixels for native Backpack
+                -- inventory, including slot borders/padding. This semantic region
+                -- catches HUD overlap without depending on private CoreGui names.
+                local inventory = Instance.new("Frame")
+                inventory.Name = "NativeInventoryReserve"
+                inventory.AnchorPoint = Vector2.new(0.5, 1)
+                inventory.Position = UDim2.fromScale(0.5, 1)
+                inventory.Size = UDim2.new(1, 0, 0, 96)
+                inventory.BackgroundTransparency = 1
+                inventory.Parent = viewport
                 local layouts: { Vector2 } = if mode
                     then { Vector2.new(568, 320), Vector2.new(750, 381), Vector2.new(852, 393) }
                     else { Vector2.new(1280, 720), Vector2.new(1920, 1080) }
@@ -333,6 +339,12 @@ return function()
                                     and relative.Y + item.AbsoluteSize.Y <= size.Y,
                                 "HUD outside viewport: " .. detail
                             )
+                            if not mode then
+                                assert(
+                                    not overlaps(item, inventory),
+                                    "desktop HUD overlaps native inventory reserve: " .. detail
+                                )
+                            end
                             for otherIndex = index + 1, #names do
                                 assert(
                                     not overlaps(item, object(names[otherIndex])),

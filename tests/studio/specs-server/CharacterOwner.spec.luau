@@ -1,8 +1,8 @@
 --!strict
--- P08 A3/R04 regression: real Player/LoadCharacterAsync/CharacterRemoving signals.
+-- P08 A3/R04 regression: real Player/LoadCharacterAsync/removal/destruction signals.
 -- Internal owner cleanup must not eliminate a life; removal of its current
 -- character must eliminate exactly once. Runs before GameRuntime owns players
--- and restores the prior test-session character/autoload setting after cleanup.
+-- and reloads a ready avatar at its prior pose before restoring autoload settings.
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     local Players = game:GetService("Players")
@@ -28,40 +28,47 @@ return function()
             end, "initial automatic character")
         end
         local previous = player.Character
-        local previousParent = if previous then previous.Parent else nil
-        Players.CharacterAutoLoads = false
-        player.Character = nil
-        if previous then
-            previous.Parent = nil
-        end
-        local released = 0
-        local match: MatchService.Controller? = nil
-        local dummyIds = { -900000001, -900000002 }
-        for seed = 1, 20 do
-            local candidate = MatchService.new({ minimumPlayers = 2, durationSeconds = 600, seed = seed }, {
-                now = function()
-                    return workspace:GetServerTimeNow()
-                end,
-                releaseLife = function(id)
-                    if id == player.UserId then
-                        released += 1
-                    end
-                end,
-            })
-            candidate.join(player.UserId)
-            for _, id in dummyIds do
-                candidate.join(id)
-            end
-            assert(candidate.deploy(), "fixture deploy")
-            if candidate.snapshot().members[player.UserId].role == "Ground" then
-                match = candidate
-                break
-            end
-        end
-        assert(match, "fixture could not assign real ground player")
-        local owner = CharacterOwner.new(player, match)
-        local removed: Model? = nil
+        local previousRoot = if previous then previous:FindFirstChild("HumanoidRootPart") else nil
+        local restorePose = if previousRoot and previousRoot:IsA("BasePart")
+            then previousRoot.CFrame
+            else workspace.World.Battlefield.Anchors.Ground01.CFrame
+        local restoreAnchored = if previousRoot and previousRoot:IsA("BasePart")
+            then previousRoot.Anchored
+            else false
+        local owned: CharacterOwner.Controller? = nil
         local ok, failure = pcall(function()
+            Players.CharacterAutoLoads = false
+            local released = 0
+            local selected: MatchService.Controller? = nil
+            local dummyIds = { -900000001, -900000002 }
+            for seed = 1, 20 do
+                local candidate = MatchService.new(
+                    { minimumPlayers = 2, durationSeconds = 600, seed = seed },
+                    {
+                        now = function()
+                            return workspace:GetServerTimeNow()
+                        end,
+                        releaseLife = function(id)
+                            if id == player.UserId then
+                                released += 1
+                            end
+                        end,
+                    }
+                )
+                candidate.join(player.UserId)
+                for _, id in dummyIds do
+                    candidate.join(id)
+                end
+                assert(candidate.deploy(), "fixture deploy")
+                if candidate.snapshot().members[player.UserId].role == "Ground" then
+                    selected = candidate
+                    break
+                end
+            end
+            assert(selected, "fixture could not assign real ground player")
+            local match = selected
+            local owner = CharacterOwner.new(player, match)
+            owned = owner
             local roundId = match.snapshot().roundId
             owner.request("Ground01", "Ground", roundId)
             waitFor(function()
@@ -87,8 +94,8 @@ return function()
             end, "replacement owned avatar")
             local current = player.Character
             assert(current and current ~= first, "new generation not loaded")
-            removed = current
-            player.Character = nil
+            -- Exact regression: Destroy() without clearing Player.Character.
+            -- Studio may retain that property while the model loses its parent.
             current:Destroy()
             waitFor(function()
                 return match.snapshot().members[player.UserId].life == "Eliminated"
@@ -109,18 +116,43 @@ return function()
                 "character owner resources survived"
             )
         end)
-        owner.stop()
-        waitFor(function()
-            return owner.resources().spawnTasks == 0
-        end, "fixture load drain")
-        if removed then
-            removed:Destroy()
-        end
-        if previous then
-            previous.Parent = previousParent
-            player.Character = previous
-        end
+        -- LoadCharacterAsync can destroy earlier avatar models even if they
+        -- were parked outside Workspace. Never restore an old model reference
+        -- or assume CharacterAutoLoads recreates a character after manual removal.
+        local cleanupOk, cleanupFailure = pcall(function()
+            local owner = owned
+            if owner then
+                owner.stop()
+                waitFor(function()
+                    return owner.resources().spawnTasks == 0
+                end, "fixture load drain")
+            end
+            assert(player:GetAttribute("RoundCharacterLoad") == nil, "fixture avatar load lease survived")
+            player:LoadCharacterAsync()
+            waitFor(function()
+                local character = player.Character
+                local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+                local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+                return character ~= nil
+                    and character:IsDescendantOf(workspace)
+                    and root ~= nil
+                    and root:IsA("BasePart")
+                    and humanoid ~= nil
+                    and humanoid.Health > 0
+            end, "restored ready avatar")
+            local character = player.Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            assert(character and root and root:IsA("BasePart"), "restored avatar vanished")
+            character:PivotTo(restorePose)
+            root.AssemblyLinearVelocity, root.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
+            root.Anchored = restoreAnchored
+            assert(
+                root.Parent == character and character.Parent ~= nil,
+                "restoration returned an unparented avatar"
+            )
+        end)
         Players.CharacterAutoLoads = autoLoads
+        assert(cleanupOk, "CharacterOwner fixture cleanup failed: " .. tostring(cleanupFailure))
         assert(ok, tostring(failure))
     end)
 end

@@ -51,10 +51,14 @@ function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
 end
 
--- The desktop pickup row sits below both status readouts. Touch shares the
--- equipment-action row above them, leaving the movement/fire regions clear.
+-- Desktop rows stay above the native Backpack's reserved bottom inventory
+-- region. Touch shares the equipment-action row above its two status readouts.
 local function pickupPosition(touch: boolean): UDim2
-    return UDim2.new(0.5, 0, 1, if touch then -104 else -20)
+    return UDim2.new(0.5, 0, 1, if touch then -104 else -160)
+end
+
+local function launcherStatusPosition(touch: boolean): UDim2
+    return UDim2.new(0.5, 0, 1, if touch then -64 else -204)
 end
 
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
@@ -135,7 +139,7 @@ function GroundCombatController.new(
             reloadButton.Parent = gui
             local launcherLabel = label:Clone()
             launcherLabel.Name = "LauncherStatus"
-            launcherLabel.Position = UDim2.new(0.5, 0, 1, -64)
+            launcherLabel.Position = launcherStatusPosition(lastTouch)
             launcherLabel.Size = UDim2.fromOffset(360, 28)
             launcherLabel.TextSize = 14
             launcherLabel.Parent = gui
@@ -302,6 +306,7 @@ function GroundCombatController.new(
                         lastTouch = touch
                         label.Position, label.Size = GroundCombatController.statusLayout(touch)
                         launcherButtons.Pickup.Position = pickupPosition(touch)
+                        launcherLabel.Position = launcherStatusPosition(touch)
                     end
                     local roundId = roundState:GetAttribute("RoundId")
                     if type(roundId) == "number" and roundId ~= round then

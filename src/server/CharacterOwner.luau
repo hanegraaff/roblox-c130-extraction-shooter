@@ -126,9 +126,9 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                         protection.Parent = character
                     end
                     -- A character can disappear without Humanoid.Died (for
-                    -- example an explicit reset/removal). Both signals consume
+                    -- example an explicit reset/removal). All signals consume
                     -- this owned generation's life once. Internal clear/request
-                    -- disconnects both before destroying its old character.
+                    -- disconnects them before destroying its old character.
                     local characterLost = false
                     local function loseCharacter(deploymentReason: string)
                         if not running or token ~= request.token or characterLost then
@@ -160,6 +160,15 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                             if removed == character then
                                 loseCharacter("CharacterRemovedDuringDeployment")
                             end
+                        end)
+                    )
+                    -- Destroy() can leave Player.Character pointing at the now
+                    -- unparented model without CharacterRemoving. Observe the
+                    -- owned model directly as well as the Player property.
+                    table.insert(
+                        connections,
+                        character.Destroying:Connect(function()
+                            loseCharacter("CharacterRemovedDuringDeployment")
                         end)
                     )
                     match.ready(player.UserId, request.roundId)
