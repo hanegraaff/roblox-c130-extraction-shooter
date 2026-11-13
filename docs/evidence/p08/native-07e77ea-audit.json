@@ -1,0 +1,3603 @@
+{
+  "source": {
+    "harnessCommit": "07e77ea5b57fba359ab611ea39e2c42c7b977881",
+    "harnessTree": "032f7b162bcc8bba6e48c002b2ca0da30939b444",
+    "productionCommit": "ef7826bc80310c17be4bcde93fe7607620303289",
+    "docsHead": "c3b155d6a34f79fc8ae0360d37267aed7a392fbb",
+    "worktreeClean": true
+  },
+  "result": {
+    "requestedClients": 3,
+    "peakClientCount": 3,
+    "passed": 11,
+    "droppedTraceRecords": 0,
+    "suite": "P08-multiplayer",
+    "currentClientCount": 2,
+    "departureMethod": "server-kick",
+    "initialClientCount": 3,
+    "clientCount": 3,
+    "requiredUnverified": [
+      "A5 actual same-identity reconnect"
+    ],
+    "discovered": 11,
+    "actualReconnectVerified": false,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A1/A5 three clients see one map launcher with M-7-only initial loadouts"
+      },
+      {
+        "passed": true,
+        "name": "A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged"
+      },
+      {
+        "passed": true,
+        "name": "A1/A2 raced real-client pickups claim once; carrier keeps M-7"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual miss drop transfer switching and early fire preserve identity and reload"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual carrier character removal while reloading preserves one recoverable identity"
+      },
+      {
+        "passed": true,
+        "name": "A6 real reset removes old state and rejects delayed prior-round intent"
+      },
+      {
+        "passed": true,
+        "name": "A4 three actual fired rockets leave 200 then 100 then commit one ground win"
+      },
+      {
+        "passed": true,
+        "name": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool"
+      },
+      {
+        "passed": true,
+        "name": "A3/A5 actual disconnect preserves reload and permits living teammate recovery"
+      },
+      {
+        "name": "A6 teardown invalidates deferred callbacks and removes every owned resource",
+        "passed": true
+      }
+    ],
+    "environment": "Studio",
+    "skipped": 0,
+    "failed": 0,
+    "mode": "manual-server-clients"
+  },
+  "traceCount": 150,
+  "selectedTraces": [
+    {
+      "aircraft": [
+        302.74676513671875,
+        140,
+        194.793212890625
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+      "wallTime": 24.537624208343914,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Available",
+        "readyAt": 0,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 1,
+        "ammo": 1,
+        "roundId": 1
+      },
+      "rockets": [],
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608262.210567,
+      "stage": "case-passed",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        275.3902893066406,
+        140,
+        231.86244201660156
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged",
+      "wallTime": 26.3713320416864,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Available",
+        "readyAt": 0,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 1,
+        "ammo": 1,
+        "roundId": 1
+      },
+      "rockets": [],
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608264.04421,
+      "stage": "case-passed",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        272.1399230957031,
+        140,
+        235.6689910888672
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A1/A2 raced real-client pickups claim once; carrier keeps M-7",
+      "wallTime": 26.57169729168527,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 2,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 1
+      },
+      "rockets": [],
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608264.244568,
+      "stage": "case-passed",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        271.02069091796875,
+        140,
+        236.95521545410156
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3 actual miss drop transfer switching and early fire preserve identity and reload",
+      "head": [
+        -2.229099750518799,
+        6.375859260559082,
+        -1.0258841514587402
+      ],
+      "wallTime": 26.640191166690784,
+      "extra": {
+        "aimKind": "fixed-miss",
+        "preparedAt": 1794608264.244949,
+        "acceptedAtDerived": 1794608264.295213,
+        "aimAgeAtAcceptanceSeconds": 0.05026388168334961,
+        "shotId": "rocket:1:1"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608268.295213,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 3,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          -2.2206192016601562,
+          6.377971649169922,
+          -1.0288394689559937
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:1:1\",\"userId\":-3,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608264.313059,
+      "stage": "fire-accepted",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        263.7542419433594,
+        140,
+        245.01776123046875
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3 actual miss drop transfer switching and early fire preserve identity and reload",
+      "head": [
+        -2.1029891967773438,
+        6.46449089050293,
+        -0.7954829931259155
+      ],
+      "wallTime": 27.070760166679975,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608268.295213,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 6,
+        "ammo": 0,
+        "ownerId": -1,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          -1.437129020690918,
+          109.97515869140625,
+          -0.6658393144607544
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:1:1\",\"userId\":-3,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608264.743614,
+      "stage": "case-passed",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        193.82337951660156,
+        140,
+        303.36859130859375
+      ],
+      "humanoidHealth": 100,
+      "userId": -1,
+      "target": [
+        179.00157165527344,
+        140,
+        312.34344482421875
+      ],
+      "resources": {
+        "flights": 2,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages",
+      "head": [
+        241.58331298828125,
+        31.386598587036133,
+        223.56752014160156
+      ],
+      "wallTime": 30.704501625004923,
+      "extra": {
+        "aimKind": "moving-direct",
+        "preparedAt": 1794608268.310061,
+        "acceptedAtDerived": 1794608268.343909,
+        "aimAgeAtAcceptanceSeconds": 0.03384804725646973,
+        "shotId": "rocket:1:2"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608272.343909,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 7,
+        "ammo": 0,
+        "ownerId": -1,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          5.1577630043029785,
+          981.986572265625,
+          2.3896522521972656
+        ],
+        [
+          239.98435974121094,
+          34.190223693847656,
+          225.86178588867188
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608268.377244,
+      "stage": "fire-accepted",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        193.82337951660156,
+        140,
+        303.36859130859375
+      ],
+      "humanoidHealth": 100,
+      "userId": -1,
+      "target": [
+        179.00157165527344,
+        140,
+        312.34344482421875
+      ],
+      "resources": {
+        "flights": 2,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages",
+      "head": [
+        241.58331298828125,
+        31.386598587036133,
+        223.56752014160156
+      ],
+      "wallTime": 30.704528041678714,
+      "extra": {
+        "shotId": "rocket:1:2"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608272.343909,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 7,
+        "ammo": 0,
+        "ownerId": -1,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          5.1577630043029785,
+          981.986572265625,
+          2.3896522521972656
+        ],
+        [
+          239.98435974121094,
+          34.190223693847656,
+          225.86178588867188
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608268.37727,
+      "stage": "before-carrier-death",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        193.82337951660156,
+        140,
+        303.36859130859375
+      ],
+      "humanoidHealth": 0,
+      "userId": -1,
+      "target": [
+        179.00157165527344,
+        140,
+        312.34344482421875
+      ],
+      "resources": {
+        "flights": 2,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages",
+      "head": [
+        241.58331298828125,
+        31.386598587036133,
+        223.56752014160156
+      ],
+      "wallTime": 30.70461400001659,
+      "extra": {
+        "shotId": "rocket:1:2"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608272.343909,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 7,
+        "ammo": 0,
+        "ownerId": -1,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          5.1577630043029785,
+          981.986572265625,
+          2.3896522521972656
+        ],
+        [
+          239.98435974121094,
+          34.190223693847656,
+          225.86178588867188
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608268.377356,
+      "stage": "after-carrier-death-request",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        193.09751892089844,
+        140,
+        303.83111572265625
+      ],
+      "userId": -1,
+      "target": [
+        179.00157165527344,
+        140,
+        312.34344482421875
+      ],
+      "resources": {
+        "flights": 2,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages",
+      "wallTime": 30.737683791667223,
+      "extra": {
+        "shotId": "rocket:1:2"
+      },
+      "launcher": {
+        "state": "Available",
+        "readyAt": 1794608272.343909,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 9,
+        "ammo": 0,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          5.219987869262695,
+          990.2142333984375,
+          2.4184815883636475
+        ],
+        [
+          236.63133239746094,
+          40.007972717285156,
+          230.6168212890625
+        ]
+      ],
+      "life": "Eliminated",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608268.410425,
+      "stage": "flight-survived-carrier-death",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        180.94387817382812,
+        140,
+        311.2222900390625
+      ],
+      "userId": -1,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":308.0932922363281,\"x\":181.9985809326172,\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "target": [
+        179.00157165527344,
+        140,
+        312.34344482421875
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages",
+      "wallTime": 31.303907583351247,
+      "extra": {
+        "shotId": "rocket:1:2"
+      },
+      "launcher": {
+        "state": "Available",
+        "readyAt": 1794608272.343909,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 9,
+        "ammo": 0,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          6.247101783752441,
+          1126.0247802734375,
+          2.894355535507202
+        ]
+      ],
+      "life": "Eliminated",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608268.976633,
+      "stage": "dead-shooter-impact-confirmed",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        177.31509399414062,
+        140,
+        313.303955078125
+      ],
+      "userId": -1,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":308.0932922363281,\"x\":181.9985809326172,\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "target": [
+        179.00157165527344,
+        140,
+        312.34344482421875
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages",
+      "wallTime": 31.47047925001243,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608272.343909,
+        "launcherId": "launcher:1",
+        "position": {
+          "y": 1.100000023841858,
+          "x": -2,
+          "z": 0
+        },
+        "revision": 10,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 1
+      },
+      "rockets": [
+        [
+          6.549474716186523,
+          1166.0062255859375,
+          3.0344488620758057
+        ]
+      ],
+      "life": "Eliminated",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}",
+      "phase": "Active",
+      "serverTime": 1794608269.143199,
+      "stage": "case-passed",
+      "roundId": 1
+    },
+    {
+      "aircraft": [
+        359.7692565917969,
+        140,
+        12.887351989746094
+      ],
+      "humanoidHealth": 100,
+      "userId": -2,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3 actual carrier character removal while reloading preserves one recoverable identity",
+      "head": [
+        -0.020169219002127647,
+        6.5425310134887695,
+        -0.22550751268863678
+      ],
+      "wallTime": 35.10429804166779,
+      "extra": {
+        "aimKind": "fixed-miss",
+        "preparedAt": 1794608272.710051,
+        "acceptedAtDerived": 1794608272.762622,
+        "aimAgeAtAcceptanceSeconds": 0.05257105827331543,
+        "shotId": "rocket:2:1"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608276.762622,
+        "launcherId": "launcher:2",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 14,
+        "ammo": 0,
+        "ownerId": -2,
+        "roundId": 2
+      },
+      "rockets": [
+        [
+          -0.009719958528876305,
+          6.544041633605957,
+          -0.148528054356575
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:2:1\",\"userId\":-2,\"roundId\":2}",
+      "phase": "Active",
+      "serverTime": 1794608272.776923,
+      "stage": "fire-accepted",
+      "roundId": 2
+    },
+    {
+      "aircraft": [
+        359.2729187011719,
+        140,
+        22.868528366088867
+      ],
+      "userId": -2,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3 actual carrier character removal while reloading preserves one recoverable identity",
+      "wallTime": 35.50410345834098,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608276.762622,
+        "launcherId": "launcher:2",
+        "position": {
+          "y": 1.100000023841858,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 17,
+        "ammo": 0,
+        "ownerId": -1,
+        "roundId": 2
+      },
+      "rockets": [
+        [
+          -0.006560679990798235,
+          101.92601013183594,
+          -0.10025198757648468
+        ]
+      ],
+      "life": "Eliminated",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:2:1\",\"userId\":-2,\"roundId\":2}",
+      "phase": "Active",
+      "serverTime": 1794608273.176718,
+      "stage": "case-passed",
+      "roundId": 2
+    },
+    {
+      "aircraft": [
+        359.5198669433594,
+        140,
+        18.586444854736328
+      ],
+      "humanoidHealth": 100,
+      "userId": -2,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A6 real reset removes old state and rejects delayed prior-round intent",
+      "head": [
+        0.01660318300127983,
+        4.509230136871338,
+        107.99604797363281
+      ],
+      "wallTime": 39.32075629167957,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Available",
+        "readyAt": 0,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 19,
+        "ammo": 1,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608276.993283,
+      "stage": "case-passed",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        359.42974853515625,
+        140,
+        20.25450897216797
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        358.2894592285156,
+        140,
+        35.05233383178711
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        329.495361328125,
+        31.509788513183594,
+        18.56519889831543
+      ],
+      "wallTime": 39.38868833333254,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 20,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608277.061213,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        358.9236145019531,
+        140,
+        27.817935943603516
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        358.2894592285156,
+        140,
+        35.05233383178711
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        329.4818115234375,
+        31.51395606994629,
+        18.44816780090332
+      ],
+      "wallTime": 39.687375625013374,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608281.344936,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 21,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          329.49261474609375,
+          31.50954818725586,
+          18.521102905273438
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608277.359894,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        358.8938903808594,
+        140,
+        28.198720932006836
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        358.2894592285156,
+        140,
+        35.05233383178711
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        329.4704284667969,
+        31.51615333557129,
+        18.371135711669922
+      ],
+      "wallTime": 39.70392720834934,
+      "extra": {
+        "aimKind": "moving-direct",
+        "preparedAt": 1794608277.061057,
+        "acceptedAtDerived": 1794608277.344936,
+        "aimAgeAtAcceptanceSeconds": 0.28387880325317383,
+        "shotId": "rocket:3:1"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608281.344936,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 21,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          330.4047546386719,
+          34.945987701416016,
+          19.04473114013672
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608277.376446,
+      "stage": "fire-accepted",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        358.3473205566406,
+        140,
+        34.455787658691406
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        358.2894592285156,
+        140,
+        35.05233383178711
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        329.2673034667969,
+        31.380508422851562,
+        17.534154891967773
+      ],
+      "wallTime": 39.95368137501646,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608281.344936,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 21,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          345.62750244140625,
+          92.29695129394531,
+          27.783584594726562
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608277.626194,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        357.8298645019531,
+        140,
+        39.468955993652344
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":34.259979248046878,\"x\":356.9091796875,\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        358.2894592285156,
+        140,
+        35.05233383178711
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        329.2498779296875,
+        31.3835391998291,
+        17.61412239074707
+      ],
+      "wallTime": 40.15368354169186,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608281.344936,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 21,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608277.826192,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        336.77081298828125,
+        140,
+        127.22190856933594
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":34.259979248046878,\"x\":356.9091796875,\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        330.19073486328125,
+        140,
+        143.4366455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        327.5628356933594,
+        31.41543197631836,
+        37.86930847167969
+      ],
+      "wallTime": 43.75531575002242,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608285.410746,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 22,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          327.57086181640625,
+          31.42006492614746,
+          37.88507843017578
+        ]
+      ],
+      "life": "Alive",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608281.427751,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        336.6174011230469,
+        140,
+        127.62726593017578
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":34.259979248046878,\"x\":356.9091796875,\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        330.19073486328125,
+        140,
+        143.4366455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        327.5548400878906,
+        31.41094207763672,
+        37.85452651977539
+      ],
+      "wallTime": 43.770967166667106,
+      "extra": {
+        "aimKind": "moving-direct",
+        "preparedAt": 1794608281.376053,
+        "acceptedAtDerived": 1794608281.410746,
+        "aimAgeAtAcceptanceSeconds": 0.034693002700805664,
+        "shotId": "rocket:3:2"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608285.410746,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 22,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          327.6415100097656,
+          34.34770965576172,
+          40.7310676574707
+        ]
+      ],
+      "life": "Alive",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608281.443402,
+      "stage": "fire-accepted",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        334.3549499511719,
+        140,
+        133.44200134277344
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":34.259979248046878,\"x\":356.9091796875,\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        330.19073486328125,
+        140,
+        143.4366455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        327.45660400390625,
+        31.371809005737305,
+        37.83319854736328
+      ],
+      "wallTime": 44.02068729168968,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608285.410746,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 22,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          328.6718444824219,
+          77.04904174804688,
+          82.2414321899414
+        ]
+      ],
+      "life": "Alive",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608281.693117,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        331.8150939941406,
+        140,
+        139.63787841796875
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":34.259979248046878,\"x\":356.9091796875,\"shotId\":\"rocket:3:1\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        330.19073486328125,
+        140,
+        143.4366455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        327.5642395019531,
+        31.436132431030273,
+        38.000389099121094
+      ],
+      "wallTime": 44.286819250002736,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608285.410746,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 22,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          329.77850341796875,
+          122.91475677490234,
+          126.82792663574219
+        ]
+      ],
+      "life": "Alive",
+      "health": 200,
+      "lastShot": "{\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608281.959244,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        330.9947509765625,
+        140,
+        141.5714569091797
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":138.38169860839845,\"x\":330.0652770996094,\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        330.19073486328125,
+        140,
+        143.4366455078125
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        327.6015930175781,
+        31.463001251220703,
+        38.03801345825195
+      ],
+      "wallTime": 44.37040254168096,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608285.410746,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 22,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 100,
+      "lastShot": "{\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608282.042825,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        287.9145812988281,
+        140,
+        216.11386108398438
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":138.38169860839845,\"x\":330.0652770996094,\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        301.7021179199219,
+        31.392553329467773,
+        132.26869201660156
+      ],
+      "wallTime": 47.80333900000551,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 23,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          301.7079772949219,
+          31.396148681640625,
+          132.2740936279297
+        ]
+      ],
+      "life": "Alive",
+      "health": 100,
+      "lastShot": "{\"shotId\":\"rocket:3:3\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608285.475699,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        287.6727600097656,
+        140,
+        216.43565368652344
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":138.38169860839845,\"x\":330.0652770996094,\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        301.69622802734375,
+        31.38887596130371,
+        132.26333618164062
+      ],
+      "wallTime": 47.82075537502533,
+      "extra": {
+        "aimKind": "moving-direct",
+        "preparedAt": 1794608285.426253,
+        "acceptedAtDerived": 1794608285.460118,
+        "aimAgeAtAcceptanceSeconds": 0.03386497497558594,
+        "shotId": "rocket:3:3"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 23,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          301.0902099609375,
+          34.14480209350586,
+          134.73670959472656
+        ]
+      ],
+      "life": "Alive",
+      "health": 100,
+      "lastShot": "{\"shotId\":\"rocket:3:3\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608285.493115,
+      "stage": "fire-accepted",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        284.1147155761719,
+        140,
+        221.08555603027344
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":138.38169860839845,\"x\":330.0652770996094,\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        301.6470031738281,
+        31.3798828125,
+        132.33023071289062
+      ],
+      "wallTime": 48.053362375008874,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 23,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          291.85089111328125,
+          75.25394439697266,
+          171.5677947998047
+        ]
+      ],
+      "life": "Alive",
+      "health": 100,
+      "lastShot": "{\"shotId\":\"rocket:3:3\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608285.725718,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        280.2030334472656,
+        140,
+        226.022705078125
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":138.38169860839845,\"x\":330.0652770996094,\"shotId\":\"rocket:3:2\",\"userId\":-3,\"roundId\":3}",
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        301.7671203613281,
+        31.45646095275879,
+        132.4872283935547
+      ],
+      "wallTime": 48.30355933334795,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 23,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 3
+      },
+      "rockets": [
+        [
+          281.9223937988281,
+          119.42976379394531,
+          211.1464080810547
+        ]
+      ],
+      "life": "Alive",
+      "health": 100,
+      "lastShot": "{\"shotId\":\"rocket:3:3\",\"userId\":-3,\"roundId\":3}",
+      "phase": "Active",
+      "serverTime": 1794608285.97591,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        278.6185302734375,
+        140,
+        227.9730682373047
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 0
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "head": [
+        301.7795104980469,
+        31.449748992919922,
+        132.44630432128906
+      ],
+      "wallTime": 48.404707208334,
+      "launcher": {
+        "state": "Inactive",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 24,
+        "ammo": 0,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Eliminated",
+      "health": 0,
+      "phase": "Results",
+      "serverTime": 1794608286.077056,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        278.6185302734375,
+        140,
+        227.9730682373047
+      ],
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 0
+      },
+      "case": "A4 three actual fired rockets leave 200 then 100 then commit one ground win",
+      "wallTime": 48.62015183334006,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Inactive",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 24,
+        "ammo": 0,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Eliminated",
+      "health": 0,
+      "phase": "Results",
+      "serverTime": 1794608286.292497,
+      "stage": "case-passed",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        278.6185302734375,
+        140,
+        227.9730682373047
+      ],
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 0
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "wallTime": 51.45705175001058,
+      "launcher": {
+        "state": "Inactive",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 24,
+        "ammo": 0,
+        "roundId": 3
+      },
+      "rockets": [],
+      "health": 0,
+      "phase": "Lobby",
+      "serverTime": 1794608289.129349,
+      "stage": "observed-state",
+      "roundId": 3
+    },
+    {
+      "aircraft": [
+        360,
+        140,
+        0.0016298545524477959
+      ],
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 0
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "wallTime": 51.491536166664446,
+      "launcher": {
+        "state": "Inactive",
+        "readyAt": 1794608289.460118,
+        "launcherId": "launcher:3",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 24,
+        "ammo": 0,
+        "roundId": 3
+      },
+      "rockets": [],
+      "life": "Deploying",
+      "health": 300,
+      "phase": "Deploying",
+      "serverTime": 1794608289.163832,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        360,
+        140,
+        0.0009827064350247383
+      ],
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "wallTime": 51.515483083348954,
+      "launcher": {
+        "state": "Available",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 25,
+        "ammo": 1,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Deploying",
+      "health": 300,
+      "phase": "Deploying",
+      "serverTime": 1794608289.187779,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        359.90887451171875,
+        140,
+        8.100154876708984
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        6.738771616770437e-18,
+        6.585810661315918,
+        -0.005887538194656372
+      ],
+      "wallTime": 51.847889333352214,
+      "launcher": {
+        "state": "Available",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 25,
+        "ammo": 1,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608289.520179,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        359.8498840332031,
+        140,
+        10.395169258117676
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        0.007223966997116804,
+        6.549650192260742,
+        -0.006319798529148102
+      ],
+      "wallTime": 51.93708387500374,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 300,
+      "phase": "Active",
+      "serverTime": 1794608289.609372,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        359.8117370605469,
+        140,
+        11.641267776489258
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.8663330078125,
+        31.513132095336914,
+        9.880107879638672
+      ],
+      "wallTime": 51.98780266667018,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 295,
+      "phase": "Active",
+      "serverTime": 1794608289.660091,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        359.59576416015625,
+        140,
+        17.055200576782227
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.68212890625,
+        31.399173736572266,
+        8.873984336853027
+      ],
+      "wallTime": 52.2036965416919,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 290,
+      "phase": "Active",
+      "serverTime": 1794608289.87598,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        359.2967224121094,
+        140,
+        22.49153709411621
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.59954833984375,
+        31.3714542388916,
+        8.889357566833496
+      ],
+      "wallTime": 52.42060483334353,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 285,
+      "phase": "Active",
+      "serverTime": 1794608290.092886,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        358.9468078613281,
+        140,
+        27.51708984375
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.68743896484375,
+        31.418575286865234,
+        9.020735740661621
+      ],
+      "wallTime": 52.62078345834743,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 280,
+      "phase": "Active",
+      "serverTime": 1794608290.293061,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        358.529296875,
+        140,
+        32.50748825073242
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7506408691406,
+        31.455785751342773,
+        9.058202743530273
+      ],
+      "wallTime": 52.820109083346324,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 275,
+      "phase": "Active",
+      "serverTime": 1794608290.492383,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        358.0394287109375,
+        140,
+        37.52009201049805
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.6733703613281,
+        31.39345932006836,
+        8.863327980041504
+      ],
+      "wallTime": 53.02062416667468,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 270,
+      "phase": "Active",
+      "serverTime": 1794608290.692895,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        357.4799499511719,
+        140,
+        42.52168273925781
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.60107421875,
+        31.372211456298828,
+        8.893444061279297
+      ],
+      "wallTime": 53.22016304166755,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 265,
+      "phase": "Active",
+      "serverTime": 1794608290.892431,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        356.8506774902344,
+        140,
+        47.51414489746094
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.6907653808594,
+        31.42081642150879,
+        9.026091575622559
+      ],
+      "wallTime": 53.42040137501317,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 260,
+      "phase": "Active",
+      "serverTime": 1794608291.092665,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        356.1539001464844,
+        140,
+        52.48230743408203
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7497253417969,
+        31.4517765045166,
+        9.045793533325195
+      ],
+      "wallTime": 53.62043370833271,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 255,
+      "phase": "Active",
+      "serverTime": 1794608291.292694,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        355.3888854980469,
+        140,
+        57.43474197387695
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.67041015625,
+        31.39164161682129,
+        8.860635757446289
+      ],
+      "wallTime": 53.820708416664274,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 250,
+      "phase": "Active",
+      "serverTime": 1794608291.492966,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        354.5518798828125,
+        140,
+        62.393619537353516
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.6026306152344,
+        31.372966766357422,
+        8.897533416748047
+      ],
+      "wallTime": 54.020502583356574,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 245,
+      "phase": "Active",
+      "serverTime": 1794608291.692757,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        353.5679016113281,
+        140,
+        67.74760437011719
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7005920410156,
+        31.42914390563965,
+        9.040239334106445
+      ],
+      "wallTime": 54.236949083337095,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 240,
+      "phase": "Active",
+      "serverTime": 1794608291.9092,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        352.5019226074219,
+        140,
+        73.0916976928711
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7369079589844,
+        31.435056686401367,
+        8.989533424377441
+      ],
+      "wallTime": 54.45373070833739,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 235,
+      "phase": "Active",
+      "serverTime": 1794608292.125979,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        351.4461669921875,
+        140,
+        78.0102310180664
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.65216064453125,
+        31.38384437561035,
+        8.85439682006836
+      ],
+      "wallTime": 54.65381287501077,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 230,
+      "phase": "Active",
+      "serverTime": 1794608292.326058,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        350.3221130371094,
+        140,
+        82.91209411621094
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.6148681640625,
+        31.378957748413086,
+        8.920782089233398
+      ],
+      "wallTime": 54.8536566249968,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 225,
+      "phase": "Active",
+      "serverTime": 1794608292.525897,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        349.13189697265625,
+        140,
+        87.78900909423828
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7113037109375,
+        31.437746047973633,
+        9.05419635772705
+      ],
+      "wallTime": 55.05401366666774,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 220,
+      "phase": "Active",
+      "serverTime": 1794608292.726252,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        347.8716735839844,
+        140,
+        92.65694427490234
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7339172363281,
+        31.431785583496094,
+        8.97861099243164
+      ],
+      "wallTime": 55.2543644583493,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 215,
+      "phase": "Active",
+      "serverTime": 1794608292.9266,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        346.4332275390625,
+        140,
+        97.89798736572266
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.6396789550781,
+        31.3800106048584,
+        8.85530948638916
+      ],
+      "wallTime": 55.47003995833802,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 210,
+      "phase": "Active",
+      "serverTime": 1794608293.142272,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        344.911865234375,
+        140,
+        103.13003540039062
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.6360168457031,
+        31.38941192626953,
+        8.949769020080566
+      ],
+      "wallTime": 55.68664858333068,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 205,
+      "phase": "Active",
+      "serverTime": 1794608293.358876,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        343.4378967285156,
+        140,
+        107.93711853027344
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.7315673828125,
+        31.452728271484375,
+        9.075499534606934
+      ],
+      "wallTime": 55.886711500003,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 200,
+      "phase": "Active",
+      "serverTime": 1794608293.558936,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        341.8957214355469,
+        140,
+        112.72673034667969
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        277.2992248535156,
+        140,
+        229.5760040283203
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        329.71380615234375,
+        31.418716430664062,
+        8.932022094726562
+      ],
+      "wallTime": 56.087097416690085,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 0,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 26,
+        "ammo": 1,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 195,
+      "phase": "Active",
+      "serverTime": 1794608293.759319,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        339.9969482421875,
+        140,
+        118.33037567138672
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        335.4434509277344,
+        140,
+        130.68162536621094
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        311.9440002441406,
+        31.373947143554688,
+        105.94815063476562
+      ],
+      "wallTime": 56.31994345833664,
+      "extra": {
+        "aimKind": "moving-direct",
+        "preparedAt": 1794608293.927045,
+        "acceptedAtDerived": 1794608293.977729,
+        "aimAgeAtAcceptanceSeconds": 0.05068397521972656,
+        "shotId": "rocket:4:1"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608297.977729,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 27,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          311.95062255859375,
+          31.375232696533203,
+          105.94298553466797
+        ]
+      ],
+      "life": "Alive",
+      "health": 195,
+      "lastShot": "{\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608293.992162,
+      "stage": "fire-accepted",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        339.9969482421875,
+        140,
+        118.33037567138672
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        335.4434509277344,
+        140,
+        130.68162536621094
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        311.9440002441406,
+        31.373947143554688,
+        105.94815063476562
+      ],
+      "wallTime": 56.320001708343625,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608297.977729,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 27,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          311.95062255859375,
+          31.375232696533203,
+          105.94298553466797
+        ]
+      ],
+      "life": "Alive",
+      "health": 195,
+      "lastShot": "{\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608293.99222,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        337.7566223144531,
+        140,
+        124.58113098144531
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        335.4434509277344,
+        140,
+        130.68162536621094
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        312.0219421386719,
+        31.42081642150879,
+        106.10530853271484
+      ],
+      "wallTime": 56.5870704583358,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608297.977729,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 27,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          325.0245361328125,
+          91.82572937011719,
+          119.7102279663086
+        ]
+      ],
+      "life": "Alive",
+      "health": 195,
+      "lastShot": "{\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608294.259284,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        335.9786376953125,
+        140,
+        129.29946899414062
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":129.4973602294922,\"x\":334.3188171386719,\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "target": [
+        335.4434509277344,
+        140,
+        130.68162536621094
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        307.8788146972656,
+        31.45379066467285,
+        117.68943786621094
+      ],
+      "wallTime": 56.786354375013616,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608297.977729,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 27,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Alive",
+      "health": 95,
+      "lastShot": "{\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608294.458566,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        293.2755126953125,
+        140,
+        208.7809295654297
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":129.4973602294922,\"x\":334.3188171386719,\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "target": [
+        282.9107360839844,
+        140,
+        222.6241455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        307.7377624511719,
+        31.376155853271484,
+        117.55000305175781
+      ],
+      "wallTime": 60.38614512499771,
+      "extra": {
+        "aimKind": "moving-direct",
+        "preparedAt": 1794608297.99182,
+        "acceptedAtDerived": 1794608298.042039,
+        "aimAgeAtAcceptanceSeconds": 0.050218820571899414,
+        "shotId": "rocket:4:2"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608302.042039,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 28,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          307.73431396484375,
+          31.374465942382812,
+          117.54315185546875
+        ]
+      ],
+      "life": "Alive",
+      "health": 95,
+      "lastShot": "{\"shotId\":\"rocket:4:2\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608298.058302,
+      "stage": "fire-accepted",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        293.2755126953125,
+        140,
+        208.7809295654297
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":129.4973602294922,\"x\":334.3188171386719,\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "target": [
+        282.9107360839844,
+        140,
+        222.6241455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        307.7377624511719,
+        31.376155853271484,
+        117.55000305175781
+      ],
+      "wallTime": 60.3861912083521,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608302.042039,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 28,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          307.73431396484375,
+          31.374465942382812,
+          117.54315185546875
+        ]
+      ],
+      "life": "Alive",
+      "health": 95,
+      "lastShot": "{\"shotId\":\"rocket:4:2\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608298.058347,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        289.579345703125,
+        140,
+        213.8780059814453
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":129.4973602294922,\"x\":334.3188171386719,\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "target": [
+        282.9107360839844,
+        140,
+        222.6241455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        307.8583984375,
+        31.451467514038086,
+        117.7112808227539
+      ],
+      "wallTime": 60.636312000016915,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608302.042039,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 28,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          298.00048828125,
+          73.96878051757812,
+          158.7476043701172
+        ]
+      ],
+      "life": "Alive",
+      "health": 95,
+      "lastShot": "{\"shotId\":\"rocket:4:2\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608298.308465,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        285.8126220703125,
+        140,
+        218.88613891601562
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "lastImpact": "{\"y\":135,\"aircraftHit\":true,\"z\":129.4973602294922,\"x\":334.3188171386719,\"shotId\":\"rocket:4:1\",\"userId\":-3,\"roundId\":4}",
+      "target": [
+        282.9107360839844,
+        140,
+        222.6241455078125
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        307.8194580078125,
+        31.40544891357422,
+        117.52722930908203
+      ],
+      "wallTime": 60.886476625018986,
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608302.042039,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 28,
+        "ammo": 0,
+        "ownerId": -3,
+        "roundId": 4
+      },
+      "rockets": [
+        [
+          288.2995300292969,
+          116.41926574707031,
+          199.81289672851562
+        ]
+      ],
+      "life": "Alive",
+      "health": 95,
+      "lastShot": "{\"shotId\":\"rocket:4:2\",\"userId\":-3,\"roundId\":4}",
+      "phase": "Active",
+      "serverTime": 1794608298.558626,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        284.0135192871094,
+        140,
+        221.21556091308594
+      ],
+      "humanoidHealth": 100,
+      "userId": -3,
+      "target": [
+        282.9107360839844,
+        140,
+        222.6241455078125
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 0
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "head": [
+        307.7725524902344,
+        31.38100242614746,
+        117.49131774902344
+      ],
+      "wallTime": 61.0067351666803,
+      "launcher": {
+        "state": "Inactive",
+        "readyAt": 1794608302.042039,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 29,
+        "ammo": 0,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Eliminated",
+      "health": 0,
+      "phase": "Results",
+      "serverTime": 1794608298.678882,
+      "stage": "observed-state",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        284.0135192871094,
+        140,
+        221.21556091308594
+      ],
+      "userId": -3,
+      "target": [
+        282.9107360839844,
+        140,
+        222.6241455078125
+      ],
+      "resources": {
+        "flights": 0,
+        "connections": 5,
+        "queued": 0,
+        "representations": 0
+      },
+      "case": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool",
+      "wallTime": 61.020671166683314,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Inactive",
+        "readyAt": 1794608302.042039,
+        "launcherId": "launcher:4",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 29,
+        "ammo": 0,
+        "roundId": 4
+      },
+      "rockets": [],
+      "life": "Eliminated",
+      "health": 0,
+      "phase": "Results",
+      "serverTime": 1794608298.692818,
+      "stage": "case-passed",
+      "roundId": 4
+    },
+    {
+      "aircraft": [
+        359.75048828125,
+        140,
+        13.400725364685059
+      ],
+      "humanoidHealth": 100,
+      "userId": -2,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A5 actual disconnect preserves reload and permits living teammate recovery",
+      "head": [
+        -0.0005150395445525646,
+        6.556977272033691,
+        -0.05748400837182999
+      ],
+      "wallTime": 64.6695912083378,
+      "extra": {
+        "aimKind": "fixed-miss",
+        "preparedAt": 1794608302.278966,
+        "acceptedAtDerived": 1794608302.325892,
+        "aimAgeAtAcceptanceSeconds": 0.046926021575927734,
+        "shotId": "rocket:5:1"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608306.325892,
+        "launcherId": "launcher:5",
+        "position": {
+          "y": 3,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 32,
+        "ammo": 0,
+        "ownerId": -2,
+        "roundId": 5
+      },
+      "rockets": [
+        [
+          0.0060180192813277245,
+          6.555701732635498,
+          -0.00623491033911705
+        ]
+      ],
+      "life": "Alive",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:5:1\",\"userId\":-2,\"roundId\":5}",
+      "phase": "Active",
+      "serverTime": 1794608302.341685,
+      "stage": "fire-accepted",
+      "roundId": 5
+    },
+    {
+      "aircraft": [
+        357.37060546875,
+        140,
+        43.43087387084961
+      ],
+      "userId": -2,
+      "target": [
+        0,
+        300,
+        0
+      ],
+      "resources": {
+        "flights": 1,
+        "connections": 5,
+        "queued": 0,
+        "representations": 1
+      },
+      "case": "A3/A5 actual disconnect preserves reload and permits living teammate recovery",
+      "wallTime": 65.86918141666683,
+      "extra": {
+        "passed": true,
+        "detail": "ok"
+      },
+      "launcher": {
+        "state": "Held",
+        "readyAt": 1794608306.325892,
+        "launcherId": "launcher:5",
+        "position": {
+          "y": 1.100000023841858,
+          "x": 0,
+          "z": 0
+        },
+        "revision": 35,
+        "ammo": 0,
+        "ownerId": -1,
+        "roundId": 5
+      },
+      "rockets": [
+        [
+          0.0001177862795884721,
+          294.25665283203125,
+          -0.00012202931247884408
+        ]
+      ],
+      "life": "Eliminated",
+      "health": 300,
+      "lastShot": "{\"shotId\":\"rocket:5:1\",\"userId\":-2,\"roundId\":5}",
+      "phase": "Active",
+      "serverTime": 1794608303.541258,
+      "stage": "case-passed",
+      "roundId": 5
+    }
+  ],
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"running\":false,\"bootstrapAbsent\":true,\"orientation\":\"Enum.ScreenOrientation.LandscapeLeft\",\"simulator\":\"default\",\"selectorNil\":true}"
+      }
+    ],
+    "isError": false
+  }
+}

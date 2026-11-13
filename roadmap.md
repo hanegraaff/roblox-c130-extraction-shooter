@@ -15,7 +15,7 @@ The integrated source on `main` includes the development shell, verification too
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
-| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | In progress | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
+| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Blocked | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
@@ -114,19 +114,22 @@ That checkpoint's late-join requirement is superseded by D50 and the active
 revision above. P08 remained Planned; no later plan started. Main was unchanged,
 and no P07 merge or Roblox publication occurred.
 
-2026-11-13 P08 candidate: [draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
-adds the recoverable launcher on `plan/08-rocket-launcher`. Tested runtime/test
-source `ef7826b` passes 55 unit / 65 integration host checks and fresh Studio
-156 server / 7 client smoke. Actual phone layout/input checks pass after fixing
-native-inventory and cross-ScreenGui conflicts; earlier ordinary native
-three-client observations verify raced pickup and death/reset/disconnect
-recovery on the unchanged server core. P06/P05/P14 two-client regressions pass
-10/10, 8/8 and 6/6 in their source-bound reports. Full eleven-case P08 harness
-and actual same-identity reconnect are still open; D50 does not waive P08's
-reconnect requirement. The [plan record](plans/08-rocket-launcher.md) and
-[evidence](docs/evidence/p08-launcher.md) preserve failures, fixes, counts and
-the stable native handoff. P09 remains unstarted. No merge or publication
-occurred.
+2026-11-13 P08 delivery: [draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
+contains the recoverable launcher, production/UI `ef7826b` and corrected
+test-only harness `07e77ea`. Full host passes 55 unit / 65 integration and all
+gates. Fresh native three-client P08 passes **11/11**, with 156 server / seven
+on each actual client, 150 retained traces and zero dropped. Real rockets
+produce 300→200→100→0/Ground victory; mixed rifle/rocket damage, in-flight
+post-death impact, recovery, rejection and reset all pass. Initial/peak count
+is three, final two after the intentional carrier Kick. Actual phone/input
+checks and source-bound P06/P05/P14 regressions (10/10, 8/8, 6/6) pass.
+**Blocked only by A5's required actual same-identity reconnect evidence**:
+current Studio helpers add another identity rather than reconnecting the same
+one. Runtime tombstone rules pass, but cannot substitute for that network
+scenario; D50 is P07-only. The [plan record](plans/08-rocket-launcher.md) and
+[evidence](docs/evidence/p08-launcher.md) preserve the sole remaining gate,
+historical failures, current reports and clean Edit teardown. P09 remains
+Planned/unstarted. No merge or publication occurred.
 
 ## How plans move
 

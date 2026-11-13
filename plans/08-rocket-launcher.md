@@ -29,50 +29,68 @@ Explain the single launcher, recovery/default replenishment and actual controls.
 
 ## Completion record
 
-The launcher implementation is present on `plan/08-rocket-launcher`; acceptance
-is not complete. [Draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
-contains source and evidence pushed at `5cbbd04`; its
-[Verify CI run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43512102022)
-passes. Latest tested runtime/test source is
-`ef7826bc80310c17be4bcde93fe7607620303289`, tree
-`db1f4e50296a2620d13e36839525c7562220a629`, based on integrated P07 main
-`c7210be`. The [verification record](../docs/evidence/p08-launcher.md) preserves
-exact commands, source-bound reports, earlier failures and cleanup.
+Implemented on `plan/08-rocket-launcher` and delivered through
+[draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32).
+Full acceptance remains incomplete **only because A5's actual same-identity
+reconnect scenario is unverified**. No waiver applies to P08. See the
+[verification record](../docs/evidence/p08-launcher.md) and
+[independent final review](../docs/evidence/p08/independent-final-07e77ea.md).
 
-| Criterion | Named tests / environment | Observed result and remaining work |
+Production/UI source is `ef7826bc80310c17be4bcde93fe7607620303289`, tree
+`db1f4e50296a2620d13e36839525c7562220a629`. Tested harness revision is
+`07e77ea5b57fba359ab611ea39e2c42c7b977881`, tree
+`032f7b162bcc8bba6e48c002b2ca0da30939b444`; it contains no production change.
+The native run observed delivery head `c3b155d`, based on integrated P07 main
+`c7210be`. [CI Verify](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43517470871)
+passes on that delivery. Subsequent changes are documentation/evidence only.
+
+| Criterion | Named tests / environment | Observed result |
 | --- | --- | --- |
-| A1 | `LauncherService.spec` raced pickup/snapshot tests; full `python3 scripts/verify.py`; `Launcher.spec` representation engine case; ordinary native three-client E race | Host gate passes 55 unit / 65 integration and all static/build/geometry/isolation gates; fresh solo engine baseline passes. Native three-client pickup produces one owner/Tool with both rifles retained; full P08 harness remains pending |
-| A2 | `LauncherService.spec` malformed/authority/reach/replay cases; shared movement/origin suites; P08 rejection harness | Deterministic rejection and shared engine checks pass. Actual three-client remote/ownership checks remain pending |
-| A3 | Reload/transfer/recovery service cases; actual-Player `CharacterOwner.spec`; ordinary native three-client carrier death/removal/disconnect observations | Rules and fresh raw-character-destruction/cleanup engine tests pass. Actual death, raw Destroy and Kick followed by native teammate pickup preserve identity/reload, with replicated state agreement. Full P08 harness remains pending |
-| A4 | Existing aircraft-health rules; launcher timing case; `Launcher.spec` first-solid/three-deduplicated-impact case; P08 fired-rocket scenarios | Rules and real engine sweep/health seam pass; player-fired three-rocket and mixed-fire multiplayer scenarios remain pending |
-| A5 | Three-client `LauncherHarness`; real reconnect gate | Initial and staged SDK P08 launches connected only two and failed startup. Corrected ordinary native three-client observations verify raced acquisition and death/reset/disconnect recovery; they are separate from the full eleven-case harness. Actual same-identity reconnect remains required and unavailable through current helpers |
-| A6 | Terminal/next-round service case; runtime cleanup/representation engine checks; P08 reset/teardown scenarios | Deterministic and engine baseline checks pass; actual multiplayer reset/late-intent assertions remain pending |
+| A1 | `LauncherService.spec` raced pickup/snapshot cases; `Launcher.spec` representations; P08 initial/raced-pickup cases | Pass: one round identity, owner and representation; both ground players retain their M-7. Full host gate and actual three-client race pass |
+| A2 | `LauncherService.spec` malformed/authority/reach/replay; shared movement/origin suites; P08 rejection/flood/movement and later valid pickup | Pass: rejected shape/role/life/ID/round/replay/rate/movement requests cannot change ownership/ammo; valid traffic works afterward |
+| A3 | Reload/transfer/recovery rules; `CharacterOwner.spec`; P08 miss/drop/transfer/switch/early-fire, death/in-flight, raw-removal and Kick/recovery cases | Pass: exact reload deadline and identity persist; reset player stays eliminated; a real accepted rocket survives nonterminal shooter death and damages the aircraft |
+| A4 | Health/timing rules; first-solid engine sweep; P08 pristine three-rocket and mixed-fire cases | Pass: actual pristine health 300→200→100→0 and Ground/AircraftDestroyed result; 21 real rifle hits give 195, then two rockets give 95→0. Miss/cover/duplicate rules and feasible reload timing pass |
+| A5 | Native P08 actual one-operator/two-ground session and replicated observations; composed MatchService tombstone tests | Three-client acquisition/death/disconnect/recovery/ownership/readiness/health agreement passes. Actual same-identity reconnect remains required and unverified; `actualReconnectVerified=false` / `requiredUnverified` explicitly retain the gap |
+| A6 | Terminal/next-round rules; runtime cleanup; P08 real reset/anchor/old-intent and teardown | Pass: old state/work cannot own or damage the next round; one fresh anchor weapon; idempotent teardown drains all owned resources |
 
-Independent fresh Studio 0.747.0.7471481 ordinary Play on `ef7826b` passes **156 server /
-7 client** cases with one actual client, zero failures/skips/errors. The
-eleven-case P08 harness and focused operated checks are distinct requirements.
-The tester's original desktop HUD and raw character-removal defects are fixed
-with semantic layout/inventory-clearance and exact lifecycle regressions, plus
-actual three-client raw-destruction confirmation. An actual phone native-slot
-overlap and later cross-ScreenGui inset collision prompted the final compact
-touch header/common-coordinate correction. Actual 750×381, 568×320 and stricter
-567×299 phone views at a 58-pixel inset pass collision, safe-bounds, text and
-drawn-reticle checks. Native touch pickup/selection/fire/drop/re-pick/reload
-passes; touch HIT readability is explicitly a client-only fixture, not damage
-proof. Two bounded real rifle aiming attempts missed. Server/input rules are
-unchanged from `75b1e88`, whose
-fresh two-client P06/P05/P14 regressions pass 10/10, 8/8 and 6/6 respectively.
-The intermediate fixture-isolation failure is preserved rather than called a
-pass. The writer updated player/contributor/package docs and D55–D57 tuning
-defaults (including D58) and refreshed the representative actual final-source
-launcher capture. Material production/GUI findings are resolved. The first full
-native P08 invocation reached three actual clients and passed 156/7 baselines,
-but failed at the death/in-flight health-200 case (seven discovered, five passed,
-two failed including completion; teardown passed). Test-only revision
-`07e77ea5b57fba359ab611ea39e2c42c7b977881` corrects aim being prepared before
-reload readiness and retains bounded flight diagnostics; its full host gate
-passes 55/65. Production/UI source remains `ef7826b`. Fresh full eleven-case
-P08 harness and actual same-identity reconnect remain pending; the original
-test document is prepared for the user's stable native three-client handoff.
-P09 has not started. No merge or Roblox publication is authorized by
-this implementation work.
+Final `python3 scripts/verify.py` passes **55 unit / 65 integration** and all
+static, strict-type, build, corruption-probe, geometry and release-isolation
+gates ([log](../docs/evidence/p08/host-07e77ea.txt)). Studio
+0.747.0.7471481 native Server & Clients passes **11/11 P08** cases, zero
+failures/skips. Requested/initial/peak population is three actual players;
+final population is two after the intentional carrier Kick. Fresh smoke is
+**156/156 server and 7/7 on each of all three clients**, captured before
+intentional departure. The [summary/baselines](../docs/evidence/p08/native-07e77ea-pass.json),
+[full report](../docs/evidence/p08/native-07e77ea-full.json) and
+[trace/cleanup audit](../docs/evidence/p08/native-07e77ea-audit.json) preserve
+150 trace records, zero dropped, source signatures and environment.
+
+The earlier native failure exposed fixture aim being prepared before reload;
+the correction calculates it after readiness and retains the original damage
+assertions. Current moving-direct aim age is 0.033848–0.283879 seconds. The
+post-death shot's matching ID/flight/impact and health 200 are preserved.
+Earlier failed SDK starts, raw-character/HUD defects, fixture isolation and
+phone inset failures remain historical evidence, not passing new results.
+
+Independent focused review verifies both walked approaches, native E race,
+1/2 selection, G/drop/recovery, touch pickup/fire/switch/reload and actual native
+inventory clearance. Final 750×381, 568×320 and stricter 567×299 phone views at
+58-pixel inset pass bounds/text/reticle checks. Touch HIT readability used a
+disclosed client-only fixture; two bounded real rifle aiming misses remain
+misses. Actual fired damage is separately established by the passing P08
+harness. Source-bound P06/P05/P14 regressions on unchanged core `75b1e88` pass
+10/10, 8/8 and 6/6, including both full orbits. All reproduced production
+findings are fixed and independently rechecked. The writer updated player,
+contributor and package docs, current actual screenshot and D55–D58 defaults.
+
+A5 would require disconnecting and rejoining the same actual identity in a
+continuing round, verifying no restored life/equipment/actions while a teammate
+retains the recovered launcher. Current helpers add another identity; service
+tombstone tests cannot replace this real adapter/network check. D50 is P07-only.
+The remaining gate needs real evidence or an explicit user-directed acceptance
+revision. P09 is not promoted or implemented.
+
+After collection, owned native sessions/fixtures were removed. The original
+`tests.rbxlx` is Edit/not running, ManualHarness=nil, BootstrapStatus absent,
+default simulator/LandscapeLeft restored. No merge or Roblox publication
+occurred.

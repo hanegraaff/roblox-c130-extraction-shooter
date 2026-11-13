@@ -9,12 +9,13 @@ checks.
 
 Verified production runtime is `ef7826b`: full host **55 unit / 65
 integration** and fresh solo Studio **156 server / 7 client** pass. The
-subsequent test-only harness revision `07e77ea` also passes the full host gate;
-its fresh native run is pending. The unchanged
+subsequent test-only harness revision `07e77ea` passes the full host gate and
+the fresh native P08 suite **11/11** with three actual initial clients. The unchanged
 server/input core's source-bound two-client regressions on `75b1e88` pass P06
 **10/10**, P05 **8/8** and P14 **6/6**. Final phone layout/native-control review
-passes. The eleven-case three-client P08 harness and actual same-identity
-reconnect remain open at this checkpoint.
+passes. Actual same-identity reconnect is the sole remaining required
+validation gap; its explicit `requiredUnverified` entry prevents full P08
+acceptance.
 
 ## Candidate and environment
 
@@ -43,12 +44,12 @@ evidence.
 
 | Criterion | Required evidence | Current evidence |
 | --- | --- | --- |
-| A1 | Full host gate; one identity/owner/representation under raced and repeated claims | Host, deterministic claims and representation engine tests pass; actual three-client raced pickup remains open |
-| A2 | Runtime role/life/round/shape/replay/rate/reach/movement rejection without mutation, then valid pickup; retained M-7 | Deterministic rejection/retry and shared ground authority regressions pass; P08 three-client remote/ownership proof remains open |
-| A3 | Drop/death/reset/disconnect reload continuity, valid recovery/fallback, terminal precedence | Service rules, exact raw-character-destruction engine case and clean lifecycle baseline pass; actual P08 transfer/recovery remains open |
-| A4 | Actual swept rockets: two nonlethal direct hits, third ground win; mixed rifle damage, cover/miss/duplicate rejection; feasible reload timing | Rules, first-solid engine sweep/health seam and P06 regressions pass; real player-fired P08 sequence remains open |
-| A5 | Three actual clients: operator and two ground players, raced pickup, death/disconnect/recovery, replicated owner/readiness/health, reconnect authority | Both bounded SDK P08 launches connected only two; corrected native harness and actual same-identity reconnect remain open |
-| A6 | Repeated pristine reset, one anchor launcher and no old tool/projectile/callback authority | Deterministic terminal/next-round rules, engine baseline and P06 reset/teardown pass; P08 actual multiplayer reset remains open |
+| A1 | Full host gate; one identity/owner/representation under raced and repeated claims | Pass: deterministic/engine checks and actual three-client P08 single-identity/loadout/race cases |
+| A2 | Runtime role/life/round/shape/replay/rate/reach/movement rejection without mutation, then valid pickup; retained M-7 | Pass: host rejection/retry and actual P08 malformed/wrong-role/stale/flood/impossible-travel and later valid pickup |
+| A3 | Drop/death/reset/disconnect reload continuity, valid recovery/fallback, terminal precedence | Pass: deterministic/engine rules, actual drop/switch/transfer/death/raw-reset/Kick/recovery and in-flight post-death hit |
+| A4 | Actual swept rockets: two nonlethal direct hits, third ground win; mixed rifle damage, cover/miss/duplicate rejection; feasible reload timing | Pass: engine obstruction/deduplication plus actual P08 pristine 300→200→100→0 and mixed 300→195→95→0/Results |
+| A5 | Three actual clients: operator and two ground players, raced pickup, death/disconnect/recovery, replicated owner/readiness/health, reconnect authority | Three-client behavior/replication passes; actual same-identity reconnect remains required and unverified |
+| A6 | Repeated pristine reset, one anchor launcher and no old tool/projectile/callback authority | Pass: actual P08 reset/old-intent and teardown plus deterministic/engine cancellation and current regressions |
 
 Focused operated review must cover both approaches, pickup, M-7/launcher
 selection, firing/misses/reload, drop/recovery, desktop/touch controls and clear
@@ -352,6 +353,63 @@ was Edit/not running, with no bootstrap owner, before the tester armed P08 for
 the next stable native handoff. This is preparation, not a passing native
 result. Source/UI, full-orbit and phone checks need no unrelated rerun for this
 harness-only correction; the new native session will run fresh 156/7 baselines.
+
+## Corrected native P08 acceptance result
+
+The user started a fresh native Server & Clients session with three actual
+players after the corrected harness was synced and armed. Production/UI source
+remains `ef7826b`; harness source is `07e77ea`; observed delivery head was
+`c3b155d`. Studio 0.747.0.7471481 ran local `tests.rbxlx` (placeId 0) through
+the manual-server-clients route with nil SDK arguments and ManualHarness=P08.
+The [source-bound result/baseline summary](p08/native-07e77ea-pass.json),
+[full 115,010-byte returned report](p08/native-07e77ea-full.json),
+[selected trace/cleanup audit](p08/native-07e77ea-audit.json) and
+[server console](p08/native-07e77ea-console.txt) preserve the run. The summary
+hashes the full report. The [independent final review](p08/independent-final-07e77ea.md)
+maps every criterion and remaining gap.
+
+All **11/11** P08 cases pass, zero failures/skips. Requested, initial and peak
+population is **three actual clients**: one operator and two ground players.
+Current/final population is two after the intentional carrier Kick. Fresh
+server smoke passes **156/156**; all three clients (−1,−2,−3) explicitly pass
+**7/7** with zero errors/skips, captured before departure. All 150 trace records
+are retained under the 192-record cap, with zero dropped records.
+
+The suite verifies initial single-weapon/loadout state; malformed/wrong-role/
+stale/flood/impossible-travel rejection; raced acquisition; miss/drop/transfer/
+switch/early-fire reload continuity; post-death in-flight damage; raw character
+removal/recovery without respawn; real reset/anchor/old-intent rejection; three
+real rockets and mixed damage; actual carrier Kick/recovery; and drained
+idempotent teardown. Health/result assertions were not weakened.
+
+Trace audit confirms the corrected timing. Moving-direct aim age at derived
+acceptance is **0.033848–0.283879 seconds**. Death shot `rocket:1:2` has age
+0.033848 seconds: health starts 300, the shooter is Alive with Humanoid health
+100 and two flights exist (the other is the previous deliberate miss). After
+death, the shooter is Eliminated, the launcher is Available with its exact
+reload deadline retained, the round stays Active and both flights persist.
+The matching shot then reports aircraftHit=true and aircraft health 200.
+Separately, pristine aircraft health goes **300→200→100→0 / Results**. Twenty-one
+actual rifle hits reduce 300→195, followed by rockets to **95→0 / Results**.
+The passing cases assert the Ground/AircraftDestroyed result.
+
+No unresolved reproduced production defect remains. A1/A2/A3/A4/A6 pass; A5's
+actual three-client acquisition, death/disconnect/recovery and replicated
+identity/readiness/health portion passes. **Actual same-identity reconnect is
+still required and unverified**, explicitly reported as
+`actualReconnectVerified = false` and `requiredUnverified = {"A5 actual same-identity reconnect"}`.
+The eleven passing cases do not erase that independent gate. Current helpers
+provide additional identities rather than reconnecting a departed one; pure
+MatchService tombstone checks prove policy, not the real adapter/network
+scenario. D50 does not waive P08. Full plan acceptance remains incomplete on
+that concrete missing evidence; P09 is not promoted or implemented.
+
+After preserving evidence, actual-server EndTest closed all owned children.
+Only original `e45b78d9-003f-45ad-b35e-00e5a5ed494a` remained, Edit, not running,
+ManualHarness=nil and BootstrapStatus absent. The default simulator and
+LandscapeLeft orientation were verified. No active test or owned fixture
+remains, and Studio mutation ownership returned to primary. No merge or Roblox
+publication occurred.
 
 ## Initial Studio availability
 
