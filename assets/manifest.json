@@ -247,5 +247,26 @@
         "face_offset_studs": 0.02
       }
     }
+  ],
+  "runtime_recipes": [
+    {
+      "id": "launcher-primitives",
+      "kind": "runtime-model",
+      "source": "Original three-part launcher tube/bands and pickup label authored entirely in first-party Luau; no external assets or scripts",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "src/server/LauncherGeometry.luau",
+      "parts_per_representation": 3
+    },
+    {
+      "id": "rocket-presentation",
+      "kind": "runtime-effect",
+      "source": "Original one-part noninteractive swept rocket presentation authored entirely in first-party Luau; server collision and P06 health decide damage",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "src/server/LauncherRuntime.luau",
+      "maximum_flight_seconds": 5,
+      "maximum_flight_studs": 1200
+    }
   ]
 }

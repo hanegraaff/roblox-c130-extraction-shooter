@@ -73,6 +73,18 @@ def check_manifest(manifest: dict) -> None:
         if asset["roblox_asset_id"] and not asset["roblox_asset_id"].isdigit():
             raise ValueError(f"asset {asset['id']} has a nonnumeric Roblox ID")
 
+    recipes = manifest.get("runtime_recipes", [])
+    if not isinstance(recipes, list):
+        raise ValueError("manifest runtime_recipes must be a list")
+    for recipe in recipes:
+        for key in ("id", "kind", "source", "author", "license", "local_path"):
+            if not isinstance(recipe.get(key), str) or not recipe[key].strip():
+                raise ValueError(f"runtime recipe requires nonempty {key}")
+        if recipe["id"] in seen:
+            raise ValueError(f"duplicate asset/recipe id: {recipe['id']}")
+        seen.add(recipe["id"])
+        local_target(ROOT, recipe["local_path"])
+
     authored = {str(path.relative_to(ROOT)) for directory in ("world", "models")
                 for path in (ROOT / "assets" / directory).rglob("*")
                 if path.is_file() and path.suffix != ".md"}

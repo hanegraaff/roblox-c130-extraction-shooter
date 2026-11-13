@@ -389,6 +389,8 @@ def geometry_rejection_probes() -> None:
 MANUAL_P06_TEST_ONLY = (
     "ServerScriptService/ServerTests/RoundHarness",
     "ServerScriptService/ServerTests/GroundCombatHarness",
+    "ServerScriptService/ServerTests/LauncherHarness",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/LauncherHarness",
     "StarterPlayer/StarterPlayerScripts/ClientTests/GroundCombatHarness",
     "ServerStorage/DevelopmentSettings",
 )
@@ -436,7 +438,7 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}

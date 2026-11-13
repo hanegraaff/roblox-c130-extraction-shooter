@@ -12,6 +12,7 @@ local AircraftService = require(script.Parent.AircraftService)
 local CombatRuntime = require(script.Parent.CombatRuntime)
 local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
 local DestructionRuntime = require(script.Parent.DestructionRuntime)
+local LauncherRuntime = require(script.Parent.LauncherRuntime)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
@@ -19,6 +20,7 @@ export type Controller = {
     combat: CombatRuntime.Controller,
     destruction: DestructionRuntime.Controller,
     groundCombat: GroundCombatRuntime.Controller,
+    launcher: LauncherRuntime.Controller,
     stop: () -> (),
 }
 
@@ -95,6 +97,16 @@ function GameRuntime.start(
         map.destroy()
         return nil, groundReason
     end
+    local launcher, launcherReason = LauncherRuntime.start(rounds.match, groundCombat)
+    if not launcher then
+        groundCombat.stop()
+        combat.stop()
+        destruction.stop()
+        aircraft.stop()
+        rounds.stop()
+        map.destroy()
+        return nil, launcherReason
+    end
     onCorrection = function(character)
         local player = Players:GetPlayerFromCharacter(character)
         if player then
@@ -102,6 +114,7 @@ function GameRuntime.start(
         end
     end
     return {
+        launcher = launcher,
         groundCombat = groundCombat,
         rounds = rounds,
         aircraft = aircraft,
@@ -109,6 +122,7 @@ function GameRuntime.start(
         destruction = destruction,
         stop = function()
             onCorrection = nil
+            launcher.stop()
             groundCombat.stop()
             combat.stop()
             destruction.stop()

@@ -47,6 +47,7 @@ do
                         DamageRules = true,
                         AircraftHealth = true,
                         GroundCombatService = true,
+                        LauncherService = true,
                         GroundMovementGuard = true,
                     }
                     local area = if serverModules[moduleName] then "server" else "shared"
