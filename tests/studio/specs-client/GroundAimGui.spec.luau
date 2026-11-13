@@ -213,6 +213,13 @@ return function()
             local status = owned:FindFirstChild("RifleStatus")
             local fire = owned:FindFirstChild("Fire")
             local reload = owned:FindFirstChild("Reload")
+            local launcherStatus = owned:FindFirstChild("LauncherStatus")
+            assert(launcherStatus and launcherStatus:IsA("TextLabel"), "launcher team status missing")
+            for _, name in { "M7", "Rocket", "Drop", "Pickup" } do
+                local button = owned:FindFirstChild(name)
+                assert(button and button:IsA("TextButton"), "launcher action missing: " .. name)
+                assert(button.Size.Y.Offset == 32, "launcher action lost readable size")
+            end
             assert(status and status:IsA("TextLabel"), "rifle status missing")
             assert(fire and fire:IsA("TextButton") and reload and reload:IsA("TextButton"), "buttons missing")
             for _, mode in { false, true, false } do
@@ -226,6 +233,14 @@ return function()
                 )
                 assert(fire.Visible == mode and reload.Visible == mode, "buttons failed to follow input mode")
                 assert(status.Parent == owned, "input mode rebuilt the status")
+                assert(
+                    launcherStatus.Size == UDim2.fromOffset(if mode then 260 else 360, 28),
+                    "launcher status failed to follow input mode"
+                )
+                assert(
+                    launcherStatus.Position == UDim2.new(0.5, 0, 1, -64),
+                    "launcher team status overlaps weapon readiness"
+                )
             end
         end)
         owner.stop()
