@@ -139,3 +139,9 @@ passed on `9109d312e283ef31fd5c3482f2154f2e43e470aa`, containing unchanged
 tested source and the current screenshot/review/regression records. Final
 evidence and review state are recorded in the delivery commits. No P06 merge
 or Roblox publication has occurred; no later plan has been implemented.
+
+Final acceptance evidence and reviewed documentation were committed and pushed
+at `d72fc6764ac89f2313addc94ba9f1077ca5d5068`. PR #27 was then marked ready
+for review. The roadmap records implementation completion separately from
+integration and promotes P07 without starting it. The last Studio state is
+the sole original test document in Edit with temporary settings cleared.

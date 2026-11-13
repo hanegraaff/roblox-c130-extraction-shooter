@@ -263,6 +263,12 @@ and contributor documentation, distinguishing verified unmerged P06 from
 checks and GitHub delivery record these facts; no Roblox publication or merge
 is implied.
 
+Final acceptance, independent QA and current documentation were pushed in
+`d72fc6764ac89f2313addc94ba9f1077ca5d5068`. GitHub then confirmed PR #27
+was ready for review (`draft = false`). The final roadmap records P06 separately
+from its pending integration and leaves P07 unstarted. Runtime/test source is
+unchanged from `0ab3607`; later status records require the repository checker.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration
