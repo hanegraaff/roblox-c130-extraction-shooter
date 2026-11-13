@@ -1,0 +1,61 @@
+{
+  "candidateCommit": "4db45950a0516ac916299fbbd728a606e4c6e6f8",
+  "candidateTree": "4d9dc2e3bbd8bd1a6e91d01f60c15a2b6e5742bc",
+  "ids": {
+    "server": "0742bf2c-7b68-4062-986f-d1f333afdce4",
+    "ground": "0c353c9d-9d25-49a9-9879-d46f970b2d6b",
+    "operator": "725ea0e9-e852-4b1b-8308-9faf5878f795",
+    "edit": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94"
+  },
+  "server": {
+    "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":142,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":142}",
+    "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":6.363355500012403}",
+    "invocation": "{\"requestedInitialClients\":2,\"mode\":\"manual-server-clients\",\"harness\":\"P07\",\"actualLateClientRequired\":false}",
+    "version": "0.747.0.7471481",
+    "bootstrap": {
+      "UptimeSeconds": 40,
+      "Running": true,
+      "Environment": "Test"
+    },
+    "players": [
+      {
+        "role": "Gunship",
+        "name": "Player1",
+        "id": -1,
+        "character": true,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "name": "Player2",
+        "id": -2,
+        "character": true,
+        "life": "Alive"
+      }
+    ],
+    "stage": "{\"clientCount\":2,\"serverTime\":1794593530.393779,\"stage\":\"A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal\"}",
+    "server": true
+  },
+  "ground": {
+    "report": "{\"errors\":0,\"skipped\":0,\"passed\":6,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":6}",
+    "role": "Ground",
+    "viewport": [
+      1081,
+      618
+    ],
+    "character": true,
+    "userId": -2,
+    "life": "Alive"
+  },
+  "operator": {
+    "report": "{\"errors\":0,\"skipped\":0,\"passed\":6,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":6}",
+    "role": "Gunship",
+    "viewport": [
+      1081,
+      618
+    ],
+    "character": true,
+    "userId": -1,
+    "life": "Alive"
+  }
+}
