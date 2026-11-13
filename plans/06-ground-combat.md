@@ -136,6 +136,18 @@ independent solo smoke passes 118/6. An actual zero-client Run simulation emits
 the expected failed zero-discovery report after 60.044 seconds and stops cleanly.
 The current-source three-client gameplay rerun is prepared; delayed first-client
 arrival beyond ten seconds has not yet been demonstrated.
+The next native run reached server smoke 118/118 after 4.600 seconds, but one
+client read the negative Run probe's stale report inherited from the Edit
+Workspace. The tester confirmed that contamination and cleared only those
+two diagnostic attributes. P06Team had 3 passed / 2 failed before client
+readiness stopped it; it is not accepted. The same three actual clients remain
+available for a distinct controlled runner restart after verified teardown.
+That separate restart on unchanged `0ab3607` passes P06Team 7/7, fresh server
+smoke 118/118 with all three players, and fresh client smoke 6/6 on each. The
+original contamination remains failed evidence. Exact-source test-runner clones
+with report attributes cleared were used after all previous owners stopped;
+this proves the actual three-client scenarios, not a clean native cold start.
+An owned normal round in the same session is being prepared for operated review.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,

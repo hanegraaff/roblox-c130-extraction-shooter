@@ -150,6 +150,41 @@ and its setup/failure documentation. Native three-client gameplay, delayed
 arrival beyond ten seconds and the remaining operated/regression checks remain
 unverified.
 
+The next [native three-client run on `0ab3607`](p06-team-0ab.json) reached
+fresh server smoke (118/118; one player at that sampling) after first arrival
+at 4.599817 seconds. Player2 and Player3 passed 6/6; Player1 failed Foundation
+after reading the exact zero-client negative report from the preceding Run
+probe before the fresh success replaced it. The tester confirmed the original
+Edit Workspace still held that probe's two attributes, `ServerTestReport` and
+`ServerTestStartup`. Run mode had retained them in the editable document;
+failing to clear them before Play contaminated this run.
+
+P06Team recorded three passing cases (loadout, forged/wrong-role rejection,
+and actual cover followed by Wing damage including moving-tracer assertions),
+then failed client readiness during the pristine rocket case and reported
+3 passed / 2 failed. This is not an accepted team suite. Its original report
+and failed-client console remain preserved. The tester cleared only the two
+temporary diagnostic attributes in Edit and retained the three live clients
+to assess a distinct controlled restart after complete harness cleanup.
+Any later clean rerun must have separate reports and must not replace this
+contaminated native result.
+
+The [distinct controlled restart](p06-team-0ab-restart.json) in the same
+three-client session passed P06Team 7/7, fresh server smoke 118/118 with all
+three players present, and fresh client smoke 6/6 on each client, with zero
+failures/skips/errors. The tester first verified the failed harness had stopped
+and removed its runtime, transport, fixture, tools and effects. Completed test
+entrypoints were replaced with exact-source clones and their descendants,
+with copied report attributes cleared; new reports were collected separately.
+The contaminated original report remains preserved above. First-client wait
+on this restart was approximately 0.000070 seconds because all three actual
+clients were already connected; this is not cold-start or delayed-join evidence.
+The current moving-tracer, cover/Wing damage, mixed rifle/rocket damage, eliminated
+teammate's shared win and reset cases pass in this controlled three-client run.
+The tester retained the session to prepare an explicitly owned normal human
+test round. Current two-client mutual-destruction/forfeit and P05/P14 regressions,
+operated feedback and a representative capture remain open.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration
