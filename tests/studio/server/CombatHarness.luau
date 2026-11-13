@@ -496,6 +496,13 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             local function slope(weapon: string): Vector3
                 local muzzle = runtime.aircraft.muzzle(weapon)
                 assert(muzzle, "slope muzzle missing")
+                local profile = CombatService.profiles[weapon]
+                local period = ReplicatedStorage.AircraftState:GetAttribute("PeriodSeconds")
+                assert(type(period) == "number" and period > 0, "slope orbit period missing")
+                local center = Vector3.new(MapRules.defaults.orbitCenterX, 0, MapRules.defaults.orbitCenterZ)
+                local minimumIncidence = 0.25
+                local guardDistanceStuds = 1.5
+                local originMarginSeconds = 0.25
                 for _, location in { Vector2.new(-240, -140), Vector2.new(135, 260) } do
                     for dx = -24, 24, 4 do
                         for dz = -24, 24, 4 do
@@ -520,11 +527,73 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                                     visible
                                     and visible.Instance == workspace.Terrain
                                     and (visible.Position - surface.Position).Magnitude < 1
+                                    and -(visible.Position - muzzle).Unit:Dot(visible.Normal)
+                                        >= minimumIncidence
                                 then
+                                    -- Select a non-grazing real Terrain scenario,
+                                    -- independently queried with the actual shell
+                                    -- radius. A ray-only tangent can disagree by
+                                    -- several studs even for a 0.05 stud sphere.
+                                    -- Rotate the entire muzzle orbit by ±0.25s
+                                    -- (~6.3 studs at 90s) to cover modest RPC motion.
+                                    -- These are fixture preconditions; the later
+                                    -- real remote still must satisfy the original
+                                    -- five-stud impact assertion independently.
+                                    local stable = true
+                                    local guards: { unknown } = {}
+                                    for _, offset in { -originMarginSeconds, 0, originMarginSeconds } do
+                                        local origin = center
+                                            + CFrame.Angles(0, -2 * math.pi * offset / period, 0)
+                                                :VectorToWorldSpace(muzzle - center)
+                                        local delta = visible.Position - origin
+                                        local swept = workspace:Spherecast(
+                                            origin,
+                                            profile.collisionRadius,
+                                            delta.Unit * math.min(delta.Magnitude + 0.25, profile.range),
+                                            rayParams()
+                                        )
+                                        if
+                                            not swept
+                                            or swept.Instance ~= workspace.Terrain
+                                            or swept.Normal.Y <= 0.2
+                                            or swept.Normal.Y >= 0.94
+                                            or -(delta.Unit:Dot(swept.Normal)) < minimumIncidence
+                                            or (swept.Position - visible.Position).Magnitude
+                                                > guardDistanceStuds
+                                        then
+                                            stable = false
+                                            break
+                                        end
+                                        table.insert(guards, {
+                                            orbitOffsetSeconds = offset,
+                                            origin = { origin.X, origin.Y, origin.Z },
+                                            contact = {
+                                                swept.Position.X,
+                                                swept.Position.Y,
+                                                swept.Position.Z,
+                                            },
+                                            distanceStuds = (swept.Position - visible.Position).Magnitude,
+                                            incidence = -(delta.Unit:Dot(swept.Normal)),
+                                        })
+                                    end
                                     local reachable = pcall(function()
                                         return payload(1, weapon, visible.Position)
                                     end)
-                                    if reachable then
+                                    if stable and reachable then
+                                        table.insert(observations, {
+                                            kind = "terrain-slope-selection",
+                                            weapon = weapon,
+                                            target = {
+                                                visible.Position.X,
+                                                visible.Position.Y,
+                                                visible.Position.Z,
+                                            },
+                                            collisionRadiusStuds = profile.collisionRadius,
+                                            minimumIncidence = minimumIncidence,
+                                            guardDistanceStuds = guardDistanceStuds,
+                                            originMarginSeconds = originMarginSeconds,
+                                            actualEngineGuards = guards,
+                                        })
                                         return visible.Position
                                     end
                                 end
@@ -575,25 +644,40 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             local function fireAndObserve(weapon: string, target: Vector3, panelId: string?)
                 shotSequence += 1
                 local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
-                local shotPayload = payload(shotSequence, weapon, target)
-                local muzzle = runtime.aircraft.muzzle(weapon)
-                assert(muzzle, "diagnostic muzzle missing")
-                local ray = target - muzzle
-                local preflight = workspace:Raycast(muzzle, ray.Unit * (ray.Magnitude + 0.25), rayParams())
                 local samples: { unknown } = {}
-                local diagnostic = {
+                local diagnostic: { [string]: unknown } = {
                     kind = "geometry-flight-diagnostic",
-                    payload = shotPayload,
+                    weapon = weapon,
+                    requestedShotId = shotSequence,
+                    target = { target.X, target.Y, target.Z },
                     expectedPanelId = panelId,
-                    sampledMuzzle = { muzzle.X, muzzle.Y, muzzle.Z },
-                    preflightHit = if preflight then preflight.Instance:GetFullName() else "none",
-                    preflightPosition = if preflight
-                        then { preflight.Position.X, preflight.Position.Y, preflight.Position.Z }
-                        else nil,
                     previousImpact = previous,
                     samples = samples,
                 }
                 table.insert(observations, diagnostic)
+                local muzzle = runtime.aircraft.muzzle(weapon)
+                diagnostic.sampledMuzzle = if muzzle then { muzzle.X, muzzle.Y, muzzle.Z } else nil
+                assert(muzzle, "diagnostic muzzle missing")
+                local shotPayload = payload(shotSequence, weapon, target)
+                diagnostic.payload = shotPayload
+                local ray = target - muzzle
+                local displacement = ray.Unit
+                    * math.min(ray.Magnitude + 0.25, CombatService.profiles[weapon].range)
+                local preflight = workspace:Raycast(muzzle, displacement, rayParams())
+                local swept = workspace:Spherecast(
+                    muzzle,
+                    CombatService.profiles[weapon].collisionRadius,
+                    displacement,
+                    rayParams()
+                )
+                diagnostic.preflightHit = if preflight then preflight.Instance:GetFullName() else "none"
+                diagnostic.preflightPosition = if preflight
+                    then { preflight.Position.X, preflight.Position.Y, preflight.Position.Z }
+                    else nil
+                diagnostic.preflightSweepHit = if swept then swept.Instance:GetFullName() else "none"
+                diagnostic.preflightSweepPosition = if swept
+                    then { swept.Position.X, swept.Position.Y, swept.Position.Z }
+                    else nil
                 local start = os.clock()
                 probe(op, "Fire", shotPayload)
                 local deadline = os.clock() + 8
@@ -626,11 +710,26 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     task.wait(0.03)
                     value = ReplicatedStorage.AircraftState:GetAttribute("Impact")
                 end
+                diagnostic.actualImpactEncoded = value
+                local observedHit = if type(value) == "string" and value ~= previous
+                    then HttpService:JSONDecode(value)
+                    else nil
+                diagnostic.actualImpact = observedHit
+                if
+                    observedHit
+                    and type(observedHit.x) == "number"
+                    and type(observedHit.y) == "number"
+                    and type(observedHit.z) == "number"
+                then
+                    local observedPosition = Vector3.new(observedHit.x, observedHit.y, observedHit.z)
+                    diagnostic.actualPosition = { observedPosition.X, observedPosition.Y, observedPosition.Z }
+                    diagnostic.actualDistanceFromTargetStuds = (observedPosition - target).Magnitude
+                end
                 assert(
                     type(value) == "string" and value ~= previous,
                     "terrain or upper-floor actual impact: " .. HttpService:JSONEncode(diagnostic)
                 )
-                local hit = snapshot("Impact")
+                local hit = observedHit
                 assert(
                     hit.weapon == weapon and hit.shotId == shotSequence,
                     "impact identity/profile disagrees"
