@@ -168,7 +168,7 @@ return function()
                 viewport.Size = UDim2.fromOffset(size.X, size.Y)
                 runService.RenderStepped:Wait()
                 runService.RenderStepped:Wait()
-                assert(status.AbsoluteSize == Vector2.new(260, 36), "rifle status lost readable size")
+                assert(status.AbsoluteSize == Vector2.new(260, 24), "rifle status lost readable size")
                 assert(status.TextBounds.X <= status.AbsoluteSize.X, "ammunition text clipped")
                 assert(not overlaps(status, cross), "rifle status overlaps centered reticle")
                 assert(not overlaps(status, fire), "rifle status overlaps fire")
@@ -234,7 +234,8 @@ return function()
                 assert(fire.Visible == mode and reload.Visible == mode, "buttons failed to follow input mode")
                 assert(status.Parent == owned, "input mode rebuilt the status")
                 assert(
-                    launcherStatus.Size == UDim2.fromOffset(if mode then 260 else 360, 28),
+                    launcherStatus.Size
+                        == UDim2.fromOffset(if mode then 260 else 360, if mode then 24 else 28),
                     "launcher status failed to follow input mode"
                 )
             end
@@ -291,8 +292,9 @@ return function()
                         child:Clone().Parent = viewport
                     end
                 end
-                -- Reserve the full bottom 96 desktop pixels for native Backpack
-                -- inventory, including slot borders/padding. This semantic region
+                -- Reserve the full bottom 96 pixels on both input modes for
+                -- native Backpack inventory, including slot borders/padding.
+                -- CoreGui is omitted by Studio screenshots; this semantic region
                 -- catches HUD overlap without depending on private CoreGui names.
                 local inventory = Instance.new("Frame")
                 inventory.Name = "NativeInventoryReserve"
@@ -301,6 +303,33 @@ return function()
                 inventory.Size = UDim2.new(1, 0, 0, 96)
                 inventory.BackgroundTransparency = 1
                 inventory.Parent = viewport
+                local reserves: { GuiObject } = { inventory }
+                local function reserve(name: string, position: UDim2, size: UDim2, anchor: Vector2?)
+                    local item = Instance.new("Frame")
+                    item.Name, item.Position, item.Size = name, position, size
+                    item.AnchorPoint = anchor or Vector2.zero
+                    item.BackgroundTransparency, item.Parent = 1, viewport
+                    table.insert(reserves, item)
+                end
+                if mode then
+                    -- Independent spatial requirements: the fixed touch reticle
+                    -- and active RoundHUD regions keep aim, health and surrender
+                    -- readable. These reservations are not the new status offsets.
+                    reserve(
+                        "TouchReticleReserve",
+                        UDim2.fromScale(0.5, 0.5),
+                        UDim2.fromOffset(24, 24),
+                        Vector2.new(0.5, 0.5)
+                    )
+                    reserve("RoundSummaryReserve", UDim2.fromOffset(12, 8), UDim2.fromOffset(300, 38))
+                    reserve("AircraftHealthReserve", UDim2.fromOffset(12, 55), UDim2.fromOffset(250, 34))
+                    reserve(
+                        "SurrenderReserve",
+                        UDim2.new(1, -12, 0, 8),
+                        UDim2.fromOffset(150, 36),
+                        Vector2.new(1, 0)
+                    )
+                end
                 local layouts: { Vector2 } = if mode
                     then { Vector2.new(568, 320), Vector2.new(750, 381), Vector2.new(852, 393) }
                     else { Vector2.new(1280, 720), Vector2.new(1920, 1080) }
@@ -339,10 +368,10 @@ return function()
                                     and relative.Y + item.AbsoluteSize.Y <= size.Y,
                                 "HUD outside viewport: " .. detail
                             )
-                            if not mode then
+                            for _, reserved in reserves do
                                 assert(
-                                    not overlaps(item, inventory),
-                                    "desktop HUD overlaps native inventory reserve: " .. detail
+                                    not overlaps(item, reserved),
+                                    "HUD overlaps reserved " .. reserved.Name .. ": " .. detail
                                 )
                             end
                             for otherIndex = index + 1, #names do

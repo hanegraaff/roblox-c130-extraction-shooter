@@ -42,23 +42,25 @@ function GroundCombatController.projectAim(
         UDim2.fromOffset(math.floor(pixels.X - guiOrigin.X + 0.5), math.floor(pixels.Y - guiOrigin.Y + 0.5))
 end
 
--- Returns the rifle status position and size without yielding. Touch layouts
--- keep the bottom-center ammunition display clear of the centered reticle.
+-- Returns weapon readiness layout without yielding. On touch, compact rows
+-- fit below round health and above the centered reticle, preserving native
+-- inventory at the bottom even in the 568x320 minimum landscape viewport.
 function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
     if touch then
-        return UDim2.new(0.5, 0, 1, -20), UDim2.fromOffset(260, 36)
+        return UDim2.new(0.5, 0, 0, 144), UDim2.fromOffset(260, 24)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
 end
 
 -- Desktop rows stay above the native Backpack's reserved bottom inventory
--- region. Touch shares the equipment-action row above its two status readouts.
+-- region. Touch actions sit below the reticle and above that same inventory
+-- reserve; its two compact status rows live above the reticle instead.
 local function pickupPosition(touch: boolean): UDim2
     return UDim2.new(0.5, 0, 1, if touch then -104 else -160)
 end
 
 local function launcherStatusPosition(touch: boolean): UDim2
-    return UDim2.new(0.5, 0, 1, if touch then -64 else -204)
+    return if touch then UDim2.new(0.5, 0, 0, 118) else UDim2.new(0.5, 0, 1, -204)
 end
 
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
@@ -140,7 +142,8 @@ function GroundCombatController.new(
             local launcherLabel = label:Clone()
             launcherLabel.Name = "LauncherStatus"
             launcherLabel.Position = launcherStatusPosition(lastTouch)
-            launcherLabel.Size = UDim2.fromOffset(360, 28)
+            launcherLabel.Size =
+                UDim2.fromOffset(if lastTouch then 260 else 360, if lastTouch then 24 else 28)
             launcherLabel.TextSize = 14
             launcherLabel.Parent = gui
             local launcherButtons: { [string]: TextButton } = {}
@@ -347,7 +350,8 @@ function GroundCombatController.new(
                     fireButton.Visible = touch
                     reloadButton.Visible = touch and (selected == nil or selected.Name == "M-7 rifle")
                     reticle.Visible = selected ~= nil
-                    launcherLabel.Size = UDim2.fromOffset(if touch then 260 else 360, 28)
+                    launcherLabel.Size =
+                        UDim2.fromOffset(if touch then 260 else 360, if touch then 24 else 28)
                     local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
                     local encoded = if launcherState then launcherState:GetAttribute("Snapshot") else nil
                     if type(encoded) == "string" and encoded ~= launcherEncoded then
