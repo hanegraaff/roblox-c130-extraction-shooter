@@ -83,8 +83,10 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local traceEnabled = false
     local fireDecisions: { unknown } = {}
     local shotObservations: { unknown } = {}
-    local tracerObservations: { { endpoint: Vector3, visualEnd: Vector3, length: number } } = {}
+    local tracerObservations: { { origin: Vector3, endpoint: Vector3, initialTip: Vector3, part: BasePart } } =
+        {}
     local lastHitName = ""
+    local sawMuzzleFlash = false
     local started, runtimeOrFailure = pcall(function()
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
@@ -115,6 +117,7 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 if traceEnabled then
                     lastHitName = shot.hitName
                     local effects = workspace:FindFirstChild("GroundCombatEffects")
+                    sawMuzzleFlash = effects ~= nil and effects:FindFirstChild("M7MuzzleFlash") ~= nil
                     local tracer: Instance? = nil
                     if effects then
                         for _, child in effects:GetChildren() do
@@ -125,9 +128,10 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                     end
                     if tracer and tracer:IsA("BasePart") then
                         table.insert(tracerObservations, {
+                            origin = shot.origin,
                             endpoint = shot.hitPosition,
-                            visualEnd = tracer.Position + tracer.CFrame.LookVector * tracer.Size.Z * 0.5,
-                            length = tracer.Size.Z,
+                            initialTip = tracer.Position + tracer.CFrame.LookVector * tracer.Size.Z * 0.5,
+                            part = tracer,
                         })
                     end
                     local aircraftPosition = shot.aircraftPosition
@@ -727,11 +731,32 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                 "shot missed visible wing: " .. lastHitName
             )
             local latestTracer = tracerObservations[#tracerObservations]
+            assert(latestTracer, "moving tracer missing")
+            assert(sawMuzzleFlash, "server rifle muzzle flash missing")
             assert(
-                latestTracer and (latestTracer.visualEnd - latestTracer.endpoint).Magnitude < 0.01,
-                "tracer endpoint disagrees with authoritative hit"
+                (latestTracer.initialTip - latestTracer.origin).Magnitude < 0.1,
+                "tracer did not start at server origin"
             )
-            assert(latestTracer.length <= 50.01, "tracer exceeds terminal segment")
+            local tracerDirection = (latestTracer.endpoint - latestTracer.origin).Unit
+            local tracerDistance = (latestTracer.endpoint - latestTracer.origin).Magnitude
+            local lastProgress = 0
+            local reached = false
+            local tracerDeadline = os.clock() + 3
+            while latestTracer.part.Parent and os.clock() < tracerDeadline do
+                local tip = latestTracer.part.Position
+                    + latestTracer.part.CFrame.LookVector * latestTracer.part.Size.Z * 0.5
+                local offset = tip - latestTracer.origin
+                local progress = offset:Dot(tracerDirection)
+                assert((offset - tracerDirection * progress).Magnitude < 0.05, "tracer left resolved ray")
+                assert(
+                    progress + 0.05 >= lastProgress and progress <= tracerDistance + 0.05,
+                    "tracer reversed or overshot"
+                )
+                lastProgress = progress
+                reached = reached or (tip - latestTracer.endpoint).Magnitude < 0.05
+                task.wait(0.01)
+            end
+            assert(not latestTracer.part.Parent and reached, "tracer did not reach endpoint and clean up")
             if teammateHumanoid then
                 assert(teammateHumanoid.Health == teammateHealth, "rifle damaged a ground teammate")
             end

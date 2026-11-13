@@ -13,9 +13,9 @@ local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local GroundCombatController = {}
 
--- Converts desktop screen-space mouse coordinates to viewport pixels. Touch aim
--- remains centered in the viewport. The same rounded pixel drives the ray and
--- the reticle; origin is the measured GUI-content position, in pixels.
+-- Mouse and touch-center inputs use viewport pixels. GUI layout uses its
+-- measured content origin plus the current inset. One rounded viewport pixel
+-- drives both the reticle and the ray.
 -- Pure and nonyielding; all arguments are sampled by the caller each frame.
 function GroundCombatController.projectAim(
     viewport: Vector2,
@@ -24,10 +24,11 @@ function GroundCombatController.projectAim(
     inset: Vector2,
     origin: Vector2
 ): (Vector2, UDim2)
-    local input = if touch then viewport * 0.5 else mouse - inset
+    local input = if touch then viewport * 0.5 else mouse
     local pixels = Vector2.new(math.floor(input.X + 0.5), math.floor(input.Y + 0.5))
+    local guiOrigin = origin + inset
     return pixels,
-        UDim2.fromOffset(math.floor(pixels.X - origin.X + 0.5), math.floor(pixels.Y - origin.Y + 0.5))
+        UDim2.fromOffset(math.floor(pixels.X - guiOrigin.X + 0.5), math.floor(pixels.Y - guiOrigin.Y + 0.5))
 end
 
 -- Returns the rifle status position and size without yielding. Touch layouts

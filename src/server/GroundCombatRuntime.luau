@@ -18,6 +18,9 @@ local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
+local TRACER_SPEED = 1200 -- studs per second; cosmetic travel, not damage timing
+local MIN_TRACER_SECONDS = 0.15
+local TRACER_TAIL_SECONDS = 0.1
 -- Server-only, nonauthoritative diagnostics for an already resolved shot.
 export type ShotObservation = {
     userId: number,
@@ -77,8 +80,21 @@ function GroundCombatRuntime.start(
     local movement: { [Player]: { character: Model, guard: GroundMovementGuard.Controller }? } = {}
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local connections: { RBXScriptConnection } = {}
+    local tracers: { { part: Part, origin: Vector3, endpoint: Vector3, started: number, duration: number } } =
+        {}
     local running = true
     local lastRound = -1
+    local function clearTracers()
+        for _, tracer in tracers do
+            tracer.part:Destroy()
+        end
+        table.clear(tracers)
+        for _, effect in effects:GetChildren() do
+            if effect.Name == "M7MuzzleFlash" then
+                effect:Destroy()
+            end
+        end
+    end
     local function observe(player: Player, decision: string, now: number)
         if dependencies and dependencies.observeFire then
             dependencies.observeFire(player.UserId, decision, now)
@@ -304,15 +320,36 @@ function GroundCombatRuntime.start(
             tracer.CanQuery = false
             tracer.Material = Enum.Material.Neon
             tracer.Color = Color3.fromRGB(255, 220, 120)
-            -- Display the terminal section of the resolved server ray.
-            -- A full head-to-target beam appears displaced in a third-person
-            -- camera even when its endpoint agrees with the aiming point.
-            local length = math.min((endpoint - origin).Magnitude, 50)
-            local start = endpoint - delta.Unit * length
-            tracer.Size = Vector3.new(0.4, 0.4, math.max(length, 0.01))
-            tracer.CFrame = CFrame.lookAt((start + endpoint) / 2, endpoint)
+            -- Moving presentation follows the resolved authoritative ray; hit
+            -- evaluation remains immediate. It never predicts a future hit.
+            tracer.Size = Vector3.new(0.35, 0.35, 0.01)
+            tracer.CFrame = CFrame.lookAt(origin, endpoint)
             tracer.Parent = effects
-            Debris:AddItem(tracer, 0.4)
+            local duration = math.max(MIN_TRACER_SECONDS, (endpoint - origin).Magnitude / TRACER_SPEED)
+            table.insert(tracers, {
+                part = tracer,
+                origin = origin,
+                endpoint = endpoint,
+                started = now,
+                duration = duration,
+            })
+            local ownedTool = tools[player]
+            local barrel = if ownedTool then ownedTool:FindFirstChild("Barrel") else nil
+            if barrel and barrel:IsA("BasePart") then
+                local flash = Instance.new("Part")
+                flash.Name = "M7MuzzleFlash"
+                flash.Shape = Enum.PartType.Ball
+                flash.Size = Vector3.new(1.2, 1.2, 1.2)
+                flash.Anchored = true
+                flash.CanCollide = false
+                flash.CanTouch = false
+                flash.CanQuery = false
+                flash.Material = Enum.Material.Neon
+                flash.Color = Color3.fromRGB(255, 206, 80)
+                flash.CFrame = barrel.CFrame * CFrame.new(0, 0, -barrel.Size.Z / 2)
+                flash.Parent = effects
+                Debris:AddItem(flash, 0.15)
+            end
             local state = match.snapshot()
             local healthBefore = health.snapshot().health
             local applied = false
@@ -381,8 +418,25 @@ function GroundCombatRuntime.start(
         RunService.Heartbeat:Connect(function()
             local now = workspace:GetServerTimeNow()
             local state = match.snapshot()
+            for i = #tracers, 1, -1 do
+                local tracer = tracers[i]
+                local elapsed = now - tracer.started
+                if elapsed >= tracer.duration + TRACER_TAIL_SECONDS or not tracer.part.Parent then
+                    tracer.part:Destroy()
+                    table.remove(tracers, i)
+                else
+                    local progress = math.clamp(elapsed / tracer.duration, 0, 1)
+                    local direction = (tracer.endpoint - tracer.origin).Unit
+                    local traveled = (tracer.endpoint - tracer.origin).Magnitude * progress
+                    local length = math.max(0.01, math.min(3, traveled))
+                    local position = tracer.origin + direction * (traveled - length * 0.5)
+                    tracer.part.Size = Vector3.new(0.35, 0.35, length)
+                    tracer.part.CFrame = CFrame.lookAt(position, position + direction)
+                end
+            end
             if state.phase == "Resetting" and lastPhase ~= "Resetting" then
                 aircraftState:SetAttribute("GroundShot", nil)
+                clearTracers()
             end
             if state.phase == "Lobby" and lastPhase ~= "Lobby" then
                 health = AircraftHealth.new()
@@ -468,6 +522,7 @@ function GroundCombatRuntime.start(
             end
             table.clear(buckets)
             table.clear(movement)
+            clearTracers()
             fire:Destroy()
             reload:Destroy()
             originGeometry.destroy()
