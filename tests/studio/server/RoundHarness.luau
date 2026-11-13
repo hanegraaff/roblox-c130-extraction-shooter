@@ -73,6 +73,23 @@ function RoundHarness.run()
     local selector = if development and development:IsA("ModuleScript")
         then development:GetAttribute("ManualHarness")
         else nil
+    if RunService:IsStudio() and args == nil and selector == "P07" then
+        local invocation = {
+            mode = "manual-server-clients",
+            harness = "P07",
+            requestedInitialClients = 2,
+            actualLateClientRequired = false,
+        }
+        workspace:SetAttribute("ManualP07Invocation", HttpService:JSONEncode(invocation))
+        workspace:SetAttribute("ManualP07Report", nil)
+        require(script.Parent.DestructionHarness).run(function(report)
+            workspace:SetAttribute(
+                "ManualP07Report",
+                HttpService:JSONEncode({ invocation = invocation, result = report })
+            )
+        end)
+        return
+    end
     if RunService:IsStudio() and args == nil and selector == "P05" then
         local invocation = {
             mode = "manual-server-clients",
@@ -116,6 +133,10 @@ function RoundHarness.run()
     end
     if type(args) == "table" and (args.kind == "P14" or args.kind == "P14ArrivalRegression") then
         require(script.Parent.AircraftPanHarness).run(args.kind == "P14ArrivalRegression")
+        return
+    end
+    if type(args) == "table" and args.kind == "P07" then
+        require(script.Parent.DestructionHarness).run()
         return
     end
     if type(args) == "table" and args.kind == "P13" then

@@ -1,0 +1,294 @@
+{
+  "candidateCommit": "56fa735dffb3e1bc95afa9df5b0952398c9467ff",
+  "nativeIDs": {
+    "server": "0742bf2c-7b68-4062-986f-d1f333afdce4",
+    "ground": "0c353c9d-9d25-49a9-9879-d46f970b2d6b",
+    "operator": "725ea0e9-e852-4b1b-8308-9faf5878f795",
+    "edit": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94"
+  },
+  "report": {
+    "actualClients": 2,
+    "purpose": "Narrow actual production reset class/ledger timeline ONLY, not live-work reset acceptance",
+    "rows": [
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "before abort actual Active",
+        "phase": "Active",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.508094,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "immediate beginReset",
+        "phase": "Resetting",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.508444,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Part",
+        "label": "same original waiter after Lobby BEFORE yielding",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 0,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.563451,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 187,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "value": true,
+        "time": 1794595997.563466,
+        "label": "original panel helper would throw"
+      },
+      {
+        "targetClass": "Part",
+        "label": "Heartbeat 1",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 0,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.564589,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 187,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "after deferred resume 1",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.5916,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "Heartbeat 2",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.592188,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "after deferred resume 2",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.593947,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "Heartbeat 3",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.594352,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "after deferred resume 3",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.60707,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "Heartbeat 4",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.607938,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      },
+      {
+        "targetClass": "Model",
+        "publishedCredit": 0,
+        "label": "after deferred resume 4",
+        "phase": "Lobby",
+        "projectiles": 0,
+        "models": 187,
+        "targetAppearance": "Pristine",
+        "time": 1794595997.623585,
+        "ledger": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "authoredPanelParts": 0,
+        "resources": {
+          "pending": 0,
+          "panels": 187,
+          "fragments": 0
+        },
+        "targetState": "Intact",
+        "roundId": 1
+      }
+    ],
+    "ok": true
+  }
+}

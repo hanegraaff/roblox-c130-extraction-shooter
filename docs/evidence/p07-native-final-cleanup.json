@@ -1,0 +1,70 @@
+{
+  "nativeServer": "30579148-0d78-4851-bce9-8384f9aa57da",
+  "beforeEndTest": {
+    "players": [
+      {
+        "id": -1,
+        "character": false
+      }
+    ],
+    "teardownLeaseAbsent": true,
+    "workspace": {
+      "P07RenderTargets": false,
+      "Aircraft": false,
+      "PanelFragments": false,
+      "P07RenderCommand": false,
+      "P07QAStop": false,
+      "P14ThermalFixtures": false
+    },
+    "disposableFolderAbsent": true,
+    "workspaceAttributeNames": [
+      "ManualP07Invocation",
+      "ManualP07Report",
+      "P05MultiplayerReport",
+      "P05PreviousRearmReport",
+      "P05RearmReport",
+      "P07GauDiagnosticReport",
+      "P07MultiplayerReport",
+      "P07PreviousRearmReport",
+      "P07PriorMultiplayerReport",
+      "P07QAReport",
+      "P07QAStage",
+      "P07RearmReport",
+      "P07RenderReport",
+      "P07RenderSequence",
+      "P07ResetOnlyReport",
+      "P07ResetOnlyStage",
+      "P07Stage",
+      "P14RearmReport",
+      "P14RearmStarted",
+      "ServerTestReport",
+      "ServerTestStartup"
+    ],
+    "replicated": {
+      "P07QAControl": false,
+      "P07Harness": false,
+      "P14Harness": false,
+      "P05Harness": false,
+      "AircraftState": false,
+      "RoundState": false
+    }
+  },
+  "reports": [
+    "/tmp/p07-tester-p14-regression-report.json",
+    "/tmp/p07-tester-reset-only-report.json",
+    "/tmp/p07-tester-p05-873f0f6-report.json",
+    "/tmp/p07-tester-a4-real-blast.json",
+    "/tmp/p07-tester-render-review.json",
+    "/tmp/p07-tester-e45ef48-native-report.json"
+  ],
+  "EndTest": {
+    "actualServerInvoked": true,
+    "returned": "Native session ended after report preservation",
+    "remainingStudioIds": [
+      "eea79821-d1ee-47bb-b6c6-cdf494d9ba94"
+    ],
+    "remainingStudioFile": "tests.rbxlx",
+    "mode": "Edit"
+  },
+  "originalEditProof": "/tmp/p07-tester-final-edit-cleanup.json"
+}

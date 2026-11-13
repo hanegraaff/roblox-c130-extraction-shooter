@@ -1,0 +1,528 @@
+{
+  "candidateCommit": "56fa735dffb3e1bc95afa9df5b0952398c9467ff",
+  "candidateTree": "c7de331fd449d59c37c45e35efe15b13712e0228",
+  "files": [
+    {
+      "path": "assets/manifest.json",
+      "sha256": "de13a24d719d23cc4653892da624f58aa881919aa30af3b6db08b397e235aa8d",
+      "bytes": 6169
+    },
+    {
+      "path": "assets/models/C130.model.json",
+      "sha256": "330e7cc1a24791172355cca411a5483f357f5e62a88fb99434c577a465e2ec3b",
+      "bytes": 10445
+    },
+    {
+      "path": "assets/models/CoverPanel.model.json",
+      "sha256": "a7569f43b6a13ae6dfc9efbebf5210e871523a7527088ba0da55daf4ea12efe6",
+      "bytes": 392
+    },
+    {
+      "path": "assets/models/PanelResidual.model.json",
+      "sha256": "9c3f53c7e2b14e2d530d9439b867b7a9e91b29b6825baf651e484a6f782eed04",
+      "bytes": 1177
+    },
+    {
+      "path": "assets/world/Battlefield.model.json",
+      "sha256": "332c1bd1d801492e4ec194bbf3e0bdd3c623972cc59349d0da1df6ecf53d1c2c",
+      "bytes": 386359
+    },
+    {
+      "path": "scripts/inspect_build.py",
+      "sha256": "0326557147172930720a6e08934a4efe0ada3dd420b27a8a743486fcdf2470a5",
+      "bytes": 28484
+    },
+    {
+      "path": "scripts/run_tests.luau",
+      "sha256": "72ef75e4137ba73559c39d146596c988c54f305b8050f1707ebe0ab2c690a48c",
+      "bytes": 2742
+    },
+    {
+      "path": "src/client/GroundCombatController.luau",
+      "sha256": "18d9822cdb2eeb293aeb67860d9de395c3b9580650fa66cf089f5d5b9efe0078",
+      "bytes": 14915
+    },
+    {
+      "path": "src/client/RoundPanel.luau",
+      "sha256": "0e129643734ce4e117bd1981e470e475c007ef0e55ee4ab61652c0db475d85fd",
+      "bytes": 11110
+    },
+    {
+      "path": "src/client/StatusPanel.luau",
+      "sha256": "01ff2577617465d1ed8c487624bfb1d7f10a670cf6933616cdef650985b52a8a",
+      "bytes": 2775
+    },
+    {
+      "path": "src/client/ThermalCameraController.luau",
+      "sha256": "9caf79dce26fb9e6ed25498a89e43665b3c397cdfcfe59c41fce40a0d5b3089c",
+      "bytes": 38546
+    },
+    {
+      "path": "src/client/init.client.luau",
+      "sha256": "6e44ed2b5f3900f741e5c638172bf5513ce422dd088e90f528b0806a6d45485d",
+      "bytes": 2187
+    },
+    {
+      "path": "src/server/AircraftHealth.luau",
+      "sha256": "f7ed71a055ddf5babccd92bbb865754da150c184a7c85d9b9dc6722447431445",
+      "bytes": 2380
+    },
+    {
+      "path": "src/server/AircraftSelection.luau",
+      "sha256": "a9e0766826a0b3a63e0b9d5feb127ed0916eed188a2617d54a7b5b56081ccf71",
+      "bytes": 2965
+    },
+    {
+      "path": "src/server/AircraftService.luau",
+      "sha256": "37b9f609afba8ace155b848deea4410f64e8bf11678957716512bd5d408b9a00",
+      "bytes": 9752
+    },
+    {
+      "path": "src/server/Bootstrap.luau",
+      "sha256": "c0365a5516ef6ead74739927ae92952ce3a899a926b42f1218e1a5c02220ac47",
+      "bytes": 1691
+    },
+    {
+      "path": "src/server/BuildingGeometry.luau",
+      "sha256": "863b5d45a43ac620bfdca1dc66dc8384d1b90887b4e3202c5889a075cf974ce1",
+      "bytes": 13534
+    },
+    {
+      "path": "src/server/CharacterOwner.luau",
+      "sha256": "69094419ff7bcd1ff8b6173554dc9f87b3c16dc694b1284647fedfda5ebf2f73",
+      "bytes": 7194
+    },
+    {
+      "path": "src/server/CombatRuntime.luau",
+      "sha256": "aefee87adccc8a172b6622822bce975147d95014a91178569c0f74e4464458d4",
+      "bytes": 23267
+    },
+    {
+      "path": "src/server/CombatService.luau",
+      "sha256": "f6bc05f787ff92aa9267c84e1c54322baaea4f2a40d1981098e03c075196a167",
+      "bytes": 8916
+    },
+    {
+      "path": "src/server/CombatViewRules.luau",
+      "sha256": "b931de5dba6a566508c4040561b24d00327d4258eb2ecbefacb799d6e5272643",
+      "bytes": 8656
+    },
+    {
+      "path": "src/server/DamageRules.luau",
+      "sha256": "cdd96377fd28842ff584ba932d714eca9d9934831c0cda47c57a9b73bfe4d9f6",
+      "bytes": 1712
+    },
+    {
+      "path": "src/server/DestructionRuntime.luau",
+      "sha256": "b9eb758f1f155d733ce498fa880d11b8296f4450cc3b1db9ddd1f63ba6b1248b",
+      "bytes": 7181
+    },
+    {
+      "path": "src/server/DestructionService.luau",
+      "sha256": "29fe18942aa03abe646930d93a4aef6ce5b3ffe5cf6f6334465b4b47c24aab0c",
+      "bytes": 8991
+    },
+    {
+      "path": "src/server/GameRuntime.luau",
+      "sha256": "399446f38288758d3936cb67fcddfc35485ba5f8e207047db1d21841a3ff127d",
+      "bytes": 4125
+    },
+    {
+      "path": "src/server/GroundCombatRuntime.luau",
+      "sha256": "821b376ff2bec4d5340827d565a2f2a620ab5d132e0bbaa487ecf11b267f4c31",
+      "bytes": 22664
+    },
+    {
+      "path": "src/server/GroundCombatService.luau",
+      "sha256": "1a5cb6c8668dad76943c920d4e6ad6d4edcedfcbbbe201404b4d94ba454dc710",
+      "bytes": 7107
+    },
+    {
+      "path": "src/server/GroundMovementGuard.luau",
+      "sha256": "86e935b15f9e48b0b0aa07d870b89a1bba1d655198f0bd785a44b3ddac40c42f",
+      "bytes": 2904
+    },
+    {
+      "path": "src/server/GroundOriginGeometry.luau",
+      "sha256": "eaefdd394dbdd1fb1d6cc9a8fbca52b8e84c3164cceacf648e313d5a40e484a2",
+      "bytes": 6373
+    },
+    {
+      "path": "src/server/MapService.luau",
+      "sha256": "ac58da9965468231c4b49f137b812187523f08c0e2c85508e583c03750eef545",
+      "bytes": 13629
+    },
+    {
+      "path": "src/server/MatchRuntime.luau",
+      "sha256": "9de00ce8e12977905c472f9d35065b780dc11ad2549dfcffa0d648b169bb7504",
+      "bytes": 16700
+    },
+    {
+      "path": "src/server/MatchService.luau",
+      "sha256": "b9238d9a57859319b729d59d461014723f9b2165aefeaf3d71ec5318e481ed3b",
+      "bytes": 13827
+    },
+    {
+      "path": "src/server/PanelDamageRules.luau",
+      "sha256": "bbf66feb810d3c1e3f2e843bf40c2f2389bbca0f41b1d039b28aed0004846161",
+      "bytes": 2469
+    },
+    {
+      "path": "src/server/PanelFragments.luau",
+      "sha256": "68112cd0d101d43d30315f1ba18e7c2dfbcf8ad6261f0071065c101357edf0b9",
+      "bytes": 7390
+    },
+    {
+      "path": "src/server/PanelGeometry.luau",
+      "sha256": "eba96a1487d212499a8570b2e3bc8f97ca24727256949af40c1beada0b2f88be",
+      "bytes": 8632
+    },
+    {
+      "path": "src/server/RoleService.luau",
+      "sha256": "f20f38b73f69593520ea2df3761d9085b053f61c5a66456842ebc56fd7d320c3",
+      "bytes": 2912
+    },
+    {
+      "path": "src/server/RoundRules.luau",
+      "sha256": "14407c812e16a176bf7cabde077fd9166ce031d8308178bb57206ef2083cfc45",
+      "bytes": 1940
+    },
+    {
+      "path": "src/server/TerrainRecipe.luau",
+      "sha256": "54154c4cd4dbaf16d89f9b903af6ca78983d25241aef16a536f03f655be0bace",
+      "bytes": 3300
+    },
+    {
+      "path": "src/server/init.server.luau",
+      "sha256": "0dd25efa3eb3f1d987d7fee90f3e17fbeb204c436f4338ba5cd3128ca144b129",
+      "bytes": 925
+    },
+    {
+      "path": "src/shared/AircraftPanRules.luau",
+      "sha256": "c4ffcf452a3c082a0729eb970744cfa4eaa73c38772c29e165dc74e1fd14a068",
+      "bytes": 11439
+    },
+    {
+      "path": "src/shared/AircraftRules.luau",
+      "sha256": "3e8482b5ca9354155af6d63322b6979b7b6c4b1d6a41e148e5ec17dd4542cc67",
+      "bytes": 4208
+    },
+    {
+      "path": "src/shared/BuildingLayout.luau",
+      "sha256": "2b9fd88489b1d10419d38a69b5ebd50e963433e1453455bb126b2657d06ad609",
+      "bytes": 3746
+    },
+    {
+      "path": "src/shared/Config.luau",
+      "sha256": "86cfa53d23b317cc943fa694e4798ca09135eec362eb64bc25f6ea201beb119d",
+      "bytes": 1713
+    },
+    {
+      "path": "src/shared/Lifecycle.luau",
+      "sha256": "98f939cf04eec21ae00498a441818733e0cb4abea7edafee72267844d01e1255",
+      "bytes": 1525
+    },
+    {
+      "path": "src/shared/MapRules.luau",
+      "sha256": "0964b17c879a22f959033ad5ead64945873b918297787e964c4c9126f606a3a0",
+      "bytes": 3459
+    },
+    {
+      "path": "src/shared/RateLimit.luau",
+      "sha256": "57305bbbbd840a662a5d87b7855b0c7ed9e78fbbbaf8a538d7bee50d3ca1b537",
+      "bytes": 1791
+    },
+    {
+      "path": "src/shared/Validation.luau",
+      "sha256": "0285f008d424b9400e3a300304cafd2ecfd8d9d73d7b13687c96a2b7c6d6c59e",
+      "bytes": 2404
+    },
+    {
+      "path": "tests/fixtures/DevelopmentSettings.luau",
+      "sha256": "2179ebc6da84d661a82e7d2d5ad58c172cd5a3a20e833b292e3a4192a9ab0eed",
+      "bytes": 148
+    },
+    {
+      "path": "tests/integration/AircraftHealth.spec.luau",
+      "sha256": "4ce54bdc711dac61fb30817bd503f3ab1544dc596a3876f7c79f4331fdfd21b6",
+      "bytes": 2055
+    },
+    {
+      "path": "tests/integration/AircraftSelection.spec.luau",
+      "sha256": "4236b0dc2bcf7b295670c449bc25b46bfd9b014d01af9920e697c24b223ff395",
+      "bytes": 5196
+    },
+    {
+      "path": "tests/integration/CombatService.spec.luau",
+      "sha256": "2b975c5183fde961ee37011ac3f19c00aed6bfe4a3f3a32c867293d3d0d14881",
+      "bytes": 7472
+    },
+    {
+      "path": "tests/integration/CombatViewRules.spec.luau",
+      "sha256": "eba8ecd400973ad7493146fa083b081ebd0e70bda0a233537ce3c330f00f3a39",
+      "bytes": 6369
+    },
+    {
+      "path": "tests/integration/DamageRules.spec.luau",
+      "sha256": "d717293f04ddc40e7a5e75d6f82a014d75dee21c2cf97530be21964723b8b8ba",
+      "bytes": 1817
+    },
+    {
+      "path": "tests/integration/DestructionService.spec.luau",
+      "sha256": "184c7f85f9d1e962986de1aab3a7743fc60902a85b8271ea3b35b2b469380458",
+      "bytes": 16418
+    },
+    {
+      "path": "tests/integration/GroundCombatService.spec.luau",
+      "sha256": "5ca0ce3d8007b833e8577c9ca390bc36b329337012df0c7e30851739f4d8a37a",
+      "bytes": 4952
+    },
+    {
+      "path": "tests/integration/GroundMovementGuard.spec.luau",
+      "sha256": "89a2fc31da4bf458240e876a9b5e7973e898124de799b5dd004557cf8b8ca65e",
+      "bytes": 1970
+    },
+    {
+      "path": "tests/integration/Lifecycle.spec.luau",
+      "sha256": "e2b73b19e6545267931fa4e11cb7dd5aae815bb91185a8386d0742b93b530e9b",
+      "bytes": 2197
+    },
+    {
+      "path": "tests/integration/MatchService.spec.luau",
+      "sha256": "3ad2067cc30f148c22dab8ec9fe7acee1f03cad446bdafe898cf78fce1194db2",
+      "bytes": 14257
+    },
+    {
+      "path": "tests/studio/client/AircraftHarness.luau",
+      "sha256": "59f89c89329ef99db4aa5688a01cc21ec73e46bc06857ba8636416d369fb81cd",
+      "bytes": 34160
+    },
+    {
+      "path": "tests/studio/client/AircraftPanHarness.luau",
+      "sha256": "ecc6776fab79aa846f791202f275482aebf380c70a5ddb2ff19ca6451df40ff9",
+      "bytes": 72253
+    },
+    {
+      "path": "tests/studio/client/CombatHarness.luau",
+      "sha256": "22c993e3448323158dca13d0764b0d425b20881e2ab5761350438dd960ebb584",
+      "bytes": 7475
+    },
+    {
+      "path": "tests/studio/client/DestructionHarness.luau",
+      "sha256": "24972c2b19e7bd02a35275db2dd81eabeb298447110c9841bfdd6f0721642ef8",
+      "bytes": 14064
+    },
+    {
+      "path": "tests/studio/client/ExpandedMapHarness.luau",
+      "sha256": "59d12b74dc398d2c318d4afad2fa9bbaa64b971de97067c50d3747f5698d1d5f",
+      "bytes": 8185
+    },
+    {
+      "path": "tests/studio/client/GroundCombatHarness.luau",
+      "sha256": "ce3d4ec82391d3d5902bca61d34e12fe4e6aa532c202d30c058873883fc41956",
+      "bytes": 4995
+    },
+    {
+      "path": "tests/studio/client/HumanTestPanel.luau",
+      "sha256": "e8da985455271e5abde54fcc2a475a5b73154c155fba609a814376093ffa3123",
+      "bytes": 6129
+    },
+    {
+      "path": "tests/studio/client/RoundHarness.luau",
+      "sha256": "3ab60fac76b82844686e8bdcb6ebfe9bc1222e03e085113bb4b247b0e0a145b0",
+      "bytes": 5892
+    },
+    {
+      "path": "tests/studio/client/init.client.luau",
+      "sha256": "cb4c82bd320698c0920e90a39cb39aa0354677ee305fdabf32b5ea4d57da8057",
+      "bytes": 1647
+    },
+    {
+      "path": "tests/studio/server/AircraftHarness.luau",
+      "sha256": "2cb522e7e8e88ec14875a97a619b3afeae004997ca8c4048fa1ee63d48288879",
+      "bytes": 17226
+    },
+    {
+      "path": "tests/studio/server/AircraftPanHarness.luau",
+      "sha256": "3b7b09a14d052fcd388a0d2f92a3a214db49c3be8d9a4bcded478e1246d6e421",
+      "bytes": 19231
+    },
+    {
+      "path": "tests/studio/server/CharacterCleanup.luau",
+      "sha256": "61db76ad8a500442e2b1d6a689e72638bf76454df09fc23c7be067a934fe04c0",
+      "bytes": 2825
+    },
+    {
+      "path": "tests/studio/server/CombatHarness.luau",
+      "sha256": "0bcf1db36f8223b4861b7a411dd52e0ab553120b2c76481a1b885c04bdad36dc",
+      "bytes": 48146
+    },
+    {
+      "path": "tests/studio/server/DestructionHarness.luau",
+      "sha256": "dd8bb6a3b18511dc096699c5fd5700548eccafdaa8ae7e697d2e526b7226eb47",
+      "bytes": 53795
+    },
+    {
+      "path": "tests/studio/server/ExpandedMapHarness.luau",
+      "sha256": "625ccc49411d3e5fb73f113a6bfc7fabdca2f1dd23798297d54fb5dd4f090670",
+      "bytes": 12092
+    },
+    {
+      "path": "tests/studio/server/GroundCombatHarness.luau",
+      "sha256": "39bf0b133a3df813d24e18f748e1752ed9492824931642804316997ff447490a",
+      "bytes": 52432
+    },
+    {
+      "path": "tests/studio/server/HumanTestCheck.luau",
+      "sha256": "d4ec505ce8aca2a3cdd98611715d1a95426bd59263eb04e9b567d6a87bdc7671",
+      "bytes": 1033
+    },
+    {
+      "path": "tests/studio/server/HumanTestSession.luau",
+      "sha256": "6f6b813c7435bdee8e91c244ae2b6fb92ee7edb892afc3553dac15a6153f3a3c",
+      "bytes": 12310
+    },
+    {
+      "path": "tests/studio/server/HumanTestSession.spec.luau",
+      "sha256": "a9404d9188c2a21cbeeb9dabf1bd71c3e6b742c2c6ad12df9e57b9de8fcadddf",
+      "bytes": 12522
+    },
+    {
+      "path": "tests/studio/server/LocalTestControls.luau",
+      "sha256": "6a8f55bfa1cab5cba688a198cf0c0459e5e75e5a759e44e7a1ec5332d4d5f3c0",
+      "bytes": 6595
+    },
+    {
+      "path": "tests/studio/server/LocalTestControls.spec.luau",
+      "sha256": "6d7b673da4d24b2f471794dd8d86f626ee72e6118cf36469ad2dc54c17f63fe5",
+      "bytes": 4026
+    },
+    {
+      "path": "tests/studio/server/LocalTestControlsCheck.luau",
+      "sha256": "2fd6cab070cf3d5b877b70f2c97d55602b4cd3f0ad09217fc1eefc6e4d339246",
+      "bytes": 1053
+    },
+    {
+      "path": "tests/studio/server/RoundHarness.luau",
+      "sha256": "b833defe55c74b3303e941a444b8cf39186e657f4d8f7904b36b1a94f76e4860",
+      "bytes": 23900
+    },
+    {
+      "path": "tests/studio/server/init.server.luau",
+      "sha256": "0fa32302c618c2232c5e25f1479ca72ddd8e0c04170008097501a621a2b47b60",
+      "bytes": 3113
+    },
+    {
+      "path": "tests/studio/specs-client/Foundation.spec.luau",
+      "sha256": "97da3c6e629f86d2105c18cbd6bc39d9ad03670b31f54b4c9516ecc10ed661fd",
+      "bytes": 6972
+    },
+    {
+      "path": "tests/studio/specs-client/GroundAimGui.spec.luau",
+      "sha256": "ae2ca5ae5953902203df9e7606fb6ac5a8d577f09985bb7f0eacaecb5986cf8c",
+      "bytes": 12823
+    },
+    {
+      "path": "tests/studio/specs-client/PointerGui.spec.luau",
+      "sha256": "1c8c524b80e3cc596623c718efe67855b17093efab68f33acd3ab3acae3d478a",
+      "bytes": 10799
+    },
+    {
+      "path": "tests/studio/specs-server/Aircraft.spec.luau",
+      "sha256": "d814e622bf6b8c1cd5e275e57e980f997fc2061443e7392967bcc3c2916819a9",
+      "bytes": 9736
+    },
+    {
+      "path": "tests/studio/specs-server/CombatCollision.spec.luau",
+      "sha256": "161a97a0bb7df2526f62f2bf0bf249fa6a2128e01c87c84f896ff59b2353381a",
+      "bytes": 6255
+    },
+    {
+      "path": "tests/studio/specs-server/CombatView.spec.luau",
+      "sha256": "c3edc66213b1c1f93488d87f13c6d381b793e3c32cfc4113e70728c6df8690dd",
+      "bytes": 3934
+    },
+    {
+      "path": "tests/studio/specs-server/ExpandedMap.spec.luau",
+      "sha256": "fb15e063a1f9366ef5cab8caa708ff023ece2f168f7c30cb007e5e0c35328196",
+      "bytes": 16203
+    },
+    {
+      "path": "tests/studio/specs-server/Foundation.spec.luau",
+      "sha256": "1e243e89e367a27679dbdd2fb51e459286305d7696553376c93a27baaf5d1df0",
+      "bytes": 4253
+    },
+    {
+      "path": "tests/studio/specs-server/GroundOriginGeometry.spec.luau",
+      "sha256": "3a990e6bdc0502463e58b261ac90b381cb10f231e8524302a5421529d0f1e379",
+      "bytes": 7467
+    },
+    {
+      "path": "tests/studio/specs-server/Map.spec.luau",
+      "sha256": "74b9438ed9d9ad4236a6aef9ab2cba9cb51879a2aa770047b83c0f5d697f3d6c",
+      "bytes": 12989
+    },
+    {
+      "path": "tests/studio/specs-server/PanelDestruction.spec.luau",
+      "sha256": "cea3aec4aa3b18d6bf249e5c5d9a220b499aeaf0676371280ea7b2c6c0a36d0e",
+      "bytes": 36148
+    },
+    {
+      "path": "tests/unit/AircraftPanRules.spec.luau",
+      "sha256": "d4070746d7ac8e6699e2834f8a12bbe0aa7bae75cbbb06f29acc66014ec0b5c1",
+      "bytes": 14939
+    },
+    {
+      "path": "tests/unit/AircraftRules.spec.luau",
+      "sha256": "804edb17b62e7bc6ee5773b868896b1d3e3096cef5e2ca65cba3107c7f2238f6",
+      "bytes": 5825
+    },
+    {
+      "path": "tests/unit/BuildingLayout.spec.luau",
+      "sha256": "dea4ef1eac81ee183c59a995a8489f7ac668959455763a22e8342f928d084dae",
+      "bytes": 4083
+    },
+    {
+      "path": "tests/unit/Config.spec.luau",
+      "sha256": "0f243a1e8340048306741c759760c3a9f4cecad36562249309a274c962990e7c",
+      "bytes": 2447
+    },
+    {
+      "path": "tests/unit/MapRules.spec.luau",
+      "sha256": "f0347bd56a45bc192539b19f39c432b00005a30232c6a4b0e9224c15a010583f",
+      "bytes": 4915
+    },
+    {
+      "path": "tests/unit/PanelDamageRules.spec.luau",
+      "sha256": "8de4bb80f56b7433ca563fe48f83e634d722cea349fb2218e4adbf80dc8bebf0",
+      "bytes": 4167
+    },
+    {
+      "path": "tests/unit/RateLimit.spec.luau",
+      "sha256": "34979b2e676b93a87eb2d337451f5134a765cc73e2ee61e301b681dc31dac846",
+      "bytes": 2299
+    },
+    {
+      "path": "tests/unit/RoleService.spec.luau",
+      "sha256": "1563927c44e8c1cfa5ca0b93018d2a8a887807aebc30db7fa8951ec13399a1f5",
+      "bytes": 3727
+    },
+    {
+      "path": "tests/unit/RoundRules.spec.luau",
+      "sha256": "9afed5dfbf404da051611fea2843c6678c29877010cfd8efec24e26d30917b3c",
+      "bytes": 2936
+    },
+    {
+      "path": "tests/unit/Validation.spec.luau",
+      "sha256": "7344d2d7548b88e80935c5098d99f30eb4719b8ca2c85d67be3cacf3cc77763e",
+      "bytes": 3073
+    }
+  ],
+  "scope": 103,
+  "manifestSerialization": "json.dumps(files,sort_keys=True,separators=(comma,colon)) UTF-8",
+  "manifestSHA256": "4ff3cfe523136469ae0f888bc83f9c6ab4b4200d928d861e002cc7de36f33d82",
+  "productionCoreUnchangedSince": "583d82abebc32e0f43fc9d521b008ce6de1c3ace",
+  "changedSince8f59": [
+    "tests/studio/server/DestructionHarness.luau"
+  ]
+}

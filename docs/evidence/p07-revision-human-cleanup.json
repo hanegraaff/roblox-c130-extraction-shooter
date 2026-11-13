@@ -1,0 +1,92 @@
+{
+  "candidateCommit": "8053c8f73c5700161e7b87d8e87824742165f3cd",
+  "candidateTree": "a1e0e2e5405b0fd30e5e5b88b712d59431c608ea",
+  "purpose": "Supplemental final human A7 run cleanup; prior final cleanup remains historically correct",
+  "cameraCleanup": {
+    "player": "Player1",
+    "cameraType": "Enum.CameraType.Custom",
+    "role": "Ground",
+    "cameraStopAfter": false,
+    "labelAfter": false
+  },
+  "nativeObserverCleanup": {
+    "existingPrivateHumanTestSessionPreservedUntilEndTest": true,
+    "time": 1794597316.530142,
+    "observerAfter": false,
+    "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":142,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":142}",
+    "round": {
+      "GroundAlive": 1,
+      "Revision": 6,
+      "MinimumPlayers": 2,
+      "Reason": "",
+      "Phase": "Active",
+      "DeadlineSeconds": 1794597663.44418,
+      "Winner": "",
+      "RoundId": 1
+    },
+    "observerStopAfter": false,
+    "actualPlayers": [
+      {
+        "id": -1,
+        "role": "Ground",
+        "name": "Player1",
+        "life": "Alive"
+      },
+      {
+        "id": -2,
+        "role": "Gunship",
+        "name": "Player2",
+        "life": "Alive"
+      }
+    ]
+  },
+  "endTest": "Actual native Server StudioTestService:EndTest after source/shot/human observation preserved; normal private HumanTestSession stopped through BindToClose, never manually replaced",
+  "editCleanup": {
+    "settingsAttributes": [],
+    "ownedRuntimePaths": [],
+    "isRunning": false,
+    "serverStorageAttributes": [],
+    "selectorIsNil": true,
+    "workspaceAttributes": [],
+    "replicatedAttributes": [],
+    "expectedSourceModulePaths": [
+      "ServerScriptService.Server.PanelFragments"
+    ]
+  },
+  "liveSourceAndGeometry": {
+    "mapParts": 403,
+    "running": false,
+    "method": "byte-length+rolling131-mod2147483647; geometry max .001stud/component",
+    "scripts": 97,
+    "failures": [],
+    "version": "0.747.0.7471481"
+  },
+  "currentInputIdentity": {
+    "files": 103,
+    "byteExactCandidate": true,
+    "mismatches": []
+  },
+  "onlyStudioAfter": {
+    "studios": [
+      {
+        "file": "tests.rbxlx",
+        "id": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94",
+        "mode": "Edit",
+        "name": "tests.rbxlx",
+        "persistedToCloud": false,
+        "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+      }
+    ]
+  },
+  "rojo": {
+    "pid": 55771,
+    "listener": "127.0.0.1:34872",
+    "stillListening": true
+  },
+  "humanObservation": {
+    "quote": "Yes, I saw pieces fall",
+    "panelId": "Shelter_Roof_R01_C03",
+    "nativeBreakingShotId": 4,
+    "groundView": "Explicit controlled FRAGMENT WATCH close-up only"
+  }
+}

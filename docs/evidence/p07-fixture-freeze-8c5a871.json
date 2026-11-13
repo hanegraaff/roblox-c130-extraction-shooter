@@ -1,0 +1,11 @@
+{
+  "files": {
+    "tests/studio/server/CombatHarness.luau": "d322115d6233f99f1f8fcb2e159c7540ea6ecaeb769ac591f839e541233d4144",
+    "tests/studio/server/DestructionHarness.luau": "032ad6e69c7e2ec9d163bd43dfd35eda264e0537f123635c0b0f753d8c5b7c08",
+    "tests/studio/client/DestructionHarness.luau": "2bc26bc8e8c9840b84ba8e5bc040f390836021b81d074f9d6b820ea0e26fd2f8"
+  },
+  "notes": "TEST ONLY fixture freeze; focused stylua check, selene, Roblox-aware luau-lsp analyze passed; independent tester owns one full host gate and actual retained-native rearm.",
+  "combinedSha256": "34cbaf5fa48485f4bf9dc89dfdb7322b2bebc5d5444eed30b0e079cc621d0b2f",
+  "sourceCommit": "8c5a871616cb9b99614385d40da5e7a68db5ce23",
+  "sourceTree": "2a06e066d3d70bd7db8b695e6f875b9dfc0b036f"
+}

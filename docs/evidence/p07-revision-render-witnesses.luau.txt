@@ -1,0 +1,141 @@
+--!strict
+--[=[
+    Disposable P07 render-only controls; NOT mapped source or live-fire evidence.
+    Call only after the stable candidate handoff in an owned native test session.
+    Uses real current panel colliders, real raycasts and the production controller's
+    ThermalTarget/Occluded Highlight path. Markers are QA Models, never Players.
+    Every marker lies along camera -> chosen face point, just behind that point.
+    This makes oblique projected controls match the intended hole/residual paths.
+    Owns only one workspace Folder/its Models; stop is idempotent. No tasks/events,
+    camera assignment, damage, authority adapters or production mutations.
+]=]
+local CollectionService = game:GetService("CollectionService")
+local Witnesses = {}
+export type Controller = {
+	folder: Folder,
+	hole: BasePart,
+	residual: BasePart,
+	stop: () -> (),
+}
+
+local function coordinates(point: Vector3): { number }
+	return { point.X, point.Y, point.Z }
+end
+
+-- Must use the same actual camera frame throughout one stage series. originalSize
+-- is measured from the pristine current collider before geometry changes. This
+-- helper never reconstructs that size from a damaged panel's bounding box.
+function Witnesses.create(panel: Model, originalSize: Vector3, cameraPosition: Vector3): Controller
+	assert(not workspace:FindFirstChild("P07RevisionRenderWitnesses"), "render witnesses already owned")
+	local pivot = panel:GetAttribute("IntactPivot")
+	assert(typeof(pivot) == "CFrame", "current registered panel pivot required")
+	assert(originalSize.X > 0 and originalSize.Y > 0 and originalSize.Z > 0, "positive original size required")
+	local localNormal: Vector3
+	local thickness: number
+	if originalSize.Y <= math.min(originalSize.X, originalSize.Z) then
+		localNormal, thickness = Vector3.yAxis, originalSize.Y
+	elseif originalSize.X <= originalSize.Z then
+		localNormal, thickness = Vector3.xAxis, originalSize.X
+	else
+		localNormal, thickness = Vector3.zAxis, originalSize.Z
+	end
+	local normal = pivot:VectorToWorldSpace(localNormal)
+	if normal:Dot(cameraPosition - pivot.Position) < 0 then
+		normal = -normal
+	end
+	local alongX = originalSize.X >= originalSize.Z
+	local major = pivot:VectorToWorldSpace(if alongX then Vector3.xAxis else Vector3.zAxis)
+	local width = if alongX then originalSize.X else originalSize.Z
+	local face = pivot.Position + normal * (thickness / 2 + 0.01)
+	local folder = Instance.new("Folder")
+	folder.Name = "P07RevisionRenderWitnesses"
+	local function marker(name: string, facePoint: Vector3): BasePart
+		local towardFace = facePoint - cameraPosition
+		assert(towardFace.Magnitude > 10, "camera must be outside the panel")
+		local body = Instance.new("Part")
+		body.Name = "Body"
+		body.Size = Vector3.new(1, 2, 0.2)
+		body.CFrame = CFrame.lookAt(facePoint + towardFace.Unit * 2.5, cameraPosition)
+		body.Anchored = true
+		body.CanCollide, body.CanQuery, body.CanTouch = false, false, false
+		body.Material = Enum.Material.SmoothPlastic
+		body.Color = Color3.fromRGB(5, 5, 5)
+		local model = Instance.new("Model")
+		model.Name = name
+		model:SetAttribute("QARenderWitness", true)
+		model:SetAttribute("ProjectedFacePoint", facePoint)
+		body.Parent = model
+		model.Parent = folder
+		CollectionService:AddTag(model, "ThermalTarget")
+		return body
+	end
+	local hole = marker("ProjectedHoleControl", face)
+	local residual = marker("ProjectedResidualControl", face + major * (width * 0.375))
+	folder.Parent = workspace
+	local stopped = false
+	return {
+		folder = folder,
+		hole = hole,
+		residual = residual,
+		stop = function()
+			if stopped then
+				return
+			end
+			stopped = true
+			folder:Destroy()
+		end,
+	}
+end
+
+-- Capture alongside each unedited screen_capture. Rays inspect the actual map,
+-- not the nonqueryable QA targets. Five rays per marker expose edge clipping;
+-- projected pixels establish that a witness is actually within this viewport.
+-- These numeric observations do not replace inspecting the rendered image.
+function Witnesses.snapshot(camera: Camera, panel: Model, controls: Controller): { [string]: unknown }
+	local parameters = RaycastParams.new()
+	parameters.FilterType = Enum.RaycastFilterType.Include
+	parameters.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+	parameters.RespectCanCollide = true
+	local observations: { [string]: unknown } = {}
+	local bodies: { [string]: BasePart } = { hole = controls.hole, residual = controls.residual }
+	for name, body in bodies do
+		local samples: { unknown } = {}
+		for _, localPoint in
+			{
+				Vector3.zero,
+				Vector3.new(-0.45, -0.9, 0),
+				Vector3.new(-0.45, 0.9, 0),
+				Vector3.new(0.45, -0.9, 0),
+				Vector3.new(0.45, 0.9, 0),
+			}
+		do
+			local point = body.CFrame:PointToWorldSpace(localPoint)
+			local hit = workspace:Raycast(camera.CFrame.Position, point - camera.CFrame.Position, parameters)
+			local pixels, visible = camera:WorldToViewportPoint(point)
+			table.insert(samples, {
+				world = coordinates(point),
+				pixels = coordinates(pixels),
+				withinViewport = visible,
+				hit = if hit then hit.Instance:GetFullName() else nil,
+				hitCurrentPanel = hit ~= nil and hit.Instance:IsDescendantOf(panel),
+			})
+		end
+		observations[name] = { center = coordinates(body.Position), samples = samples }
+	end
+	return {
+		purpose = "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+		serverTime = workspace:GetServerTimeNow(),
+		panelId = panel:GetAttribute("PanelId"),
+		panelState = panel:GetAttribute("PanelState"),
+		visualStage = panel:GetAttribute("DamageAppearance"),
+		progress = panel:GetAttribute("PanelProgress"),
+		heavySeconds = panel:GetAttribute("HeavySeconds"),
+		sustainedSeconds = panel:GetAttribute("SustainedSeconds"),
+		cameraFrame = { camera.CFrame:GetComponents() },
+		fov = camera.FieldOfView,
+		viewport = { camera.ViewportSize.X, camera.ViewportSize.Y },
+		controls = observations,
+	}
+end
+
+return Witnesses

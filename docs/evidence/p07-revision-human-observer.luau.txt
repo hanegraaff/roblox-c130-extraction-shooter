@@ -1,0 +1,62 @@
+--!strict
+-- Disposable human A7 observation: records current production impact/publication and
+-- real fragment motion; never awards damage, changes clocks, or owns a game runtime.
+local H = game:GetService("HttpService")
+local R = game:GetService("ReplicatedStorage")
+local RS = game:GetService("RunService")
+local records = {}
+local samples = {}
+local connections = {}
+local target = "Shelter_Roof_R01_C03"
+local activeUntil = 0
+local previousStage = ""
+local lastSample = 0
+local stopped = false
+local function vector(v) return {v.X,v.Y,v.Z} end
+local function publish()
+ workspace:SetAttribute("P07HumanObservationReport", H:JSONEncode({
+ purpose="Actual native live-orbit breaking-shot human review; read-only observer",
+ sourceCommit="8053c8f73c5700161e7b87d8e87824742165f3cd",
+ targetId=target, time=workspace:GetServerTimeNow(), impacts=records, fragmentSamples=samples
+ }))
+end
+local state = assert(R:FindFirstChild("AircraftState"))
+table.insert(connections,state:GetAttributeChangedSignal("Impact"):Connect(function()
+ local raw=state:GetAttribute("Impact")
+ if type(raw)=="string" and #records<32 then
+  local impact=H:JSONDecode(raw)
+  local panel=workspace.World.Battlefield:FindFirstChild(target,true)
+  table.insert(records,{observedAt=workspace:GetServerTimeNow(),impact=impact,targetState=panel and panel:GetAttribute("PanelState"),targetProgress=panel and panel:GetAttribute("PanelProgress"),targetHeavy=panel and panel:GetAttribute("HeavySeconds"),targetAppearance=panel and panel:GetAttribute("DamageAppearance")})
+  publish()
+ end
+end))
+table.insert(connections,RS.Heartbeat:Connect(function()
+ local now=workspace:GetServerTimeNow()
+ local panel=workspace.World.Battlefield:FindFirstChild(target,true)
+ local stage=panel and panel:GetAttribute("PanelState") or ""
+ if stage~=previousStage then
+  if previousStage~="" then activeUntil=now+2 end
+  previousStage=stage
+ end
+ if now<=activeUntil and now-lastSample>=0.03 and #samples<70 then
+  lastSample=now
+  local pieces={}
+  local folder=workspace:FindFirstChild("PanelFragments")
+  if folder then for _,p in folder:GetChildren() do if p:IsA("BasePart") then table.insert(pieces,{name=p.Name,position=vector(p.Position),velocity=vector(p.AssemblyLinearVelocity),anchored=p.Anchored,canCollide=p.CanCollide,canQuery=p.CanQuery}) end end end
+  table.insert(samples,{time=now,stage=stage,pieces=pieces})
+  publish()
+ end
+end))
+local stop=Instance.new("BindableEvent")
+stop.Name="P07HumanObservationStop"
+stop.Parent=workspace
+table.insert(connections,stop.Event:Connect(function()
+ if stopped then return end stopped=true
+ publish()
+ for _,c in connections do c:Disconnect() end
+ table.clear(connections)
+ stop:Destroy()
+ script:Destroy()
+end))
+publish()
+

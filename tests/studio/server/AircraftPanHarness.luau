@@ -193,13 +193,17 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
         parameters.RespectCanCollide = true
         for _, panel in panels:GetChildren() do
             if
-                panel:IsA("BasePart")
+                panel:IsA("Model")
                 and panel:GetAttribute("StoryId") == "02"
                 and not string.find(panel.Name, "Roof", 1, true)
             then
-                local hit = workspace:Raycast(origin, panel.Position - origin, parameters)
-                if hit and hit.Instance == panel then
-                    return hit.Position
+                for _, solid in panel:GetDescendants() do
+                    if solid:IsA("BasePart") and solid.CanQuery and solid.CanCollide then
+                        local hit = workspace:Raycast(origin, solid.Position - origin, parameters)
+                        if hit and hit.Instance:IsDescendantOf(panel) then
+                            return hit.Position
+                        end
+                    end
                 end
             end
         end

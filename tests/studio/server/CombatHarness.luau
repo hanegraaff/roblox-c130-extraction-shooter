@@ -496,6 +496,13 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             local function slope(weapon: string): Vector3
                 local muzzle = runtime.aircraft.muzzle(weapon)
                 assert(muzzle, "slope muzzle missing")
+                local profile = CombatService.profiles[weapon]
+                local period = ReplicatedStorage.AircraftState:GetAttribute("PeriodSeconds")
+                assert(type(period) == "number" and period > 0, "slope orbit period missing")
+                local center = Vector3.new(MapRules.defaults.orbitCenterX, 0, MapRules.defaults.orbitCenterZ)
+                local minimumIncidence = 0.25
+                local guardDistanceStuds = 1.5
+                local originMarginSeconds = 0.25
                 for _, location in { Vector2.new(-240, -140), Vector2.new(135, 260) } do
                     for dx = -24, 24, 4 do
                         for dz = -24, 24, 4 do
@@ -520,11 +527,73 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                                     visible
                                     and visible.Instance == workspace.Terrain
                                     and (visible.Position - surface.Position).Magnitude < 1
+                                    and -(visible.Position - muzzle).Unit:Dot(visible.Normal)
+                                        >= minimumIncidence
                                 then
+                                    -- Select a non-grazing real Terrain scenario,
+                                    -- independently queried with the actual shell
+                                    -- radius. A ray-only tangent can disagree by
+                                    -- several studs even for a 0.05 stud sphere.
+                                    -- Rotate the entire muzzle orbit by ±0.25s
+                                    -- (~6.3 studs at 90s) to cover modest RPC motion.
+                                    -- These are fixture preconditions; the later
+                                    -- real remote still must satisfy the original
+                                    -- five-stud impact assertion independently.
+                                    local stable = true
+                                    local guards: { unknown } = {}
+                                    for _, offset in { -originMarginSeconds, 0, originMarginSeconds } do
+                                        local origin = center
+                                            + CFrame.Angles(0, -2 * math.pi * offset / period, 0)
+                                                :VectorToWorldSpace(muzzle - center)
+                                        local delta = visible.Position - origin
+                                        local swept = workspace:Spherecast(
+                                            origin,
+                                            profile.collisionRadius,
+                                            delta.Unit * math.min(delta.Magnitude + 0.25, profile.range),
+                                            rayParams()
+                                        )
+                                        if
+                                            not swept
+                                            or swept.Instance ~= workspace.Terrain
+                                            or swept.Normal.Y <= 0.2
+                                            or swept.Normal.Y >= 0.94
+                                            or -(delta.Unit:Dot(swept.Normal)) < minimumIncidence
+                                            or (swept.Position - visible.Position).Magnitude
+                                                > guardDistanceStuds
+                                        then
+                                            stable = false
+                                            break
+                                        end
+                                        table.insert(guards, {
+                                            orbitOffsetSeconds = offset,
+                                            origin = { origin.X, origin.Y, origin.Z },
+                                            contact = {
+                                                swept.Position.X,
+                                                swept.Position.Y,
+                                                swept.Position.Z,
+                                            },
+                                            distanceStuds = (swept.Position - visible.Position).Magnitude,
+                                            incidence = -(delta.Unit:Dot(swept.Normal)),
+                                        })
+                                    end
                                     local reachable = pcall(function()
                                         return payload(1, weapon, visible.Position)
                                     end)
-                                    if reachable then
+                                    if stable and reachable then
+                                        table.insert(observations, {
+                                            kind = "terrain-slope-selection",
+                                            weapon = weapon,
+                                            target = {
+                                                visible.Position.X,
+                                                visible.Position.Y,
+                                                visible.Position.Z,
+                                            },
+                                            collisionRadiusStuds = profile.collisionRadius,
+                                            minimumIncidence = minimumIncidence,
+                                            guardDistanceStuds = guardDistanceStuds,
+                                            originMarginSeconds = originMarginSeconds,
+                                            actualEngineGuards = guards,
+                                        })
                                         return visible.Position
                                     end
                                 end
@@ -542,24 +611,28 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     if panels then
                         for _, panel in panels:GetChildren() do
                             if
-                                panel:IsA("BasePart")
+                                panel:IsA("Model")
                                 and panel:GetAttribute("StoryId") == "02"
                                 and not string.find(panel.Name, "Roof", 1, true)
                             then
-                                local visible =
-                                    workspace:Raycast(muzzle, panel.Position - muzzle, rayParams())
-                                local id = panel:GetAttribute("PanelId")
-                                if
-                                    visible
-                                    and visible.Instance == panel
-                                    and type(id) == "string"
-                                    and runtime.aircraft.aimAllowed(visible.Position)
-                                then
-                                    local reachable = pcall(function()
-                                        return payload(1, weapon, visible.Position)
-                                    end)
-                                    if reachable then
-                                        return visible.Position, id
+                                for _, solid in panel:GetDescendants() do
+                                    if solid:IsA("BasePart") and solid.CanQuery and solid.CanCollide then
+                                        local visible =
+                                            workspace:Raycast(muzzle, solid.Position - muzzle, rayParams())
+                                        local id = panel:GetAttribute("PanelId")
+                                        if
+                                            visible
+                                            and visible.Instance:IsDescendantOf(panel)
+                                            and type(id) == "string"
+                                            and runtime.aircraft.aimAllowed(visible.Position)
+                                        then
+                                            local reachable = pcall(function()
+                                                return payload(1, weapon, visible.Position)
+                                            end)
+                                            if reachable then
+                                                return visible.Position, id
+                                            end
+                                        end
                                     end
                                 end
                             end
@@ -571,25 +644,40 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             local function fireAndObserve(weapon: string, target: Vector3, panelId: string?)
                 shotSequence += 1
                 local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
-                local shotPayload = payload(shotSequence, weapon, target)
-                local muzzle = runtime.aircraft.muzzle(weapon)
-                assert(muzzle, "diagnostic muzzle missing")
-                local ray = target - muzzle
-                local preflight = workspace:Raycast(muzzle, ray.Unit * (ray.Magnitude + 0.25), rayParams())
                 local samples: { unknown } = {}
-                local diagnostic = {
+                local diagnostic: { [string]: unknown } = {
                     kind = "geometry-flight-diagnostic",
-                    payload = shotPayload,
+                    weapon = weapon,
+                    requestedShotId = shotSequence,
+                    target = { target.X, target.Y, target.Z },
                     expectedPanelId = panelId,
-                    sampledMuzzle = { muzzle.X, muzzle.Y, muzzle.Z },
-                    preflightHit = if preflight then preflight.Instance:GetFullName() else "none",
-                    preflightPosition = if preflight
-                        then { preflight.Position.X, preflight.Position.Y, preflight.Position.Z }
-                        else nil,
                     previousImpact = previous,
                     samples = samples,
                 }
                 table.insert(observations, diagnostic)
+                local muzzle = runtime.aircraft.muzzle(weapon)
+                diagnostic.sampledMuzzle = if muzzle then { muzzle.X, muzzle.Y, muzzle.Z } else nil
+                assert(muzzle, "diagnostic muzzle missing")
+                local shotPayload = payload(shotSequence, weapon, target)
+                diagnostic.payload = shotPayload
+                local ray = target - muzzle
+                local displacement = ray.Unit
+                    * math.min(ray.Magnitude + 0.25, CombatService.profiles[weapon].range)
+                local preflight = workspace:Raycast(muzzle, displacement, rayParams())
+                local swept = workspace:Spherecast(
+                    muzzle,
+                    CombatService.profiles[weapon].collisionRadius,
+                    displacement,
+                    rayParams()
+                )
+                diagnostic.preflightHit = if preflight then preflight.Instance:GetFullName() else "none"
+                diagnostic.preflightPosition = if preflight
+                    then { preflight.Position.X, preflight.Position.Y, preflight.Position.Z }
+                    else nil
+                diagnostic.preflightSweepHit = if swept then swept.Instance:GetFullName() else "none"
+                diagnostic.preflightSweepPosition = if swept
+                    then { swept.Position.X, swept.Position.Y, swept.Position.Z }
+                    else nil
                 local start = os.clock()
                 probe(op, "Fire", shotPayload)
                 local deadline = os.clock() + 8
@@ -622,11 +710,26 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     task.wait(0.03)
                     value = ReplicatedStorage.AircraftState:GetAttribute("Impact")
                 end
+                diagnostic.actualImpactEncoded = value
+                local observedHit = if type(value) == "string" and value ~= previous
+                    then HttpService:JSONDecode(value)
+                    else nil
+                diagnostic.actualImpact = observedHit
+                if
+                    observedHit
+                    and type(observedHit.x) == "number"
+                    and type(observedHit.y) == "number"
+                    and type(observedHit.z) == "number"
+                then
+                    local observedPosition = Vector3.new(observedHit.x, observedHit.y, observedHit.z)
+                    diagnostic.actualPosition = { observedPosition.X, observedPosition.Y, observedPosition.Z }
+                    diagnostic.actualDistanceFromTargetStuds = (observedPosition - target).Magnitude
+                end
                 assert(
                     type(value) == "string" and value ~= previous,
                     "terrain or upper-floor actual impact: " .. HttpService:JSONEncode(diagnostic)
                 )
-                local hit = snapshot("Impact")
+                local hit = observedHit
                 assert(
                     hit.weapon == weapon and hit.shotId == shotSequence,
                     "impact identity/profile disagrees"
@@ -681,8 +784,37 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             wall.Position = muzzle
             wall:SetAttribute("PanelId", "P05MuzzleOverlap")
             wall.Parent = workspace.World.Battlefield
+            local muzzleWitness = Instance.new("Part")
+            muzzleWitness.Name = "P05OverlapWitness"
+            muzzleWitness.Shape = Enum.PartType.Ball
+            muzzleWitness.Size = Vector3.one * 0.1
+            muzzleWitness.CFrame = CFrame.new(muzzle)
+            muzzleWitness.Anchored = true
+            muzzleWitness.CanCollide = false
+            muzzleWitness.CanTouch = false
+            muzzleWitness.CanQuery = false
+            muzzleWitness.Transparency = 1
+            muzzleWitness.Parent = workspace
+            local overlap = OverlapParams.new()
+            overlap.FilterType = Enum.RaycastFilterType.Include
+            local overlapRoots: { Instance } = { workspace.World.Battlefield }
+            if character then
+                table.insert(overlapRoots, character)
+            end
+            overlap.FilterDescendantsInstances = overlapRoots
             local before = ReplicatedStorage.AircraftState:GetAttribute("Impact")
             local overlapOk, overlapReason = pcall(function()
+                -- The real overlap result identifies the one containing solid;
+                -- its copied PanelId tag grants no registered structural identity.
+                local containing = workspace:GetPartsInPart(muzzleWitness, overlap)
+                assert(
+                    #containing == 1 and containing[1] == wall,
+                    "overlap positive control did not uniquely identify containing wall"
+                )
+                assert(
+                    CombatRuntime.initialOverlap(muzzleWitness, overlap, workspace.World.Battlefield) == wall,
+                    "production initial-overlap query did not identify containing wall"
+                )
                 probe(op, "Fire", payload(5, "M102", Vector3.new(0, 30, 0)))
                 waitFor(function()
                     local impact = ReplicatedStorage.AircraftState:GetAttribute("Impact")
@@ -690,8 +822,29 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                 end, "initial solid-cover impact", 6)
                 local hit = snapshot("Impact")
                 assert(
-                    hit.panelId == "P05MuzzleOverlap" and hit.shotId == 5,
-                    "shot bypassed cover containing muzzle"
+                    hit.panelId == nil and hit.shotId == 5 and hit.weapon == "M102",
+                    "overlap impact identity/profile or normalized structural ID disagrees"
+                )
+                local actual = Vector3.new(hit.x :: number, hit.y :: number, hit.z :: number)
+                local localImpact = wall.CFrame:PointToObjectSpace(actual)
+                -- The aircraft continues moving during the real client roundtrip.
+                -- An initial-overlap point may touch the wall within the 0.05 stud
+                -- probe radius; 0.1 stud covers engine float serialization as well.
+                -- A fixed 0.01 stud comparison to the earlier muzzle would instead
+                -- measure network delay and legitimate orbit movement.
+                assert(
+                    math.abs(localImpact.X) <= wall.Size.X / 2 + 0.1
+                        and math.abs(localImpact.Y) <= wall.Size.Y / 2 + 0.1
+                        and math.abs(localImpact.Z) <= wall.Size.Z / 2 + 0.1,
+                    "impact was outside the uniquely containing wall"
+                )
+                assert(
+                    (actual - muzzle).Magnitude <= wall.Size.Magnitude / 2 + 0.1,
+                    "initial impact escaped the bounded saved-muzzle fixture"
+                )
+                assert(
+                    runtime.combat.resources().projectiles == 0,
+                    "embedded shot entered a live projectile flight"
                 )
                 task.wait(0.2)
                 assert(
@@ -703,6 +856,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     "embedded-cover blast ended the round"
                 )
             end)
+            muzzleWitness:Destroy()
             wall:Destroy()
             if root.Parent then
                 root.CFrame = originalFrame

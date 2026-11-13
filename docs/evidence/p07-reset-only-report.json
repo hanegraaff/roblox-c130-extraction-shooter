@@ -1,0 +1,124 @@
+{
+  "candidateCommit": "873f0f690bfb76803c81f46e0b49390090e2be97",
+  "candidateTree": "b16fb42007179a852c71565beab6b87fc5973001",
+  "runtimeCommit": "cb530a0175f683f933d93fa7546b377614788c39",
+  "nativeServer": "30579148-0d78-4851-bce9-8384f9aa57da",
+  "nativeClients": [
+    "597f43bf-5d6d-43ac-92dc-3807f9f8d910",
+    "fb4773c6-c96e-4e16-aabb-698f8cd21f18"
+  ],
+  "probe": {
+    "file": "/tmp/p07-reset-only-server.luau",
+    "sha256": "f3bb3bf7aa109724ce8b3d594cc2d1b9d62af0b90849f979f94dc689eb4dc240",
+    "bytes": 20987,
+    "sourceExact": true
+  },
+  "clientFixture": {
+    "file": "tests/studio/client/DestructionHarness.luau",
+    "sha256": "2bc26bc8e8c9840b84ba8e5bc040f390836021b81d074f9d6b820ea0e26fd2f8",
+    "bytes": 11965,
+    "sourceExactOnBoth": true,
+    "freshRun": true
+  },
+  "report": {
+    "clientCount": 2,
+    "failed": 0,
+    "passed": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "actual round 1 reset cancels partial fire, fragments and flight"
+      },
+      {
+        "passed": true,
+        "name": "actual round 2 reset cancels partial fire, fragments and flight"
+      }
+    ],
+    "observations": [
+      {
+        "mapParts": 334,
+        "panelId": "Foundry_S02_Roof_01_03",
+        "beforeAbort": {
+          "sent": 4,
+          "projectiles": 2,
+          "sustainedSeconds": 0.1666851043701172,
+          "stage": 1,
+          "publishedSustainedSeconds": 0.1666851043701172,
+          "resources": {
+            "pending": 0,
+            "panels": 111,
+            "fragments": 4
+          },
+          "serverTime": 1794584549.067196,
+          "roundId": 1
+        },
+        "expiryWaitSeconds": 2.25,
+        "terrainVoxelSamples": 576,
+        "iteration": 1,
+        "clientRoofPanels": 30,
+        "pristineAfterFlightDeadline": true,
+        "clientUserIds": [
+          -1,
+          -2
+        ],
+        "groundUserId": -2,
+        "serverPanels": 111,
+        "staleRejection": "stale round",
+        "staleOutcomeAccepted": false,
+        "operatorUserId": -1
+      },
+      {
+        "mapParts": 334,
+        "panelId": "Foundry_S02_Roof_01_03",
+        "beforeAbort": {
+          "sent": 4,
+          "projectiles": 2,
+          "sustainedSeconds": 0.19986391067504883,
+          "stage": 1,
+          "publishedSustainedSeconds": 0.19986391067504883,
+          "resources": {
+            "pending": 0,
+            "panels": 111,
+            "fragments": 4
+          },
+          "serverTime": 1794584563.583277,
+          "roundId": 2
+        },
+        "expiryWaitSeconds": 2.25,
+        "terrainVoxelSamples": 576,
+        "iteration": 2,
+        "clientRoofPanels": 30,
+        "pristineAfterFlightDeadline": true,
+        "clientUserIds": [
+          -1,
+          -2
+        ],
+        "groundUserId": -1,
+        "serverPanels": 111,
+        "staleRejection": "stale round",
+        "staleOutcomeAccepted": false,
+        "operatorUserId": -2
+      }
+    ],
+    "limits": "Separate reset-only evidence; does not run or satisfy the full P07 late-join/rendered/operated suite.",
+    "environment": "Studio",
+    "discovered": 2,
+    "suite": "P07-reset-only",
+    "initialUserIds": [
+      -2,
+      -1
+    ],
+    "sourceTag": "873f0f690bfb76803c81f46e0b49390090e2be97; reset probe f3bb3bf7aa109724ce8b3d594cc2d1b9d62af0b90849f979f94dc689eb4dc240"
+  },
+  "cleanup": {
+    "RoundStateAbsent": true,
+    "AircraftStateAbsent": true,
+    "P07HarnessAbsent": true,
+    "PanelFragmentsAbsent": true,
+    "bothCharactersAbsent": true,
+    "RoundCharacterTeardownAttributeAbsent": true,
+    "probeModuleRemoved": true,
+    "nativeTwoRetained": true
+  }
+}

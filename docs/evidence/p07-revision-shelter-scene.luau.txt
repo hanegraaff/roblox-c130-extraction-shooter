@@ -1,0 +1,168 @@
+--!strict
+-- Disposable actual two-client render/input scene, outside every Rojo mapping.
+-- Composes existing public production owners. ONLY AircraftService's supported
+-- orbit clock is held; match/combat time and Heartbeat remain real. Damage must
+-- come from production FireWeapon/native input, never an injected stage/award.
+-- Fixed orbit is controlled visual/input evidence, not a live-orbit regression.
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Server = game:GetService("ServerScriptService").Server
+local MapService = require(Server.MapService)
+local MatchRuntime = require(Server.MatchRuntime)
+local AircraftService = require(Server.AircraftService)
+local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+local DestructionRuntime = require(Server.DestructionRuntime)
+local CombatRuntime = require(Server.CombatRuntime)
+local cleanups: { () -> () } = {}
+local function start()
+	assert(RunService:IsRunning() and #Players:GetPlayers() == 2, "requires retained actual two clients")
+	assert(not ReplicatedStorage:FindFirstChild("RoundState"), "previous runtime must stop first")
+	assert(not Players:GetAttribute("RoundCharacterTeardown"), "previous avatar cleanup must drain")
+	assert(not workspace:FindFirstChild("P07RevisionRenderStop"), "render scene already owned")
+	local clock = 0
+	local map, mapReason = MapService.new(workspace.World, {
+		characters = function()
+			local result: { Model } = {}
+			for _, player in Players:GetPlayers() do
+				if player:GetAttribute("Role") == "Ground" and player.Character then
+					table.insert(result, player.Character)
+				end
+			end
+			return result
+		end,
+		heartbeat = RunService.Heartbeat,
+		allowStations = false,
+	})
+	assert(map, mapReason)
+	table.insert(cleanups, map.destroy)
+	assert(map.start(), "render map start failed")
+	local rounds = MatchRuntime.new(map, {
+		automaticDeployment = false,
+		minimumPlayers = 2,
+		durationSeconds = 600,
+		lobbySeconds = 0,
+		deploymentSeconds = 25,
+		resultsSeconds = 10,
+		seed = 1,
+	})
+	table.insert(cleanups, rounds.stop)
+	assert(rounds.start(), "render round owner failed")
+	local aircraft, aircraftReason = AircraftService.start(rounds.match, function()
+		return clock
+	end)
+	assert(aircraft, aircraftReason)
+	table.insert(cleanups, aircraft.stop)
+	local destruction, destructionReason = DestructionRuntime.start(workspace.World)
+	assert(destruction, destructionReason)
+	table.insert(cleanups, destruction.stop)
+	destruction.sync(rounds.match.snapshot().roundId)
+	local facts: { unknown } = {}
+	local combat, combatReason = CombatRuntime.start(rounds.match, aircraft, function(impact)
+		if #facts >= 96 then
+			return
+		end
+		table.insert(facts, {
+			shotId = impact.shotId,
+			roundId = impact.roundId,
+			firedAt = impact.firedAt,
+			impactAt = impact.time,
+			weapon = impact.weapon,
+			panelId = impact.panelId,
+			state = if impact.panelId then destruction.snapshot(impact.panelId) else nil,
+		})
+	end, nil, nil, destruction)
+	assert(combat, combatReason)
+	table.insert(cleanups, combat.stop)
+	local panelId = "Shelter_Roof_R06_C04"
+	local panel = workspace.World.Battlefield:FindFirstChild(panelId, true)
+	assert(panel and panel:IsA("Model"), "prepared exterior panel unavailable")
+	local pivot = panel:GetAttribute("IntactPivot")
+	assert(typeof(pivot) == "CFrame", "prepared panel pivot missing")
+	local initialIds: { number } = {}
+	for _, player in Players:GetPlayers() do
+		table.insert(initialIds, player.UserId)
+	end
+	local function report(label: string)
+		local current = rounds.match.snapshot()
+		local players = {}
+		for _, player in Players:GetPlayers() do
+			table.insert(
+				players,
+				{ userId = player.UserId, role = player:GetAttribute("Role"), life = player:GetAttribute("Life") }
+			)
+		end
+		local encoded = HttpService:JSONEncode({
+			purpose = "Actual production input/damage at an explicitly held canonical orbit clock",
+			label = label,
+			serverTime = workspace:GetServerTimeNow(),
+			aircraftClock = clock,
+			panelId = panelId,
+			panelPivot = { pivot:GetComponents() },
+			initialUserIds = initialIds,
+			currentCount = #Players:GetPlayers(),
+			round = { roundId = current.roundId, phase = current.phase, deadlineSeconds = current.deadlineSeconds },
+			players = players,
+			state = destruction.snapshot(panelId),
+			impacts = facts,
+		})
+		workspace:SetAttribute("P07RevisionRenderReport", encoded)
+		return encoded
+	end
+	local stopped = false
+	local stop = Instance.new("BindableEvent")
+	stop.Name = "P07RevisionRenderStop"
+	stop.Parent = workspace
+	local stopConnection: RBXScriptConnection? = nil
+	stopConnection = stop.Event:Connect(function()
+		if stopped then
+			return
+		end
+		stopped = true
+		report("stopped-after-report-preservation")
+		for index = #cleanups, 1, -1 do
+			cleanups[index]()
+		end
+		table.clear(cleanups)
+		if stopConnection then
+			stopConnection:Disconnect()
+		end
+		stop:Destroy()
+	end)
+	table.insert(cleanups, function()
+		if stopConnection then
+			stopConnection:Disconnect()
+		end
+		stop:Destroy()
+	end)
+	assert(rounds.match.deploy(), "actual render deployment rejected")
+	local deadline = os.clock() + 35
+	while rounds.match.snapshot().phase ~= "Active" and os.clock() < deadline do
+		task.wait(0.03)
+	end
+	assert(rounds.match.snapshot().phase == "Active", "actual render deployment timed out")
+	-- This one selected canonical phase radially aligns the known clear east wall.
+	-- Hold its supported clock constant; do not assign Aircraft/Hitbox CFrame.
+	local angle = math.atan2(pivot.Position.Z, pivot.Position.X) % (math.pi * 2)
+	clock = angle / (math.pi * 2) * AircraftRules.defaults.periodSeconds
+	RunService.Heartbeat:Wait()
+	RunService.Heartbeat:Wait()
+	report("ready-for-bounded-fixed-view-captures")
+	return { panelId = panelId, heldClock = clock, aircraftPosition = aircraft.position(), snapshot = report }
+end
+local ok, result = pcall(start)
+if not ok then
+	for index = #cleanups, 1, -1 do
+		local cleaned, failure = pcall(function()
+			cleanups[index]()
+			return true
+		end)
+		if not cleaned then
+			warn("Render cleanup: " .. tostring(failure))
+		end
+	end
+	table.clear(cleanups)
+	error(tostring(result))
+end
+return result

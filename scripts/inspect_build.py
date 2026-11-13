@@ -207,6 +207,73 @@ def building_surface_rejection_probes(world: dict) -> None:
             raise RuntimeError(f"Building surface probe accepted {fault}")
 
 
+def check_starting_shelter(world: dict) -> dict:
+    """Prove each tiled surface is an exact, nonoverlapping cover of its old box.
+
+    Old boxes intentionally intersect at wall corners/roof joints. Group-wise
+    coverage preserves that original union without retaining old full colliders.
+    """
+    children = {node["Name"]: node for node in world["Children"]}
+    assert "Permanent" not in children, "old shelter collider container remains"
+    root = children["SpawnShelterPanels"]
+    descriptors = children["PanelRegistries"]["Children"]
+    assert len(descriptors) == 1 and descriptors[0]["Name"] == "SpawnShelter" and descriptors[0]["Properties"]["Value"] == "SpawnShelterPanels", "shelter registry descriptor"
+    regions = {
+        "Roof": ((0,14,114),(108,2,96),42),
+        "West": ((-35,7,120),(2,14,56),8),
+        "East": ((35,7,120),(2,14,56),8),
+        "Back": ((0,7,147),(72,14,2),10),
+        "FrontCenter": ((0,7,93),(32,14,2),4),
+        "FrontWest": ((-34,7,93),(4,14,2),2),
+        "FrontEast": ((34,7,93),(4,14,2),2),
+    }
+    assert len(root["Children"]) == 76, "starting shelter panel count"
+    names = set()
+    for label, (center,size,count) in regions.items():
+        tiles = [node for node in root["Children"] if node["Name"].startswith("Shelter_"+label+"_")]
+        assert len(tiles) == count, "shelter surface panel count: "+label
+        volume = 0
+        boxes = []
+        for tile in tiles:
+            assert tile["Name"] not in names, "duplicate shelter panel ID"
+            names.add(tile["Name"])
+            p = tile["Properties"]
+            assert tile["ClassName"] == "Part" and p["Anchored"] and p["CanCollide"] and p["CanQuery"], "shelter tile collision"
+            assert p["CFrame"][3:] == [1,0,0,0,1,0,0,0,1], "shelter tile rotation"
+            xyz, dimensions = p["CFrame"][:3],p["Size"]
+            assert all(value>0 for value in dimensions), "shelter dimensions"
+            assert all(abs(xyz[a]-center[a])+dimensions[a]/2 <= size[a]/2+1e-7 for a in range(3)), "tile escapes original shelter surface"
+            volume += math.prod(dimensions)
+            boxes.append((xyz,dimensions))
+        assert abs(volume-math.prod(size))<1e-7, "shelter surface no longer fills original box"
+        for index,(a,sa) in enumerate(boxes):
+            for b,sb in boxes[index+1:]:
+                assert not all(min(a[k]+sa[k]/2,b[k]+sb[k]/2)-max(a[k]-sa[k]/2,b[k]-sb[k]/2)>1e-7 for k in range(3)), "shelter tiles overlap"
+    assert len(names) == 76, "unclassified shelter collider"
+    return {"CFrame":[0,14,114],"Size":[108,2,96]}
+
+
+def shelter_rejection_probes(world: dict) -> None:
+    for fault in ("missing","overlap","old-collider","registry"):
+        fixture = copy.deepcopy(world)
+        children = {node["Name"]: node for node in fixture["Children"]}
+        tiles = children["SpawnShelterPanels"]["Children"]
+        if fault == "missing":
+            tiles.pop()
+        elif fault == "overlap":
+            tiles[1]["Properties"]["CFrame"][0] -= .5
+        elif fault == "old-collider":
+            old = copy.deepcopy(tiles[0]);old["Name"]="ShelterRoof";tiles.append(old)
+        else:
+            children["PanelRegistries"]["Children"][0]["Properties"]["Value"]="LobbyStation"
+        try:
+            check_starting_shelter(fixture)
+        except AssertionError as error:
+            print(f"Expected shelter rejection ({fault}): {error}")
+        else:
+            raise RuntimeError("shelter corruption accepted: "+fault)
+
+
 def check_expanded_world_contract() -> None:
     """Check deterministic terrain/source metadata and real authored floor/stair/panel poses.
 
@@ -222,7 +289,8 @@ def check_expanded_world_contract() -> None:
     assert children["GroundDisk"]["Properties"]["Size"] == [4, 720, 720], "ExpandedMapRules diameter"
     # The doubled radius lowers approach angles. Check that all nine protected spawn
     # rays intersect the enlarged canopy, including the old southwest/north failures.
-    roof = next(item["Properties"] for item in children["Permanent"]["Children"] if item["Name"] == "ShelterRoof")
+    roof = check_starting_shelter(world)
+    shelter_rejection_probes(world)
     for anchor in children["Anchors"]["Children"]:
         if not anchor["Name"].startswith("Ground"):
             continue
@@ -282,7 +350,7 @@ def check_expanded_world_contract() -> None:
                 assert 8 in panel["Properties"]["Size"] and 16 in panel["Properties"]["Size"], "16x8 wall panels"
         assert stories == {"01", "02"} and roof, "panels on each story and roof"
     assert sorted(areas) == [1536, 3072, 3072], "two large and one smaller footprint"
-    print(f"Expanded world source contract passed: 720-stud diameter, 8 deterministic terrain hills, 3 two-story buildings, {len(ids)} stable panel pivots.")
+    print(f"Expanded world source contract passed: 720-stud diameter, 8 deterministic terrain hills, 3 two-story buildings, {len(ids)} building +76 starting-shelter stable panel pivots (187 total).")
 
 
 def geometry_rejection_probes() -> None:
@@ -368,7 +436,7 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
@@ -380,6 +448,13 @@ def main() -> None:
     for name in ("ServerScriptService/ServerTests", "StarterPlayer/StarterPlayerScripts/ClientTests", "ReplicatedStorage/TestPackages/TestEZ", "ServerStorage/DevelopmentSettings"):
         if name not in tests:
             raise RuntimeError(f"Test mapping missing {name}")
+    for name in (
+        "ServerScriptService/ServerTests/DestructionHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",
+        "ServerStorage/Tests/Studio/PanelDestruction.spec",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P07 destruction fixture missing from tests or leaked to release: {name}")
     # The P06 manual selector/runner is wholly test-mapped, never shipped.
     check_manual_p06_isolation(release, tests)
     for name in MANUAL_P06_TEST_ONLY:

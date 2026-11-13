@@ -1,0 +1,9 @@
+{
+  "serverFile": "/tmp/p07-reset-only-server.luau",
+  "sha256": "f3bb3bf7aa109724ce8b3d594cc2d1b9d62af0b90849f979f94dc689eb4dc240",
+  "clientFile": null,
+  "clientProtocol": "reuse current P07 helper .run() on each actual client before server start",
+  "replayNotes": "/tmp/p07-reset-only-replay.md",
+  "checks": "stylua --check, selene, Roblox-aware luau-lsp analyze all exit0",
+  "execution": "not run; tester owns native Studio"
+}

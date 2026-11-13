@@ -1,0 +1,395 @@
+-- Disposable real-client A4 verification fixture; deliberately outside source mapping.
+assert(game:GetService("RunService"):IsRunning(), "requires existing real native server")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Http = game:GetService("HttpService")
+local Server = game.ServerScriptService.Server
+local GameRuntime = require(Server.GameRuntime)
+local View = require(Server.CombatViewRules)
+local Combat = require(Server.CombatRuntime)
+local Profiles = require(Server.CombatService).profiles
+local Map = require(ReplicatedStorage.Shared.MapRules).defaults
+local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
+local Aircraft = require(ReplicatedStorage.Shared.AircraftRules)
+assert(not ReplicatedStorage:FindFirstChild("P07QAControl"), "fixture already owned")
+assert(not ReplicatedStorage:FindFirstChild("RoundState"), "previous runtime must finish first")
+assert(#Players:GetPlayers() >= 2, "actual multiplayer clients required")
+local controller, reason = GameRuntime.start({
+	automaticDeployment = false,
+	minimumPlayers = 2,
+	durationSeconds = 600,
+	lobbySeconds = 0,
+	deploymentSeconds = 25,
+	resultsSeconds = 10,
+	seed = 1,
+})
+assert(controller, reason)
+local control = Instance.new("RemoteEvent")
+control.Name = "P07QAControl"
+local ready, replies, saved = {}, {}, {}
+local serial, fireSequence, selectSequence = 0, 0, 0
+local report = {
+	suite = "P07-A4-real-player-blast",
+	environment = "Studio",
+	version = version(),
+	cases = {},
+	observations = {},
+	actualUserIds = {},
+}
+for _, player in Players:GetPlayers() do
+	table.insert(report.actualUserIds, player.UserId)
+end
+local listener = control.OnServerEvent:Connect(function(player, token, ok, message)
+	if token == 0 then
+		ready[player] = true
+	elseif type(token) == "number" then
+		replies[token] = { player = player, ok = ok == true, message = tostring(message) }
+	end
+end)
+control.Parent = ReplicatedStorage
+local stop = Instance.new("BindableEvent")
+stop.Name = "P07QAStop"
+stop.Parent = workspace
+local observedCombat
+local actualImpacts = {}
+local trackedHumanoid
+local resolvedTimes = {}
+local observedRound, contiguous = -1, 0
+local renderTargets, renderCommand, fireObserver
+local disposed = false
+local function dispose()
+	if disposed then
+		return
+	end
+	disposed = true
+	for root, prior in saved do
+		if root.Parent then
+			root.Anchored = prior.anchored
+		end
+	end
+	if fireObserver then
+		fireObserver:Disconnect()
+	end
+	if renderTargets then
+		renderTargets:Destroy()
+	end
+	if renderCommand then
+		renderCommand:Destroy()
+	end
+	listener:Disconnect()
+	control:Destroy()
+	if observedCombat then
+		observedCombat.stop()
+	end
+	controller.stop()
+	stop:Destroy()
+	workspace:SetAttribute("P07QAStage", "disposed")
+end
+stop.Event:Connect(dispose)
+local function stage(value)
+	workspace:SetAttribute("P07QAStage", value)
+end
+local function waitFor(predicate, label, budget)
+	local deadline = os.clock() + (budget or 15)
+	while not predicate() and os.clock() < deadline do
+		task.wait(0.03)
+	end
+	assert(predicate(), "P07 A4 timeout: " .. label)
+end
+local function request(player, kind, payload)
+	waitFor(function()
+		return ready[player]
+	end, "actual client armed", 120)
+	serial += 1
+	local token = serial
+	control:FireClient(player, token, kind, payload)
+	waitFor(function()
+		return replies[token] ~= nil
+	end, "actual client " .. kind, 20)
+	local reply = replies[token]
+	replies[token] = nil
+	assert(reply.player == player and reply.ok, reply.message)
+end
+local function command(weapon, point, camera)
+	camera = camera or controller.aircraft.position()
+	local radial = Vector2.new(camera.X, camera.Z).Unit
+	local ground = camera + (point - camera) * (Map.altitudeStuds / (camera.Y - point.Y))
+	local goal = { x = ground.X * radial.X + ground.Z * radial.Y, z = -ground.X * radial.Y + ground.Z * radial.X }
+	local home = assert(Pan.recenter(Map, 16 / 9, 40))
+	local payload = {
+		roundId = controller.rounds.match.snapshot().roundId,
+		sequence = fireSequence,
+		weapon = weapon,
+		x = point.X,
+		y = point.Y,
+		z = point.Z,
+		focusX = home.x,
+		focusZ = home.z,
+		aspect = 16 / 9,
+		cameraX = camera.X,
+		cameraZ = camera.Z,
+	}
+	for sample = 0, 100 do
+		local t = sample / 100
+		payload.focusX = goal.x + (home.x - goal.x) * t
+		payload.focusZ = goal.z + (home.z - goal.z) * t
+		if View.validate(payload, Map, weapon, camera.X, camera.Z) then
+			return payload
+		end
+	end
+	return nil
+end
+local function params()
+	local p = RaycastParams.new()
+	p.FilterType = Enum.RaycastFilterType.Include
+	p.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+	p.RespectCanCollide = true
+	return p
+end
+local function readyWeapon(weapon)
+	waitFor(function()
+		local raw = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+		if type(raw) ~= "string" then
+			return false
+		end
+		local state = Http:JSONDecode(raw)[weapon]
+		local now = workspace:GetServerTimeNow()
+		return state and state.ammo > 0 and now >= state.nextFire and now >= state.reloadUntil
+	end, "authoritative " .. weapon .. " readiness", 8)
+end
+local function select(operator, weapon)
+	selectSequence += 1
+	request(
+		operator,
+		"Select",
+		{ roundId = controller.rounds.match.snapshot().roundId, sequence = selectSequence, weapon = weapon }
+	)
+	waitFor(function()
+		return controller.aircraft.weapon() == weapon
+	end, "acknowledged profile")
+	readyWeapon(weapon)
+end
+local function fire(operator, weapon, point)
+	readyWeapon(weapon)
+	local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+	fireSequence += 1
+	request(operator, "Fire", assert(command(weapon, point), "permitted actual view unavailable"))
+	waitFor(function()
+		return ReplicatedStorage.AircraftState:GetAttribute("Impact") ~= previous
+	end, "actual impact", 8)
+	local impact = Http:JSONDecode(ReplicatedStorage.AircraftState:GetAttribute("Impact"))
+	assert(impact.weapon == weapon and impact.roundId == controller.rounds.match.snapshot().roundId, "wrong impact")
+	return impact
+end
+local function roles()
+	local operator, ground
+	for _, player in Players:GetPlayers() do
+		if player:GetAttribute("Role") == "Gunship" then
+			operator = player
+		elseif player:GetAttribute("Role") == "Ground" and not ground then
+			ground = player
+		end
+	end
+	assert(operator and ground, "actual roles missing")
+	return operator, ground
+end
+local function deploy()
+	assert(controller.rounds.match.deploy(), "actual deployment failed")
+	waitFor(function()
+		return controller.rounds.match.snapshot().phase == "Active"
+	end, "Active round", 35)
+end
+local function chooseWall(weapon)
+	local muzzle = assert(controller.aircraft.muzzle(weapon))
+	for _, item in workspace.World.Battlefield:GetDescendants() do
+		if
+			item:IsA("Model")
+			and item:GetAttribute("PanelId")
+			and item:GetAttribute("PanelState") == "Intact"
+			and string.find(item.Name, "_S01_", 1, true)
+			and not string.find(item.Name, "Interior", 1, true)
+			and not string.find(item.Name, "Roof", 1, true)
+		then
+			local solid = item:FindFirstChild("Solid")
+			if solid and solid:IsA("BasePart") then
+				local axis = if solid.Size.X < 2 then Vector3.xAxis else Vector3.zAxis
+				local outward = axis * (if (muzzle - solid.Position):Dot(axis) > 0 then 1 else -1)
+				local point = solid.Position + outward * 0.5
+				local step = point - muzzle
+				local hit = workspace:Raycast(muzzle, step.Unit * (step.Magnitude + 0.2), params())
+				if hit and hit.Instance == solid and command(weapon, point) then
+					return item, solid.CFrame, outward, point
+				end
+			end
+		end
+	end
+	error("no actual visible ground-story wall")
+end
+controller.combat.stop()
+observedCombat = assert(Combat.start(controller.rounds.match, controller.aircraft, function(impact)
+	if observedRound ~= impact.roundId then
+		observedRound = impact.roundId
+		contiguous = 0
+		table.clear(resolvedTimes)
+	end
+	resolvedTimes[impact.shotId] = impact.firedAt
+	while resolvedTimes[contiguous + 1] do
+		contiguous += 1
+	end
+	local state = if impact.panelId then controller.destruction.snapshot(impact.panelId) else nil
+	table.insert(actualImpacts, {
+		roundId = impact.roundId,
+		shotId = impact.shotId,
+		weapon = impact.weapon,
+		panelId = impact.panelId,
+		firedAt = impact.firedAt,
+		impactAt = impact.time,
+		stage = state and state.stage,
+		progress = state and state.progress,
+		scoredThroughFiredAt = resolvedTimes[contiguous],
+		groundHealth = trackedHumanoid and trackedHumanoid.Health,
+	})
+end, nil, nil, controller.destruction))
+controller.combat = observedCombat
+report.actualImpactFacts = actualImpacts
+
+local scene = {
+	ready = false,
+	observations = {},
+	purpose = "actual rendered cover/thermal and native controls; tagged fixtures are not Players",
+}
+local operator, ground, selectedPanel, pivot, normal, impactPoint
+local busy = false
+local function coordinates(v)
+	return { v.X, v.Y, v.Z }
+end
+local function snapshot()
+	local frags = {}
+	local folder = workspace:FindFirstChild("PanelFragments")
+	if folder then
+		for _, f in folder:GetChildren() do
+			if f:IsA("BasePart") then
+				table.insert(frags, {
+					position = coordinates(f.Position),
+					velocity = coordinates(f.AssemblyLinearVelocity),
+					anchored = f.Anchored,
+				})
+			end
+		end
+	end
+	return {
+		time = workspace:GetServerTimeNow(),
+		ready = scene.ready,
+		panelId = selectedPanel and selectedPanel.Name,
+		panelState = selectedPanel and selectedPanel:GetAttribute("PanelState"),
+		progress = selectedPanel and selectedPanel:GetAttribute("PanelProgress"),
+		impactPoint = impactPoint and coordinates(impactPoint),
+		normal = normal and coordinates(normal),
+		pivot = pivot and coordinates(pivot.Position),
+		operatorId = operator and operator.UserId,
+		groundId = ground and ground.UserId,
+		fragments = frags,
+		impacts = actualImpacts,
+	}
+end
+renderCommand = Instance.new("BindableFunction")
+renderCommand.Name = "P07RenderCommand"
+renderCommand.Parent = workspace
+renderCommand.OnInvoke = function(action)
+	if action == "Snapshot" then
+		return snapshot()
+	end
+	if action == "Heavy" then
+		assert(scene.ready and not busy, "render fixture unavailable or firing")
+		busy = true
+		task.spawn(function()
+			local ok, err = pcall(function()
+				fire(operator, "M102", impactPoint)
+			end)
+			busy = false
+			local item = snapshot()
+			item.ok = ok
+			item.failure = if ok then nil else tostring(err)
+			table.insert(scene.observations, item)
+			workspace:SetAttribute("P07RenderReport", Http:JSONEncode(scene))
+		end)
+		return { started = true }
+	end
+	if action == "GroundView" then
+		local character = assert(ground.Character)
+		local target = pivot.Position + normal * 22
+		local hit = workspace:Raycast(Vector3.new(target.X, 80, target.Z), Vector3.new(0, -150, 0), params())
+		assert(hit, "ground-view floor unavailable")
+		local position = Vector3.new(target.X, hit.Position.Y + 3.1, target.Z)
+		character:PivotTo(CFrame.lookAt(position, Vector3.new(pivot.Position.X, position.Y, pivot.Position.Z)))
+		return { position = coordinates(position) }
+	end
+	error("unsupported render command")
+end
+stage("render-waiting-for-real-client-arms")
+task.spawn(function()
+	local ok, err = pcall(function()
+		for _, player in Players:GetPlayers() do
+			waitFor(function()
+				return ready[player]
+			end, "render clients", 120)
+		end
+		deploy()
+		operator, ground = roles()
+		selectedPanel = assert(workspace.World.Battlefield:FindFirstChild("Warehouse_S01_South_04", true))
+		pivot = selectedPanel:GetAttribute("IntactPivot")
+		normal = Vector3.new(0, 0, 1)
+		local muzzle = assert(controller.aircraft.muzzle("M102"))
+		local target = pivot.Position + normal * 0.5
+		local firstHit =
+			workspace:Raycast(muzzle, (target - muzzle).Unit * ((target - muzzle).Magnitude + 0.2), params())
+		assert(
+			firstHit and firstHit.Instance:IsDescendantOf(selectedPanel),
+			"near Warehouse capture wall is not actually exposed"
+		)
+		impactPoint = pivot.Position + normal * 0.5 + Vector3.yAxis:Cross(normal) * 6
+		renderTargets = Instance.new("Folder")
+		renderTargets.Name = "P07RenderTargets"
+		renderTargets.Parent = workspace
+		for _, entry in { { name = "CentreThroughHole", offset = 0 }, { name = "SideBehindResidual", offset = 6 } } do
+			local model = Instance.new("Model")
+			model.Name = entry.name
+			local part = Instance.new("Part")
+			part.Name = "ThermalWitness"
+			part.Size = Vector3.new(2, 5, 1)
+			local position = pivot.Position - normal * 2 + Vector3.yAxis:Cross(normal) * entry.offset
+			part.CFrame = CFrame.lookAt(position, position + normal)
+			part.Anchored = true
+			part.CanCollide = false
+			part.CanTouch = false
+			part.CanQuery = false
+			part.Color = Color3.new(0, 0, 0)
+			part.Parent = model
+			model.Parent = renderTargets
+			game:GetService("CollectionService"):AddTag(model, "ThermalTarget")
+		end
+		fireObserver = ReplicatedStorage.AircraftState.FireWeapon.OnServerEvent:Connect(function(player, payload)
+			if player == operator and type(payload) == "table" and type(payload.sequence) == "number" then
+				fireSequence = math.max(fireSequence, payload.sequence)
+			end
+		end)
+		scene.ready = true
+		scene.panelId = selectedPanel.Name
+		scene.operatorId = operator.UserId
+		scene.groundId = ground.UserId
+		scene.setup = snapshot()
+		renderCommand:Invoke("GroundView")
+		workspace:SetAttribute("P07RenderReport", Http:JSONEncode(scene))
+		stage("render-intact-ready")
+	end)
+	if not ok then
+		scene.failure = tostring(err)
+		workspace:SetAttribute("P07RenderReport", Http:JSONEncode(scene))
+		stage("render-setup-failed")
+	end
+end)
+return {
+	started = true,
+	actualClients = #Players:GetPlayers(),
+	next = "arm existing A4 client bridge on both clients; use actual operator native inputs, Snapshot and optional Heavy control; cleanup P07QAStop",
+}
