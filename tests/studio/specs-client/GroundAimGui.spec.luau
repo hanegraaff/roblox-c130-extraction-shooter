@@ -249,4 +249,104 @@ return function()
         assert(not owned or owned.Parent == nil, "controller stop retained HUD")
         assert(ok, tostring(failure))
     end)
+    test("P08 actual desktop and phone launcher HUD rectangles never hide ammunition or actions", function()
+        local player = game:GetService("Players").LocalPlayer
+        local runService = game:GetService("RunService")
+        local controllerModule = require(player.PlayerScripts.Client.GroundCombatController)
+        local before: { [Instance]: boolean } = {}
+        for _, child in player.PlayerGui:GetChildren() do
+            before[child] = true
+        end
+        local state = Instance.new("Folder")
+        local touch = false
+        local owner = controllerModule.new(player, player.PlayerGui, state, function()
+            return touch
+        end)
+        assert(owner.start(), "layout owner failed")
+        local source: ScreenGui? = nil
+        for _, child in player.PlayerGui:GetChildren() do
+            if not before[child] and child.Name == "GroundCombatHUD" and child:IsA("ScreenGui") then
+                source = child
+            end
+        end
+        local gui = Instance.new("ScreenGui")
+        gui.Name, gui.IgnoreGuiInset, gui.Parent = "P08LayoutProbe", true, player.PlayerGui
+        local viewport = Instance.new("Frame")
+        viewport.BackgroundTransparency, viewport.Parent = 1, gui
+        local function overlaps(a: GuiObject, b: GuiObject): boolean
+            local a0, b0 = a.AbsolutePosition, b.AbsolutePosition
+            local a1, b1 = a0 + a.AbsoluteSize, b0 + b.AbsoluteSize
+            return a0.X < b1.X and b0.X < a1.X and a0.Y < b1.Y and b0.Y < a1.Y
+        end
+        local function object(name: string): GuiObject
+            local result = viewport:FindFirstChild(name)
+            assert(result and result:IsA("GuiObject"), "production HUD object missing: " .. name)
+            return result
+        end
+        local ok, failure = pcall(function()
+            assert(source, "production HUD not created")
+            for _, mode in { false, true } do
+                touch = mode
+                runService.RenderStepped:Wait()
+                runService.RenderStepped:Wait()
+                viewport:ClearAllChildren()
+                for _, child in source:GetChildren() do
+                    if child:IsA("GuiObject") then
+                        child:Clone().Parent = viewport
+                    end
+                end
+                local layouts: { Vector2 } = if mode
+                    then { Vector2.new(568, 320), Vector2.new(750, 381), Vector2.new(852, 393) }
+                    else { Vector2.new(1280, 720), Vector2.new(1920, 1080) }
+                for _, size in layouts do
+                    viewport.Size = UDim2.fromOffset(size.X, size.Y)
+                    for _, scenario in { "Available", "Held" } do
+                        local names = { "RifleStatus", "LauncherStatus" }
+                        if scenario == "Available" then
+                            table.insert(names, "Pickup")
+                        elseif mode then
+                            for _, name in { "M7", "Rocket", "Drop" } do
+                                table.insert(names, name)
+                            end
+                        end
+                        if mode then
+                            table.insert(names, "Fire")
+                            table.insert(names, "Reload")
+                        end
+                        runService.RenderStepped:Wait()
+                        runService.RenderStepped:Wait()
+                        for index, name in names do
+                            local item = object(name)
+                            local relative = item.AbsolutePosition - viewport.AbsolutePosition
+                            local detail = string.format(
+                                "%s %s %dx%d: %s",
+                                if mode then "touch" else "desktop",
+                                scenario,
+                                size.X,
+                                size.Y,
+                                name
+                            )
+                            assert(
+                                relative.X >= 0
+                                    and relative.Y >= 0
+                                    and relative.X + item.AbsoluteSize.X <= size.X
+                                    and relative.Y + item.AbsoluteSize.Y <= size.Y,
+                                "HUD outside viewport: " .. detail
+                            )
+                            for otherIndex = index + 1, #names do
+                                assert(
+                                    not overlaps(item, object(names[otherIndex])),
+                                    "HUD rectangles overlap: " .. detail .. " / " .. names[otherIndex]
+                                )
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+        owner.stop()
+        state:Destroy()
+        gui:Destroy()
+        assert(ok, tostring(failure))
+    end)
 end

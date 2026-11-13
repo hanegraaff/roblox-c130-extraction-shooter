@@ -1,6 +1,8 @@
 --!strict
 --[=[
-    GroundCombatController: local presentation and M-7 intent for an equipped rifle.
+    GroundCombatController: local M-7/launcher aim, fire and equipment intent, plus
+    team launcher ownership/readiness and pickup/drop presentation. The equipped
+    server-owned Tool selects firing; native slots/touch buttons select equipment.
     Depends on PlayerGui, UserInputService, current camera and server-owned remotes.
     The server validates ownership, target, timing, cover and damage. start/stop are
     idempotent and disconnect all listeners, release held fire and destroy the HUD.
@@ -47,6 +49,12 @@ function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
         return UDim2.new(0.5, 0, 1, -20), UDim2.fromOffset(260, 36)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
+end
+
+-- The desktop pickup row sits below both status readouts. Touch shares the
+-- equipment-action row above them, leaving the movement/fire regions clear.
+local function pickupPosition(touch: boolean): UDim2
+    return UDim2.new(0.5, 0, 1, if touch then -104 else -20)
 end
 
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
@@ -137,6 +145,9 @@ function GroundCombatController.new(
                 button.Name = name
                 button.AnchorPoint = Vector2.new(0.5, 1)
                 button.Position = UDim2.new(0.5, if name == "Pickup" then 0 else (index - 2) * 90, 1, -104)
+                if name == "Pickup" then
+                    button.Position = pickupPosition(lastTouch)
+                end
                 button.Size = UDim2.fromOffset(if name == "Pickup" then 130 else 84, 32)
                 button.Text = if name == "M7"
                     then "M-7"
@@ -290,6 +301,7 @@ function GroundCombatController.new(
                     if touch ~= lastTouch then
                         lastTouch = touch
                         label.Position, label.Size = GroundCombatController.statusLayout(touch)
+                        launcherButtons.Pickup.Position = pickupPosition(touch)
                     end
                     local roundId = roundState:GetAttribute("RoundId")
                     if type(roundId) == "number" and roundId ~= round then

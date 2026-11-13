@@ -392,6 +392,80 @@ function Harness.run(finish: ((Report) -> ())?)
                 observe(200)
             end
         )
+        check(
+            "A3 actual carrier character removal while reloading preserves one recoverable identity",
+            function()
+                resetRound()
+                local _, ground = roles()
+                local carrier, teammate = ground[1], ground[2]
+                pickup(carrier)
+                equip(carrier, "Rocket launcher")
+                fire(carrier, Vector3.new(0, 300, 0))
+                local before = runtime.launcher.snapshot()
+                assert(
+                    workspace:GetServerTimeNow() < before.readyAt,
+                    "fixture removal did not occur during reload"
+                )
+                local character = carrier.Character
+                assert(character, "carrier character missing before removal")
+                -- Remove the actual owned character without Humanoid.Died, exercising
+                -- the character-reset/removal boundary separately from combat death.
+                carrier.Character = nil
+                character:Destroy()
+                waitFor(function()
+                    return carrier:GetAttribute("Life") == "Eliminated"
+                        and runtime.launcher.snapshot().state == "Available"
+                end, "character removal and recovery")
+                assert(runtime.rounds.match.snapshot().phase == "Active", "removal ended a populated round")
+                local recovered = runtime.launcher.snapshot()
+                assert(
+                    recovered.launcherId == before.launcherId and recovered.readyAt == before.readyAt,
+                    "character removal changed identity or readiness"
+                )
+                local function launcherTools(player: Player): number
+                    local count = 0
+                    local containers: { Instance } = {}
+                    local backpack = player:FindFirstChildOfClass("Backpack")
+                    if backpack then
+                        table.insert(containers, backpack)
+                    end
+                    if player.Character then
+                        table.insert(containers, player.Character)
+                    end
+                    for _, container in containers do
+                        for _, item in container:GetChildren() do
+                            if item:IsA("Tool") and item.Name == "Rocket launcher" then
+                                count += 1
+                            end
+                        end
+                    end
+                    return count
+                end
+                waitFor(function()
+                    return carrier.Character == nil and launcherTools(carrier) == 0
+                end, "no reset-user equipment or respawn")
+                pickup(teammate)
+                waitFor(function()
+                    return launcherTools(teammate) == 1
+                end, "one teammate launcher")
+                assert(
+                    runtime.launcher.snapshot().launcherId == before.launcherId
+                        and runtime.launcher.snapshot().readyAt == before.readyAt
+                        and runtime.launcher.resources().representations == 1,
+                    "reset recovery duplicated weapon"
+                )
+                probe(carrier, "Pickup", payload(carrier))
+                task.wait(0.1)
+                assert(
+                    carrier:GetAttribute("Life") == "Eliminated"
+                        and carrier.Character == nil
+                        and launcherTools(carrier) == 0
+                        and runtime.launcher.snapshot().ownerId == teammate.UserId,
+                    "reset user reclaimed active life or launcher"
+                )
+                observe(300)
+            end
+        )
         check("A6 real reset removes old state and rejects delayed prior-round intent", function()
             local _, ground = roles()
             local delayed = payload(ground[1], Vector3.new(0, 300, 0))

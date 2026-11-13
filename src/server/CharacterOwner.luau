@@ -4,6 +4,8 @@
     MatchService, authored anchor poses and Roblox avatar loading. Serializes yielding
     loads, tags callbacks with a generation and leases in-flight loads on the Player.
     New runtimes must wait for old load leases to drain before acquiring characters.
+    Death or external removal consumes an owned ground life once; internal cleanup
+    disconnects first. Operator loss requests a replacement protected placeholder.
     All public calls are nonyielding; stop is idempotent and invalidates queued work.
 ]=]
 local MatchService = require(script.Parent.MatchService)
@@ -123,23 +125,40 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                         protection.Visible = false
                         protection.Parent = character
                     end
+                    -- A character can disappear without Humanoid.Died (for
+                    -- example an explicit reset/removal). Both signals consume
+                    -- this owned generation's life once. Internal clear/request
+                    -- disconnects both before destroying its old character.
+                    local characterLost = false
+                    local function loseCharacter(deploymentReason: string)
+                        if not running or token ~= request.token or characterLost then
+                            return
+                        end
+                        local state = match.snapshot()
+                        if state.roundId ~= request.roundId then
+                            return
+                        end
+                        characterLost = true
+                        if state.phase == "Deploying" then
+                            match.abort(request.roundId, deploymentReason)
+                        elseif request.role == "Ground" then
+                            match.eliminate(player.UserId, request.roundId)
+                        elseif state.phase == "Lobby" or state.phase == "Active" then
+                            -- Operator reset rebuilds only the protected placeholder body.
+                            owner.request(request.anchor, request.role, request.roundId)
+                        end
+                    end
                     table.insert(
                         connections,
                         humanoid.Died:Connect(function()
-                            if not running or token ~= request.token then
-                                return
-                            end
-                            local state = match.snapshot()
-                            if state.roundId ~= request.roundId then
-                                return
-                            end
-                            if state.phase == "Deploying" then
-                                match.abort(request.roundId, "DeathDuringDeployment")
-                            elseif request.role == "Ground" then
-                                match.eliminate(player.UserId, request.roundId)
-                            elseif state.phase == "Lobby" or state.phase == "Active" then
-                                -- Operator reset rebuilds only the protected placeholder body.
-                                owner.request(request.anchor, request.role, request.roundId)
+                            loseCharacter("DeathDuringDeployment")
+                        end)
+                    )
+                    table.insert(
+                        connections,
+                        player.CharacterRemoving:Connect(function(removed)
+                            if removed == character then
+                                loseCharacter("CharacterRemovedDuringDeployment")
                             end
                         end)
                     )
