@@ -75,10 +75,10 @@ publication is authorized or claimed.
 | A1 | `PanelDamageRules` and full independent host gates pass 54 unit / 53 integration; native actual M102 hits 1–6 produce the required stages/progress. |
 | A2 | Named `SustainedPanelFire` integration cases cover thresholds, accepted-shot ordering, interruptions, invalid/stale inputs and cleanup. Actual native 61-shot fire proves zero first-hit credit and a transition after at least nine accepted seconds. The initial failed timing fixture and causal reproduction are retained separately. |
 | A3 | Studio `PanelGeometryStates` checks all 111 panels, 50% residual opening, real rays/overlaps, identity/pivots and static supports. The e45 native run also passed actual client-and-server-observed Ground Humanoid traversal. |
-| A4 | `PreImpactCoverAndThermal` engine geometry checks pass. Separate actual-player blast checks pass both profiles, protecting health on the creating impact and damaging the same in-radius target through the later hole. Rendered thermal/cover review is still required. |
+| A4 | `PreImpactCoverAndThermal` engine geometry checks pass. Separate actual-player blast checks pass both profiles, protecting health on the creating impact and damaging the same in-radius target through the later hole. Actual Ground opening view is captured; clean rendered thermal comparison remains unverified. |
 | A5 | Real Studio `PanelFragmentPhysics` passes fall/contact, server ownership, groups/query controls, actual-avatar exclusion, mass/velocity, cap/lifetime and cleanup assertions. |
-| A6 | Two actual clients passed role/rejection, stage/progress/opening agreement and debris-expiry checks. The e45 run discovered six cases: five passed and late join timed out without a third PlayerAdded. Its later reset case was never discovered; a separate actual two-client reset check remains required. |
-| A7 | Automated actual heavy/30mm progression and real wall traversal passed. Operated readability, rendered views, stable-route review and the representative P07 capture remain required. |
+| A6 | Two actual clients passed role/rejection, stage/progress/opening agreement and debris-expiry checks. The e45 run passed five of six discovered cases, then late join timed out. A separate reset-only probe passes 2/2 actual rounds with positive partial credit, live fragments and pending flights: all 111 server panels/334 map parts restore, 576 voxel samples match, both clients verify 30 roofs/no debris, and stale outcomes reject. True late reconstruction remains unverified. |
+| A7 | Automated actual heavy/30mm progression and real wall traversal passed. The actual Ground opening capture replaces the README hero. Clean thermal comparison, Destroyed/falling-fragment visual review, native firing feel and complete operated readability remain open. |
 
 The specific late-join capability gap is confirmed in the installed Studio
 0.747 manual session: both the client-count control and Quick Open Actions →
@@ -94,4 +94,17 @@ one or two real late clients in the same Active round, within the original
 240-second deadline. Its optional batch path remains unrun. P05 regression
 found a grazing Terrain fixture mismatch; `873f0f6` retains the original
 five-stud actual-impact assertion while selecting a stable sloped scenario.
-Its actual rerun and P14 regression remain required at this checkpoint.
+Its actual rerun passed 8/8 with zero failures/skips. Independent host gate on
+the final executable candidate passes 54 unit / 53 integration. The final
+actual P14 regression passes 6/6 with both weapon full orbits, new-round focus,
+operator departure and repeated teardown. The verification record retains
+exact source hashes, separate scopes and actual failed runs.
+
+The remaining conditions for completion are a real post-damage join in the
+same Active round and the focused rendered/operated items identified in A4/A7.
+The tested native UI cannot add that client; restarting with three initial
+players does not clear this condition. The SDK path also needs changed
+capability/state before a justified retry. The next review must establish clean
+thermal sight lines through the opening, Destroyed/falling-fragment visibility
+and actual firing/readability with the current candidate. No acceptance
+requirement was silently waived, and an incomplete plan is not marked Complete.

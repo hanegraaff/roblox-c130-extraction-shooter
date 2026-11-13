@@ -4,9 +4,9 @@
 
 One player operates a circling C-130 while 5–9 teammates on the ground try to destroy it. Ground players start with M-7 rifles; coordinated hits wear down the aircraft's shared health. The intended map launcher will add rockets, with three direct hits destroying an undamaged plane. It is not yet a player item.
 
-![Ground player in an active round with M-7 ammo, reticle and aircraft health visible](docs/evidence/p06-presentation/current-progress.jpg)
+![Ground player outside Warehouse beside its original left doorway and a new opening in the wall panel on the right](docs/evidence/p07/panel-opening.png)
 
-*P06 ground-combat prototype: actual desktop Studio capture from an active three-client round on 2026-11-12, after the user’s firing review. The held primitive M-7, ammunition and shared aircraft-health readout are visible; the aircraft is outside this frame.*
+*P07 QA stage, 2026-11-13: actual desktop Studio capture in an active two-client round. Three 105mm hits opened the right Warehouse panel beside the original left doorway. The black upright block inside is a temporary QA visibility marker.*
 
 ## What you can play today
 
@@ -22,7 +22,7 @@ Follow the teal western or ochre eastern route toward the gold center marker, wh
 
 The HUD shows phase, role, life, time, ground survivors, ammunition and aircraft health. A confirmed rifle hit displays **AIRCRAFT HIT −5** for its shooter; server-resolved shots flash the reticle and show a short travelling tracer. Ground death, character reset or **Surrender / spectate** consumes that round's life. Eliminated players follow a living teammate; late arrivals and reconnecting players spectate until the next lobby. Resetting the operator's protected station character keeps the assignment, aircraft and deadline. Leaving the operator role restores the normal camera and removes thermal effects.
 
-The visuals and HUD are primitive development art. Desktop and simulated-phone combat/panning were reviewed on the earlier integrated source; P07 needs its own destruction readability, rendered thermal and multiplayer evidence before acceptance. A physical mobile device, gamepad controls, combat audio, release performance and actual 6/10-player capacity remain unverified or planned. The MVP ships one level; [future levels](plans/15-interchangeable-levels.md) will reuse the same orbiting-aircraft, camera, combat and demolition rules. Launcher handling is P08 work; complete Help/presentation is P10 work. Progression, purchases, ground vehicles and full structural collapse are outside MVP scope.
+The visuals and HUD are primitive development art. Desktop and simulated-phone combat/panning were reviewed on the earlier integrated source; P07 still needs full rendered thermal/Destroyed-state review, falling-fragment visuals and native firing/readability review. Current two-client gunship and panning regressions and a focused reset probe have passing [source-specific evidence](docs/testing.md#run-the-p07-destruction-harness). A genuine third late client remains unverified because the tested session’s launch controls are disabled. The QA capture above demonstrates a new ground-view opening; full-plan acceptance remains incomplete. A physical mobile device, gamepad controls, combat audio, release performance and actual 6/10-player capacity remain unverified or planned. The MVP ships one level; [future levels](plans/15-interchangeable-levels.md) will reuse the same orbiting-aircraft, camera, combat and demolition rules. Launcher handling is P08 work; complete Help/presentation is P10 work. Progression, purchases, ground vehicles and full structural collapse are outside MVP scope.
 
 ## Set up locally
 

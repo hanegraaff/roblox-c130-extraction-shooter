@@ -1,0 +1,50 @@
+{
+  "studioId": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94",
+  "onlyRemainingStudio": true,
+  "mode": "Edit",
+  "edit": {
+    "placeName": "tests.rbxlx",
+    "settingsAttrs": [],
+    "placeId": 0,
+    "workspaceAttributeNames": [],
+    "running": false,
+    "version": "0.747.0.7471481",
+    "disposableFolderAbsent": true,
+    "selectorAbsent": true,
+    "workspace": {
+      "P07RenderTargets": false,
+      "Aircraft": false,
+      "P07RenderCommand": false,
+      "P07QAStop": false,
+      "PanelFragments": false
+    },
+    "selectorBefore": "P07",
+    "replicated": {
+      "P07QAControl": false,
+      "P14Harness": false,
+      "BootstrapStatus": false,
+      "P07Harness": false,
+      "AircraftState": false,
+      "P05Harness": false,
+      "RoundState": false,
+      "EntrypointStatus": false
+    }
+  },
+  "mappedScriptSourceComparison": {
+    "running": false,
+    "method": "byte-length+rolling131-mod2147483647",
+    "failures": [],
+    "checked": 97,
+    "version": "0.747.0.7471481"
+  },
+  "sourceProbe": "/tmp/p07-tester-source-compare-current.luau",
+  "rojo": {
+    "pid": 55771,
+    "port": 34872,
+    "address": "127.0.0.1",
+    "state": "LISTEN",
+    "process": "rojo",
+    "method": "lsof -nP -iTCP:34872 -sTCP:LISTEN",
+    "note": "Existing process retained; all97 current mapped script Sources also match by length and rolling131 hash."
+  }
+}

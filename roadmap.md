@@ -14,7 +14,7 @@ The integrated source on `main` includes the development shell, verification too
 | M2 — View revision | [P14: Directional aircraft targeting](plans/14-aircraft-panning.md) | Complete | P13 | Pan the aircraft view with WASD or mobile arrows, aim independently and retain the view through the orbit |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
-| M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | In progress | P06, P13, P14 | See panels degrade: 3 heavy hits → half destroyed, 3 more → gone; 9 seconds sustained 30mm → damage, with real falling fragments |
+| M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Blocked | P06, P13, P14 | See panels degrade: 3 heavy hits → half destroyed, 3 more → gone; 9 seconds sustained 30mm → damage, with real falling fragments |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Planned | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
@@ -55,6 +55,29 @@ to verified final head `dce058d`. The fresh integrated full host gate passes
 [integration record](docs/evidence/p06-integration.md) preserves merge, build
 and existing Studio evidence. Routine setup selects `main`; P07 can branch
 from it and remains unstarted. No Roblox publication occurred.
+
+2026-11-13 P07 candidate: [draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
+contains progressive panels, real openings and bounded physical fragments on
+`plan/07-destruction`, based on integrated main `e4c6e3a`. The final executable
+candidate `873f0f6` passes 54 unit / 53 integration and all host gates;
+unchanged core `cb530a0` passed clean Studio 137 server / 6 client tests.
+Actual two-client checks prove heavy/30mm progression, wall traversal,
+state agreement and debris expiry. Separate actual-player blast checks pass
+2/2, P05 regression 8/8, reset-only two-round checks 2/2 and P14 regression
+6/6. These separate results do not turn the failed full P07 late-join run
+into a pass. The [plan record](plans/07-destruction.md) and
+[verification evidence](docs/evidence/p07-destruction.md) retain exact scopes,
+source hashes, failures, cleanup and the current QA opening capture.
+
+Acceptance still needs a genuinely new post-damage client: the installed
+Studio 0.747 manual session disables both client count and Quick Open Actions
+Start, and the previously unavailable SDK/manual-session AddPlayers routes
+were not retried without changed conditions. Clean rendered thermal-hole
+comparison, Destroyed/falling-fragment visual review and native firing /
+complete operated readability also remain open after bounded review attempts.
+Resume P07 when a real mid-round join route and the focused visual review can
+be exercised. P08 remains Planned; no later plan started. Main is unchanged,
+and no P07 merge or Roblox publication occurred.
 
 ## How plans move
 

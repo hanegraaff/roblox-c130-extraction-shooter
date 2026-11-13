@@ -20,7 +20,7 @@ These written fixtures require the [P14 two-client procedure](../../../docs/test
 
 The test-only `CombatHarness` client observes weapon/readiness, shot/impact, health and result state and sends bounded fire/selection probes for the two-client P05 harness. Its excluded transport is destroyed on teardown; actual execution and acceptance are recorded in the [P05 plan](../../../plans/05-gunship-combat.md), separate from the ordinary six client TestEZ cases.
 
-The test-only `GroundCombatHarness` client sends bounded rifle intents and observes replicated shot, health, destruction and result state for P06. It is excluded from release builds and its listeners are removed on teardown. Native desktop input and simulated-phone layout received separate operated review on the current source; physical-device behavior remains unverified.
+The test-only `GroundCombatHarness` client sends bounded rifle intents and observes replicated shot, health, destruction and result state for P06. It is excluded from release builds and its listeners are removed on teardown. Native desktop input and simulated-phone layout received separate operated review on the earlier integrated P06 source; physical-device behavior remains unverified.
 
 `GroundAimGui.spec.luau` checks desktop mouse and touch-center aim using real GUI layout, measured inset and viewport camera rays; it also checks touch label placement and an actual owned controller reacting to input-mode changes and cleaning up. Its passing result supplements, but does not replace, an operated native moving-aircraft aim/fire review.
 

@@ -1,0 +1,576 @@
+--!strict
+--[=[
+    P07 reset-only native probe. Install as a DISPOSABLE ModuleScript outside
+    managed source, then run asynchronously with exactly two real clients whose
+    existing P07 client helper has been rearmed. Never invokes the full P07 suite
+    or claims its late-join/rendered acceptance. No authority adapters or injected
+    elapsed/health/panel state: every positive award comes from real FireWeapon.
+    Owns runtime, P07Harness transport, one listener and a bounded four-shot task.
+    Always tears them down; preserves report/stage attributes for collection.
+]=]
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local Server = game:GetService("ServerScriptService").Server
+local GameRuntime = require(Server.GameRuntime)
+local CombatService = require(Server.CombatService)
+local CombatRuntime = require(Server.CombatRuntime)
+local View = require(Server.CombatViewRules)
+local Map = require(ReplicatedStorage.Shared.MapRules)
+local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
+local Aircraft = require(ReplicatedStorage.Shared.AircraftRules)
+local Probe = {}
+type Case = { name: string, passed: boolean, detail: string? }
+local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
+	local deadline = os.clock() + (seconds or 15)
+	while not predicate() and os.clock() < deadline do
+		task.wait(0.01)
+	end
+	assert(predicate(), "reset-only timeout: " .. label)
+end
+local function components(values: { number }): string
+	local result: { string } = {}
+	for _, value in values do
+		table.insert(result, string.format("%.17g", value))
+	end
+	return table.concat(result, ",")
+end
+-- Includes every map BasePart, therefore all permanent floors/stairs/frames,
+-- panel colliders and authored terrain descriptors. Ordered full paths preserve
+-- identity despite every registered panel child being named Solid.
+local function mapSignature(): (string, number)
+	local rows: { string } = {}
+	for _, item in workspace.World.Battlefield:GetDescendants() do
+		if item:IsA("BasePart") then
+			table.insert(
+				rows,
+				table.concat({
+					item:GetFullName(),
+					item.ClassName,
+					components({ item.CFrame:GetComponents() }),
+					components({ item.Size.X, item.Size.Y, item.Size.Z }),
+					tostring(item.Anchored),
+					tostring(item.CanCollide),
+					tostring(item.CanQuery),
+					tostring(item.CanTouch),
+					item.CollisionGroup,
+					item.Material.Name,
+					components({ item.Color.R, item.Color.G, item.Color.B }),
+				}, ":")
+			)
+			if #rows % 100 == 0 then
+				task.wait()
+			end
+		end
+	end
+	table.sort(rows)
+	return table.concat(rows, "|"), #rows
+end
+-- Real occupancy/material samples straddle every authored hill's apex. Exact
+-- voxel comparison complements exact static geometry; no Terrain writes occur.
+local function terrainSignature(): (string, number)
+	local hills: { BasePart } = {}
+	for _, item in workspace.World.Battlefield.TerrainRecipe:GetChildren() do
+		if item:IsA("BasePart") and item.Name ~= "TerrainBounds" then
+			table.insert(hills, item)
+		end
+	end
+	table.sort(hills, function(a, b)
+		return a.Name < b.Name
+	end)
+	assert(#hills == 8, "terrain descriptor population changed")
+	local rows: { string } = {}
+	local count = 0
+	for _, hill in hills do
+		local center = hill.Position + Vector3.yAxis * (hill.Size.X / 2 - 4)
+		local region = Region3.new(center - Vector3.one * 8, center + Vector3.one * 8):ExpandToGrid(4)
+		local materials, occupancy = workspace.Terrain:ReadVoxels(region, 4)
+		table.insert(rows, hill.Name)
+		for x = 1, #materials do
+			for y = 1, #materials[x] do
+				for z = 1, #materials[x][y] do
+					count += 1
+					table.insert(rows, materials[x][y][z].Name .. ":" .. string.format("%.17g", occupancy[x][y][z]))
+				end
+			end
+		end
+		task.wait() -- at most one small voxel region per yielding batch
+	end
+	return table.concat(rows, "|"), count
+end
+local function registry(): { Model }
+	local result: { Model } = {}
+	for _, building in workspace.World.Battlefield.Buildings:GetChildren() do
+		local panels = building:FindFirstChild(building.Name .. "_Panels")
+		assert(panels, "missing panel registry")
+		for _, panel in panels:GetChildren() do
+			assert(panel:IsA("Model") and panel:GetAttribute("PanelId") == panel.Name, "invalid current panel identity")
+			table.insert(result, panel)
+		end
+	end
+	table.sort(result, function(a, b)
+		return a.Name < b.Name
+	end)
+	assert(#result == 111, "expected all 111 current panels")
+	return result
+end
+local function panelPivot(panel: Model): CFrame
+	local value = panel:GetAttribute("IntactPivot")
+	assert(typeof(value) == "CFrame", "panel pivot unavailable")
+	return value
+end
+local function panelSnapshot(): string
+	local rows: { string } = {}
+	for _, panel in registry() do
+		assert(
+			panel:GetAttribute("PanelState") == "Intact"
+				and panel:GetAttribute("PanelProgress") == 0
+				and panel:GetAttribute("HeavySeconds") == 0
+				and panel:GetAttribute("SustainedSeconds") == 0,
+			"reset panel retained stage/progress"
+		)
+		assert(panel:GetPivot() == panelPivot(panel), "reset panel pivot differs from its stable pivot")
+		assert(#panel:GetChildren() == 1, "pristine panel collider count differs")
+		table.insert(rows, panel.Name .. ":" .. components({ panelPivot(panel):GetComponents() }))
+	end
+	return table.concat(rows, "|")
+end
+-- Reuse the existing Panels protocol for all 30 roof panels, across all buildings.
+-- Server checks all 111 panels and every map Part. Roof rays use the existing
+-- client's correct vertical normal; no new client helper or protocol is needed.
+local function clientPacket(): { { id: string, stage: string, progress: number, parts: number, pivot: { number } } }
+	local result = {}
+	for _, panel in registry() do
+		if string.find(panel.Name, "Roof", 1, true) then
+			table.insert(result, {
+				id = panel.Name,
+				stage = "Intact",
+				progress = 0,
+				parts = 1,
+				pivot = { panelPivot(panel):GetComponents() },
+			})
+		end
+	end
+	assert(#result == 30, "roof replication sample population changed")
+	return result
+end
+function Probe.run(sourceTag: string?)
+	local cases: { Case } = {}
+	local observations: { unknown } = {}
+	local initialIds: { number } = {}
+	for _, player in Players:GetPlayers() do
+		table.insert(initialIds, player.UserId)
+	end
+	table.sort(initialIds)
+	local function stage(name: string, facts: unknown?)
+		workspace:SetAttribute(
+			"P07ResetOnlyStage",
+			HttpService:JSONEncode({
+				stage = name,
+				facts = facts,
+				clientCount = #Players:GetPlayers(),
+				serverTime = workspace:GetServerTimeNow(),
+			})
+		)
+	end
+	local function finish()
+		local passed = 0
+		for _, item in cases do
+			if item.passed then
+				passed += 1
+			end
+		end
+		local report = {
+			suite = "P07-reset-only",
+			environment = "Studio",
+			sourceTag = sourceTag,
+			initialUserIds = initialIds,
+			clientCount = #Players:GetPlayers(),
+			discovered = #cases,
+			passed = passed,
+			failed = #cases - passed,
+			skipped = 0,
+			cases = cases,
+			observations = observations,
+			limits = "Separate reset-only evidence; does not run or satisfy the full P07 late-join/rendered/operated suite.",
+		}
+		workspace:SetAttribute("P07ResetOnlyReport", HttpService:JSONEncode(report))
+		stage(if report.failed == 0 then "complete" else "failed", report)
+		return report
+	end
+	stage("startup")
+	if
+		#initialIds ~= 2
+		or ReplicatedStorage:FindFirstChild("P07Harness")
+		or ReplicatedStorage:FindFirstChild("RoundState")
+		or ReplicatedStorage:FindFirstChild("AircraftState")
+	then
+		table.insert(cases, {
+			name = "startup",
+			passed = false,
+			detail = "requires exactly two actual players and no competing runtime/transport",
+		})
+		return finish()
+	end
+	local runtime, reason = GameRuntime.start({
+		automaticDeployment = false,
+		minimumPlayers = 2,
+		durationSeconds = 600,
+		lobbySeconds = 0,
+		deploymentSeconds = 25,
+		resultsSeconds = 10,
+		seed = 1,
+	})
+	if not runtime then
+		table.insert(cases, { name = "startup", passed = false, detail = reason })
+		return finish()
+	end
+	local transport = Instance.new("RemoteEvent")
+	transport.Name = "P07Harness"
+	local ready: { [Player]: boolean } = {}
+	local replies: { [number]: { player: Player, ok: boolean, message: string } } = {}
+	local token, fireSequence, selectionSequence = 0, 0, 0
+	local listener = transport.OnServerEvent:Connect(
+		function(player: Player, id: unknown, success: unknown, message: unknown)
+			if id == 0 then
+				ready[player] = true
+			elseif type(id) == "number" and type(success) == "boolean" then
+				replies[id] = { player = player, ok = success, message = tostring(message) }
+			end
+		end
+	)
+	transport.Parent = ReplicatedStorage
+	local streamTask: thread? = nil
+	local streamFailure: string? = nil
+	local function send(player: Player, kind: string, value: unknown): number
+		assert(ready[player], "actual client protocol not ready")
+		token += 1
+		transport:FireClient(player, token, kind, value)
+		return token
+	end
+	local function probe(player: Player, kind: string, value: unknown)
+		waitFor(function()
+			return ready[player] == true
+		end, "actual client ready", 25)
+		local id = send(player, kind, value)
+		waitFor(function()
+			return replies[id] ~= nil
+		end, "actual client reply")
+		local reply = replies[id]
+		replies[id] = nil
+		assert(reply.player == player and reply.ok, reply.message)
+	end
+	local function command(
+		weapon: string,
+		point: Vector3,
+		sequence: number,
+		cameraOverride: Vector3?
+	): { [string]: unknown }
+		local map = Map.defaults
+		local camera = cameraOverride or runtime.aircraft.position()
+		local radial = Vector2.new(camera.X - map.centerX, camera.Z - map.centerZ).Unit
+		local projected = camera + (point - camera) * (map.altitudeStuds / (camera.Y - point.Y))
+		local offset = Vector2.new(projected.X - map.centerX, projected.Z - map.centerZ)
+		local wanted = { x = offset.X * radial.X + offset.Y * radial.Y, z = -offset.X * radial.Y + offset.Y * radial.X }
+		local home = assert(Pan.recenter(map, 16 / 9, 40), "fixture home missing")
+		local payload: { [string]: unknown } = {
+			roundId = runtime.rounds.match.snapshot().roundId,
+			sequence = sequence,
+			weapon = weapon,
+			x = point.X,
+			y = point.Y,
+			z = point.Z,
+			focusX = home.x,
+			focusZ = home.z,
+			aspect = 16 / 9,
+			cameraX = camera.X,
+			cameraZ = camera.Z,
+		}
+		for index = 0, 100 do
+			local t = index / 100
+			payload.focusX = wanted.x + (home.x - wanted.x) * t
+			payload.focusZ = wanted.z + (home.z - wanted.z) * t
+			if View.validate(payload, map, weapon, camera.X, camera.Z) then
+				return payload
+			end
+		end
+		error("reset-only target outside permitted current view")
+	end
+	local function selectWeapon(player: Player, weapon: string)
+		selectionSequence += 1
+		probe(
+			player,
+			"Select",
+			{ roundId = runtime.rounds.match.snapshot().roundId, sequence = selectionSequence, weapon = weapon }
+		)
+		waitFor(function()
+			return runtime.aircraft.weapon() == weapon
+		end, "server weapon selection")
+	end
+	local function readyWeapon(weapon: string)
+		waitFor(function()
+			local encoded = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+			if type(encoded) ~= "string" then
+				return false
+			end
+			local value = HttpService:JSONDecode(encoded)[weapon]
+			return value
+				and value.ammo > 0
+				and value.reloadUntil == 0
+				and workspace:GetServerTimeNow() + 1e-9 >= value.nextFire
+		end, "server weapon readiness", 8)
+	end
+	local function currentPanel(id: string): Model
+		local result = workspace.World.Battlefield:FindFirstChild(id, true)
+		assert(result and result:IsA("Model"), "current panel missing")
+		return result
+	end
+	local function target(): (Model, Vector3)
+		local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
+		assert(type(epoch) == "number", "canonical epoch unavailable")
+		local params = RaycastParams.new()
+		params.FilterType = Enum.RaycastFilterType.Include
+		params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+		params.RespectCanCollide = true
+		for _, panel in registry() do
+			if string.find(panel.Name, "Roof", 1, true) and panel:GetAttribute("PanelState") == "Intact" then
+				local solid = panel:FindFirstChild("Solid")
+				assert(solid and solid:IsA("BasePart"), "pristine roof solid unavailable")
+				local point = solid.CFrame:PointToWorldSpace(Vector3.new(-solid.Size.X * 0.375, solid.Size.Y / 2, 0))
+				local usable = true
+				for _, offset in { 0, 4, 8, 12, 16 } do
+					local pose = assert(
+						Aircraft.pose(Map.defaults, Aircraft.defaults, workspace:GetServerTimeNow() - epoch + offset),
+						"forecast pose missing"
+					)
+					local camera = Vector3.new(pose.x, pose.y, pose.z)
+					local success = pcall(function()
+						command("M102", point, fireSequence + 1, camera)
+						command("GAU23", point, fireSequence + 1, camera)
+						return true
+					end)
+					if not success then
+						usable = false
+						break
+					end
+				end
+				local muzzle = assert(runtime.aircraft.muzzle("M102"), "heavy muzzle unavailable")
+				local delta = point - muzzle
+				local hit = CombatRuntime.sweep(
+					muzzle,
+					CombatService.profiles.M102.collisionRadius,
+					delta.Unit * (delta.Magnitude + 0.25),
+					params
+				)
+				if usable and hit and runtime.destruction.identify(hit.Instance) == panel.Name then
+					return panel, point
+				end
+			end
+		end
+		error("no current roof target with bounded view/first-hit guards")
+	end
+	local function modelsReady(): boolean
+		local buildings = workspace.World.Battlefield:FindFirstChild("Buildings")
+		if not buildings then
+			return false
+		end
+		local count = 0
+		for _, building in buildings:GetChildren() do
+			local panels = building:FindFirstChild(building.Name .. "_Panels")
+			if not panels then
+				return false
+			end
+			for _, panel in panels:GetChildren() do
+				if
+					not panel:IsA("Model")
+					or panel:GetAttribute("PanelState") ~= "Intact"
+					or panel:GetAttribute("PanelProgress") ~= 0
+				then
+					return false
+				end
+				count += 1
+			end
+		end
+		return count == 111
+	end
+	local ok, failure = pcall(function()
+		for _, player in Players:GetPlayers() do
+			waitFor(function()
+				return ready[player] == true
+			end, "two real clients ready", 25)
+		end
+		waitFor(modelsReady, "initial pristine model registry")
+		local baselinePanels = panelSnapshot()
+		local baselineMap, mapParts = mapSignature()
+		local baselineTerrain, voxelCount = terrainSignature()
+		for iteration = 1, 2 do
+			local caseName = "actual round " .. iteration .. " reset cancels partial fire, fragments and flight"
+			stage(caseName)
+			local caseOk, caseFailure = pcall(function()
+				assert(#Players:GetPlayers() == 2, "actual client population changed")
+				assert(runtime.rounds.match.deploy(), "actual deployment failed")
+				waitFor(function()
+					return runtime.rounds.match.snapshot().phase == "Active"
+				end, "actual Active round", 35)
+				local operator: Player? = nil
+				local ground: Player? = nil
+				for _, player in Players:GetPlayers() do
+					if player:GetAttribute("Role") == "Gunship" then
+						operator = player
+					elseif player:GetAttribute("Role") == "Ground" then
+						ground = player
+					end
+				end
+				assert(operator and ground, "actual two-player role assignment missing")
+				local detail: { [string]: unknown } = {
+					iteration = iteration,
+					operatorUserId = operator.UserId,
+					groundUserId = ground.UserId,
+					mapParts = mapParts,
+					terrainVoxelSamples = voxelCount,
+					serverPanels = 111,
+					clientRoofPanels = 30,
+				}
+				table.insert(observations, detail)
+				selectWeapon(operator, "M102")
+				local panel, point = target()
+				local id = panel.Name
+				detail.panelId = id
+				for heavy = 1, 3 do
+					readyWeapon("M102")
+					fireSequence += 1
+					probe(operator, "Fire", command("M102", point, fireSequence))
+					waitFor(function()
+						local model = currentPanel(id)
+						return model:GetAttribute("PanelState") == (if heavy == 3 then "Damaged" else "Intact")
+							and model:GetAttribute("PanelProgress") == (if heavy == 3 then 0 else heavy / 3)
+					end, "actual direct heavy " .. heavy, 8)
+				end
+				assert(runtime.destruction.resources().fragments > 0, "heavy transition produced no live fragments")
+				selectWeapon(operator, "GAU23")
+				readyWeapon("GAU23")
+				local sent = 0
+				local sentIds: { number } = {}
+				streamFailure = nil
+				streamTask = task.spawn(function()
+					local sentOk, why = pcall(function()
+						local nextAt = workspace:GetServerTimeNow()
+						for _ = 1, 4 do
+							while workspace:GetServerTimeNow() < nextAt do
+								RunService.Heartbeat:Wait()
+							end
+							fireSequence += 1
+							local packet = command("GAU23", point, fireSequence)
+							table.insert(sentIds, send(operator, "Fire", packet))
+							sent += 1
+							nextAt = workspace:GetServerTimeNow() + 0.18
+						end
+						return true
+					end)
+					if not sentOk then
+						streamFailure = tostring(why)
+					end
+				end)
+				waitFor(function()
+					assert(not streamFailure, streamFailure or "stream failed")
+					for _, replyId in sentIds do
+						local reply = replies[replyId]
+						assert(
+							not reply or (reply.player == operator and reply.ok),
+							if reply then reply.message else "stream reply failed"
+						)
+					end
+					local state = runtime.destruction.snapshot(id)
+					return sent == 4
+						and state ~= nil
+						and state.stage == 1
+						and state.sustainedSeconds > 0
+						and (currentPanel(id):GetAttribute("SustainedSeconds") :: number) > 0
+						and runtime.combat.resources().projectiles > 0
+						and runtime.destruction.resources().fragments > 0
+				end, "REAL partial sustained credit AND pending flight AND live fragments", 8)
+				local state = assert(runtime.destruction.snapshot(id), "partial panel missing")
+				detail.beforeAbort = {
+					roundId = runtime.rounds.match.snapshot().roundId,
+					serverTime = workspace:GetServerTimeNow(),
+					sustainedSeconds = state.sustainedSeconds,
+					publishedSustainedSeconds = currentPanel(id):GetAttribute("SustainedSeconds"),
+					stage = state.stage,
+					resources = runtime.destruction.resources(),
+					projectiles = runtime.combat.resources().projectiles,
+					sent = sent,
+				}
+				stage("before-abort", detail.beforeAbort)
+				local staleRound = runtime.rounds.match.snapshot().roundId
+				assert(runtime.rounds.match.abort(staleRound, "P07ResetOnly"), "abort failed")
+				assert(runtime.rounds.match.beginReset(), "beginReset failed")
+				waitFor(function()
+					return runtime.rounds.match.snapshot().phase == "Lobby"
+				end, "reset Lobby", 20)
+				waitFor(modelsReady, "all 111 pristine reset models")
+				assert(panelSnapshot() == baselinePanels, "reset panel ID/pivot/stage/progress differs")
+				local afterMap = mapSignature()
+				assert(afterMap == baselineMap, "reset static geometry/colliders differ")
+				local afterTerrain = terrainSignature()
+				assert(afterTerrain == baselineTerrain, "reset terrain voxel samples differ")
+				assert(
+					runtime.destruction.resources().fragments == 0
+						and runtime.destruction.resources().pending == 0
+						and runtime.combat.resources().projectiles == 0,
+					"reset left owned work"
+				)
+				local accepted, staleReason = runtime.destruction.resolve({
+					roundId = staleRound,
+					shotId = 1,
+					weapon = "M102",
+					firedAt = workspace:GetServerTimeNow(),
+					panelId = id,
+				})
+				assert(not accepted, "stale round outcome mutated fresh panel")
+				detail.staleOutcomeAccepted = accepted
+				detail.staleRejection = staleReason
+				local expiryWait = CombatService.profiles.GAU23.lifetime + 0.25
+				task.wait(expiryWait)
+				assert(
+					panelSnapshot() == baselinePanels
+						and mapSignature() == baselineMap
+						and terrainSignature() == baselineTerrain,
+					"fresh map advanced after old flight deadline"
+				)
+				assert(
+					runtime.destruction.resources().fragments == 0
+						and runtime.destruction.resources().pending == 0
+						and runtime.combat.resources().projectiles == 0,
+					"old owned work reappeared"
+				)
+				detail.expiryWaitSeconds = expiryWait
+				local expected = clientPacket()
+				for _, player in Players:GetPlayers() do
+					probe(player, "Panels", expected)
+					probe(player, "NoFragments", nil)
+				end
+				detail.clientUserIds = { Players:GetPlayers()[1].UserId, Players:GetPlayers()[2].UserId }
+				detail.pristineAfterFlightDeadline = true
+				return true
+			end)
+			table.insert(
+				cases,
+				{ name = caseName, passed = caseOk, detail = if caseOk then nil else tostring(caseFailure) }
+			)
+			assert(caseOk, tostring(caseFailure))
+		end
+		return true
+	end)
+	if not ok and (#cases == 0 or cases[#cases].passed) then
+		table.insert(cases, { name = "probe completion", passed = false, detail = tostring(failure) })
+	end
+	if streamTask and coroutine.status(streamTask) ~= "dead" then
+		task.cancel(streamTask)
+	end
+	listener:Disconnect()
+	transport:Destroy()
+	runtime.stop()
+	return finish()
+end
+return Probe

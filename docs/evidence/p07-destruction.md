@@ -388,3 +388,141 @@ Focused format/lint/Roblox strict checks passed. Independent full
 non-Studio gates passing. The actual P05 rerun remains pending while the
 same native session is used for rendered review; no gameplay/core source
 changed in this correction.
+
+The [corrected native P05 report](p07-p05-873f0f6-report.json) subsequently
+passed **8/8**, zero failures/skips, on the same two actual clients. Fresh
+server Source matched the frozen `0bcf1db...` hash; each unchanged client
+fixture was compared and rearmed once. Both profiles passed real sloped
+Terrain and upper-panel hits, the corrected unique muzzle-overlap / protected
+health / zero-flight check passed, and switching, lethal/reset and exact
+projectile lifetime paths passed. The prior failed P05 run remains preserved.
+
+## Rendered and operated review scope
+
+The [render review record](p07-render-review.json) and
+[disposable server helper](p07-render-server.luau.txt) preserve the actual
+two-client scene and limitations. Three real M102 impacts on
+`Warehouse_S01_South_04` (impact times 1794583834.572075,
+1794583838.787123 and 1794583843.038433) produced per-hit progress and Damaged.
+The [Ground capture](p07/panel-opening.png) shows the new right-hand opening
+beside the existing left doorway. The black upright block is an owned QA
+visibility marker, not a game enemy or item. This actual staged playtest
+capture replaces the README representative image for 2026-11-13.
+
+The [operator capture](p07/operator-damaged-qa.png) is genuine but cannot prove
+the intended clean thermal-hole comparison: from that orbit perspective,
+`CentreThroughHole` was blocked by the Left residual while the Side target's
+center ray was clear. Actual native Two/W/A/D controls worked. Native mouse
+firing, a Destroyed-stage capture, clean rendered thermal comparison and
+visually observed falling-fragment readability remain unverified. No further
+camera/layout retries were made after the bounded scene replacement and
+front-side wait. The actual player-health blast checks above retain their
+independent passing scope.
+
+Capture metadata records Active round 1, client viewport 1081×618 and graphics
+Automatic; PNG outputs are 1920×1080. These images do not establish a
+same-pixel calibration check. Image-time client snapshots precede the declared
+round deadline; a later server snapshot is in timeout Results and does not
+relabel the images as post-round captures. The helper's cumulative impacts
+list is shared by earlier observation records, so individual shot timestamps
+and per-observation stage/time are authoritative for chronology. The initial
+intact overviews were not used as a matched before/after thermal proof.
+
+Render runtime, transport and owned markers were fully disposed, preserving
+the two native clients for the remaining independent reset/camera regressions.
+
+## Independent actual two-client reset check
+
+The [reset-only report](p07-reset-only-report.json) passes **2/2** actual
+round cases, zero failures/skips. This is a separate suite; it does not skip
+the late-join case inside the full P07 harness or turn that failed run into
+a pass. Its [server artifact](p07-reset-only-server.luau.txt), SHA256
+`f3bb3bf7aa109724ce8b3d594cc2d1b9d62af0b90849f979f94dc689eb4dc240`, and
+[static-check record](p07-reset-only-sha256.json) are outside source mappings.
+The developer ran formatting, lint and Roblox-aware strict analysis; the
+independent tester installed exact Source, rearmed the existing 11,965-byte
+P07 client helper once per actual client and executed the probe.
+
+Each round had four live fragments, two actual in-flight projectiles and
+positive published/rules sustained credit immediately before abort:
+0.166685104 seconds in round 1 and 0.199863911 in round 2. Four bounded
+current-view Fire intents at 0.18-second spacing use production validation;
+no elapsed/progress/health claim is injected. After each reset, all 111 server
+panel IDs/pivots/stages/progress and all 334 map-Part fingerprints match the
+pristine baseline. All 576 material/occupancy voxel samples across eight hill
+regions match. These are sampled native Terrain checks; the separate named
+engine reconstruction cases provide the full-recipe voxel evidence.
+
+Both actual clients verify all 30 roof panels and no historical debris after
+each reset. The existing client vertical-ray helper is roof-specific, so
+this is not described as all-111 client ray verification. Stale-round outcomes
+reject without mutation and pristine state persists after the 2.25-second
+pending-flight deadline. Runtime, transport, fragments, characters and teardown
+lease were absent/drained before handing the native session to P14.
+
+Replay requires no competing owner in the same actual two-client server:
+install the server artifact as a fresh disposable ModuleScript, call the
+current P07 client helper's `.run()` once in each client, then asynchronously
+call the disposable module's `.run(sourceTag)` in the server. Read Workspace
+`P07ResetOnlyReport`; collect it before removing only the disposable module
+and its stage/report attributes. The probe owns its normal cleanup.
+
+## Final executable source identity
+
+The independent [103-file manifest](p07-source-identity-873f0f6.json) identifies
+candidate `873f0f690bfb76803c81f46e0b49390090e2be97`, tree
+`b16fb42007179a852c71565beab6b87fc5973001`. Canonical serialized manifest
+SHA256 is `b782434834e82549f17af2e35f124eec7d11e9ebd92f8a7c87c8e5834b71c5fc`.
+Only the three authorized Studio fixture modules differ from runtime candidate
+`cb530a0`; all runtime/core/assets and TestEZ rule/engine specs are unchanged.
+Later prose, screenshots and replay evidence do not change that executable
+candidate.
+
+## Final actual camera regression
+
+The [full P14 regression report](p07-p14-regression-report.json) passes
+**6/6**, zero failures/skips, in the retained actual two-client session.
+The tester loaded exact fresh server Source (19,231 bytes, SHA prefix
+`3b7b09a`) and client Source (72,253 bytes, `ecc6776f`) on both clients,
+matching the candidate manifest. All raw report chunks were retrieved and
+parsed before saving: 150,863 bytes, 49 observations plus baseline reports.
+
+Both weapon full-orbit samples, upper-panel Model helpers, zoom/rejected
+selection/pan plus Ground overlap, blocked/recenter behavior, actual occluded
+thermal configuration, new-round focus reset, operator departure and repeated
+teardown passed. The final required kick left one actual player. No capture
+or input was added during orbit timing. This preserves P14 regression scope;
+its existing thermal-configuration case does not close the new P07 rendered
+hole-comparison or operated readability gaps described above.
+
+The [independent review](p07-independent-review.md) consolidates findings,
+exact-source gates, resolved defects and remaining unavailable/unverified
+checks. Signed-in solo Studio identifiers are redacted in that prose; actual
+local native test IDs remain distinguishable.
+
+## Final cleanup and delivery limits
+
+[Native cleanup proof](p07-native-final-cleanup.json) and
+[original Edit proof](p07-final-edit-cleanup.json) confirm all results were
+saved before actual-server EndTest succeeded. Runtime, aircraft, state,
+transports, fragments, marker targets, characters, teardown lease and five
+disposable server modules were absent/removed. Only the original Edit
+`tests.rbxlx`, Studio `eea79821-d1ee-47bb-b6c6-cdf494d9ba94`, remains.
+Its ManualHarness selector is nil, Workspace attributes are empty and no
+BootstrapStatus/EntrypointStatus or QA artifacts remain. Existing Rojo PID
+55771 still serves 127.0.0.1:34872. A final read-only comparison of all 97
+mapped scripts reports zero byte-length/rolling-hash mismatches against the
+current repository; external SHA256 identity is recorded separately.
+
+The passing e45 traversal measured server distance 1.813776 studs from the
+goal with almost no replication wait. It proves the unchanged two-stud
+criterion in that run; the prior immediately restored failure has no saved
+trajectory, so its exact cause is not retrospectively claimed.
+
+All available automated gates and independent two-client blast, reset, weapon
+and camera regressions have passing scoped evidence. Required genuine
+post-damage late join is unavailable in the installed manual session, and
+the focused rendered/operated gaps in A4/A7 remain open. The roadmap records
+the concrete capability block, P08 remains Planned and PR #29 remains draft.
+No plan completion, merge or Roblox publication is claimed. Later prose/media
+commits preserve the final executable source `873f0f6` and its manifest.
