@@ -2,7 +2,8 @@
 --[=[
     P07 manual/SDK harness: two actual clients fire production gunship remotes,
     inspect current panel replication, then hold AFTER damage for a genuinely new
-    third player. No fake Players or client-authoritative damage seam. The late-join
+    third player, optionally accompanied by a fourth from Studio's Start batch.
+    No fake Players or client-authoritative damage seam. The late-join
     checkpoint is bounded to 240 seconds and published for a coordinated native UI
     join. Fixtures/control transport are test-mapped only; stop owns all resources.
 ]=]
@@ -20,12 +21,22 @@ local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
 local Harness = {}
 type Case = { name: string, passed: boolean, detail: string? }
+type LateArrival = {
+    userId: number,
+    arrivedAtServerSeconds: number,
+    afterCheckpointSeconds: number,
+    roundId: number,
+    clientCountAtArrival: number,
+}
 export type Report = {
     suite: string,
     environment: string,
     clientCount: number,
     initialUserIds: { number },
+    initialObservedAtServerSeconds: number?,
     lateUserId: number?,
+    lateUserIds: { number },
+    lateArrivals: { LateArrival },
     discovered: number,
     passed: number,
     failed: number,
@@ -46,7 +57,10 @@ function Harness.run(finish: ((Report) -> ())?)
     local cases: { Case } = {}
     local observations: { unknown } = {}
     local initialIds: { number } = {}
+    local initialObservedAt: number? = nil
     local lateUserId: number? = nil
+    local lateIds: { number } = {}
+    local lateArrivals: { LateArrival } = {}
     local function stage(name: string, detail: unknown?)
         workspace:SetAttribute(
             "P07Stage",
@@ -70,7 +84,10 @@ function Harness.run(finish: ((Report) -> ())?)
             environment = "Studio",
             clientCount = #Players:GetPlayers(),
             initialUserIds = initialIds,
+            initialObservedAtServerSeconds = initialObservedAt,
             lateUserId = lateUserId,
+            lateUserIds = lateIds,
+            lateArrivals = lateArrivals,
             discovered = #cases,
             passed = passed,
             failed = #cases - passed,
@@ -107,6 +124,7 @@ function Harness.run(finish: ((Report) -> ())?)
         return
     end
     local initialPlayers = Players:GetPlayers()
+    initialObservedAt = workspace:GetServerTimeNow()
     for _, player in initialPlayers do
         table.insert(initialIds, player.UserId)
     end
@@ -456,11 +474,29 @@ function Harness.run(finish: ((Report) -> ())?)
     local ground: Player? = nil
     local testedIds: { string } = {}
     local latePlayer: Player? = nil
+    local latePlayers: { Player } = {}
+    local firstLateArrivedAt: number? = nil
+    local checkpointStartedAt = 0
     local checkpoint = false
     local added = Players.PlayerAdded:Connect(function(player)
-        if checkpoint and not table.find(initialIds, player.UserId) then
-            latePlayer = player
-            lateUserId = player.UserId
+        if
+            checkpoint
+            and not table.find(initialIds, player.UserId)
+            and not table.find(lateIds, player.UserId)
+        then
+            local arrivedAt = os.clock()
+            if not latePlayer then
+                latePlayer, lateUserId, firstLateArrivedAt = player, player.UserId, arrivedAt
+            end
+            table.insert(latePlayers, player)
+            table.insert(lateIds, player.UserId)
+            table.insert(lateArrivals, {
+                userId = player.UserId,
+                arrivedAtServerSeconds = workspace:GetServerTimeNow(),
+                afterCheckpointSeconds = arrivedAt - checkpointStartedAt,
+                roundId = runtime.rounds.match.snapshot().roundId,
+                clientCountAtArrival = #Players:GetPlayers(),
+            })
         end
     end)
     local ok, failure = pcall(function()
@@ -775,36 +811,146 @@ function Harness.run(finish: ((Report) -> ())?)
         check(
             "A6 genuinely late third client spectates current round and reconstructs without prior debris",
             function()
-                checkpoint = true
                 local checkpointRound = runtime.rounds.match.snapshot().roundId
+                checkpointStartedAt = os.clock()
+                local checkpointDeadline = checkpointStartedAt + 240
+                local checkpointServerTime = workspace:GetServerTimeNow()
+                checkpoint = true
+                local lateObservation: { [string]: unknown } = {
+                    kind = "actual-late-join",
+                    roundId = checkpointRound,
+                    checkpointAtServerSeconds = checkpointServerTime,
+                    arrivalBudgetSeconds = 240,
+                    optionalBatchSettleCapSeconds = 15,
+                    initialUserIds = initialIds,
+                    lateUserIds = lateIds,
+                    arrivals = lateArrivals,
+                }
+                table.insert(observations, lateObservation)
                 stage("AwaitingLateJoin", {
                     initialUserIds = initialIds,
                     roundId = checkpointRound,
                     timeoutSeconds = 240,
+                    permittedTotalClients = { 3, 4 },
+                    requiredNewClients = 1,
+                    optionalBatchSettleCapSeconds = 15,
                     panels = expected(testedIds),
-                    instruction = "Add one actual client to this existing native Server & Clients session",
+                    instruction = "Add actual clients to this existing session. On macOS, Option+Command+P opens Quick Open Actions; Start can add the original batch of two. Keep the same server running.",
                 })
-                waitFor(function()
-                    return latePlayer ~= nil
-                end, "actual new third PlayerAdded AFTER checkpoint", 240)
-                checkpoint = false
-                local spectator = latePlayer
-                assert(spectator and #Players:GetPlayers() == 3, "actual third player absent")
+                while not latePlayer and os.clock() < checkpointDeadline do
+                    task.wait(0.03)
+                end
+                assert(
+                    latePlayer and firstLateArrivedAt,
+                    "timeout: actual new third PlayerAdded AFTER checkpoint within 240s"
+                )
+                -- Start may spawn its original batch sequentially. Wait for at
+                -- most one optional companion, bounded by BOTH 15s after first
+                -- arrival and the original 240s checkpoint deadline. A missing
+                -- fourth is reported as absent, never invented or required.
+                local settleDeadline = math.min(firstLateArrivedAt + 15, checkpointDeadline)
+                stage("SettlingLateJoinBatch", {
+                    firstLateUserId = lateUserId,
+                    lateUserIds = lateIds,
+                    remainingSeconds = math.max(0, settleDeadline - os.clock()),
+                    checkpointDeadlineServerSeconds = checkpointServerTime + 240,
+                })
+                while #latePlayers < 2 and os.clock() < settleDeadline do
+                    task.wait(0.03)
+                end
+                lateObservation.settleEndedAfterCheckpointSeconds = os.clock() - checkpointStartedAt
+                assert(#latePlayers >= 1 and #latePlayers <= 2, "expected one or two genuine late players")
                 assert(
                     runtime.rounds.match.snapshot().roundId == checkpointRound
                         and runtime.rounds.match.snapshot().phase == "Active",
                     "late join crossed round"
                 )
-                probe(spectator, "Spectator", nil)
-                for _, player in Players:GetPlayers() do
+                for _, player in initialPlayers do
                     probe(player, "Panels", expected(testedIds))
                     probe(player, "NoFragments", nil)
                 end
-                local intent = assert(command("M102", pose(testedIds[3]).Position, 9999), "spectator target")
                 local before = HttpService:JSONEncode(expected(testedIds))
-                probe(spectator, "Flood", intent)
-                task.wait(0.3)
-                assert(HttpService:JSONEncode(expected(testedIds)) == before, "spectator altered cover")
+                local intent = assert(command("M102", pose(testedIds[3]).Position, 9999), "spectator target")
+                local verified: { number } = {}
+                lateObservation.verifiedLateUserIds = verified
+                local observedIds: { number } = {}
+                for _, player in Players:GetPlayers() do
+                    table.insert(observedIds, player.UserId)
+                end
+                table.sort(observedIds)
+                lateObservation.observedClientUserIds = observedIds
+                local index = 1
+                -- The arrival listener remains active while real-client probes
+                -- yield. Any companion present before continuation gets every
+                -- spectator, reconstruction, debris and rejection assertion too.
+                while index <= #latePlayers do
+                    local spectator = latePlayers[index]
+                    lateObservation.verifyingUserId = spectator.UserId
+                    local arrival = lateArrivals[index]
+                    assert(
+                        arrival.afterCheckpointSeconds <= 240 and arrival.roundId == checkpointRound,
+                        "late arrival exceeded original checkpoint window or changed round"
+                    )
+                    probe(spectator, "Spectator", nil)
+                    local state = runtime.rounds.match.snapshot()
+                    local member = state.members[spectator.UserId]
+                    local backpack = spectator:FindFirstChildOfClass("Backpack")
+                    assert(
+                        state.phase == "Active"
+                            and state.roundId == checkpointRound
+                            and member
+                            and member.connected
+                            and member.role == "Spectator"
+                            and member.life == "Spectating",
+                        "late server member was not same-round spectator"
+                    )
+                    assert(
+                        spectator:GetAttribute("RoundId") == checkpointRound
+                            and spectator:GetAttribute("Role") == "Spectator"
+                            and spectator:GetAttribute("Life") == "Spectating",
+                        "late role/life/round attributes disagreed"
+                    )
+                    assert(
+                        spectator.Character == nil and (not backpack or #backpack:GetChildren() == 0),
+                        "late spectator has a character or equipment"
+                    )
+                    probe(spectator, "Panels", expected(testedIds))
+                    probe(spectator, "NoFragments", nil)
+                    probe(spectator, "Flood", intent)
+                    task.wait(0.3)
+                    assert(
+                        HttpService:JSONEncode(expected(testedIds)) == before,
+                        "late spectator altered cover"
+                    )
+                    table.insert(verified, spectator.UserId)
+                    index += 1
+                end
+                table.clear(observedIds)
+                for _, player in Players:GetPlayers() do
+                    table.insert(observedIds, player.UserId)
+                    assert(
+                        table.find(initialIds, player.UserId) or table.find(verified, player.UserId),
+                        "unverified additional client present before continuation"
+                    )
+                end
+                table.sort(observedIds)
+                lateObservation.observedClientUserIds = observedIds
+                lateObservation.verifiedLateUserIds = verified
+                lateObservation.optionalFourthObserved = #latePlayers == 2
+                assert(
+                    #observedIds == 2 + #latePlayers and (#observedIds == 3 or #observedIds == 4),
+                    "initial two plus actual late client population disagrees"
+                )
+                assert(
+                    #latePlayers <= 2 and #verified == #latePlayers and latePlayer.UserId == lateIds[1],
+                    "late batch was overwritten or incompletely verified"
+                )
+                assert(
+                    runtime.rounds.match.snapshot().roundId == checkpointRound
+                        and runtime.rounds.match.snapshot().phase == "Active",
+                    "late reconstruction crossed round"
+                )
+                checkpoint = false
             end
         )
         check("A6 reset during fragmentation and pending work restores panels through two rounds", function()
