@@ -1,0 +1,8 @@
+{
+  "file": "tests/studio/server/DestructionHarness.luau",
+  "sha256": "5ec48417cce8d9775ff5f5ec5dd0857a584276bcda2276ebbf1d0bf4903f28d7",
+  "change": "TEST ONLY actual server traversal observation waits at most2s after client reply; diagnostics captured before restoration; client/prod unchanged",
+  "focusedChecks": "stylua --check, selene and Roblox-aware luau-lsp analyze all exit0",
+  "sourceCommit": "e45ef48dad0d8e43757a70662c74c6b190f1b18c",
+  "sourceTree": "8434c9f058bf357db159112de51cfac194cea388"
+}

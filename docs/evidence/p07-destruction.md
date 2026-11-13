@@ -202,3 +202,67 @@ accepted timing and preserve first-impact/threshold assertions. Production
 cooldown, nine-second threshold and interruption rules remain unchanged.
 The P05 external-solid fixture and P07 wall visibility guards are included
 in that consolidated test-only correction before another full gate/rearm.
+
+### Corrected fixture candidate and retained-session rerun
+
+Source `8c5a871616cb9b99614385d40da5e7a68db5ce23`, tree
+`2a06e066d3d70bd7db8b695e6f875b9dfc0b036f`, changes exactly three Studio
+fixture modules. Runtime, core rules and assets are unchanged from `cb530a0`.
+The [fixture hash record](p07-fixture-freeze-8c5a871.json) identifies those
+files; combined SHA256 is
+`34cbaf5fa48485f4bf9dc89dfdb7322b2bebc5d5444eed30b0e079cc621d0b2f`.
+
+The developer's focused formatting, lint and Roblox-aware strict type checks
+passed. The independent tester then ran one full `python3 scripts/verify.py`
+gate: exit 0, 54 unit / 53 integration, all non-Studio gates passed. Review
+confirmed current-send view generation, the bounded 0.18-second delivery
+margin, actual 61 same-panel impacts, first-impact zero and at least nine
+accepted seconds, settled snapshot checks, the exterior wall forecast and
+the independent P05 overlap proof. No gameplay tolerance was widened.
+
+The tester loaded fresh exact-source fixture modules into the existing native
+server and its two actual clients, checked Source equality and retained
+per-file hashes, then started P07 once on that same session. No SDK launcher,
+new native session or source-only result substitutes for this actual rerun.
+Its results are pending at this checkpoint.
+
+That [retained-session rerun](p07-native-8c5a871-failure.json) discovered four
+cases, passed three and failed one before late join. All 61 real GAU-23 impacts
+hit the intended panel; first-impact credit was zero, accepted span was
+11.032572 seconds and the stage transition occurred at 9.016574 accepted
+seconds. The wall forecast selected `Warehouse_S01_West_01`; all three actual
+M102 impacts produced the expected progress and Damaged opening. The actual
+Ground client completed its Walk probe, but the immediate server assertion
+failed with `server did not observe traversal`. Teardown restored the body
+before its post-reply physics trajectory could be recorded. This is another
+failed whole multiplayer gate, not an A3/A6 pass or late-join result.
+
+Before another run, a minimal fixture-only correction declares a two-second
+bound for the actual server root position to reach the same goal after the
+client reply, preserving the original two-stud distance assertion. Start,
+goal, reply/final server positions and elapsed wait must be retained before
+restoration, including on failure. No goal teleport or simulated movement
+will substitute for actual Humanoid/physics replication. A narrow same-session
+probe will distinguish delayed replication from a persistent movement issue.
+
+The minimal correction is committed as
+`e45ef48dad0d8e43757a70662c74c6b190f1b18c`, tree
+`8434c9f058bf357db159112de51cfac194cea388`; the
+[one-file freeze record](p07-walk-freeze-e45ef48.json) identifies it. The
+independent full host gate again passed 54 unit / 53 integration and all
+non-Studio checks. No runtime/core/assets or client fixture changed from
+the preceding candidate. A separate preparation probe failed parsing before
+creating any runtime/Instances; it was abandoned in favor of the fixture's
+new preserved trajectory observations.
+
+The tester loaded/compared the exact fresh server fixture (42,445 bytes,
+SHA256 `5ec48417cce8d9775ff5f5ec5dd0857a584276bcda2276ebbf1d0bf4903f28d7`)
+and unchanged client fixture (11,965 bytes,
+SHA256 `2bc26bc8e8c9840b84ba8e5bc040f390836021b81d074f9d6b820ea0e26fd2f8`),
+then rearmed once in the same native two-client session. It passed the
+revised GAU case, actual server-observed wall traversal and settled snapshot
+setup, reaching `AwaitingLateJoin` at server time 1794582207.721844. The
+checkpoint retains the same Active round, exactly two initial clients and a
+240-second budget for a new third PlayerAdded. The primary agent sent the
+human add-player request immediately. Late join and the final report remain
+pending at this checkpoint; passing pre-checkpoint cases do not complete A6.
