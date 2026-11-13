@@ -1,0 +1,33 @@
+{
+  "mergeCommit": "1d71c63a4d8daea5d3f1526f3e02e6be6de6d2c6",
+  "mergeTree": "27f09a58fcae8955ffb37259f3216c1ffbb295df",
+  "pr": 27,
+  "reviewedHead": "dce058d8da5c088491f93bdd97c8688cda9cada9",
+  "reviewedHeadCI": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43344198328",
+  "treeIdentical": true,
+  "command": "python3 scripts/verify.py",
+  "environment": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.10.4"
+  },
+  "exitCode": 0,
+  "unit": {
+    "discovered": 50,
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0
+  },
+  "integration": {
+    "discovered": 43,
+    "passed": 43,
+    "failed": 0,
+    "skipped": 0
+  },
+  "builds": {
+    "build/game.rbxlx": "aadab60470a70bc1a68c9fb6bccdd93e0f37b6ac20f99bcb19a1c1e277c12284",
+    "build/tests.rbxlx": "857154f54138db1b5fbb2f5d0935081ff5dcdfe4d80792ddcd3cf6bcdd14e382"
+  },
+  "studio": "No additional Studio run for this integration. Exact merged tree preserves the final PR acceptance and source-specific engine/operated evidence.",
+  "log": "p06-integration-host.log"
+}
