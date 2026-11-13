@@ -41,8 +41,9 @@ Production/UI source is `ef7826bc80310c17be4bcde93fe7607620303289`, tree
 `07e77ea5b57fba359ab611ea39e2c42c7b977881`, tree
 `032f7b162bcc8bba6e48c002b2ca0da30939b444`; it contains no production change.
 The native run observed delivery head `c3b155d`, based on integrated P07 main
-`c7210be`. [CI Verify](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43517470871)
-passes on that delivery. Subsequent changes are documentation/evidence only.
+`c7210be`. Final source/evidence delivery `370aff4` passes
+[CI Verify](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43519154819).
+Subsequent changes are documentation/evidence only.
 
 | Criterion | Named tests / environment | Observed result |
 | --- | --- | --- |
