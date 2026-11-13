@@ -1,0 +1,107 @@
+{
+  "source": "88732d4e926d3463f95900928aa13d9a9d97eee8",
+  "tree": "64948c6878e23044eb2677bded61b6080a19f60c",
+  "environment": "Studio 0.747.0.7471481 local native Server & Clients",
+  "actualClients": 3,
+  "serverSmoke": {
+    "discovered": 155,
+    "passed": 155,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "clientCount": 3
+  },
+  "clientSmoke": [
+    {
+      "userId": -1,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    {
+      "userId": -2,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    {
+      "userId": -3,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    }
+  ],
+  "scenario": "Ordinary HumanTestSession (ManualHarness nil); normal 180-second round started via excluded test controls. Not the P08 acceptance harness.",
+  "sourceSignature": {
+    "LauncherRuntime": {
+      "bytes": 18750,
+      "adler32": 3629527672
+    }
+  },
+  "gui": {
+    "userId": -1,
+    "role": "Ground",
+    "life": "Alive",
+    "viewport": [
+      1081,
+      618
+    ],
+    "hudEnabled": true,
+    "pickupVisible": true,
+    "riflePosition": [
+      375.5,
+      424
+    ],
+    "rifleSize": [
+      330,
+      36
+    ],
+    "pickupPosition": [
+      475.5,
+      424
+    ],
+    "pickupSize": [
+      130,
+      32
+    ],
+    "overlap": true,
+    "capture": "p08-initial-desktop-overlap.jpg",
+    "fixtureDisclosure": "Server posed and anchored Ground at (0,3,0) solely to expose pickup UI. Movement guard was not bypassed; no acquired-launcher or route-playability claim."
+  },
+  "characterRemoval": {
+    "before": {
+      "phase": "Active",
+      "life": "Alive",
+      "humanoidHealth": 100
+    },
+    "operation": "actual character:Destroy() without Humanoid death",
+    "afterTwoHeartbeats": {
+      "phase": "Active",
+      "role": "Ground",
+      "life": "Alive",
+      "characterParent": "nil",
+      "groundAlive": 2,
+      "actualPlayers": 3
+    },
+    "defect": "Removed active body retains an active life and ground population; A3/R04 lifecycle violation."
+  },
+  "cleanup": {
+    "EndTest": "called on actual native server",
+    "originalStudioId": "e45b78d9-003f-45ad-b35e-00e5a5ed494a",
+    "originalEdit": true,
+    "ManualHarness": null,
+    "BootstrapStatusAbsent": true
+  },
+  "limitations": [
+    "No P08 full harness run in this ordinary session",
+    "No actual same-identity reconnect",
+    "No passing operated/native launcher acceptance",
+    "No fixed-source evidence"
+  ]
+}

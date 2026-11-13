@@ -1,0 +1,21 @@
+{
+  "source": "273611f53583d6aa1dc18f7e44bdfb20d7aea7bc",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":2,\\\"skipped\\\":0,\\\"passed\\\":154,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":2,\\\"discovered\\\":156}\",\"autoLoads\":true,\"groups\":{\"1\":{\"name\":\"Default\",\"mask\":-3},\"3\":{\"name\":\"PanelStatic\",\"mask\":-1},\"2\":{\"name\":\"PanelFragments\",\"mask\":-4}},\"character\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"errors\":1,\"skipped\":0,\"passed\":6,\"userId\":2227341845,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"discovered\":7}"
+      }
+    ],
+    "isError": false
+  }
+}

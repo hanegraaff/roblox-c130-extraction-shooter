@@ -29,4 +29,29 @@ Explain the single launcher, recovery/default replenishment and actual controls.
 
 ## Completion record
 
-Not implemented. Record A1–A6, source, three-client transfer evidence and timing/readability observations.
+The launcher implementation is present on `plan/08-rocket-launcher`; acceptance
+is not complete. Tested runtime/test source is
+`75b1e882a33f73a4c4aa429cb0fb125648d75501`, tree
+`055b7664a60d1f0cef49615d8009b29cabde1f2b`, based on integrated P07 main
+`c7210be`. The [verification record](../docs/evidence/p08-launcher.md) preserves
+exact commands, source-bound reports, earlier failures and cleanup.
+
+| Criterion | Named tests / environment | Observed result and remaining work |
+| --- | --- | --- |
+| A1 | `LauncherService.spec` raced pickup/snapshot tests; full `python3 scripts/verify.py`; `Launcher.spec` representation engine case | Host gate passes 55 unit / 65 integration and all static/build/geometry/isolation gates; fresh solo engine baseline passes. Three-client raced representation proof remains pending |
+| A2 | `LauncherService.spec` malformed/authority/reach/replay cases; shared movement/origin suites; P08 rejection harness | Deterministic rejection and shared engine checks pass. Actual three-client remote/ownership checks remain pending |
+| A3 | Reload/transfer/recovery service cases; actual-Player `CharacterOwner.spec`; P08 carrier death/removal/disconnect scenarios | Rule and fresh raw-character-destruction/cleanup engine tests pass. Three-client recovery and native control review remain pending |
+| A4 | Existing aircraft-health rules; launcher timing case; `Launcher.spec` first-solid/three-deduplicated-impact case; P08 fired-rocket scenarios | Rules and real engine sweep/health seam pass; player-fired three-rocket and mixed-fire multiplayer scenarios remain pending |
+| A5 | Three-client `LauncherHarness`; real reconnect gate | Initial SDK requested three but connected only two and failed startup. Ordinary native first-candidate session confirmed three actual clients and reproduced defects; it is not the corrected P08 acceptance harness. Corrected native harness is prepared. Actual same-identity reconnect remains required and unavailable through current helpers |
+| A6 | Terminal/next-round service case; runtime cleanup/representation engine checks; P08 reset/teardown scenarios | Deterministic and engine baseline checks pass; actual multiplayer reset/late-intent assertions remain pending |
+
+Independent fresh Studio 0.747.0.7471481 ordinary Play passes **156 server /
+7 client** cases with one actual client, zero failures/skips/errors. The
+eleven-case P08 harness and focused operated checks are distinct requirements.
+The tester's original desktop HUD and raw character-removal defects are fixed
+with semantic layout/inventory-clearance and exact lifecycle regressions.
+The intermediate fixture-isolation failure is preserved rather than called a
+pass. The writer updated player/contributor/package docs and D55–D57 tuning
+defaults; the representative launcher capture and final evidence review remain
+pending. P09 has not started. No merge or Roblox publication is authorized by
+this implementation work.
