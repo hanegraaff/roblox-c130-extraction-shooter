@@ -10,8 +10,7 @@ return function()
         local input = game:GetService("UserInputService")
         local player = players.LocalPlayer
         local controller = require(player.PlayerScripts.Client.GroundCombatController)
-        local camera = workspace.CurrentCamera
-        assert(camera, "current camera missing")
+        local http = game:GetService("HttpService")
         local gui = Instance.new("ScreenGui")
         gui.Name = "GroundAimProjectionProbe"
         gui.IgnoreGuiInset = true
@@ -25,50 +24,101 @@ return function()
         cross.Parent = gui
         gui.Parent = player.PlayerGui
         local ok, failure = pcall(function()
-            runService.RenderStepped:Wait()
-            local inset = guiService:GetGuiInset()
-            local viewport = camera.ViewportSize
-            local worldPoint = camera.CFrame:PointToWorldSpace(Vector3.new(6, 4, -100))
-            local worldPixels = camera:WorldToViewportPoint(worldPoint)
-            local samples = {
-                { touch = false, mouse = Vector2.new(worldPixels.X, worldPixels.Y), world = worldPoint },
-                { touch = false, mouse = input:GetMouseLocation(), native = true },
-                { touch = true, mouse = Vector2.new(0, 0) },
-            }
-            for _, sample in samples do
-                local pixels, offset = controller.projectAim(
-                    viewport,
-                    sample.mouse,
-                    sample.touch,
-                    inset,
-                    origin.AbsolutePosition
-                )
+            local deadline = os.clock() + 10
+            local ready = false
+            while os.clock() < deadline do
+                runService.RenderStepped:Wait()
+                local current = workspace.CurrentCamera
+                if current and current.ViewportSize.X >= 200 and current.ViewportSize.Y >= 200 then
+                    ready = true
+                    break
+                end
+            end
+            assert(ready, "camera viewport did not reach 200×200 within 10 seconds")
+            for _, mode in { "world", "native", "touch" } do
+                local camera = workspace.CurrentCamera
+                assert(camera, "current camera disappeared")
+                local viewport = camera.ViewportSize
+                local inset = guiService:GetGuiInset()
+                local worldPoint = camera.CFrame:PointToWorldSpace(Vector3.new(6, 4, -100))
+                local projected = camera:WorldToViewportPoint(worldPoint)
+                local mouse = if mode == "world"
+                    then Vector2.new(projected.X, projected.Y)
+                    else input:GetMouseLocation()
+                -- Native mouse and its engine UnitRay are sampled together,
+                -- without rendering waits between them.
+                local nativeRay = if mode == "native" then player:GetMouse().UnitRay else nil
+                local pixels, offset =
+                    controller.projectAim(viewport, mouse, mode == "touch", inset, origin.AbsolutePosition)
                 local actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
-                if sample.native then
-                    local nativeRay = player:GetMouse().UnitRay
+                local diagnostic = {
+                    mode = mode,
+                    viewport = { viewport.X, viewport.Y },
+                    inset = { inset.X, inset.Y },
+                    fov = camera.FieldOfView,
+                    cameraCFrame = { camera.CFrame:GetComponents() },
+                    mouse = { mouse.X, mouse.Y },
+                    pixels = { pixels.X, pixels.Y },
+                    world = { worldPoint.X, worldPoint.Y, worldPoint.Z },
+                    worldProjection = { projected.X, projected.Y, projected.Z },
+                    rayOrigin = { actualRay.Origin.X, actualRay.Origin.Y, actualRay.Origin.Z },
+                    rayDirection = { actualRay.Direction.X, actualRay.Direction.Y, actualRay.Direction.Z },
+                }
+                local detail = http:JSONEncode(diagnostic)
+                if nativeRay then
+                    local rawRay = camera:ViewportPointToRay(mouse.X, mouse.Y)
                     assert(
-                        actualRay.Direction.Unit:Dot(nativeRay.Direction.Unit) > 0.99999,
-                        "ground ray disagrees with native Mouse.UnitRay"
+                        rawRay.Direction.Unit:Dot(nativeRay.Direction.Unit) > 0.99999,
+                        "raw viewport ray disagrees with native Mouse.UnitRay: " .. detail
+                    )
+                    local nativePoint = nativeRay.Origin + nativeRay.Direction.Unit * 100
+                    local nativeProjection = camera:WorldToViewportPoint(nativePoint)
+                    local nativePixelError = (pixels - Vector2.new(nativeProjection.X, nativeProjection.Y)).Magnitude
+                    assert(
+                        nativePixelError <= 1,
+                        "production aim differs from native Mouse.UnitRay by "
+                            .. tostring(nativePixelError)
+                            .. " pixels: "
+                            .. detail
                     )
                 end
-                if sample.world then
+                if mode == "world" then
+                    -- Compare the independently projected world point to the
+                    -- reprojected actual production ray in pixels. This tests
+                    -- integer rasterization independently of viewport FOV.
+                    local along = (worldPoint - actualRay.Origin).Magnitude
+                    local actualProjection =
+                        camera:WorldToViewportPoint(actualRay.Origin + actualRay.Direction.Unit * along)
+                    local errorPixels = (Vector2.new(actualProjection.X, actualProjection.Y) - mouse).Magnitude
                     assert(
-                        actualRay.Direction.Unit:Dot((sample.world - actualRay.Origin).Unit) > 0.99999,
-                        "ground ray misses independently projected world point"
+                        errorPixels <= 1,
+                        "ground ray misses independently projected world point by "
+                            .. tostring(errorPixels)
+                            .. " pixels: "
+                            .. detail
+                    )
+                    -- The old double-inset subtraction must fail the same
+                    -- independent projection even on zero-inset machines.
+                    local oldRay = camera:ViewportPointToRay(mouse.X, mouse.Y - 58)
+                    local oldProjection =
+                        camera:WorldToViewportPoint(oldRay.Origin + oldRay.Direction.Unit * along)
+                    assert(
+                        (Vector2.new(oldProjection.X, oldProjection.Y) - mouse).Magnitude > 40,
+                        "old inset error was not detected: " .. detail
                     )
                 end
                 cross.Position = offset
                 runService.RenderStepped:Wait()
                 runService.RenderStepped:Wait()
                 local drawn = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + guiService:GetGuiInset()
-                local expected = if sample.touch then viewport * 0.5 else sample.mouse
-                assert((drawn - expected).Magnitude <= 1, "reticle does not follow viewport aim")
-                assert((drawn - pixels).Magnitude <= 1, "drawn reticle and ray pixels diverge")
+                local expected = if mode == "touch" then viewport * 0.5 else mouse
+                assert((drawn - expected).Magnitude <= 1, "reticle does not follow viewport aim: " .. detail)
+                assert((drawn - pixels).Magnitude <= 1, "drawn reticle and ray pixels diverge: " .. detail)
                 local drawnRay = camera:ViewportPointToRay(drawn.X, drawn.Y)
                 actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
                 assert(
                     (actualRay.Direction - drawnRay.Direction).Magnitude < 0.002,
-                    "firing ray misses the actual drawn reticle"
+                    "firing ray misses the actual drawn reticle: " .. detail
                 )
             end
         end)
