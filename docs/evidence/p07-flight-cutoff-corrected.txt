@@ -1,0 +1,16 @@
+initial-e577ee4 exit 0
+{
+    heavySeconds = 0,
+    progress = 0,
+    stage = 0,
+    sustainedSeconds = 0,
+}
+
+current-candidate exit 0
+{
+    heavySeconds = 0,
+    progress = 0,
+    stage = 1,
+    sustainedSeconds = 0,
+}
+

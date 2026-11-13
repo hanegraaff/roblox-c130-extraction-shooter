@@ -1,0 +1,6 @@
+{
+  "scope": "all src/tests Luau + assets JSON + inspect_build.py + run_tests.luau",
+  "sha256": "ff19643430e0b55f5d4beb730ebf6829d2acb4f9717f71bff78f4d178db27c43",
+  "files": 103,
+  "hostGate": "python3 scripts/verify.py passed;54unit/51integration;353 authored part transforms perartifact; /tmp/p07-developer-host-gate.log"
+}

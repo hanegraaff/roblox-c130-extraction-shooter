@@ -1,0 +1,14 @@
+ordered outcomes control {
+    heavySeconds = 0,
+    progress = 0,
+    stage = 1,
+    sustainedSeconds = 0,
+}
+production idle cutoff {
+    heavySeconds = 0,
+    progress = 0,
+    stage = 0,
+    sustainedSeconds = 0,
+}
+
+exit 0
