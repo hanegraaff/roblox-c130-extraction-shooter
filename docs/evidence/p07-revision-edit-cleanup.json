@@ -1,0 +1,37 @@
+{
+  "candidateCommit": "8053c8f73c5700161e7b87d8e87824742165f3cd",
+  "candidateTree": "a1e0e2e5405b0fd30e5e5b88b712d59431c608ea",
+  "edit": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94",
+  "onlyStudioDocument": "tests.rbxlx",
+  "cleanup": {
+    "selectorBefore": "P07",
+    "serverStorageAttributes": [],
+    "workspaceChildren": [
+      "World",
+      "Terrain",
+      "Camera"
+    ],
+    "selectorIsNil": true,
+    "replicatedAttributes": [],
+    "workspaceAttributes": [],
+    "gameId": 0,
+    "placeId": 0,
+    "ownedRuntimePaths": [],
+    "isRunning": false,
+    "settingsAttributes": []
+  },
+  "sourceGeometryMatch": {
+    "mapParts": 403,
+    "running": false,
+    "method": "byte-length+rolling131-mod2147483647; geometry max .001stud/component",
+    "scripts": 97,
+    "failures": [],
+    "version": "0.747.0.7471481"
+  },
+  "rojo": {
+    "pid": 55771,
+    "listener": "127.0.0.1:34872",
+    "observedListening": true
+  },
+  "nativeSessionEndedWith": "actual Server StudioTestService:EndTest after reports/QA cleanup"
+}

@@ -2255,19 +2255,19 @@
       ]
     },
     {
-      "Name": "Permanent",
+      "Name": "SpawnShelterPanels",
       "ClassName": "Folder",
       "Children": [
         {
-          "Name": "ShelterRoof",
+          "Name": "Shelter_Roof_R01_C01",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
-              108,
+              14,
               2,
-              96
+              16
             ],
             "Color": [
               0.3,
@@ -2277,9 +2277,9 @@
             "TopSurface": "Smooth",
             "BottomSurface": "Smooth",
             "CFrame": [
-              0,
+              -47.0,
               14,
-              114,
+              74.0,
               1.0,
               0,
               0,
@@ -2289,19 +2289,1455 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
           }
         },
         {
-          "Name": "ShelterWest",
+          "Name": "Shelter_Roof_R01_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -32.0,
+              14,
+              74.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R01_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              14,
+              74.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R01_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              14,
+              74.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R01_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              14,
+              74.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R01_C06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              32.0,
+              14,
+              74.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R01_C07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              47.0,
+              14,
+              74.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -47.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -32.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              32.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R02_C07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              47.0,
+              14,
+              90.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -47.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -32.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              32.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R03_C07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              47.0,
+              14,
+              106.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -47.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -32.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              32.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R04_C07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              47.0,
+              14,
+              122.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -47.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -32.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              32.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R05_C07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              47.0,
+              14,
+              138.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -47.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -32.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C06",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              32.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Roof_R06_C07",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              14,
+              2,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              47.0,
+              14,
+              154.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R01_C01",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
               2,
-              14,
-              56
+              8,
+              12
             ],
             "Color": [
               0.3,
@@ -2312,8 +3748,8 @@
             "BottomSurface": "Smooth",
             "CFrame": [
               -35,
-              7,
-              120,
+              4.0,
+              98.0,
               1.0,
               0,
               0,
@@ -2323,19 +3759,265 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
           }
         },
         {
-          "Name": "ShelterEast",
+          "Name": "Shelter_West_R01_C02",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
               2,
-              14,
-              56
+              8,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              4.0,
+              112.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R01_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              8,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              4.0,
+              128.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R01_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              8,
+              12
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              4.0,
+              142.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R02_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              12
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              11.0,
+              98.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R02_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              11.0,
+              112.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R02_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              11.0,
+              128.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_West_R02_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              12
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -35,
+              11.0,
+              142.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R01_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              8,
+              12
             ],
             "Color": [
               0.3,
@@ -2346,8 +4028,8 @@
             "BottomSurface": "Smooth",
             "CFrame": [
               35,
-              7,
-              120,
+              4.0,
+              98.0,
               1.0,
               0,
               0,
@@ -2357,18 +4039,264 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
           }
         },
         {
-          "Name": "ShelterBack",
+          "Name": "Shelter_East_R01_C02",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
-              72,
-              14,
+              2,
+              8,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              4.0,
+              112.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R01_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              8,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              4.0,
+              128.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R01_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              8,
+              12
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              4.0,
+              142.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R02_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              12
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              11.0,
+              98.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R02_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              11.0,
+              112.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R02_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              16
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              11.0,
+              128.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_East_R02_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              2,
+              6,
+              12
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              35,
+              11.0,
+              142.0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R01_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              12,
+              8,
               2
             ],
             "Color": [
@@ -2379,8 +4307,8 @@
             "TopSurface": "Smooth",
             "BottomSurface": "Smooth",
             "CFrame": [
-              0,
-              7,
+              -30.0,
+              4.0,
               147,
               1.0,
               0,
@@ -2391,18 +4319,19 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
           }
         },
         {
-          "Name": "ShelterFrontCenter",
+          "Name": "Shelter_Back_R01_C02",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
-              32,
-              14,
+              16,
+              8,
               2
             ],
             "Color": [
@@ -2413,8 +4342,323 @@
             "TopSurface": "Smooth",
             "BottomSurface": "Smooth",
             "CFrame": [
+              -16.0,
+              4.0,
+              147,
+              1.0,
               0,
-              7,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R01_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              8,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              4.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R01_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              8,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              4.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R01_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              12,
+              8,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              30.0,
+              4.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R02_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              12,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -30.0,
+              11.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R02_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -16.0,
+              11.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R02_C03",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              0.0,
+              11.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R02_C04",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              16.0,
+              11.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_Back_R02_C05",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              12,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              30.0,
+              11.0,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_FrontCenter_R01_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              8,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -8.0,
+              4.0,
               93,
               1.0,
               0,
@@ -2425,18 +4669,124 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
           }
         },
         {
-          "Name": "ShelterFrontWest",
+          "Name": "Shelter_FrontCenter_R01_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              8,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              8.0,
+              4.0,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_FrontCenter_R02_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              -8.0,
+              11.0,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_FrontCenter_R02_C02",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              16,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              8.0,
+              11.0,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_FrontWest_R01_C01",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
               4,
-              14,
+              8,
               2
             ],
             "Color": [
@@ -2447,8 +4797,8 @@
             "TopSurface": "Smooth",
             "BottomSurface": "Smooth",
             "CFrame": [
-              -34,
-              7,
+              -34.0,
+              4.0,
               93,
               1.0,
               0,
@@ -2459,18 +4809,19 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
           }
         },
         {
-          "Name": "ShelterFrontEast",
+          "Name": "Shelter_FrontWest_R02_C01",
           "ClassName": "Part",
           "Properties": {
             "Anchored": true,
             "CanCollide": true,
             "Size": [
               4,
-              14,
+              6,
               2
             ],
             "Color": [
@@ -2481,8 +4832,8 @@
             "TopSurface": "Smooth",
             "BottomSurface": "Smooth",
             "CFrame": [
-              34,
-              7,
+              -34.0,
+              11.0,
               93,
               1.0,
               0,
@@ -2493,7 +4844,78 @@
               0,
               0,
               1.0
-            ]
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_FrontEast_R01_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              4,
+              8,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              34.0,
+              4.0,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
+          }
+        },
+        {
+          "Name": "Shelter_FrontEast_R02_C01",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": true,
+            "Size": [
+              4,
+              6,
+              2
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "CFrame": [
+              34.0,
+              11.0,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "CanQuery": true
           }
         }
       ]
@@ -12283,6 +14705,19 @@
           "ClassName": "NumberValue",
           "Properties": {
             "Value": 32
+          }
+        }
+      ]
+    },
+    {
+      "ClassName": "Folder",
+      "Name": "PanelRegistries",
+      "Children": [
+        {
+          "ClassName": "StringValue",
+          "Name": "SpawnShelter",
+          "Properties": {
+            "Value": "SpawnShelterPanels"
           }
         }
       ]

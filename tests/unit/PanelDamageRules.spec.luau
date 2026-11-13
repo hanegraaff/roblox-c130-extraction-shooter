@@ -31,19 +31,38 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(rounded.stage == 1, "cadence rounding did not reach nine")
         end
     )
-    test("PanelDamageRules mixed heavy credit persists while interrupted 30mm clears", function()
+    test("PanelDamageRules mixed earned credit advances both stages without surplus carry", function()
         local state = Rules.new()
         Rules.apply(state, true, 0)
         Rules.apply(state, false, 5.9)
-        Rules.interrupt(state)
         assert(
-            state.heavySeconds == 3 and state.sustainedSeconds == 0 and state.stage == 0,
-            "Expected state.heavySeconds == 3 and state.sustainedSeconds == 0 and state.stage == 0"
+            state.heavySeconds == 3 and state.sustainedSeconds == 5.9 and state.stage == 0,
+            "earned mixed damage changed"
         )
-        assert(Rules.apply(state, false, 6) and state.stage == 1, "one heavy did not equal three seconds")
+        assert(Rules.apply(state, false, 0.1) and state.stage == 1, "one heavy did not equal three seconds")
+        assert(state.heavySeconds == 0 and state.sustainedSeconds == 0, "stage boundary carried surplus")
         Rules.apply(state, true, 0)
         Rules.apply(state, true, 0)
         assert(Rules.apply(state, false, 3) and state.stage == 2, "second-stage mixed threshold")
+    end)
+    test("PanelDamageRules appearance distinguishes first-zero Light Heavy-zero and Total", function()
+        local state = Rules.new()
+        assert(Rules.appearance(state) == "Pristine", "new panel is damaged")
+        Rules.apply(state, false, 0)
+        assert(Rules.appearance(state) == "Pristine", "first zero-credit impact appeared Light")
+        Rules.apply(state, false, 0.15)
+        assert(Rules.appearance(state) == "Light", "positive credit did not appear Light")
+        for _ = 1, 3 do
+            Rules.apply(state, true, 0)
+        end
+        assert(
+            state.stage == 1 and Rules.progress(state) == 0 and Rules.appearance(state) == "Heavy",
+            "Heavy appearance reset with stage-local progress"
+        )
+        for _ = 1, 3 do
+            Rules.apply(state, true, 0)
+        end
+        assert(Rules.appearance(state) == "Total", "destroyed appearance incorrect")
     end)
     test(
         "PanelDamageRules invalid seconds reject without mutation and overflow never skips stages",

@@ -1,0 +1,26 @@
+{
+  "branch": "fix/p07-progressive-persistent-damage",
+  "scope": "all src/tests Luau + assets JSON + inspect_build.py + run_tests.luau",
+  "sha256": "741d5ab0852a28aaabc3b77be8fd3dbd784f752e14fae0de783547317edc0ebf",
+  "files": 103,
+  "changedImplementationFiles": [
+    "assets/manifest.json",
+    "assets/world/Battlefield.model.json",
+    "scripts/inspect_build.py",
+    "src/server/BuildingGeometry.luau",
+    "src/server/DestructionRuntime.luau",
+    "src/server/DestructionService.luau",
+    "src/server/MapService.luau",
+    "src/server/PanelDamageRules.luau",
+    "src/server/PanelGeometry.luau",
+    "tests/integration/DestructionService.spec.luau",
+    "tests/studio/client/DestructionHarness.luau",
+    "tests/studio/server/DestructionHarness.luau",
+    "tests/studio/specs-server/Map.spec.luau",
+    "tests/studio/specs-server/PanelDestruction.spec.luau",
+    "tests/unit/PanelDamageRules.spec.luau"
+  ],
+  "hostGate": "python3 scripts/verify.py passed;55unit/55integration;422part transforms eachartifact; full /tmp/p07-persistent-verify-final.log",
+  "engineChecks": "UNRUN currentrevision; expected142server/6client smoke; native7scenarios revised withoutlatejoin",
+  "sourceFreeze": true
+}

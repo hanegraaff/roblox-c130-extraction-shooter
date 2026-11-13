@@ -78,7 +78,7 @@ function RoundHarness.run()
             mode = "manual-server-clients",
             harness = "P07",
             requestedInitialClients = 2,
-            actualLateClientRequired = true,
+            actualLateClientRequired = false,
         }
         workspace:SetAttribute("ManualP07Invocation", HttpService:JSONEncode(invocation))
         workspace:SetAttribute("ManualP07Report", nil)

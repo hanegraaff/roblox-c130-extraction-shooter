@@ -8,6 +8,84 @@ local Aircraft = require(ReplicatedStorage.Shared.AircraftRules)
 local Map = require(ReplicatedStorage.Shared.MapRules)
 local Camera = require(Players.LocalPlayer.PlayerScripts.Client.ThermalCameraController)
 local Harness = {}
+type PanelExpectation = {
+    id: string,
+    stage: string,
+    progress: number,
+    appearance: string,
+    heavySeconds: number,
+    sustainedSeconds: number,
+    parts: number,
+    pivot: { number },
+    size: Vector3,
+}
+
+-- Own-panel filters isolate its real opening from other legitimate map cover.
+-- Original thin-axis normals handle roofs and either wall orientation; Light
+-- remains solid, Heavy has a center hole and remaining strip, Total is empty.
+local function panelMatches(entry: PanelExpectation): boolean
+    local model = workspace.World.Battlefield:FindFirstChild(entry.id, true)
+    if not model or not model:IsA("Model") then
+        return false
+    end
+    local credits: { [string]: number } = {
+        PanelProgress = entry.progress,
+        HeavySeconds = entry.heavySeconds,
+        SustainedSeconds = entry.sustainedSeconds,
+    }
+    for attribute, value in credits do
+        local actual = model:GetAttribute(attribute)
+        if type(actual) ~= "number" or math.abs(actual - value) > 1e-5 then
+            return false
+        end
+    end
+    if
+        model:GetAttribute("PanelId") ~= entry.id
+        or model:GetAttribute("PanelState") ~= entry.stage
+        or model:GetAttribute("DamageAppearance") ~= entry.appearance
+        or #model:GetChildren() ~= entry.parts
+        or (entry.appearance == "Pristine" and model:FindFirstChild("DamageVisuals") ~= nil)
+    then
+        return false
+    end
+    local pivot = CFrame.new(unpack(entry.pivot))
+    local originalPivot = model:GetAttribute("IntactPivot")
+    local size = model:GetAttribute("IntactSize")
+    if typeof(originalPivot) ~= "CFrame" or typeof(size) ~= "Vector3" or size ~= entry.size then
+        return false
+    end
+    for _, actualPivot in { originalPivot, model:GetPivot() } do
+        for index, component in { actualPivot:GetComponents() } do
+            if math.abs(component - entry.pivot[index]) > 0.01 then
+                return false
+            end
+        end
+    end
+    local params = RaycastParams.new()
+    params.FilterType = Enum.RaycastFilterType.Include
+    params.FilterDescendantsInstances = { model }
+    params.RespectCanCollide = true
+    local normal = if size.Y <= math.min(size.X, size.Z)
+        then pivot.UpVector
+        elseif size.X < size.Z then pivot.RightVector
+        else -pivot.LookVector
+    local thickness = math.min(size.X, size.Y, size.Z)
+    local function faceHit(point: Vector3): RaycastResult?
+        return workspace:Raycast(point - normal * (thickness / 2 + 1), normal * (thickness + 2), params)
+    end
+    local centerHit = faceHit(pivot.Position)
+    if entry.stage == "Intact" then
+        return centerHit ~= nil
+    elseif centerHit then
+        return false
+    elseif entry.stage == "Damaged" then
+        local strip = if size.X >= size.Z
+            then pivot.RightVector * size.X * 0.375
+            else -pivot.LookVector * size.Z * 0.375
+        return faceHit(pivot.Position + strip) ~= nil
+    end
+    return entry.stage == "Destroyed"
+end
 
 -- Constructs bounded intent from the CURRENT canonical pose and production
 -- camera basis. This is request generation only: the server still validates
@@ -110,7 +188,11 @@ function Harness.run()
                             cadence: number,
                         }
                         assert(
-                            typeof(burst.point) == "Vector3" and burst.count == 61 and burst.cadence == 0.18,
+                            typeof(burst.point) == "Vector3"
+                                and burst.count >= 1
+                                and burst.count <= 61
+                                and burst.count % 1 == 0
+                                and burst.cadence == 0.18,
                             "unbounded burst fixture"
                         )
                         local state = ReplicatedStorage:WaitForChild("AircraftState", 5)
@@ -138,45 +220,28 @@ function Harness.run()
                         assert(burstOk, tostring(burstFailure))
                     elseif kind == "Panels" then
                         assert(type(payload) == "table", "expected panel observations")
-                        local expected = payload :: {
-                            {
-                                id: string,
-                                stage: string,
-                                progress: number,
-                                parts: number,
-                                pivot: { number },
-                            }
-                        }
-                        for _, entry in expected do
-                            waitFor(function()
-                                local model = workspace.World.Battlefield:FindFirstChild(entry.id, true)
-                                if not model or not model:IsA("Model") then
+                        local expected = payload :: { PanelExpectation }
+                        assert(#expected >= 1 and #expected <= 187, "unbounded panel observation batch")
+                        local mismatch = "unknown panel"
+                        local function matches(): boolean
+                            for index, entry in expected do
+                                if not panelMatches(entry) then
+                                    mismatch = entry.id
                                     return false
                                 end
-                                local progress = model:GetAttribute("PanelProgress")
-                                if
-                                    model:GetAttribute("PanelState") ~= entry.stage
-                                    or type(progress) ~= "number"
-                                    or math.abs(progress - entry.progress) > 1e-5
-                                    or #model:GetChildren() ~= entry.parts
-                                then
-                                    return false
+                                if index % 16 == 0 then
+                                    task.wait() -- bounded real-query batches, one shared retry deadline
                                 end
-                                local pivot = CFrame.new(unpack(entry.pivot))
-                                if (model:GetPivot().Position - pivot.Position).Magnitude > 0.01 then
-                                    return false
-                                end
-                                local params = RaycastParams.new()
-                                params.FilterType = Enum.RaycastFilterType.Include
-                                params.FilterDescendantsInstances = { model }
-                                local normal = if string.find(entry.id, "Roof", 1, true)
-                                    then Vector3.yAxis
-                                    else Vector3.zAxis
-                                local hit = workspace:Raycast(pivot.Position - normal * 2, normal * 4, params)
-                                return (entry.stage == "Intact" and hit ~= nil)
-                                    or (entry.stage ~= "Intact" and hit == nil)
-                            end, entry.id .. " state/progress/opening")
+                            end
+                            return true
                         end
+                        local deadline = os.clock() + 8
+                        local matched = matches()
+                        while not matched and os.clock() < deadline do
+                            task.wait(0.03)
+                            matched = matches()
+                        end
+                        assert(matched, "P07 client timeout: " .. mismatch .. " state/credit/pivot/opening")
                     elseif kind == "Walk" then
                         assert(typeof(payload) == "Vector3", "walking goal missing")
                         local character = Players.LocalPlayer.Character

@@ -1,11 +1,12 @@
 --!strict
 --[=[
     PanelDamageRules: deterministic server-only structural stage arithmetic. No
-    engine, network, clock access or yielding. Heavy credit persists; uncommitted
-    30mm seconds may be cleared by the orchestration owner. Completed stages never
-    regress. Durations are seconds; stage 0/1/2 means Intact/Damaged/Destroyed.
+    engine, network, clock access or yielding. All earned heavy/30mm credit
+    persists until reset. Continuity anchors belong to DestructionService and
+    cannot erase earned damage. Completed stages never regress. Durations are seconds; stage 0/1/2 means Intact/Damaged/Destroyed.
 ]=]
 local PanelDamageRules = {}
+export type DamageAppearance = "Pristine" | "Light" | "Heavy" | "Total"
 export type State = { stage: number, heavySeconds: number, sustainedSeconds: number }
 PanelDamageRules.stageSeconds = 9
 PanelDamageRules.heavySeconds = 3
@@ -21,9 +22,17 @@ function PanelDamageRules.progress(state: State): number
     return if state.stage == 2 then 1 else (state.heavySeconds + state.sustainedSeconds) / 9
 end
 
--- Clears only incomplete 30mm work. Does not change heavy credit or stage.
-function PanelDamageRules.interrupt(state: State)
-    state.sustainedSeconds = 0
+-- Stable player-visible tier. Heavy never returns to the original appearance
+-- when its new stage starts at zero local progress; any positive earned credit
+-- gives Light, while the first zero-credit 30mm impact remains Pristine.
+function PanelDamageRules.appearance(state: State): DamageAppearance
+    if state.stage == 2 then
+        return "Total"
+    end
+    if state.stage == 1 then
+        return "Heavy"
+    end
+    return if state.heavySeconds + state.sustainedSeconds > 0 then "Light" else "Pristine"
 end
 
 -- Applies one direct heavy impact or nonnegative finite valid 30mm seconds.

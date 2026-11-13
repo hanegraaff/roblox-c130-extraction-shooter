@@ -7,6 +7,46 @@
 ]=]
 local BuildingLayout = require(game:GetService("ReplicatedStorage").Shared.BuildingLayout)
 local BuildingGeometry = {}
+-- A level-supplied registry root. Formal buildings infer story from stable IDs;
+-- ancillary one-floor envelopes use an explicit default story. Damage rules do
+-- not depend on the name/count/footprint of any registry.
+export type Registry = { buildingId: string, panels: Folder, storyId: string? }
+
+-- Reads the current level's formal building folders and additional StringValue
+-- descriptors (name=building ID,value=direct map folder name). Rejects malformed
+-- roots/duplicate identities without writes or yielding. No recursive path lookup.
+function BuildingGeometry.registries(map: Model): ({ Registry }?, string?)
+    local buildings = map:FindFirstChild("Buildings")
+    if not buildings then
+        return nil, "missing buildings"
+    end
+    local result: { Registry } = {}
+    local ids: { [string]: boolean } = {}
+    for _, building in buildings:GetChildren() do
+        local panels = building:FindFirstChild(building.Name .. "_Panels")
+        if not panels or not panels:IsA("Folder") then
+            return nil, "missing formal panel root"
+        end
+        ids[building.Name] = true
+        table.insert(result, { buildingId = building.Name, panels = panels })
+    end
+    local descriptors = map:FindFirstChild("PanelRegistries")
+    if not descriptors then
+        return nil, "missing additional panel descriptors"
+    end
+    for _, descriptor in descriptors:GetChildren() do
+        if not descriptor:IsA("StringValue") or descriptor.Value == "" or ids[descriptor.Name] then
+            return nil, "invalid additional panel descriptor"
+        end
+        local root = map:FindFirstChild(descriptor.Value)
+        if not root or not root:IsA("Folder") or #root:GetChildren() == 0 then
+            return nil, "missing additional panel root"
+        end
+        ids[descriptor.Name] = true
+        table.insert(result, { buildingId = descriptor.Name, panels = root, storyId = "01" })
+    end
+    return result, nil
+end
 
 -- Checks actual floor separation, contiguous stair poses, headroom, avatar-wide entry
 -- corridors and unique panel/story/pivot contracts. Rejects without mutation.
@@ -189,37 +229,54 @@ function BuildingGeometry.validate(
             panels = registry,
         })
     end
-    return BuildingLayout.validate(layouts)
+    local valid, reason = BuildingLayout.validate(layouts)
+    if not valid then
+        return false, reason
+    end
+    local registries, registryReason = BuildingGeometry.registries(map)
+    if not registries then
+        return false, registryReason
+    end
+    for _, registry in registries do
+        for _, part in registry.panels:GetChildren() do
+            if not part:IsA("BasePart") or not part.CanCollide or not part.CanQuery then
+                return false, "registered panel must be a real solid"
+            end
+        end
+    end
+    return true, nil
 end
 
 -- Applies stable replicated identity and Intact variant contracts after validation.
 -- Rebuild reuses source IDs and pivots; P07 implements residual variants and fragments.
 function BuildingGeometry.decorate(map: Model)
-    local buildings = map:FindFirstChild("Buildings")
-    if buildings then
-        for _, building in buildings:GetChildren() do
-            building:SetAttribute("BuildingId", building.Name)
-            building:SetAttribute("Stories", 2)
-            local panels = building:FindFirstChild(building.Name .. "_Panels")
-            if panels then
-                for _, panel in panels:GetChildren() do
-                    if panel:IsA("BasePart") then
-                        panel:SetAttribute("PanelId", panel.Name)
-                        panel:SetAttribute("BuildingId", building.Name)
-                        panel:SetAttribute("StoryId", string.match(panel.Name, "_S(%d%d)_"))
-                        panel:SetAttribute("CoverKind", "BuildingPanel")
-                        panel:SetAttribute("PanelState", "Intact")
-                        panel:SetAttribute("IntactPivot", panel.CFrame)
-                        panel:SetAttribute("VariantContract", "Intact/Damaged/Destroyed:v1")
-                    end
-                end
+    local registries, reason = BuildingGeometry.registries(map)
+    assert(registries, reason)
+    for _, registry in registries do
+        for _, panel in registry.panels:GetChildren() do
+            if panel:IsA("BasePart") then
+                panel:SetAttribute("PanelId", panel.Name)
+                panel:SetAttribute("BuildingId", registry.buildingId)
+                panel:SetAttribute("StoryId", registry.storyId or string.match(panel.Name, "_S(%d%d)_"))
+                panel:SetAttribute("CoverKind", "BuildingPanel")
+                panel:SetAttribute("PanelState", "Intact")
+                panel:SetAttribute("DamageAppearance", "Pristine")
+                panel:SetAttribute("IntactPivot", panel.CFrame)
+                panel:SetAttribute("IntactSize", panel.Size)
+                panel:SetAttribute("VariantContract", "Intact/Damaged/Destroyed:v1")
             end
-            local supports = building:FindFirstChild(building.Name .. "_Static")
-            if supports then
-                for _, support in supports:GetChildren() do
-                    support:SetAttribute("BuildingId", building.Name)
-                    support:SetAttribute("CoverKind", "StaticSupport")
-                end
+        end
+    end
+    local buildings = map:FindFirstChild("Buildings")
+    assert(buildings, "validated buildings missing")
+    for _, building in buildings:GetChildren() do
+        building:SetAttribute("BuildingId", building.Name)
+        building:SetAttribute("Stories", 2)
+        local supports = building:FindFirstChild(building.Name .. "_Static")
+        if supports then
+            for _, support in supports:GetChildren() do
+                support:SetAttribute("BuildingId", building.Name)
+                support:SetAttribute("CoverKind", "StaticSupport")
             end
         end
     end

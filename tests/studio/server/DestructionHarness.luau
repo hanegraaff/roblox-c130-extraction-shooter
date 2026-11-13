@@ -1,11 +1,9 @@
 --!strict
 --[=[
     P07 manual/SDK harness: two actual clients fire production gunship remotes,
-    inspect current panel replication, then hold AFTER damage for a genuinely new
-    third player, optionally accompanied by a fourth from Studio's Start batch.
-    No fake Players or client-authoritative damage seam. The late-join
-    checkpoint is bounded to 240 seconds and published for a coordinated native UI
-    join. Fixtures/control transport are test-mapped only; stop owns all resources.
+    inspect persistent Light/Heavy/Total state and repeat actual round resets.
+    The current P07 gate uses two real clients without a late-player checkpoint.
+    No fake Players or client-authoritative damage seam. Fixtures/control transport are test-mapped only; stop owns all resources.
 ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,14 +17,21 @@ local CombatService = require(Server.CombatService)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
+-- Only the non-yielding production basis function is used; no client controller
+-- is started on this server. Forecasts also respect Burst's stricter 0.7 inset.
+local Camera = require(game:GetService("StarterPlayer").StarterPlayerScripts.Client.ThermalCameraController)
 local Harness = {}
 type Case = { name: string, passed: boolean, detail: string? }
-type LateArrival = {
-    userId: number,
-    arrivedAtServerSeconds: number,
-    afterCheckpointSeconds: number,
-    roundId: number,
-    clientCountAtArrival: number,
+type PanelExpectation = {
+    id: string,
+    stage: string,
+    progress: number,
+    appearance: string,
+    heavySeconds: number,
+    sustainedSeconds: number,
+    parts: number,
+    pivot: { number },
+    size: Vector3,
 }
 export type Report = {
     suite: string,
@@ -34,9 +39,6 @@ export type Report = {
     clientCount: number,
     initialUserIds: { number },
     initialObservedAtServerSeconds: number?,
-    lateUserId: number?,
-    lateUserIds: { number },
-    lateArrivals: { LateArrival },
     discovered: number,
     passed: number,
     failed: number,
@@ -58,9 +60,6 @@ function Harness.run(finish: ((Report) -> ())?)
     local observations: { unknown } = {}
     local initialIds: { number } = {}
     local initialObservedAt: number? = nil
-    local lateUserId: number? = nil
-    local lateIds: { number } = {}
-    local lateArrivals: { LateArrival } = {}
     local function stage(name: string, detail: unknown?)
         workspace:SetAttribute(
             "P07Stage",
@@ -85,9 +84,6 @@ function Harness.run(finish: ((Report) -> ())?)
             clientCount = #Players:GetPlayers(),
             initialUserIds = initialIds,
             initialObservedAtServerSeconds = initialObservedAt,
-            lateUserId = lateUserId,
-            lateUserIds = lateIds,
-            lateArrivals = lateArrivals,
             discovered = #cases,
             passed = passed,
             failed = #cases - passed,
@@ -156,6 +152,7 @@ function Harness.run(finish: ((Report) -> ())?)
             scoredThroughFiredAt: number?,
             stage: number?,
             progress: number?,
+            earnedSeconds: number?,
         }
     } =
         {}
@@ -199,6 +196,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 scoredThroughFiredAt = resolvedTimes[contiguousShotId],
                 stage = if current then current.stage else nil,
                 progress = if current then current.progress else nil,
+                earnedSeconds = if current then current.sustainedSeconds else nil,
             })
         end,
         nil,
@@ -277,7 +275,8 @@ function Harness.run(finish: ((Report) -> ())?)
         weapon: string,
         point: Vector3,
         sequence: number,
-        predictedCamera: Vector3?
+        predictedCamera: Vector3?,
+        burstView: boolean?
     ): { [string]: unknown }?
         local map = MapRules.defaults
         local camera = predictedCamera or runtime.aircraft.position()
@@ -301,10 +300,35 @@ function Harness.run(finish: ((Report) -> ())?)
         }
         for sample = 0, 100 do
             local t = sample / 100
-            payload.focusX = targetFocus.x + (home.x - targetFocus.x) * t
-            payload.focusZ = targetFocus.z + (home.z - targetFocus.z) * t
+            local focus = {
+                x = targetFocus.x + (home.x - targetFocus.x) * t,
+                z = targetFocus.z + (home.z - targetFocus.z) * t,
+            }
+            payload.focusX = focus.x
+            payload.focusZ = focus.z
             if CombatViewRules.validate(payload, map, weapon, camera.X, camera.Z) then
-                return payload
+                if not burstView then
+                    return payload
+                end
+                local worldFocus = assert(
+                    Pan.worldFocus(map, focus, camera.X, camera.Z),
+                    "valid fixture world focus unavailable"
+                )
+                local frame = assert(
+                    Camera.frame(camera, Vector3.new(worldFocus.x, map.groundY, worldFocus.z)),
+                    "valid fixture camera basis unavailable"
+                )
+                local widest = assert(Pan.supportedFov(map, 16 / 9, 40), "fixture lens unavailable")
+                local tangent = math.tan(math.rad(math.min(AircraftRules.defaults.fov30mm, widest)) / 2)
+                local localPoint = frame:PointToObjectSpace(point)
+                local depth = -localPoint.Z
+                if
+                    depth > 0
+                    and math.abs(localPoint.X / (depth * tangent * (16 / 9))) <= 0.7
+                    and math.abs(localPoint.Y / (depth * tangent)) <= 0.7
+                then
+                    return payload
+                end
             end
         end
         return nil
@@ -319,16 +343,33 @@ function Harness.run(finish: ((Report) -> ())?)
         assert(typeof(value) == "CFrame", "panel pivot unavailable")
         return value
     end
-    local function expected(ids: { string })
-        local result = {}
+    -- Fixed target on a remaining roof strip, using the real authored thickness
+    -- and original size (including 2-stud starting-shelter roof tiles).
+    local function roofTarget(model: Model): Vector3
+        local size = model:GetAttribute("IntactSize")
+        assert(typeof(size) == "Vector3", "original panel dimensions unavailable")
+        local offset = if size.X >= size.Z
+            then Vector3.new(-size.X * 0.375, size.Y / 2, 0)
+            else Vector3.new(0, size.Y / 2, -size.Z * 0.375)
+        return pose(model.Name):PointToWorldSpace(offset)
+    end
+    local function expected(ids: { string }): { PanelExpectation }
+        local result: { PanelExpectation } = {}
         for _, id in ids do
             local model = panel(id)
+            local state = assert(runtime.destruction.snapshot(id), "registered panel ledger unavailable")
+            local size = model:GetAttribute("IntactSize")
+            assert(typeof(size) == "Vector3", "registered panel size unavailable")
             table.insert(result, {
                 id = id,
-                stage = model:GetAttribute("PanelState"),
-                progress = model:GetAttribute("PanelProgress"),
+                stage = ({ "Intact", "Damaged", "Destroyed" })[state.stage + 1],
+                progress = state.progress,
+                appearance = state.appearance,
+                heavySeconds = state.heavySeconds,
+                sustainedSeconds = state.sustainedSeconds,
                 parts = #model:GetChildren(),
                 pivot = { pose(id):GetComponents() },
+                size = size,
             })
         end
         return result
@@ -470,35 +511,147 @@ function Harness.run(finish: ((Report) -> ())?)
         })
         return selected, selectedPoint, selectedNormal
     end
+    -- A reset target must remain reachable through all three heavy reload/flight
+    -- steps and the following four-shot GAU burst. Prefer roofs near the level
+    -- center rather than an orbit-dependent current FOV edge. The point is on a
+    -- real residual strip and uses authored roof thickness; no collider is moved.
+    local function stableResetRoof(): (string, Vector3, RaycastParams)
+        awaitReady("M102")
+        local params = RaycastParams.new()
+        params.FilterType = Enum.RaycastFilterType.Include
+        params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+        params.RespectCanCollide = true
+        local candidates: { Model } = {}
+        local center = Vector3.new(MapRules.defaults.centerX, 0, MapRules.defaults.centerZ)
+        for _, item in workspace.World.Battlefield:GetDescendants() do
+            if
+                item:IsA("Model")
+                and string.find(item.Name, "Roof", 1, true)
+                and item:GetAttribute("PanelState") == "Intact"
+                and item:GetAttribute("PanelProgress") == 0
+            then
+                table.insert(candidates, item)
+            end
+        end
+        table.sort(candidates, function(a, b)
+            return (pose(a.Name).Position * Vector3.new(1, 0, 1) - center).Magnitude
+                < (pose(b.Name).Position * Vector3.new(1, 0, 1) - center).Magnitude
+        end)
+        local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
+        assert(type(epoch) == "number", "reset forecast epoch unavailable")
+        local aircraftFrame = workspace.Aircraft:GetPivot()
+        local relativeMuzzles: { [string]: Vector3 } = {}
+        for _, weapon in { "M102", "GAU23" } do
+            local muzzle = assert(runtime.aircraft.muzzle(weapon), "reset forecast muzzle unavailable")
+            relativeMuzzles[weapon] = aircraftFrame:PointToObjectSpace(muzzle)
+        end
+        for candidateIndex, model in candidates do
+            local point = roofTarget(model)
+            local startedAt = workspace:GetServerTimeNow()
+            local clear = true
+            for step = 0, math.ceil(wallWindowSeconds / 0.5) do
+                local predicted = assert(
+                    AircraftRules.pose(
+                        MapRules.defaults,
+                        AircraftRules.defaults,
+                        startedAt - epoch + step * 0.5
+                    ),
+                    "reset forecast pose unavailable"
+                )
+                local camera = Vector3.new(predicted.x, predicted.y, predicted.z)
+                local frame =
+                    CFrame.lookAt(camera, camera + Vector3.new(predicted.tangentX, 0, predicted.tangentZ))
+                for _, weapon in { "M102", "GAU23" } do
+                    local first =
+                        aimHit(weapon, point, frame:PointToWorldSpace(relativeMuzzles[weapon]), params)
+                    if
+                        not first
+                        or runtime.destruction.identify(first.Instance) ~= model.Name
+                        or not command(weapon, point, fireSequence + 1, camera, weapon == "GAU23")
+                    then
+                        clear = false
+                        break
+                    end
+                end
+                if not clear then
+                    break
+                end
+                if step % 8 == 7 then
+                    task.wait() -- at most sixteen engine queries per uninterrupted batch
+                end
+            end
+            if clear then
+                table.insert(observations, {
+                    kind = "reset-roof-forecast",
+                    panelId = model.Name,
+                    windowSeconds = wallWindowSeconds,
+                    sampleIntervalSeconds = 0.5,
+                    candidateIndex = candidateIndex,
+                    startedAtServerSeconds = startedAt,
+                    selectedAtServerSeconds = workspace:GetServerTimeNow(),
+                })
+                return model.Name, point, params
+            end
+            task.wait()
+        end
+        error("no pristine roof has both profile views and first hits across reset reload/flight window")
+    end
+    -- Readiness may yield; view and actual first-hit checks therefore run AFTER
+    -- it, immediately before the next send. Forecasts never authorize a shot.
+    local function readyResetTarget(weapon: string, id: string, point: Vector3, params: RaycastParams)
+        awaitReady(weapon)
+        local payload = assert(
+            command(weapon, point, fireSequence + 1, nil, weapon == "GAU23"),
+            "reset target outside current " .. weapon .. " fixture view"
+        )
+        local first =
+            aimHit(weapon, point, assert(runtime.aircraft.muzzle(weapon), "reset muzzle missing"), params)
+        assert(
+            first and runtime.destruction.identify(first.Instance) == id,
+            "reset current " .. weapon .. " first hit is not the selected real panel"
+        )
+        return payload
+    end
     local op: Player? = nil
     local ground: Player? = nil
     local testedIds: { string } = {}
-    local latePlayer: Player? = nil
-    local latePlayers: { Player } = {}
-    local firstLateArrivedAt: number? = nil
-    local checkpointStartedAt = 0
-    local checkpoint = false
-    local added = Players.PlayerAdded:Connect(function(player)
-        if
-            checkpoint
-            and not table.find(initialIds, player.UserId)
-            and not table.find(lateIds, player.UserId)
-        then
-            local arrivedAt = os.clock()
-            if not latePlayer then
-                latePlayer, lateUserId, firstLateArrivedAt = player, player.UserId, arrivedAt
+    local allIds: { string } = {}
+    local originalPanels: { [string]: { pivot: CFrame, size: Vector3 } } = {}
+    local function allPanelStates(pristine: boolean): { PanelExpectation }
+        assert(#allIds == 187 and runtime.destruction.resources().panels == 187, "all-panel registry changed")
+        local entries = expected(allIds)
+        for _, entry in entries do
+            local model = panel(entry.id)
+            local original = assert(originalPanels[entry.id], "original panel identity missing")
+            assert(
+                model:GetAttribute("PanelState") == entry.stage
+                    and model:GetAttribute("PanelProgress") == entry.progress
+                    and model:GetAttribute("DamageAppearance") == entry.appearance
+                    and model:GetAttribute("HeavySeconds") == entry.heavySeconds
+                    and model:GetAttribute("SustainedSeconds") == entry.sustainedSeconds,
+                entry.id .. " ledger/publication disagreement"
+            )
+            assert(
+                pose(entry.id) == original.pivot
+                    and model:GetPivot() == original.pivot
+                    and entry.size == original.size,
+                entry.id .. " original pivot/size changed"
+            )
+            if pristine then
+                assert(
+                    entry.stage == "Intact"
+                        and entry.progress == 0
+                        and entry.appearance == "Pristine"
+                        and entry.heavySeconds == 0
+                        and entry.sustainedSeconds == 0
+                        and entry.parts == 1
+                        and not model:FindFirstChild("DamageVisuals"),
+                    entry.id .. " retained damage after reset"
+                )
             end
-            table.insert(latePlayers, player)
-            table.insert(lateIds, player.UserId)
-            table.insert(lateArrivals, {
-                userId = player.UserId,
-                arrivedAtServerSeconds = workspace:GetServerTimeNow(),
-                afterCheckpointSeconds = arrivedAt - checkpointStartedAt,
-                roundId = runtime.rounds.match.snapshot().roundId,
-                clientCountAtArrival = #Players:GetPlayers(),
-            })
         end
-    end)
+        return entries
+    end
     local ok, failure = pcall(function()
         check(
             "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation",
@@ -515,6 +668,16 @@ function Harness.run(finish: ((Report) -> ())?)
                     end
                 end
                 assert(op and ground, "roles missing")
+                for _, item in workspace.World.Battlefield:GetDescendants() do
+                    if item:IsA("Model") and item:GetAttribute("PanelId") == item.Name then
+                        local size = item:GetAttribute("IntactSize")
+                        assert(typeof(size) == "Vector3", "initial panel dimensions missing")
+                        table.insert(allIds, item.Name)
+                        originalPanels[item.Name] = { pivot = pose(item.Name), size = size }
+                    end
+                end
+                table.sort(allIds)
+                allPanelStates(true)
                 local roofIds: { string } = {}
                 for _, item in workspace.World.Battlefield:GetDescendants() do
                     if item:IsA("Model") and string.find(item.Name, "Roof", 1, true) then
@@ -523,7 +686,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
                 table.sort(roofIds)
                 for _, id in roofIds do
-                    local point = pose(id).Position + Vector3.new(-6, 0.5, 0)
+                    local point = roofTarget(panel(id))
                     if command("M102", point, 1) and command("GAU23", point, 1) then
                         table.insert(testedIds, id)
                         if #testedIds == 3 then
@@ -559,7 +722,7 @@ function Harness.run(finish: ((Report) -> ())?)
                     task.wait(4.05)
                 end
                 fireSequence += 1
-                local point = pose(id).Position + Vector3.new(-6, 0.5, 0)
+                local point = roofTarget(panel(id))
                 probe(
                     operator,
                     "Fire",
@@ -586,113 +749,157 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
             end
         end)
-        check("A7 actual same-panel 30mm reaches nine valid seconds without first-hit time credit", function()
+        check("A7 earned 30mm Light damage persists through three bursts before Heavy", function()
             selectWeapon(operator, "GAU23")
             local id = testedIds[2]
-            local firstSequence = fireSequence + 1
-            local factsBefore = #impactFacts
-            local receiptBefore = #receipts
-            local beforeReadiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
-            assert(type(beforeReadiness) == "string", "GAU initial readiness unavailable")
-            local initialAmmo = HttpService:JSONDecode(beforeReadiness).GAU23.ammo
+            local overallFacts = #impactFacts
+            local initialReadiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+            assert(type(initialReadiness) == "string", "GAU initial readiness missing")
+            local initialAmmo = HttpService:JSONDecode(initialReadiness).GAU23.ammo
+            local earnedTotal = 0
+            local earnedByShot: { [number]: number } = {}
+            local transition: typeof(impactFacts[1])? = nil
             local diagnostic: { [string]: unknown } = {
-                kind = "actual-30mm",
+                kind = "persistent-30mm-bursts",
                 panelId = id,
-                requested = 61,
-                sendIntervalSeconds = 0.18,
-                serverCadenceSeconds = CombatService.profiles.GAU23.cadence,
-                gapSeconds = 0.225,
+                requested = 63,
+                bursts = {},
                 impacts = impactFacts,
                 receipts = receipts,
                 clientTimingByToken = burstTiming,
-                firstFactIndex = factsBefore + 1,
-                firstReceiptIndex = receiptBefore + 1,
+                firstFactIndex = overallFacts + 1,
             }
-            -- Insert BEFORE sending so any failure retains bounded actual facts.
             table.insert(observations, diagnostic)
-            fireSequence += 61
-            local timingToken = probe(operator, "Burst", {
-                point = pose(id).Position + Vector3.new(-6, 0.5, 0),
-                roundId = runtime.rounds.match.snapshot().roundId,
-                firstSequence = firstSequence,
-                count = 61,
-                cadence = 0.18,
-            })
-            diagnostic.clientSends = burstTiming[timingToken]
-            burstTiming[timingToken] = nil
-            waitFor(function()
-                return #impactFacts >= factsBefore + 61 and runtime.combat.resources().projectiles == 0
-            end, "61 actual sustained-fire impacts", 8)
-            diagnostic.lastFactIndex = #impactFacts
-            diagnostic.lastReceiptIndex = #receipts
-            local firstPhysical = impactFacts[factsBefore + 1]
-            assert(
-                firstPhysical
-                    and firstPhysical.weapon == "GAU23"
-                    and firstPhysical.panelId == id
-                    and firstPhysical.progress == 0,
-                "first real on-panel impact earned pre-first-impact credit"
-            )
-            local ordered: { typeof(firstPhysical) } = {}
-            local transition: typeof(firstPhysical)? = nil
-            for index = factsBefore + 1, #impactFacts do
-                local fact = impactFacts[index]
+            local bursts: { unknown } = {}
+            diagnostic.bursts = bursts
+            for burst = 1, 3 do
+                local before = assert(runtime.destruction.snapshot(id), "panel missing")
+                local factStart = #impactFacts
+                local firstSequence = fireSequence + 1
+                fireSequence += 21
+                local timingToken = probe(operator, "Burst", {
+                    point = roofTarget(panel(id)),
+                    roundId = runtime.rounds.match.snapshot().roundId,
+                    firstSequence = firstSequence,
+                    count = 21,
+                    cadence = 0.18,
+                })
+                local burstRecord: { [string]: unknown } =
+                    { index = burst, clientSends = burstTiming[timingToken], firstFactIndex = factStart + 1 }
+                table.insert(bursts, burstRecord)
+                burstTiming[timingToken] = nil
+                waitFor(function()
+                    return #impactFacts >= factStart + 21 and runtime.combat.resources().projectiles == 0
+                end, "21 actual on-panel burst impacts", 8)
+                local firstPhysical = impactFacts[factStart + 1]
                 assert(
-                    fact.weapon == "GAU23" and fact.panelId == id,
-                    "sustained outcome missed or hit a different panel"
+                    firstPhysical.earnedSeconds
+                        and math.abs(firstPhysical.earnedSeconds - before.sustainedSeconds) < 1e-7
+                        and firstPhysical.stage == before.stage,
+                    "first resumed impact earned paused/off-target time"
                 )
-                table.insert(ordered, fact)
-                if not transition and fact.stage == 1 then
-                    transition = fact
+                local ordered: { typeof(firstPhysical) } = {}
+                for index = factStart + 1, #impactFacts do
+                    local fact = impactFacts[index]
+                    assert(
+                        fact.weapon == "GAU23" and fact.panelId == id,
+                        "burst outcome missed or hit another panel"
+                    )
+                    table.insert(ordered, fact)
+                    if not transition and fact.stage == 1 then
+                        transition = fact
+                    end
+                end
+                assert(#ordered == 21, "bounded burst did not produce21 actual impacts")
+                table.sort(ordered, function(a, b)
+                    return a.shotId < b.shotId
+                end)
+                for index, fact in ordered do
+                    if index > 1 then
+                        local previous = ordered[index - 1]
+                        local gap = fact.firedAt - previous.firedAt
+                        assert(
+                            fact.shotId == previous.shotId + 1
+                                and gap + 1e-9 >= CombatService.profiles.GAU23.cadence
+                                and gap <= 0.225 + 1e-7,
+                            "accepted burst cadence/gap invalid"
+                        )
+                        earnedTotal += gap
+                    end
+                    earnedByShot[fact.shotId] = earnedTotal
+                end
+                local saved = assert(runtime.destruction.snapshot(id), "earned panel missing")
+                local savedAppearance = panel(id):GetAttribute("DamageAppearance")
+                if burst == 1 then
+                    assert(
+                        saved.appearance == "Light" and saved.sustainedSeconds > 0,
+                        "first real burst lacks Light damage"
+                    )
+                end
+                task.wait(0.5) -- longer than continuity gap, after all actual flights
+                local paused = assert(runtime.destruction.snapshot(id), "paused panel missing")
+                assert(
+                    paused.stage == saved.stage
+                        and paused.progress == saved.progress
+                        and paused.sustainedSeconds == saved.sustainedSeconds
+                        and panel(id):GetAttribute("DamageAppearance") == savedAppearance,
+                    "stopping fire erased earned damage/appearance"
+                )
+                burstRecord.earnedTotalSeconds = earnedTotal
+                burstRecord.earnedAfterPause = paused.sustainedSeconds
+                burstRecord.appearance = savedAppearance
+                for _, player in initialPlayers do
+                    probe(player, "Panels", expected({ id }))
                 end
             end
-            table.sort(ordered, function(a, b)
-                return a.shotId < b.shotId
-            end)
-            local first = ordered[1]
-            local previous = first
-            for index = 2, #ordered do
-                local fact = ordered[index]
-                local gap = fact.firedAt - previous.firedAt
-                assert(
-                    fact.shotId == previous.shotId + 1
-                        and gap + 1e-9 >= CombatService.profiles.GAU23.cadence
-                        and gap <= 0.225 + 1e-7,
-                    "actual accepted interval outside cadence/continuity bounds"
-                )
-                previous = fact
-            end
             local finalReadiness = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
-            assert(type(finalReadiness) == "string", "GAU final readiness unavailable")
+            assert(type(finalReadiness) == "string", "GAU final readiness missing")
             local spent = initialAmmo - HttpService:JSONDecode(finalReadiness).GAU23.ammo
-            diagnostic.accepted = spent
-            diagnostic.actualSpanSeconds = previous.firedAt - first.firedAt
             assert(
-                #impactFacts - factsBefore == 61 and spent == 61,
-                "not all 61 bounded requests became real accepted impacts"
+                #impactFacts - overallFacts == 63 and spent == 63,
+                "not all 63 real burst requests were accepted impacts"
             )
             assert(
                 transition
-                    and transition.scoredThroughFiredAt
-                    and transition.scoredThroughFiredAt - first.firedAt >= 9 - 1e-7,
-                "stage advanced before nine actual accepted on-panel seconds"
+                    and earnedByShot[transition.scoredThroughShotId]
+                    and earnedByShot[transition.scoredThroughShotId] >= 9 - 1e-7,
+                "Heavy appeared before nine valid earned seconds"
             )
-            diagnostic.transitionSpanSeconds = (transition.scoredThroughFiredAt :: number) - first.firedAt
             assert(
-                panel(id):GetAttribute("PanelState") == "Damaged",
-                "nine valid actual seconds did not damage panel"
+                panel(id):GetAttribute("PanelState") == "Damaged"
+                    and panel(id):GetAttribute("DamageAppearance") == "Heavy",
+                "persistent valid bursts did not reach Heavy"
             )
-            -- Preserve transition facts above, then wait for the ordinary idle
-            -- barrier to clear incomplete second-stage credit before freezing a
-            -- progress snapshot for sequential real-client replication probes.
-            waitFor(function()
-                return runtime.combat.resources().projectiles == 0
-                    and panel(id):GetAttribute("SustainedSeconds") == 0
-            end, "sustained tail and idle-barrier settlement", 8)
-            for _, player in initialPlayers do
-                probe(player, "Panels", expected({ id }))
-            end
+            diagnostic.accepted = spent
+            diagnostic.earnedTotalSeconds = earnedTotal
+            diagnostic.transitionEarnedSeconds = earnedByShot[transition.scoredThroughShotId]
         end)
+        check(
+            "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits",
+            function()
+                selectWeapon(operator, "M102")
+                local id = "Shelter_Roof_R01_C02"
+                local point = roofTarget(panel(id))
+                for hit = 1, 6 do
+                    awaitReady("M102")
+                    fireSequence += 1
+                    probe(
+                        operator,
+                        "Fire",
+                        (assert(command("M102", point, fireSequence), "shelter roof outside current view"))
+                    )
+                    local wanted = if hit < 3 then "Light" elseif hit < 6 then "Heavy" else "Total"
+                    waitFor(function()
+                        return panel(id):GetAttribute("DamageAppearance") == wanted
+                            and panel(id):GetAttribute("PanelProgress")
+                                == (if hit == 6 then 1 else (hit % 3) / 3)
+                    end, "actual shelter hit" .. hit, 8)
+                    for _, player in initialPlayers do
+                        probe(player, "Panels", expected({ id }))
+                    end
+                end
+            end
+        )
         check("A3 actual ground Humanoid walks through an authored damaged wall opening", function()
             selectWeapon(operator, "M102")
             local wallId, wallPoint, normal = stableExteriorWall()
@@ -780,7 +987,7 @@ function Harness.run(finish: ((Report) -> ())?)
             assert(walked, tostring(walkFailure))
         end)
         check(
-            "A6 current state reaches both initial clients and prior fragments expire before late join",
+            "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons",
             function()
                 -- One real heavy impact leaves a separate accumulating panel.
                 selectWeapon(operator, "M102")
@@ -792,7 +999,7 @@ function Harness.run(finish: ((Report) -> ())?)
                     "Fire",
                     (
                         assert(
-                            command("M102", pose(id).Position + Vector3.new(-6, 0.5, 0), fireSequence),
+                            command("M102", roofTarget(panel(id)), fireSequence),
                             "accumulating panel target"
                         )
                     )
@@ -802,155 +1009,18 @@ function Harness.run(finish: ((Report) -> ())?)
                 end, "accumulating panel")
                 task.wait(8.2)
                 assert(runtime.destruction.resources().fragments == 0, "prior debris still live")
+                local entries = allPanelStates(false)
                 for _, player in initialPlayers do
                     probe(player, "Panels", expected(testedIds))
+                    probe(player, "Panels", entries)
                     probe(player, "NoFragments", nil)
                 end
-            end
-        )
-        check(
-            "A6 genuinely late third client spectates current round and reconstructs without prior debris",
-            function()
-                local checkpointRound = runtime.rounds.match.snapshot().roundId
-                checkpointStartedAt = os.clock()
-                local checkpointDeadline = checkpointStartedAt + 240
-                local checkpointServerTime = workspace:GetServerTimeNow()
-                checkpoint = true
-                local lateObservation: { [string]: unknown } = {
-                    kind = "actual-late-join",
-                    roundId = checkpointRound,
-                    checkpointAtServerSeconds = checkpointServerTime,
-                    arrivalBudgetSeconds = 240,
-                    optionalBatchSettleCapSeconds = 15,
-                    initialUserIds = initialIds,
-                    lateUserIds = lateIds,
-                    arrivals = lateArrivals,
-                }
-                table.insert(observations, lateObservation)
-                stage("AwaitingLateJoin", {
-                    initialUserIds = initialIds,
-                    roundId = checkpointRound,
-                    timeoutSeconds = 240,
-                    permittedTotalClients = { 3, 4 },
-                    requiredNewClients = 1,
-                    optionalBatchSettleCapSeconds = 15,
-                    panels = expected(testedIds),
-                    instruction = "Add actual clients to this existing session. On macOS, Option+Command+P opens Quick Open Actions; Start can add the original batch of two. Keep the same server running.",
+                table.insert(observations, {
+                    kind = "all-panel-current-agreement",
+                    serverPanels = #entries,
+                    actualClients = #initialPlayers,
+                    perClientQueriedPanels = #entries,
                 })
-                while not latePlayer and os.clock() < checkpointDeadline do
-                    task.wait(0.03)
-                end
-                assert(
-                    latePlayer and firstLateArrivedAt,
-                    "timeout: actual new third PlayerAdded AFTER checkpoint within 240s"
-                )
-                -- Start may spawn its original batch sequentially. Wait for at
-                -- most one optional companion, bounded by BOTH 15s after first
-                -- arrival and the original 240s checkpoint deadline. A missing
-                -- fourth is reported as absent, never invented or required.
-                local settleDeadline = math.min(firstLateArrivedAt + 15, checkpointDeadline)
-                stage("SettlingLateJoinBatch", {
-                    firstLateUserId = lateUserId,
-                    lateUserIds = lateIds,
-                    remainingSeconds = math.max(0, settleDeadline - os.clock()),
-                    checkpointDeadlineServerSeconds = checkpointServerTime + 240,
-                })
-                while #latePlayers < 2 and os.clock() < settleDeadline do
-                    task.wait(0.03)
-                end
-                lateObservation.settleEndedAfterCheckpointSeconds = os.clock() - checkpointStartedAt
-                assert(#latePlayers >= 1 and #latePlayers <= 2, "expected one or two genuine late players")
-                assert(
-                    runtime.rounds.match.snapshot().roundId == checkpointRound
-                        and runtime.rounds.match.snapshot().phase == "Active",
-                    "late join crossed round"
-                )
-                for _, player in initialPlayers do
-                    probe(player, "Panels", expected(testedIds))
-                    probe(player, "NoFragments", nil)
-                end
-                local before = HttpService:JSONEncode(expected(testedIds))
-                local intent = assert(command("M102", pose(testedIds[3]).Position, 9999), "spectator target")
-                local verified: { number } = {}
-                lateObservation.verifiedLateUserIds = verified
-                local observedIds: { number } = {}
-                for _, player in Players:GetPlayers() do
-                    table.insert(observedIds, player.UserId)
-                end
-                table.sort(observedIds)
-                lateObservation.observedClientUserIds = observedIds
-                local index = 1
-                -- The arrival listener remains active while real-client probes
-                -- yield. Any companion present before continuation gets every
-                -- spectator, reconstruction, debris and rejection assertion too.
-                while index <= #latePlayers do
-                    local spectator = latePlayers[index]
-                    lateObservation.verifyingUserId = spectator.UserId
-                    local arrival = lateArrivals[index]
-                    assert(
-                        arrival.afterCheckpointSeconds <= 240 and arrival.roundId == checkpointRound,
-                        "late arrival exceeded original checkpoint window or changed round"
-                    )
-                    probe(spectator, "Spectator", nil)
-                    local state = runtime.rounds.match.snapshot()
-                    local member = state.members[spectator.UserId]
-                    local backpack = spectator:FindFirstChildOfClass("Backpack")
-                    assert(
-                        state.phase == "Active"
-                            and state.roundId == checkpointRound
-                            and member
-                            and member.connected
-                            and member.role == "Spectator"
-                            and member.life == "Spectating",
-                        "late server member was not same-round spectator"
-                    )
-                    assert(
-                        spectator:GetAttribute("RoundId") == checkpointRound
-                            and spectator:GetAttribute("Role") == "Spectator"
-                            and spectator:GetAttribute("Life") == "Spectating",
-                        "late role/life/round attributes disagreed"
-                    )
-                    assert(
-                        spectator.Character == nil and (not backpack or #backpack:GetChildren() == 0),
-                        "late spectator has a character or equipment"
-                    )
-                    probe(spectator, "Panels", expected(testedIds))
-                    probe(spectator, "NoFragments", nil)
-                    probe(spectator, "Flood", intent)
-                    task.wait(0.3)
-                    assert(
-                        HttpService:JSONEncode(expected(testedIds)) == before,
-                        "late spectator altered cover"
-                    )
-                    table.insert(verified, spectator.UserId)
-                    index += 1
-                end
-                table.clear(observedIds)
-                for _, player in Players:GetPlayers() do
-                    table.insert(observedIds, player.UserId)
-                    assert(
-                        table.find(initialIds, player.UserId) or table.find(verified, player.UserId),
-                        "unverified additional client present before continuation"
-                    )
-                end
-                table.sort(observedIds)
-                lateObservation.observedClientUserIds = observedIds
-                lateObservation.verifiedLateUserIds = verified
-                lateObservation.optionalFourthObserved = #latePlayers == 2
-                assert(
-                    #observedIds == 2 + #latePlayers and (#observedIds == 3 or #observedIds == 4),
-                    "initial two plus actual late client population disagrees"
-                )
-                assert(
-                    #latePlayers <= 2 and #verified == #latePlayers and latePlayer.UserId == lateIds[1],
-                    "late batch was overwritten or incompletely verified"
-                )
-                assert(
-                    runtime.rounds.match.snapshot().roundId == checkpointRound
-                        and runtime.rounds.match.snapshot().phase == "Active",
-                    "late reconstruction crossed round"
-                )
-                checkpoint = false
             end
         )
         check("A6 reset during fragmentation and pending work restores panels through two rounds", function()
@@ -963,33 +1033,10 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
                 assert(currentOperator, "reset fixture has no active operator")
                 selectWeapon(currentOperator, "M102")
-                local freshId: string? = nil
-                for _, item in workspace.World.Battlefield:GetDescendants() do
-                    if
-                        item:IsA("Model")
-                        and string.find(item.Name, "Roof", 1, true)
-                        and item:GetAttribute("PanelState") == "Intact"
-                        and item:GetAttribute("PanelProgress") == 0
-                    then
-                        local point = pose(item.Name).Position + Vector3.new(-6, 0.5, 0)
-                        if
-                            command("M102", point, fireSequence + 1)
-                            and command("GAU23", point, fireSequence + 1)
-                        then
-                            freshId = item.Name
-                            break
-                        end
-                    end
-                end
-                assert(freshId, "fresh reachable reset panel unavailable")
-                local targetId = freshId
+                local targetId, targetPoint, resetParams = stableResetRoof()
                 for hit = 1, 3 do
-                    task.wait(4.05)
+                    local payload = readyResetTarget("M102", targetId, targetPoint, resetParams)
                     fireSequence += 1
-                    local payload = assert(
-                        command("M102", pose(targetId).Position + Vector3.new(-6, 0.5, 0), fireSequence),
-                        "reset panel left view"
-                    )
                     probe(currentOperator, "Fire", payload)
                     waitFor(function()
                         return panel(targetId):GetAttribute("PanelState")
@@ -1000,16 +1047,31 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
                 assert(runtime.destruction.resources().fragments > 0, "reset did not overlap live fragments")
                 selectWeapon(currentOperator, "GAU23")
-                fireSequence += 1
-                local pending = assert(
-                    command("GAU23", pose(targetId).Position + Vector3.new(-6, 0.5, 0), fireSequence),
-                    "reset pending target"
-                )
-                probe(currentOperator, "Fire", pending)
-                assert(
-                    runtime.combat.resources().projectiles > 0,
-                    "reset did not overlap actual in-flight shot"
-                )
+                readyResetTarget("GAU23", targetId, targetPoint, resetParams)
+                local firstSequence = fireSequence + 1
+                fireSequence += 4
+                probe(currentOperator, "Burst", {
+                    point = targetPoint,
+                    roundId = runtime.rounds.match.snapshot().roundId,
+                    firstSequence = firstSequence,
+                    count = 4,
+                    cadence = 0.18,
+                })
+                waitFor(function()
+                    local earned = runtime.destruction.snapshot(targetId)
+                    return earned ~= nil
+                        and earned.sustainedSeconds > 0
+                        and runtime.combat.resources().projectiles > 0
+                        and runtime.destruction.resources().fragments > 0
+                end, "actual partial credit plus pending flight plus fragments", 8)
+                table.insert(observations, {
+                    kind = "reset-pre-abort-work",
+                    iteration = iteration,
+                    panelId = targetId,
+                    sustainedSeconds = assert(runtime.destruction.snapshot(targetId)).sustainedSeconds,
+                    pendingProjectiles = runtime.combat.resources().projectiles,
+                    liveFragments = runtime.destruction.resources().fragments,
+                })
                 local staleRound = runtime.rounds.match.snapshot().roundId
                 runtime.rounds.match.abort(runtime.rounds.match.snapshot().roundId, "P07 reset fixture")
                 assert(runtime.rounds.match.beginReset(), "reset start")
@@ -1017,8 +1079,30 @@ function Harness.run(finish: ((Report) -> ())?)
                     return runtime.rounds.match.snapshot().phase == "Lobby"
                 end, "reset lobby")
                 waitFor(function()
-                    return panel(testedIds[1]):GetAttribute("PanelState") == "Intact"
-                end, "pristine panels")
+                    -- Lobby can precede the next Heartbeat's panel capture.
+                    -- Authored Parts are a pending state, not a failed Model lookup.
+                    local world = workspace:FindFirstChild("World")
+                    local map = if world then world:FindFirstChild("Battlefield") else nil
+                    if not map then
+                        return false
+                    end
+                    for _, id in allIds do
+                        local model = map:FindFirstChild(id, true)
+                        if
+                            not model
+                            or not model:IsA("Model")
+                            or model:GetAttribute("PanelState") ~= "Intact"
+                            or model:GetAttribute("DamageAppearance") ~= "Pristine"
+                            or model:GetAttribute("PanelProgress") ~= 0
+                            or model:GetAttribute("HeavySeconds") ~= 0
+                            or model:GetAttribute("SustainedSeconds") ~= 0
+                        then
+                            return false
+                        end
+                    end
+                    return true
+                end, "all pristine panel Models reconstructed")
+                local resetEntries = allPanelStates(true)
                 assert(not runtime.destruction.resolve({
                     roundId = staleRound,
                     shotId = 1,
@@ -1028,13 +1112,22 @@ function Harness.run(finish: ((Report) -> ())?)
                 }), "stale pre-reset outcome accepted")
                 assert(
                     runtime.destruction.resources().fragments == 0
-                        and runtime.destruction.resources().pending == 0,
+                        and runtime.destruction.resources().pending == 0
+                        and runtime.combat.resources().projectiles == 0,
                     "reset work leaked"
                 )
                 for _, player in Players:GetPlayers() do
                     probe(player, "Panels", expected(testedIds))
+                    probe(player, "Panels", resetEntries)
                     probe(player, "NoFragments", nil)
                 end
+                table.insert(observations, {
+                    kind = "all-panel-pristine-reset-agreement",
+                    iteration = iteration,
+                    serverPanels = #resetEntries,
+                    actualClients = #Players:GetPlayers(),
+                    perClientQueriedPanels = #resetEntries,
+                })
                 if iteration == 1 then
                     assert(runtime.rounds.match.deploy(), "second deployment")
                     waitFor(function()
@@ -1047,8 +1140,6 @@ function Harness.run(finish: ((Report) -> ())?)
     if not ok and (#cases == 0 or cases[#cases].passed) then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })
     end
-    checkpoint = false
-    added:Disconnect()
     listener:Disconnect()
     receiptListener:Disconnect()
     transport:Destroy()

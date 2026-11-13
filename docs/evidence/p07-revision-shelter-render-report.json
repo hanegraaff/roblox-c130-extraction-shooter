@@ -1,0 +1,4326 @@
+{
+  "productionCoreCandidate": "4db45950a0516ac916299fbbd728a606e4c6e6f8",
+  "coreUnchangedThrough": "56fa735dffb3e1bc95afa9df5b0952398c9467ff",
+  "nativeIDs": {
+    "server": "0742bf2c-7b68-4062-986f-d1f333afdce4",
+    "ground": "0c353c9d-9d25-49a9-9879-d46f970b2d6b",
+    "operator": "725ea0e9-e852-4b1b-8308-9faf5878f795",
+    "edit": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94"
+  },
+  "mode": "ONE bounded shelter render cycle; real native keyboard/pointer/mouse button input into production thermal camera+CombatRuntime; aircraft orbit clock held22.5; actual damage/real match+combat+gravity clocks",
+  "sceneFile": "/tmp/p07-revision-shelter-render-scene.luau",
+  "sceneSHA256": "3f5ac2971d2fd0def876f83ec343aaf4d4ad5e8a90e919566e54827f7ea319fc",
+  "witnessFile": "/tmp/p07-revision-shelter-witnesses.luau",
+  "witnessSHA256": "70ab79e14ef260c3e6d7303bfa2b43f2216e2bdaf86618cd3d8100ee0db9b37f",
+  "normalCameraFile": "/tmp/p07-revision-normal-camera.luau",
+  "normalCameraSHA256": "ac6f9ed80676f352d7b9b9c5e0085596da7c33bb08a74a4d296d65420ee84bf8",
+  "alignment": "One native W600ms hold after pointer focus; no camera retry; production operator camera held resulting focus thereafter. Normal camera explicitly controlled overhead.",
+  "initialAim": {
+    "panelSize": [
+      16,
+      2,
+      16
+    ],
+    "weapon": "M102",
+    "blocked": false,
+    "pixels": [
+      519.3448486328125,
+      276.65728759765625,
+      240.78384399414062
+    ],
+    "fov": 40,
+    "viewport": [
+      1081,
+      618
+    ],
+    "frame": [
+      2.204364281713743e-14,
+      140,
+      360,
+      1,
+      -3.373480766007662e-17,
+      5.110149109040704e-17,
+      0,
+      0.8345506191253662,
+      0.5509312152862549,
+      -6.123234262925839e-17,
+      -0.5509312152862549,
+      0.8345506191253662
+    ],
+    "target": [
+      -6,
+      15,
+      154
+    ],
+    "withinViewport": true
+  },
+  "normalFrame": [
+    0,
+    38,
+    154,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    -1,
+    0
+  ],
+  "firstStop": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-native-GAU-first-stop",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Light",
+      "progress": 0.11110909779866536,
+      "sustainedSeconds": 0.9999818801879883,
+      "stage": 0,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595196.938297,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "beforeResume": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-stopped-Light-captured-before-native-resume",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Light",
+      "progress": 0.11110909779866536,
+      "sustainedSeconds": 0.9999818801879883,
+      "stage": 0,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595240.387508,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "resumedStop": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-native-resumed-GAU-stopped-and-M102-selected",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Light",
+      "progress": 0.22219898965623644,
+      "sustainedSeconds": 1.999790906906128,
+      "stage": 0,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794595240.570412,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595240.936597,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794595240.769604,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.13324154747856987,
+          "sustainedSeconds": 1.199173927307129,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.136589,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794595240.969652,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.15546909968058267,
+          "sustainedSeconds": 1.3992218971252441,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.336722,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794595241.170053,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.17773588498433432,
+          "sustainedSeconds": 1.5996229648590088,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.537262,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794595241.370207,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.19997522566053602,
+          "sustainedSeconds": 1.7997770309448242,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.737213,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794595241.570221,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.22219898965623644,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.936543,
+        "roundId": 1,
+        "shotId": 12
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595244.953945,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "resumeCheck": {
+    "before": 0.9999818801879883,
+    "after": 1.999790906906128,
+    "firstResumedEarned": 0.9999818801879883,
+    "actualResumedSpan": 0.9998090267181396,
+    "actualFirstGap": 47.86615800857544,
+    "resumedShots": 6,
+    "pausedRealSeconds": 43.44921088218689
+  },
+  "beforeHeavy": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-native-two-M102-before-heavy-fragment-attempt",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Light",
+      "progress": 0.8888656563229032,
+      "sustainedSeconds": 1.999790906906128,
+      "stage": 0,
+      "heavySeconds": 6
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794595240.570412,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595240.936597,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794595240.769604,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.13324154747856987,
+          "sustainedSeconds": 1.199173927307129,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.136589,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794595240.969652,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.15546909968058267,
+          "sustainedSeconds": 1.3992218971252441,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.336722,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794595241.170053,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.17773588498433432,
+          "sustainedSeconds": 1.5996229648590088,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.537262,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794595241.370207,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.19997522566053602,
+          "sustainedSeconds": 1.7997770309448242,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.737213,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794595241.570221,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.22219898965623644,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.936543,
+        "roundId": 1,
+        "shotId": 12
+      },
+      {
+        "firedAt": 1794595294.386224,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.5555323229895698,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794595295.185722,
+        "roundId": 1,
+        "shotId": 13
+      },
+      {
+        "firedAt": 1794595298.98543,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.8888656563229032,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794595299.785648,
+        "roundId": 1,
+        "shotId": 14
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595306.037171,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "heavy": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-Heavy-after-both-views",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Heavy",
+      "progress": 0,
+      "sustainedSeconds": 0,
+      "stage": 1,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794595240.570412,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595240.936597,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794595240.769604,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.13324154747856987,
+          "sustainedSeconds": 1.199173927307129,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.136589,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794595240.969652,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.15546909968058267,
+          "sustainedSeconds": 1.3992218971252441,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.336722,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794595241.170053,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.17773588498433432,
+          "sustainedSeconds": 1.5996229648590088,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.537262,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794595241.370207,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.19997522566053602,
+          "sustainedSeconds": 1.7997770309448242,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.737213,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794595241.570221,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.22219898965623644,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.936543,
+        "roundId": 1,
+        "shotId": 12
+      },
+      {
+        "firedAt": 1794595294.386224,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.5555323229895698,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794595295.185722,
+        "roundId": 1,
+        "shotId": 13
+      },
+      {
+        "firedAt": 1794595298.98543,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.8888656563229032,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794595299.785648,
+        "roundId": 1,
+        "shotId": 14
+      },
+      {
+        "firedAt": 1794595308.968987,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794595309.7685,
+        "roundId": 1,
+        "shotId": 15
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595398.751973,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "total": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-six-native-M102-Total",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Total",
+      "progress": 1,
+      "sustainedSeconds": 0,
+      "stage": 2,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794595240.570412,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595240.936597,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794595240.769604,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.13324154747856987,
+          "sustainedSeconds": 1.199173927307129,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.136589,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794595240.969652,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.15546909968058267,
+          "sustainedSeconds": 1.3992218971252441,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.336722,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794595241.170053,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.17773588498433432,
+          "sustainedSeconds": 1.5996229648590088,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.537262,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794595241.370207,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.19997522566053602,
+          "sustainedSeconds": 1.7997770309448242,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.737213,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794595241.570221,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.22219898965623644,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.936543,
+        "roundId": 1,
+        "shotId": 12
+      },
+      {
+        "firedAt": 1794595294.386224,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.5555323229895698,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794595295.185722,
+        "roundId": 1,
+        "shotId": 13
+      },
+      {
+        "firedAt": 1794595298.98543,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.8888656563229032,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794595299.785648,
+        "roundId": 1,
+        "shotId": 14
+      },
+      {
+        "firedAt": 1794595308.968987,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794595309.7685,
+        "roundId": 1,
+        "shotId": 15
+      },
+      {
+        "firedAt": 1794595398.967508,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.3333333333333333,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794595399.767309,
+        "roundId": 1,
+        "shotId": 16
+      },
+      {
+        "firedAt": 1794595403.634482,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.6666666666666666,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794595404.433471,
+        "roundId": 1,
+        "shotId": 17
+      },
+      {
+        "firedAt": 1794595408.300591,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Total",
+          "progress": 1,
+          "sustainedSeconds": 0,
+          "stage": 2,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794595409.100685,
+        "roundId": 1,
+        "shotId": 18
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595415.184844,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "final": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Shelter_Roof_R06_C04",
+    "label": "shelter-four-tiers-and-native-resume-evidence-complete",
+    "panelPivot": [
+      0,
+      14,
+      154,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Total",
+      "progress": 1,
+      "sustainedSeconds": 0,
+      "stage": 2,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794595191.704272,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.071061,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794595191.904188,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.022212876213921443,
+          "sustainedSeconds": 0.19991588592529297,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.271827,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794595192.120492,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04624666108025445,
+          "sustainedSeconds": 0.41621994972229004,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.489375,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794595192.304437,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06668498780992296,
+          "sustainedSeconds": 0.6001648902893066,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.671245,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794595192.504468,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08891065915425618,
+          "sustainedSeconds": 0.8001959323883057,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595192.871718,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794595192.704254,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595193.07065,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794595240.570412,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.11110909779866536,
+          "sustainedSeconds": 0.9999818801879883,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595240.936597,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794595240.769604,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.13324154747856987,
+          "sustainedSeconds": 1.199173927307129,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.136589,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794595240.969652,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.15546909968058267,
+          "sustainedSeconds": 1.3992218971252441,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.336722,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794595241.170053,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.17773588498433432,
+          "sustainedSeconds": 1.5996229648590088,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.537262,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794595241.370207,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.19997522566053602,
+          "sustainedSeconds": 1.7997770309448242,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.737213,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794595241.570221,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.22219898965623644,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794595241.936543,
+        "roundId": 1,
+        "shotId": 12
+      },
+      {
+        "firedAt": 1794595294.386224,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.5555323229895698,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794595295.185722,
+        "roundId": 1,
+        "shotId": 13
+      },
+      {
+        "firedAt": 1794595298.98543,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.8888656563229032,
+          "sustainedSeconds": 1.999790906906128,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794595299.785648,
+        "roundId": 1,
+        "shotId": 14
+      },
+      {
+        "firedAt": 1794595308.968987,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794595309.7685,
+        "roundId": 1,
+        "shotId": 15
+      },
+      {
+        "firedAt": 1794595398.967508,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.3333333333333333,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794595399.767309,
+        "roundId": 1,
+        "shotId": 16
+      },
+      {
+        "firedAt": 1794595403.634482,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.6666666666666666,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794595404.433471,
+        "roundId": 1,
+        "shotId": 17
+      },
+      {
+        "firedAt": 1794595408.300591,
+        "panelId": "Shelter_Roof_R06_C04",
+        "state": {
+          "appearance": "Total",
+          "progress": 1,
+          "sustainedSeconds": 0,
+          "stage": 2,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794595409.100685,
+        "roundId": 1,
+        "shotId": 18
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794595657.733071,
+      "roundId": 1
+    },
+    "aircraftClock": 22.5,
+    "serverTime": 1794595504.667119,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "fragmentAttempt": {
+    "panelId": "Shelter_Roof_R06_C04",
+    "progress": 0,
+    "userId": -2,
+    "panelState": "Damaged",
+    "cosmeticMarks": 28,
+    "visualStage": "Heavy",
+    "controls": {
+      "hole": {
+        "center": [
+          0,
+          12.510000228881836,
+          154
+        ],
+        "samples": [
+          {
+            "pixels": [
+              540.5,
+              309,
+              25.489999771118164
+            ],
+            "hitCurrentPanel": false,
+            "withinViewport": true,
+            "world": [
+              0,
+              12.510000228881836,
+              154
+            ]
+          },
+          {
+            "pixels": [
+              525.5122680664062,
+              279.02471923828125,
+              25.489999771118164
+            ],
+            "hitCurrentPanel": false,
+            "withinViewport": true,
+            "world": [
+              -0.44999998807907104,
+              12.510000228881836,
+              153.10000610351562
+            ]
+          },
+          {
+            "pixels": [
+              525.5122680664062,
+              338.97528076171875,
+              25.489999771118164
+            ],
+            "hitCurrentPanel": false,
+            "withinViewport": true,
+            "world": [
+              -0.44999998807907104,
+              12.510000228881836,
+              154.89999389648438
+            ]
+          },
+          {
+            "pixels": [
+              555.4877319335938,
+              279.02471923828125,
+              25.489999771118164
+            ],
+            "hitCurrentPanel": false,
+            "withinViewport": true,
+            "world": [
+              0.44999998807907104,
+              12.510000228881836,
+              153.10000610351562
+            ]
+          },
+          {
+            "pixels": [
+              555.4877319335938,
+              338.97528076171875,
+              25.489999771118164
+            ],
+            "hitCurrentPanel": false,
+            "withinViewport": true,
+            "world": [
+              0.44999998807907104,
+              12.510000228881836,
+              154.89999389648438
+            ]
+          }
+        ]
+      },
+      "residual": {
+        "center": [
+          6.631311893463135,
+          12.591024398803711,
+          154
+        ],
+        "samples": [
+          {
+            "pixels": [
+              762.06689453125,
+              309,
+              25.40897560119629
+            ],
+            "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+            "hitCurrentPanel": true,
+            "withinViewport": true,
+            "world": [
+              6.631311893463135,
+              12.591024398803711,
+              154
+            ]
+          },
+          {
+            "pixels": [
+              746.5971069335938,
+              279.0626525878906,
+              25.522600173950195
+            ],
+            "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+            "hitCurrentPanel": true,
+            "withinViewport": true,
+            "world": [
+              6.195898056030273,
+              12.477399826049805,
+              153.09999084472656
+            ]
+          },
+          {
+            "pixels": [
+              746.5968017578125,
+              338.9368896484375,
+              25.522674560546875
+            ],
+            "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+            "hitCurrentPanel": true,
+            "withinViewport": true,
+            "world": [
+              6.1959075927734375,
+              12.477325439453125,
+              154.89999389648438
+            ]
+          },
+          {
+            "pixels": [
+              777.676025390625,
+              278.7939758300781,
+              25.295276641845703
+            ],
+            "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+            "hitCurrentPanel": true,
+            "withinViewport": true,
+            "world": [
+              7.066716194152832,
+              12.704723358154297,
+              153.10000610351562
+            ]
+          },
+          {
+            "pixels": [
+              777.6756591796875,
+              339.206298828125,
+              25.295351028442383
+            ],
+            "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+            "hitCurrentPanel": true,
+            "withinViewport": true,
+            "world": [
+              7.066725730895996,
+              12.704648971557617,
+              154.90000915527344
+            ]
+          }
+        ]
+      }
+    },
+    "highlights": [],
+    "fragments": [
+      {
+        "name": "Fragment1",
+        "position": [
+          -4.550850868225098,
+          0.7148546576499939,
+          158.61961364746094
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "pixels": [
+          436.8786315917969,
+          414.1868896484375,
+          37.2851448059082
+        ],
+        "withinViewport": true
+      },
+      {
+        "name": "Fragment2",
+        "position": [
+          4.711009502410889,
+          0.7226672768592834,
+          158.41256713867188
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "pixels": [
+          647.7906494140625,
+          409.4936218261719,
+          37.2773323059082
+        ],
+        "withinViewport": true
+      },
+      {
+        "name": "Fragment3",
+        "position": [
+          -3.4453651905059814,
+          0.7109483480453491,
+          150.26400756835938
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "pixels": [
+          462.0583801269531,
+          223.9415740966797,
+          37.2890510559082
+        ],
+        "withinViewport": true
+      },
+      {
+        "name": "Fragment4",
+        "position": [
+          3.6484932899475098,
+          0.7148546576499939,
+          149.94369506835938
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "pixels": [
+          623.5750122070312,
+          216.63912963867188,
+          37.2851448059082
+        ],
+        "withinViewport": true
+      }
+    ],
+    "phase": "Active",
+    "solids": [
+      {
+        "name": "Left",
+        "canCollide": true,
+        "color": [
+          0.2980392277240753,
+          0.2666666805744171,
+          0.22745098173618317
+        ],
+        "material": "Enum.Material.Slate",
+        "canQuery": true,
+        "size": [
+          4,
+          2,
+          16
+        ]
+      },
+      {
+        "name": "Right",
+        "canCollide": true,
+        "color": [
+          0.2980392277240753,
+          0.2666666805744171,
+          0.22745098173618317
+        ],
+        "material": "Enum.Material.Slate",
+        "canQuery": true,
+        "size": [
+          4,
+          2,
+          16
+        ]
+      }
+    ],
+    "heavySeconds": 0,
+    "cameraFrame": [
+      0,
+      38,
+      154,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      -1,
+      0
+    ],
+    "sustainedSeconds": 0,
+    "life": "Alive",
+    "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+    "fov": 40,
+    "viewport": [
+      1081,
+      618
+    ],
+    "role": "Ground",
+    "serverTime": 1794595312.812082,
+    "roundId": 1
+  },
+  "captures": [
+    {
+      "stage": "Pristine",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-shelter-thermal-pristine.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0,
+        "userId": -1,
+        "panelState": "Intact",
+        "cosmeticMarks": 0,
+        "visualStage": "Pristine",
+        "controls": {
+          "hole": {
+            "center": [
+              -2.28712792392952e-16,
+              13.71317195892334,
+              151.86265563964844
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  276.6271057128906,
+                  243.27651977539062
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -2.28712792392952e-16,
+                  13.71317195892334,
+                  151.86265563964844
+                ]
+              },
+              {
+                "pixels": [
+                  542.0701293945312,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  542.0706176757812,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              },
+              {
+                "pixels": [
+                  538.9298706054688,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  538.9293823242188,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.0622334480285645,
+              13.713574409484863,
+              151.86331176757812
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  561.6556396484375,
+                  276.6271057128906,
+                  243.2757568359375
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.0622334480285645,
+                  13.713574409484863,
+                  151.86331176757812
+                ]
+              },
+              {
+                "pixels": [
+                  563.1756591796875,
+                  279.7932434082031,
+                  243.29945373535156
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.498437404632568,
+                  12.944035530090332,
+                  152.34292602539062
+                ]
+              },
+              {
+                "pixels": [
+                  563.277099609375,
+                  273.5075988769531,
+                  243.2301788330078
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.5256476402282715,
+                  14.483101844787598,
+                  151.409912109375
+                ]
+              },
+              {
+                "pixels": [
+                  560.0347900390625,
+                  279.74542236328125,
+                  243.32131958007812
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  5.598819255828857,
+                  12.944046974182129,
+                  152.31671142578125
+                ]
+              },
+              {
+                "pixels": [
+                  560.1353149414062,
+                  273.4603576660156,
+                  243.25204467773438
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  5.6260294914245605,
+                  14.483113288879395,
+                  151.38369750976562
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.3176470696926117,
+              0.33725491166114807
+            ],
+            "material": "Enum.Material.Plastic",
+            "canQuery": true,
+            "size": [
+              16,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          2.204364281713743e-14,
+          140,
+          360,
+          1,
+          -3.373480766007662e-17,
+          5.110149109040704e-17,
+          0,
+          0.8345506191253662,
+          0.5509312152862549,
+          -6.123234262925839e-17,
+          -0.5509312152862549,
+          0.8345506191253662
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794595181.771703,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Pristine",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-shelter-normal-pristine.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0,
+        "userId": -2,
+        "panelState": "Intact",
+        "cosmeticMarks": 0,
+        "visualStage": "Pristine",
+        "controls": {
+          "hole": {
+            "center": [
+              0,
+              12.510000228881836,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0,
+                  12.510000228881836,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.631311893463135,
+              12.591024398803711,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  762.06689453125,
+                  309,
+                  25.40897560119629
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.631311893463135,
+                  12.591024398803711,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  746.5971069335938,
+                  279.0626525878906,
+                  25.522600173950195
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.195898056030273,
+                  12.477399826049805,
+                  153.09999084472656
+                ]
+              },
+              {
+                "pixels": [
+                  746.5968017578125,
+                  338.9368896484375,
+                  25.522674560546875
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.1959075927734375,
+                  12.477325439453125,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  777.676025390625,
+                  278.7939758300781,
+                  25.295276641845703
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066716194152832,
+                  12.704723358154297,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  777.6756591796875,
+                  339.206298828125,
+                  25.295351028442383
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066725730895996,
+                  12.704648971557617,
+                  154.90000915527344
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.3176470696926117,
+              0.33725491166114807
+            ],
+            "material": "Enum.Material.Plastic",
+            "canQuery": true,
+            "size": [
+              16,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          0,
+          38,
+          154,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -1,
+          0
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794595188.082882,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Light-stopped",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-shelter-normal-light-stopped.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0.11110909779866536,
+        "userId": -2,
+        "panelState": "Intact",
+        "cosmeticMarks": 6,
+        "visualStage": "Light",
+        "controls": {
+          "hole": {
+            "center": [
+              0,
+              12.510000228881836,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0,
+                  12.510000228881836,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.631311893463135,
+              12.591024398803711,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  762.06689453125,
+                  309,
+                  25.40897560119629
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.631311893463135,
+                  12.591024398803711,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  746.5971069335938,
+                  279.0626525878906,
+                  25.522600173950195
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.195898056030273,
+                  12.477399826049805,
+                  153.09999084472656
+                ]
+              },
+              {
+                "pixels": [
+                  746.5968017578125,
+                  338.9368896484375,
+                  25.522674560546875
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.1959075927734375,
+                  12.477325439453125,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  777.676025390625,
+                  278.7939758300781,
+                  25.295276641845703
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066716194152832,
+                  12.704723358154297,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  777.6756591796875,
+                  339.206298828125,
+                  25.295351028442383
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066725730895996,
+                  12.704648971557617,
+                  154.90000915527344
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.5764706134796143,
+              0.545098066329956,
+              0.4901960790157318
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              16,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          0,
+          38,
+          154,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -1,
+          0
+        ],
+        "sustainedSeconds": 0.9999818801879883,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794595236.48034,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Light-resumed",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-shelter-normal-light.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0.22219898965623644,
+        "userId": -2,
+        "panelState": "Intact",
+        "cosmeticMarks": 8,
+        "visualStage": "Light",
+        "controls": {
+          "hole": {
+            "center": [
+              0,
+              12.510000228881836,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0,
+                  12.510000228881836,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.631311893463135,
+              12.591024398803711,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  762.06689453125,
+                  309,
+                  25.40897560119629
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.631311893463135,
+                  12.591024398803711,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  746.5971069335938,
+                  279.0626525878906,
+                  25.522600173950195
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.195898056030273,
+                  12.477399826049805,
+                  153.09999084472656
+                ]
+              },
+              {
+                "pixels": [
+                  746.5968017578125,
+                  338.9368896484375,
+                  25.522674560546875
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.1959075927734375,
+                  12.477325439453125,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  777.676025390625,
+                  278.7939758300781,
+                  25.295276641845703
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066716194152832,
+                  12.704723358154297,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  777.6756591796875,
+                  339.206298828125,
+                  25.295351028442383
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066725730895996,
+                  12.704648971557617,
+                  154.90000915527344
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.5686274766921997,
+              0.5372549295425415,
+              0.48235294222831726
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              16,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          0,
+          38,
+          154,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -1,
+          0
+        ],
+        "sustainedSeconds": 1.999790906906128,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794595286.864533,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Light-resumed",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-shelter-thermal-light.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0.22219898965623644,
+        "userId": -1,
+        "panelState": "Intact",
+        "cosmeticMarks": 8,
+        "visualStage": "Light",
+        "controls": {
+          "hole": {
+            "center": [
+              -2.28712792392952e-16,
+              13.71317195892334,
+              151.86265563964844
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  276.6271057128906,
+                  243.27651977539062
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -2.28712792392952e-16,
+                  13.71317195892334,
+                  151.86265563964844
+                ]
+              },
+              {
+                "pixels": [
+                  542.0701293945312,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  542.0706176757812,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              },
+              {
+                "pixels": [
+                  538.9298706054688,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  538.9293823242188,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.0622334480285645,
+              13.713574409484863,
+              151.86331176757812
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  561.6556396484375,
+                  276.6271057128906,
+                  243.2757568359375
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.0622334480285645,
+                  13.713574409484863,
+                  151.86331176757812
+                ]
+              },
+              {
+                "pixels": [
+                  563.1756591796875,
+                  279.7932434082031,
+                  243.29945373535156
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.498437404632568,
+                  12.944035530090332,
+                  152.34292602539062
+                ]
+              },
+              {
+                "pixels": [
+                  563.277099609375,
+                  273.5075988769531,
+                  243.2301788330078
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.5256476402282715,
+                  14.483101844787598,
+                  151.409912109375
+                ]
+              },
+              {
+                "pixels": [
+                  560.0347900390625,
+                  279.74542236328125,
+                  243.32131958007812
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  5.598819255828857,
+                  12.944046974182129,
+                  152.31671142578125
+                ]
+              },
+              {
+                "pixels": [
+                  560.1353149414062,
+                  273.4603576660156,
+                  243.25204467773438
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  5.6260294914245605,
+                  14.483113288879395,
+                  151.38369750976562
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.5686274766921997,
+              0.5372549295425415,
+              0.48235294222831726
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              16,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          2.204364281713743e-14,
+          140,
+          360,
+          1,
+          -3.373480766007662e-17,
+          5.110149109040704e-17,
+          0,
+          0.8345506191253662,
+          0.5509312152862549,
+          -6.123234262925839e-17,
+          -0.5509312152862549,
+          0.8345506191253662
+        ],
+        "sustainedSeconds": 1.999790906906128,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794595293.355701,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Heavy",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-shelter-normal-heavy.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0,
+        "userId": -2,
+        "panelState": "Damaged",
+        "cosmeticMarks": 28,
+        "visualStage": "Heavy",
+        "controls": {
+          "hole": {
+            "center": [
+              0,
+              12.510000228881836,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0,
+                  12.510000228881836,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.631311893463135,
+              12.591024398803711,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  762.06689453125,
+                  309,
+                  25.40897560119629
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.631311893463135,
+                  12.591024398803711,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  746.5971069335938,
+                  279.0626525878906,
+                  25.522600173950195
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.195898056030273,
+                  12.477399826049805,
+                  153.09999084472656
+                ]
+              },
+              {
+                "pixels": [
+                  746.5968017578125,
+                  338.9368896484375,
+                  25.522674560546875
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.1959075927734375,
+                  12.477325439453125,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  777.676025390625,
+                  278.7939758300781,
+                  25.295276641845703
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066716194152832,
+                  12.704723358154297,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  777.6756591796875,
+                  339.206298828125,
+                  25.295351028442383
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  7.066725730895996,
+                  12.704648971557617,
+                  154.90000915527344
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "fragments": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -4.550850868225098,
+              0.7148546576499939,
+              158.61961364746094
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "pixels": [
+              436.8786315917969,
+              414.1868896484375,
+              37.2851448059082
+            ],
+            "withinViewport": true
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              4.711009502410889,
+              0.7226672768592834,
+              158.41256713867188
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "pixels": [
+              647.7906494140625,
+              409.4936218261719,
+              37.2773323059082
+            ],
+            "withinViewport": true
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -3.4453651905059814,
+              0.7109483480453491,
+              150.26400756835938
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "pixels": [
+              462.0583801269531,
+              223.9415740966797,
+              37.2890510559082
+            ],
+            "withinViewport": true
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              3.6484932899475098,
+              0.7148546576499939,
+              149.94369506835938
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "pixels": [
+              623.5750122070312,
+              216.63912963867188,
+              37.2851448059082
+            ],
+            "withinViewport": true
+          }
+        ],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Left",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              4,
+              2,
+              16
+            ]
+          },
+          {
+            "name": "Right",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              4,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          0,
+          38,
+          154,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -1,
+          0
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794595312.812082,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Heavy",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-shelter-thermal-heavy.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 0,
+        "userId": -1,
+        "panelState": "Damaged",
+        "cosmeticMarks": 28,
+        "visualStage": "Heavy",
+        "controls": {
+          "hole": {
+            "center": [
+              -2.28712792392952e-16,
+              13.71317195892334,
+              151.86265563964844
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  276.6271057128906,
+                  243.27651977539062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -2.28712792392952e-16,
+                  13.71317195892334,
+                  151.86265563964844
+                ]
+              },
+              {
+                "pixels": [
+                  542.0701293945312,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  542.0706176757812,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              },
+              {
+                "pixels": [
+                  538.9298706054688,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  538.9293823242188,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.0622334480285645,
+              13.713574409484863,
+              151.86331176757812
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  561.6556396484375,
+                  276.6271057128906,
+                  243.2757568359375
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.0622334480285645,
+                  13.713574409484863,
+                  151.86331176757812
+                ]
+              },
+              {
+                "pixels": [
+                  563.1756591796875,
+                  279.7932434082031,
+                  243.29945373535156
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.498437404632568,
+                  12.944035530090332,
+                  152.34292602539062
+                ]
+              },
+              {
+                "pixels": [
+                  563.277099609375,
+                  273.5075988769531,
+                  243.2301788330078
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  6.5256476402282715,
+                  14.483101844787598,
+                  151.409912109375
+                ]
+              },
+              {
+                "pixels": [
+                  560.0347900390625,
+                  279.74542236328125,
+                  243.32131958007812
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  5.598819255828857,
+                  12.944046974182129,
+                  152.31671142578125
+                ]
+              },
+              {
+                "pixels": [
+                  560.1353149414062,
+                  273.4603576660156,
+                  243.25204467773438
+                ],
+                "hit": "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R06_C04.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  5.6260294914245605,
+                  14.483113288879395,
+                  151.38369750976562
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Left",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              4,
+              2,
+              16
+            ]
+          },
+          {
+            "name": "Right",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              4,
+              2,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          2.204364281713743e-14,
+          140,
+          360,
+          1,
+          -3.373480766007662e-17,
+          5.110149109040704e-17,
+          0,
+          0.8345506191253662,
+          0.5509312152862549,
+          -6.123234262925839e-17,
+          -0.5509312152862549,
+          0.8345506191253662
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794595395.8667,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Total",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-shelter-thermal-total.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 1,
+        "userId": -1,
+        "panelState": "Destroyed",
+        "cosmeticMarks": 0,
+        "visualStage": "Total",
+        "controls": {
+          "hole": {
+            "center": [
+              -2.28712792392952e-16,
+              13.71317195892334,
+              151.86265563964844
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  276.6271057128906,
+                  243.27651977539062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -2.28712792392952e-16,
+                  13.71317195892334,
+                  151.86265563964844
+                ]
+              },
+              {
+                "pixels": [
+                  542.0701293945312,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  542.0706176757812,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              },
+              {
+                "pixels": [
+                  538.9298706054688,
+                  279.76971435546875,
+                  243.310791015625
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.94373607635498,
+                  152.32952880859375
+                ]
+              },
+              {
+                "pixels": [
+                  538.9293823242188,
+                  273.4836120605469,
+                  243.2422332763672
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  14.4826078414917,
+                  151.39578247070312
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.0622334480285645,
+              13.713574409484863,
+              151.86331176757812
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  561.6556396484375,
+                  276.6271057128906,
+                  243.2757568359375
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  6.0622334480285645,
+                  13.713574409484863,
+                  151.86331176757812
+                ]
+              },
+              {
+                "pixels": [
+                  563.1756591796875,
+                  279.7932434082031,
+                  243.29945373535156
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  6.498437404632568,
+                  12.944035530090332,
+                  152.34292602539062
+                ]
+              },
+              {
+                "pixels": [
+                  563.277099609375,
+                  273.5075988769531,
+                  243.2301788330078
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  6.5256476402282715,
+                  14.483101844787598,
+                  151.409912109375
+                ]
+              },
+              {
+                "pixels": [
+                  560.0347900390625,
+                  279.74542236328125,
+                  243.32131958007812
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  5.598819255828857,
+                  12.944046974182129,
+                  152.31671142578125
+                ]
+              },
+              {
+                "pixels": [
+                  560.1353149414062,
+                  273.4603576660156,
+                  243.25204467773438
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  5.6260294914245605,
+                  14.483113288879395,
+                  151.38369750976562
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          2.204364281713743e-14,
+          140,
+          360,
+          1,
+          -3.373480766007662e-17,
+          5.110149109040704e-17,
+          0,
+          0.8345506191253662,
+          0.5509312152862549,
+          -6.123234262925839e-17,
+          -0.5509312152862549,
+          0.8345506191253662
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794595495.349719,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Total",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-shelter-normal-total.png",
+      "metadata": {
+        "panelId": "Shelter_Roof_R06_C04",
+        "progress": 1,
+        "userId": -2,
+        "panelState": "Destroyed",
+        "cosmeticMarks": 0,
+        "visualStage": "Total",
+        "controls": {
+          "hole": {
+            "center": [
+              0,
+              12.510000228881836,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0,
+                  12.510000228881836,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  525.5122680664062,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  -0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  279.02471923828125,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  555.4877319335938,
+                  338.97528076171875,
+                  25.489999771118164
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  0.44999998807907104,
+                  12.510000228881836,
+                  154.89999389648438
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              6.631311893463135,
+              12.591024398803711,
+              154
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  762.06689453125,
+                  309,
+                  25.40897560119629
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  6.631311893463135,
+                  12.591024398803711,
+                  154
+                ]
+              },
+              {
+                "pixels": [
+                  746.5971069335938,
+                  279.0626525878906,
+                  25.522600173950195
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  6.195898056030273,
+                  12.477399826049805,
+                  153.09999084472656
+                ]
+              },
+              {
+                "pixels": [
+                  746.5968017578125,
+                  338.9368896484375,
+                  25.522674560546875
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  6.1959075927734375,
+                  12.477325439453125,
+                  154.89999389648438
+                ]
+              },
+              {
+                "pixels": [
+                  777.676025390625,
+                  278.7939758300781,
+                  25.295276641845703
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  7.066716194152832,
+                  12.704723358154297,
+                  153.10000610351562
+                ]
+              },
+              {
+                "pixels": [
+                  777.6756591796875,
+                  339.206298828125,
+                  25.295351028442383
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  7.066725730895996,
+                  12.704648971557617,
+                  154.90000915527344
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "fragments": [],
+        "phase": "Active",
+        "solids": [],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          0,
+          38,
+          154,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -1,
+          0
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794595501.745243,
+        "roundId": 1
+      }
+    }
+  ],
+  "limits": "Pristine/Light/Heavy/Total actual GPU views/native fire/stop-resume validated at held canonical orbit, not live-orbit aim. QA markers disclosed, not Players. Heavy fragment capture shows four actual settled pieces; airborne/fall visual not captured and not claimed. Actual engine142 suite independently proves gravity/contact/ownership/player/query safety.",
+  "imageFiles": [
+    {
+      "file": "/tmp/p07-revision-shelter-thermal-pristine.png",
+      "sha256": "9c95119e89a9a9826680ba27c13a942dd3d400818aed5f23b793c1c9051e3a82",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 103356
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-normal-pristine.png",
+      "sha256": "1e41e6c1554c44f3e71095a5fce43dc4e34fada8e37fb6a8401f244ed3df3884",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 41165
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-normal-light-stopped.png",
+      "sha256": "c20320d22f98270ac4ed51608c145c16b721c22b04a7caf8155bcddabdf298ef",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 251319
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-normal-light.png",
+      "sha256": "03f23b51fe4b255e31d4c26d81c1a7260699a25e858d54705733cc0b62dbb306",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 252469
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-thermal-light.png",
+      "sha256": "418f84c7f58b127f08002a73dd6609c40527ef46163edda82cd88001945f1e8f",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 104809
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-normal-heavy.png",
+      "sha256": "e39231cb20f2e32b0213cf83d3c89227e4b64dfda237f1993608633dd0cb4ed9",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 140039
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-thermal-heavy.png",
+      "sha256": "56e0a31ead408ffa57d7a3dfb44ea1fd6745c546fe32b46c01bf75b06805a609",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 104431
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-thermal-total.png",
+      "sha256": "4de05d70c39c7726220c3183d4c4502135def60d116dcc81d3d71adb4ad78c7e",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 103986
+    },
+    {
+      "file": "/tmp/p07-revision-shelter-normal-total.png",
+      "sha256": "6ccac3ec5c530401609e89a0436a7c51e5aa6d55bc1090342bfe6a8edf94782c",
+      "width": 65536,
+      "height": 4292542531,
+      "bytes": 47419
+    }
+  ],
+  "cleanup": {
+    "normalBindingStopped": true,
+    "normalClientEntryIntactOnBoth": true,
+    "temporaryModulesAndWitnessesRemoved": true,
+    "runtimeStopped": true,
+    "nativeTwoRetained": true
+  }
+}

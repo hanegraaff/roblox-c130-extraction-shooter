@@ -1,0 +1,2801 @@
+{
+  "productionCoreCandidate": "4db45950a0516ac916299fbbd728a606e4c6e6f8",
+  "coreUnchangedBySubsequentFixture8f59": true,
+  "nativeIDs": {
+    "server": "0742bf2c-7b68-4062-986f-d1f333afdce4",
+    "ground": "0c353c9d-9d25-49a9-9879-d46f970b2d6b",
+    "operator": "725ea0e9-e852-4b1b-8308-9faf5878f795",
+    "edit": "eea79821-d1ee-47bb-b6c6-cdf494d9ba94"
+  },
+  "mode": "Two actual Players/production MatchRuntime/AircraftService/CombatRuntime/normal ThermalCameraController; supported aircraft orbit clock held; real match/combat/physics clocks/native mouse inputs; NO synthetic damage",
+  "sceneSource": "/tmp/p07-revision-fixed-render-scene.luau",
+  "sceneSHA256": "be362e7c5ab35593eb8a1b0e1fc823266a940458cc37e70fafe82d462e47f28c",
+  "witnessSHA256": "580586c3906085f7faeb0ece1700db971491a208cbc543cd8b53bc789b5530d5",
+  "normalCameraSHA256": "ac6f9ed80676f352d7b9b9c5e0085596da7c33bb08a74a4d296d65420ee84bf8",
+  "inputCoordinateCalibration": {
+    "x": 0,
+    "y": 58
+  },
+  "lightImmediate": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Warehouse_S02_East_02",
+    "label": "actual-native-GAU-released-then-M102-acknowledged",
+    "panelPivot": [
+      192,
+      14.125,
+      -80,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Light",
+      "progress": 0.10906810230678982,
+      "sustainedSeconds": 0.9816129207611084,
+      "stage": 0,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794594219.530143,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594219.828583,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794594219.712463,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.020257764392428927,
+          "sustainedSeconds": 0.18231987953186035,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.012525,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794594219.911578,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04238165749443902,
+          "sustainedSeconds": 0.38143491744995117,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.212545,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794594220.112058,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06465721130371094,
+          "sustainedSeconds": 0.5819149017333984,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.411609,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794594220.328499,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08870622846815321,
+          "sustainedSeconds": 0.7983560562133789,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.628904,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794594220.511756,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.10906810230678982,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.81365,
+        "roundId": 1,
+        "shotId": 6
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794594602.955464,
+      "roundId": 1
+    },
+    "aircraftClock": 84.34503376298989,
+    "serverTime": 1794594224.012847,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "lightAfterIdle": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Warehouse_S02_East_02",
+    "label": "Light-after-real-idle-and-both-captures",
+    "panelPivot": [
+      192,
+      14.125,
+      -80,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Light",
+      "progress": 0.10906810230678982,
+      "sustainedSeconds": 0.9816129207611084,
+      "stage": 0,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794594219.530143,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594219.828583,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794594219.712463,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.020257764392428927,
+          "sustainedSeconds": 0.18231987953186035,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.012525,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794594219.911578,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04238165749443902,
+          "sustainedSeconds": 0.38143491744995117,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.212545,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794594220.112058,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06465721130371094,
+          "sustainedSeconds": 0.5819149017333984,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.411609,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794594220.328499,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08870622846815321,
+          "sustainedSeconds": 0.7983560562133789,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.628904,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794594220.511756,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.10906810230678982,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.81365,
+        "roundId": 1,
+        "shotId": 6
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794594602.955464,
+      "roundId": 1
+    },
+    "aircraftClock": 84.34503376298989,
+    "serverTime": 1794594255.379168,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "heavy": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Warehouse_S02_East_02",
+    "label": "three-native-M102-after-native-GAU-Light",
+    "panelPivot": [
+      192,
+      14.125,
+      -80,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Heavy",
+      "progress": 0,
+      "sustainedSeconds": 0,
+      "stage": 1,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794594219.530143,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594219.828583,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794594219.712463,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.020257764392428927,
+          "sustainedSeconds": 0.18231987953186035,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.012525,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794594219.911578,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04238165749443902,
+          "sustainedSeconds": 0.38143491744995117,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.212545,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794594220.112058,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06465721130371094,
+          "sustainedSeconds": 0.5819149017333984,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.411609,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794594220.328499,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08870622846815321,
+          "sustainedSeconds": 0.7983560562133789,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.628904,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794594220.511756,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.10906810230678982,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.81365,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794594303.05961,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.44240143564012313,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794594303.708023,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794594307.707545,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.7757347689734565,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794594308.358219,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794594312.374674,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794594313.024784,
+        "roundId": 1,
+        "shotId": 9
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794594602.955464,
+      "roundId": 1
+    },
+    "aircraftClock": 84.34503376298989,
+    "serverTime": 1794594316.5436,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "total": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Warehouse_S02_East_02",
+    "label": "six-native-M102-Total",
+    "panelPivot": [
+      192,
+      14.125,
+      -80,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Total",
+      "progress": 1,
+      "sustainedSeconds": 0,
+      "stage": 2,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794594219.530143,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594219.828583,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794594219.712463,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.020257764392428927,
+          "sustainedSeconds": 0.18231987953186035,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.012525,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794594219.911578,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04238165749443902,
+          "sustainedSeconds": 0.38143491744995117,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.212545,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794594220.112058,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06465721130371094,
+          "sustainedSeconds": 0.5819149017333984,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.411609,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794594220.328499,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08870622846815321,
+          "sustainedSeconds": 0.7983560562133789,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.628904,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794594220.511756,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.10906810230678982,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.81365,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794594303.05961,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.44240143564012313,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794594303.708023,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794594307.707545,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.7757347689734565,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794594308.358219,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794594312.374674,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794594313.024784,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794594360.972656,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.3333333333333333,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794594361.621827,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794594365.572206,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.6666666666666666,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794594366.222445,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794594370.172014,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Total",
+          "progress": 1,
+          "sustainedSeconds": 0,
+          "stage": 2,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794594370.822033,
+        "roundId": 1,
+        "shotId": 12
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794594602.955464,
+      "roundId": 1
+    },
+    "aircraftClock": 84.34503376298989,
+    "serverTime": 1794594374.040032,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "final": {
+    "players": [
+      {
+        "role": "Gunship",
+        "userId": -1,
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "userId": -2,
+        "life": "Alive"
+      }
+    ],
+    "panelId": "Warehouse_S02_East_02",
+    "label": "all-four-tiers-complete-retained-for-evidence",
+    "panelPivot": [
+      192,
+      14.125,
+      -80,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "currentCount": 2,
+    "state": {
+      "appearance": "Total",
+      "progress": 1,
+      "sustainedSeconds": 0,
+      "stage": 2,
+      "heavySeconds": 0
+    },
+    "purpose": "Actual production input/damage at an explicitly held canonical orbit clock",
+    "impacts": [
+      {
+        "firedAt": 1794594219.530143,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Pristine",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594219.828583,
+        "roundId": 1,
+        "shotId": 1
+      },
+      {
+        "firedAt": 1794594219.712463,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.020257764392428927,
+          "sustainedSeconds": 0.18231987953186035,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.012525,
+        "roundId": 1,
+        "shotId": 2
+      },
+      {
+        "firedAt": 1794594219.911578,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.04238165749443902,
+          "sustainedSeconds": 0.38143491744995117,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.212545,
+        "roundId": 1,
+        "shotId": 3
+      },
+      {
+        "firedAt": 1794594220.112058,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.06465721130371094,
+          "sustainedSeconds": 0.5819149017333984,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.411609,
+        "roundId": 1,
+        "shotId": 4
+      },
+      {
+        "firedAt": 1794594220.328499,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.08870622846815321,
+          "sustainedSeconds": 0.7983560562133789,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.628904,
+        "roundId": 1,
+        "shotId": 5
+      },
+      {
+        "firedAt": 1794594220.511756,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.10906810230678982,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 0
+        },
+        "weapon": "GAU23",
+        "impactAt": 1794594220.81365,
+        "roundId": 1,
+        "shotId": 6
+      },
+      {
+        "firedAt": 1794594303.05961,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.44240143564012313,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794594303.708023,
+        "roundId": 1,
+        "shotId": 7
+      },
+      {
+        "firedAt": 1794594307.707545,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Light",
+          "progress": 0.7757347689734565,
+          "sustainedSeconds": 0.9816129207611084,
+          "stage": 0,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794594308.358219,
+        "roundId": 1,
+        "shotId": 8
+      },
+      {
+        "firedAt": 1794594312.374674,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794594313.024784,
+        "roundId": 1,
+        "shotId": 9
+      },
+      {
+        "firedAt": 1794594360.972656,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.3333333333333333,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 3
+        },
+        "weapon": "M102",
+        "impactAt": 1794594361.621827,
+        "roundId": 1,
+        "shotId": 10
+      },
+      {
+        "firedAt": 1794594365.572206,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Heavy",
+          "progress": 0.6666666666666666,
+          "sustainedSeconds": 0,
+          "stage": 1,
+          "heavySeconds": 6
+        },
+        "weapon": "M102",
+        "impactAt": 1794594366.222445,
+        "roundId": 1,
+        "shotId": 11
+      },
+      {
+        "firedAt": 1794594370.172014,
+        "panelId": "Warehouse_S02_East_02",
+        "state": {
+          "appearance": "Total",
+          "progress": 1,
+          "sustainedSeconds": 0,
+          "stage": 2,
+          "heavySeconds": 0
+        },
+        "weapon": "M102",
+        "impactAt": 1794594370.822033,
+        "roundId": 1,
+        "shotId": 12
+      }
+    ],
+    "round": {
+      "phase": "Active",
+      "deadlineSeconds": 1794594602.955464,
+      "roundId": 1
+    },
+    "aircraftClock": 84.34503376298989,
+    "serverTime": 1794594449.071342,
+    "initialUserIds": [
+      -1,
+      -2
+    ]
+  },
+  "captures": [
+    {
+      "stage": "Pristine",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-thermal-pristine.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 0,
+        "userId": -1,
+        "panelState": "Intact",
+        "cosmeticMarks": 0,
+        "visualStage": "Pristine",
+        "controls": {
+          "hole": {
+            "center": [
+              190.73583984375,
+              12.527532577514648,
+              -79.25807189941406
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  539.6510009765625,
+                  230.487548828125,
+                  198.643798828125
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.73583984375,
+                  12.527532577514648,
+                  -79.25807189941406
+                ]
+              },
+              {
+                "pixels": [
+                  541.5770263671875,
+                  234.34716796875,
+                  198.72714233398438
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.09274291992188,
+                  11.835213661193848,
+                  -79.89510345458984
+                ]
+              },
+              {
+                "pixels": [
+                  541.5714721679688,
+                  226.6214599609375,
+                  198.56129455566406
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0316925048828,
+                  13.219863891601562,
+                  -79.45135498046875
+                ]
+              },
+              {
+                "pixels": [
+                  537.732177734375,
+                  234.3504638671875,
+                  198.726318359375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.4399871826172,
+                  11.835201263427734,
+                  -79.06478881835938
+                ]
+              },
+              {
+                "pixels": [
+                  537.723388671875,
+                  226.62478637695312,
+                  198.56045532226562
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.37893676757812,
+                  13.21985149383545,
+                  -78.62104034423828
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.75245666503906,
+              12.542500495910645,
+              -73.18959045410156
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  515.8849487304688,
+                  224.131103515625,
+                  200.27279663085938
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.75245666503906,
+                  12.542500495910645,
+                  -73.18959045410156
+                ]
+              },
+              {
+                "pixels": [
+                  517.8927001953125,
+                  227.91705322265625,
+                  200.3748016357422
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.08132934570312,
+                  11.84572982788086,
+                  -73.83678436279297
+                ]
+              },
+              {
+                "pixels": [
+                  517.6922607421875,
+                  220.25125122070312,
+                  200.19448852539062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0467071533203,
+                  13.239264488220215,
+                  -73.35968780517578
+                ]
+              },
+              {
+                "pixels": [
+                  514.0790405273438,
+                  228.00790405273438,
+                  200.35108947753906
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.4582061767578,
+                  11.845736503601074,
+                  -73.01949310302734
+                ]
+              },
+              {
+                "pixels": [
+                  513.8751220703125,
+                  220.3412628173828,
+                  200.17076110839844
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.423583984375,
+                  13.23927116394043,
+                  -72.54239654541016
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.4274509847164154,
+              0.38823530077934265,
+              0.3176470696926117
+            ],
+            "material": "Enum.Material.Plastic",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          332.30767822265625,
+          140,
+          -138.46153259277344,
+          -0.38461539149284363,
+          -0.6527140140533447,
+          0.6527139544487,
+          2.107342567114756e-8,
+          0.7071068286895752,
+          0.7071068286895752,
+          -0.9230769872665405,
+          0.2719641625881195,
+          -0.2719641327857971
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794594159.064441,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Pristine",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-normal-pristine.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 0,
+        "userId": -2,
+        "panelState": "Intact",
+        "cosmeticMarks": 0,
+        "visualStage": "Pristine",
+        "controls": {
+          "hole": {
+            "center": [
+              190.00999450683594,
+              14.125,
+              -80
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  14.125,
+                  -80
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -79.55000305175781
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -79.55000305175781
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.0877685546875,
+              14.125,
+              -73.38129425048828
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  323.6492919921875,
+                  309,
+                  25.9122314453125
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0877685546875,
+                  14.125,
+                  -73.38129425048828
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  338.36077880859375,
+                  26.023590087890625
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  13.225000381469727,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  279.63922119140625,
+                  26.023590087890625
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  15.024999618530273,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  338.6142272949219,
+                  25.800872802734375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  13.225000381469727,
+                  -72.9452896118164
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  279.3857727050781,
+                  25.800872802734375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  15.024999618530273,
+                  -72.9452896118164
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.4274509847164154,
+              0.38823530077934265,
+              0.3176470696926117
+            ],
+            "material": "Enum.Material.Plastic",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          216,
+          14.125,
+          -80,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794594183.773618,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Light",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-normal-light.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 0.10906810230678982,
+        "userId": -2,
+        "panelState": "Intact",
+        "cosmeticMarks": 6,
+        "visualStage": "Light",
+        "controls": {
+          "hole": {
+            "center": [
+              190.00999450683594,
+              14.125,
+              -80
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  14.125,
+                  -80
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -79.55000305175781
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -79.55000305175781
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.0877685546875,
+              14.125,
+              -73.38129425048828
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  323.6492919921875,
+                  309,
+                  25.9122314453125
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0877685546875,
+                  14.125,
+                  -73.38129425048828
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  338.36077880859375,
+                  26.023590087890625
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  13.225000381469727,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  279.63922119140625,
+                  26.023590087890625
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  15.024999618530273,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  338.6142272949219,
+                  25.800872802734375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  13.225000381469727,
+                  -72.9452896118164
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  279.3857727050781,
+                  25.800872802734375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  15.024999618530273,
+                  -72.9452896118164
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.5764706134796143,
+              0.545098066329956,
+              0.4901960790157318
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          216,
+          14.125,
+          -80,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "sustainedSeconds": 0.9816129207611084,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794594245.988617,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Light",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-thermal-light.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 0.10906810230678982,
+        "userId": -1,
+        "panelState": "Intact",
+        "cosmeticMarks": 6,
+        "visualStage": "Light",
+        "controls": {
+          "hole": {
+            "center": [
+              190.73583984375,
+              12.527532577514648,
+              -79.25807189941406
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  539.6510009765625,
+                  230.487548828125,
+                  198.643798828125
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.73583984375,
+                  12.527532577514648,
+                  -79.25807189941406
+                ]
+              },
+              {
+                "pixels": [
+                  541.5770263671875,
+                  234.34716796875,
+                  198.72714233398438
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.09274291992188,
+                  11.835213661193848,
+                  -79.89510345458984
+                ]
+              },
+              {
+                "pixels": [
+                  541.5714721679688,
+                  226.6214599609375,
+                  198.56129455566406
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0316925048828,
+                  13.219863891601562,
+                  -79.45135498046875
+                ]
+              },
+              {
+                "pixels": [
+                  537.732177734375,
+                  234.3504638671875,
+                  198.726318359375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.4399871826172,
+                  11.835201263427734,
+                  -79.06478881835938
+                ]
+              },
+              {
+                "pixels": [
+                  537.723388671875,
+                  226.62478637695312,
+                  198.56045532226562
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.37893676757812,
+                  13.21985149383545,
+                  -78.62104034423828
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.75245666503906,
+              12.542500495910645,
+              -73.18959045410156
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  515.8849487304688,
+                  224.131103515625,
+                  200.27279663085938
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.75245666503906,
+                  12.542500495910645,
+                  -73.18959045410156
+                ]
+              },
+              {
+                "pixels": [
+                  517.8927001953125,
+                  227.91705322265625,
+                  200.3748016357422
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.08132934570312,
+                  11.84572982788086,
+                  -73.83678436279297
+                ]
+              },
+              {
+                "pixels": [
+                  517.6922607421875,
+                  220.25125122070312,
+                  200.19448852539062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0467071533203,
+                  13.239264488220215,
+                  -73.35968780517578
+                ]
+              },
+              {
+                "pixels": [
+                  514.0790405273438,
+                  228.00790405273438,
+                  200.35108947753906
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.4582061767578,
+                  11.845736503601074,
+                  -73.01949310302734
+                ]
+              },
+              {
+                "pixels": [
+                  513.8751220703125,
+                  220.3412628173828,
+                  200.17076110839844
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Solid",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.423583984375,
+                  13.23927116394043,
+                  -72.54239654541016
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Solid",
+            "canCollide": true,
+            "color": [
+              0.5764706134796143,
+              0.545098066329956,
+              0.4901960790157318
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              16
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          332.30767822265625,
+          140,
+          -138.46153259277344,
+          -0.38461539149284363,
+          -0.6527140140533447,
+          0.6527139544487,
+          2.107342567114756e-8,
+          0.7071068286895752,
+          0.7071068286895752,
+          -0.9230769872665405,
+          0.2719641625881195,
+          -0.2719641327857971
+        ],
+        "sustainedSeconds": 0.9816129207611084,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794594252.160009,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Heavy",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-thermal-heavy.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 0,
+        "userId": -1,
+        "panelState": "Damaged",
+        "cosmeticMarks": 28,
+        "visualStage": "Heavy",
+        "controls": {
+          "hole": {
+            "center": [
+              190.73583984375,
+              12.527532577514648,
+              -79.25807189941406
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  539.6510009765625,
+                  230.487548828125,
+                  198.643798828125
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.73583984375,
+                  12.527532577514648,
+                  -79.25807189941406
+                ]
+              },
+              {
+                "pixels": [
+                  541.5770263671875,
+                  234.34716796875,
+                  198.72714233398438
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  191.09274291992188,
+                  11.835213661193848,
+                  -79.89510345458984
+                ]
+              },
+              {
+                "pixels": [
+                  541.5714721679688,
+                  226.6214599609375,
+                  198.56129455566406
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.0316925048828,
+                  13.219863891601562,
+                  -79.45135498046875
+                ]
+              },
+              {
+                "pixels": [
+                  537.732177734375,
+                  234.3504638671875,
+                  198.726318359375
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  191.4399871826172,
+                  11.835201263427734,
+                  -79.06478881835938
+                ]
+              },
+              {
+                "pixels": [
+                  537.723388671875,
+                  226.62478637695312,
+                  198.56045532226562
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.37893676757812,
+                  13.21985149383545,
+                  -78.62104034423828
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.75245666503906,
+              12.542500495910645,
+              -73.18959045410156
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  515.8849487304688,
+                  224.131103515625,
+                  200.27279663085938
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.75245666503906,
+                  12.542500495910645,
+                  -73.18959045410156
+                ]
+              },
+              {
+                "pixels": [
+                  517.8927001953125,
+                  227.91705322265625,
+                  200.3748016357422
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.08132934570312,
+                  11.84572982788086,
+                  -73.83678436279297
+                ]
+              },
+              {
+                "pixels": [
+                  517.6922607421875,
+                  220.25125122070312,
+                  200.19448852539062
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0467071533203,
+                  13.239264488220215,
+                  -73.35968780517578
+                ]
+              },
+              {
+                "pixels": [
+                  514.0790405273438,
+                  228.00790405273438,
+                  200.35108947753906
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  191.4582061767578,
+                  11.845736503601074,
+                  -73.01949310302734
+                ]
+              },
+              {
+                "pixels": [
+                  513.8751220703125,
+                  220.3412628173828,
+                  200.17076110839844
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.423583984375,
+                  13.23927116394043,
+                  -72.54239654541016
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Left",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              4
+            ]
+          },
+          {
+            "name": "Right",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              4
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          332.30767822265625,
+          140,
+          -138.46153259277344,
+          -0.38461539149284363,
+          -0.6527140140533447,
+          0.6527139544487,
+          2.107342567114756e-8,
+          0.7071068286895752,
+          0.7071068286895752,
+          -0.9230769872665405,
+          0.2719641625881195,
+          -0.2719641327857971
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794594319.126063,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Heavy",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-normal-heavy.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 0,
+        "userId": -2,
+        "panelState": "Damaged",
+        "cosmeticMarks": 28,
+        "visualStage": "Heavy",
+        "controls": {
+          "hole": {
+            "center": [
+              190.00999450683594,
+              14.125,
+              -80
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  14.125,
+                  -80
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -79.55000305175781
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -79.55000305175781
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.0877685546875,
+              14.125,
+              -73.38129425048828
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  323.6492919921875,
+                  309,
+                  25.9122314453125
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.0877685546875,
+                  14.125,
+                  -73.38129425048828
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  338.36077880859375,
+                  26.023590087890625
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  13.225000381469727,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  279.63922119140625,
+                  26.023590087890625
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  15.024999618530273,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  338.6142272949219,
+                  25.800872802734375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  13.225000381469727,
+                  -72.9452896118164
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  279.3857727050781,
+                  25.800872802734375
+                ],
+                "hit": "Workspace.World.Battlefield.Buildings.Warehouse.Warehouse_Panels.Warehouse_S02_East_02.Right",
+                "hitCurrentPanel": true,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  15.024999618530273,
+                  -72.9452896118164
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "phase": "Active",
+        "solids": [
+          {
+            "name": "Left",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              4
+            ]
+          },
+          {
+            "name": "Right",
+            "canCollide": true,
+            "color": [
+              0.2980392277240753,
+              0.2666666805744171,
+              0.22745098173618317
+            ],
+            "material": "Enum.Material.Slate",
+            "canQuery": true,
+            "size": [
+              1,
+              8,
+              4
+            ]
+          }
+        ],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          216,
+          14.125,
+          -80,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794594360.120188,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Total",
+      "view": "controlled-normal",
+      "file": "/tmp/p07-revision-normal-total.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 1,
+        "userId": -2,
+        "panelState": "Destroyed",
+        "cosmeticMarks": 0,
+        "visualStage": "Total",
+        "controls": {
+          "hole": {
+            "center": [
+              190.00999450683594,
+              14.125,
+              -80
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  540.5,
+                  309,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  14.125,
+                  -80
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  555.1992797851562,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -80.44999694824219
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  338.39874267578125,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  13.225000381469727,
+                  -79.55000305175781
+                ]
+              },
+              {
+                "pixels": [
+                  525.8007202148438,
+                  279.60125732421875,
+                  25.990005493164062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.00999450683594,
+                  15.024999618530273,
+                  -79.55000305175781
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.0877685546875,
+              14.125,
+              -73.38129425048828
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  323.6492919921875,
+                  309,
+                  25.9122314453125
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.0877685546875,
+                  14.125,
+                  -73.38129425048828
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  338.36077880859375,
+                  26.023590087890625
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  13.225000381469727,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  338.801025390625,
+                  279.63922119140625,
+                  26.023590087890625
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  189.97640991210938,
+                  15.024999618530273,
+                  -73.81729888916016
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  338.6142272949219,
+                  25.800872802734375
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  13.225000381469727,
+                  -72.9452896118164
+                ]
+              },
+              {
+                "pixels": [
+                  308.36676025390625,
+                  279.3857727050781,
+                  25.800872802734375
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.19912719726562,
+                  15.024999618530273,
+                  -72.9452896118164
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [],
+        "phase": "Active",
+        "solids": [],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          216,
+          14.125,
+          -80,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          -1,
+          0,
+          0
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Ground",
+        "serverTime": 1794594437.614528,
+        "roundId": 1
+      }
+    },
+    {
+      "stage": "Total",
+      "view": "operator-thermal",
+      "file": "/tmp/p07-revision-thermal-total.png",
+      "metadata": {
+        "panelId": "Warehouse_S02_East_02",
+        "progress": 1,
+        "userId": -1,
+        "panelState": "Destroyed",
+        "cosmeticMarks": 0,
+        "visualStage": "Total",
+        "controls": {
+          "hole": {
+            "center": [
+              190.73583984375,
+              12.527532577514648,
+              -79.25807189941406
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  539.6510009765625,
+                  230.487548828125,
+                  198.643798828125
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.73583984375,
+                  12.527532577514648,
+                  -79.25807189941406
+                ]
+              },
+              {
+                "pixels": [
+                  541.5770263671875,
+                  234.34716796875,
+                  198.72714233398438
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  191.09274291992188,
+                  11.835213661193848,
+                  -79.89510345458984
+                ]
+              },
+              {
+                "pixels": [
+                  541.5714721679688,
+                  226.6214599609375,
+                  198.56129455566406
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.0316925048828,
+                  13.219863891601562,
+                  -79.45135498046875
+                ]
+              },
+              {
+                "pixels": [
+                  537.732177734375,
+                  234.3504638671875,
+                  198.726318359375
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  191.4399871826172,
+                  11.835201263427734,
+                  -79.06478881835938
+                ]
+              },
+              {
+                "pixels": [
+                  537.723388671875,
+                  226.62478637695312,
+                  198.56045532226562
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.37893676757812,
+                  13.21985149383545,
+                  -78.62104034423828
+                ]
+              }
+            ]
+          },
+          "residual": {
+            "center": [
+              190.75245666503906,
+              12.542500495910645,
+              -73.18959045410156
+            ],
+            "samples": [
+              {
+                "pixels": [
+                  515.8849487304688,
+                  224.131103515625,
+                  200.27279663085938
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.75245666503906,
+                  12.542500495910645,
+                  -73.18959045410156
+                ]
+              },
+              {
+                "pixels": [
+                  517.8927001953125,
+                  227.91705322265625,
+                  200.3748016357422
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  191.08132934570312,
+                  11.84572982788086,
+                  -73.83678436279297
+                ]
+              },
+              {
+                "pixels": [
+                  517.6922607421875,
+                  220.25125122070312,
+                  200.19448852539062
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.0467071533203,
+                  13.239264488220215,
+                  -73.35968780517578
+                ]
+              },
+              {
+                "pixels": [
+                  514.0790405273438,
+                  228.00790405273438,
+                  200.35108947753906
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  191.4582061767578,
+                  11.845736503601074,
+                  -73.01949310302734
+                ]
+              },
+              {
+                "pixels": [
+                  513.8751220703125,
+                  220.3412628173828,
+                  200.17076110839844
+                ],
+                "hitCurrentPanel": false,
+                "withinViewport": true,
+                "world": [
+                  190.423583984375,
+                  13.23927116394043,
+                  -72.54239654541016
+                ]
+              }
+            ]
+          }
+        },
+        "highlights": [
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedResidualControl",
+            "fill": 0.15000000596046448
+          },
+          {
+            "depth": "Enum.HighlightDepthMode.Occluded",
+            "name": "ProjectedHoleControl",
+            "fill": 0.15000000596046448
+          }
+        ],
+        "phase": "Active",
+        "solids": [],
+        "heavySeconds": 0,
+        "cameraFrame": [
+          332.30767822265625,
+          140,
+          -138.46153259277344,
+          -0.38461539149284363,
+          -0.6527140140533447,
+          0.6527139544487,
+          2.107342567114756e-8,
+          0.7071068286895752,
+          0.7071068286895752,
+          -0.9230769872665405,
+          0.2719641625881195,
+          -0.2719641327857971
+        ],
+        "sustainedSeconds": 0,
+        "life": "Alive",
+        "purpose": "Controlled render-only QA; markers are not Players; no live orbit/fire claim",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "role": "Gunship",
+        "serverTime": 1794594443.973398,
+        "roundId": 1
+      }
+    }
+  ],
+  "scope": "Eight unedited actual GPU captures; normal-color camera explicitly controlled at same fixed frame for each tier; operator camera is unmodified production controller at held canonical pose. QA markers disclosed. Inert marks never bridge hole. Actual debris visible in thermal Heavy but no visual airborne/fall claim; real fall/contact independently automated142 suite. Not live-orbit/OSfocus/touch/route-feel evidence."
+}

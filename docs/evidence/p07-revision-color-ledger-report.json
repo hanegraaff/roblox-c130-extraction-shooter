@@ -1,0 +1,209 @@
+{
+  "candidateCommit": "a92d704d13394c8947c6698637266faef2c0e1cd",
+  "actualColorIsolation": {
+    "mathFirst": [
+      0.5867974162101746,
+      0.5554248690605164,
+      0.5005947947502136
+    ],
+    "mathEqual": false,
+    "mathSecond": [
+      0.585359513759613,
+      0.5539869666099548,
+      0.4992287755012512
+    ],
+    "progress": 0.03333333333333333,
+    "first": [
+      0.5843137502670288,
+      0.5529412031173706,
+      0.49803921580314636
+    ],
+    "second": [
+      0.5843137502670288,
+      0.5529412031173706,
+      0.49803921580314636
+    ],
+    "equal": true,
+    "earned": 0.3,
+    "visualParts": 6
+  },
+  "ledgerProbe": {
+    "allOwnedRemoved": true,
+    "observations": [
+      {
+        "id": "Foundry_S01_North_02",
+        "storedColorUnchanged": true,
+        "snapshots": [
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.01666666666666414,
+              "sustainedSeconds": 0.14999999999997726,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "first .15 earned"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.01666666666666414,
+              "sustainedSeconds": 0.14999999999997726,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "after idle barrier"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.01666666666666414,
+              "sustainedSeconds": 0.14999999999997726,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "resumed first zero"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.03333333333334091,
+              "sustainedSeconds": 0.3000000000000682,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "resumed next .15"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.04999999999999242,
+              "sustainedSeconds": 0.4499999999999318,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5803921818733215,
+              0.5490196347236633,
+              0.4941176474094391
+            ],
+            "marks": 6,
+            "label": "one additional valid interval"
+          }
+        ]
+      },
+      {
+        "id": "Shelter_Roof_R01_C01",
+        "storedColorUnchanged": true,
+        "snapshots": [
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.016666666666676773,
+              "sustainedSeconds": 0.15000000000009095,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "first .15 earned"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.016666666666676773,
+              "sustainedSeconds": 0.15000000000009095,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "after idle barrier"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.016666666666676773,
+              "sustainedSeconds": 0.15000000000009095,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "resumed first zero"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.033333333333353546,
+              "sustainedSeconds": 0.3000000000001819,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5843137502670288,
+              0.5529412031173706,
+              0.49803921580314636
+            ],
+            "marks": 6,
+            "label": "resumed next .15"
+          },
+          {
+            "state": {
+              "appearance": "Light",
+              "progress": 0.050000000000005054,
+              "sustainedSeconds": 0.4500000000000455,
+              "stage": 0,
+              "heavySeconds": 0
+            },
+            "color": [
+              0.5803921818733215,
+              0.5490196347236633,
+              0.4941176474094391
+            ],
+            "marks": 6,
+            "label": "one additional valid interval"
+          }
+        ]
+      }
+    ],
+    "fragmentGroupRemoved": true
+  },
+  "probeFile": "/tmp/p07-revision-tester-color-ledger-probe.luau"
+}
