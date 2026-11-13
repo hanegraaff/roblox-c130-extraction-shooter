@@ -185,6 +185,62 @@ The tester retained the session to prepare an explicitly owned normal human
 test round. Current two-client mutual-destruction/forfeit and P05/P14 regressions,
 operated feedback and a representative capture remain open.
 
+## Accepted desktop review and simulated phone on `0ab3607`
+
+After complete harness teardown, the tester started an explicitly owned normal
+`HumanTestSession` with three actual players: Player1 Gunship and Player2/3
+Ground, all Alive, a 600-second Active round and initial aircraft health 300.
+Roles/duration/start used the normal test session boundary and seeded
+RoleService. No camera transform or gameplay input was injected for the user.
+
+The user reported that tracers were visible, shots lined up with the crosshair,
+the aircraft took damage, and they saw no issues. The [matched recording](p06-user-0ab.json)
+contains twelve actual requests with camera/native pointer/reticle and server
+samples. Client target versus payload differed by at most 0.000044 studs;
+sampled GUI reticle center converted by inset was within two pixels of the raw
+pointer during motion. Eight recorded requests reduced health in five-unit
+steps from 195 to 155, with engine, wing and canonical hitbox contacts.
+The record does not claim that every request was accepted. Client tracer
+observations were present in 57 frame samples; simultaneous burst tracers were
+not individually identified, so those frames are not per-shot trajectory
+proof. The server fixture separately checks motion, endpoint and cleanup.
+
+The [current desktop capture](p06-presentation/current-progress.jpg), with
+[metadata](p06-presentation/current-progress.json), is the real post-review
+Player2 Ground view: held M-7, ammo 22/90 and aircraft health 155/300. The
+logical viewport was 1081×618 and the native capture is 1889×1080. No camera
+or input override was used. This replaces the earlier representative image;
+it does not depict the aircraft or an in-flight tracer in that frame.
+
+The [current phone report](p06-phone-0ab.json) and [capture](p06-presentation/mobile-0ab.jpg)
+record Studio iPhone 17 Pro landscape, 750×381. Actual GUI center plus inset
+was (375,191), matching rounded viewport center; status/FIRE/RELOAD did not
+overlap. Simulator touch FIRE spent 22→17, RELOAD restored 30/77, and a separate
+world swipe changed the camera. The simulator returned to desktop defaults and
+temporary shot observers/transport were removed. This is simulated touch and
+layout evidence, not a physical-device test.
+
+The tester stopped the owned human session through its retained cleanup closure
+and verified no RoundState, AircraftState, StudioTestControls, LocalTestControls,
+GroundCombatEffects or tools, with no characters/load ownership at the sample.
+Player3 then deliberately left, retaining exactly two real clients. Exact P05
+client harnesses were rearmed after old discovery waiters expired; the unchanged
+full server suite ran with a report-only finish callback. [P05 passed 8/8](p06-p05-0ab.json),
+zero failures/skips, then cleaned up. The unchanged full [P14 regression passed
+6/6](p06-p14-0ab.json) in that same two-client session, zero failures/skips. It
+ran both complete weapon orbits, ground/slope/upper-floor projection,
+acknowledged/rejected zoom, concurrent ground movement and operator pan, blocked
+input/recenter, thermal occlusion, round/role reset and teardown. Its actual
+operator-departure case left one client as expected. The separate full
+two-client P06 suite remains required; no final acceptance or merge is claimed yet.
+
+The primary agent reran the complete `python3 scripts/verify.py` on unchanged
+runtime/test/tool/world inputs: 50/50 unit and 43/43 integration, with all format,
+lint, strict-type, build, 351-part geometry, release-isolation and deliberate
+negative-probe gates passing. The [host report](p06-final-host.json) and
+[bounded complete log](p06-final-host.log) retain the exact command/environment
+and distinguish intentionally rejected probes from game-test failures.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration
@@ -522,8 +578,9 @@ the production controls no longer overlap. Actual simulated touch FIRE spent
 to desktop restored the 330-wide status and hid touch buttons. The test-only
 Studio panel initially overlaid phone controls, so the tester hid only that
 panel for a [genuine phone capture](p06-presentation/mobile-after.jpg). The
-[current desktop capture](p06-presentation/current-progress.jpg) is an actual
-active Ground view. These simulated input checks are not physical-device tests.
+[representative desktop capture](p06-presentation/current-progress.jpg) is
+refreshed by the latest operated review above. These simulated input checks are
+not physical-device tests.
 
 The native operated moving-aircraft hit and resulting health feedback remain
 unverified: after ordinary Ground movement and a 28-second projected-visibility

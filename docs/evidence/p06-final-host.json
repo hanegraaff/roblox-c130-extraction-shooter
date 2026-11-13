@@ -1,0 +1,26 @@
+{
+  "source": "0ab360775bdd7d97a2654aa3b6857ddbc3d6157e",
+  "tree": "3d6bb3fd49629f66d12e31f921975a151607714f",
+  "command": "python3 scripts/verify.py",
+  "environment": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.10.4"
+  },
+  "exitCode": 0,
+  "unit": {
+    "discovered": 50,
+    "passed": 50,
+    "failed": 0,
+    "skipped": 0
+  },
+  "integration": {
+    "discovered": 43,
+    "passed": 43,
+    "failed": 0,
+    "skipped": 0
+  },
+  "sourceCheck": "git diff versus source commit for src/tests/scripts/config/world/model/project/tool inputs: documentation-only differences",
+  "expectedNegativeProbes": "Deliberate failing/empty suites, type errors and artifact corruptions rejected as required; those probe failures are not game-test failures.",
+  "log": "p06-final-host.log"
+}

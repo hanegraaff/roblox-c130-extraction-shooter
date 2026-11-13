@@ -28,142 +28,97 @@ Update named ground weapon, mixed-damage/three-rocket contract, destruction resu
 
 ## Completion record
 
-Implementation started on `plan/06-ground-combat` from integrated main
-`186def18af0a0dfcaba979d895afb08e3524d057`. The candidate implements the
-server-owned M-7 and aircraft-health rules; acceptance remains open pending
-current-source Studio and operated review.
+The increment uses `plan/06-ground-combat`, based on integrated main
+`186def18af0a0dfcaba979d895afb08e3524d057`. The tested runtime/test candidate
+is `0ab360775bdd7d97a2654aa3b6857ddbc3d6157e`, tree
+`3d6bb3fd49629f66d12e31f921975a151607714f`. Gameplay is unchanged from
+`59252c9`; `dc081f4` improves independent camera-test sampling and `0ab3607`
+adds bounded native-client startup diagnostics. Later commits contain prose
+and evidence. The required current-source two-client P06 suite remains open;
+the implementation is not yet fully accepted.
 
-| Criterion | Evidence and outstanding checks |
-| --- | --- |
-| A1 | Developer full host gate on `59252c9` passes 50 unit / 43 integration cases; fresh Studio smoke passes 118/6 with independent native/world/GUI aiming oracles. Actual `6613375` two-client P06 10/10 includes equipped rifle, positive Wing damage and solid cover. Moving presentation and current-source multiplayer/operated checks remain open. |
-| A2 | Host tests cover pristine three-rocket, mixed, miss and duplicate behavior. Actual `6613375` P06 10/10 includes pristine rocket sweeps and measured speed. Current-source multiplayer regression remains open. |
-| A3 | Host tests cover bounded requests and movement. Actual `6613375` P06 includes origin/query rejection and same-sequence recovery, obstruction and friendly-fire assertions. The movement guard bounds endpoints without sweeping the path between them. Current-source regression remains open. |
-| A4 | Actual `6613375` P06 passes both measured same-step callback orders and separate operator-forfeit reason. Actual `bdb1de1` P06Team passes 7/7 with three clients, including the eliminated teammate's shared win. Current-source regression remains open. |
-| A5 | Actual `6613375` P06 passes 10/10 with two clients, shot/health feedback and reset assertions. Corrected aiming, moving-tracer replication, native desktop/phone playability, P05/P14 regressions and a current capture remain required. |
+| Criterion | Current evidence | Outstanding acceptance |
+| --- | --- | --- |
+| A1 | Developer and final primary-agent `python3 scripts/verify.py`: 50 unit / 43 integration, plus format/lint/types, builds, geometry and release isolation. Fresh Studio baseline: 118 server and 6 per client. Actual three-client P06Team 7/7 includes server-owned rifle/loadout, cover/Wing damage, ammo and friendly-fire assertions. | Final current-source two-client run. |
+| A2 | Host cases cover pristine three-rocket boundaries, mixed damage, duplicates and misses. Current P06Team validates mixed rifle/rocket sweeps at the actual orbit; historical `6613375` two-client P06 10/10 includes pristine 300→200→100→0 sweeps and measured speed. | Current-source pristine rocket and mutual-destruction cases in the full two-client P06 suite. |
+| A3 | Current P06Team checks malformed/wrong-role requests, implausible origins, embedded body/cover rejection, eliminated fire, query failure without mutation and recovery with the same sequence. Host cases cover bounds, stale/replayed/flood traffic and movement budgets. | Final current-source two-client regression. |
+| A4 | Current three-client P06Team proves the eliminated teammate receives the shared Ground result. Historical `6613375` P06 proves both actual same-step callback orders and separate operator-forfeit reason. | Current-source two-client callback-order/pristine-rocket/forfeit cases. |
+| A5 | Current P06Team 7/7: three real clients, shared shot/health/destruction observations, repeated reset, tools/listeners/effects teardown. Corrected desktop aim and feedback accepted by the user; simulated-phone layout/fire/reload/swipe pass. Current two-client P05 and full P14 regressions pass 8/8 and 6/6. | Current full two-client P06; final documentation/evidence delivery. |
+
+### Actual Studio and operated evidence
 
 The [verification record](../docs/evidence/p06-ground-combat.md) preserves
-source-specific results, tester findings and the stalled Studio launch. Latest
-host gate was 50 unit / 43 integration on `644a90d` with independent source
-review. On `a4d53f3` a fresh Studio run passed 118/118 server and 3/3 client
-cases after correcting the reproduced smoothed-Terrain bypass; a bounded real
-slope probe accepted 154/154 normal standing/jumping samples. The next two-client
-SDK launch stalled before Play, so current multiplayer/P05 regression checks
-remain open. The test-only manual fallback on `e55a961` reached two actual
-clients and passed 118/118 server and 3/3 per-client smoke, but its P06 suite
-timed out at the query-failure case after five passing cases. A possible cadence
-race is being diagnosed; the actual failure and incomplete suite are recorded.
-The user ended that session. Candidate `60aa623` waits for actual server
-readiness and adds bounded rejection diagnostics; its fresh host gate and
-118/3 Studio smoke pass. The manual two-client rerun then timed out in an
-earlier live rifle-hit case, before the query-recovery case. Candidate `6c5a016`
-adds live-shot diagnostics and a safely inward fixture position; independent
-host and 118/3 Studio smoke pass. Its two-client run passed actual cover,
-aircraft-hit and query-failure recovery, then failed the shared-Heartbeat
-assertion in the mutual-destruction case; callback values were not recorded
-before the assertion, so its cause remains unproven. `56495f9` records callback
-timing and outcome before asserting. Its real two-client run showed actual
-aircraft-first callbacks within one simulation step and the correct Ground
-result; the fixture failed its requested ground-first ordering because Roblox
-executed callbacks in reverse registration order. `bdb1de1` calibrates actual
-callback scheduling while retaining strict order/step/outcome assertions. Its
-manual two-client P06 run passed 10/10, including both actual same-step orders
-and Ground/AircraftDestroyed; the manual forfeit used server-kick. Its manual
-P06Team run passed 7/7 with three actual clients. The test-only manual P05
-regression on `dae58a4` passed 8/8 with two actual clients. The operated review
-found a desktop reticle/ray inset mismatch, measured at about 11.3 studs on
-the sampled ground surface. The `9adf5d5` fix passed host and 118 server /
-4 client Studio smoke, P05 8/8, and the operated desktop reticle/ray comparison.
-Simulated phone touch firing, reload and camera motion worked, but its ammo
-panel overlapped the centered reticle. `0003fe4` adjusts the touch HUD and
-handles device-mode transitions; independent host and Studio smoke pass
-(118 server / 6 client). Actual two-client desktop ray alignment and simulated
-phone layout, touch fire/reload/swipe pass on `0003fe4`. The native tester could
-not acquire and hit the moving plane. The user subsequently hit it in a real
-two-client round and health replicated 300→250, but reported no visible health
-feedback, shots appearing above the reticle and no gun in the avatar's hands.
-These player-facing findings and stale Lobby shot state require fixes and a
-fresh review; they are not represented as a pass. `23e053c` adds a primitive
-held rifle, dedicated health HUD, server-confirmed shooter hit indicator,
-terminal server-impact tracer and reset shot clearing. Host and 118/6 Studio
-smoke pass; the manual two-client P06 suite passed 10/10 with 118/6 smoke and
-fixture assertions for the equipped rifle, health, hit feedback and reset.
-In the user's ordinary two-client review, the rifle looked good but shots were
-not visible and no damage was apparent; server samples showed at least one
-actual hit (300→295) and other misses. The health label overlapped the passing
-aircraft and user-time shot alignment could not be reconstructed. These
-player-facing findings require correction and a fresh operated review.
-`6613375` makes visible aircraft surfaces queryable, brightens and extends
-server-resolved shot feedback, and moves health away from the center. Its host
-gate, fresh 118/6 Studio smoke and manual P06 10/10 pass; the real Wing hit
-and cover cases passed. Current-source user review and P05/P14 regressions are
-not yet complete. [GitHub Verify 43329198860](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43329198860)
-passed on `4860aaede85ae384671207ba0d6ba1165594528c`; it does not replace the
-prepared current-source native two-client and user review. The
-automated Studio launcher is unreliable, so manual Server & Clients is the
-established fallback. The current P06 manual suite passed; ordinary user
-aiming/bullet-visibility review on `6613375` still failed: the user saw a
-laser-like nearby ground streak but no visible plane shots or damage. The
-subsequent matched 12-shot recording and independent native mouse ray identified
-a 58-pixel inset error in rifle aiming; the earlier `9adf5d5` alignment test
-mirrored that wrong assumption. Those alignment claims are superseded by the
-actual user evidence. `59252c9` restores raw viewport ray coordinates, converts
-only GUI drawing, and replaces the static terminal streak with a moving cosmetic
-tracer and muzzle flash. Damage remains immediate and server-resolved. Its full
-host gate passes 50 unit / 43 integration. Independent fresh Studio smoke passes
-118 server / 6 client, and native mouse ray, independent world projection and
-actual drawn reticle agree. [GitHub Verify 43334404940](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43334404940)
-passes on that exact source. Multiplayer tracer and operated checks remain open.
-These user findings and current P05/P14 regression remain required work.
-The following native three-client P06Team run failed before gameplay readiness:
-Player3 failed the new independent world-projection client assertion (5/6),
-while the other clients passed 6/6 and server smoke passed 118/118. The team
-harness timed out and reported 0/2. A later passing same-client probe does not
-establish the original cause; the test needs source-specific investigation and
-better same-frame diagnostics. This failed run does not satisfy A4/A5.
-Test-only `dc081f4` measures the existing one-pixel raster contract against
-independent world/native-ray projections, samples the pointer immediately,
-waits for a ready current camera and logs detailed failures. Gameplay source
-remains `59252c9`. Its developer full host gate passes 50 unit / 43 integration;
-independent fresh solo Studio smoke passes 118 server / 6 client with zero
-failures/skips/errors. The three-client rerun and gameplay checks remain open.
-That rerun did not reach the suites: the server's ten-second first-client wait
-expired before native clients connected. All three clients later passed the new
-aiming check but failed Foundation while waiting for missing server smoke. This
-is an unavailable P06Team run, with its startup failure preserved. A test-only
-sixty-second client-arrival budget and explicit startup diagnostics are in
-`0ab3607`; roster/gameplay timeouts and production code are unchanged. Fresh
-independent solo smoke passes 118/6. An actual zero-client Run simulation emits
-the expected failed zero-discovery report after 60.044 seconds and stops cleanly.
-The current-source three-client gameplay rerun is prepared; delayed first-client
-arrival beyond ten seconds has not yet been demonstrated.
-The next native run reached server smoke 118/118 after 4.600 seconds, but one
-client read the negative Run probe's stale report inherited from the Edit
-Workspace. The tester confirmed that contamination and cleared only those
-two diagnostic attributes. P06Team had 3 passed / 2 failed before client
-readiness stopped it; it is not accepted. The same three actual clients remain
-available for a distinct controlled runner restart after verified teardown.
-That separate restart on unchanged `0ab3607` passes P06Team 7/7, fresh server
-smoke 118/118 with all three players, and fresh client smoke 6/6 on each. The
-original contamination remains failed evidence. Exact-source test-runner clones
-with report attributes cleared were used after all previous owners stopped;
-this proves the actual three-client scenarios, not a clean native cold start.
-An owned normal round in the same session is being prepared for operated review.
-A real current-P06
-screenshot and operated desktop/mobile combat review are also
-required. Rifle/aircraft health and movement limits are tuning defaults,
-documented separately in decisions. The movement guard permits a 45-stud burst
-and does not sweep intervening walls; it bounds movement but does not establish
-that every short relocation is impossible.
+all source-specific runs and failures. Its linked structured reports are the
+primary evidence; an earlier pass is not relabeled as a current-source run.
 
-[Draft PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27)
-contains the pushed candidate and its current evidence. It is not ready to merge
-until the required current-source Studio and operated checks are complete.
-[GitHub Verify 43306825870](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43306825870)
-passed on `a8bc57a89413b1ae79bbabd0576e58ef416c04a1`; this does not replace
-the missing real-engine evidence.
-[GitHub Verify 43310736534](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43310736534)
-also passed on `918296e9182f85edf82789f9ba398a297f9118ca`, containing the
-Terrain fix and manual fallback; current Studio acceptance remains open.
-[GitHub Verify 43324633959](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43324633959)
-passed on `4d8b56acb5df5fc8d44b143680e4b0fc113d45e8`, including the aim and
-reactive mobile HUD fixes. This does not replace the remaining operated review.
+The [final local host report](../docs/evidence/p06-final-host.json) and
+[complete gate log](../docs/evidence/p06-final-host.log) record the primary
+agent's full verification on unchanged runtime/test source, including exact
+environment and expected negative probes. Subsequent prose/evidence changes
+require the repository checker rather than another unchanged gameplay run.
+
+- [Current three-client P06Team](../docs/evidence/p06-team-0ab-restart.json):
+  7/7, server smoke 118/118 with three players and client smoke 6/6 on each,
+  zero failures/skips/errors. This was a distinct controlled restart of exact
+  test-runner source after full owner cleanup, with three already-connected
+  clients. It is not a clean native cold-start or delayed-join claim.
+- [Current desktop user review](../docs/evidence/p06-user-0ab.json): a normal
+  three-player round, native M-7 input, 12 paired request/camera samples and
+  health decreasing 195→155 in the preserved window. The user reported visible
+  tracers, shots aligned with the crosshair, aircraft damage and no issues.
+  This supersedes the earlier failed operated reviews. The [representative
+  current capture](../docs/evidence/p06-presentation/current-progress.jpg)
+  shows the held primitive rifle and health 155/300; [capture metadata](../docs/evidence/p06-presentation/current-progress.json)
+  records its actual source, role, viewport and hash.
+- [Current simulated-phone review](../docs/evidence/p06-phone-0ab.json):
+  iPhone 17 Pro landscape, 750×381; reticle centered at (375,191), readable
+  nonoverlapping controls, touch FIRE 22→17, RELOAD 30/77 and a separate world
+  swipe changing the camera. Simulator state and diagnostic observers were
+  restored/removed. This is not physical-device evidence.
+- [Current P05 regression](../docs/evidence/p06-p05-0ab.json): 8/8 with two
+  actual clients. The human-session owner stopped completely before one fixture
+  player departed; exact client harness modules were rearmed and the unchanged
+  full P05 server suite ran with its normal cleanup.
+- [Current P14 regression](../docs/evidence/p06-p14-0ab.json): 6/6 with two
+  actual clients, both full weapon orbits, ground/slope/upper-floor projection,
+  zoom/rejected selection, concurrent ground movement/operator pan, UI blocking,
+  thermal occlusion, role/round reset and repeated teardown. Its final actual
+  operator departure left one client as expected; the tester then ended the
+  session and confirmed only the original Edit document remained. The final
+  fresh two-client P06 suite is prepared.
+
+### Startup and prior findings
+
+Matched native user shots on `6613375` identified a 58-pixel inset error:
+raw mouse and the aircraft's viewport projection agreed, but the firing ray
+subtracted GUI inset. Earlier alignment checks mirrored that mistake. The
+corrected production ray and GUI drawing now have independent native
+`Mouse.UnitRay`, world-projection and measured GUI checks; their previous
+claims and subsequent startup failures remain recorded in the evidence.
+
+Native Studio client processes sometimes arrived after the original ten-second
+server wait. `0ab3607` permits a separate bounded sixty-second first-client
+wait without changing roster or gameplay deadlines. [Startup evidence](../docs/evidence/p06-startup-0ab.json)
+contains fresh 118/6 solo smoke and an actual zero-client Run simulation which
+correctly emitted an explicit failed zero-discovery report after 60.044 seconds.
+That negative probe retained two diagnostic Workspace attributes in Edit and
+contaminated a later native launch; the original failed run was preserved and
+those temporary attributes cleared before the separate successful runner
+restart. The testing guide now documents saving/restoring those exact values.
+Arrival beyond ten seconds under the revised budget has not been demonstrated.
+
+The server movement guard's 45-stud burst bounds endpoint displacement without
+sweeping intervening walls. It is not a complete movement anti-cheat. The
+conservative Terrain-origin policy is tested against current wall/Terrain
+fixtures; unusual cave shapes and severe latency need broader later playtests.
+Rifle/aircraft health, movement and cosmetic values are tuning defaults in
+[decisions](../docs/decisions.md). The actual map launcher remains P08 work.
+
+### Delivery
+
+[PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27)
+remains draft until the outstanding current-source checks and delivery records
+are complete. [GitHub Verify 43338524340](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43338524340)
+passed on `0075f1916d2cec43a1e23b18d371ac02c2cabef0`, containing the tested
+source and prior evidence. No P06 merge or Roblox publication has occurred;
+no later plan has been implemented.

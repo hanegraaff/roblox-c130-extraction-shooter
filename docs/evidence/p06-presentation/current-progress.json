@@ -1,0 +1,25 @@
+{
+  "source": "0ab360775bdd7d97a2654aa3b6857ddbc3d6157e",
+  "gameplay": "59252c96d8774473cde642b50fc0ecd39e8bd5e3",
+  "capture": "actual Studio screen_capture after user review; no camera or input override",
+  "capturedAtServerSeconds": 1794530561.275823,
+  "localDate": "2026-11-12",
+  "timezone": "America/New_York",
+  "client": "Player2",
+  "role": "Ground",
+  "life": "Alive",
+  "actualClientCount": 3,
+  "viewportPixels": [
+    1081,
+    618
+  ],
+  "capturePixels": [
+    1889,
+    1080
+  ],
+  "aircraftHealth": 155,
+  "aircraftMaximumHealth": 300,
+  "magazine": 22,
+  "reserve": 90,
+  "sha256": "061925edc9b26371700ab0a0ff0643cf1bd448d1355aefb4dd70a5c7166c8278"
+}

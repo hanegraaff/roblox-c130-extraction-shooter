@@ -1,0 +1,62 @@
+{
+  "source": "0ab360775bdd7d97a2654aa3b6857ddbc3d6157e",
+  "gameplay": "59252c96d8774473cde642b50fc0ecd39e8bd5e3",
+  "session": "native Server & Clients, 3 actual clients, Player1 Gunship Player2+Player3 Ground, normal owned HumanTestSession",
+  "device": "Studio iPhone 17 Pro simulator, landscape",
+  "viewport": [
+    750,
+    381
+  ],
+  "touchEnabled": true,
+  "reticleAbsolute": [
+    363,
+    121,
+    24,
+    24
+  ],
+  "guiInset": [
+    0,
+    58
+  ],
+  "reticleViewportCenter": [
+    375,
+    191
+  ],
+  "statusRect": [
+    245,
+    267,
+    260,
+    36
+  ],
+  "fireRect": [
+    636,
+    123,
+    90,
+    70
+  ],
+  "reloadRect": [
+    636,
+    59,
+    90,
+    54
+  ],
+  "fire": "Alt+Shift simulator gesture at FIRE; ammo 22→17",
+  "reload": "separate Alt+Shift gesture at RELOAD; ammo 17→30, reserve 90→77",
+  "swipe": "separate simulated touch drag changed camera CFrame",
+  "screenshot": "/private/tmp/p06-phone-0ab.jpg",
+  "cleanup": "simulator restored default, touch false; temporary shot diagnostics disconnected",
+  "limitation": "Simulated input and layout, not a physical-device test",
+  "desktopCapture": {
+    "path": "/private/tmp/p06-user-0ab.jpg",
+    "role": "Player2 Ground Alive",
+    "viewport": [
+      1081,
+      618
+    ],
+    "serverTime": 1794530561.275823,
+    "aircraftHealth": 155,
+    "ammo": 22,
+    "reserve": 90,
+    "method": "actual Studio screen_capture after user completed native play without camera or input modification"
+  }
+}
