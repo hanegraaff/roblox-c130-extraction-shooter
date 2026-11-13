@@ -31,8 +31,8 @@ Explain the single launcher, recovery/default replenishment and actual controls.
 
 The launcher implementation is present on `plan/08-rocket-launcher`; acceptance
 is not complete. [Draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
-contains source and evidence pushed at `5dae4b6`; its
-[Verify CI run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43503117593)
+contains source and evidence pushed at `5cbbd04`; its
+[Verify CI run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43512102022)
 passes. Latest tested runtime/test source is
 `ef7826bc80310c17be4bcde93fe7607620303289`, tree
 `db1f4e50296a2620d13e36839525c7562220a629`, based on integrated P07 main

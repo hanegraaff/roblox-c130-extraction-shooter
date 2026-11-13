@@ -1,9 +1,9 @@
 # P08 launcher verification
 
 [Draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
-contains the implementation, prose and source-bound evidence. Delivery head
-`5dae4b6206912f42ed2eeca00e7aed33dd57498d` has a passing
-[GitHub Verify run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43503117593).
+contains the implementation, prose and source-bound evidence. Verified delivery
+`5cbbd046fde01c0c89511a19f684871530eadad1` has a passing
+[GitHub Verify run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43512102022).
 Acceptance remains open; CI does not replace actual multiplayer or operated
 checks.
 
