@@ -54,6 +54,22 @@ passing/failing records below describe the earlier source and do not validate
 the revised behavior. The revised candidate must pass its own gates and
 operated review before completion.
 
+Dedicated follow-up [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30)
+targets the original unmerged PR #29 branch. Production damage/geometry/assets
+are frozen from `583d82a`; test-only corrections through `8f59c42` address a
+BasePart color-quantization assumption and a moving reset-fixture target,
+and explicitly compare all 187 panels on both clients. Independent full host
+gate passes 55 unit / 55 integration; fresh solo Studio baseline passes
+142 server / 6 client with no failures/skips/errors. Actual native-fired
+Warehouse comparison shows stopped 30mm Light damage persisting for over
+31 seconds, then real third/sixth M102 Heavy/Total transitions in normal and
+thermal views. The first revised native seven-case run passed six and failed
+its reset fixture before any GAU reset intent; it is preserved as a failure.
+The corrected all-panel native rerun, shelter operated review and affected
+regressions are pending. The [revision evidence](../docs/evidence/p07-damage-revision.md)
+records source identities, failure diagnosis, actual captures and separate
+real-player blast-health checks. Neither PR has been merged or published.
+
 ### Earlier candidate record (historical)
 
 Implementation started on 2026-11-13 on `plan/07-destruction`, based on

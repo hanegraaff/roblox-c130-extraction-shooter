@@ -56,7 +56,23 @@ to verified final head `dce058d`. The fresh integrated full host gate passes
 and existing Studio evidence. Routine setup selects `main`; P07 can branch
 from it and remains unstarted. No Roblox publication occurred.
 
-2026-11-13 P07 candidate: [draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
+2026-11-13 active P07 revision: the user removed a real late-joining-client
+scenario from current acceptance (D50). That old unavailable capability no
+longer blocks P07; runtime spectator restrictions remain. Dedicated
+`fix/p07-progressive-persistent-damage` and dependent
+[PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30)
+preserve earned 30mm damage, distinguish Light/Heavy/Total and make the starting
+battlefield shelter destructible under the same rules as the other buildings.
+The current independent host gate passes 55 unit / 55 integration; the fresh
+Studio baseline passes 142 server / 6 client. New native-fired normal/thermal
+Warehouse comparisons show persistent Light scars, Heavy's real half opening
+and Total removal. Revised all-panel two-client reset, shelter operated review
+and affected regressions are still being checked. The
+[revision record](docs/evidence/p07-damage-revision.md) separates current proof
+from earlier failed runs. P08 remains Planned and no P07 integration or Roblox
+publication occurred.
+
+2026-11-13 earlier P07 candidate (historical): [draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
 contains progressive panels, real openings and bounded physical fragments on
 `plan/07-destruction`, based on integrated main `e4c6e3a`. The final executable
 candidate `873f0f6` passes 54 unit / 53 integration and all host gates;
@@ -69,14 +85,14 @@ into a pass. The [plan record](plans/07-destruction.md) and
 [verification evidence](docs/evidence/p07-destruction.md) retain exact scopes,
 source hashes, failures, cleanup and the current QA opening capture.
 
-Acceptance still needs a genuinely new post-damage client: the installed
+At that earlier checkpoint, acceptance still needed a genuinely new post-damage client: the installed
 Studio 0.747 manual session disables both client count and Quick Open Actions
 Start, and the previously unavailable SDK/manual-session AddPlayers routes
 were not retried without changed conditions. Clean rendered thermal-hole
 comparison, Destroyed/falling-fragment visual review and native firing /
 complete operated readability also remain open after bounded review attempts.
-Resume P07 when a real mid-round join route and the focused visual review can
-be exercised. P08 remains Planned; no later plan started. Main is unchanged,
+That checkpoint's late-join requirement is superseded by D50 and the active
+revision above. P08 remained Planned; no later plan started. Main was unchanged,
 and no P07 merge or Roblox publication occurred.
 
 ## How plans move

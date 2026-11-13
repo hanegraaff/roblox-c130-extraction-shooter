@@ -128,3 +128,84 @@ The user then started the prepared two-client session. Its
 6.363356 seconds and `actualLateClientRequired=false` is observed. The revised
 seven-case report and focused visual/native-input checks are still pending
 at this checkpoint; historical results are not substituted.
+
+## Review delivery
+
+[Draft revision PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30)
+targets the unmerged `plan/07-destruction` dependency branch, isolating this
+user-requested fix from the original feature in PR #29. It was opened at
+documentation head `abc789a1a0ad1bb7e816f13c20cdbbd92d91975f`; tested executable
+source remains `4db4595`. PR #29 links the required follow-up and no longer
+describes the user-waived late join as the revised gate. Neither PR is merged.
+
+The first revised native run discovered seven cases, passed six and FAILED
+the final reset case. All 63 accepted GAU impacts, actual valid interval sum
+10.998499 seconds and Heavy transition at 9.164498 seconds passed. Stopped
+Light credits 3.665681 / 7.331610 persisted, and all six shelter M102 stage /
+appearance steps passed. Shared current state and real wall traversal passed.
+The reset target was validated for both weapon views before its roughly
+ten-second heavy sequence, then moved outside the allowed 30mm fixture view.
+No GAU reset intent reached the server, so partial/in-flight preconditions
+were never established; this is not a reset pass or known production defect.
+The authorized test-only correction forecasts both views and first-hit geometry
+over the complete bounded sequence, then rechecks immediately before firing.
+Native all-panel comparison coverage is also being made explicit rather than
+overstating the older three-panel reset sample.
+
+The [native 4db failure report](p07-revision-native-4db-failure.json) preserves
+that six-pass/one-failure result. Runtime, transport, fragments and teardown
+lease were clean afterward; the actual two clients remained connected.
+No additional human launch was requested.
+
+The [current-core actual-player blast check](p07-revision-a4-real-blast.json)
+then passed 2/2 on those same real clients, using exact source-faithful probe
+scripts and unchanged production rules. Both targets were outside colliders,
+had no ForceField and were within the relevant blast radius. GAU's creating
+hole kept health 100, then the actual same-plane control impact through the
+hole left 75 at 3.499304 studs (<4). M102's third creating hit kept health 100,
+then the later through-hole blast left 0 at 3.502333 studs (<18). Residual
+obstruction and actual control-solid containment passed. Real roles rotated;
+QA runtime/control/fragments were disposed before the next owner. This health
+result is separate from the pending rendered stage comparisons.
+
+## Actual native-fired Warehouse stage comparison
+
+The [render report](p07-revision-fixed-render-report.json) records the same two
+actual players using production MatchRuntime, AircraftService, CombatRuntime
+and the normal operator ThermalCameraController. Only the supported aircraft
+clock is held to keep a reproducible angle; match, combat and fragment physics
+continue in real time. The normal-color comparison camera is explicitly fixed.
+This comparison does not prove live orbit, OS focus or touch input behavior.
+No damage is awarded synthetically. The exact disposable [scene](p07-revision-fixed-render-scene.luau.txt),
+[visibility witnesses](p07-revision-render-witnesses.luau.txt) and
+[normal camera](p07-revision-normal-camera.luau.txt) accompany the report.
+
+Six native-fired GAU impacts earned 0.981613 seconds of valid on-panel credit.
+The same Light credit and visible scars remained after 31.366 seconds idle.
+Six subsequent native-fired M102 impacts progressed through Light, Heavy at
+the third heavy hit and Total at the sixth. Both views use the same declared
+frame/FOV for their respective tier comparisons. The 105mm operator FOV is
+40 degrees; its production controller is unchanged.
+
+| State | Normal-color view | Production thermal view |
+| --- | --- | --- |
+| Pristine | [capture](p07-revision/normal-pristine.png) | [capture](p07-revision/thermal-pristine.png) |
+| Light, after idle | [capture](p07-revision/normal-light.png) | [capture](p07-revision/thermal-light.png) |
+| Heavy, after third heavy hit | [capture](p07-revision/normal-heavy.png) | [capture](p07-revision/thermal-heavy.png) |
+| Total, after sixth heavy hit | [capture](p07-revision/normal-total.png) | [capture](p07-revision/thermal-total.png) |
+
+All eight PNGs are unedited actual GPU captures. Root independently inspected
+them: Light has persistent dark scars; Heavy has visibly darker residual
+strips with contrasting fractures and a genuine central opening; Total has
+no panel. Temporary inert QA blocks behind the hole and residual provide
+visibility controls. Thermal hides both controls under Pristine/Light, reveals
+only the hole control under Heavy and both under Total. Reported center and
+corner rays agree with these surfaces. The black blocks in normal view and
+white highlights in thermal are test witnesses, not intended game assets.
+
+Real debris is visible below the Heavy panel in the thermal frame, but the
+capture occurred after the transition. It is not claimed as visual proof of
+airborne fragments. Automated actual gravity/contact tests passed in the
+142-case engine baseline; the remaining shelter/fragment operated review,
+new all-panel reset run and current gunship/panning regressions remain open
+at this checkpoint.

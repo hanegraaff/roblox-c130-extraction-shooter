@@ -1,0 +1,45 @@
+--!strict
+-- Disposable normal-color capture camera. Public render priority/camera APIs
+-- hold one declared frame without changing the normal Client entrypoint, role,
+-- avatar, input handlers or production thermal controller. This is controlled
+-- render evidence, not an operated Ground-camera claim. Stop restores ownership.
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local NormalCamera = {}
+function NormalCamera.start(frame: CFrame, fov: number, focus: Vector3): { stop: () -> () }
+	local scripts = Players.LocalPlayer.PlayerScripts
+	assert(not scripts:FindFirstChild("P07RevisionNormalCameraStop"), "normal render camera already owned")
+	assert(fov > 0 and fov < 90, "declared render FOV required")
+	local camera = workspace.CurrentCamera
+	assert(camera, "actual client camera required")
+	local savedFrame, savedType, savedFov = camera.CFrame, camera.CameraType, camera.FieldOfView
+	local savedFocus, savedSubject = camera.Focus, camera.CameraSubject
+	local binding = "P07RevisionControlledNormalCamera"
+	local stopEvent = Instance.new("BindableEvent")
+	stopEvent.Name = "P07RevisionNormalCameraStop"
+	stopEvent.Parent = scripts
+	local stopped = false
+	local connection: RBXScriptConnection? = nil
+	local function stop()
+		if stopped then
+			return
+		end
+		stopped = true
+		RunService:UnbindFromRenderStep(binding)
+		if camera.Parent then
+			camera.CFrame, camera.CameraType, camera.FieldOfView = savedFrame, savedType, savedFov
+			camera.Focus, camera.CameraSubject = savedFocus, savedSubject
+		end
+		if connection then
+			connection:Disconnect()
+		end
+		stopEvent:Destroy()
+	end
+	connection = stopEvent.Event:Connect(stop)
+	RunService:BindToRenderStep(binding, Enum.RenderPriority.Camera.Value + 100, function()
+		camera.CameraType = Enum.CameraType.Scriptable
+		camera.CFrame, camera.FieldOfView, camera.Focus = frame, fov, CFrame.new(focus)
+	end)
+	return { stop = stop }
+end
+return NormalCamera
