@@ -10,6 +10,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
+local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local LauncherService = require(game:GetService("ServerScriptService").Server.LauncherService)
 local Harness = {}
@@ -31,6 +32,8 @@ export type Report = {
     actualReconnectVerified: boolean,
     requiredUnverified: { string },
     departureMethod: string,
+    traces: { unknown },
+    droppedTraceRecords: number,
 }
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 15)
@@ -43,6 +46,8 @@ end
 -- until the coordinator collects it and ends the owned manual session.
 function Harness.run(finish: ((Report) -> ())?)
     local cases: { Case } = {}
+    local traces: { unknown } = {}
+    local droppedTraceRecords = 0
     local initialClientCount = #Players:GetPlayers()
     local peakClientCount = initialClientCount
     local arrivals = Players.PlayerAdded:Connect(function()
@@ -74,6 +79,8 @@ function Harness.run(finish: ((Report) -> ())?)
             actualReconnectVerified = false,
             requiredUnverified = { "A5 actual same-identity reconnect" },
             departureMethod = if finish then "server-kick" else "client-leave",
+            traces = traces,
+            droppedTraceRecords = droppedTraceRecords,
         }
         workspace:SetAttribute("P08MultiplayerReport", HttpService:JSONEncode(report))
         if finish then
@@ -106,6 +113,87 @@ function Harness.run(finish: ((Report) -> ())?)
         deliver()
         return
     end
+    -- Retain bounded diagnostics before runtime.stop removes transport/effects.
+    -- JSON-safe scalar copies never grant hits or change production state.
+    local currentCase = "startup"
+    local watchedPlayer: Player? = nil
+    local lastTarget: Vector3? = nil
+    local function point(position: Vector3): { number }
+        return { position.X, position.Y, position.Z }
+    end
+    local function record(stage: string, player: Player?, target: Vector3?, extra: unknown)
+        local round = runtime.rounds.match.snapshot()
+        local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
+        local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
+        local aircraft = workspace:FindFirstChild("Aircraft")
+        local character = if player then player.Character else nil
+        local head = if character then character:FindFirstChild("Head") else nil
+        local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+        local effects = workspace:FindFirstChild("LauncherEffects")
+        local rockets: { unknown } = {}
+        if effects then
+            for _, item in effects:GetChildren() do
+                if item.Name == "Rocket" and item:IsA("BasePart") and #rockets < 4 then
+                    table.insert(rockets, point(item.Position))
+                end
+            end
+        end
+        local entry = {
+            stage = stage,
+            case = currentCase,
+            serverTime = workspace:GetServerTimeNow(),
+            wallTime = os.clock(),
+            roundId = round.roundId,
+            phase = round.phase,
+            launcher = runtime.launcher.snapshot(),
+            resources = runtime.launcher.resources(),
+            health = if aircraftState then aircraftState:GetAttribute("Health") else nil,
+            lastShot = if launcherState then launcherState:GetAttribute("LastShot") else nil,
+            lastImpact = if launcherState then launcherState:GetAttribute("LastImpact") else nil,
+            userId = if player then player.UserId else nil,
+            life = if player and round.members[player.UserId] then round.members[player.UserId].life else nil,
+            humanoidHealth = if humanoid then humanoid.Health else nil,
+            head = if head and head:IsA("BasePart") then point(head.Position) else nil,
+            aircraft = if aircraft and aircraft:IsA("Model")
+                then point(aircraft:GetPivot().Position)
+                else nil,
+            target = if target then point(target) else nil,
+            rockets = rockets,
+            extra = extra,
+        }
+        if #traces == 192 then
+            table.remove(traces, 1)
+            droppedTraceRecords += 1
+        end
+        table.insert(traces, entry)
+    end
+    local observedKey = ""
+    local lastFlightSample = 0
+    local observer = RunService.Heartbeat:Connect(function()
+        local round, launcherState =
+            runtime.rounds.match.snapshot(), ReplicatedStorage:FindFirstChild("LauncherState")
+        local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
+        local snapshot, resources = runtime.launcher.snapshot(), runtime.launcher.resources()
+        local key = HttpService:JSONEncode({
+            roundId = round.roundId,
+            phase = round.phase,
+            state = snapshot.state,
+            ownerId = snapshot.ownerId,
+            readyAt = snapshot.readyAt,
+            flights = resources.flights,
+            health = if aircraftState then aircraftState:GetAttribute("Health") else nil,
+            lastShot = if launcherState then launcherState:GetAttribute("LastShot") else nil,
+            lastImpact = if launcherState then launcherState:GetAttribute("LastImpact") else nil,
+            life = if watchedPlayer and round.members[watchedPlayer.UserId]
+                then round.members[watchedPlayer.UserId].life
+                else nil,
+        })
+        local now = workspace:GetServerTimeNow()
+        if key ~= observedKey or (resources.flights > 0 and now - lastFlightSample >= 0.25) then
+            observedKey, lastFlightSample = key, now
+            record("observed-state", watchedPlayer, lastTarget)
+        end
+    end)
     local transport = Instance.new("RemoteEvent")
     transport.Name = "P08Harness"
     local ready: { [Player]: boolean } = {}
@@ -256,17 +344,52 @@ function Harness.run(finish: ((Report) -> ())?)
             target = runtime.aircraft.sample(elapsed + travel + 0.10).Position
             travel = (target - head.Position).Magnitude / LauncherService.speedStudsPerSecond
         end
+        record(
+            "lead-prepared",
+            player,
+            target,
+            { estimatedTravelSeconds = travel, transportAllowanceSeconds = 0.10 }
+        )
         return target
     end
-    local function fire(player: Player, target: Vector3)
+    -- Moving targets are providers: evaluate only once readiness and the client
+    -- rendezvous are satisfied. A precomputed lead can be several seconds stale
+    -- when the previous carrier's identity-owned reload is still in progress.
+    -- Explicit fixed miss vectors deliberately use the separate scalar branch.
+    local function fire(player: Player, targetSource: Vector3 | (() -> Vector3)): string
+        watchedPlayer = player
+        waitFor(function()
+            return ready[player] == true
+        end, "fire client ready")
         waitFor(function()
             return runtime.launcher.snapshot().ammo == 1
         end, "rocket ready", 8)
         local before = runtime.launcher.snapshot().readyAt
+        local preparedAt = workspace:GetServerTimeNow()
+        local target = if type(targetSource) == "function" then targetSource() else targetSource
+        lastTarget = target
+        local kind = if type(targetSource) == "function" then "moving-direct" else "fixed-miss"
+        record("fire-dispatch", player, target, { preparedAt = preparedAt, aimKind = kind })
         probe(player, "Fire", payload(player, target))
         waitFor(function()
             return runtime.launcher.snapshot().readyAt > before
         end, "accepted real fire")
+        local acceptedAt = runtime.launcher.snapshot().readyAt - LauncherService.reloadSeconds
+        local state = ReplicatedStorage:FindFirstChild("LauncherState")
+        local encoded = if state then state:GetAttribute("LastShot") else nil
+        local shot = if type(encoded) == "string" then HttpService:JSONDecode(encoded) else nil
+        assert(
+            type(shot) == "table" and type(shot.shotId) == "string" and shot.userId == player.UserId,
+            "accepted rocket identity unavailable"
+        )
+        record("fire-accepted", player, target, {
+            preparedAt = preparedAt,
+            acceptedAtDerived = acceptedAt,
+            aimAgeAtAcceptanceSeconds = acceptedAt - preparedAt,
+            aimKind = kind,
+            shotId = shot.shotId,
+        })
+        return shot.shotId
     end
     local function resetRound()
         local before = runtime.rounds.match.snapshot()
@@ -286,11 +409,19 @@ function Harness.run(finish: ((Report) -> ())?)
         deploy()
     end
     local function check(name: string, callback: () -> ())
+        currentCase = name
+        record("case-start", watchedPlayer, lastTarget)
         local ok, failure = pcall(function()
             callback()
             return true
         end)
         table.insert(cases, { name = name, passed = ok, detail = if ok then nil else tostring(failure) })
+        record(
+            if ok then "case-passed" else "case-failed",
+            watchedPlayer,
+            lastTarget,
+            { passed = ok, detail = if ok then "ok" else tostring(failure) }
+        )
         assert(ok, tostring(failure))
     end
     local ok, failure = pcall(function()
@@ -373,19 +504,53 @@ function Harness.run(finish: ((Report) -> ())?)
                 assert(carrier, "carrier missing")
                 local teammate = if ground[1] == carrier then ground[2] else ground[1]
                 nearAircraft(carrier)
-                fire(carrier, lead(carrier))
+                local shotId = fire(carrier, function()
+                    return lead(carrier)
+                end)
                 local untilTime = runtime.launcher.snapshot().readyAt
+                local state = ReplicatedStorage:FindFirstChild("LauncherState")
+                local encoded = if state then state:GetAttribute("LastImpact") else nil
+                local lastImpact = if type(encoded) == "string" then HttpService:JSONDecode(encoded) else nil
+                assert(
+                    runtime.launcher.resources().flights > 0
+                        and health() == 300
+                        and (type(lastImpact) ~= "table" or lastImpact.shotId ~= shotId),
+                    "direct rocket was not still in flight before carrier death"
+                )
+                record("before-carrier-death", carrier, lastTarget, { shotId = shotId })
                 local humanoid = if carrier.Character
                     then carrier.Character:FindFirstChildOfClass("Humanoid")
                     else nil
                 assert(humanoid, "carrier body missing")
                 humanoid.Health = 0
+                record("after-carrier-death-request", carrier, lastTarget, { shotId = shotId })
                 waitFor(function()
                     return runtime.launcher.snapshot().state == "Available"
                 end, "death recovery")
+                local roundAfterDeath = runtime.rounds.match.snapshot()
+                local mate = roundAfterDeath.members[teammate.UserId]
+                assert(
+                    roundAfterDeath.phase == "Active" and mate and mate.life == "Alive" and mate.connected,
+                    "death fixture lost its living teammate or active round"
+                )
+                if health() == 300 then
+                    assert(
+                        runtime.launcher.resources().flights > 0,
+                        "nonterminal carrier death canceled an in-flight rocket"
+                    )
+                    record("flight-survived-carrier-death", carrier, lastTarget, { shotId = shotId })
+                else
+                    record(
+                        "impact-observed-before-recovery-rendezvous",
+                        carrier,
+                        lastTarget,
+                        { shotId = shotId }
+                    )
+                end
                 waitFor(function()
                     return health() == 200
                 end, "dead shooter's actual in-flight rocket", 8)
+                record("dead-shooter-impact-confirmed", carrier, lastTarget, { shotId = shotId })
                 pickup(teammate)
                 assert(runtime.launcher.snapshot().readyAt == untilTime, "death healed reload")
                 assert(carrier:GetAttribute("Life") == "Eliminated", "death restored life")
@@ -495,7 +660,9 @@ function Harness.run(finish: ((Report) -> ())?)
             equip(shooter, "Rocket launcher")
             for index = 1, 3 do
                 nearAircraft(shooter)
-                fire(shooter, lead(shooter))
+                fire(shooter, function()
+                    return lead(shooter)
+                end)
                 waitFor(function()
                     return health() == 300 - index * 100
                 end, "direct rocket " .. tostring(index), 8)
@@ -547,7 +714,9 @@ function Harness.run(finish: ((Report) -> ())?)
                 equip(shooter, "Rocket launcher")
                 for index = 1, 2 do
                     nearAircraft(shooter)
-                    fire(shooter, lead(shooter))
+                    fire(shooter, function()
+                        return lead(shooter)
+                    end)
                     waitFor(function()
                         return health() == math.max(0, 195 - index * 100)
                     end, "mixed rocket", 8)
@@ -586,6 +755,8 @@ function Harness.run(finish: ((Report) -> ())?)
     if not ok then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })
     end
+    record("before-runtime-cleanup", watchedPlayer, lastTarget)
+    observer:Disconnect()
     runtime.stop()
     runtime.stop()
     listener:Disconnect()
