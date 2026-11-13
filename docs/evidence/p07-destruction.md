@@ -140,3 +140,65 @@ was created on 2026-11-13 from `plan/07-destruction` at
 in its description. Remote main remained
 `e4c6e3a2506a9e9ac5574bdf42242f77f8200650`. This draft delivery does not
 mark P07 complete or integrate it.
+
+## First actual native multiplayer run
+
+On 2026-11-13 the user started Server & Clients with two actual clients.
+Native server `30579148-0d78-4851-bce9-8384f9aa57da` observed Player1/-1
+Operator Alive and Player2/-2 Ground Alive. Its baseline discovered/passed
+137 server cases with zero failures/skips/errors; first actual client arrived
+at 5.075 seconds. Runtime source remained `cb530a0` (documentation head
+`a80780906fdd78e616f763cccb719c4c02ad1897`).
+
+The P07 harness discovered three cases, passed two and failed one. Rejected
+requests left cover unchanged. Actual M102 impacts on
+`Foundry_S02_Roof_01_02` produced Intact after hits 1/2, Damaged after 3,
+Damaged after 4/5 and Destroyed after 6. The sustained GAU-23 case timed out
+with `P07 timeout: nine seconds of actual 30mm`. The harness stopped its owned
+runtime; native windows remained open for diagnosis and controlled rearm.
+This is a failed multiplayer gate. No late-join checkpoint was reached and
+no A2/A7 or late-join pass is inferred. Cause and correction remain under
+investigation; the passing solo/deterministic results above retain their
+original scope.
+
+The [native failure report](p07-native-first-failure.json) preserves both actual
+client baseline reports (6/6 each), server identity, invocation and console.
+Because the fixture's teardown removed its runtime state, a separate controlled
+same-session probe is required to capture accepted/rejected GAU-23 timing;
+the original failure has no retrospective per-shot timeline.
+
+A subsequent source review also found a P05 regression fixture still requiring
+the raw `P05MuzzleOverlap` tag as structural impact identity. The current
+production normalization correctly reports no registered panel for that
+external solid. Its collision/position/protected-health/no-flight assertions
+must be retained while correcting that expected identity. A forecast warning
+that P07's wall target may become occluded during heavy reloads remains a
+fixture risk, not an observed native failure.
+
+### Focused same-session GAU-23 diagnosis
+
+The independent tester rearmed the actual production runtime on the same two
+clients and fired the original bounded 61-request / 0.151-second fixture.
+No thresholds, gap tolerance, clock or Heartbeat were replaced. The
+[diagnostic trace](p07-gau-diagnostic.json) and
+[summary](p07-gau-diagnostic-summary.json) show 60 accepted outcomes and
+60 impacts, all on `Foundry_S02_Roof_01_03`; every view validated. Request
+sequence 45 arrived 0.000859 seconds before the authoritative cooldown ended
+and correctly rejected, although its local send interval was 0.151147 seconds.
+The next accepted gap was 0.315841 seconds, above the existing 0.225-second
+continuity limit. The ordered barrier correctly cleared 6.999062 valid seconds.
+
+The local burst took 9.983341 seconds, median send interval 0.166708 seconds.
+This establishes a reproducible fixture delivery-jitter failure path, while
+the original failed run itself retains no retrospective timeline. The
+observer's Readiness snapshot ran before dispatch; actual acceptance is derived
+from resolved shot IDs/firedAt, not the observer's initial guess. A preparation
+script error before any requests was cleaned up separately and is not a
+candidate failure.
+
+The authorized correction is confined to test fixtures: provide delivery margin
+inside the unchanged cadence/gap bounds, use current view intent, record actual
+accepted timing and preserve first-impact/threshold assertions. Production
+cooldown, nine-second threshold and interruption rules remain unchanged.
+The P05 external-solid fixture and P07 wall visibility guards are included
+in that consolidated test-only correction before another full gate/rearm.

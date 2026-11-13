@@ -1,0 +1,61 @@
+{
+  "requests": 61,
+  "acceptedActualOutcomes": 60,
+  "impacts": 60,
+  "panelIds": [
+    "Foundry_S02_Roof_01_03"
+  ],
+  "allViewValid": true,
+  "rejectedRequests": [
+    {
+      "viewValid": true,
+      "sequence": 45,
+      "acceptedFireTime": 1794581168.507281,
+      "ammo": 56,
+      "userId": -1,
+      "camera": [
+        307.7550964355469,
+        186.7800750732422
+      ],
+      "time": 1794581168.656422,
+      "claimedCamera": [
+        316.9151306152344,
+        170.77703857421875
+      ],
+      "acceptedByReadiness": true,
+      "nextFire": 1794581168.6572812,
+      "actualAccepted": false
+    }
+  ],
+  "largestAcceptedGap": {
+    "afterShotId": 44,
+    "nextShotId": 45,
+    "gap": 0.3158409595489502
+  },
+  "sendIntervalMin": 0.15114688873291016,
+  "sendIntervalMedian": 0.16670846939086914,
+  "sendIntervalMax": 0.16748809814453125,
+  "clientBurstDuration": 9.983340978622437,
+  "maxProgressSeconds": 6.9990620613098145,
+  "final": {
+    "progress": 0,
+    "sustainedSeconds": 0,
+    "stage": 0,
+    "heavySeconds": 0
+  },
+  "barriers": [
+    {
+      "time": 1794581161.095633,
+      "afterShotId": 0
+    },
+    {
+      "time": 1794581168.739815,
+      "afterShotId": 44
+    },
+    {
+      "time": 1794581171.556562,
+      "afterShotId": 60
+    }
+  ],
+  "note": "Remote observer ran before production listener; its Readiness is pre-dispatch. Accepted matching uses actual resolve outcomes within5ms of observed receipt."
+}
