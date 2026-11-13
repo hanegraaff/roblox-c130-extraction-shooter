@@ -42,25 +42,35 @@ function GroundCombatController.projectAim(
         UDim2.fromOffset(math.floor(pixels.X - guiOrigin.X + 0.5), math.floor(pixels.Y - guiOrigin.Y + 0.5))
 end
 
--- Returns weapon readiness layout without yielding. On touch, compact rows
--- fit below round health and above the centered reticle, preserving native
--- inventory at the bottom even in the 568x320 minimum landscape viewport.
-function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
+-- Weapon readiness layout in GUI-content pixels. Touch shares a compact
+-- header with RoundPanel: health left/readiness right, then ownership left.
+-- origin is this ScreenGui's measured content origin; unlike viewport rays,
+-- readouts must share coordinates with the normal-inset RoundHUD. No yielding.
+function GroundCombatController.statusLayout(
+    touch: boolean,
+    origin: Vector2?,
+    inset: Vector2?
+): (UDim2, UDim2)
+    local offset = origin or Vector2.zero
+    local safeInset = inset or Vector2.zero
     if touch then
-        return UDim2.new(0.5, 0, 0, 144), UDim2.fromOffset(260, 24)
+        return UDim2.new(1, -132 - offset.X - safeInset.X, 0, 66 - offset.Y), UDim2.fromOffset(240, 22)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
 end
 
--- Desktop rows stay above the native Backpack's reserved bottom inventory
--- region. Touch actions sit below the reticle and above that same inventory
--- reserve; its two compact status rows live above the reticle instead.
-local function pickupPosition(touch: boolean): UDim2
-    return UDim2.new(0.5, 0, 1, if touch then -104 else -160)
+-- Bottom touch actions leave a 96px native inventory band clear. Narrower
+-- equipment buttons also keep the minimum landscape thumbstick region clear.
+local function pickupPosition(touch: boolean, origin: Vector2?, inset: Vector2?): UDim2
+    local offset, safeInset = origin or Vector2.zero, inset or Vector2.zero
+    return if touch
+        then UDim2.new(0.5, -offset.X - safeInset.X, 1, -104 - offset.Y - safeInset.Y)
+        else UDim2.new(0.5, 0, 1, -160)
 end
 
-local function launcherStatusPosition(touch: boolean): UDim2
-    return if touch then UDim2.new(0.5, 0, 0, 118) else UDim2.new(0.5, 0, 1, -204)
+local function launcherStatusPosition(touch: boolean, origin: Vector2?): UDim2
+    local offset = origin or Vector2.zero
+    return if touch then UDim2.fromOffset(132 - offset.X, 92 - offset.Y) else UDim2.new(0.5, 0, 1, -204)
 end
 
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
@@ -143,7 +153,7 @@ function GroundCombatController.new(
             launcherLabel.Name = "LauncherStatus"
             launcherLabel.Position = launcherStatusPosition(lastTouch)
             launcherLabel.Size =
-                UDim2.fromOffset(if lastTouch then 260 else 360, if lastTouch then 24 else 28)
+                UDim2.fromOffset(if lastTouch then 240 else 360, if lastTouch then 22 else 28)
             launcherLabel.TextSize = 14
             launcherLabel.Parent = gui
             local launcherButtons: { [string]: TextButton } = {}
@@ -305,12 +315,36 @@ function GroundCombatController.new(
                 connections,
                 RunService.RenderStepped:Connect(function()
                     local touch = touchEnabled()
-                    if touch ~= lastTouch then
-                        lastTouch = touch
-                        label.Position, label.Size = GroundCombatController.statusLayout(touch)
-                        launcherButtons.Pickup.Position = pickupPosition(touch)
-                        launcherLabel.Position = launcherStatusPosition(touch)
+                    local origin = projectionOrigin.AbsolutePosition
+                    local layoutInset = GuiService:GetGuiInset()
+                    label.Position, label.Size =
+                        GroundCombatController.statusLayout(touch, origin, layoutInset)
+                    label.TextSize = if touch then 14 else 16
+                    launcherButtons.Pickup.Position = pickupPosition(touch, origin, layoutInset)
+                    launcherLabel.Position = launcherStatusPosition(touch, origin)
+                    launcherLabel.Size =
+                        UDim2.fromOffset(if touch then 240 else 360, if touch then 22 else 28)
+                    for index, name in { "M7", "Rocket", "Drop" } do
+                        local button = launcherButtons[name]
+                        button.Size = UDim2.fromOffset(if touch then 68 else 84, 32)
+                        button.Position = if touch
+                            then UDim2.new(
+                                0.5,
+                                (index - 2) * 74 - origin.X - layoutInset.X,
+                                1,
+                                -104 - origin.Y - layoutInset.Y
+                            )
+                            else UDim2.new(0.5, (index - 2) * 90, 1, -104)
                     end
+                    fireButton.Size = UDim2.fromOffset(if touch then 78 else 90, if touch then 56 else 70)
+                    fireButton.Position = if touch
+                        then UDim2.new(1, -24 - origin.X - layoutInset.X, 0, 126 - origin.Y)
+                        else UDim2.new(1, -24, 1, -130)
+                    reloadButton.Size = UDim2.fromOffset(if touch then 54 else 90, if touch then 42 else 54)
+                    reloadButton.Position = if touch
+                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 128 - origin.Y)
+                        else UDim2.new(1, -24, 1, -210)
+                    reloadButton.TextSize = if touch then 12 else 16
                     local roundId = roundState:GetAttribute("RoundId")
                     if type(roundId) == "number" and roundId ~= round then
                         round = roundId
@@ -350,8 +384,6 @@ function GroundCombatController.new(
                     fireButton.Visible = touch
                     reloadButton.Visible = touch and (selected == nil or selected.Name == "M-7 rifle")
                     reticle.Visible = selected ~= nil
-                    launcherLabel.Size =
-                        UDim2.fromOffset(if touch then 260 else 360, if touch then 24 else 28)
                     local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
                     local encoded = if launcherState then launcherState:GetAttribute("Snapshot") else nil
                     if type(encoded) == "string" and encoded ~= launcherEncoded then
@@ -465,7 +497,10 @@ function GroundCombatController.new(
                             hitMarker.Text = "ROCKET HIT"
                         end
                     end
-                    hitMarker.Visible = now < hitUntil
+                    hitMarker.Visible = not touch and now < hitUntil
+                    if touch and now < hitUntil then
+                        label.Text ..= " • HIT"
+                    end
                     reticle.TextColor3 = if now < shotUntil
                         then Color3.fromRGB(255, 205, 55)
                         else Color3.new(1, 1, 1)
