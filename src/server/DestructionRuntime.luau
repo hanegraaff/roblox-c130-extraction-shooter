@@ -9,6 +9,7 @@
 ]=]
 local DestructionService = require(script.Parent.DestructionService)
 local PanelGeometry = require(script.Parent.PanelGeometry)
+local BuildingGeometry = require(script.Parent.BuildingGeometry)
 local PanelFragments = require(script.Parent.PanelFragments)
 local DestructionRuntime = {}
 export type Controller = {
@@ -28,10 +29,11 @@ export type Controller = {
 -- never enter the ledger. Map replacement is detected by Instance identity even
 -- when reset retains the same roundId. Optional fragment settings are test tuning.
 function DestructionRuntime.start(world: Instance, settings: PanelFragments.Settings?): (Controller?, string?)
-    local map = world:FindFirstChild("Battlefield")
-    if not map then
+    local candidateMap = world:FindFirstChild("Battlefield")
+    if not candidateMap or not candidateMap:IsA("Model") then
         return nil, "missing active battlefield"
     end
+    local map: Model = candidateMap
     local fragments, reason = PanelFragments.start(map, settings)
     if not fragments then
         return nil, reason
@@ -54,12 +56,10 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         table.clear(panels)
     end
     local function capture()
-        local buildings = map:FindFirstChild("Buildings")
-        assert(buildings, "active level requires building registry")
-        for _, building in buildings:GetChildren() do
-            local registry = building:FindFirstChild(building.Name .. "_Panels")
-            assert(registry, "missing active panel registry")
-            for _, part in registry:GetChildren() do
+        local registries, registryReason = BuildingGeometry.registries(map)
+        assert(registries, registryReason)
+        for _, registry in registries do
+            for _, part in registry.panels:GetChildren() do
                 assert(
                     part:IsA("BasePart") and type(part:GetAttribute("PanelId")) == "string",
                     "invalid registered panel"
@@ -95,7 +95,8 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                     state.stage,
                     state.progress,
                     state.heavySeconds,
-                    state.sustainedSeconds
+                    state.sustainedSeconds,
+                    state.appearance
                 )
             end
         end
@@ -107,7 +108,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 return
             end
             local active = world:FindFirstChild("Battlefield")
-            assert(active, "active battlefield disappeared")
+            assert(active and active:IsA("Model"), "active battlefield disappeared")
             if active ~= map or id ~= roundId then
                 -- A map reset can retain the completed roundId while entering
                 -- Lobby. Keep its fresh panels closed to all old outcomes until
@@ -130,7 +131,15 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         -- forged tag/copy, support, detached old map or model root is not a hit.
         cancel = rules.cancel,
         identify = function(hit)
-            if not running or not hit or not hit:IsA("BasePart") or map.Parent ~= world then
+            if
+                not running
+                or not hit
+                or not hit:IsA("BasePart")
+                or not hit.CanCollide
+                or not hit.CanQuery
+                or hit:GetAttribute("DamageVisual") == true
+                or map.Parent ~= world
+            then
                 return nil
             end
             local id = hit:GetAttribute("PanelId")
@@ -140,6 +149,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
             local panel = panels[id]
             return if panel
                     and panel.model:IsDescendantOf(map)
+                    and hit.Parent == panel.model
                     and hit:IsDescendantOf(panel.model)
                 then id
                 else nil

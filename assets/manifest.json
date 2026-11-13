@@ -4,7 +4,7 @@
     {
       "id": "battlefield-greybox",
       "kind": "world",
-      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts",
+      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts; original starting-shelter union faithfully retiled into 42 roof and 34 wall panels with explicit level registry descriptor",
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/world/Battlefield.model.json",
@@ -37,6 +37,170 @@
         "minimum_y_studs": -1,
         "maximum_y_studs": 32,
         "owner_module": "src/server/AircraftService.luau"
+      },
+      "panel_registry": {
+        "owner_module": "src/server/BuildingGeometry.luau",
+        "descriptor_path": "PanelRegistries",
+        "building_panels": 111,
+        "starting_shelter_panels": 76,
+        "total_panels": 187,
+        "starting_shelter_folder": "SpawnShelterPanels",
+        "original_shelter_regions": [
+          {
+            "id": "ShelterRoof",
+            "cframe": [
+              0,
+              14,
+              114,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              108,
+              2,
+              96
+            ]
+          },
+          {
+            "id": "ShelterWest",
+            "cframe": [
+              -35,
+              7,
+              120,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              2,
+              14,
+              56
+            ]
+          },
+          {
+            "id": "ShelterEast",
+            "cframe": [
+              35,
+              7,
+              120,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              2,
+              14,
+              56
+            ]
+          },
+          {
+            "id": "ShelterBack",
+            "cframe": [
+              0,
+              7,
+              147,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              72,
+              14,
+              2
+            ]
+          },
+          {
+            "id": "ShelterFrontCenter",
+            "cframe": [
+              0,
+              7,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              32,
+              14,
+              2
+            ]
+          },
+          {
+            "id": "ShelterFrontWest",
+            "cframe": [
+              -34,
+              7,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              4,
+              14,
+              2
+            ]
+          },
+          {
+            "id": "ShelterFrontEast",
+            "cframe": [
+              34,
+              7,
+              93,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ],
+            "size": [
+              4,
+              14,
+              2
+            ]
+          }
+        ]
       }
     },
     {
@@ -67,7 +231,21 @@
       "license": "Project license",
       "local_path": "assets/models/PanelResidual.model.json",
       "roblox_asset_id": null,
-      "upload_owner": null
+      "upload_owner": null,
+      "damage_visual_recipe": {
+        "owner_module": "src/server/PanelGeometry.luau",
+        "source": "Original normalized two-face primitive crack recipe in Git; no external textures or scripts",
+        "appearances": [
+          "Pristine",
+          "Light",
+          "Heavy",
+          "Total"
+        ],
+        "marks_per_face_maximum": 7,
+        "mark_width_studs": 0.12,
+        "mark_depth_studs": 0.03,
+        "face_offset_studs": 0.02
+      }
     }
   ]
 }

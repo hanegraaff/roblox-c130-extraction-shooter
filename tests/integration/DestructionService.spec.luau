@@ -60,7 +60,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(assert(owner.snapshot("wall"), "wall missing").stage == 2, "destroyed state regressed")
         end
     )
-    test("SustainedPanelFire cadence gap boundary tolerates spacing and resets above it", function()
+    test("SustainedPanelFire cadence gap boundary preserves earned work and excludes elapsed gaps", function()
         for _, gap in { 0.225, 0.22501 } do
             local owner = fixture()
             shot(owner, 1, 0, "wall")
@@ -68,13 +68,13 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             shot(owner, 3, 0.15 + gap, "wall")
             local state = assert(owner.snapshot("wall"), 'Expected owner.snapshot("wall")')
             assert(
-                math.abs(state.sustainedSeconds - (if gap == 0.225 then 0.375 else 0)) < 1e-8,
+                math.abs(state.sustainedSeconds - (if gap == 0.225 then 0.375 else 0.15)) < 1e-8,
                 "gap policy"
             )
         end
     end)
     test(
-        "SustainedPanelFire misses blocked targets switches reload and operator loss clear only uncommitted work",
+        "SustainedPanelFire misses blocked targets switches reload and operator loss preserve earned damage",
         function()
             for _, interruption in { "miss", "target", "switch", "reload", "disconnect" } do
                 local owner = fixture()
@@ -94,8 +94,21 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                 end
                 local state = assert(owner.snapshot("wall"), 'Expected owner.snapshot("wall")')
                 assert(
-                    state.heavySeconds == 3 and state.sustainedSeconds == 0 and state.stage == 0,
+                    state.heavySeconds == 3
+                        and math.abs(state.sustainedSeconds - 0.15) < 1e-8
+                        and state.stage == 0,
                     interruption
+                )
+                local resumed = if interruption == "disconnect" then 4 else 5
+                shot(owner, resumed, 20, "wall")
+                assert(
+                    math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.15) < 1e-8,
+                    "first resumed hit charged paused time"
+                )
+                shot(owner, resumed + 1, 20.15, "wall")
+                assert(
+                    math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.3) < 1e-8,
+                    "resumed interval lost prior earned credit"
                 )
             end
         end
@@ -197,7 +210,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         end
     )
     test(
-        "SustainedPanelFire queued interruption clears partial prefix before later shots without resurrection",
+        "SustainedPanelFire queued interruption retains partial prefix while forbidding time across its barrier",
         function()
             local owner = fixture()
             for id = 1, 17 do
@@ -211,15 +224,15 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                 shot(owner, id, (id - 1) * 0.15, "wall")
             end
             assert(
-                assert(owner.snapshot("wall"), "wall missing").progress == 0,
-                "partial pre-barrier credit survived"
+                math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 3) < 1e-8,
+                "partial pre-barrier credit was lost or gap time awarded"
             )
             shot(owner, 23, 4.15, "wall")
             owner.interrupt(21)
             owner.interrupt(22) -- an unissued historical boundary is stale too
             assert(
-                math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.15) < 1e-8,
-                "stale barrier cleared new valid stream"
+                math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 3.15) < 1e-8,
+                "stale barrier changed persistent valid stream"
             )
             assert(
                 owner.resources().pending == 0 and owner.resources().barriers == 0,
@@ -249,13 +262,76 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             }), "closed generation accepted old flight")
             assert(
                 assert(owner.snapshot("wall"), "wall missing").stage == 1
-                    and assert(owner.snapshot("wall"), "wall missing").sustainedSeconds == 0,
-                "cancel regressed completed stage or kept partial work"
+                    and math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.15)
+                        < 1e-8,
+                "cancel regressed completed stage or erased earned credit"
             )
             owner.reset(2, { "wall" })
             assert(
                 owner.resolve({ roundId = 2, shotId = 1, weapon = "M102", firedAt = 20, panelId = "wall" }),
                 "new generation did not reopen"
+            )
+        end
+    )
+    test(
+        "PersistentPanelFire three separated bursts earn nine seconds per stage without idle credit",
+        function()
+            local owner = fixture()
+            local id = 0
+            for burst = 1, 6 do
+                for sample = 0, 20 do
+                    id += 1
+                    shot(owner, id, burst * 100 + sample * 0.15, "wall")
+                end
+                owner.interrupt(id)
+                local state = assert(owner.snapshot("wall"), "wall missing")
+                assert(
+                    state.stage == math.min(2, math.floor(burst / 3)),
+                    "separated bursts crossed wrong stage boundary"
+                )
+                assert(
+                    math.abs(state.sustainedSeconds - (if burst % 3 == 0 then 0 else (burst % 3) * 3)) < 1e-7,
+                    "idle barrier changed earned burst credit"
+                )
+            end
+        end
+    )
+    test(
+        "PersistentPanelFire alternating targets keep independent credits and resumed first hits earn zero",
+        function()
+            local owner = fixture()
+            shot(owner, 1, 0, "wall")
+            shot(owner, 2, 0.15, "wall")
+            shot(owner, 3, 0.3, "roof")
+            shot(owner, 4, 0.45, "roof")
+            shot(owner, 5, 0.6, "wall")
+            assert(
+                math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.15) < 1e-8,
+                "retargeted first hit charged elapsed gap"
+            )
+            shot(owner, 6, 0.75, "wall")
+            shot(owner, 7, 0.9, nil)
+            shot(owner, 8, 1.05, "wall")
+            shot(owner, 9, 1.2, "wall")
+            assert(
+                math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.45) < 1e-8,
+                "wall credit did not persist across target/miss"
+            )
+            assert(
+                math.abs(assert(owner.snapshot("roof"), "roof missing").sustainedSeconds - 0.15) < 1e-8,
+                "other panel credit changed"
+            )
+            shot(owner, 10, 2, "wall", "M102")
+            assert(
+                assert(owner.snapshot("wall"), "wall missing").heavySeconds == 3
+                    and assert(owner.snapshot("wall"), "wall missing").appearance == "Light",
+                "mixed persistent appearance incorrect"
+            )
+            owner.reset(2, { "wall", "roof" })
+            assert(
+                assert(owner.snapshot("wall"), "wall missing").appearance == "Pristine"
+                    and assert(owner.snapshot("roof"), "roof missing").progress == 0,
+                "reset retained earned damage"
             )
         end
     )

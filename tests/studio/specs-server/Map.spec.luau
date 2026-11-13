@@ -58,7 +58,8 @@ return function()
                 "spawn transform must survive file load"
             )
             assert(
-                (map.Permanent.ShelterRoof.Position - Vector3.new(0, 14, 114)).Magnitude < 0.01,
+                (map.SpawnShelterPanels.Shelter_Roof_R01_C01.Position - Vector3.new(-47, 14, 74)).Magnitude
+                    < 0.01,
                 "cover transform must survive file load"
             )
             local size = disk.Size
@@ -90,6 +91,29 @@ return function()
             assert(owner.validate(), "expected owner.validate()")
         end)
     end)
+    test(
+        "StartingShelterRegistry rejects missing wrong or widened registry inputs without mutation",
+        function()
+            fixture(function(world, owner)
+                local inputs = world.Battlefield.PanelRegistries
+                local input = inputs.SpawnShelter
+                local original = input.Value
+                input.Value = "Breakable"
+                assert(not owner.validate(), "generic barriers replaced shelter registry")
+                input.Value = original
+                local duplicate = input:Clone()
+                duplicate.Name = "Lobby"
+                duplicate.Value = "LobbyStation"
+                duplicate.Parent = inputs
+                assert(not owner.validate(), "protected lobby entered panel registry")
+                duplicate:Destroy()
+                input.Parent = nil
+                assert(not owner.validate(), "missing shelter descriptor accepted")
+                input.Parent = inputs
+                assert(owner.validate(), "restored shelter registry rejected")
+            end)
+        end
+    )
     test("two launcher approaches clear a 4x6x4 stud upright avatar and have continuous floor", function()
         fixture(function(world)
             local map = world.Battlefield
@@ -138,10 +162,12 @@ return function()
             rays.FilterType = Enum.RaycastFilterType.Include
             rays.FilterDescendantsInstances = { map }
             rays.RespectCanCollide = true
-            for _, kind in { "Permanent", "Breakable" } do
+            for _, kind in { "SpawnShelterPanels", "Breakable" } do
                 local part = map[kind]:GetChildren()[1] :: BasePart
                 assert(
-                    part:GetAttribute("CoverKind") == kind and part:GetAttribute("CoverId") == part.Name,
+                    part:GetAttribute("CoverKind")
+                            == (if kind == "SpawnShelterPanels" then "BuildingPanel" else kind)
+                        and part:GetAttribute("CoverId") == part.Name,
                     'expected part:GetAttribute("CoverKind") == kind and part:GetAttribute("CoverId") == part.Name'
                 )
                 local hit =
@@ -156,7 +182,7 @@ return function()
                         local point = (anchor :: BasePart).Position
                         local hit = workspace:Raycast(point, aircraft - point, rays)
                         assert(
-                            hit and hit.Instance:IsDescendantOf(map.Permanent),
+                            hit and hit.Instance:IsDescendantOf(map.SpawnShelterPanels),
                             "spawn unprotected: " .. anchor.Name .. " phase " .. i
                         )
                     end
@@ -223,7 +249,7 @@ return function()
             end
             local count = #world.Battlefield:GetDescendants()
             for _ = 1, 2 do
-                world.Battlefield.Permanent.ShelterRoof:Destroy()
+                world.Battlefield.SpawnShelterPanels.Shelter_Roof_R01_C01:Destroy()
                 local transient = Instance.new("Part")
                 transient.Name = "TransientDebris"
                 transient.Parent = world.Battlefield

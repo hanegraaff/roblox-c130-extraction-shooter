@@ -110,7 +110,11 @@ function Harness.run()
                             cadence: number,
                         }
                         assert(
-                            typeof(burst.point) == "Vector3" and burst.count == 61 and burst.cadence == 0.18,
+                            typeof(burst.point) == "Vector3"
+                                and burst.count >= 1
+                                and burst.count <= 61
+                                and burst.count % 1 == 0
+                                and burst.cadence == 0.18,
                             "unbounded burst fixture"
                         )
                         local state = ReplicatedStorage:WaitForChild("AircraftState", 5)
@@ -143,6 +147,7 @@ function Harness.run()
                                 id: string,
                                 stage: string,
                                 progress: number,
+                                appearance: string?,
                                 parts: number,
                                 pivot: { number },
                             }
@@ -156,6 +161,7 @@ function Harness.run()
                                 local progress = model:GetAttribute("PanelProgress")
                                 if
                                     model:GetAttribute("PanelState") ~= entry.stage
+                                    or (entry.appearance ~= nil and model:GetAttribute("DamageAppearance") ~= entry.appearance)
                                     or type(progress) ~= "number"
                                     or math.abs(progress - entry.progress) > 1e-5
                                     or #model:GetChildren() ~= entry.parts
@@ -169,10 +175,20 @@ function Harness.run()
                                 local params = RaycastParams.new()
                                 params.FilterType = Enum.RaycastFilterType.Include
                                 params.FilterDescendantsInstances = { model }
-                                local normal = if string.find(entry.id, "Roof", 1, true)
-                                    then Vector3.yAxis
-                                    else Vector3.zAxis
-                                local hit = workspace:Raycast(pivot.Position - normal * 2, normal * 4, params)
+                                local size = model:GetAttribute("IntactSize")
+                                if typeof(size) ~= "Vector3" then
+                                    return false
+                                end
+                                local normal = if size.Y <= math.min(size.X, size.Z)
+                                    then pivot.UpVector
+                                    elseif size.X < size.Z then pivot.RightVector
+                                    else -pivot.LookVector
+                                local thickness = math.min(size.X, size.Y, size.Z)
+                                local hit = workspace:Raycast(
+                                    pivot.Position - normal * (thickness / 2 + 1),
+                                    normal * (thickness + 2),
+                                    params
+                                )
                                 return (entry.stage == "Intact" and hit ~= nil)
                                     or (entry.stage ~= "Intact" and hit == nil)
                             end, entry.id .. " state/progress/opening")

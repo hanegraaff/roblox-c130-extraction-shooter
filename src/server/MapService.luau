@@ -142,7 +142,21 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             return false, "missing " .. name .. " station"
         end
     end
-    for _, kind in { "Permanent", "Breakable" } do
+    local panelInputs = map:FindFirstChild("PanelRegistries")
+    local shelterInput = if panelInputs then panelInputs:FindFirstChild("SpawnShelter") else nil
+    local shelter = map:FindFirstChild("SpawnShelterPanels")
+    if
+        not panelInputs
+        or #panelInputs:GetChildren() ~= 1
+        or not shelterInput
+        or not shelterInput:IsA("StringValue")
+        or shelterInput.Value ~= "SpawnShelterPanels"
+        or not shelter
+        or #shelter:GetChildren() ~= 76
+    then
+        return false, "starting shelter requires its explicit76-panel registry"
+    end
+    for _, kind in { "SpawnShelterPanels", "Breakable" } do
         local covers = map:FindFirstChild(kind)
         if not covers or #covers:GetChildren() == 0 then
             return false, "missing " .. kind .. " cover"
@@ -197,7 +211,7 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
     local destroyed = false
     local controller: Controller
     local function decorate()
-        for _, kind in { "Permanent", "Breakable" } do
+        for _, kind in { "SpawnShelterPanels", "Breakable" } do
             local covers = map:FindFirstChild(kind)
             if covers then
                 for _, cover in covers:GetChildren() do

@@ -10,6 +10,73 @@ local PhysicsService = game:GetService("PhysicsService")
 local RunService = game:GetService("RunService")
 local CombatRuntime = require(Server.CombatRuntime)
 local CombatService = require(Server.CombatService)
+-- Independent geometry measurements filter actual authoritative solids. Cosmetic
+-- marks may add visible Parts but cannot enlarge collision or bridge GPU holes.
+local function colliders(model: Model): { BasePart }
+    local result: { BasePart } = {}
+    for _, item in model:GetDescendants() do
+        if item:IsA("BasePart") and item.CanCollide and item.CanQuery then
+            table.insert(result, item)
+        end
+    end
+    return result
+end
+local function axes(size: Vector3): (Vector3, Vector3, Vector3, number, number)
+    if size.Y <= math.min(size.X, size.Z) then
+        if size.X >= size.Z then
+            return Vector3.yAxis, Vector3.xAxis, Vector3.zAxis, size.X, size.Z
+        end
+        return Vector3.yAxis, Vector3.zAxis, Vector3.xAxis, size.Z, size.X
+    end
+    if size.X < size.Z then
+        return Vector3.xAxis, Vector3.zAxis, Vector3.yAxis, size.Z, size.Y
+    end
+    return Vector3.zAxis, Vector3.xAxis, Vector3.yAxis, size.X, size.Y
+end
+local function visualMarks(model: Model, size: Vector3, owner: DestructionRuntime.Controller): number
+    local _, u, v = axes(size)
+    local solids = colliders(model)
+    local count = 0
+    for _, mark in model:GetDescendants() do
+        if mark:IsA("BasePart") and mark:GetAttribute("DamageVisual") == true then
+            count += 1
+            assert(
+                mark.Anchored
+                    and not mark.CanCollide
+                    and not mark.CanQuery
+                    and not mark.CanTouch
+                    and mark:GetAttribute("PanelId") == nil,
+                "cosmetic mark gained collision/query/identity"
+            )
+            assert(owner.identify(mark) == nil, "cosmetic mark identified as cover")
+            local fits = false
+            for _, solid in solids do
+                local contained = true
+                for _, sx in { -1, 1 } do
+                    for _, sy in { -1, 1 } do
+                        local corner = solid.CFrame:PointToObjectSpace(
+                            mark.CFrame:PointToWorldSpace(
+                                Vector3.new(sx * mark.Size.X / 2, sy * mark.Size.Y / 2, 0)
+                            )
+                        )
+                        if
+                            math.abs(corner:Dot(u)) > math.abs(solid.Size:Dot(u)) / 2 + 0.001
+                            or math.abs(corner:Dot(v)) > math.abs(solid.Size:Dot(v)) / 2 + 0.001
+                        then
+                            contained = false
+                        end
+                    end
+                end
+                if contained then
+                    fits = true
+                    break
+                end
+            end
+            assert(fits, "opaque cosmetic mark bridges outside a remaining solid face")
+        end
+    end
+    return count
+end
 local function fixture()
     local world = Instance.new("Folder")
     world.Name = "P07GeometryFixture"
@@ -41,7 +108,7 @@ return function()
                 table.sort(panels, function(a, b)
                     return a.Name < b.Name
                 end)
-                assert(#panels == 111, "missing authored panel coverage")
+                assert(#panels == 187, "missing authored panel coverage")
                 local serial = 0
                 local function heavy(id: string)
                     serial += 1
@@ -72,21 +139,17 @@ return function()
                     )
                     owner.flush(workspace:GetServerTimeNow())
                     assert(
-                        panel:GetAttribute("PanelState") == "Damaged" and #panel:GetChildren() == 2,
+                        panel:GetAttribute("PanelState") == "Damaged"
+                            and panel:GetAttribute("DamageAppearance") == "Heavy"
+                            and #colliders(panel) == 2,
                         "damaged state"
                     )
                     assert(
                         panel:GetAttribute("IntactPivot") == pivot and panel:GetPivot() == pivot,
                         "pivot changed"
                     )
-                    local normal = if size.Y < 2
-                        then Vector3.yAxis
-                        elseif size.X < 2 then Vector3.xAxis
-                        else Vector3.zAxis
-                    local major = if size.X >= size.Z then Vector3.xAxis else Vector3.zAxis
-                    local second = if size.Y < 2 then Vector3.zAxis else Vector3.yAxis
-                    local width = if size.X >= size.Z then size.X else size.Z
-                    local height = if size.Y < 2 then size.Z else size.Y
+                    local normal, major, second, width, height = axes(size)
+                    assert(visualMarks(panel, size, owner) == 28, "Heavy two-face fractures missing")
                     local rays = RaycastParams.new()
                     rays.FilterType = Enum.RaycastFilterType.Include
                     rays.FilterDescendantsInstances = { panel }
@@ -106,7 +169,7 @@ return function()
                     end
                     local opening = 1 - blocked / 400
                     assert(opening >= 0.45 and opening <= 0.55, panel.Name .. " opening=" .. opening)
-                    if size.Y > 2 then
+                    if normal ~= Vector3.yAxis and width >= 10 and height >= 6 then
                         local overlap = OverlapParams.new()
                         overlap.FilterType = Enum.RaycastFilterType.Include
                         overlap.FilterDescendantsInstances = { panel }
@@ -121,9 +184,12 @@ return function()
                     end
                     owner.flush(workspace:GetServerTimeNow())
                     assert(
-                        panel:GetAttribute("PanelState") == "Destroyed" and #panel:GetChildren() == 0,
+                        panel:GetAttribute("PanelState") == "Destroyed"
+                            and panel:GetAttribute("DamageAppearance") == "Total"
+                            and #panel:GetChildren() == 0,
                         "ghost collider"
                     )
+                    task.wait() -- bounded per-panel real query/visual batches
                 end
                 for part, pose in statics do
                     assert(
@@ -147,6 +213,117 @@ return function()
                 end
             end)
             owner.stop()
+            owner.stop()
+            world:Destroy()
+            assert(ok, tostring(failure))
+        end
+    )
+    test(
+        "PersistentDamageAppearance keeps Light and Heavy on both building and starting-shelter panels",
+        function()
+            local world, map, owner = fixture()
+            local ok, failure = pcall(function()
+                local serial = 0
+                for index, id in { "Foundry_S01_North_02", "Shelter_Roof_R01_C01" } do
+                    local model = map:FindFirstChild(id, true)
+                    assert(model and model:IsA("Model"), "visual fixture panel missing")
+                    local solid = model:FindFirstChild("Solid")
+                    assert(solid and solid:IsA("BasePart"), "visual fixture collider missing")
+                    local size = solid.Size
+                    local time = index * 1000
+                    local function impact(weapon: string, at: number)
+                        serial += 1
+                        assert(
+                            owner.resolve({
+                                roundId = 1,
+                                shotId = serial,
+                                weapon = weapon,
+                                firedAt = at,
+                                panelId = id,
+                            }),
+                            "visual fixture impact rejected"
+                        )
+                        owner.flush(workspace:GetServerTimeNow())
+                    end
+                    impact("GAU23", time)
+                    assert(
+                        model:GetAttribute("DamageAppearance") == "Pristine"
+                            and not model:FindFirstChild("DamageVisuals"),
+                        "zero first-hit credit appeared damaged"
+                    )
+                    impact("GAU23", time + 0.15)
+                    local light = solid.Color
+                    assert(
+                        model:GetAttribute("DamageAppearance") == "Light"
+                            and solid.Material == Enum.Material.Slate
+                            and visualMarks(model, size, owner) >= 6,
+                        "positive earned damage lacks two-face Light cues"
+                    )
+                    owner.interrupt(serial)
+                    owner.flush(workspace:GetServerTimeNow() + 30)
+                    assert(
+                        solid.Color == light
+                            and model:GetAttribute("DamageAppearance") == "Light"
+                            and math.abs(
+                                    assert(owner.snapshot(id), "panel missing").sustainedSeconds - 0.15
+                                )
+                                < 1e-8,
+                        "pause erased earned Light appearance"
+                    )
+                    impact("GAU23", time + 30)
+                    assert(solid.Color == light, "resumed first impact changed earned damage")
+                    impact("GAU23", time + 30.15)
+                    assert(solid.Color ~= light, "additional earned credit has no progressive cue")
+                    for hit = 1, 3 do
+                        impact("M102", time + 40 + hit * 4)
+                    end
+                    assert(
+                        model:GetAttribute("DamageAppearance") == "Heavy"
+                            and model:GetAttribute("PanelProgress") == 0
+                            and #colliders(model) == 2,
+                        "Heavy appearance or actual opening lost at zero local progress"
+                    )
+                    assert(visualMarks(model, size, owner) == 28, "Heavy fracture faces missing")
+                    local heavy = colliders(model)[1].Color
+                    local lightLuma = light.R * 0.2126 + light.G * 0.7152 + light.B * 0.0722
+                    local heavyLuma = heavy.R * 0.2126 + heavy.G * 0.7152 + heavy.B * 0.0722
+                    assert(
+                        math.abs(heavyLuma - lightLuma) > 0.15,
+                        "Light/Heavy grayscale base contrast too small"
+                    )
+                    local marks = model:FindFirstChild("DamageVisuals")
+                    assert(marks, "Heavy marks missing")
+                    local mark = marks:GetChildren()[1]
+                    assert(mark:IsA("BasePart"), "fracture mark missing")
+                    mark:SetAttribute("PanelId", id)
+                    mark.CanCollide = true
+                    mark.CanQuery = true
+                    assert(
+                        owner.identify(mark) == nil,
+                        "forged decoration attributes acquired collider identity"
+                    )
+                    mark.CanCollide = false
+                    mark.CanQuery = false
+                    mark:SetAttribute("PanelId", nil)
+                    owner.interrupt(serial)
+                    owner.flush(workspace:GetServerTimeNow() + 60)
+                    assert(
+                        model:GetAttribute("DamageAppearance") == "Heavy"
+                            and colliders(model)[1].Color == heavy,
+                        "Heavy returned to original appearance after pause"
+                    )
+                end
+                owner.sync(2)
+                for _, item in map:GetDescendants() do
+                    if item:IsA("Model") and item:GetAttribute("PanelId") then
+                        assert(
+                            item:GetAttribute("DamageAppearance") == "Pristine"
+                                and not item:FindFirstChild("DamageVisuals"),
+                            "reset retained damage visuals"
+                        )
+                    end
+                end
+            end)
             owner.stop()
             world:Destroy()
             assert(ok, tostring(failure))
