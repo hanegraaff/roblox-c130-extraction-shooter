@@ -1,5 +1,11 @@
 # P07 damage revision — 2026-11-13
 
+**Integration update:** with the user's subsequent merge authorization, PR #30
+merged into the P07 branch, then PR #29 merged the accepted tree into main at
+`3c0cfab`. The [integration record](p07-integration.md) documents matching
+trees and a fresh passing main gate. Branch/draft/authorization statements
+below describe the earlier source-specific checkpoints, before integration.
+
 The user removed the real late-joining-player scenario from current P07
 acceptance and reported three remaining issues: Light/Heavy damage was not
 visually distinct, the battlefield starting shelter stayed immune, and 30mm

@@ -41,7 +41,20 @@ Document panel IDs/variants, heavy/sustained/mixed damage contracts, measured op
 
 ## Completion record
 
-### Active user revision — 2026-11-13
+### Main integration — 2026-11-13
+
+With the user's authorization to merge both PRs and complete the loop,
+PR #30 merged into the P07 branch at `633683053b2ddbb6be303901843a03b8a88af8e5`,
+then PR #29 merged into main at `3c0cfabd641039ace3bd2ebe26defcdd2ed5ed31`.
+Both trees equal accepted head `15b362f` exactly:
+`ac1deb12cb4321c7adaab6ed5bbf465826dd754e`.
+The [integration record](../docs/evidence/p07-integration.md) preserves the
+fresh main full gate (55 unit / 55 integration), build hashes and unchanged
+Studio acceptance scope. Routine setup selects main; P08's required source
+is integrated, and implementation has not started. No Roblox publication
+occurred. The following branch-delivery records predate these merges.
+
+### Accepted user revision (pre-integration) — 2026-11-13
 
 The user explicitly removed real late joining from P07 acceptance and reported
 three remaining defects: insufficient Light/Heavy visual distinction, an

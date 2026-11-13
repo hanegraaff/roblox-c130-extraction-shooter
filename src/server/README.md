@@ -79,7 +79,7 @@ The default GAU23 profile holds 100 rounds, fires no faster than once per 0.15 s
 
 ## Progressive panel destruction
 
-The persistent-damage revision on `fix/p07-progressive-persistent-damage` has fresh passing acceptance evidence; older P07 results retain their original source scope.
+The persistent-damage revision is integrated on `main` with passing acceptance and [integration evidence](../../docs/evidence/p07-integration.md); older P07 results retain their original source scope.
 
 `PanelDamageRules` is pure server-only arithmetic with independent `{ stage, heavySeconds, sustainedSeconds }` records. `new()` returns pristine state; `apply(state, heavy, seconds)` accepts valid nonnegative finite input and returns whether one stage advanced. `progress(state)` is stage-local (Destroyed = 1); `appearance(state)` returns Pristine, Light, Heavy or Total independently. Positive earned credit on Intact is Light. Structural stage 1 remains Heavy even with zero current-stage credit; stage 2 is Total. There is no rule API that heals earned credit on an interruption. Stage values 0/1/2 remain Intact/Damaged/Destroyed. Each stage costs nine equivalent seconds, each direct M102 hit adds three, and surplus at a completed stage is discarded. Threshold/readiness rounding tolerances remain 1e-7 / 1e-9 seconds. Calls are nonyielding.
 
