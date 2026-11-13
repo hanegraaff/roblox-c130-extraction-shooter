@@ -1,6 +1,6 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); The verified P07 panel/fragment revision is delivered separately in [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30), awaiting integration. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
@@ -56,7 +56,16 @@ to verified final head `dce058d`. The fresh integrated full host gate passes
 and existing Studio evidence. Routine setup selects `main`; P07 can branch
 from it and remains unstarted. No Roblox publication occurred.
 
-2026-11-13 active P07 revision: the user removed a real late-joining-client
+2026-11-13 P07 main integration: with the user's authorization, PR #30 merged
+into the P07 branch at `6336830`, then PR #29 merged it into `main` at
+`3c0cfab`. Both merge trees exactly match accepted final head `15b362f`.
+A fresh full gate on integrated main passes 55 unit / 55 integration and all
+build/reconstruction/isolation checks. The [integration record](docs/evidence/p07-integration.md)
+preserves exact hashes, commands, prior Studio evidence and scope. Routine
+setup now selects main. P07 stays Complete; P08 stays Ready and unstarted,
+with its dependency source now integrated. No Roblox publication occurred.
+
+2026-11-13 accepted P07 revision (pre-integration): the user removed a real late-joining-client
 scenario from current acceptance (D50). That old unavailable capability no
 longer blocks P07; runtime spectator restrictions remain. Dedicated
 `fix/p07-progressive-persistent-damage` and dependent

@@ -1,0 +1,52 @@
+{
+  "mainMergeCommit": "3c0cfabd641039ace3bd2ebe26defcdd2ed5ed31",
+  "revisionMergeCommit": "633683053b2ddbb6be303901843a03b8a88af8e5",
+  "acceptedHead": "15b362fd11751b3b548103b5c687f3b33a3a15b4",
+  "mergeTree": "ac1deb12cb4321c7adaab6ed5bbf465826dd754e",
+  "treeIdentical": true,
+  "prs": [
+    30,
+    29
+  ],
+  "command": "python3 scripts/verify.py",
+  "environment": {
+    "system": "Darwin",
+    "release": "26.6.2",
+    "machine": "arm64",
+    "python": "3.10.4"
+  },
+  "exitCode": 0,
+  "unit": {
+    "discovered": 55,
+    "failed": 0,
+    "passed": 55,
+    "skipped": 0,
+    "suite": "unit"
+  },
+  "integration": {
+    "discovered": 55,
+    "failed": 0,
+    "passed": 55,
+    "skipped": 0,
+    "suite": "integration"
+  },
+  "scopeInputCount": 103,
+  "scopeManifest": "p07-revision-source-identity-8053.json",
+  "scopeInputSHA256Matches": true,
+  "builds": {
+    "build/game.rbxlx": "f369d8033cb993699ca8d73f8ebde99caa67bda1f6093dbcd2385010bd17f0b9",
+    "build/tests.rbxlx": "5fce731fff20ad7aa510c00055f8c7387a492fddd58f85e7c3020a3f49e343fc"
+  },
+  "artifactCounts": {
+    "authoredPartsPerBuild": 422,
+    "releaseInstances": 503,
+    "testInstances": 586,
+    "releaseRuntimeScripts": 40,
+    "registeredPanels": 187
+  },
+  "expectedRejectionControls": "Deliberately failing/empty suites, invalid types and artifact corruption probes reject as intended; they are not candidate failures.",
+  "toolNote": "Selene API refresh failed and its pinned cached Roblox standard library was used; lint reports zero errors/warnings/parse errors.",
+  "studio": "No new Studio run for integration. Exact tree and all 103 runtime/test/asset inputs preserve the separately recorded accepted Studio/native/human evidence.",
+  "log": "p07-integration-host.txt",
+  "release": "No Roblox publication performed."
+}
