@@ -253,10 +253,11 @@ return function()
                     )
                     impact("GAU23", time + 0.15)
                     local light = solid.Color
+                    local firstLightMarkCount = visualMarks(model, size, owner)
                     assert(
                         model:GetAttribute("DamageAppearance") == "Light"
                             and solid.Material == Enum.Material.Slate
-                            and visualMarks(model, size, owner) >= 6,
+                            and firstLightMarkCount >= 6,
                         "positive earned damage lacks two-face Light cues"
                     )
                     owner.interrupt(serial)
@@ -273,7 +274,30 @@ return function()
                     impact("GAU23", time + 30)
                     assert(solid.Color == light, "resumed first impact changed earned damage")
                     impact("GAU23", time + 30.15)
-                    assert(solid.Color ~= light, "additional earned credit has no progressive cue")
+                    local resumedState = assert(owner.snapshot(id), "panel missing")
+                    assert(
+                        math.abs(resumedState.sustainedSeconds - 0.30) < 1e-8,
+                        "resumed valid interval did not retain exactly 0.30 earned seconds"
+                    )
+                    -- BasePart stores quantized color channels, so one valid 0.15-second
+                    -- interval need not change stored Color. Earn 1.95 seconds in total:
+                    -- this remains Light and crosses the first crack-count bucket at 1.8.
+                    for sample = 2, 12 do
+                        impact("GAU23", time + 30 + sample * 0.15)
+                    end
+                    local progressedState = assert(owner.snapshot(id), "panel missing")
+                    local progressedMarkCount = visualMarks(model, size, owner)
+                    assert(
+                        math.abs(progressedState.sustainedSeconds - 1.95) < 1e-8
+                            and progressedState.stage == 0
+                            and model:GetAttribute("DamageAppearance") == "Light",
+                        "additional valid intervals did not retain earned Light damage"
+                    )
+                    assert(solid.Color ~= light, "additional earned credit has no stored color cue")
+                    assert(
+                        progressedMarkCount > firstLightMarkCount and progressedMarkCount <= 14,
+                        "additional earned credit lacks bounded two-face crack progression"
+                    )
                     for hit = 1, 3 do
                         impact("M102", time + 40 + hit * 4)
                     end
