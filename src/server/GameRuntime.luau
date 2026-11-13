@@ -11,11 +11,13 @@ local MatchRuntime = require(script.Parent.MatchRuntime)
 local AircraftService = require(script.Parent.AircraftService)
 local CombatRuntime = require(script.Parent.CombatRuntime)
 local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
+local DestructionRuntime = require(script.Parent.DestructionRuntime)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
     aircraft: AircraftService.Controller,
     combat: CombatRuntime.Controller,
+    destruction: DestructionRuntime.Controller,
     groundCombat: GroundCombatRuntime.Controller,
     stop: () -> (),
 }
@@ -68,8 +70,17 @@ function GameRuntime.start(
         map.destroy()
         return nil, aircraftReason
     end
-    local combat, combatReason = CombatRuntime.start(rounds.match, aircraft)
+    local destruction, destructionReason = DestructionRuntime.start(workspace.World)
+    if not destruction then
+        aircraft.stop()
+        rounds.stop()
+        map.destroy()
+        return nil, destructionReason
+    end
+    destruction.sync(rounds.match.snapshot().roundId)
+    local combat, combatReason = CombatRuntime.start(rounds.match, aircraft, nil, nil, nil, destruction)
     if not combat then
+        destruction.stop()
         aircraft.stop()
         rounds.stop()
         map.destroy()
@@ -78,6 +89,7 @@ function GameRuntime.start(
     local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match, groundDependencies)
     if not groundCombat then
         combat.stop()
+        destruction.stop()
         aircraft.stop()
         rounds.stop()
         map.destroy()
@@ -94,10 +106,12 @@ function GameRuntime.start(
         rounds = rounds,
         aircraft = aircraft,
         combat = combat,
+        destruction = destruction,
         stop = function()
             onCorrection = nil
             groundCombat.stop()
             combat.stop()
+            destruction.stop()
             aircraft.stop()
             rounds.stop()
             map.destroy()

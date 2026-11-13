@@ -23,6 +23,9 @@ local Validation = (
         else loadPath("../shared/Validation")
 ) :: typeof(require(game:GetService("ReplicatedStorage").Shared.Validation))
 local CombatService = {}
+-- Floating-point addition and multiplication of the same cadence may differ by
+-- subnanoseconds. This guard admits only that rounding, never a gameplay frame.
+CombatService.readinessEpsilonSeconds = 1e-9
 
 -- Balance defaults in seconds, studs and health units. A 100-round chain-gun
 -- magazine at 0.15 seconds per shot permits more than nine uninterrupted seconds.
@@ -211,7 +214,7 @@ function CombatService.new(map: typeof(MapRules.defaults), minimumY: number, max
             local readiness = current(weapon, now)
             if
                 not readiness
-                or now < readiness.nextFire
+                or now + CombatService.readinessEpsilonSeconds < readiness.nextFire
                 or readiness.reloadUntil > 0
                 or readiness.ammo <= 0
             then

@@ -17,10 +17,13 @@ local MatchService = require(script.Parent.MatchService)
 local CombatService = require(script.Parent.CombatService)
 local CombatViewRules = require(script.Parent.CombatViewRules)
 local DamageRules = require(script.Parent.DamageRules)
+local DestructionRuntime = require(script.Parent.DestructionRuntime)
+local DestructionService = require(script.Parent.DestructionService)
 local CombatRuntime = {}
 
--- Impact is a server-resolved direct collision seam for the future panel service.
--- panelId is nil for terrain/players or unregistered parts. No panel damage occurs.
+-- Impact is a server-resolved direct collision observation, never client authority.
+-- panelId is nil for terrain/players or unregistered solids. Observers must not
+-- mutate colliders; structural changes use the separate end-of-batch owner.
 export type Impact = {
     roundId: number,
     shotId: number,
@@ -28,6 +31,7 @@ export type Impact = {
     position: Vector3,
     panelId: string?,
     time: number,
+    firedAt: number,
 }
 export type Controller = {
     stop: () -> (),
@@ -42,6 +46,8 @@ type Projectile = {
     visual: Part,
     marker: Part,
     awards: DamageRules.Controller,
+    initialHit: BasePart?,
+    embeddedInCover: boolean?,
 }
 
 -- Sweeps the finite shell radius through authoritative query geometry. A zero
@@ -81,6 +87,13 @@ function CombatRuntime.initialOverlap(
     return characterHit
 end
 
+-- Uses the same actual solid-cover query for splash as for engine acceptance.
+-- Both points are world studs. A new hole cannot affect this result until the
+-- batch owner flushes residual geometry. No health or geometry writes/yielding.
+function CombatRuntime.coverAllows(origin: Vector3, target: Vector3, params: RaycastParams): boolean
+    return workspace:Raycast(origin, target - origin, params) == nil
+end
+
 -- Starts one engine owner. optional onImpact is called synchronously after resolution;
 -- it must not yield or reenter the owner. A valid callback is not a destruction award.
 -- Optional monotonic clock and heartbeat are injected boundaries; production defaults
@@ -90,7 +103,8 @@ function CombatRuntime.start(
     aircraft: AircraftService.Controller,
     onImpact: ((Impact) -> ())?,
     clock: (() -> number)?,
-    heartbeat: RBXScriptSignal?
+    heartbeat: RBXScriptSignal?,
+    structure: DestructionRuntime.Controller?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("FireWeapon") then
@@ -120,6 +134,8 @@ function CombatRuntime.start(
     local running = true
     local lastRound = -1
     local lastReadiness = ""
+    local lastAcceptedAt = -math.huge
+    local lastSelected = aircraft.weapon()
     local emit = onImpact or function(_impact: Impact) end
     local now: () -> number = clock or function(): number
         return workspace:GetServerTimeNow()
@@ -167,6 +183,17 @@ function CombatRuntime.start(
         params.FilterDescendantsInstances = roots
         params.RespectCanCollide = not includeCharacters
         return params
+    end
+    local function outcome(projectile: Projectile, panelId: string?)
+        if structure then
+            structure.resolve({
+                roundId = projectile.shot.roundId,
+                shotId = projectile.shot.shotId,
+                weapon = projectile.shot.weapon,
+                firedAt = projectile.shot.firedAt,
+                panelId = panelId,
+            })
+        end
     end
     -- Resolve the entire impact against unchanged cover; no destructible mutation is
     -- performed here. One iteration per player ensures no direct-plus-splash award.
@@ -216,8 +243,9 @@ function CombatRuntime.start(
                 local direct = hit ~= nil and character ~= nil and hit:IsDescendantOf(character)
                 local delta = root.Position - visibilityOrigin
                 if direct or delta.Magnitude <= profile.radius then
-                    local obstruction = workspace:Raycast(visibilityOrigin, delta, rayParameters(false))
-                    if direct or obstruction == nil then
+                    local visible =
+                        CombatRuntime.coverAllows(visibilityOrigin, root.Position, rayParameters(false))
+                    if direct or visible then
                         local damage = projectile.awards.award(
                             player.UserId,
                             humanoid.Health,
@@ -253,6 +281,7 @@ function CombatRuntime.start(
         projectile.marker.Size = Vector3.one * (if projectile.shot.weapon == "M102" then 18 else 4)
         projectile.marker.Transparency = 0.2
         Debris:AddItem(projectile.marker, 0.35)
+        outcome(projectile, panelId)
         emit({
             roundId = state.roundId,
             shotId = projectile.shot.shotId,
@@ -260,6 +289,7 @@ function CombatRuntime.start(
             position = position,
             panelId = panelId,
             time = time,
+            firedAt = projectile.shot.firedAt,
         })
         return true
     end
@@ -289,6 +319,10 @@ function CombatRuntime.start(
                 return
             end
             local weapon = aircraft.weapon()
+            if structure and weapon ~= lastSelected then
+                structure.interrupt(time)
+                lastSelected = weapon
+            end
             local muzzle = aircraft.muzzle(weapon)
             if not muzzle then
                 return
@@ -303,6 +337,15 @@ function CombatRuntime.start(
             if not shot then
                 return
             end
+            -- Only accepted shots can interrupt continuity. Unauthorized/malformed/
+            -- cadence-rejected requests leave structural state untouched.
+            if
+                structure
+                and (weapon ~= "GAU23" or time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7)
+            then
+                structure.interrupt(time)
+            end
+            lastAcceptedAt = time
             local target = Vector3.new(shot.x, shot.y, shot.z)
             local delta = target - muzzle
             local visual = Instance.new("Part")
@@ -357,24 +400,23 @@ function CombatRuntime.start(
             local initialHit = if battlefield
                 then CombatRuntime.initialOverlap(muzzleProbe, overlap, battlefield)
                 else nil
-            if initialHit then
-                -- A ray starting inside a solid can leave it without reporting an
-                -- intersection. Conservatively suppress all splash for this rare
-                -- embedded-cover impact rather than granting damage through cover.
-                local embeddedInCover = battlefield ~= nil and initialHit:IsDescendantOf(battlefield)
-                if not impact(projectile, muzzle, initialHit, time, embeddedInCover) then
-                    marker:Destroy()
-                end
-                visual:Destroy()
-            else
-                table.insert(projectiles, projectile)
-            end
+            -- Initial overlaps join the same Heartbeat batch as moving shells;
+            -- even remote events arriving together cannot swap cover mid-batch.
+            projectile.initialHit = initialHit
+            projectile.embeddedInCover = initialHit ~= nil
+                and battlefield ~= nil
+                and initialHit:IsDescendantOf(battlefield)
+            table.insert(projectiles, projectile)
             publish(time)
         end)
     )
     table.insert(
         connections,
         Players.PlayerRemoving:Connect(function(player)
+            local member = match.snapshot().members[player.UserId]
+            if structure and member and member.role == "Gunship" then
+                structure.interrupt(now())
+            end
             buckets[player] = nil
         end)
     )
@@ -383,6 +425,9 @@ function CombatRuntime.start(
         frameSignal:Connect(function(dt)
             local time = now()
             local state = match.snapshot()
+            if structure then
+                structure.sync(state.roundId)
+            end
             if state.roundId ~= lastRound then
                 clear()
                 aircraftState:SetAttribute("Impact", nil)
@@ -390,7 +435,21 @@ function CombatRuntime.start(
                 combat.reset(lastRound)
                 publish(time)
             end
+            if structure then
+                local selected = aircraft.weapon()
+                if selected ~= lastSelected then
+                    structure.interrupt(time)
+                end
+                lastSelected = selected
+                if time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7 then
+                    structure.interrupt(time)
+                end
+            end
             if state.phase ~= "Active" or time >= state.deadlineSeconds then
+                if structure then
+                    structure.interrupt(time)
+                    structure.flush(time)
+                end
                 if #projectiles > 0 then
                     clear()
                 end
@@ -398,6 +457,22 @@ function CombatRuntime.start(
             end
             for i = #projectiles, 1, -1 do
                 local projectile = projectiles[i]
+                if projectile.initialHit then
+                    if
+                        not impact(
+                            projectile,
+                            projectile.position,
+                            projectile.initialHit,
+                            time,
+                            projectile.embeddedInCover
+                        )
+                    then
+                        projectile.marker:Destroy()
+                    end
+                    projectile.visual:Destroy()
+                    table.remove(projectiles, i)
+                    continue
+                end
                 local profile = CombatService.profiles[projectile.shot.weapon]
                 local distance, expired = 0, true
                 if profile then
@@ -409,6 +484,7 @@ function CombatRuntime.start(
                     )
                 end
                 if expired then
+                    outcome(projectile, nil)
                     projectile.visual:Destroy()
                     projectile.marker:Destroy()
                     table.remove(projectiles, i)
@@ -432,12 +508,20 @@ function CombatRuntime.start(
                 projectile.visual.Position = projectile.position
                 if hit or projectile.remaining <= 0 then
                     -- Client endpoints bound travel only; they do not create impacts.
+                    if not hit then
+                        outcome(projectile, nil)
+                    end
                     if not hit or not impact(projectile, projectile.position, hit.Instance, time) then
                         projectile.marker:Destroy()
                     end
                     projectile.visual:Destroy()
                     table.remove(projectiles, i)
                 end
+            end
+            -- All projectile sweeps and splash rays above observed the pre-impact
+            -- cover. No callback may open it halfway through this batch.
+            if structure then
+                structure.flush(time)
             end
             publish(time)
         end)

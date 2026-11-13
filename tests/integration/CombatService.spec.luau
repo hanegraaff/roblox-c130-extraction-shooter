@@ -28,7 +28,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     test("P05 chain gun sustains nine seconds without forced reload", function()
         local owner = fixture()
         for i = 1, 61 do
-            assert(owner.fire(1, request(i, "GAU23"), "GAU23", true, (i - 1) * 0.151, 360, 140, 0))
+            assert(owner.fire(1, request(i, "GAU23"), "GAU23", true, (i - 1) * 0.15, 360, 140, 0))
         end
         assert(assert(owner.readiness("GAU23", 9.1), "readiness").ammo == 39, "combat invariant")
     end)

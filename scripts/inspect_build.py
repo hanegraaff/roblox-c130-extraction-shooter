@@ -368,7 +368,7 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
@@ -380,6 +380,13 @@ def main() -> None:
     for name in ("ServerScriptService/ServerTests", "StarterPlayer/StarterPlayerScripts/ClientTests", "ReplicatedStorage/TestPackages/TestEZ", "ServerStorage/DevelopmentSettings"):
         if name not in tests:
             raise RuntimeError(f"Test mapping missing {name}")
+    for name in (
+        "ServerScriptService/ServerTests/DestructionHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",
+        "ServerStorage/Tests/Studio/PanelDestruction.spec",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P07 destruction fixture missing from tests or leaked to release: {name}")
     # The P06 manual selector/runner is wholly test-mapped, never shipped.
     check_manual_p06_isolation(release, tests)
     for name in MANUAL_P06_TEST_ONLY:

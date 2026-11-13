@@ -58,6 +58,16 @@
       "local_path": "assets/models/C130.model.json",
       "roblox_asset_id": null,
       "upload_owner": null
+    },
+    {
+      "id": "panel-residual-original",
+      "kind": "model",
+      "source": "Original normalized Roblox primitive residual strips authored in this repository; PanelGeometry scales the two quarter-width strips to each authored panel, leaving an exact central 50% face opening; no external assets or scripts",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/models/PanelResidual.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null
     }
   ]
 }

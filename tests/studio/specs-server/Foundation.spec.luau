@@ -10,6 +10,11 @@ return function()
     require(ServerStorage.Tests.Unit["RateLimit.spec"])(test, require(Shared.RateLimit))
     require(ServerStorage.Tests.Integration["Lifecycle.spec"])(test, require(Shared.Lifecycle))
     local Server = game:GetService("ServerScriptService").Server
+    require(ServerStorage.Tests.Unit["PanelDamageRules.spec"])(test, require(Server.PanelDamageRules))
+    require(ServerStorage.Tests.Integration["DestructionService.spec"])(
+        test,
+        require(Server.DestructionService)
+    )
     require(ServerStorage.Tests.Unit["RoleService.spec"])(test, require(Server.RoleService))
     require(ServerStorage.Tests.Unit["RoundRules.spec"])(test, require(Server.RoundRules))
     require(ServerStorage.Tests.Integration["MatchService.spec"])(test, require(Server.MatchService))
