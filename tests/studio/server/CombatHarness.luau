@@ -542,24 +542,28 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     if panels then
                         for _, panel in panels:GetChildren() do
                             if
-                                panel:IsA("BasePart")
+                                panel:IsA("Model")
                                 and panel:GetAttribute("StoryId") == "02"
                                 and not string.find(panel.Name, "Roof", 1, true)
                             then
-                                local visible =
-                                    workspace:Raycast(muzzle, panel.Position - muzzle, rayParams())
-                                local id = panel:GetAttribute("PanelId")
-                                if
-                                    visible
-                                    and visible.Instance == panel
-                                    and type(id) == "string"
-                                    and runtime.aircraft.aimAllowed(visible.Position)
-                                then
-                                    local reachable = pcall(function()
-                                        return payload(1, weapon, visible.Position)
-                                    end)
-                                    if reachable then
-                                        return visible.Position, id
+                                for _, solid in panel:GetDescendants() do
+                                    if solid:IsA("BasePart") and solid.CanQuery and solid.CanCollide then
+                                        local visible =
+                                            workspace:Raycast(muzzle, solid.Position - muzzle, rayParams())
+                                        local id = panel:GetAttribute("PanelId")
+                                        if
+                                            visible
+                                            and visible.Instance:IsDescendantOf(panel)
+                                            and type(id) == "string"
+                                            and runtime.aircraft.aimAllowed(visible.Position)
+                                        then
+                                            local reachable = pcall(function()
+                                                return payload(1, weapon, visible.Position)
+                                            end)
+                                            if reachable then
+                                                return visible.Position, id
+                                            end
+                                        end
                                     end
                                 end
                             end

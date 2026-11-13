@@ -211,6 +211,23 @@ function Harness.run(finish: ((Report) -> ())?)
         end
         return result
     end
+    -- Read current authoritative readiness; fixture setup cannot bypass the
+    -- M102 reload merely because a prior movement/probe happened to be fast.
+    local function awaitReady(weapon: string)
+        waitFor(function()
+            local encoded = ReplicatedStorage.AircraftState:GetAttribute("Readiness")
+            if type(encoded) ~= "string" then
+                return false
+            end
+            local decoded = HttpService:JSONDecode(encoded)
+            local profile = decoded[weapon]
+            local now = workspace:GetServerTimeNow()
+            return profile ~= nil
+                and profile.ammo > 0
+                and profile.reloadUntil == 0
+                and now + 1e-9 >= profile.nextFire
+        end, "authoritative " .. weapon .. " readiness", 8)
+    end
     local function selectWeapon(player: Player, weapon: string)
         selectSequence += 1
         probe(
@@ -442,6 +459,7 @@ function Harness.run(finish: ((Report) -> ())?)
             function()
                 -- One real heavy impact leaves a separate accumulating panel.
                 selectWeapon(operator, "M102")
+                awaitReady("M102")
                 fireSequence += 1
                 local id = testedIds[3]
                 probe(

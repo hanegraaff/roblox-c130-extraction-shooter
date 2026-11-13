@@ -2,8 +2,9 @@
 --[=[
     PanelFragments: server-only bounded rigid-body presentation owner. Depends on
     PhysicsService, actual Workspace physics and injected seconds. Fragments have
-    server network ownership, cannot query/touch combat, and collide only with
-    explicitly anchored static scenery. No character group or damage callback is
+    server network ownership and collide only with explicitly anchored scenery.
+    Query safety relies on collision groups and active-level Include filters;
+    CanQuery=false alone cannot hide a collidable BasePart. No touch callbacks. No character group or damage callback is
     owned here. step expires fragments without tasks; clear/stop are idempotent.
 ]=]
 local PhysicsService = game:GetService("PhysicsService")
@@ -147,6 +148,9 @@ function PanelFragments.start(root: Instance, settings: Settings?): (Controller?
                 part.Size = Vector3.new(math.min(size.X, 1.5), math.min(size.Y, 1.5), math.min(size.Z, 1.5))
                 part.Color = color
                 part.Material = Enum.Material.Concrete
+                -- Mass <=3.375 game mass units and launch speed <=12studs/s bound
+                -- initial linear momentum to40.5. This sets initial velocity,
+                -- not an ongoing force or ApplyImpulse call.
                 -- Deterministic symmetric offsets and bounded velocity; no forces
                 -- or constraints keep fragments aloft or attach them to structure.
                 local direction =

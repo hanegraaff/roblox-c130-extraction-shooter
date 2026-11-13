@@ -13,6 +13,8 @@ local PanelFragments = require(script.Parent.PanelFragments)
 local DestructionRuntime = {}
 export type Controller = {
     sync: (number) -> (),
+    cancel: () -> (),
+    identify: (Instance?) -> string?,
     resolve: (DestructionService.Outcome) -> (boolean, string?),
     interrupt: (number?) -> (),
     flush: (number) -> (),
@@ -123,6 +125,24 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 rules.reset(ledgerRound, ids)
                 flush(workspace:GetServerTimeNow())
             end
+        end,
+        -- Returns identity only for an actual currently registered solid. A
+        -- forged tag/copy, support, detached old map or model root is not a hit.
+        cancel = rules.cancel,
+        identify = function(hit)
+            if not running or not hit or not hit:IsA("BasePart") or map.Parent ~= world then
+                return nil
+            end
+            local id = hit:GetAttribute("PanelId")
+            if type(id) ~= "string" then
+                return nil
+            end
+            local panel = panels[id]
+            return if panel
+                    and panel.model:IsDescendantOf(map)
+                    and hit:IsDescendantOf(panel.model)
+                then id
+                else nil
         end,
         resolve = rules.resolve,
         interrupt = rules.interrupt,

@@ -163,23 +163,99 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         end
     )
     test(
-        "SustainedPanelFire interruption cutoff prevents old in-flight outcomes restoring cleared work",
+        "SustainedPanelFire exact nine-second accepted prefix survives 0.6-second flight and idle barrier",
         function()
             local owner = fixture()
-            shot(owner, 1, 1, "wall")
-            shot(owner, 2, 1.15, "wall")
-            owner.interrupt(2)
-            shot(owner, 3, 1.3, "wall")
-            shot(owner, 4, 1.45, "wall")
+            local accepted = 0
+            local delivered = 0
+            local lastAcceptedAt = -math.huge
+            -- Controlled flight adapter reproduces actual .15s authorization and .6s
+            -- travel. Idle begins while the final four valid outcomes remain in flight.
+            for frame = 0, 204 do
+                local now = frame * 0.05
+                while accepted < 61 and accepted * 0.15 <= now + 1e-8 do
+                    lastAcceptedAt = accepted * 0.15
+                    accepted += 1
+                end
+                if now - lastAcceptedAt > 0.225 then
+                    owner.interrupt(accepted)
+                end
+                while delivered < accepted and delivered * 0.15 + 0.6 <= now + 1e-8 do
+                    delivered += 1
+                    shot(owner, delivered, (delivered - 1) * 0.15, "wall")
+                end
+            end
+            local state = assert(owner.snapshot("wall"), "wall missing")
+            assert(
+                accepted == 61 and delivered == 61 and state.stage == 1,
+                "idle cancelled exact valid nine-second tail"
+            )
+            assert(
+                state.sustainedSeconds == 0 and owner.resources().barriers == 0,
+                "completed prefix or interruption leaked"
+            )
+        end
+    )
+    test(
+        "SustainedPanelFire queued interruption clears partial prefix before later shots without resurrection",
+        function()
+            local owner = fixture()
+            for id = 1, 17 do
+                shot(owner, id, (id - 1) * 0.15, "wall")
+            end
+            owner.interrupt(21)
+            -- A later shot may collide first, but cannot score before older outcomes
+            -- and the accepted-prefix barrier have drained.
+            shot(owner, 22, 4, "wall")
+            for id = 18, 21 do
+                shot(owner, id, (id - 1) * 0.15, "wall")
+            end
             assert(
                 assert(owner.snapshot("wall"), "wall missing").progress == 0,
-                "old flight restored interrupted work"
+                "partial pre-barrier credit survived"
             )
-            shot(owner, 5, 3, "wall")
-            shot(owner, 6, 3.15, "wall")
+            shot(owner, 23, 4.15, "wall")
+            owner.interrupt(21)
+            owner.interrupt(22) -- an unissued historical boundary is stale too
             assert(
                 math.abs(assert(owner.snapshot("wall"), "wall missing").sustainedSeconds - 0.15) < 1e-8,
-                "new stream failed"
+                "stale barrier cleared new valid stream"
+            )
+            assert(
+                owner.resources().pending == 0 and owner.resources().barriers == 0,
+                "ordered interruption work leaked"
+            )
+        end
+    )
+    test(
+        "SustainedPanelFire terminal cancellation rejects old outcomes and clears pending barriers",
+        function()
+            local owner = fixture()
+            for id = 1, 3 do
+                shot(owner, id, id * 4, "wall", "M102")
+            end
+            shot(owner, 4, 13, "wall")
+            shot(owner, 5, 13.15, "wall")
+            owner.interrupt(7)
+            shot(owner, 7, 13.45, "wall")
+            owner.cancel()
+            assert(owner.resources().pending == 0 and owner.resources().barriers == 0, "terminal work leaked")
+            assert(not owner.resolve({
+                roundId = 1,
+                shotId = 6,
+                weapon = "GAU23",
+                firedAt = 13.3,
+                panelId = "wall",
+            }), "closed generation accepted old flight")
+            assert(
+                assert(owner.snapshot("wall"), "wall missing").stage == 1
+                    and assert(owner.snapshot("wall"), "wall missing").sustainedSeconds == 0,
+                "cancel regressed completed stage or kept partial work"
+            )
+            owner.reset(2, { "wall" })
+            assert(
+                owner.resolve({ roundId = 2, shotId = 1, weapon = "M102", firedAt = 20, panelId = "wall" }),
+                "new generation did not reopen"
             )
         end
     )

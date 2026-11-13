@@ -135,6 +135,7 @@ function CombatRuntime.start(
     local lastRound = -1
     local lastReadiness = ""
     local lastAcceptedAt = -math.huge
+    local lastAcceptedShotId = 0
     local lastSelected = aircraft.weapon()
     local emit = onImpact or function(_impact: Impact) end
     local now: () -> number = clock or function(): number
@@ -217,7 +218,11 @@ function CombatRuntime.start(
             return false
         end
         local panelId: string? = nil
-        if hit then
+        if structure then
+            -- Registry identity, not a copied/string-only tag, owns structural
+            -- credit. Every other accepted collision still resolves as a miss.
+            panelId = structure.identify(hit)
+        elseif hit then
             local id = hit:GetAttribute("PanelId")
             if type(id) == "string" then
                 panelId = id
@@ -320,7 +325,7 @@ function CombatRuntime.start(
             end
             local weapon = aircraft.weapon()
             if structure and weapon ~= lastSelected then
-                structure.interrupt(time)
+                structure.interrupt(lastAcceptedShotId)
                 lastSelected = weapon
             end
             local muzzle = aircraft.muzzle(weapon)
@@ -337,15 +342,11 @@ function CombatRuntime.start(
             if not shot then
                 return
             end
-            -- Only accepted shots can interrupt continuity. Unauthorized/malformed/
-            -- cadence-rejected requests leave structural state untouched.
-            if
-                structure
-                and (weapon ~= "GAU23" or time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7)
-            then
-                structure.interrupt(time)
-            end
+            -- Selection/idle barriers refer to the previously accepted prefix.
+            -- The ledger lets every accepted in-flight tail finish first; an
+            -- exact nine-second burst can therefore complete after release.
             lastAcceptedAt = time
+            lastAcceptedShotId = shot.shotId
             local target = Vector3.new(shot.x, shot.y, shot.z)
             local delta = target - muzzle
             local visual = Instance.new("Part")
@@ -415,7 +416,7 @@ function CombatRuntime.start(
         Players.PlayerRemoving:Connect(function(player)
             local member = match.snapshot().members[player.UserId]
             if structure and member and member.role == "Gunship" then
-                structure.interrupt(now())
+                structure.interrupt(lastAcceptedShotId)
             end
             buckets[player] = nil
         end)
@@ -432,28 +433,35 @@ function CombatRuntime.start(
                 clear()
                 aircraftState:SetAttribute("Impact", nil)
                 lastRound = state.roundId
+                lastAcceptedShotId = 0
+                lastAcceptedAt = -math.huge
                 combat.reset(lastRound)
                 publish(time)
             end
-            if structure then
-                local selected = aircraft.weapon()
-                if selected ~= lastSelected then
-                    structure.interrupt(time)
-                end
-                lastSelected = selected
-                if time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7 then
-                    structure.interrupt(time)
-                end
-            end
             if state.phase ~= "Active" or time >= state.deadlineSeconds then
                 if structure then
-                    structure.interrupt(time)
+                    if state.phase ~= "Deploying" then
+                        structure.cancel()
+                    end
                     structure.flush(time)
                 end
+                lastAcceptedShotId = 0
+                lastAcceptedAt = -math.huge
+                lastSelected = aircraft.weapon()
                 if #projectiles > 0 then
                     clear()
                 end
                 return
+            end
+            if structure then
+                local selected = aircraft.weapon()
+                if selected ~= lastSelected then
+                    structure.interrupt(lastAcceptedShotId)
+                end
+                lastSelected = selected
+                if time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7 then
+                    structure.interrupt(lastAcceptedShotId)
+                end
             end
             for i = #projectiles, 1, -1 do
                 local projectile = projectiles[i]

@@ -153,6 +153,83 @@ return function()
         end
     )
     test(
+        "PanelImpactRegistry real unknown and forged-tag obstructions consume misses before later registered hits",
+        function()
+            local world, map, owner = fixture()
+            local ok, failure = pcall(function()
+                local model = map.Buildings.Foundry.Foundry_Panels:FindFirstChild("Foundry_S01_North_02")
+                assert(model and model:IsA("Model"), "registered wall fixture missing")
+                local solid = model:FindFirstChild("Solid")
+                assert(solid and solid:IsA("BasePart"), "registered solid missing")
+                local obstruction = solid:Clone()
+                obstruction.Name = "P07UnregisteredSolid"
+                obstruction.CFrame = CFrame.new(0, 80, 0)
+                obstruction:SetAttribute("PanelId", "unknown-panel")
+                obstruction.Parent = map
+                local params = RaycastParams.new()
+                params.FilterType = Enum.RaycastFilterType.Include
+                params.FilterDescendantsInstances = { obstruction }
+                local hit =
+                    workspace:Raycast(obstruction.Position - Vector3.zAxis * 5, Vector3.zAxis * 10, params)
+                assert(hit and hit.Instance == obstruction, "unknown-tag ray positive control")
+                assert(owner.identify(hit.Instance) == nil, "unknown tag acquired structural identity")
+                assert(
+                    owner.resolve({
+                        roundId = 1,
+                        shotId = 1,
+                        weapon = "GAU23",
+                        firedAt = 0,
+                        panelId = owner.identify(hit.Instance),
+                    }),
+                    "accepted obstruction did not consume miss"
+                )
+                obstruction:SetAttribute("PanelId", model.Name)
+                assert(owner.identify(hit.Instance) == nil, "forged copied registry tag awarded damage")
+                assert(
+                    owner.resolve({
+                        roundId = 1,
+                        shotId = 2,
+                        weapon = "GAU23",
+                        firedAt = 0.15,
+                        panelId = owner.identify(hit.Instance),
+                    }),
+                    "forged obstruction did not consume miss"
+                )
+                params.FilterDescendantsInstances = { model }
+                local registered =
+                    workspace:Raycast(solid.Position - Vector3.zAxis * 5, Vector3.zAxis * 10, params)
+                assert(
+                    registered
+                        and registered.Instance == solid
+                        and owner.identify(registered.Instance) == model.Name,
+                    "actual registered ray identity lost"
+                )
+                for id = 3, 5 do
+                    assert(
+                        owner.resolve({
+                            roundId = 1,
+                            shotId = id,
+                            weapon = "M102",
+                            firedAt = id * 4,
+                            panelId = owner.identify(registered.Instance),
+                        }),
+                        "later registered direct impact rejected"
+                    )
+                end
+                owner.flush(workspace:GetServerTimeNow())
+                assert(
+                    assert(owner.snapshot(model.Name), "wall missing").stage == 1
+                        and owner.resources().pending == 0,
+                    "unknown-tag obstruction poisoned later scoring"
+                )
+                assert(owner.identify(solid) == nil, "destroyed old intact solid retained identity")
+            end)
+            owner.stop()
+            world:Destroy()
+            assert(ok, tostring(failure))
+        end
+    )
+    test(
         "PreImpactCoverAndThermal both profiles retain pre-impact solids then expose only actual holes",
         function()
             local world, map, owner = fixture()
