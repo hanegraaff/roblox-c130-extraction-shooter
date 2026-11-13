@@ -1,6 +1,6 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 panel/fragment physics are next. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); The verified P07 panel/fragment revision is delivered separately in [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30), awaiting integration. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
@@ -14,8 +14,8 @@ The integrated source on `main` includes the development shell, verification too
 | M2 — View revision | [P14: Directional aircraft targeting](plans/14-aircraft-panning.md) | Complete | P13 | Pan the aircraft view with WASD or mobile arrows, aim independently and retain the view through the orbit |
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
-| M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | In progress | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
-| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Planned | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
+| M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
+| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Ready | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
@@ -63,13 +63,23 @@ longer blocks P07; runtime spectator restrictions remain. Dedicated
 [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30)
 preserve earned 30mm damage, distinguish Light/Heavy/Total and make the starting
 battlefield shelter destructible under the same rules as the other buildings.
-The current independent host gate passes 55 unit / 55 integration; the fresh
-Studio baseline passes 142 server / 6 client. New native-fired normal/thermal
-Warehouse comparisons show persistent Light scars, Heavy's real half opening
-and Total removal. Revised all-panel two-client reset, shelter operated review
-and affected regressions are still being checked. The
+Final source `8053c8f` passes the independent 55-unit / 55-integration host gate
+and GitHub CI; the unchanged production core's fresh Studio baseline passes
+142 server / 6 client. Final actual two-client P07 passes 7/7, including both
+live-work resets with all 187 panels verified on server and each client. P05
+passes 8/8. Actual native-fired normal/thermal Warehouse and shelter reviews
+show persistent Light scars, Heavy's real half opening and Total removal;
+stopped/resumed native GAU fire credits no paused time. Final P14 regression
+passes 6/6, including both full orbits and actual operator departure. The
+separate visual falling-fragment observation also passes: in an additional
+ordinary live-orbit two-player round, the user confirms “Yes, I saw pieces
+fall” after the third native M102 target hit in a labelled Ground close-up.
+Actual recorded gravity/contact agrees; earlier settled GPU captures are not
+relabelled as airborne proof. The
 [revision record](docs/evidence/p07-damage-revision.md) separates current proof
-from earlier failed runs. P08 remains Planned and no P07 integration or Roblox
+from earlier failed runs. P07 acceptance is complete on this branch and P08
+is Ready, without starting implementation. P08 must include this dependency
+source until integration. No P07 integration or Roblox
 publication occurred.
 
 2026-11-13 earlier P07 candidate (historical): [draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)

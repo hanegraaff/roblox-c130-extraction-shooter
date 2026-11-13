@@ -1,0 +1,4700 @@
+{
+  "source": "8053c8f73c5700161e7b87d8e87824742165f3cd",
+  "server": "b0380581-fd19-4f90-95f6-acfb8b73e37f",
+  "ground": "92f6190e-da9b-4733-926c-64d21f19f354",
+  "operator": "bfcec8cf-6bc0-4004-93ef-f17e2cd45ad4",
+  "twoConfirmedHits": {
+    "panelId": "Shelter_Roof_R01_C03",
+    "actualShotIds": [
+      2,
+      3
+    ],
+    "heavySeconds": 6,
+    "progress": 0.6666666666666666,
+    "appearance": "Light",
+    "roundId": 1
+  },
+  "nativeActions": [
+    {
+      "kind": "first-demo-native-click",
+      "aim": {
+        "y": 230.71405029296875,
+        "x": 404.3822326660156,
+        "time": 1794597004.7323,
+        "fov": 40,
+        "camera": [
+          -7.985800266265869,
+          140,
+          359.9114074707031,
+          0.9912149310112,
+          0.010700568556785583,
+          -0.13182741403579712,
+          0.05429079756140709,
+          0.8759609460830688,
+          0.4793170988559723,
+          0.12060462683439255,
+          -0.4822632968425751,
+          0.8676846027374268
+        ],
+        "on": true,
+        "role": "Gunship"
+      },
+      "actions": [
+        {
+          "action": "moveTo",
+          "x": 404,
+          "y": 173
+        },
+        {
+          "action": "mouseButtonUp",
+          "mouse_button": "left"
+        },
+        {
+          "action": "wait",
+          "wait_time_ms": 40
+        },
+        {
+          "action": "mouseButtonDown",
+          "mouse_button": "left"
+        },
+        {
+          "action": "wait",
+          "wait_time_ms": 50
+        },
+        {
+          "action": "mouseButtonUp",
+          "mouse_button": "left"
+        }
+      ],
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "kind": "native-click-second-attempt",
+      "aim": {
+        "y": 209.814697265625,
+        "x": 450.40960693359375,
+        "time": 1794597143.362438,
+        "fov": 40,
+        "camera": [
+          274.937744140625,
+          140,
+          -232.3988800048828,
+          -0.6455524563789368,
+          -0.30132555961608887,
+          0.7017583847045898,
+          0,
+          0.9188736081123352,
+          0.3945518732070923,
+          -0.7637159824371338,
+          0.25470393896102905,
+          -0.5931810736656189
+        ],
+        "on": true,
+        "role": "Gunship"
+      },
+      "actions": [
+        {
+          "action": "moveTo",
+          "x": 450,
+          "y": 152
+        },
+        {
+          "action": "mouseButtonDown",
+          "mouse_button": "left"
+        },
+        {
+          "action": "wait",
+          "wait_time_ms": 80
+        },
+        {
+          "action": "mouseButtonUp",
+          "mouse_button": "left"
+        }
+      ],
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "kind": "native-target-hit2-attempt",
+      "aim": {
+        "y": 310.6803894042969,
+        "x": 465.9869689941406,
+        "time": 1794597173.604029,
+        "fov": 40,
+        "camera": [
+          57.82681655883789,
+          140,
+          355.3252868652344,
+          0.9870147109031677,
+          -0.06337688863277435,
+          0.14759871363639832,
+          0,
+          0.9188736081123352,
+          0.3945519030094147,
+          -0.16063004732131958,
+          -0.3894285261631012,
+          0.9069417715072632
+        ],
+        "on": true,
+        "role": "Gunship"
+      },
+      "actions": [
+        {
+          "action": "moveTo",
+          "x": 466,
+          "y": 253
+        },
+        {
+          "action": "mouseButtonDown",
+          "mouse_button": "left"
+        },
+        {
+          "action": "wait",
+          "wait_time_ms": 80
+        },
+        {
+          "action": "mouseButtonUp",
+          "mouse_button": "left"
+        }
+      ],
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "kind": "AUTHORIZED-BREAKING-THIRD-native-click",
+      "aim": {
+        "y": 204.92794799804688,
+        "x": 480.31878662109375,
+        "time": 1794597230.096781,
+        "fov": 40,
+        "camera": [
+          215.294921875,
+          140,
+          -288.5274658203125,
+          -0.8014652132987976,
+          -0.23595838248729706,
+          0.5495244860649109,
+          0,
+          0.9188736081123352,
+          0.3945518732070923,
+          -0.5980414748191833,
+          0.31621959805488586,
+          -0.7364451885223389
+        ],
+        "on": true,
+        "role": "Gunship"
+      },
+      "actions": [
+        {
+          "action": "moveTo",
+          "x": 480,
+          "y": 147
+        },
+        {
+          "action": "mouseButtonDown",
+          "mouse_button": "left"
+        },
+        {
+          "action": "wait",
+          "wait_time_ms": 80
+        },
+        {
+          "action": "mouseButtonUp",
+          "mouse_button": "left"
+        }
+      ],
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Success"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "scope": "Human Ready received; supplemental actual LIVE-orbit demo in user's newly started normal HumanTestSession; public Duration600/Start generation2→3 only. No held clock, runtime takeover, fakeplayers, synthetic damage or physics changes. Explicit normal Ground comparison camera only. Awaiting observed third shot and human answer.",
+  "observer": {
+    "purpose": "Actual native live-orbit breaking-shot human review; read-only observer",
+    "targetId": "Shelter_Roof_R01_C03",
+    "impacts": [
+      {
+        "targetState": "Intact",
+        "targetAppearance": "Pristine",
+        "targetHeavy": 0,
+        "targetProgress": 0,
+        "observedAt": 1794597092.166699,
+        "impact": {
+          "y": 0,
+          "x": -47.82423400878906,
+          "z": 177.22067260742188,
+          "roundId": 1,
+          "shotId": 1,
+          "weapon": "M102"
+        }
+      },
+      {
+        "targetState": "Intact",
+        "targetAppearance": "Pristine",
+        "targetHeavy": 0,
+        "targetProgress": 0,
+        "observedAt": 1794597145.232079,
+        "impact": {
+          "y": 15,
+          "x": -17.399452209472656,
+          "z": 73.37335968017578,
+          "roundId": 1,
+          "shotId": 2,
+          "panelId": "Shelter_Roof_R01_C03",
+          "weapon": "M102"
+        }
+      },
+      {
+        "targetState": "Intact",
+        "targetAppearance": "Light",
+        "targetHeavy": 3,
+        "targetProgress": 0.3333333333333333,
+        "observedAt": 1794597175.055476,
+        "impact": {
+          "y": 15,
+          "x": -17.790868759155273,
+          "z": 73.9754638671875,
+          "roundId": 1,
+          "shotId": 3,
+          "panelId": "Shelter_Roof_R01_C03",
+          "weapon": "M102"
+        }
+      },
+      {
+        "targetState": "Intact",
+        "targetAppearance": "Light",
+        "targetHeavy": 6,
+        "targetProgress": 0.6666666666666666,
+        "observedAt": 1794597231.966153,
+        "impact": {
+          "y": 15,
+          "x": -17.584739685058594,
+          "z": 73.41107940673828,
+          "roundId": 1,
+          "shotId": 4,
+          "panelId": "Shelter_Roof_R01_C03",
+          "weapon": "M102"
+        }
+      }
+    ],
+    "time": 1794597233.982959,
+    "fragmentSamples": [
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -17.5,
+              14.011802673339844,
+              75.5
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -0.08750009536743164,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -14.5,
+              14.011802673339844,
+              75.5
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -0.08750009536743164,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -17.5,
+              14.011802673339844,
+              72.5
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -0.08750009536743164,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -14.5,
+              14.011802673339844,
+              72.5
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -0.08750009536743164,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597231.98384,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -17.766666412353516,
+              13.845385551452637,
+              75.76666259765625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -6.627500057220459,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -14.233333587646484,
+              13.845385551452637,
+              75.76666259765625
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -6.627500057220459,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -17.766666412353516,
+              13.845385551452637,
+              72.23333740234375
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -6.627500057220459,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -14.233333587646484,
+              13.845385551452637,
+              72.23333740234375
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -6.627500057220459,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.015906,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -18.03333282470703,
+              13.460968971252441,
+              76.0333251953125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -13.167499542236328,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -13.966667175292969,
+              13.460968971252441,
+              76.0333251953125
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -13.167499542236328,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -18.03333282470703,
+              13.460968971252441,
+              71.9666748046875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -13.167499542236328,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -13.966667175292969,
+              13.460968971252441,
+              71.9666748046875
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -13.167499542236328,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.049319,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -18.299999237060547,
+              12.858551979064941,
+              76.29998779296875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -19.707500457763672,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -13.700000762939453,
+              12.858551979064941,
+              76.29998779296875
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -19.707500457763672,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -18.299999237060547,
+              12.858551979064941,
+              71.70001220703125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -19.707500457763672,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -13.700000762939453,
+              12.858551979064941,
+              71.70001220703125
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -19.707500457763672,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.082663,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -18.566665649414062,
+              12.038135528564453,
+              76.566650390625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -26.247501373291016,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -13.433334350585938,
+              12.038135528564453,
+              76.566650390625
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -26.247501373291016,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -18.566665649414062,
+              12.038135528564453,
+              71.433349609375
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -26.247501373291016,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -13.433334350585938,
+              12.038135528564453,
+              71.433349609375
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -26.247501373291016,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.115809,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -18.833332061767578,
+              10.99971866607666,
+              76.83331298828125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -32.78750228881836,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -13.166667938232422,
+              10.99971866607666,
+              76.83331298828125
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -32.78750228881836,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -18.833332061767578,
+              10.99971866607666,
+              71.16668701171875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -32.78750228881836,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -13.166667938232422,
+              10.99971866607666,
+              71.16668701171875
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -32.78750228881836,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.149318,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -19.099998474121094,
+              9.743301391601562,
+              77.0999755859375
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -39.3275032043457,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -12.900001525878906,
+              9.743301391601562,
+              77.0999755859375
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -39.3275032043457,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -19.099998474121094,
+              9.743301391601562,
+              70.9000244140625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -39.3275032043457,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -12.900001525878906,
+              9.743301391601562,
+              70.9000244140625
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -39.3275032043457,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.182396,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -19.36666488647461,
+              8.268884658813477,
+              77.36663818359375
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -45.86750411987305,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -12.63333511352539,
+              8.268884658813477,
+              77.36663818359375
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -45.86750411987305,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -19.36666488647461,
+              8.268884658813477,
+              70.63336181640625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -45.86750411987305,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -12.63333511352539,
+              8.268884658813477,
+              70.63336181640625
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -45.86750411987305,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.215925,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -19.633331298828125,
+              6.576467990875244,
+              77.63330078125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -52.40750503540039,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -12.366668701171875,
+              6.576467990875244,
+              77.63330078125
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -52.40750503540039,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -19.633331298828125,
+              6.576467990875244,
+              70.36669921875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -52.40750503540039,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -12.366668701171875,
+              6.576467990875244,
+              70.36669921875
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -52.40750503540039,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.249623,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -19.899999618530273,
+              4.652425765991211,
+              77.89996337890625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -60.58250427246094,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -12.10000228881836,
+              4.652425765991211,
+              77.89996337890625
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -60.58250427246094,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -19.899999618530273,
+              4.652425765991211,
+              70.10003662109375
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -60.58250427246094,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -12.10000228881836,
+              4.652425765991211,
+              70.10003662109375
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -60.58250427246094,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.282477,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -20.166669845581055,
+              2.4967586994171143,
+              78.1666259765625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -67.12250518798828,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.833335876464844,
+              2.4967586994171143,
+              78.1666259765625
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -67.12250518798828,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -20.166669845581055,
+              2.4967586994171143,
+              69.8333740234375
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -67.12250518798828,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.833335876464844,
+              2.4967586994171143,
+              69.8333740234375
+            ],
+            "canQuery": false,
+            "velocity": [
+              8,
+              -67.12250518798828,
+              -8
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.316446,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -20.433340072631836,
+              0.6676172614097595,
+              78.43328857421875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8,
+              -8.319427490234375,
+              8
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.595813751220703,
+              0.6715918183326721,
+              78.40450286865234
+            ],
+            "canQuery": false,
+            "velocity": [
+              4.5026960372924805,
+              -7.842475891113281,
+              4.545638084411621
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -20.410099029541016,
+              0.6795716881752014,
+              69.59017944335938
+            ],
+            "canQuery": false,
+            "velocity": [
+              -5.211077690124512,
+              -6.884895324707031,
+              -5.183794975280762
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.653064727783203,
+              0.7285211086273193,
+              69.66543579101562
+            ],
+            "canQuery": false,
+            "velocity": [
+              -2.3674306869506836,
+              -1.0109634399414062,
+              3.8472299575805664
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.350369,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -20.661678314208984,
+              1.1071940660476685,
+              78.6384506225586
+            ],
+            "canQuery": false,
+            "velocity": [
+              -7.238875865936279,
+              4.509247303009033,
+              5.912477493286133
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.534095764160156,
+              0.9938265085220337,
+              78.59307098388672
+            ],
+            "canQuery": false,
+            "velocity": [
+              2.535425901412964,
+              0.3921627700328827,
+              6.406280040740967
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -20.6508846282959,
+              0.9685420989990234,
+              69.500244140625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8.443853378295898,
+              -0.6857354044914246,
+              -3.518138885498047
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.735875129699707,
+              0.7450207471847534,
+              69.73230743408203
+            ],
+            "canQuery": false,
+            "velocity": [
+              -1.7084293365478516,
+              -1.450906753540039,
+              1.5467467308044434
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.382795,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -20.89255142211914,
+              1.2012068033218384,
+              78.82566833496094
+            ],
+            "canQuery": false,
+            "velocity": [
+              -6.7197651863098145,
+              1.7066895961761475,
+              5.393252849578857
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.439407348632812,
+              1.0044434070587158,
+              78.82844543457031
+            ],
+            "canQuery": false,
+            "velocity": [
+              1.926285982131958,
+              -0.16421198844909668,
+              7.867709636688232
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -20.898561477661133,
+              1.0156439542770386,
+              69.45674896240234
+            ],
+            "canQuery": false,
+            "velocity": [
+              -7.226008415222168,
+              0.619707465171814,
+              -0.3107723891735077
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.712358474731445,
+              0.6914239525794983,
+              69.77367401123047
+            ],
+            "canQuery": false,
+            "velocity": [
+              1.690669059753418,
+              -2.638956069946289,
+              1.1735002994537354
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.416489,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -21.11363983154297,
+              1.2204651832580566,
+              78.99949645996094
+            ],
+            "canQuery": false,
+            "velocity": [
+              -6.64869499206543,
+              -0.250999391078949,
+              5.136622428894043
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.372343063354492,
+              0.9626497626304626,
+              79.08399200439453
+            ],
+            "canQuery": false,
+            "velocity": [
+              2.0762710571289062,
+              -2.2322213649749756,
+              7.825497150421143
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.14179229736328,
+              0.9925782680511475,
+              69.46649932861328
+            ],
+            "canQuery": false,
+            "velocity": [
+              -7.467061996459961,
+              -1.3933074474334717,
+              0.16348481178283691
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.702314376831055,
+              0.7284684181213379,
+              69.77915954589844
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.19768744707107544,
+              0.002356290817260742,
+              0.143830806016922
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.44987,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -21.342933654785156,
+              1.1745308637619019,
+              79.17303466796875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -7.127079486846924,
+              -2.343315362930298,
+              5.322312355041504
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.298125267028809,
+              0.8312474489212036,
+              79.35704040527344
+            ],
+            "canQuery": false,
+            "velocity": [
+              2.3424391746520996,
+              -5.526834011077881,
+              8.435190200805664
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.404319763183594,
+              0.9021889567375183,
+              69.4737548828125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8.226396560668945,
+              -3.9266672134399414,
+              0.266531378030777
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706497192382812,
+              0.728488028049469,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00039821863174438477,
+              -0.0011163949966430664,
+              0.0006498172879219055
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.483274,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -21.593868255615234,
+              1.0407822132110596,
+              79.35906219482422
+            ],
+            "canQuery": false,
+            "velocity": [
+              -7.819183826446533,
+              -5.548072338104248,
+              5.793928146362305
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.284261703491211,
+              0.7787761092185974,
+              79.5455093383789
+            ],
+            "canQuery": false,
+            "velocity": [
+              -1.0418634414672852,
+              2.6447274684906006,
+              1.9842596054077148
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.687532424926758,
+              0.6955506205558777,
+              69.48590850830078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -8.504782676696777,
+              -8.270943641662598,
+              0.40516048669815063
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706501007080078,
+              0.728449821472168,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00009554535063216463,
+              -0.0011619329452514648,
+              0.00015222321962937713
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.515889,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -21.88155746459961,
+              0.8676155209541321,
+              79.52631378173828
+            ],
+            "canQuery": false,
+            "velocity": [
+              -9.146838188171387,
+              -4.08316707611084,
+              3.7804958820343018
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.295215606689453,
+              0.8112943768501282,
+              79.57176208496094
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.24848492443561554,
+              -0.303911954164505,
+              -0.17784923315048218
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.706815719604492,
+              0.8456851840019226,
+              69.56233978271484
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.8868169784545898,
+              1.4839613437652588,
+              1.1960242986679077
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.7283903360366821,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00016934826271608472,
+              -0.0023915767669677734,
+              0.00022132456069812179
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.549576,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.166231155395508,
+              0.7463883757591248,
+              79.61946868896484
+            ],
+            "canQuery": false,
+            "velocity": [
+              -6.643529891967773,
+              2.6389822959899902,
+              2.3227829933166504
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2623872756958,
+              0.7460862398147583,
+              79.5250473022461
+            ],
+            "canQuery": false,
+            "velocity": [
+              1.5302023887634277,
+              -3.3302183151245117,
+              -2.305082082748413
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.702539443969727,
+              0.8465306758880615,
+              69.5674057006836
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.9202309846878052,
+              -1.0909521579742432,
+              -0.6614532470703125
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706511497497559,
+              0.7283092141151428,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001488307025283575,
+              -0.0024476051330566406,
+              0.00016313797095790505
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.58316,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.363061904907227,
+              0.7816333770751953,
+              79.66960144042969
+            ],
+            "canQuery": false,
+            "velocity": [
+              -5.117862701416016,
+              -0.8845449686050415,
+              0.9375667572021484
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.268877983093262,
+              0.733105480670929,
+              79.4601821899414
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.3762356638908386,
+              0.5797894597053528,
+              -0.25821584463119507
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.64031410217285,
+              0.7585774064064026,
+              69.51363372802734
+            ],
+            "canQuery": false,
+            "velocity": [
+              2.551577568054199,
+              -3.9536941051483154,
+              -2.2902450561523438
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706515312194824,
+              0.7282263040542603,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00012777865049429238,
+              -0.002499103546142578,
+              0.0001145904534496367
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.616663,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.466590881347656,
+              0.6952562928199768,
+              79.67650604248047
+            ],
+            "canQuery": false,
+            "velocity": [
+              -2.1011767387390137,
+              -3.557220935821533,
+              0.2353838086128235
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264841079711914,
+              0.7194682359695435,
+              79.4765396118164
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0005890727043151855,
+              0.00022983551025390625,
+              -0.0023516416549682617
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57652473449707,
+              0.7378727197647095,
+              69.45618438720703
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.20434865355491638,
+              -0.4001818895339966,
+              0.24559848010540009
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70651912689209,
+              0.7281417846679688,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00010660701082088053,
+              -0.0025467872619628906,
+              0.0000745537254260853
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.649084,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.49452018737793,
+              0.7324590086936951,
+              79.7368392944336
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.33576929569244385,
+              -3.0989556312561035,
+              1.5240848064422607
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264841079711914,
+              0.7193840742111206,
+              79.4765396118164
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00007501922664232552,
+              -0.003181934356689453,
+              0.00009150296682491899
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.589405059814453,
+              0.7237237095832825,
+              69.47068786621094
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.029970411211252213,
+              -0.0011383295059204102,
+              0.029617661610245705
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706522941589355,
+              0.7280558347702026,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00008585696923546493,
+              -0.0025908946990966797,
+              0.00004220871051074937
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.682706,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.52401351928711,
+              0.7237585783004761,
+              79.7782211303711
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.09933489561080933,
+              0.008964240550994873,
+              1.0401043891906738
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264837265014648,
+              0.7193765640258789,
+              79.4765396118164
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00011709822865668684,
+              -0.0031201839447021484,
+              0.00016060283815022558
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.588172912597656,
+              0.7236987352371216,
+              69.4719009399414
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.04328983649611473,
+              -0.001447916030883789,
+              0.04302755370736122
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706524848937988,
+              0.7279684543609619,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00006576029409188777,
+              -0.002631664276123047,
+              0.000016553502064198256
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.716248,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521038055419922,
+              0.7261375188827515,
+              79.78739929199219
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0005262523191049695,
+              -0.0017371177673339844,
+              -0.0012558277230709791
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7193663120269775,
+              79.4765396118164
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00014671057579107583,
+              -0.003068208694458008,
+              0.00020850732107646763
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.58636474609375,
+              0.7236631512641907,
+              69.47370910644531
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.06412868201732635,
+              -0.0019985437393188477,
+              0.0639524832367897
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706526756286621,
+              0.7278798222541809,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0000465841731056571,
+              -0.0026688575744628906,
+              -0.000002999666321557015
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.749806,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521053314208984,
+              0.7260817289352417,
+              79.78733825683594
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0005333439912647009,
+              -0.001731276512145996,
+              -0.0012115869903936982
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7193527221679688,
+              79.47654724121094
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001659741683397442,
+              -0.0030252933502197266,
+              0.00023944559507071972
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.583663940429688,
+              0.7236036062240601,
+              69.47640991210938
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.09611237794160843,
+              -0.003136575222015381,
+              0.09603297710418701
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706528663635254,
+              0.7277899980545044,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.000028738453693222255,
+              -0.002702951431274414,
+              -0.000017914644558914006
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.783005,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521068572998047,
+              0.7260258197784424,
+              79.78727722167969
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0004864489892497659,
+              -0.0016663074493408203,
+              -0.0011727273231372237
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7193366885185242,
+              79.4765625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00017712920089252293,
+              -0.002990245819091797,
+              0.00025680140242911875
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57960319519043,
+              0.723486065864563,
+              69.48046112060547
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.1447751373052597,
+              -0.005641937255859375,
+              0.14483411610126495
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706528663635254,
+              0.7276991605758667,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00001226495805894956,
+              -0.0027337074279785156,
+              -0.000028223803383298218
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.81675,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.52108383178711,
+              0.7259718179702759,
+              79.78721618652344
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0004507648991420865,
+              -0.0016167163848876953,
+              -0.0011430034646764398
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7193188667297363,
+              79.47657775878906
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001818654709495604,
+              -0.002961874008178711,
+              0.0002635941782500595
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.578378677368164,
+              0.7245599031448364,
+              69.4817123413086
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0007056050817482173,
+              -0.0013329386711120605,
+              -0.0007211004267446697
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706528663635254,
+              0.7276073694229126,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.0000030228111427277327,
+              -0.002761363983154297,
+              -0.00003538322198437527
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.84913,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521099090576172,
+              0.7259193062782288,
+              79.78715515136719
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00042364568798802793,
+              -0.0015788078308105469,
+              -0.0011202860623598099
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7193001508712769,
+              79.47659301757812
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00018154087592847645,
+              -0.0029392242431640625,
+              0.00026204786263406277
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57840919494629,
+              0.7245184779167175,
+              69.4817123413086
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0007067937403917313,
+              -0.0013470649719238281,
+              -0.0007159546948969364
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706528663635254,
+              0.7275146842002869,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.000016450612747576088,
+              -0.0027861595153808594,
+              -0.00003911689418600872
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.882944,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521114349365234,
+              0.725867748260498,
+              79.78709411621094
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00040295746293850243,
+              -0.001549839973449707,
+              -0.0011028614826500416
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7192807197570801,
+              79.47660827636719
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00017729130922816694,
+              -0.00292205810546875,
+              0.0002543869486544281
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.578475952148438,
+              0.7244011163711548,
+              69.4816665649414
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002831816440448165,
+              -0.005428791046142578,
+              -0.0028216885402798653
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706528663635254,
+              0.7274212837219238,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.000028279180696699768,
+              -0.0028083324432373047,
+              -0.00004040127532789484
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.9166,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521148681640625,
+              0.7257351279258728,
+              79.7869873046875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.001492462120950222,
+              -0.006062507629394531,
+              -0.0043300967663526535
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.719261109828949,
+              79.47662353515625
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00017041324463207275,
+              -0.0029091835021972656,
+              0.00024226038658525795
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.578571319580078,
+              0.7242258787155151,
+              69.48157501220703
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002849382348358631,
+              -0.0054552555084228516,
+              -0.002855301834642887
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706526756286621,
+              0.7273271679878235,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.000038678197597619146,
+              -0.0028276443481445312,
+              -0.00003960064350394532
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.950133,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521198272705078,
+              0.7255343794822693,
+              79.7868423461914
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0015323428669944406,
+              -0.0060882568359375,
+              -0.004343836568295956
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7192414999008179,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001614976063137874,
+              -0.002899646759033203,
+              0.00022706565505359322
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57866668701172,
+              0.7240497469902039,
+              69.48148345947266
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002860034117475152,
+              -0.0054776668548583984,
+              -0.002856225473806262
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706524848937988,
+              0.7272325158119202,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00004738093412015587,
+              -0.0028448104858398438,
+              -0.00003723394911503419
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597232.982576,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.52124786376953,
+              0.7253344058990479,
+              79.78670501708984
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0015109294326975942,
+              -0.006058692932128906,
+              -0.00432570930570364
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.2648344039917,
+              0.7192221879959106,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00015137577429413795,
+              -0.0028934478759765625,
+              0.0002098323602695018
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57876205444336,
+              0.7238730192184448,
+              69.48139190673828
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0028707508463412523,
+              -0.005498170852661133,
+              -0.002858672756701708
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706522941589355,
+              0.7271372675895691,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.0000546749506611377,
+              -0.002859830856323242,
+              -0.00003363242285558954
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.015962,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521297454833984,
+              0.7251352667808533,
+              79.78656768798828
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0014921710826456547,
+              -0.0060329437255859375,
+              -0.004309445153921843
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264833450317383,
+              0.7192033529281616,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00014047842705622315,
+              -0.0028896331787109375,
+              0.00019147663260810077
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.578857421875,
+              0.7236955165863037,
+              69.4813003540039
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0028788771014660597,
+              -0.005514621734619141,
+              -0.002865111455321312
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706521034240723,
+              0.7270416021347046,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.0000605782370257657,
+              -0.0028727054595947266,
+              -0.000029398848710116
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.049432,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521347045898438,
+              0.7249369025230408,
+              79.78643035888672
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.001475994591601193,
+              -0.0060100555419921875,
+              -0.0042958022095263
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.26483154296875,
+              0.7191850543022156,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00012938087456859648,
+              -0.002887725830078125,
+              0.00017286867660004646
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57895278930664,
+              0.7235175371170044,
+              69.48120880126953
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0028873689007014036,
+              -0.005530118942260742,
+              -0.002871489617973566
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70651912689209,
+              0.7269455790519714,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00006521471368614584,
+              -0.0028839111328125,
+              -0.000024476998078171164
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.082472,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.52139663696289,
+              0.724739134311676,
+              79.78629302978516
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0014617955312132835,
+              -0.005990266799926758,
+              -0.004283545538783073
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264829635620117,
+              0.7191674709320068,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00011832562449853867,
+              -0.0028874874114990234,
+              0.00015435792738571763
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57904815673828,
+              0.7233390212059021,
+              69.48111724853516
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002895733341574669,
+              -0.0055446624755859375,
+              -0.0028774302918463945
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706517219543457,
+              0.7268491983413696,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00006866943294880912,
+              -0.002893209457397461,
+              -0.000019148137653246522
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.116649,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521446228027344,
+              0.7245419025421143,
+              79.7861557006836
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.001449252013117075,
+              -0.005973100662231445,
+              -0.004272522404789925
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264827728271484,
+              0.7191503643989563,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00010737736010923982,
+              -0.0028884410858154297,
+              0.0001363146147923544
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.579151153564453,
+              0.7232860326766968,
+              69.48103332519531
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0029041003435850143,
+              -0.00555872917175293,
+              -0.0028830962255597115
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706515312194824,
+              0.7267525792121887,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00007110011210897937,
+              -0.002901315689086914,
+              -0.00001377471926389262
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.14986,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521451950073242,
+              0.7245259284973145,
+              79.78610229492188
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00016661424888297915,
+              -0.0029006004333496094,
+              -0.0012969711096957326
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264825820922852,
+              0.7191341519355774,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00009707437129691243,
+              -0.0028905868530273438,
+              0.00011908602027688175
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57925796508789,
+              0.7232642769813538,
+              69.48095703125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002912321826443076,
+              -0.005571603775024414,
+              -0.0028882401529699564
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706513404846191,
+              0.7266557216644287,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00007238649413920939,
+              -0.002907991409301758,
+              -0.000008472685294691473
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.182494,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.5214786529541,
+              0.724467396736145,
+              79.78600311279297
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00016093056183308363,
+              -0.0028901100158691406,
+              -0.0014458643272519112
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264823913574219,
+              0.719118595123291,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0000872899399837479,
+              -0.002893209457397461,
+              0.00010307082993676886
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57936668395996,
+              0.7232431173324585,
+              69.48088073730469
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0029200860299170017,
+              -0.005583763122558594,
+              -0.002893178490921855
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706511497497559,
+              0.7265586256980896,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00007310807995963842,
+              -0.0029134750366210938,
+              -0.0000033511241781525314
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.215837,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521488189697266,
+              0.7245323657989502,
+              79.78594970703125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00017910561291500926,
+              -0.00290679931640625,
+              -0.001134420745074749
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264820098876953,
+              0.7191035151481628,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00007798853766871616,
+              -0.0028963088989257812,
+              0.00008796869951765984
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.579477310180664,
+              0.7232222557067871,
+              69.48080444335938
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002927664900198579,
+              -0.005595207214355469,
+              -0.002897680038586259
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706509590148926,
+              0.7264614105224609,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00007296566036529839,
+              -0.0029180049896240234,
+              0.0000017567508621141315
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.249546,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521514892578125,
+              0.7244722843170166,
+              79.78585052490234
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00016754830721765757,
+              -0.0028839111328125,
+              -0.001432353863492608
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264816284179688,
+              0.7190892100334167,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00006961733743082732,
+              -0.0028994083404541016,
+              0.00007427221135003492
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.579587936401367,
+              0.7232018113136292,
+              69.48072814941406
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002934732474386692,
+              -0.005605936050415039,
+              -0.0029018300119787455
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.706507682800293,
+              0.7263640761375427,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00007218559039756656,
+              -0.0029211044311523438,
+              0.000006302827387116849
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.282831,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521526336669922,
+              0.7245369553565979,
+              79.78579711914062
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00018401275156065822,
+              -0.0029006004333496094,
+              -0.0011254597920924425
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264812469482422,
+              0.7190755009651184,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00006198789196787402,
+              -0.0029032230377197266,
+              0.00006179724732646719
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.57969856262207,
+              0.7231817841529846,
+              69.48065185546875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.002941812388598919,
+              -0.005616188049316406,
+              -0.0029062104877084494
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0.00007087615813361481,
+              -0.002924203872680664,
+              0.000010571093298494816
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.316618,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521554946899414,
+              0.7244767546653748,
+              79.78569793701172
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001728598726913333,
+              -0.002878427505493164,
+              -0.001423111418262124
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264808654785156,
+              0.7190622687339783,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00005501603300217539,
+              -0.00290679931640625,
+              0.00005060766125097871
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.579809188842773,
+              0.7231618165969849,
+              69.48057556152344
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0029481074307113886,
+              -0.005625247955322266,
+              -0.002909637289121747
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.348959,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.52156639099121,
+              0.724541187286377,
+              79.78564453125
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00018819986144080758,
+              -0.0028951168060302734,
+              -0.0011194843100383878
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.26480484008789,
+              0.7190496325492859,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00004881566928816028,
+              -0.0029103755950927734,
+              0.00004049635026603937
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.579919815063477,
+              0.7231420874595642,
+              69.48049926757812
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0029539037495851517,
+              -0.005633831024169922,
+              -0.0029129087924957275
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.382562,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521595001220703,
+              0.7244810461997986,
+              79.7855453491211
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00017735036090016365,
+              -0.0028743743896484375,
+              -0.0014165481552481651
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264801025390625,
+              0.7190374135971069,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00004326137786847539,
+              -0.0029137134552001953,
+              0.0000316761652356945
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.58003044128418,
+              0.7231225371360779,
+              69.48042297363281
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0029591929633170366,
+              -0.00564122200012207,
+              -0.002915704855695367
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.415728,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521625518798828,
+              0.724495530128479,
+              79.78543853759766
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0013902296777814627,
+              -0.00587773323059082,
+              -0.004221635404974222
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.26479721069336,
+              0.7190256118774414,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.00003849074346362613,
+              -0.0029168128967285156,
+              0.000023781132767908275
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580141067504883,
+              0.7231031656265259,
+              69.4803466796875
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0029644491150975227,
+              -0.005648374557495117,
+              -0.0029184913728386164
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.449092,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521635055541992,
+              0.724484384059906,
+              79.78538513183594
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001849393593147397,
+              -0.0028798580169677734,
+              -0.001254312926903367
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.482614,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521665573120117,
+              0.7244995832443237,
+              79.78528594970703
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.001387057127431035,
+              -0.00587010383605957,
+              -0.004220436792820692
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.515866,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.52167510986328,
+              0.724488377571106,
+              79.78523254394531
+            ],
+            "canQuery": false,
+            "velocity": [
+              -0.0001876411261036992,
+              -0.002876758575439453,
+              -0.0012511293170973659
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.549131,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.582432,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.615796,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.649156,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.682619,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.716073,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.749354,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.782505,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.816193,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.849426,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.882859,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.9156,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.949298,
+        "stage": "Damaged"
+      },
+      {
+        "pieces": [
+          {
+            "name": "Fragment1",
+            "position": [
+              -22.521705627441406,
+              0.7245035171508789,
+              79.7851333618164
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment2",
+            "position": [
+              -11.264793395996094,
+              0.7190142273902893,
+              79.47663116455078
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment3",
+            "position": [
+              -21.580251693725586,
+              0.7230837941169739,
+              69.48027038574219
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          },
+          {
+            "name": "Fragment4",
+            "position": [
+              -11.70650577545166,
+              0.726266622543335,
+              69.7822265625
+            ],
+            "canQuery": false,
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "canCollide": true,
+            "anchored": false
+          }
+        ],
+        "time": 1794597233.982894,
+        "stage": "Damaged"
+      }
+    ],
+    "sourceCommit": "8053c8f73c5700161e7b87d8e87824742165f3cd"
+  },
+  "afterThird": {
+    "panel": {
+      "StoryId": "01",
+      "PanelId": "Shelter_Roof_R01_C03",
+      "CoverId": "Shelter_Roof_R01_C03",
+      "VariantContract": "Intact/Damaged/Destroyed:v1",
+      "PanelProgress": 0,
+      "SustainedSeconds": 0,
+      "PanelState": "Damaged",
+      "HeavySeconds": 0,
+      "IntactPivot": null,
+      "BuildingId": "SpawnShelter",
+      "CoverKind": "BuildingPanel",
+      "IntactSize": null,
+      "DamageAppearance": "Heavy"
+    },
+    "fragments": [
+      {
+        "name": "Fragment1",
+        "position": [
+          -22.521635055541992,
+          0.724484384059906,
+          79.78538513183594
+        ],
+        "collisionGroup": "PanelFragments",
+        "velocity": [
+          -0.0001849393593147397,
+          -0.0028798580169677734,
+          -0.001254312926903367
+        ],
+        "canQuery": false,
+        "anchored": false
+      },
+      {
+        "name": "Fragment2",
+        "position": [
+          -11.264793395996094,
+          0.7190142273902893,
+          79.47663116455078
+        ],
+        "collisionGroup": "PanelFragments",
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "canQuery": false,
+        "anchored": false
+      },
+      {
+        "name": "Fragment3",
+        "position": [
+          -21.580251693725586,
+          0.7230837941169739,
+          69.48027038574219
+        ],
+        "collisionGroup": "PanelFragments",
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "canQuery": false,
+        "anchored": false
+      },
+      {
+        "name": "Fragment4",
+        "position": [
+          -11.70650577545166,
+          0.726266622543335,
+          69.7822265625
+        ],
+        "collisionGroup": "PanelFragments",
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "canQuery": false,
+        "anchored": false
+      }
+    ],
+    "time": 1794597233.48461,
+    "round": {
+      "GroundAlive": 1,
+      "Revision": 6,
+      "MinimumPlayers": 2,
+      "Reason": "",
+      "Phase": "Active",
+      "DeadlineSeconds": 1794597663.44418,
+      "Winner": "",
+      "RoundId": 1
+    },
+    "impact": "{\"y\":15,\"x\":-17.584739685058595,\"z\":73.41107940673828,\"panelId\":\"Shelter_Roof_R01_C03\",\"weapon\":\"M102\",\"shotId\":4,\"roundId\":1}"
+  },
+  "humanObservation": {
+    "status": "confirmed",
+    "directUserQuote": "Yes, I saw pieces fall",
+    "view": "Player1 / Ground, explicitly labeled FRAGMENT WATCH controlled normal-color close-up",
+    "trigger": "Actual native M102 shot4, third direct target hit",
+    "reportedBy": "User directly through root coordinator",
+    "scope": "Direct human observed falling fragments; distinct from previously automated physics trajectory/captured resting frames. No claim of native Ground camera feel."
+  },
+  "sceneScope": "Actual LIVE canonical orbit and real clocks/physics in existing normal HumanTestSession; public Duration600/Start generation2→3 only. No runtime takeover/clock hold/synthetic damage. Ground controlled normal camera labeled FRAGMENT WATCH only.",
+  "observerSource": {
+    "path": "/tmp/p07-revision-human-observer.server.luau",
+    "sha256": "0d6a76ef5f865587b66e197329d558f819db6fc4bd1af8d1a5aeb1171c399506",
+    "bytes": 2726
+  },
+  "normalCameraSource": {
+    "path": "/tmp/p07-revision-human-normal-camera.luau",
+    "sha256": "08214e2d01c6faff5c50a66898a6d0bb028b78168b523cecb432fffe2201d4a9"
+  },
+  "nativeProjectionSource": {
+    "path": "/tmp/p07-revision-human-native-projection.luau",
+    "sha256": "3210fe653029f83440ae4c6fea35b858a8ddc4a25175afc15fbc43d6efda4fd1"
+  }
+}

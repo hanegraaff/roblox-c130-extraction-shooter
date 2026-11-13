@@ -1,0 +1,77 @@
+{
+  "candidateCommit": "8053c8f73c5700161e7b87d8e87824742165f3cd",
+  "server": "0742bf2c-7b68-4062-986f-d1f333afdce4",
+  "precleanup": {
+    "players": [
+      {
+        "name": "Player1",
+        "character": false,
+        "userId": -1,
+        "backpack": 0
+      }
+    ],
+    "serverStorageChildren": [
+      "Assets",
+      "DevelopmentSettings",
+      "Tests",
+      "P07RevisionNativeFixtures"
+    ],
+    "workspaceChildren": [
+      "World",
+      "Terrain",
+      "Camera"
+    ],
+    "workspaceAttributeKeys": [
+      "ManualP07Invocation",
+      "P07QAReport",
+      "ManualP07Report",
+      "ServerTestReport",
+      "P07QAStage",
+      "ServerTestStartup",
+      "P07RevisionRearmStarted",
+      "P07Stage",
+      "P07Revision8053Started",
+      "P07MultiplayerReport",
+      "P14RevisionReport",
+      "P07RevisionRearmReport",
+      "P14RevisionStarted",
+      "P05RevisionReport",
+      "P05MultiplayerReport",
+      "P07RevisionRenderReport",
+      "P07Revision56Started"
+    ],
+    "replicated": {
+      "P07Harness": false,
+      "P05Harness": false,
+      "P14Harness": false,
+      "AircraftState": false,
+      "RoundState": false
+    }
+  },
+  "cleanup": {
+    "workspaceChildren": [
+      "World",
+      "Terrain",
+      "Camera"
+    ],
+    "removedFixtureModules": [
+      "P07Server8f59",
+      "P05CurrentRevision",
+      "P07Server56fa",
+      "P07Server8053",
+      "P14Revision"
+    ],
+    "remainingOwnedPathsBefore": [],
+    "fixtureFolderAfter": false
+  },
+  "P14Summary": {
+    "discovered": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "initialActualClients": 2,
+    "finalActualPlayers": 1,
+    "operatorKickedIntentionally": true
+  },
+  "savedReport": "/tmp/p07-revision-tester-p14-report.json"
+}

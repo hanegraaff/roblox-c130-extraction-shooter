@@ -56,19 +56,35 @@ operated review before completion.
 
 Dedicated follow-up [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30)
 targets the original unmerged PR #29 branch. Production damage/geometry/assets
-are frozen from `583d82a`; test-only corrections through `8f59c42` address a
-BasePart color-quantization assumption and a moving reset-fixture target,
-and explicitly compare all 187 panels on both clients. Independent full host
-gate passes 55 unit / 55 integration; fresh solo Studio baseline passes
-142 server / 6 client with no failures/skips/errors. Actual native-fired
-Warehouse comparison shows stopped 30mm Light damage persisting for over
-31 seconds, then real third/sixth M102 Heavy/Total transitions in normal and
-thermal views. The first revised native seven-case run passed six and failed
-its reset fixture before any GAU reset intent; it is preserved as a failure.
-The corrected all-panel native rerun, shelter operated review and affected
-regressions are pending. The [revision evidence](../docs/evidence/p07-damage-revision.md)
-records source identities, failure diagnosis, actual captures and separate
-real-player blast-health checks. Neither PR has been merged or published.
+are frozen from `583d82a`; final test source is
+`8053c8f73c5700161e7b87d8e87824742165f3cd`, tree
+`a1e0e2e5405b0fd30e5e5b88b712d59431c608ea`. Test-only corrections address
+color quantization, future target visibility, assertion forwarding and a
+measured 28ms Part-to-Model reset reconstruction boundary. The
+[103-input identity](../docs/evidence/p07-revision-source-identity-8053.json)
+and independent source comparison preserve the unchanged production core.
+The [revision evidence](../docs/evidence/p07-damage-revision.md) retains all
+failed runs separately from the final passing reports.
+
+| Criterion | Revised verification and remaining scope |
+| --- | --- |
+| A1 | Independent final `python3 scripts/verify.py`: 55 unit / 55 integration; exact 0–6 stage/appearance boundaries, monotonic/idempotent/mixed rules pass. GitHub Verify run 271 also passes. |
+| A2 | Persistent `DestructionService` timing/barrier/rejection/reset tests pass. Final native three-burst run accepts all 63 shots, earns 11.001190 seconds and reaches Heavy at 9.168631; stopped Light credits remain 3.667306 / 7.334313. Actual native shelter stop/resume adds zero for a 47.866-second gap. |
+| A3 | Fresh actual Studio baseline: 142 server / 6 client, including every one of 187 panels, real residual/query/cosmetic geometry and stable supports. Shelter union/anchors and artifact reconstruction pass. Final actual two-client suite passes Ground Humanoid wall traversal. |
+| A4 | Fresh geometry/pre-impact tests and actual two-player blast-health 2/2 pass. Unedited Warehouse and shelter normal/thermal four-tier comparisons reveal the QA hole control while hiding residual-solid control under Heavy; Total exposes both. Held aircraft clock and controlled normal comparison cameras are disclosed. |
+| A5 | Actual Studio fragment gravity/contact, ownership/groups/query exclusion, real-avatar safety, cap/lifetime and cleanup tests pass in the 142-case baseline. GPU captures show resting fragments; they do not establish the separate A7 visual-fall observation. |
+| A6 | Final native suite passes 7/7 with two actual clients, zero failures/skips. Both resets have actual partial GAU credit, two pending projectiles and four live fragments. Server and each client verify all 187 pristine panels, pivots, credit, cosmetics and queries; stale outcomes reject and work clears. Real late join is waived under D50. |
+| A7 | Native Warehouse/shelter firing, stopped/resumed scars, third/sixth M102 Heavy/Total, real holes and normal/thermal distinction pass focused review. In an additional ordinary live-orbit two-player round, native M102 shot 4 creates Heavy damage and four fragments on the third target hit; the user directly confirms, “Yes, I saw pieces fall,” in the labelled controlled Ground close-up. The recorded 61-Heartbeat trajectory independently corroborates real gravity/contact. Current-core regressions pass P05 8/8 and P14 6/6, including two full 90-second orbits and operator departure. |
+
+All revised A1–A7 acceptance passes; P08 is eligible for Ready without starting
+implementation. The [human observation and native proof](../docs/evidence/p07-revision-human-fragments.json)
+distinguish the user's factual answer from readiness and prior settled-frame
+captures. Final source remains 8053; no production changes were needed for the
+human review. PR #30 delivers the revision to the unmerged PR #29 dependency;
+integration into main remains separate and unauthorized. No Roblox publication
+occurred. The current README uses an actual revised Heavy capture and labels
+its QA camera/marker setup. Final cleanup retains the original Edit document
+and Rojo connection with no QA runtime/camera pollution.
 
 ### Earlier candidate record (historical)
 

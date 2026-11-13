@@ -12,6 +12,28 @@ Dedicated branch `fix/p07-progressive-persistent-damage` starts at
 Main remains `e4c6e3a2506a9e9ac5574bdf42242f77f8200650`. No previous gate
 count is a pass for this changed behavior. No merge/publication is authorized.
 
+## Latest verified result
+
+Final executable/test source `8053c8f` passes the full independent host gate
+**55 unit / 55 integration** and GitHub CI. The unchanged production core has
+a fresh ordinary Studio baseline of **142 server / 6 client**. The
+[complete revised native suite](p07-revision-native-8053-pass.json) passes
+**7/7 on two actual clients**, including both live-work resets and all 187
+panels checked on server and each client. Current P05 passes **8/8** and P14
+passes **6/6**. Native-fired normal/thermal Warehouse and starting-shelter
+comparisons verify persistent Light/Heavy/Total appearance and real openings.
+
+All revised A1–A7 acceptance now passes. In a further ordinary live-orbit
+two-player round, the user directly confirms **“Yes, I saw pieces fall”**
+after the third native M102 target hit in the labelled Ground close-up.
+The [human observation/native proof](p07-revision-human-fragments.json)
+records real unanchored fragments and 61 Heartbeat samples. This resolves the
+earlier visual gap without inferring motion from settled GPU captures or
+changing production physics. P07 is complete on the revision branch; P08 is
+Ready but unstarted. Integration and Roblox publication remain separate.
+The chronology below preserves every failed fixture candidate independently
+of final passing results.
+
 ## Confirmed source causes
 
 - `PanelDamageRules.interrupt` zeroed sustained credit. Idle, miss/target,
@@ -170,6 +192,44 @@ result is separate from the pending rendered stage comparisons.
 
 ## Actual native-fired Warehouse stage comparison
 
+The subsequent test-only fixture freeze is `8f59c4220eda42243a8d9de24fd65530883da794`,
+tree `cbfc0f7810347976de2288e3630f6454bc1fa7d6`. Its
+[103-file identity](p07-revision-source-identity-8f59.json) is compared byte for
+byte against Git. Only the two native destruction harness files differ from
+the earlier 4db identity; the production core remains unchanged. Independent
+full `python3 scripts/verify.py` passes 55 unit / 55 integration and all
+non-Studio gates. Before the fresh native rerun, all 97 script Sources and
+403 authored Battlefield Parts matched the intended Edit document again.
+The fresh server helper's pure Camera.frame dependency was verified present
+and callable before loading it. Both real clients received the exact matching
+new client helper. This confirms fixture identity without claiming the
+running revised suite has finished.
+
+The [actual `8f59c42` rerun](p07-revision-native-8f59-failure.json) then passed six of seven cases, including the new
+server-and-both-client comparison of all 187 panels. The last reset fixture
+failed before forecast/firing: passing `assert(muzzle, "message")` directly to
+the vararg `CFrame:PointToObjectSpace` API also forwarded the assertion's
+message string. No partial/in-flight reset work was established, so there is
+no reset pass. The minimal correction binds the asserted Vector3 first;
+damage rules, future-view checks and positive reset preconditions are retained.
+The failed source remains independently identified above. The minimal fix is
+`56fa735dffb3e1bc95afa9df5b0952398c9467ff`, tree
+`c7de331fd449d59c37c45e35efe15b13712e0228`; its
+[103-file identity](p07-revision-source-identity-56fa.json) changes only the
+server native harness from 8f59. Every production source/asset input also
+compares byte for byte against 583. Focused format/lint/strict checks pass.
+The [fresh independent full host log](p07-revision-host-56fa.txt) passes
+55 unit / 55 integration and all non-Studio gates on that final fixture source.
+The earlier [8f59 full gate](p07-revision-host-8f59.txt) is retained separately.
+[GitHub Verify run 269](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43484764811)
+also completes successfully for 56fa; CI does not replace Studio evidence.
+
+The [current-core P05 regression](p07-revision-p05-report.json) passes all
+eight cases on the same actual two clients, with no failures/skips. Its
+runtime/transport/fixture cleanup was verified before the bounded shelter
+render review. The corrected final P07 native reset and P14 regression still
+require their own finished reports.
+
 The [render report](p07-revision-fixed-render-report.json) records the same two
 actual players using production MatchRuntime, AircraftService, CombatRuntime
 and the normal operator ThermalCameraController. Only the supported aircraft
@@ -209,3 +269,169 @@ airborne fragments. Automated actual gravity/contact tests passed in the
 142-case engine baseline; the remaining shelter/fragment operated review,
 new all-panel reset run and current gunship/panning regressions remain open
 at this checkpoint.
+
+## Actual native-fired starting-shelter review
+
+The [shelter render report](p07-revision-shelter-render-report.json) records one
+bounded scene using the same two actual players, production controllers and
+combat. Supported aircraft time is held at 22.5 seconds; real match, combat
+and gravity clocks continue. One native 600ms W hold aligns the production
+operator view, then it stays at the same 40-degree M102 FOV for tier comparison.
+The normal-color camera is explicitly controlled above the roof; it is a
+comparison view, not a claim about the ordinary ground camera. Exact disposable
+[scene](p07-revision-shelter-scene.luau.txt) and
+[witness](p07-revision-shelter-witnesses.luau.txt) sources are hash-checked.
+
+Native GAU fire earns 0.999981880 seconds from six accepted impacts. The
+[stopped Light capture](p07-revision/shelter/normal-light-stopped.png) and
+ledger retain that value after 43.449211 seconds idle. The first of six native
+resumed impacts still has exactly 0.999981880 seconds despite a 47.866158-second
+interburst gap. Only the subsequent valid intervals add 0.999809027 seconds,
+for 1.999790907 total. No paused time is credited. Six actual native M102
+impacts then produce Heavy on the third and Total on the sixth.
+
+| State | Normal-color roof comparison | Production operator thermal view |
+| --- | --- | --- |
+| Pristine | [capture](p07-revision/shelter/normal-pristine.png) | [capture](p07-revision/shelter/thermal-pristine.png) |
+| Light, resumed fire stopped | [capture](p07-revision/shelter/normal-light.png) | [capture](p07-revision/shelter/thermal-light.png) |
+| Heavy, third M102 | [capture](p07-revision/shelter/normal-heavy.png) | [capture](p07-revision/shelter/thermal-heavy.png) |
+| Total, sixth M102 | [capture](p07-revision/shelter/normal-total.png) | [capture](p07-revision/shelter/thermal-total.png) |
+
+Root independently inspected all four tiers in both views. Light scars are
+clearly visible; Heavy has darker fractured residual strips around the real
+half-roof opening; Total removes the panel. Temporary QA controls remain
+hidden under Pristine/Light, only the hole control is visible under Heavy,
+and both appear under Total. Center and four-corner map rays corroborate each
+control. The normal Heavy image includes four actual fragments on the ground.
+These nine PNGs are unedited GPU captures, including the extra stopped-Light
+frame. The attempted immediate Heavy capture still caught settled fragments
+(Y about 0.71, velocity zero), not airborne motion. No visual fall pass is
+inferred; actual gravity/contact remains independently established by engine
+tests, and a brief human visual observation has been requested separately.
+
+## Actual reset reconstruction boundary
+
+The [56fa native report](p07-revision-native-56fa-failure.json) again passes
+six of seven cases. Unlike the earlier fixture failures, it now establishes
+real pre-reset work: 0.183054 earned GAU seconds, two pending projectiles and
+four live fragments on `Shelter_Roof_R01_C04`. Its 16-second future-view guard
+passes. After abort/reset reaches Lobby, the fixture's throwing `panel()`
+lookup fails before the next combat callback can wrap the rebuilt authored
+Parts. This is not a passing reset case.
+
+The independent [two-player reset timeline](p07-revision-reset-timeline.json)
+with [exact probe source](p07-revision-reset-timeline-probe.luau.txt) isolates
+the ordering: at server time 1794595997.563451 the current map has 187 authored
+Parts and zero wrappers; the original helper would throw. After a deferred
+Heartbeat resume at 1794595997.591600, all 187 are registered Models with
+Pristine appearance and zero ledger/published credit, fragments, pending
+outcomes and projectiles. Four further Heartbeats stay correct. The observed
+28.15ms reconstruction boundary is temporary, not a persistent reset defect.
+This narrow probe does not prove reset under live work.
+
+The authorized fixture correction uses a bounded nonthrowing current-map
+readiness predicate for all 187 Models, followed by the unchanged strict
+server/client reset, real-work and stale-outcome assertions. It adds neither
+an arbitrary sleep nor a manual production sync. Its fresh full native gate
+must still pass; production damage and reset behavior are unchanged.
+
+This correction is frozen at `8053c8f73c5700161e7b87d8e87824742165f3cd`,
+tree `a1e0e2e5405b0fd30e5e5b88b712d59431c608ea`.
+The [final 103-input identity](p07-revision-source-identity-8053.json) matches
+the tester's independently generated manifest and every input in Git.
+All production source/asset inputs still match 583 byte for byte.
+The [final full host log](p07-revision-host-8053.txt) passes all non-Studio
+gates, including 55 unit / 55 integration cases; independent
+[GitHub Verify run 271](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43487297961)
+also succeeds. All 97 mapped scripts and 403 authored Battlefield Part
+properties match the original Editor again. The fresh server helper is
+54,917 bytes (SHA256 `101a38dfbcf66235ba25e2595a7a2eddecf2eb8003017161c8f5ee8be7dd4617`);
+each fresh client helper is 14,064 bytes (SHA256
+`24972c2b19e7bd02a35275db2dd81eabeb298447110c9841bfdd6f0721642ef8`).
+The [final native seven-case report](p07-revision-native-8053-pass.json)
+passes **7/7**, with two actual clients, zero failures and zero skips. All
+63 GAU requests are accepted; actual valid intervals total 11.001190 seconds,
+with Heavy reached at 9.168631, never early. Stopped Light credit remains
+3.667306 and 7.334313 seconds after the first two bursts. Main-building and
+shelter M102 progression, actual Ground Humanoid wall traversal, rejection /
+flood safety and current-state/debris agreement all pass.
+
+Both reset iterations now establish actual positive partial credit alongside
+two pending projectiles and four live fragments: 0.165956 seconds before the
+first reset and 0.184302 before the second. Each reset verifies all **187**
+pristine panels on the server and queries all **187** on **each** actual client,
+including pivots, credits, cosmetic absence and collision/query state. Old
+outcomes cannot advance the fresh map; pending work and fragments are zero.
+The second reset follows a real second deployment/round with the same actual
+participants. This is the full revised suite, separate from the earlier
+six-pass/one-failure reports and narrow reset timeline.
+
+The [final current-core P14 regression](p07-revision-p14-report.json)
+passes all six cases, including two full
+90-second orbits and actual operator departure. It starts with two real
+clients; the final deliberate operator kick leaves one as intended. Actual
+native-fired Warehouse/shelter tier readability is verified above. At this
+pre-human checkpoint, visual falling-fragment observation was still open
+despite passing automated actual gravity/contact; no human Ready/observation
+reply had yet arrived. The later observed demonstration below resolves it.
+
+The [native cleanup record](p07-revision-final-cleanup.json) identifies the
+deliberate departure and removes owned QA fixture modules/transport/runtime
+before ending the session. Final original-Editor cleanup and the consolidated
+independent review are recorded in the
+[final Edit proof](p07-revision-edit-cleanup.json) and
+[independent QA report](p07-revision-final-review.md). Native EndTest closed
+the simulation windows; only the original `tests.rbxlx` Edit instance remains,
+not running. ManualHarness is nil, runtime/settings/Workspace/replicated /
+server-storage pollution is absent and the existing Rojo PID 55771 still
+listens on port 34872. A final reread matches all 103 Git inputs and live
+97 scripts / 403 authored Battlefield Parts, with zero mismatches.
+
+Independent review at that checkpoint reports no known unresolved production
+defect and passing A1–A6. A7's direct visual observation was the sole open
+criterion. The user subsequently became available, resolving it as follows.
+
+## Direct human fragment observation — final A7
+
+The user answered Ready after the automated session ended and had already
+started a fresh ordinary two-client session. It was reused without another
+launch. Its private HumanTestSession controller and normal production orbit,
+match, weapons and physics stayed in control; no runtime takeover, global
+registry, time/physics freeze or synthetic damage was introduced.
+
+The [supplemental report](p07-revision-human-fragments.json) identifies the new
+actual server/clients and records three real native M102 target impacts,
+shot IDs 2, 3 and 4, on `Shelter_Roof_R01_C03` at pivot (-16,14,74). Before
+shot 4 it is Light at 2/3 progress with six heavy-credit seconds. That shot
+creates Heavy at local progress zero, a genuine opening and four unanchored,
+nonqueryable fragments. Sixty-one actual Heartbeat samples record fragment Y
+starting near 14.0118 and reaching static scenery near 0.72 with zero velocity.
+
+The Ground Player1 view used a labelled **FRAGMENT WATCH** controlled normal
+close-up, CFrame from (-16,8,68) toward (-16,12,76), FOV 55. The operator
+retained the normal live camera and fired actual native input. After the
+coordinator's countdown and the confirmed impact, the user answered the
+specific falling-piece question: **“Yes, I saw pieces fall.”** This factual
+observation, rather than the earlier Ready answer, closes A7. It establishes
+the visible effect from the disclosed close-up, not ordinary Ground camera
+comfort, physical-mobile feel or release balance.
+
+The [replay procedure](p07-revision-human-replay.md) and exact
+[read-only observer](p07-revision-human-observer.luau.txt),
+[watch camera](p07-revision-human-camera.luau.txt) and
+[native projection](p07-revision-human-projection.luau.txt) sources preserve
+the supplemental setup and SHA256 identities. All 103 candidate inputs remain
+byte-identical to 8053; prior full host, engine, seven-case, blast, P05 and P14
+results therefore retain their original valid scope. No repeated full gate or
+new feature was needed for the observation.
+
+The [post-human cleanup proof](p07-revision-human-cleanup.json) restores the
+watch camera to Custom, removes its label/binding and disconnects the read-only
+observer. The ordinary private HumanTestSession owner remains untouched until
+native EndTest invokes its normal BindToClose cleanup. Only the original Edit
+document remains afterward, ManualHarness nil and no owned runtime or attribute
+pollution; Rojo PID 55771/34872 is retained. Final rereads again match all 103
+Git inputs, 97 live script Sources and 403 authored Battlefield Parts.
+The refreshed [independent review](p07-revision-final-review.md) reports
+passing A1–A7 with no known unresolved production defect or required validation
+gap. Historical fixture failures and limited GPU captures remain preserved.
