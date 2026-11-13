@@ -34,22 +34,32 @@ is `0ab360775bdd7d97a2654aa3b6857ddbc3d6157e`, tree
 `3d6bb3fd49629f66d12e31f921975a151607714f`. Gameplay is unchanged from
 `59252c9`; `dc081f4` improves independent camera-test sampling and `0ab3607`
 adds bounded native-client startup diagnostics. Later commits contain prose
-and evidence. The required current-source two-client P06 suite remains open;
-the implementation is not yet fully accepted.
+and evidence. All current acceptance checks below passed. Integration into
+`main` is recorded separately from implementation and validation.
 
-| Criterion | Current evidence | Outstanding acceptance |
-| --- | --- | --- |
-| A1 | Developer and final primary-agent `python3 scripts/verify.py`: 50 unit / 43 integration, plus format/lint/types, builds, geometry and release isolation. Fresh Studio baseline: 118 server and 6 per client. Actual three-client P06Team 7/7 includes server-owned rifle/loadout, cover/Wing damage, ammo and friendly-fire assertions. | Final current-source two-client run. |
-| A2 | Host cases cover pristine three-rocket boundaries, mixed damage, duplicates and misses. Current P06Team validates mixed rifle/rocket sweeps at the actual orbit; historical `6613375` two-client P06 10/10 includes pristine 300→200→100→0 sweeps and measured speed. | Current-source pristine rocket and mutual-destruction cases in the full two-client P06 suite. |
-| A3 | Current P06Team checks malformed/wrong-role requests, implausible origins, embedded body/cover rejection, eliminated fire, query failure without mutation and recovery with the same sequence. Host cases cover bounds, stale/replayed/flood traffic and movement budgets. | Final current-source two-client regression. |
-| A4 | Current three-client P06Team proves the eliminated teammate receives the shared Ground result. Historical `6613375` P06 proves both actual same-step callback orders and separate operator-forfeit reason. | Current-source two-client callback-order/pristine-rocket/forfeit cases. |
-| A5 | Current P06Team 7/7: three real clients, shared shot/health/destruction observations, repeated reset, tools/listeners/effects teardown. Corrected desktop aim and feedback accepted by the user; simulated-phone layout/fire/reload/swipe pass. Current two-client P05 and full P14 regressions pass 8/8 and 6/6. | Current full two-client P06; final documentation/evidence delivery. |
+| Criterion | Passing current-source evidence |
+| --- | --- |
+| A1 | Developer and final primary-agent `python3 scripts/verify.py`: 50 unit / 43 integration, plus format/lint/types, builds, geometry and release isolation. `GroundCombatService` cases cover readiness and reload. Fresh Studio baseline: 118 server and 6 per client. P06 10/10 and P06Team 7/7 include named loadout and cover/Wing-damage cases with ammo/friendly-fire assertions. |
+| A2 | `AircraftHealth` host cases cover pristine boundaries, mixed damage, duplicates and misses. Current two-client P06 actual swept fixtures produce pristine 300→200→100→0 at 300 studs/second in 50-stud steps; the named direct-sweep case covers mixed damage/replay/miss behavior. |
+| A3 | Named P06 forged/wrong-role and query-failure cases pass in both current two-/three-client suites. `GroundMovementGuard`, `GroundOriginGeometry` and ground-combat cases cover implausible origins, body/cover/Terrain rejection, stale/replayed/flood input, eliminated fire, rejection without mutation and same-sequence recovery. |
+| A4 | Both named P06 same-simulation-batch order cases pass with recorded shared frames/equal Heartbeat deltas and Ground/AircraftDestroyed. The actual operator-disconnect case passes with its separate forfeit reason. P06Team proves the eliminated teammate receives the shared Ground result. |
+| A5 | P06 10/10 and P06Team 7/7 observe shared shots/health/destruction, repeated reset, tools/listeners/effects cleanup. User accepts current desktop aim/tracers/damage; simulated-phone layout/fire/reload/swipe pass. Current P05 and full P14 regressions pass 8/8 and 6/6. Actual current capture and final documentation review are recorded. |
 
 ### Actual Studio and operated evidence
 
 The [verification record](../docs/evidence/p06-ground-combat.md) preserves
 all source-specific runs and failures. Its linked structured reports are the
 primary evidence; an earlier pass is not relabeled as a current-source run.
+
+Named cases are implemented in the [ground-combat server harness](../tests/studio/server/GroundCombatHarness.luau),
+[client observations](../tests/studio/client/GroundCombatHarness.luau),
+[rifle rules](../tests/integration/GroundCombatService.spec.luau),
+[aircraft health](../tests/integration/AircraftHealth.spec.luau),
+[movement guard](../tests/integration/GroundMovementGuard.spec.luau),
+[origin geometry](../tests/studio/specs-server/GroundOriginGeometry.spec.luau)
+and [independent GUI/native-ray checks](../tests/studio/specs-client/GroundAimGui.spec.luau).
+The [final independent QA report](../docs/evidence/p06-final-review.md) resolves
+the material findings and identifies the remaining scope limits.
 
 The [final local host report](../docs/evidence/p06-final-host.json) and
 [complete gate log](../docs/evidence/p06-final-host.log) record the primary
@@ -62,6 +72,12 @@ require the repository checker rather than another unchanged gameplay run.
   zero failures/skips/errors. This was a distinct controlled restart of exact
   test-runner source after full owner cleanup, with three already-connected
   clients. It is not a clean native cold-start or delayed-join claim.
+- [Final fresh native two-client P06](../docs/evidence/p06-final-0ab.json):
+  10/10, server smoke 118/118 with two players and 6/6 on each client, zero
+  failures/skips/errors. First arrival 7.320930 seconds; actual pristine rocket
+  sweeps, both same-frame/equal-delta callback orders, forfeit, repeated reset
+  and moving-tracer tests pass. The operator-kick fixture leaves one client;
+  the tester then ends the server session and clears all temporary selectors.
 - [Current desktop user review](../docs/evidence/p06-user-0ab.json): a normal
   three-player round, native M-7 input, 12 paired request/camera samples and
   health decreasing 195→155 in the preserved window. The user reported visible
@@ -84,8 +100,7 @@ require the repository checker rather than another unchanged gameplay run.
   zoom/rejected selection, concurrent ground movement/operator pan, UI blocking,
   thermal occlusion, role/round reset and repeated teardown. Its final actual
   operator departure left one client as expected; the tester then ended the
-  session and confirmed only the original Edit document remained. The final
-  fresh two-client P06 suite is prepared.
+  session and confirmed only the original Edit document remained.
 
 ### Startup and prior findings
 
@@ -117,8 +132,10 @@ Rifle/aircraft health, movement and cosmetic values are tuning defaults in
 ### Delivery
 
 [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27)
-remains draft until the outstanding current-source checks and delivery records
-are complete. [GitHub Verify 43338524340](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43338524340)
-passed on `0075f1916d2cec43a1e23b18d371ac02c2cabef0`, containing the tested
-source and prior evidence. No P06 merge or Roblox publication has occurred;
-no later plan has been implemented.
+contains the implementation; all required local/Studio and operated checks
+pass. The technical writer reviewed the player/contributor narrative and found
+no material design contradiction. [GitHub Verify 43340569992](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43340569992)
+passed on `9109d312e283ef31fd5c3482f2154f2e43e470aa`, containing unchanged
+tested source and the current screenshot/review/regression records. Final
+evidence and review state are recorded in the delivery commits. No P06 merge
+or Roblox publication has occurred; no later plan has been implemented.

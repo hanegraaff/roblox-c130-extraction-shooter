@@ -241,6 +241,28 @@ negative-probe gates passing. The [host report](p06-final-host.json) and
 [bounded complete log](p06-final-host.log) retain the exact command/environment
 and distinguish intentionally rejected probes from game-test failures.
 
+## Final fresh two-client P06 acceptance
+
+The [final native Server & Clients run](p06-final-0ab.json) on unchanged
+`0ab3607` passed all 10/10 P06 cases with two actual clients, zero
+failures/skips. Fresh server smoke passed 118/118 with two players; both
+clients passed 6/6, zero errors. First-client startup was 7.320930 seconds.
+Both actual callback orders recorded the same simulation frame and equal
+Heartbeat delta, producing Ground/AircraftDestroyed. Pristine swept rockets
+produce 300→200→100→0; cover, rifle/tracer presentation, query-failure rejection
+and recovery, shared state and reset cases pass. The actual operator server
+kick produces the separate forfeit reason and leaves one client.
+
+After saving the reports, the tester ended the actual server session and
+confirmed sole original `tests.rbxlx` in Edit, ManualHarness and SDK arguments
+nil, temporary Workspace startup/report attributes nil, and no retained live
+owners. The [final independent review](p06-final-review.md) finds no unresolved
+material acceptance finding. The technical writer reviewed the current player
+and contributor documentation, distinguishing verified unmerged P06 from
+`main` and later launcher/destruction/production-capacity work. Final repository
+checks and GitHub delivery record these facts; no Roblox publication or merge
+is implied.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration
