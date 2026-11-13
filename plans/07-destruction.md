@@ -108,3 +108,11 @@ capability/state before a justified retry. The next review must establish clean
 thermal sight lines through the opening, Destroyed/falling-fragment visibility
 and actual firing/readability with the current candidate. No acceptance
 requirement was silently waived, and an incomplete plan is not marked Complete.
+
+Final delivery checkpoint: branch/evidence head `4f3fbeb` is pushed;
+[source CI](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43451965908)
+and [evidence/media CI](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43456880127)
+pass. Repository checking passes 77 Markdown / 166 JSON files; the final
+103-file executable manifest has zero mismatches. Native tests ended cleanly,
+only the original Edit document remains, ManualHarness is nil and the existing
+Rojo connection is retained. Main remains `e4c6e3a`; PR #29 is draft/unmerged.
