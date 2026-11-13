@@ -1,0 +1,55 @@
+{
+  "runtimeSource": "ef7826bc80310c17be4bcde93fe7607620303289",
+  "runtimeTree": "db1f4e50296a2620d13e36839525c7562220a629",
+  "docsHeadAtRun": "5919d63",
+  "environment": "Studio0.747 native manual Server & Clients, selected P08 marker; three actual clients",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":{\"1\":{\"userId\":-1},\"3\":{\"userId\":-3},\"2\":{\"userId\":-2}},\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":156,\\\"clientCount\\\":3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":156}\",\"p08\":\"{\\\"requestedClients\\\":3,\\\"departureMethod\\\":\\\"server-kick\\\",\\\"initialClientCount\\\":3,\\\"actualReconnectVerified\\\":false,\\\"clientCount\\\":3,\\\"requiredUnverified\\\":[\\\"A5 actual same-identity reconnect\\\"],\\\"passed\\\":5,\\\"cases\\\":[{\\\"passed\\\":true,\\\"name\\\":\\\"A1/A5 three clients see one map launcher with M-7-only initial loadouts\\\"},{\\\"passed\\\":true,\\\"name\\\":\\\"A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged\\\"},{\\\"passed\\\":true,\\\"name\\\":\\\"A1/A2 raced real-client pickups claim once; carrier keeps M-7\\\"},{\\\"passed\\\":true,\\\"name\\\":\\\"A3 actual miss drop transfer switching and early fire preserve identity and reload\\\"},{\\\"passed\\\":false,\\\"name\\\":\\\"A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages\\\",\\\"detail\\\":\\\"ServerScriptService.ServerTests.LauncherHarness:40: P08 timeout: dead shooter's actual in-flight rocket\\\"},{\\\"passed\\\":false,\\\"name\\\":\\\"Harness completion\\\",\\\"detail\\\":\\\"ServerScriptService.ServerTests.LauncherHarness:294: ServerScriptService.ServerTests.LauncherHarness:40: P08 timeout: dead shooter's actual in-flight rocket\\\"},{\\\"name\\\":\\\"A6 teardown invalidates deferred callbacks and removes every owned resource\\\",\\\"passed\\\":true}],\\\"skipped\\\":0,\\\"failed\\\":2,\\\"discovered\\\":7,\\\"environment\\\":\\\"Studio\\\",\\\"peakClientCount\\\":3,\\\"suite\\\":\\\"P08-multiplayer\\\",\\\"currentClientCount\\\":3,\\\"mode\\\":\\\"manual-server-clients\\\"}\",\"LauncherHarness\":{\"adler32\":3903058256,\"bytes\":27050},\"invocation\":\"{\\\"requestedClients\\\":3,\\\"mode\\\":\\\"manual-server-clients\\\",\\\"harness\\\":\\\"P08\\\"}\",\"CharacterOwner\":{\"adler32\":1462459928,\"bytes\":8749},\"report\":\"{\\\"invocation\\\":{\\\"requestedClients\\\":3,\\\"mode\\\":\\\"manual-server-clients\\\",\\\"harness\\\":\\\"P08\\\"},\\\"result\\\":{\\\"requestedClients\\\":3,\\\"departureMethod\\\":\\\"server-kick\\\",\\\"initialClientCount\\\":3,\\\"actualReconnectVerified\\\":false,\\\"clientCount\\\":3,\\\"requiredUnverified\\\":[\\\"A5 actual same-identity reconnect\\\"],\\\"passed\\\":5,\\\"cases\\\":[{\\\"passed\\\":true,\\\"name\\\":\\\"A1/A5 three clients see one map launcher with M-7-only initial loadouts\\\"},{\\\"passed\\\":true,\\\"name\\\":\\\"A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged\\\"},{\\\"passed\\\":true,\\\"name\\\":\\\"A1/A2 raced real-client pickups claim once; carrier keeps M-7\\\"},{\\\"passed\\\":true,\\\"name\\\":\\\"A3 actual miss drop transfer switching and early fire preserve identity and reload\\\"},{\\\"passed\\\":false,\\\"name\\\":\\\"A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages\\\",\\\"detail\\\":\\\"ServerScriptService.ServerTests.LauncherHarness:40: P08 timeout: dead shooter's actual in-flight rocket\\\"},{\\\"passed\\\":false,\\\"name\\\":\\\"Harness completion\\\",\\\"detail\\\":\\\"ServerScriptService.ServerTests.LauncherHarness:294: ServerScriptService.ServerTests.LauncherHarness:40: P08 timeout: dead shooter's actual in-flight rocket\\\"},{\\\"name\\\":\\\"A6 teardown invalidates deferred callbacks and removes every owned resource\\\",\\\"passed\\\":true}],\\\"skipped\\\":0,\\\"failed\\\":2,\\\"discovered\\\":7,\\\"environment\\\":\\\"Studio\\\",\\\"peakClientCount\\\":3,\\\"suite\\\":\\\"P08-multiplayer\\\",\\\"currentClientCount\\\":3,\\\"mode\\\":\\\"manual-server-clients\\\"}}\",\"actualCount\":3,\"manual\":\"P08\"}"
+      }
+    ],
+    "isError": false
+  },
+  "clientBaselines": [
+    {
+      "studioId": "7a17dec6-23d9-4799-bb85-6bcaa80e7f34",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"userId\":-1,\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "9c4eb3a7-9897-4dc2-9428-a6d3c8a497ed",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"userId\":-2,\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "d0d8c2e6-c9eb-400d-b4f3-ae5c6aa74ab9",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"userId\":-3,\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "diagnosticLimit": "Harness failed, then its own runtime.stop removed shot/flight state before MCP inspection. Accepted-shot payload/readyAt/LastImpact trace was not retained by this candidate harness. Do not infer flight cancellation or a runtime damage defect from the timeout alone.",
+  "sourceFinding": "Probable fixture stale aim: caller evaluates lead(carrier) before fire helper waits for reload readiness. Prior transfer deliberately leaves reload running, so accepted shot can aim at an old future aircraft position. Similar ordering exists in later three/mixed loops. This is source-derived and requires corrected engine re-run; current failure is not relabelled passed."
+}

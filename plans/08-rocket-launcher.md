@@ -65,7 +65,13 @@ fresh two-client P06/P05/P14 regressions pass 10/10, 8/8 and 6/6 respectively.
 The intermediate fixture-isolation failure is preserved rather than called a
 pass. The writer updated player/contributor/package docs and D55–D57 tuning
 defaults (including D58) and refreshed the representative actual final-source
-launcher capture. All material tester findings are resolved. Full eleven-case
+launcher capture. Material production/GUI findings are resolved. The first full
+native P08 invocation reached three actual clients and passed 156/7 baselines,
+but failed at the death/in-flight health-200 case (seven discovered, five passed,
+two failed including completion; teardown passed). Test-only revision
+`07e77ea5b57fba359ab611ea39e2c42c7b977881` corrects aim being prepared before
+reload readiness and retains bounded flight diagnostics; its full host gate
+passes 55/65. Production/UI source remains `ef7826b`. Fresh full eleven-case
 P08 harness and actual same-identity reconnect remain pending; the original
 test document is prepared for the user's stable native three-client handoff.
 P09 has not started. No merge or Roblox publication is authorized by

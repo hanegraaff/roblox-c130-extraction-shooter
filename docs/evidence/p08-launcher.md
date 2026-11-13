@@ -7,8 +7,10 @@ contains the implementation, prose and source-bound evidence. Verified delivery
 Acceptance remains open; CI does not replace actual multiplayer or operated
 checks.
 
-Latest verified runtime/test source is `ef7826b`: full host **55 unit / 65
-integration** and fresh solo Studio **156 server / 7 client** pass. The unchanged
+Verified production runtime is `ef7826b`: full host **55 unit / 65
+integration** and fresh solo Studio **156 server / 7 client** pass. The
+subsequent test-only harness revision `07e77ea` also passes the full host gate;
+its fresh native run is pending. The unchanged
 server/input core's source-bound two-client regressions on `75b1e88` pass P06
 **10/10**, P05 **8/8** and P14 **6/6**. Final phone layout/native-control review
 passes. The eleven-case three-client P08 harness and actual same-identity
@@ -289,6 +291,67 @@ signatures matched `ef7826b`. The tester then armed `ManualHarness = "P08"`
 for the user's stable native three-client handoff. No subsequent Studio
 mutation or competing launch is authorized by elapsed waiting time; the
 selector stays fixed until that handoff is exercised.
+
+## First complete native P08 invocation
+
+The user exercised the stable three-client handoff on `ef7826b`. The actual
+server had nil SDK arguments and ManualHarness=P08; initial/peak/current
+population was three, matching the requested count. Server smoke passed
+156/156 and all three actual clients (−1,−2,−3) passed 7/7. The
+[full failed invocation](p08/native-ef7826b-failed.json) and
+[console](p08/native-ef7826b-console.txt) preserve fingerprints and reports.
+
+The P08 gameplay suite did **not** pass: seven cases were discovered before
+early exit, five passed and two failed. Initial single-launcher/loadout,
+rejection/flood/movement checks, raced real-client pickup and miss/drop/transfer/
+selection/early-reload cases pass. The next case timed out waiting for aircraft
+health 200 after the carrier fired and died; a harness-completion failure
+records that same interruption, and final teardown passes. Raw reset,
+three-player-fired-rocket, mixed-fire and disconnect cases were not reached.
+
+Investigation found a harness sequencing defect: `lead(carrier)` is evaluated
+before the fire helper waits for reload readiness, although the prior transfer
+case deliberately leaves reload in progress. Thus the target can be seconds
+old at dispatch. Other direct-rocket loops use the same pattern. The stopped
+runtime had already removed shot/impact state before inspection, so this run
+cannot establish flight cancellation; it establishes the failed health
+assertion. The correction must calculate moving aim after readiness and retain
+bounded dispatch/impact diagnostics, without changing the required health or
+bypassing real fire/collision. The tester ended the owned native session and
+verified original Edit, nil selector, no bootstrap owner and no running
+simulation before repository edits resumed. This failed result remains
+historical even if the corrected harness later passes.
+
+## Harness timing correction
+
+Test-only source `07e77ea5b57fba359ab611ea39e2c42c7b977881`, tree
+`032f7b162bcc8bba6e48c002b2ca0da30939b444`, changes only the server P08
+harness. All three direct-rocket call sites supply lazy moving-target
+providers; the helper waits for client rendezvous and identity reload
+readiness before preparing and dispatching aim. Deliberate upward misses
+remain explicit vectors. Original health-200, three-direct-hit and mixed-fire
+assertions are unchanged. Stronger pre-death checks require a fresh shot,
+health 300, no matching impact and an actual live flight. After death the
+teammate/round must stay active, and a flight must still exist until its impact
+if health has not yet changed.
+
+The report retains up to 192 newest JSON-safe `traces` with
+`droppedTraceRecords`: preparation/dispatch/acceptance-derived time and aim age,
+target/head/aircraft/rocket positions, IDs, readiness, impact, phase/life/health
+and resource counts. Quarter-second live-flight samples and explicit
+before/after-death/before-cleanup records survive teardown; the observer is
+disconnected before cleanup. These diagnostics do not award damage or bypass
+production collision.
+
+Primary's full `python3 scripts/verify.py` passes 55 unit / 65 integration and
+every host gate ([log](p08/host-07e77ea.txt)). The independent tester reviewed
+the sequencing/unchanged assertions and verified synced harness source
+(35,814 bytes, Adler32 3441968132); production Ground/Round module signatures
+remain the previously accepted `ef7826b` values. The original local document
+was Edit/not running, with no bootstrap owner, before the tester armed P08 for
+the next stable native handoff. This is preparation, not a passing native
+result. Source/UI, full-orbit and phone checks need no unrelated rerun for this
+harness-only correction; the new native session will run fresh 156/7 baselines.
 
 ## Initial Studio availability
 
