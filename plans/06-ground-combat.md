@@ -126,6 +126,12 @@ waits for a ready current camera and logs detailed failures. Gameplay source
 remains `59252c9`. Its developer full host gate passes 50 unit / 43 integration;
 independent fresh solo Studio smoke passes 118 server / 6 client with zero
 failures/skips/errors. The three-client rerun and gameplay checks remain open.
+That rerun did not reach the suites: the server's ten-second first-client wait
+expired before native clients connected. All three clients later passed the new
+aiming check but failed Foundation while waiting for missing server smoke. This
+is an unavailable P06Team run, with its startup failure preserved. A test-only
+sixty-second client-arrival budget and explicit startup diagnostics are prepared;
+roster/gameplay timeouts and production code are unchanged.
 A real current-P06
 screenshot and operated desktop/mobile combat review are also
 required. Rifle/aircraft health and movement limits are tuning defaults,

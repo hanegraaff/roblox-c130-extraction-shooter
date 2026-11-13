@@ -114,6 +114,26 @@ the source and tree. The tester returned the original document to Edit and
 prepared P06Team for three actual clients. This passing solo run does not
 replace the failed prior team run or prove that the new multiplayer run passes.
 
+The next native three-client run on `dc081f4` never reached server smoke or
+P06Team. The [startup record and exact logs](p06-team-dc0.json) preserve the
+server's first-client ten-second timeout, absent `ServerTestReport` and manual
+invocation/report, and three actual clients present later. Each client passed
+GroundAimGui, but failed Foundation after sixty seconds waiting for server
+fixtures (5/6 overall on each). This is failed startup evidence, not a P06Team
+gameplay result. The tester ended the session and restored the original Edit
+document with selectors nil.
+
+The follow-up `0ab360775bdd7d97a2654aa3b6857ddbc3d6157e`, tree
+`3d6bb3fd49629f66d12e31f921975a151607714f`, changes only test startup: a
+separate sixty-second first-real-client budget, per-second/final
+`ServerTestStartup` timing/count/status observations, and an explicit failed
+zero-discovery report on timeout. It preserves the real client requirement and
+every smoke, roster and gameplay assertion. Its developer full host gate passes
+50 unit / 43 integration. The prior ten-second failure remains recorded; a
+fresh native run must establish actual startup and gameplay results. A
+deliberately delayed arrival and the complete sixty-second no-client timeout
+have not yet been exercised in Studio.
+
 ## Initial candidate `888de26`
 
 Independent `python3 scripts/verify.py` passed 50 unit and 38 integration

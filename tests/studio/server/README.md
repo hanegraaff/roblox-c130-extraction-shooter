@@ -1,6 +1,6 @@
 # Server TestEZ runner
 
-This package’s `init.server.luau` maps to the test-only `ServerScriptService.ServerTests` Script. During Play it waits for the actual bootstrap and at least one real player, then runs the [server specs](../specs-server/README.md) through locked TestEZ. Startup requires a player within ten seconds.
+This package’s `init.server.luau` maps to the test-only `ServerScriptService.ServerTests` Script. During Play it waits up to ten seconds for actual bootstrap status and, separately, up to 60 seconds for the first real client, then runs the complete nonempty [server specs](../specs-server/README.md) through locked TestEZ. `workspace.ServerTestStartup` records JSON status, elapsed seconds, budget seconds and actual client count roughly once per second and on arrival or timeout. On first-client timeout it publishes a failed zero-discovery `ServerTestReport` and errors; zero discovery is not a pass. The revised delayed-arrival and no-client paths require fresh Studio verification; this budget does not change harness roster or gameplay deadlines.
 
 Read `workspace:GetAttribute("ServerTestReport")` in the **server** context. Its JSON includes suite/environment/seed, discovered/passed/failed/skipped/errors and actual `clientCount`. Zero discovery, any skip/failure/error, missing readiness or a missing report is not a pass. The runner also asserts on invalid totals and sends TestEZ details to Studio Output.
 
