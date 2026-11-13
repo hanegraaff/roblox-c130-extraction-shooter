@@ -1079,8 +1079,29 @@ function Harness.run(finish: ((Report) -> ())?)
                     return runtime.rounds.match.snapshot().phase == "Lobby"
                 end, "reset lobby")
                 waitFor(function()
-                    return panel(targetId):GetAttribute("PanelState") == "Intact"
-                end, "pristine panels")
+                    -- Lobby can precede the next Heartbeat's panel capture.
+                    -- Authored Parts are a pending state, not a failed Model lookup.
+                    local world = workspace:FindFirstChild("World")
+                    local map = if world then world:FindFirstChild("Battlefield") else nil
+                    if not map then
+                        return false
+                    end
+                    for _, id in allIds do
+                        local model = map:FindFirstChild(id, true)
+                        if
+                            not model
+                            or not model:IsA("Model")
+                            or model:GetAttribute("PanelState") ~= "Intact"
+                            or model:GetAttribute("DamageAppearance") ~= "Pristine"
+                            or model:GetAttribute("PanelProgress") ~= 0
+                            or model:GetAttribute("HeavySeconds") ~= 0
+                            or model:GetAttribute("SustainedSeconds") ~= 0
+                        then
+                            return false
+                        end
+                    end
+                    return true
+                end, "all pristine panel Models reconstructed")
                 local resetEntries = allPanelStates(true)
                 assert(not runtime.destruction.resolve({
                     roundId = staleRound,
