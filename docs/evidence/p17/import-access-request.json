@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date_local": "2026-11-14",
-  "authorization": "Pending; not granted",
+  "authorization": "Approved by explicit user reply on 2026-11-14; private only. Initial cloud save and MCP access still pending.",
   "source_commit": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
   "release_build": {
     "path": "build/game.rbxlx",
@@ -35,5 +35,6 @@
     "upload_directory": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/assets/exports/military-outpost",
     "uploaded_assets": []
   },
-  "scope": "Private asset import and verification workspace; no public game release or test-only cloud content. A1-A6 remain open until actual replacement acceptance."
+  "scope": "Private asset import and verification workspace; no public game release or test-only cloud content. A1-A6 remain open until actual replacement acceptance.",
+  "authorization_record": "private-upload-authorization.json"
 }

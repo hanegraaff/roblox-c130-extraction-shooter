@@ -56,7 +56,19 @@ targeting `main`. Initial evidence delivery `916713e` passes
 [GitHub Verify #335](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43605942429).
 The code/tooling source remains `03c9c06`; the plan records source-bound
 Studio results and remaining evidence limitations. This draft does not complete
-P17 or authorize its pending private cloud workspace/assets.
+P17. The user's subsequent authorization below covers its private cloud
+workspace/assets.
+
+2026-11-14 private-upload authorization: the user explicitly approved uploading
+the identified release build and approved assets while keeping the experience
+private. The [P17 authorization record](docs/evidence/p17/private-upload-authorization.json)
+preserves the response, build hash, owner and scope. Consent is resolved and
+must not be requested again. The access blocker remains: the current document
+is local, MCP's publishing scope is ungranted, and the initial private cloud
+save requires the user to complete Studio's dialog. The release build matches
+the authorized hash and passes artifact isolation; tests remain local. No cloud
+upload or private-audience verification is claimed until actual IDs and results
+are recorded. P17 stays Blocked and P09 stays Planned.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree

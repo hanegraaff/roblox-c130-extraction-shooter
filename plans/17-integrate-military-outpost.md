@@ -250,3 +250,29 @@ prose/evidence records do not change gameplay or tests.
 P17 retains the concrete import-access blocker in the roadmap. No A1–A6
 completion, next-plan promotion, merge, cloud save, asset upload or Roblox
 publication is claimed by this draft.
+
+### Private upload authorization — 2026-11-14
+
+The user explicitly replied **“Yes, upload the game, but make sure to keep it
+private.”** to the identified release-build / owner-only **C130 P17 Import**
+workspace and approved model/texture-upload proposal. The
+[authorization record](../docs/evidence/p17/private-upload-authorization.json)
+binds that response to code `03c9c06`, release build SHA-256
+`47a8a8f3934f9b21d70ecfb56b56771f59740b865a89335aae80ad6ffb489338`,
+user account `2227341845`, private audience and the approved asset scope.
+Consent is now granted; do not request it again for this same destination,
+build and scope. It does not make an upload, privacy verification or P17
+acceptance complete.
+
+Rechecked local `build/game.rbxlx` matches the authorized hash; the artifact
+inspection passes with 510 release Instances / 47 runtime scripts and no
+tests/fixtures/development overrides. Studio still has local `tests.rbxlx`
+open. A harmless `universe:write` scope probe still returns **Scope has not
+been granted**. The connected `save_place` tool saves a local document back
+to its file and cannot create the initial cloud experience or open another
+file. Browser control also reports **browser access host is unavailable**.
+The user has been asked to open `build/game.rbxlx` in Studio and complete the
+initial **Publish to Roblox** dialog as **C130 P17 Import**, keeping **Audience:
+Private**. Never cloud-save the test mapping. Actual cloud IDs, a verified
+private audience and asset scopes remain pending; the roadmap's access blocker
+therefore remains. No upload or public release is claimed at this checkpoint.

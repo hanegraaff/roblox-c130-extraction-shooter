@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "timezone": "America/New_York",
+  "response_verbatim": "Yes, upload the game, but make sure to keep it private.",
+  "context": "Explicit reply to the proposed owner-only C130 P17 Import workspace using the prepared release build and permanent approved model/texture uploads.",
+  "authorized_source_commit": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "authorized_release_build": {
+    "path": "build/game.rbxlx",
+    "sha256": "47a8a8f3934f9b21d70ecfb56b56771f59740b865a89335aae80ad6ffb489338",
+    "bytes": 920113,
+    "mapping": "default.project.json",
+    "cloud_eligible": "Only with separate named-destination/audience authorization"
+  },
+  "workspace": {
+    "experience_name": "C130 P17 Import",
+    "place_name": "P17 Import Workspace",
+    "owner_type": "User",
+    "owner_id": 2227341845,
+    "audience": "Private; owner only",
+    "universe_id": null,
+    "place_id": null,
+    "initial_save": "User opens the release-mapped build/game.rbxlx and completes Save to Roblox; never save the test mapping"
+  },
+  "asset_scope": {
+    "owner_id": 2227341845,
+    "permanent": true,
+    "models": [
+      "assets/exports/military-outpost/outpost-assembly-v1.fbx",
+      "assets/exports/military-outpost/panel-library-v1.fbx"
+    ],
+    "textures": "Only approved package PNG maps needed to repair missing imported materials, up to twelve; reuse returned IDs",
+    "required_scopes": [
+      "asset:read",
+      "asset:write"
+    ],
+    "upload_directory": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/assets/exports/military-outpost",
+    "uploaded_assets": []
+  },
+  "audience_constraint": "Private; owner only. No public or Limited release.",
+  "observed_preflight": {
+    "studio_file": "tests.rbxlx",
+    "studio_id": "e8a5a6d7-8d8c-4326-ab03-c3185048e07f",
+    "persistedToCloud": false,
+    "universe_write_probe": "Scope universe:write has not been granted",
+    "browser_control": "Unavailable: browser access host is unavailable",
+    "release_build_sha256_matches_approved_candidate": true,
+    "artifact_isolation": "Passed: 510 release Instances / 47 runtime scripts; no tests, fixtures or development overrides"
+  },
+  "execution": {
+    "initial_cloud_save": "Pending user completion of initial Studio Publish to Roblox dialog for the release build",
+    "privacy_verified": false,
+    "uploaded_assets": [],
+    "public_release_performed": false
+  }
+}
