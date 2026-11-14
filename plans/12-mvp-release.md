@@ -21,6 +21,12 @@ Prepare a clean-checkout release candidate using the release mapping. Record sou
 
 ## Release boundary
 
+[P16/P17's Blender asset and smaller-Outpost refinement](17-integrate-military-outpost.md)
+is scheduled before P09 and this plan by D63. Require the approved replacement's
+source, complete exports/manifest, actual owner asset access and P17 acceptance
+alongside the release checks above. Blender approval alone cannot establish
+release readiness.
+
 Missing Roblox destination, access, explicit publishing authorization or ten-client validation leaves this plan incomplete. Finish all local preparation and state precisely what remains; do not publish to an invented place, change audience silently or waive a capacity check. Merge authorization is separate from publication authorization.
 
 ## Completion record

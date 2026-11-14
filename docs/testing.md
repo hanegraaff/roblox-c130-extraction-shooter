@@ -2,11 +2,14 @@
 
 ## Current host checks
 
-Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map, round, aircraft/view, gunship/ground combat, panel-destruction and P08 launcher source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
+Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map, round, aircraft/view, gunship/ground combat, panel-destruction, P08 launcher source and P16 asset package. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
 
 | Gate | Command used by the verifier |
 | --- | --- |
 | Repository inputs | `python3 scripts/check_repository.py` |
+| Asset provenance rejection tests | `python3 -m unittest discover -s tests/tooling -v` |
+| P16 committed asset package | `python3 scripts/p16_audit.py` |
+| Asset audit regression tests | `python3 -m unittest discover -s tests/assets -v` |
 | Format | `stylua --check src tests scripts/run_tests.luau` |
 | Lint | `selene src tests scripts/run_tests.luau` |
 | Roblox sourcemap | `rojo sourcemap test.project.json --output build/sourcemap.json` |
@@ -25,6 +28,75 @@ The verifier also copies source into disposable fixtures to inject a deliberatel
 Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The stable build checks **422 authored Parts**, including **403 Battlefield Parts** and all **187 panels**; the earlier 353-part/111-panel artifact result is historical. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
+
+## Verify and review the P16 Blender package
+
+P16 is an asset-authoring increment outside Rojo's runtime mappings. Its
+[acceptance record](evidence/p16/acceptance.md) binds commands, measurements,
+failures, independent review and explicit human approval to exact source/export
+hashes. Use the [source guide](../assets/blender/military-outpost/README.md) for
+inspection and the full copyable rebuild/reopen/render sequence; the
+[export guide](../assets/exports/military-outpost/README.md) documents consumers.
+The current game retains the primitive smaller Outpost until P17.
+
+The full host gate now includes Python manifest and asset regression suites and
+`python3 scripts/p16_audit.py`. Require nonzero discovery, all named cases
+passing and no skips/failures. The current mapping expects seven asset-audit suites, 22 asset regression
+cases and ten manifest cases. These counts are separate from the 55 unit /
+65 service cases above; source-bound outcomes remain in the acceptance record. The portable asset audit checks the actual exported
+triangle data rather than accepting catalog opening fractions as proof:
+
+| Named audit | Evidence it checks |
+| --- | --- |
+| `P16AssetInventory` | Required reference features, editable named components, furnished assembly, declared scale/site and reusable asset mapping |
+| `P16DamageCatalog` | Six material/shape families, four appearances, material-matched fragment exports and retained legacy pivot/identity mapping |
+| `P16PanelGeometry` | Rasterized actual mesh/proxy face coverage; Light retains pristine coverage with actual earned-scar faces on both sides, Heavy removes 45–55% of original blocking face, Total has no solid; proxies cannot fill visible holes |
+| `P16Navigation` | Actual stair/floor/beam/balcony geometry at 185 route stations (98 internal / 87 external), with 1,850 support rays and 4×6×4-stud body checks across treads, landings, turns and the upper door; checked in OBJ, saved-source and clean-FBX geometry; actual Humanoid traversal remains P17 |
+| `P16ExportAudit` | Finite triangulated OBJ data, UV/material/texture references, named exports and measured file/triangle/texture budgets |
+| `P16BlenderReopen` | Checked-in clean Blender reopen and FBX-import reports match the source/export hashes and record no missing dependencies |
+| `P16Dependencies` | Exact package file set, sizes and SHA-256 values against its lock |
+
+The Python rejection tests use disposable copies to exercise invisible Heavy
+colliders, invalid Light/Total solids, shifted pivots, invalid UV indices,
+oversized fragments, missing baked textures and empty FBX files. Added
+regressions restore the obstructing internal beam/full balcony deck and a
+side obstruction missed by a center ray, and reject stale panel/kit import
+proof, missing/changed render images, stale source receipts and changed review
+scripts even after package hashes are refreshed. Light-scar regressions reject
+Pristine geometry substituted for Light, renamed/permuted copies and unused
+dark-material declarations; the audit requires actual measurable earned-scar
+triangles on both faces.
+`tests/tooling` separately checks manifest coverage, changed/missing hashes,
+duplicate/noncanonical/escaping paths, backups and file-size limits. Refer to
+the actual reports for discovered counts and precise cases; never combine
+these with Luau counts or report them as Studio execution.
+
+Portable CI checks committed geometry and hash-bound tool evidence; it does
+**not** freshly open Blender. A new authoring revision additionally needs a
+clean Blender 5.3.0 reopen, actual FBX imports of assembly/panels/all eight
+reusable props, and saved-source exterior, both furnished-floor, cutaway/kit
+and all six families' two-sided color/grayscale renders. Required proof binds
+the saved `.blend`, review script, every FBX and all 29 review images to
+their actual hashes; missing or stale proof is incomplete acceptance. `p16_blender_review.py` performs
+those tool checks without saving changes back into the source. Run its audit
+and render commands in separate fresh processes after final source save, then
+refresh the package lock/manifest and run the full gate. Include
+`--python-exit-code 1` on every Blender script command so a Python exception
+returns a failed process status. Full `--render` writes its complete metadata
+automatically. Once the identical tested art/review script is committed, the
+optional `--render-manifest-only` step records HEAD from verified unchanged
+receipts; it rejects stale/incomplete receipts and does not rerender or approve
+changed source. Repeated render work
+cannot turn an earlier failed source into passing evidence; retain failure
+scope and identify the replacement source.
+
+Human approval is an additional required P16 gate: the user must explicitly
+approve the identified saved revision after inspecting exterior, both interiors
+and material damage. Automation, reviewer preference and silence cannot satisfy
+it. Blender geometry, grayscale previews and FBX round trips do not establish
+Roblox Humanoid navigation, collision/query behavior, thermal occlusion,
+fragment physics, replication/reset or runtime budgets. Those require P17's
+actual imported candidate and its separate Studio/player evidence.
 
 ## Run the Studio smoke suites
 

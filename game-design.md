@@ -117,6 +117,25 @@ At each server step, enforce deadline first; resolve accepted projectile/damage 
 
 ## Presentation and readiness
 
+The [P16 Blender review kit](assets/blender/military-outpost/README.md) supplies
+editable source for a weathered military exterior, ground-floor storage/workshop,
+upstairs command room and reusable indoor/outdoor props, based on all three
+images in `src/images/military-outpost/`. It includes six material/shape panel
+families with Pristine/Light/Heavy/Total appearances, matching fragments,
+explicit proxy candidates and saved review views. The user explicitly approved
+revision `e8fb840` on 2026-11-13 ([record](docs/evidence/p16/human-approval.json)); the playable smaller Outpost still uses
+primitive art.
+
+[P17](plans/17-integrate-military-outpost.md) will replace that **smaller Outpost**
+on the same level with the approved revision. Concrete, corrugated metal and
+roofing must retain their material-specific damage while shared systems retain
+the three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment rules.
+Floors, stairs and supporting structure stay stable. The package's declared
+fixed apertures and additional partition require P17 navigation/cover validation;
+Blender previews do not grant runtime acceptance. D63 schedules P16 approval,
+then P17, before P09 and remaining MVP work. Existing gameplay evidence remains
+bound to its recorded primitive-asset source.
+
 Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
 
 MVP readiness also requires walking every authored floor of all three buildings on the expanded terrain, panning across the full battlefield at both weapon zooms, demonstrating the six-heavy-hit and nine-second 30mm panel rules, real damaged-state openings, bounded physical debris and repeated pristine reconstruction. MVP readiness requires complete 6- and 10-player rounds for aircraft destruction, ground elimination and timeout; correct launcher recovery and weapon switching; rejection of invalid input; repeated clean resets; and readable counterplay. Automated checks prove rules, while operated multiplayer sessions assess feel, balance and performance.

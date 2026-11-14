@@ -14,5 +14,6 @@ __pycache__/
 .env
 .env.*
 !.env.example
+*.blend[0-9]*
 
 # Authored .rbxmx/.rbxm and world exports are intentionally versionable.

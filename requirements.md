@@ -9,7 +9,7 @@ These requirements describe the MVP target and future level boundary. Integrated
 
 | ID | Requirement | Plans | Required automated evidence |
 | --- | --- | --- | --- |
-| R01 | Git reconstructs source, configuration, world, terrain and asset references | P01, P02, P13, P12 | Clean-checkout build; map/manifest validation; no test content in release artifact |
+| R01 | Git reconstructs source, configuration, world, terrain and asset references | P01, P02, P13, P12, P16, P17 | Clean-checkout build; map/manifest validation; self-contained Blender sources/exports when added; no test content in release artifact |
 | R02 | Match starts with 6–10 players, one operator and one united ground team | P03 | Roster boundary/role-selection tests; Studio role replication |
 | R03 | Round lifecycle, deadline and team result are authoritative and reset safely | P03, P06, P09 | Transition, conflict, disconnect and repeated-reset integration tests |
 | R04 | No respawns; late join and reconnect cannot recover an active life | P03, P08, P10 | Lifecycle/rejoin service tests plus supported Studio character/death/reset/late-join cases (D59) |
@@ -24,11 +24,21 @@ These requirements describe the MVP target and future level boundary. Integrated
 | R13 | Remotes reject malformed, stale, unauthorized and excessive requests | P01, P03–P09, P14 | Table-driven negative inputs, finite-number checks, replay/rate tests; no-state-change assertions |
 | R14 | Game supports repeated 6- and 10-player rounds within measured budgets | P11, P12 | Seeded soak/load fixtures, cleanup/resource invariants, recorded multiplayer metrics |
 | R15 | Code, tests and documentation are human-readable and kept current | Every plan | Format/lint/type checks, documentation link gate and named reviewer evidence |
-| R16 | Authored traversable terrain contains two large buildings and one smaller building, each at least two stories with accessible upper floors and panelized walls/roofs | P13, P07, P11, P12 | Reconstructable terrain/manifest, building count/story/footprint/panel-ID checks; real walking/stair/clearance, supported spawns, two launcher routes and full-orbit cover/sight-line checks |
+| R16 | Authored traversable terrain contains two large buildings and one smaller building, each at least two stories with accessible upper floors and panelized walls/roofs | P13, P07, P11, P12, P17 | Reconstructable terrain/manifest, building count/story/footprint/panel-ID checks; real walking/stair/clearance, supported spawns, two launcher routes and full-orbit cover/sight-line checks |
 | R17 | Operator directional panning works with desktop WASD and an on-screen touch pad; a held camera angle remains stable relative to the plane through its orbit, while touch aiming, selection and recenter remain usable without changing ground movement | P14, P10, P12 | Pure axis/edge/frame-time and orbit-local tests; actual camera rays and native keyboard/emulated or actual touch hold/multitouch, role isolation, GUI hit, layout and cleanup tests |
 | R18 | Every future level has a circling C-130, while panning, zoom, damage and building demolition use core rules with level-supplied geometry/configuration | P14 architecture, P05–P07, P15 | Level-schema validation, two distinct level fixtures, boundary/orbit/aim/panel ID tests, reset/late-join reconstruction and multiplayer acceptance before a second level ships |
+| R19 | A detailed editable Blender outpost closely matches the three supplied exterior/interior references, includes indoor/outdoor assets and material-specific Pristine/Light/Heavy/Total panels/fragments, and receives explicit human visual approval before integration | P16, P17 | Asset inventory/catalog, Heavy opening/proxy audit, saved-scene clean reopen/render, export/dependency/budget/manifest checks; explicit human approval of the identified `.blend` revision is an additional mandatory nonautomated gate |
+| R20 | The approved outpost replaces only the current smaller Outpost while retaining two usable stories, shared damage rules, actual openings, safe fragments, replication and pristine reset on the existing level | P17 | Clean reconstruction and map/registry regression; real avatar navigation, material-family wall/roof collision/thermal checks, actual two-client stage/reset tests, fragment safety and measured performance; human approval of actual integrated presentation |
 
 Existing requirement IDs are preserved. The 2026-11-08 revision extends R05/R06/R09/R12 and adds R16; the 2026-11-10 revision updates R06 and adds R17/R18. P13/P14/P07 update the implemented smaller-map/fixed-focus assumptions while preserving prior completion evidence. R07 retains the 105mm M102 name confirmed in D31. R18's second playable level is future work and does not claim that the current code already switches levels.
+
+The 2026-11-13 Blender revision adds R19/R20 for P16/P17. The user's follow-up
+sequencing revision (D63) places them between P07 and P08 as the next two
+increments, before P09 and remaining MVP work. The approved replacement must
+participate in the applicable P09/P11/P12 round-loop, regression, performance and
+release checks. This does not invalidate earlier simple-art evidence. Reference
+images and plans are not delivered models or evidence of implemented
+material-aware destruction.
 
 ## Shared acceptance rules
 
