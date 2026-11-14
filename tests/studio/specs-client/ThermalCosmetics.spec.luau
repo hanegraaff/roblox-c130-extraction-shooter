@@ -81,7 +81,8 @@ return function()
             local Cosmetics = cosmetics()
             local root = Instance.new("Folder")
             root.Name = "ThermalFragmentFixture"
-            root.Parent = workspace
+            -- An unparented real-Instance subtree has exactly this test owner.
+            -- The live operator owner legitimately watches all of Workspace.
             local fragment = Instance.new("Part")
             fragment.Position = Vector3.new(2000, 100, 2000)
             fragment.Size = Vector3.new(1, 1, 1)
@@ -141,7 +142,7 @@ return function()
             local Cosmetics = cosmetics()
             local root = Instance.new("Folder")
             root.Name = "ThermalCosmeticFixture"
-            root.Parent = workspace
+            -- Isolate ownership from the production operator's Workspace watch.
             local cosmetic = Instance.new("Part")
             cosmetic.Anchored = true
             cosmetic.CanCollide, cosmetic.CanQuery = false, false
