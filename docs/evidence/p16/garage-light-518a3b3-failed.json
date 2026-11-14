@@ -1,0 +1,17 @@
+{
+  "source_commit": "518a3b30a3a752c4d71bc715f91bc6c01a626fd5",
+  "family": "corrugated_garage",
+  "pristine_triangles": 780,
+  "light_triangles": 780,
+  "same_vertices": true,
+  "same_triangles": true,
+  "pristine_materials": [
+    "orange",
+    "teal"
+  ],
+  "light_materials": [
+    "orange",
+    "teal"
+  ],
+  "result": "FAIL: Light has no earned visual distinction"
+}

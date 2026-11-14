@@ -10,6 +10,13 @@ Walk through the detailed military outpost approved in P16, including its storag
 
 ## Input and boundaries
 
+The user approved P16 source `e8fb840a986969bdd3b7ac932469e3fa8cc99a9e`
+on 2026-11-13: `.blend` SHA-256
+`4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
+The [approval record](../docs/evidence/p16/human-approval.json) binds that input.
+P16's source and approval are on its unmerged task branch / PR #35; include
+that source when starting P17. No P17 implementation is delivered by this record.
+
 Use the exact P16 source/export revision the user approved, with its asset inventory, scale/axes, panel catalog, collision proxies, budgets and review conditions. Record its hash before implementation. P16 approval is a real dependency: draft renders or an unapproved later asset revision cannot substitute. Include the completed P07/P13/P14 destruction/map/view source through dependencies or their eventual merges; do not branch from stale main while required source is unmerged. P08 is not a prerequisite. The current planning branch already contains completed P08 source; retain that work and run its applicable regressions rather than removing it to mimic the revised table order.
 
 Work on `plan/17-integrate-military-outpost`. Inspect the intended Studio instance/place ID and version-specific MCP guidance, reuse the matching Rojo-connected document, and coordinate mutations. Retain the original source in Git history so the replacement is reviewable and reversible. Roblox publication is a separate authorized release action.

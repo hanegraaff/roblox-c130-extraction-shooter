@@ -15,8 +15,8 @@ The integrated source on `main` includes the development shell, verification too
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
-| M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Ready | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
-| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Planned | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
+| M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
+| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Ready | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
@@ -24,13 +24,14 @@ The integrated source on `main` includes the development shell, verification too
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
-**Next implementation order (user-directed, D63): P16 → P17 → P09.** P16 and
+**Next implementation order (user-directed, D63): P17 → P09.** P16 and
 P17 are inserted between P07 and P08 without renumbering existing plans. P16
-must receive the user's Blender approval before P17 starts. P08's already
+received the user's Blender approval before P17 starts. P08's already
 completed work and historical evidence remain valid; it is not undone or
 repeated. P09 waits for P17 and the completed P08 source. This priority takes
-precedence over lowest-numbered selection. This update schedules the work;
-neither asset plan has started implementation.
+precedence over lowest-numbered selection. P16's approved asset is delivered
+on `plan/16-blender-military-outpost-assets` through review-ready PR #35.
+P17 has not started and must include that unmerged dependency source.
 
 2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
 asset set closely matching all three references in
@@ -42,7 +43,32 @@ that approved revision and separately verifies in-game demolition, replication,
 reset and presentation. These plans do not depend on P12 publication or P15
 level selection. The user's subsequent sequencing revision places them next,
 before continuing P09 and the remaining MVP work, as recorded in D63 above.
-Neither new plan has started, and no Blender assets or replacement are claimed.
+At that planning checkpoint neither asset plan had started. The current P16
+candidate and evidence are recorded below; P17 has not replaced the building.
+
+2026-11-13 P16 review delivery: [draft PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
+contains editable source, furnished exterior/workshop/command-room assets,
+material-specific variants, proxies/fragments and 29 saved-scene renders.
+Final authored source `e8fb840` passes 55 unit / 65 integration, seven asset
+audits, 22 asset regression cases, 10 manifest cases and all existing host
+gates. The independent reviewer resolved initial navigation/proof gaps and
+the intermediate missing garage Light appearance; historical failures remain
+preserved. Current source has measured routes and distinct two-sided scars
+for every family. The [P16 plan](plans/16-blender-military-outpost-assets.md)
+and [acceptance ledger](docs/evidence/p16/acceptance.md) identify exact hashes,
+commands and limits. At that delivery checkpoint A4 was pending, P17 had not
+started and no merge or Roblox publication had occurred.
+
+2026-11-13 P16 human acceptance: the user explicitly answered **“Approve this
+asset revision”** for source `e8fb840` and `.blend` SHA-256
+`4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
+The [approval record](docs/evidence/p16/human-approval.json) preserves the exact
+response, date, reviewed scope and asset identity; no conditions were specified.
+A1–A4 now pass, all material tester findings are resolved, documentation/source/
+evidence are pushed and GitHub Verify passes on delivery `8b469e2`. P16 is
+Complete; dependency-complete P17 is Ready and remains unstarted. PR #35 is
+ready for review, with integration separate. P09 waits for P17. No merge or
+Roblox publication is authorized by asset approval or performed here.
 
 2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
 host gate, 104 server and 3 per-client Studio smoke, and the eight-case
@@ -192,7 +218,7 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 
 Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
 
-P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. This update schedules plans only; it does not start implementation.
+P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. The planning update scheduled these increments; P16 has since delivered the approved package. P17 remains the next unstarted increment.
 
 ## Initial delivery record
 

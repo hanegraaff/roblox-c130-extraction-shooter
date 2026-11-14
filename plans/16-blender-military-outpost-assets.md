@@ -86,4 +86,88 @@ Reopen the saved `.blend` in a clean Blender process and verify every material/t
 
 ## Delivery and completion record
 
-This document defines future work; it does not deliver a Blender asset or human approval. No live building replacement is part of P16. Record A1–A4 outcomes, exact tool versions/commands, source/export hashes, budgets, reference provenance, feedback iterations, explicit human approval, committed asset paths and PR/commit delivery here when executed. P17 consumes that approved package revision. Status remains in the roadmap.
+Implementation started on 2026-11-13 on `plan/16-blender-military-outpost-assets`,
+from `e6944cdf21f519bd10b748b5a794e764be2a6575`. This includes P07/P13
+dependency source and the unmerged P08/acceptance/planning stack through PR #34.
+Remote fetch confirmed the dependency branch at that same hash before edits;
+no integration or publication is authorized by this work.
+
+Installed authoring tool: Blender **5.3.0**, build `02f0899d78e3` (2026-11-10),
+via `/Applications/Blender.app/Contents/MacOS/Blender`. D64 records the scale,
+initial budgets and ordinary-Git storage decision chosen before production.
+All three supplied references were visually inspected. The separate developer
+owns source/assets/tests, followed by independent tester and technical-writer
+review of the actual candidate. No live building replacement is part of P16.
+
+Final authored source is `e8fb840a986969bdd3b7ac932469e3fa8cc99a9e`, tree
+`cfb4ed35a15f5a756b3ec86858841f41b7dba577`. The editable scene is
+[`military-outpost.blend`](../assets/blender/military-outpost/military-outpost.blend),
+SHA-256 `4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
+Assembly FBX SHA-256 is
+`7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8`.
+The [review guide](../assets/blender/military-outpost/README.md) explains
+orbiting, camera selection, interior/roof inspection and both-sided
+normal/grayscale damage review. [PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
+is stacked on planning PR #34, preserving the dependency source without merging it.
+
+| Criterion | Named evidence and environment | Outcome |
+| --- | --- | --- |
+| A1 | `P16AssetInventory`, `P16Navigation`, saved-scene exterior/both-floor/cutaway/kit renders; Blender 5.3.0 / local OBJ/FBX | 36 inventory categories; two furnished floors; 185 body stations / 1,850 support rays across both routes on actual OBJ, saved source and clean FBX. Independent source and FBX probes each pass 324/324 tread samples |
+| A2 | `P16DamageCatalog`, `P16PanelGeometry`, independent per-family Light parser and two-sided normal/grayscale review | Six families, 24 appearances, 24 bounded fragments; all 25 legacy IDs/pivots retained plus one declared partition. Heavy opening 48.295–50%; zero sampled invisible blocker cells; Light keeps pristine apertures, Total is empty. All six families have actual earned scar geometry on both faces; full 29-view and corrected garage review pass with no remaining material finding |
+| A3 | `P16BlenderReopen`, `P16ExportAudit`, `P16Dependencies`, full `python3 scripts/verify.py`; macOS arm64 / Blender 5.3.0 | Clean reopen / assembly, library and eight semantic-kit imports pass; all dependencies local. Final 29 source/script/image-bound views pass. Full gate: 55 unit / 65 integration, seven asset suites, 22 asset cases, 10 manifest cases and every existing static/build/probe/isolation gate pass |
+| A4 | Explicit human review of the exact `.blend` hash above, exterior, both interiors and every material family | **Pass.** On 2026-11-13 (America/New_York), the user answered “Approve this asset revision” to the revision-specific review question. No conditions were specified; [approval record](../docs/evidence/p16/human-approval.json) |
+
+The [acceptance ledger](../docs/evidence/p16/acceptance.md) records commands,
+source-bound measurements, test counts, actual tool failures and feedback.
+The [independent report](../docs/evidence/p16/independent-review.md) preserves
+the initial navigation/proof defects and intermediate missing garage Light
+appearance, with corrections/rechecks distinguished from the old passing but
+insufficient-coverage gates. Historical failures are not relabelled.
+
+Final measured art: 89,024 assembled / 137,076 unique package triangles
+(11,292 reusable-kit triangles), 12 shared 512×512 textures, 12 MiB decoded
+base texture data / 16 MiB estimated with mipmaps, and 31,897,836 bytes
+including the package lock across 110 manifest files. Largest file is the
+8,466,076-byte assembly FBX. These satisfy the original D64 targets; actual
+Roblox runtime cost remains P17/P11 work. Source/export provenance, hashes,
+scale/axes, fixed-open aperture migration and reference-proportion compromises
+are documented with the package. Material appearance does not alter durability.
+
+The technical writer updated the whole player/setup narrative and contributor,
+architecture and package guides after source stabilization. The actual P08
+gameplay screenshot remains current because no playable geometry changed.
+Studio MCP listed no connected instances at preflight; no Studio session was
+launched or mutated. P16 requires Blender checks, with no new engine/player
+behavior or Studio pass claimed. P17 and Roblox publication have not started.
+Review source, all 29 renders, historical failures, independent report and
+documentation were committed/pushed at
+`751f2ea16ea74e6a6de732b0ca6ab96978ea081c`, tree
+`f990792a3c750aa6448a60ab1b77ecd4d4a7404d`. GitHub
+[Verify 43541991864](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43541991864)
+passes on that exact delivery head. The final prose checker passes 91 Markdown /
+223 JSON files and diff checks were clean at delivery. PR #35 is now ready for review, open and mergeable,
+targeting `docs/military-outpost-blender-plans`; no merge was performed.
+The verified file was launched with `open -n -a /Applications/Blender.app`
+for inspection in a separate instance. An explicit approval/change request
+was presented for source `e8fb840` / `.blend` hash `4c1c5264…`.
+
+On 2026-11-13 (America/New_York), the user explicitly replied **“Approve this
+asset revision”**. This satisfies A4 for the exact source/asset identified
+above, including exterior, both furnished interiors and the two-sided
+normal/grayscale material gallery. No conditions were specified. The
+[machine-readable record](../docs/evidence/p16/human-approval.json) preserves
+that response and identity. The `.blend`, exports, lock and render bytes were
+not changed to record approval; future visual revisions need their own review.
+All A1–A4 evidence is satisfied. P17 is eligible but unstarted. This approval
+does not authorize merging PR #35 or publishing to Roblox.
+
+The pre-approval records head `8b469e240a9d6f7b69c4b4e4231cfc13092d11f7`
+also passes [Verify 43542134119](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43542134119).
+Approval/completion updates are prose and evidence only, checked with the
+repository checker and unchanged-asset audit rather than repeating gameplay
+or Blender execution.
+The approval identity check confirms the current Blender bytes match the
+approved full hash. `python3 scripts/p16_audit.py` passes 7/7 with no failures
+or skips; `python3 scripts/check_repository.py` passes 91 Markdown / 224 JSON
+files and `git diff --check` passes. Only the P16/P17 roadmap statuses changed;
+P17 implementation files, runtime source and asset bytes are unchanged.

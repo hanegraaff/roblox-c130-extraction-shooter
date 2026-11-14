@@ -1,0 +1,36 @@
+newmtl concrete
+Kd 1 1 1
+map_Kd textures/concrete.png
+newmtl teal
+Kd 1 1 1
+map_Kd textures/teal.png
+newmtl orange
+Kd 1 1 1
+map_Kd textures/orange.png
+newmtl steel
+Kd 1 1 1
+map_Kd textures/steel.png
+newmtl dark
+Kd 1 1 1
+map_Kd textures/dark.png
+newmtl ivory
+Kd 1 1 1
+map_Kd textures/ivory.png
+newmtl olive
+Kd 1 1 1
+map_Kd textures/olive.png
+newmtl wood
+Kd 1 1 1
+map_Kd textures/wood.png
+newmtl roof
+Kd 1 1 1
+map_Kd textures/roof.png
+newmtl screen
+Kd 1 1 1
+map_Kd textures/screen.png
+newmtl tactical
+Kd 1 1 1
+map_Kd textures/tactical.png
+newmtl lamp
+Kd 1 1 1
+map_Kd textures/lamp.png
