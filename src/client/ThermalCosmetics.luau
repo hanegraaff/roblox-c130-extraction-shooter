@@ -2,14 +2,22 @@
 --[=[
     ThermalCosmetics: client-only operator depth consistency for explicitly marked
     non-cover art. Native Occluded highlights retain all real cover depth. Only
-    server-authored ThermalNonCover Parts that neither collide nor query are
-    locally hidden; ground players keep the furnished scene. Owns/restores each
+    server-authored ThermalNonCover art is hidden when it neither collides nor
+    queries. Explicit PanelFragmentVisual bodies in the PanelFragments collision
+    group may collide with static scenery only and are also hidden from thermal
+    depth. Real solid cover remains visible; ground keeps all art/fragments.
+    Owns/restores each
     LocalTransparencyModifier and all listeners across role/map/fragment teardown.
     No remotes, physics writes, authority or yielding.
 ]=]
 local ThermalCosmetics = {}
 export type Controller = { stop: () -> (), resources: () -> number }
-type Owned = { original: number, hidden: boolean, connections: { RBXScriptConnection } }
+type Owned = {
+    original: number,
+    hidden: boolean,
+    fragmentWatches: boolean,
+    connections: { RBXScriptConnection },
+}
 
 -- Watches one workspace/fixture subtree. Attribute/property ordering may differ
 -- during replication, so late flags and conversion into real cover are handled.
@@ -34,15 +42,31 @@ function ThermalCosmetics.start(root: Instance): Controller
             return
         end
         local part = item
-        local record: Owned = { original = part.LocalTransparencyModifier, hidden = false, connections = {} }
+        local record: Owned = {
+            original = part.LocalTransparencyModifier,
+            hidden = false,
+            fragmentWatches = false,
+            connections = {},
+        }
         owned[part] = record
         local function update()
             if not running or owned[part] ~= record then
                 return
             end
+            local fragmentMarker = part:GetAttribute("PanelFragmentVisual") == true
+            if fragmentMarker and not record.fragmentWatches then
+                record.fragmentWatches = true
+                for _, property in { "CollisionGroup", "Anchored", "CanTouch" } do
+                    table.insert(record.connections, part:GetPropertyChangedSignal(property):Connect(update))
+                end
+            end
+            local fragment = fragmentMarker
+                and part.CollisionGroup == "PanelFragments"
+                and not part.Anchored
+                and not part.CanTouch
             local hide = part:GetAttribute("ThermalNonCover") == true
-                and not part.CanCollide
                 and not part.CanQuery
+                and (not part.CanCollide or fragment)
             if hide and not record.hidden then
                 record.original = part.LocalTransparencyModifier
                 record.hidden = true
@@ -53,6 +77,10 @@ function ThermalCosmetics.start(root: Instance): Controller
             end
         end
         table.insert(record.connections, part:GetAttributeChangedSignal("ThermalNonCover"):Connect(update))
+        table.insert(
+            record.connections,
+            part:GetAttributeChangedSignal("PanelFragmentVisual"):Connect(update)
+        )
         table.insert(record.connections, part:GetPropertyChangedSignal("CanCollide"):Connect(update))
         table.insert(record.connections, part:GetPropertyChangedSignal("CanQuery"):Connect(update))
         update()

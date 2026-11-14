@@ -22,6 +22,41 @@ end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test(
+        "P17OutpostIdentityPreflight rejects missing mismatched and non-archivable source identities before cloning",
+        function()
+            local assets = Assets:Clone()
+            local source = assets:FindFirstChild("MilitaryOutpost")
+            local panels = if source then source:FindFirstChild("Outpost_Panels") else nil
+            local panel = if panels then panels:GetChildren()[1] else nil
+            assert(panel and panel:IsA("Model"), "managed panel missing")
+            local original = panel:GetAttribute("LocalIdentityPivot")
+            assert(typeof(original) == "CFrame", "managed local identity missing")
+            local sourceCount = #assets:GetDescendants()
+            local worldCount = #workspace.World.Battlefield:GetDescendants()
+            for _, change in { "missing", "mismatch", "unclonable" } do
+                panel:SetAttribute(
+                    "LocalIdentityPivot",
+                    if change == "missing"
+                        then nil
+                        elseif change == "mismatch" then original * CFrame.new(1, 0, 0)
+                        else original
+                )
+                panel.Archivable = change ~= "unclonable"
+                local ok, model, reason = pcall(Reconstruction.prepare, assets)
+                assert(
+                    ok and model == nil and type(reason) == "string",
+                    "malformed identity threw or produced an unowned clone"
+                )
+                assert(
+                    #assets:GetDescendants() == sourceCount
+                        and #workspace.World.Battlefield:GetDescendants() == worldCount,
+                    "rejection mutated source or world"
+                )
+            end
+            assets:Destroy()
+        end
+    )
+    test(
         "P17OutpostReconstruction invalid imported support rejects before any active world mutation",
         function()
             local assets = Assets:Clone()

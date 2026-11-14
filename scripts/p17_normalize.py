@@ -18,8 +18,22 @@ from p17_assets import ROOT, SOURCE, EXPORT, BLEND_SHA, PACKAGE_LOCK_SHA, approv
 from p17_library_glb import source_groups, mapped
 
 
+def ordered_sum(values):
+    """Use explicit left-to-right IEEE-754 additions for reproducible receipts.
+
+    CPython 3.12 changed builtin sum(float) to compensated summation. Exact
+    generated JSON must retain one defined reduction order across Python versions;
+    do not replace this loop with builtin sum or silently loosen receipt checks.
+    https://docs.python.org/3.12/library/functions.html#sum
+    """
+    total = 0
+    for value in values:
+        total += value
+    return total
+
+
 def multiply(matrix: list, vector: list) -> list:
-    return [sum(matrix[3 * row + column] * vector[column] for column in range(3)) for row in range(3)]
+    return [ordered_sum(matrix[3 * row + column] * vector[column] for column in range(3)) for row in range(3)]
 
 
 def transpose(matrix: list) -> list:
@@ -27,7 +41,7 @@ def transpose(matrix: list) -> list:
 
 
 def product(a: list, b: list) -> list:
-    return [sum(a[3 * row + index] * b[3 * index + column] for index in range(3))
+    return [ordered_sum(a[3 * row + index] * b[3 * index + column] for index in range(3))
             for row in range(3) for column in range(3)]
 
 
@@ -95,17 +109,17 @@ def fit_similarity(source: list[list], observed: list[list]) -> dict:
     """Fit all matching centers; reject nonuniform scale/misplaced components."""
     if len(source) != len(observed) or len(source) < 4:
         raise ValueError("normalization fit requires four or more matched source centers")
-    source_mean = [sum(point[axis] for point in source) / len(source) for axis in range(3)]
-    observed_mean = [sum(point[axis] for point in observed) / len(observed) for axis in range(3)]
+    source_mean = [ordered_sum(point[axis] for point in source) / len(source) for axis in range(3)]
+    observed_mean = [ordered_sum(point[axis] for point in observed) / len(observed) for axis in range(3)]
     centered_source = [[point[axis] - source_mean[axis] for axis in range(3)] for point in source]
     centered_observed = [[point[axis] - observed_mean[axis] for axis in range(3)] for point in observed]
-    variance = sum(value * value for point in centered_source for value in point)
+    variance = ordered_sum(value * value for point in centered_source for value in point)
     if variance <= 0:
         raise ValueError("degenerate source centers cannot establish import axes")
     best = None
     for rotation in rotations():
         rotated = [multiply(rotation, point) for point in centered_source]
-        scale = sum(sum(a * b for a, b in zip(point, other)) for point, other in zip(rotated, centered_observed)) / variance
+        scale = ordered_sum(ordered_sum(a * b for a, b in zip(point, other)) for point, other in zip(rotated, centered_observed)) / variance
         if not math.isfinite(scale) or scale <= 0:
             continue
         transformed_mean = multiply(rotation, source_mean)
@@ -157,7 +171,7 @@ def normalize_assembly(receipt: dict, root: Path = ROOT) -> dict:
         source, component = metrics[name], by_name[name]
         local_rotation = product(inverse, component["cframe"][3:])
         local_size = [value / fit["scale"] for value in component["size"]]
-        world_size = [sum(abs(local_rotation[3 * axis + column]) * local_size[column] for column in range(3)) for axis in range(3)]
+        world_size = [ordered_sum(abs(local_rotation[3 * axis + column]) * local_size[column] for column in range(3)) for axis in range(3)]
         error = max(abs(world_size[axis] - source["size"][axis]) for axis in range(3))
         maximum_bounds_error = max(maximum_bounds_error, error)
         if error > 1e-4:

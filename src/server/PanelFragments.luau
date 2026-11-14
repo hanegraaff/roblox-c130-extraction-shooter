@@ -150,6 +150,7 @@ function PanelFragments.start(root: Instance, settings: Settings?): (Controller?
                 local part: BasePart = if template then template:Clone() else Instance.new("Part")
                 part.Name = "Fragment" .. tostring(serial)
                 part:SetAttribute("ThermalNonCover", true)
+                part:SetAttribute("PanelFragmentVisual", true)
                 if not template then
                     part.Size =
                         Vector3.new(math.min(size.X, 1.5), math.min(size.Y, 1.5), math.min(size.Z, 1.5))

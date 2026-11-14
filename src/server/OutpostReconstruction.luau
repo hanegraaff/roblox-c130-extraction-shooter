@@ -26,6 +26,7 @@ function OutpostReconstruction.prepare(assets: Instance): (Model?, string?)
     if
         not source
         or not source:IsA("Model")
+        or not source.Archivable
         or source:GetAttribute("AssetRevision") ~= Approved.revision
         or source:GetAttribute("BlendSha256") ~= Approved.blendSha256
         or not AssetRules.receipt(source:GetAttribute("ImportReceiptSha256"))
@@ -78,6 +79,9 @@ function OutpostReconstruction.prepare(assets: Instance): (Model?, string?)
     local ids: { [string]: boolean } = {}
     local meshes = 0
     for _, item in source:GetDescendants() do
+        if not item.Archivable then
+            return nil, "non-archivable approved Outpost content"
+        end
         if ids[item.Name] then
             return nil, "duplicate Outpost reconstruction identity"
         end
@@ -121,6 +125,10 @@ function OutpostReconstruction.prepare(assets: Instance): (Model?, string?)
     for _, item in panels:GetChildren() do
         if not item:IsA("Model") or item:GetAttribute("PanelId") ~= item.Name then
             return nil, "invalid Outpost panel identity"
+        end
+        local localPivot = item:GetAttribute("LocalIdentityPivot")
+        if typeof(localPivot) ~= "CFrame" or localPivot ~= item:GetPivot() then
+            return nil, "invalid Outpost local identity pivot"
         end
         local familyId = item:GetAttribute("PanelAssetFamily")
         local family = if type(familyId) == "string" then catalog[familyId] else nil

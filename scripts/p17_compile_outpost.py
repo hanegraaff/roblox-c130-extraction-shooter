@@ -17,7 +17,7 @@ import sys
 
 from p17_assets import ROOT, SOURCE, EXPORT, BLEND_SHA, PACKAGE_LOCK_SHA, approved_catalog, sha
 from p17_library_glb import GLB_PATH, REPORT_PATH, verify as verify_derivative
-from p17_normalize import normalize_assembly, fit_similarity, transpose, product, multiply, finite, rigid
+from p17_normalize import normalize_assembly, fit_similarity, transpose, product, multiply, finite, rigid, ordered_sum
 
 IDENTITY = [1, 0, 0, 0, 1, 0, 0, 0, 1]
 SITE = [144, 0, 164]
@@ -128,7 +128,7 @@ def normalize_library(receipt: dict, root: Path = ROOT) -> tuple[list[dict], dic
         source, raw = expected[name], actual[name]
         rotation = product(inverse, raw["cframe"][3:])
         size = [value / fit["scale"] for value in raw["size"]]
-        world_size = [sum(abs(rotation[3 * axis + column]) * size[column] for column in range(3)) for axis in range(3)]
+        world_size = [ordered_sum(abs(rotation[3 * axis + column]) * size[column] for column in range(3)) for axis in range(3)]
         error = max(abs(world_size[axis] - source["size"][axis]) for axis in range(3))
         maximum_bounds_error = max(maximum_bounds_error, error)
         if error > 1e-4:
@@ -201,7 +201,7 @@ def construction_class(record, panels):
         roof = name.startswith(ROOF_DRESSING)
         candidates = [panel for panel in panels.values() if panel["roof"] == roof]
         center = record["center"]
-        owner = min(candidates, key=lambda panel: sum((center[axis] - panel["identity"] [axis]) ** 2 for axis in range(3)))
+        owner = min(candidates, key=lambda panel: ordered_sum((center[axis] - panel["identity"] [axis]) ** 2 for axis in range(3)))
         return "PanelAttachment", owner["panel_id"]
     return "CosmeticProp", None
 

@@ -1,7 +1,9 @@
 """P17 A1 source reconstruction/provenance; actual engine acceptance is separate."""
 import copy
+import builtins
 import importlib.util
 import json
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -12,6 +14,7 @@ sys.path.insert(0, str(SCRIPTS))
 SPEC = importlib.util.spec_from_file_location("p17_compile_outpost", SCRIPTS / "p17_compile_outpost.py")
 compiler = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(compiler)
+import p17_normalize as normalizer
 
 
 class P17OutpostReconstruction(unittest.TestCase):
@@ -26,6 +29,21 @@ class P17OutpostReconstruction(unittest.TestCase):
         self.assertEqual(result["total_runtime_panels"], 188)
         self.assertFalse(result["native_acceptance_verified"])
         self.assertEqual(len(list(compiler.iter_class(self.outpost, "MeshPart"))), 2256)
+
+    def test_exact_generation_survives_builtin_float_summation_algorithm_changes(self):
+        """Exercise the real receipts under pre/post-3.12 float-sum semantics."""
+        original_sum = builtins.sum
+        def compensated_sum(values, start=0):
+            items = list(values)
+            if isinstance(start, float) or any(isinstance(item, float) for item in items):
+                return math.fsum([start] + items)
+            return original_sum(items, start)
+        before = compiler.managed_outputs()
+        with patch.object(normalizer, "sum", compensated_sum, create=True), patch.object(compiler, "sum", compensated_sum, create=True):
+            after = compiler.managed_outputs()
+        for path in before:
+            self.assertEqual(json.dumps(before[path], separators=(",", ":"), allow_nan=False),
+                             json.dumps(after[path], separators=(",", ":"), allow_nan=False), path.as_posix())
 
     def test_all_legacy_identity_pivots_remain_exact_with_explicit_material_bases(self):
         catalog = compiler.approved_catalog()

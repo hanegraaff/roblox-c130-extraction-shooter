@@ -4,6 +4,65 @@ local Cosmetics = require(game.Players.LocalPlayer.PlayerScripts.Client.ThermalC
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test(
+        "P17ThermalFragments hides owned physical debris while rejecting marker-only impostors and real cover",
+        function()
+            local root = Instance.new("Folder")
+            root.Name = "ThermalFragmentFixture"
+            root.Parent = workspace
+            local fragment = Instance.new("Part")
+            fragment.Position = Vector3.new(2000, 100, 2000)
+            fragment.Size = Vector3.new(1, 1, 1)
+            fragment.Anchored, fragment.CanCollide, fragment.CanQuery, fragment.CanTouch =
+                false, true, false, false
+            fragment.LocalTransparencyModifier = 0.2
+            fragment:SetAttribute("ThermalNonCover", true)
+            fragment:SetAttribute("PanelFragmentVisual", true)
+            fragment.CollisionGroup = "PanelFragments"
+            fragment.Parent = root
+            local impostor = fragment:Clone()
+            impostor.CollisionGroup = "Default"
+            impostor.LocalTransparencyModifier = 0.2
+            impostor.Parent = root
+            local solid = fragment:Clone()
+            solid.Anchored, solid.CanQuery = true, true
+            solid.CollisionGroup = "PanelFragments"
+            solid.LocalTransparencyModifier = 0.2
+            solid.Parent = root
+            local owner = Cosmetics.start(root)
+            local ok, failure = pcall(function()
+                assert(
+                    fragment.LocalTransparencyModifier == 1 and fragment.CanCollide and not fragment.CanQuery,
+                    "physical presentation fragment retained thermal depth or lost physics"
+                )
+                assert(
+                    math.abs(impostor.LocalTransparencyModifier - 0.2) < 1e-6
+                        and math.abs(solid.LocalTransparencyModifier - 0.2) < 1e-6,
+                    "fragment exception hid non-fragment cover"
+                )
+                fragment.CollisionGroup = "Default"
+                task.wait()
+                assert(
+                    math.abs(fragment.LocalTransparencyModifier - 0.2) < 1e-6,
+                    "loss of owned collision group remained hidden"
+                )
+                fragment.CollisionGroup = "PanelFragments"
+                task.wait()
+                assert(
+                    fragment.LocalTransparencyModifier == 1,
+                    "reacquired presentation group was not observed"
+                )
+            end)
+            owner.stop()
+            owner.stop()
+            assert(
+                owner.resources() == 0 and math.abs(fragment.LocalTransparencyModifier - 0.2) < 1e-6,
+                "fragment teardown leaked local opacity or listeners"
+            )
+            root:Destroy()
+            assert(ok, failure)
+        end
+    )
+    test(
         "P17ThermalNonCover hides marked art restores exact values and retains native solid cover",
         function()
             local root = Instance.new("Folder")
