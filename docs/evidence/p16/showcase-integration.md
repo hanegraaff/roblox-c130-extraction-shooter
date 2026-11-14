@@ -2,14 +2,26 @@
 
 Date: 2026-11-13 (America/New_York). The user requested: “generate a new image showcasing the blender creation, add it to the readme and merge the PR”.
 
+## Subsequent user-selected replacement
+
+The user subsequently said: “don't like it, use blender_outpost.png, and merge
+the PR”. The README now uses the supplied
+[Blender viewport capture](../../../blender_outpost.png) instead of the
+generated board, with an accurate capture caption. The supplied PNG is retained
+byte-for-byte: 1988×1314, 3,583,569 bytes, SHA-256
+`94ebc1333b183fb42c20c24249ff31109053b187255d380915dcafbb13f9165c`.
+The generated image below is historical; the actual P08 gameplay screenshot
+and approved Blender source are unchanged. PR #35 was already merged, so the
+replacement is delivered through a new small PR into the same planning base.
+
 ## Showcase
 
-The built-in `image_gen` tool produced the
+For the original request, the built-in `image_gen` tool produced the
 [1672×941 showcase](../../images/military-outpost-showcase.png), using the
 actual approved exterior/workshop/command-room Blender renders as subject
 references. The [exact prompt and provenance](../../images/military-outpost-showcase.md)
-are committed. The README displays it in the Blender inspection section and
-explicitly identifies it as an AI-generated illustration. The representative
+are committed. At that merge, the README displayed it in the Blender inspection section and
+explicitly identified it as an AI-generated illustration. The representative
 actual P08 gameplay capture remains near the top of the README.
 
 Image SHA-256:
