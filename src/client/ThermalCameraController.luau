@@ -19,6 +19,7 @@ local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
 local AircraftPanRules = require(ReplicatedStorage.Shared.AircraftPanRules)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Validation = require(ReplicatedStorage.Shared.Validation)
+local ThermalCosmetics = require(script.Parent.ThermalCosmetics)
 local ThermalCameraController = {}
 export type Controller = { ownsCamera: () -> boolean, stop: () -> () }
 -- Optional deterministic input boundary for accessibility/adapters and engine fixtures.
@@ -170,6 +171,7 @@ function ThermalCameraController.new(
     local reticle: TextLabel? = nil
     local projectionOrigin: Frame? = nil
     local correction: ColorCorrectionEffect? = nil
+    local cosmetics: ThermalCosmetics.Controller? = nil
     local backdrop: BasePart? = nil
     local highlights: { [Model]: Highlight } = {}
     local buttons: { RBXScriptConnection } = {}
@@ -237,6 +239,10 @@ function ThermalCameraController.new(
             return
         end
         active = false
+        if cosmetics then
+            cosmetics.stop()
+            cosmetics = nil
+        end
         fireHeld = false
         for _, connection in buttons do
             connection:Disconnect()
@@ -307,6 +313,7 @@ function ThermalCameraController.new(
     end
     local function enter(camera: Camera)
         active = true
+        cosmetics = ThermalCosmetics.start(workspace)
         local touchControls = UserInputService.TouchEnabled
         previewWeapon = "GAU23"
         focus = nil

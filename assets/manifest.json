@@ -1299,8 +1299,8 @@
       "author": "Project contributors",
       "license": "Original project-authored asset; no third-party mesh or texture content bundled. No additional redistribution license specified.",
       "local_path": "assets/exports/military-outpost/outpost-assembly-v1.fbx",
-      "roblox_asset_id": null,
-      "upload_owner": null,
+      "roblox_asset_id": "73311045122621",
+      "upload_owner": "User 2227341845",
       "sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8"
     },
     {
@@ -1321,8 +1321,8 @@
       "author": "Project contributors",
       "license": "Original project-authored asset; no third-party mesh or texture content bundled. No additional redistribution license specified.",
       "local_path": "assets/exports/military-outpost/panel-library-v1.fbx",
-      "roblox_asset_id": null,
-      "upload_owner": null,
+      "roblox_asset_id": "126055228085421",
+      "upload_owner": "User 2227341845",
       "sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d"
     },
     {
@@ -1456,6 +1456,95 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "e511b8255dfdce9a44599ad5bc146cd60c660cc505d276731291e032bfd4b283"
+    },
+    {
+      "id": "p17-panel-library-materials-v2-glb",
+      "kind": "import-derivative",
+      "source": "Equivalent approved P16 OBJ/MTL/PNG library split into one primitive per source-object/material by scripts/p17_library_glb.py; no source faces or UVs changed; collision proxies excluded from visual import",
+      "author": "Project contributors",
+      "license": "Original project-authored geometry and baked textures",
+      "local_path": "assets/imports/military-outpost/panel-library-materials-v2.glb",
+      "roblox_asset_id": "126055228085421",
+      "upload_owner": "User 2227341845",
+      "sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e",
+      "uploaded_revision": "2"
+    },
+    {
+      "id": "p17-panel-library-materials-v2-json",
+      "kind": "import-derivative-map",
+      "source": "Equivalent approved P16 OBJ/MTL/PNG library split into one primitive per source-object/material by scripts/p17_library_glb.py; no source faces or UVs changed; collision proxies excluded from visual import",
+      "author": "Project contributors",
+      "license": "Original project-authored geometry and baked textures",
+      "local_path": "assets/imports/military-outpost/panel-library-materials-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "94dc64fc13dac0b740b7cc4b0cb3fb9375cde26c42aa54047619e1ddcee9c86f"
+    },
+    {
+      "id": "p17-assembly-fbx-receipt-v1",
+      "kind": "import-receipt",
+      "source": "Actual MCP-observed private Studio import of approved assembly model 73311045122621 revision1, owner User2227341845; raw material-loss/scale metadata retained for audited normalization",
+      "author": "Project contributors",
+      "license": "Original project-authored geometry; receipt contains no credentials or player data",
+      "local_path": "assets/imports/military-outpost/assembly-fbx-receipt-v1.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "9ff1c7ec60efa72b8fbe0ce73576875f7091002a3c7e2d3d421b2c9b6aef993e"
+    },
+    {
+      "id": "p17-library-glb-receipt-v2-json",
+      "kind": "import-receipt",
+      "source": "Actual approved private import/texture receipt; source geometry/PNG hashes match the approved P16 package",
+      "author": "Project contributors",
+      "license": "Original project asset metadata; no credentials or player data",
+      "local_path": "assets/imports/military-outpost/library-glb-receipt-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "6fab3fe4546c175ba144b93ddb641ef6751e64b55f65a5675c3a111c3fb6365f"
+    },
+    {
+      "id": "p17-material-textures-v2-json",
+      "kind": "import-receipt",
+      "source": "Actual approved private import/texture receipt; source geometry/PNG hashes match the approved P16 package",
+      "author": "Project contributors",
+      "license": "Original project asset metadata; no credentials or player data",
+      "local_path": "assets/imports/military-outpost/material-textures-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "896d3213ba17f2bbf6ad1c0027200ccac44a7cc409459e7d4226d11a19e8d86e"
+    },
+    {
+      "id": "p17-MaterialPanels-model-json",
+      "kind": "material-templates",
+      "source": "Deterministic actual-import reconstruction from approved P16 geometry, native FBX/GLB receipts and exact baked PNG repairs; scripts/p17_compile_outpost.py",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "assets/models/MaterialPanels.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "b04a8d3d31988663bc4ac2126415c583abdf2ae6b20987ca201f4f87e60052e2"
+    },
+    {
+      "id": "p17-MilitaryOutpost-model-json",
+      "kind": "building-template",
+      "source": "Deterministic actual-import reconstruction from approved P16 geometry, native FBX/GLB receipts and exact baked PNG repairs; scripts/p17_compile_outpost.py",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "assets/models/MilitaryOutpost.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "b93851f1084f55946191b34bd3107e768a24b0c944fa6b697594e4cc98cde883"
+    },
+    {
+      "id": "p17-construction-v2-json",
+      "kind": "construction-contract",
+      "source": "Deterministic actual-import reconstruction from approved P16 geometry, native FBX/GLB receipts and exact baked PNG repairs; scripts/p17_compile_outpost.py",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "assets/imports/military-outpost/construction-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "f0435493e0c4b5a00494bddd4c54330f6e6ef22df3e9e7c345b35759fb1d79ca"
     }
   ],
   "runtime_recipes": [

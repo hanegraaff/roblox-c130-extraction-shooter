@@ -16,7 +16,7 @@ The integrated source on `main` includes the development shell, verification too
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
 | M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
-| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Blocked | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
+| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | In progress | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
@@ -67,8 +67,20 @@ must not be requested again. The access blocker remains: the current document
 is local, MCP's publishing scope is ungranted, and the initial private cloud
 save requires the user to complete Studio's dialog. The release build matches
 the authorized hash and passes artifact isolation; tests remain local. No cloud
-upload or private-audience verification is claimed until actual IDs and results
-are recorded. P17 stays Blocked and P09 stays Planned.
+upload or private-audience verification was claimed at that checkpoint.
+
+2026-11-14 private upload completed: **C130 P17 Import**, universe
+`10776653720` / place `72732833195348`, is verified `PRIVATE` and owned by user
+`2227341845`. The initial cloud document had the test mapping; all matching
+test-only trees were removed after release-artifact comparison. Clean place
+revision **5** is verified published/Approved, with 47 runtime script fingerprints
+and 422 authored Parts checked. The approved assembly and library packages
+uploaded successfully with actual IDs in the manifest. The access blocker is
+cleared and P17 resumes. Native FBX import preserved 2,225 / 260 meshes but
+dropped all colors/textures; source-bound normalization/material repair and
+actual replacement/acceptance continue. The playable building remains primitive.
+See the [cloud receipt](docs/evidence/p17/cloud-import-progress.json). P09 remains
+Planned; this private upload is not P12 multiplayer/release acceptance.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree

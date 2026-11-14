@@ -17,7 +17,7 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 IGNORED = {".git", ".tools", "build", "artifacts", "Packages", "ServerPackages", "__pycache__"}
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
-ASSET_ROOTS = ("world", "models", "blender", "exports")
+ASSET_ROOTS = ("world", "models", "blender", "exports", "imports")
 MAX_AUTHORED_BINARY_BYTES = 20 * 1024 * 1024
 
 
@@ -88,7 +88,7 @@ def check_manifest(manifest: dict, *, root: Path = ROOT) -> None:
             if canonical_path != asset["local_path"] or canonical_path in seen_paths:
                 raise ValueError(f"duplicate or noncanonical asset path: {asset['local_path']}")
             seen_paths.add(canonical_path)
-            is_package = canonical_path.startswith(("assets/blender/", "assets/exports/"))
+            is_package = canonical_path.startswith(("assets/blender/", "assets/exports/", "assets/imports/"))
             digest = asset.get("sha256")
             if is_package or digest is not None:
                 if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):

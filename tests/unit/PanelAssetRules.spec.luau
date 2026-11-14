@@ -16,6 +16,14 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                 "P17 assertion: Rules.geometry({ 2, 4, 1 }, { 2, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0, 1 }, { 8, 4, 0.9 })"
             )
             assert(Rules.receipt(string.rep("a0", 32)), 'P17 assertion: Rules.receipt(string.rep("a0", 32))')
+            assert(
+                Rules.geometry({ 32, 1, 48 }, identity, { 16, 1, 24 }, 64),
+                "approved full-building floor exceeds panel-only default"
+            )
+            assert(
+                not Rules.geometry({ 32, 1, 48 }, identity, { 16, 1, 24 }, 65),
+                "unbounded import dimension override"
+            )
         end
     )
     test(

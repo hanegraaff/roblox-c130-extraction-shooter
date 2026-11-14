@@ -18,6 +18,7 @@ type PanelExpectation = {
     parts: number,
     pivot: { number },
     size: Vector3,
+    assetFamily: string?,
 }
 
 -- Own-panel filters isolate its real opening from other legitimate map cover.
@@ -75,6 +76,23 @@ local function panelMatches(entry: PanelExpectation): boolean
     end
     local centerHit = faceHit(pivot.Position)
     if entry.stage == "Intact" then
+        if entry.assetFamily then
+            if model:GetAttribute("PanelAssetFamily") ~= entry.assetFamily then
+                return false
+            end
+            local aperture = entry.assetFamily == "corrugated_window"
+                or entry.assetFamily == "corrugated_door"
+                or entry.assetFamily == "corrugated_garage"
+            if (centerHit == nil) ~= aperture then
+                return false
+            end
+            for _, solid in model:GetChildren() do
+                if solid:IsA("BasePart") and solid.CanQuery and solid.CanCollide then
+                    return faceHit(solid.Position) ~= nil
+                end
+            end
+            return false
+        end
         return centerHit ~= nil
     elseif centerHit then
         return false
@@ -221,7 +239,7 @@ function Harness.run()
                     elseif kind == "Panels" then
                         assert(type(payload) == "table", "expected panel observations")
                         local expected = payload :: { PanelExpectation }
-                        assert(#expected >= 1 and #expected <= 187, "unbounded panel observation batch")
+                        assert(#expected >= 1 and #expected <= 188, "unbounded panel observation batch")
                         local mismatch = "unknown panel"
                         local function matches(): boolean
                             for index, entry in expected do

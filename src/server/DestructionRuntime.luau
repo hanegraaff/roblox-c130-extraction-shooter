@@ -67,7 +67,16 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                     if type(family) ~= "string" or not catalog[family] then
                         return nil, "unknown material panel family"
                     end
-                    if panel:GetAttribute("IntactSize") ~= catalog[family].size then
+                    local basis, basisReason = MaterialPanelGeometry.basis(panel)
+                    if not basis then
+                        return nil, basisReason
+                    end
+                    local authoredSize = panel:GetAttribute("IntactSize")
+                    if
+                        typeof(authoredSize) ~= "Vector3"
+                        or (authoredSize - MaterialPanelGeometry.identitySize(catalog[family], basis)).Magnitude
+                            > 0.001
+                    then
                         return nil, "material panel size differs from approved family"
                     end
                     local valid, panelReason = MaterialPanelGeometry.validate(panel, catalog[family])
@@ -144,7 +153,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                     fragments.static(panel.model)
                     for _ = previousStage + 1, state.stage do
                         fragments.emit(
-                            panel.pivot,
+                            panel.pivot * (panel.assetBasis or CFrame.identity),
                             panel.size,
                             panel.color,
                             now,

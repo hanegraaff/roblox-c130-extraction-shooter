@@ -21,6 +21,7 @@ export type Panel = {
     visualBucket: string,
     family: PanelAssetCatalog.Family?,
     color: Color3,
+    assetBasis: CFrame?,
 }
 
 -- Captures an authored Part or material Model into a persistent identity. Models
@@ -31,6 +32,8 @@ function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog
         assert(family, "material panel requires a validated family")
         local size = part:GetAttribute("IntactSize")
         assert(typeof(size) == "Vector3", "material panel requires authored IntactSize")
+        local basis, reason = MaterialPanelGeometry.basis(part)
+        assert(basis, reason)
         return {
             id = part.Name,
             pivot = part:GetPivot(),
@@ -41,6 +44,7 @@ function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog
             visualBucket = "Pristine",
             family = family,
             color = Color3.new(1, 1, 1),
+            assetBasis = basis,
         }
     end
     local model = Instance.new("Model")
@@ -66,6 +70,7 @@ function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog
         visualBucket = "",
         family = nil,
         color = part.Color,
+        assetBasis = nil,
     }
 end
 
@@ -80,7 +85,14 @@ function PanelGeometry.setStage(panel: Panel, stage: number)
     panel.visualBucket = ""
     if panel.family then
         local appearance = if stage == 0 then "Pristine" elseif stage == 1 then "Heavy" else "Total"
-        MaterialPanelGeometry.install(panel.model, panel.pivot, panel.family, appearance)
+        MaterialPanelGeometry.install(
+            panel.model,
+            panel.pivot * (panel.assetBasis or CFrame.identity),
+            panel.family,
+            appearance,
+            panel.pivot,
+            panel.original
+        )
         panel.visualBucket = appearance
         panel.stage = stage
         return
@@ -210,7 +222,14 @@ function PanelGeometry.publish(
     local state = ({ "Intact", "Damaged", "Destroyed" })[stage + 1]
     if panel.family then
         if panel.visualBucket ~= appearance then
-            MaterialPanelGeometry.install(panel.model, panel.pivot, panel.family, appearance)
+            MaterialPanelGeometry.install(
+                panel.model,
+                panel.pivot * (panel.assetBasis or CFrame.identity),
+                panel.family,
+                appearance,
+                panel.pivot,
+                panel.original
+            )
             panel.visualBucket = appearance
         end
         MaterialPanelGeometry.progress(panel.model, progress)

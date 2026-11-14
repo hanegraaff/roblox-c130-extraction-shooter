@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "authorized_source_commit": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "universe_id": 10776653720,
+  "root_place_id": 72732833195348,
+  "display_name": "C130 P17 Import ",
+  "owner_user_id": 2227341845,
+  "privacy": {
+    "endpoint": "GET /cloud/v2/universes/10776653720",
+    "http_status": 200,
+    "visibility": "PRIVATE",
+    "owner": "users/2227341845",
+    "root_place": "universes/10776653720/places/72732833195348"
+  },
+  "initial_cloud_source_inspection": {
+    "studio_id": "d1cf23f3-c505-4c50-9555-51be07f7a2f9",
+    "server_tests": true,
+    "client_tests": true,
+    "development_settings": true,
+    "test_packages": true,
+    "tests_storage": true,
+    "running": false,
+    "release_mapping_correction_required": true
+  },
+  "source_sync": {
+    "old_test_rojo_server": "Stopped owned test server on34872",
+    "release_rojo_server": "PlayersVsC130 on127.0.0.1:34873; host endpoint verified",
+    "studio_connection": "localhost and explicit127.0.0.1 plugin connections failed despite verified healthy release server; no further retry"
+  },
+  "asset_scopes": "asset:read andasset:write probe passed200",
+  "upload_directory": "User confirmed added; second same-path upload accepted",
+  "assembly_upload": {
+    "source": "assets/exports/military-outpost/outpost-assembly-v1.fbx",
+    "source_sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8",
+    "operation_id": "4a9773e8-40a3-4819-8687-60a8c963ba8e",
+    "accepted_http_status": 200,
+    "completed": true,
+    "asset_id": "73311045122621",
+    "moderation": "Approved",
+    "revision": "1"
+  },
+  "approved_release_saved": true,
+  "approved_release_published": true,
+  "public_release_performed": false,
+  "release_correction": {
+    "method": "Compared trusted release/test artifacts directly; removed exactly six matching test-only roots",
+    "preflight_release_nodes": 504,
+    "preflight_test_nodes": 90,
+    "release_script_fingerprints": 47,
+    "authored_parts": 422,
+    "comparison": "Class/path/value equality, source UTF-8 byte count and Adler-32 fingerprints, Part CFrame/size/shape/physical flags; source artifactSHA256 separately pinned",
+    "first_postcheck": "Initial counter omitted root Script/LocalScript; post-delete assertion failed at45; corrected inclusive count47 and all release checks reran successfully",
+    "tests_remaining": false,
+    "cloud_save_status": "Saved",
+    "cloud_saved_version": 5,
+    "published_clean_release": "Pending user Publish to Roblox; save_place does not publish"
+  },
+  "library_upload": {
+    "source": "assets/exports/military-outpost/panel-library-v1.fbx",
+    "source_sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d",
+    "operation_id": "a32a10ad-8119-4a9f-86c2-eb0ecd186d30",
+    "asset_id": "126055228085421",
+    "completed": true,
+    "moderation": "Approved",
+    "revision": "1"
+  },
+  "completed_model_uploads": 2,
+  "actual_model_insertion_verified": false,
+  "release_publication": {
+    "endpoint": "GET /assets/v1/assets/72732833195348",
+    "http_status": 200,
+    "asset_type": "Place",
+    "revision_id": "5",
+    "moderation": "Approved",
+    "is_published": true,
+    "revision_create_time_utc": "2026-11-14T16:54:11.036Z",
+    "owner_user_id": "2227341845"
+  },
+  "privacy_after_publication": {
+    "endpoint": "GET /cloud/v2/universes/10776653720",
+    "http_status": 200,
+    "visibility": "PRIVATE"
+  },
+  "version_history_endpoint_limit": "Legacy history endpoint returned403: Scope must be configured to allow all resources. No broad grant requested; direct asset metadata with asset:read verified published revision5.",
+  "raw_staging": {
+    "parent": "ServerStorage.P17ImportStaging",
+    "assembly_meshes": 2225,
+    "library_meshes": 260,
+    "scripts": 0,
+    "texture_maps_present": 0,
+    "material_issue": "AllFBXMeshParts arriveddefaultgraywithnoTextureIDorSurfaceAppearance",
+    "raw_receipts": "build/p17-assembly-raw-receipt.json and build/p17-library-raw-receipt.json; capturedin51boundedMCPchunks"
+  },
+  "material_repair": "Equivalent libraryGLB generatedfromexactapprovedOBJ/MTL/PNG; localface/UV/materialauditpassed. Awaiting derivativefolderapproval/nativeimport.",
+  "library_material_update": {
+    "operation_id": "ab0417cf-7963-4cff-8dd7-7bc9637e8238",
+    "asset_id": "126055228085421",
+    "revision_id": "2",
+    "moderation": "Approved",
+    "is_published": true,
+    "source_glb": "assets/imports/military-outpost/panel-library-materials-v2.glb",
+    "source_sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e",
+    "native_meshes": 76,
+    "native_textured_meshes": 76,
+    "native_scripts": 0,
+    "native_color_maps": 7,
+    "native_pbr_scalar_maps": 0,
+    "note": "Material colors/UV available. Scalar roughness/metalness/emission not preserved as native maps; retain explicit review limitation."
+  },
+  "manual_texture_uploads": [
+    {
+      "material": "olive",
+      "operationId": "7116df12-52f2-4d94-98b4-a244f31df935",
+      "asset_id": "89338266395233",
+      "color_map": "rbxassetid://89338266395233",
+      "moderation": "Approved",
+      "source_png_path": "assets/exports/military-outpost/textures/olive.png",
+      "privacy_request": "Restricted",
+      "owner_user_id": "2227341845",
+      "source_png_sha256": "c9babc7dabc09421d15a41003b09830e166c04e4939ac5c13acb2d36e280b4ee"
+    },
+    {
+      "material": "wood",
+      "operationId": "f6d69acc-b4c4-446c-a400-68ca54d987c8",
+      "asset_id": "125796777052199",
+      "color_map": "rbxassetid://125796777052199",
+      "moderation": "Approved",
+      "source_png_path": "assets/exports/military-outpost/textures/wood.png",
+      "privacy_request": "Restricted",
+      "owner_user_id": "2227341845",
+      "source_png_sha256": "e511b8255dfdce9a44599ad5bc146cd60c660cc505d276731291e032bfd4b283"
+    },
+    {
+      "material": "screen",
+      "operationId": "a48d4b02-046f-422a-b6f8-9b51907cb744",
+      "asset_id": "116131302925608",
+      "color_map": "rbxassetid://116131302925608",
+      "moderation": "Approved",
+      "source_png_path": "assets/exports/military-outpost/textures/screen.png",
+      "privacy_request": "Restricted",
+      "owner_user_id": "2227341845",
+      "source_png_sha256": "e7c1b8e233c42a1cace7becfafa3ff4f3cc4d9d45dcf8eb404bf53dbc12f5b48"
+    },
+    {
+      "material": "tactical",
+      "operationId": "817c310f-b60b-499c-bcfd-74cb4603f55c",
+      "asset_id": "139223280119673",
+      "color_map": "rbxassetid://139223280119673",
+      "moderation": "Approved",
+      "source_png_path": "assets/exports/military-outpost/textures/tactical.png",
+      "privacy_request": "Restricted",
+      "owner_user_id": "2227341845",
+      "source_png_sha256": "a7e28b356f35db5948d847913f6c9da6adf6a547a38c33f0014f955afa29da5c"
+    },
+    {
+      "material": "lamp",
+      "operationId": "4cc8c6b9-a2f9-4486-8367-19a3da4df8ca",
+      "asset_id": "75656006256490",
+      "color_map": "rbxassetid://75656006256490",
+      "moderation": "Approved",
+      "source_png_path": "assets/exports/military-outpost/textures/lamp.png",
+      "privacy_request": "Restricted",
+      "owner_user_id": "2227341845",
+      "source_png_sha256": "f80575f3f0ca6ab2ef9de70489abb1f73b2e08009f315f1410f26a67588bc151"
+    }
+  ],
+  "color_texture_assets_total": 12,
+  "texture_availability": "All12typedImageLabelpreloadsSuccess; actualMeshPartmesh/texture controlSuccess; see texture-availability.json"
+}

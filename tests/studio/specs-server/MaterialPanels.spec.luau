@@ -83,6 +83,58 @@ return function()
         world:Destroy()
     end)
     test(
+        "P17MaterialBasis preserves legacy identity and owns attached dressing through stage reset",
+        function()
+            local family = familyFixture("corrugated_window")
+            local model = Instance.new("Model")
+            model.Name = "MaterialBasisFixture"
+            local pivot = CFrame.new(2100, 80, 2000)
+            local basis = CFrame.Angles(0, math.pi / 2, 0)
+            model:SetAttribute("PanelAssetBasis", basis)
+            model:SetAttribute("IntactSize", Vector3.new(1, 8, 16))
+            model:SetAttribute("PanelAssetFamily", family.id)
+            model:SetAttribute("PanelId", model.Name)
+            MaterialGeometry.install(model, pivot * basis, family, "Pristine", pivot)
+            local attachment = Instance.new("MeshPart")
+            attachment.Name = "AttachedCosmeticFixture"
+            attachment.Size = Vector3.new(1, 1, 1)
+            attachment.CFrame = pivot * CFrame.new(0, 10, 0)
+            attachment.Anchored = true
+            attachment.CanCollide, attachment.CanQuery, attachment.CanTouch = false, false, false
+            attachment:SetAttribute("PanelAttachment", true)
+            attachment:SetAttribute("AttachmentPanelId", model.Name)
+            attachment.Parent = model
+            local panel = Geometry.capture(model, family)
+            local ok, failure = pcall(function()
+                assert(MaterialGeometry.validate(model, family), "valid retained basis rejected")
+                Geometry.publish(panel, 0, 1 / 3, 3, 0, "Light")
+                assert(
+                    model:GetPivot() == pivot and model:FindFirstChild("AttachedCosmeticFixture"),
+                    "Light changed identity or detached support dressing"
+                )
+                Geometry.setStage(panel, 1)
+                Geometry.publish(panel, 1, 0, 0, 0, "Heavy")
+                assert(
+                    model:GetPivot() == pivot and not model:FindFirstChild("AttachedCosmeticFixture"),
+                    "Heavy retained floating dressing or changed identity"
+                )
+                Geometry.setStage(panel, 0)
+                Geometry.publish(panel, 0, 0, 0, 0, "Pristine")
+                assert(
+                    MaterialGeometry.validate(model, family)
+                        and model:FindFirstChild("AttachedCosmeticFixture"),
+                    "pristine reset lost source dressing"
+                )
+                model:SetAttribute("PanelAssetBasis", CFrame.new(1, 0, 0))
+                assert(MaterialGeometry.basis(model) == nil, "translated material basis accepted")
+            end)
+            panel.original:Destroy()
+            model:Destroy()
+            destroyFamily(family)
+            assert(ok, failure)
+        end
+    )
+    test(
         "P17MaterialPanelStates shared thresholds retain catalog proxies across persistent Light Heavy Total",
         function()
             for id in Approved.families do
@@ -204,6 +256,7 @@ return function()
             root.Parent = workspace
             local template = Instance.new("MeshPart")
             template.Size = Vector3.new(1, 1, 1)
+            template.CFrame = CFrame.new(0.25, 0, -0.1) * CFrame.Angles(0.2, math.pi, 0)
             template.Anchored = true
             template.CanCollide = false
             template.CanQuery = false
@@ -232,6 +285,11 @@ return function()
                     assert(
                         part.CollisionGroup == "PanelFragments" and part:GetNetworkOwner() == nil,
                         'P17 assertion: part.CollisionGroup == "PanelFragments" and part:GetNetworkOwner() == nil'
+                    )
+                    assert(
+                        part.CFrame.RightVector:Dot(template.CFrame.RightVector) > 0.9999
+                            and part.CFrame.UpVector:Dot(template.CFrame.UpVector) > 0.9999,
+                        "fragment clone discarded approved imported local orientation"
                     )
                 end
                 owner.step(8)

@@ -48,9 +48,13 @@
     "artifact_isolation": "Passed: 510 release Instances / 47 runtime scripts; no tests, fixtures or development overrides"
   },
   "execution": {
-    "initial_cloud_save": "Pending user completion of initial Studio Publish to Roblox dialog for the release build",
-    "privacy_verified": false,
-    "uploaded_assets": [],
-    "public_release_performed": false
+    "initial_cloud_save": "Private universe10776653720/place72732833195348; release-only version5 verified published/Approved",
+    "privacy_verified": true,
+    "uploaded_assets": [
+      "73311045122621",
+      "126055228085421"
+    ],
+    "public_release_performed": false,
+    "privacy_receipt": "cloud-import-progress.json"
   }
 }

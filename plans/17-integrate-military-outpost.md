@@ -276,3 +276,48 @@ initial **Publish to Roblox** dialog as **C130 P17 Import**, keeping **Audience:
 Private**. Never cloud-save the test mapping. Actual cloud IDs, a verified
 private audience and asset scopes remain pending; the roadmap's access blocker
 therefore remains. No upload or public release is claimed at this checkpoint.
+
+### Private upload verified and implementation resumed — 2026-11-14
+
+The user created **C130 P17 Import**, universe `10776653720`, root place
+`72732833195348`, on account `2227341845`. Open Cloud Get Universe returns
+`visibility = PRIVATE` and the expected owner. The initial cloud document
+contained the test mapping, so it was not accepted as the release upload.
+Rojo 7.7.1 served the release project on loopback port 34873; both localhost
+and explicit IPv4 plugin connections failed despite a responding server. The
+installed plugin is also 7.7.1 / protocol 5; no version mismatch was inferred.
+
+The primary agent instead compared the native document with the already
+verified release/test artifacts: 504 release nodes plus 90 test-only nodes,
+all 47 script byte-count/Adler-32 fingerprints, and all 422 authored Part
+poses/sizes/shapes/physical flags. Only the six matching test-only roots were
+removed; gameplay code and world geometry were unchanged. An initial
+post-removal counter omitted the two entrypoint roots and failed at 45; the
+inclusive count was corrected to 47 and all 504 release-node comparisons
+reran successfully. The [comparison receipt](../docs/evidence/p17/private-release-comparison.json)
+preserves both that diagnostic failure and the passing checks.
+
+Studio `save_place` saved clean cloud version **5**. After the user's Publish
+click, `GET /assets/v1/assets/72732833195348` independently returns Place
+revision **5**, `isPublished = true`, moderation `Approved`. A fresh Get Universe
+still returns `PRIVATE`. The legacy version-history endpoint required a broader
+all-resources scope; no broad grant was requested because scoped asset metadata
+proved the published revision. The [cloud receipt](../docs/evidence/p17/cloud-import-progress.json)
+records the exact source, IDs, privacy and publication facts. No public release
+or P12 capacity acceptance is claimed.
+
+Two actual Model/package uploads are approved on the same owner account:
+
+| Approved source export | Package ID / revision | Upload operation |
+| --- | --- | --- |
+| `outpost-assembly-v1.fbx` | `73311045122621` / 1 | `4a9773e8-40a3-4819-8687-60a8c963ba8e` |
+| `panel-library-v1.fbx` | `126055228085421` / 1 | `a32a10ad-8119-4a9f-86c2-eb0ecd186d30` |
+
+The manifest records these actual references and owner. Native insertion into
+temporary server-only `P17ImportStaging` confirms exactly 2,225 assembly and
+260 library MeshParts, no scripts, but **zero imported texture maps and default
+gray colors throughout**. Thus upload success is not material appearance
+acceptance. Full raw mesh receipts were captured in 51 bounded calls for
+source-bound normalization; material repair continues without changing the
+approved P16 files. The access blocker is cleared and implementation resumes;
+all actual replacement and A1–A6 gates remain open.

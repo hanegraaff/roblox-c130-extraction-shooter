@@ -29,7 +29,7 @@ def paths(path: Path) -> dict[str, str]:
 
 
 CFRAME_COMPONENTS = ("X", "Y", "Z", "R00", "R01", "R02", "R10", "R11", "R12", "R20", "R21", "R22")
-PART_CLASSES = {"Part", "SpawnLocation"}
+PART_CLASSES = {"Part", "SpawnLocation", "MeshPart"}
 
 
 def instance_nodes(path: Path) -> dict[str, ET.Element]:
@@ -98,10 +98,20 @@ def check_authored_geometry(path: Path) -> int:
                 actual_bool = True if serialized is None else serialized == "true"
                 if actual_bool != expected_bool:
                     raise RuntimeError(f"Authored {boolean} reconstruction mismatch: {full}")
-            expected_shape = {"Block": "1", "Ball": "0", "Cylinder": "2"}[properties.get("Shape", "Block")]
-            if item.findtext("Properties/token[@name='shape']", "1") != expected_shape:
-                raise RuntimeError(f"Authored shape reconstruction mismatch: {full}")
+            if source["ClassName"] == "MeshPart":
+                actual_mesh = item.findtext("Properties/Content[@name='MeshContent']/uri") or item.findtext("Properties/Content[@name='MeshId']/url")
+                if actual_mesh != properties["MeshId"]:
+                    raise RuntimeError(f"Imported MeshId reconstruction mismatch: {full}")
+            else:
+                expected_shape = {"Block": "1", "Ball": "0", "Cylinder": "2"}[properties.get("Shape", "Block")]
+                if item.findtext("Properties/token[@name='shape']", "1") != expected_shape:
+                    raise RuntimeError(f"Authored shape reconstruction mismatch: {full}")
             count += 1
+        if source["ClassName"] == "SurfaceAppearance":
+            for key in ("ColorMap", "NormalMap", "RoughnessMap", "MetalnessMap"):
+                actual_map = item.findtext(f"Properties/Content[@name='{key}Content']/uri") or item.findtext(f"Properties/Content[@name='{key}']/url") or ""
+                if actual_map != source["Properties"].get(key, ""):
+                    raise RuntimeError(f"Imported texture reconstruction mismatch: {full}/{key}")
         for child in source.get("Children", []):
             walk(child, full + "/" + child["Name"])
 
@@ -434,10 +444,11 @@ def main() -> None:
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
+    expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")

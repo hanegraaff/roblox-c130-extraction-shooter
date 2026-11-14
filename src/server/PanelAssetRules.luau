@@ -14,7 +14,16 @@ end
 -- A rigid, right-handed orientation and all eight transformed bounds corners
 -- must fit the approved canonical envelope. Rejects malformed arrays/NaN/infinity,
 -- zero/negative dimensions, translated/scaled/sheared/reflected import transforms.
-function PanelAssetRules.geometry(size: { number }, pose: { number }, bounds: { number }): boolean
+function PanelAssetRules.geometry(
+    size: { number },
+    pose: { number },
+    bounds: { number },
+    maximumDimensionStuds: number?
+): boolean
+    local maximum = maximumDimensionStuds or 40
+    if maximum ~= maximum or maximum <= 0 or maximum > 64 then
+        return false
+    end
     if #size ~= 3 or #pose ~= 12 or #bounds ~= 3 then
         return false
     end
@@ -26,7 +35,7 @@ function PanelAssetRules.geometry(size: { number }, pose: { number }, bounds: { 
         end
     end
     for axis = 1, 3 do
-        if size[axis] <= 0 or size[axis] > 40 or bounds[axis] <= 0 then
+        if size[axis] <= 0 or size[axis] > maximum or bounds[axis] <= 0 then
             return false
         end
     end

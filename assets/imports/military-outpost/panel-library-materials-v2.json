@@ -1,0 +1,1750 @@
+{
+  "schema_version": 1,
+  "recipe": "approved-obj-material-split-v1",
+  "approved_blend_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c",
+  "approved_package_lock_sha256": "eda4926391d6c1f19d35186a4b8d56db13a6e3e36cda256e43be0e414210b3b2",
+  "generator_sha256": "209c496657343e9dda1cca92590bfb51eb6396be911d172572bf1969a16b147b",
+  "glb_sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e",
+  "glb_bytes": 6520872,
+  "axes": [
+    "X",
+    "Z",
+    "-Y"
+  ],
+  "uv_mapping": [
+    "U",
+    "1-V"
+  ],
+  "units": "stud; no Roblox importer scale assumed",
+  "triangulated_normals": "flat geometric normals; no source triangles or UVs changed",
+  "triangle_count": 34144,
+  "primitive_count": 76,
+  "sources": 48,
+  "nonempty_sources": 42,
+  "empty_total_sources": [
+    {
+      "family": "corrugated_wall",
+      "appearance": "Total",
+      "source": "corrugated_wall-total.obj",
+      "fragment_index": null,
+      "source_sha256": "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1"
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Total",
+      "source": "corrugated_window-total.obj",
+      "fragment_index": null,
+      "source_sha256": "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1"
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Total",
+      "source": "corrugated_door-total.obj",
+      "fragment_index": null,
+      "source_sha256": "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1"
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Total",
+      "source": "corrugated_garage-total.obj",
+      "fragment_index": null,
+      "source_sha256": "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1"
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": "Total",
+      "source": "concrete_partition-total.obj",
+      "fragment_index": null,
+      "source_sha256": "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1"
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Total",
+      "source": "layered_roof-total.obj",
+      "fragment_index": null,
+      "source_sha256": "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1"
+    }
+  ],
+  "embedded_textures": [
+    {
+      "material": "concrete",
+      "source": "assets/exports/military-outpost/textures/concrete.png",
+      "sha256": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea",
+      "bytes": 384668
+    },
+    {
+      "material": "teal",
+      "source": "assets/exports/military-outpost/textures/teal.png",
+      "sha256": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b",
+      "bytes": 330077
+    },
+    {
+      "material": "orange",
+      "source": "assets/exports/military-outpost/textures/orange.png",
+      "sha256": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb",
+      "bytes": 345006
+    },
+    {
+      "material": "steel",
+      "source": "assets/exports/military-outpost/textures/steel.png",
+      "sha256": "38f516603b37b3c788a8776311f3ad0cd34259b74ad9582c6c8a2c313d87e443",
+      "bytes": 397472
+    },
+    {
+      "material": "dark",
+      "source": "assets/exports/military-outpost/textures/dark.png",
+      "sha256": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e",
+      "bytes": 374052
+    },
+    {
+      "material": "ivory",
+      "source": "assets/exports/military-outpost/textures/ivory.png",
+      "sha256": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233",
+      "bytes": 401825
+    },
+    {
+      "material": "olive",
+      "source": "assets/exports/military-outpost/textures/olive.png",
+      "sha256": "c9babc7dabc09421d15a41003b09830e166c04e4939ac5c13acb2d36e280b4ee",
+      "bytes": 388986
+    },
+    {
+      "material": "wood",
+      "source": "assets/exports/military-outpost/textures/wood.png",
+      "sha256": "e511b8255dfdce9a44599ad5bc146cd60c660cc505d276731291e032bfd4b283",
+      "bytes": 348738
+    },
+    {
+      "material": "roof",
+      "source": "assets/exports/military-outpost/textures/roof.png",
+      "sha256": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46",
+      "bytes": 389910
+    },
+    {
+      "material": "screen",
+      "source": "assets/exports/military-outpost/textures/screen.png",
+      "sha256": "e7c1b8e233c42a1cace7becfafa3ff4f3cc4d9d45dcf8eb404bf53dbc12f5b48",
+      "bytes": 20146
+    },
+    {
+      "material": "tactical",
+      "source": "assets/exports/military-outpost/textures/tactical.png",
+      "sha256": "a7e28b356f35db5948d847913f6c9da6adf6a547a38c33f0014f955afa29da5c",
+      "bytes": 44670
+    },
+    {
+      "material": "lamp",
+      "source": "assets/exports/military-outpost/textures/lamp.png",
+      "sha256": "f80575f3f0ca6ab2ef9de70489abb1f73b2e08009f315f1410f26a67588bc151",
+      "bytes": 419743
+    }
+  ],
+  "used_materials": [
+    "concrete",
+    "dark",
+    "ivory",
+    "orange",
+    "roof",
+    "steel",
+    "teal"
+  ],
+  "nodes": [
+    {
+      "family": "corrugated_wall",
+      "appearance": "Pristine",
+      "source": "corrugated_wall-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "5f543c95d9e84838c281635b36fbdd8fbafe676b55844c80f01a8e88322c302e",
+      "node": "P17__corrugated_wall__Pristine__teal",
+      "source_object": "corrugated_wall.Pristine",
+      "material": "teal",
+      "triangles": 756,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Pristine",
+      "source": "corrugated_wall-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "5f543c95d9e84838c281635b36fbdd8fbafe676b55844c80f01a8e88322c302e",
+      "node": "P17__corrugated_wall__Pristine__orange",
+      "source_object": "corrugated_wall.Pristine",
+      "material": "orange",
+      "triangles": 24,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Light",
+      "source": "corrugated_wall-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ef7c1c0215c646e30060681f046230d0ce8523fe6db1e0170cab823a5c4f5d57",
+      "node": "P17__corrugated_wall__Light__teal",
+      "source_object": "corrugated_wall.Light",
+      "material": "teal",
+      "triangles": 756,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Light",
+      "source": "corrugated_wall-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ef7c1c0215c646e30060681f046230d0ce8523fe6db1e0170cab823a5c4f5d57",
+      "node": "P17__corrugated_wall__Light__orange",
+      "source_object": "corrugated_wall.Light",
+      "material": "orange",
+      "triangles": 24,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Light",
+      "source": "corrugated_wall-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ef7c1c0215c646e30060681f046230d0ce8523fe6db1e0170cab823a5c4f5d57",
+      "node": "P17__corrugated_wall__Light__dark",
+      "source_object": "corrugated_wall.Light",
+      "material": "dark",
+      "triangles": 216,
+      "center": [
+        -0.31999999999999984,
+        -0.02435799999999988,
+        0.0
+      ],
+      "size": [
+        12.165517999999999,
+        4.593006,
+        1.345
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Light",
+      "source": "corrugated_wall-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ef7c1c0215c646e30060681f046230d0ce8523fe6db1e0170cab823a5c4f5d57",
+      "node": "P17__corrugated_wall__Light__ivory",
+      "source_object": "corrugated_wall.Light",
+      "material": "ivory",
+      "triangles": 216,
+      "center": [
+        -0.22999999999999998,
+        -0.024357500000000032,
+        0.0
+      ],
+      "size": [
+        11.565000000000001,
+        4.651553,
+        1.365
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Heavy",
+      "source": "corrugated_wall-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "8fe3fdc669cab68a3b95ee72143646a7add7233079390bea0da550263d2e4ed6",
+      "node": "P17__corrugated_wall__Heavy__teal",
+      "source_object": "corrugated_wall.Heavy",
+      "material": "teal",
+      "triangles": 6048,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Heavy",
+      "source": "corrugated_wall-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "8fe3fdc669cab68a3b95ee72143646a7add7233079390bea0da550263d2e4ed6",
+      "node": "P17__corrugated_wall__Heavy__orange",
+      "source_object": "corrugated_wall.Heavy",
+      "material": "orange",
+      "triangles": 144,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": "Heavy",
+      "source": "corrugated_wall-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "8fe3fdc669cab68a3b95ee72143646a7add7233079390bea0da550263d2e4ed6",
+      "node": "P17__corrugated_wall__Heavy__ivory",
+      "source_object": "corrugated_wall.Heavy",
+      "material": "ivory",
+      "triangles": 768,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        9.314632,
+        8.0,
+        1.7381526
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": null,
+      "source": "corrugated_wall-fragment-1.obj",
+      "fragment_index": 1,
+      "source_sha256": "0b4e9cd89348fe0a8be806021dc7824be275178c2a5dcb75da771479c8c599f4",
+      "node": "P17__corrugated_wall__Fragment01__teal",
+      "source_object": "corrugated_wall.fragment0",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": null,
+      "source": "corrugated_wall-fragment-2.obj",
+      "fragment_index": 2,
+      "source_sha256": "2bd04ed18546fd30efc169fb654a54b48eb55c72c51c64b7ae3b373dcfdb67e1",
+      "node": "P17__corrugated_wall__Fragment02__teal",
+      "source_object": "corrugated_wall.fragment1",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": null,
+      "source": "corrugated_wall-fragment-3.obj",
+      "fragment_index": 3,
+      "source_sha256": "e22fc9a50fdc5292b8696468b4c53d8370b8549102b672a8451e46aa02d7283f",
+      "node": "P17__corrugated_wall__Fragment03__teal",
+      "source_object": "corrugated_wall.fragment2",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_wall",
+      "appearance": null,
+      "source": "corrugated_wall-fragment-4.obj",
+      "fragment_index": 4,
+      "source_sha256": "cdd21fd24eb09ec2090949297d549a7479c5a8bf83bf1751df10d024d7b3c9b0",
+      "node": "P17__corrugated_wall__Fragment04__teal",
+      "source_object": "corrugated_wall.fragment3",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Pristine",
+      "source": "corrugated_window-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "36388aad76304dd759c4f1b331ef28952fb9f10e00eb43b2b04273ec15c745bf",
+      "node": "P17__corrugated_window__Pristine__teal",
+      "source_object": "corrugated_window.Pristine",
+      "material": "teal",
+      "triangles": 1104,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Pristine",
+      "source": "corrugated_window-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "36388aad76304dd759c4f1b331ef28952fb9f10e00eb43b2b04273ec15c745bf",
+      "node": "P17__corrugated_window__Pristine__orange",
+      "source_object": "corrugated_window.Pristine",
+      "material": "orange",
+      "triangles": 72,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Light",
+      "source": "corrugated_window-light.obj",
+      "fragment_index": null,
+      "source_sha256": "71185e66806b6660f0745ae4b1ebf28552902d34cb143f8e69c1252f4ba6ad85",
+      "node": "P17__corrugated_window__Light__teal",
+      "source_object": "corrugated_window.Light",
+      "material": "teal",
+      "triangles": 1104,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Light",
+      "source": "corrugated_window-light.obj",
+      "fragment_index": null,
+      "source_sha256": "71185e66806b6660f0745ae4b1ebf28552902d34cb143f8e69c1252f4ba6ad85",
+      "node": "P17__corrugated_window__Light__orange",
+      "source_object": "corrugated_window.Light",
+      "material": "orange",
+      "triangles": 72,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Light",
+      "source": "corrugated_window-light.obj",
+      "fragment_index": null,
+      "source_sha256": "71185e66806b6660f0745ae4b1ebf28552902d34cb143f8e69c1252f4ba6ad85",
+      "node": "P17__corrugated_window__Light__dark",
+      "source_object": "corrugated_window.Light",
+      "material": "dark",
+      "triangles": 48,
+      "center": [
+        -0.31999999999999984,
+        -0.8875671999999999,
+        0.0
+      ],
+      "size": [
+        12.165517999999999,
+        2.8665876,
+        1.345
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Light",
+      "source": "corrugated_window-light.obj",
+      "fragment_index": null,
+      "source_sha256": "71185e66806b6660f0745ae4b1ebf28552902d34cb143f8e69c1252f4ba6ad85",
+      "node": "P17__corrugated_window__Light__ivory",
+      "source_object": "corrugated_window.Light",
+      "material": "ivory",
+      "triangles": 48,
+      "center": [
+        -0.2299994999999999,
+        -0.8875670000000001,
+        0.0
+      ],
+      "size": [
+        11.565001,
+        2.925134,
+        1.365
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Heavy",
+      "source": "corrugated_window-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "55f91a71ed083c6f2d380855a8269140e1b9902c5faa161a9b5648fd0b8b1ad3",
+      "node": "P17__corrugated_window__Heavy__teal",
+      "source_object": "corrugated_window.Heavy",
+      "material": "teal",
+      "triangles": 4512,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Heavy",
+      "source": "corrugated_window-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "55f91a71ed083c6f2d380855a8269140e1b9902c5faa161a9b5648fd0b8b1ad3",
+      "node": "P17__corrugated_window__Heavy__orange",
+      "source_object": "corrugated_window.Heavy",
+      "material": "orange",
+      "triangles": 144,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": "Heavy",
+      "source": "corrugated_window-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "55f91a71ed083c6f2d380855a8269140e1b9902c5faa161a9b5648fd0b8b1ad3",
+      "node": "P17__corrugated_window__Heavy__ivory",
+      "source_object": "corrugated_window.Heavy",
+      "material": "ivory",
+      "triangles": 768,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        11.314632,
+        8.0,
+        1.7381526
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": null,
+      "source": "corrugated_window-fragment-1.obj",
+      "fragment_index": 1,
+      "source_sha256": "bbe589f3ff42e7bd13e2fa98f44785989abadbc632b251a04b016270d8c1b105",
+      "node": "P17__corrugated_window__Fragment01__teal",
+      "source_object": "corrugated_window.fragment0",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": null,
+      "source": "corrugated_window-fragment-2.obj",
+      "fragment_index": 2,
+      "source_sha256": "7ef9a7662f7fd70fc1e267042bf8f37fe091ae70af71660bb2fcc51fe27fe151",
+      "node": "P17__corrugated_window__Fragment02__teal",
+      "source_object": "corrugated_window.fragment1",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": null,
+      "source": "corrugated_window-fragment-3.obj",
+      "fragment_index": 3,
+      "source_sha256": "ded4af3bb94cf9a679a170ad099f0b5b08a9738caf3f270b0f941f42a8c7555e",
+      "node": "P17__corrugated_window__Fragment03__teal",
+      "source_object": "corrugated_window.fragment2",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_window",
+      "appearance": null,
+      "source": "corrugated_window-fragment-4.obj",
+      "fragment_index": 4,
+      "source_sha256": "43d8b39c09111a73f107e06a37e1a3bf28e992245e09ba36edad21c23b104391",
+      "node": "P17__corrugated_window__Fragment04__teal",
+      "source_object": "corrugated_window.fragment3",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Pristine",
+      "source": "corrugated_door-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "4dddd487387bbc8fb27be043719b371bd49ad962781ef5c1b6933ae80750ac47",
+      "node": "P17__corrugated_door__Pristine__teal",
+      "source_object": "corrugated_door.Pristine",
+      "material": "teal",
+      "triangles": 732,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Pristine",
+      "source": "corrugated_door-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "4dddd487387bbc8fb27be043719b371bd49ad962781ef5c1b6933ae80750ac47",
+      "node": "P17__corrugated_door__Pristine__orange",
+      "source_object": "corrugated_door.Pristine",
+      "material": "orange",
+      "triangles": 48,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Light",
+      "source": "corrugated_door-light.obj",
+      "fragment_index": null,
+      "source_sha256": "375c662b94204e87412556048aee9396f86b7af1be58fbcb836203a3c88cc064",
+      "node": "P17__corrugated_door__Light__teal",
+      "source_object": "corrugated_door.Light",
+      "material": "teal",
+      "triangles": 732,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Light",
+      "source": "corrugated_door-light.obj",
+      "fragment_index": null,
+      "source_sha256": "375c662b94204e87412556048aee9396f86b7af1be58fbcb836203a3c88cc064",
+      "node": "P17__corrugated_door__Light__orange",
+      "source_object": "corrugated_door.Light",
+      "material": "orange",
+      "triangles": 48,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Light",
+      "source": "corrugated_door-light.obj",
+      "fragment_index": null,
+      "source_sha256": "375c662b94204e87412556048aee9396f86b7af1be58fbcb836203a3c88cc064",
+      "node": "P17__corrugated_door__Light__dark",
+      "source_object": "corrugated_door.Light",
+      "material": "dark",
+      "triangles": 96,
+      "center": [
+        -0.31999999999999984,
+        -0.02435799999999988,
+        0.0
+      ],
+      "size": [
+        12.165517999999999,
+        4.593006,
+        1.345
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Light",
+      "source": "corrugated_door-light.obj",
+      "fragment_index": null,
+      "source_sha256": "375c662b94204e87412556048aee9396f86b7af1be58fbcb836203a3c88cc064",
+      "node": "P17__corrugated_door__Light__ivory",
+      "source_object": "corrugated_door.Light",
+      "material": "ivory",
+      "triangles": 96,
+      "center": [
+        -0.2299994999999999,
+        -0.024357500000000032,
+        0.0
+      ],
+      "size": [
+        11.565001,
+        4.651553,
+        1.365
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Heavy",
+      "source": "corrugated_door-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "73f66e027c431a22fa7d442eb85dd5eed61192058a6eaae6a1b8f31c5ef9265e",
+      "node": "P17__corrugated_door__Heavy__teal",
+      "source_object": "corrugated_door.Heavy",
+      "material": "teal",
+      "triangles": 4128,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Heavy",
+      "source": "corrugated_door-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "73f66e027c431a22fa7d442eb85dd5eed61192058a6eaae6a1b8f31c5ef9265e",
+      "node": "P17__corrugated_door__Heavy__orange",
+      "source_object": "corrugated_door.Heavy",
+      "material": "orange",
+      "triangles": 144,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": "Heavy",
+      "source": "corrugated_door-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "73f66e027c431a22fa7d442eb85dd5eed61192058a6eaae6a1b8f31c5ef9265e",
+      "node": "P17__corrugated_door__Heavy__ivory",
+      "source_object": "corrugated_door.Heavy",
+      "material": "ivory",
+      "triangles": 768,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        11.939632,
+        8.0,
+        1.7381526
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": null,
+      "source": "corrugated_door-fragment-1.obj",
+      "fragment_index": 1,
+      "source_sha256": "079c65dae20b58ffd0ee18ebce1807a58d120a14c9bc38b9e1b186d451f453af",
+      "node": "P17__corrugated_door__Fragment01__teal",
+      "source_object": "corrugated_door.fragment0",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": null,
+      "source": "corrugated_door-fragment-2.obj",
+      "fragment_index": 2,
+      "source_sha256": "24410293128fc1eee13b14fe48ec1ee0bdf3e0b95bebe4cdbf9edfbe77dfe821",
+      "node": "P17__corrugated_door__Fragment02__teal",
+      "source_object": "corrugated_door.fragment1",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": null,
+      "source": "corrugated_door-fragment-3.obj",
+      "fragment_index": 3,
+      "source_sha256": "5610d8f14ab208be6b5a61defbf5b0cd0f5ad49528ebfd8fe6c6c1ab37fc1c42",
+      "node": "P17__corrugated_door__Fragment03__teal",
+      "source_object": "corrugated_door.fragment2",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_door",
+      "appearance": null,
+      "source": "corrugated_door-fragment-4.obj",
+      "fragment_index": 4,
+      "source_sha256": "5f72c00a506a783430fe134ad57e710e4a5f1b01adc17fa9c694709d069b2cc3",
+      "node": "P17__corrugated_door__Fragment04__teal",
+      "source_object": "corrugated_door.fragment3",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Pristine",
+      "source": "corrugated_garage-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "ac43f77cc0c2ee944ca6174e56417e54aaa09588d23b33a01b983aefeeee7359",
+      "node": "P17__corrugated_garage__Pristine__teal",
+      "source_object": "corrugated_garage.Pristine",
+      "material": "teal",
+      "triangles": 732,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Pristine",
+      "source": "corrugated_garage-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "ac43f77cc0c2ee944ca6174e56417e54aaa09588d23b33a01b983aefeeee7359",
+      "node": "P17__corrugated_garage__Pristine__orange",
+      "source_object": "corrugated_garage.Pristine",
+      "material": "orange",
+      "triangles": 48,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Light",
+      "source": "corrugated_garage-light.obj",
+      "fragment_index": null,
+      "source_sha256": "60f5b182f2a0842fd273aa6b665e4ec47c415de2106f8a90b5ff5d0e5700ff74",
+      "node": "P17__corrugated_garage__Light__teal",
+      "source_object": "corrugated_garage.Light",
+      "material": "teal",
+      "triangles": 732,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Light",
+      "source": "corrugated_garage-light.obj",
+      "fragment_index": null,
+      "source_sha256": "60f5b182f2a0842fd273aa6b665e4ec47c415de2106f8a90b5ff5d0e5700ff74",
+      "node": "P17__corrugated_garage__Light__orange",
+      "source_object": "corrugated_garage.Light",
+      "material": "orange",
+      "triangles": 48,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Light",
+      "source": "corrugated_garage-light.obj",
+      "fragment_index": null,
+      "source_sha256": "60f5b182f2a0842fd273aa6b665e4ec47c415de2106f8a90b5ff5d0e5700ff74",
+      "node": "P17__corrugated_garage__Light__dark",
+      "source_object": "corrugated_garage.Light",
+      "material": "dark",
+      "triangles": 144,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        14.645518,
+        5.891454,
+        1.345
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Light",
+      "source": "corrugated_garage-light.obj",
+      "fragment_index": null,
+      "source_sha256": "60f5b182f2a0842fd273aa6b665e4ec47c415de2106f8a90b5ff5d0e5700ff74",
+      "node": "P17__corrugated_garage__Light__ivory",
+      "source_object": "corrugated_garage.Light",
+      "material": "ivory",
+      "triangles": 144,
+      "center": [
+        0.08999999999999986,
+        0.0,
+        0.0
+      ],
+      "size": [
+        14.045,
+        5.95,
+        1.365
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Heavy",
+      "source": "corrugated_garage-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "09d27726fdacb33ce01b6fc97a2798bd93bb155805fd04f72f4f4a436c08254c",
+      "node": "P17__corrugated_garage__Heavy__teal",
+      "source_object": "corrugated_garage.Heavy",
+      "material": "teal",
+      "triangles": 2016,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.16
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Heavy",
+      "source": "corrugated_garage-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "09d27726fdacb33ce01b6fc97a2798bd93bb155805fd04f72f4f4a436c08254c",
+      "node": "P17__corrugated_garage__Heavy__orange",
+      "source_object": "corrugated_garage.Heavy",
+      "material": "orange",
+      "triangles": 144,
+      "center": [
+        0.0,
+        -2.2,
+        0.0
+      ],
+      "size": [
+        16.0,
+        0.8,
+        1.205
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": "Heavy",
+      "source": "corrugated_garage-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "09d27726fdacb33ce01b6fc97a2798bd93bb155805fd04f72f4f4a436c08254c",
+      "node": "P17__corrugated_garage__Heavy__ivory",
+      "source_object": "corrugated_garage.Heavy",
+      "material": "ivory",
+      "triangles": 768,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        14.564632,
+        8.0,
+        1.7381526
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": null,
+      "source": "corrugated_garage-fragment-1.obj",
+      "fragment_index": 1,
+      "source_sha256": "f7fae39db7d2b284b96d8fd17d9626e0cb1c7b799081b74bb06d97c4218cc16a",
+      "node": "P17__corrugated_garage__Fragment01__teal",
+      "source_object": "corrugated_garage.fragment0",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": null,
+      "source": "corrugated_garage-fragment-2.obj",
+      "fragment_index": 2,
+      "source_sha256": "444dfec3f822da683f9bf3b572782b763db7a8fef7d915eadac958d29447bc73",
+      "node": "P17__corrugated_garage__Fragment02__teal",
+      "source_object": "corrugated_garage.fragment1",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": null,
+      "source": "corrugated_garage-fragment-3.obj",
+      "fragment_index": 3,
+      "source_sha256": "9607a382fb36d6ede4a90ced75202f63adc1bb91c3713c091111d025e2b093db",
+      "node": "P17__corrugated_garage__Fragment03__teal",
+      "source_object": "corrugated_garage.fragment2",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "corrugated_garage",
+      "appearance": null,
+      "source": "corrugated_garage-fragment-4.obj",
+      "fragment_index": 4,
+      "source_sha256": "733683df082d5a3e9f8432b9ab84861f7485dbdfa8968bc5e0ecbdeb44f974b6",
+      "node": "P17__corrugated_garage__Fragment04__teal",
+      "source_object": "corrugated_garage.fragment3",
+      "material": "teal",
+      "triangles": 12,
+      "center": [
+        0.025000000000000022,
+        0.07500000000000001,
+        -0.045
+      ],
+      "size": [
+        1.25,
+        0.9500000000000001,
+        0.21
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": "Pristine",
+      "source": "concrete_partition-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "57accf3bf04af8c5198f7cf3048de91cf242389b313160c48fd242e6bbb987ce",
+      "node": "P17__concrete_partition__Pristine__concrete",
+      "source_object": "concrete_partition.Pristine",
+      "material": "concrete",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.0
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": "Light",
+      "source": "concrete_partition-light.obj",
+      "fragment_index": null,
+      "source_sha256": "390acf64a1b6843e3722bd8bcb0a19d6ef7ef73a04be2709bd6242bedb964bf5",
+      "node": "P17__concrete_partition__Light__concrete",
+      "source_object": "concrete_partition.Light",
+      "material": "concrete",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.0
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": "Light",
+      "source": "concrete_partition-light.obj",
+      "fragment_index": null,
+      "source_sha256": "390acf64a1b6843e3722bd8bcb0a19d6ef7ef73a04be2709bd6242bedb964bf5",
+      "node": "P17__concrete_partition__Light__dark",
+      "source_object": "concrete_partition.Light",
+      "material": "dark",
+      "triangles": 1080,
+      "center": [
+        -0.19882849999999985,
+        -0.22714100000000004,
+        0.0
+      ],
+      "size": [
+        12.605208999999999,
+        4.749986,
+        1.1100002
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": "Heavy",
+      "source": "concrete_partition-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "7e3799244e2958b6f795ce34ab7d0b036b41c1186315f740ff4720f1fdfa298f",
+      "node": "P17__concrete_partition__Heavy__concrete",
+      "source_object": "concrete_partition.Heavy",
+      "material": "concrete",
+      "triangles": 384,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        16.0,
+        8.0,
+        1.0
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": "Heavy",
+      "source": "concrete_partition-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "7e3799244e2958b6f795ce34ab7d0b036b41c1186315f740ff4720f1fdfa298f",
+      "node": "P17__concrete_partition__Heavy__ivory",
+      "source_object": "concrete_partition.Heavy",
+      "material": "ivory",
+      "triangles": 512,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        9.16,
+        8.0,
+        1.04
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": null,
+      "source": "concrete_partition-fragment-1.obj",
+      "fragment_index": 1,
+      "source_sha256": "6c0c9d4b94ee4d62b9c163d9120b59b0ef0c704ed68ab1f99f8bd56070778ac5",
+      "node": "P17__concrete_partition__Fragment01__concrete",
+      "source_object": "concrete_partition.fragment0",
+      "material": "concrete",
+      "triangles": 16,
+      "center": [
+        0.024999999999999967,
+        0.06499999999999997,
+        0.0
+      ],
+      "size": [
+        1.15,
+        1.03,
+        0.6
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": null,
+      "source": "concrete_partition-fragment-2.obj",
+      "fragment_index": 2,
+      "source_sha256": "f52021b845786ba8f2d2d114726ddbba92c6745d43bb1edd1eb907f2d66261d8",
+      "node": "P17__concrete_partition__Fragment02__concrete",
+      "source_object": "concrete_partition.fragment1",
+      "material": "concrete",
+      "triangles": 16,
+      "center": [
+        0.024999999999999967,
+        0.06499999999999997,
+        0.0
+      ],
+      "size": [
+        1.15,
+        1.03,
+        0.6
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": null,
+      "source": "concrete_partition-fragment-3.obj",
+      "fragment_index": 3,
+      "source_sha256": "aabea3556cd78178320fd1be027f4b1bdcdc1b499a224aba8a3ab5ec90930cbd",
+      "node": "P17__concrete_partition__Fragment03__concrete",
+      "source_object": "concrete_partition.fragment2",
+      "material": "concrete",
+      "triangles": 16,
+      "center": [
+        0.024999999999999967,
+        0.06499999999999997,
+        0.0
+      ],
+      "size": [
+        1.15,
+        1.03,
+        0.6
+      ]
+    },
+    {
+      "family": "concrete_partition",
+      "appearance": null,
+      "source": "concrete_partition-fragment-4.obj",
+      "fragment_index": 4,
+      "source_sha256": "5e76c3480406aa1e1ea4b4e03798fdb4ae54948bf446fcaac55851c9b694fc35",
+      "node": "P17__concrete_partition__Fragment04__concrete",
+      "source_object": "concrete_partition.fragment3",
+      "material": "concrete",
+      "triangles": 16,
+      "center": [
+        0.024999999999999967,
+        0.06499999999999997,
+        0.0
+      ],
+      "size": [
+        1.15,
+        1.03,
+        0.6
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Pristine",
+      "source": "layered_roof-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "849907e3ad9fbb852ceb06cbca428fd202f5fb684af0403f395f202261ac20e6",
+      "node": "P17__layered_roof__Pristine__concrete",
+      "source_object": "layered_roof.Pristine",
+      "material": "concrete",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.33999999999999997
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.32
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Pristine",
+      "source": "layered_roof-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "849907e3ad9fbb852ceb06cbca428fd202f5fb684af0403f395f202261ac20e6",
+      "node": "P17__layered_roof__Pristine__ivory",
+      "source_object": "layered_roof.Pristine",
+      "material": "ivory",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        -0.009999999999999995
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.36
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Pristine",
+      "source": "layered_roof-pristine.obj",
+      "fragment_index": null,
+      "source_sha256": "849907e3ad9fbb852ceb06cbca428fd202f5fb684af0403f395f202261ac20e6",
+      "node": "P17__layered_roof__Pristine__roof",
+      "source_object": "layered_roof.Pristine",
+      "material": "roof",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        -0.35
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.3
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Light",
+      "source": "layered_roof-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ddf27473007867417149ff2a9d35014cd056622a48727f6a9703de5ad582d068",
+      "node": "P17__layered_roof__Light__concrete",
+      "source_object": "layered_roof.Light",
+      "material": "concrete",
+      "triangles": 228,
+      "center": [
+        0.0,
+        0.0,
+        5.000000002919336e-08
+      ],
+      "size": [
+        16.0,
+        16.0,
+        1.1199999
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Light",
+      "source": "layered_roof-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ddf27473007867417149ff2a9d35014cd056622a48727f6a9703de5ad582d068",
+      "node": "P17__layered_roof__Light__ivory",
+      "source_object": "layered_roof.Light",
+      "material": "ivory",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        -0.009999999999999995
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.36
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Light",
+      "source": "layered_roof-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ddf27473007867417149ff2a9d35014cd056622a48727f6a9703de5ad582d068",
+      "node": "P17__layered_roof__Light__roof",
+      "source_object": "layered_roof.Light",
+      "material": "roof",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        -0.35
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.3
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Light",
+      "source": "layered_roof-light.obj",
+      "fragment_index": null,
+      "source_sha256": "ddf27473007867417149ff2a9d35014cd056622a48727f6a9703de5ad582d068",
+      "node": "P17__layered_roof__Light__dark",
+      "source_object": "layered_roof.Light",
+      "material": "dark",
+      "triangles": 216,
+      "center": [
+        -0.31999999999999984,
+        -0.048715500000000134,
+        0.0
+      ],
+      "size": [
+        11.64,
+        9.003105,
+        1.075
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Heavy",
+      "source": "layered_roof-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "f0866a6650048b9ccce41f3aae8b9d78994c3c90967426aeba9d19f53d7edaa6",
+      "node": "P17__layered_roof__Heavy__concrete",
+      "source_object": "layered_roof.Heavy",
+      "material": "concrete",
+      "triangles": 384,
+      "center": [
+        0.0,
+        0.0,
+        0.33999999999999997
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.32
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Heavy",
+      "source": "layered_roof-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "f0866a6650048b9ccce41f3aae8b9d78994c3c90967426aeba9d19f53d7edaa6",
+      "node": "P17__layered_roof__Heavy__ivory",
+      "source_object": "layered_roof.Heavy",
+      "material": "ivory",
+      "triangles": 384,
+      "center": [
+        0.0,
+        0.0,
+        -0.009999999999999995
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.36
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Heavy",
+      "source": "layered_roof-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "f0866a6650048b9ccce41f3aae8b9d78994c3c90967426aeba9d19f53d7edaa6",
+      "node": "P17__layered_roof__Heavy__roof",
+      "source_object": "layered_roof.Heavy",
+      "material": "roof",
+      "triangles": 384,
+      "center": [
+        0.0,
+        0.0,
+        -0.35
+      ],
+      "size": [
+        16.0,
+        16.0,
+        0.3
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": "Heavy",
+      "source": "layered_roof-heavy.obj",
+      "fragment_index": null,
+      "source_sha256": "f0866a6650048b9ccce41f3aae8b9d78994c3c90967426aeba9d19f53d7edaa6",
+      "node": "P17__layered_roof__Heavy__steel",
+      "source_object": "layered_roof.Heavy",
+      "material": "steel",
+      "triangles": 1792,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        9.27,
+        15.9,
+        1.15
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": null,
+      "source": "layered_roof-fragment-1.obj",
+      "fragment_index": 1,
+      "source_sha256": "c76d0cec384c73e56f45d398bf658861b605bc8aaf97b1cfd56207616cbb7d73",
+      "node": "P17__layered_roof__Fragment01__roof",
+      "source_object": "layered_roof.fragment0",
+      "material": "roof",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.9,
+        0.7
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": null,
+      "source": "layered_roof-fragment-2.obj",
+      "fragment_index": 2,
+      "source_sha256": "335fc02fd77a32d947129e68534ceb4894b382a269e993bab55323bb7f0057e8",
+      "node": "P17__layered_roof__Fragment02__roof",
+      "source_object": "layered_roof.fragment1",
+      "material": "roof",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.9,
+        0.7
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": null,
+      "source": "layered_roof-fragment-3.obj",
+      "fragment_index": 3,
+      "source_sha256": "8b84634c773c8c392a52bc715dd0e684ed0282a80e29742a3afd8af9d05f0841",
+      "node": "P17__layered_roof__Fragment03__roof",
+      "source_object": "layered_roof.fragment2",
+      "material": "roof",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.9,
+        0.7
+      ]
+    },
+    {
+      "family": "layered_roof",
+      "appearance": null,
+      "source": "layered_roof-fragment-4.obj",
+      "fragment_index": 4,
+      "source_sha256": "90f9515fd9182fc874258ac07a80b442b0d9dad313d197c0a1508fdf8730f326",
+      "node": "P17__layered_roof__Fragment04__roof",
+      "source_object": "layered_roof.fragment3",
+      "material": "roof",
+      "triangles": 12,
+      "center": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.9,
+        0.7
+      ]
+    }
+  ],
+  "roblox_import_verified": false
+}

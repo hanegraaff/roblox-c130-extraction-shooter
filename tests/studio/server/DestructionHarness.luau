@@ -32,6 +32,7 @@ type PanelExpectation = {
     parts: number,
     pivot: { number },
     size: Vector3,
+    assetFamily: string?,
 }
 export type Report = {
     suite: string,
@@ -370,6 +371,9 @@ function Harness.run(finish: ((Report) -> ())?)
                 parts = #model:GetChildren(),
                 pivot = { pose(id):GetComponents() },
                 size = size,
+                assetFamily = if type(model:GetAttribute("PanelAssetFamily")) == "string"
+                    then model:GetAttribute("PanelAssetFamily") :: string
+                    else nil,
             })
         end
         return result
@@ -616,9 +620,15 @@ function Harness.run(finish: ((Report) -> ())?)
     local ground: Player? = nil
     local testedIds: { string } = {}
     local allIds: { string } = {}
-    local originalPanels: { [string]: { pivot: CFrame, size: Vector3 } } = {}
+    local originalPanels: { [string]: { pivot: CFrame, size: Vector3, pristineParts: number } } = {}
     local function allPanelStates(pristine: boolean): { PanelExpectation }
-        assert(#allIds == 187 and runtime.destruction.resources().panels == 187, "all-panel registry changed")
+        local count = if workspace.World.Battlefield:GetAttribute("OutpostAssetRevision") == "p16-v1"
+            then 188
+            else 187
+        assert(
+            #allIds == count and runtime.destruction.resources().panels == count,
+            "all-panel registry changed"
+        )
         local entries = expected(allIds)
         for _, entry in entries do
             local model = panel(entry.id)
@@ -644,7 +654,7 @@ function Harness.run(finish: ((Report) -> ())?)
                         and entry.appearance == "Pristine"
                         and entry.heavySeconds == 0
                         and entry.sustainedSeconds == 0
-                        and entry.parts == 1
+                        and entry.parts == original.pristineParts
                         and not model:FindFirstChild("DamageVisuals"),
                     entry.id .. " retained damage after reset"
                 )
@@ -673,7 +683,8 @@ function Harness.run(finish: ((Report) -> ())?)
                         local size = item:GetAttribute("IntactSize")
                         assert(typeof(size) == "Vector3", "initial panel dimensions missing")
                         table.insert(allIds, item.Name)
-                        originalPanels[item.Name] = { pivot = pose(item.Name), size = size }
+                        originalPanels[item.Name] =
+                            { pivot = pose(item.Name), size = size, pristineParts = #item:GetChildren() }
                     end
                 end
                 table.sort(allIds)

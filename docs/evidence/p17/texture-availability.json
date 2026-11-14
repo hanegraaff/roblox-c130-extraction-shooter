@@ -1,0 +1,24 @@
+{
+  "date_local": "2026-11-14",
+  "studio_id": "d1cf23f3-c505-4c50-9555-51be07f7a2f9",
+  "place_id": 72732833195348,
+  "scope": "Edit-mode actual texture availability; not navigation or multiplayer acceptance",
+  "typed_instance_preload": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"completed\":12,\"results\":[{\"id\":\"rbxassetid://139291215981523\",\"status\":\"Success\"},{\"id\":\"rbxassetid://116131302925608\",\"status\":\"Success\"},{\"id\":\"rbxassetid://109354452545782\",\"status\":\"Success\"},{\"id\":\"rbxassetid://118558085320552\",\"status\":\"Success\"},{\"id\":\"rbxassetid://96151745233480\",\"status\":\"Success\"},{\"id\":\"rbxassetid://75656006256490\",\"status\":\"Success\"},{\"id\":\"rbxassetid://125796777052199\",\"status\":\"Success\"},{\"id\":\"rbxassetid://124187636737611\",\"status\":\"Success\"},{\"id\":\"rbxassetid://135106155017244\",\"status\":\"Success\"},{\"id\":\"rbxassetid://139223280119673\",\"status\":\"Success\"},{\"id\":\"rbxassetid://85019949077305\",\"status\":\"Success\"},{\"id\":\"rbxassetid://89338266395233\",\"status\":\"Success\"}],\"requested\":12}"
+      }
+    ],
+    "isError": false
+  },
+  "initial_string_only_probe": "All raw-string requests returned Failure. Typed ImageLabel requests and actual MeshPart dependencies succeeded; no asset permission change was used.",
+  "native_mesh_control": {
+    "mesh": "rbxassetid://108516984486882",
+    "texture": "rbxassetid://85019949077305",
+    "mesh_status": "Success",
+    "texture_status": "Success",
+    "observation": "Temporary source teal mesh rendered its corrugation/weathering after setting white tint; outside battlefield, Editor camera explicitly controlled",
+    "probe_removed": true
+  }
+}

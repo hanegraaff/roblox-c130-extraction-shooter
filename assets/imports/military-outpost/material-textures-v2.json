@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "materials": {
+    "olive": {
+      "color_map": "rbxassetid://89338266395233",
+      "source_png_sha256": "c9babc7dabc09421d15a41003b09830e166c04e4939ac5c13acb2d36e280b4ee",
+      "source_png_path": "assets/exports/military-outpost/textures/olive.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "89338266395233"
+    },
+    "wood": {
+      "color_map": "rbxassetid://125796777052199",
+      "source_png_sha256": "e511b8255dfdce9a44599ad5bc146cd60c660cc505d276731291e032bfd4b283",
+      "source_png_path": "assets/exports/military-outpost/textures/wood.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "125796777052199"
+    },
+    "screen": {
+      "color_map": "rbxassetid://116131302925608",
+      "source_png_sha256": "e7c1b8e233c42a1cace7becfafa3ff4f3cc4d9d45dcf8eb404bf53dbc12f5b48",
+      "source_png_path": "assets/exports/military-outpost/textures/screen.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "116131302925608"
+    },
+    "tactical": {
+      "color_map": "rbxassetid://139223280119673",
+      "source_png_sha256": "a7e28b356f35db5948d847913f6c9da6adf6a547a38c33f0014f955afa29da5c",
+      "source_png_path": "assets/exports/military-outpost/textures/tactical.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "139223280119673"
+    },
+    "lamp": {
+      "color_map": "rbxassetid://75656006256490",
+      "source_png_sha256": "f80575f3f0ca6ab2ef9de70489abb1f73b2e08009f315f1410f26a67588bc151",
+      "source_png_path": "assets/exports/military-outpost/textures/lamp.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "75656006256490"
+    },
+    "concrete": {
+      "color_map": "rbxassetid://96151745233480",
+      "source_png_sha256": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea",
+      "source_png_path": "assets/exports/military-outpost/textures/concrete.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "96151745233480"
+    },
+    "ivory": {
+      "color_map": "rbxassetid://124187636737611",
+      "source_png_sha256": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233",
+      "source_png_path": "assets/exports/military-outpost/textures/ivory.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "124187636737611"
+    },
+    "dark": {
+      "color_map": "rbxassetid://118558085320552",
+      "source_png_sha256": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e",
+      "source_png_path": "assets/exports/military-outpost/textures/dark.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "118558085320552"
+    },
+    "teal": {
+      "color_map": "rbxassetid://85019949077305",
+      "source_png_sha256": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b",
+      "source_png_path": "assets/exports/military-outpost/textures/teal.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "85019949077305"
+    },
+    "orange": {
+      "color_map": "rbxassetid://109354452545782",
+      "source_png_sha256": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb",
+      "source_png_path": "assets/exports/military-outpost/textures/orange.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "109354452545782"
+    },
+    "roof": {
+      "color_map": "rbxassetid://139291215981523",
+      "source_png_sha256": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46",
+      "source_png_path": "assets/exports/military-outpost/textures/roof.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "139291215981523"
+    },
+    "steel": {
+      "color_map": "rbxassetid://135106155017244",
+      "source_png_sha256": "38f516603b37b3c788a8776311f3ad0cd34259b74ad9582c6c8a2c313d87e443",
+      "source_png_path": "assets/exports/military-outpost/textures/steel.png",
+      "owner_user_id": "2227341845",
+      "asset_id": "135106155017244"
+    }
+  }
+}

@@ -10,13 +10,45 @@ local Catalog = require(script.Parent.PanelAssetCatalog)
 local AssetRules = require(script.Parent.PanelAssetRules)
 local MaterialPanelGeometry = {}
 
+-- Rotation-only material coordinates preserve legacy sidewall/roof identities.
+-- Missing basis is identity. Reject malformed authoring without mutation.
+function MaterialPanelGeometry.basis(model: Model): (CFrame?, string?)
+    local value = model:GetAttribute("PanelAssetBasis")
+    if value == nil then
+        return CFrame.identity, nil
+    end
+    if
+        typeof(value) ~= "CFrame"
+        or value.Position.Magnitude > 1e-6
+        or not AssetRules.geometry({ 1, 1, 1 }, { value:GetComponents() }, { 2, 2, 2 })
+    then
+        return nil, "invalid material panel asset basis"
+    end
+    return value, nil
+end
+
+-- Axis-aligned IntactSize in the stable identity frame, never a solid collider.
+function MaterialPanelGeometry.identitySize(family: Catalog.Family, basis: CFrame): Vector3
+    local right, up, back = basis.RightVector, basis.UpVector, -basis.LookVector
+    return Vector3.new(
+        math.abs(right.X) * family.size.X + math.abs(up.X) * family.size.Y + math.abs(back.X) * family.size.Z,
+        math.abs(right.Y) * family.size.X + math.abs(up.Y) * family.size.Y + math.abs(back.Y) * family.size.Z,
+        math.abs(right.Z) * family.size.X + math.abs(up.Z) * family.size.Y + math.abs(back.Z) * family.size.Z
+    )
+end
+
 -- Checks the authored pristine proxy set before capture. Imported visible mesh
 -- references are separately validated in the private catalog; models may not add
 -- solid/queryable dressing or a hidden full-panel collider around these proxies.
 function MaterialPanelGeometry.validate(model: Model, family: Catalog.Family): (boolean, string?)
     local rectangles = family.states.Pristine.rectangles
     local found: { [number]: boolean } = {}
-    local pivot = model:GetPivot()
+    local identityPivot = model:GetPivot()
+    local basis, reason = MaterialPanelGeometry.basis(model)
+    if not basis then
+        return false, reason
+    end
+    local pivot = identityPivot * basis
     for _, component in { pivot:GetComponents() } do
         if component ~= component or math.abs(component) == math.huge then
             return false, "nonfinite material panel pivot"
@@ -24,11 +56,20 @@ function MaterialPanelGeometry.validate(model: Model, family: Catalog.Family): (
     end
     for _, item in model:GetDescendants() do
         if item:IsA("BasePart") then
+            local attachment = item:GetAttribute("PanelAttachment") == true
+            if
+                attachment
+                and (not item:IsA("MeshPart") or item:GetAttribute("AttachmentPanelId") ~= model.Name)
+            then
+                return false, "invalid material panel attachment ownership"
+            end
             if
                 not AssetRules.geometry(
                     { item.Size.X, item.Size.Y, item.Size.Z },
                     { pivot:ToObjectSpace(item.CFrame):GetComponents() },
-                    { family.size.X / 2, family.size.Y / 2, family.size.Z / 2 + 0.4 }
+                    if attachment
+                        then { 100, 100, 100 }
+                        else { family.size.X / 2, family.size.Y / 2, family.size.Z / 2 + 0.4 }
                 )
             then
                 return false, "invalid material panel geometry"
@@ -38,7 +79,8 @@ function MaterialPanelGeometry.validate(model: Model, family: Catalog.Family): (
                     return false, "material cosmetics cannot become solid cover"
                 end
             else
-                local index = tonumber(string.match(item.Name, "_Proxy(%d+)$"))
+                local suffix = string.match(item.Name, "_Proxy(%d+)$")
+                local index = if suffix then tonumber(suffix) else nil
                 local rectangle = if index then rectangles[index] else nil
                 if
                     not index
@@ -81,13 +123,18 @@ function MaterialPanelGeometry.validate(model: Model, family: Catalog.Family): (
     return true, nil
 end
 
--- Replaces only children of the caller-owned identity. Template references must
--- already pass PanelAssetCatalog.load. No cloud loading or yielding occurs here.
+-- Replaces only children of the caller-owned identity. pivot places canonical
+-- family geometry; optional identityPivot retains legacy Model pivot metadata.
+-- Pristine/Light copy panel-owned cosmetic attachments from the private original;
+-- Heavy/Total remove that dressing so it cannot float across earned openings.
+-- Templates must pass PanelAssetCatalog.load. No cloud loading or yielding.
 function MaterialPanelGeometry.install(
     model: Model,
     pivot: CFrame,
     family: Catalog.Family,
-    appearance: string
+    appearance: string,
+    identityPivot: CFrame?,
+    attachments: Instance?
 )
     local variant = family.states[appearance]
     assert(variant, "validated material appearance disappeared")
@@ -118,7 +165,14 @@ function MaterialPanelGeometry.install(
         proxy:SetAttribute("PanelProxy", true)
         proxy.Parent = model
     end
-    model.WorldPivot = pivot
+    if attachments and (appearance == "Pristine" or appearance == "Light") then
+        for _, source in attachments:GetChildren() do
+            if source:IsA("MeshPart") and source:GetAttribute("PanelAttachment") == true then
+                source:Clone().Parent = model
+            end
+        end
+    end
+    model.WorldPivot = identityPivot or pivot
 end
 
 -- Progress darkens the approved base material within a stage; it never applies

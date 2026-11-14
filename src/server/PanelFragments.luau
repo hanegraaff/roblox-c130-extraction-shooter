@@ -149,6 +149,7 @@ function PanelFragments.start(root: Instance, settings: Settings?): (Controller?
                 local template = if templates then templates[((index - 1) % #templates) + 1] else nil
                 local part: BasePart = if template then template:Clone() else Instance.new("Part")
                 part.Name = "Fragment" .. tostring(serial)
+                part:SetAttribute("ThermalNonCover", true)
                 if not template then
                     part.Size =
                         Vector3.new(math.min(size.X, 1.5), math.min(size.Y, 1.5), math.min(size.Z, 1.5))
@@ -163,7 +164,8 @@ function PanelFragments.start(root: Instance, settings: Settings?): (Controller?
                 -- or constraints keep fragments aloft or attach them to structure.
                 local direction =
                     Vector3.new(if index % 2 == 0 then 1 else -1, 0.5, if index <= 2 then 1 else -1).Unit
-                part.CFrame = pivot + Vector3.new(direction.X * 2, 0, direction.Z * 2)
+                part.CFrame = (if template then pivot * template.CFrame else pivot)
+                    + Vector3.new(direction.X * 2, 0, direction.Z * 2)
                 part.CanCollide = true
                 part.CanQuery = false
                 part.CanTouch = false
