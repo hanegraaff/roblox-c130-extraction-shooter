@@ -10,6 +10,7 @@
 local Approved = require(script.Parent.ApprovedOutpost)
 local Rules = require(script.Parent.PanelAssetRules)
 local AssetMaterial = require(game:GetService("ReplicatedStorage").Shared.AssetMaterial)
+local AssetMesh = require(game:GetService("ReplicatedStorage").Shared.AssetMesh)
 local PanelAssetCatalog = {}
 export type Appearance = "Pristine" | "Light" | "Heavy" | "Total"
 export type Rectangle = { number }
@@ -46,6 +47,7 @@ local function meshContent(root: Instance, bounds: { number }): (boolean, string
             local material = AssetMaterial.read(item)
             if
                 not assetId(item.MeshId)
+                or not AssetMesh.validate(item)
                 or not material
                 or not item.Anchored
                 or item.CanCollide
@@ -132,6 +134,7 @@ function PanelAssetCatalog.load(root: Instance?): (Catalog?, string?)
                 or not part:IsA("MeshPart")
                 or #part:GetChildren() > 1
                 or not assetId(part.MeshId)
+                or not AssetMesh.validate(part)
                 or part:GetAttribute("SourcePath") ~= fragment.source
                 or part:GetAttribute("SourceSha256") ~= fragment.sha256
                 or part.Size.X > 1.5

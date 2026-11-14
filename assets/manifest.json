@@ -1522,7 +1522,7 @@
       "local_path": "assets/models/MaterialPanels.model.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "2f4d5e773ee899341de9654e93597d17c63ee20b0f4ee3912f18ee967f99ff5a"
+      "sha256": "e8e6e8e08f2cfd7e02ed333e84f13c3adb4f6bdc32cab1a0c3e339af22a14433"
     },
     {
       "id": "p17-MilitaryOutpost-model-json",
@@ -1533,7 +1533,7 @@
       "local_path": "assets/models/MilitaryOutpost.model.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "4f59cb67322608e00462b61e4babfaeed789627b901184602a1d3273de6f44ac"
+      "sha256": "fd1b20cda4ed15b90fe7e1899f8fea7c878f55a219d812e357c38961ab921f2e"
     },
     {
       "id": "p17-construction-v2-json",
@@ -1544,7 +1544,40 @@
       "local_path": "assets/imports/military-outpost/construction-v2.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "f0435493e0c4b5a00494bddd4c54330f6e6ef22df3e9e7c345b35759fb1d79ca"
+      "sha256": "eae643eb7b9f48155aafc2eb56c403c078709fd17b0ab69cd5554f1bec07e8f7"
+    },
+    {
+      "id": "p17-native-mesh-profiles-v1-rbxm",
+      "kind": "native-mesh-payload",
+      "source": "Exact approved imported mesh IDs, native AssetService constructor with declared Box/PreciseConvexDecomposition + Automatic policy, SerializationService export and all-407 public native roundtrip; compiler preserves genuine intrinsic/collision payload bytes without a runtime factory.",
+      "author": "Project contributors",
+      "license": "Original project authoring; engine serialization of approved project meshes",
+      "local_path": "assets/imports/military-outpost/native-mesh-profiles-v1.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": "User 2227341845",
+      "sha256": "73a7f6dfc224f677453966ae950081016ac71cd195db4a84cd305c0b98e6cc1c"
+    },
+    {
+      "id": "p17-native-mesh-profiles-v1-json",
+      "kind": "native-mesh-receipt",
+      "source": "Exact approved imported mesh IDs, native AssetService constructor with declared Box/PreciseConvexDecomposition + Automatic policy, SerializationService export and all-407 public native roundtrip; compiler preserves genuine intrinsic/collision payload bytes without a runtime factory.",
+      "author": "Project contributors",
+      "license": "Original project authoring; engine serialization of approved project meshes",
+      "local_path": "assets/imports/military-outpost/native-mesh-profiles-v1.json",
+      "roblox_asset_id": null,
+      "upload_owner": "User 2227341845",
+      "sha256": "decf0d70598c6cc5e805b0bf3d9cbf3fe2d73ffd9fe9bd31bd32fbfe8a07de57"
+    },
+    {
+      "id": "p17-native-mesh-requests-v1-json",
+      "kind": "native-mesh-policy",
+      "source": "Exact approved imported mesh IDs, native AssetService constructor with declared Box/PreciseConvexDecomposition + Automatic policy, SerializationService export and all-407 public native roundtrip; compiler preserves genuine intrinsic/collision payload bytes without a runtime factory.",
+      "author": "Project contributors",
+      "license": "Original project authoring; engine serialization of approved project meshes",
+      "local_path": "assets/imports/military-outpost/native-mesh-requests-v1.json",
+      "roblox_asset_id": null,
+      "upload_owner": "User 2227341845",
+      "sha256": "d916f5cb5897bb9727c3603a2c8d8eaeac83f1044b3b44a772ca40a6bd8f067c"
     }
   ],
   "runtime_recipes": [

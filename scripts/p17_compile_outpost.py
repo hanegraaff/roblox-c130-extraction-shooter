@@ -18,6 +18,7 @@ import sys
 from p17_assets import ROOT, SOURCE, EXPORT, BLEND_SHA, PACKAGE_LOCK_SHA, approved_catalog, sha
 from p17_library_glb import GLB_PATH, REPORT_PATH, verify as verify_derivative
 from p17_normalize import normalize_assembly, fit_similarity, transpose, product, multiply, finite, rigid, ordered_sum
+from p17_native_meshes import load_profiles, profile_key, BANK_PATH, RECEIPT_PATH, REQUEST_PATH
 
 IDENTITY = [1, 0, 0, 0, 1, 0, 0, 0, 1]
 SITE = [144, 0, 164]
@@ -311,11 +312,36 @@ def compile_models(assembly_receipt, library_receipt, texture_receipt, library_r
     records, fit = normalize_library(library_receipt, root)
     library = library_model(records, maps, library_receipt_sha, root)
     outpost, classifications = outpost_model(assembly, library, maps, library_receipt_sha, root)
+    bind_native_geometry((library, outpost), load_profiles(root))
     return library, outpost, dict(schema_version=1, approved_blend_sha256=BLEND_SHA,
         approved_package_lock_sha256=PACKAGE_LOCK_SHA, assembly_similarity=assembly["similarity"], library_similarity=fit,
         material_mapping_complete=True, classifications=classifications, panel_count=26,
         total_active_panel_count=188, texture_only_materials=[name for name, value in maps.items() if not value["roughness_map"] or not value["metalness_map"]],
         missing_native_acceptance=["rendering and UV orientation", "native navigation and targeting", "demolition/openings/fragments", "replication/reset/performance", "human A6 approval"])
+
+
+def bind_native_geometry(models, profiles):
+    """Copy engine-authored constructor fields, never infer them from target Size.
+
+    Every generated MeshPart must match the exact native factory fidelity policy;
+    every captured profile/use must be consumed. The bank stays outside the live
+    DataModel: no duplicate Instances, runtime downloads or ApplyMesh workaround.
+    """
+    uses = {key: 0 for key in profiles}
+    for model in models:
+        for mesh in iter_class(model, "MeshPart"):
+            props = mesh["Properties"]
+            key = profile_key(props["MeshId"], props["CollisionFidelity"], props["RenderFidelity"])
+            native = profiles.get(key)
+            if native is None:
+                raise ValueError("missing actual native constructor profile: " + str(key))
+            uses[key] += 1
+            for field in ("InitialSize", "PhysicalConfigData", "PhysicsData", "AeroMeshData"):
+                props[field] = copy.deepcopy(native[field])
+            props["Attributes"].update(attributes(NativeGeometryVersion=1, NativeMeshId=key[0],
+                NativeMeshSize=("Vector3", native["InitialSize"]), NativeCollisionFidelity=key[1], NativeRenderFidelity=key[2]))
+    if any(count != profiles[key]["uses"] for key, count in uses.items()):
+        raise ValueError("native profile coverage differs from generated approved geometry")
 
 
 def managed_outputs(root=ROOT):
@@ -324,6 +350,8 @@ def managed_outputs(root=ROOT):
     texture_path = root / IMPORTS / "material-textures-v2.json"
     library, outpost, report = compile_models(json.loads(assembly_path.read_text()), json.loads(library_path.read_text()), json.loads(texture_path.read_text()), sha(library_path), root)
     report.update(assembly_receipt_sha256=sha(assembly_path), library_receipt_sha256=sha(library_path), texture_receipt_sha256=sha(texture_path))
+    report.update(native_mesh_bank_sha256=sha(root / BANK_PATH), native_mesh_receipt_sha256=sha(root / RECEIPT_PATH),
+                  native_mesh_requests_sha256=sha(root / REQUEST_PATH), native_mesh_profiles=407, native_mesh_uses=2332)
     return {Path("assets/models/MaterialPanels.model.json"):library, Path("assets/models/MilitaryOutpost.model.json"):outpost,
             IMPORTS / "construction-v2.json":report}
 

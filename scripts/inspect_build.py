@@ -7,12 +7,13 @@ import tempfile
 import copy
 import base64
 import struct
+from p17_native_meshes import PAYLOAD_FIELDS, decode_payload, float32_vector
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
 def compiled_surface_attributes(item: ET.Element) -> dict:
-    """Decode this contract's String/Float64 attributes from actual Rojo XML.
+    """Decode compiled String/Bool/Float64/Vector3 attributes from Rojo XML.
 
     P17 surfaces intentionally have only those attribute types. Unknown/truncated
     serialized metadata rejects rather than trusting the source JSON counterpart.
@@ -44,7 +45,9 @@ def compiled_surface_attributes(item: ET.Element) -> dict:
             if key in values: raise ValueError("duplicate material metadata")
             kind = number("<B")
             if kind == 2: values[key] = string()
+            elif kind == 3: values[key] = bool(number("<B"))
             elif kind == 6: values[key] = number("<d")
+            elif kind == 17: values[key] = [number("<f") for _ in range(3)]
             else: raise ValueError("unexpected compiled material metadata type")
         if offset != len(data): raise ValueError("trailing compiled material metadata")
         return values
@@ -117,6 +120,36 @@ def numeric_property(item: ET.Element, tag: str, name: str, components: tuple[st
     return numbers
 
 
+def check_native_mesh(item: ET.Element, source: dict, shared: dict[str, bytes], full: str) -> None:
+    """Require native intrinsic/payload preservation, independently of part Size.
+
+    These opaque bytes are compared to the source-bound factory capture rather
+    than synthesized or treated as collision/rendering proof in a host process.
+    """
+    properties = source["Properties"]
+    initial = numeric_property(item, "Vector3", "InitialSize", ("X", "Y", "Z"), full)
+    expected = properties.get("InitialSize")
+    if not expected or any(value <= 0 for value in initial) or float32_vector(initial) != expected:
+        raise RuntimeError(f"Native mesh intrinsic reconstruction mismatch: {full}")
+    metadata = compiled_surface_attributes(item)
+    for key in ("NativeGeometryVersion", "NativeMeshId", "NativeMeshSize", "NativeCollisionFidelity", "NativeRenderFidelity"):
+        typed = properties.get("Attributes", {}).get(key, {})
+        expected_value = next(iter(typed.values()), None)
+        if expected_value is None or metadata.get(key) != expected_value:
+            raise RuntimeError(f"Native mesh metadata reconstruction mismatch: {full}/{key}")
+    for field, kind in PAYLOAD_FIELDS.items():
+        node = item.find(f"Properties/{kind}[@name='{field}']")
+        source_value = properties.get(field, {}).get(kind)
+        if node is None or source_value is None:
+            raise RuntimeError(f"Missing native mesh payload: {full}/{field}")
+        if kind == "SharedString":
+            actual = shared.get(node.text)
+        else:
+            actual = decode_payload(node.text)
+        if actual != decode_payload(source_value) or (field == "PhysicalConfigData" and not actual):
+            raise RuntimeError(f"Native mesh payload reconstruction mismatch: {full}/{field}")
+
+
 def check_authored_geometry(path: Path) -> int:
     """Compare every authored part pose/size/shape/collision against the actual XML.
 
@@ -125,6 +158,7 @@ def check_authored_geometry(path: Path) -> int:
     before Studio. This gate verifies reconstruction, not engine navigation/rays.
     """
     nodes = instance_nodes(path)
+    shared = {node.attrib["md5"]: decode_payload(node.text) for node in ET.parse(path).getroot().findall("SharedStrings/SharedString")}
     count = 0
     manifest = json.loads((ROOT / "assets/manifest.json").read_text())
 
@@ -158,6 +192,7 @@ def check_authored_geometry(path: Path) -> int:
                 actual_mesh = item.findtext("Properties/Content[@name='MeshContent']/uri") or item.findtext("Properties/Content[@name='MeshId']/url")
                 if actual_mesh != properties["MeshId"]:
                     raise RuntimeError(f"Imported MeshId reconstruction mismatch: {full}")
+                check_native_mesh(item, source, shared, full)
             else:
                 expected_shape = {"Block": "1", "Ball": "0", "Cylinder": "2"}[properties.get("Shape", "Block")]
                 if item.findtext("Properties/token[@name='shape']", "1") != expected_shape:
@@ -507,6 +542,7 @@ def main() -> None:
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts.add("ReplicatedStorage/Shared/AssetMaterial")
+    expected_scripts.add("ReplicatedStorage/Shared/AssetMesh")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")

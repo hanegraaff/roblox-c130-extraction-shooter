@@ -86,10 +86,10 @@ def main() -> int:
     if not (ROOT / "Packages/TestEZ.lua").exists():
         raise RuntimeError("Missing Wally dependencies; run python3 scripts/setup.py")
     (ROOT / "build").mkdir(exist_ok=True)
-    run(["stylua", "--check", "src", "tests", "scripts/run_tests.luau"])
-    run(["selene", "src", "tests", "scripts/run_tests.luau"])
+    run(["stylua", "--check", "src", "tests", "scripts/run_tests.luau", "scripts/p17_native_mesh_xml.luau"])
+    run(["selene", "src", "tests", "scripts/run_tests.luau", "scripts/p17_native_mesh_xml.luau"])
     run(["rojo", "sourcemap", "test.project.json", "--output", "build/sourcemap.json"])
-    run(analysis_arguments() + ["src", "tests", "scripts/run_tests.luau"])
+    run(analysis_arguments() + ["src", "tests", "scripts/run_tests.luau", "scripts/p17_native_mesh_xml.luau"])
     for suite in ("unit", "integration"):
         run(["lune", "run", "scripts/run_tests.luau", suite])
     negative_probes()

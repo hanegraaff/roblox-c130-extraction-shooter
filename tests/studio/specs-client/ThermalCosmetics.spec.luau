@@ -2,6 +2,7 @@
 -- P17: real client-only transparency ownership; rendered depth review is separate.
 type CosmeticsAPI = typeof(require(game.StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics))
 type MaterialAPI = typeof(require(game.ReplicatedStorage.Shared.AssetMaterial))
+type MeshAPI = typeof(require(game.ReplicatedStorage.Shared.AssetMesh))
 -- Resolve delayed StarterPlayerScripts copies inside each test, so prerequisite
 -- timeouts remain ordinary reported failures rather than aborting TestEZ discovery.
 local function cosmetics(): CosmeticsAPI
@@ -16,6 +17,12 @@ local function materialAPI(): MaterialAPI
     local module = if shared then shared:WaitForChild("AssetMaterial", 10) else nil
     assert(module and module:IsA("ModuleScript"), "shared AssetMaterial replication timeout")
     return require(module) :: MaterialAPI
+end
+local function meshAPI(): MeshAPI
+    local shared = game.ReplicatedStorage:WaitForChild("Shared", 10)
+    local module = if shared then shared:WaitForChild("AssetMesh", 10) else nil
+    assert(module and module:IsA("ModuleScript"), "shared AssetMesh replication timeout")
+    return require(module) :: MeshAPI
 end
 local function importedMesh(materials: MaterialAPI): MeshPart
     local deadline = os.clock() + 60
@@ -58,6 +65,8 @@ return function()
         function()
             local AssetMaterial = materialAPI()
             local source = importedMesh(AssetMaterial)
+            local AssetMesh = meshAPI()
+            assert(AssetMesh.validate(source), "replicated native mesh constructor data missing")
             local material, reason = AssetMaterial.read(source)
             assert(material, reason)
             assert(
@@ -70,6 +79,8 @@ return function()
             surface:SetAttribute("MaterialMetadataVersion", 0)
             local ok, failure = pcall(function()
                 assert(AssetMaterial.read(clone) == nil, "client accepted wrong material contract version")
+                clone:SetAttribute("NativeMeshSize", source.MeshSize * 2)
+                assert(not AssetMesh.validate(clone), "client accepted mismatched native mesh intrinsics")
             end)
             clone:Destroy()
             assert(ok, failure)

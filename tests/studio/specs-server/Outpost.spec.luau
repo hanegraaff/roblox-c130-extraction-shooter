@@ -9,6 +9,7 @@ local DestructionRuntime = require(Server.DestructionRuntime)
 local Catalog = require(Server.PanelAssetCatalog)
 local MaterialGeometry = require(Server.MaterialPanelGeometry)
 local AssetMaterial = require(game.ReplicatedStorage.Shared.AssetMaterial)
+local AssetMesh = require(game.ReplicatedStorage.Shared.AssetMesh)
 local function fixture()
     local world = Instance.new("Folder")
     world.Name = "OutpostEngineFixture"
@@ -23,6 +24,117 @@ local function fixture()
 end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test(
+        "P17NativeMeshReconstruction preserves all actual intrinsics fidelities clones and floor collision bounds",
+        function()
+            local count = 0
+            for _, root in { Assets.MaterialPanels, Assets.MilitaryOutpost } do
+                for _, item in root:GetDescendants() do
+                    if item:IsA("MeshPart") then
+                        local valid, reason = AssetMesh.validate(item)
+                        assert(valid, item.Name .. ": " .. tostring(reason))
+                        local clone = item:Clone()
+                        local cloneValid = AssetMesh.validate(clone)
+                        clone:Destroy()
+                        assert(cloneValid, "native constructor fields lost during clone")
+                        count += 1
+                    end
+                end
+            end
+            assert(count == 2332, "native geometry template coverage incomplete")
+            local floor = Assets.MilitaryOutpost.Outpost_Static.Outpost_GroundFloor:Clone()
+            assert(floor:IsA("MeshPart"), "actual native floor absent")
+            floor.CFrame = CFrame.new(2500, 80, 2500) * floor.CFrame.Rotation
+            floor.Parent = workspace
+            local ok, failure = pcall(function()
+                local params = RaycastParams.new()
+                params.FilterType = Enum.RaycastFilterType.Include
+                params.FilterDescendantsInstances = { floor }
+                params.RespectCanCollide = true
+                task.wait(0.1)
+                local inside =
+                    workspace:Raycast(floor.Position + Vector3.yAxis * 4, -Vector3.yAxis * 8, params)
+                local outside = floor.CFrame:PointToWorldSpace(Vector3.new(floor.Size.X / 2 + 2, 4, 0))
+                assert(inside and inside.Instance == floor, "native floor collision surface missing")
+                assert(
+                    math.abs(inside.Position.Y - (floor.Position.Y + floor.Size.Y / 2)) < 0.05,
+                    "native floor collision escaped target bounds"
+                )
+                assert(
+                    workspace:Raycast(outside, -Vector3.yAxis * 8, params) == nil,
+                    "native collision exceeds declared floor footprint"
+                )
+            end)
+            floor:Destroy()
+            assert(ok, failure)
+        end
+    )
+    test(
+        "P17NativeMeshPreflight rejects missing intrinsic payload and malformed metadata without world mutation",
+        function()
+            local assets = Assets:Clone()
+            local source = assets.MilitaryOutpost.Outpost_Static.Outpost_GroundFloor
+            assert(source:IsA("MeshPart"), "managed floor absent")
+            local malformed = game.ServerStorage.Tests.Fixtures.MissingNativeMesh:Clone()
+            assert(malformed:IsA("MeshPart"), "serialized missing-payload fixture absent")
+            local ok, failure = pcall(function()
+                for _, field in { "NativeMeshSize", "NativeCollisionFidelity", "NativeGeometryVersion" } do
+                    local original = source:GetAttribute(field)
+                    source:SetAttribute(field, if field == "NativeMeshSize" then Vector3.one else nil)
+                    assert(not AssetMesh.validate(source), "malformed native metadata accepted")
+                    local model, reason = Reconstruction.prepare(assets)
+                    if model then
+                        model:Destroy()
+                    end
+                    assert(
+                        model == nil and type(reason) == "string",
+                        "invalid native contract reached preparation"
+                    )
+                    source:SetAttribute(field, original)
+                end
+                -- MeshId is not writable by ordinary game scripts. This test-only
+                -- JSON fixture recreates the former constructor with the real ID
+                -- and target Size but intentionally omits intrinsic/payload data.
+                assert(
+                    malformed.MeshId == source.MeshId and malformed.MeshSize == Vector3.zero,
+                    "negative native fixture changed"
+                )
+                malformed.Name, malformed.Size, malformed.CFrame, malformed.Color =
+                    source.Name, source.Size, source.CFrame, source.Color
+                for key, value in source:GetAttributes() do
+                    malformed:SetAttribute(key, value)
+                end
+                for _, child in source:GetChildren() do
+                    child:Clone().Parent = malformed
+                end
+                malformed.Parent = source.Parent
+                source:Destroy()
+                local assetsBefore = #assets:GetDescendants()
+                local worldBefore = #workspace.World.Battlefield:GetDescendants()
+                local valid, nativeReason = AssetMesh.validate(malformed)
+                assert(
+                    not valid and nativeReason == "native mesh intrinsic/fidelity reconstruction mismatch",
+                    "zero-intrinsic constructor accepted"
+                )
+                local model, reason = Reconstruction.prepare(assets)
+                if model then
+                    model:Destroy()
+                end
+                assert(
+                    model == nil and type(reason) == "string",
+                    "missing native payload reached world preparation"
+                )
+                assert(
+                    #assets:GetDescendants() == assetsBefore
+                        and #workspace.World.Battlefield:GetDescendants() == worldBefore,
+                    "native geometry rejection mutated source/world"
+                )
+            end)
+            malformed:Destroy()
+            assets:Destroy()
+            assert(ok, failure)
+        end
+    )
     test(
         "P17OutpostAttachments accepts actual spanning roof dressing and rejects malformed ownership bounds before mutation",
         function()
@@ -288,6 +400,11 @@ return function()
                             panel:GetAttribute("DamageAppearance") == expected,
                             "material changed shared thresholds"
                         )
+                        for _, mesh in panel:GetDescendants() do
+                            if mesh:IsA("MeshPart") then
+                                assert(AssetMesh.validate(mesh), "stage clone lost native constructor data")
+                            end
+                        end
                         if hit == 3 then
                             local basis = panel:GetAttribute("PanelAssetBasis")
                             assert(typeof(basis) == "CFrame", "asset basis absent")
@@ -319,6 +436,12 @@ return function()
                     assert(#panel:GetChildren() == 0, "Total left attached art/phantom cover")
                 end
                 assert(familyCount == 6, "actual material family coverage incomplete")
+                owner.sync(2)
+                for _, mesh in map.Buildings.Outpost:GetDescendants() do
+                    if mesh:IsA("MeshPart") then
+                        assert(AssetMesh.validate(mesh), "pristine reset lost native constructor data")
+                    end
+                end
             end)
             owner.stop()
             world:Destroy()
