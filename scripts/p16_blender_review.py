@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import math
+import subprocess
 from pathlib import Path
 import sys
 
@@ -20,6 +21,8 @@ ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/'assets/blender/military-outpost'
 EXPORT=ROOT/'assets/exports/military-outpost'
 EVIDENCE=ROOT/'docs/evidence/p16'
+sys.path.insert(0,str(ROOT/'scripts'))
+import p16_audit as portable_audit
 
 
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -38,6 +41,19 @@ def mesh_info(obj):
         material=me.materials[tri.material_index].name.split('.')[0]
         record['material_triangles'][material]=record['material_triangles'].get(material,0)+1
     eo.to_mesh_clear();return record
+
+
+def blender_geometry(objects):
+    """Read evaluated world-space triangle meshes; never substitute dimensions."""
+    deps=bpy.context.evaluated_depsgraph_get();vertices=[];triangles=[];names=[]
+    for o in objects:
+        if o.type!='MESH':continue
+        evaluated=o.evaluated_get(deps);mesh=evaluated.to_mesh();mesh.calc_loop_triangles();offset=len(vertices)
+        vertices.extend(tuple(o.matrix_world@v.co) for v in mesh.vertices)
+        for tri in mesh.loop_triangles:
+            triangles.append(tuple(offset+i for i in tri.vertices));names.append(o.name)
+        evaluated.to_mesh_clear()
+    return dict(vertices=vertices,triangles=triangles,triangle_objects=names)
 
 
 def audit():
@@ -64,13 +80,15 @@ def audit():
             assembly.extend(mesh_info(o) for o in c.objects if o.type=='MESH')
     assert sum(o['triangles'] for o in assembly)==inventory['measured']['assembly_triangles']
     assert all(o['uv_layers']>0 and o['materials'] for o in assembly)
+    source_objects=[o for c in bpy.data.collections if c.name[:2] in ('01','02','03','04','05') for o in c.objects if o.type=='MESH']
+    navigation=portable_audit.inspect_navigation(blender_geometry(source_objects))
     max_mesh=max(o['triangles'] for o in assembly)
     # FBX import-friendly per-mesh limit selected for audit; actual Roblox cost P17.
     assert max_mesh<=10000,('per mesh triangle cap',max_mesh)
     report=dict(suite='P16BlenderReopen',passed=True,blender_version=bpy.app.version_string,
       source_sha256=digest(SOURCE/'military-outpost.blend'),collection_count=len(bpy.data.collections),cameras=cameras,
       images=images,missing_dependencies=0,assembly_meshes=len(assembly),assembly_triangles=sum(o['triangles'] for o in assembly),
-      max_mesh_triangles=max_mesh,assets=assembly)
+      max_mesh_triangles=max_mesh,navigation=navigation,assets=assembly)
     (EVIDENCE/'blender-reopen.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({k:v for k,v in report.items() if k not in ('assets','images')}))
     return assembly
@@ -103,9 +121,11 @@ def render_view(view):
     prepare(view)
     scene=bpy.context.scene;scene.render.filepath=str(EVIDENCE/(view.lower().replace('_','-')+'.png'))
     bpy.ops.render.render(write_still=True)
+    return [Path(scene.render.filepath)]
 
 
 def damage_renders():
+    rendered=[]
     scene=bpy.context.scene
     catalog=json.loads((SOURCE/'panel-catalog.json').read_text())
     for c in scene.collection.children:c.hide_render=c.name not in ('06_Damage_Gallery','09_Review_Cameras_Lights')
@@ -128,7 +148,7 @@ def damage_renders():
             camera=bpy.data.objects['Damage_'+side]
             camera.data.type='ORTHO';camera.data.ortho_scale=82
             camera.location=(30,gy+(-55 if side=='front' else 55),h*.5+9)
-            target=Vector((30,gy,h*.5+1))
+            target=Vector((30,gy,h*.5-.4))
             camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler();scene.camera=camera
             # For back view order is intentionally reversed; each caption identifies state.
             for mode in ('normal','grayscale'):
@@ -136,7 +156,9 @@ def damage_renders():
                 # Native CPU color-mode conversion avoids a GPU compositor requirement.
                 scene.render.image_settings.color_mode='BW' if mode=='grayscale' else 'RGB'
                 bpy.ops.render.render(write_still=True)
+                rendered.append(Path(scene.render.filepath))
     scene.render.image_settings.color_mode='RGB'
+    return rendered
 
 
 def fbx_audit(expected):
@@ -160,6 +182,7 @@ def fbx_audit(expected):
         assert after['material_triangles']==before['material_triangles'],('FBX material mismatch',before['name'])
         err=max(abs(a-b) for rowa,rowb in zip(before['bounds'],after['bounds']) for a,b in zip(rowa,rowb));maxerr=max(maxerr,err)
         assert err<.001,(before['name'],err)
+    navigation=portable_audit.inspect_navigation(blender_geometry([o for o in bpy.context.scene.objects if o.type=='MESH']))
     for mat in bpy.data.materials:
         if mat.users==0 or not mat.use_nodes:continue
         images=[n.image for n in mat.node_tree.nodes if n.type=='TEX_IMAGE']
@@ -183,25 +206,63 @@ def fbx_audit(expected):
     report=dict(suite='P16ExportAudit-FBX',passed=True,blender_version=bpy.app.version_string,
       fbx_sha256=digest(EXPORT/'outpost-assembly-v1.fbx'),imported_meshes=len(imported),
       imported_triangles=sum(o['triangles'] for o in imported.values()),max_bound_error_studs=maxerr,
-      scale_axes_verified=True,uv_materials_verified=True,panel_library_meshes=len(lib),
+      scale_axes_verified=True,uv_materials_verified=True,navigation=navigation,panel_library_meshes=len(lib),
       panel_library_sha256=digest(EXPORT/'panel-library-v1.fbx'),reusable_kit=kit_records)
     (EVIDENCE/'fbx-import.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
 
 
+def write_render_metadata(rendered=None):
+    """Regenerate complete source/script/image proof using only verified receipts.
+
+    Partial --view runs retain prior receipts only for the identical source and
+    review script. Merely leaving old PNGs in the directory cannot count as a new
+    render. --render-manifest-only rebinds the already verified receipt to HEAD
+    after the coordinator commits the tested source; no ad-hoc snippet is needed.
+    """
+    source_hash=digest(SOURCE/'military-outpost.blend');script_hash=digest(Path(__file__))
+    receipt_path=EVIDENCE/'render-evidence.json';files={}
+    if receipt_path.exists():
+        previous=json.loads(receipt_path.read_text())
+        if previous.get('source_sha256')==source_hash and previous.get('review_script_sha256')==script_hash:
+            for entry in previous['files']:
+                path=ROOT/entry['path']
+                if path.is_file() and portable_audit.png_record(path,ROOT)==entry:files[entry['path']]=entry
+    for path in rendered or ():
+        entry=portable_audit.png_record(path,ROOT);files[entry['path']]=entry
+    expected=portable_audit.expected_render_paths(json.loads((SOURCE/'panel-catalog.json').read_text()))
+    complete=set(files)==expected
+    if rendered is None:assert complete,'incomplete or stale render receipts; run full --render first'
+    receipt=dict(schema_version=1,suite='P16SavedSceneRenders',passed=complete,blender_version=bpy.app.version_string,
+      source_path=str((SOURCE/'military-outpost.blend').relative_to(ROOT)),source_sha256=source_hash,
+      review_script_path=str(Path(__file__).resolve().relative_to(ROOT)),review_script_sha256=script_hash,
+      command=['/Applications/Blender.app/Contents/MacOS/Blender','--background','assets/blender/military-outpost/military-outpost.blend',
+        '--python-exit-code','1','--python','scripts/p16_blender_review.py','--','--render'],
+      renderer='Cycles CPU,24samples,denoising; native PNG BW grayscale, no GPU compositor',
+      image_count=len(files),files=[files[path] for path in sorted(files)])
+    receipt_path.write_text(json.dumps(receipt,indent=2)+'\n')
+    commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    matches=True
+    for path,expected_hash in ((receipt['source_path'],source_hash),(receipt['review_script_path'],script_hash)):
+        try:committed=subprocess.check_output(['git','show',f'{commit}:{path}'],cwd=ROOT,stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError:matches=False;continue
+        matches=matches and hashlib.sha256(committed).hexdigest()==expected_hash
+    manifest=dict(receipt,source_commit=commit,source_commit_matches_art=matches)
+    (EVIDENCE/'render-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    print(json.dumps(dict(suite='P16SavedSceneRenders',passed=complete,image_count=len(files),source_sha256=source_hash,source_commit=commit,source_commit_matches_art=matches)))
+
+
 def main():
     args=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
-    p=argparse.ArgumentParser();p.add_argument('--audit',action='store_true');p.add_argument('--render',action='store_true');p.add_argument('--view',action='append');p.add_argument('--fbx-audit',action='store_true');a=p.parse_args(args)
+    p=argparse.ArgumentParser();p.add_argument('--audit',action='store_true');p.add_argument('--render',action='store_true');p.add_argument('--view',action='append');p.add_argument('--fbx-audit',action='store_true');p.add_argument('--render-manifest-only',action='store_true');a=p.parse_args(args)
     EVIDENCE.mkdir(parents=True,exist_ok=True)
     expected=audit() if a.audit or a.fbx_audit else None
     if a.render:
+        rendered=[]
         views=a.view or ['Exterior','Floor_1','Floor_2','Cutaway','Isolated_kit','damage']
         for view in views:
-            if view=='damage':damage_renders()
-            else:render_view(view)
-    if a.render:
-        files=sorted(EVIDENCE.glob('*.png'))
-        (EVIDENCE/'render-evidence.json').write_text(json.dumps(dict(source_sha256=digest(SOURCE/'military-outpost.blend'),
-          blender_version=bpy.app.version_string,files=[dict(path=str(f.relative_to(ROOT)),sha256=digest(f)) for f in files]),indent=2)+'\n')
+            rendered.extend(damage_renders() if view=='damage' else render_view(view))
+        write_render_metadata(rendered)
+    if a.render_manifest_only:write_render_metadata()
     if a.fbx_audit:fbx_audit(expected)
 
 

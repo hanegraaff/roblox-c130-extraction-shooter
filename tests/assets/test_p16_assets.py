@@ -18,13 +18,15 @@ class P16RejectionTests(unittest.TestCase):
         self.root=Path(self.temporary.name)
         for path in ('assets/blender/military-outpost','assets/exports/military-outpost','assets/world','docs/evidence/p16'):
             shutil.copytree(ROOT/path,self.root/path)
+        (self.root/'scripts').mkdir(exist_ok=True)
+        shutil.copyfile(ROOT/'scripts/p16_blender_review.py',self.root/'scripts/p16_blender_review.py')
 
     def tearDown(self):self.temporary.cleanup()
 
     def check(self):return audit.inspect_package(self.root,check_lock=False,check_evidence=False)
 
     def test_real_saved_package(self):
-        report=self.check();self.assertEqual(report['failed'],0);self.assertEqual(report['passed'],4)
+        report=self.check();self.assertEqual(report['failed'],0);self.assertEqual(report['passed'],5)
 
     def test_invisible_heavy_collider_is_rejected(self):
         path=self.root/'assets/exports/military-outpost/corrugated_wall-heavy-collision.obj'
@@ -64,6 +66,58 @@ class P16RejectionTests(unittest.TestCase):
     def test_empty_fbx_is_rejected(self):
         (self.root/'assets/exports/military-outpost/outpost-assembly-v1.fbx').write_bytes(b'Kaydara FBX Binary')
         with self.assertRaises(AssertionError):self.check()
+
+    def corrupt_box(self,geometry,name,lo,hi):
+        vertices=[(x,y,z) for z in (lo[2],hi[2]) for y in (lo[1],hi[1]) for x in (lo[0],hi[0])]
+        quads=[(0,1,3,2),(4,6,7,5),(0,4,5,1),(2,3,7,6),(0,2,6,4),(1,5,7,3)]
+        first=len(geometry['vertices']);geometry['vertices'].extend(vertices)
+        for a,b,c,d in quads:
+            geometry['triangles'].extend(((first+a,first+b,first+c),(first+a,first+c,first+d)))
+            geometry['triangle_objects'].extend((name,name))
+
+    def test_internal_stair_beam_corruption_is_rejected(self):
+        geometry=audit.parse_obj(self.root/'assets/exports/military-outpost/outpost-assembly-v1.obj')
+        self.corrupt_box(geometry,'Regression_internal_full_cross_beam',(-15,-.75,8.125),(15,.75,10.125))
+        with self.assertRaisesRegex(AssertionError,'P16Navigation obstructed'):audit.inspect_navigation(geometry)
+
+    def test_restored_external_full_deck_is_rejected(self):
+        geometry=audit.parse_obj(self.root/'assets/exports/military-outpost/outpost-assembly-v1.obj')
+        self.corrupt_box(geometry,'Regression_external_full_balcony',(16.5,-24,9.575),(22.5,24,10.125))
+        with self.assertRaisesRegex(AssertionError,'P16Navigation obstructed'):audit.inspect_navigation(geometry)
+
+    def test_body_width_obstruction_missed_by_center_ray_is_rejected(self):
+        geometry=audit.parse_obj(self.root/'assets/exports/military-outpost/outpost-assembly-v1.obj')
+        self.corrupt_box(geometry,'Regression_stair_side_obstruction',(-11.8,-.75,7),(-11.5,.75,8))
+        with self.assertRaisesRegex(AssertionError,'P16Navigation obstructed'):audit.inspect_navigation(geometry)
+
+    def test_all_current_tool_and_render_proofs(self):audit.validate_proofs(self.root)
+
+    def test_stale_panel_library_proof_rejected_after_lock_refresh(self):
+        path=self.root/'assets/exports/military-outpost/panel-library-v1.fbx';path.write_bytes(path.read_bytes()+b'stale')
+        audit.write_lock(self.root)
+        with self.assertRaisesRegex(AssertionError,'stale panel library'):audit.validate_proofs(self.root)
+
+    def test_stale_kit_proof_rejected_after_lock_refresh(self):
+        entry=audit.load(self.root/'assets/blender/military-outpost/reusable-kit.json')['assets'][0]
+        path=self.root/'assets/exports/military-outpost'/entry['fbx'];path.write_bytes(path.read_bytes()+b'stale')
+        audit.write_lock(self.root)
+        with self.assertRaisesRegex(AssertionError,'stale kit'):audit.validate_proofs(self.root)
+
+    def test_missing_required_render_is_rejected(self):
+        (self.root/'docs/evidence/p16/floor-2.png').unlink()
+        with self.assertRaisesRegex(AssertionError,'required render'):audit.validate_proofs(self.root)
+
+    def test_stale_render_bytes_are_rejected(self):
+        path=self.root/'docs/evidence/p16/floor-2.png';path.write_bytes(path.read_bytes()+b'stale')
+        with self.assertRaisesRegex(AssertionError,'stale/corrupt render'):audit.validate_proofs(self.root)
+
+    def test_stale_render_source_is_rejected(self):
+        path=self.root/'docs/evidence/p16/render-manifest.json';data=json.loads(path.read_text());data['source_sha256']='0'*64;path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(AssertionError,'stale render source'):audit.validate_proofs(self.root)
+
+    def test_stale_render_script_is_rejected(self):
+        path=self.root/'scripts/p16_blender_review.py';path.write_text(path.read_text()+'\n# changed render program\n')
+        with self.assertRaisesRegex(AssertionError,'stale render script'):audit.validate_proofs(self.root)
 
 
 if __name__=='__main__':unittest.main()

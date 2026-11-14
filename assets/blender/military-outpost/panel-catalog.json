@@ -2443,7 +2443,7 @@
           8,
           16
         ],
-        "family": "corrugated_window",
+        "family": "corrugated_door",
         "pivot_blender": [
           16.0,
           16.0,
@@ -2474,7 +2474,7 @@
           8,
           16
         ],
-        "family": "corrugated_door",
+        "family": "corrugated_window",
         "pivot_blender": [
           16.0,
           -0.0,

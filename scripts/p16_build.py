@@ -260,7 +260,7 @@ def chair(name,pos):
 
 
 def service(name,z):
-    for x in (-12,11):
+    for x in ((-2,11) if z<10 else (-12,11)):
         cube(name+'.duct',(x,0,z),(1,42,.75),'steel',.03,asset='duct')
         for y in range(-20,21,4):
             cube(name+'.duct_seam',(x,y,z),(1.06,.08,.8),'ivory',.01)
@@ -460,8 +460,13 @@ def build_damage():
                 cp=o.copy();cp.data=o.data;col.objects.link(cp);cp.name=f'Gallery.{key}.{state}';cp.location=(gx,gy,h/2+1)
             for x in (gx-w/2-.35,gx+w/2+.35):cube('Gallery stable edge',(x,gy,h/2+1),(.3,1,h+1),'steel',0)
             cube('Gallery plinth',(gx,gy,.25),(18,3,.5),'concrete',.04)
-            text('Gallery label',f'{key}\n{state.upper()}',(gx-w/2,gy-.7,.7),.45)
-            text('Gallery back label',f'{key}\n{state.upper()}',(gx+w/2,gy+.7,.7),.45,rotation=(math.pi/2,0,math.pi))
+            for side in (-1,1):
+                cube('Gallery caption card',(gx,gy+side*1.75,-1),(18,.12,2.4),'ivory',.025)
+                rotation=(math.pi/2,0,0 if side<0 else math.pi)
+                state_label=text('Gallery state label',state.upper(),(gx,gy+side*1.83,-.9),1.15,'dark',rotation)
+                state_label.data.align_x='CENTER'
+                family_label=text('Gallery family label',key.replace('_',' ').upper(),(gx,gy+side*1.83,-1.8),.52,'dark',rotation)
+                family_label.data.align_x='CENTER'
         CURRENT=library
         for i in range(4):
             if mat=='corrugated':
@@ -516,11 +521,17 @@ def build_structure(templates):
                 for dx in (-.32,.32):cyl('Anchor bolt',(x+dx,y-.94,z),.065,.09,'ivory',rotation=(math.pi/2,0,0),vertices=6)
     for z in (9.125,19.125):
         for x in (-16,16):cube('Perimeter long beam',(x,0,z),(2,46,2),'concrete',.08,asset='stable_beam')
-        for y in (-24,0,24):cube('Cross beam',(0,y,z),(30,1.5,2),'concrete',.08)
+        for y in (-24,0,24):
+            if y==0 and z<10:
+                # The west stairwell must remain open through the upper floor.
+                cube('Cross beam stairwell return',(5.5,y,z),(19,1.5,2),'concrete',.08)
+            else:cube('Cross beam',(0,y,z),(30,1.5,2),'concrete',.08)
     for k in range(16):
         height=(k+1)*.625; y=-15+2*k
         cube('Internal stair tread '+str(k+1),(-10,y,.125+height/2),(8,2,height),'concrete',.025,asset='internal_stair')
         cube('Tread nosing',(-10,y-.9,.125+height+.02),(7.8,.16,.04),'orange',0)
+    cube('Internal top landing',(-10,17,9.625),(8,2,1),'concrete',.04,asset='usable_upper_floor')
+    cube('Upper balcony threshold',(16,16,9.625),(3,6,1),'concrete',.04,asset='usable_upper_floor')
     for x in (-14,-6):
         for y,z in ((-15,2),(1,7),(15,12)):
             rod('Stair baluster',(x,y,z-2),(x,y,z+.5),.055)
@@ -545,7 +556,7 @@ def build_structure(templates):
         key='layered_roof' if roof else 'corrugated_wall'
         if 'South' in name:key='corrugated_garage' if 'S01' in name else 'corrugated_window'
         elif 'East' in name and ('02' in name[-2:] or 'S02' in name):key='corrugated_window'
-        if 'S02_East_02' in name:key='corrugated_door'
+        if 'S02_East_01' in name:key='corrugated_door'
         rz=math.pi/2 if ('West' in name or 'East' in name) else 0
         o=instance_panel(templates,key,'Pristine',name,location,rz,roof)
         mapping.append(dict(panel_id=name,legacy_pivot_roblox=p['CFrame'],legacy_size_roblox=p['Size'],
@@ -574,16 +585,18 @@ def build_exterior():
     global CURRENT
     CURRENT=collection('03_Exterior_Dressing')
     # Upper right walkway and external stair match reference; keep inside <=24 X.
-    cube('Exterior balcony',(19.5,0,9.85),(6,48,.55),'steel',.04,asset='balcony')
-    for y in range(-24,25,4):
-        for x in (16.8,22.4):rod('Balcony post',(x,y,10.125),(x,y,12.9),.07)
+    cube('Exterior balcony landing',(19.5,7.75,9.85),(6,32.5,.55),'steel',.04,asset='balcony')
+    for y in range(-8,25,4):
+        for x in (16.8,22.4):
+            if x<17 and abs(y-16)<3:continue # Clear the upper personnel doorway.
+            rod('Balcony post',(x,y,10.125),(x,y,12.9),.07)
         for z in (11.2,12.9):
             rod('Balcony railing',(22.4,y,z),(22.4,min(y+4,24),z),.06)
-    for y in (-24,24):
+    for y in (24,):
         rod('Balcony end rail',(16.8,y,12.9),(22.4,y,12.9),.07)
     for i in range(20):
-        y=-28+i;z=.125+(i+1)*.5
-        cube('External open tread',(19.5,y,z),(5.6,.95,.15),'steel',.02,asset='external_stair')
+        y=-28+i;z=.125+(i+1)*.5-.075
+        cube('External open tread',(19.5,y,z),(5.6,1,.15),'steel',.02,asset='external_stair')
         cube('External anti slip nosing',(19.5,y-.38,z+.08),(5.4,.12,.025),'ivory',0)
     for x in (16.8,22.2):
         rod('Stair stringer',(x,-28,.3),(x,-8,10.3),.12)
@@ -595,17 +608,28 @@ def build_exterior():
         for x in (5,11):cube('Entry portal jamb',(x,-24,z+3.8),(.35,.9,7.6),'steel',.05,asset='door_frame')
         cube('Entry portal head',(8,-24,z+7.7),(6.4,.9,.35),'steel',.05)
         for x,sgn in ((5,-1),(11,1)):
+            leaf_before=set(CURRENT.objects)
             o=cube('Fixed open personnel door',(x,-25.8,z+3.5),(.18,3.4,6.8),'ivory',.04,asset='fixed_open_door')
             cube('Door vision slot',(x-.11*sgn,-25.6,z+4.7),(.03,.85,1.45),'dark',.02)
             rod('Door pull',(x-.18*sgn,-26,z+2.6),(x-.18*sgn,-26,z+3.8),.04)
+            for leaf in set(CURRENT.objects)-leaf_before:leaf['portal_leaf_sign']=sgn
         aw=cube('Entry awning',(8,-25.5,z+8.0),(8,3,.12),'ivory',.03,asset='awning');aw.rotation_euler[0]=-.12
         light('Entry luminaire',(8,-24.8,z+7.5),power=75)
         if z>10:
             # Upper portal belongs to the east balcony; keep front windows intact.
             for o in set(CURRENT.objects)-portal_before:
                 relative=o.location-Vector((8,-24,0))
-                o.location=(16-relative.y,relative.x,relative.z)
+                o.location=(16-relative.y,16+relative.x,relative.z)
                 o.rotation_euler[2]+=math.pi/2
+            # Fixed-open leaves fold back against the facade, leaving the narrow
+            # balcony approach clear instead of projecting across its route.
+            for o in set(CURRENT.objects)-portal_before:
+                sign=o.get('portal_leaf_sign')
+                if sign is None:continue
+                old=Vector((17.8,16+sign*3,z+3.5));new=Vector((16.8,16+sign*4.8,z+3.5))
+                angle=sign*math.pi/2
+                o.location=new+Matrix.Rotation(angle,3,'Z')@(o.location-old)
+                o.rotation_euler[2]+=angle
     cube('Garage roller drum',(-8,-24.1,7.75),(12.6,1.1,.8),'steel',.08,asset='garage_frame')
     for x in (-14,-2):cube('Garage track',(x,-24.65,3.6),(.25,.35,7.2),'steel',.02)
     for x in (-13,-3,5,11):
@@ -613,7 +637,7 @@ def build_exterior():
         cube('Bollard foot',(x,-27,.25),(.8,.8,.5),'orange',.04)
     for y in (-18,4,19):
         louver('Wall vent',(16.65,y,5),(3,.7,2.8),rotation=math.pi/2)
-        for z in (6.5,16.5):light('Facade lamp',(16.7,y,z),power=50)
+        for z in (6.5,16.5):light('Facade lamp',(16.7,y,z),rotation=(0,0,math.pi/2),power=50)
     for x in (-15.1,15.1):
         rod('Downpipe',(x,-24.75,.5),(x,-24.75,20.5),.13)
         for z in (3,8,13,18):cube('Pipe clamp',(x,-24.75,z),(.5,.4,.13),'steel',.02)
@@ -718,7 +742,7 @@ def build_command():
     # Front-facing consoles look toward windows; center route and stair landing clear.
     desk('Window command console',(5,-20,z));chair('Forward operator chair',(5,-17,z))
     desk('West command console',(-.5,5,z));chair('West operator chair',(-.5,8,z))
-    desk('Rear command console',(4,20,z),3)
+    desk('Rear command console',(5,20,z),3)
     for x in (1,5):chair('Rear operator chair',(x,17,z))
     # Tactical display: actual original baked topographic graphic, no interaction.
     cube('Tactical table pedestal',(7,-3,z+1.3),(5,5,2.6),'steel',.12,asset='tactical_table')
@@ -736,7 +760,7 @@ def build_command():
             for dx in (-.3,0,.3):cube('Server vent',(13+dx,y-1.83,zz),(.1,.02,.23),'dark',0)
         for dx in (-.5,0,.5):rod('Server patch cable',(13+dx,y-1.9,z+1),(13+dx+.15,y-1.95,z+2.5),.035,'orange')
     rack('Command equipment shelving',(12.7,-14,z),levels=2,boxes=True)
-    for x in (0,4):
+    for x in (3,7):
         cube('Radio receiver',(x,20,z+4.3),(2.2,1.2,1.2),'olive',.08,asset='radio_equipment')
         for dx in (-.65,0,.65):cyl('Radio knob',(x+dx,19.34,z+4.3),.09,.1,'steel',rotation=(math.pi/2,0,0))
         rod('Radio antenna',(x+.8,20,z+4.9),(x+.8,20,z+6.6),.025)

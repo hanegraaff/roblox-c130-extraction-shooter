@@ -25,8 +25,8 @@
     "package_bytes": 47185920
   },
   "measured": {
-    "assembly_triangles": 89440,
-    "package_triangles": 137204,
+    "assembly_triangles": 89024,
+    "package_triangles": 136788,
     "reusable_kit_triangles": 11292,
     "materials": 12,
     "textures": 12,
@@ -109,7 +109,7 @@
         "External stair handrail",
         "Upper stairwell guardrail"
       ],
-      "matched_meshes": 39
+      "matched_meshes": 31
     },
     {
       "feature": "awnings",
@@ -375,7 +375,7 @@
   ],
   "category_counts": {
     "foundation": 1,
-    "usable_upper_floor": 1,
+    "usable_upper_floor": 3,
     "support_column": 8,
     "stable_beam": 4,
     "internal_stair": 16,
@@ -414,8 +414,8 @@
   },
   "collections": {
     "06_Damage_Gallery": {
-      "mesh_objects": 114,
-      "triangles": 34720
+      "mesh_objects": 162,
+      "triangles": 35296
     },
     "07_Panel_Library": {
       "mesh_objects": 42,
@@ -426,16 +426,16 @@
       "triangles": 2616
     },
     "01_Stable_Structure": {
-      "mesh_objects": 149,
-      "triangles": 4972
+      "mesh_objects": 151,
+      "triangles": 5060
     },
     "02_Destructible_Panels": {
       "mesh_objects": 38,
       "triangles": 17556
     },
     "03_Exterior_Dressing": {
-      "mesh_objects": 372,
-      "triangles": 19008
+      "mesh_objects": 354,
+      "triangles": 18504
     },
     "04_Floor_1_Workshop": {
       "mesh_objects": 845,
@@ -484,6 +484,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.001",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery.corrugated_wall.Light",
       "collection": "06_Damage_Gallery",
       "triangles": 1212,
@@ -503,6 +515,18 @@
     },
     {
       "name": "Gallery plinth.001",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.002",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.003",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -532,6 +556,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.004",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.005",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery stable edge.006",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
@@ -545,6 +581,18 @@
     },
     {
       "name": "Gallery plinth.003",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.006",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.007",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -598,6 +646,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.008",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.009",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery.corrugated_window.Light",
       "collection": "06_Damage_Gallery",
       "triangles": 1272,
@@ -617,6 +677,18 @@
     },
     {
       "name": "Gallery plinth.005",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.010",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.011",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -646,6 +718,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.012",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.013",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery stable edge.014",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
@@ -659,6 +743,18 @@
     },
     {
       "name": "Gallery plinth.007",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.014",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.015",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -712,6 +808,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.016",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.017",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery.corrugated_door.Light",
       "collection": "06_Damage_Gallery",
       "triangles": 972,
@@ -731,6 +839,18 @@
     },
     {
       "name": "Gallery plinth.009",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.018",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.019",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -760,6 +880,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.020",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.021",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery stable edge.022",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
@@ -773,6 +905,18 @@
     },
     {
       "name": "Gallery plinth.011",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.022",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.023",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -826,6 +970,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.024",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.025",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery.corrugated_garage.Light",
       "collection": "06_Damage_Gallery",
       "triangles": 780,
@@ -845,6 +1001,18 @@
     },
     {
       "name": "Gallery plinth.013",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.026",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.027",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -874,6 +1042,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.028",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.029",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery stable edge.030",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
@@ -887,6 +1067,18 @@
     },
     {
       "name": "Gallery plinth.015",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.030",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.031",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -940,6 +1132,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.032",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.033",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery.concrete_partition.Light",
       "collection": "06_Damage_Gallery",
       "triangles": 1092,
@@ -959,6 +1163,18 @@
     },
     {
       "name": "Gallery plinth.017",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.034",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.035",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -988,6 +1204,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.036",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.037",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery stable edge.038",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
@@ -1001,6 +1229,18 @@
     },
     {
       "name": "Gallery plinth.019",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.038",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.039",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -1054,6 +1294,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.040",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.041",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery.layered_roof.Light",
       "collection": "06_Damage_Gallery",
       "triangles": 468,
@@ -1073,6 +1325,18 @@
     },
     {
       "name": "Gallery plinth.021",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.042",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.043",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -1102,6 +1366,18 @@
       "asset_category": null
     },
     {
+      "name": "Gallery caption card.044",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.045",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
       "name": "Gallery stable edge.046",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
@@ -1115,6 +1391,18 @@
     },
     {
       "name": "Gallery plinth.023",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.046",
+      "collection": "06_Damage_Gallery",
+      "triangles": 12,
+      "asset_category": null
+    },
+    {
+      "name": "Gallery caption card.047",
       "collection": "06_Damage_Gallery",
       "triangles": 12,
       "asset_category": null
@@ -3226,13 +3514,13 @@
       "asset_category": null
     },
     {
-      "name": "Cross beam.001",
+      "name": "Cross beam stairwell return",
       "collection": "01_Stable_Structure",
       "triangles": 44,
       "asset_category": null
     },
     {
-      "name": "Cross beam.002",
+      "name": "Cross beam.001",
       "collection": "01_Stable_Structure",
       "triangles": 44,
       "asset_category": null
@@ -3250,6 +3538,12 @@
       "asset_category": "stable_beam"
     },
     {
+      "name": "Cross beam.002",
+      "collection": "01_Stable_Structure",
+      "triangles": 44,
+      "asset_category": null
+    },
+    {
       "name": "Cross beam.003",
       "collection": "01_Stable_Structure",
       "triangles": 44,
@@ -3257,12 +3551,6 @@
     },
     {
       "name": "Cross beam.004",
-      "collection": "01_Stable_Structure",
-      "triangles": 44,
-      "asset_category": null
-    },
-    {
-      "name": "Cross beam.005",
       "collection": "01_Stable_Structure",
       "triangles": 44,
       "asset_category": null
@@ -3458,6 +3746,18 @@
       "collection": "01_Stable_Structure",
       "triangles": 12,
       "asset_category": null
+    },
+    {
+      "name": "Internal top landing",
+      "collection": "01_Stable_Structure",
+      "triangles": 44,
+      "asset_category": "usable_upper_floor"
+    },
+    {
+      "name": "Upper balcony threshold",
+      "collection": "01_Stable_Structure",
+      "triangles": 44,
+      "asset_category": "usable_upper_floor"
     },
     {
       "name": "Stair baluster",
@@ -3696,13 +3996,13 @@
     {
       "name": "Outpost_S02_East_01",
       "collection": "02_Destructible_Panels",
-      "triangles": 1176,
+      "triangles": 780,
       "asset_category": null
     },
     {
       "name": "Outpost_S02_East_02",
       "collection": "02_Destructible_Panels",
-      "triangles": 780,
+      "triangles": 1176,
       "asset_category": null
     },
     {
@@ -3826,7 +4126,7 @@
       "asset_category": null
     },
     {
-      "name": "Exterior balcony",
+      "name": "Exterior balcony landing",
       "collection": "03_Exterior_Dressing",
       "triangles": 44,
       "asset_category": "balcony"
@@ -3982,12 +4282,6 @@
       "asset_category": null
     },
     {
-      "name": "Balcony post.013",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
       "name": "Balcony railing.012",
       "collection": "03_Exterior_Dressing",
       "triangles": 28,
@@ -4000,13 +4294,13 @@
       "asset_category": null
     },
     {
-      "name": "Balcony post.014",
+      "name": "Balcony post.013",
       "collection": "03_Exterior_Dressing",
       "triangles": 28,
       "asset_category": null
     },
     {
-      "name": "Balcony post.015",
+      "name": "Balcony post.014",
       "collection": "03_Exterior_Dressing",
       "triangles": 28,
       "asset_category": null
@@ -4024,13 +4318,13 @@
       "asset_category": null
     },
     {
-      "name": "Balcony post.016",
+      "name": "Balcony post.015",
       "collection": "03_Exterior_Dressing",
       "triangles": 28,
       "asset_category": null
     },
     {
-      "name": "Balcony post.017",
+      "name": "Balcony post.016",
       "collection": "03_Exterior_Dressing",
       "triangles": 28,
       "asset_category": null
@@ -4048,109 +4342,7 @@
       "asset_category": null
     },
     {
-      "name": "Balcony post.018",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.019",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.018",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.019",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.020",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.021",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.020",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.021",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.022",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.023",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.022",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.023",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.024",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony post.025",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.024",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony railing.025",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
       "name": "Balcony end rail",
-      "collection": "03_Exterior_Dressing",
-      "triangles": 28,
-      "asset_category": null
-    },
-    {
-      "name": "Balcony end rail.001",
       "collection": "03_Exterior_Dressing",
       "triangles": 28,
       "asset_category": null

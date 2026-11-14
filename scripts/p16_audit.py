@@ -33,13 +33,13 @@ def art_files(root=ROOT):
       for p in base.rglob('*') if p.is_file() and p.suffix.lower()!='.md' and p.name!='package-lock.json')
 
 
-def write_lock():
-    files=art_files()
-    LOCK.write_text(json.dumps(dict(schema_version=1,revision='p16-v1',files=[dict(path=str(p.relative_to(ROOT)),sha256=sha(p),bytes=p.stat().st_size) for p in files]),indent=2)+'\n')
+def write_lock(root=ROOT):
+    files=art_files(root)
+    (root/'assets/blender/military-outpost/package-lock.json').write_text(json.dumps(dict(schema_version=1,revision='p16-v1',files=[dict(path=str(p.relative_to(root)),sha256=sha(p),bytes=p.stat().st_size) for p in files]),indent=2)+'\n')
 
 
 def parse_obj(path):
-    vertices=[];uvs=[];triangles=[];materials=set();objects=[]
+    vertices=[];uvs=[];triangles=[];materials=set();objects=[];triangle_objects=[];current_object='unnamed'
     for line in path.read_text().splitlines():
         p=line.split()
         if not p:continue
@@ -49,7 +49,8 @@ def parse_obj(path):
         elif p[0]=='vt':
             uv=tuple(float(x) for x in p[1:]);assert len(uv)==2 and all(math.isfinite(x) for x in uv),path
             uvs.append(uv)
-        elif p[0]=='o':objects.append(' '.join(p[1:]))
+        elif p[0]=='o':
+            current_object=' '.join(p[1:]);objects.append(current_object)
         elif p[0]=='usemtl':materials.add(p[1])
         elif p[0]=='f':
             assert len(p)==4,('not triangulated',path)
@@ -58,8 +59,8 @@ def parse_obj(path):
                 fields=token.split('/');i=int(fields[0])-1;t=int(fields[1])-1
                 assert 0<=i<len(vertices) and 0<=t<len(uvs),('invalid face index',path)
                 corners.append(i)
-            triangles.append(tuple(corners))
-    return dict(vertices=vertices,uvs=uvs,triangles=triangles,materials=materials,objects=objects)
+            triangles.append(tuple(corners));triangle_objects.append(current_object)
+    return dict(vertices=vertices,uvs=uvs,triangles=triangles,materials=materials,objects=objects,triangle_objects=triangle_objects)
 
 
 def projected_mask(obj,w,h,res=128):
@@ -84,6 +85,170 @@ def projected_mask(obj,w,h,res=128):
                 v=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(z-c[1]))/denom
                 if u>=-1e-9 and v>=-1e-9 and u+v<=1+1e-9:mask.add(iz*nx+ix)
     return mask
+
+
+def navigation_samples():
+    """Named routes in Blender stud coordinates, including treads and landings.
+
+    Expected foot heights select the intended walking surface, never a high
+    overhead deck. A 0.1-stud edge tolerance allows nosings/shared tread edges.
+    The visible geometry must independently supply support and clear a 4x6x4
+    upright envelope. Native avatar movement remains P17 acceptance.
+    """
+    samples=[]
+    def add(route,x,y,z):samples.append(dict(route=route,x=x,y=y,expected_foot=z))
+    for y in (-19,-18,-17):add('internal',-10,y,.125)
+    for i in range(16):
+        for offset in (-.7,-.35,0,.35,.7):add('internal',-10,-15+2*i+offset,.125+(i+1)*.625)
+    for y in (16.25,16.75,17.25,17.75,18.25,19,20):add('internal',-10,y,10.125)
+    for x in (-9,-8,-7,-6,-5,-4,-3,-2):add('internal',x,20,10.125)
+    for y in (-31,-30,-29):add('external',19.5,y,.125)
+    for i in range(20):
+        for offset in (-.35,0,.35):add('external',19.5,-28+i+offset,.125+(i+1)*.5)
+    for y in (-8.25,-7.75,-7,-6,-4,-2,0,4,8,12,14,16):add('external',19.5,y,10.125)
+    for x in (19,18.5,18,17.5,17,16.5,16,15.5,15,14.5,14,13.5):add('external',x,16,10.125)
+    return samples
+
+
+def _triangle_box_intersects(vertices,lower,upper):
+    """Separating-axis triangle/AABB test; contact without volume is allowed."""
+    center=[(a+b)/2 for a,b in zip(lower,upper)];half=[(b-a)/2 for a,b in zip(lower,upper)]
+    vs=[tuple(v[i]-center[i] for i in range(3)) for v in vertices]
+    edges=[tuple(vs[(j+1)%3][i]-vs[j][i] for i in range(3)) for j in range(3)]
+    def cross(a,b):return (a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0])
+    axes=[(1,0,0),(0,1,0),(0,0,1),cross(edges[0],edges[1])]
+    for edge in edges:
+        for basis in ((1,0,0),(0,1,0),(0,0,1)):axes.append(cross(edge,basis))
+    for axis in axes:
+        if sum(a*a for a in axis)<1e-16:continue
+        dots=[sum(v[i]*axis[i] for i in range(3)) for v in vs]
+        radius=sum(half[i]*abs(axis[i]) for i in range(3))
+        if min(dots)>=radius-1e-6 or max(dots)<=-radius+1e-6:return False
+    return True
+
+
+def inspect_navigation(geometry):
+    """Validate actual saved/exported triangles against both complete stair routes.
+
+    Floors are ray-tested from actual mesh triangles. At each center/intermediate
+    station, nine footprint support rays select a legal stepped profile; the
+    highest support defines a legal ascending floor profile. Exact triangle/box tests
+    then check all visible assembly geometry, with no name-based obstruction
+    exemptions. Only outside ground before the external stairs is level-supplied
+    at Z=.125; that plane is not presented as an authored outpost floor.
+    """
+    floor_prefixes=('Foundation','Upper_Main','Upper_North_Landing','Upper_South_Rim',
+      'Internal_stair_tread','Tread_nosing','Internal_top_landing','Upper_balcony_threshold',
+      'External_open_tread','External_anti_slip_nosing','Exterior_balcony_landing')
+    records=[];bins={};floor_bins={}
+    names=geometry['triangle_objects'];vertices=geometry['vertices']
+    for ids,name in zip(geometry['triangles'],names):
+        vs=tuple(vertices[i] for i in ids)
+        low=tuple(min(v[i] for v in vs) for i in range(3));high=tuple(max(v[i] for v in vs) for i in range(3))
+        index=len(records);records.append((name,vs,low,high))
+        for bx in range(math.floor(low[0]/4),math.floor(high[0]/4)+1):
+            for by in range(math.floor(low[1]/4),math.floor(high[1]/4)+1):
+                bins.setdefault((bx,by),[]).append(index)
+                if name.replace(' ','_').startswith(floor_prefixes):floor_bins.setdefault((bx,by),[]).append(index)
+    def support(x,y,hint,route):
+        heights=[]
+        for i in floor_bins.get((math.floor(x/4),math.floor(y/4)),()):
+            _,vs,lo,hi=records[i]
+            if not (lo[0]-1e-6<=x<=hi[0]+1e-6 and lo[1]-1e-6<=y<=hi[1]+1e-6):continue
+            a,b,c=vs;den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1])
+            if abs(den)<1e-9:continue
+            u=((b[1]-c[1])*(x-c[0])+(c[0]-b[0])*(y-c[1]))/den
+            v=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(y-c[1]))/den
+            if u>=-1e-6 and v>=-1e-6 and u+v<=1+1e-6:
+                z=u*a[2]+v*b[2]+(1-u-v)*c[2]
+                if z<=hint+1.4:heights.append(z)
+        # Explicit external approach ground, supplied by the current level.
+        if route=='external' and y<-28.5:heights.append(.125)
+        return max(heights) if heights else None
+    checks=[];body_samples=0;support_rays=0
+    for sample in navigation_samples():
+        route=sample['route'];x=sample['x'];y=sample['y'];expected=sample['expected_foot']
+        center=support(x,y,expected,route);support_rays+=1
+        assert center is not None and abs(center-expected)<=.11,('P16Navigation missing/incorrect tread',sample,center)
+        heights=[]
+        for dx in (-1.95,0,1.95):
+            for dy in (-1.95,0,1.95):
+                floor=support(x+dx,y+dy,expected,route);support_rays+=1
+                if floor is not None:heights.append(floor)
+        foot=max(heights+[center]);lower=(x-2,y-2,center+.065);upper=(x+2,y+2,center+6)
+        candidates=set()
+        for bx in range(math.floor(lower[0]/4),math.floor(upper[0]/4)+1):
+            for by in range(math.floor(lower[1]/4),math.floor(upper[1]/4)+1):candidates.update(bins.get((bx,by),()))
+        for i in candidates:
+            name,vs,lo,hi=records[i]
+            # Rising tread faces within the actual sampled step profile are
+            # legal beneath the avatar; they must not become low-body walls.
+            if name.replace(' ','_').startswith(floor_prefixes) and hi[2]<=foot+.065:continue
+            if any(hi[a]<=lower[a]+1e-5 or lo[a]>=upper[a]-1e-5 for a in range(3)):continue
+            assert not _triangle_box_intersects(vs,lower,upper),('P16Navigation obstructed upright body',sample,name,lower,upper)
+        body_samples+=1;checks.append(route)
+    return dict(name='P16Navigation',passed=True,body_dimensions_studs=[4,6,4],foot_clearance_studs=.065,
+      support_height_tolerance_studs=.11,profile_method='6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays',
+      body_samples=body_samples,support_rays=support_rays,
+      internal_samples=checks.count('internal'),external_samples=checks.count('external'),
+      scope='Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17')
+
+
+def expected_render_paths(catalog):
+    """The required five scene views and every two-sided normal/grayscale family."""
+    names=['exterior','floor-1','floor-2','cutaway','isolated-kit']
+    names += [f"damage-{f['id']}-{side}-{mode}" for f in catalog['families']
+      for side in ('front','back') for mode in ('normal','grayscale')]
+    return {f'docs/evidence/p16/{name}.png' for name in names}
+
+
+def png_record(path,root):
+    data=path.read_bytes();assert data[:8]==b'\x89PNG\r\n\x1a\n',path
+    width,height,depth,color,_,_,_=struct.unpack('>IIBBBBB',data[16:29])
+    return dict(path=str(path.relative_to(root)),sha256=sha(path),bytes=len(data),width=width,height=height,
+      bit_depth=depth,color_mode={0:'BW',2:'RGB',6:'RGBA'}[color])
+
+
+def validate_proofs(root):
+    """Bind tool evidence to exact current art, exporter and all required images.
+
+    Refreshing package-lock deliberately cannot make a stale import/render proof
+    valid. Both source/export identities and the complete named view set must
+    agree with independently generated clean-Blender reports.
+    """
+    source=root/'assets/blender/military-outpost';export=root/'assets/exports/military-outpost';evidence=root/'docs/evidence/p16'
+    reopened=load(evidence/'blender-reopen.json');fbx=load(evidence/'fbx-import.json')
+    source_hash=sha(source/'military-outpost.blend')
+    assert reopened['passed'] and reopened['source_sha256']==source_hash,'stale Blender reopen'
+    assert fbx['passed'] and fbx['fbx_sha256']==sha(export/'outpost-assembly-v1.fbx'),'stale assembly FBX import'
+    assert fbx['panel_library_sha256']==sha(export/'panel-library-v1.fbx'),'stale panel library FBX import'
+    kit=load(source/'reusable-kit.json')['assets'];proofs={e['family']:e for e in fbx['reusable_kit']}
+    assert set(proofs)=={e['family'] for e in kit},'missing/extra reusable kit import proof'
+    for entry in kit:
+        proof=proofs[entry['family']]
+        assert proof['fbx_sha256']==sha(export/entry['fbx']),('stale kit FBX import',entry['family'])
+        assert proof['triangles']==entry['triangles'],('stale kit geometry import',entry['family'])
+    assert reopened['missing_dependencies']==0 and fbx['scale_axes_verified'] and fbx['uv_materials_verified']
+    assert reopened['navigation']['passed'] and fbx['navigation']['passed'],'missing source/FBX navigation proof'
+    expected=expected_render_paths(load(source/'panel-catalog.json'))
+    actual={str(p.relative_to(root)) for p in evidence.glob('*.png')}
+    assert actual==expected,('missing/extra required render',sorted(expected-actual),sorted(actual-expected))
+    script_hash=sha(root/'scripts/p16_blender_review.py')
+    for name in ('render-evidence.json','render-manifest.json'):
+        report=load(evidence/name)
+        assert report['source_sha256']==source_hash,('stale render source',name)
+        assert report['review_script_sha256']==script_hash,('stale render script',name)
+        assert report.get('passed') and report['image_count']==29,('incomplete render set',name)
+        files={f['path']:f for f in report['files']}
+        assert len(report['files'])==len(files)==29 and set(files)==expected,('wrong render identity set',name)
+        for path,entry in files.items():
+            current=png_record(root/path,root);assert entry==current,('stale/corrupt render',path)
+            damage='/damage-' in path
+            assert (current['width'],current['height'])==((1600,440) if damage else (1280,900)),path
+            if '-grayscale.' in path:assert current['color_mode']=='BW',('not grayscale',path)
+            else:assert current['color_mode'] in ('RGB','RGBA'),('not color',path)
+    return dict(source_sha256=source_hash,blender_version=reopened['blender_version'],missing_dependencies=0,
+      fbx_meshes=fbx['imported_meshes'],panel_library_meshes=fbx['panel_library_meshes'],kit_imports=len(kit),required_renders=29)
 
 
 def inspect_package(root=ROOT,check_lock=True,check_evidence=True):
@@ -151,6 +316,7 @@ def inspect_package(root=ROOT,check_lock=True,check_evidence=True):
     # Actual OBJ data validates UV indexing, finite positions, triangle counts and
     # material references independently from the authoring inventory declarations.
     assembly=parse_obj(export/'outpost-assembly-v1.obj')
+    passed('P16Navigation',inspect_navigation(assembly))
     assert len(assembly['triangles'])==inv['measured']['assembly_triangles']
     assert len(assembly['objects'])==inv['collections']['01_Stable_Structure']['mesh_objects']+sum(inv['collections'][name]['mesh_objects'] for name in ['02_Destructible_Panels','03_Exterior_Dressing','04_Floor_1_Workshop','05_Floor_2_Command'])
     for key,val in inv['measured'].items():
@@ -173,11 +339,7 @@ def inspect_package(root=ROOT,check_lock=True,check_evidence=True):
         data=(export/entry['fbx']).read_bytes();assert data.startswith(b'Kaydara FBX Binary') and len(data)>10000
     passed('P16ExportAudit',dict(assembly_triangles=len(assembly['triangles']),materials=12,textures=12,reusable_kit_assets=len(kit),package_bytes=total))
     if check_evidence:
-        reopened=load(root/'docs/evidence/p16/blender-reopen.json');fbx=load(root/'docs/evidence/p16/fbx-import.json')
-        assert reopened['passed'] and reopened['source_sha256']==sha(source/'military-outpost.blend'),'stale Blender reopen'
-        assert fbx['passed'] and fbx['fbx_sha256']==sha(export/'outpost-assembly-v1.fbx'),'stale FBX import'
-        assert reopened['missing_dependencies']==0 and fbx['scale_axes_verified'] and fbx['uv_materials_verified']
-        passed('P16BlenderReopen',dict(source_sha256=reopened['source_sha256'],blender_version=reopened['blender_version'],missing_dependencies=0,fbx_meshes=fbx['imported_meshes']))
+        passed('P16BlenderReopen',validate_proofs(root))
     if check_lock:
         lock=load(source/'package-lock.json');expected={f['path']:f for f in lock['files']}
         assert set(expected)=={str(p.relative_to(root)) for p in files},'untracked/missing art file'
