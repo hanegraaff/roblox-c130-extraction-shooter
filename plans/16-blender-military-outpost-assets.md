@@ -171,3 +171,13 @@ approved full hash. `python3 scripts/p16_audit.py` passes 7/7 with no failures
 or skips; `python3 scripts/check_repository.py` passes 91 Markdown / 224 JSON
 files and `git diff --check` passes. Only the P16/P17 roadmap statuses changed;
 P17 implementation files, runtime source and asset bytes are unchanged.
+
+2026-11-13 showcase/integration: the user's subsequent request added a generated
+README showcase with [prompt/provenance](../docs/images/military-outpost-showcase.md)
+and explicitly authorized merging PR #35. Candidate `e5486a2` passes GitHub
+Verify 43546042230. PR #35 merged into its configured planning-branch base at
+`3f1116a533ce0dd6b046d7f5ea815706851ee483`, with a tree exactly matching the
+passing candidate. The [integration record](../docs/evidence/p16/showcase-integration.md)
+preserves scope, hashes and commands. The remaining parent stack's integration
+into `main` is separate. The approved asset bytes remain unchanged and P17 has
+not started.

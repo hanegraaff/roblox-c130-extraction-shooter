@@ -30,8 +30,9 @@ received the user's Blender approval before P17 starts. P08's already
 completed work and historical evidence remain valid; it is not undone or
 repeated. P09 waits for P17 and the completed P08 source. This priority takes
 precedence over lowest-numbered selection. P16's approved asset is delivered
-on `plan/16-blender-military-outpost-assets` through review-ready PR #35.
-P17 has not started and must include that unmerged dependency source.
+through PR #35, merged into `docs/military-outpost-blender-plans`.
+P17 has not started and must include that source while the parent stack remains
+unmerged into `main`. See the [integration record](docs/evidence/p16/showcase-integration.md).
 
 2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
 asset set closely matching all three references in
@@ -69,6 +70,15 @@ evidence are pushed and GitHub Verify passes on delivery `8b469e2`. P16 is
 Complete; dependency-complete P17 is Ready and remains unstarted. PR #35 is
 ready for review, with integration separate. P09 waits for P17. No merge or
 Roblox publication is authorized by asset approval or performed here.
+
+2026-11-13 subsequent showcase request: a new AI-generated illustration based
+on the approved Blender renders was added to the README, with clear labelling
+and exact prompt/provenance. The user explicitly authorized PR #35's merge;
+it merged at `3f1116a` into its configured planning-branch base after passing
+CI, with an identical candidate/merge tree. The
+[integration record](docs/evidence/p16/showcase-integration.md) distinguishes
+this from the remaining parent-stack integration into `main`. P16 remains
+Complete, P17 remains Ready/unstarted, and no Roblox publication occurred.
 
 2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
 host gate, 104 server and 3 per-client Studio smoke, and the eight-case

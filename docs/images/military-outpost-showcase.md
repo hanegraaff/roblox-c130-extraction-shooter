@@ -12,6 +12,9 @@ Subject references (actual renders of approved source `e8fb840`, Blender SHA-256
 
 The actual source, exports, review images, locks and approval remain unchanged. The generated image lives outside runtime asset mappings and acceptance-render directories. The README retains its representative actual Studio gameplay capture.
 
+[PR #35 integration record](../evidence/p16/showcase-integration.md) identifies
+the passing candidate, actual merge commit and configured destination branch.
+
 ## Final generation prompt
 
 ```text
