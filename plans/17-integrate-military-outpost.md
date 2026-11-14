@@ -14,13 +14,13 @@ The user approved P16 source `e8fb840a986969bdd3b7ac932469e3fa8cc99a9e`
 on 2026-11-13: `.blend` SHA-256
 `4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
 The [approval record](../docs/evidence/p16/human-approval.json) binds that input.
-P16's source and approval were merged through PR #35 into
-`docs/military-outpost-blender-plans`; include that branch or a descendant when
-starting P17 while the remaining stack is unmerged into `main`. The
-[integration record](../docs/evidence/p16/showcase-integration.md) identifies the
-exact merge. No P17 implementation is delivered by this record.
+P16's source and approval are now integrated on `main` through the remaining
+PR #34 → #33 → #32 stack, ending at `87df925`. Start P17 from updated `main`.
+The [main integration record](../docs/evidence/p08-p16-main-integration.md)
+identifies the exact merges and matching tested tree. No P17 implementation
+is delivered by this record.
 
-Use the exact P16 source/export revision the user approved, with its asset inventory, scale/axes, panel catalog, collision proxies, budgets and review conditions. Record its hash before implementation. P16 approval is a real dependency: draft renders or an unapproved later asset revision cannot substitute. Include the completed P07/P13/P14 destruction/map/view source through dependencies or their eventual merges; do not branch from stale main while required source is unmerged. P08 is not a prerequisite. The current planning branch already contains completed P08 source; retain that work and run its applicable regressions rather than removing it to mimic the revised table order.
+Use the exact P16 source/export revision the user approved, with its asset inventory, scale/axes, panel catalog, collision proxies, budgets and review conditions. Record its hash before implementation. P16 approval is a real dependency: draft renders or an unapproved later asset revision cannot substitute. Include the completed P07/P13/P14 destruction/map/view source through dependencies or their eventual merges; do not branch from stale main while required source is unmerged. P08 is not a prerequisite. Integrated `main` already contains completed P08 source; retain that work and run its applicable regressions rather than removing it to mimic the revised table order.
 
 Work on `plan/17-integrate-military-outpost`. Inspect the intended Studio instance/place ID and version-specific MCP guidance, reuse the matching Rojo-connected document, and coordinate mutations. Retain the original source in Git history so the replacement is reviewable and reversible. Roblox publication is a separate authorized release action.
 

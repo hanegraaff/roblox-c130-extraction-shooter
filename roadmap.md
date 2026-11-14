@@ -1,6 +1,6 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P08 and the approved P16 source/export package are now integrated on `main` through PRs #34 → #33 → #32; the [main integration record](docs/evidence/p08-p16-main-integration.md) identifies matching trees and fresh host verification. P17 still owns replacing the playable Outpost. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
@@ -31,8 +31,21 @@ completed work and historical evidence remain valid; it is not undone or
 repeated. P09 waits for P17 and the completed P08 source. This priority takes
 precedence over lowest-numbered selection. P16's approved asset is delivered
 through PR #35, merged into `docs/military-outpost-blender-plans`.
-P17 has not started and must include that source while the parent stack remains
-unmerged into `main`. See the [integration record](docs/evidence/p16/showcase-integration.md).
+The remaining parent stack is now integrated on `main`; P17 has not started
+and can branch from updated `main`. See the
+[main integration record](docs/evidence/p08-p16-main-integration.md).
+
+2026-11-13 main integration: under the user's merge request, PR #34 merged
+into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
+equals the combined passing candidate `537a2ce` /
+`bf7338aa50b15df6e1dbef605ff0ea73b965ed49`. A fresh full local gate passes
+55 unit / 65 integration, seven asset suites, 22 asset regressions, ten manifest
+regressions and all existing static/type/build/geometry/isolation checks.
+Main includes the recoverable launcher, supported-Studio acceptance revision,
+approved Blender source/exports and user-selected `blender_outpost.png`.
+Routine setup now selects `main`; P08/P16 stay Complete, P17 stays Ready and
+unstarted, and P09 waits for P17. Historical failed evidence and prior merge
+checkpoints below remain unchanged. No Roblox publication occurred.
 
 2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
 asset set closely matching all three references in

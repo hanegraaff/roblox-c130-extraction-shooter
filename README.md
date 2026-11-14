@@ -10,7 +10,7 @@ One player operates a circling C-130 while 5–9 teammates on the ground try to 
 
 ## What you can play today
 
-The local candidate on **`plan/16-blender-military-outpost-assets`** includes the single launcher alongside the existing battlefield, gunship and rifle combat, directional thermal camera, progressive cover damage and round loop. Its playable source includes the P08 candidate from `docs/studio-supported-acceptance`; the new Blender outpost is available for separate art review. **P08 meets the revised Studio-supported acceptance criteria (D59)**: use the [plan record](plans/08-rocket-launcher.md) and [verification evidence](docs/evidence/p08-launcher.md) for tested source and the acceptance revision. Integrated `main` contains P07 and does not yet include player launcher handling. There is no published Roblox play link.
+The integrated source on **`main`** includes the single recoverable launcher alongside the existing battlefield, gunship and rifle combat, directional thermal camera, progressive cover damage and round loop. It also includes the separately approved P16 Blender source/export package; the playable Outpost still uses primitive art until P17. **P08 meets the revised Studio-supported acceptance criteria (D59)**: the [plan record](plans/08-rocket-launcher.md) and [verification evidence](docs/evidence/p08-launcher.md) identify tested source and the acceptance revision. The [main integration record](docs/evidence/p08-p16-main-integration.md) identifies the merged stack and matching verified tree. There is no published Roblox play link.
 
 A normal round starts in the protected, walkable lobby with 6–10 players. The server assigns one operator, preferring eligible players who have waited longer, and deploys everyone else as one ground team. The aircraft circles the edge of the **720-stud battlefield** automatically. Ground wins by destroying it; the operator wins by eliminating all ground lives or surviving until timeout. The default limit is ten minutes. An operator disconnect forfeits to the remaining ground team. Results return everyone to a fresh lobby and restore the battlefield.
 
@@ -22,7 +22,7 @@ Use the eight grass/rock hills, two large buildings and one smaller building for
 
 The HUD shows role, life, time, survivors, ammunition and aircraft health. Desktop confirmed hits show **AIRCRAFT HIT −5** for the rifle or **ROCKET HIT** for the launcher; touch appends **HIT** to weapon readiness so feedback stays clear of the centered aim. Friendly fire is off. Ground death, character reset or Surrender / spectate consumes that round's life; eliminated players follow a living teammate. Late arrivals and reconnecting players cannot regain an active life or launcher. Operator reset replaces only the protected station body. An orange boundary marks the playable disk; leaving it or falling below the map returns an active ground player to shelter. Movement/origin checks can temporarily reject pickup or fire after implausible position jumps; they issue no automatic ban.
 
-This is primitive development art and a local test candidate. Current checks pass the host gate, solo smoke, two-client combat/panning regressions, simulated-phone rifle/launcher controls and the full **11-case P08 native harness** with three actual clients. Ordinary route walking, raced pickup and selection also have separate review. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity are unverified or planned. The MVP has one level; additional selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope.
+This is primitive development art and a local test candidate. Current checks pass the host gate, solo smoke, two-client combat/panning regressions, simulated-phone rifle/launcher controls and the full **11-case P08 native harness** with three actual clients. Ordinary route walking, raced pickup and selection also have separate review. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass and the source is integrated on `main`. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity are unverified or planned. The MVP has one level; additional selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope.
 
 The [P16 Blender review candidate](assets/blender/military-outpost/README.md)
 contains a furnished two-story military outpost, outdoor props and material-specific
@@ -44,12 +44,12 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Select the current source and Blender review candidate before building:
+Select the integrated source and approved Blender package before building:
 
 ```sh
 git fetch origin
-git switch plan/16-blender-military-outpost-assets
-git pull --ff-only origin plan/16-blender-military-outpost-assets
+git switch main
+git pull --ff-only origin main
 ```
 
 Do not discard local edits when switching source; select the same source for builds, Rojo sync and test evidence.

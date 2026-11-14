@@ -98,4 +98,13 @@ not been implemented. Source/evidence delivery is recorded in the scope revision
 After collection, owned native sessions/fixtures were removed. The original
 `tests.rbxlx` is Edit/not running, ManualHarness=nil, BootstrapStatus absent,
 default simulator/LandscapeLeft restored. No merge or Roblox publication
-occurred.
+occurred at that acceptance checkpoint.
+
+2026-11-13 integration: with the user's subsequent merge request, PR #34 merged
+into #33, #33 into this branch, then PR #32 into `main` at
+`87df925b58ca2cb87d243dfc610702bb48563f0d`. All three trees equal tested
+combined candidate `537a2ce` / tree `bf7338aa50b15df6e1dbef605ff0ea73b965ed49`.
+The [integration record](../docs/evidence/p08-p16-main-integration.md) preserves
+the fresh 55-unit / 65-integration full gate, asset checks, CI and unchanged
+runtime-input comparison. Routine setup uses `main`. P17 remains unstarted;
+P09 waits for P17 under D63. No Roblox publication occurred.
