@@ -1,27 +1,48 @@
 --!strict
 --[=[
-    PanelGeometry: server-only reconstruction of primitive panel variants. Depends
-    on the original authored Part and server-only normalized PanelResidual template.
-    Geometry is original project authoring, scaled along the longest face axis.
-    Two 25%-wide residual strips leave exactly 50% open area, including full-height
-    wall passage. No full-size invisible collider survives. No yielding/events.
+    PanelGeometry: server-only primitive/material panel presentation owner. Uses
+    original authored Parts/PanelResidual for primitives, or validated private
+    PanelAssetCatalog families through MaterialPanelGeometry. Neither path changes
+    damage rules. Primitive strips leave exactly 50% open; material proxies retain
+    the approved irregular apertures. No invisible full-wall collider survives.
+    The caller owns captured originals and cleanup. No yielding/events/cloud loads.
 ]=]
 local ServerStorage = game:GetService("ServerStorage")
+local PanelAssetCatalog = require(script.Parent.PanelAssetCatalog)
+local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
 local PanelGeometry = {}
 export type Panel = {
     id: string,
     pivot: CFrame,
     size: Vector3,
-    original: BasePart,
+    original: Instance,
     model: Model,
     stage: number,
     visualBucket: string,
+    family: PanelAssetCatalog.Family?,
+    color: Color3,
 }
 
--- Captures an authored panel into a persistent identity model. Caller must own the
--- validated map subtree. Identity/pivot survive all swaps; original is retained
--- unparented for reconstruction and must be destroyed by the owner on teardown.
-function PanelGeometry.capture(part: BasePart): Panel
+-- Captures an authored Part or material Model into a persistent identity. Models
+-- require a validated family, canonical pivot and local IntactSize. Caller owns
+-- the validated subtree; originals remain private until restored/destroyed at stop.
+function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog.Family?): Panel
+    if part:IsA("Model") then
+        assert(family, "material panel requires a validated family")
+        local size = part:GetAttribute("IntactSize")
+        assert(typeof(size) == "Vector3", "material panel requires authored IntactSize")
+        return {
+            id = part.Name,
+            pivot = part:GetPivot(),
+            size = size,
+            original = part:Clone(),
+            model = part,
+            stage = 0,
+            visualBucket = "Pristine",
+            family = family,
+            color = Color3.new(1, 1, 1),
+        }
+    end
     local model = Instance.new("Model")
     model.Name = part.Name
     for key, value in part:GetAttributes() do
@@ -43,6 +64,8 @@ function PanelGeometry.capture(part: BasePart): Panel
         model = model,
         stage = 0,
         visualBucket = "",
+        family = nil,
+        color = part.Color,
     }
 end
 
@@ -55,6 +78,14 @@ function PanelGeometry.setStage(panel: Panel, stage: number)
     end
     panel.model:ClearAllChildren()
     panel.visualBucket = ""
+    if panel.family then
+        local appearance = if stage == 0 then "Pristine" elseif stage == 1 then "Heavy" else "Total"
+        MaterialPanelGeometry.install(panel.model, panel.pivot, panel.family, appearance)
+        panel.visualBucket = appearance
+        panel.stage = stage
+        return
+    end
+    assert(panel.original:IsA("BasePart"), "primitive original is not a BasePart")
     if stage == 0 then
         local intact = panel.original:Clone()
         intact.Name = "Solid"
@@ -177,6 +208,24 @@ function PanelGeometry.publish(
     appearance: string
 )
     local state = ({ "Intact", "Damaged", "Destroyed" })[stage + 1]
+    if panel.family then
+        if panel.visualBucket ~= appearance then
+            MaterialPanelGeometry.install(panel.model, panel.pivot, panel.family, appearance)
+            panel.visualBucket = appearance
+        end
+        MaterialPanelGeometry.progress(panel.model, progress)
+        local descendants = panel.model:GetDescendants()
+        table.insert(descendants, panel.model)
+        for _, item in descendants do
+            item:SetAttribute("PanelState", state)
+            item:SetAttribute("DamageAppearance", appearance)
+            item:SetAttribute("PanelProgress", progress)
+            item:SetAttribute("HeavySeconds", heavySeconds)
+            item:SetAttribute("SustainedSeconds", sustainedSeconds)
+        end
+        return
+    end
+    assert(panel.original:IsA("BasePart"), "primitive original is not a BasePart")
     local count = if appearance == "Light"
         then math.min(7, 3 + math.floor(progress * 5))
         elseif appearance == "Heavy" then 7

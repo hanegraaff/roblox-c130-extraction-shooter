@@ -434,6 +434,7 @@ def main() -> None:
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
@@ -454,6 +455,7 @@ def main() -> None:
         "ServerScriptService/ServerTests/DestructionHarness",
         "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",
         "ServerStorage/Tests/Studio/PanelDestruction.spec",
+        "ServerStorage/Tests/Studio/MaterialPanels.spec",
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P07 destruction fixture missing from tests or leaked to release: {name}")

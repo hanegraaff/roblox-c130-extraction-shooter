@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "plan": "P17",
+  "date_local": "2026-11-14",
+  "source_base": "db17aba07c8e90212a2f021b89093d476e1b6f09",
+  "approved_source_commit": "e8fb840a986969bdd3b7ac932469e3fa8cc99a9e",
+  "files": [
+    {
+      "path": "assets/blender/military-outpost/military-outpost.blend",
+      "sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c",
+      "bytes": 5585181
+    },
+    {
+      "path": "assets/exports/military-outpost/outpost-assembly-v1.fbx",
+      "sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8",
+      "bytes": 8466076
+    },
+    {
+      "path": "assets/exports/military-outpost/panel-library-v1.fbx",
+      "sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d",
+      "bytes": 1216268
+    },
+    {
+      "path": "assets/exports/military-outpost/material-map.json",
+      "sha256": "f3e513c37bd7658b4c06b0a8a6be74f57c7c0c6ea8f431f757ea29407f81d165",
+      "bytes": 2442
+    }
+  ],
+  "expected_assembly_meshes": 2225,
+  "expected_assembly_triangles": 89024,
+  "maximum_assembly_mesh_triangles": 3512,
+  "expected_panel_library_meshes": 260,
+  "per_mesh_expectations": "docs/evidence/p16/blender-reopen.json:assets",
+  "dimensions_source_studs": [
+    48.0,
+    57.84000015258789,
+    30.901086807250977
+  ],
+  "source_to_roblox_axes": [
+    "X",
+    "Z",
+    "-Y"
+  ],
+  "intended_site_center_studs": [
+    144,
+    0,
+    164
+  ],
+  "orientation_checks": [
+    "Personnel entrance and garage on source -Y / Roblox +Z side",
+    "External stairs and balcony on source +X / Roblox +X side"
+  ],
+  "materials": "assets/exports/military-outpost/material-map.json",
+  "expected_source_textures": 12,
+  "cloud_uploads": [],
+  "observed_development_baseline": {
+    "studio_id": "0716c7b4-b2bb-47d2-80cb-2efa104e03c9",
+    "file": "game.rbxlx",
+    "persistedToCloud": false,
+    "studio_version": "0.747.0.7471481",
+    "mode": "Edit",
+    "actual_clients": 0,
+    "workspace_descendants": 434,
+    "base_parts": 404,
+    "mesh_parts": 0,
+    "texture_instances": 0,
+    "workspace_scripts": 0
+  },
+  "limits": "Edit inventory only; no gameplay frame/memory baseline, import, runtime replacement or engine acceptance established."
+}

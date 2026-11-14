@@ -63,4 +63,21 @@ Profile the added art relative to the primitive baseline on the same recorded de
 
 ## Documentation and completion record
 
-Update the root player README with the implemented building and one representative **actual Studio/playtest** screenshot replacing its current representative image. Keep Blender renders in the P16 evidence gallery; do not present them as gameplay. Update asset/package READMEs, reconstruction instructions, manifest, architecture and named test/evidence links together. Record A1–A6, dependency/package hashes, source/PR, actual import ownership, tool commands, test counts, clients, navigation/normal/thermal observations, performance metrics, reset/cleanup and human feedback here when executed. This plan currently defines future work; no replacement or verification result is claimed. Status remains in the roadmap.
+Update the root player README with the implemented building. Preserve the user's selected `blender_outpost.png` as its first and only embedded image immediately after the title, with an accurate Blender-authoring caption, as required by the current `AGENTS.md`. Keep actual Studio/playtest captures in linked P17 evidence; do not present Blender images as gameplay. Update asset/package READMEs, reconstruction instructions, manifest, architecture and named test/evidence links together. Record A1–A6, dependency/package hashes, source/PR, actual import ownership, tool commands, test counts, clients, navigation/normal/thermal observations, performance metrics, reset/cleanup and human feedback here when executed. Status remains in the roadmap.
+
+### Implementation preflight — 2026-11-14
+
+Selected P17 under D63 on dedicated `plan/17-integrate-military-outpost`, based
+on updated `origin/main` / `db17aba07c8e90212a2f021b89093d476e1b6f09` (tree
+`38023cd6760b2fa19ea8e59db0ae608995d7a3b3`). The checkout was clean and the
+GitHub connector reported no open PRs. P16/P07/P13/P14 dependency source and the
+completed P08 source are present. The approved `.blend` still hashes to
+`4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
+
+Required evidence remains A1–A6 above: named host/catalog/service suites; actual
+Studio import/reconstruction, navigation, targeting, material openings and
+fragments; two actual clients and two damaged-to-pristine resets; current
+P07/P05/P14/P08 regressions; measured candidate/baseline performance; and explicit
+human approval of the identified integrated candidate. P16 approval does not
+satisfy A6. No replacement, cloud import or new engine pass is claimed by this
+preflight record.
