@@ -315,6 +315,9 @@ placement must return to Git. P16's Blender approval and P17's actual engine,
 two-client/reset and human presentation gates are distinct. This boundary is
 building-asset data for the current level, not an implementation of P15 level
 selection or a claim that material-aware authored variants already work.
+The user-directed D63 order schedules P16 then P17 before continuing P09;
+P17 consumes the P07/P13/P14 core without requiring P08 to start. Preserve and
+regression-test completed P08 source when present in the selected branch.
 
 ## Tooling and verification
 

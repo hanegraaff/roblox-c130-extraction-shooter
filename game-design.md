@@ -126,8 +126,10 @@ saved as editable assets for the user's inspection and explicit visual approval.
 on this same level with the approved revision. Concrete, corrugated metal and
 roof materials must damage in visually appropriate ways while retaining the
 same shared three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment
-rules. Floors, stairs and supporting structure stay stable. This is planned art
-refinement, not a new level, current gameplay or a mandatory high-detail MVP gate.
+rules. Floors, stairs and supporting structure stay stable. D63 schedules these
+two increments next, between P07 and P08, before P09 and remaining MVP work.
+They remain planned work on the current level; existing completion evidence is
+preserved.
 
 Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
 

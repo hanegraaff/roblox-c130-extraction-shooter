@@ -1,6 +1,8 @@
 # P09 — Complete team win/loss and replay loop
 
-**Milestone:** M5. **Dependencies:** P08. **Requirements:** R03, R04, R08, R10, R11, R13, R15. Status: [roadmap](../roadmap.md).
+**Milestone:** M5. **Dependencies:** P08, P17. **Requirements:** R03, R04, R08, R10, R11, R13, R15. Status: [roadmap](../roadmap.md).
+
+The user's D63 sequencing revision places P16 Blender assets and P17 smaller-Outpost integration next, between P07 and P08 in the roadmap. Resume this plan only after the approved replacement is complete, retaining the already completed P08 launcher source and evidence. Exercise the resulting building and its destruction/reset behavior in the full round loop.
 
 ## Capability and player experience
 

@@ -1,6 +1,8 @@
 # P16 — Detailed military-outpost assets in Blender
 
-**Milestone:** Asset refinement / Blender authoring. **Dependencies:** P07, P13. **Requirements:** R01, R09, R15, R16, R19. Status: [roadmap](../roadmap.md).
+**Milestone:** M4 / Blender authoring. **Dependencies:** P07, P13. **Requirements:** R01, R09, R15, R16, R19. Status: [roadmap](../roadmap.md).
+
+**Sequence (D63):** Next implementation increment, placed after P07 and before P08 in roadmap order. Complete this plan and obtain human approval before P17; P09 waits for both asset increments. Plan IDs remain stable.
 
 ## Capability and human experience
 

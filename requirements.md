@@ -32,12 +32,13 @@ These requirements describe the MVP target and future level boundary. Integrated
 
 Existing requirement IDs are preserved. The 2026-11-08 revision extends R05/R06/R09/R12 and adds R16; the 2026-11-10 revision updates R06 and adds R17/R18. P13/P14/P07 update the implemented smaller-map/fixed-focus assumptions while preserving prior completion evidence. R07 retains the 105mm M102 name confirmed in D31. R18's second playable level is future work and does not claim that the current code already switches levels.
 
-The 2026-11-13 Blender revision adds R19/R20 for P16/P17. These are separately
-scheduled asset-refinement requirements, not prerequisites for the original
-simple-art MVP. If the replacement is included in a release candidate, its
-actual art participates in the applicable P11/P12 regression, performance and
-release checks. Reference images and plans are not delivered models or evidence
-of implemented material-aware destruction.
+The 2026-11-13 Blender revision adds R19/R20 for P16/P17. The user's follow-up
+sequencing revision (D63) places them between P07 and P08 as the next two
+increments, before P09 and remaining MVP work. The approved replacement must
+participate in the applicable P09/P11/P12 round-loop, regression, performance and
+release checks. This does not invalidate earlier simple-art evidence. Reference
+images and plans are not delivered models or evidence of implemented
+material-aware destruction.
 
 ## Shared acceptance rules
 

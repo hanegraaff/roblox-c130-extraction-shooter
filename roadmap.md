@@ -15,14 +15,22 @@ The integrated source on `main` includes the development shell, verification too
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
+| M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Ready | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
+| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Planned | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
-| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Ready | P08 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
+| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
-| Asset refinement — Blender | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Ready | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
-| Asset refinement — Integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Planned | P16, P08, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
+
+**Next implementation order (user-directed, D63): P16 → P17 → P09.** P16 and
+P17 are inserted between P07 and P08 without renumbering existing plans. P16
+must receive the user's Blender approval before P17 starts. P08's already
+completed work and historical evidence remain valid; it is not undone or
+repeated. P09 waits for P17 and the completed P08 source. This priority takes
+precedence over lowest-numbered selection. This update schedules the work;
+neither asset plan has started implementation.
 
 2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
 asset set closely matching all three references in
@@ -32,8 +40,8 @@ Outpost for P17 replacement and confirmed a close match to all three images.
 P16 requires explicit human approval of the actual asset revision; P17 consumes
 that approved revision and separately verifies in-game demolition, replication,
 reset and presentation. These plans do not depend on P12 publication or P15
-level selection, and do not make refined art a mandatory MVP prerequisite.
-P09 remains Ready; the normal lowest-numbered selection rule is unchanged.
+level selection. The user's subsequent sequencing revision places them next,
+before continuing P09 and the remaining MVP work, as recorded in D63 above.
 Neither new plan has started, and no Blender assets or replacement are claimed.
 
 2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
@@ -157,7 +165,7 @@ unmerged. No Roblox publication occurred.
 
 `Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. Only this table owns status; individual plans own implementation/evidence records.
 
-Plan IDs remain stable; table/dependency order places the later-added P13/P14 before P05 rather than renumbering delivered plans. Select the lowest-numbered Ready plan whose dependencies are Complete; then ensure those dependencies' source is present on the implementation branch before coding. Resolve an open dependency PR's branch when main lacks that source. Resume an In progress plan before starting another. Reassess a Blocked plan when new evidence shows its blocker may have cleared; elapsed time alone is not resolution. If no Ready plan exists, the coordinator may promote the first Planned plan whose dependencies are complete. An unresolved Blocked prerequisite cannot be skipped to claim its dependent capability.
+Plan IDs remain stable; table/dependency order places the later-added P13/P14 before P05 and P16/P17 between P07 and P08 rather than renumbering delivered plans. Resume an In progress plan before starting another. Follow the explicit user-directed priority above; otherwise select the lowest-numbered Ready plan whose dependencies are Complete. Ensure those dependencies' source is present on the implementation branch before coding. Resolve an open dependency PR's branch when main lacks that source. Reassess a Blocked plan when new evidence shows its blocker may have cleared; elapsed time alone is not resolution. If no Ready plan exists, the coordinator may promote the first Planned plan whose dependencies are complete, respecting the explicit priority. An unresolved Blocked prerequisite cannot be skipped to claim its dependent capability.
 
 Use the [feature-loop skill](.agents/skills/implement-next-plan/SKILL.md) for one plan. Split a plan here before implementation if it is no longer a coherent increment; preserve IDs and requirement links. Do not implement the entire roadmap in one invocation.
 
@@ -175,16 +183,16 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 - After **P13/P14**, review terrain/building traversal and full-orbit pan reach at both zooms before combat depends on them.
 - After **P06**, test attacking and counterattacking on the revised map.
 - After **P07**, demonstrate the complete panel progression and physical fragments with simple graphics; art refinement cannot substitute for missing mechanics.
-- After **P09**, play the complete team-versus-plane loop and inspect destruction/elimination/timeout conflicts.
-- After **P12**, the MVP is ready only with the recorded gates and authorized publication; “code written” is not release completion.
 - After **P16**, the user must inspect the saved Blender scene, furnished interior/exterior and every material's damage gallery and explicitly like/approve the identified revision before P17 starts.
 - After **P17**, review the approved smaller Outpost in actual gameplay, including both floors, normal/thermal damage, real openings, fragments and pristine reset.
+- After **P09**, play the complete team-versus-plane loop and inspect destruction/elimination/timeout conflicts.
+- After **P12**, the MVP is ready only with the recorded gates and authorized publication; “code written” is not release completion.
 
 ## Later asset refinement and other proposals
 
 Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
 
-P16/P17 now scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 supplies readable UI/effects/audio without making high-detail art an MVP dependency. If P17 is integrated before an MVP release candidate, P11/P12 must profile and verify that actual candidate art. This update creates plans only; it does not start implementation.
+P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. This update schedules plans only; it does not start implementation.
 
 ## Initial delivery record
 
