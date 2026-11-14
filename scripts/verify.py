@@ -65,6 +65,9 @@ def negative_probes() -> None:
 def main() -> int:
     """Run repository, pinned-tool, format/lint/type, unit/service, probes and build gates."""
     run([sys.executable, "scripts/check_repository.py"])
+    run([sys.executable, "-m", "unittest", "discover", "-s", "tests/tooling", "-v"])
+    run([sys.executable, "scripts/p16_audit.py"])
+    run([sys.executable, "-m", "unittest", "discover", "-s", "tests/assets", "-v"])
     # Refuse accidental upgrades or tool substitutions; Rokit pins are the source of truth.
     for name, pin in re.findall(r'([\w-]+)\s*=\s*"[^"@]+@([\d.]+)"', (ROOT / "rokit.toml").read_text()):
         executable = shutil.which(name, path=ENVIRONMENT["PATH"])

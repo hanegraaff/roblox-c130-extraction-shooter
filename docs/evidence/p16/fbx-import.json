@@ -1,0 +1,55 @@
+{
+  "suite": "P16ExportAudit-FBX",
+  "passed": true,
+  "blender_version": "5.3.0",
+  "fbx_sha256": "cfca0ce6e37986169f7932fbc06e73b23b0b9a5f4a2eaa9f6a785c13984fc949",
+  "imported_meshes": 2241,
+  "imported_triangles": 89440,
+  "max_bound_error_studs": 5.7220458984375e-06,
+  "scale_axes_verified": true,
+  "uv_materials_verified": true,
+  "panel_library_meshes": 260,
+  "panel_library_sha256": "33ca83ab207bb2b4bccbaa776c4e12825f9d968b27c74eb4f77ded8def5a4f25",
+  "reusable_kit": [
+    {
+      "family": "utility_lamp",
+      "fbx_sha256": "3f23e9451f34ea566d0ef5a3f9fc62c64d3fda591ff431e6600a208bb7a0574b",
+      "triangles": 88
+    },
+    {
+      "family": "louver_vent",
+      "fbx_sha256": "5c5ef575ddec36109986a3cd465671fa7da3811d154212da7c464ba070de8822",
+      "triangles": 440
+    },
+    {
+      "family": "pallet",
+      "fbx_sha256": "bd0037eb694bf20bff56b4722b5d8df31bf150ec71e964f05d1adba86691d56c",
+      "triangles": 352
+    },
+    {
+      "family": "sealed_case",
+      "fbx_sha256": "4572e5ad8bb32da30ebf6d75032624cd45a999fcba6d0141e83c5aba48a0646a",
+      "triangles": 352
+    },
+    {
+      "family": "storage_rack",
+      "fbx_sha256": "7f8bb42fefd2b3491c8dcec36752f90e1389d5d2c8e1c416432c6a8ba47900d5",
+      "triangles": 3260
+    },
+    {
+      "family": "workbench",
+      "fbx_sha256": "71f51ebab324b800a0ace1b1adf4266030276daf651830f5f8c03033dec4c44f",
+      "triangles": 4248
+    },
+    {
+      "family": "command_console",
+      "fbx_sha256": "4f61edaa9662a3bb3b5210528f99bada9ee502ce073b850774313b577a0a1390",
+      "triangles": 1916
+    },
+    {
+      "family": "operator_chair",
+      "fbx_sha256": "0fa9a51e8fdfc9bd542d5e3a798ac06404840455d9a1593865aa4ed42b50ae57",
+      "triangles": 636
+    }
+  ]
+}
