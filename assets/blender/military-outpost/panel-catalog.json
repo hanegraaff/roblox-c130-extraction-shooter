@@ -1,0 +1,2727 @@
+{
+  "schema_version": 1,
+  "revision": "p16-v1",
+  "unit": "stud",
+  "face_axes": [
+    "X",
+    "Z"
+  ],
+  "thickness_axis": "Y",
+  "families": [
+    {
+      "id": "corrugated_wall",
+      "material": "corrugated",
+      "shape": "solid",
+      "dimensions_studs": [
+        16,
+        1,
+        8
+      ],
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "source_collection": "07_Panel_Library",
+      "states": {
+        "Pristine": {
+          "mesh": "corrugated_wall-pristine.obj",
+          "collision": "corrugated_wall-pristine-collision.obj",
+          "source_object": "corrugated_wall.Pristine",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 128.0,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Light": {
+          "mesh": "corrugated_wall-light.obj",
+          "collision": "corrugated_wall-light-collision.obj",
+          "source_object": "corrugated_wall.Light",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 128.0,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Heavy": {
+          "mesh": "corrugated_wall-heavy.obj",
+          "collision": "corrugated_wall-heavy-collision.obj",
+          "source_object": "corrugated_wall.Heavy",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -3.9999999999999964,
+              -3.5
+            ],
+            [
+              3.9999999999999964,
+              -4.0,
+              8.0,
+              -3.5
+            ],
+            [
+              -8.0,
+              -3.5,
+              -4.399999999999997,
+              -3.0
+            ],
+            [
+              4.399999999999997,
+              -3.5,
+              8.0,
+              -3.0
+            ],
+            [
+              -8.0,
+              -3.0,
+              -3.6999999999999966,
+              -2.5
+            ],
+            [
+              3.6999999999999966,
+              -3.0,
+              8.0,
+              -2.5
+            ],
+            [
+              -8.0,
+              -2.5,
+              -4.099999999999996,
+              -2.0
+            ],
+            [
+              4.099999999999996,
+              -2.5,
+              8.0,
+              -2.0
+            ],
+            [
+              -8.0,
+              -2.0,
+              -3.7999999999999963,
+              -1.5
+            ],
+            [
+              3.7999999999999963,
+              -2.0,
+              8.0,
+              -1.5
+            ],
+            [
+              -8.0,
+              -1.5,
+              -4.349999999999996,
+              -1.0
+            ],
+            [
+              4.349999999999996,
+              -1.5,
+              8.0,
+              -1.0
+            ],
+            [
+              -8.0,
+              -1.0,
+              -3.6499999999999964,
+              -0.5
+            ],
+            [
+              3.6499999999999964,
+              -1.0,
+              8.0,
+              -0.5
+            ],
+            [
+              -8.0,
+              -0.5,
+              -3.9999999999999964,
+              0.0
+            ],
+            [
+              3.9999999999999964,
+              -0.5,
+              8.0,
+              0.0
+            ],
+            [
+              -8.0,
+              0.0,
+              -3.9999999999999964,
+              0.5
+            ],
+            [
+              3.9999999999999964,
+              0.0,
+              8.0,
+              0.5
+            ],
+            [
+              -8.0,
+              0.5,
+              -4.399999999999997,
+              1.0
+            ],
+            [
+              4.399999999999997,
+              0.5,
+              8.0,
+              1.0
+            ],
+            [
+              -8.0,
+              1.0,
+              -3.6999999999999966,
+              1.5
+            ],
+            [
+              3.6999999999999966,
+              1.0,
+              8.0,
+              1.5
+            ],
+            [
+              -8.0,
+              1.5,
+              -4.099999999999996,
+              2.0
+            ],
+            [
+              4.099999999999996,
+              1.5,
+              8.0,
+              2.0
+            ],
+            [
+              -8.0,
+              2.0,
+              -3.7999999999999963,
+              2.5
+            ],
+            [
+              3.7999999999999963,
+              2.0,
+              8.0,
+              2.5
+            ],
+            [
+              -8.0,
+              2.5,
+              -4.349999999999996,
+              3.0
+            ],
+            [
+              4.349999999999996,
+              2.5,
+              8.0,
+              3.0
+            ],
+            [
+              -8.0,
+              3.0,
+              -3.6499999999999964,
+              3.5
+            ],
+            [
+              3.6499999999999964,
+              3.0,
+              8.0,
+              3.5
+            ],
+            [
+              -8.0,
+              3.5,
+              -3.9999999999999964,
+              4.0
+            ],
+            [
+              3.9999999999999964,
+              3.5,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 64.00000000000006,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 0.49999999999999956,
+          "object_count": 1
+        },
+        "Total": {
+          "mesh": "corrugated_wall-total.obj",
+          "collision": "corrugated_wall-total-collision.obj",
+          "source_object": null,
+          "rectangles": [],
+          "blocking_area": 0,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 1.0,
+          "object_count": 0
+        }
+      },
+      "fragments": [
+        {
+          "mesh": "corrugated_wall-fragment-1.obj",
+          "source_object": "corrugated_wall.fragment0",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_wall-fragment-2.obj",
+          "source_object": "corrugated_wall.fragment1",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_wall-fragment-3.obj",
+          "source_object": "corrugated_wall.fragment2",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_wall-fragment-4.obj",
+          "source_object": "corrugated_wall.fragment3",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "fragment_cap": 4
+    },
+    {
+      "id": "corrugated_window",
+      "material": "corrugated",
+      "shape": "window",
+      "dimensions_studs": [
+        16,
+        1,
+        8
+      ],
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "source_collection": "07_Panel_Library",
+      "states": {
+        "Pristine": {
+          "mesh": "corrugated_window-pristine.obj",
+          "collision": "corrugated_window-pristine-collision.obj",
+          "source_object": "corrugated_window.Pristine",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -4,
+              4.0
+            ],
+            [
+              4,
+              -4.0,
+              8.0,
+              4.0
+            ],
+            [
+              -4,
+              -4.0,
+              4,
+              -1
+            ],
+            [
+              -4,
+              3,
+              4,
+              4.0
+            ]
+          ],
+          "blocking_area": 96.0,
+          "pristine_blocking_area": 96.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Light": {
+          "mesh": "corrugated_window-light.obj",
+          "collision": "corrugated_window-light-collision.obj",
+          "source_object": "corrugated_window.Light",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -4,
+              4.0
+            ],
+            [
+              4,
+              -4.0,
+              8.0,
+              4.0
+            ],
+            [
+              -4,
+              -4.0,
+              4,
+              -1
+            ],
+            [
+              -4,
+              3,
+              4,
+              4.0
+            ]
+          ],
+          "blocking_area": 96.0,
+          "pristine_blocking_area": 96.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Heavy": {
+          "mesh": "corrugated_window-heavy.obj",
+          "collision": "corrugated_window-heavy-collision.obj",
+          "source_object": "corrugated_window.Heavy",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -4.9999999999999964,
+              -3.5
+            ],
+            [
+              4.9999999999999964,
+              -4.0,
+              8.0,
+              -3.5
+            ],
+            [
+              -8.0,
+              -3.5,
+              -5.399999999999997,
+              -3.0
+            ],
+            [
+              5.399999999999997,
+              -3.5,
+              8.0,
+              -3.0
+            ],
+            [
+              -8.0,
+              -3.0,
+              -4.699999999999997,
+              -2.5
+            ],
+            [
+              4.699999999999997,
+              -3.0,
+              8.0,
+              -2.5
+            ],
+            [
+              -8.0,
+              -2.5,
+              -5.099999999999996,
+              -2.0
+            ],
+            [
+              5.099999999999996,
+              -2.5,
+              8.0,
+              -2.0
+            ],
+            [
+              -8.0,
+              -2.0,
+              -4.799999999999996,
+              -1.5
+            ],
+            [
+              4.799999999999996,
+              -2.0,
+              8.0,
+              -1.5
+            ],
+            [
+              -8.0,
+              -1.5,
+              -5.349999999999996,
+              -1.0
+            ],
+            [
+              5.349999999999996,
+              -1.5,
+              8.0,
+              -1.0
+            ],
+            [
+              -8.0,
+              -1.0,
+              -4.649999999999997,
+              -0.5
+            ],
+            [
+              4.649999999999997,
+              -1.0,
+              8.0,
+              -0.5
+            ],
+            [
+              -8.0,
+              -0.5,
+              -4.9999999999999964,
+              0.0
+            ],
+            [
+              4.9999999999999964,
+              -0.5,
+              8.0,
+              0.0
+            ],
+            [
+              -8.0,
+              0.0,
+              -4.9999999999999964,
+              0.5
+            ],
+            [
+              4.9999999999999964,
+              0.0,
+              8.0,
+              0.5
+            ],
+            [
+              -8.0,
+              0.5,
+              -5.399999999999997,
+              1.0
+            ],
+            [
+              5.399999999999997,
+              0.5,
+              8.0,
+              1.0
+            ],
+            [
+              -8.0,
+              1.0,
+              -4.699999999999997,
+              1.5
+            ],
+            [
+              4.699999999999997,
+              1.0,
+              8.0,
+              1.5
+            ],
+            [
+              -8.0,
+              1.5,
+              -5.099999999999996,
+              2.0
+            ],
+            [
+              5.099999999999996,
+              1.5,
+              8.0,
+              2.0
+            ],
+            [
+              -8.0,
+              2.0,
+              -4.799999999999996,
+              2.5
+            ],
+            [
+              4.799999999999996,
+              2.0,
+              8.0,
+              2.5
+            ],
+            [
+              -8.0,
+              2.5,
+              -5.349999999999996,
+              3.0
+            ],
+            [
+              5.349999999999996,
+              2.5,
+              8.0,
+              3.0
+            ],
+            [
+              -8.0,
+              3.0,
+              -4.649999999999997,
+              3.5
+            ],
+            [
+              4.649999999999997,
+              3.0,
+              8.0,
+              3.5
+            ],
+            [
+              -8.0,
+              3.5,
+              -4.9999999999999964,
+              4.0
+            ],
+            [
+              4.9999999999999964,
+              3.5,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 48.00000000000006,
+          "pristine_blocking_area": 96.0,
+          "removed_fraction": 0.49999999999999944,
+          "object_count": 1
+        },
+        "Total": {
+          "mesh": "corrugated_window-total.obj",
+          "collision": "corrugated_window-total-collision.obj",
+          "source_object": null,
+          "rectangles": [],
+          "blocking_area": 0,
+          "pristine_blocking_area": 96.0,
+          "removed_fraction": 1.0,
+          "object_count": 0
+        }
+      },
+      "fragments": [
+        {
+          "mesh": "corrugated_window-fragment-1.obj",
+          "source_object": "corrugated_window.fragment0",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_window-fragment-2.obj",
+          "source_object": "corrugated_window.fragment1",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_window-fragment-3.obj",
+          "source_object": "corrugated_window.fragment2",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_window-fragment-4.obj",
+          "source_object": "corrugated_window.fragment3",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "fragment_cap": 4
+    },
+    {
+      "id": "corrugated_door",
+      "material": "corrugated",
+      "shape": "door",
+      "dimensions_studs": [
+        16,
+        1,
+        8
+      ],
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "source_collection": "07_Panel_Library",
+      "states": {
+        "Pristine": {
+          "mesh": "corrugated_door-pristine.obj",
+          "collision": "corrugated_door-pristine-collision.obj",
+          "source_object": "corrugated_door.Pristine",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -3,
+              4.0
+            ],
+            [
+              3,
+              -4.0,
+              8.0,
+              4.0
+            ],
+            [
+              -3,
+              3,
+              3,
+              4.0
+            ]
+          ],
+          "blocking_area": 86.0,
+          "pristine_blocking_area": 86.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Light": {
+          "mesh": "corrugated_door-light.obj",
+          "collision": "corrugated_door-light-collision.obj",
+          "source_object": "corrugated_door.Light",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -3,
+              4.0
+            ],
+            [
+              3,
+              -4.0,
+              8.0,
+              4.0
+            ],
+            [
+              -3,
+              3,
+              3,
+              4.0
+            ]
+          ],
+          "blocking_area": 86.0,
+          "pristine_blocking_area": 86.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Heavy": {
+          "mesh": "corrugated_door-heavy.obj",
+          "collision": "corrugated_door-heavy-collision.obj",
+          "source_object": "corrugated_door.Heavy",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -5.3124999999999964,
+              -3.5
+            ],
+            [
+              5.3124999999999964,
+              -4.0,
+              8.0,
+              -3.5
+            ],
+            [
+              -8.0,
+              -3.5,
+              -5.712499999999997,
+              -3.0
+            ],
+            [
+              5.712499999999997,
+              -3.5,
+              8.0,
+              -3.0
+            ],
+            [
+              -8.0,
+              -3.0,
+              -5.012499999999997,
+              -2.5
+            ],
+            [
+              5.012499999999997,
+              -3.0,
+              8.0,
+              -2.5
+            ],
+            [
+              -8.0,
+              -2.5,
+              -5.412499999999996,
+              -2.0
+            ],
+            [
+              5.412499999999996,
+              -2.5,
+              8.0,
+              -2.0
+            ],
+            [
+              -8.0,
+              -2.0,
+              -5.112499999999996,
+              -1.5
+            ],
+            [
+              5.112499999999996,
+              -2.0,
+              8.0,
+              -1.5
+            ],
+            [
+              -8.0,
+              -1.5,
+              -5.662499999999996,
+              -1.0
+            ],
+            [
+              5.662499999999996,
+              -1.5,
+              8.0,
+              -1.0
+            ],
+            [
+              -8.0,
+              -1.0,
+              -4.962499999999997,
+              -0.5
+            ],
+            [
+              4.962499999999997,
+              -1.0,
+              8.0,
+              -0.5
+            ],
+            [
+              -8.0,
+              -0.5,
+              -5.3124999999999964,
+              0.0
+            ],
+            [
+              5.3124999999999964,
+              -0.5,
+              8.0,
+              0.0
+            ],
+            [
+              -8.0,
+              0.0,
+              -5.3124999999999964,
+              0.5
+            ],
+            [
+              5.3124999999999964,
+              0.0,
+              8.0,
+              0.5
+            ],
+            [
+              -8.0,
+              0.5,
+              -5.712499999999997,
+              1.0
+            ],
+            [
+              5.712499999999997,
+              0.5,
+              8.0,
+              1.0
+            ],
+            [
+              -8.0,
+              1.0,
+              -5.012499999999997,
+              1.5
+            ],
+            [
+              5.012499999999997,
+              1.0,
+              8.0,
+              1.5
+            ],
+            [
+              -8.0,
+              1.5,
+              -5.412499999999996,
+              2.0
+            ],
+            [
+              5.412499999999996,
+              1.5,
+              8.0,
+              2.0
+            ],
+            [
+              -8.0,
+              2.0,
+              -5.112499999999996,
+              2.5
+            ],
+            [
+              5.112499999999996,
+              2.0,
+              8.0,
+              2.5
+            ],
+            [
+              -8.0,
+              2.5,
+              -5.662499999999996,
+              3.0
+            ],
+            [
+              5.662499999999996,
+              2.5,
+              8.0,
+              3.0
+            ],
+            [
+              -8.0,
+              3.0,
+              -4.962499999999997,
+              3.5
+            ],
+            [
+              4.962499999999997,
+              3.0,
+              8.0,
+              3.5
+            ],
+            [
+              -8.0,
+              3.5,
+              -5.3124999999999964,
+              4.0
+            ],
+            [
+              5.3124999999999964,
+              3.5,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 43.00000000000006,
+          "pristine_blocking_area": 86.0,
+          "removed_fraction": 0.49999999999999933,
+          "object_count": 1
+        },
+        "Total": {
+          "mesh": "corrugated_door-total.obj",
+          "collision": "corrugated_door-total-collision.obj",
+          "source_object": null,
+          "rectangles": [],
+          "blocking_area": 0,
+          "pristine_blocking_area": 86.0,
+          "removed_fraction": 1.0,
+          "object_count": 0
+        }
+      },
+      "fragments": [
+        {
+          "mesh": "corrugated_door-fragment-1.obj",
+          "source_object": "corrugated_door.fragment0",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_door-fragment-2.obj",
+          "source_object": "corrugated_door.fragment1",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_door-fragment-3.obj",
+          "source_object": "corrugated_door.fragment2",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_door-fragment-4.obj",
+          "source_object": "corrugated_door.fragment3",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "fragment_cap": 4
+    },
+    {
+      "id": "corrugated_garage",
+      "material": "corrugated",
+      "shape": "garage",
+      "dimensions_studs": [
+        16,
+        1,
+        8
+      ],
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "source_collection": "07_Panel_Library",
+      "states": {
+        "Pristine": {
+          "mesh": "corrugated_garage-pristine.obj",
+          "collision": "corrugated_garage-pristine-collision.obj",
+          "source_object": "corrugated_garage.Pristine",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -6,
+              4.0
+            ],
+            [
+              6,
+              -4.0,
+              8.0,
+              4.0
+            ],
+            [
+              -6,
+              3,
+              6,
+              4.0
+            ]
+          ],
+          "blocking_area": 44.0,
+          "pristine_blocking_area": 44.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Light": {
+          "mesh": "corrugated_garage-light.obj",
+          "collision": "corrugated_garage-light-collision.obj",
+          "source_object": "corrugated_garage.Light",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -6,
+              4.0
+            ],
+            [
+              6,
+              -4.0,
+              8.0,
+              4.0
+            ],
+            [
+              -6,
+              3,
+              6,
+              4.0
+            ]
+          ],
+          "blocking_area": 44.0,
+          "pristine_blocking_area": 44.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Heavy": {
+          "mesh": "corrugated_garage-heavy.obj",
+          "collision": "corrugated_garage-heavy-collision.obj",
+          "source_object": "corrugated_garage.Heavy",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -6.6249999999999964,
+              -3.5
+            ],
+            [
+              6.6249999999999964,
+              -4.0,
+              8.0,
+              -3.5
+            ],
+            [
+              -8.0,
+              -3.5,
+              -7.024999999999997,
+              -3.0
+            ],
+            [
+              7.024999999999997,
+              -3.5,
+              8.0,
+              -3.0
+            ],
+            [
+              -8.0,
+              -3.0,
+              -6.324999999999997,
+              -2.5
+            ],
+            [
+              6.324999999999997,
+              -3.0,
+              8.0,
+              -2.5
+            ],
+            [
+              -8.0,
+              -2.5,
+              -6.724999999999996,
+              -2.0
+            ],
+            [
+              6.724999999999996,
+              -2.5,
+              8.0,
+              -2.0
+            ],
+            [
+              -8.0,
+              -2.0,
+              -6.424999999999996,
+              -1.5
+            ],
+            [
+              6.424999999999996,
+              -2.0,
+              8.0,
+              -1.5
+            ],
+            [
+              -8.0,
+              -1.5,
+              -6.974999999999996,
+              -1.0
+            ],
+            [
+              6.974999999999996,
+              -1.5,
+              8.0,
+              -1.0
+            ],
+            [
+              -8.0,
+              -1.0,
+              -6.274999999999997,
+              -0.5
+            ],
+            [
+              6.274999999999997,
+              -1.0,
+              8.0,
+              -0.5
+            ],
+            [
+              -8.0,
+              -0.5,
+              -6.6249999999999964,
+              0.0
+            ],
+            [
+              6.6249999999999964,
+              -0.5,
+              8.0,
+              0.0
+            ],
+            [
+              -8.0,
+              0.0,
+              -6.6249999999999964,
+              0.5
+            ],
+            [
+              6.6249999999999964,
+              0.0,
+              8.0,
+              0.5
+            ],
+            [
+              -8.0,
+              0.5,
+              -7.024999999999997,
+              1.0
+            ],
+            [
+              7.024999999999997,
+              0.5,
+              8.0,
+              1.0
+            ],
+            [
+              -8.0,
+              1.0,
+              -6.324999999999997,
+              1.5
+            ],
+            [
+              6.324999999999997,
+              1.0,
+              8.0,
+              1.5
+            ],
+            [
+              -8.0,
+              1.5,
+              -6.724999999999996,
+              2.0
+            ],
+            [
+              6.724999999999996,
+              1.5,
+              8.0,
+              2.0
+            ],
+            [
+              -8.0,
+              2.0,
+              -6.424999999999996,
+              2.5
+            ],
+            [
+              6.424999999999996,
+              2.0,
+              8.0,
+              2.5
+            ],
+            [
+              -8.0,
+              2.5,
+              -6.974999999999996,
+              3.0
+            ],
+            [
+              6.974999999999996,
+              2.5,
+              8.0,
+              3.0
+            ],
+            [
+              -8.0,
+              3.0,
+              -6.274999999999997,
+              3.5
+            ],
+            [
+              6.274999999999997,
+              3.0,
+              8.0,
+              3.5
+            ],
+            [
+              -8.0,
+              3.5,
+              -6.6249999999999964,
+              4.0
+            ],
+            [
+              6.6249999999999964,
+              3.5,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 22.000000000000057,
+          "pristine_blocking_area": 44.0,
+          "removed_fraction": 0.49999999999999867,
+          "object_count": 1
+        },
+        "Total": {
+          "mesh": "corrugated_garage-total.obj",
+          "collision": "corrugated_garage-total-collision.obj",
+          "source_object": null,
+          "rectangles": [],
+          "blocking_area": 0,
+          "pristine_blocking_area": 44.0,
+          "removed_fraction": 1.0,
+          "object_count": 0
+        }
+      },
+      "fragments": [
+        {
+          "mesh": "corrugated_garage-fragment-1.obj",
+          "source_object": "corrugated_garage.fragment0",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_garage-fragment-2.obj",
+          "source_object": "corrugated_garage.fragment1",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_garage-fragment-3.obj",
+          "source_object": "corrugated_garage.fragment2",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "corrugated_garage-fragment-4.obj",
+          "source_object": "corrugated_garage.fragment3",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "fragment_cap": 4
+    },
+    {
+      "id": "concrete_partition",
+      "material": "concrete",
+      "shape": "solid",
+      "dimensions_studs": [
+        16,
+        1,
+        8
+      ],
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "source_collection": "07_Panel_Library",
+      "states": {
+        "Pristine": {
+          "mesh": "concrete_partition-pristine.obj",
+          "collision": "concrete_partition-pristine-collision.obj",
+          "source_object": "concrete_partition.Pristine",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 128.0,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Light": {
+          "mesh": "concrete_partition-light.obj",
+          "collision": "concrete_partition-light-collision.obj",
+          "source_object": "concrete_partition.Light",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 128.0,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Heavy": {
+          "mesh": "concrete_partition-heavy.obj",
+          "collision": "concrete_partition-heavy-collision.obj",
+          "source_object": "concrete_partition.Heavy",
+          "rectangles": [
+            [
+              -8.0,
+              -4.0,
+              -3.9999999999999964,
+              -3.5
+            ],
+            [
+              3.9999999999999964,
+              -4.0,
+              8.0,
+              -3.5
+            ],
+            [
+              -8.0,
+              -3.5,
+              -4.399999999999997,
+              -3.0
+            ],
+            [
+              4.399999999999997,
+              -3.5,
+              8.0,
+              -3.0
+            ],
+            [
+              -8.0,
+              -3.0,
+              -3.6999999999999966,
+              -2.5
+            ],
+            [
+              3.6999999999999966,
+              -3.0,
+              8.0,
+              -2.5
+            ],
+            [
+              -8.0,
+              -2.5,
+              -4.099999999999996,
+              -2.0
+            ],
+            [
+              4.099999999999996,
+              -2.5,
+              8.0,
+              -2.0
+            ],
+            [
+              -8.0,
+              -2.0,
+              -3.7999999999999963,
+              -1.5
+            ],
+            [
+              3.7999999999999963,
+              -2.0,
+              8.0,
+              -1.5
+            ],
+            [
+              -8.0,
+              -1.5,
+              -4.349999999999996,
+              -1.0
+            ],
+            [
+              4.349999999999996,
+              -1.5,
+              8.0,
+              -1.0
+            ],
+            [
+              -8.0,
+              -1.0,
+              -3.6499999999999964,
+              -0.5
+            ],
+            [
+              3.6499999999999964,
+              -1.0,
+              8.0,
+              -0.5
+            ],
+            [
+              -8.0,
+              -0.5,
+              -3.9999999999999964,
+              0.0
+            ],
+            [
+              3.9999999999999964,
+              -0.5,
+              8.0,
+              0.0
+            ],
+            [
+              -8.0,
+              0.0,
+              -3.9999999999999964,
+              0.5
+            ],
+            [
+              3.9999999999999964,
+              0.0,
+              8.0,
+              0.5
+            ],
+            [
+              -8.0,
+              0.5,
+              -4.399999999999997,
+              1.0
+            ],
+            [
+              4.399999999999997,
+              0.5,
+              8.0,
+              1.0
+            ],
+            [
+              -8.0,
+              1.0,
+              -3.6999999999999966,
+              1.5
+            ],
+            [
+              3.6999999999999966,
+              1.0,
+              8.0,
+              1.5
+            ],
+            [
+              -8.0,
+              1.5,
+              -4.099999999999996,
+              2.0
+            ],
+            [
+              4.099999999999996,
+              1.5,
+              8.0,
+              2.0
+            ],
+            [
+              -8.0,
+              2.0,
+              -3.7999999999999963,
+              2.5
+            ],
+            [
+              3.7999999999999963,
+              2.0,
+              8.0,
+              2.5
+            ],
+            [
+              -8.0,
+              2.5,
+              -4.349999999999996,
+              3.0
+            ],
+            [
+              4.349999999999996,
+              2.5,
+              8.0,
+              3.0
+            ],
+            [
+              -8.0,
+              3.0,
+              -3.6499999999999964,
+              3.5
+            ],
+            [
+              3.6499999999999964,
+              3.0,
+              8.0,
+              3.5
+            ],
+            [
+              -8.0,
+              3.5,
+              -3.9999999999999964,
+              4.0
+            ],
+            [
+              3.9999999999999964,
+              3.5,
+              8.0,
+              4.0
+            ]
+          ],
+          "blocking_area": 64.00000000000006,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 0.49999999999999956,
+          "object_count": 1
+        },
+        "Total": {
+          "mesh": "concrete_partition-total.obj",
+          "collision": "concrete_partition-total-collision.obj",
+          "source_object": null,
+          "rectangles": [],
+          "blocking_area": 0,
+          "pristine_blocking_area": 128.0,
+          "removed_fraction": 1.0,
+          "object_count": 0
+        }
+      },
+      "fragments": [
+        {
+          "mesh": "concrete_partition-fragment-1.obj",
+          "source_object": "concrete_partition.fragment0",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "concrete_partition-fragment-2.obj",
+          "source_object": "concrete_partition.fragment1",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "concrete_partition-fragment-3.obj",
+          "source_object": "concrete_partition.fragment2",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "concrete_partition-fragment-4.obj",
+          "source_object": "concrete_partition.fragment3",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "fragment_cap": 4
+    },
+    {
+      "id": "layered_roof",
+      "material": "roof",
+      "shape": "solid",
+      "dimensions_studs": [
+        16,
+        1,
+        16
+      ],
+      "pivot": [
+        0,
+        0,
+        0
+      ],
+      "source_collection": "07_Panel_Library",
+      "states": {
+        "Pristine": {
+          "mesh": "layered_roof-pristine.obj",
+          "collision": "layered_roof-pristine-collision.obj",
+          "source_object": "layered_roof.Pristine",
+          "rectangles": [
+            [
+              -8.0,
+              -8.0,
+              8.0,
+              8.0
+            ]
+          ],
+          "blocking_area": 256.0,
+          "pristine_blocking_area": 256.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Light": {
+          "mesh": "layered_roof-light.obj",
+          "collision": "layered_roof-light-collision.obj",
+          "source_object": "layered_roof.Light",
+          "rectangles": [
+            [
+              -8.0,
+              -8.0,
+              8.0,
+              8.0
+            ]
+          ],
+          "blocking_area": 256.0,
+          "pristine_blocking_area": 256.0,
+          "removed_fraction": 0.0,
+          "object_count": 1
+        },
+        "Heavy": {
+          "mesh": "layered_roof-heavy.obj",
+          "collision": "layered_roof-heavy-collision.obj",
+          "source_object": "layered_roof.Heavy",
+          "rectangles": [
+            [
+              -8.0,
+              -8.0,
+              -3.9999999999999964,
+              -7.0
+            ],
+            [
+              3.9999999999999964,
+              -8.0,
+              8.0,
+              -7.0
+            ],
+            [
+              -8.0,
+              -7.0,
+              -4.399999999999997,
+              -6.0
+            ],
+            [
+              4.399999999999997,
+              -7.0,
+              8.0,
+              -6.0
+            ],
+            [
+              -8.0,
+              -6.0,
+              -3.6999999999999966,
+              -5.0
+            ],
+            [
+              3.6999999999999966,
+              -6.0,
+              8.0,
+              -5.0
+            ],
+            [
+              -8.0,
+              -5.0,
+              -4.099999999999996,
+              -4.0
+            ],
+            [
+              4.099999999999996,
+              -5.0,
+              8.0,
+              -4.0
+            ],
+            [
+              -8.0,
+              -4.0,
+              -3.7999999999999963,
+              -3.0
+            ],
+            [
+              3.7999999999999963,
+              -4.0,
+              8.0,
+              -3.0
+            ],
+            [
+              -8.0,
+              -3.0,
+              -4.349999999999996,
+              -2.0
+            ],
+            [
+              4.349999999999996,
+              -3.0,
+              8.0,
+              -2.0
+            ],
+            [
+              -8.0,
+              -2.0,
+              -3.6499999999999964,
+              -1.0
+            ],
+            [
+              3.6499999999999964,
+              -2.0,
+              8.0,
+              -1.0
+            ],
+            [
+              -8.0,
+              -1.0,
+              -3.9999999999999964,
+              0.0
+            ],
+            [
+              3.9999999999999964,
+              -1.0,
+              8.0,
+              0.0
+            ],
+            [
+              -8.0,
+              0.0,
+              -3.9999999999999964,
+              1.0
+            ],
+            [
+              3.9999999999999964,
+              0.0,
+              8.0,
+              1.0
+            ],
+            [
+              -8.0,
+              1.0,
+              -4.399999999999997,
+              2.0
+            ],
+            [
+              4.399999999999997,
+              1.0,
+              8.0,
+              2.0
+            ],
+            [
+              -8.0,
+              2.0,
+              -3.6999999999999966,
+              3.0
+            ],
+            [
+              3.6999999999999966,
+              2.0,
+              8.0,
+              3.0
+            ],
+            [
+              -8.0,
+              3.0,
+              -4.099999999999996,
+              4.0
+            ],
+            [
+              4.099999999999996,
+              3.0,
+              8.0,
+              4.0
+            ],
+            [
+              -8.0,
+              4.0,
+              -3.7999999999999963,
+              5.0
+            ],
+            [
+              3.7999999999999963,
+              4.0,
+              8.0,
+              5.0
+            ],
+            [
+              -8.0,
+              5.0,
+              -4.349999999999996,
+              6.0
+            ],
+            [
+              4.349999999999996,
+              5.0,
+              8.0,
+              6.0
+            ],
+            [
+              -8.0,
+              6.0,
+              -3.6499999999999964,
+              7.0
+            ],
+            [
+              3.6499999999999964,
+              6.0,
+              8.0,
+              7.0
+            ],
+            [
+              -8.0,
+              7.0,
+              -3.9999999999999964,
+              8.0
+            ],
+            [
+              3.9999999999999964,
+              7.0,
+              8.0,
+              8.0
+            ]
+          ],
+          "blocking_area": 128.0000000000001,
+          "pristine_blocking_area": 256.0,
+          "removed_fraction": 0.49999999999999956,
+          "object_count": 1
+        },
+        "Total": {
+          "mesh": "layered_roof-total.obj",
+          "collision": "layered_roof-total-collision.obj",
+          "source_object": null,
+          "rectangles": [],
+          "blocking_area": 0,
+          "pristine_blocking_area": 256.0,
+          "removed_fraction": 1.0,
+          "object_count": 0
+        }
+      },
+      "fragments": [
+        {
+          "mesh": "layered_roof-fragment-1.obj",
+          "source_object": "layered_roof.fragment0",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "layered_roof-fragment-2.obj",
+          "source_object": "layered_roof.fragment1",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "layered_roof-fragment-3.obj",
+          "source_object": "layered_roof.fragment2",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        },
+        {
+          "mesh": "layered_roof-fragment-4.obj",
+          "source_object": "layered_roof.fragment3",
+          "max_dimensions_studs": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "fragment_cap": 4
+    }
+  ],
+  "identity_migration": {
+    "version": 2,
+    "legacy_count": 25,
+    "legacy_world_center": [
+      144,
+      0,
+      164
+    ],
+    "mapping": [
+      {
+        "panel_id": "Outpost_S01_North_01",
+        "legacy_pivot_roblox": [
+          136.0,
+          4.125,
+          140.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -8.0,
+          24.0,
+          4.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S01_North_02",
+        "legacy_pivot_roblox": [
+          152.0,
+          4.125,
+          140.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          8.0,
+          24.0,
+          4.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S01_South_01",
+        "legacy_pivot_roblox": [
+          136.0,
+          4.125,
+          188.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_garage",
+        "pivot_blender": [
+          -8.0,
+          -24.0,
+          4.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S01_West_01",
+        "legacy_pivot_roblox": [
+          128.0,
+          4.125,
+          148.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -16.0,
+          16.0,
+          4.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S01_West_02",
+        "legacy_pivot_roblox": [
+          128.0,
+          4.125,
+          164.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -16.0,
+          -0.0,
+          4.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S01_West_03",
+        "legacy_pivot_roblox": [
+          128.0,
+          4.125,
+          180.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -16.0,
+          -16.0,
+          4.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S01_East_01",
+        "legacy_pivot_roblox": [
+          160.0,
+          4.125,
+          148.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          16.0,
+          16.0,
+          4.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S01_East_02",
+        "legacy_pivot_roblox": [
+          160.0,
+          4.125,
+          164.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_window",
+        "pivot_blender": [
+          16.0,
+          -0.0,
+          4.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S01_East_03",
+        "legacy_pivot_roblox": [
+          160.0,
+          4.125,
+          180.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          16.0,
+          -16.0,
+          4.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_North_01",
+        "legacy_pivot_roblox": [
+          136.0,
+          14.125,
+          140.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -8.0,
+          24.0,
+          14.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_North_02",
+        "legacy_pivot_roblox": [
+          152.0,
+          14.125,
+          140.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          8.0,
+          24.0,
+          14.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_South_01",
+        "legacy_pivot_roblox": [
+          136.0,
+          14.125,
+          188.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_window",
+        "pivot_blender": [
+          -8.0,
+          -24.0,
+          14.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S02_South_02",
+        "legacy_pivot_roblox": [
+          152.0,
+          14.125,
+          188.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          8,
+          1
+        ],
+        "family": "corrugated_window",
+        "pivot_blender": [
+          8.0,
+          -24.0,
+          14.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S02_West_01",
+        "legacy_pivot_roblox": [
+          128.0,
+          14.125,
+          148.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -16.0,
+          16.0,
+          14.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_West_02",
+        "legacy_pivot_roblox": [
+          128.0,
+          14.125,
+          164.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -16.0,
+          -0.0,
+          14.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_West_03",
+        "legacy_pivot_roblox": [
+          128.0,
+          14.125,
+          180.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_wall",
+        "pivot_blender": [
+          -16.0,
+          -16.0,
+          14.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_East_01",
+        "legacy_pivot_roblox": [
+          160.0,
+          14.125,
+          148.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_door",
+        "pivot_blender": [
+          16.0,
+          16.0,
+          14.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S02_East_02",
+        "legacy_pivot_roblox": [
+          160.0,
+          14.125,
+          164.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_window",
+        "pivot_blender": [
+          16.0,
+          -0.0,
+          14.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S02_East_03",
+        "legacy_pivot_roblox": [
+          160.0,
+          14.125,
+          180.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          1,
+          8,
+          16
+        ],
+        "family": "corrugated_window",
+        "pivot_blender": [
+          16.0,
+          -16.0,
+          14.125
+        ],
+        "rotation_z": 1.5707963267948966,
+        "roof": false,
+        "migration": "v2 aperture changes; pivot/ID retained"
+      },
+      {
+        "panel_id": "Outpost_S02_Roof_01_01",
+        "legacy_pivot_roblox": [
+          136.0,
+          20.625,
+          148.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          1,
+          16
+        ],
+        "family": "layered_roof",
+        "pivot_blender": [
+          -8.0,
+          16.0,
+          20.625
+        ],
+        "rotation_z": 0,
+        "roof": true,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_Roof_01_02",
+        "legacy_pivot_roblox": [
+          136.0,
+          20.625,
+          164.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          1,
+          16
+        ],
+        "family": "layered_roof",
+        "pivot_blender": [
+          -8.0,
+          -0.0,
+          20.625
+        ],
+        "rotation_z": 0,
+        "roof": true,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_Roof_01_03",
+        "legacy_pivot_roblox": [
+          136.0,
+          20.625,
+          180.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          1,
+          16
+        ],
+        "family": "layered_roof",
+        "pivot_blender": [
+          -8.0,
+          -16.0,
+          20.625
+        ],
+        "rotation_z": 0,
+        "roof": true,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_Roof_02_01",
+        "legacy_pivot_roblox": [
+          152.0,
+          20.625,
+          148.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          1,
+          16
+        ],
+        "family": "layered_roof",
+        "pivot_blender": [
+          8.0,
+          16.0,
+          20.625
+        ],
+        "rotation_z": 0,
+        "roof": true,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_Roof_02_02",
+        "legacy_pivot_roblox": [
+          152.0,
+          20.625,
+          164.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          1,
+          16
+        ],
+        "family": "layered_roof",
+        "pivot_blender": [
+          8.0,
+          -0.0,
+          20.625
+        ],
+        "rotation_z": 0,
+        "roof": true,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_S02_Roof_02_03",
+        "legacy_pivot_roblox": [
+          152.0,
+          20.625,
+          180.0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "legacy_size_roblox": [
+          16,
+          1,
+          16
+        ],
+        "family": "layered_roof",
+        "pivot_blender": [
+          8.0,
+          -16.0,
+          20.625
+        ],
+        "rotation_z": 0,
+        "roof": true,
+        "migration": "ID/pivot retained"
+      },
+      {
+        "panel_id": "Outpost_v2_Interior01",
+        "family": "concrete_partition",
+        "pivot_blender": [
+          7.0,
+          16.0,
+          4.125
+        ],
+        "rotation_z": 0,
+        "roof": false,
+        "migration": "new v2 panel; does not replace a legacy identity"
+      }
+    ],
+    "note": "P17 must adopt the declared fixed apertures and additional interior panel, revalidate aim/navigation, and preserve authoritative IDs."
+  },
+  "safety": {
+    "max_fragments_per_transition": 4,
+    "max_fragment_dimension": 1.5,
+    "max_live_fragments": 48,
+    "lifetime_seconds": 8,
+    "max_initial_linear_speed": 12,
+    "max_initial_angular_speed": 4
+  }
+}

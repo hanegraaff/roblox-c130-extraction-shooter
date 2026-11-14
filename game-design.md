@@ -8,7 +8,7 @@ The user's gameplay revision on 2026-11-07 supersedes the collection-and-escape 
 
 The user's 2026-11-08 level revision expands the MVP to a battlefield with twice the current diameter, authored terrain, two large buildings and one smaller building (all at least two stories), and visible panel destruction with physical debris. The 2026-11-10 control revision selects operator WASD panning and a mobile directional pad; mouse movement aims the reticle without moving the camera. Simple graphics must demonstrate the complete mechanics; refined assets are later work. P13 supplies the validated expanded terrain/building map. P14 supplies the verified panning implementation and its engine/playability acceptance on `main`. P07 adds persistent progressive panel damage, real openings and bounded physical fragments on all battlefield buildings, including the starting shelter. Its accepted implementation is integrated on `main` through PRs #30 and #29; the [plan](plans/07-destruction.md) and [integration record](docs/evidence/p07-integration.md) distinguish source-specific acceptance from merge verification. P02/P04 evidence describes the smaller, fixed-focus prototype and is not evidence for the revised map. See [decisions](docs/decisions.md) for selected rules versus proposed defaults.
 
-The P08 candidate on `plan/08-rocket-launcher` implements the single recoverable launcher using the existing shared aircraft health and authoritative ground-origin checks. Its [acceptance record](plans/08-rocket-launcher.md) remains separate from this design contract: all eleven native harness cases pass, while actual same-identity reconnect remains the sole unverified P08 acceptance gate. P08 is not complete or integrated. Initial controls and numeric reload/flight/recovery values are defaults in D55–D57.
+The P08 candidate on `docs/studio-supported-acceptance` implements the single recoverable launcher using the existing shared aircraft health and authoritative ground-origin checks. Its [acceptance record](plans/08-rocket-launcher.md) remains separate from this design contract: all eleven native harness cases pass. D59 removes unsupported actual same-identity reconnect from acceptance; the supported checks pass and integration is pending. Initial controls and numeric reload/flight/recovery values are defaults in D55–D57.
 
 ## MVP contract
 
@@ -116,6 +116,25 @@ Player states are Waiting → ActiveGround / ActiveGunship → Eliminated / Spec
 At each server step, enforce deadline first; resolve accepted projectile/damage events as a batch against pre-impact geometry; then evaluate aircraft destruction before total ground elimination. If no result is committed, handle departures (empty server, no ground players, operator forfeit) and launcher interactions. Once Results is committed, no pending shot/pickup/disconnect can change it. A rocket already in flight can still count after its shooter dies if another ground player keeps the round active; if a prior step already ended the round, it cannot retroactively win. Never trust a client timestamp to change this order.
 
 ## Presentation and readiness
+
+The [P16 Blender review kit](assets/blender/military-outpost/README.md) supplies
+editable source for a weathered military exterior, ground-floor storage/workshop,
+upstairs command room and reusable indoor/outdoor props, based on all three
+images in `src/images/military-outpost/`. It includes six material/shape panel
+families with Pristine/Light/Heavy/Total appearances, matching fragments,
+explicit proxy candidates and saved review views. The user explicitly approved
+revision `e8fb840` on 2026-11-13 ([record](docs/evidence/p16/human-approval.json)); the playable smaller Outpost still uses
+primitive art.
+
+[P17](plans/17-integrate-military-outpost.md) will replace that **smaller Outpost**
+on the same level with the approved revision. Concrete, corrugated metal and
+roofing must retain their material-specific damage while shared systems retain
+the three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment rules.
+Floors, stairs and supporting structure stay stable. The package's declared
+fixed apertures and additional partition require P17 navigation/cover validation;
+Blender previews do not grant runtime acceptance. D63 schedules P16 approval,
+then P17, before P09 and remaining MVP work. Existing gameplay evidence remains
+bound to its recorded primitive-asset source.
 
 Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
 

@@ -16,7 +16,7 @@ Add LauncherService with one round-owned identity and Available/Held/Recovering 
 - **A2:** Wrong role, dead/spectator, invalid ID, impossible travel/reach, stale round and flood requests reject without ownership/ammo mutation. A valid pickup works afterward; M-7 remains available to the carrier.
 - **A3:** During an active round, drop, death, character reset and disconnect preserve reload state and produce one recoverable weapon. Terminal cleanup takes precedence after a result. Invalid/out-of-bounds positions return it to its anchor. Switching/re-picking cannot fire before reload finishes; replenishment never creates ammo items.
 - **A4:** Real launcher impacts apply the P06 contract: two direct hits alone leave a pristine plane alive, the third ends the round as ground win, and earlier rifle damage reduces remaining health. Miss/obstruction/duplicate impacts do not add a full direct hit. Configured timing permits at least three shots during the round.
-- **A5:** A Studio session with one operator and two ground clients demonstrates raced acquisition, carrier death/disconnect and teammate recovery. Clients agree on ownership, reload and aircraft health; reconnect cannot restore a carried launcher or active life.
+- **A5:** A Studio session with one operator and two ground clients demonstrates raced acquisition, carrier death/disconnect and teammate recovery. Clients agree on ownership, reload and aircraft health. Same-identity reconnect is excluded from Studio acceptance under D59; service tests retain the no-restored-life/equipment rule.
 - **A6:** Reset removes old held/dropped/projectile state and spawns exactly one launcher at the original anchor. A delayed prior-round callback cannot grant ownership or damage the next aircraft.
 
 ## Focused human check
@@ -31,8 +31,9 @@ Explain the single launcher, recovery/default replenishment and actual controls.
 
 Implemented on `plan/08-rocket-launcher` and delivered through
 [draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32).
-Full acceptance remains incomplete **only because A5's actual same-identity
-reconnect scenario is unverified**. No waiver applies to P08. See the
+The user-directed D59 revision removes actual same-identity reconnect from
+required acceptance because Studio does not support that operation. All revised
+criteria pass on this branch; integration remains separate. See the
 [verification record](../docs/evidence/p08-launcher.md) and
 [independent final review](../docs/evidence/p08/independent-final-07e77ea.md).
 
@@ -43,7 +44,11 @@ Production/UI source is `ef7826bc80310c17be4bcde93fe7607620303289`, tree
 The native run observed delivery head `c3b155d`, based on integrated P07 main
 `c7210be`. Final source/evidence delivery `370aff4` passes
 [CI Verify](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43519154819).
-Subsequent changes are documentation/evidence only.
+The D59 revision changes acceptance documentation and test-report metadata only;
+production code and the eleven gameplay assertions are unchanged. See the
+[scope revision](../docs/evidence/p08/studio-acceptance-revision.md), delivered in
+[PR #33](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/33)
+from verified revision commit `0cd5ec8`.
 
 | Criterion | Named tests / environment | Observed result |
 | --- | --- | --- |
@@ -51,7 +56,7 @@ Subsequent changes are documentation/evidence only.
 | A2 | `LauncherService.spec` malformed/authority/reach/replay; shared movement/origin suites; P08 rejection/flood/movement and later valid pickup | Pass: rejected shape/role/life/ID/round/replay/rate/movement requests cannot change ownership/ammo; valid traffic works afterward |
 | A3 | Reload/transfer/recovery rules; `CharacterOwner.spec`; P08 miss/drop/transfer/switch/early-fire, death/in-flight, raw-removal and Kick/recovery cases | Pass: exact reload deadline and identity persist; reset player stays eliminated; a real accepted rocket survives nonterminal shooter death and damages the aircraft |
 | A4 | Health/timing rules; first-solid engine sweep; P08 pristine three-rocket and mixed-fire cases | Pass: actual pristine health 300→200→100→0 and Ground/AircraftDestroyed result; 21 real rifle hits give 195, then two rockets give 95→0. Miss/cover/duplicate rules and feasible reload timing pass |
-| A5 | Native P08 actual one-operator/two-ground session and replicated observations; composed MatchService tombstone tests | Three-client acquisition/death/disconnect/recovery/ownership/readiness/health agreement passes. Actual same-identity reconnect remains required and unverified; `actualReconnectVerified=false` / `requiredUnverified` explicitly retain the gap |
+| A5 | Native P08 actual one-operator/two-ground session and replicated observations; composed MatchService tombstone tests | Pass: three-client acquisition/death/disconnect/recovery/ownership/readiness/health agreement. D59 excludes actual same-identity reconnect; service tombstone tests retain its runtime rule. Historical reports preserve the former required gap |
 | A6 | Terminal/next-round rules; runtime cleanup; P08 real reset/anchor/old-intent and teardown | Pass: old state/work cannot own or damage the next round; one fresh anchor weapon; idempotent teardown drains all owned resources |
 
 Final `python3 scripts/verify.py` passes **55 unit / 65 integration** and all
@@ -84,12 +89,11 @@ harness. Source-bound P06/P05/P14 regressions on unchanged core `75b1e88` pass
 findings are fixed and independently rechecked. The writer updated player,
 contributor and package docs, current actual screenshot and D55–D58 defaults.
 
-A5 would require disconnecting and rejoining the same actual identity in a
-continuing round, verifying no restored life/equipment/actions while a teammate
-retains the recovered launcher. Current helpers add another identity; service
-tombstone tests cannot replace this real adapter/network check. D50 is P07-only.
-The remaining gate needs real evidence or an explicit user-directed acceptance
-revision. P09 is not promoted or implemented.
+D59 records the user's explicit removal of unsupported Studio acceptance
+scenarios. Same-identity reconnect remains unverified and is no longer required;
+it is not relabelled as a passing network check. Supported late joins and real
+three-client sessions remain required where specified. P09 is eligible but has
+not been implemented. Source/evidence delivery is recorded in the scope revision.
 
 After collection, owned native sessions/fixtures were removed. The original
 `tests.rbxlx` is Edit/not running, ManualHarness=nil, BootstrapStatus absent,

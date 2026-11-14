@@ -1,0 +1,66 @@
+# P17 — Replace the smaller Outpost with the approved asset
+
+**Milestone:** M4 / Outpost integration. **Dependencies:** P16, P07, P13, P14. **Requirements:** R01, R05, R06, R09, R10, R12, R15, R16, R19, R20. Status: [roadmap](../roadmap.md).
+
+**Sequence (D63):** Implement immediately after the approved P16 package, before continuing P09. This plan sits between P07 and P08 in roadmap order and does not require P08 to start; preserve the already completed launcher implementation when present in the selected source.
+
+## Capability and player experience
+
+Walk through the detailed military outpost approved in P16, including its storage/workshop downstairs, command room upstairs, exterior stairs/balcony and rooftop details. Aircraft fire produces persistent damage appropriate to each panel's material, real openings and bounded physical debris. Replace **only the existing smaller Outpost** in the current battlefield. Foundry and Warehouse remain the two larger buildings; this does not introduce a second level or level selection.
+
+## Input and boundaries
+
+The user approved P16 source `e8fb840a986969bdd3b7ac932469e3fa8cc99a9e`
+on 2026-11-13: `.blend` SHA-256
+`4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
+The [approval record](../docs/evidence/p16/human-approval.json) binds that input.
+P16's source and approval were merged through PR #35 into
+`docs/military-outpost-blender-plans`; include that branch or a descendant when
+starting P17 while the remaining stack is unmerged into `main`. The
+[integration record](../docs/evidence/p16/showcase-integration.md) identifies the
+exact merge. No P17 implementation is delivered by this record.
+
+Use the exact P16 source/export revision the user approved, with its asset inventory, scale/axes, panel catalog, collision proxies, budgets and review conditions. Record its hash before implementation. P16 approval is a real dependency: draft renders or an unapproved later asset revision cannot substitute. Include the completed P07/P13/P14 destruction/map/view source through dependencies or their eventual merges; do not branch from stale main while required source is unmerged. P08 is not a prerequisite. The current planning branch already contains completed P08 source; retain that work and run its applicable regressions rather than removing it to mimic the revised table order.
+
+Work on `plan/17-integrate-military-outpost`. Inspect the intended Studio instance/place ID and version-specific MCP guidance, reuse the matching Rojo-connected document, and coordinate mutations. Retain the original source in Git history so the replacement is reviewable and reversible. Roblox publication is a separate authorized release action.
+
+## Implementation
+
+### 1. Import and register the approved asset
+
+Use P16's validated export recipe. Retain meshes/textures and import/reconstruction descriptors in managed repository paths; record any required Roblox asset IDs and actual owner/access in the manifest. Confirm access for the intended experience owner and reimportability from the local exports. Do not make an unavailable cloud mesh or texture look like a successful reconstruction. Inspect imported content for unintended scripts. Export deliberate Studio-authored model definitions into `assets/models/` or `assets/world/` and update mappings/manifest together; a Studio-only placement is not delivery.
+
+Replace the current smaller Outpost at its existing site/orientation, starting from its 32×48-stud footprint, two stories and site envelope surveyed in P16. Integrate the approved stairs/balcony and furnishing while retaining avatar clearance, safe entry, traversable upper-floor routes, spawn/launcher anchors and both launcher approaches. Keep the total at two large and one smaller formal building, all with at least two accessible stories. Record any justified dimensional/panel-layout revision as a versioned construction change and update validation data; do not weaken building-count or accessibility checks to make an import pass.
+
+Classify every object as stable structure, destructible panel, cosmetic prop or deliberate solid cover. Stable floors, stairs and supporting frames retain their contract. Decorative screens, cables and material effects cannot silently become weapon/thermal blockers. Any actual solid prop cover must participate consistently in server obstruction and thermal presentation. Window/door treatment and attached dressing must agree with the panel catalog; no invisible full-wall proxy or detached floating facade may remain after damage.
+
+### 2. Connect material variants to shared destruction
+
+The current `PanelGeometry` clones primitive authored Parts and generates generic Slate scars/two-strip residuals; importing an intact mesh alone cannot render P16's material-specific stages. Add a small explicit, validated asset-catalog boundary to the existing shared reconstruction/presentation modules so registered panels can select approved meshes, textures, proxies and fragments. Keep `PanelDamageRules`, `DestructionService`, ordered shot outcomes, weapon selection/readiness and damage authority shared. Do not create an Outpost-specific combat/destruction service or implement P15 level switching.
+
+Preserve stable building/panel IDs, pivots, story/roof registration and reset identities where possible. If P16 requires a different panel arrangement, version its migration and update all registry, map-layout, artifact and engine fixtures using actual counts and coverage. Validate missing/unknown material keys, variants, duplicate IDs, invalid geometry and out-of-budget assets before mutating the active world; define an explicit error or compatible fallback. Existing primitive Foundry/Warehouse/starting-shelter panels must retain their current behavior and appearance.
+
+For every new wall/roof panel family, map Pristine/Light/Heavy/Total appearance and stage-local progress onto the authoritative state. Retain three/six direct 105mm hit thresholds, nine valid 30mm seconds per stage, persistent earned credit and interruption barriers. Material changes never alter durability. Light is visibly damaged but intact; Heavy shows a measured roughly half-face real opening and distinct material damage; Total removes the panel and blocking proxies. Use residual query/collision geometry that agrees with the visible opening. Texture alpha alone does not create an opening. Remove or transition attached lights/conduits/dressing consistently when their supporting panel disappears.
+
+Instantiate the material-matched fragment set through the existing bounded server-owned fragment lifecycle. Preserve or explicitly justify tuning within the safety contract: static-scenery contact only, no player harm/pushing, no gameplay query or route obstruction, bounded counts/mass/impulse/lifetime and reset/stop cleanup. Keep all template selection and stage changes server-authoritative; clients cannot choose materials, variants, damage or panel IDs through a new trusted remote.
+
+### 3. Reconstruct, exercise and review the candidate
+
+Rebuild from a clean checkout and sync the committed source into the confirmed Studio test document. Verify actual loaded transforms, dimensions, render materials, UVs, collision/query flags, asset availability and complete panel registration. Exercise actual avatar walking through both floors and external stairs/balcony. Inspect close ground views and the operator's grayscale view over a full orbit at both weapon-linked zooms, including rooftop height against the authored aim envelope. Adapt lower-priority details if needed to preserve readability and measured performance; material visual compromises require user review.
+
+Use named deterministic/catalog and service tests for new asset-boundary validation, same-rule progression, invalid/stale request rejection without mutation, queued impact/reset ordering and cleanup. Use real Studio rays, overlap/collision and thermal observations to establish actual wall/roof openings, residual solidity, initial window/door apertures and fragment contact. Actual two-client checks must establish replicated appearance/current geometry and repeated pristine reconstruction. Do not rely on duplicated rule code, screenshots or Blender simulations as engine evidence.
+
+Profile the added art relative to the primitive baseline on the same recorded device/settings with actual client counts. Record mesh/material/texture/Instance counts, memory and frame times, including mass panel transitions and debris. Preserve the [testing budgets](../docs/testing.md); P11/P12 retain their broader soak/capacity gates. Keep tests, preview galleries, Blender cameras/lights and development overrides out of the release place.
+
+## Acceptance criteria
+
+- **A1 — Exactly the intended replacement:** `P17OutpostReconstruction` and `P17AssetCatalog` pass alongside the full `python3 scripts/verify.py` gate. A clean checkout reconstructs the approved smaller-Outpost asset with the manifest, exports, actual asset references and no unintended scripts/test content. Foundry, Warehouse, terrain, the starting shelter, protected waiting lobby, 720-stud boundary and canonical orbit are preserved. Building/story/panel counts and registered IDs match the revised source; missing/invalid imports fail clearly.
+- **A2 — Playable interior and exterior:** `P17OutpostNavigation` uses real Studio floor/support/clearance checks and an actual avatar walkthrough to reach the furnished ground floor, upper floor and approved external stairs/balcony without blocked circulation or falling through decorative floors. Both launcher approaches and all deployment anchors remain valid. `P17OutpostTargeting` verifies authored height/range, full-orbit reach and reticle rays at both zooms; operated desktop/touch review covers normal and thermal readability.
+- **A3 — Material-aware authoritative demolition:** `P17MaterialPanelStates` covers every new material/shape family on walls and roofs: Pristine, persistent Light, Heavy after exactly three direct M102 hits or nine valid GAU23 seconds, and Total after the next equivalent stage. Include stopped/resumed and alternating-panel fire, mixed fire, ordered in-flight outcomes, duplicate/stale/unauthorized rejection and no paused-time credit. `P17OutpostOpenings` uses actual rays/collision/thermal checks through Heavy/Total openings and against remaining solids, with no phantom full-panel collider. Runtime thresholds and appearance must agree; attached props cannot hide or block an earned opening.
+- **A4 — Replication, reset and fragment safety:** `P17OutpostMultiplayer` runs with at least two actual clients and fresh server/per-client baseline reports. Both clients agree on panel identity, stage, progress, material appearance and real geometry. Across at least two damaged-to-pristine resets with live fragments/pending work, restore the exact approved pristine building once, clear all damage/old effects and reacquire fresh panel references. `P17MaterialFragments` verifies actual falling/static contact, bounds, expiry, stop/reset cleanup and no character/query interference. Keep supported spectator/late-join regressions where their existing suites require them; do not add unsupported same-identity reconnect acceptance (D59).
+- **A5 — Measured regression and presentation:** Required current P07/P05/P14 regression suites pass on the final source, including primitive-building damage and launcher-anchor accessibility. When completed P08 source is present, its launcher/recovery regressions also pass; this preserves existing behavior without making P08 a start prerequisite. Record nonzero discovered/passed counts, actual clients and source/build identity. `P17OutpostPerformance` records baseline/candidate workload metrics and complies with applicable testing budgets; missing engine evidence or placeholder cloud assets cannot pass. P11/P12 still own full soak and real 6/10-player release acceptance.
+- **A6 — Human approves the in-game result:** The user inspects the actual integrated smaller Outpost from ground and operator views, both furnished floors, stairs/roof details and each material's damage progression, and explicitly likes/approves the identified candidate. Revisit P16 approval if integration materially changes the approved art. Record response, date, source/package hashes and conditions; silence or an agent's judgment is not approval.
+
+## Documentation and completion record
+
+Update the root player README with the implemented building and one representative **actual Studio/playtest** screenshot replacing its current representative image. Keep Blender renders in the P16 evidence gallery; do not present them as gameplay. Update asset/package READMEs, reconstruction instructions, manifest, architecture and named test/evidence links together. Record A1–A6, dependency/package hashes, source/PR, actual import ownership, tool commands, test counts, clients, navigation/normal/thermal observations, performance metrics, reset/cleanup and human feedback here when executed. This plan currently defines future work; no replacement or verification result is claimed. Status remains in the roadmap.

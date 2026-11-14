@@ -4,7 +4,7 @@
     real client intents and real moving-aircraft swept flights. Trusted fixture poses
     isolate authority/collision tests; they do not claim operated route traversal.
     Each run owns/cleans its runtime and transport. Actual same-identity reconnect
-    remains explicitly unverified: AddPlayers creates a new Studio identity.
+    is unsupported and excluded under D59: AddPlayers creates a new Studio identity.
 ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -31,6 +31,7 @@ export type Report = {
     cases: { Case },
     actualReconnectVerified: boolean,
     requiredUnverified: { string },
+    unsupportedChecks: { string },
     departureMethod: string,
     traces: { unknown },
     droppedTraceRecords: number,
@@ -77,7 +78,8 @@ function Harness.run(finish: ((Report) -> ())?)
             skipped = 0,
             cases = cases,
             actualReconnectVerified = false,
-            requiredUnverified = { "A5 actual same-identity reconnect" },
+            requiredUnverified = {},
+            unsupportedChecks = { "actual same-identity reconnect" },
             departureMethod = if finish then "server-kick" else "client-leave",
             traces = traces,
             droppedTraceRecords = droppedTraceRecords,

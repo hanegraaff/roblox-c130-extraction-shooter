@@ -1,0 +1,72 @@
+{
+  "suite": "P16ExportAudit-FBX",
+  "passed": true,
+  "blender_version": "5.3.0",
+  "fbx_sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8",
+  "imported_meshes": 2225,
+  "imported_triangles": 89024,
+  "max_bound_error_studs": 5.7220458984375e-06,
+  "scale_axes_verified": true,
+  "uv_materials_verified": true,
+  "navigation": {
+    "name": "P16Navigation",
+    "passed": true,
+    "body_dimensions_studs": [
+      4,
+      6,
+      4
+    ],
+    "foot_clearance_studs": 0.065,
+    "support_height_tolerance_studs": 0.11,
+    "profile_method": "6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays",
+    "body_samples": 185,
+    "support_rays": 1850,
+    "internal_samples": 98,
+    "external_samples": 87,
+    "scope": "Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17"
+  },
+  "panel_library_meshes": 260,
+  "panel_library_sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d",
+  "reusable_kit": [
+    {
+      "family": "utility_lamp",
+      "fbx_sha256": "201336c7d74de8b6337118998ddcdb6d7a2687980dc981e306a0be50a3d391cf",
+      "triangles": 88
+    },
+    {
+      "family": "louver_vent",
+      "fbx_sha256": "1d4dab6ae196f88095cfceee86a99eb14ded827b2b618c0196ef9f1cbe4449ae",
+      "triangles": 440
+    },
+    {
+      "family": "pallet",
+      "fbx_sha256": "d51ca96d710ec90bb15c4b89d52d333d17655c8d00d99e53f35c38c567c328c9",
+      "triangles": 352
+    },
+    {
+      "family": "sealed_case",
+      "fbx_sha256": "ce34a76ff008d436664cc55ec3694cf3f9e48f409dcc9aff42ead6dbc5d9bf5f",
+      "triangles": 352
+    },
+    {
+      "family": "storage_rack",
+      "fbx_sha256": "cc681da8aa285291e613560a9dd69af7afbce50290220c2293d156411410cde6",
+      "triangles": 3260
+    },
+    {
+      "family": "workbench",
+      "fbx_sha256": "927949b70941fe6a21eedbe5cdce3f62e3f075a331987b7ffdc67b5c958d0fca",
+      "triangles": 4248
+    },
+    {
+      "family": "command_console",
+      "fbx_sha256": "d24010f1327179b84893cb616ef1e285431225b8ef33c9f7128cf9d115431c33",
+      "triangles": 1916
+    },
+    {
+      "family": "operator_chair",
+      "fbx_sha256": "0ad9fb7c5ba6048e455bf9c4b1d0e7a670063f13e733867e069e2148b59acf49",
+      "triangles": 636
+    }
+  ]
+}
