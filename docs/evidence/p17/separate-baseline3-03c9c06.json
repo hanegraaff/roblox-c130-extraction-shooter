@@ -1,0 +1,39 @@
+{
+  "source": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "tree": "e3ee056df1dca3928fe3d53465f00480c9daf8fb",
+  "scope": "Separate ordinary SDK three-client baseline request; does not replace missing reports from earlier passing P08 harness",
+  "requestedClients": 3,
+  "observedClients": 2,
+  "complete": false,
+  "missingClientReports": 1,
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":{\"1\":-1,\"2\":-2},\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":164,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":164}\",\"testArgs\":{\"kind\":\"P17Baseline\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "clients": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"userId\":-1,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"userId\":-2,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "limitation": "Only two actual clients connected within this one bounded attempt. Both observed clients passed seven cases; server passed164. No third-client report exists for this session."
+}

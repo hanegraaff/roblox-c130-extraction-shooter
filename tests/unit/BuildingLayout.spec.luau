@@ -10,6 +10,7 @@ type Building = {
     stepRise: number,
     stepRun: number,
     panels: { Panel },
+    panelLayoutVersion: number?,
 }
 type API = { validate: ({ Building }) -> (boolean, string?) }
 return function(test: (string, () -> ()) -> (), candidate: unknown)
@@ -71,6 +72,32 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     test("BuildingLayout accepts two larger and one smaller two-story panel registry", function()
         assert(Layout.validate(fixture()))
     end)
+    test(
+        "P17OutpostReconstruction layout migration requires exactly the additional ground partition",
+        function()
+            local buildings = fixture()
+            local outpost = buildings[3]
+            outpost.id = "Outpost"
+            outpost.panelLayoutVersion = 2
+            assert(not Layout.validate(buildings), "missing migrated partition accepted")
+            table.insert(outpost.panels, {
+                id = "Outpost_v2_Interior01",
+                story = 1,
+                roof = false,
+                interior = true,
+                pivot = { 151, 4.125, 148, 1, 0, 0, 0, 1, 0, 0, 0, 1 },
+            })
+            assert(Layout.validate(buildings))
+            outpost.panels[#outpost.panels].story = 2
+            assert(not Layout.validate(buildings), "partition moved to upper story")
+            outpost.panels[#outpost.panels].story = 1
+            outpost.panelLayoutVersion = 3
+            assert(not Layout.validate(buildings), "unknown migration accepted")
+            outpost.panelLayoutVersion = 2
+            outpost.id = "Other"
+            assert(not Layout.validate(buildings), "migration applied to a different building")
+        end
+    )
     test("BuildingLayout rejects missing buildings stories stairs and size distinctions", function()
         local missing = fixture()
         table.remove(missing)

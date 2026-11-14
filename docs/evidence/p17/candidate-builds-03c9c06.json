@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "source_commit": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "source_tree": "e3ee056df1dca3928fe3d53465f00480c9daf8fb",
+  "command": "python3 scripts/verify.py",
+  "date_local": "2026-11-14",
+  "environment": "macOS host; pinned repository tools",
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 27,
+  "manifest_regressions": 10,
+  "p16_audits": 7,
+  "p17_definition_checks": 1,
+  "authored_parts_each_build": 422,
+  "release_instances": 510,
+  "test_instances": 600,
+  "release_runtime_modules": 47,
+  "builds": [
+    {
+      "path": "build/game.rbxlx",
+      "sha256": "47a8a8f3934f9b21d70ecfb56b56771f59740b865a89335aae80ad6ffb489338",
+      "bytes": 920113,
+      "mapping": "default.project.json",
+      "cloud_eligible": "Only with separate named-destination/audience authorization"
+    },
+    {
+      "path": "build/tests.rbxlx",
+      "sha256": "7076aa1c379d47be166197993746b4175e85b951db29c287d491b2112ae78fa2",
+      "bytes": 1760400,
+      "mapping": "test.project.json",
+      "cloud_eligible": "No; test content must never be published"
+    }
+  ],
+  "cloud_import_verified": false,
+  "publication_performed": false
+}

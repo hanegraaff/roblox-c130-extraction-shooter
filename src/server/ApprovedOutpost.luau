@@ -1,0 +1,515 @@
+--!strict
+--[=[
+    ApprovedOutpost: trusted server-only construction data derived from the exact
+    P16 package approved by the user. Units are studs; canonical coordinates are
+    Blender X/Y/Z (face X/Z). No assets are uploaded or presumed accessible here.
+    Regenerate with scripts/p17_assets.py; never hand-tune approved art data.
+]=]
+export type Source = { source: string, sha256: string }
+export type State = { source: string, sha256: string, rectangles: { { number } } }
+export type Family = { size: { number }, states: { [string]: State }, fragments: { Source } }
+local ApprovedOutpost: {
+    revision: string,
+    blendSha256: string,
+    families: { [string]: Family },
+} =
+    { revision = "p16-v1", blendSha256 = "", families = {} }
+ApprovedOutpost.revision = "p16-v1"
+ApprovedOutpost.blendSha256 = "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c"
+ApprovedOutpost.families = {
+    corrugated_wall = {
+        size = { 16, 1, 8 },
+        states = {
+            Pristine = {
+                source = "corrugated_wall-pristine.obj",
+                sha256 = "5f543c95d9e84838c281635b36fbdd8fbafe676b55844c80f01a8e88322c302e",
+                rectangles = {
+                    { -8, -4, 8, 4 },
+                },
+            },
+            Light = {
+                source = "corrugated_wall-light.obj",
+                sha256 = "ef7c1c0215c646e30060681f046230d0ce8523fe6db1e0170cab823a5c4f5d57",
+                rectangles = {
+                    { -8, -4, 8, 4 },
+                },
+            },
+            Heavy = {
+                source = "corrugated_wall-heavy.obj",
+                sha256 = "8fe3fdc669cab68a3b95ee72143646a7add7233079390bea0da550263d2e4ed6",
+                rectangles = {
+                    { -8, -4, -4, -3.5 },
+                    { 4, -4, 8, -3.5 },
+                    { -8, -3.5, -4.4, -3 },
+                    { 4.4, -3.5, 8, -3 },
+                    { -8, -3, -3.7, -2.5 },
+                    { 3.7, -3, 8, -2.5 },
+                    { -8, -2.5, -4.1, -2 },
+                    { 4.1, -2.5, 8, -2 },
+                    { -8, -2, -3.8, -1.5 },
+                    { 3.8, -2, 8, -1.5 },
+                    { -8, -1.5, -4.35, -1 },
+                    { 4.35, -1.5, 8, -1 },
+                    { -8, -1, -3.65, -0.5 },
+                    { 3.65, -1, 8, -0.5 },
+                    { -8, -0.5, -4, 0 },
+                    { 4, -0.5, 8, 0 },
+                    { -8, 0, -4, 0.5 },
+                    { 4, 0, 8, 0.5 },
+                    { -8, 0.5, -4.4, 1 },
+                    { 4.4, 0.5, 8, 1 },
+                    { -8, 1, -3.7, 1.5 },
+                    { 3.7, 1, 8, 1.5 },
+                    { -8, 1.5, -4.1, 2 },
+                    { 4.1, 1.5, 8, 2 },
+                    { -8, 2, -3.8, 2.5 },
+                    { 3.8, 2, 8, 2.5 },
+                    { -8, 2.5, -4.35, 3 },
+                    { 4.35, 2.5, 8, 3 },
+                    { -8, 3, -3.65, 3.5 },
+                    { 3.65, 3, 8, 3.5 },
+                    { -8, 3.5, -4, 4 },
+                    { 4, 3.5, 8, 4 },
+                },
+            },
+            Total = {
+                source = "corrugated_wall-total.obj",
+                sha256 = "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1",
+                rectangles = {},
+            },
+        },
+        fragments = {
+            {
+                source = "corrugated_wall-fragment-1.obj",
+                sha256 = "0b4e9cd89348fe0a8be806021dc7824be275178c2a5dcb75da771479c8c599f4",
+            },
+            {
+                source = "corrugated_wall-fragment-2.obj",
+                sha256 = "2bd04ed18546fd30efc169fb654a54b48eb55c72c51c64b7ae3b373dcfdb67e1",
+            },
+            {
+                source = "corrugated_wall-fragment-3.obj",
+                sha256 = "e22fc9a50fdc5292b8696468b4c53d8370b8549102b672a8451e46aa02d7283f",
+            },
+            {
+                source = "corrugated_wall-fragment-4.obj",
+                sha256 = "cdd21fd24eb09ec2090949297d549a7479c5a8bf83bf1751df10d024d7b3c9b0",
+            },
+        },
+    },
+    corrugated_window = {
+        size = { 16, 1, 8 },
+        states = {
+            Pristine = {
+                source = "corrugated_window-pristine.obj",
+                sha256 = "36388aad76304dd759c4f1b331ef28952fb9f10e00eb43b2b04273ec15c745bf",
+                rectangles = {
+                    { -8, -4, -4, 4 },
+                    { 4, -4, 8, 4 },
+                    { -4, -4, 4, -1 },
+                    { -4, 3, 4, 4 },
+                },
+            },
+            Light = {
+                source = "corrugated_window-light.obj",
+                sha256 = "71185e66806b6660f0745ae4b1ebf28552902d34cb143f8e69c1252f4ba6ad85",
+                rectangles = {
+                    { -8, -4, -4, 4 },
+                    { 4, -4, 8, 4 },
+                    { -4, -4, 4, -1 },
+                    { -4, 3, 4, 4 },
+                },
+            },
+            Heavy = {
+                source = "corrugated_window-heavy.obj",
+                sha256 = "55f91a71ed083c6f2d380855a8269140e1b9902c5faa161a9b5648fd0b8b1ad3",
+                rectangles = {
+                    { -8, -4, -5, -3.5 },
+                    { 5, -4, 8, -3.5 },
+                    { -8, -3.5, -5.4, -3 },
+                    { 5.4, -3.5, 8, -3 },
+                    { -8, -3, -4.7, -2.5 },
+                    { 4.7, -3, 8, -2.5 },
+                    { -8, -2.5, -5.1, -2 },
+                    { 5.1, -2.5, 8, -2 },
+                    { -8, -2, -4.8, -1.5 },
+                    { 4.8, -2, 8, -1.5 },
+                    { -8, -1.5, -5.35, -1 },
+                    { 5.35, -1.5, 8, -1 },
+                    { -8, -1, -4.65, -0.5 },
+                    { 4.65, -1, 8, -0.5 },
+                    { -8, -0.5, -5, 0 },
+                    { 5, -0.5, 8, 0 },
+                    { -8, 0, -5, 0.5 },
+                    { 5, 0, 8, 0.5 },
+                    { -8, 0.5, -5.4, 1 },
+                    { 5.4, 0.5, 8, 1 },
+                    { -8, 1, -4.7, 1.5 },
+                    { 4.7, 1, 8, 1.5 },
+                    { -8, 1.5, -5.1, 2 },
+                    { 5.1, 1.5, 8, 2 },
+                    { -8, 2, -4.8, 2.5 },
+                    { 4.8, 2, 8, 2.5 },
+                    { -8, 2.5, -5.35, 3 },
+                    { 5.35, 2.5, 8, 3 },
+                    { -8, 3, -4.65, 3.5 },
+                    { 4.65, 3, 8, 3.5 },
+                    { -8, 3.5, -5, 4 },
+                    { 5, 3.5, 8, 4 },
+                },
+            },
+            Total = {
+                source = "corrugated_window-total.obj",
+                sha256 = "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1",
+                rectangles = {},
+            },
+        },
+        fragments = {
+            {
+                source = "corrugated_window-fragment-1.obj",
+                sha256 = "bbe589f3ff42e7bd13e2fa98f44785989abadbc632b251a04b016270d8c1b105",
+            },
+            {
+                source = "corrugated_window-fragment-2.obj",
+                sha256 = "7ef9a7662f7fd70fc1e267042bf8f37fe091ae70af71660bb2fcc51fe27fe151",
+            },
+            {
+                source = "corrugated_window-fragment-3.obj",
+                sha256 = "ded4af3bb94cf9a679a170ad099f0b5b08a9738caf3f270b0f941f42a8c7555e",
+            },
+            {
+                source = "corrugated_window-fragment-4.obj",
+                sha256 = "43d8b39c09111a73f107e06a37e1a3bf28e992245e09ba36edad21c23b104391",
+            },
+        },
+    },
+    corrugated_door = {
+        size = { 16, 1, 8 },
+        states = {
+            Pristine = {
+                source = "corrugated_door-pristine.obj",
+                sha256 = "4dddd487387bbc8fb27be043719b371bd49ad962781ef5c1b6933ae80750ac47",
+                rectangles = {
+                    { -8, -4, -3, 4 },
+                    { 3, -4, 8, 4 },
+                    { -3, 3, 3, 4 },
+                },
+            },
+            Light = {
+                source = "corrugated_door-light.obj",
+                sha256 = "375c662b94204e87412556048aee9396f86b7af1be58fbcb836203a3c88cc064",
+                rectangles = {
+                    { -8, -4, -3, 4 },
+                    { 3, -4, 8, 4 },
+                    { -3, 3, 3, 4 },
+                },
+            },
+            Heavy = {
+                source = "corrugated_door-heavy.obj",
+                sha256 = "73f66e027c431a22fa7d442eb85dd5eed61192058a6eaae6a1b8f31c5ef9265e",
+                rectangles = {
+                    { -8, -4, -5.3125, -3.5 },
+                    { 5.3125, -4, 8, -3.5 },
+                    { -8, -3.5, -5.7125, -3 },
+                    { 5.7125, -3.5, 8, -3 },
+                    { -8, -3, -5.0125, -2.5 },
+                    { 5.0125, -3, 8, -2.5 },
+                    { -8, -2.5, -5.4125, -2 },
+                    { 5.4125, -2.5, 8, -2 },
+                    { -8, -2, -5.1125, -1.5 },
+                    { 5.1125, -2, 8, -1.5 },
+                    { -8, -1.5, -5.6625, -1 },
+                    { 5.6625, -1.5, 8, -1 },
+                    { -8, -1, -4.9625, -0.5 },
+                    { 4.9625, -1, 8, -0.5 },
+                    { -8, -0.5, -5.3125, 0 },
+                    { 5.3125, -0.5, 8, 0 },
+                    { -8, 0, -5.3125, 0.5 },
+                    { 5.3125, 0, 8, 0.5 },
+                    { -8, 0.5, -5.7125, 1 },
+                    { 5.7125, 0.5, 8, 1 },
+                    { -8, 1, -5.0125, 1.5 },
+                    { 5.0125, 1, 8, 1.5 },
+                    { -8, 1.5, -5.4125, 2 },
+                    { 5.4125, 1.5, 8, 2 },
+                    { -8, 2, -5.1125, 2.5 },
+                    { 5.1125, 2, 8, 2.5 },
+                    { -8, 2.5, -5.6625, 3 },
+                    { 5.6625, 2.5, 8, 3 },
+                    { -8, 3, -4.9625, 3.5 },
+                    { 4.9625, 3, 8, 3.5 },
+                    { -8, 3.5, -5.3125, 4 },
+                    { 5.3125, 3.5, 8, 4 },
+                },
+            },
+            Total = {
+                source = "corrugated_door-total.obj",
+                sha256 = "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1",
+                rectangles = {},
+            },
+        },
+        fragments = {
+            {
+                source = "corrugated_door-fragment-1.obj",
+                sha256 = "079c65dae20b58ffd0ee18ebce1807a58d120a14c9bc38b9e1b186d451f453af",
+            },
+            {
+                source = "corrugated_door-fragment-2.obj",
+                sha256 = "24410293128fc1eee13b14fe48ec1ee0bdf3e0b95bebe4cdbf9edfbe77dfe821",
+            },
+            {
+                source = "corrugated_door-fragment-3.obj",
+                sha256 = "5610d8f14ab208be6b5a61defbf5b0cd0f5ad49528ebfd8fe6c6c1ab37fc1c42",
+            },
+            {
+                source = "corrugated_door-fragment-4.obj",
+                sha256 = "5f72c00a506a783430fe134ad57e710e4a5f1b01adc17fa9c694709d069b2cc3",
+            },
+        },
+    },
+    corrugated_garage = {
+        size = { 16, 1, 8 },
+        states = {
+            Pristine = {
+                source = "corrugated_garage-pristine.obj",
+                sha256 = "ac43f77cc0c2ee944ca6174e56417e54aaa09588d23b33a01b983aefeeee7359",
+                rectangles = {
+                    { -8, -4, -6, 4 },
+                    { 6, -4, 8, 4 },
+                    { -6, 3, 6, 4 },
+                },
+            },
+            Light = {
+                source = "corrugated_garage-light.obj",
+                sha256 = "60f5b182f2a0842fd273aa6b665e4ec47c415de2106f8a90b5ff5d0e5700ff74",
+                rectangles = {
+                    { -8, -4, -6, 4 },
+                    { 6, -4, 8, 4 },
+                    { -6, 3, 6, 4 },
+                },
+            },
+            Heavy = {
+                source = "corrugated_garage-heavy.obj",
+                sha256 = "09d27726fdacb33ce01b6fc97a2798bd93bb155805fd04f72f4f4a436c08254c",
+                rectangles = {
+                    { -8, -4, -6.625, -3.5 },
+                    { 6.625, -4, 8, -3.5 },
+                    { -8, -3.5, -7.025, -3 },
+                    { 7.025, -3.5, 8, -3 },
+                    { -8, -3, -6.325, -2.5 },
+                    { 6.325, -3, 8, -2.5 },
+                    { -8, -2.5, -6.725, -2 },
+                    { 6.725, -2.5, 8, -2 },
+                    { -8, -2, -6.425, -1.5 },
+                    { 6.425, -2, 8, -1.5 },
+                    { -8, -1.5, -6.975, -1 },
+                    { 6.975, -1.5, 8, -1 },
+                    { -8, -1, -6.275, -0.5 },
+                    { 6.275, -1, 8, -0.5 },
+                    { -8, -0.5, -6.625, 0 },
+                    { 6.625, -0.5, 8, 0 },
+                    { -8, 0, -6.625, 0.5 },
+                    { 6.625, 0, 8, 0.5 },
+                    { -8, 0.5, -7.025, 1 },
+                    { 7.025, 0.5, 8, 1 },
+                    { -8, 1, -6.325, 1.5 },
+                    { 6.325, 1, 8, 1.5 },
+                    { -8, 1.5, -6.725, 2 },
+                    { 6.725, 1.5, 8, 2 },
+                    { -8, 2, -6.425, 2.5 },
+                    { 6.425, 2, 8, 2.5 },
+                    { -8, 2.5, -6.975, 3 },
+                    { 6.975, 2.5, 8, 3 },
+                    { -8, 3, -6.275, 3.5 },
+                    { 6.275, 3, 8, 3.5 },
+                    { -8, 3.5, -6.625, 4 },
+                    { 6.625, 3.5, 8, 4 },
+                },
+            },
+            Total = {
+                source = "corrugated_garage-total.obj",
+                sha256 = "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1",
+                rectangles = {},
+            },
+        },
+        fragments = {
+            {
+                source = "corrugated_garage-fragment-1.obj",
+                sha256 = "f7fae39db7d2b284b96d8fd17d9626e0cb1c7b799081b74bb06d97c4218cc16a",
+            },
+            {
+                source = "corrugated_garage-fragment-2.obj",
+                sha256 = "444dfec3f822da683f9bf3b572782b763db7a8fef7d915eadac958d29447bc73",
+            },
+            {
+                source = "corrugated_garage-fragment-3.obj",
+                sha256 = "9607a382fb36d6ede4a90ced75202f63adc1bb91c3713c091111d025e2b093db",
+            },
+            {
+                source = "corrugated_garage-fragment-4.obj",
+                sha256 = "733683df082d5a3e9f8432b9ab84861f7485dbdfa8968bc5e0ecbdeb44f974b6",
+            },
+        },
+    },
+    concrete_partition = {
+        size = { 16, 1, 8 },
+        states = {
+            Pristine = {
+                source = "concrete_partition-pristine.obj",
+                sha256 = "57accf3bf04af8c5198f7cf3048de91cf242389b313160c48fd242e6bbb987ce",
+                rectangles = {
+                    { -8, -4, 8, 4 },
+                },
+            },
+            Light = {
+                source = "concrete_partition-light.obj",
+                sha256 = "390acf64a1b6843e3722bd8bcb0a19d6ef7ef73a04be2709bd6242bedb964bf5",
+                rectangles = {
+                    { -8, -4, 8, 4 },
+                },
+            },
+            Heavy = {
+                source = "concrete_partition-heavy.obj",
+                sha256 = "7e3799244e2958b6f795ce34ab7d0b036b41c1186315f740ff4720f1fdfa298f",
+                rectangles = {
+                    { -8, -4, -4, -3.5 },
+                    { 4, -4, 8, -3.5 },
+                    { -8, -3.5, -4.4, -3 },
+                    { 4.4, -3.5, 8, -3 },
+                    { -8, -3, -3.7, -2.5 },
+                    { 3.7, -3, 8, -2.5 },
+                    { -8, -2.5, -4.1, -2 },
+                    { 4.1, -2.5, 8, -2 },
+                    { -8, -2, -3.8, -1.5 },
+                    { 3.8, -2, 8, -1.5 },
+                    { -8, -1.5, -4.35, -1 },
+                    { 4.35, -1.5, 8, -1 },
+                    { -8, -1, -3.65, -0.5 },
+                    { 3.65, -1, 8, -0.5 },
+                    { -8, -0.5, -4, 0 },
+                    { 4, -0.5, 8, 0 },
+                    { -8, 0, -4, 0.5 },
+                    { 4, 0, 8, 0.5 },
+                    { -8, 0.5, -4.4, 1 },
+                    { 4.4, 0.5, 8, 1 },
+                    { -8, 1, -3.7, 1.5 },
+                    { 3.7, 1, 8, 1.5 },
+                    { -8, 1.5, -4.1, 2 },
+                    { 4.1, 1.5, 8, 2 },
+                    { -8, 2, -3.8, 2.5 },
+                    { 3.8, 2, 8, 2.5 },
+                    { -8, 2.5, -4.35, 3 },
+                    { 4.35, 2.5, 8, 3 },
+                    { -8, 3, -3.65, 3.5 },
+                    { 3.65, 3, 8, 3.5 },
+                    { -8, 3.5, -4, 4 },
+                    { 4, 3.5, 8, 4 },
+                },
+            },
+            Total = {
+                source = "concrete_partition-total.obj",
+                sha256 = "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1",
+                rectangles = {},
+            },
+        },
+        fragments = {
+            {
+                source = "concrete_partition-fragment-1.obj",
+                sha256 = "6c0c9d4b94ee4d62b9c163d9120b59b0ef0c704ed68ab1f99f8bd56070778ac5",
+            },
+            {
+                source = "concrete_partition-fragment-2.obj",
+                sha256 = "f52021b845786ba8f2d2d114726ddbba92c6745d43bb1edd1eb907f2d66261d8",
+            },
+            {
+                source = "concrete_partition-fragment-3.obj",
+                sha256 = "aabea3556cd78178320fd1be027f4b1bdcdc1b499a224aba8a3ab5ec90930cbd",
+            },
+            {
+                source = "concrete_partition-fragment-4.obj",
+                sha256 = "5e76c3480406aa1e1ea4b4e03798fdb4ae54948bf446fcaac55851c9b694fc35",
+            },
+        },
+    },
+    layered_roof = {
+        size = { 16, 1, 16 },
+        states = {
+            Pristine = {
+                source = "layered_roof-pristine.obj",
+                sha256 = "849907e3ad9fbb852ceb06cbca428fd202f5fb684af0403f395f202261ac20e6",
+                rectangles = {
+                    { -8, -8, 8, 8 },
+                },
+            },
+            Light = {
+                source = "layered_roof-light.obj",
+                sha256 = "ddf27473007867417149ff2a9d35014cd056622a48727f6a9703de5ad582d068",
+                rectangles = {
+                    { -8, -8, 8, 8 },
+                },
+            },
+            Heavy = {
+                source = "layered_roof-heavy.obj",
+                sha256 = "f0866a6650048b9ccce41f3aae8b9d78994c3c90967426aeba9d19f53d7edaa6",
+                rectangles = {
+                    { -8, -8, -4, -7 },
+                    { 4, -8, 8, -7 },
+                    { -8, -7, -4.4, -6 },
+                    { 4.4, -7, 8, -6 },
+                    { -8, -6, -3.7, -5 },
+                    { 3.7, -6, 8, -5 },
+                    { -8, -5, -4.1, -4 },
+                    { 4.1, -5, 8, -4 },
+                    { -8, -4, -3.8, -3 },
+                    { 3.8, -4, 8, -3 },
+                    { -8, -3, -4.35, -2 },
+                    { 4.35, -3, 8, -2 },
+                    { -8, -2, -3.65, -1 },
+                    { 3.65, -2, 8, -1 },
+                    { -8, -1, -4, 0 },
+                    { 4, -1, 8, 0 },
+                    { -8, 0, -4, 1 },
+                    { 4, 0, 8, 1 },
+                    { -8, 1, -4.4, 2 },
+                    { 4.4, 1, 8, 2 },
+                    { -8, 2, -3.7, 3 },
+                    { 3.7, 2, 8, 3 },
+                    { -8, 3, -4.1, 4 },
+                    { 4.1, 3, 8, 4 },
+                    { -8, 4, -3.8, 5 },
+                    { 3.8, 4, 8, 5 },
+                    { -8, 5, -4.35, 6 },
+                    { 4.35, 5, 8, 6 },
+                    { -8, 6, -3.65, 7 },
+                    { 3.65, 6, 8, 7 },
+                    { -8, 7, -4, 8 },
+                    { 4, 7, 8, 8 },
+                },
+            },
+            Total = {
+                source = "layered_roof-total.obj",
+                sha256 = "a77fbcb7dcc08d703493604de213ccedbacc1fc3510a6fc96ed1efa0e736daa1",
+                rectangles = {},
+            },
+        },
+        fragments = {
+            {
+                source = "layered_roof-fragment-1.obj",
+                sha256 = "c76d0cec384c73e56f45d398bf658861b605bc8aaf97b1cfd56207616cbb7d73",
+            },
+            {
+                source = "layered_roof-fragment-2.obj",
+                sha256 = "335fc02fd77a32d947129e68534ceb4894b382a269e993bab55323bb7f0057e8",
+            },
+            {
+                source = "layered_roof-fragment-3.obj",
+                sha256 = "8b84634c773c8c392a52bc715dd0e684ed0282a80e29742a3afd8af9d05f0841",
+            },
+            {
+                source = "layered_roof-fragment-4.obj",
+                sha256 = "90f9515fd9182fc874258ac07a80b442b0d9dad313d197c0a1508fdf8730f326",
+            },
+        },
+    },
+}
+return ApprovedOutpost

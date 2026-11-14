@@ -16,7 +16,7 @@ The integrated source on `main` includes the development shell, verification too
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
 | M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
-| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Ready | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
+| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Blocked | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
@@ -31,9 +31,32 @@ completed work and historical evidence remain valid; it is not undone or
 repeated. P09 waits for P17 and the completed P08 source. This priority takes
 precedence over lowest-numbered selection. P16's approved asset is delivered
 through PR #35, merged into `docs/military-outpost-blender-plans`.
-The remaining parent stack is now integrated on `main`; P17 has not started
-and can branch from updated `main`. See the
+The remaining parent stack is now integrated on `main`; P17 starts on
+`plan/17-integrate-military-outpost` from updated `main`. See the
 [main integration record](docs/evidence/p08-p16-main-integration.md).
+
+2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
+validated shared material-panel boundary and approved-source generation gate.
+Final code/tooling `03c9c06` passes 59 unit / 65 integration, 27 asset
+regressions, ten manifest cases and all host gates. The independent reviewer
+found and rechecked an approved-export provenance defect; the correction pins
+the exact approved package lock. Fresh local Studio fixtures and source-bound
+primitive regressions are recorded in the [P17 record](plans/17-integrate-military-outpost.md).
+The playable Outpost remains primitive; no cloud assets or replacement are
+delivered. P17 is Blocked on a cloud-saved import workspace and asset upload
+authorization/access: Studio requires saving to Roblox before managing MCP
+permissions, and both required asset scopes are ungranted. Local tests can run
+in the separate Rojo-connected test document. Actual import/reconstruction,
+integrated-art acceptance/performance and human in-game approval remain open.
+P09 stays Planned. No cloud save, asset upload, merge or Roblox publication
+has occurred.
+
+P17 preparation is delivered for review in [draft PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39),
+targeting `main`. Initial evidence delivery `916713e` passes
+[GitHub Verify #335](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43605942429).
+The code/tooling source remains `03c9c06`; the plan records source-bound
+Studio results and remaining evidence limitations. This draft does not complete
+P17 or authorize its pending private cloud workspace/assets.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
@@ -241,7 +264,7 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 
 Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
 
-P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. The planning update scheduled these increments; P16 has since delivered the approved package. P17 remains the next unstarted increment.
+P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. The planning update scheduled these increments; P16 has since delivered the approved package. P17 has delivered preparation and awaits authenticated imports before the actual replacement can proceed.
 
 ## Initial delivery record
 

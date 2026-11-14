@@ -11,6 +11,8 @@ local DestructionService = require(script.Parent.DestructionService)
 local PanelGeometry = require(script.Parent.PanelGeometry)
 local BuildingGeometry = require(script.Parent.BuildingGeometry)
 local PanelFragments = require(script.Parent.PanelFragments)
+local PanelAssetCatalog = require(script.Parent.PanelAssetCatalog)
+local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
 local DestructionRuntime = {}
 export type Controller = {
     sync: (number) -> (),
@@ -34,6 +36,48 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         return nil, "missing active battlefield"
     end
     local map: Model = candidateMap
+    local registries, registryReason = BuildingGeometry.registries(map)
+    if not registries then
+        return nil, registryReason
+    end
+    local catalog: PanelAssetCatalog.Catalog? = nil
+    local materialPanels = false
+    local panelIds: { [string]: boolean } = {}
+    for _, registry in registries do
+        for _, panel in registry.panels:GetChildren() do
+            if panel.Name == "" or panelIds[panel.Name] or panel:GetAttribute("PanelId") ~= panel.Name then
+                return nil, "invalid/duplicate registered panel identity"
+            end
+            panelIds[panel.Name] = true
+            materialPanels = materialPanels or panel:IsA("Model")
+        end
+    end
+    if materialPanels then
+        local assets = game:GetService("ServerStorage"):FindFirstChild("Assets")
+        local reason: string?
+        catalog, reason =
+            PanelAssetCatalog.load(if assets then assets:FindFirstChild("MaterialPanels") else nil)
+        if not catalog then
+            return nil, reason
+        end
+        for _, registry in registries do
+            for _, panel in registry.panels:GetChildren() do
+                if panel:IsA("Model") then
+                    local family = panel:GetAttribute("PanelAssetFamily")
+                    if type(family) ~= "string" or not catalog[family] then
+                        return nil, "unknown material panel family"
+                    end
+                    if panel:GetAttribute("IntactSize") ~= catalog[family].size then
+                        return nil, "material panel size differs from approved family"
+                    end
+                    local valid, panelReason = MaterialPanelGeometry.validate(panel, catalog[family])
+                    if not valid then
+                        return nil, panelReason
+                    end
+                end
+            end
+        end
+    end
     local fragments, reason = PanelFragments.start(map, settings)
     if not fragments then
         return nil, reason
@@ -56,16 +100,28 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         table.clear(panels)
     end
     local function capture()
-        local registries, registryReason = BuildingGeometry.registries(map)
-        assert(registries, registryReason)
-        for _, registry in registries do
+        local currentRegistries, currentReason = BuildingGeometry.registries(map)
+        assert(currentRegistries, currentReason)
+        for _, registry in currentRegistries do
             for _, part in registry.panels:GetChildren() do
                 assert(
-                    part:IsA("BasePart") and type(part:GetAttribute("PanelId")) == "string",
+                    (part:IsA("BasePart") or part:IsA("Model"))
+                        and type(part:GetAttribute("PanelId")) == "string",
                     "invalid registered panel"
                 )
-                local panel = PanelGeometry.capture(part)
-                panel.original.CollisionGroup = fragments.previousGroup(part)
+                local familyId = part:GetAttribute("PanelAssetFamily")
+                local family = if catalog and type(familyId) == "string" then catalog[familyId] else nil
+                local panel = PanelGeometry.capture(part :: BasePart | Model, family)
+                if panel.original:IsA("BasePart") and part:IsA("BasePart") then
+                    panel.original.CollisionGroup = fragments.previousGroup(part)
+                elseif panel.original:IsA("Model") and part:IsA("Model") then
+                    for _, original in panel.original:GetChildren() do
+                        local source = part:FindFirstChild(original.Name)
+                        if original:IsA("BasePart") and source and source:IsA("BasePart") then
+                            original.CollisionGroup = fragments.previousGroup(source)
+                        end
+                    end
+                end
                 assert(panels[panel.id] == nil, "duplicate active panel ID")
                 panels[panel.id] = panel
             end
@@ -87,7 +143,13 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                     PanelGeometry.setStage(panel, state.stage)
                     fragments.static(panel.model)
                     for _ = previousStage + 1, state.stage do
-                        fragments.emit(panel.pivot, panel.size, panel.original.Color, now)
+                        fragments.emit(
+                            panel.pivot,
+                            panel.size,
+                            panel.color,
+                            now,
+                            if panel.family then panel.family.fragments else nil
+                        )
                     end
                 end
                 PanelGeometry.publish(
@@ -98,6 +160,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                     state.sustainedSeconds,
                     state.appearance
                 )
+                fragments.static(panel.model)
             end
         end
         fragments.step(now)

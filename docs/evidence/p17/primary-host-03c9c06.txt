@@ -1,0 +1,303 @@
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/check_repository.py
+Repository checks passed: 94 Markdown files, 227 JSON files.
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/tooling -v
+test_backup_rejects_even_when_recorded (test_asset_manifest.AssetManifestTests) ... ok
+test_changed_source_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_complete_source_and_export_coverage (test_asset_manifest.AssetManifestTests) ... ok
+test_duplicate_path_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_large_binary_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_manifest_path_cannot_escape_checkout (test_asset_manifest.AssetManifestTests) ... ok
+test_missing_dependency_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_noncanonical_path_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_package_requires_hash (test_asset_manifest.AssetManifestTests) ... ok
+test_unrecorded_texture_rejects (test_asset_manifest.AssetManifestTests) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.044s
+
+OK
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p16_audit.py
+{"suite": "P16-assets", "discovered": 7, "passed": 7, "failed": 0, "skipped": 0, "results": [{"name": "P16AssetInventory", "passed": true, "detail": {"categories": 36, "mesh_objects": 3093, "furnished_floors": 2}}, {"name": "P16DamageCatalog", "passed": true, "detail": {"families": 6, "states": 24, "fragments": 24, "legacy_pivots": 25, "new_panels": 1}}, {"name": "P16PanelGeometry", "passed": true, "detail": [{"family": "corrugated_wall", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}]}, "actual_removed_fraction": 0.494140625, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.005859375, "raster_width": 128}, {"family": "corrugated_window", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}, {"side": 1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}]}, "actual_removed_fraction": 0.4921875, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0078125, "raster_width": 128}, {"family": "corrugated_door", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}, {"side": 1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}]}, "actual_removed_fraction": 0.4883720930232558, "proxy_removed_fraction": 0.49709302325581395, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.00872093023255814, "raster_width": 128}, {"family": "corrugated_garage", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}, {"side": 1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}]}, "actual_removed_fraction": 0.4829545454545454, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.017045454545454544, "raster_width": 128}, {"family": "concrete_partition", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 405, "projected_scar_area_studs2": 0.9212782372151346}, {"side": 1, "scar_triangles": 405, "projected_scar_area_studs2": 0.921278159933692}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}, {"family": "layered_roof", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}]}, {"name": "P16Navigation", "passed": true, "detail": {"name": "P16Navigation", "passed": true, "body_dimensions_studs": [4, 6, 4], "foot_clearance_studs": 0.065, "support_height_tolerance_studs": 0.11, "profile_method": "6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays", "body_samples": 185, "support_rays": 1850, "internal_samples": 98, "external_samples": 87, "scope": "Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17"}}, {"name": "P16ExportAudit", "passed": true, "detail": {"assembly_triangles": 89024, "materials": 12, "textures": 12, "reusable_kit_assets": 8, "package_bytes": 31876595}}, {"name": "P16BlenderReopen", "passed": true, "detail": {"source_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c", "blender_version": "5.3.0", "missing_dependencies": 0, "fbx_meshes": 2225, "panel_library_meshes": 260, "kit_imports": 8, "required_renders": 29}}, {"name": "P16Dependencies", "passed": true, "detail": {"files": 109, "sha256_verified": true}}]}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p17_assets.py
+{"appearances": 24, "cloud_import_verified": false, "discovered": 1, "failed": 0, "families": 6, "fragment_sources": 24, "passed": 1, "suite": "P17AssetDefinition"}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/assets -v
+test_all_current_tool_and_render_proofs (test_p16_assets.P16RejectionTests) ... ok
+test_body_width_obstruction_missed_by_center_ray_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_empty_fbx_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_garage_pristine_substituted_for_light_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_internal_stair_beam_corruption_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_invalid_uv_index_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_invisible_heavy_collider_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_light_opening_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_baked_texture_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_required_render_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_oversized_fragment_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_real_saved_package (test_p16_assets.P16RejectionTests) ... ok
+test_renaming_or_vertex_permutation_does_not_create_light_scars (test_p16_assets.P16RejectionTests) ... ok
+test_restored_external_full_deck_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_shifted_legacy_identity_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_kit_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_panel_library_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_bytes_are_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_script_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_source_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_total_hidden_solid_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_unused_dark_material_declaration_does_not_create_scars (test_p16_assets.P16RejectionTests) ... ok
+test_changed_approval_input_rejects_before_generation (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_export_rejects_without_writing_runtime_definition (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_generated_values_fail_while_formatter_whitespace_is_allowed (test_p17_assets.P17AssetDefinition) ... ok
+test_coordinated_export_lock_descriptor_and_manifest_refresh_cannot_replace_approval (test_p17_assets.P17AssetDefinition)
+A valid UV edit remains unapproved even when every mutable hash agrees. ... ok
+test_exact_approved_definition_is_reproducible_and_does_not_assert_cloud_access (test_p17_assets.P17AssetDefinition) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 10.671s
+
+OK
+Rojo 7.7.1
+stylua 2.6.0
+selene 0.32.0
+lune 0.11.1
+wally 0.3.2
+1.70.1
++ stylua --check src tests scripts/run_tests.luau
++ selene src tests scripts/run_tests.luau
+ERROR: There was an error generating a new Roblox standard library: error when getting API dump
+Using the cached one instead.
+Results:
+0 errors
+0 warnings
+0 parse errors
++ rojo sourcemap test.project.json --output build/sourcemap.json
+Created sourcemap at build/sourcemap.json
++ luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau src tests scripts/run_tests.luau
+[INFO] Loading definitions file: @roblox - .tools/globalTypes.d.luau
+[WARN] client does not allow didChangeWatchedFiles registration - automatic updating on sourcemap changes disabled
+[INFO] Loading Luau configuration from /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.luaurc
++ lune run scripts/run_tests.luau unit
+PASS AircraftPanRules recenter creates an independent safe inward view
+PASS AircraftPanRules WASD and touch axes move in the orbit-local view
+PASS AircraftPanRules horizontal input follows camera right throughout orbit
+PASS AircraftPanRules frame-rate independence holds away from view limits
+PASS AircraftPanRules diagonal speed and long-frame delta are bounded
+PASS AircraftPanRules held pan reaches each view limit and stops
+PASS AircraftPanRules shows level edge inside each outer quarter at both zooms
+PASS AircraftPanRules keeps edge and diagonal views within the noninteractive backdrop
+PASS AircraftPanRules both zoom profiles retain safe framing at common layouts
+PASS AircraftPanRules supported lens preserves normal FOV and adapts ultra-wide
+PASS AircraftPanRules held view rotates rigidly with aircraft orbit
+PASS AircraftPanRules blocked and neutral input hold relative view
+PASS AircraftPanRules rejects nonfinite axes geometry FOV and time
+PASS AircraftPanRules respects a differently sized level and rejects bad orbit
+PASS AircraftPanRules raster shares rounded integer ray and draw pixels
+PASS AircraftPanRules raster preserves exact central bounds
+PASS AircraftPanRules raster rejects invalid pointer and viewport
+PASS orbit is periodic with negative/positive phase wrap and exact altitude
+PASS all sampled poses have map perimeter radius and unit perpendicular tangent
+PASS orbit rejects nonfinite time, invalid map and derived overflow
+PASS zoom config decodes finite distinct ordered profiles without mutating input
+PASS zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+PASS aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+PASS BuildingLayout accepts two larger and one smaller two-story panel registry
+PASS P17OutpostReconstruction layout migration requires exactly the additional ground partition
+PASS BuildingLayout rejects missing buildings stories stairs and size distinctions
+PASS BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+PASS default and valid endpoints decode without aliasing
+PASS malformed and nonfinite config reject without mutation
+PASS ExpandedMapRules defaults decode to independent matching circle and ground focus
+PASS ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+PASS ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+PASS ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+PASS P17AssetCatalog metadata accepts bounded rigid canonical geometry and exact hex receipts
+PASS P17AssetCatalog metadata rejects invalid bounds dimensions and transforms without mutation
+PASS P17AssetCatalog receipt rejects nonhex wrong-length and nonscalar identities
+PASS PanelDamageRules heavy hits zero through six preserve exact stage boundaries
+PASS PanelDamageRules nine seconds never advance early and apply epsilon only at rounding boundary
+PASS PanelDamageRules mixed earned credit advances both stages without surplus carry
+PASS PanelDamageRules appearance distinguishes first-zero Light Heavy-zero and Total
+PASS PanelDamageRules invalid seconds reject without mutation and overflow never skips stages
+PASS burst exhausts and exact refill boundary accepts
+PASS bad time rejects without mutation and valid requests still succeed
+PASS invalid bucket configuration rejects
+PASS production rosters reject five and eleven players without mutation
+PASS six and ten players receive exactly one operator and one united ground roster
+PASS seeded ties are repeatable independent of incoming join order
+PASS longest waiting alternative gets operator without repeating previous operator
+PASS two and three player server fixtures are supported and duplicate ids reject
+PASS unsafe seeds reject and accepted seed boundaries always assign one operator
+PASS only documented phase edges and deployment cancellation are legal
+PASS deadline equality beats destruction and last ground elimination
+PASS pre-deadline aircraft destruction beats mutual ground elimination
+PASS empty server and no participants never award a competitive winner
+PASS finite values include zero and numeric boundaries
+PASS NaN infinities and nonnumbers reject
+PASS payload bound configuration rejects nonfinite negative and fractional values
+PASS flat payload accepts exact field and byte boundaries
+PASS payload rejects oversized nested cyclic metatable and malformed data
+{"discovered":59,"failed":0,"passed":59,"skipped":0,"suite":"unit"}
++ lune run scripts/run_tests.luau integration
+PASS three direct rockets destroy pristine aircraft once
+PASS misses and mixed damage obey health clamps and reset
+PASS accepted aircraft profile switches atomically and reset restores initial profile
+PASS wrong role, life, phase and deadline eligibility reject without mutation
+PASS malformed, oversized, stale and unknown profile payloads reject without sequence consumption
+PASS duplicate, fractional and nonfinite selection sequences reject without mutation
+PASS P05 chain gun sustains nine seconds without forced reload
+PASS P05 heavy reload survives selection changes and exact boundary
+PASS P05 forged, stale, nonfinite and unauthorized fire reject without spending
+PASS P05 chain gun cadence and magazine reload exact boundaries
+PASS P05 bounded range and weapon-specific readiness reject without sequence mutation
+PASS P05 each profile bounds swept distance and expires only after its exact lifetime
+PASS P05 alternate level bounds replace industrial coordinates
+PASS P05 valid panned views remain legal at both zooms through an entire orbit
+PASS P05 forged pose, invalid focus and unreachable reticle reject
+PASS P05 finite bounded orbit replication age accepts normal delay and rejects excess
+PASS P05 vertical reticle at the legal P14 40-degree limit remains valid
+PASS P05 adaptive ultra-wide FOV cache is exact, reusable and bounded
+PASS P05 damage clamps to remaining and maximum health
+PASS P05 one shot awards each target once and a new shot has a fresh ledger
+PASS P05 invalid damage inputs reject without poisoning a later valid award
+PASS SustainedPanelFire first hit earns zero and exact cadence reaches nine then eighteen seconds
+PASS SustainedPanelFire cadence gap boundary preserves earned work and excludes elapsed gaps
+PASS SustainedPanelFire misses blocked targets switches reload and operator loss preserve earned damage
+PASS SustainedPanelFire rejected malformed stale duplicate and unknown-panel outcomes do not mutate
+PASS SustainedPanelFire out-of-order same-step impacts await misses and deduplicate after drain
+PASS SustainedPanelFire exact nine-second accepted prefix survives 0.6-second flight and idle barrier
+PASS SustainedPanelFire queued interruption retains partial prefix while forbidding time across its barrier
+PASS SustainedPanelFire terminal cancellation rejects old outcomes and clears pending barriers
+PASS PersistentPanelFire three separated bursts earn nine seconds per stage without idle credit
+PASS PersistentPanelFire alternating targets keep independent credits and resumed first hits earn zero
+PASS SustainedPanelFire stale-round cancellation resets stream pending and heavy history
+PASS SustainedPanelFire heavy six direct hits preserve monotonic state and immutable snapshots
+PASS rifle cadence magazine reserve and reload boundaries
+PASS forged invalid stale or unowned requests do not spend ammunition
+PASS finite reserve exhausts without affecting another ground player
+PASS preflight rejects bad or cooldown requests without spending readiness or sequence
+PASS ordinary motion and delayed replication fit bounded movement credit
+PASS teleport remains quarantined until return or explicit server correction
+PASS invalid and reversed clock samples reject without corrupting valid state
+PASS P08 A1 raced pickup and snapshots retain one stable identity
+PASS P08 A2 malformed forged oversized nonfinite and stale intents leave readiness unchanged
+PASS P08 A2 authority and reach rejection preserve valid retry and replay state
+PASS P08 A3 drop transfers preserve exact reload deadline and no reserve items
+PASS P08 A3 death reset and disconnect recovery is idempotent and preserves per-user replay
+PASS P08 A3 re-picking and same-round reset cannot refill or replay a prior holder's command
+PASS P08 A4 fire preflight and exact range are nonmutating until accepted
+PASS P08 A4 replenishment permits three shots well within the normal round
+PASS P08 A6 terminal cleanup beats recovery and next round rejects old callbacks
+PASS P08 A3/A5 composed match tombstones prevent reconnect life or launcher restoration
+PASS two start stop cycles own one listener and task and clean both
+PASS partial initialization rolls back in reverse order and can retry
+PASS constructor rejects overflowing seed instead of deploying a roster without operator
+PASS deployment waits for every roster member and cancellation clears partial readiness
+PASS ground departure during deployment also cancels without partial members
+PASS exact injected deadline commits timeout once and late proposals cannot change it
+PASS mutual destruction batch gives ground win and terminal cleanup suppresses recovery
+PASS aircraft destruction before last ground elimination also resolves ground win once
+PASS death releases one owned life once after nonterminal batch and cannot revive on rejoin
+PASS operator departure followed by immediate reconnect still forfeits assigned round
+PASS last ground departure wins for remaining operator with no weapon recovery
+PASS both participant departures with a late spectator produce no competitive winner
+PASS wrong role stale replay malformed and spectator commands reject without revision mutation
+PASS three accelerated rounds clear roster result and deadline while rotating operator
+PASS snapshots cannot mutate authoritative members or committed results
+{"discovered":65,"failed":0,"passed":65,"skipped":0,"suite":"integration"}
++ lune run scripts/run_tests.luau unit
+PASS AircraftPanRules recenter creates an independent safe inward view
+PASS AircraftPanRules WASD and touch axes move in the orbit-local view
+PASS AircraftPanRules horizontal input follows camera right throughout orbit
+PASS AircraftPanRules frame-rate independence holds away from view limits
+PASS AircraftPanRules diagonal speed and long-frame delta are bounded
+PASS AircraftPanRules held pan reaches each view limit and stops
+PASS AircraftPanRules shows level edge inside each outer quarter at both zooms
+PASS AircraftPanRules keeps edge and diagonal views within the noninteractive backdrop
+PASS AircraftPanRules both zoom profiles retain safe framing at common layouts
+PASS AircraftPanRules supported lens preserves normal FOV and adapts ultra-wide
+PASS AircraftPanRules held view rotates rigidly with aircraft orbit
+PASS AircraftPanRules blocked and neutral input hold relative view
+PASS AircraftPanRules rejects nonfinite axes geometry FOV and time
+PASS AircraftPanRules respects a differently sized level and rejects bad orbit
+PASS AircraftPanRules raster shares rounded integer ray and draw pixels
+PASS AircraftPanRules raster preserves exact central bounds
+PASS AircraftPanRules raster rejects invalid pointer and viewport
+PASS orbit is periodic with negative/positive phase wrap and exact altitude
+PASS all sampled poses have map perimeter radius and unit perpendicular tangent
+PASS orbit rejects nonfinite time, invalid map and derived overflow
+PASS zoom config decodes finite distinct ordered profiles without mutating input
+PASS zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+PASS aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+PASS BuildingLayout accepts two larger and one smaller two-story panel registry
+PASS P17OutpostReconstruction layout migration requires exactly the additional ground partition
+PASS BuildingLayout rejects missing buildings stories stairs and size distinctions
+PASS BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+PASS default and valid endpoints decode without aliasing
+PASS malformed and nonfinite config reject without mutation
+PASS ExpandedMapRules defaults decode to independent matching circle and ground focus
+PASS ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+PASS ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+PASS ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+PASS P17AssetCatalog metadata accepts bounded rigid canonical geometry and exact hex receipts
+PASS P17AssetCatalog metadata rejects invalid bounds dimensions and transforms without mutation
+PASS P17AssetCatalog receipt rejects nonhex wrong-length and nonscalar identities
+PASS PanelDamageRules heavy hits zero through six preserve exact stage boundaries
+PASS PanelDamageRules nine seconds never advance early and apply epsilon only at rounding boundary
+PASS PanelDamageRules mixed earned credit advances both stages without surplus carry
+PASS PanelDamageRules appearance distinguishes first-zero Light Heavy-zero and Total
+PASS PanelDamageRules invalid seconds reject without mutation and overflow never skips stages
+PASS burst exhausts and exact refill boundary accepts
+PASS bad time rejects without mutation and valid requests still succeed
+PASS invalid bucket configuration rejects
+PASS production rosters reject five and eleven players without mutation
+PASS six and ten players receive exactly one operator and one united ground roster
+PASS seeded ties are repeatable independent of incoming join order
+PASS longest waiting alternative gets operator without repeating previous operator
+PASS two and three player server fixtures are supported and duplicate ids reject
+PASS unsafe seeds reject and accepted seed boundaries always assign one operator
+PASS only documented phase edges and deployment cancellation are legal
+PASS deadline equality beats destruction and last ground elimination
+PASS pre-deadline aircraft destruction beats mutual ground elimination
+PASS empty server and no participants never award a competitive winner
+FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-ibfeyjki/tests/unit/Validation.spec:2: deliberate failure
+{"discovered":55,"failed":1,"passed":54,"skipped":0,"suite":"unit"}
+Expected rejection observed: exit 1
++ lune run scripts/run_tests.luau unit
+/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-ibfeyjki/scripts/run_tests:60: empty required suite: unit
+[Stack Begin]
+    Script '[C]' - function 'error'
+    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-ibfeyjki/scripts/run_tests', Line 60
+[Stack End]
+
+Expected rejection observed: exit 1
++ luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/build/StrictTypeProbe.luau
+[INFO] Loading definitions file: @roblox - .tools/globalTypes.d.luau
+[WARN] client does not allow didChangeWatchedFiles registration - automatic updating on sourcemap changes disabled
+[INFO] Loading Luau configuration from /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.luaurc
+build/StrictTypeProbe.luau(3,17): TypeError: Expected this to be 'boolean', but got 'string'
+build/StrictTypeProbe.luau(4,1): TypeError: Expected this to be 'number', but got 'string'
+Expected rejection observed: exit 1
++ rojo build default.project.json --output build/game.rbxlx
+Building project 'PlayersVsC130'
+Built project to game.rbxlx
++ rojo build test.project.json --output build/tests.rbxlx
+Building project 'PlayersVsC130Tests'
+Built project to tests.rbxlx
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/inspect_build.py
+P06 manual fixture isolation passed, including eight deliberate corruption probes.
+P05 manual fixture isolation passed, including eight deliberate corruption probes.
+Expected building surface rejection (ground): building floor overlaps the Y=0 battlefield surface
+Expected building surface rejection (frame): coplanar building faces: Foundry_UpperMain / Foundry_BeamEast9, axis 1
+Expected building surface rejection (duplicate): coplanar building faces: Foundry_S01_North_02 / Foundry_S01_North_02_Duplicate, axis 1
+Building surface separation passed: 7146 part pairs, no exposed coplanar overlaps.
+Expected shelter rejection (missing): starting shelter panel count
+Expected shelter rejection (overlap): shelter tiles overlap
+Expected shelter rejection (old-collider): starting shelter panel count
+Expected shelter rejection (registry): shelter registry descriptor
+Expanded world source contract passed: 720-stud diameter, 8 deterministic terrain hills, 3 two-story buildings, 111 building +76 starting-shelter stable panel pivots (187 total).
+Expected geometry rejection (alias): Noncanonical serialized pose alias: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (pose): Authored CFrame reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (size): Authored size reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (nonfinite): Nonfinite CFrame: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (missing): Missing canonical CFrame: Workspace/World/Battlefield/GroundDisk
+Authored geometry reconstruction passed: 422 release/422 test part transforms, dimensions, shape and collision flags.
+Artifact isolation passed: 510 release Instances, 600 test Instances; 47 runtime scripts only in release.
+All non-Studio gates passed. Studio server/client smoke and visual review require separate evidence.

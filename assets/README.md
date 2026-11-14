@@ -69,3 +69,20 @@ Runtime navigation, openings, collision/query behavior, thermal readability,
 fragment physics, multiplayer/reset and engine cost remain P17 checks.
 
 The current P07 revision also versions the starting battlefield shelter’s panelization in the world source/manifest. It replaces the old seven collider envelopes with 76 wall/roof panels while preserving the pristine union/entrances/anchors; the revised source passes its reconstruction and acceptance checks. Runtime Light/Heavy scars and fragments are original code-generated primitives and must not be exported as pristine world assets. Keep registry descriptors, manifest coverage and reconstruction checks aligned; the separate outside lobby is unchanged.
+
+## P17 material-boundary preparation
+
+The P17 branch adds the `approved-outpost-materials` runtime recipe for generated
+`src/server/ApprovedOutpost.luau`. `python3 scripts/p17_assets.py` checks its
+approved Blender/catalog/package-lock identity, source-export hashes and manifest
+digest. This is construction metadata, with six families and approved appearance,
+proxy and fragment definitions; it does not contain an uploaded model or verify
+cloud access. The authored active world and its 187 primitive panels remain
+unchanged.
+
+Actual P17 imports must add their managed model exports and real asset IDs,
+upload owner, experience access and import receipts to the manifest. Keep the
+reviewed P16 source/export bytes intact. See the
+[import preparation guide](../docs/development.md#prepare-the-approved-outpost-import)
+for the current boundary and the private-workspace requirement when Studio
+cannot configure MCP asset permissions in a local place.

@@ -111,6 +111,12 @@ def check_manifest(manifest: dict, *, root: Path = ROOT) -> None:
             raise ValueError(f"duplicate asset/recipe id: {recipe['id']}")
         seen.add(recipe["id"])
         local_target(root, recipe["local_path"], root=root)
+        if "sha256" in recipe:
+            digest = recipe["sha256"]
+            if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+                raise ValueError(f"runtime recipe {recipe['id']} requires a lowercase SHA-256")
+            if hashlib.sha256((root / recipe["local_path"]).read_bytes()).hexdigest() != digest:
+                raise ValueError(f"runtime recipe hash mismatch: {recipe['local_path']}")
 
     authored = {str(path.relative_to(root)) for directory in ASSET_ROOTS
                 for path in (root / "assets" / directory).rglob("*")

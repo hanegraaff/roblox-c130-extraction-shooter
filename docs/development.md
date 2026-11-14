@@ -122,7 +122,9 @@ The [export guide](../assets/exports/military-outpost/README.md) describes the
 FBX/OBJ/PNG/material map and panel/reusable-kit identities. Blender 5.3.0 is the
 recorded authoring version; Python's standard library is sufficient for the
 portable audit and CI. The user approved P16 revision `e8fb840` on 2026-11-13;
-the game still uses the primitive Outpost while P17 remains unimplemented.
+the game still uses the primitive Outpost. P17's preparation branch adds the
+shared imported-panel boundary described below; actual Outpost import and
+replacement remain future work.
 
 A deliberate source rebuild runs `scripts/p16_build.py` in a factory-startup
 Blender process. Reopen the saved `.blend` in a new background process through
@@ -156,9 +158,56 @@ new saved-source hash. A green portable audit cannot grant approval or replace
 P17's actual import, traversal, collision/thermal, fragment, replication/reset
 and engine-performance checks.
 
+## Prepare the approved Outpost import
+
+The `plan/17-integrate-military-outpost` branch prepares a server-only material
+boundary while retaining the primitive Outpost and all 187 active panels.
+It contains no uploaded asset IDs, imported templates or assembly replacement.
+Use the ordinary local setup above to inspect or test this source.
+
+Check that its generated definitions still match the approved P16 inputs:
+
+```sh
+python3 scripts/p17_assets.py
+python3 scripts/verify.py
+```
+
+`scripts/p17_assets.py` checks the approved Blender/catalog/package-lock identity, export
+hashes and the generated `src/server/ApprovedOutpost.luau` against its manifest
+runtime recipe. `--write` regenerates that module only; it does not import or
+upload anything. After an intentional regeneration, format the module and
+refresh that recipe's SHA-256 before verification. Do not substitute a new art
+revision for the approved package without updating its review/approval evidence.
+
+The future managed template root is `ServerStorage.Assets.MaterialPanels`.
+Its six family folders each contain Pristine, Light, Heavy and Total Models
+plus four fragment MeshParts. Templates carry source-file hashes and the root
+carries the approved revision, Blender hash and import-receipt hash. Meshes use
+canonical Roblox face X/Y, thickness Z, mapped from source `(X, Z, −Y)`.
+Cosmetic meshes are anchored and cannot collide, touch or enter queries;
+approved rectangle proxies alone define solid cover. See the
+[server API](../src/server/README.md#imported-material-panel-boundary-p17-preparation)
+for validation and cleanup contracts.
+
+Actual import needs authenticated asset upload access and an approved upload
+directory. If Studio says **Save to Roblox to manage MCP settings**, the local
+document cannot grant those permissions yet. Prepare an explicitly authorized
+private import workspace from the **release mapping** before configuring asset
+permissions there. Do not cloud-save `build/tests.rbxlx` or the test mapping.
+The experience/place, owner, audience and permanent asset uploads need the
+user's authorization; local test or GitHub delivery does not grant it.
+
+After import, retain the observed asset IDs, owner/access, source hashes,
+normalized transforms, material references and a managed model export in Git.
+Reference validation alone does not prove content loaded. Verify the actual
+approved assembly, both furnished floors, material states, collision/thermal
+openings, fragments, two-client resets and performance before claiming the
+replacement. [P17](../plans/17-integrate-military-outpost.md) retains those
+acceptance criteria and the separate human in-game approval gate.
+
 ## Author progressive panels and fragments
 
-Keep each destructible wall, roof or interior panel as one anchored authored BasePart under a validated panel registry. Formal buildings use `_Panels`; additional level-owned `PanelRegistries` StringValues name a direct Battlefield Folder, with Name as the building identity. The candidate uses SpawnShelter → SpawnShelterPanels for its 76 shelter panels alongside 111 formal-building panels. BuildingGeometry validates/decorates its globally unique ID, story/building metadata and Intact pivot before DestructionRuntime captures it. Do not author the runtime identity Model, damaged live state or debris into the source map. Static floors, stairs and support frames belong in `_Static` and never enter the panel ledger. Generic `Breakable` cover is currently unaffected.
+Keep each primitive destructible wall, roof or interior panel as one anchored authored BasePart under a validated panel registry. The prepared imported path instead requires a validated pristine material Model, with approved family, pivot, IntactSize and exact proxy geometry. Formal buildings use `_Panels`; additional level-owned `PanelRegistries` StringValues name a direct Battlefield Folder, with Name as the building identity. The active map uses SpawnShelter → SpawnShelterPanels for its 76 shelter panels alongside 111 formal-building panels. BuildingGeometry validates/decorates its globally unique ID, story/building metadata and Intact pivot before DestructionRuntime captures it. Do not author damaged live state or debris into the source map. Static floors, stairs and support frames belong in `_Static` and never enter the panel ledger. Generic `Breakable` cover is currently unaffected.
 
 The server-only [PanelResidual template](../assets/models/PanelResidual.model.json) is original primitive geometry: two normalized X strips, each width 0.25 and centered at −0.375/+0.375. PanelGeometry scales them along the longest face axis, preserving the authored thickness/pivot and a central 50% opening. Keep the manifest, source model, residual shape checks and all-panel Studio geometry assertions consistent. D50–D54 revise acceptance, persistent credit, appearance and shelter coverage while retaining the continuity/residual/fragment defaults; do not encode map-specific damage thresholds in the world package.
 

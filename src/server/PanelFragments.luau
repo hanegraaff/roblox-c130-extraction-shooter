@@ -24,7 +24,7 @@ PanelFragments.defaults = table.freeze({
     angularRadiansPerSecond = 4,
 })
 export type Controller = {
-    emit: (CFrame, Vector3, Color3, number) -> (),
+    emit: (CFrame, Vector3, Color3, number, { MeshPart }?) -> (),
     step: (number) -> (),
     clear: () -> (),
     stop: () -> (),
@@ -32,7 +32,7 @@ export type Controller = {
     static: (Instance) -> (),
     previousGroup: (BasePart) -> string,
 }
-type Fragment = { part: Part, expires: number }
+type Fragment = { part: BasePart, expires: number }
 
 -- Rejects nonfinite/out-of-budget tuning before touching collision groups. These
 -- local caps bound presentation independently of gameplay progression.
@@ -65,6 +65,9 @@ end
 -- Starts one exclusive group owner. Static input must contain only owned scenery;
 -- only anchored parts are assigned. Terrain is explicitly static. Original group
 -- properties are restored on stop, and groups owned here are unregistered.
+-- emit optionally receives already validated material fragment templates from
+-- PanelAssetCatalog (four nonempty <=1.5-stud MeshParts); their immutable source
+-- meshes/materials survive cloning. The default primitive path remains unchanged.
 function PanelFragments.start(root: Instance, settings: Settings?): (Controller?, string?)
     local config = settings or PanelFragments.defaults
     if not PanelFragments.validate(config) then
@@ -134,7 +137,7 @@ function PanelFragments.start(root: Instance, settings: Settings?): (Controller?
                 end
             end
         end,
-        emit = function(pivot, size, color, now)
+        emit = function(pivot, size, color, now, templates)
             if not running then
                 return
             end
@@ -143,11 +146,16 @@ function PanelFragments.start(root: Instance, settings: Settings?): (Controller?
                     retire(1)
                 end
                 serial += 1
-                local part = Instance.new("Part")
+                local template = if templates then templates[((index - 1) % #templates) + 1] else nil
+                local part: BasePart = if template then template:Clone() else Instance.new("Part")
                 part.Name = "Fragment" .. tostring(serial)
-                part.Size = Vector3.new(math.min(size.X, 1.5), math.min(size.Y, 1.5), math.min(size.Z, 1.5))
-                part.Color = color
-                part.Material = Enum.Material.Concrete
+                if not template then
+                    part.Size =
+                        Vector3.new(math.min(size.X, 1.5), math.min(size.Y, 1.5), math.min(size.Z, 1.5))
+                    part.Color = color
+                    part.Material = Enum.Material.Concrete
+                end
+                part.Anchored = false
                 -- Mass <=3.375 game mass units and launch speed <=12studs/s bound
                 -- initial linear momentum to40.5. This sets initial velocity,
                 -- not an ongoing force or ApplyImpulse call.

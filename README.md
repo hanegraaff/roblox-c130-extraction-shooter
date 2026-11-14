@@ -29,8 +29,10 @@ contains a furnished two-story military outpost, outdoor props and material-spec
 Pristine/Light/Heavy/Total damage variants. It is editable 3D source with game
 exports, explicitly approved on 2026-11-13 for revision `e8fb840`
 ([approval record](docs/evidence/p16/human-approval.json)). The playable building still
-uses primitive art. [P17](plans/17-integrate-military-outpost.md) will replace
-only the smaller Outpost with this approved revision and verify it in actual gameplay.
+uses primitive art. The `plan/17-integrate-military-outpost` preparation branch
+adds validation and shared damage support for imported material panels; it has
+no imported Outpost meshes or replacement building yet. [P17](plans/17-integrate-military-outpost.md)
+will replace only the smaller Outpost with the approved revision and verify it in actual gameplay.
 The [roadmap](roadmap.md) schedules those two increments before P09.
 
 ## Set up locally
@@ -54,6 +56,11 @@ git pull --ff-only origin main
 
 Do not discard local edits when switching source; select the same source for builds, Rojo sync and test evidence.
 
+To review P17's unfinished import preparation instead, select
+`plan/17-integrate-military-outpost` after fetching. It still plays the primitive
+Outpost. Follow the [import preparation guide](docs/development.md#prepare-the-approved-outpost-import)
+for the asset boundary and remaining access requirements.
+
 If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
 
 Install the pinned tools and dependencies, run the complete host gate, and make the tool commands available in this terminal:
@@ -65,7 +72,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install      # Install the matching Studio plugin once
 ```
 
-The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. The host gate runs **55 unit and 65 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It also checks the Blender package's files, exported geometry and hash-bound tool reports, with asset and manifest rejection tests. It does not run Blender or Roblox Studio. Blender 5.3.0 is needed to edit, rebuild or freshly render the outpost; ordinary play/build checks use the committed package. The dependency and build directories are generated and stay out of Git.
+The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. Integrated `main` has **55 unit and 65 integration tests**; the P17 preparation branch has **59 unit and 65 integration tests**, plus its approved-source generation check. Both run formatting/lint/type checks, both builds, geometry checks and release isolation. The gate also checks the Blender package's files, exported geometry and hash-bound tool reports, with asset and manifest rejection tests. It does not run Blender or Roblox Studio. Blender 5.3.0 is needed to edit, rebuild or freshly render the outpost; ordinary play/build checks use the committed package. The dependency and build directories are generated and stay out of Git.
 
 ## Play and develop locally with Rojo
 
@@ -102,7 +109,7 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
 2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
-3. Open Studio's **Output** panel. Require nonempty server and client reports with every discovered test passing and zero failures, skipped cases or errors. On source `ef7826b`, fresh ordinary Play passed **156 server tests and 7 client tests with one actual client**, with zero failures, errors or skips. A separate ordinary two-client SDK session passed the same server and per-client baselines. Require fresh source-specific reports after changes; this solo result does not establish three-client launcher acceptance. The [P08 record](plans/08-rocket-launcher.md) tracks the separate checks. The test server records first-client startup progress in `workspace.ServerTestStartup` and waits up to 60 seconds for that client before publishing an explicit failed report. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for startup diagnostics and source-specific evidence. These cover rules, selection rejection, service lifecycle, status/character behavior, actual GUI-hover/text-focus blocking, building/story/panel geometry, terrain reconstruction, supported routes, canonical aircraft poses, solid sight lines, boundary correction, all-panel residual geometry, pre-impact cover, fragment physics and pristine resets. These engine suites do not replace the three-client P08 or other multiplayer and operated checks. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
+3. Open Studio's **Output** panel. Require nonempty server and client reports with every discovered test passing and zero failures, skipped cases or errors. Expect **156 server tests and 7 tests per actual client** on integrated `main`, or **164 server and 7 per actual client** on the P17 preparation branch. Its added material fixtures use empty test-only cosmetic meshes to exercise real proxy rays and lifecycle; they do not load the approved art. Require fresh source-specific reports after changes; a solo result does not establish multiplayer launcher or imported-Outpost acceptance. The [P08 record](plans/08-rocket-launcher.md) tracks the separate checks. The test server records first-client startup progress in `workspace.ServerTestStartup` and waits up to 60 seconds for that client before publishing an explicit failed report. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for startup diagnostics and source-specific evidence. These cover rules, selection rejection, service lifecycle, status/character behavior, actual GUI-hover/text-focus blocking, building/story/panel geometry, terrain reconstruction, supported routes, canonical aircraft poses, solid sight lines, boundary correction, all-panel residual geometry, pre-impact cover, fragment physics and pristine resets. These engine suites do not replace the three-client P08 or other multiplayer and operated checks. After those suites pass, the test runner starts the round runtime. With one client, it automatically moves you to the battlefield for solo exploration. The HUD reads **Studio preview • Ground**. This bypasses the lobby location for testing; no opponent, active life or competitive round is created.
 4. Click **Stop**, then **Play** again. Check fresh passing reports and one status panel plus one round panel. Stop before changing the mapping or source.
 5. Use the **STUDIO TESTING** panel at the bottom right. Click **Role** to cycle Auto → Ground → Operator. With one client, the choice changes your solo preview immediately: Ground can walk, while Operator previews the inward thermal view. Hold **WASD** to pan and move the mouse to aim, or use the touch directional pad and a separate aiming touch. Use **R / Recenter** to reset the safe view, and **1 / 2** or the named buttons to inspect both zoom profiles. Solo selection is cosmetic and does not grant an active role. Click **Next round** to cycle 30, 60, 180 or 600 seconds.
 6. For a real role/round test, use Studio **Server & Clients** with **2 clients** (or **3** for launcher recovery and teammate spectating). Choose your roles, then click **Start round now** to bypass the lobby wait. Two Operator choices, or everyone choosing Ground, produces an explanation rather than silently changing a tester's choice. **Auto** fills the required operator when nobody explicitly requests it.
