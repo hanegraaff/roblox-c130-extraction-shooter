@@ -208,6 +208,25 @@ report does not include baseline reports. The missing P08-session server/two
 client reports remain an evidence limitation; other source-bound sessions or
 a separately recorded three-client smoke cannot retrospectively supply them.
 
+One focused separate `ExecuteMultiplayerTestAsync(3, {kind = "P17Baseline"})`
+attempt on `03c9c06` connected only two actual clients. The
+[baseline report](../docs/evidence/p17/separate-baseline3-03c9c06.json) records
+164 server / seven on each observed client, `requestedClients = 3`,
+`observedClients = 2` and `complete = false`. No third report exists. Its
+[return/cleanup report](../docs/evidence/p17/separate-baseline3-return-03c9c06.json)
+is separate from the passing P08 harness. The missing P08-session raw reports
+and this unavailable third baseline remain open A5 evidence; a supported
+operation's temporary startup/capture failure does not waive it. The green
+eleven-case harness was not rerun merely to replace already passing scenarios.
+
+The [independent final review](../docs/evidence/p17/independent-review.md)
+finds no unresolved material defect in the bounded preparation after the
+approval-lock correction. It retains the access and baseline gaps. All owned
+Play/SDK sessions ended; only the original confirmed test document remains
+in Edit, RunService is stopped, `ManualHarness` is nil, `BootstrapStatus` is
+absent and Workspace attributes are restored to their initial empty state.
+The Rojo server remains available on port 34872 for source iteration.
+
 The [pending access request](../docs/evidence/p17/import-access-request.json)
 identifies the proposed owner-only **C130 P17 Import** experience / **P17 Import
 Workspace** place on user account `2227341845`, the exact release-mapped build,
@@ -215,3 +234,19 @@ approved model exports and required asset scopes/upload directory. This is a
 proposal, with no assigned cloud IDs or consent inferred. The initial cloud
 save and permanent asset uploads await explicit authorization. Test mappings
 must stay local; public release remains separate.
+
+### GitHub review delivery
+
+[Draft PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39)
+targets `main` from `plan/17-integrate-military-outpost`. Initial source,
+documentation and evidence delivery is
+`916713e64451c5620c416b29d722f6b4eca2ff9f`, tree
+`d86bc3a7834a06d8beb2cc13c545e042bd38004c`. Its
+[GitHub Verify run #335](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43605942429)
+completed successfully. Runtime/tooling evidence remains tied to `03c9c06`,
+with the explicitly equivalent `16ea166` runtime reports above. Delivery-only
+prose/evidence records do not change gameplay or tests.
+
+P17 retains the concrete import-access blocker in the roadmap. No A1–A6
+completion, next-plan promotion, merge, cloud save, asset upload or Roblox
+publication is claimed by this draft.

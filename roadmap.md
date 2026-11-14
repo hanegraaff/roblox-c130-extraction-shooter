@@ -51,6 +51,13 @@ integrated-art acceptance/performance and human in-game approval remain open.
 P09 stays Planned. No cloud save, asset upload, merge or Roblox publication
 has occurred.
 
+P17 preparation is delivered for review in [draft PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39),
+targeting `main`. Initial evidence delivery `916713e` passes
+[GitHub Verify #335](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43605942429).
+The code/tooling source remains `03c9c06`; the plan records source-bound
+Studio results and remaining evidence limitations. This draft does not complete
+P17 or authorize its pending private cloud workspace/assets.
+
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
 equals the combined passing candidate `537a2ce` /
