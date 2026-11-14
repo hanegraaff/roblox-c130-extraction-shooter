@@ -1,5 +1,10 @@
 # Military outpost showcase
 
+**Historical, replaced:** the user rejected this generated showcase and selected
+[blender_outpost.png](../../blender_outpost.png), an actual Blender viewport
+capture, for the README. The generated image and prompt below remain only as
+the record of the earlier showcase request; the README no longer displays them.
+
 Generated on 2026-11-13 (America/New_York) with the built-in `image_gen` tool using the imagegen skill. This is a generated documentation illustration based on actual approved Blender renders, not a direct Blender render or gameplay capture. It does not change the approved asset or establish P17 runtime behavior.
 
 Output: [military-outpost-showcase.png](military-outpost-showcase.png). Dimensions: 1672×941; 2,168,423 bytes. SHA-256: `885ada1fba4a17a5d50846093cee2cf343671e7dfb0b7fb908eea106c87c3e8f`.

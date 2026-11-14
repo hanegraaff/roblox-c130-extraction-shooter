@@ -146,9 +146,9 @@ The launcher carries one ready rocket and automatically replenishes after four s
 
 ## Inspect the Blender outpost
 
-![Generated showcase of the approved two-story Blender outpost, with its exterior, storage workshop and command room](docs/images/military-outpost-showcase.png)
+![Blender viewport showing the two-story outpost with teal walls, rooftop equipment, balcony and external stairs](blender_outpost.png)
 
-*AI-generated showcase, 2026-11-13, based on the approved P16 Blender renders; this is an illustration, not a gameplay capture or direct Blender render. [Original renders and editable source](assets/blender/military-outpost/README.md) · [Prompt and provenance](docs/images/military-outpost-showcase.md).*
+*User-provided Blender viewport capture of the P16 outpost. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
 Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend)
 in **Blender 5.3.0**. It contains the exterior, furnished workshop and command
