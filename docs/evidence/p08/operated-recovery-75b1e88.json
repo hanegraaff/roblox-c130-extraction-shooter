@@ -1,0 +1,59 @@
+{
+  "source": "75b1e882a33f73a4c4aa429cb0fb125648d75501",
+  "tree": "055b7664a60d1f0cef49615d8009b29cabde1f2b",
+  "environment": "Studio0.747 native manual Server & Clients ordinary HumanTestSession; three initial actual clients, two after intentional carrier Kick",
+  "rawDestroy": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"sameReload\":true,\"after\":{\"state\":\"Available\",\"revision\":5,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.7174975872039797,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603620.684379,\"roundId\":1},\"phase\":\"Active\",\"before\":{\"ownerId\":-1,\"revision\":3,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603620.684379,\"roundId\":1},\"life\":\"Eliminated\",\"count\":3,\"character\":false,\"sameIdentity\":true,\"groundAlive\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "afterRawDestroyPickup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603620.684379,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":2.7174975872039797,\\\"z\\\":0.01173020526766777},\\\"revision\\\":6,\\\"ammo\\\":1,\\\"ownerId\\\":-2,\\\"roundId\\\":1}\",\"character\":false,\"health\":300,\"life\":\"Eliminated\"}"
+      }
+    ],
+    "isError": false
+  },
+  "disconnect": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"sameReload\":true,\"method\":\"actual server Kick in native manual session\",\"phase\":\"Active\",\"departed\":true,\"count\":2,\"before\":{\"ownerId\":-2,\"revision\":3,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603694.631388,\"roundId\":1},\"sameIdentity\":true,\"after\":{\"state\":\"Available\",\"revision\":5,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":-2.6627566814422609,\"z\":0.007820136845111847},\"ammo\":0,\"readyAt\":1794603694.631388,\"roundId\":1},\"groundAlive\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "afterDisconnectReplication": [
+    {
+      "studioId": "04cd6426-7822-4a31-8794-0782a6efbb96",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-1,\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603694.631388,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":-2.6627566814422609,\\\"z\\\":0.007820136845111847},\\\"revision\\\":6,\\\"ammo\\\":1,\\\"ownerId\\\":-1,\\\"roundId\\\":1}\",\"health\":300}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "8d1001f8-776e-4946-b88a-2ef12f5f22b5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-3,\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603694.631388,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":-2.6627566814422609,\\\"z\\\":0.007820136845111847},\\\"revision\\\":6,\\\"ammo\\\":1,\\\"ownerId\\\":-1,\\\"roundId\\\":1}\",\"health\":300}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "scope": "Normal test controls restarted the owning HumanTestSession between cases; fresh runtime generation resets roundId to1. This does not claim the complete eleven-case P08 harness or same-identity reconnect."
+}

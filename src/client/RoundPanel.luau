@@ -7,16 +7,20 @@
 ]=]
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 local Lifecycle = require(game:GetService("ReplicatedStorage").Shared.Lifecycle)
 local RoundPanel = {}
 local ThermalCameraController = require(script.Parent.ThermalCameraController)
 
 -- Creates a controller for existing player/status owners; start/stop are idempotent.
+-- Optional nonyielding touch capability supports the same responsive layout in
+-- alternate input environments/tests. Production samples UserInputService.
 function RoundPanel.new(
     player: Player,
     playerGui: PlayerGui,
     state: Instance,
-    inputProvider: ThermalCameraController.InputProvider?
+    inputProvider: ThermalCameraController.InputProvider?,
+    touchProvider: (() -> boolean)?
 ): Lifecycle.Controller
     return Lifecycle.new({
         function()
@@ -104,6 +108,7 @@ function RoundPanel.new(
                     healthLabel.Text =
                         string.format("AIRCRAFT HEALTH  %d / %d", aircraftHealth, aircraftMaximum)
                 end
+                local roundDetail = detail
                 if
                     phase == "Active"
                     and type(aircraftHealth) == "number"
@@ -121,19 +126,30 @@ function RoundPanel.new(
                         )
                 end
                 local activeGround = phase == "Active" and role == "Ground" and life == "Alive"
+                local touch = if touchProvider then touchProvider() else UserInputService.TouchEnabled
+                local compactGround = activeGround and touch
+                healthLabel.Position = UDim2.fromOffset(12, if compactGround then 44 else 55)
+                healthLabel.Size =
+                    UDim2.fromOffset(if compactGround then 240 else 250, if compactGround then 22 else 34)
+                healthLabel.TextSize = if compactGround then 14 else 17
                 if thermal.ownsCamera() or activeGround then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
-                    label.Size = UDim2.fromOffset(300, 38)
+                    label.Size = if compactGround
+                        then UDim2.new(1, -180, 0, 22)
+                        else UDim2.fromOffset(300, 38)
                     label.TextSize = 14
-                    label.Text = if phase == "Active" then detail else "Operator preview"
+                    label.Text = if compactGround
+                        then roundDetail
+                        elseif phase == "Active" then detail
+                        else "Operator preview"
                 else
                     label.AnchorPoint = Vector2.new(0.5, 0)
                     label.Position = UDim2.new(0.5, 0, 0, 112)
                     label.Size = UDim2.fromOffset(540, 102)
                     label.TextSize = 18
                     label.Text = string.format(
-                        "%s\n%s\nM-7 available to living ground players • Launcher planned",
+                        "%s\n%s\nGround players start with M-7 • One launcher on the map",
                         heading,
                         detail
                     )
@@ -142,7 +158,7 @@ function RoundPanel.new(
                 if activeGround then
                     surrender.AnchorPoint = Vector2.new(1, 0)
                     surrender.Position = UDim2.new(1, -12, 0, 8)
-                    surrender.Size = UDim2.fromOffset(150, 36)
+                    surrender.Size = UDim2.fromOffset(150, if compactGround then 32 else 36)
                     surrender.TextSize = 13
                 else
                     surrender.AnchorPoint = Vector2.new(0.5, 0)

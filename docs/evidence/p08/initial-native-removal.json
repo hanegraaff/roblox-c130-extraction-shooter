@@ -1,0 +1,23 @@
+{
+  "source": "88732d4e926d3463f95900928aa13d9a9d97eee8",
+  "result": {
+    "before": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"phase\":\"Active\",\"life\":\"Alive\",\"health\":100}"
+        }
+      ],
+      "isError": false
+    },
+    "after": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"roundAttributes\":{\"RoundId\":1,\"Revision\":8,\"MinimumPlayers\":2,\"Reason\":\"\",\"Phase\":\"Active\",\"DeadlineSeconds\":1794601685.090345,\"Winner\":\"\",\"GroundAlive\":2},\"life\":\"Alive\",\"character\":true,\"role\":\"Ground\",\"parent\":\"nil\",\"phase\":\"Active\",\"players\":3,\"launcher\":\"{\\\"state\\\":\\\"Available\\\",\\\"readyAt\\\":0,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":3,\\\"x\\\":0,\\\"z\\\":0},\\\"revision\\\":1,\\\"ammo\\\":1,\\\"roundId\\\":1}\"}"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

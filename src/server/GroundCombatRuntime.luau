@@ -46,6 +46,11 @@ export type Controller = {
     stop: () -> (),
     rocketImpact: (number, string, boolean) -> boolean,
     rocketSweep: (number, string, Vector3, Vector3) -> boolean,
+    -- Sweeps the first authoritative solid. Returns collision and aircraft award;
+    -- nil collision means clear travel, never permission to skip solid cover.
+    rocketCast: (number, string, Vector3, Vector3) -> (Vector3?, boolean),
+    -- Shared movement/origin authority for equipped launcher fire and pickup.
+    validateGround: (Player) -> boolean,
     -- Only a trusted server owner may acknowledge its own spawn/correction.
     trustCorrection: (Player) -> boolean,
     -- Fresh readiness copy for a server-owned diagnostic, at server time.
@@ -233,7 +238,12 @@ function GroundCombatRuntime.start(
     local function award(roundId: number, shotId: string, weapon: string, direct: boolean): boolean
         local state = match.snapshot()
         local now = workspace:GetServerTimeNow()
-        if state.phase ~= "Active" or state.roundId ~= roundId or now >= state.deadlineSeconds then
+        if
+            not running
+            or state.phase ~= "Active"
+            or state.roundId ~= roundId
+            or now >= state.deadlineSeconds
+        then
             return false
         end
         local amount, destroyed = health.impact(roundId, shotId, weapon, direct)
@@ -245,6 +255,46 @@ function GroundCombatRuntime.start(
             match.proposeAircraftDestroyed(roundId)
         end
         return true
+    end
+    local function rocketCast(
+        roundId: number,
+        shotId: string,
+        origin: Vector3,
+        displacement: Vector3
+    ): (Vector3?, boolean)
+        if
+            not running
+            or displacement.Magnitude <= 0
+            or displacement.Magnitude > 1200
+            or origin.Magnitude ~= origin.Magnitude
+            or origin.Magnitude == math.huge
+            or displacement.Magnitude ~= displacement.Magnitude
+        then
+            return nil, false
+        end
+        local aircraft = workspace:FindFirstChild("Aircraft")
+        local world = workspace:FindFirstChild("World")
+        local battlefield = if world then world:FindFirstChild("Battlefield") else nil
+        if not aircraft or not battlefield then
+            return nil, false
+        end
+        local parameters = RaycastParams.new()
+        parameters.FilterType = Enum.RaycastFilterType.Include
+        parameters.FilterDescendantsInstances = { battlefield, workspace.Terrain, aircraft }
+        local overlap = OverlapParams.new()
+        overlap.FilterType = Enum.RaycastFilterType.Include
+        overlap.FilterDescendantsInstances = { battlefield }
+        overlap.MaxParts = 1
+        if #workspace:GetPartBoundsInRadius(origin, 0.2, overlap) > 0 then
+            return origin, false
+        end
+        local hit = workspace:Spherecast(origin, 0.2, displacement, parameters)
+        if not hit then
+            return nil, false
+        end
+        local applied = hit.Instance:IsDescendantOf(aircraft)
+            and award(roundId, shotId, "RocketLauncher", true)
+        return hit.Position, applied
     end
     table.insert(
         connections,
@@ -481,25 +531,27 @@ function GroundCombatRuntime.start(
         trustCorrection = function(player)
             return running and track(player, workspace:GetServerTimeNow(), true)
         end,
+        validateGround = function(player)
+            local now = workspace:GetServerTimeNow()
+            if not running or not active(player, now) or not track(player, now, false) then
+                return false
+            end
+            local character = player.Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            local head = if character then character:FindFirstChild("Head") else nil
+            return root ~= nil
+                and root:IsA("BasePart")
+                and head ~= nil
+                and head:IsA("BasePart")
+                and originGeometry.allows(root, head)
+        end,
         rocketImpact = function(roundId, shotId, direct)
             return award(roundId, shotId, "RocketLauncher", direct)
         end,
+        rocketCast = rocketCast,
         rocketSweep = function(roundId, shotId, origin, displacement)
-            if displacement.Magnitude <= 0 or displacement.Magnitude > 1200 then
-                return false
-            end
-            local aircraft = workspace:FindFirstChild("Aircraft")
-            if not aircraft then
-                return false
-            end
-            local parameters = RaycastParams.new()
-            parameters.FilterType = Enum.RaycastFilterType.Include
-            parameters.FilterDescendantsInstances =
-                { workspace.World.Battlefield, workspace.Terrain, aircraft }
-            local hit = workspace:Spherecast(origin, 0.2, displacement, parameters)
-            return hit ~= nil
-                and hit.Instance:IsDescendantOf(aircraft)
-                and award(roundId, shotId, "RocketLauncher", true)
+            local _, applied = rocketCast(roundId, shotId, origin, displacement)
+            return applied
         end,
         resources = function()
             local count = 0

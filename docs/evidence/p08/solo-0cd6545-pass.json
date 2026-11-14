@@ -1,0 +1,35 @@
+{
+  "source": "0cd65458b4afcdcf8e8b111c3b0adaed19c7652c",
+  "tree": "40748edb77e71d26e6e060bf2f941e532b88103c",
+  "server": {
+    "report": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 156,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 156
+    },
+    "count": 1,
+    "startup": {
+      "status": "first-client-arrived",
+      "clientCount": 1,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 0.1577158750151284
+    }
+  },
+  "client": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 7,
+    "userId": 2227341845,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-client",
+    "failed": 0,
+    "discovered": 7
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "suite": "P16-assets",
+  "discovered": 7,
+  "passed": 7,
+  "failed": 0,
+  "skipped": 0,
+  "results": [
+    {
+      "name": "P16AssetInventory",
+      "passed": true,
+      "detail": {
+        "categories": 36,
+        "mesh_objects": 3093,
+        "furnished_floors": 2
+      }
+    },
+    {
+      "name": "P16DamageCatalog",
+      "passed": true,
+      "detail": {
+        "families": 6,
+        "states": 24,
+        "fragments": 24,
+        "legacy_pivots": 25,
+        "new_panels": 1
+      }
+    },
+    {
+      "name": "P16PanelGeometry",
+      "passed": true,
+      "detail": [
+        {
+          "family": "corrugated_wall",
+          "actual_removed_fraction": 0.494140625,
+          "proxy_removed_fraction": 0.5,
+          "proxy_extra_cells": 0,
+          "cosmetic_silhouette_difference": 0.005859375,
+          "raster_width": 128
+        },
+        {
+          "family": "corrugated_window",
+          "actual_removed_fraction": 0.4921875,
+          "proxy_removed_fraction": 0.5,
+          "proxy_extra_cells": 0,
+          "cosmetic_silhouette_difference": 0.0078125,
+          "raster_width": 128
+        },
+        {
+          "family": "corrugated_door",
+          "actual_removed_fraction": 0.4883720930232558,
+          "proxy_removed_fraction": 0.49709302325581395,
+          "proxy_extra_cells": 0,
+          "cosmetic_silhouette_difference": 0.00872093023255814,
+          "raster_width": 128
+        },
+        {
+          "family": "corrugated_garage",
+          "actual_removed_fraction": 0.4829545454545454,
+          "proxy_removed_fraction": 0.5,
+          "proxy_extra_cells": 0,
+          "cosmetic_silhouette_difference": 0.017045454545454544,
+          "raster_width": 128
+        },
+        {
+          "family": "concrete_partition",
+          "actual_removed_fraction": 0.5,
+          "proxy_removed_fraction": 0.5,
+          "proxy_extra_cells": 0,
+          "cosmetic_silhouette_difference": 0.0,
+          "raster_width": 128
+        },
+        {
+          "family": "layered_roof",
+          "actual_removed_fraction": 0.5,
+          "proxy_removed_fraction": 0.5,
+          "proxy_extra_cells": 0,
+          "cosmetic_silhouette_difference": 0.0,
+          "raster_width": 128
+        }
+      ]
+    },
+    {
+      "name": "P16Navigation",
+      "passed": true,
+      "detail": {
+        "name": "P16Navigation",
+        "passed": true,
+        "body_dimensions_studs": [
+          4,
+          6,
+          4
+        ],
+        "foot_clearance_studs": 0.065,
+        "support_height_tolerance_studs": 0.11,
+        "profile_method": "6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays",
+        "body_samples": 185,
+        "support_rays": 1850,
+        "internal_samples": 98,
+        "external_samples": 87,
+        "scope": "Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17"
+      }
+    },
+    {
+      "name": "P16ExportAudit",
+      "passed": true,
+      "detail": {
+        "assembly_triangles": 89024,
+        "materials": 12,
+        "textures": 12,
+        "reusable_kit_assets": 8,
+        "package_bytes": 31849884
+      }
+    },
+    {
+      "name": "P16BlenderReopen",
+      "passed": true,
+      "detail": {
+        "source_sha256": "08277437457c0538d0767c97bffa784a8b0e511d4f7bee2c1e37cf66a89b7c93",
+        "blender_version": "5.3.0",
+        "missing_dependencies": 0,
+        "fbx_meshes": 2225,
+        "panel_library_meshes": 260,
+        "kit_imports": 8,
+        "required_renders": 29
+      }
+    },
+    {
+      "name": "P16Dependencies",
+      "passed": true,
+      "detail": {
+        "files": 109,
+        "sha256_verified": true
+      }
+    }
+  ]
+}

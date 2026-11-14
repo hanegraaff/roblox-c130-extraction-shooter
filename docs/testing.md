@@ -2,11 +2,14 @@
 
 ## Current host checks
 
-Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map, round, aircraft/view, gunship/ground combat and panel-destruction source. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
+Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map, round, aircraft/view, gunship/ground combat, panel-destruction, P08 launcher source and P16 asset package. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
 
 | Gate | Command used by the verifier |
 | --- | --- |
 | Repository inputs | `python3 scripts/check_repository.py` |
+| Asset provenance rejection tests | `python3 -m unittest discover -s tests/tooling -v` |
+| P16 committed asset package | `python3 scripts/p16_audit.py` |
+| Asset audit regression tests | `python3 -m unittest discover -s tests/assets -v` |
 | Format | `stylua --check src tests scripts/run_tests.luau` |
 | Lint | `selene src tests scripts/run_tests.luau` |
 | Roblox sourcemap | `rojo sourcemap test.project.json --output build/sourcemap.json` |
@@ -18,13 +21,82 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. Revised candidate `8053c8f73c5700161e7b87d8e87824742165f3cd` passes the [full host gate](evidence/p07-revision-host-8053.txt) with **55 unit and 55 integration cases**. The earlier 54-unit/53-integration result is historical. Unit coverage includes validation/config/rate, map/building layout, aircraft orbit/pan/zoom, roster/outcome rules and panel-stage arithmetic. Integration coverage composes actual lifecycle/match, weapon selection/readiness/view, health/damage, movement-origin and ordered destruction services with controlled boundaries. `PanelDamageRules` covers persistent damage, mixed/nine-second arithmetic and appearance tiers; `DestructionService` covers per-panel accumulation, timing breaks, accepted-shot ordering, rejection and generation cleanup. The suites load production modules, not copied rules. They do not establish Studio collision, rigid-body contact, actual traversal or replication. Server-only policy modules remain under `src/server` in both runtimes.
+The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The P08 mapping has **55 unit and 65 integration cases**. Current test source `07e77ea` with production/UI `ef7826b` passes the primary full `python3 scripts/verify.py` gate with those counts and every static/build/probe/isolation check ([full log](evidence/p08/host-07e77ea.txt)). Exact source and earlier independent/first-candidate results remain recorded in the [P08 evidence](evidence/p08-launcher.md). The earlier P07 55/55 result remains historical. Coverage includes validation/config/rate, map/building layout, orbit/pan/zoom, roles/outcomes, weapon readiness, shared aircraft health, movement-origin checks, ordered panel destruction and single-launcher identity/reload/recovery. These suites load production modules with deterministic boundaries. They do not establish real collision, rigid-body contact, actual traversal or multiplayer replication. Server-only policy stays under `src/server`.
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
 Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The stable build checks **422 authored Parts**, including **403 Battlefield Parts** and all **187 panels**; the earlier 353-part/111-panel artifact result is historical. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
+
+## Verify and review the P16 Blender package
+
+P16 is an asset-authoring increment outside Rojo's runtime mappings. Its
+[acceptance record](evidence/p16/acceptance.md) binds commands, measurements,
+failures, independent review and explicit human approval to exact source/export
+hashes. Use the [source guide](../assets/blender/military-outpost/README.md) for
+inspection and the full copyable rebuild/reopen/render sequence; the
+[export guide](../assets/exports/military-outpost/README.md) documents consumers.
+The current game retains the primitive smaller Outpost until P17.
+
+The full host gate now includes Python manifest and asset regression suites and
+`python3 scripts/p16_audit.py`. Require nonzero discovery, all named cases
+passing and no skips/failures. The current mapping expects seven asset-audit suites, 22 asset regression
+cases and ten manifest cases. These counts are separate from the 55 unit /
+65 service cases above; source-bound outcomes remain in the acceptance record. The portable asset audit checks the actual exported
+triangle data rather than accepting catalog opening fractions as proof:
+
+| Named audit | Evidence it checks |
+| --- | --- |
+| `P16AssetInventory` | Required reference features, editable named components, furnished assembly, declared scale/site and reusable asset mapping |
+| `P16DamageCatalog` | Six material/shape families, four appearances, material-matched fragment exports and retained legacy pivot/identity mapping |
+| `P16PanelGeometry` | Rasterized actual mesh/proxy face coverage; Light retains pristine coverage with actual earned-scar faces on both sides, Heavy removes 45–55% of original blocking face, Total has no solid; proxies cannot fill visible holes |
+| `P16Navigation` | Actual stair/floor/beam/balcony geometry at 185 route stations (98 internal / 87 external), with 1,850 support rays and 4×6×4-stud body checks across treads, landings, turns and the upper door; checked in OBJ, saved-source and clean-FBX geometry; actual Humanoid traversal remains P17 |
+| `P16ExportAudit` | Finite triangulated OBJ data, UV/material/texture references, named exports and measured file/triangle/texture budgets |
+| `P16BlenderReopen` | Checked-in clean Blender reopen and FBX-import reports match the source/export hashes and record no missing dependencies |
+| `P16Dependencies` | Exact package file set, sizes and SHA-256 values against its lock |
+
+The Python rejection tests use disposable copies to exercise invisible Heavy
+colliders, invalid Light/Total solids, shifted pivots, invalid UV indices,
+oversized fragments, missing baked textures and empty FBX files. Added
+regressions restore the obstructing internal beam/full balcony deck and a
+side obstruction missed by a center ray, and reject stale panel/kit import
+proof, missing/changed render images, stale source receipts and changed review
+scripts even after package hashes are refreshed. Light-scar regressions reject
+Pristine geometry substituted for Light, renamed/permuted copies and unused
+dark-material declarations; the audit requires actual measurable earned-scar
+triangles on both faces.
+`tests/tooling` separately checks manifest coverage, changed/missing hashes,
+duplicate/noncanonical/escaping paths, backups and file-size limits. Refer to
+the actual reports for discovered counts and precise cases; never combine
+these with Luau counts or report them as Studio execution.
+
+Portable CI checks committed geometry and hash-bound tool evidence; it does
+**not** freshly open Blender. A new authoring revision additionally needs a
+clean Blender 5.3.0 reopen, actual FBX imports of assembly/panels/all eight
+reusable props, and saved-source exterior, both furnished-floor, cutaway/kit
+and all six families' two-sided color/grayscale renders. Required proof binds
+the saved `.blend`, review script, every FBX and all 29 review images to
+their actual hashes; missing or stale proof is incomplete acceptance. `p16_blender_review.py` performs
+those tool checks without saving changes back into the source. Run its audit
+and render commands in separate fresh processes after final source save, then
+refresh the package lock/manifest and run the full gate. Include
+`--python-exit-code 1` on every Blender script command so a Python exception
+returns a failed process status. Full `--render` writes its complete metadata
+automatically. Once the identical tested art/review script is committed, the
+optional `--render-manifest-only` step records HEAD from verified unchanged
+receipts; it rejects stale/incomplete receipts and does not rerender or approve
+changed source. Repeated render work
+cannot turn an earlier failed source into passing evidence; retain failure
+scope and identify the replacement source.
+
+Human approval is an additional required P16 gate: the user must explicitly
+approve the identified saved revision after inspecting exterior, both interiors
+and material damage. Automation, reviewer preference and silence cannot satisfy
+it. Blender geometry, grayscale previews and FBX round trips do not establish
+Roblox Humanoid navigation, collision/query behavior, thermal occlusion,
+fragment physics, replication/reset or runtime budgets. Those require P17's
+actual imported candidate and its separate Studio/player evidence.
 
 ## Run the Studio smoke suites
 
@@ -46,11 +118,11 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The frozen revised P07 baseline expects **142 server cases and six cases per actual client**. Its [fresh ordinary solo report](evidence/p07-revision-solo-4db-pass.json) records zero failures/skips/errors and clean bootstrap progress. This is one actual client; it does not by itself prove the separate two-client harness or operated acceptance. The earlier candidate’s 137-server/six-client result remains historical. Each report must have `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`; the server includes unit/service registrations and foundation/map/aircraft/ground-origin/panel engine specs. Record current source/build and actual contexts with every report. P06's historical 118-server baseline and earlier P13/P14 reports retain their own counts; never relabel them as P07 evidence. See the [P07 record](../plans/07-destruction.md) for actual execution and open acceptance.
+5. The corrected P08 mapping expects **156 server cases and seven cases per actual client**: 55 unit, 65 integration and 36 server engine cases, plus the separate client suite. Current source `ef7826b` passed fresh ordinary one-client Play with **156 server / seven client**, zero failures/errors/skips, and an ordinary two-client SDK session passed 156 server/seven per actual client. These baseline results do not establish the complete three-client launcher harness or operated input. The [P08 record](../plans/08-rocket-launcher.md) identifies the actual tested candidate and passing/unavailable checks. Initial candidate `88732d4` passed 155 server/six client before its character-removal and GUI-intersection corrections. Require every current report to have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`. Preserve exact source/build and actual contexts; historical P06/P07 counts below apply only to their recorded source.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
-The revised P07 aggregate includes panel/appearance, persistent-credit and shelter-geometry engine checks alongside the shared host cases and existing suites. A passing one-client baseline establishes only those assertions, not P07's required two-client/reset or operated checks. Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
+The P08 aggregate includes launcher geometry/reload lifecycle and owned-character removal alongside panel/appearance, persistent-credit, shelter-geometry and shared host cases. A passing one-client baseline establishes only those assertions, not P07's required two-client/reset or operated checks. Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
 
 - Assert actual loaded disk/spawn/roof transforms, then reject invalid disk dimensions, anchor identity/count and exterior/below-ground/floating/blocked anchors before restoring validity.
 - Sample both launcher approaches every 0.5 stud with a 4×6×4-stud upright envelope and downward floor rays. This recorded envelope is a clearance fixture, not an avatar compatibility claim.
@@ -58,7 +130,7 @@ The revised P07 aggregate includes panel/appearance, persistent-credit and shelt
 - Correct exterior/below-threshold characters, preserve legal disk/station positions, and disconnect containment on stop.
 - Rebuild twice after removed cover and transient debris; compare descendant counts, stable part names and poses, then exercise idempotent destruction.
 
-The client TestEZ suite includes Foundation, P14 PointerGui and P06 GroundAimGui cases; the current candidate expects six. `PointerGui.spec.luau` calls the production default-input adapter against actual normal/full-bleed GUI buttons and an actual focused TextBox, verifies window-focus blocking and unchanged raw pointer coordinates, then releases focus and destroys its fixtures. `ClientTests.PointerGuiInset` records the observed inset. GroundAimGui checks rifle reticle/ray agreement and touch layout. Prior reports are source-specific; each new multiplayer session needs fresh reports. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
+The client TestEZ suite includes Foundation, P14 PointerGui and GroundAimGui cases; the current candidate expects seven. The added P08 case constructs production RoundPanel and GroundCombatController in distinct ScreenGuis with measured origins/insets, then checks actual HUD rectangle separation/containment at desktop and phone sizes. Source `ef7826b` aligns the compact active-Ground touch header in shared GUI-content coordinates and tests client-only presentation state representing confirmed rifle/rocket feedback, text fit, native inventory/thumbstick reserves, centered aim, actionable controls and cleanup. Touch confirmed hits append HIT to readiness; desktop keeps floating hit text. These fixtures do not establish native touch input or prove actual CoreGui placement; inspect native inventory independently because Studio captures omit it. `PointerGui.spec.luau` calls the production default-input adapter against actual normal/full-bleed GUI buttons and an actual focused TextBox, verifies window-focus blocking and unchanged raw pointer coordinates, then releases focus and destroys its fixtures. `ClientTests.PointerGuiInset` records the observed inset. GroundAimGui checks rifle reticle/ray agreement and touch layout. Prior reports are source-specific; each new multiplayer session needs fresh reports. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
 
 ### Preserve Edit state around a zero-client Run
 
@@ -68,7 +140,7 @@ Before such a negative probe, snapshot the exact existence, class, attributes an
 
 The [P06 startup record](evidence/p06-ground-combat.md) distinguishes its contaminated cold start, expected zero-client timeout and later controlled three-client run. The [P07 record](../plans/07-destruction.md) records its separate stale-folder diagnosis and subsequent clean baseline. These outcomes must retain their actual source and launch conditions. Normal Play/Stop is the routine workflow; this low-level probe is not needed to play or validate destruction.
 
-For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. Watch the perimeter aircraft from the ground and inspect the inward thermal view in solo Operator preview or a real two-client round. Launcher pickup remains unavailable. The P06 implementation supplies active-round M-7 ground fire; gunship combat also requires an active round.
+For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. Watch the perimeter aircraft from the ground and inspect the inward thermal view in solo Operator preview or a real two-client round. The P08 candidate provides launcher pickup during a real active round; solo preview remains noncompetitive. The P06 implementation supplies active-round M-7 ground fire; gunship combat also requires an active round.
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
 
@@ -91,7 +163,7 @@ The test-only server [RoundHarness](../tests/studio/server/RoundHarness.luau) st
 
 The named scenarios target replicated roles/phase/deadline/UI; characterless late-join spectating; death without respawn and teammate camera; wrong-role/stale/eliminated command rejection; protected operator reset; elimination, timeout and operator-forfeit outcomes; ground departure while a teammate remains; three map/camera/roster resets; stable connections and draining-load teardown. Each round perturbs cover and adds transient map content before checking pristine restoration. Deterministic service tests separately cover deployment departures, reconnect tombstones, exact deadlines and result conflicts. The [P03 record](../plans/03-rounds-and-roles.md) distinguishes which engine scenarios actually ran and any open gaps.
 
-For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 30°/40° profiles, then confirm role loss restores the normal camera. Exercise active gunship and M-7 firing and cover separately; launcher gameplay remains unavailable. Record readability and camera observations separately from automated pass counts. End the test session when finished.
+For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 30°/40° profiles, then confirm role loss restores the normal camera. Exercise active gunship and M-7 firing and cover separately; launcher gameplay is available in the P08 candidate during a real active round. Record readability and camera observations separately from automated pass counts. End the test session when finished.
 
 ## Run the P05 gunship combat harness
 
@@ -149,7 +221,7 @@ end)
 return "P06 started"
 ```
 
-After the owned session returns to Edit, collect `P06LastReport`, actual client counts and fresh baseline reports: 118 server/six per client on integrated P06, or the current P07 counts above when running this as a candidate regression. Require discovered cases to be nonzero and all passing with zero failures, skips and errors; a launch timeout or a harness-completion error is not a pass. Run the companion three-client fixture with `ExecuteMultiplayerTestAsync(3, { kind = "P06Team" })` and store its separate result to verify teammate/friendly-fire scenarios. These fixtures exercise server-only rocket seams; they do not add a launcher to player inventory or prove native input by themselves. Follow [P06](../plans/06-ground-combat.md) for source-specific evidence and remaining gaps.
+After the owned session returns to Edit, collect `P06LastReport`, actual client counts and fresh baseline reports: 118 server/six per client on integrated P06, or the current candidate counts above when running this as a candidate regression. Require discovered cases to be nonzero and all passing with zero failures, skips and errors; a launch timeout or a harness-completion error is not a pass. Run the companion three-client fixture with `ExecuteMultiplayerTestAsync(3, { kind = "P06Team" })` and store its separate result to verify teammate/friendly-fire scenarios. These fixtures exercise server-only rocket seams; they do not add a launcher to player inventory or prove native input by themselves. Follow [P06](../plans/06-ground-combat.md) for source-specific evidence and remaining gaps.
 
 ### Manual Studio Server & Clients fallback for P06
 
@@ -181,6 +253,55 @@ If the SDK launcher cannot establish the required clients, the test-only runner 
    Repeat with the other selector and requested client count if both P06 variants are required. Never apply this test-only selector to a cloud or release place.
 
 The [P06 plan](../plans/06-ground-combat.md) and linked source-specific evidence preserve the actual two-/three-client runs, native startup failures, controlled restarts, same-shot desktop aim checks and simulated-phone review. Use their original counts and conditions; the revised P07 source expects 142 server/six cases per client, with fresh reports for each session. Operate both sides of a real round separately: equip/aim/fire/reload the M-7, inspect aircraft health and cover, and observe the team result. Check moving-aircraft reticle/ray agreement and simulated-phone FIRE/RELOAD/layout alongside ground movement. A simulator is not a physical device; fixtures are not operated input. Changes to shared outcome or query handling also require the relevant P05/P14 regressions.
+
+## Run the P08 launcher harness
+
+Use the existing confirmed local `tests.rbxlx` Edit document, fully synced from `docs/studio-supported-acceptance` through `test.project.json` on port 34872. Verify mapped source signatures and the current smoke counts before attributing results to the candidate. P08 needs **three actual clients**: one operator and two ground players. Solo smoke, fake roster records and an SDK request for three do not establish that population.
+
+Start the SDK route from MCP Edit/plugin context without blocking the call:
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(3, { kind = "P08" })
+    workspace:SetAttribute("P08LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P08 launcher test started"
+```
+
+After the session ends, preserve `P08LastReport`, source commit/tree, build, Studio version and each actual baseline report. The corrected fixture has **11 named cases**, including teardown. Require all cases discovered/passing with zero failures/skips/completion errors, three actual clients before intentional departure, and consistent identity, reload and health observations. `requestedClients`, `initialClientCount`, `peakClientCount` and `currentClientCount` distinguish requested population from connection/departure facts. A successful outer invocation with a failing inner report is a failure. The first candidate's SDK run requested three but connected two and failed startup; keep that historical result separate from any later native run.
+
+The native `ef7826b` P08 run is a preserved failure: server smoke passed 156 cases and each of three actual clients passed seven, but only four gameplay cases passed before the death/in-flight case timed out waiting for aircraft health 200. A duplicate Harness completion failure and passing teardown produced **seven discovered / five passed / two failed**; that is not full acceptance. The [failed report](evidence/p08/native-ef7826b-failed.json) and [console](evidence/p08/native-ef7826b-console.txt) retain the original result.
+
+Test-only correction `07e77ea` prepares moving-aircraft lead through a lazy provider **after** client readiness and the identity-owned reload wait at all three direct-fire sites. Previously the lead was evaluated before that wait and could be seconds stale. Health assertions are unchanged. The death scenario also requires a genuine pre-death flight and an active living teammate afterward, and checks that nonterminal death retains an unfinished flight. Production/UI remains `ef7826b`. The corrected test source passes the primary full host gate at 55 unit/65 integration and all checks, and its fresh native run now passes all eleven cases. The earlier failure remains historical.
+
+Preserve the report's JSON-safe `traces` and `droppedTraceRecords` alongside case results. The test observer retains at most 192 records, retiring the oldest and counting losses, before runtime cleanup removes live state. Records include case/stage, server/wall time, launcher readiness/resources, health/life, head/aircraft/target positions, bounded live rocket positions, LastShot/LastImpact and dispatch/derived acceptance timing. Use prepared target age and pre-/post-death flight observations to distinguish stale fixture aim from rejected fire, obstruction, canceled flight or missed impact. Diagnostics neither award hits nor relax assertions and remain available after owned cleanup.
+
+The final [native `07e77ea` report](evidence/p08/native-07e77ea-pass.json) passes **11/11**, zero failures/skips, against unchanged production/UI `ef7826b`. It starts with three actual clients, peaks at three and ends with two after intentional carrier Kick. Fresh server smoke passes 156/156 and each of UserIds −3/−2/−1 passes 7/7. Races, rejection, misses/transfers/reload, death/in-flight damage, raw character reset, next-round stale intent, direct/mixed destruction, disconnect recovery and teardown all pass. D59 subsequently removed unsupported actual same-identity reconnect from acceptance. It remains unverified, while the eleven passing cases satisfy the revised Studio gate.
+
+The [full report](evidence/p08/native-07e77ea-full.json) retains 150 trace records with zero dropped; accepted moving aim age ranges 0.033848–0.283879 seconds. Shot `rocket:1:2` is live before death, remains while its shooter is Eliminated, the launcher Available and the round Active, then records matching `aircraftHit=true` and health 200. Pristine damage is 300→200→100→0/Results; real rifle damage reaches 195 before rockets take 95→0/Results. Cleanup returns only the original Edit document, stopped with nil manual selector, no BootstrapStatus and the simulator at default LandscapeLeft. These observations belong to this source/run and do not relabel earlier failures as passes.
+
+On runtime/test source `75b1e88`, the independent full host gate passes 55 unit/65 integration; ordinary solo Play passes 156 server/seven client; separate two-actual-client SDK P06, P05 and P14 regressions pass 10/10, 8/8 and 6/6 respectively, including both 90-second P14 orbits. A corrected ordinary native three-client session also passes 156 server/seven cases per actual client. That ordinary session verifies native D walking, both authored approaches through actual Humanoid movement, raced native E pickup producing one carrier, native 1/M-7 and 2/launcher selection, and separation from the actual inventory. These are bounded positive observations, not an eleven-case P08 harness pass. That earlier three-client capture is retained in evidence. The current README capture is from an ordinary two-client SDK session on `ef7826b`, showing one Ground carrier after natural walking with the default camera. The test-only panel was hidden for review and restored afterward. The capture tool omits native CoreGui, whose hotbar bounds were separately measured. See the [P08 evidence](evidence/p08-launcher.md) for the exact source-bound reports, operated fire/drop/reload/touch/recovery observations and the D59 acceptance revision.
+
+The earlier phone correction `0cd6545` passed host and smoke checks but failed actual simulator review: GroundCombatHUD and RoundHUD had different content origins, allowing header overlap despite the shared-coordinate fixture. Preserve that failure. The client-only correction `ef7826b` aligns measured ScreenGui origins/insets, compacts the active Ground touch RoundPanel header and exercises both production controllers together with confirmed feedback. Server authority, input/ray rules and desktop/operator behavior remain unchanged. Fresh `ef7826b` execution passes 156 server/seven client in solo Play and 156 server/seven per actual client in an ordinary two-client SDK session. Actual iPhone-simulator 750×381 and 568×320 views with a 58-pixel inset pass the layout observer: zero owned/native/top-RoundHUD/reticle overlaps, zero controls outside CoreGui-safe bounds, fitting status TextBounds and zero-pixel drawn-reticle error. A stricter actual 567×299 view also passes. At exact 568×320, native touch M-7/ROCKET/DROP/PICK UP/FIRE/RELOAD also works: rocket fire/drop/re-pick preserves the exact reload deadline and denies early fire, while M-7 reload changes 25→30 rounds and reserve 120→115. HIT readability is a separately disclosed client-only GroundShot presentation fixture: inline text fits, floating text stays hidden and server aircraft health stays 300. Two real M-7 aim attempts using QA-controlled cameras missed; they are not actual damage proof. The final eleven-case native P08 run passes on test source `07e77ea`; D59 excludes unsupported actual same-identity reconnect from acceptance. Historical `0cd6545` positives do not establish this correction.
+
+The server/client `LauncherHarness` uses production GameRuntime and real remote intent. It covers M-7-only initial loadouts and one available launcher; invalid/wrong-role/stale/flood/implausible-movement rejection; raced acquisition; miss/drop/selection/transfer with unchanged reload; carrier death with an already-flying direct rocket; explicit character removal while reloading and teammate recovery without restored life/equipment; pristine reset and stale intent; three real rockets yielding 200, 100 and zero aircraft health; earlier real rifle damage followed by two lethal remaining rockets; actual carrier disconnect; and drained idempotent teardown. Trusted fixture poses isolate these rules and collision checks; they are not operated route traversal or native input evidence.
+
+**D59 limits Studio acceptance to supported operations.** Same-identity reconnect is excluded: current helpers add a different test identity. Runtime MatchService tombstone/rejoin rules remain covered by deterministic service tests. The historical report's `actualReconnectVerified=false` and `requiredUnverified` remain unchanged; subsequent reports list it in informational `unsupportedChecks` with no required reconnect gap. Supported late joins and three-client sessions stay required. Supported checks temporarily blocked by access or startup failures remain incomplete. P12's explicit 6/10-player Roblox-client release sessions retain their separate environment. Do not relabel service tests as network reconnect evidence.
+
+If the SDK cannot connect three clients, prepare the native fallback once, with Play stopped in the same test document:
+
+```luau
+local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+assert(settings and settings:IsA("ModuleScript"), "test settings unavailable")
+assert(settings:GetAttribute("ManualHarness") == nil, "selector already in use")
+settings:SetAttribute("ManualHarness", "P08")
+return "P08 native three-client selector ready"
+```
+
+Choose Studio **Server & Clients**, set **3 clients**, and start the session. Capture actual Server workspace `ManualP08Invocation`, `ManualP08Report` and `P08MultiplayerReport`, plus each client's fresh smoke report. Native departure uses a server kick; SDK departure uses the client's LeaveTest. Preserve the mode and method. After report collection, end only the owned simulation from its actual Server context with `StudioTestService:EndTest({reason = "P08 manual cleanup after report collection"})`. Confirm the original document is back in Edit, then clear `ServerStorage.DevelopmentSettings.ManualHarness` and verify nil. This temporary server-only selector is absent from Git defaults and release artifacts. Do not restart the runner on top of an existing runtime or launch extra Studio processes to refresh source.
+
+Separately operate both painted approaches, E/PICK UP, native tool selection, M-7/rocket firing and reload, G/DROP and teammate recovery in an ordinary real round. Check ground movement and mouse aim; use a simulator/device for touch pickup, M-7/ROCKET/DROP and FIRE while aiming. Review desktop/phone status readability, real rocket travel/cover, ownership agreement and shared aircraft-health feedback without a fixed remaining-hit promise. Refresh the representative README capture from the actual candidate, disclosing any fixture pose/camera. Rerun affected P05/P06/P14 and character/lifecycle scenarios after shared authority or cleanup changes; preserve each result separately. The [P08 plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) own actual results and remaining limitations.
 
 ## Run the P07 destruction harness
 
@@ -224,7 +345,7 @@ return "P04 aircraft test started"
 
 The [server AircraftHarness](../tests/studio/server/AircraftHarness.luau) starts actual `GameRuntime` and the [client harness](../tests/studio/client/AircraftHarness.luau) observes each real client through excluded test transport. Allow approximately two minutes: it samples a complete production-speed **90-second orbit** at nine points on both clients and runs two rounds. The six named scenarios cover initial canonical pose/both profiles; rejected selection coherence and valid traffic afterward; exposed/covered thermal fixtures; both-client pose convergence/inward view/tangent model; reset/reentry/singleton HUD/effect/input restoration; and actual operator disconnect with complete server teardown.
 
-After the self-ending session returns to Edit, inspect `workspace:GetAttribute("P04LastReport")`. Require the inner `P04-multiplayer` report to have `clientCount = 2`, `discovered = passed = 6`, zero failed/skipped cases, and passing baseline reports of 86 server and 3 per actual client on the historical P14 source; use 118 server/six client cases for integrated P06 or the current P07 counts above for a candidate regression. A failure can append a failed harness-completion case; never treat an early exit or missing client acknowledgement as six passing scenarios. Keep actual baseline client counts distinct from the harness's two-client count: the baseline server may finish while clients are still joining.
+After the self-ending session returns to Edit, inspect `workspace:GetAttribute("P04LastReport")`. Require the inner `P04-multiplayer` report to have `clientCount = 2`, `discovered = passed = 6`, zero failed/skipped cases, and passing baseline reports of 86 server and 3 per actual client on the historical P14 source; use 118 server/six client cases for integrated P06 or the current candidate counts above for a candidate regression. A failure can append a failed harness-completion case; never treat an early exit or missing client acknowledgement as six passing scenarios. Keep actual baseline client counts distinct from the harness's two-client count: the baseline server may finish while clients are still joining.
 
 The pose convergence bound is **8 studs** (approximately 0.32 seconds of motion at 25.13 studs/second on the expanded orbit), measured against the server pose sent to each client. Engine canonical tests use **0.01 studs** and heading dot tolerance `1e-5` for CFrame precision; the live server comparison permits **2 studs** between Heartbeat updates. Record observed errors separately from these permitted bounds. There is no smoothing shell or second gameplay pose.
 
@@ -234,7 +355,7 @@ Use the [P04 record](../plans/04-aircraft-and-thermal.md) for original aircraft 
 
 ## Run the P14 panned-targeting harness
 
-The verified horizontal-direction source is integrated on `main`; [P14 acceptance evidence](evidence/p14-horizontal-acceptance.md) records the actual multiplayer and operated results. Earlier orbit and edge candidates have source-specific [correction](evidence/p14-orbit-relative-view.md) and [edge](evidence/p14-edge-overscan.md) evidence. Use the same confirmed test document in Edit with the selected source synced, including Battlefield/AimEnvelope NumberValues. Match mapped source signatures and loaded geometry/configuration before starting. The historical P14 ordinary server/client baselines were 86 / 3; integrated P06 expects 118 / 6; use the current P07 counts above for the candidate. Retain actual counts and client identities.
+The verified horizontal-direction source is integrated on `main`; [P14 acceptance evidence](evidence/p14-horizontal-acceptance.md) records the actual multiplayer and operated results. Earlier orbit and edge candidates have source-specific [correction](evidence/p14-orbit-relative-view.md) and [edge](evidence/p14-edge-overscan.md) evidence. Use the same confirmed test document in Edit with the selected source synced, including Battlefield/AimEnvelope NumberValues. Match mapped source signatures and loaded geometry/configuration before starting. The historical P14 ordinary server/client baselines were 86 / 3; integrated P06 expects 118 / 6; use the current candidate counts above for the candidate. Retain actual counts and client identities.
 
 From MCP Edit/plugin context, start two actual clients and preserve the self-ending result without blocking the MCP call:
 
@@ -298,7 +419,7 @@ return "P13 expanded-map test started"
 
 The test-only server/client `ExpandedMapHarness` expects five scenarios: initial two-client map/terrain/panel/aircraft agreement; a real ground Humanoid walking from outside entry through every building's stairs into its upper room; two perturbed round resets; an actual third late client observing the rebuilt map as a characterless spectator; and idempotent teardown of owned round/aircraft/transport resources. It places the avatar at each building's outside starting marker, then uses normal Humanoid movement between that entry and the upper floor; it does not teleport between route waypoints.
 
-Read `workspace:GetAttribute("P13LastReport")` after the session self-ends in Edit. Require five discovered/passing scenarios, zero failures/skips, two initial actual clients, peak three actual clients and all three named buildings in the walked list. Collect the separate baseline reports (the current P07 counts above for this candidate; integrated P06 expects 118/6 and historical P14 expected 86/3); their actual startup client counts can differ from the harness count. A first-case failure or harness-completion error is incomplete acceptance. The teardown/resource assertion runs independently after earlier scenario failure, including a failed third-client launch; its own result is retained without erasing that earlier failure.
+Read `workspace:GetAttribute("P13LastReport")` after the session self-ends in Edit. Require five discovered/passing scenarios, zero failures/skips, two initial actual clients, peak three actual clients and all three named buildings in the walked list. Collect the separate baseline reports (the current candidate counts above for this candidate; integrated P06 expects 118/6 and historical P14 expected 86/3); their actual startup client counts can differ from the harness count. A first-case failure or harness-completion error is incomplete acceptance. The teardown/resource assertion runs independently after earlier scenario failure, including a failed third-client launch; its own result is retained without erasing that earlier failure.
 
 Static map replication compares exact part identities, classes, shapes, collision/query/touch flags and counts, with a 0.001 tolerance for numeric CFrame components and sizes. Numeric comparison avoids treating signed zero as world divergence. Each client also checks stable panel IDs/Intact state, eight actual terrain apex material/elevation queries and canonical aircraft presence on the expanded perimeter. The full-time P04 harness remains a separate camera/selection/orbit regression.
 
@@ -366,7 +487,7 @@ Unit tests use observable invariants and boundary examples, not implementation-s
 
 For each mutating action, exercise malformed payloads, NaN/infinity, oversized data, unknown weapon/launcher IDs, unowned equipment, wrong role, spectator/eliminated state, excessive rate, stale round ID, repeated sequence, impossible range/origin and blocked line of sight. Assert rejection **and unchanged ammo/health/launcher-ownership/result state**. Valid traffic must still succeed after a rejected request.
 
-Character movement is client-simulated in normal Roblox play. P06 uses a server-observed, character-scoped movement budget for firing origins: defaults 45-stud burst, 70 studs/second refill, quarantine recovery within 8 studs of the last trusted point or a trusted server correction, and an 8-stud head/root bound. Test ordinary movement, delayed replication, nonfinite data, untrusted teleports, return/recovery and MapService correction; host cases do not prove live networking. It never bans players. Unusual legitimate movement or severe latency may temporarily block shots and require tuning. `GroundOriginGeometry` also checks root/head overlaps, the solid segment in both directions, and six-axis Terrain containment with a voxel fallback; Terrain query errors reject firing. Use real Studio wall, buried-head, slope and ordinary movement cases. The conservative approach is not an exact signed-distance query for arbitrary caves; unusual terrain needs continued operated review. Launcher pickup validation remains future work; proximity alone does not prove movement abuse is prevented.
+Character movement is client-simulated in normal Roblox play. P06 uses a server-observed, character-scoped movement budget for firing origins: defaults 45-stud burst, 70 studs/second refill, quarantine recovery within 8 studs of the last trusted point or a trusted server correction, and an 8-stud head/root bound. Test ordinary movement, delayed replication, nonfinite data, untrusted teleports, return/recovery and MapService correction; host cases do not prove live networking. It never bans players. Unusual legitimate movement or severe latency may temporarily block shots and require tuning. `GroundOriginGeometry` also checks root/head overlaps, the solid segment in both directions, and six-axis Terrain containment with a voxel fallback; Terrain query errors reject firing. Use real Studio wall, buried-head, slope and ordinary movement cases. The conservative approach is not an exact signed-distance query for arbitrary caves; unusual terrain needs continued operated review. The P08 candidate shares that guard for pickup and rocket fire, and also requires pickup reach and solid-world line of sight. Proximity alone does not grant authority; the guard retains its documented movement limitations.
 
 ## Studio execution and evidence
 
@@ -403,7 +524,7 @@ The [Roblox testing documentation](https://create.roblox.com/docs/studio/testing
 
 ## Solo exploration and lobby movement regression
 
-An ordinary one-client Play in `PlayersVsC130Tests` automatically enters a labelled solo map preview after the current source's expected server/six-client baseline cases listed above. WASD works in both the preview and the protected lobby. The preview keeps the player Waiting and the phase Lobby; it does not fabricate an operator, active life or match result. With two or more clients, use the human panel to choose roles and explicitly start the real round loop. See the [root guide](../README.md#run-local-automated-tests) for human test panel controls.
+An ordinary one-client Play in `PlayersVsC130Tests` automatically enters a labelled solo map preview after the current source's expected server/client baseline cases listed above. WASD works in both the preview and the protected lobby. The preview keeps the player Waiting and the phase Lobby; it does not fabricate an operator, active life or match result. With two or more clients, use the human panel to choose roles and explicitly start the real round loop. See the [root guide](../README.md#run-local-automated-tests) for human test panel controls.
 
 The explicit `ExecutePlayModeAsync({kind = "LobbyControls"})` scenario runs four TestEZ engine cases through `LocalTestControlsCheck`, then ends the session with structured results. Check `discovered = passed = 4`, no errors/failures/skips, and actual `clientCount = 1`. Focused operated WASD checks supplement unanchored-root assertions. No additional Studio client windows are required. [Fix evidence](evidence/lobby-preview.md) records actual execution.
 

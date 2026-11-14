@@ -27,6 +27,7 @@ assert(
 require(script.CombatHarness).run()
 require(script.DestructionHarness).run()
 require(script.GroundCombatHarness).run()
+require(script.LauncherHarness).run()
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
 require(script.AircraftPanHarness).run()

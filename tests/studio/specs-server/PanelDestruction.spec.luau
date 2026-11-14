@@ -510,6 +510,17 @@ return function()
     test(
         "PanelFragmentPhysics falls contacts static scenery excludes characters and expires with bounded cap",
         function()
+            -- Validate the actual avatar before acquiring fragment collision
+            -- groups; a missing prerequisite must not contaminate later tests.
+            local player = game:GetService("Players"):GetPlayers()[1]
+            local character = if player then player.Character else nil
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+            assert(character and root and root:IsA("BasePart") and humanoid, "actual physics avatar missing")
+            local originalPose = character:GetPivot()
+            local originalHealth = humanoid.Health
+            local originalOwner = root:GetNetworkOwner()
+            local automaticOwnership = root:GetNetworkOwnershipAuto()
             local scenery = Instance.new("Folder")
             scenery.Name = "P07PhysicsFixture"
             local floor = Instance.new("Part")
@@ -519,20 +530,14 @@ return function()
             floor.Parent = scenery
             scenery.Parent = workspace
             local owner, reason = PanelFragments.start(scenery)
-            assert(owner, reason)
-            local player = game:GetService("Players"):GetPlayers()[1]
-            local character = player.Character
-            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
-            local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
-            assert(character and root and root:IsA("BasePart") and humanoid, "actual physics avatar missing")
-            local originalPose = character:GetPivot()
-            local originalHealth = humanoid.Health
-            local originalOwner = root:GetNetworkOwner()
-            local automaticOwnership = root:GetNetworkOwnershipAuto()
-            root:SetNetworkOwner(nil)
-            character:PivotTo(CFrame.new(0, 123.5, 0))
-            root.AssemblyLinearVelocity = Vector3.zero
+            if not owner then
+                scenery:Destroy()
+                error(tostring(reason))
+            end
             local ok, failure = pcall(function()
+                root:SetNetworkOwner(nil)
+                character:PivotTo(CFrame.new(0, 123.5, 0))
+                root.AssemblyLinearVelocity = Vector3.zero
                 owner.emit(CFrame.new(0, 130, 0), Vector3.new(16, 8, 1), Color3.new(1, 1, 1), 0)
                 local folder = workspace:FindFirstChild("PanelFragments")
                 assert(folder and #folder:GetChildren() == 4, "physical fragments absent")
@@ -665,17 +670,23 @@ return function()
                 owner.step(8)
                 assert(owner.count() == 0 and #folder:GetChildren() == 0, "lifetime boundary leaked")
             end)
-            character:PivotTo(originalPose)
-            root.AssemblyLinearVelocity = Vector3.zero
-            if automaticOwnership then
-                root:SetNetworkOwnershipAuto()
-            else
-                root:SetNetworkOwner(originalOwner)
-            end
+            -- Release collision-group ownership before restoration assertions,
+            -- including when avatar setup or a physics assertion failed.
             owner.stop()
             owner.stop()
-            assert(floor.CollisionGroup == "Default", "static group not restored")
+            local staticRestored = floor.CollisionGroup == "Default"
+            local restored, restoreFailure = pcall(function()
+                character:PivotTo(originalPose)
+                root.AssemblyLinearVelocity = Vector3.zero
+                if automaticOwnership then
+                    root:SetNetworkOwnershipAuto()
+                else
+                    root:SetNetworkOwner(originalOwner)
+                end
+            end)
             scenery:Destroy()
+            assert(staticRestored, "static group not restored")
+            assert(restored, tostring(restoreFailure))
             assert(ok, tostring(failure))
         end
     )

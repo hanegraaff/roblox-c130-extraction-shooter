@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-Integrated `main`, including [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30) through [PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29), contains the 720-stud circular battlefield, bounded terrain and three two-story buildings; authoritative rounds; a perimeter aircraft with inward thermal view, directional panning and weapon-linked zoom; gunship and M-7 combat; aircraft health/results; and persistent per-panel damage, distinct appearance tiers, registered starting-shelter destruction, residual collision and physical fragments. P07 implementation and source-specific acceptance evidence are tracked in the [plan](plans/07-destruction.md), with matching merge trees and a fresh main gate in the [integration record](docs/evidence/p07-integration.md). Current P07, P05 and P14 automated regressions pass in their documented contexts; the focused falling-fragment observation is also confirmed by the user in a live-clock demonstration with a disclosed Ground watch camera. Launcher handling and additional levels remain future work.
+Integrated `main`, including [PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30) through [PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29), contains the 720-stud circular battlefield, bounded terrain and three two-story buildings; authoritative rounds; a perimeter aircraft with inward thermal view, directional panning and weapon-linked zoom; gunship and M-7 combat; aircraft health/results; and persistent per-panel damage, distinct appearance tiers, registered starting-shelter destruction, residual collision and physical fragments. P07 implementation and source-specific acceptance evidence are tracked in the [plan](plans/07-destruction.md), with matching merge trees and a fresh main gate in the [integration record](docs/evidence/p07-integration.md). Current P07, P05 and P14 automated regressions pass in their documented contexts; the focused falling-fragment observation is also confirmed by the user in a live-clock demonstration with a disclosed Ground watch camera. The candidate on `docs/studio-supported-acceptance` adds one recoverable player launcher through shared aircraft-health and ground-origin authority. Its [P08 record](plans/08-rocket-launcher.md) and [evidence](docs/evidence/p08-launcher.md) record all eleven native P08 scenarios passing on harness `07e77ea` with production/UI `ef7826b`. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. Additional levels remain future work.
 
 Server-only services own roles, UserId membership, deadlines, readiness, damage and results. Engine adapters own characters, map reconstruction and replicated presentation. Clients display state, send bounded intent and manage role cameras; they never award structural or player damage.
 
@@ -75,7 +75,7 @@ Server-only `TerrainRecipe` reads the authored invisible descriptors for eight G
 
 The phase loop is Lobby → Deploying → Active → Results → Resetting → Lobby. Deployment waits for all assigned character loads, cancels to Lobby when an assigned player leaves, and aborts on dead/incomplete characters or timeout. Active membership remains keyed by UserId: departure removes the life, rejoin cannot restore it, and late joins are spectators. Deadline equality wins before destruction proposals; before expiry, aircraft destruction wins a mutual elimination. P03 provides the server-only destruction proposal seam; later combat supplies real damage.
 
-`MatchRuntime` owns teams, noncolliding character groups, one heartbeat and the `RoundState.Surrender` RemoteEvent. `CharacterOwner` serializes yielding avatar loads, invalidates queued requests with tokens and uses a per-player load lease to keep an older runtime from destroying a newer character. Ground death/reset/surrender eliminates; operator reset replaces only the protected placeholder body. `GameRuntime` explicitly composes map, round, aircraft, destruction, gunship and ground-combat owners. Stop releases ground combat, gunship combat, destruction, aircraft, rounds and finally the map snapshot; partial startup rolls back in reverse acquisition order. See package contracts for cleanup and load-drain behavior.
+`MatchRuntime` owns teams, noncolliding character groups, one heartbeat and the `RoundState.Surrender` RemoteEvent. `CharacterOwner` serializes yielding avatar loads, invalidates queued requests with tokens and uses a per-player load lease to keep an older runtime from destroying a newer character. Ground death, unexpected owned-character removal or raw Model destruction, reset or surrender eliminates. Humanoid.Died, Player.CharacterRemoving and the owned Model.Destroying signal consume that generation once, including when Destroy leaves Player.Character referencing an unparented model. Internal clear/replacement disconnects those callbacks before destroying the old body. Operator reset replaces only the protected placeholder body. `GameRuntime` explicitly composes map, round, aircraft, destruction, gunship, ground-combat and launcher owners. Stop releases launcher, ground combat, gunship combat, destruction, aircraft, rounds and finally the map snapshot; partial startup rolls back in reverse acquisition order. See package contracts for cleanup and load-drain behavior.
 
 `RoundPanel` reads replicated phase/role/life/deadline/result attributes and computes its timer using `GetServerTimeNow`. Eliminated players and late spectators follow the lowest-UserId living ground teammate, falling back to a fixed overview when no target exists. Lobby restores the local character camera. There is no manual spectator target selector yet. `RoundPanel` delegates the living operator and labelled solo Operator preview to its owned `ThermalCameraController`; other roles retain normal round/spectator cameras.
 
@@ -159,7 +159,7 @@ The release project excludes tests, test dependencies, fixtures and development 
 | `ThermalCameraController`, `AircraftPanRules` | P14 implements verified inward WASD/touch pad pan, recenter, acknowledged zoom and actual-surface reticle projection on `main` | P04; panning P14 |
 | `CombatService` / `CombatRuntime` | Validates gunship intent/readiness and resolves server-side flight, impact and ground damage | P05; ground combat P06 |
 | `PanelDamageRules`, `DestructionService`, `DestructionRuntime` | Implemented server-only stage arithmetic, ordered shot outcomes, replicated progress, residual colliders and bounded fragments | P07 |
-| `LauncherService` | One launcher identity, atomic ownership, drop/recovery and reload continuity | P08 |
+| `LauncherService`, `LauncherRuntime`, `LauncherGeometry` | Candidate: one identity, atomic ownership, reload-preserving recovery, validated real rocket flights and primitive representations | P08 |
 | `MatchService` outcome integration | Aircraft destruction, ground elimination, timeout and forfeit resolution | P09 (basic outcomes P03/P06) |
 | `GroundController`, `HUDController`, `SpectatorController` | Role-specific controls and complete player feedback | Introduced with features; completed P10 |
 
@@ -183,7 +183,8 @@ Use a small named RemoteEvent surface, not an unrestricted generic RPC dispatche
 | Client → fire | round ID, sequence, weapon ID, bounded aim direction/point | Role/life, equipment, ammo, cooldown, finite values, origin, range, aim envelope, obstruction |
 | Client → aircraft select (implemented) | exactly `roundId`, `sequence`, `weapon` (`GAU23`/`M102`) | Living connected operator, Active/unexpired round, increasing bounded integral sequence; six-token budget refilling at four/second; atomic acknowledged weapon/round/revision |
 | Client → M-7 reload (implemented) | exactly `roundId`, `sequence` | Active equipped ground life, readiness, bounded sequence and request budget; gunship reload is automatic |
-| Client → pickup/drop launcher (planned) | round ID, sequence, launcher ID | Existence, reach, life, current ownership, valid ground position, active phase |
+| Client → launcher Pickup / Drop (P08 candidate) | exactly round ID, sequence, launcher ID | Current identity, increasing sequence, live connected Ground membership, request budget; pickup also shares movement/origin authority, 8-stud reach and solid-world sight line |
+| Client → launcher Fire (P08 candidate) | exactly round ID, sequence, launcher ID, finite x/y/z target | Same authority plus held/equipped Tool, reload deadline and bounded server-head-to-target range; server sweeps the resulting flight |
 | Client → sync request (target) | bounded request token | Per-player rate budget; return only that role's permitted snapshot |
 | Server → snapshot/update | round ID, revision, permitted state | Immutable view model; client discards stale rounds/revisions |
 | Server → effects | round ID, shot/event ID, bounded effect data | Cosmetic only; client deduplicates and caps lifetime/count |
@@ -232,7 +233,7 @@ A nonyielding typed impact callback carries round/shot ID, profile, hit position
 
 The movement budget permits short rapid relocation within its available burst and does not sweep the traveled path for walls. It therefore bounds movement-based firing-origin abuse but does not eliminate possible teleport or cover bypass. This is a code-derived limitation rather than a confirmed exploit.
 
-The initial defaults are 5 aircraft health units per direct M-7 hit, magazine 30, reserve 120, cadence 0.15 seconds, reload 2 seconds and server range 1200 studs. `AircraftHealth` derives maximum 300 from a 100-unit direct rocket hit, clamps health and deduplicates each shot. The server-only rocket sweep/impact seam supports engine fixtures; no launcher is granted to players before P08. `MatchService` remains the only result owner. Combat owners submit destruction and elimination facts; `MatchRuntime` defers outcome evaluation until Heartbeat callbacks have submitted that step, retaining deadline-first and pre-deadline destruction-before-elimination precedence.
+The initial defaults are 5 aircraft health units per direct M-7 hit, magazine 30, reserve 120, cadence 0.15 seconds, reload 2 seconds and server range 1200 studs. `AircraftHealth` derives maximum 300 from a 100-unit direct rocket hit, clamps health and deduplicates each shot. The P08 candidate uses this same health owner through server-only `rocketCast`; the existing sweep/impact seams remain available to engine fixtures. Players acquire the one map launcher rather than receiving it with their initial loadout. `MatchService` remains the only result owner. Combat owners submit destruction and elimination facts; `MatchRuntime` defers outcome evaluation until Heartbeat callbacks have submitted that step, retaining deadline-first and pre-deadline destruction-before-elimination precedence.
 
 The current P06 source is integrated on `main`. Its host, two-/three-client, P05/P14 regression, operated desktop and simulated-phone results are recorded in [P06](plans/06-ground-combat.md), with source-specific Studio evidence and documented limitations. Future level contracts must retain authoritative solid geometry and aircraft hitbox access.
 
@@ -262,7 +263,15 @@ Use explicit weapon configurations for `GAU23`, `M102`, `M7` and `RocketLauncher
 
 Derive integer aircraft maximum health as three times direct rocket damage. Apply each direct rocket impact once, with no duplicate splash to the same aircraft; first/second hits alone leave a pristine plane alive and the third destroys it. M-7 damage is small and positive, reducing the same health pool. No regeneration, falloff or armor modifier can break the three-hit contract. AircraftService proposes destruction to MatchService; MatchService alone commits the immediate team result and cancels pending combat.
 
-The planned P08 LauncherService will transition one identity between Available, Held and Recovering; it never creates one copy per player. A short atomic non-yielding claim prevents raced pickups. Death/disconnect/drop preserves reload timing and makes it recoverable; invalid positions return it to the authored anchor. Replenishing one-round reload is the current supply default. Reset disposes the old identity and creates exactly one new launcher.
+The P08 candidate's server-only `LauncherService` owns one round-scoped identity (`launcher:<roundId>`) and transitions Available → Held → Recovering → Available. Pickup is atomic and nonyielding; rejected shape, round, sequence, eligibility or readiness leaves ownership/ammunition unchanged. Accepted per-user sequence history and the four-second reload deadline stay on that identity through transfers. `clear()` makes it Inactive; a different round's `reset()` creates one fresh identity/readiness state, while same-round reset cannot refill it.
+
+`LauncherRuntime` composes the service with the existing ground owner and level anchors. Remote receipt spends a shared per-player eight-token budget refilling six/second, performs cheap bounded validation and queues at most 32 requests. Deferred processing follows MatchRuntime's outcome commit, so Results/deadline/aircraft destruction wins over pickup and recovery. Pickup and fire use `GroundCombatRuntime.validateGround` and its existing movement/origin guard; pickup additionally needs a clear solid-world sight line within eight studs. The server derives rocket origin from the character head, requires the actual equipped launcher Tool, and rejects targets beyond 1200 studs.
+
+Rockets move linearly at 240 studs/second and sweep a 0.2-stud sphere through Battlefield, Terrain and the canonical aircraft. `GroundCombatRuntime.rocketCast` returns the first collision and awards shared aircraft damage only for a direct aircraft hit; obstruction ends the flight, while a miss expires after five seconds or 1200 studs. Cosmetic rocket Parts cannot collide or decide hits. Already-fired rockets can outlive a dead shooter while another ground player keeps the round active. Terminal phases, a new round or stop invalidate pending requests/flights.
+
+`LauncherGeometry` constructs the single available Model or held Tool from original primitives. Representations are noncolliding/nonqueryable and never define authority. While held, the runtime samples last trusted supported ground positions. Drop, death, character removal or disconnect preserves readiness and recovers there; a 12-stud downward floor probe, slope and 4×6×4-stud clearance checks reject invalid positions and fall back to the original validated anchor. The runtime reacquires current anchors after map reconstruction. `stop()` idempotently disconnects transport/Heartbeat/player observers and removes models, tools, flights and queued work. The manifest records these runtime-generated primitives; no live damaged state or effects are exported as authored map assets.
+
+`GroundCombatController` presents team ownership and current equipped readiness, sends E/PICK UP or G/DROP intent, and uses native tool slots or touch M-7/ROCKET buttons for selection. Switching equipment cannot reset either weapon. Aircraft health remains the team's damage guide; it does not promise a fixed remaining rocket count after rifle damage. The [P08 evidence](docs/evidence/p08-launcher.md) records eleven passing native cases with three initial/peak actual clients and two after intentional carrier departure, plus fresh 156-server/seven-per-client smoke. D59 excludes unsupported actual same-identity reconnect from acceptance; runtime rejoin authority remains covered by service tests.
 
 P03/P06 establish basic win proposals; P09 validates their combined timing/disconnect behavior. Follow game-design.md for deadline precedence, same-step mutual kills, forfeits and late projectiles. There is no collectible-progress or escape-zone service.
 
@@ -276,9 +285,60 @@ Static map files and server-cloned templates have separate ownership. Do not syn
 
 The source includes the original normalized two-strip [PanelResidual template](assets/models/PanelResidual.model.json). DestructionRuntime scales it to each registered wall/roof/interior panel; no external art or cloud reference is required. Runtime fragments are generated primitives, not authored map content. Never export them, projectile effects or damaged live state as pristine source. The [progressive destruction contract](#progressive-panel-destruction-p07) governs their lifecycle.
 
+### Blender source and material-aware panel assets
+
+The [P16 review package](assets/blender/military-outpost/README.md) retains an
+editable, self-contained Blender 5.3.0 outpost under
+`assets/blender/military-outpost/` and game exports under
+`assets/exports/military-outpost/`. It supplies a versioned panel catalog for
+six material/shape families, dimensions, center pivots, Pristine/Light/Heavy/Total
+meshes, explicit collision-proxy candidates and bounded material-matched fragments.
+Its identity migration preserves 25 legacy panel IDs/pivots and declares one new
+partition plus fixed apertures. Inventory and reusable-kit mappings connect
+named editable components to placed assembly and floor-centered prop exports.
+
+The asset checker covers all authored files under `world`, `models`, `blender`
+and `exports`, and requires content hashes for every Blender source/export.
+The portable audit measures actual OBJ triangle projections, proxy coverage,
+UV/material references, fragment bounds, budgets and package dependencies.
+Hash-bound clean Blender reopen/FBX-import reports are checked in; CI validates
+their relation to the candidate without running a fresh Blender process.
+Saved-source renders and explicit human approval are additional acceptance
+evidence. The user explicitly approved source revision `e8fb840` on 2026-11-13;
+the [approval record](docs/evidence/p16/human-approval.json) binds the exact
+Blender hash. Asset bytes remain unchanged by that external record.
+
+Original baked PNGs and explicit material constants provide export equivalents
+for the source materials. Blender cameras/review lighting stay outside Rojo
+runtime mappings. The 32×48-stud footprint and floor levels remain authored
+construction inputs; the external balcony/stair and declared aperture migration
+need actual P17 clearance/cover checks. Local Blender round trips do not infer
+Roblox import success, thermal visibility, runtime physics or upload permission.
+
+[P17](plans/17-integrate-military-outpost.md) will replace only the smaller
+Outpost using the human-approved package. Current `PanelGeometry` clones
+primitive Parts and applies generic scars/residuals, so mesh import alone cannot
+consume the new variants. Extend the shared asset/reconstruction boundary to
+select validated material-specific visuals, authoritative collision/query
+proxies and safe fragments. Preserve `PanelDamageRules`/`DestructionService`
+timing, damage authority and lifecycle. Material does not change durability.
+Keep existing primitive panels compatible; missing variants, bad IDs/geometry
+and stale reset references need explicit validation. Mesh appearance and proxy
+geometry must agree for actual openings and thermal/weapon obstruction.
+
+MapService retains pristine rebuild and registry ownership. Every new imported
+template needs a managed source/export and manifest record; deliberate Studio
+placement must return to Git. P16's Blender approval and P17's actual engine,
+two-client/reset and human presentation gates are distinct. This boundary is
+building-asset data for the current level, not an implementation of P15 level
+selection or a claim that material-aware authored variants already work.
+The user-directed D63 order schedules P16 then P17 before continuing P09;
+P17 consumes the P07/P13/P14 core without requiring P08 to start. Preserve and
+regression-test completed P08 source when present in the selected branch.
+
 ## Tooling and verification
 
-Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository checks, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds, canonical authored-geometry/corruption checks and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
+Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository and asset-manifest checks, the portable Blender-package audit and rejection tests, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds, canonical authored-geometry/corruption checks and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
 
 The test mapping runs separate server and client TestEZ bootstraps in real Studio Play contexts and publishes structured JSON reports. Those runs establish mapped imports and engine behavior separately from the host gate. Ordinary Linux CI runs the host gate and cannot replace required Studio evidence.
 

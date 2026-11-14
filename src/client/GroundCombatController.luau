@@ -1,6 +1,8 @@
 --!strict
 --[=[
-    GroundCombatController: local presentation and M-7 intent for an equipped rifle.
+    GroundCombatController: local M-7/launcher aim, fire and equipment intent, plus
+    team launcher ownership/readiness and pickup/drop presentation. The equipped
+    server-owned Tool selects firing; native slots/touch buttons select equipment.
     Depends on PlayerGui, UserInputService, current camera and server-owned remotes.
     The server validates ownership, target, timing, cover and damage. start/stop are
     idempotent and disconnect all listeners, release held fire and destroy the HUD.
@@ -12,6 +14,15 @@ local GuiService = game:GetService("GuiService")
 local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local GroundCombatController = {}
+type LauncherView = {
+    roundId: number,
+    launcherId: string,
+    state: string,
+    ownerId: number?,
+    readyAt: number,
+    ammo: number,
+    position: { x: number, y: number, z: number },
+}
 
 -- Mouse and touch-center inputs use viewport pixels. GUI layout uses its
 -- measured content origin plus the current inset. One rounded viewport pixel
@@ -31,13 +42,35 @@ function GroundCombatController.projectAim(
         UDim2.fromOffset(math.floor(pixels.X - guiOrigin.X + 0.5), math.floor(pixels.Y - guiOrigin.Y + 0.5))
 end
 
--- Returns the rifle status position and size without yielding. Touch layouts
--- keep the bottom-center ammunition display clear of the centered reticle.
-function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
+-- Weapon readiness layout in GUI-content pixels. Touch shares a compact
+-- header with RoundPanel: health left/readiness right, then ownership left.
+-- origin is this ScreenGui's measured content origin; unlike viewport rays,
+-- readouts must share coordinates with the normal-inset RoundHUD. No yielding.
+function GroundCombatController.statusLayout(
+    touch: boolean,
+    origin: Vector2?,
+    inset: Vector2?
+): (UDim2, UDim2)
+    local offset = origin or Vector2.zero
+    local safeInset = inset or Vector2.zero
     if touch then
-        return UDim2.new(0.5, 0, 1, -20), UDim2.fromOffset(260, 36)
+        return UDim2.new(1, -132 - offset.X - safeInset.X, 0, 66 - offset.Y), UDim2.fromOffset(240, 22)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
+end
+
+-- Bottom touch actions leave a 96px native inventory band clear. Narrower
+-- equipment buttons also keep the minimum landscape thumbstick region clear.
+local function pickupPosition(touch: boolean, origin: Vector2?, inset: Vector2?): UDim2
+    local offset, safeInset = origin or Vector2.zero, inset or Vector2.zero
+    return if touch
+        then UDim2.new(0.5, -offset.X - safeInset.X, 1, -104 - offset.Y - safeInset.Y)
+        else UDim2.new(0.5, 0, 1, -160)
+end
+
+local function launcherStatusPosition(touch: boolean, origin: Vector2?): UDim2
+    local offset = origin or Vector2.zero
+    return if touch then UDim2.fromOffset(132 - offset.X, 92 - offset.Y) else UDim2.new(0.5, 0, 1, -204)
 end
 
 -- Owns UI/input for one round-state lifetime. No yielding or combat authority.
@@ -116,6 +149,34 @@ function GroundCombatController.new(
             reloadButton.BackgroundColor3 = Color3.fromRGB(35, 44, 55)
             reloadButton.TextColor3 = Color3.new(1, 1, 1)
             reloadButton.Parent = gui
+            local launcherLabel = label:Clone()
+            launcherLabel.Name = "LauncherStatus"
+            launcherLabel.Position = launcherStatusPosition(lastTouch)
+            launcherLabel.Size =
+                UDim2.fromOffset(if lastTouch then 240 else 360, if lastTouch then 22 else 28)
+            launcherLabel.TextSize = 14
+            launcherLabel.Parent = gui
+            local launcherButtons: { [string]: TextButton } = {}
+            for index, name in { "M7", "Rocket", "Drop", "Pickup" } do
+                local button = Instance.new("TextButton")
+                button.Name = name
+                button.AnchorPoint = Vector2.new(0.5, 1)
+                button.Position = UDim2.new(0.5, if name == "Pickup" then 0 else (index - 2) * 90, 1, -104)
+                if name == "Pickup" then
+                    button.Position = pickupPosition(lastTouch)
+                end
+                button.Size = UDim2.fromOffset(if name == "Pickup" then 130 else 84, 32)
+                button.Text = if name == "M7"
+                    then "M-7"
+                    elseif name == "Rocket" then "ROCKET"
+                    elseif name == "Drop" then "DROP"
+                    else "PICK UP"
+                button.TextSize = 14
+                button.BackgroundColor3 = Color3.fromRGB(61, 65, 38)
+                button.TextColor3 = Color3.new(1, 1, 1)
+                button.Parent = gui
+                launcherButtons[name] = button
+            end
             gui.Parent = playerGui
             local selected: Tool? = nil
             local toolConnections: { RBXScriptConnection } = {}
@@ -123,6 +184,9 @@ function GroundCombatController.new(
             local held = false
             local fireTouch: InputObject? = nil
             local sequence = 0
+            local launcherSequence = 0
+            local launcher: LauncherView? = nil
+            local launcherEncoded: string? = nil
             local round = -1
             local nextAttempt = 0
             local lastShot: string? = nil
@@ -142,9 +206,54 @@ function GroundCombatController.new(
                 local item = if aircraftState then aircraftState:FindFirstChild(name) else nil
                 return if item and item:IsA("RemoteEvent") then item else nil
             end
+            local function sendLauncher(action: string)
+                local state = ReplicatedStorage:FindFirstChild("LauncherState")
+                local event = if state then state:FindFirstChild(action) else nil
+                if not launcher or not event or not event:IsA("RemoteEvent") then
+                    return
+                end
+                launcherSequence += 1
+                event:FireServer({
+                    roundId = round,
+                    sequence = launcherSequence,
+                    launcherId = launcher.launcherId,
+                })
+            end
+            local function equip(name: string)
+                local character, backpack = player.Character, player:FindFirstChildOfClass("Backpack")
+                local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
+                local tool = if backpack then backpack:FindFirstChild(name) else nil
+                if humanoid and tool and tool:IsA("Tool") then
+                    humanoid:EquipTool(tool)
+                end
+            end
+            table.insert(
+                connections,
+                launcherButtons.Pickup.Activated:Connect(function()
+                    sendLauncher("Pickup")
+                end)
+            )
+            table.insert(
+                connections,
+                launcherButtons.Drop.Activated:Connect(function()
+                    sendLauncher("Drop")
+                end)
+            )
+            table.insert(
+                connections,
+                launcherButtons.M7.Activated:Connect(function()
+                    equip("M-7 rifle")
+                end)
+            )
+            table.insert(
+                connections,
+                launcherButtons.Rocket.Activated:Connect(function()
+                    equip("Rocket launcher")
+                end)
+            )
             local function sendReload()
                 local event = remote("GroundReload")
-                if event and selected and round > 0 then
+                if event and selected and selected.Name == "M-7 rifle" and round > 0 then
                     sequence += 1
                     event:FireServer({ roundId = round, sequence = sequence })
                 end
@@ -152,8 +261,15 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 UserInputService.InputBegan:Connect(function(input, processed)
-                    if not processed and input.KeyCode == Enum.KeyCode.R and selected then
+                    if processed or UserInputService:GetFocusedTextBox() then
+                        return
+                    end
+                    if input.KeyCode == Enum.KeyCode.R and selected then
                         sendReload()
+                    elseif input.KeyCode == Enum.KeyCode.E then
+                        sendLauncher("Pickup")
+                    elseif input.KeyCode == Enum.KeyCode.G then
+                        sendLauncher("Drop")
                     end
                 end)
             )
@@ -199,18 +315,49 @@ function GroundCombatController.new(
                 connections,
                 RunService.RenderStepped:Connect(function()
                     local touch = touchEnabled()
-                    if touch ~= lastTouch then
-                        lastTouch = touch
-                        label.Position, label.Size = GroundCombatController.statusLayout(touch)
+                    local origin = projectionOrigin.AbsolutePosition
+                    local layoutInset = GuiService:GetGuiInset()
+                    label.Position, label.Size =
+                        GroundCombatController.statusLayout(touch, origin, layoutInset)
+                    label.TextSize = if touch then 14 else 16
+                    launcherButtons.Pickup.Position = pickupPosition(touch, origin, layoutInset)
+                    launcherLabel.Position = launcherStatusPosition(touch, origin)
+                    launcherLabel.Size =
+                        UDim2.fromOffset(if touch then 240 else 360, if touch then 22 else 28)
+                    for index, name in { "M7", "Rocket", "Drop" } do
+                        local button = launcherButtons[name]
+                        button.Size = UDim2.fromOffset(if touch then 68 else 84, 32)
+                        button.Position = if touch
+                            then UDim2.new(
+                                0.5,
+                                (index - 2) * 74 - origin.X - layoutInset.X,
+                                1,
+                                -104 - origin.Y - layoutInset.Y
+                            )
+                            else UDim2.new(0.5, (index - 2) * 90, 1, -104)
                     end
+                    fireButton.Size = UDim2.fromOffset(if touch then 78 else 90, if touch then 56 else 70)
+                    fireButton.Position = if touch
+                        then UDim2.new(1, -24 - origin.X - layoutInset.X, 0, 126 - origin.Y)
+                        else UDim2.new(1, -24, 1, -130)
+                    reloadButton.Size = UDim2.fromOffset(if touch then 54 else 90, if touch then 42 else 54)
+                    reloadButton.Position = if touch
+                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 128 - origin.Y)
+                        else UDim2.new(1, -24, 1, -210)
+                    reloadButton.TextSize = if touch then 12 else 16
                     local roundId = roundState:GetAttribute("RoundId")
                     if type(roundId) == "number" and roundId ~= round then
                         round = roundId
                         sequence = 0
+                        launcherSequence = 0
                         held = false
                     end
                     local character = player.Character
-                    local tool = if character then character:FindFirstChild("M-7 rifle") else nil
+                    local tool = if character
+                        then character:FindFirstChild("M-7 rifle") or character:FindFirstChild(
+                            "Rocket launcher"
+                        )
+                        else nil
                     local equipped = if tool and tool:IsA("Tool") then tool else nil
                     if equipped ~= selected then
                         clearTool()
@@ -230,13 +377,53 @@ function GroundCombatController.new(
                             )
                         end
                     end
-                    local visible = selected ~= nil
-                        and player:GetAttribute("Role") == "Ground"
+                    local visible = player:GetAttribute("Role") == "Ground"
                         and player:GetAttribute("Life") == "Alive"
                         and roundState:GetAttribute("Phase") == "Active"
                     gui.Enabled = visible
                     fireButton.Visible = touch
-                    reloadButton.Visible = touch
+                    reloadButton.Visible = touch and (selected == nil or selected.Name == "M-7 rifle")
+                    reticle.Visible = selected ~= nil
+                    local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
+                    local encoded = if launcherState then launcherState:GetAttribute("Snapshot") else nil
+                    if type(encoded) == "string" and encoded ~= launcherEncoded then
+                        launcherEncoded = encoded
+                        local parsed, value = pcall(function()
+                            return HttpService:JSONDecode(encoded)
+                        end)
+                        launcher = if parsed and type(value) == "table"
+                            then (value :: unknown) :: LauncherView
+                            else nil
+                    elseif not launcherState then
+                        launcher = nil
+                        launcherEncoded = nil
+                    end
+                    local owns = launcher ~= nil
+                        and launcher.roundId == round
+                        and launcher.ownerId == player.UserId
+                    local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+                    local near = false
+                    if launcher and launcher.state == "Available" and root and root:IsA("BasePart") then
+                        local spot = launcher.position
+                        near = (root.Position - Vector3.new(spot.x, spot.y, spot.z)).Magnitude <= 8
+                    end
+                    for name, button in launcherButtons do
+                        button.Visible = if name == "Pickup" then near else owns and touch
+                    end
+                    if launcher and launcher.state == "Available" then
+                        launcherLabel.Text = if near
+                            then "LAUNCHER • E / PICK UP"
+                            else "LAUNCHER • available on map"
+                    elseif launcher and launcher.ownerId then
+                        local carrier = game:GetService("Players"):GetPlayerByUserId(launcher.ownerId)
+                        launcherLabel.Text = if owns
+                            then "LAUNCHER • yours • G to drop"
+                            else "LAUNCHER • " .. (if carrier
+                                then string.sub(carrier.DisplayName, 1, 16)
+                                else "teammate")
+                    else
+                        launcherLabel.Text = "LAUNCHER • unavailable"
+                    end
                     if not visible then
                         held = false
                         return
@@ -247,8 +434,13 @@ function GroundCombatController.new(
                     local remaining = if type(reloadUntil) == "number"
                         then math.max(0, reloadUntil - workspace:GetServerTimeNow())
                         else 0
-                    label.Text = if remaining > 0
-                        then string.format("M-7 • Reload %.1fs", remaining)
+                    local rocketSelected = selected ~= nil and selected.Name == "Rocket launcher"
+                    label.Text = if rocketSelected
+                        then (if remaining > 0
+                            then string.format("ROCKET • Reload %.1fs", remaining)
+                            else "ROCKET • 1 ready • G drop")
+                        elseif not selected then "Equip M-7 / launcher to fire"
+                        elseif remaining > 0 then string.format("M-7 • Reload %.1fs", remaining)
                         else string.format(
                             "M-7 • %s / %s • R reload",
                             tostring(ammo),
@@ -284,36 +476,77 @@ function GroundCombatController.new(
                             shotUntil = now + 0.2
                             if value.aircraftHit == true then
                                 hitUntil = now + 1.2
+                                hitMarker.Text = "AIRCRAFT HIT  −5"
                             end
                         end
                     end
-                    hitMarker.Visible = now < hitUntil
+                    local impact = if launcherState then launcherState:GetAttribute("LastImpact") else nil
+                    if type(impact) == "string" and impact ~= gui:GetAttribute("LastRocketImpact") then
+                        gui:SetAttribute("LastRocketImpact", impact)
+                        local parsed, value = pcall(function()
+                            return HttpService:JSONDecode(impact)
+                        end)
+                        if
+                            parsed
+                            and type(value) == "table"
+                            and value.userId == player.UserId
+                            and value.roundId == round
+                            and value.aircraftHit == true
+                        then
+                            hitUntil = now + 1.2
+                            hitMarker.Text = "ROCKET HIT"
+                        end
+                    end
+                    hitMarker.Visible = not touch and now < hitUntil
+                    if touch and now < hitUntil then
+                        label.Text ..= " • HIT"
+                    end
                     reticle.TextColor3 = if now < shotUntil
                         then Color3.fromRGB(255, 205, 55)
                         else Color3.new(1, 1, 1)
-                    if not held or now < nextAttempt then
+                    if
+                        not selected
+                        or not held
+                        or now < nextAttempt
+                        or UserInputService:GetFocusedTextBox()
+                    then
                         return
                     end
-                    local event = remote("GroundFire")
+                    local rocketRemote = if launcherState then launcherState:FindFirstChild("Fire") else nil
+                    local event = if rocketSelected
+                        then (if rocketRemote and rocketRemote:IsA("RemoteEvent") then rocketRemote else nil)
+                        else remote("GroundFire")
                     if not event then
                         return
                     end
-                    nextAttempt = now + 0.15
+                    nextAttempt = now + (if rocketSelected then 0.25 else 0.15)
                     local ray = camera:ViewportPointToRay(point.X, point.Y)
                     local params = RaycastParams.new()
                     params.FilterType = Enum.RaycastFilterType.Exclude
                     params.FilterDescendantsInstances = if character then { character } else {}
                     local result = workspace:Raycast(ray.Origin, ray.Direction * 950, params)
                     local target = if result then result.Position else ray.Origin + ray.Direction * 950
-                    sequence += 1
-                    event:FireServer({
-                        roundId = round,
-                        sequence = sequence,
-                        weapon = "M7",
-                        x = target.X,
-                        y = target.Y,
-                        z = target.Z,
-                    })
+                    if rocketSelected and launcher then
+                        launcherSequence += 1
+                        event:FireServer({
+                            roundId = round,
+                            sequence = launcherSequence,
+                            launcherId = launcher.launcherId,
+                            x = target.X,
+                            y = target.Y,
+                            z = target.Z,
+                        })
+                    elseif not rocketSelected then
+                        sequence += 1
+                        event:FireServer({
+                            roundId = round,
+                            sequence = sequence,
+                            weapon = "M7",
+                            x = target.X,
+                            y = target.Y,
+                            z = target.Z,
+                        })
+                    end
                 end)
             )
             return function()

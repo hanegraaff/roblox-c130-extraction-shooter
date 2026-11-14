@@ -1,0 +1,21 @@
+{
+  "source": "0cd65458b4afcdcf8e8b111c3b0adaed19c7652c",
+  "layout": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"nativeSlots\":{\"1\":{\"visible\":true,\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.1\",\"position\":{\"1\":313,\"2\":258},\"text\":\"\",\"size\":{\"1\":60,\"2\":60}},\"2\":{\"visible\":true,\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.2\",\"position\":{\"1\":378,\"2\":258},\"text\":\"\",\"size\":{\"1\":60,\"2\":60}}},\"hud\":{\"1\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.RifleStatus\",\"position\":{\"1\":245,\"2\":62},\"text\":\"ROCKET • 1 ready • G drop\",\"size\":{\"1\":260,\"2\":24}},\"3\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.M7\",\"position\":{\"1\":243,\"2\":187},\"text\":\"M-7\",\"size\":{\"1\":84,\"2\":32}},\"2\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.LauncherStatus\",\"position\":{\"1\":245,\"2\":36},\"text\":\"LAUNCHER • yours • G to drop\",\"size\":{\"1\":260,\"2\":24}},\"5\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.Drop\",\"position\":{\"1\":423,\"2\":187},\"text\":\"DROP\",\"size\":{\"1\":84,\"2\":32}},\"4\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.Rocket\",\"position\":{\"1\":333,\"2\":187},\"text\":\"ROCKET\",\"size\":{\"1\":84,\"2\":32}},\"7\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.Fire\",\"position\":{\"1\":636,\"2\":123},\"text\":\"FIRE\",\"size\":{\"1\":90,\"2\":70}},\"6\":{\"visible\":false,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.Pickup\",\"position\":{\"1\":310,\"2\":187},\"text\":\"PICK UP\",\"size\":{\"1\":130,\"2\":32}},\"9\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.Reticle\",\"position\":{\"1\":363,\"2\":121},\"text\":\"+\",\"size\":{\"1\":24,\"2\":24}},\"8\":{\"visible\":false,\"name\":\"Players.Player1.PlayerGui.GroundCombatHUD.Reload\",\"position\":{\"1\":636,\"2\":59},\"text\":\"RELOAD\",\"size\":{\"1\":90,\"2\":54}}},\"testPanelHidden\":true,\"viewport\":{\"1\":750,\"2\":381},\"backpackEnabled\":true,\"reticle\":true,\"roundHud\":{\"1\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.RoundHUD.Round\",\"position\":{\"1\":12,\"2\":8},\"text\":\"8:33 remaining • 1 ground alive • Aircraft 300/300\",\"size\":{\"1\":300,\"2\":38}},\"3\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.RoundHUD.Surrender\",\"position\":{\"1\":588,\"2\":8},\"text\":\"Surrender / spectate\",\"size\":{\"1\":150,\"2\":36}},\"2\":{\"visible\":true,\"name\":\"Players.Player1.PlayerGui.RoundHUD.AircraftHealth\",\"position\":{\"1\":12,\"2\":55},\"text\":\"AIRCRAFT HEALTH  300 / 300\",\"size\":{\"1\":250,\"2\":34}}}}"
+      }
+    ],
+    "isError": false
+  },
+  "inset": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"cameraViewport\":\"750, 381\",\"device\":\"iphone_17_pro\",\"round\":{\"screenInsets\":\"Enum.ScreenInsets.CoreUISafeInsets\",\"ignore\":false},\"ground\":{\"ignore\":true,\"screenInsets\":\"Enum.ScreenInsets.DeviceSafeInsets\",\"origin\":\"0, -58\"},\"inset\":\"0, 58\"}"
+      }
+    ],
+    "isError": false
+  }
+}

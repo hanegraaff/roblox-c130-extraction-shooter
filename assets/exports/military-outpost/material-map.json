@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "materials": [
+    {
+      "material": "concrete",
+      "base_color": "textures/concrete.png",
+      "roughness": 0.8600000143051147,
+      "metalness": 0.0,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "teal",
+      "base_color": "textures/teal.png",
+      "roughness": 0.699999988079071,
+      "metalness": 0.3499999940395355,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "orange",
+      "base_color": "textures/orange.png",
+      "roughness": 0.699999988079071,
+      "metalness": 0.30000001192092896,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "steel",
+      "base_color": "textures/steel.png",
+      "roughness": 0.5,
+      "metalness": 0.6499999761581421,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "dark",
+      "base_color": "textures/dark.png",
+      "roughness": 0.6499999761581421,
+      "metalness": 0.20000000298023224,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "ivory",
+      "base_color": "textures/ivory.png",
+      "roughness": 0.7200000286102295,
+      "metalness": 0.10000000149011612,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "olive",
+      "base_color": "textures/olive.png",
+      "roughness": 0.6499999761581421,
+      "metalness": 0.30000001192092896,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "wood",
+      "base_color": "textures/wood.png",
+      "roughness": 0.800000011920929,
+      "metalness": 0.0,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "roof",
+      "base_color": "textures/roof.png",
+      "roughness": 0.8999999761581421,
+      "metalness": 0.0,
+      "emission_strength": 0.0
+    },
+    {
+      "material": "screen",
+      "base_color": "textures/screen.png",
+      "roughness": 0.3499999940395355,
+      "metalness": 0.10000000149011612,
+      "emission_strength": 1.2000000476837158
+    },
+    {
+      "material": "tactical",
+      "base_color": "textures/tactical.png",
+      "roughness": 0.3499999940395355,
+      "metalness": 0.10000000149011612,
+      "emission_strength": 0.8999999761581421
+    },
+    {
+      "material": "lamp",
+      "base_color": "textures/lamp.png",
+      "roughness": 0.4000000059604645,
+      "metalness": 0.0,
+      "emission_strength": 3.0
+    }
+  ],
+  "note": "All base colors are original baked PNGs; constant roughness/metalness/emission listed explicitly. No Roblox upload performed."
+}

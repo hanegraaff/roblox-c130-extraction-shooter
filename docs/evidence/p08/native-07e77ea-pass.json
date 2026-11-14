@@ -1,0 +1,142 @@
+{
+  "source": {
+    "harnessCommit": "07e77ea5b57fba359ab611ea39e2c42c7b977881",
+    "harnessTree": "032f7b162bcc8bba6e48c002b2ca0da30939b444",
+    "runtimeCommit": "ef7826bc80310c17be4bcde93fe7607620303289",
+    "docsHead": "c3b155d6a34f79fc8ae0360d37267aed7a392fbb",
+    "harnessBytes": 35814,
+    "harnessAdler32": 3441968132
+  },
+  "environment": {
+    "studioVersion": "0.747.0.7471481",
+    "place": "tests.rbxlx",
+    "placeId": 0,
+    "originalEditId": "e45b78d9-003f-45ad-b35e-00e5a5ed494a",
+    "nativeServerId": "a928a0af-a7cf-415c-a9eb-80c880e985b5",
+    "args": null,
+    "manualHarness": "P08"
+  },
+  "serverBaseline": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 156,
+    "clientCount": 3,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 156
+  },
+  "clientBaselines": [
+    {
+      "studioId": "94876d67-f358-40cc-ac34-6cbe3eddc99a",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"userId\":-3,\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "a3c2cd80-6bdd-44e4-8f2e-1889a2f5d3e3",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"userId\":-2,\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "b32cff3a-f53d-45cf-a85f-8e10376e0a6f",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"userId\":-1,\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "invocation": {
+    "requestedClients": 3,
+    "mode": "manual-server-clients",
+    "harness": "P08"
+  },
+  "result": {
+    "requestedClients": 3,
+    "peakClientCount": 3,
+    "passed": 11,
+    "droppedTraceRecords": 0,
+    "suite": "P08-multiplayer",
+    "currentClientCount": 2,
+    "departureMethod": "server-kick",
+    "initialClientCount": 3,
+    "clientCount": 3,
+    "requiredUnverified": [
+      "A5 actual same-identity reconnect"
+    ],
+    "discovered": 11,
+    "actualReconnectVerified": false,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A1/A5 three clients see one map launcher with M-7-only initial loadouts"
+      },
+      {
+        "passed": true,
+        "name": "A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged"
+      },
+      {
+        "passed": true,
+        "name": "A1/A2 raced real-client pickups claim once; carrier keeps M-7"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual miss drop transfer switching and early fire preserve identity and reload"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual carrier character removal while reloading preserves one recoverable identity"
+      },
+      {
+        "passed": true,
+        "name": "A6 real reset removes old state and rejects delayed prior-round intent"
+      },
+      {
+        "passed": true,
+        "name": "A4 three actual fired rockets leave 200 then 100 then commit one ground win"
+      },
+      {
+        "passed": true,
+        "name": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool"
+      },
+      {
+        "passed": true,
+        "name": "A3/A5 actual disconnect preserves reload and permits living teammate recovery"
+      },
+      {
+        "name": "A6 teardown invalidates deferred callbacks and removes every owned resource",
+        "passed": true
+      }
+    ],
+    "environment": "Studio",
+    "skipped": 0,
+    "failed": 0,
+    "mode": "manual-server-clients"
+  },
+  "traceRecords": 150,
+  "fullReport": "native-07e77ea-full.json",
+  "fullReportSha256": "f24ab8032e5b86992f12c31ad72056a1b477697abf27f37741056c8283ca5de1"
+}

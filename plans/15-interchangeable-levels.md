@@ -22,4 +22,8 @@ Define a versioned, immutable `LevelDefinition` with a stable level ID and sourc
 
 ## Delivery boundary
 
+[P17](17-integrate-military-outpost.md) replaces one building in the existing
+level using P16's approved Blender assets. That replacement does not satisfy
+P15's distinct-level, level-selection or switch/reconstruction acceptance.
+
 This plan is future work. The 2026-11-10 architecture revision defines the target contract; it does not claim that current `MapRules.defaults`, `TerrainRecipe`, `BuildingLayout`, `MapService` or the Rojo world mapping can switch levels today. Implement only after the preceding MVP plans are complete or a user-directed dependency revision supplies the needed source and acceptance scope. Do not mark P15 complete from a second mock map or host-only tests.

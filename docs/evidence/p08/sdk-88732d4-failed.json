@@ -1,0 +1,32 @@
+{
+  "source": "88732d4e926d3463f95900928aa13d9a9d97eee8",
+  "invocationResult": {
+    "ok": true,
+    "result": {
+      "requestedClients": 3,
+      "actualReconnectVerified": false,
+      "peakClientCount": 2,
+      "cases": [
+        {
+          "name": "Harness startup",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.LauncherHarness:40: P08 timeout: three actual clients"
+        }
+      ],
+      "skipped": 0,
+      "requiredUnverified": [
+        "A5 actual same-identity reconnect"
+      ],
+      "passed": 0,
+      "departureMethod": "client-leave",
+      "discovered": 1,
+      "clientCount": 2,
+      "currentClientCount": 2,
+      "environment": "Studio",
+      "initialClientCount": 2,
+      "suite": "P08-multiplayer",
+      "failed": 1,
+      "mode": "sdk"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "source": "75b1e882a33f73a4c4aa429cb0fb125648d75501",
+  "tree": "055b7664a60d1f0cef49615d8009b29cabde1f2b",
+  "environment": "Studio0.747 native Server & Clients, ordinary HumanTestSession, three actual clients; no full P08 harness invoked",
+  "walkBefore": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"role\":\"Ground\",\"focus\":false,\"id\":-1,\"position\":\"0, 2.9980251789093018, 108\",\"life\":\"Alive\"}"
+      }
+    ],
+    "isError": false
+  },
+  "walkAfter": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"life\":\"Alive\",\"role\":\"Ground\",\"position\":\"9.597502708435059, 2.9980251789093018, 108.00045776367188\"}"
+      }
+    ],
+    "isError": false
+  },
+  "raceAndRoutes": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"routes\":{\"-1\":{\"side\":1,\"waypoints\":{\"1\":{\"target\":{\"1\":24,\"3\":108,\"2\":3.5},\"seconds\":5.44682879166794,\"actual\":{\"1\":21.76595687866211,\"3\":107.99969482421875,\"2\":2.9980926513671877}},\"3\":{\"target\":{\"1\":60,\"3\":65,\"2\":3.5},\"seconds\":2.166782083339058,\"actual\":{\"1\":57.73916244506836,\"3\":65.05567932128906,\"2\":2.9980926513671877}},\"2\":{\"target\":{\"1\":24,\"3\":65,\"2\":3.5},\"seconds\":2.783116541657364,\"actual\":{\"1\":23.9827880859375,\"3\":65.87600708007813,\"2\":2.9980926513671877}},\"5\":{\"target\":{\"1\":2,\"3\":0,\"2\":3.5},\"seconds\":3.650736041687196,\"actual\":{\"1\":4.215622425079346,\"3\":0.03876419737935066,\"2\":2.9962210655212404}},\"4\":{\"target\":{\"1\":60,\"3\":0,\"2\":3.5},\"seconds\":4.016225833358476,\"actual\":{\"1\":59.955665588378909,\"3\":2.2186708450317385,\"2\":2.9980926513671877}}},\"done\":true,\"passed\":true,\"userId\":-1},\"-2\":{\"side\":-1,\"waypoints\":{\"1\":{\"target\":{\"1\":-24,\"3\":108,\"2\":3.5},\"seconds\":0.3637645833368879,\"actual\":{\"1\":-21.38288116455078,\"3\":107.99969482421875,\"2\":2.993126153945923}},\"3\":{\"target\":{\"1\":-60,\"3\":65,\"2\":3.5},\"seconds\":2.2503127499949189,\"actual\":{\"1\":-57.169315338134769,\"3\":65.06900787353516,\"2\":2.9980926513671877}},\"2\":{\"target\":{\"1\":-24,\"3\":65,\"2\":3.5},\"seconds\":2.716322874999605,\"actual\":{\"1\":-23.960433959960939,\"3\":67.11237335205078,\"2\":2.9980926513671877}},\"5\":{\"target\":{\"1\":-2,\"3\":0,\"2\":3.5},\"seconds\":3.6499786666827278,\"actual\":{\"1\":-4.357120513916016,\"3\":0.035188741981983188,\"2\":2.995112419128418}},\"4\":{\"target\":{\"1\":-60,\"3\":0,\"2\":3.5},\"seconds\":4.266122916655149,\"actual\":{\"1\":-59.970367431640628,\"3\":2.312345504760742,\"2\":2.9980926513671877}}},\"done\":true,\"passed\":true,\"userId\":-2}},\"snapshot\":{\"ownerId\":-1,\"revision\":2,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"state\":\"Held\",\"ammo\":1,\"readyAt\":0,\"roundId\":1},\"tools\":{\"1\":{\"name\":\"M-7 rifle\",\"userId\":-1},\"3\":{\"name\":\"M-7 rifle\",\"userId\":-2},\"2\":{\"id\":\"launcher:1\",\"name\":\"Rocket launcher\",\"userId\":-1}},\"launcherTools\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "desktopHeldLayout": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"hud\":{\"Pickup\":{\"visible\":false,\"p\":\"475.5, 426\",\"s\":\"130, 32\"},\"RifleStatus\":{\"visible\":true,\"text\":\"ROCKET • 1 ready • G drop\",\"s\":\"330, 36\",\"p\":\"375.5, 482\"},\"LauncherStatus\":{\"visible\":true,\"text\":\"LAUNCHER • yours • G to drop\",\"s\":\"360, 28\",\"p\":\"360.5, 386\"}},\"inset\":\"0, 0\",\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":0,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":3,\\\"x\\\":0,\\\"z\\\":0},\\\"revision\\\":2,\\\"ammo\\\":1,\\\"ownerId\\\":-1,\\\"roundId\\\":1}\",\"equipped\":{\"1\":{\"ammo\":1,\"reloadUntil\":0,\"name\":\"Rocket launcher\"}},\"hotbar\":{\"visible\":true,\"p\":\"213.5, 548\",\"s\":\"655, 70\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "desktopDropReload": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"shot\":\"{\\\"shotId\\\":\\\"rocket:1:2\\\",\\\"userId\\\":-1,\\\"roundId\\\":1}\",\"events\":{\"1\":{\"time\":1794603200.454001,\"snapshot\":{\"ownerId\":-1,\"revision\":3,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603204.453202,\"roundId\":1}},\"3\":{\"time\":1794603204.469013,\"snapshot\":{\"state\":\"Available\",\"revision\":5,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":1,\"readyAt\":1794603204.453202,\"roundId\":1}},\"2\":{\"time\":1794603200.9867,\"snapshot\":{\"state\":\"Available\",\"revision\":5,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603204.453202,\"roundId\":1}},\"5\":{\"time\":1794603224.984704,\"snapshot\":{\"ownerId\":-1,\"revision\":7,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603228.984438,\"roundId\":1}},\"4\":{\"time\":1794603224.386632,\"snapshot\":{\"ownerId\":-1,\"revision\":6,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":1,\"readyAt\":1794603204.453202,\"roundId\":1}},\"7\":{\"time\":1794603225.385527,\"snapshot\":{\"ownerId\":-1,\"revision\":10,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603228.984438,\"roundId\":1}},\"6\":{\"time\":1794603225.118379,\"snapshot\":{\"state\":\"Available\",\"revision\":9,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603228.984438,\"roundId\":1}}},\"health\":300,\"now\":1794603228.652211,\"impacts\":[]}"
+      }
+    ],
+    "isError": false
+  },
+  "phoneHeldLayout": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"hud\":{\"Rocket\":{\"visible\":true,\"text\":\"ROCKET\",\"s\":\"84, 32\",\"p\":\"333, 245\"},\"M7\":{\"visible\":true,\"text\":\"M-7\",\"s\":\"84, 32\",\"p\":\"243, 245\"},\"LauncherStatus\":{\"visible\":true,\"text\":\"LAUNCHER • yours • G to drop\",\"s\":\"260, 28\",\"p\":\"245, 289\"},\"Drop\":{\"visible\":true,\"text\":\"DROP\",\"s\":\"84, 32\",\"p\":\"423, 245\"},\"Pickup\":{\"visible\":false,\"text\":\"PICK UP\",\"s\":\"130, 32\",\"p\":\"310, 245\"},\"RifleStatus\":{\"visible\":true,\"text\":\"ROCKET • 1 ready • G drop\",\"s\":\"260, 36\",\"p\":\"245, 325\"},\"Fire\":{\"visible\":true,\"text\":\"FIRE\",\"s\":\"90, 70\",\"p\":\"636, 181\"},\"Reload\":{\"visible\":false,\"text\":\"RELOAD\",\"s\":\"90, 54\",\"p\":\"636, 117\"}},\"touchControls\":{\"1\":{\"visible\":true,\"p\":\"655, 291\",\"s\":\"70, 70\",\"name\":\"JumpButton\"},\"3\":{\"visible\":true,\"p\":\"29, 288\",\"s\":\"74, 74\",\"name\":\"ThumbstickStart\"},\"2\":{\"visible\":true,\"p\":\"-100, 127\",\"s\":\"400, 354\",\"name\":\"DynamicThumbstickFrame\"},\"5\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"},\"4\":{\"visible\":true,\"p\":\"48, 307\",\"s\":\"36, 36\",\"name\":\"ThumbstickEnd\"},\"7\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"},\"6\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"},\"9\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"},\"8\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"},\"11\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"},\"10\":{\"visible\":false,\"p\":\"-100, 127\",\"s\":\"0, 0\",\"name\":\"ThumbstickMiddle\"}},\"viewport\":\"750, 381\",\"hotbar\":{\"visible\":true,\"p\":\"48, 311\",\"s\":\"655, 70\"},\"inset\":\"0, 0\"}"
+      }
+    ],
+    "isError": false
+  },
+  "phoneNativeSlots": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"parents\":{\"1\":{\"visible\":true,\"class\":\"Frame\",\"name\":\"Hotbar\"},\"4\":{\"name\":\"CoreGui\",\"class\":\"CoreGui\"},\"3\":{\"enabled\":true,\"class\":\"ScreenGui\",\"name\":\"RobloxGui\"},\"2\":{\"visible\":true,\"class\":\"Frame\",\"name\":\"Backpack\"}},\"slots\":{\"1\":{\"p\":\"313, 316\",\"s\":\"60, 60\",\"shown\":true,\"class\":\"TextButton\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.1\"},\"3\":{\"p\":\"378, 316\",\"s\":\"60, 60\",\"shown\":true,\"class\":\"TextButton\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.2\"},\"2\":{\"p\":\"314, 317\",\"s\":\"58, 58\",\"shown\":true,\"class\":\"TextLabel\",\"text\":\"M-7 rifle\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.1.ToolName\"},\"5\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.3.ToolName\"},\"4\":{\"p\":\"379, 317\",\"s\":\"58, 58\",\"shown\":true,\"class\":\"TextLabel\",\"text\":\"Rocket launcher\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.2.ToolName\"},\"7\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.5.ToolName\"},\"6\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.4.ToolName\"},\"9\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.7.ToolName\"},\"8\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.6.ToolName\"},\"12\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.10.ToolName\"},\"11\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.9.ToolName\"},\"10\":{\"p\":\"49, 312\",\"s\":\"58, 58\",\"shown\":false,\"class\":\"TextLabel\",\"text\":\"\",\"name\":\"CoreGui.RobloxGui.Backpack.Hotbar.8.ToolName\"}}}"
+      }
+    ],
+    "isError": false
+  },
+  "phoneCorrectedInput": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"inputs\":{\"1\":{\"kind\":\"Enum.UserInputType.Touch\",\"key\":\"Enum.KeyCode.None\",\"processed\":false},\"3\":{\"kind\":\"Enum.UserInputType.Touch\",\"key\":\"Enum.KeyCode.None\",\"processed\":false},\"2\":{\"kind\":\"Enum.UserInputType.Touch\",\"key\":\"Enum.KeyCode.None\",\"processed\":false},\"5\":{\"kind\":\"Enum.UserInputType.Touch\",\"key\":\"Enum.KeyCode.None\",\"processed\":false},\"4\":{\"kind\":\"Enum.UserInputType.Touch\",\"key\":\"Enum.KeyCode.None\",\"processed\":false},\"7\":{\"processed\":false,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"285, 241, 0\",\"buttons\":[]},\"6\":{\"kind\":\"Enum.UserInputType.Touch\",\"key\":\"Enum.KeyCode.None\",\"processed\":true},\"9\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"375, 261, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.Rocket\"}},\"8\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"285, 261, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.M7\"}},\"14\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"681, 216, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.Fire\",\"2\":\"Players.Player1.PlayerGui.StudioTestPanel.Frame.Start\"}},\"13\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"375, 261, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.Rocket\"}},\"12\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"375, 261, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.Pickup\"}},\"11\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"465, 261, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.Drop\",\"2\":\"Players.Player1.PlayerGui.StudioTestPanel.Frame.Reset\"}},\"10\":{\"processed\":true,\"kind\":\"Enum.UserInputType.Touch\",\"position\":\"681, 216, 0\",\"buttons\":{\"1\":\"Players.Player1.PlayerGui.GroundCombatHUD.Fire\",\"2\":\"Players.Player1.PlayerGui.StudioTestPanel.Frame.Start\"}}},\"health\":300,\"label\":\"ROCKET • 1 ready • G drop\",\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603431.809067,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":2.721407651901245,\\\"z\\\":0.01173020526766777},\\\"revision\\\":14,\\\"ammo\\\":1,\\\"ownerId\\\":-1,\\\"roundId\\\":1}\",\"lastShot\":\"{\\\"shotId\\\":\\\"rocket:1:3\\\",\\\"userId\\\":-1,\\\"roundId\\\":1}\"}"
+      }
+    ],
+    "isError": false
+  },
+  "phoneServerObservations": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"snapshots\":{\"1\":{\"time\":1794603200.454001,\"snapshot\":{\"ownerId\":-1,\"revision\":3,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603204.453202,\"roundId\":1}},\"3\":{\"time\":1794603204.469013,\"snapshot\":{\"state\":\"Available\",\"revision\":5,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":1,\"readyAt\":1794603204.453202,\"roundId\":1}},\"2\":{\"time\":1794603200.9867,\"snapshot\":{\"state\":\"Available\",\"revision\":5,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603204.453202,\"roundId\":1}},\"5\":{\"time\":1794603224.984704,\"snapshot\":{\"ownerId\":-1,\"revision\":7,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603228.984438,\"roundId\":1}},\"4\":{\"time\":1794603224.386632,\"snapshot\":{\"ownerId\":-1,\"revision\":6,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":1,\"readyAt\":1794603204.453202,\"roundId\":1}},\"7\":{\"time\":1794603225.385527,\"snapshot\":{\"ownerId\":-1,\"revision\":10,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603228.984438,\"roundId\":1}},\"6\":{\"time\":1794603225.118379,\"snapshot\":{\"state\":\"Available\",\"revision\":9,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603228.984438,\"roundId\":1}},\"9\":{\"time\":1794603427.809788,\"snapshot\":{\"ownerId\":-1,\"revision\":11,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603431.809067,\"roundId\":1}},\"8\":{\"time\":1794603228.984838,\"snapshot\":{\"ownerId\":-1,\"revision\":10,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":1,\"readyAt\":1794603228.984438,\"roundId\":1}},\"12\":{\"time\":1794603431.809207,\"snapshot\":{\"ownerId\":-1,\"revision\":14,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":1,\"readyAt\":1794603431.809067,\"roundId\":1}},\"11\":{\"time\":1794603429.427632,\"snapshot\":{\"ownerId\":-1,\"revision\":14,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603431.809067,\"roundId\":1}},\"10\":{\"time\":1794603428.744944,\"snapshot\":{\"state\":\"Available\",\"revision\":13,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603431.809067,\"roundId\":1}}},\"health\":300,\"impacts\":{\"1\":{\"health\":300,\"time\":1794603427.876713,\"impact\":\"{\\\"y\\\":0,\\\"aircraftHit\\\":false,\\\"z\\\":-12.471758842468262,\\\"x\\\":2.7209432125091554,\\\"shotId\\\":\\\"rocket:1:3\\\",\\\"userId\\\":-1,\\\"roundId\\\":1}\"}}}"
+      }
+    ],
+    "isError": false
+  },
+  "deathRecovery": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":3,\"after\":{\"state\":\"Available\",\"revision\":17,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"ammo\":0,\"readyAt\":1794603484.423699,\"roundId\":1},\"phase\":\"Active\",\"before\":{\"ownerId\":-1,\"revision\":15,\"launcherId\":\"launcher:1\",\"position\":{\"y\":1.100000023841858,\"x\":2.721407651901245,\"z\":0.01173020526766777},\"state\":\"Held\",\"ammo\":0,\"readyAt\":1794603484.423699,\"roundId\":1},\"life\":\"Eliminated\",\"sameReload\":true,\"sameIdentity\":true,\"character\":false,\"groundAlive\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "afterDeathReplication": [
+    {
+      "studioId": "04cd6426-7822-4a31-8794-0782a6efbb96",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-1,\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603484.423699,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":2.721407651901245,\\\"z\\\":0.01173020526766777},\\\"revision\\\":18,\\\"ammo\\\":1,\\\"ownerId\\\":-2,\\\"roundId\\\":1}\",\"health\":300,\"life\":\"Eliminated\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "1c270f6a-49af-4591-8474-4ae6e473ca22",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-2,\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603484.423699,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":2.721407651901245,\\\"z\\\":0.01173020526766777},\\\"revision\\\":18,\\\"ammo\\\":1,\\\"ownerId\\\":-2,\\\"roundId\\\":1}\",\"health\":300,\"life\":\"Alive\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "studioId": "8d1001f8-776e-4946-b88a-2ef12f5f22b5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-3,\"snapshot\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1794603484.423699,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":1.100000023841858,\\\"x\\\":2.721407651901245,\\\"z\\\":0.01173020526766777},\\\"revision\\\":18,\\\"ammo\\\":1,\\\"ownerId\\\":-2,\\\"roundId\\\":1}\",\"health\":300,\"life\":\"Alive\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "phoneFailure": "Actual visible native slots1/2 at313,316 and378,316 size60x60 overlap weapon readiness245,325 size260x36. Simulator iPhone17Pro750x381. Root screenshot omits CoreGui so numeric native slots were separately verified.",
+  "inputCalibration": "MCP mouse device coordinates required observed safe-area offset(+62,+20) to reach intended GUI. First instance-path taps missed and did not mutate launcher; corrected native taps generated actual Touch/processedtrue and hit intended buttons.",
+  "cameraAndPose": "Default Ground camera; both avatars naturally walked controlled Humanoid waypoints without teleport or movement-trust override; native D movement independently verified. No camera/clock takeover used."
+}

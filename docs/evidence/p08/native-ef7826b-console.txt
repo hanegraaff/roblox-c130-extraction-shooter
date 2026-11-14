@@ -1,0 +1,170 @@
+ContentId: rbxassetid://203785492 failed due to: Asset type does not match requested type
+Test results:
+[+] Studio
+   [+] Aircraft
+      [+] canonical engine aircraft follows full perimeter, tangent and muzzle contract then resets
+      [+] PannedTargetProjection authored vertical envelope rejects above-roof and below-ground endpoints
+      [+] PannedTargetProjection selected muzzle obstruction rejects a clear camera ray
+      [+] server aim rejects exterior and actual solid cover while a clear endpoint succeeds
+   [+] CharacterOwner
+      [+] P08 owned character removal eliminates once while internal clear preserves the life
+   [+] CombatCollision
+      [+] P05 shell sweep hits thin cover and cannot create an empty-space impact
+      [+] P05 swept shell reaches reproduced orbit-moving sloped terrain surface
+   [+] CombatView
+      [+] P05 view intent accepts actual panned CFrame centerline rays around the orbit
+   [+] ExpandedMap
+      [+] BuildingLayout accepts two larger and one smaller two-story panel registry
+      [+] BuildingLayout loaded panels have stable IDs story pivots and distinct static supports
+      [+] BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+      [+] BuildingLayout rejects missing buildings stories stairs and size distinctions
+      [+] BuildingLayout rejects missing upper support detached stairs and blocked avatar routes
+      [+] ExpandedMapCleanup teardown restores mutated panel geometry and remains idempotent
+      [+] ExpandedMapNavigation rejects lobby deck overlap and combat-zone station anchors
+      [+] ExpandedMapSightLines full orbit has protected building interiors and supported clear counterfire positions
+      [+] TerrainReconstruction rejects out-of-bounds recipes without terrain writes
+      [+] TerrainReconstruction samples elevations materials and exact voxels through two mutated rebuilds
+   [+] Foundation
+      [+] accepted aircraft profile switches atomically and reset restores initial profile
+      [+] aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+      [+] aircraft destruction before last ground elimination also resolves ground win once
+      [+] AircraftPanRules blocked and neutral input hold relative view
+      [+] AircraftPanRules both zoom profiles retain safe framing at common layouts
+      [+] AircraftPanRules diagonal speed and long-frame delta are bounded
+      [+] AircraftPanRules frame-rate independence holds away from view limits
+      [+] AircraftPanRules held pan reaches each view limit and stops
+      [+] AircraftPanRules held view rotates rigidly with aircraft orbit
+      [+] AircraftPanRules horizontal input follows camera right throughout orbit
+      [+] AircraftPanRules keeps edge and diagonal views within the noninteractive backdrop
+      [+] AircraftPanRules raster preserves exact central bounds
+      [+] AircraftPanRules raster rejects invalid pointer and viewport
+      [+] AircraftPanRules raster shares rounded integer ray and draw pixels
+      [+] AircraftPanRules recenter creates an independent safe inward view
+      [+] AircraftPanRules rejects nonfinite axes geometry FOV and time
+      [+] AircraftPanRules respects a differently sized level and rejects bad orbit
+      [+] AircraftPanRules shows level edge inside each outer quarter at both zooms
+      [+] AircraftPanRules supported lens preserves normal FOV and adapts ultra-wide
+      [+] AircraftPanRules WASD and touch axes move in the orbit-local view
+      [+] all sampled poses have map perimeter radius and unit perpendicular tangent
+      [+] bad time rejects without mutation and valid requests still succeed
+      [+] both participant departures with a late spectator produce no competitive winner
+      [+] burst exhausts and exact refill boundary accepts
+      [+] constructor rejects overflowing seed instead of deploying a roster without operator
+      [+] deadline equality beats destruction and last ground elimination
+      [+] death releases one owned life once after nonterminal batch and cannot revive on rejoin
+      [+] default and valid endpoints decode without aliasing
+      [+] deployment waits for every roster member and cancellation clears partial readiness
+      [+] duplicate, fractional and nonfinite selection sequences reject without mutation
+      [+] empty server and no participants never award a competitive winner
+      [+] exact injected deadline commits timeout once and late proposals cannot change it
+      [+] finite reserve exhausts without affecting another ground player
+      [+] finite values include zero and numeric boundaries
+      [+] flat payload accepts exact field and byte boundaries
+      [+] forged invalid stale or unowned requests do not spend ammunition
+      [+] ground departure during deployment also cancels without partial members
+      [+] ground spawn is solid anchored and reachable
+      [+] invalid and reversed clock samples reject without corrupting valid state
+      [+] invalid bucket configuration rejects
+      [+] last ground departure wins for remaining operator with no weapon recovery
+      [+] longest waiting alternative gets operator without repeating previous operator
+      [+] malformed and nonfinite config reject without mutation
+      [+] malformed, oversized, stale and unknown profile payloads reject without sequence consumption
+      [+] misses and mixed damage obey health clamps and reset
+      [+] mutual destruction batch gives ground win and terminal cleanup suppresses recovery
+      [+] NaN infinities and nonnumbers reject
+      [+] only documented phase edges and deployment cancellation are legal
+      [+] operator departure followed by immediate reconnect still forfeits assigned round
+      [+] orbit is periodic with negative/positive phase wrap and exact altitude
+      [+] orbit rejects nonfinite time, invalid map and derived overflow
+      [+] ordinary motion and delayed replication fit bounded movement credit
+      [+] P05 adaptive ultra-wide FOV cache is exact, reusable and bounded
+      [+] P05 alternate level bounds replace industrial coordinates
+      [+] P05 bounded range and weapon-specific readiness reject without sequence mutation
+      [+] P05 chain gun cadence and magazine reload exact boundaries
+      [+] P05 chain gun sustains nine seconds without forced reload
+      [+] P05 damage clamps to remaining and maximum health
+      [+] P05 each profile bounds swept distance and expires only after its exact lifetime
+      [+] P05 finite bounded orbit replication age accepts normal delay and rejects excess
+      [+] P05 forged pose, invalid focus and unreachable reticle reject
+      [+] P05 forged, stale, nonfinite and unauthorized fire reject without spending
+      [+] P05 heavy reload survives selection changes and exact boundary
+      [+] P05 invalid damage inputs reject without poisoning a later valid award
+      [+] P05 one shot awards each target once and a new shot has a fresh ledger
+      [+] P05 valid panned views remain legal at both zooms through an entire orbit
+      [+] P05 vertical reticle at the legal P14 40-degree limit remains valid
+      [+] P08 A1 raced pickup and snapshots retain one stable identity
+      [+] P08 A2 authority and reach rejection preserve valid retry and replay state
+      [+] P08 A2 malformed forged oversized nonfinite and stale intents leave readiness unchanged
+      [+] P08 A3 death reset and disconnect recovery is idempotent and preserves per-user replay
+      [+] P08 A3 drop transfers preserve exact reload deadline and no reserve items
+      [+] P08 A3 re-picking and same-round reset cannot refill or replay a prior holder's command
+      [+] P08 A3/A5 composed match tombstones prevent reconnect life or launcher restoration
+      [+] P08 A4 fire preflight and exact range are nonmutating until accepted
+      [+] P08 A4 replenishment permits three shots well within the normal round
+      [+] P08 A6 terminal cleanup beats recovery and next round rejects old callbacks
+      [+] PanelDamageRules appearance distinguishes first-zero Light Heavy-zero and Total
+      [+] PanelDamageRules heavy hits zero through six preserve exact stage boundaries
+      [+] PanelDamageRules invalid seconds reject without mutation and overflow never skips stages
+      [+] PanelDamageRules mixed earned credit advances both stages without surplus carry
+      [+] PanelDamageRules nine seconds never advance early and apply epsilon only at rounding boundary
+      [+] partial initialization rolls back in reverse order and can retry
+      [+] payload bound configuration rejects nonfinite negative and fractional values
+      [+] payload rejects oversized nested cyclic metatable and malformed data
+      [+] PersistentPanelFire alternating targets keep independent credits and resumed first hits earn zero
+      [+] PersistentPanelFire three separated bursts earn nine seconds per stage without idle credit
+      [+] pre-deadline aircraft destruction beats mutual ground elimination
+      [+] preflight rejects bad or cooldown requests without spending readiness or sequence
+      [+] production rosters reject five and eleven players without mutation
+      [+] rifle cadence magazine reserve and reload boundaries
+      [+] seeded ties are repeatable independent of incoming join order
+      [+] server bootstrap stops and starts twice without duplicate resources
+      [+] six and ten players receive exactly one operator and one united ground roster
+      [+] snapshots cannot mutate authoritative members or committed results
+      [+] SustainedPanelFire cadence gap boundary preserves earned work and excludes elapsed gaps
+      [+] SustainedPanelFire exact nine-second accepted prefix survives 0.6-second flight and idle barrier
+      [+] SustainedPanelFire first hit earns zero and exact cadence reaches nine then eighteen seconds
+      [+] SustainedPanelFire heavy six direct hits preserve monotonic state and immutable snapshots
+      [+] SustainedPanelFire misses blocked targets switches reload and operator loss preserve earned damage
+      [+] SustainedPanelFire out-of-order same-step impacts await misses and deduplicate after drain
+      [+] SustainedPanelFire queued interruption retains partial prefix while forbidding time across its barrier
+      [+] SustainedPanelFire rejected malformed stale duplicate and unknown-panel outcomes do not mutate
+      [+] SustainedPanelFire stale-round cancellation resets stream pending and heavy history
+      [+] SustainedPanelFire terminal cancellation rejects old outcomes and clears pending barriers
+      [+] teleport remains quarantined until return or explicit server correction
+      [+] three accelerated rounds clear roster result and deadline while rotating operator
+      [+] three direct rockets destroy pristine aircraft once
+      [+] two and three player server fixtures are supported and duplicate ids reject
+      [+] two start stop cycles own one listener and task and clean both
+      [+] unsafe seeds reject and accepted seed boundaries always assign one operator
+      [+] wrong role stale replay malformed and spectator commands reject without revision mutation
+      [+] wrong role, life, phase and deadline eligibility reject without mutation
+      [+] zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+      [+] zoom config decodes finite distinct ordered profiles without mutating input
+   [+] GroundOriginGeometry
+      [+] permits normal standing above a sloped Terrain surface
+      [+] rejects a head buried in Terrain but permits normal standing and jumping
+      [+] rejects a wall between root and head and a root embedded in cover
+      [+] terrain-query failure rejects explicitly and a later valid request recovers
+   [+] Launcher
+      [+] P08 first solid sweep blocks rockets; three deduplicated direct impacts destroy once
+      [+] P08 held and map representations keep one ID and cannot collide or enter combat queries
+      [+] P08 supported recovery rejects exterior void steep and blocked positions; cover blocks pickup
+   [+] Map
+      [+] authored anchors validate and malformed identity count clearance and elevations reject
+      [+] cover queries protect all nine spawns and expose firing angles to 64 perimeter samples
+      [+] ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+      [+] ExpandedMapRules defaults decode to independent matching circle and ground focus
+      [+] ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+      [+] ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+      [+] server corrects exterior and below kill plane while preserving disk and station positions
+      [+] StartingShelterRegistry rejects missing wrong or widened registry inputs without mutation
+      [+] two launcher approaches clear a 4x6x4 stud upright avatar and have continuous floor
+      [+] two rebuilds restore exact geometry IDs poses counts and remove transient content
+   [+] PanelDestruction
+      [+] PanelDestructionReset reacquires a replaced map without stale rounds or group leaks
+      [+] PanelFragmentPhysics falls contacts static scenery excludes characters and expires with bounded cap
+      [+] PanelGeometryStates measures every wall roof interior face and preserves stable structure
+      [+] PanelImpactRegistry real unknown and forged-tag obstructions consume misses before later registered hits
+      [+] PersistentDamageAppearance keeps Light and Heavy on both building and starting-shelter panels
+      [+] PreImpactCoverAndThermal both profiles retain pre-impact solids then expose only actual holes
+156 passed, 0 failed, 0 skipped
