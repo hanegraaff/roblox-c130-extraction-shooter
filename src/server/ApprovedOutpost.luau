@@ -1,6 +1,6 @@
 --!strict
 --[=[
-    ApprovedOutpost: immutable server-only construction data derived from the exact
+    ApprovedOutpost: trusted server-only construction data derived from the exact
     P16 package approved by the user. Units are studs; canonical coordinates are
     Blender X/Y/Z (face X/Z). No assets are uploaded or presumed accessible here.
     Regenerate with scripts/p17_assets.py; never hand-tune approved art data.

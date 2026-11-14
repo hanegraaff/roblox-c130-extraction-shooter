@@ -1,6 +1,11 @@
 """P17 preparation tests: approved source identity and generated descriptor only."""
 import importlib.util
+import hashlib
+import json
 from pathlib import Path
+import re
+import shutil
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -31,6 +36,45 @@ class P17AssetDefinition(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "differs from reviewed package lock"):
                 p17.compile_definition()
         self.assertEqual((p17.ROOT / p17.OUTPUT).read_bytes(), before)
+
+    def test_coordinated_export_lock_descriptor_and_manifest_refresh_cannot_replace_approval(self):
+        """A valid UV edit remains unapproved even when every mutable hash agrees."""
+        with tempfile.TemporaryDirectory(prefix="p17-approval-boundary-") as directory:
+            root = Path(directory)
+            for name in ("military-outpost.blend", "panel-catalog.json", "package-lock.json"):
+                target = root / p17.SOURCE / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(p17.ROOT / p17.SOURCE / name, target)
+            export_path = p17.EXPORT / "corrugated_wall-pristine.obj"
+            export = root / export_path
+            export.parent.mkdir(parents=True, exist_ok=True)
+            original = (p17.ROOT / export_path).read_text()
+            edited, count = re.subn(r"^vt [^\n]+$", "vt 0.25 0.75", original, count=1, flags=re.MULTILINE)
+            self.assertEqual(count, 1)
+            export.write_text(edited)
+            before_digest = p17.sha(p17.ROOT / export_path)
+            changed_digest = p17.sha(export)
+            self.assertNotEqual(before_digest, changed_digest)
+            lock_path = root / p17.SOURCE / "package-lock.json"
+            lock = json.loads(lock_path.read_text())
+            for entry in lock["files"]:
+                if entry["path"] == export_path.as_posix():
+                    entry.update(sha256=changed_digest, bytes=export.stat().st_size)
+            lock_path.write_text(json.dumps(lock, indent=2) + "\n")
+            self.assertNotEqual(p17.sha(lock_path), p17.PACKAGE_LOCK_SHA)
+            generated = p17.compile_definition().replace(before_digest, changed_digest)
+            output = root / p17.OUTPUT
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(generated)
+            manifest = json.loads((p17.ROOT / "assets/manifest.json").read_text())
+            for recipe in manifest["runtime_recipes"]:
+                if recipe["id"] == "approved-outpost-materials":
+                    recipe["sha256"] = hashlib.sha256(generated.encode()).hexdigest()
+            (root / "assets/manifest.json").write_text(json.dumps(manifest))
+            for operation in (p17.compile_definition, p17.verify):
+                with self.assertRaisesRegex(ValueError, "approved P16 input: package-lock.json"):
+                    operation(root)
+            self.assertEqual(output.read_text(), generated, "rejected generation wrote runtime data")
 
     def test_changed_generated_values_fail_while_formatter_whitespace_is_allowed(self):
         self.assertEqual(p17.normalized("{ value = 1, }"), p17.normalized("{value=1}"))

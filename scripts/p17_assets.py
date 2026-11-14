@@ -1,6 +1,6 @@
 """Compile the approved P16 material geometry into a server-only definition.
 
-This gate checks immutable reviewed inputs and deterministic runtime data. It
+This gate checks hash-pinned reviewed inputs and deterministic runtime data. It
 never uploads assets, assigns cloud ownership or claims imported mesh availability.
 The default command is read-only; --write regenerates only ApprovedOutpost.luau.
 """
@@ -19,6 +19,10 @@ EXPORT = Path("assets/exports/military-outpost")
 OUTPUT = Path("src/server/ApprovedOutpost.luau")
 BLEND_SHA = "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c"
 CATALOG_SHA = "6e632a170de2183e355759e544980170d62b157365b62716ef913ed32f193478"
+# SHA-256 of package-lock.json in the explicitly approved source commit
+# e8fb840a986969bdd3b7ac932469e3fa8cc99a9e. Pin the complete reviewed export
+# inventory before consuming it: refreshing a local lock cannot approve new art.
+PACKAGE_LOCK_SHA = "eda4926391d6c1f19d35186a4b8d56db13a6e3e36cda256e43be0e414210b3b2"
 
 
 def sha(path: Path) -> str:
@@ -27,7 +31,8 @@ def sha(path: Path) -> str:
 
 def approved_catalog(root: Path = ROOT) -> dict:
     """Fail before generation if reviewed source/catalog identity has changed."""
-    for name, expected in (("military-outpost.blend", BLEND_SHA), ("panel-catalog.json", CATALOG_SHA)):
+    for name, expected in (("military-outpost.blend", BLEND_SHA), ("panel-catalog.json", CATALOG_SHA),
+                           ("package-lock.json", PACKAGE_LOCK_SHA)):
         if sha(root / SOURCE / name) != expected:
             raise ValueError(f"P17 requires the approved P16 input: {name}")
     return json.loads((root / SOURCE / "panel-catalog.json").read_text())
@@ -46,7 +51,7 @@ def compile_definition(root: Path = ROOT) -> str:
         return digest
     lines = [
         "--!strict", "--[=[",
-        "    ApprovedOutpost: immutable server-only construction data derived from the exact",
+        "    ApprovedOutpost: trusted server-only construction data derived from the exact",
         "    P16 package approved by the user. Units are studs; canonical coordinates are",
         "    Blender X/Y/Z (face X/Z). No assets are uploaded or presumed accessible here.",
         "    Regenerate with scripts/p17_assets.py; never hand-tune approved art data.",
