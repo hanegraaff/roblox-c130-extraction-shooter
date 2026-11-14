@@ -1,12 +1,12 @@
 # Players vs C-130
 
+![Blender viewport showing the two-story outpost with teal walls, rooftop equipment, balcony and external stairs](blender_outpost.png)
+
+*User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
+
 **A Roblox game in development: one gunship against a united ground team.**
 
 One player operates a circling C-130 while 5–9 teammates on the ground try to destroy it. Every ground player starts with an M-7 rifle. One shared map launcher provides recoverable rockets: three direct hits destroy an undamaged aircraft, and rifle fire wears down the same health pool.
-
-![Ground player holding the rocket launcher at the center marker, with launcher ownership, ready rocket and aircraft health shown in the HUD](docs/evidence/p08/current-held.jpg)
-
-*P08 candidate, 2026-11-13: actual two-client ordinary SDK Studio session on `ef7826b`, after the Ground player walked to the center. Default camera and natural walking position; the test panel was hidden for capture, then restored. Native inventory is omitted by the capture tool and was measured separately. [Capture and verification details](docs/evidence/p08-launcher.md).*
 
 ## What you can play today
 
@@ -146,17 +146,13 @@ The launcher carries one ready rocket and automatically replenishes after four s
 
 ## Inspect the Blender outpost
 
-![Blender viewport showing the two-story outpost with teal walls, rooftop equipment, balcony and external stairs](blender_outpost.png)
-
-*User-provided Blender viewport capture of the P16 outpost. [Editable source and review views](assets/blender/military-outpost/README.md).*
-
 Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend)
 in **Blender 5.3.0**. It contains the exterior, furnished workshop and command
 room, a cutaway, reusable props and six material/shape damage families.
 The [asset review guide](assets/blender/military-outpost/README.md) explains
 orbiting, selecting the saved cameras, hiding the roof and inspecting every
 panel from both sides. It links the actual Blender renders and grayscale damage
-views. These are art previews, separate from the gameplay screenshot above.
+views. These show the Blender asset; P17 will integrate it into gameplay.
 
 To check the committed package without launching Blender:
 
