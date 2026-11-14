@@ -82,6 +82,25 @@ actual replacement/acceptance continue. The playable building remains primitive.
 See the [cloud receipt](docs/evidence/p17/cloud-import-progress.json). P09 remains
 Planned; this private upload is not P12 multiplayer/release acceptance.
 
+2026-11-14 integrated candidate: source `f378733` replaces the smaller Outpost
+through managed imported templates, retaining 25 panel identity pivots and
+registering 26 Outpost / 188 battlefield panels. The material-preserving library
+revision and twelve actual color-map references are recorded in Git. Both
+developer and independent macOS host gates pass. Fresh Linux CI exposes a
+reconstruction portability failure; independent review also identifies pivot
+preflight and thermal-fragment defects. Corrections and the integrated native
+acceptance are underway. P17 remains In progress; A1–A6, performance and human
+in-game approval are still open. The private published version remains the older
+primitive source. The [P17 record](plans/17-integrate-military-outpost.md) preserves
+exact source/build identities, evidence and historical failures. P09 has not
+started.
+
+Correction `b1a6734` preserves the managed art bytes while making float reduction
+portable and adding pivot/thermal-fragment preflight regressions. Its macOS full
+host gate and independent focused review pass; Linux CI confirmation and actual
+integrated Studio acceptance remain pending. The test mapping now expects
+169 server / nine per actual client, with no passing native result claimed.
+
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
 equals the combined passing candidate `537a2ce` /

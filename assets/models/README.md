@@ -6,24 +6,37 @@ Rojo maps this folder to `ServerStorage.Assets`. [`CoverPanel.model.json`](Cover
 
 `Hitbox.GAU23Muzzle` is at local `(−5, −2, −7)` studs; `Hitbox.M102Muzzle` is at `(−5, −2, 6)`. Their canonical CFrames are versioned and identity-oriented. They supply server-derived gunship firing origins. Model pose follows the orbit tangent, independently of the inward-facing operator camera. No separate cosmetic interpolation shell exists. The artifact gate compares all 16 part poses/sizes/flags, while real Studio specs verify canonical pivot/attachment/query/orbit behavior.
 
-[`PanelResidual.model.json`](PanelResidual.model.json) is an original two-Part server-only template with no external asset/scripts. Left/Right are anchored, collidable/queryable, nontouching normalized strips: X width 0.25, Y/Z size 1 and X centers −0.375/+0.375. PanelGeometry reads their X width/offset and scales pristine panel clones along the longest face axis. The result preserves the original pivot/thickness and leaves a central 50% opening on walls or roofs. The current material/color comes from the original panel and its progress cue, not the normalized template. Destroyed panels retain their identity Model without BaseParts. All active primitive building panels share this contract, including the revised candidate’s 76 starting-shelter pieces and 111 formal-building panels; static floors/stairs/frames and generic cover are outside it.
+[`PanelResidual.model.json`](PanelResidual.model.json) is an original two-Part server-only template with no external asset/scripts. Left/Right are anchored, collidable/queryable, nontouching normalized strips: X width 0.25, Y/Z size 1 and X centers −0.375/+0.375. PanelGeometry reads their X width/offset and scales pristine panel clones along the longest face axis. The result preserves the original pivot/thickness and leaves a central 50% opening on walls or roofs. The current material/color comes from the original panel and its progress cue, not the normalized template. Destroyed panels retain their identity Model without BaseParts. All active primitive building panels share this contract, including 76 starting-shelter pieces and 86 Foundry/Warehouse panels on the integrated candidate; static floors/stairs/frames and generic cover are outside it.
 
 P06 supplies a server-owned primitive held M-7; P07 generates capped physics-fragment primitives at runtime. Neither uses imported art or a cloud asset. Fragments are transient presentation and must never be exported into authored templates. The P08 candidate generates its original primitive available launcher Model and held Tool in `LauncherGeometry`, plus cosmetic rocket Parts in `LauncherRuntime`. These noncolliding/nonqueryable/nontouching representations are reconstructed from source; they do not grant ownership or resolve collisions. The one authoritative round identity lives in LauncherService, and stop/reset/transfer removes obsolete representations. The manifest records the runtime recipe; no live pickup/projectile is exported as a pristine authored template. The [manifest](../manifest.json) records source/author/license and local paths; no Roblox asset IDs or upload owner have been invented. See the [destruction owner](../../src/server/README.md#progressive-panel-destruction) for state, collision, timing and cleanup contracts.
 
 The primitive path generates original crack/scar marks in `PanelGeometry`, with no imported texture, mesh or script dependency. Light/Heavy use Concrete/Slate and D54’s slate/charcoal/pale-fracture defaults instead of glowing CrackedLava. Marks are cosmetic on both faces, clipped to residual solids, excluded from collision/queries and structural identity, and cleaned up with owned panel state. They are runtime presentation, not separate authored templates. The fresh solo engine baseline covers appearance/query assertions. Current Warehouse and starting-shelter native-input captures distinguish all four normal/thermal tiers, actual holes and solid residual occlusion, with disclosed QA markers. Their orbit pose and normal comparison camera are held. Resting debris captures and measured engine physics do not by themselves establish visual falling. The full seven-case two-client/reset check and six-case P14 regression pass. The separate [human demonstration](../../docs/evidence/p07-revision-human-fragments.json) confirms falling pieces under live clocks with an explicitly controlled close-up Ground watch camera. Current P07 acceptance checks pass; the earlier resting images retain their narrower scope.
 
-## Prepared material-panel templates
+## Imported Outpost and material templates
 
-P17's preparation branch can consume a validated `MaterialPanels` Folder here,
-but no such imported template is committed yet. The active map therefore keeps
-its primitive Outpost. `PanelAssetCatalog` requires six named family folders,
-Pristine/Light/Heavy/Total Models and four indexed fragment MeshParts per family,
-with approved source hashes and an import-receipt identity. Cosmetic meshes are
-separate from the exact authoritative rectangle proxies generated at runtime;
-mesh collision decomposition cannot fill an earned opening.
+[`MilitaryOutpost.model.json`](MilitaryOutpost.model.json) and
+[`MaterialPanels.model.json`](MaterialPanels.model.json) are managed definitions
+compiled from the exact approved P16 package and observed native import receipts.
+The pristine Outpost template contains 2,256 visible MeshParts, 26 registered
+panel Models, stable supporting geometry, furnishings and navigation markers.
+GameRuntime installs it at the original smaller-Outpost site before MapService
+captures pristine reset state. All 25 legacy panel pivots remain; one partition
+adds the 188th active map panel.
 
-Retain actual uploaded mesh/texture IDs, owner/access and observed transforms
-with the managed import export and manifest. Do not substitute placeholder IDs
-or export a damaged live panel. See the
-[preparation guide](../../docs/development.md#prepare-the-approved-outpost-import)
-and [server API](../../src/server/README.md#imported-material-panel-boundary-p17-preparation).
+MaterialPanels holds six families with Pristine/Light/Heavy/Total Models and
+four indexed fragment templates each. PanelAssetCatalog requires approved source
+and import-receipt identities, valid asset references, bounded geometry and inert
+cosmetics. Canonical family coordinates are mapped to legacy identity frames
+through PanelAssetBasis. Exact rectangle Parts own collision/query behavior;
+imported visual meshes cannot silently fill an earned opening. Panel-owned
+dressing is removed at Heavy/Total and restored with pristine state.
+
+The [import package](../imports/military-outpost/README.md) identifies actual
+mesh/texture packages, owner, derivative and deterministic regeneration. Twelve
+PNG color maps are repaired; scalar roughness/metalness/emission remain metadata
+and require explicit A6 review of the resulting finish. Managed source does not
+by itself establish native loading, traversal, thermal cover, fragment safety,
+replication/reset or performance. Never export damaged live state or fragments
+as pristine templates. See the
+[reconstruction guide](../../docs/development.md#reconstruct-the-approved-outpost)
+and [server API](../../src/server/README.md#imported-material-panels-and-outpost-reconstruction-p17).

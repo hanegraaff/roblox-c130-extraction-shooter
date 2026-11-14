@@ -54,7 +54,7 @@
     "tests_remaining": false,
     "cloud_save_status": "Saved",
     "cloud_saved_version": 5,
-    "published_clean_release": "Pending user Publish to Roblox; save_place does not publish"
+    "published_clean_release": "Verified Place revision 5 isPublished=true / Approved; universe remains PRIVATE (see release_publication and privacy_after_publication)."
   },
   "library_upload": {
     "source": "assets/exports/military-outpost/panel-library-v1.fbx",
@@ -66,7 +66,7 @@
     "revision": "1"
   },
   "completed_model_uploads": 2,
-  "actual_model_insertion_verified": false,
+  "actual_model_insertion_verified": true,
   "release_publication": {
     "endpoint": "GET /assets/v1/assets/72732833195348",
     "http_status": 200,
@@ -90,9 +90,13 @@
     "scripts": 0,
     "texture_maps_present": 0,
     "material_issue": "AllFBXMeshParts arriveddefaultgraywithnoTextureIDorSurfaceAppearance",
-    "raw_receipts": "build/p17-assembly-raw-receipt.json and build/p17-library-raw-receipt.json; capturedin51boundedMCPchunks"
+    "raw_receipts": "build/p17-assembly-raw-receipt.json and build/p17-library-raw-receipt.json; capturedin51boundedMCPchunks",
+    "managed_receipts": [
+      "assets/imports/military-outpost/assembly-fbx-receipt-v1.json",
+      "assets/imports/military-outpost/library-glb-receipt-v2.json"
+    ]
   },
-  "material_repair": "Equivalent libraryGLB generatedfromexactapprovedOBJ/MTL/PNG; localface/UV/materialauditpassed. Awaiting derivativefolderapproval/nativeimport.",
+  "material_repair": "Derivative folder approval accepted; library revision 2 native insertion verifies 76 textured meshes. Twelve source-bound color images are available. Managed compiled templates use SurfaceAppearance color maps; native scalar-PBR equivalence and integrated acceptance remain unverified.",
   "library_material_update": {
     "operation_id": "ab0417cf-7963-4cff-8dd7-7bc9637e8238",
     "asset_id": "126055228085421",
@@ -166,5 +170,15 @@
     }
   ],
   "color_texture_assets_total": 12,
-  "texture_availability": "All12typedImageLabelpreloadsSuccess; actualMeshPartmesh/texture controlSuccess; see texture-availability.json"
+  "texture_availability": "All12typedImageLabelpreloadsSuccess; actualMeshPartmesh/texture controlSuccess; see texture-availability.json",
+  "actual_integrated_runtime_acceptance_verified": false,
+  "material_repair_initial_checkpoint": "Equivalent libraryGLB generatedfromexactapprovedOBJ/MTL/PNG; localface/UV/materialauditpassed. Awaiting derivativefolderapproval/nativeimport.",
+  "staging_cleanup": {
+    "removed": true,
+    "remaining_import_staging": false,
+    "remaining_texture_probes": false,
+    "saved_draft_version": 8,
+    "published_new_integration": false,
+    "published_source_still": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59"
+  }
 }

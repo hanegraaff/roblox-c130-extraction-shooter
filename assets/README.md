@@ -1,6 +1,6 @@
 # Authored assets
 
-The current runtime assets are the original primitive [expanded terrain/building battlefield](world/Battlefield.model.json), [C-130 template](models/C130.model.json) and [cover panel template](models/CoverPanel.model.json) and [normalized panel residual](models/PanelResidual.model.json), recorded in [manifest.json](manifest.json). They require no cloud asset IDs or external scripts. `world/` maps to `Workspace.World`; `models/` maps to server-only `ServerStorage.Assets`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under `world/`, `models/`, `blender/` and `exports/`, excluding Markdown. The Blender source/export package below remains outside runtime mappings.
+The current runtime assets are the original primitive [expanded terrain/building battlefield](world/Battlefield.model.json), [C-130 template](models/C130.model.json) and [cover panel template](models/CoverPanel.model.json) and [normalized panel residual](models/PanelResidual.model.json), recorded in [manifest.json](manifest.json). Those primitive assets require no cloud asset IDs or external scripts. The P17 candidate also uses managed imported [Outpost/material templates](models/README.md#imported-outpost-and-material-templates), with actual mesh/texture references and receipts under [imports](imports/military-outpost/README.md). `world/` maps to `Workspace.World`; `models/` maps to server-only `ServerStorage.Assets`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under `world/`, `models/`, `blender/`, `exports/` and `imports/`, excluding Markdown. The Blender source/export package below remains outside runtime mappings.
 
 Prefer `.model.json` for simple primitives and text `.rbxmx` exports for Studio-authored models. Export only authored objects after stopping play mode. Keep scripts in `src/`; inspect imported models for unintended scripts. For meshes, textures, animations and audio, retain original sources when rights and size permit, and record uploaded asset references and ownership.
 
@@ -48,7 +48,7 @@ are visual references outside runtime mappings. All packaged meshes and baked
 textures are original local authoring from `scripts/p16_build.py`, seed 1601;
 the illustrations' pixels are not textures and their unspecified creator/license
 is not guessed. Twelve original PNGs are packed in the source and retained at
-versioned relative paths. No Roblox upload IDs or owners exist for this package.
+versioned relative paths. P17 upload IDs and actual ownership are recorded in the [import package](imports/military-outpost/README.md); the original approved art bytes remain unchanged.
 
 `assets/blender/military-outpost/` retains the compressed `.blend`, inventory,
 panel catalog, reusable-kit mapping and package hash lock.
@@ -59,7 +59,7 @@ package, with each file below 20 MiB and an initial combined art-package target
 of 45 MiB (D64); no LFS dependency is required. Backups, caches and temporary
 files are excluded. Revisit storage deliberately if measured assets grow.
 
-The checker enforces exact four-root manifest coverage, unique canonical paths,
+The checker enforces exact five-root manifest coverage, unique canonical paths,
 SHA-256 for Blender source/export records, binary file budgets and cache/backup
 rejection. After a deliberate re-export, refresh the package lock/tool evidence
 and run `python3 scripts/refresh_outpost_manifest.py`, then the full verifier.
@@ -70,19 +70,19 @@ fragment physics, multiplayer/reset and engine cost remain P17 checks.
 
 The current P07 revision also versions the starting battlefield shelter’s panelization in the world source/manifest. It replaces the old seven collider envelopes with 76 wall/roof panels while preserving the pristine union/entrances/anchors; the revised source passes its reconstruction and acceptance checks. Runtime Light/Heavy scars and fragments are original code-generated primitives and must not be exported as pristine world assets. Keep registry descriptors, manifest coverage and reconstruction checks aligned; the separate outside lobby is unchanged.
 
-## P17 material-boundary preparation
+## P17 imported Outpost reconstruction
 
-The P17 branch adds the `approved-outpost-materials` runtime recipe for generated
-`src/server/ApprovedOutpost.luau`. `python3 scripts/p17_assets.py` checks its
-approved Blender/catalog/package-lock identity, source-export hashes and manifest
-digest. This is construction metadata, with six families and approved appearance,
-proxy and fragment definitions; it does not contain an uploaded model or verify
-cloud access. The authored active world and its 187 primitive panels remain
-unchanged.
+The candidate uses managed `MilitaryOutpost` and `MaterialPanels` model definitions
+plus actual import receipts, texture references and a material-split GLB under
+`assets/imports/military-outpost`. `GameRuntime` replaces only the smaller Outpost
+before pristine map snapshotting; the runtime registry has 26 Outpost/188 total
+panels. The original source world remains available for review and rollback.
 
-Actual P17 imports must add their managed model exports and real asset IDs,
-upload owner, experience access and import receipts to the manifest. Keep the
-reviewed P16 source/export bytes intact. See the
-[import preparation guide](../docs/development.md#prepare-the-approved-outpost-import)
-for the current boundary and the private-workspace requirement when Studio
-cannot configure MCP asset permissions in a local place.
+The `approved-outpost-materials` runtime recipe binds generated
+`src/server/ApprovedOutpost.luau`. Definition, GLB and reconstruction gates pin
+approved inputs and verify managed output against real native import receipts.
+They do not establish current asset access, rendered appearance or gameplay
+acceptance. The [import guide](imports/military-outpost/README.md) records actual
+packages/owner, twelve repaired color maps and missing scalar PBR appearance.
+Native navigation, openings, fragment physics, thermal readability, multiplayer
+reset, performance and human A6 approval remain separate P17 gates.

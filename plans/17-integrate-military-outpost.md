@@ -321,3 +321,136 @@ acceptance. Full raw mesh receipts were captured in 51 bounded calls for
 source-bound normalization; material repair continues without changing the
 approved P16 files. The access blocker is cleared and implementation resumes;
 all actual replacement and A1–A6 gates remain open.
+
+### Integrated material candidate — 2026-11-14
+
+Source `f3787331f34ba5623506a239f9d6660044a957b7`, tree
+`bbe1dd533f7a9bf18d15bf61688a78ee0adbac1b`, activates the smaller-Outpost
+replacement through `OutpostReconstruction` before the map's pristine snapshot.
+Managed `MilitaryOutpost.model.json` and `MaterialPanels.model.json` reconstruct
+the actual imported meshes. The versioned construction retains all 25 legacy
+panel identity pivots, adds the approved internal partition and registers 26
+Outpost / 188 battlefield panels. Foundry, Warehouse and shelter still use the
+shared primitive path. This source has been pushed to the existing draft PR;
+it has not been published to Roblox.
+
+The unchanged approved P16 source/package lock is still the input. A managed,
+material-split GLB derivative updates library package `126055228085421` to
+revision 2, rather than creating a duplicate package. Its SHA-256 is
+`a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e`.
+The derivative decoder verifies equivalent triangle corners/winding, UVs and
+original embedded PNGs: 76 one-material primitives, 34,144 triangles, 42
+nonempty source objects and six explicit empty Total definitions. Native
+insertion confirms 76 textured MeshParts with no scripts. Actual assembly and
+library receipts, normalization, texture references and construction migration
+are managed under `assets/imports/military-outpost/`; all package references
+belong to user `2227341845`.
+
+The original native assembly remains the geometry source; its missing material
+references are repaired with seven imported color maps and five uploaded
+original PNGs. The [texture availability receipt](../docs/evidence/p17/texture-availability.json)
+records successful typed-instance preload of all 12 images plus a real textured
+MeshPart dependency. An earlier raw-string-only preload returned Failure; it
+was not treated as evidence of an asset permission failure. Native scalar
+roughness, metalness and emission maps are absent, so exact PBR equivalence is
+not claimed. That material compromise requires actual in-game A6 review.
+
+Imported panel variants use an explicit `PanelAssetBasis` to retain identity
+pivots while aligning canonical faces and authored fragments. Panel-owned
+dressing remains on Pristine/Light and is removed on Heavy/Total, then restored
+on reset. `ThermalCosmetics` hides explicitly non-cover art/fragments locally
+for the operator's thermal view; actual solid cover continues to occlude
+highlights. Ground views retain the furnishings. This presentation policy also
+requires operated review on the integrated scene.
+
+The [developer full gate](../docs/evidence/p17/developer-host-f378733.txt) passes
+`python3 scripts/verify.py`: **59 unit / 65 integration, 41 asset regressions,
+ten manifest regressions**, seven P16 audits and the P17 definition, derivative
+and reconstruction gates, plus format/lint/types/build/geometry/isolation.
+Expected-failure corruption probes are intentional gate assertions. The
+[build record](../docs/evidence/p17/candidate-builds-f378733.json) binds both
+generated files to this source. Each contains 2,804 authored Parts; release
+isolation finds 5,294 Instances / 49 runtime scripts and no test content. The
+separate local test artifact has 5,386 Instances. Its expected native baseline
+is 168 server / eight per client, not yet an observed passing result.
+
+Independent integrated-source review is underway. The user has been asked to
+open the fresh local `build/tests.rbxlx` in the existing Studio application;
+the private cloud import document must remain free of tests. The published
+private version 5 is still the earlier clean `03c9c06` source. All previous
+primitive preparation reports above remain historical and cannot establish
+this candidate's native acceptance.
+
+| Criterion | Current integrated evidence | Required evidence still open |
+| --- | --- | --- |
+| A1 | Actual owner-bound import receipts, equivalent derivative, managed reconstruction and passing host gates | Independent clean reconstruction and native source/template verification |
+| A2 | Approved furnished geometry, preserved anchors and preflighted supports/stairs | Real avatar routes, targeting/orbit and operated desktop/touch normal/thermal review |
+| A3 | Shared authority/progression, material templates, native proxy fixtures in the test mapping | Actual six-family state/fire/opening/attachment/thermal checks on this candidate |
+| A4 | Shared bounded fragment/reset lifecycle and imported fragment geometry | Two actual clients, fresh raw baselines, two live-work resets and physical fragment safety/contact/expiry |
+| A5 | Full host gate on the integrated source | Current P07/P05/P14/P08 native regressions and controlled baseline/candidate performance |
+| A6 | Original P16 approval remains valid for its source package | Explicit human approval of this identified integrated in-game result, including material/presentation compromises |
+
+No A1–A6 completion or P09 start is claimed by this checkpoint.
+
+
+### Independent integrated review and portability failure — 2026-11-14
+
+The [independent macOS full gate](../docs/evidence/p17/independent-host-f378733.txt)
+also passes unchanged `f378733`: 59 unit / 65 integration, 41 asset regressions,
+ten manifest regressions and all static/type/build/isolation gates. Native
+Studio testing has not begun on this integrated candidate.
+
+Fresh [GitHub Verify #341](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43623002662)
+on Ubuntu 26.04.1 / CPython 3.12.16 fails the deterministic reconstruction gate:
+`assets/models/MaterialPanels.model.json` differs from regeneration. The
+[bounded failure receipt](../docs/evidence/p17/ci-failure-f378733.json)
+preserves the actual failure; a local pass does not waive it.
+
+Independent source review also identifies two material defects for correction:
+missing/mismatched `LocalIdentityPivot` is not rejected before cloning, and the
+thermal cosmetic predicate excludes server-owned physical fragments because
+they deliberately retain static-scenery collision. These findings have been
+returned to the developer as one batch with the portability failure. A corrected
+candidate, explicit rejection/fragment regressions, source synchronization and
+native acceptance are still required. No historical passing fixture is relabeled
+as proof of these corrections.
+
+### Corrected integrated candidate — 2026-11-14
+
+Source `b1a67341100e8f72ab87e7fb44166ec8b807fa32`, tree
+`7c22149fb8d1be70383bdf25f5904f71862d2837`, corrects the three findings above.
+Python 3.12's compensated floating-point `sum` changed tiny normalized values
+relative to Python 3.10's ordered reduction. Explicit ordered reductions make
+the compiler independent of that built-in change. The real-receipt regression
+simulates compensated summation and requires byte-identical generated outputs;
+exact receipt/provenance validation has not been relaxed. Both model JSONs,
+the construction report and every approved P16 input remain byte-identical to
+`f378733`.
+
+Outpost preparation now rejects missing/mismatched local identity pivots and
+non-archivable content before cloning. Thermal hiding additionally accepts only
+explicitly marked, unanchored, non-querying, non-touching visual fragments in
+the owned fragment collision group. It watches replicated marker/group/physics
+changes and restores real-cover opacity. The new native fixtures cover those
+contracts; their actual Studio results remain unrun.
+
+The [developer final full gate](../docs/evidence/p17/developer-host-b1a6734.txt)
+passes on macOS / Python 3.10: **59 unit / 65 integration, 42 asset regressions,
+ten manifest regressions**, all seven P16 audits, all P17 source/derivative/
+reconstruction gates and format/lint/type/build/geometry/isolation checks.
+The [independent focused recheck](../docs/evidence/p17/independent-portability-fix-recheck.txt)
+passes all six reconstruction Python cases. The tester's
+[integrated review](../docs/evidence/p17/independent-integrated-review-f378733.md)
+records the original findings and corrected source inspection, with no further
+material source finding. This does not substitute for Linux CI or native
+positive/rejection/thermal checks.
+
+The [corrected build record](../docs/evidence/p17/candidate-builds-b1a6734.json)
+binds fresh release/test artifacts. Counts remain 2,804 authored Parts each,
+5,294 release / 5,386 test Instances and 49 runtime scripts. The expanded
+native mapping now expects **169 server / nine per actual client**, not yet
+observed. Documentation describes the actual integrated branch, reconstruction,
+texture/PBR limitation and narrow thermal policy across the player guide,
+development/testing/architecture and package guides. The chosen README image
+is preserved. All A1–A6 native/performance/human checks remain open, and the
+private published version is still the older clean primitive source.

@@ -4,8 +4,9 @@ Open [military-outpost.blend](military-outpost.blend) in **Blender 5.3.0**.
 This P16 candidate contains editable meshes, materials, packed textures,
 the assembled two-story outpost, furnished rooms, damage samples and reusable
 props. **The user explicitly approved revision `e8fb840` on 2026-11-13**
-([exact asset hash and response](../../../docs/evidence/p16/human-approval.json)). P17 has not replaced the
-playable smaller Outpost with these assets.
+([exact asset hash and response](../../../docs/evidence/p16/human-approval.json)). The P17 candidate now reconstructs the
+smaller Outpost from these approved assets; its native in-game acceptance and
+separate human approval remain open. See the [import reconstruction package](../../imports/military-outpost/README.md).
 
 The [acceptance record](../../../docs/evidence/p16/acceptance.md) identifies
 the tested source and feedback. The approval covers the saved exterior,

@@ -1,0 +1,12 @@
+test_all_legacy_identity_pivots_remain_exact_with_explicit_material_bases (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_complete_actual_import_models_reconstruct_without_claiming_native_acceptance (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_cosmetic_depth_policy_never_hides_panel_visuals_or_solid_cover (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_exact_generation_survives_builtin_float_summation_algorithm_changes (test_p17_reconstruction.P17OutpostReconstruction)
+Exercise the real receipts under pre/post-3.12 float-sum semantics. ... ok
+test_managed_unintended_script_or_geometry_edits_fail_reconstruction_gate (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_missing_or_wrong_source_texture_cannot_fall_back_to_gray (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 9.336s
+
+OK

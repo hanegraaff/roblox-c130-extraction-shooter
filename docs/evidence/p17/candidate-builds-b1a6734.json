@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "source_commit": "b1a67341100e8f72ab87e7fb44166ec8b807fa32",
+  "source_tree": "7c22149fb8d1be70383bdf25f5904f71862d2837",
+  "command": "python3 scripts/verify.py",
+  "date_local": "2026-11-14",
+  "environment": "macOS host; pinned repository tools; developer execution",
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 42,
+  "manifest_regressions": 10,
+  "p16_audits": 7,
+  "p17_definition_checks": 1,
+  "p17_glb_equivalence_checks": 1,
+  "p17_reconstruction_checks": 1,
+  "authored_parts_each_build": 2804,
+  "release_instances": 5294,
+  "test_instances": 5386,
+  "release_runtime_scripts": 49,
+  "native_baseline_expected": {
+    "server": 169,
+    "per_client": 9
+  },
+  "native_baseline_observed": null,
+  "builds": [
+    {
+      "path": "build/game.rbxlx",
+      "sha256": "48bb6ce5d4fc0894c8386a27a39b942907eaa08fdc5be0443eeb06a67740a9e6",
+      "bytes": 7369904,
+      "mapping": "default.project.json",
+      "cloud_eligible": true
+    },
+    {
+      "path": "build/tests.rbxlx",
+      "sha256": "745a186acf076c3d516e872ba73a7fb16c1d10871a76fec36b1c1a6312c11c68",
+      "bytes": 8230931,
+      "mapping": "test.project.json",
+      "cloud_eligible": false
+    }
+  ],
+  "publication_performed_for_this_candidate": false,
+  "published_private_source": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "limitations": [
+    "Host gate does not establish native A1-A6 acceptance.",
+    "Native imported color textures are available; scalar roughness/metalness/emission material properties require A6 review.",
+    "Separate local test document required; test content must never be cloud-published."
+  ],
+  "managed_templates_unchanged_from": "f3787331f34ba5623506a239f9d6660044a957b7"
+}

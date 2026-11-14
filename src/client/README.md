@@ -45,3 +45,21 @@ LauncherState’s atomic Snapshot supplies current round/identity/owner/position
 Current-round server-resolved rifle shots flash the shooter’s reticle. On desktop, confirmed rifle damage shows AIRCRAFT HIT −5 for 1.2 seconds; launcher LastImpact shows ROCKET HIT only for a server-confirmed direct hit by that shooter. On touch, either confirmed hit appends HIT to the compact readiness row instead of drawing floating hit text over the centered reticle. RoundPanel’s shared aircraft-health readout is the team’s damage guide; the HUD does not promise a fixed remaining rocket count after rifle damage. Presentation cannot authorize hits, ownership, collision or results.
 
 `GroundAimGui.spec.luau` checks real ray/reticle alignment, mode changes, cleanup and production-created HUD rectangle separation/containment at desktop and phone sizes. The layout case constructs both production RoundPanel and GroundCombatController under distinct ScreenGui origins/insets, supplies client-only presentation state representing confirmed rifle/rocket feedback and checks shared coordinates, hit text, centered aim, native inventory/thumbstick reserves and teardown. This catches cross-ScreenGui overlap that a shared cloned coordinate space misses. Actual native CoreGui/simulator measurements remain separate, since Studio captures omit the hotbar. These fixtures supplement native mouse/keyboard/touch and moving-aircraft review. [P06](../../plans/06-ground-combat.md) retains earlier source-specific aiming/tracer evidence; [P08](../../plans/08-rocket-launcher.md) records eleven native harness cases passing on test source `07e77ea` with three actual clients and unchanged `ef7826b` presentation. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass and the source is integrated on `main`; the [main integration record](../../docs/evidence/p08-p16-main-integration.md) identifies its matching tree. The excluded client LauncherHarness sends production pickup/drop/fire intent and observes actual replicated ownership/reload/health; it is not shipped input code.
+
+
+## Non-cover art in the operator thermal view
+
+`ThermalCosmetics.start(root)` returns a nonyielding `{ stop, resources }` owner.
+It watches BaseParts under the selected subtree. Ordinary cosmetic furnishings
+require server-authored `ThermalNonCover = true` and both CanCollide/CanQuery false
+to hide. Physical fragments have a narrow exception: they must also carry
+`PanelFragmentVisual = true`, use the owned `PanelFragments` collision group, be
+unanchored and nontouching, and remain non-querying. Their scenery collision can
+stay enabled. Ground players keep the furnished view and visible debris. Solid
+cover without that complete fragment contract remains visible to native Occluded
+highlights. The owner reacts to replication ordering, late tags and changes into
+real cover, retains original LocalTransparencyModifier values, and restores them
+on removal/stop. `resources()` counts tracked Parts; `stop()` disconnects all
+root/property listeners idempotently. The operator camera starts/stops this
+owner with its own role lifecycle. It writes no physics, hit or damage authority.
+Rendered thermal legibility and workload cost require separate native review.

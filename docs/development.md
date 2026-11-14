@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use updated `main` for the current game and approved Blender asset package, as shown in the [root setup guide](../README.md#set-up-locally). It includes the P07 map/combat/destruction source plus P08 single-launcher recovery, shared aircraft-health rocket damage and reload-preserving ownership. The approved P16 assets remain outside runtime mappings pending P17 integration. All eleven native P08 harness cases pass with three initial/peak actual clients in their recorded source-bound run; D59 excludes unsupported same-identity reconnect while runtime rejoin protections remain tested. The [main integration record](evidence/p08-p16-main-integration.md) identifies the merges, verified tree and fresh full host gate. Additional playable levels remain future work.
+Use `plan/17-integrate-military-outpost` for the detailed-Outpost candidate, as shown in the [root setup guide](../README.md#set-up-locally). It reconstructs the imported smaller Outpost before the map owner captures its reset snapshot and retains the existing map, camera, combat and launcher systems. Native integrated acceptance and human approval remain open. Accepted `main` retains the primitive Outpost; earlier P07/P08 evidence remains source-specific. Additional levels are future work.
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -28,7 +28,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs the portable P16 asset audit and asset/manifest rejection tests, formatting, lint, strict type analysis, 55 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs the portable P16 asset audit, P17 definition/GLB/reconstruction gates, 42 asset and ten manifest rejection cases, formatting, lint, strict type analysis, 59 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -42,7 +42,7 @@ For documentation-only changes:
 python3 scripts/check_repository.py
 ```
 
-This checks local file links, JSON, mapped paths, asset-manifest references and coverage of every authored file under `assets/world`, `assets/models`, `assets/blender` and `assets/exports`. Blender source/export entries require matching SHA-256 content hashes and stay within the documented ordinary-Git file budget. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
+This checks local file links, JSON, mapped paths, asset-manifest references and coverage of every authored file under `assets/world`, `assets/models`, `assets/blender`, `assets/exports` and `assets/imports`. Blender source/export entries require matching SHA-256 content hashes and stay within the documented ordinary-Git file budget. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
 
 ## Connect Roblox Studio MCP
 
@@ -71,7 +71,7 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 Stop Play in the intended local test document. Open **Plugins → Rojo**, connect to `localhost:34872`, and verify the project is **PlayersVsC130Tests** before applying its mapping. For a development document instead, serve `default.project.json` on a different explicit port, such as `34873`. Keep test and development connections separate; never connect the test mapping to the cloud/release place. If the Rojo panel is hidden in Edit mode, reopen it with the Rojo toolbar button; a hidden panel does not mean the plugin is missing. On first plugin installation, save work and restart Studio only if the toolbar button/plugin is absent in Edit mode. Load the plugin in Edit before connecting.
 
-If a Rojo server stops or restarts, reconnect the plugin in the existing Edit document and verify **PlayersVsC130Tests** on port **34872** before testing revised source. A running CLI server does not by itself reconnect a disconnected plugin.
+If a Rojo server stops or restarts, reconnect the plugin in the existing Edit document and verify **PlayersVsC130Tests** on port **34872** before testing revised source. A running CLI server does not by itself reconnect a disconnected plugin or prove that source synced. If Connect fails, preserve the error and inspect delivered module/template identities; no successful connection fix is inferred from an HTTP response on the Rojo port.
 
 If Connect reports **Http requests can only be executed by game server**, inspect the Studio mode first. A Play session with the Client view focused can produce this error. Stop Play, confirm the Edit DataModel is available, then reconnect; do not open another Studio instance to work around it.
 
@@ -109,7 +109,7 @@ Keep both painted routes and the launcher marker clear. The Studio suite samples
 
 `TerrainRecipe` reconstructs eight fixed Grass/Rock caps from the invisible sphere descriptors under `Battlefield.TerrainRecipe`. The manifest records recipe version 1, seed 0 (no random sampling), four-stud voxels and the owned box from `(-368,-112,-368)` to `(368,32,368)`. Only this box is cleared and rewritten; unrelated terrain outside it is preserved. Terrain appears when `MapService.start()` runs, not as serialized Terrain voxels in the Edit document. Fill operations do not yield, but collision/raycast updates can settle afterward; engine tests wait for bounded readiness rather than assuming immediate physics.
 
-`BuildingLayout` validates the pure footprint/story/panel contract. Server-only `BuildingGeometry` validates actual loaded floors, landings, sixteen connected treads, entry sweeps, five navigation markers and panel pivots before decorating public identities. Foundry and Warehouse are 64×48 studs (3072 square studs each); Outpost is 32×48 (1536 square studs). Each has two floors, a usable upper floor at Y=10, exterior panels on both stories and panelized roofs. The larger buildings have 32-stud room bays divided by registered interior panels. Static floors/stairs/frames remain separate from the 111 Intact panels. These dimensions are construction defaults; [decisions](decisions.md) distinguishes them from selected game rules.
+`BuildingLayout` validates the pure footprint/story/panel contract. Server-only `BuildingGeometry` validates actual loaded floors, landings, sixteen connected treads, entry sweeps, five navigation markers and panel pivots before decorating public identities. Foundry and Warehouse are 64×48 studs (3072 square studs each); Outpost is 32×48 (1536 square studs). Each has two floors, a usable upper floor at Y=10, exterior panels on both stories and panelized roofs. The larger buildings have 32-stud room bays divided by registered interior panels. The detailed-Outpost candidate has 112 formal-building panels (26 in Outpost) plus 76 starting-shelter panels, for 188 total; the original base world has 111+76. Static floors/stairs/frames remain separate. These dimensions are construction defaults; [decisions](decisions.md) distinguishes them from selected game rules.
 
 Use the [world contract](../assets/world/README.md) when changing terrain, buildings or anchors. Add every authored source to the manifest, update the pure and artifact contracts, and run the named P13 engine/harness checks. A source-built artifact load is a separate reconstruction check from Rojo live sync. `python3 scripts/build_studio_world_probe.py` emits a native world binary, source expectations, hashes and a complete Edit-mode MCP probe under `build/studio-world-probe.*`. The [procedure](testing.md#check-a-fresh-native-world-load) exercises production MapService against that fresh world and restores its temporary geometry/terrain; it requires no new Studio process. Runtime Play/replication checks remain separate. The native-world check does not establish panning acceptance or implement panel damage.
 
@@ -122,9 +122,8 @@ The [export guide](../assets/exports/military-outpost/README.md) describes the
 FBX/OBJ/PNG/material map and panel/reusable-kit identities. Blender 5.3.0 is the
 recorded authoring version; Python's standard library is sufficient for the
 portable audit and CI. The user approved P16 revision `e8fb840` on 2026-11-13;
-the game still uses the primitive Outpost. P17's preparation branch adds the
-shared imported-panel boundary described below; actual Outpost import and
-replacement remain future work.
+the candidate imports that source into the detailed smaller Outpost. Its actual
+Studio behavior and in-game visual approval are separate P17 gates.
 
 A deliberate source rebuild runs `scripts/p16_build.py` in a factory-startup
 Blender process. Reopen the saved `.blend` in a new background process through
@@ -158,58 +157,69 @@ new saved-source hash. A green portable audit cannot grant approval or replace
 P17's actual import, traversal, collision/thermal, fragment, replication/reset
 and engine-performance checks.
 
-## Prepare the approved Outpost import
+## Reconstruct the approved Outpost
 
-The `plan/17-integrate-military-outpost` branch prepares a server-only material
-boundary while retaining the primitive Outpost and all 187 active panels.
-It contains no uploaded asset IDs, imported templates or assembly replacement.
-Use the ordinary local setup above to inspect or test this source.
+The candidate reconstructs only the smaller Outpost at `(144, 0, 164)` from
+managed `MilitaryOutpost.model.json` and `MaterialPanels.model.json` templates.
+It retains all 25 legacy panel pivots and adds one interior partition. There are
+26 Outpost panels and 188 active panels overall; the base world file retains
+its primitive source for review and replacement rollback. `GameRuntime` installs
+the detailed building before `MapService` takes its pristine snapshot.
 
-Check that its generated definitions still match the approved P16 inputs:
+A clean checkout needs no new upload to rebuild the committed templates. It
+uses actual mesh IDs and twelve repaired PNG color-map IDs owned by Roblox user
+`2227341845`. Check all reconstruction inputs without changing them:
 
 ```sh
 python3 scripts/p17_assets.py
+python3 scripts/p17_library_glb.py
+python3 scripts/p17_compile_outpost.py
 python3 scripts/verify.py
 ```
 
-`scripts/p17_assets.py` checks the approved Blender/catalog/package-lock identity, export
-hashes and the generated `src/server/ApprovedOutpost.luau` against its manifest
-runtime recipe. `--write` regenerates that module only; it does not import or
-upload anything. After an intentional regeneration, format the module and
-refresh that recipe's SHA-256 before verification. Do not substitute a new art
-revision for the approved package without updating its review/approval evidence.
+The [import package guide](../assets/imports/military-outpost/README.md) identifies
+the native receipts, actual packages/owner, GLB derivative, texture repair and
+copyable regeneration commands. The original approved P16 Blender/FBX/OBJ/PNG
+bytes and package lock remain unchanged. The material-split derivative preserves
+source triangles, UVs and material boundaries; compilation fits observed import
+scale/rotation/translation rather than assuming importer units.
 
-The future managed template root is `ServerStorage.Assets.MaterialPanels`.
-Its six family folders each contain Pristine, Light, Heavy and Total Models
-plus four fragment MeshParts. Templates carry source-file hashes and the root
-carries the approved revision, Blender hash and import-receipt hash. Meshes use
-canonical Roblox face X/Y, thickness Z, mapped from source `(X, Z, −Y)`.
-Cosmetic meshes are anchored and cannot collide, touch or enter queries;
-approved rectangle proxies alone define solid cover. See the
-[server API](../src/server/README.md#imported-material-panel-boundary-p17-preparation)
-for validation and cleanup contracts.
+`OutpostReconstruction.prepare(assets)` validates the managed templates before
+world writes. `install(world, assets)` replaces exactly the intended smaller
+building and returns commit/rollback ownership. Missing assets, malformed support
+geometry, unintended scripts, bad references or invalid panels reject startup.
+The shared catalog and rectangle proxies own material appearance/solidity;
+`PanelAssetBasis` rotates canonical material coordinates while keeping legacy
+identity pivots. Supporting floors, stairs and frames remain stable. Panel-owned
+dressing survives Pristine/Light and is removed at Heavy/Total, restoring on reset.
+See the [server API](../src/server/README.md#imported-material-panels-and-outpost-reconstruction-p17).
 
-Actual import needs authenticated asset upload access and an approved upload
-directory. If Studio says **Save to Roblox to manage MCP settings**, the local
-document cannot grant those permissions yet. Prepare an explicitly authorized
-private import workspace from the **release mapping** before configuring asset
-permissions there. Do not cloud-save `build/tests.rbxlx` or the test mapping.
-The experience/place, owner, audience and permanent asset uploads need the
-user's authorization; local test or GitHub delivery does not grant it.
+The current reconstruction repairs base-color textures but does not recreate
+Blender scalar roughness, metalness or emission as SurfaceAppearance maps.
+Those source values remain recorded as metadata. This material-finish compromise
+needs explicit A6 in-game review; do not describe it as exact PBR reproduction.
+The operator's thermal owner locally hides classified non-cover props/fragments;
+real collidable/queryable cover retains native occlusion. Ground views keep the
+furnishings. Normal/thermal readability still needs actual rendered acceptance.
 
-After import, retain the observed asset IDs, owner/access, source hashes,
-normalized transforms, material references and a managed model export in Git.
-Reference validation alone does not prove content loaded. Verify the actual
-approved assembly, both furnished floors, material states, collision/thermal
-openings, fragments, two-client resets and performance before claiming the
-replacement. [P17](../plans/17-integrate-military-outpost.md) retains those
-acceptance criteria and the separate human in-game approval gate.
+The authorized `C130P17Import` workspace is private (universe `10776653720`,
+place `72732833195348`). Its published version 5 contains the older clean
+`03c9c06` primitive release build, not this integrated candidate. Preserve that
+separation when collecting source-specific evidence. Never cloud-save or publish
+`build/tests.rbxlx`, TestEZ or development overrides. Publication of a new candidate
+remains a separate named destination/audience action.
+
+If future upload work needs permissions and Studio says **Save to Roblox to
+manage MCP settings**, use an authorized private release-mapped workspace;
+local testing does not require cloud-saving the test place. The existing asset
+uploads and workspace authorization are recorded in the plan evidence and
+should not prompt repeated permission requests for the same scope.
 
 ## Author progressive panels and fragments
 
-Keep each primitive destructible wall, roof or interior panel as one anchored authored BasePart under a validated panel registry. The prepared imported path instead requires a validated pristine material Model, with approved family, pivot, IntactSize and exact proxy geometry. Formal buildings use `_Panels`; additional level-owned `PanelRegistries` StringValues name a direct Battlefield Folder, with Name as the building identity. The active map uses SpawnShelter → SpawnShelterPanels for its 76 shelter panels alongside 111 formal-building panels. BuildingGeometry validates/decorates its globally unique ID, story/building metadata and Intact pivot before DestructionRuntime captures it. Do not author damaged live state or debris into the source map. Static floors, stairs and support frames belong in `_Static` and never enter the panel ledger. Generic `Breakable` cover is currently unaffected.
+Keep each primitive destructible wall, roof or interior panel as one anchored authored BasePart under a validated panel registry. The imported path instead requires a validated pristine material Model, with approved family, pivot, IntactSize and exact proxy geometry. Formal buildings use `_Panels`; additional level-owned `PanelRegistries` StringValues name a direct Battlefield Folder, with Name as the building identity. The active map uses SpawnShelter → SpawnShelterPanels for its 76 shelter panels alongside 112 formal-building panels after Outpost reconstruction. BuildingGeometry validates/decorates its globally unique ID, story/building metadata and Intact pivot before DestructionRuntime captures it. Do not author damaged live state or debris into the source map. Static floors, stairs and support frames belong in `_Static` and never enter the panel ledger. Generic `Breakable` cover is currently unaffected.
 
-The server-only [PanelResidual template](../assets/models/PanelResidual.model.json) is original primitive geometry: two normalized X strips, each width 0.25 and centered at −0.375/+0.375. PanelGeometry scales them along the longest face axis, preserving the authored thickness/pivot and a central 50% opening. Keep the manifest, source model, residual shape checks and all-panel Studio geometry assertions consistent. D50–D54 revise acceptance, persistent credit, appearance and shelter coverage while retaining the continuity/residual/fragment defaults; do not encode map-specific damage thresholds in the world package.
+The primitive path uses the server-only [PanelResidual template](../assets/models/PanelResidual.model.json) is original primitive geometry: two normalized X strips, each width 0.25 and centered at −0.375/+0.375. PanelGeometry scales them along the longest face axis, preserving the authored thickness/pivot and a central 50% opening. Keep the manifest, source model, residual shape checks and all-panel Studio geometry assertions consistent. D50–D54 revise acceptance, persistent credit, appearance and shelter coverage while retaining the continuity/residual/fragment defaults; do not encode map-specific damage thresholds in the world package.
 
 The timing anchor and earned damage have separate lifecycles. Pauses, misses, target/weapon changes, reload and eligibility loss break timing only; earned heavy/30mm credit stays on each panel until reset. Every resumed first impact earns zero elapsed time. Keep structural state separate from DamageAppearance: Light has visible persistent cosmetic scars, Heavy stays distinctly dark/fractured at zero current-stage progress, and only real residual geometry creates holes. Marks cannot enter collision/query/structural identity. Candidate `8053c8f` passes the full 55-unit/55-integration host gate; the unchanged production core has the recorded `4db4595` ordinary solo baseline of 142 server/six client cases. Warehouse and starting-shelter native-input scenes verify stopped/resumed credit and all four appearance tiers in normal/thermal views at a held canonical orbit pose. Current P05 passes eight two-client cases; the seven-case two-client/reset run now passes, and P14 passes six cases with two initial clients followed by operator departure to one remaining client. The user-confirmed live-clock fragment demonstration closes the visual falling check with its controlled Ground watch camera disclosed; the prior 54/53 host and 137/6 Studio totals stay historical.
 

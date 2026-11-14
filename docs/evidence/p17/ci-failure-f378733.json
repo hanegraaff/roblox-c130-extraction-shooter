@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_commit": "f3787331f34ba5623506a239f9d6660044a957b7",
+  "merge_commit": "7d95892df22344a42318437bb6b31f6d19ca57ad",
+  "run": 341,
+  "run_id": 43623002662,
+  "job_id": 132532606073,
+  "url": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43623002662",
+  "environment": "GitHub-hosted Ubuntu 26.04.1 x64; CPython 3.12.16",
+  "command": "python3 scripts/verify.py",
+  "passed": false,
+  "stage": "scripts/p17_compile_outpost.py",
+  "failure": "managed Outpost reconstruction differs from actual approved import receipts: assets/models/MaterialPanels.model.json",
+  "prior_passes": [
+    "Repository checks 95 Markdown / 247 JSON",
+    "10 manifest tests",
+    "7 P16 audits",
+    "P17AssetDefinition",
+    "P17MaterialDerivative"
+  ],
+  "log_excerpt": [
+    "2026-11-14T17:47:37.6055442Z Repository checks passed: 95 Markdown files, 247 JSON files.",
+    "2026-11-14T17:47:37.8375207Z Ran 10 tests in 0.063s",
+    "2026-11-14T17:47:40.7878805Z {\"appearances\": 24, \"cloud_import_verified\": false, \"discovered\": 1, \"failed\": 0, \"families\": 6, \"fragment_sources\": 24, \"passed\": 1, \"suite\": \"P17AssetDefinition\"}",
+    "2026-11-14T17:47:42.4365414Z {\"discovered\": 1, \"embedded_textures\": 12, \"empty_total_sources\": 6, \"failed\": 0, \"glb_bytes\": 6520872, \"glb_sha256\": \"a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e\", \"passed\": 1, \"positions_uvs_materials_textures_equivalent\": true, \"primitives\": 76, \"roblox_import_verified\": false, \"skipped\": 0, \"suite\": \"P17MaterialDerivative\", \"triangles\": 34144, \"used_materials\": [\"concrete\", \"dark\", \"ivory\", \"orange\", \"roof\", \"steel\", \"teal\"]}",
+    "2026-11-14T17:47:42.4465696Z + /opt/hostedtoolcache/Python/3.12.16/x64/bin/python3 scripts/p17_compile_outpost.py",
+    "2026-11-14T17:47:45.5770635Z P17 reconstruction compilation failed: managed Outpost reconstruction differs from actual approved import receipts: assets/models/MaterialPanels.model.json",
+    "2026-11-14T17:47:45.5883889Z Verification failed: Command '['/opt/hostedtoolcache/Python/3.12.16/x64/bin/python3', 'scripts/p17_compile_outpost.py']' returned non-zero exit status 1.",
+    "2026-11-14T17:47:45.5968786Z ##[error]Process completed with exit code 1."
+  ],
+  "scope": "Historical remote failure preserved; local macOS gate success does not waive cross-platform reconstruction."
+}
