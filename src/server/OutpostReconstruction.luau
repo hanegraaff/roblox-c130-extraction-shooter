@@ -46,6 +46,35 @@ function OutpostReconstruction.prepare(assets: Instance): (Model?, string?)
     then
         return nil, "invalid approved Outpost registry/structure/navigation"
     end
+    local function support(name: string, position: Vector3, size: Vector3): boolean
+        local part = statics:FindFirstChild(name)
+        return part ~= nil
+            and part:IsA("MeshPart")
+            and part.CanCollide
+            and part.CanQuery
+            and (part.Position - position).Magnitude < 0.001
+            and (part.Size - size).Magnitude < 0.001
+            and part.CFrame.UpVector:Dot(Vector3.yAxis) > 0.9999
+    end
+    if
+        not support("Outpost_GroundFloor", Vector3.new(0, -0.375, 0), Vector3.new(32, 1, 48))
+        or not support("Outpost_UpperMain", Vector3.new(5.5, 9.625, 0), Vector3.new(19, 1, 46))
+        or not support("Outpost_UpperNorthLanding", Vector3.new(-9.5, 9.625, -20.5), Vector3.new(11, 1, 5))
+    then
+        return nil, "approved Outpost floor contract changed"
+    end
+    for index = 1, 16 do
+        local height = index * 0.625
+        if
+            not support(
+                string.format("Outpost_Step%02d", index),
+                Vector3.new(-10, 0.125 + height / 2, 15 - (index - 1) * 2),
+                Vector3.new(8, height, 2)
+            )
+        then
+            return nil, "approved Outpost internal stair contract changed"
+        end
+    end
     local ids: { [string]: boolean } = {}
     local meshes = 0
     for _, item in source:GetDescendants() do

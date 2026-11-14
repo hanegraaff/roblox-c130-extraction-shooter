@@ -37,6 +37,9 @@ function ThermalCosmetics.start(root: Instance): Controller
         local record: Owned = { original = part.LocalTransparencyModifier, hidden = false, connections = {} }
         owned[part] = record
         local function update()
+            if not running or owned[part] ~= record then
+                return
+            end
             local hide = part:GetAttribute("ThermalNonCover") == true
                 and not part.CanCollide
                 and not part.CanQuery

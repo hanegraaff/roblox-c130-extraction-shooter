@@ -22,6 +22,29 @@ end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test(
+        "P17OutpostReconstruction invalid imported support rejects before any active world mutation",
+        function()
+            local assets = Assets:Clone()
+            local source = assets:FindFirstChild("MilitaryOutpost")
+            assert(source, "managed template missing")
+            local supportFolder = source:FindFirstChild("Outpost_Static")
+            local floor = if supportFolder then supportFolder:FindFirstChild("Outpost_GroundFloor") else nil
+            assert(floor and floor:IsA("MeshPart"), "managed floor missing")
+            floor.Size = Vector3.new(16, 1, 48)
+            local before = #workspace.World.Battlefield:GetDescendants()
+            local model, reason = Reconstruction.prepare(assets)
+            assert(
+                model == nil and reason == "approved Outpost floor contract changed",
+                "invalid import floor accepted"
+            )
+            assert(
+                #workspace.World.Battlefield:GetDescendants() == before,
+                "rejected import mutated active world"
+            )
+            assets:Destroy()
+        end
+    )
+    test(
         "P17OutpostReconstruction actual repaired source retains legacy identities exact site and clean rollback",
         function()
             local catalog, reason = Catalog.load(Assets.MaterialPanels)

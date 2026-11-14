@@ -30,19 +30,23 @@ return function()
                     "solid cover changed"
                 )
                 cosmetic.Parent = nil
+                task.wait()
                 assert(
                     math.abs(cosmetic.LocalTransparencyModifier - 0.35) < 1e-6,
                     "map removal did not restore prior local value"
                 )
                 cosmetic.Parent = root
+                task.wait()
                 assert(cosmetic.LocalTransparencyModifier == 1, "fresh descendant not observed")
                 cosmetic.CanQuery = true
+                task.wait()
                 assert(
                     math.abs(cosmetic.LocalTransparencyModifier - 0.35) < 1e-6,
                     "conversion into real cover remained hidden"
                 )
                 cosmetic.CanQuery = false
                 cosmetic:SetAttribute("ThermalNonCover", false)
+                task.wait()
                 assert(
                     math.abs(cosmetic.LocalTransparencyModifier - 0.35) < 1e-6,
                     "attribute cleanup lost prior value"
