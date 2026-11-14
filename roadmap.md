@@ -15,7 +15,7 @@ The integrated source on `main` includes the development shell, verification too
 | M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
-| M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Ready | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
+| M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | In progress | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
 | M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Planned | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
@@ -29,8 +29,9 @@ P17 are inserted between P07 and P08 without renumbering existing plans. P16
 must receive the user's Blender approval before P17 starts. P08's already
 completed work and historical evidence remain valid; it is not undone or
 repeated. P09 waits for P17 and the completed P08 source. This priority takes
-precedence over lowest-numbered selection. This update schedules the work;
-neither asset plan has started implementation.
+precedence over lowest-numbered selection. P16's editable candidate is delivered
+on `plan/16-blender-military-outpost-assets` through draft PR #35; its required
+human visual approval remains pending. P17 has not started.
 
 2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
 asset set closely matching all three references in
@@ -42,7 +43,22 @@ that approved revision and separately verifies in-game demolition, replication,
 reset and presentation. These plans do not depend on P12 publication or P15
 level selection. The user's subsequent sequencing revision places them next,
 before continuing P09 and the remaining MVP work, as recorded in D63 above.
-Neither new plan has started, and no Blender assets or replacement are claimed.
+At that planning checkpoint neither asset plan had started. The current P16
+candidate and evidence are recorded below; P17 has not replaced the building.
+
+2026-11-13 P16 review delivery: [draft PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
+contains editable source, furnished exterior/workshop/command-room assets,
+material-specific variants, proxies/fragments and 29 saved-scene renders.
+Final authored source `e8fb840` passes 55 unit / 65 integration, seven asset
+audits, 22 asset regression cases, 10 manifest cases and all existing host
+gates. The independent reviewer resolved initial navigation/proof gaps and
+the intermediate missing garage Light appearance; historical failures remain
+preserved. Current source has measured routes and distinct two-sided scars
+for every family. The [P16 plan](plans/16-blender-military-outpost-assets.md)
+and [acceptance ledger](docs/evidence/p16/acceptance.md) identify exact hashes,
+commands and limits. **P16 remains In progress pending the user's explicit A4
+approval of the actual Blender revision**; P17 remains Planned, P09 waits,
+and no new plan, merge or Roblox publication has begun.
 
 2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
 host gate, 104 server and 3 per-client Studio smoke, and the eight-case

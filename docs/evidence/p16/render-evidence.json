@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "suite": "P16SavedSceneRenders",
+  "passed": true,
+  "blender_version": "5.3.0",
+  "source_path": "assets/blender/military-outpost/military-outpost.blend",
+  "source_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c",
+  "review_script_path": "scripts/p16_blender_review.py",
+  "review_script_sha256": "cbd3144099c1ddfb2d784a86565e04243451cf97d2b1e153dea0457aa0666384",
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "--background",
+    "assets/blender/military-outpost/military-outpost.blend",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "scripts/p16_blender_review.py",
+    "--",
+    "--render"
+  ],
+  "renderer": "Cycles CPU,24samples,denoising; native PNG BW grayscale, no GPU compositor",
+  "image_count": 29,
+  "files": [
+    {
+      "path": "docs/evidence/p16/cutaway.png",
+      "sha256": "bd204aae1df76164e0a6fd5c75f6989828d26abf8148a337b9cbbc2f3a7672b6",
+      "bytes": 1738578,
+      "width": 1280,
+      "height": 900,
+      "bit_depth": 8,
+      "color_mode": "RGBA"
+    },
+    {
+      "path": "docs/evidence/p16/damage-concrete_partition-back-grayscale.png",
+      "sha256": "f1a1b4fbdc8feaf264b9160bfae344dd76964f4144d7f50d4d87990f73db8914",
+      "bytes": 253354,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-concrete_partition-back-normal.png",
+      "sha256": "b278bb11d1c6d1ac162b31357d8659ecfb3811113ec9aaeac047cae365a3f427",
+      "bytes": 657479,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-concrete_partition-front-grayscale.png",
+      "sha256": "73d47d657be7e2241d9a2b67ceed1f9d6197029385a228397807739d66ad704a",
+      "bytes": 253256,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-concrete_partition-front-normal.png",
+      "sha256": "f17c0caf3cfb63b28173b3a7dfa8ceca03655bb25aa142170c4353851399ad84",
+      "bytes": 657867,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_door-back-grayscale.png",
+      "sha256": "163f3888dbbf9868fbf5b6fd5d030d5cadfe122938776ae98d0d029089d2abce",
+      "bytes": 249319,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_door-back-normal.png",
+      "sha256": "ca5e0e2943a349b33490b85f3deb7d3ff921428d640b125362724a28e652168a",
+      "bytes": 665419,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_door-front-grayscale.png",
+      "sha256": "b5de620c9909f66bd15c4eca8ddaaf5b3f1fc4e84854b00bffcf63677eecadf6",
+      "bytes": 248479,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_door-front-normal.png",
+      "sha256": "cb1e650531461e4633206871ee1ceb76c6b3703addf8910d1e9a5a2c246122a9",
+      "bytes": 663547,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_garage-back-grayscale.png",
+      "sha256": "2c37ec1b4b81f5b81911fb563ada2cbd2a9a09ca6b5da44a3af42a55a0e89a45",
+      "bytes": 243175,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_garage-back-normal.png",
+      "sha256": "bac8911fcbeaf1c9c444c21de073170fa8cbf780564ac63a52cc7ed549923200",
+      "bytes": 642430,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_garage-front-grayscale.png",
+      "sha256": "4d4b9e443ec8ebe8798201751a6fb8b4374071389ce9fa043ceb46b718818469",
+      "bytes": 242362,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_garage-front-normal.png",
+      "sha256": "7c7778c3490eb22d4cea51ea668b34dfae59293e0ffc232e6ec621f8c9e524a2",
+      "bytes": 640974,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_wall-back-grayscale.png",
+      "sha256": "a8fe6944e443135c5e40a91a86a2e4739211f680cf7dba36aa2c178f1d4c9661",
+      "bytes": 255890,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_wall-back-normal.png",
+      "sha256": "3ea3398f23119a988d15644bd871f75153f3bbd05ba613640bf0fe4c2510c58c",
+      "bytes": 686830,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_wall-front-grayscale.png",
+      "sha256": "5d501cff7f42e6d37686510ee89039ad670febcefe00ddba93bd8261a8c9b334",
+      "bytes": 254001,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_wall-front-normal.png",
+      "sha256": "27dfef272932e68b3abe4603e95a67541503785f43b539d6dec2e030fb481810",
+      "bytes": 682826,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_window-back-grayscale.png",
+      "sha256": "f84838e803329eeadf95386ebfc0326ce143f9bbdbd67f8f4f5c510cb0a188f6",
+      "bytes": 252938,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_window-back-normal.png",
+      "sha256": "bfcc062527b5de6d6411a79c92b8ec6123b79530113e3da424fa416da15b4c4f",
+      "bytes": 674219,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_window-front-grayscale.png",
+      "sha256": "276bd5d4fbf07f54d7ee763cff61ef85586baa4b6ce820979bf82391ad81b4c2",
+      "bytes": 251362,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-corrugated_window-front-normal.png",
+      "sha256": "8c0c01a7cd5d126153b436985ddf0ccd59714868f9cd5b3617cc4fc262d7eec7",
+      "bytes": 671351,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-layered_roof-back-grayscale.png",
+      "sha256": "91e7baff6eaaf0f8ad2a533b07cc4b0c799bbca08a3a178a72dd4532f6cebeeb",
+      "bytes": 260220,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-layered_roof-back-normal.png",
+      "sha256": "ea6b144e6062192a1355191d36a4a16724c847bf5030732638fc45f5a74b010f",
+      "bytes": 675878,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/damage-layered_roof-front-grayscale.png",
+      "sha256": "54c1d2af0a8d862472ad9db12dea8b793fd1fb3b678b7522fdb8eec3eef54d15",
+      "bytes": 272245,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "BW"
+    },
+    {
+      "path": "docs/evidence/p16/damage-layered_roof-front-normal.png",
+      "sha256": "f285c560f5daddb2326125fa5fed5c4d8fdb16a87fd44a7585db5e14d2564eb4",
+      "bytes": 709656,
+      "width": 1600,
+      "height": 440,
+      "bit_depth": 8,
+      "color_mode": "RGB"
+    },
+    {
+      "path": "docs/evidence/p16/exterior.png",
+      "sha256": "0a8cfc1c521b4996dcd65abd757536b5097580b1fa082bee7d7d1f7e6804f99b",
+      "bytes": 1581290,
+      "width": 1280,
+      "height": 900,
+      "bit_depth": 8,
+      "color_mode": "RGBA"
+    },
+    {
+      "path": "docs/evidence/p16/floor-1.png",
+      "sha256": "5d7cf177e3ffcc171da9b3150d42116597e384a15ee3541d7e708fe4e62ebf69",
+      "bytes": 1631269,
+      "width": 1280,
+      "height": 900,
+      "bit_depth": 8,
+      "color_mode": "RGBA"
+    },
+    {
+      "path": "docs/evidence/p16/floor-2.png",
+      "sha256": "c5b8a1c21ac42e125ef4f3aa10bd76bb5403f1595193e9db1e490d3264f030fd",
+      "bytes": 1622219,
+      "width": 1280,
+      "height": 900,
+      "bit_depth": 8,
+      "color_mode": "RGBA"
+    },
+    {
+      "path": "docs/evidence/p16/isolated-kit.png",
+      "sha256": "93aa184c544c64f29d7f163cbfe18e4b282440beabc1c408fb1dd7121e0cd5dd",
+      "bytes": 1365663,
+      "width": 1280,
+      "height": 900,
+      "bit_depth": 8,
+      "color_mode": "RGBA"
+    }
+  ]
+}

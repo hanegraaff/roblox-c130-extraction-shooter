@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `docs/studio-supported-acceptance` for the launcher candidate, as shown in the [root setup guide](../README.md#set-up-locally). It includes the integrated P07 map/combat/destruction source plus one recoverable launcher, shared aircraft-health rocket damage and reload-preserving ownership. All eleven native P08 harness cases pass with three initial/peak actual clients. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. The [plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) identify tested source and the acceptance revision. Integrated `main` remains the P07 baseline until this task is merged. Additional playable levels remain future work.
+Use `plan/16-blender-military-outpost-assets` for the current source and separate Blender art-review candidate, as shown in the [root setup guide](../README.md#set-up-locally). Its playable source includes the launcher candidate from `docs/studio-supported-acceptance`; P16 assets remain outside runtime mappings pending human approval and P17 integration. It includes the integrated P07 map/combat/destruction source plus one recoverable launcher, shared aircraft-health rocket damage and reload-preserving ownership. All eleven native P08 harness cases pass with three initial/peak actual clients. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. The [plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) identify tested source and the acceptance revision. Integrated `main` remains the P07 baseline until this task is merged. Additional playable levels remain future work.
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -28,7 +28,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs formatting, lint, strict type analysis, 55 deterministic unit and 55 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs the portable P16 asset audit and asset/manifest rejection tests, formatting, lint, strict type analysis, 55 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -42,7 +42,7 @@ For documentation-only changes:
 python3 scripts/check_repository.py
 ```
 
-This checks local file links, JSON, mapped paths, asset-manifest references and coverage of every authored file under `assets/world` and `assets/models`. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
+This checks local file links, JSON, mapped paths, asset-manifest references and coverage of every authored file under `assets/world`, `assets/models`, `assets/blender` and `assets/exports`. Blender source/export entries require matching SHA-256 content hashes and stay within the documented ordinary-Git file budget. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
 
 ## Connect Roblox Studio MCP
 
@@ -112,6 +112,49 @@ Keep both painted routes and the launcher marker clear. The Studio suite samples
 `BuildingLayout` validates the pure footprint/story/panel contract. Server-only `BuildingGeometry` validates actual loaded floors, landings, sixteen connected treads, entry sweeps, five navigation markers and panel pivots before decorating public identities. Foundry and Warehouse are 64×48 studs (3072 square studs each); Outpost is 32×48 (1536 square studs). Each has two floors, a usable upper floor at Y=10, exterior panels on both stories and panelized roofs. The larger buildings have 32-stud room bays divided by registered interior panels. Static floors/stairs/frames remain separate from the 111 Intact panels. These dimensions are construction defaults; [decisions](decisions.md) distinguishes them from selected game rules.
 
 Use the [world contract](../assets/world/README.md) when changing terrain, buildings or anchors. Add every authored source to the manifest, update the pure and artifact contracts, and run the named P13 engine/harness checks. A source-built artifact load is a separate reconstruction check from Rojo live sync. `python3 scripts/build_studio_world_probe.py` emits a native world binary, source expectations, hashes and a complete Edit-mode MCP probe under `build/studio-world-probe.*`. The [procedure](testing.md#check-a-fresh-native-world-load) exercises production MapService against that fresh world and restores its temporary geometry/terrain; it requires no new Studio process. Runtime Play/replication checks remain separate. The native-world check does not establish panning acceptance or implement panel damage.
+
+## Author and review the Blender outpost
+
+The [source guide](../assets/blender/military-outpost/README.md) gives the saved
+file, exact collections/cameras, orbit/cutaway/interior inspection steps,
+material-damage review links, scale/axis contracts and complete rebuild recipe.
+The [export guide](../assets/exports/military-outpost/README.md) describes the
+FBX/OBJ/PNG/material map and panel/reusable-kit identities. Blender 5.3.0 is the
+recorded authoring version; Python's standard library is sufficient for the
+portable audit and CI. The game still uses the primitive Outpost while P16
+awaits explicit human approval and P17 remains unimplemented.
+
+A deliberate source rebuild runs `scripts/p16_build.py` in a factory-startup
+Blender process. Reopen the saved `.blend` in a new background process through
+`scripts/p16_blender_review.py -- --audit --fbx-audit`, then render that same saved
+source with `--render`. Refresh `scripts/p16_audit.py --write-lock` and
+`python3 scripts/refresh_outpost_manifest.py` only after the intended exports
+and tool evidence exist, then run the full verifier. The package guide contains
+copyable commands with the actual macOS executable path. Render/reopen commands
+write evidence without saving mutations into the reviewed `.blend`. Full
+`--render` generates all render receipts/metadata; the package guide also
+documents the optional verified-receipt `--render-manifest-only` step after the
+tested source is committed. Keep `--python-exit-code 1` on Blender commands so
+Python failures propagate to the shell.
+
+The `.blend` packs its twelve original baked PNGs and retains versioned relative
+texture dependencies. `asset-inventory.json` measures the assembly/variants,
+`panel-catalog.json` maps six material/shape families and the declared v2 panel
+migration, and `reusable-kit.json` maps grouped prop exports to editable
+components. Preserve the migration explicitly: 25 original IDs/pivots remain,
+with fixed aperture changes and one added interior partition for P17 to validate.
+No new material changes durability or client authority.
+
+Ordinary Git stores source and exports below 20 MiB per file, with an initial
+45 MiB package target (D64). Do not commit `.blend1` backups, caches or temporary
+renders. `package-lock.json` hashes art files excluding itself/Markdown;
+`assets/manifest.json` additionally records the lock and all source/export
+provenance. The original reference illustrations remain visual inputs with
+unspecified creator/license; do not bundle their pixels as texture sources or
+invent an upload owner. Changes needing human visual approval must identify the
+new saved-source hash. A green portable audit cannot grant approval or replace
+P17's actual import, traversal, collision/thermal, fragment, replication/reset
+and engine-performance checks.
 
 ## Author progressive panels and fragments
 

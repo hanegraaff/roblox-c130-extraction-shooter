@@ -10,7 +10,7 @@ One player operates a circling C-130 while 5–9 teammates on the ground try to 
 
 ## What you can play today
 
-The local candidate on **`docs/studio-supported-acceptance`** includes the single launcher alongside the existing battlefield, gunship and rifle combat, directional thermal camera, progressive cover damage and round loop. **P08 meets the revised Studio-supported acceptance criteria (D59)**: use the [plan record](plans/08-rocket-launcher.md) and [verification evidence](docs/evidence/p08-launcher.md) for tested source and the acceptance revision. Integrated `main` contains P07 and does not yet include player launcher handling. There is no published Roblox play link.
+The local candidate on **`plan/16-blender-military-outpost-assets`** includes the single launcher alongside the existing battlefield, gunship and rifle combat, directional thermal camera, progressive cover damage and round loop. Its playable source includes the P08 candidate from `docs/studio-supported-acceptance`; the new Blender outpost is available for separate art review. **P08 meets the revised Studio-supported acceptance criteria (D59)**: use the [plan record](plans/08-rocket-launcher.md) and [verification evidence](docs/evidence/p08-launcher.md) for tested source and the acceptance revision. Integrated `main` contains P07 and does not yet include player launcher handling. There is no published Roblox play link.
 
 A normal round starts in the protected, walkable lobby with 6–10 players. The server assigns one operator, preferring eligible players who have waited longer, and deploys everyone else as one ground team. The aircraft circles the edge of the **720-stud battlefield** automatically. Ground wins by destroying it; the operator wins by eliminating all ground lives or surviving until timeout. The default limit is ten minutes. An operator disconnect forfeits to the remaining ground team. Results return everyone to a fresh lobby and restore the battlefield.
 
@@ -24,13 +24,13 @@ The HUD shows role, life, time, survivors, ammunition and aircraft health. Deskt
 
 This is primitive development art and a local test candidate. Current checks pass the host gate, solo smoke, two-client combat/panning regressions, simulated-phone rifle/launcher controls and the full **11-case P08 native harness** with three actual clients. Ordinary route walking, raced pickup and selection also have separate review. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity are unverified or planned. The MVP has one level; additional selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope.
 
-The next planned work is detailed building art: [P16](plans/16-blender-military-outpost-assets.md)
-will create a furnished military outpost in Blender closely matching the three
-supplied references, including material-specific damage variants for your review
-and approval. [P17](plans/17-integrate-military-outpost.md) will replace the smaller
-Outpost with the approved asset. They sit between P07 and P08 in the
-[roadmap](roadmap.md) and run before the remaining P09 work. These plans have
-not produced assets or changed the playable building yet.
+The [P16 Blender review candidate](assets/blender/military-outpost/README.md)
+contains a furnished two-story military outpost, outdoor props and material-specific
+Pristine/Light/Heavy/Total damage variants. It is editable 3D source with game
+exports, awaiting your explicit visual approval. The playable building still
+uses primitive art. [P17](plans/17-integrate-military-outpost.md) will replace
+only the smaller Outpost after approval and verify it in actual gameplay.
+The [roadmap](roadmap.md) schedules those two increments before P09.
 
 ## Set up locally
 
@@ -43,12 +43,12 @@ git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 ```
 
-Select the launcher candidate before building this version:
+Select the current source and Blender review candidate before building:
 
 ```sh
 git fetch origin
-git switch docs/studio-supported-acceptance
-git pull --ff-only origin docs/studio-supported-acceptance
+git switch plan/16-blender-military-outpost-assets
+git pull --ff-only origin plan/16-blender-military-outpost-assets
 ```
 
 Do not discard local edits when switching source; select the same source for builds, Rojo sync and test evidence.
@@ -64,7 +64,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install      # Install the matching Studio plugin once
 ```
 
-The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. The host gate runs **55 unit and 65 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It does not run Roblox Studio. The dependency and build directories are generated and stay out of Git.
+The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. The host gate runs **55 unit and 65 integration tests**, formatting/lint/type checks, both builds, geometry checks and release isolation. It also checks the Blender package's files, exported geometry and hash-bound tool reports, with asset and manifest rejection tests. It does not run Blender or Roblox Studio. Blender 5.3.0 is needed to edit, rebuild or freshly render the outpost; ordinary play/build checks use the committed package. The dependency and build directories are generated and stay out of Git.
 
 ## Play and develop locally with Rojo
 
@@ -111,7 +111,7 @@ For **solo exploration**, just click **Play** in the test document; no **Server 
 
 Use **Return to lobby** to inspect the walkable lobby, or **Explore map (solo)** to return to preview. No Command Bar commands are required. Solo previews are clearly labelled and do not grant an active round life, opponent or weapons. The panel and all override/settings code are excluded from the release mapping; production still requires 6–10 players and uses its normal role selection. See [test-control evidence](docs/evidence/lobby-preview.md) for verified cases.
 
-The [P08 launcher harness](docs/testing.md#run-the-p08-launcher-harness) requires **three actual clients**: one operator and two ground players. It checks raced acquisition, rejected requests, real rockets, reload-preserving drop/death/character-removal/disconnect recovery, replication and reset. Actual same-identity reconnect remains separately required and unverified; P07’s late-join waiver does not apply to it. The revised [P07 destruction harness](docs/testing.md#run-the-p07-destruction-harness) requires **two actual clients**. It checks persistent Light/Heavy/Total progression, earned 30mm time across separated bursts, starting-shelter damage, openings, rejection, replication and resets. A real late join is waived for this P07 gate; no third client or mid-session Start action is required. Its plan links accepted source-specific reports and operated normal/thermal review; changed candidates need fresh applicable evidence. The [P14 pan harness](docs/testing.md#run-the-p14-panned-targeting-harness) requires two actual clients, a full orbit at each FOV, real terrain/upper-floor surface projections, selection coherence, role isolation and cleanup. Its automated pointer-input fixtures are separate from native mouse/keyboard/button review and 1280×720 / 1920×1080 rendered checks. The [P13 map harness](docs/testing.md#run-the-p13-expanded-map-harness) starts two actual clients, walks a ground avatar into all three upper floors, perturbs and resets the map twice, then requests a third actual late client to check rebuilt-map replication. The [P04 multiplayer harness](docs/testing.md#run-the-p04-aircraft-harness) uses two actual clients to sample a full 90-second orbit, check both zoom profiles and rejected selections, test thermal fixtures, reset/reentry and operator departure. The [P03 multiplayer harness](docs/testing.md#run-the-p03-multiplayer-harness) separately starts three clients, adds a late spectator and drives three accelerated rounds. The [P05 combat harness](docs/testing.md#run-the-p05-gunship-combat-harness) adds two-client firing, cover, rejection, result and reset checks. The [P06 harness](docs/testing.md#run-the-p06-ground-combat-harness) checks rifle and aircraft-health behavior; its earlier candidate fixture passed with two actual clients. A single-client TestEZ pass does not establish replicated combat or release capacity.
+The [P08 launcher harness](docs/testing.md#run-the-p08-launcher-harness) requires **three actual clients**: one operator and two ground players. It checks raced acquisition, rejected requests, real rockets, reload-preserving drop/death/character-removal/disconnect recovery, replication and reset. D59 excludes unsupported actual same-identity reconnect; runtime rejoin authority remains covered by service tests. Supported late-join requirements in other plans remain. The revised [P07 destruction harness](docs/testing.md#run-the-p07-destruction-harness) requires **two actual clients**. It checks persistent Light/Heavy/Total progression, earned 30mm time across separated bursts, starting-shelter damage, openings, rejection, replication and resets. A real late join is waived for this P07 gate; no third client or mid-session Start action is required. Its plan links accepted source-specific reports and operated normal/thermal review; changed candidates need fresh applicable evidence. The [P14 pan harness](docs/testing.md#run-the-p14-panned-targeting-harness) requires two actual clients, a full orbit at each FOV, real terrain/upper-floor surface projections, selection coherence, role isolation and cleanup. Its automated pointer-input fixtures are separate from native mouse/keyboard/button review and 1280×720 / 1920×1080 rendered checks. The [P13 map harness](docs/testing.md#run-the-p13-expanded-map-harness) starts two actual clients, walks a ground avatar into all three upper floors, perturbs and resets the map twice, then requests a third actual late client to check rebuilt-map replication. The [P04 multiplayer harness](docs/testing.md#run-the-p04-aircraft-harness) uses two actual clients to sample a full 90-second orbit, check both zoom profiles and rejected selections, test thermal fixtures, reset/reentry and operator departure. The [P03 multiplayer harness](docs/testing.md#run-the-p03-multiplayer-harness) separately starts three clients, adds a late spectator and drives three accelerated rounds. The [P05 combat harness](docs/testing.md#run-the-p05-gunship-combat-harness) adds two-client firing, cover, rejection, result and reset checks. The [P06 harness](docs/testing.md#run-the-p06-ground-combat-harness) checks rifle and aircraft-health behavior; its earlier candidate fixture passed with two actual clients. A single-client TestEZ pass does not establish replicated combat or release capacity.
 
 After source changes, stop Play, rerun the host gate, confirm Rojo is connected to **PlayersVsC130Tests** on `localhost:34872`, verify it delivered the candidate and start a fresh session. If the sync server was restarted, reconnect the existing document's Rojo plugin in Edit before testing.
 
@@ -142,6 +142,27 @@ The M-7 defaults are **5 damage**, a **30-round magazine**, **120 reserve rounds
 Panel damage counts server-resolved **direct gunship impacts**, separately from blast damage to players. The first 30mm hit, including the first after a pause or target change, starts timing with zero elapsed credit; trigger time alone does not count. Current mixing defaults let one heavy hit contribute one third of a stage and preserve it through interruptions. All earned per-panel heavy and 30mm damage persists until reset; only the timing connection between hits breaks. Light scars do not make holes. Heavy/Damaged panels leave two solid side strips around a central 50% opening; those strips still block movement, shots and thermal sight lines. A creating blast uses the cover present before the damage batch; later shots can exploit the hole. Up to 48 server-owned fragments fall against scenery and expire after eight seconds. They do not damage or collide with players or supply cover. See [destruction contracts](architecture.md#progressive-panel-destruction-p07) for timing and collision details.
 
 The launcher carries one ready rocket and automatically replenishes after four seconds. Its reload deadline follows the single round weapon through switching and transfers. A direct rocket applies 100 aircraft-health units once; three alone destroy a pristine 300-health plane. Cover, misses and near misses do not earn a direct hit. A rocket already flying may still count after its shooter dies if another ground player keeps the round active; a committed result cancels remaining work. See the [roadmap](roadmap.md) and [P08 evidence](docs/evidence/p08-launcher.md) for acceptance and integration state.
+
+## Inspect the Blender outpost
+
+Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend)
+in **Blender 5.3.0**. It contains the exterior, furnished workshop and command
+room, a cutaway, reusable props and six material/shape damage families.
+The [asset review guide](assets/blender/military-outpost/README.md) explains
+orbiting, selecting the saved cameras, hiding the roof and inspecting every
+panel from both sides. It links the actual Blender renders and grayscale damage
+views. These are art previews, separate from the gameplay screenshot above.
+
+To check the committed package without launching Blender:
+
+```sh
+python3 scripts/p16_audit.py
+```
+
+The [P16 acceptance record](docs/evidence/p16/acceptance.md) identifies the
+reviewed source, tool checks and pending human approval. A Blender opening or
+render does not establish Roblox navigation, cover, thermal visibility,
+replication or runtime performance; P17 must test those after integration.
 
 ## Follow development or contribute
 

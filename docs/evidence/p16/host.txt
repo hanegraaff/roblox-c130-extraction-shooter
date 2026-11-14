@@ -1,5 +1,5 @@
 + /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/check_repository.py
-Repository checks passed: 88 Markdown files, 219 JSON files.
+Repository checks passed: 91 Markdown files, 223 JSON files.
 + /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/tooling -v
 test_backup_rejects_even_when_recorded (test_asset_manifest.AssetManifestTests) ... ok
 test_changed_source_rejects (test_asset_manifest.AssetManifestTests) ... ok
@@ -13,24 +13,37 @@ test_package_requires_hash (test_asset_manifest.AssetManifestTests) ... ok
 test_unrecorded_texture_rejects (test_asset_manifest.AssetManifestTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 0.044s
+Ran 10 tests in 0.041s
 
 OK
 + /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p16_audit.py
-{"suite": "P16-assets", "discovered": 6, "passed": 6, "failed": 0, "skipped": 0, "results": [{"name": "P16AssetInventory", "passed": true, "detail": {"categories": 36, "mesh_objects": 3061, "furnished_floors": 2}}, {"name": "P16DamageCatalog", "passed": true, "detail": {"families": 6, "states": 24, "fragments": 24, "legacy_pivots": 25, "new_panels": 1}}, {"name": "P16PanelGeometry", "passed": true, "detail": [{"family": "corrugated_wall", "actual_removed_fraction": 0.494140625, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.005859375, "raster_width": 128}, {"family": "corrugated_window", "actual_removed_fraction": 0.4921875, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0078125, "raster_width": 128}, {"family": "corrugated_door", "actual_removed_fraction": 0.4883720930232558, "proxy_removed_fraction": 0.49709302325581395, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.00872093023255814, "raster_width": 128}, {"family": "corrugated_garage", "actual_removed_fraction": 0.4829545454545454, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.017045454545454544, "raster_width": 128}, {"family": "concrete_partition", "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}, {"family": "layered_roof", "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}]}, {"name": "P16ExportAudit", "passed": true, "detail": {"assembly_triangles": 89440, "materials": 12, "textures": 12, "reusable_kit_assets": 8, "package_bytes": 31881100}}, {"name": "P16BlenderReopen", "passed": true, "detail": {"source_sha256": "22d668fff653832915868e09c25e25d2b4e24f92255394984bc1819ff9f2b8f8", "blender_version": "5.3.0", "missing_dependencies": 0, "fbx_meshes": 2241}}, {"name": "P16Dependencies", "passed": true, "detail": {"files": 109, "sha256_verified": true}}]}
+{"suite": "P16-assets", "discovered": 7, "passed": 7, "failed": 0, "skipped": 0, "results": [{"name": "P16AssetInventory", "passed": true, "detail": {"categories": 36, "mesh_objects": 3093, "furnished_floors": 2}}, {"name": "P16DamageCatalog", "passed": true, "detail": {"families": 6, "states": 24, "fragments": 24, "legacy_pivots": 25, "new_panels": 1}}, {"name": "P16PanelGeometry", "passed": true, "detail": [{"family": "corrugated_wall", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}]}, "actual_removed_fraction": 0.494140625, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.005859375, "raster_width": 128}, {"family": "corrugated_window", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}, {"side": 1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}]}, "actual_removed_fraction": 0.4921875, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0078125, "raster_width": 128}, {"family": "corrugated_door", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}, {"side": 1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}]}, "actual_removed_fraction": 0.4883720930232558, "proxy_removed_fraction": 0.49709302325581395, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.00872093023255814, "raster_width": 128}, {"family": "corrugated_garage", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}, {"side": 1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}]}, "actual_removed_fraction": 0.4829545454545454, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.017045454545454544, "raster_width": 128}, {"family": "concrete_partition", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 405, "projected_scar_area_studs2": 0.9212782372151346}, {"side": 1, "scar_triangles": 405, "projected_scar_area_studs2": 0.921278159933692}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}, {"family": "layered_roof", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}]}, {"name": "P16Navigation", "passed": true, "detail": {"name": "P16Navigation", "passed": true, "body_dimensions_studs": [4, 6, 4], "foot_clearance_studs": 0.065, "support_height_tolerance_studs": 0.11, "profile_method": "6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays", "body_samples": 185, "support_rays": 1850, "internal_samples": 98, "external_samples": 87, "scope": "Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17"}}, {"name": "P16ExportAudit", "passed": true, "detail": {"assembly_triangles": 89024, "materials": 12, "textures": 12, "reusable_kit_assets": 8, "package_bytes": 31876595}}, {"name": "P16BlenderReopen", "passed": true, "detail": {"source_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c", "blender_version": "5.3.0", "missing_dependencies": 0, "fbx_meshes": 2225, "panel_library_meshes": 260, "kit_imports": 8, "required_renders": 29}}, {"name": "P16Dependencies", "passed": true, "detail": {"files": 109, "sha256_verified": true}}]}
 + /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/assets -v
+test_all_current_tool_and_render_proofs (test_p16_assets.P16RejectionTests) ... ok
+test_body_width_obstruction_missed_by_center_ray_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_empty_fbx_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_garage_pristine_substituted_for_light_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_internal_stair_beam_corruption_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_invalid_uv_index_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_invisible_heavy_collider_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_light_opening_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_missing_baked_texture_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_required_render_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_oversized_fragment_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_real_saved_package (test_p16_assets.P16RejectionTests) ... ok
+test_renaming_or_vertex_permutation_does_not_create_light_scars (test_p16_assets.P16RejectionTests) ... ok
+test_restored_external_full_deck_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_shifted_legacy_identity_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_kit_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_panel_library_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_bytes_are_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_script_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_source_is_rejected (test_p16_assets.P16RejectionTests) ... ok
 test_total_hidden_solid_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_unused_dark_material_declaration_does_not_create_scars (test_p16_assets.P16RejectionTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 9 tests in 7.845s
+Ran 22 tests in 10.643s
 
 OK
 Rojo 7.7.1
@@ -228,14 +241,14 @@ PASS only documented phase edges and deployment cancellation are legal
 PASS deadline equality beats destruction and last ground elimination
 PASS pre-deadline aircraft destruction beats mutual ground elimination
 PASS empty server and no participants never award a competitive winner
-FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-f1h_0_9_/tests/unit/Validation.spec:2: deliberate failure
+FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-gxt7axib/tests/unit/Validation.spec:2: deliberate failure
 {"discovered":51,"failed":1,"passed":50,"skipped":0,"suite":"unit"}
 Expected rejection observed: exit 1
 + lune run scripts/run_tests.luau unit
-/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-f1h_0_9_/scripts/run_tests:59: empty required suite: unit
+/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-gxt7axib/scripts/run_tests:59: empty required suite: unit
 [Stack Begin]
     Script '[C]' - function 'error'
-    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-f1h_0_9_/scripts/run_tests', Line 59
+    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-gxt7axib/scripts/run_tests', Line 59
 [Stack End]
 
 Expected rejection observed: exit 1

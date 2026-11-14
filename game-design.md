@@ -117,19 +117,24 @@ At each server step, enforce deadline first; resolve accepted projectile/damage 
 
 ## Presentation and readiness
 
-The separately planned [P16 Blender asset kit](plans/16-blender-military-outpost-assets.md)
-closely follows all three images in `src/images/military-outpost/`: a weathered
-military exterior, ground-floor storage/workshop and upstairs command room.
-It includes indoor/outdoor props and material-specific panel damage/fragments,
-saved as editable assets for the user's inspection and explicit visual approval.
-[P17](plans/17-integrate-military-outpost.md) then replaces the **smaller Outpost**
-on this same level with the approved revision. Concrete, corrugated metal and
-roof materials must damage in visually appropriate ways while retaining the
-same shared three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment
-rules. Floors, stairs and supporting structure stay stable. D63 schedules these
-two increments next, between P07 and P08, before P09 and remaining MVP work.
-They remain planned work on the current level; existing completion evidence is
-preserved.
+The [P16 Blender review kit](assets/blender/military-outpost/README.md) supplies
+editable source for a weathered military exterior, ground-floor storage/workshop,
+upstairs command room and reusable indoor/outdoor props, based on all three
+images in `src/images/military-outpost/`. It includes six material/shape panel
+families with Pristine/Light/Heavy/Total appearances, matching fragments,
+explicit proxy candidates and saved review views. The actual candidate awaits
+the user's explicit visual approval; the playable smaller Outpost still uses
+primitive art.
+
+[P17](plans/17-integrate-military-outpost.md) will replace that **smaller Outpost**
+on the same level with the approved revision. Concrete, corrugated metal and
+roofing must retain their material-specific damage while shared systems retain
+the three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment rules.
+Floors, stairs and supporting structure stay stable. The package's declared
+fixed apertures and additional partition require P17 navigation/cover validation;
+Blender previews do not grant runtime acceptance. D63 schedules P16 approval,
+then P17, before P09 and remaining MVP work. Existing gameplay evidence remains
+bound to its recorded primitive-asset source.
 
 Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
 

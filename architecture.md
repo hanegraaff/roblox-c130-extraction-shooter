@@ -285,18 +285,33 @@ Static map files and server-cloned templates have separate ownership. Do not syn
 
 The source includes the original normalized two-strip [PanelResidual template](assets/models/PanelResidual.model.json). DestructionRuntime scales it to each registered wall/roof/interior panel; no external art or cloud reference is required. Runtime fragments are generated primitives, not authored map content. Never export them, projectile effects or damaged live state as pristine source. The [progressive destruction contract](#progressive-panel-destruction-p07) governs their lifecycle.
 
-### Planned Blender source and material-aware panel assets
+### Blender source and material-aware panel assets
 
-[P16](plans/16-blender-military-outpost-assets.md) will retain an editable,
-self-contained outpost scene under `assets/blender/military-outpost/` and game
-exports under `assets/exports/military-outpost/`, with a versioned panel catalog
-for material/shape, source, dimensions, pivot, appearance variants, collision
-proxies and fragments. These proposed directories and catalog are not implemented
-yet. The current asset checker must be extended deliberately to cover them; its
-coverage rule currently includes only `assets/world` and `assets/models`.
-Blender source/review lighting stays outside Rojo runtime mappings. Record scale,
-axes, dependency hashes, actual provenance and export instructions; do not infer
-Roblox import success or permission from a local render.
+The [P16 review package](assets/blender/military-outpost/README.md) retains an
+editable, self-contained Blender 5.3.0 outpost under
+`assets/blender/military-outpost/` and game exports under
+`assets/exports/military-outpost/`. It supplies a versioned panel catalog for
+six material/shape families, dimensions, center pivots, Pristine/Light/Heavy/Total
+meshes, explicit collision-proxy candidates and bounded material-matched fragments.
+Its identity migration preserves 25 legacy panel IDs/pivots and declares one new
+partition plus fixed apertures. Inventory and reusable-kit mappings connect
+named editable components to placed assembly and floor-centered prop exports.
+
+The asset checker covers all authored files under `world`, `models`, `blender`
+and `exports`, and requires content hashes for every Blender source/export.
+The portable audit measures actual OBJ triangle projections, proxy coverage,
+UV/material references, fragment bounds, budgets and package dependencies.
+Hash-bound clean Blender reopen/FBX-import reports are checked in; CI validates
+their relation to the candidate without running a fresh Blender process.
+Saved-source renders and explicit human approval are additional acceptance
+evidence. P16 remains pending human visual approval.
+
+Original baked PNGs and explicit material constants provide export equivalents
+for the source materials. Blender cameras/review lighting stay outside Rojo
+runtime mappings. The 32×48-stud footprint and floor levels remain authored
+construction inputs; the external balcony/stair and declared aperture migration
+need actual P17 clearance/cover checks. Local Blender round trips do not infer
+Roblox import success, thermal visibility, runtime physics or upload permission.
 
 [P17](plans/17-integrate-military-outpost.md) will replace only the smaller
 Outpost using the human-approved package. Current `PanelGeometry` clones
@@ -321,7 +336,7 @@ regression-test completed P08 source when present in the selected branch.
 
 ## Tooling and verification
 
-Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository checks, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds, canonical authored-geometry/corruption checks and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
+Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository and asset-manifest checks, the portable Blender-package audit and rejection tests, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds, canonical authored-geometry/corruption checks and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
 
 The test mapping runs separate server and client TestEZ bootstraps in real Studio Play contexts and publishes structured JSON reports. Those runs establish mapped imports and engine behavior separately from the host gate. Ordinary Linux CI runs the host gate and cannot replace required Studio evidence.
 
