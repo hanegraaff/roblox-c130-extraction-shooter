@@ -2,7 +2,8 @@
 
 These P16 exports accompany the editable
 [Blender source and review guide](../../blender/military-outpost/README.md).
-They are local integration inputs awaiting human asset approval and P17's
+The user approved their source revision `e8fb840` on 2026-11-13
+([approval record](../../../docs/evidence/p16/human-approval.json)). They await P17's
 Roblox import/engine checks. The playable map still uses its original Outpost.
 
 | Files | Contract |

@@ -37,8 +37,9 @@ Generated place builds belong in ignored `build/`. Do not blanket-ignore authore
 [P16](../plans/16-blender-military-outpost-assets.md) now provides editable
 [source and inspection instructions](blender/military-outpost/README.md),
 [game exports](exports/military-outpost/README.md), a complete feature inventory,
-material/shape panel catalog and saved-scene review renders. Human visual
-approval is pending. [P17](../plans/17-integrate-military-outpost.md) will consume
+material/shape panel catalog and saved-scene review renders. The user explicitly
+approved revision `e8fb840` on 2026-11-13
+([record](../docs/evidence/p16/human-approval.json)). [P17](../plans/17-integrate-military-outpost.md) will consume
 the approved revision to replace only the smaller Outpost; these files do not
 yet change the playable map.
 

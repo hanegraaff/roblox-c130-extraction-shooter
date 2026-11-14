@@ -48,7 +48,7 @@ actual imported behavior and engine cost.
 | A1 | P16AssetInventory; P16Navigation; exterior and both furnished-floor saved-scene renders | Technical checks pass: 36 categories, two furnished floors; 185 body stations / 1,850 support rays on OBJ, saved source and clean FBX; independent 324/324 tread samples on source and another 324/324 on clean FBX |
 | A2 | P16DamageCatalog; P16PanelGeometry; independent per-family Light parser; both-sided normal/grayscale material gallery | Six families / 24 states / 24 fragments; 25 retained legacy pivots plus one declared partition. Heavy opening 48.295–50%; no sampled invisible blockers, Light preserves apertures and Total is empty. All six have actual two-sided earned scars; complete 29-view review and targeted corrected garage review resolve all material findings |
 | A3 | P16BlenderReopen; P16ExportAudit; full final host gate; source/export hashes | Clean Blender reopen / assembly, library and eight-kit imports pass. All 29 source/script/hash-bound PNGs pass. Full host: 55 unit / 65 integration, 10 manifest cases, 22 asset cases, seven asset suites and all existing gates pass |
-| A4 | Explicit human approval of the identified saved asset revision after viewing all required scenes | Pending; no approval inferred |
+| A4 | Explicit human approval of the identified saved asset revision after viewing all required scenes | Pass: user replied “Approve this asset revision” on 2026-11-13 (America/New_York), for source `e8fb840` / Blender hash `4c1c5264…`; no conditions specified. [Record](human-approval.json) |
 
 The [independent review](independent-review.md) distinguishes initial failures,
 corrected measured outcomes and subjective fidelity. P17 remains unstarted.
@@ -110,19 +110,35 @@ The independent reviewer reports no unresolved reproduced technical defect;
 its final audit passes 7/7 and asset regressions 22/22 (10.276s), with raw
 [audit](independent-final-audit.txt) and [tests](independent-final-tests.txt).
 
-The explicit human response, date, conditions and approved asset hash remain
-**pending**. Draft [PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
-delivers the candidate; P16 remains in progress and P17 has not started.
+The user explicitly answered **“Approve this asset revision”** on
+2026-11-13 (America/New_York) to the review question identifying source
+`e8fb840` and Blender hash `4c1c5264…`. The [approval record](human-approval.json)
+binds the full source/asset identities, reviewed scope and verbatim response.
+No conditions were specified. This satisfies A4 alongside the existing A1–A3
+evidence. [PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
+is ready for review; P17 is eligible and remains unstarted. Asset approval
+does not authorize a merge or Roblox publication.
 
 Delivery commit `751f2ea16ea74e6a6de732b0ca6ab96978ea081c`, tree
 `f990792a3c750aa6448a60ab1b77ecd4d4a7404d`, contains the corrected source,
 all final views, report and guides.
 [GitHub Verify 43541991864](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43541991864)
-passes on that exact commit. PR #35 is draft/open/mergeable against the
-planning branch. The file-open command succeeded in a separate Blender
+passes on that exact commit. PR #35 is open/mergeable against the
+planning branch and was marked ready for review after approval. The file-open command succeeded in a separate Blender
 instance; the user was asked to inspect and approve or request changes for
-source `e8fb840` / asset hash `4c1c5264…`. No response has been received or
-inferred. The final records commit does not alter the tested art or scripts.
+source `e8fb840` / asset hash `4c1c5264…`, and the explicit response above
+completed that gate. The approval records do not alter tested art, exports,
+scripts or render bytes. Historical pending/failed reports below retain their
+original scopes. Pre-approval records head `8b469e2` also passes
+[Verify 43542134119](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43542134119).
+
+Approval-record validation: the current `.blend` SHA-256 matches the approved
+hash; the unchanged package audit passes 7/7, zero failures/skips. The repository
+checker passes 91 Markdown / 224 JSON files and diff checks pass. A focused
+dependency audit confirms that only P16 becomes Complete and P17 becomes Ready;
+P09 stays Planned and no P17 implementation begins. These changes add approval
+evidence/prose only; the existing full host and Blender evidence remain bound
+to the unchanged authored source.
 
 ## Intermediate package checks and required commands
 

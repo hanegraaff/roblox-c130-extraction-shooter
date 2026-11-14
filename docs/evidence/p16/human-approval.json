@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "plan": "P16",
+  "criterion": "A4",
+  "decision": "approved",
+  "date_local": "2026-11-13",
+  "timezone": "America/New_York",
+  "approval_source": "Explicit user reply to the revision-specific visual-review question in this conversation",
+  "response_verbatim": "Approve this asset revision",
+  "review_scope": [
+    "Saved editable Blender scene",
+    "Exterior",
+    "Both furnished interiors",
+    "Every material's damage views, both sides, normal and grayscale"
+  ],
+  "source_commit": "e8fb840a986969bdd3b7ac932469e3fa8cc99a9e",
+  "source_tree": "cfb4ed35a15f5a756b3ec86858841f41b7dba577",
+  "blend_path": "assets/blender/military-outpost/military-outpost.blend",
+  "blend_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c",
+  "assembly_fbx_sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8",
+  "review_guide": "assets/blender/military-outpost/README.md",
+  "conditions": "None specified",
+  "authorizes_merge": false,
+  "authorizes_roblox_publication": false,
+  "p17_implementation_started": false
+}

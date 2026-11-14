@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `plan/16-blender-military-outpost-assets` for the current source and separate Blender art-review candidate, as shown in the [root setup guide](../README.md#set-up-locally). Its playable source includes the launcher candidate from `docs/studio-supported-acceptance`; P16 assets remain outside runtime mappings pending human approval and P17 integration. It includes the integrated P07 map/combat/destruction source plus one recoverable launcher, shared aircraft-health rocket damage and reload-preserving ownership. All eleven native P08 harness cases pass with three initial/peak actual clients. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. The [plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) identify tested source and the acceptance revision. Integrated `main` remains the P07 baseline until this task is merged. Additional playable levels remain future work.
+Use `plan/16-blender-military-outpost-assets` for the current source and separate Blender art-review candidate, as shown in the [root setup guide](../README.md#set-up-locally). Its playable source includes the launcher candidate from `docs/studio-supported-acceptance`; The approved P16 assets remain outside runtime mappings pending P17 integration. It includes the integrated P07 map/combat/destruction source plus one recoverable launcher, shared aircraft-health rocket damage and reload-preserving ownership. All eleven native P08 harness cases pass with three initial/peak actual clients. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. The [plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) identify tested source and the acceptance revision. Integrated `main` remains the P07 baseline until this task is merged. Additional playable levels remain future work.
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -121,8 +121,8 @@ material-damage review links, scale/axis contracts and complete rebuild recipe.
 The [export guide](../assets/exports/military-outpost/README.md) describes the
 FBX/OBJ/PNG/material map and panel/reusable-kit identities. Blender 5.3.0 is the
 recorded authoring version; Python's standard library is sufficient for the
-portable audit and CI. The game still uses the primitive Outpost while P16
-awaits explicit human approval and P17 remains unimplemented.
+portable audit and CI. The user approved P16 revision `e8fb840` on 2026-11-13;
+the game still uses the primitive Outpost while P17 remains unimplemented.
 
 A deliberate source rebuild runs `scripts/p16_build.py` in a factory-startup
 Blender process. Reopen the saved `.blend` in a new background process through

@@ -122,8 +122,8 @@ editable source for a weathered military exterior, ground-floor storage/workshop
 upstairs command room and reusable indoor/outdoor props, based on all three
 images in `src/images/military-outpost/`. It includes six material/shape panel
 families with Pristine/Light/Heavy/Total appearances, matching fragments,
-explicit proxy candidates and saved review views. The actual candidate awaits
-the user's explicit visual approval; the playable smaller Outpost still uses
+explicit proxy candidates and saved review views. The user explicitly approved
+revision `e8fb840` on 2026-11-13 ([record](docs/evidence/p16/human-approval.json)); the playable smaller Outpost still uses
 primitive art.
 
 [P17](plans/17-integrate-military-outpost.md) will replace that **smaller Outpost**

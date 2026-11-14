@@ -33,7 +33,7 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
 
 P16 is an asset-authoring increment outside Rojo's runtime mappings. Its
 [acceptance record](evidence/p16/acceptance.md) binds commands, measurements,
-failures, independent review and pending human approval to exact source/export
+failures, independent review and explicit human approval to exact source/export
 hashes. Use the [source guide](../assets/blender/military-outpost/README.md) for
 inspection and the full copyable rebuild/reopen/render sequence; the
 [export guide](../assets/exports/military-outpost/README.md) documents consumers.

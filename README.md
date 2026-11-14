@@ -27,9 +27,10 @@ This is primitive development art and a local test candidate. Current checks pas
 The [P16 Blender review candidate](assets/blender/military-outpost/README.md)
 contains a furnished two-story military outpost, outdoor props and material-specific
 Pristine/Light/Heavy/Total damage variants. It is editable 3D source with game
-exports, awaiting your explicit visual approval. The playable building still
+exports, explicitly approved on 2026-11-13 for revision `e8fb840`
+([approval record](docs/evidence/p16/human-approval.json)). The playable building still
 uses primitive art. [P17](plans/17-integrate-military-outpost.md) will replace
-only the smaller Outpost after approval and verify it in actual gameplay.
+only the smaller Outpost with this approved revision and verify it in actual gameplay.
 The [roadmap](roadmap.md) schedules those two increments before P09.
 
 ## Set up locally
@@ -160,7 +161,7 @@ python3 scripts/p16_audit.py
 ```
 
 The [P16 acceptance record](docs/evidence/p16/acceptance.md) identifies the
-reviewed source, tool checks and pending human approval. A Blender opening or
+reviewed source, tool checks and explicit human approval. A Blender opening or
 render does not establish Roblox navigation, cover, thermal visibility,
 replication or runtime performance; P17 must test those after integration.
 

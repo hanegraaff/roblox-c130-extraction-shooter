@@ -304,7 +304,9 @@ UV/material references, fragment bounds, budgets and package dependencies.
 Hash-bound clean Blender reopen/FBX-import reports are checked in; CI validates
 their relation to the candidate without running a fresh Blender process.
 Saved-source renders and explicit human approval are additional acceptance
-evidence. P16 remains pending human visual approval.
+evidence. The user explicitly approved source revision `e8fb840` on 2026-11-13;
+the [approval record](docs/evidence/p16/human-approval.json) binds the exact
+Blender hash. Asset bytes remain unchanged by that external record.
 
 Original baked PNGs and explicit material constants provide export equivalents
 for the source materials. Blender cameras/review lighting stay outside Rojo
