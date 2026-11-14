@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "model": "MacBookPro18,3",
+  "chip": "Apple M1 Pro",
+  "memory_bytes": 17179869184,
+  "memory_gib": 16,
+  "os": "macOS 26.6.2",
+  "architecture": "arm64",
+  "studio_version": "0.747.0.7471481",
+  "command": "/usr/sbin/sysctl -n hw.model hw.memsize machdep.cpu.brand_string; Python platform.mac_ver/platform.machine",
+  "display_and_graphics_settings": null,
+  "performance_measurement_performed": false,
+  "scope": "Reference hardware identification only. Native viewport, quality, frame and memory evidence remain required."
+}

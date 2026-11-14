@@ -15,6 +15,8 @@ The integrated in-game result has a separate pending A6 approval.
 | `panel-library-materials-v2.glb` / `.json` | Equivalent derivative and measured source/node/material/UV/texture mapping |
 | `material-textures-v2.json` | Twelve actual source-bound PNG color-map references and owner IDs |
 | `construction-v2.json` | Normalization fits, object classification, panel counts, receipt hashes and remaining native acceptance |
+| `native-mesh-requests-v1.json` | Exact mesh/fidelity profile requests and use counts |
+| `native-mesh-profiles-v1.rbxm` / `.json` | Genuine engine constructor payload bank and public native roundtrip receipt |
 
 Roblox user **2227341845** owns assembly package **73311045122621 revision 1**
 and material-library package **126055228085421 revision 2**. The latter uses a
@@ -39,6 +41,22 @@ CompiledColorPngSha256. Ordinary server/client code uses shared `AssetMaterial`
 for those attributes and never reads protected map slots/Content variants.
 Compiler and artifact/Edit audits compare the real slots, metadata and approved
 receipt. Actual Instance-based preload remains separate loading evidence.
+
+MeshId and target Size alone do not reconstruct MeshPart intrinsic size or
+collision data. The managed native bank contains 407 genuine engine-created
+profiles: 87 PreciseConvexDecomposition and 320 Box, all with Automatic render
+fidelity, covering 2,332 template uses. The compiler preserves actual InitialSize,
+PhysicalConfigData, PhysicsData and AeroMeshData bytes. Pinned Lune decodes the
+local RBXM without fetching cloud data; Python verifies request/receipt/bank
+hashes and exact profile coverage before writing model definitions. Opaque bytes
+are copied, not synthesized from normalized dimensions or source-format units.
+
+Five readable attributes (NativeGeometryVersion, NativeMeshId, NativeMeshSize,
+NativeCollisionFidelity and NativeRenderFidelity) bind public runtime checks to
+that construction data. Shared AssetMesh validates public MeshSize and fidelity;
+that does not prove rendered bounds, UV appearance, actual collision contacts or
+replication. The current constructor correction still requires fresh native
+acceptance, and previous pre-constructor observations remain historical.
 
 Check the committed reconstruction without uploading or changing files:
 
@@ -75,7 +93,8 @@ owner locally hides only non-cover art; ground views retain furnishings.
 
 The private `C130P17Import` workspace is universe **10776653720**, place
 **72732833195348**. Clean integrated draft 11 (source `010289d`) is saved there
-without publication; newer local source `51f8440` has not replaced that draft.
+without publication; newer local constructor corrections have not replaced that
+recorded draft.
 The last verified published version 5 contains older primitive `03c9c06` release
 source; saving the current draft did not update that published build.
 Tests and development overrides belong only in separate local test documents.

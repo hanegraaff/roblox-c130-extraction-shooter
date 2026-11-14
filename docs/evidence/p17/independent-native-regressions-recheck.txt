@@ -1,0 +1,10 @@
+test_actual_artifact_gate_rejects_missing_intrinsics_payload_bytes_and_readable_metadata_drift (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_all_real_profiles_and_2332_uses_keep_intrinsics_independent_of_normalized_target_size (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_capture_hash_public_intrinsics_requested_policy_and_roundtrip_cannot_drift (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_compiler_rejects_missing_native_profile_wrong_fidelity_or_unused_capture (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_missing_zero_or_unintended_native_bank_fields_reject (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.277s
+
+OK

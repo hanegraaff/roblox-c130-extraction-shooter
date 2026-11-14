@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "source_commit": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "artifact": "build/p17-native-four-rojo-roundtrip.rbxm",
+  "sha256": "8df3f9e8cda81c34dcb138b364ba1abe8155c8aaf2c10284a824fadbf12c3c7c",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"bytes\":1055,\"allOwnedInstancesDestroyed\":true,\"scope\":\"native→LuneJSON→RojoXML→LuneRBXM→native public field roundtrip\",\"samples\":{\"1\":{\"render\":\"Automatic\",\"name\":\"Outpost_GroundFloor\",\"meshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453},\"id\":\"rbxassetid://115500378831807\",\"collision\":\"Box\",\"size\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453}},\"4\":{\"render\":\"Automatic\",\"name\":\"GroundFloorPrecise\",\"meshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453},\"id\":\"rbxassetid://115500378831807\",\"collision\":\"PreciseConvexDecomposition\",\"size\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453}},\"3\":{\"render\":\"Automatic\",\"name\":\"P17__corrugated_wall__Pristine__orange\",\"meshSize\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737},\"id\":\"rbxassetid://127368714498696\",\"collision\":\"Box\",\"size\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737}},\"2\":{\"render\":\"Automatic\",\"name\":\"Outpost_UpperMain\",\"meshSize\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082},\"id\":\"rbxassetid://129818374361640\",\"collision\":\"Box\",\"size\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082}}},\"passed\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "scope": "Genuine native intrinsic/collision field preservation test; full407profiles still required."
+}

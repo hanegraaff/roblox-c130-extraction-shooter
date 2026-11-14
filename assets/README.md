@@ -86,5 +86,10 @@ and approved receipts. Ordinary runtime checks read that metadata through shared
 AssetMaterial; they do not establish current asset access, rendered appearance
 or gameplay acceptance. The [import guide](imports/military-outpost/README.md) records actual
 packages/owner, twelve repaired color maps and missing scalar PBR appearance.
-Native navigation, openings, fragment physics, thermal readability, multiplayer
-reset, performance and human A6 approval remain separate P17 gates.
+The compiler additionally preserves genuine engine mesh intrinsics and opaque
+collision/physics payloads from the managed 407-profile RBXM/receipt for 2,332
+uses. Shared AssetMesh checks public intrinsics/fidelities against five native
+attributes; host audits bind those to the captured bytes. Source art, target
+poses and texture IDs are unchanged by this constructor correction. Native
+rendered bounds, navigation, openings, fragment physics, thermal readability,
+multiplayer reset, performance and human A6 approval remain separate P17 gates.

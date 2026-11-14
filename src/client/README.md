@@ -71,3 +71,11 @@ SurfaceAppearance without inspecting its protected map properties. The compiler,
 artifact checker and Edit audit bind slots/source receipts; metadata validation
 does not prove loading. Use actual Instance-based preload and rendered review
 for availability/appearance. See the [shared material contract](../shared/README.md#compiled-material-metadata).
+
+
+`AssetMesh.validate(mesh)` is the corresponding ordinary-context native
+reconstruction check. It compares public MeshSize and collision/render fidelity
+with the five compiled native attributes, without reading opaque payloads or
+loading cloud content. The managed compiler preserves genuine engine payloads;
+client metadata/intrinsic validity alone does not establish rendered bounds,
+UVs, contact behavior or replication acceptance.

@@ -359,6 +359,16 @@ serialized slots to those attributes and the source receipt. This separates
 metadata validity from actual Instance preload, asset access and rendered
 appearance; public replicated metadata grants no new client authority.
 
+Shared `AssetMesh.validate(mesh)` separately checks public intrinsic MeshSize
+and collision/render fidelity against five readable native attributes. MeshId
+plus target Size alone is insufficient. The managed compiler preserves genuine
+engine InitialSize, PhysicalConfigData, PhysicsData and AeroMeshData from a
+hash-bound 407-profile RBXM/receipt (87 PreciseConvexDecomposition, 320 Box) for
+2,332 template uses. These bytes are not inferred from normalized geometry.
+Host audits bind payloads and metadata; runtime checks are nonyielding ordinary
+API reads. Rendering, UV appearance, contact and multiplayer fidelity remain
+independent native acceptance, with previous pre-constructor results historical.
+
 Source roughness, metalness and emission scalars remain metadata. The current
 Roblox reconstruction repairs base-color textures but does not reproduce those
 scalars as SurfaceAppearance maps. That visual compromise requires A6 approval.

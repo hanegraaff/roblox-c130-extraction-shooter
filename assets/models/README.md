@@ -36,6 +36,13 @@ Shared AssetMaterial reads it in ordinary server/client code without protected
 map-property access. Compiler/artifact/Edit audits bind actual slots and source
 receipts; runtime metadata checks do not establish availability or appearance.
 
+Every generated MeshPart also retains genuine engine InitialSize and opaque
+physical/collision payloads from the managed 407-profile native bank. Shared
+AssetMesh compares public MeshSize/fidelity with five compiled native attributes;
+MeshId and target Size alone are insufficient. The 2,332 uses preserve their
+requested 87 Precise/320 Box profile policies. Public validity and host byte
+binding do not establish rendered bounds, contacts or replication.
+
 The [import package](../imports/military-outpost/README.md) identifies actual
 mesh/texture packages, owner, derivative and deterministic regeneration. Twelve
 PNG color maps are repaired; scalar roughness/metalness/emission remain metadata

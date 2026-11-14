@@ -1,0 +1,23 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "studio": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "scope": "FreshordinaryoneclientPlay beforeactualrendercapture",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":171,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":171}\",\"outpost\":\"p16-v1\",\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":0.25184733333298939}\",\"players\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"fieldOfView\":70,\"readiness\":\"{\\\"elapsedSeconds\\\":10.641910791688133,\\\"avatarSeconds\\\":0.000018208345863968135,\\\"state\\\":\\\"{\\\\\\\"phase\\\\\\\":\\\\\\\"Lobby\\\\\\\",\\\\\\\"roundState\\\\\\\":true,\\\\\\\"hasRoot\\\\\\\":true,\\\\\\\"role\\\\\\\":\\\\\\\"Waiting\\\\\\\",\\\\\\\"hasCharacter\\\\\\\":true,\\\\\\\"loadLease\\\\\\\":\\\\\\\"nil\\\\\\\",\\\\\\\"elapsedSeconds\\\\\\\":10.641911458340474,\\\\\\\"life\\\\\\\":\\\\\\\"Waiting\\\\\\\",\\\\\\\"stage\\\\\\\":\\\\\\\"ready\\\\\\\",\\\\\\\"serverBaselineComplete\\\\\\\":true}\\\"}\",\"keyboard\":true,\"editQuality\":\"Enum.QualityLevel.Automatic\",\"userId\":2227341845,\"role\":\"Waiting\",\"cameraType\":\"Custom\",\"preview\":\"Ground\",\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":2227341845,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"renderQuality\":\"Enum.QualityLevel.Automatic\",\"enableFRM\":\"true\",\"camera\":{\"1\":0,\"3\":132.07406616210938,\"2\":7.833263397216797,\"5\":0,\"4\":1,\"7\":0,\"6\":0,\"9\":0.258819043636322,\"8\":0.9659258127212524,\"12\":0.9659258127212524,\"11\":-0.258819043636322,\"10\":0},\"subject\":\"Workspace.KingKunkank.Humanoid\",\"life\":\"Waiting\",\"viewport\":{\"1\":1153,\"2\":579},\"mouse\":true,\"touch\":false,\"savedQuality\":\"Enum.SavedQualitySetting.Automatic\"}"
+      }
+    ],
+    "isError": false
+  }
+}

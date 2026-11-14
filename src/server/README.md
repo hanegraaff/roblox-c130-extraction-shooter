@@ -152,7 +152,9 @@ require a family, identity/pivot and IntactSize. Publish selects their approved
 appearance and replicates the same stage/progress/credit attributes; primitive
 panels retain generic scars and two-strip residuals. `DestructionRuntime.start`
 preflights registered IDs and the material catalog/proxies before acquiring
-fragment collision groups. Damage timing and ordering remain in the existing
+fragment collision groups. Shared `AssetMesh.validate` additionally requires
+public native MeshSize/collision/render fidelity to match five compiled native
+attributes; a MeshId/Size-only object cannot pass as reconstructed native art. Damage timing and ordering remain in the existing
 shared rules and service; no new client remote selects materials or panels.
 
 `PanelFragments.emit(pivot, size, color, nowSeconds, templates?)` optionally
@@ -167,7 +169,7 @@ cover and multiplayer acceptance.
 `OutpostReconstruction.prepare(assets)` returns an unparented site-positioned
 Model or `nil, reason`, without world writes. It validates imported catalog,
 managed revision/receipt, exact floor/internal-stair support geometry, mesh/material
-references and compiled material metadata, inert content, unique component IDs
+references, compiled material metadata and public native intrinsics/fidelities, inert content, unique component IDs
 and 26 pristine panel Models.
 `install(world, assets)` replaces only `Battlefield.Buildings.Outpost` and returns
 `{ commit, rollback }` or `nil, reason`. Both closures are nonyielding/idempotent;
@@ -180,6 +182,10 @@ reconstruct that snapshot and require fresh panel references.
 The managed templates contain twelve repaired base-color texture maps. Source
 roughness/metalness/emission scalars are metadata rather than equivalent
 SurfaceAppearance maps; the resulting material finish requires explicit A6 review.
+The compiler also preserves genuine engine InitialSize, PhysicalConfigData,
+PhysicsData and AeroMeshData from 407 managed native profiles across 2,332 uses.
+It never invents payloads from target sizes. Public runtime checks remain separate
+from host payload audits and actual rendered/contact/replication acceptance.
 Import owner/IDs and deterministic reconstruction receipts are documented in the
 [asset package](../../assets/imports/military-outpost/README.md).
 

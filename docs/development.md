@@ -28,7 +28,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs the portable P16 asset audit, P17 definition/GLB/reconstruction gates, 43 asset and ten manifest rejection cases, formatting, lint, strict type analysis, 59 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs the portable P16 asset audit, P17 definition/GLB/reconstruction gates, 48 asset and ten manifest rejection cases, formatting, lint, strict type analysis, 59 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -184,6 +184,15 @@ bytes and package lock remain unchanged. The material-split derivative preserves
 source triangles, UVs and material boundaries; compilation fits observed import
 scale/rotation/translation rather than assuming importer units.
 
+MeshId plus target Size does not reconstruct native mesh intrinsics or collision
+data. The compiler also loads the managed 407-profile native RBXM/receipt and
+preserves engine-authored InitialSize and opaque PhysicalConfigData, PhysicsData
+and AeroMeshData for all 2,332 uses. Profiles are keyed by MeshId, collision and
+render fidelity; payloads are never inferred from normalized sizes. Ordinary
+`AssetMesh.validate` checks public MeshSize/fidelities against the five compiled
+native attributes. Payload-byte audits, runtime metadata checks and actual
+render/contact/replication acceptance remain separate.
+
 `OutpostReconstruction.prepare(assets)` validates the managed templates before
 world writes. `install(world, assets)` replaces exactly the intended smaller
 building and returns commit/rollback ownership. Missing assets, malformed support
@@ -214,7 +223,7 @@ furnishings. Normal/thermal readability still needs actual rendered acceptance.
 
 The authorized `C130P17Import` workspace is private (universe `10776653720`,
 place `72732833195348`). Clean unpublished draft 11 contains source `010289d`,
-not the newer local `51f8440` candidate.
+not the newer local native-constructor candidate.
 The last verified published version 5 contains the older clean `03c9c06`
 primitive release build; saving the draft did not publish the candidate. Preserve
 that separation when collecting source-specific evidence. Never cloud-save or publish

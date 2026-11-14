@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "source_commit": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "studio_id": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "date_local": "2026-11-14",
+  "comparison": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"scope\":\"unparented native asset reconstruction comparison\",\"rows\":{\"1\":{\"freshMeshId\":\"rbxassetid://115500378831807\",\"sourceMeshSize\":{\"1\":0,\"3\":0,\"2\":0},\"passed\":true,\"freshMeshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453},\"appliedMeshId\":\"rbxassetid://115500378831807\",\"appliedMeshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453},\"name\":\"Outpost_GroundFloor\",\"sourceSize\":{\"1\":32,\"3\":48,\"2\":1.0000077486038209},\"cframeUnchanged\":true,\"appliedSize\":{\"1\":32,\"3\":48,\"2\":1.0000077486038209},\"mesh\":\"rbxassetid://115500378831807\",\"freshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453}},\"3\":{\"freshMeshId\":\"rbxassetid://127368714498696\",\"sourceMeshSize\":{\"1\":0,\"3\":0,\"2\":0},\"passed\":true,\"freshMeshSize\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737},\"appliedMeshId\":\"rbxassetid://127368714498696\",\"appliedMeshSize\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737},\"name\":\"P17__corrugated_wall__Pristine__orange\",\"sourceSize\":{\"1\":15.999992370605469,\"3\":1.205000877380371,\"2\":0.7999997138977051},\"cframeUnchanged\":true,\"appliedSize\":{\"1\":15.999992370605469,\"3\":1.205000877380371,\"2\":0.7999997138977051},\"mesh\":\"rbxassetid://127368714498696\",\"freshSize\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737}},\"2\":{\"freshMeshId\":\"rbxassetid://129818374361640\",\"sourceMeshSize\":{\"1\":0,\"3\":0,\"2\":0},\"passed\":true,\"freshMeshSize\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082},\"appliedMeshId\":\"rbxassetid://129818374361640\",\"appliedMeshSize\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082},\"name\":\"Outpost_UpperMain\",\"sourceSize\":{\"1\":19,\"3\":46,\"2\":1.0000073909759522},\"cframeUnchanged\":true,\"appliedSize\":{\"1\":19,\"3\":46,\"2\":1.0000073909759522},\"mesh\":\"rbxassetid://129818374361640\",\"freshSize\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082}}},\"ownedInstancesDestroyed\":true,\"sourceMutated\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "native_export": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"bytes\":4065,\"chunks\":1,\"nativeSerializeRoundtripPassed\":true,\"base64Characters\":5420,\"samples\":{\"1\":{\"render\":\"Automatic\",\"name\":\"Outpost_GroundFloor\",\"meshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453},\"collision\":\"Box\",\"mesh\":\"rbxassetid://115500378831807\",\"size\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453}},\"3\":{\"render\":\"Automatic\",\"name\":\"P17__corrugated_wall__Pristine__orange\",\"meshSize\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737},\"collision\":\"Box\",\"mesh\":\"rbxassetid://127368714498696\",\"size\":{\"1\":16,\"3\":1.2050014734268189,\"2\":0.8000000715255737}},\"2\":{\"render\":\"Automatic\",\"name\":\"Outpost_UpperMain\",\"meshSize\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082},\"collision\":\"Box\",\"mesh\":\"rbxassetid://129818374361640\",\"size\":{\"1\":810.6666870117188,\"3\":1962.666748046875,\"2\":42.6669807434082}}},\"sourceUnchanged\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "scope": "Unparented supported AssetService/ApplyMesh and native serialization proof; original templates unchanged. Full rendered repair not yet established."
+}

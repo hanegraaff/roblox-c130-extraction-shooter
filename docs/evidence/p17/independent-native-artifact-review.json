@@ -1,0 +1,12 @@
+{
+  "command": "rojo build test.project.json --output build/p17-independent-native-fixed-tests.rbxlx",
+  "artifact": "build/p17-independent-native-fixed-tests.rbxlx",
+  "sha256": "c1b467e1769c3c754b941442f28caa35a644e697132a69123a7de2614c4dce59",
+  "bytes": 10960098,
+  "actual_mesh_parts_checked": 2332,
+  "initial_size_preserved": true,
+  "normalized_target_size_preserved": true,
+  "opaque_payloads_exact": true,
+  "runtime_metadata_exact": true,
+  "scope": "Independent host actual-Rojo-XML preservation; native render/collision/ordinary API access not tested"
+}

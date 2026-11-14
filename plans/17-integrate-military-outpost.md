@@ -720,3 +720,87 @@ confirms the on-disk test artifact still matches SHA-256
 with no saved temporary hooks. The user is asked to open that unchanged local
 file once in the existing Studio application with Rojo disconnected. A new
 intended Studio ID/source verification is required before further tests.
+
+### Render reconstruction defect isolated — 2026-11-14
+
+The reopened local document source/material identity passes again, and the
+recovery SDK runs with two actual clients and 171/10/10 passing baselines.
+The [full recovery report](../docs/evidence/p17/material-48eae4b-recovery-v5.json)
+preserves four of five discovered passing cases: rejection/authority, actual
+mesh loading, avatar routes and all six material families' replicated states
+and independent earned-opening/residual rays. All 42 family/stage records
+agree on both clients; a pristine reset/redeploy succeeds. Native M102 roof
+fire reaches direct hits one through five and Heavy on the third, then times
+out awaiting the sixth. This is incomplete native-fire acceptance, not a
+changed threshold. A [focused diagnostic launch](../docs/evidence/p17/material-48eae4b-v6-partial-return.json)
+starts only one actual client and self-ends at 60.403 seconds; the shot
+diagnostic does not run. Its child contexts close, exact hooks/attributes are
+restored and the [identity proof](../docs/evidence/p17/material-hooks-restoration-48eae4b-recovery.json)
+passes. Repeated SDK startup trouble is preserved, with a supported manual
+Server & Clients route being prepared rather than more launch loops.
+
+Ordinary one-client visual review on the same source passes 171/10 but exposes
+a **P1 reconstruction defect**. At verified outside cameras the imported art
+renders as giant planes, while actual Part bounds report a 48×62×31-stud
+building. With the camera fixed, hiding only the 2,256 imported Outpost meshes
+reveals the normal map; restoring their exact local transparency restores the
+giant planes. The [prioritized render review](../docs/evidence/p17/native-render-review-48eae4b.md),
+[camera/geometry metadata](../docs/evidence/p17/native-render-metadata-48eae4b.json),
+[original diagnostic images](../docs/evidence/p17/render-capture-files-48eae4b.json)
+and [cleanup proof](../docs/evidence/p17/native-render-cleanup-48eae4b.json)
+preserve this actual observation. Original viewport is 1153×579, capture output
+1920×964, graphics Automatic with FRM enabled; these are not performance-budget
+settings. Actual operator-preview UI and zoom respond, but the building cannot
+be meaningfully inspected. No visual/A6 or performance pass is claimed.
+
+Inspected reconstructed MeshParts have public `MeshSize = (0,0,0)` despite
+nonzero Size/MeshId. A supported unparented AssetService comparison loads the
+same actual IDs: the floor's intrinsic MeshSize is approximately
+1365.333×42.667×2048 while its intended placed Size is 32×1×48. Applying that
+native mesh to a clone preserves its target Size/CFrame and restores the real
+intrinsic size. Native serialize/deserialize preserves the loaded mesh data.
+The [comparison receipt](../docs/evidence/p17/native-mesh-create-apply-comparison-48eae4b.json)
+records three positive samples and cleanup without touching source templates.
+
+A [controlled paired render](../docs/evidence/p17/native-payload-render-isolation-48eae4b.json)
+then compares the two same-position floor clones: missing native payload
+produces giant planes, while supported `ApplyMesh` from the actual asset
+produces the intended 32×48 textured slab. Original templates and all
+diagnostic nodes are restored/removed. This establishes incomplete native
+constructor payload as a render reconstruction problem; a persistent native
+field/bank pipeline and roundtrip checks must now be implemented. No hidden
+property access, synthetic intrinsic-size guess or renderer fallback is used.
+Correct declared collision fidelity must also survive native reconstruction.
+The approved art, pivots, IDs and original P16 package remain the input.
+
+### Genuine native mesh reconstruction — 2026-11-14
+
+Source `ee19deb5fe18090573ce0d9788b0c77555bca333`, tree
+`4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a`, preserves genuine engine-authored
+`InitialSize`, `PhysicalConfigData`, `PhysicsData` and `AeroMeshData` in the
+existing managed model definitions. The managed native profile bank contains
+407 actual mesh/fidelity profiles (320 Box / 87 PreciseConvexDecomposition),
+captured through supported AssetService construction and native serialization.
+The compiler applies their exact fields to all 2,332 template uses; it does not
+derive intrinsic size from the intended placed Size. Original P16 art, mesh IDs,
+target Size/CFrame, material maps and classification remain unchanged.
+
+Shared `AssetMesh.validate` checks ordinary public MeshSize and fidelities
+against versioned readable identity metadata, before installation and in native
+regressions. Host audits bind those attributes to the actual native payload.
+The test-only missing-payload fixture reproduces the former malformed constructor
+and is absent from the release mapping. No runtime cloud fetch is introduced.
+
+The [developer full gate](../docs/evidence/p17/developer-host-ee19deb.txt) and
+[Linux Verify #355](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43634221984)
+passes **59 unit / 65 integration / 48 asset / ten manifest cases**, plus all
+required static/type/build/isolation checks. The
+[candidate build record](../docs/evidence/p17/candidate-builds-ee19deb.json)
+pins 5,296 release / 5,389 test Instances, 51 release scripts and 2,804 authored
+Parts. The [independent host review](../docs/evidence/p17/independent-native-constructor-review.md)
+confirms all 407 profiles, 2,332 uses, preserved payload bytes and unchanged art.
+Its [five focused rejection cases](../docs/evidence/p17/independent-native-regressions-recheck.txt) pass after
+correcting the negative fixture's positive control. Expected native counts are
+173 server / ten client; these are **not yet observed on this source**.
+Fresh actual rendering, fidelity/physics, client reconstruction and the
+remaining A1–A6 gates must run before closing the P1 or claiming acceptance.

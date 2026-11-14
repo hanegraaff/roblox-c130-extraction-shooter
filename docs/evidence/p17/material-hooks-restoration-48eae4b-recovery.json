@@ -1,0 +1,14 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "studio": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "scope": "OriginalSourcesrestoredexactly, ownedmodulesandattrsremoved aftercompletedpartialSDK; noactiveownedchildren",
+  "identity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"source\":\"48eae4b2f0ebb4b0f069fb21a41973b9a37a297a\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"version\":\"0.747.0.7471481\",\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"meshes\":2332,\"scripts\":132,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  }
+}

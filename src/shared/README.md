@@ -1,9 +1,10 @@
 # Shared rules and lifecycle modules
 
-Rojo maps this package to `ReplicatedStorage.Shared`. Its rule modules are strict, deterministic and nonyielding, with no services, global clock or mutable singleton authority state. `AssetMaterial` is a nonyielding Instance metadata reader shared by ordinary server/client code. Replication makes all of this code public; server adapters must still validate every action. Authoritative role/round services live in the [server package](../server/README.md).
+Rojo maps this package to `ReplicatedStorage.Shared`. Its rule modules are strict, deterministic and nonyielding, with no services, global clock or mutable singleton authority state. `AssetMaterial` and `AssetMesh` are nonyielding Instance adapters shared by ordinary server/client code. Replication makes all of this code public; server adapters must still validate every action. Authoritative role/round services live in the [server package](../server/README.md).
 
 | Module / API | Contract |
 | --- | --- |
+| `AssetMesh.validate(mesh)` | Returns `boolean, reason?` by comparing public MeshSize/collision/render fidelity with five compiled native attributes. It does not fetch assets, read protected payloads, mutate Instances or prove rendered bounds/physics contacts. |
 | `AssetMaterial.read(mesh)` | Returns a compiled material record or `nil, reason` from exactly one SurfaceAppearance and readable v1 attributes. It never reads protected map properties, yields, caches, mutates Instances or proves content availability. |
 | `Validation.isFinite(value)` | Accepts finite numbers, including zero; rejects NaN, infinity and nonnumbers. |
 | `Validation.inRange(value, minimum, maximum)` | Inclusive finite bounds; malformed bounds reject. |
@@ -53,3 +54,22 @@ bind actual serialized map slots to this metadata and the approved source PNGs.
 Metadata matching, authoring-slot comparison, Instance-based preload and rendered
 appearance are separate observations. Neither metadata nor a successful return
 proves asset ownership/access, loading, UV orientation or visual approval.
+
+
+## Compiled native mesh construction
+
+`AssetMesh.validate(mesh: MeshPart)` requires NativeGeometryVersion 1,
+NativeMeshId matching the actual MeshId, a positive finite Vector3 NativeMeshSize,
+NativeCollisionFidelity Box or PreciseConvexDecomposition, and
+NativeRenderFidelity Automatic. It compares the public MeshSize with metadata
+within 0.0001 studs and checks the actual collision/render fidelities. Missing,
+zero or mismatched data returns `false, reason`; success returns true. It never
+yields, loads cloud assets, reads protected bytes, caches state or owns cleanup.
+
+NativeMeshSize describes asset intrinsics independently of target Size.
+MeshId/Size alone cannot recreate those intrinsics or collision data. The
+compiler preserves genuine engine-authored InitialSize and opaque payloads from
+the managed native profile bank; host/native authoring audits bind the five
+attributes to those bytes. Runtime validity, rendered bounds/UVs, contact
+behavior and replication are separate checks. Public metadata is not an authority
+or secrecy boundary.

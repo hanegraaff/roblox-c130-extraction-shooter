@@ -13,10 +13,10 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 | P17 equivalent material-split GLB | `python3 scripts/p17_library_glb.py` |
 | P17 managed import reconstruction | `python3 scripts/p17_compile_outpost.py` |
 | Asset audit regression tests | `python3 -m unittest discover -s tests/assets -v` |
-| Format | `stylua --check src tests scripts/run_tests.luau` |
-| Lint | `selene src tests scripts/run_tests.luau` |
+| Format | `stylua --check src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau` |
+| Lint | `selene src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau` |
 | Roblox sourcemap | `rojo sourcemap test.project.json --output build/sourcemap.json` |
-| Strict types | `luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau src tests scripts/run_tests.luau` |
+| Strict types | `luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau` |
 | Unit rules | `lune run scripts/run_tests.luau unit` |
 | Lifecycle integration | `lune run scripts/run_tests.luau integration` |
 | Release/test builds | `rojo build default.project.json --output build/game.rbxlx` and `rojo build test.project.json --output build/tests.rbxlx` |
@@ -28,13 +28,13 @@ The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The current candidate checks **2,804 authored Parts** across source world/templates, **50 runtime scripts** and **5,295 release Instances**. The base world retains 403 Battlefield Parts/187 primitive panels, while runtime Outpost installation produces 188 active panels. Earlier 422-part/187-panel and 353-part/111-panel artifact counts retain their original source scope. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The current candidate checks **2,804 authored Parts** across source world/templates, **51 runtime scripts**, **5,296 release Instances** and **5,389 test Instances**. The base world retains 403 Battlefield Parts/187 primitive panels, while runtime Outpost installation produces 188 active panels. Earlier 422-part/187-panel and 353-part/111-panel artifact counts retain their original source scope. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
 ## Verify the integrated P17 Outpost
 
-The host gate checks 59 unit / 65 integration cases, 43 asset regressions,
+The host gate checks 59 unit / 65 integration cases, 48 asset regressions,
 ten manifest regressions, seven P16 audits and the P17 definition, GLB and
 reconstruction gates. `p17_assets.py` pins the approved Blender/catalog/lock
 identity. `p17_library_glb.py` decodes the material-split derivative and compares
@@ -49,21 +49,31 @@ pristine template has 2,256 visible MeshParts. Source-specific host results and
 native acceptance status belong to the [P17 record](../plans/17-integrate-military-outpost.md).
 The original P16 package and its human approval are unchanged.
 
+The compiler now preserves genuine engine constructor data, not only MeshId and
+target Size. A managed native RBXM/receipt covers 407 profiles (87 PreciseConvexDecomposition
+and 320 Box) across 2,332 template uses. InitialSize and opaque PhysicalConfigData,
+PhysicsData and AeroMeshData bytes must match the source-bound capture. Shared
+`AssetMesh.validate` checks public MeshSize/fidelities against readable v1
+metadata in ordinary server/client contexts. Host checks bind payload bytes and
+metadata; a valid public check does not prove rendered bounds, UVs, actual
+collision contacts or multiplayer fidelity. Those need fresh native acceptance.
+
 Run a fresh source-confirmed local test document. The current mapping expects
-**171 server cases and ten per actual client**. Source `51f8440` passed a fresh
-ordinary local Play in Studio `0.747.0.7471481`: 171/171 server and 10/10 client,
-one actual client, zero errors, failures or skips. The real GameRuntime installed
-the `p16-v1` Outpost; ordinary material-metadata, reconstruction/roof-attachment
-and ThermalCosmetics fixtures passed. This is a solo baseline. All P17 acceptance
-criteria still require their full source-specific navigation, material/fire,
-multiplayer/reset, workload and human evidence. Earlier preparation-source 164/7
-and integrated P08 156/7 reports retain their original scope.
+**173 server cases and ten per actual client** for the native-constructor fix
+`ee19deb5`; that corrected source still needs fresh native execution. Do not
+report the expected count as a pass. Source `51f8440` passed its earlier ordinary
+local Play baseline (171/171 server and 10/10 client, one actual client,
+Studio `0.747.0.7471481`, zero errors/failures/skips), before this native mesh
+payload repair. That result and later pre-constructor observations remain
+historical and cannot establish corrected rendering, fidelity or replication.
+All P17 criteria retain their full source-specific navigation, material/fire,
+multiplayer/reset, workload and human evidence.
 
 | Suite / file | Intended native assertions |
 | --- | --- |
 | [`MaterialPanels.spec.luau`](../tests/studio/specs-server/MaterialPanels.spec.luau) | Controlled empty-cosmetic fixtures for catalog rejection, shared damage/proxies, real Heavy/Total rays and bounded fragment-template lifecycle |
-| [`Outpost.spec.luau`](../tests/studio/specs-server/Outpost.spec.luau) | Actual managed template validation, ordinary-server material-metadata reads, invalid-support/pivot rejection before mutation, exact site/legacy identities/rollback, material-family heavy thresholds and real openings |
-| [`ThermalCosmetics.spec.luau`](../tests/studio/specs-client/ThermalCosmetics.spec.luau) | Ordinary-client material-metadata reads; client-only non-cover hiding, native solid-cover retention and exact transparency/listener cleanup |
+| [`Outpost.spec.luau`](../tests/studio/specs-server/Outpost.spec.luau) | Actual managed template validation, ordinary-server material/native-intrinsic reads, invalid-support/pivot rejection before mutation, exact site/legacy identities/rollback, material-family heavy thresholds and real openings |
+| [`ThermalCosmetics.spec.luau`](../tests/studio/specs-client/ThermalCosmetics.spec.luau) | Ordinary-client material/native-intrinsic reads; client-only non-cover hiding, native solid-cover retention and exact transparency/listener cleanup |
 
 Client readiness waits run inside bounded test callbacks, after the actual
 Outpost replacement and descendant compiled-material metadata are available.
@@ -182,7 +192,7 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The integrated P17 mapping expects **171 server cases and ten cases per actual client**. Fresh reports are required after changes. The ordinary one-actual-client `51f8440` baseline passed 171/171 server and 10/10 client with zero errors, failures or skips; it does not establish multiplayer or full P17 acceptance. The earlier P08 mapping had 156 server cases (55 unit, 65 integration and 36 server engine cases). Recorded P08 source `ef7826b` passed fresh ordinary one-client Play with **156 server / seven client**, zero failures/errors/skips, and an ordinary two-client SDK session passed 156 server/seven per actual client. These baseline results do not establish the complete three-client launcher harness or operated input. The [P08 record](../plans/08-rocket-launcher.md) identifies the actual tested candidate and passing/unavailable checks. Initial candidate `88732d4` passed 155 server/six client before its character-removal and GUI-intersection corrections. Require every current report to have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`. Preserve exact source/build and actual contexts; historical P06/P07 counts below apply only to their recorded source.
+5. The integrated P17 mapping expects **173 server cases and ten cases per actual client** for the native-constructor correction. Fresh reports are required; this expected count is not execution evidence. The earlier one-client `51f8440` 171/10 baseline predates that correction and retains only its original source/fixture scope. The earlier P08 mapping had 156 server cases (55 unit, 65 integration and 36 server engine cases). Recorded P08 source `ef7826b` passed fresh ordinary one-client Play with **156 server / seven client**, zero failures/errors/skips, and an ordinary two-client SDK session passed 156 server/seven per actual client. These baseline results do not establish the complete three-client launcher harness or operated input. The [P08 record](../plans/08-rocket-launcher.md) identifies the actual tested candidate and passing/unavailable checks. Initial candidate `88732d4` passed 155 server/six client before its character-removal and GUI-intersection corrections. Require every current report to have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`. Preserve exact source/build and actual contexts; historical P06/P07 counts below apply only to their recorded source.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 

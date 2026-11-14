@@ -1,0 +1,13 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "scope": "ActualpartialSDKreturn andcleanup afterstartupfailure; subsequentEndTest attempt foundclosedownedcontexts",
+  "raw": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"raw\":\"{\\\"ok\\\":true,\\\"report\\\":{\\\"serverBaseline\\\":\\\"{\\\\\\\"errors\\\\\\\":0,\\\\\\\"skipped\\\\\\\":0,\\\\\\\"passed\\\\\\\":171,\\\\\\\"clientCount\\\\\\\":1,\\\\\\\"environment\\\\\\\":\\\\\\\"Studio\\\\\\\",\\\\\\\"seed\\\\\\\":1,\\\\\\\"suite\\\\\\\":\\\\\\\"P01-server\\\\\\\",\\\\\\\"failed\\\\\\\":0,\\\\\\\"discovered\\\\\\\":171}\\\",\\\"skipped\\\":0,\\\"cases\\\":[{\\\"name\\\":\\\"Harness startup\\\",\\\"passed\\\":false,\\\"detail\\\":\\\"ServerScriptService.ServerTests.P17MaterialHarness:204: P07 timeout: initial actual two clients\\\"}],\\\"passed\\\":0,\\\"clientBaselines\\\":[],\\\"clientCount\\\":1,\\\"observations\\\":[],\\\"clientDiagnostics\\\":[],\\\"environment\\\":\\\"Studio\\\",\\\"failed\\\":1,\\\"suite\\\":\\\"P17-imported-material-multiplayer\\\",\\\"initialUserIds\\\":[],\\\"discovered\\\":1}}\",\"finished\":1794683730228,\"idle\":true,\"started\":1794683669825}"
+      }
+    ],
+    "isError": false
+  }
+}
