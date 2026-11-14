@@ -1,15 +1,63 @@
 --!strict
 -- P17: real client-only transparency ownership; rendered depth review is separate.
-local Cosmetics = require(game.Players.LocalPlayer.PlayerScripts.Client.ThermalCosmetics)
-local AssetMaterial = require(game.ReplicatedStorage.Shared.AssetMaterial)
+type CosmeticsAPI = typeof(require(game.StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics))
+type MaterialAPI = typeof(require(game.ReplicatedStorage.Shared.AssetMaterial))
+-- Resolve delayed StarterPlayerScripts copies inside each test, so prerequisite
+-- timeouts remain ordinary reported failures rather than aborting TestEZ discovery.
+local function cosmetics(): CosmeticsAPI
+    local scripts = game.Players.LocalPlayer:WaitForChild("PlayerScripts", 10)
+    local client = if scripts then scripts:WaitForChild("Client", 15) else nil
+    local module = if client then client:WaitForChild("ThermalCosmetics", 10) else nil
+    assert(module and module:IsA("ModuleScript"), "client ThermalCosmetics replication timeout")
+    return require(module) :: CosmeticsAPI
+end
+local function materialAPI(): MaterialAPI
+    local shared = game.ReplicatedStorage:WaitForChild("Shared", 10)
+    local module = if shared then shared:WaitForChild("AssetMaterial", 10) else nil
+    assert(module and module:IsA("ModuleScript"), "shared AssetMaterial replication timeout")
+    return require(module) :: MaterialAPI
+end
+local function importedMesh(materials: MaterialAPI): MeshPart
+    local deadline = os.clock() + 60
+    while type(workspace:GetAttribute("ServerTestReport")) ~= "string" and os.clock() < deadline do
+        task.wait()
+    end
+    local report = workspace:GetAttribute("ServerTestReport")
+    assert(type(report) == "string", "server fixtures did not finish before imported material probe")
+    local totals = game.HttpService:JSONDecode(report)
+    assert(
+        totals.failed == 0 and totals.errors == 0 and totals.passed > 0,
+        "server fixtures failed: " .. report
+    )
+    -- Runtime startup follows fixture completion. Attribute and actual descendant
+    -- readiness are both required; a report alone is not mesh replication proof.
+    deadline = os.clock() + 35
+    repeat
+        local world = workspace:FindFirstChild("World")
+        local map = if world then world:FindFirstChild("Battlefield") else nil
+        local buildings = if map then map:FindFirstChild("Buildings") else nil
+        local outpost = if buildings then buildings:FindFirstChild("Outpost") else nil
+        local mesh = if outpost then outpost:FindFirstChildWhichIsA("MeshPart", true) else nil
+        if
+            map
+            and map:GetAttribute("OutpostAssetRevision")
+            and mesh
+            and mesh:IsA("MeshPart")
+            and materials.read(mesh) ~= nil
+        then
+            return mesh
+        end
+        task.wait()
+    until os.clock() >= deadline
+    error("approved runtime Outpost mesh/material metadata replication timeout")
+end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test(
         "P17MaterialMetadata ordinary client reads compiled material contract without Plugin property access",
         function()
-            local outpost = workspace.World.Battlefield.Buildings:FindFirstChild("Outpost")
-            local source = if outpost then outpost:FindFirstChildWhichIsA("MeshPart", true) else nil
-            assert(source and source:IsA("MeshPart"), "replicated imported Outpost mesh absent")
+            local AssetMaterial = materialAPI()
+            local source = importedMesh(AssetMaterial)
             local material, reason = AssetMaterial.read(source)
             assert(material, reason)
             assert(
@@ -30,6 +78,7 @@ return function()
     test(
         "P17ThermalFragments hides owned physical debris while rejecting marker-only impostors and real cover",
         function()
+            local Cosmetics = cosmetics()
             local root = Instance.new("Folder")
             root.Name = "ThermalFragmentFixture"
             root.Parent = workspace
@@ -89,6 +138,7 @@ return function()
     test(
         "P17ThermalNonCover hides marked art restores exact values and retains native solid cover",
         function()
+            local Cosmetics = cosmetics()
             local root = Instance.new("Folder")
             root.Name = "ThermalCosmeticFixture"
             root.Parent = workspace

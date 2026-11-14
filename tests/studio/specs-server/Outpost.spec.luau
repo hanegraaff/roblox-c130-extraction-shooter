@@ -7,6 +7,7 @@ local Reconstruction = require(Server.OutpostReconstruction)
 local BuildingGeometry = require(Server.BuildingGeometry)
 local DestructionRuntime = require(Server.DestructionRuntime)
 local Catalog = require(Server.PanelAssetCatalog)
+local MaterialGeometry = require(Server.MaterialPanelGeometry)
 local AssetMaterial = require(game.ReplicatedStorage.Shared.AssetMaterial)
 local function fixture()
     local world = Instance.new("Folder")
@@ -22,6 +23,96 @@ local function fixture()
 end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test(
+        "P17OutpostAttachments accepts actual spanning roof dressing and rejects malformed ownership bounds before mutation",
+        function()
+            local catalog, reason = Catalog.load(Assets.MaterialPanels)
+            assert(catalog, reason)
+            local assets = Assets:Clone()
+            local source = assets:FindFirstChild("MilitaryOutpost")
+            local panels = if source then source:FindFirstChild("Outpost_Panels") else nil
+            assert(panels, "managed material panels absent")
+            local ok, failure = pcall(function()
+                local spanning = 0
+                for _, panel in panels:GetChildren() do
+                    assert(panel:IsA("Model"), "managed panel identity absent")
+                    local familyId = panel:GetAttribute("PanelAssetFamily")
+                    assert(type(familyId) == "string" and catalog[familyId], "managed family absent")
+                    assert(
+                        MaterialGeometry.validate(panel, catalog[familyId]),
+                        "approved panel dressing rejected"
+                    )
+                    for _, part in panel:GetChildren() do
+                        if
+                            part:IsA("MeshPart")
+                            and math.max(part.Size.X, part.Size.Y, part.Size.Z) > 40.01
+                        then
+                            assert(
+                                part:GetAttribute("PanelAttachment") == true,
+                                "large panel mesh is not owned dressing"
+                            )
+                            spanning += 1
+                        end
+                    end
+                end
+                assert(spanning >= 10, "actual 42/44-stud approved roof dressing not exercised")
+                local panel = panels:FindFirstChild("Outpost_S02_Roof_01_02")
+                assert(panel and panel:IsA("Model"), "approved roof identity absent")
+                local family = catalog.layered_roof
+                local original = panel:FindFirstChild("Outpost_Imported0216")
+                assert(original and original:IsA("MeshPart"), "actual 44-stud roof attachment absent")
+                local size, frame = original.Size, original.CFrame
+                local basis = panel:GetAttribute("PanelAssetBasis")
+                assert(typeof(basis) == "CFrame", "roof material basis absent")
+                local canonical = panel:GetPivot() * basis
+                original.Size, original.CFrame = Vector3.new(64, 0.1, 0.1), canonical
+                assert(MaterialGeometry.validate(panel, family), "owned attachment at 64-stud bound rejected")
+                original.Size, original.CFrame = size, frame
+                local before = #workspace.World.Battlefield:GetDescendants()
+                local sourceCount = #assets:GetDescendants()
+                for _, change in
+                    { "unflagged", "wrong-owner", "oversized", "outside-envelope", "malformed-basis" }
+                do
+                    -- BasePart.CFrame orthonormalizes assignments. The authored
+                    -- CFrame attribute preserves malformed matrices for rejection.
+                    panel:SetAttribute(
+                        "PanelAssetBasis",
+                        if change == "malformed-basis"
+                            then CFrame.new(0, 0, 0, 1, 0.5, 0, 0, 1, 0, 0, 0, 1)
+                            else basis
+                    )
+                    original:SetAttribute("PanelAttachment", change ~= "unflagged")
+                    original:SetAttribute(
+                        "AttachmentPanelId",
+                        if change == "wrong-owner" then "OtherPanel" else panel.Name
+                    )
+                    original.Size = if change == "oversized" then Vector3.new(64.01, 0.1, 0.1) else size
+                    original.CFrame = if change == "outside-envelope"
+                        then canonical * CFrame.new(33, 0, 0)
+                        else frame
+                    assert(
+                        not MaterialGeometry.validate(panel, family),
+                        "invalid attachment accepted: " .. change
+                    )
+                    local prepared, rejection = Reconstruction.prepare(assets)
+                    if prepared then
+                        prepared:Destroy()
+                    end
+                    assert(
+                        prepared == nil and type(rejection) == "string",
+                        "invalid attachment reached world preparation"
+                    )
+                    assert(
+                        #workspace.World.Battlefield:GetDescendants() == before
+                            and #assets:GetDescendants() == sourceCount,
+                        "attachment rejection mutated source/world"
+                    )
+                end
+            end)
+            assets:Destroy()
+            assert(ok, failure)
+        end
+    )
     test(
         "P17MaterialMetadata ordinary server reads compiled maps and rejects missing malformed or duplicate contracts",
         function()

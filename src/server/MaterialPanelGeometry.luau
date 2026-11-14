@@ -9,6 +9,11 @@
 local Catalog = require(script.Parent.PanelAssetCatalog)
 local AssetRules = require(script.Parent.PanelAssetRules)
 local MaterialPanelGeometry = {}
+-- Owned dressing may span several panels (approved roof rails are 42/44 studs).
+-- It shares the full-building 64-stud ceiling in a bounded canonical envelope;
+-- ordinary panel meshes/proxies and fragment catalog bounds keep their defaults.
+local attachmentHalfBoundsStuds = { 32, 32, 32 }
+local attachmentMaximumDimensionStuds = 64
 
 -- Rotation-only material coordinates preserve legacy sidewall/roof identities.
 -- Missing basis is identity. Reject malformed authoring without mutation.
@@ -68,8 +73,9 @@ function MaterialPanelGeometry.validate(model: Model, family: Catalog.Family): (
                     { item.Size.X, item.Size.Y, item.Size.Z },
                     { pivot:ToObjectSpace(item.CFrame):GetComponents() },
                     if attachment
-                        then { 100, 100, 100 }
-                        else { family.size.X / 2, family.size.Y / 2, family.size.Z / 2 + 0.4 }
+                        then attachmentHalfBoundsStuds
+                        else { family.size.X / 2, family.size.Y / 2, family.size.Z / 2 + 0.4 },
+                    if attachment then attachmentMaximumDimensionStuds else nil
                 )
             then
                 return false, "invalid material panel geometry"
