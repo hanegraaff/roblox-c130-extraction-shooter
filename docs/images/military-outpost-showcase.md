@@ -2,7 +2,7 @@
 
 Generated on 2026-11-13 (America/New_York) with the built-in `image_gen` tool using the imagegen skill. This is a generated documentation illustration based on actual approved Blender renders, not a direct Blender render or gameplay capture. It does not change the approved asset or establish P17 runtime behavior.
 
-Output: [military-outpost-showcase.png](military-outpost-showcase.png).
+Output: [military-outpost-showcase.png](military-outpost-showcase.png). Dimensions: 1672×941; 2,168,423 bytes. SHA-256: `885ada1fba4a17a5d50846093cee2cf343671e7dfb0b7fb908eea106c87c3e8f`.
 
 Subject references (actual renders of approved source `e8fb840`, Blender SHA-256 `4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`):
 
@@ -25,4 +25,3 @@ Text verbatim: small tasteful heading "BLENDER OUTPOST"; three readable panel la
 Avoid: redesigning the model; new wings, extra floors, altered roof layout, extra structures, extra vehicles, aircraft, people, guns, desert scenery, explosions, combat damage, gameplay HUD, Roblox or Blender logos, software UI, invented gameplay claims, mock screenshots. This is a generated editorial showcase, not a claimed direct Blender render or gameplay capture.
 Background: opaque, not transparent.
 ```
-
