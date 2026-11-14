@@ -101,6 +101,12 @@ host gate and independent focused review pass; Linux CI confirmation and actual
 integrated Studio acceptance remain pending. The test mapping now expects
 169 server / nine per actual client, with no passing native result claimed.
 
+Fresh [Verify #343](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43624006036)
+passes on Linux / Python 3.12 for documentation delivery `821bfd5`, with the
+same `b1a6734` runtime/test source. The portability failure is closed. The fresh
+local test document still awaits opening; integrated native/performance and
+human acceptance remain open, so P17 stays In progress and PR #39 stays draft.
+
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
 equals the combined passing candidate `537a2ce` /

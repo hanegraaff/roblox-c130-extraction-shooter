@@ -454,3 +454,30 @@ texture/PBR limitation and narrow thermal policy across the player guide,
 development/testing/architecture and package guides. The chosen README image
 is preserved. All A1–A6 native/performance/human checks remain open, and the
 private published version is still the older clean primitive source.
+
+### Cross-platform delivery checkpoint — 2026-11-14
+
+Documentation/evidence delivery `821bfd52e08764f31e6fd83a52b3a599a8322e4a`
+(tree `3268c8a75fd2f0e6ce393ba0dd08f053595ee9ab`) contains the unchanged
+`b1a6734` runtime/test/assets/config candidate. Fresh
+[GitHub Verify #343](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43624006036)
+passes the full gate on actual Ubuntu 26.04.1 / CPython 3.12.16. The
+[CI receipt](../docs/evidence/p17/ci-pass-b1a6734.json) preserves environment,
+source, counts and bounded log excerpts. Its real suites pass 59 unit / 65
+integration, 42 asset and ten manifest cases; expected-failure verifier probes
+are separate. This closes the observed Linux portability failure without
+changing the approved or managed art bytes.
+
+The technical writer reviewed twelve player/contributor/package prose files.
+The primary's final repository checker passes 97 Markdown / 251 JSON
+files including this CI receipt. Root README retains only the selected Blender
+image and distinguishes the detailed candidate, accepted primitive `main`
+and older private published build.
+
+The connected Studio remains the private cloud import document, not the new
+local test artifact. The user has been asked to open the freshly built local
+`build/tests.rbxlx` in the existing Studio application and enable its MCP server.
+No integrated Play, multiplayer, navigation, thermal, fragment or performance
+result exists yet. Native mapping counts 169 server / nine per client are
+expectations only. The draft PR remains reviewable, unmerged and incomplete;
+actual A1–A6 evidence and explicit human in-game approval are still required.
