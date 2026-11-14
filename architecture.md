@@ -316,22 +316,38 @@ need actual P17 clearance/cover checks. Local Blender round trips do not infer
 Roblox import success, thermal visibility, runtime physics or upload permission.
 
 [P17](plans/17-integrate-military-outpost.md) will replace only the smaller
-Outpost using the human-approved package. Current `PanelGeometry` clones
-primitive Parts and applies generic scars/residuals, so mesh import alone cannot
-consume the new variants. Extend the shared asset/reconstruction boundary to
-select validated material-specific visuals, authoritative collision/query
-proxies and safe fragments. Preserve `PanelDamageRules`/`DestructionService`
-timing, damage authority and lifecycle. Material does not change durability.
-Keep existing primitive panels compatible; missing variants, bad IDs/geometry
-and stale reset references need explicit validation. Mesh appearance and proxy
-geometry must agree for actual openings and thermal/weapon obstruction.
+Outpost using the human-approved package. Its preparation branch supplies a
+server-only shared material boundary; the active map still uses the original
+187 primitive panels. There are no imported Outpost templates or asset IDs yet.
+
+Generated `ApprovedOutpost` data retains family dimensions, approved rectangle
+proxies and source-file hashes. Its generator pins the approved Blender,
+catalog and package-lock hashes before reading exports. `PanelAssetRules` checks
+finite rigid transforms, canonical bounds and receipt identities.
+`PanelAssetCatalog.load` validates the private
+`ServerStorage.Assets.MaterialPanels` tree, appearance/fragment references,
+geometry and inert-content contract before world mutation. Missing imports
+return an explicit failure when a material panel is registered. Reference
+validation does not load cloud content or prove experience access.
+
+`PanelGeometry` accepts a validated material identity Model as well as a
+primitive Part. `MaterialPanelGeometry` installs the selected Pristine/Light/
+Heavy/Total cosmetic meshes and exact rectangle collision/query proxies at the
+retained pivot; Total has no solids. Stage-local progress tints the imported
+base appearance without changing durability. The primitive path retains its
+generic scars and two-strip residuals. `PanelFragments` can clone validated
+material MeshPart templates through the same bounded lifecycle.
+`PanelDamageRules`/`DestructionService` retain timing, ordered impact authority
+and cleanup. Material does not change damage thresholds or introduce a remote.
 
 MapService retains pristine rebuild and registry ownership. Every new imported
 template needs a managed source/export and manifest record; deliberate Studio
 placement must return to Git. P16's Blender approval and P17's actual engine,
 two-client/reset and human presentation gates are distinct. This boundary is
 building-asset data for the current level, not an implementation of P15 level
-selection or a claim that material-aware authored variants already work.
+selection. The preparation fixtures use empty cosmetic meshes and actual
+proxies; they do not establish imported-art appearance, traversal, thermal
+cover, fragment contact, replication/reset or performance.
 The user-directed D63 order schedules P16 then P17 before continuing P09;
 P17 consumes the P07/P13/P14 core without requiring P08 to start. Preserve and
 regression-test completed P08 source when present in the selected branch.

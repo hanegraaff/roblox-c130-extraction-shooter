@@ -1,0 +1,12 @@
+{
+  "source": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "studio_version": "0.747.0.7471481",
+  "environment": "Studio Server during two-client P14 regression",
+  "fixture": "Unparented disposable Battlefield with one Model-backed corrugated_wall identity, matching PanelId and IntactSize; no MaterialPanels imports",
+  "ownerAbsent": true,
+  "reason": "missing approved material-panel assets",
+  "worldUnchanged": true,
+  "fragmentGroupUnchanged": true,
+  "fixtureDestroyed": true,
+  "scope": "Validates missing-import failure before resource acquisition, not imported art or real integrated Outpost"
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "authorization": "Pending; not granted",
+  "source_commit": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59",
+  "release_build": {
+    "path": "build/game.rbxlx",
+    "sha256": "47a8a8f3934f9b21d70ecfb56b56771f59740b865a89335aae80ad6ffb489338",
+    "bytes": 920113,
+    "mapping": "default.project.json",
+    "cloud_eligible": "Only with separate named-destination/audience authorization"
+  },
+  "proposed_workspace": {
+    "experience_name": "C130 P17 Import",
+    "place_name": "P17 Import Workspace",
+    "owner_type": "User",
+    "owner_id": 2227341845,
+    "audience": "Private; owner only",
+    "universe_id": null,
+    "place_id": null,
+    "initial_save": "User opens the release-mapped build/game.rbxlx and completes Save to Roblox; never save the test mapping"
+  },
+  "asset_uploads": {
+    "owner_id": 2227341845,
+    "permanent": true,
+    "models": [
+      "assets/exports/military-outpost/outpost-assembly-v1.fbx",
+      "assets/exports/military-outpost/panel-library-v1.fbx"
+    ],
+    "textures": "Only approved package PNG maps needed to repair missing imported materials, up to twelve; reuse returned IDs",
+    "required_scopes": [
+      "asset:read",
+      "asset:write"
+    ],
+    "upload_directory": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/assets/exports/military-outpost",
+    "uploaded_assets": []
+  },
+  "scope": "Private asset import and verification workspace; no public game release or test-only cloud content. A1-A6 remain open until actual replacement acceptance."
+}

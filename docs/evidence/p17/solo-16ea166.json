@@ -1,0 +1,23 @@
+{
+  "source": "16ea1664d9d15b113fc9244c187a772969f54bc3",
+  "tree": "6f7efcff83e232c532d4c2cc404e9e9a19c0f2d1",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":164,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":164}\",\"version\":\"0.747.0.7471481\",\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":0.14923199999611826}\",\"players\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":7,\\\"userId\\\":2227341845,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":7}\",\"userId\":2227341845}"
+      }
+    ],
+    "isError": false
+  },
+  "scope": "One actual client; primitive active world; empty-cosmetic material fixtures do not establish approved art or P17 acceptance."
+}
