@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "source_commit": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "source_tree": "7c75a118c6f887c3bf4f995448635dbfca895d5c",
+  "previous_source": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "product_source_unchanged": true,
+  "release_sha256": "7240a3ec7b4e7b070a9eb27b5b2de61e5019b9a184d12c6c6e71d9f302fd1205",
+  "studio_id": "d26e7b2c-23eb-4007-9db2-3dae43e5ee33",
+  "sync": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"source\":\"48eae4b2f0ebb4b0f069fb21a41973b9a37a297a\",\"assetsChanged\":false,\"placeId\":0,\"updatedScripts\":2}"
+      }
+    ],
+    "isError": false
+  },
+  "identity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"source\":\"48eae4b2f0ebb4b0f069fb21a41973b9a37a297a\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"version\":\"0.747.0.7471481\",\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"meshes\":2332,\"scripts\":132,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  },
+  "scope": "Two client test Sources only; product source/assets unchanged. Actual SDK2 fixture recheck pending."
+}

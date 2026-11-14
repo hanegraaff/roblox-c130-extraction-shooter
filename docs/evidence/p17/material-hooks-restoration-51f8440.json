@@ -1,0 +1,12 @@
+{
+  "source": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "raw": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"source\":\"51f8440ee728e641ec47b85a3b95370981fdc813\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"version\":\"0.747.0.7471481\",\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"meshes\":2332,\"scripts\":132,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  }
+}

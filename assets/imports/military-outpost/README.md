@@ -32,6 +32,14 @@ SurfaceAppearance scalar maps are not supplied. Material finish therefore needs
 explicit A6 review. Source equivalence and reference validation do not prove
 actual Roblox texture loading, UV orientation or identical PBR appearance.
 
+The compiler also writes a readable material contract onto each
+SurfaceAppearance: MaterialMetadataVersion 1, MaterialKey, CompiledColorMap,
+CompiledNormalMap, CompiledRoughnessMap, CompiledMetalnessMap and
+CompiledColorPngSha256. Ordinary server/client code uses shared `AssetMaterial`
+for those attributes and never reads protected map slots/Content variants.
+Compiler and artifact/Edit audits compare the real slots, metadata and approved
+receipt. Actual Instance-based preload remains separate loading evidence.
+
 Check the committed reconstruction without uploading or changing files:
 
 ```sh
@@ -59,13 +67,17 @@ The output models live in [`assets/models`](../../models/README.md). Stable
 structure, material panels, panel attachments and non-cover cosmetics have
 explicit classifications. Panels retain 25 original pivots and add one partition;
 the resulting building has 26 panels and the active map has 188. Pristine/Light
-keep panel dressing; Heavy/Total remove it. Exact rectangle proxies own cover,
+keep panel dressing; Heavy/Total remove it. Only correctly owned PanelAttachment
+MeshParts receive the 64-stud dimension / 32-stud canonical half-envelope
+construction allowance, while ordinary geometry retains the 40-stud default. Exact rectangle proxies own cover,
 and material fragments use the shared bounded lifecycle. The operator thermal
 owner locally hides only non-cover art; ground views retain furnishings.
 
 The private `C130P17Import` workspace is universe **10776653720**, place
-**72732833195348**. Its published version 5 contains the older primitive
-`03c9c06` release source; the integrated candidate is not published there.
+**72732833195348**. Clean integrated draft 11 (source `010289d`) is saved there
+without publication; newer local source `51f8440` has not replaced that draft.
+The last verified published version 5 contains older primitive `03c9c06` release
+source; saving the current draft did not update that published build.
 Tests and development overrides belong only in separate local test documents.
 Native navigation, damage/openings, fragment contact, thermal readability,
 two-client/reset, performance and human approval remain separate

@@ -1,0 +1,24 @@
+{
+  "source": "b1a67341100e8f72ab87e7fb44166ec8b807fa32",
+  "tree": "7c22149fb8d1be70383bdf25f5904f71862d2837",
+  "studio_id": "d26e7b2c-23eb-4007-9db2-3dae43e5ee33",
+  "scope": "Fresh ordinary Play baseline; no probe/source mutations",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":4,\\\"skipped\\\":0,\\\"passed\\\":165,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":4,\\\"discovered\\\":169}\",\"version\":\"0.747.0.7471481\",\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":0.118613833328709}\",\"players\":1}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":1,\\\"skipped\\\":0,\\\"passed\\\":8,\\\"userId\\\":2227341845,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":1,\\\"discovered\\\":9}\",\"userId\":2227341845}"
+      }
+    ],
+    "isError": false
+  }
+}

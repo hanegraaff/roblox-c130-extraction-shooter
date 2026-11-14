@@ -81,8 +81,10 @@ panels. The original source world remains available for review and rollback.
 The `approved-outpost-materials` runtime recipe binds generated
 `src/server/ApprovedOutpost.luau`. Definition, GLB and reconstruction gates pin
 approved inputs and verify managed output against real native import receipts.
-They do not establish current asset access, rendered appearance or gameplay
-acceptance. The [import guide](imports/military-outpost/README.md) records actual
+They bind actual serialized map slots to readable compiled material metadata
+and approved receipts. Ordinary runtime checks read that metadata through shared
+AssetMaterial; they do not establish current asset access, rendered appearance
+or gameplay acceptance. The [import guide](imports/military-outpost/README.md) records actual
 packages/owner, twelve repaired color maps and missing scalar PBR appearance.
 Native navigation, openings, fragment physics, thermal readability, multiplayer
 reset, performance and human A6 approval remain separate P17 gates.

@@ -63,3 +63,11 @@ on removal/stop. `resources()` counts tracked Parts; `stop()` disconnects all
 root/property listeners idempotently. The operator camera starts/stops this
 owner with its own role lifecycle. It writes no physics, hit or damage authority.
 Rendered thermal legibility and workload cost require separate native review.
+
+
+Client imported-material observations use shared `AssetMaterial.read(mesh)`.
+It reads the compiled v1 attribute contract and requires one actual
+SurfaceAppearance without inspecting its protected map properties. The compiler,
+artifact checker and Edit audit bind slots/source receipts; metadata validation
+does not prove loading. Use actual Instance-based preload and rendered review
+for availability/appearance. See the [shared material contract](../shared/README.md#compiled-material-metadata).

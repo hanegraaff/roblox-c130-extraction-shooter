@@ -1,0 +1,17 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "scope": "Post-user-close recovery inventory: no local documents or SDKserver/client contexts remain; closed-document Source restoration impossible to verify",
+  "originalStudio": "d26e7b2c-23eb-4007-9db2-3dae43e5ee33",
+  "readonlyChild": "7cc8d602-f07c-4da4-aef1-28d39dd92ef2",
+  "observation": {
+    "content": [
+      {
+        "type": "text",
+        "text": "The requested `studio_id` is not connected — that Roblox Studio instance may have been closed or its place unloaded. Call `list_roblox_studios` for the current instances, then continue on the one the user confirms (or the one whose `name` matches)."
+      }
+    ],
+    "isError": true
+  },
+  "cloud": "onlyknownremainingprivatecloud; neveroperated",
+  "backup": "build/p17-native-dispatcher-originals-48eae4b.json"
+}

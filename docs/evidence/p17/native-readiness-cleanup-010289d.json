@@ -1,0 +1,22 @@
+{
+  "source": "010289d3945f862a2af377455a62a950e76d3e45",
+  "tree": "5e7a5d86e336054ed4bdb970a7a314aa0d543245",
+  "clientReadiness": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"nowClientPresent\":true,\"playerScripts\":{\"1\":{\"name\":\"ChatScript\",\"class\":\"LocalScript\"},\"3\":{\"name\":\"ClientTests\",\"class\":\"LocalScript\"},\"2\":{\"name\":\"BubbleChat\",\"class\":\"LocalScript\"},\"5\":{\"name\":\"Client\",\"class\":\"LocalScript\"},\"4\":{\"name\":\"PlayerScriptsLoader\",\"class\":\"LocalScript\"},\"7\":{\"name\":\"RbxCharacterSounds\",\"class\":\"LocalScript\"},\"6\":{\"name\":\"PlayerModule\",\"class\":\"ModuleScript\"}}}"
+      }
+    ],
+    "isError": false
+  },
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"bootstrap\":false,\"placeId\":0,\"attributes\":[],\"gameId\":0}"
+      }
+    ],
+    "isError": false
+  }
+}

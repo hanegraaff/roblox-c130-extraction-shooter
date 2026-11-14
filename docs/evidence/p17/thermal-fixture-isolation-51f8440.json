@@ -1,0 +1,13 @@
+{
+  "source": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "scope": "Disposable native client isolation probe inside focused diagnostic SDK session; actual Gunship role and production global thermal owner active",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"role\":\"Gunship\",\"observations\":{\"1\":{\"unmarked\":0.3499999940395355,\"before\":1,\"cover\":0.3499999940395355,\"afterStop\":0.3499999940395355,\"resources\":0,\"marked\":1,\"inWorkspace\":false},\"2\":{\"unmarked\":1,\"before\":1,\"cover\":0.3499999940395355,\"afterStop\":1,\"resources\":0,\"marked\":1,\"inWorkspace\":true}}}"
+      }
+    ],
+    "isError": false
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "source": "010289d3945f862a2af377455a62a950e76d3e45",
+  "tree": "5e7a5d86e336054ed4bdb970a7a314aa0d543245",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":1,\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":0.1272120833164081}\",\"report\":{\"errors\":2,\"clientCount\":1,\"passed\":168,\"environment\":\"Studio\",\"seed\":1,\"discovered\":170,\"suite\":\"P01-server\",\"failed\":2,\"skipped\":0}}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"userId\":2227341845}"
+      }
+    ],
+    "isError": false
+  }
+}

@@ -350,6 +350,15 @@ appearance. Primitive panels retain generic scars/two-strip residuals.
 server-owned lifecycle. Shared damage timing, ordered impacts, thresholds and
 reset authority remain in the existing rules/services; there is no new remote.
 
+Shared `AssetMaterial.read(mesh)` validates readable compiled v1 material
+attributes from exactly one SurfaceAppearance in ordinary server/client code.
+The contract contains the material key, four compiled map references and the
+approved color-PNG digest. Runtime code never reads protected SurfaceAppearance
+map properties or Content variants. Compiler/artifact/Edit audits bind actual
+serialized slots to those attributes and the source receipt. This separates
+metadata validity from actual Instance preload, asset access and rendered
+appearance; public replicated metadata grants no new client authority.
+
 Source roughness, metalness and emission scalars remain metadata. The current
 Roblox reconstruction repairs base-color textures but does not reproduce those
 scalars as SurfaceAppearance maps. That visual compromise requires A6 approval.

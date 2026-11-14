@@ -1,0 +1,51 @@
+{
+  "source_commit": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "source_tree": "d280d1cfd941e17646d900f76a84a18a8a8b2530",
+  "command": "python3 scripts/verify.py",
+  "environment": "macOS26.6.2ARM/Python3.10.4",
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 43,
+  "manifest_regressions": 10,
+  "authored_parts_each_build": 2804,
+  "release_instances": 5295,
+  "test_instances": 5387,
+  "release_runtime_scripts": 50,
+  "native_expected": {
+    "server": 171,
+    "client": 10
+  },
+  "native_observed": {
+    "environment": "Roblox Studio0.747.0.7471481 ordinaryPlay localtests.rbxlx",
+    "actual_clients": 1,
+    "server": {
+      "discovered": 171,
+      "passed": 171,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "client": {
+      "discovered": 10,
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "scope": "Fresh ordinary baseline; integratedmultiplayer/navigation/performance/A6 remainseparate."
+  },
+  "builds": [
+    {
+      "path": "build/game.rbxlx",
+      "sha256": "7240a3ec7b4e7b070a9eb27b5b2de61e5019b9a184d12c6c6e71d9f302fd1205",
+      "bytes": 8468498,
+      "test_only": false
+    },
+    {
+      "path": "build/tests.rbxlx",
+      "sha256": "23839345bec5a64a0f0eec396bffbdd8cee5dda1b0f45ac7c8ae3644fb5af78f",
+      "bytes": 9340153,
+      "test_only": true
+    }
+  ]
+}

@@ -1,9 +1,10 @@
 # Shared rules and lifecycle modules
 
-Rojo maps this package to `ReplicatedStorage.Shared`. Its modules are strict, deterministic and nonyielding. They depend only on each other, with no services, global clock or mutable singleton authority state. Replication makes their code public; server adapters must still validate every action. Authoritative role/round services live in the [server package](../server/README.md).
+Rojo maps this package to `ReplicatedStorage.Shared`. Its rule modules are strict, deterministic and nonyielding, with no services, global clock or mutable singleton authority state. `AssetMaterial` is a nonyielding Instance metadata reader shared by ordinary server/client code. Replication makes all of this code public; server adapters must still validate every action. Authoritative role/round services live in the [server package](../server/README.md).
 
 | Module / API | Contract |
 | --- | --- |
+| `AssetMaterial.read(mesh)` | Returns a compiled material record or `nil, reason` from exactly one SurfaceAppearance and readable v1 attributes. It never reads protected map properties, yields, caches, mutates Instances or proves content availability. |
 | `Validation.isFinite(value)` | Accepts finite numbers, including zero; rejects NaN, infinity and nonnumbers. |
 | `Validation.inRange(value, minimum, maximum)` | Inclusive finite bounds; malformed bounds reject. |
 | `Validation.flatPayload(value, maxFields, maxStringBytes)` | Accepts plain flat string-keyed tables of finite numbers, strings or booleans. Rejects metatables, nested/cyclic values and excess fields/bytes. Bounds must be integral: fields 0–1024, bytes 0–65536. |
@@ -31,3 +32,24 @@ Lifecycle components are nonyielding functions that return nonthrowing cleanup c
 `Config`, `RateLimit`, `MapRules`, `AircraftRules` and `AircraftPanRules` import their shared dependencies through `script.Parent` in Studio and a relative path under Lune. This explicit two-runtime branch is limited to dependency loading. The same [unit cases](../../tests/unit) run against filesystem-loaded modules in Lune and Instance-loaded modules in the Studio server wrapper. [Lifecycle integration cases](../../tests/integration/Lifecycle.spec.luau) use controlled resource adapters.
 
 These helpers provide structural guards and rate accounting. MatchService/MatchRuntime add role, life, round, sequence and rate checks for surrender; AircraftSelection/AircraftService add them for operator profile changes and expose a server aim/solid-sight-line seam. The P05 server combat adapters add role, selection, aim/range, cadence, collision and damage checks; shared code is never a security boundary.
+
+
+## Compiled material metadata
+
+`AssetMaterial.read(mesh: MeshPart)` works in ordinary server and client contexts.
+It requires exactly one real SurfaceAppearance, `MaterialMetadataVersion = 1`,
+and matching nonempty `MaterialKey` on the mesh/surface. The surface carries
+`CompiledColorMap`, `CompiledNormalMap`, `CompiledRoughnessMap`,
+`CompiledMetalnessMap` and `CompiledColorPngSha256`. Color is a required canonical
+`rbxassetid://` reference; the other maps may be empty strings. The PNG digest is
+64 lowercase hex characters. Missing, duplicated or malformed contracts return
+`nil, reason`; valid output has `key`, `colorMap`, `normalMap`, `roughnessMap`,
+`metalnessMap` and `colorPngSha256`. There is no cleanup ownership or hidden state.
+
+These are public compiled attributes, not an authority or secrecy boundary.
+SurfaceAppearance map properties and their Content variants are protected and
+must not be read by ordinary game code. The compiler and artifact/Edit audits
+bind actual serialized map slots to this metadata and the approved source PNGs.
+Metadata matching, authoring-slot comparison, Instance-based preload and rendered
+appearance are separate observations. Neither metadata nor a successful return
+proves asset ownership/access, loading, UV orientation or visual approval.

@@ -31,6 +31,11 @@ through PanelAssetBasis. Exact rectangle Parts own collision/query behavior;
 imported visual meshes cannot silently fill an earned opening. Panel-owned
 dressing is removed at Heavy/Total and restored with pristine state.
 
+Each SurfaceAppearance carries a compiled v1 material attribute contract.
+Shared AssetMaterial reads it in ordinary server/client code without protected
+map-property access. Compiler/artifact/Edit audits bind actual slots and source
+receipts; runtime metadata checks do not establish availability or appearance.
+
 The [import package](../imports/military-outpost/README.md) identifies actual
 mesh/texture packages, owner, derivative and deterministic regeneration. Twelve
 PNG color maps are repaired; scalar roughness/metalness/emission remain metadata

@@ -107,6 +107,27 @@ same `b1a6734` runtime/test source. The portability failure is closed. The fresh
 local test document still awaits opening; integrated native/performance and
 human acceptance remain open, so P17 stays In progress and PR #39 stays draft.
 
+The local test document is now open and source-verified. Native testing exposed
+ordinary-script texture-property restrictions; correction `010289d` introduces
+compiled material metadata and passes macOS plus Linux Verify #347. Actual Edit
+inspection matches 132 scripts, 2,332 imported mesh identities and 9,328 texture
+slot/metadata comparisons. A second ordinary run passes the new metadata case
+but still blocks startup on two approved roof attachments and a client fixture
+readiness race. Those corrections are in progress; no integrated native pass
+is claimed. An accidental cloud test sync was stopped, the six test-only trees
+removed and clean unpublished draft 11 saved; the universe remains Private.
+P17 remains In progress, PR #39 stays draft and P09 has not started. Exact
+failed/passing scopes are preserved in the [plan record](plans/17-integrate-military-outpost.md).
+
+Current source `48eae4b` preserves product `51f8440` byte-for-byte and corrects
+two client fixtures. Native baselines now pass 171 server and ten on each of
+two actual clients; actual mesh loading and controlled internal/external avatar
+navigation also pass. Full material/native-fire/reset, rendered views, current
+regressions, performance and A6 remain open. Corrected catalog-based material
+rays await execution after an SDK startup failure and closure of both local
+test documents; the unchanged clean test file is ready to reopen once. P17
+stays In progress and the PR stays draft; P09 remains unstarted.
+
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
 equals the combined passing candidate `537a2ce` /

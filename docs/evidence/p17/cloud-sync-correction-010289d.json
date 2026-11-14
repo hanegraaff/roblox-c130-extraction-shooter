@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "source_commit": "010289d3945f862a2af377455a62a950e76d3e45",
+  "incident": "Rojo test mapping was connected to cloud import document as well as local test document; no Play or Publish performed in cloud.",
+  "test_rojo_server": "Stopped owned session75716 with Ctrl-C",
+  "cloud_studio_id": "d1cf23f3-c505-4c50-9555-51be07f7a2f9",
+  "preflight": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":10776653720,\"source\":\"010289d3945f862a2af377455a62a950e76d3e45\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":72732833195348,\"passed\":true,\"version\":\"0.747.0.7471481\",\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"meshes\":2332,\"scripts\":132,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  },
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"removedRoots\":6,\"cloudDraftOnly\":true,\"source\":\"010289d3945f862a2af377455a62a950e76d3e45\",\"removedNodes\":92,\"published\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "saved_clean_draft": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Saved: Saved to Roblox."
+      },
+      {
+        "type": "text",
+        "text": "{\"status\":\"Saved\",\"location\":\"TeamCreate\",\"version\":11,\"message\":\"Saved to Roblox.\"}"
+      }
+    ],
+    "isError": false
+  },
+  "privacy_check": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "GET https://apis.roblox.com/cloud/v2/universes/10776653720 -> 200 OK\n\n{\"path\":\"universes/10776653720\",\"createTime\":\"2026-11-14T16:41:11.180Z\",\"updateTime\":\"2026-11-14T16:41:14.720Z\",\"displayName\":\"C130 P17 Import \",\"description\":\"early beta of King Kunkan's C-130 battle\",\"user\":\"users/2227341845\",\"visibility\":\"PRIVATE\",\"voiceChatEnabled\":true,\"ageRating\":\"AGE_RATING_13_PLUS\",\"desktopEnabled\":true,\"mobileEnabled\":true,\"tabletEnabled\":true,\"consoleEnabled\":false,\"vrEnabled\":false,\"rootPlace\":\"universes/10776653720/places/72732833195348\",\"templateRootPlace\":\"\"}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "latest_asset_metadata": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "GET https://apis.roblox.com/assets/v1/assets/72732833195348 -> 200 OK\n\n{\"path\":\"assets/72732833195348\",\"revisionId\":\"11\",\"revisionCreateTime\":\"2026-11-14T18:19:54.702Z\",\"assetId\":\"72732833195348\",\"displayName\":\"C130 P17 Import \",\"description\":\"early beta of King Kunkan's C-130 battle\",\"assetType\":\"Place\",\"creationContext\":{\"creator\":{\"userId\":\"2227341845\"}},\"moderationResult\":{\"moderationState\":\"Approved\"},\"state\":\"Active\"}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "published_by_agent": false,
+  "last_previously_verified_published_version": 5,
+  "note": "Assets GET after clean save reports revision11 without isPublished field; no new published-version claim inferred. save_place never publishes. Clean cloud draft contains50runtime scripts/no six test-only roots."
+}

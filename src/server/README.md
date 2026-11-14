@@ -121,11 +121,21 @@ family. Each source path/hash must match the generated definition. Canonical
 Roblox face axes are X/Y, thickness Z. Cosmetic mesh/texture references must be
 nonempty asset IDs, geometry must fit the approved bounds, and scripts,
 unexpected content, duplicate names or colliding/queryable/touchable cosmetics
-reject. This validates references and metadata; actual content, ownership,
-materials and access must be established by a separate import receipt/review.
+reject. Runtime material checks use shared `AssetMaterial.read`: exactly one
+SurfaceAppearance and its readable compiled v1 attributes, with mesh/surface
+MaterialKey agreement and bounded references/PNG digest. Ordinary game code never
+reads protected SurfaceAppearance map slots or Content variants. Compiler and
+artifact/Edit audits bind real serialized slots to the attributes and approved
+receipt. Actual content loading, ownership/access and appearance remain separate
+preload/import/render observations.
 
 `MaterialPanelGeometry.validate(model, family)` checks the pristine Model's
 canonical geometry and complete exact proxy set, rejecting phantom solids.
+The larger attachment allowance applies only to a MeshPart explicitly marked
+PanelAttachment with AttachmentPanelId equal to the owning panel's name: each
+dimension is at most 64 studs and all canonical bounds fit a 32-stud half-envelope.
+Ordinary panel geometry retains the 40-stud default and its family-specific bounds;
+attachment allowance never makes dressing solid/queryable/touchable.
 `basis(model)` validates the optional rotation-only `PanelAssetBasis` attribute;
 `identitySize(family, basis)` computes its stable identity-frame dimensions.
 `install(model, materialPivot, family, appearance, identityPivot?, attachments?)`
@@ -157,7 +167,8 @@ cover and multiplayer acceptance.
 `OutpostReconstruction.prepare(assets)` returns an unparented site-positioned
 Model or `nil, reason`, without world writes. It validates imported catalog,
 managed revision/receipt, exact floor/internal-stair support geometry, mesh/material
-references, inert content, unique component IDs and 26 pristine panel Models.
+references and compiled material metadata, inert content, unique component IDs
+and 26 pristine panel Models.
 `install(world, assets)` replaces only `Battlefield.Buildings.Outpost` and returns
 `{ commit, rollback }` or `nil, reason`. Both closures are nonyielding/idempotent;
 commit releases the original, rollback restores it before snapshot acceptance.

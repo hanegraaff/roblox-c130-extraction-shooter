@@ -1,0 +1,37 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "tree": "7c75a118c6f887c3bf4f995448635dbfca895d5c",
+  "scope": "Original25sec listener; errors-only recording in temporarycliententry, candidate assertions unchanged",
+  "ok": true,
+  "report": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":171,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":171}",
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+      },
+      {
+        "name": "P17ActualAssetAvailability both actual clients preload all managed material states fragments and furnished Outpost",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.P17MaterialHarness:816: ServerScriptService.ServerTests.P17MaterialHarness:328: Players.Player1.PlayerScripts.ClientTests.P17MaterialClient:355: {\"assetFailures\":[{\"id\":\"rbxassetid://135106155017244\",\"state\":\"None\"},{\"id\":\"rbxassetid://89338266395233\",\"state\":\"None\"},{\"id\":\"rbxassetid://118558085320552\",\"state\":\"None\"},{\"id\":\"rbxassetid://109354452545782\",\"state\":\"None\"},{\"id\":\"rbxassetid://75656006256490\",\"state\":\"None\"},{\"id\":\"rbxassetid://125796777052199\",\"state\":\"None\"},{\"id\":\"rbxassetid://85019949077305\",\"state\":\"None\"},{\"id"
+      }
+    ],
+    "passed": 1,
+    "clientBaselines": {
+      "-1": "{\"errors\":0,\"skipped\":0,\"passed\":10,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":10}",
+      "-2": "{\"errors\":0,\"skipped\":0,\"passed\":10,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":10}"
+    },
+    "clientCount": 2,
+    "observations": [],
+    "discovered": 2,
+    "environment": "Studio",
+    "failed": 1,
+    "suite": "P17-imported-material-multiplayer",
+    "initialUserIds": [
+      -1,
+      -2
+    ],
+    "initialObservedAtServerSeconds": 1794681959.513498
+  }
+}

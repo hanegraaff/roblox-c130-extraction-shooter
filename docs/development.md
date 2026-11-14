@@ -28,7 +28,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs the portable P16 asset audit, P17 definition/GLB/reconstruction gates, 42 asset and ten manifest rejection cases, formatting, lint, strict type analysis, 59 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs the portable P16 asset audit, P17 definition/GLB/reconstruction gates, 43 asset and ten manifest rejection cases, formatting, lint, strict type analysis, 59 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -192,20 +192,32 @@ The shared catalog and rectangle proxies own material appearance/solidity;
 `PanelAssetBasis` rotates canonical material coordinates while keeping legacy
 identity pivots. Supporting floors, stairs and frames remain stable. Panel-owned
 dressing survives Pristine/Light and is removed at Heavy/Total, restoring on reset.
+Only explicitly owned attachment MeshParts may use the 64-stud per-dimension,
+32-stud canonical half-envelope construction allowance; ordinary panel geometry
+retains its 40-stud default. These are authoring validation bounds, not weapon or
+damage tuning.
 See the [server API](../src/server/README.md#imported-material-panels-and-outpost-reconstruction-p17).
 
 The current reconstruction repairs base-color textures but does not recreate
 Blender scalar roughness, metalness or emission as SurfaceAppearance maps.
 Those source values remain recorded as metadata. This material-finish compromise
 needs explicit A6 in-game review; do not describe it as exact PBR reproduction.
+Ordinary server/client validation reads shared `AssetMaterial` metadata instead
+of protected SurfaceAppearance map properties. The compiler/artifact/Edit audits
+bind actual slots to readable compiled attributes and the approved PNG receipt;
+actual Instance-based preload establishes availability separately. Neither map
+Content variants nor a fallback runtime slot read is permitted.
+
 The operator's thermal owner locally hides classified non-cover props/fragments;
 real collidable/queryable cover retains native occlusion. Ground views keep the
 furnishings. Normal/thermal readability still needs actual rendered acceptance.
 
 The authorized `C130P17Import` workspace is private (universe `10776653720`,
-place `72732833195348`). Its published version 5 contains the older clean
-`03c9c06` primitive release build, not this integrated candidate. Preserve that
-separation when collecting source-specific evidence. Never cloud-save or publish
+place `72732833195348`). Clean unpublished draft 11 contains source `010289d`,
+not the newer local `51f8440` candidate.
+The last verified published version 5 contains the older clean `03c9c06`
+primitive release build; saving the draft did not publish the candidate. Preserve
+that separation when collecting source-specific evidence. Never cloud-save or publish
 `build/tests.rbxlx`, TestEZ or development overrides. Publication of a new candidate
 remains a separate named destination/audience action.
 

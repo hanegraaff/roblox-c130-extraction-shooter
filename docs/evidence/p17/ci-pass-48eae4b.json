@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_commit": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "source_tree": "7c75a118c6f887c3bf4f995448635dbfca895d5c",
+  "run": 351,
+  "run_id": 43628420492,
+  "job_id": 132549399245,
+  "url": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43628420492",
+  "environment": "GitHub-hosted Ubuntu26.04 / CPython3.12.16",
+  "command": "python3 scripts/verify.py",
+  "passed": true,
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 43,
+  "manifest_regressions": 10,
+  "release_runtime_scripts": 50,
+  "release_instances": 5295,
+  "test_instances": 5387,
+  "release_sha256": "7240a3ec7b4e7b070a9eb27b5b2de61e5019b9a184d12c6c6e71d9f302fd1205",
+  "product_byte_identical_to": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "log_excerpt": [
+    "2026-11-14T18:46:06.6185132Z Successfully set up CPython (3.12.16)",
+    "2026-11-14T18:46:10.8992499Z Repository checks passed: 97 Markdown files, 251 JSON files.",
+    "2026-11-14T18:46:11.0189247Z Ran 10 tests in 0.042s",
+    "2026-11-14T18:46:39.4589026Z Ran 43 tests in 23.993s",
+    "2026-11-14T18:46:41.8266429Z {\"discovered\":59,\"failed\":0,\"passed\":59,\"skipped\":0,\"suite\":\"unit\"}",
+    "2026-11-14T18:46:41.8930119Z {\"discovered\":65,\"failed\":0,\"passed\":65,\"skipped\":0,\"suite\":\"integration\"}",
+    "2026-11-14T18:46:46.8748117Z Artifact isolation passed: 5295 release Instances, 5387 test Instances; 50 runtime scripts only in release.",
+    "2026-11-14T18:46:47.9464034Z All non-Studio gates passed. Studio server/client smoke and visual review require separate evidence."
+  ],
+  "scope": "Host gate on client-fixture correction. Actual171/10/10 passed; later P17 probe failures remain separate."
+}

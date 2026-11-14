@@ -180,5 +180,21 @@
     "saved_draft_version": 8,
     "published_new_integration": false,
     "published_source_still": "03c9c06c88b25d7d85fceed881ef8b25cc4e7e59"
+  },
+  "later_sync_correction": {
+    "source_commit": "010289d3945f862a2af377455a62a950e76d3e45",
+    "test_mapping_connected_to_cloud": true,
+    "server_stopped": true,
+    "verified_scripts_before_cleanup": 132,
+    "verified_actual_slots": 9328,
+    "removed_test_roots": 6,
+    "removed_test_nodes": 92,
+    "release_scripts_after_cleanup": 50,
+    "tests_remaining": false,
+    "clean_saved_draft_version": 11,
+    "published_by_agent": false,
+    "latest_verified_visibility": "PRIVATE",
+    "receipt": "docs/evidence/p17/cloud-sync-correction-010289d.json",
+    "note": "Latest asset metadata now reports draft11 without isPublished field; prior published5 record remains historical. No new publication inferred."
   }
 }

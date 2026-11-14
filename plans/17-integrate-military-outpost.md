@@ -481,3 +481,242 @@ No integrated Play, multiplayer, navigation, thermal, fragment or performance
 result exists yet. Native mapping counts 169 server / nine per client are
 expectations only. The draft PR remains reviewable, unmerged and incomplete;
 actual A1–A6 evidence and explicit human in-game approval are still required.
+
+### Local Studio identity and first native failure — 2026-11-14
+
+The user opened fresh local `tests.rbxlx`, Studio
+`d26e7b2c-23eb-4007-9db2-3dae43e5ee33`, with PlaceId/GameId zero and engine
+`0.747.0.7471481`. The [read-only identity receipt](../docs/evidence/p17/source-identity-b1a6734.json)
+matches all 131 runtime/test script byte-count/Adler-32 fingerprints and the
+actual imported template references/classes: 2,256 meshes in the Outpost Model
+and 76 in the material Folder, with no imported executable content. Two primary
+probe assumptions initially failed: XML Source tags were parsed too narrowly,
+and the material registry was incorrectly assumed to be a Model. Both probe
+errors were corrected; no place content changed and the final identity check
+passed. The private cloud document remained untouched.
+
+Independent ordinary Play on exact `b1a6734` does **not** pass: **169 server
+discovered / 165 passed / four failed / four errors**, and **nine client
+discovered / eight passed / one failed**, one actual client, zero skips. The
+[raw baseline](../docs/evidence/p17/native-baseline-b1a6734-failed.json) and
+[full console](../docs/evidence/p17/native-baseline-b1a6734-console.txt)
+preserve the failure. All four Outpost cases reach a protected
+`SurfaceAppearance.ColorMap` read in `PanelAssetCatalog`; ordinary script
+threads lack Plugin capability. The client Foundation failure propagates that
+server-fixture failure, so the runtime never starts. Passing host gates and
+privileged MCP inspection did not establish ordinary runtime API access.
+
+The [official SurfaceAppearance API](https://create.roblox.com/docs/reference/engine/classes/SurfaceAppearance)
+also restricts the Content variants; changing only the property name would not
+resolve this. The developer is correcting the runtime boundary to use compiled
+readable metadata plus actual SurfaceAppearance presence, retaining exact
+serialized-property validation in the compiler/artifact/native-Edit checks.
+Instance-based preload must establish actual availability without reading
+protected properties. Native probes must distinguish readable metadata from
+actual protected-map inspection. No broader permissions are requested.
+
+The tester stopped the owned session cleanly: the same local document is back
+in Edit, ManualHarness is nil, BootstrapStatus is absent and Workspace
+attributes are restored. No temporary probe modules/hooks had been installed.
+The corrected source must be synced into this same document and exercised by
+fresh ordinary server/client scripts before any native pass is claimed.
+
+### Runtime-safe material correction and second native run — 2026-11-14
+
+Source `010289d3945f862a2af377455a62a950e76d3e45`, tree
+`5e7a5d86e336054ed4bdb970a7a314aa0d543245`, introduces shared
+`AssetMaterial.read(mesh)`. It validates one actual SurfaceAppearance and
+versioned readable material-key/map/PNG-hash attributes, without protected
+property reads in ordinary server/client code. Compiler and artifact checks
+bind all seven attributes on each of 2,332 surfaces to the actual serialized
+slots and original receipt. Actual texture IDs, art, poses, flags and approved
+P16 inputs are unchanged.
+
+The [developer full gate](../docs/evidence/p17/developer-host-010289d.txt) and
+[GitHub Verify #347](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43626378313)
+pass: **59 unit / 65 integration, 43 asset regressions, ten manifest cases**
+and all static/type/build/isolation gates. The
+[independent seven-case material recheck](../docs/evidence/p17/independent-material-recheck-010289d.txt)
+includes actual serialized-slot/metadata drift and missing-metadata rejection.
+The [build record](../docs/evidence/p17/candidate-builds-010289d.json) binds
+2,804 Parts each, 5,295 release / 5,387 test Instances and 50 runtime scripts.
+
+Rojo connected the test mapping to the private cloud import document as well
+as the local test document. The user subsequently identified the accidental
+connection. The primary stopped the owned test server immediately, verified
+all 132 mapped sources and 9,328 protected-slot/metadata comparisons in the
+cloud editor, removed exactly six verified test-only roots / 92 nodes, and
+checked 50 release scripts with no tests remaining. Clean **draft 11** was
+saved; no Publish operation occurred. Get Universe still returns `PRIVATE`.
+The latest asset metadata reports revision 11 without an `isPublished` field;
+it does not establish a new published revision. The prior version-5 publication
+proof remains historical. The [correction receipt](../docs/evidence/p17/cloud-sync-correction-010289d.json)
+preserves actual observations. The saved draft now contains the new source,
+while no new playable-version publication is claimed.
+
+The local document already received the final source updates. A guarded manual
+sync refused its old-`b1a6734` precondition before mutation; the new
+[read-only identity check](../docs/evidence/p17/source-material-identity-010289d.json)
+then matches all 132 sources, every 2,332 mesh path/ID/material identity and
+all **9,328 actual protected-slot / compiled-attribute / approved-palette**
+comparisons. No manual source write was needed. This is Edit-mode property
+evidence, distinct from ordinary runtime reads and actual dependency loading.
+
+Fresh ordinary Play still fails: **170 server discovered / 168 passed / two
+failed / two errors / zero skipped**, one actual client. The ordinary material
+metadata fixture passes, closing the original PluginSecurity defect. Two
+Outpost cases fail `invalid material panel geometry`: the default 40-stud
+per-panel validator rejects genuine 42/44-stud roof attachments, although the
+approved whole-source contract permits 64. Client test discovery aborts before
+any cases/report because the ThermalCosmetics fixture immediately indexes a
+not-yet-replicated `PlayerScripts.Client`. No ten-case client pass is claimed.
+The [raw reports](../docs/evidence/p17/native-baseline-010289d-failed.json),
+[console](../docs/evidence/p17/native-baseline-010289d-console.json) and
+[independent review](../docs/evidence/p17/native-review-010289d-failed.md)
+preserve both findings. The developer is correcting the scoped attachment
+bound and bounded client prerequisites together. The tester restored the same
+local document to clean Edit with no temporary hooks installed; P17 remains
+open for corrected ordinary Play and all integrated acceptance.
+
+### Corrected ordinary initialization and SDK fixture findings — 2026-11-14
+
+Source `51f8440ee728e641ec47b85a3b95370981fdc813`, tree
+`d280d1cfd941e17646d900f76a84a18a8a8b2530`, changes only three source/spec
+files. Material geometry grants the approved 64-stud dimension / 32-stud
+canonical half-envelope only to MeshPart dressing marked `PanelAttachment`
+with the correct owning panel ID; ordinary visual/proxy/fragment limits remain
+40. The [independent envelope check](../docs/evidence/p17/attachment-envelope-010289d.json)
+verifies all 274 actual attachments across 26 panels. Client tests acquire
+runtime modules inside callbacks with bounded waits and wait for actual imported
+replacement/metadata before checking it. Assets, maps and P16 inputs are unchanged.
+
+The [developer full gate](../docs/evidence/p17/developer-host-51f8440.txt) and
+[Linux Verify #349](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43627282453)
+pass unchanged host counts 59 unit / 65 integration, 43 asset / ten manifest
+regressions and all static/type/build/isolation gates. The
+[build record](../docs/evidence/p17/candidate-builds-51f8440.json) pins both
+artifacts. A guarded one-way sync changed only three local Script Sources;
+the [post-sync identity](../docs/evidence/p17/source-material-identity-51f8440.json)
+again matches all 132 sources, 2,332 mesh identities and 9,328 actual material
+slot comparisons. Neither cloud document nor asset data was changed by that sync.
+
+Fresh ordinary Play now **passes 171/171 server and 10/10 client cases**, one
+actual client, zero failures/errors/skips. The real imported Outpost initializes;
+ordinary server/client material access, approved attachments and reconstruction
+pass. Preserve the [raw baseline](../docs/evidence/p17/native-baseline-51f8440.json)
+and [console](../docs/evidence/p17/native-baseline-51f8440-console.json) as this
+bounded ordinary result, not full A1–A6 acceptance.
+
+The first excluded P17Material SDK session starts two actual clients, operator
+`-1` and Ground `-2`, with 171/171 server and 10/10 Ground. Operator baseline
+is 9/10, so its test entrypoint stops before attaching the acceptance listener.
+The derived suite fails its one startup case; **no P17 acceptance case runs**.
+The [raw session result](../docs/evidence/p17/material-51f8440-attempt1.json)
+and [all actual-client baseline captures](../docs/evidence/p17/material-session-baselines-51f8440.json)
+are separate from the earlier passing solo smoke.
+
+A focused diagnostic attempt retains operator 8/10, Ground 10/10 and server
+171/171. It identifies a test-only thermal ownership conflict: the disposable
+fixture under Workspace is also owned by the live operator thermal controller,
+which correctly keeps it hidden after the nested fixture stops. An identical
+unparented fixture restores opacity/resources correctly. The
+[actual isolation proof](../docs/evidence/p17/thermal-fixture-isolation-51f8440.json)
+supports isolating both fixtures, without changing product thermal policy.
+This attempt also hits the existing P06 reticle-projection assertion; its old
+diagnostic lacks current drawn/expected/origin/viewport/inset values. That
+remains an unresolved validation concern. One-pixel assertions must remain.
+The [diagnostic baselines](../docs/evidence/p17/material-diagnostic-baselines-51f8440.json),
+[consoles](../docs/evidence/p17/material-diagnostic-consoles-51f8440.json) and
+[independent SDK review](../docs/evidence/p17/native-sdk-review-51f8440.md)
+preserve these distinct observations; neither attempt passes imported-art
+multiplayer acceptance.
+
+Both temporary dispatchers are restored byte-for-byte, the two owned modules
+and report attributes removed, and the local document is back in clean Edit.
+The [restoration proof](../docs/evidence/p17/material-hooks-restoration-51f8440.json)
+again passes all 132 source / 2,332 mesh / 9,328 slot checks. The developer is
+correcting fixture isolation and collecting concise P06 readiness/projection
+diagnostics before the next controlled native run. Performance probes remain
+excluded and unexecuted; actual A1–A6 acceptance is still open.
+
+### Stable two-client baseline and partial native acceptance — 2026-11-14
+
+Test-only correction `48eae4b2f0ebb4b0f069fb21a41973b9a37a297a`, tree
+`7c75a118c6f887c3bf4f995448635dbfca895d5c`, isolates disposable thermal
+fixtures from the production Workspace owner. P06 fixture sampling now waits
+for layout and retries only a measured camera/viewport/inset/origin change;
+stable mismatches still fail unchanged one-pixel/ray limits. Concise current-frame
+telemetry is preserved before assertion. Product source, assets and the release
+artifact are byte-identical to `51f8440`.
+
+The [developer full gate](../docs/evidence/p17/developer-host-48eae4b.txt) and
+[Linux Verify #351](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43628420492)
+pass 59 unit / 65 integration, 43 asset / ten manifest cases and every required
+host/static/build gate. The [build record](../docs/evidence/p17/candidate-builds-48eae4b.json)
+pins the unchanged release and revised test artifacts. The
+[source/material sync receipt](../docs/evidence/p17/source-material-identity-48eae4b.json)
+verifies both changed client Sources and all 132 source / 2,332 mesh / 9,328
+material-slot identities in the same local document.
+
+Fresh SDK sessions now preserve **171/171 server and 10/10 on each of two
+actual clients** (`-1`, `-2`), zero failures/errors/skips. The
+[complete first raw bundle](../docs/evidence/p17/material-48eae4b-attempt1.json)
+and [subsequent baseline/telemetry bundle](../docs/evidence/p17/material-corrected-probe-baselines-48eae4b.json)
+establish this scope. Their later excluded-probe failures are not an overall
+acceptance pass. The performance fixture's prerequisite pins SHA-256
+`f8d47d0f7dcc5d212351e001f091a3167bac940c319b7a2e29407e8535daeacd`
+of the real first bundle and checks all source/config/assets against its commit;
+the fixture remains prepared, not executed.
+
+The first availability probe incorrectly treated `GetAssetFetchStatus` of
+compiled SurfaceAppearance image IDs as a preload test. Official
+[ContentProvider documentation](https://raw.githubusercontent.com/Roblox/creator-docs/main/content/en-us/reference/engine/classes/ContentProvider.yaml)
+excludes SurfaceAppearance/MaterialVariant textures from `PreloadAsync`; their
+processed packs stream at runtime. `None` for those aliases is not evidence of
+an unavailable asset. Corrected probes retain actual callback IDs/statuses and
+separate mesh loading from still-unverified rendered texture appearance.
+
+The [complete third SDK report](../docs/evidence/p17/material-48eae4b-attempt3.json),
+recovered in 16 bounded chunks and parsed in full, records **three passing of
+four discovered cases**: authority/rejection, actual mesh availability and
+Humanoid navigation. Both clients receive 2,332 successful actual MeshPart
+callbacks covering all 407 unique expected mesh IDs, with zero callback
+failures. One real Ground avatar completes the internal 19-waypoint and external
+29-waypoint routes using only one initial placement per route and ordinary
+Humanoid MoveTo thereafter, reaching upper-floor root Y=13.123. This is actual
+controlled locomotion, distinct from desktop/touch input or subjective review.
+
+The fourth case initially uses a generic primitive residual ray inside the
+approved garage Heavy opening. Detailed
+[field-level comparison](../docs/evidence/p17/material-48eae4b-attempt4-panel-mismatch.json)
+shows state/progress/identity and all 35 children agree exactly, with zero mesh,
+metadata, color, pose, size or physical-flag differences. The excluded ray
+fixture is corrected to use approved residual rectangle centers and a point
+solid in Pristine/Light but newly absent in Heavy; primitive checks and thresholds
+remain unchanged. No candidate replication defect is assigned from that failed
+assumption. Material/texture appearance, full six-family/native-fire/reset,
+fragments, regressions, performance and human A6 remain open.
+
+The following approved-ray SDK attempt does not start a server/client: Studio
+opens an extra read-only local test document instead. No candidate code is run
+there. The [startup-unavailable receipt](../docs/evidence/p17/material-48eae4b-attempt5-startup-unavailable.json)
+records zero running contexts, the pending launch and owned child identity.
+One supported Stop request does not resolve the pending RPC. No additional
+process launch/reopen retry occurs; the user is asked to close only that extra
+read-only window because MCP exposes no document-close operation. Original
+temporary hooks/backups remain owned until recovery and exact restoration.
+This temporary SDK failure does not waive any supported acceptance check.
+
+The [fourth full report](../docs/evidence/p17/material-48eae4b-attempt4.json)
+was also recovered completely (345,470 characters / 18 bounded chunks). The
+[independent checkpoint](../docs/evidence/p17/native-integrated-checkpoint-48eae4b.md)
+consolidates supported passes, excluded-probe mistakes and open evidence.
+During launcher recovery the user closed both local test documents, leaving
+only the private import document open. Consequently the original pending RPC
+and its final result are unavailable; no post-restoration check is claimed on
+that closed document. The [disconnection receipt](../docs/evidence/p17/material-48eae4b-startup-recovery-disconnected.json)
+confirms the on-disk test artifact still matches SHA-256
+`53e8fb79fa034a2d0fdb51631bee74e77a1d34300c4184442b7ae2d0e78aa4ad`,
+with no saved temporary hooks. The user is asked to open that unchanged local
+file once in the existing Studio application with Rojo disconnected. A new
+intended Studio ID/source verification is required before further tests.
