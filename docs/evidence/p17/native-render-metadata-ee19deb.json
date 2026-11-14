@@ -1,0 +1,115 @@
+{
+  "candidate": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "tree": "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a",
+  "studioId": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "scope": "Ordinary one-client Lobby/Ground preview; owned fixed client camera; HUD temporarily hidden in all close views; original JPEGs unedited; no actual competitive operator or multiplayer proof.",
+  "views": {
+    "south-exterior": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"south-exterior\",\"camera\":{\"type\":\"Custom\",\"fov\":70,\"viewport\":[1153,579],\"frame\":[178,11,208,0.7912850975990295,0,0.6114474534988403,0,1,-0,-0.6114475131034851,0,0.79128497838974],\"lastRendered\":[178,11,208,0.7912850975990295,0,0.6114474534988403,0,1,-0,-0.6114475131034851,0,0.79128497838974]},\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"graphics\":{\"EditQualityLevel\":\"Enum.QualityLevel.Automatic\",\"QualityLevel\":\"Enum.QualityLevel.Automatic\",\"EnableFRM\":\"true\"},\"role\":\"Waiting\",\"preview\":\"Ground\",\"outpostBounds\":{\"size\":[48,30.901092529296876,62.099998474121097],\"frame\":[144,14.575542449951172,167.4499969482422,1,0,0,0,1,0,0,0,1]},\"savedQuality\":\"Enum.SavedQualitySetting.Automatic\"}"
+        }
+      ],
+      "isError": false
+    },
+    "high-outside": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"high-outside\",\"lastRendered\":[144,100,264,1,0,-0,-0,0.7432941198348999,0.6689647436141968,0,-0.6689647436141968,0.7432941198348999],\"fov\":70,\"viewport\":[1153,579],\"frame\":[144,100,264,1,0,-0,-0,0.7432941198348999,0.6689647436141968,0,-0.6689647436141968,0.7432941198348999]}"
+        }
+      ],
+      "isError": false
+    },
+    "ground-floor": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"ground-floor\",\"lastRendered\":[154,5,181,0.8700222969055176,0,0.49301254749298098,0,1.0000001192092896,-0,-0.49301260709762576,0,0.870022177696228],\"fov\":75,\"viewport\":[1153,579],\"frame\":[154,5,181,0.8700222969055176,0,0.49301254749298098,0,1.0000001192092896,-0,-0.49301260709762576,0,0.870022177696228]}"
+        }
+      ],
+      "isError": false
+    },
+    "upper-floor": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"upper-floor\",\"lastRendered\":[154,15,181,0.8700222373008728,-0.00714811310172081,0.49296075105667117,0,0.999894917011261,0.014498845674097538,-0.49301257729530337,-0.012614318169653416,0.8699307441711426],\"fov\":75,\"viewport\":[1153,579],\"frame\":[154,15,181,0.8700222373008728,-0.00714811310172081,0.49296075105667117,0,0.999894917011261,0.014498845674097538,-0.49301257729530337,-0.012614318169653416,0.8699307441711426]}"
+        }
+      ],
+      "isError": false
+    },
+    "stairs-balcony-roof": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"stairs-balcony-roof\",\"lastRendered\":[178,34,206,0.8064050078392029,-0.14390261471271516,0.5735878348350525,0,0.9699409604072571,0.24334029853343965,-0.5913636684417725,-0.19623082876205445,0.7821652293205261],\"fov\":55,\"viewport\":[1153,579],\"frame\":[178,34,206,0.8064050078392029,-0.14390261471271516,0.5735878348350525,0,0.9699409604072571,0.24334029853343965,-0.5913636684417725,-0.19623082876205445,0.7821652293205261]}"
+        }
+      ],
+      "isError": false
+    },
+    "command-screens-close": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"command-screens-close\",\"lastRendered\":[149,14.600000381469727,150,1,0,-0,-0,0.9778023958206177,0.20952904224395753,0,-0.20952904224395753,0.9778023958206177],\"fov\":60,\"viewport\":[1153,579],\"frame\":[149,14.600000381469727,150,1,0,-0,-0,0.9778023958206177,0.20952904224395753,0,-0.20952904224395753,0.9778023958206177]}"
+        }
+      ],
+      "isError": false
+    },
+    "workshop-wood-close": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"view\":\"workshop-wood-close\",\"lastRendered\":[143,5.800000190734863,183,1,0,-0,-0,0.9615238904953003,0.2747213840484619,0,-0.2747213840484619,0.9615238904953003],\"fov\":65,\"viewport\":[1153,579],\"frame\":[143,5.800000190734863,183,1,0,-0,-0,0.9615238904953003,0.2747213840484619,0,-0.2747213840484619,0.9615238904953003]}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "guiMutation": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"changedGuis\":7,\"parts\":[{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\",\"size\":[32,1.0000077486038209,48],\"position\":[144,-0.375,164]}]}"
+      }
+    ],
+    "isError": false
+  },
+  "nativeClient": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"models\":[{\"meshes\":2256,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_North_01\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_North_02\"},{\"meshes\":9,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_South_01\"},{\"meshes\":6,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_West_01\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_West_02\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_West_03\"},{\"meshes\":14,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_East_01\"},{\"meshes\":14,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_East_02\"},{\"meshes\":15,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S01_East_03\"},{\"meshes\":3,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_North_01\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_North_02\"},{\"meshes\":11,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_South_01\"},{\"meshes\":13,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_South_02\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_West_01\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_West_02\"},{\"meshes\":2,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_West_03\"},{\"meshes\":4,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_East_01\"},{\"meshes\":4,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_East_02\"},{\"meshes\":4,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_East_03\"},{\"meshes\":51,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01\"},{\"meshes\":39,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_02\"},{\"meshes\":19,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_03\"},{\"meshes\":42,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_02_01\"},{\"meshes\":43,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_02_02\"},{\"meshes\":23,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_02_03\"},{\"meshes\":1,\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_v2_Interior01\"}],\"checked\":2256,\"samples\":[{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0011\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0012\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0013\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0014\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0015\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0016\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0017\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0018\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0019\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]},{\"path\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0020\",\"meshSize\":[5.546666622161865,4.803541660308838,3.8400001525878908],\"meshId\":\"rbxassetid://81115176033306\",\"fidelity\":\"PreciseConvexDecomposition\",\"size\":[0.12999999523162843,0.11258300393819809,0.09000000357627869]}],\"fidelityHistogram\":{\"Box\":2000,\"PreciseConvexDecomposition\":256},\"failures\":[],\"minimumIntrinsicAxis\":0.0010000000474974514,\"maximumIntrinsicAxis\":2048}"
+      }
+    ],
+    "isError": false
+  },
+  "floorBoundsRays": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"records\":[{\"x\":0,\"z\":0,\"height\":0.12499997019767761,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":15,\"z\":23,\"height\":0.12500369548797608,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":-15,\"z\":23,\"height\":0.12500369548797608,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":15,\"z\":-23,\"height\":0.12499624490737915,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":-15,\"z\":-23,\"height\":0.12499624490737915,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":17,\"z\":0,\"pass\":true,\"expectedHit\":false},{\"x\":-17,\"z\":0,\"pass\":true,\"expectedHit\":false},{\"x\":0,\"z\":25,\"pass\":true,\"expectedHit\":false},{\"x\":0,\"z\":-25,\"pass\":true,\"expectedHit\":false},{\"x\":17,\"z\":25,\"pass\":true,\"expectedHit\":false},{\"x\":-17,\"z\":25,\"pass\":true,\"expectedHit\":false},{\"x\":17,\"z\":-25,\"pass\":true,\"expectedHit\":false},{\"x\":-17,\"z\":-25,\"pass\":true,\"expectedHit\":false}],\"fidelity\":\"PreciseConvexDecomposition\",\"collidable\":true,\"meshSize\":[1365.3333740234376,42.66699981689453,2048],\"queryable\":true,\"failures\":0,\"datamodel\":\"Client\",\"size\":[32,1.0000077486038209,48]}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"records\":[{\"x\":0,\"z\":0,\"height\":0.12499997019767761,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":15,\"z\":23,\"height\":0.12500369548797608,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":-15,\"z\":23,\"height\":0.12500369548797608,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":15,\"z\":-23,\"height\":0.12499624490737915,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":-15,\"z\":-23,\"height\":0.12499624490737915,\"pass\":true,\"expectedHit\":true,\"hit\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor\"},{\"x\":17,\"z\":0,\"pass\":true,\"expectedHit\":false},{\"x\":-17,\"z\":0,\"pass\":true,\"expectedHit\":false},{\"x\":0,\"z\":25,\"pass\":true,\"expectedHit\":false},{\"x\":0,\"z\":-25,\"pass\":true,\"expectedHit\":false},{\"x\":17,\"z\":25,\"pass\":true,\"expectedHit\":false},{\"x\":-17,\"z\":25,\"pass\":true,\"expectedHit\":false},{\"x\":17,\"z\":-25,\"pass\":true,\"expectedHit\":false},{\"x\":-17,\"z\":-25,\"pass\":true,\"expectedHit\":false}],\"fidelity\":\"PreciseConvexDecomposition\",\"collidable\":true,\"meshSize\":[1365.3333740234376,42.66699981689453,2048],\"queryable\":true,\"failures\":0,\"datamodel\":\"Server\",\"size\":[32,1.0000077486038209,48]}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}

@@ -804,3 +804,69 @@ correcting the negative fixture's positive control. Expected native counts are
 173 server / ten client; these are **not yet observed on this source**.
 Fresh actual rendering, fidelity/physics, client reconstruction and the
 remaining A1–A6 gates must run before closing the P1 or claiming acceptance.
+
+The corrected asset bundle is then synced only into local `tests.rbxlx`
+(`61a9a1b7-8b1d-4834-8adb-1df099229ce3`, GameId/PlaceId zero). The guarded
+transaction checks the four transferred base64 chunks and decoded native bytes,
+all old sources/material identities, and unparented corrected templates before
+any managed write. It changes five ModuleScript sources, adds the negative
+fixture and replaces the two private template roots using bounded parent batches.
+Original roots/sources remain available until independent verification passes.
+
+The [complete sync/identity receipt](../docs/evidence/p17/native-sync-and-identity-ee19deb.json)
+records passing transaction checks, the independent main probe and **all ten**
+target-geometry chunks: 133 source identities, 2,332 native mesh uses, 9,328
+actual material slots, 11,660 native metadata fields, 6,996 public native
+properties, 6,996 target Size and 27,984 target CFrame components. Explicit
+finalization repeats source/native checks before destroying the retained old
+templates. The transfer buffer and rollback owner are removed. This is native
+Edit reconstruction evidence; ordinary Play, rendered bounds and actual physics
+remain separate. The private cloud document and published version are untouched.
+
+### Fresh native correction recheck — 2026-11-14
+
+Fresh ordinary Play on `ee19deb5` passes **173/173 server / 10/10 client**,
+one actual client, zero failures/errors/skips. New constructor/preflight and
+bounded floor-collision regressions pass. All **2,256** actual-client Outpost
+meshes independently pass `AssetMesh.validate` (2,000 Box / 256 Precise).
+The [raw baseline and console](../docs/evidence/p17/native-ordinary-baseline-ee19deb.json)
+retain the exact observations; this is distinct from two-client acceptance.
+
+The [independent render review](../docs/evidence/p17/native-render-review-ee19deb.md)
+closes the prior giant-plane P1 in its actual tested scope. The same prior
+outside camera now shows a correctly sized textured Outpost; both furnished
+floors, command screens, workshop wood, lamps, stairs/balcony and roof details
+render coherently. The [eight original JPEGs and hashes](../docs/evidence/p17/render-capture-files-ee19deb.json)
+are native captures without image manipulation. Independent
+[floor queries and camera metadata](../docs/evidence/p17/native-render-metadata-ee19deb.json)
+pass 13 positions on each Server and Client: five inside hits / eight outside
+misses. Real contacts, avatar routes and fragments remain separate. An existing
+low-priority “launcher planned” status-label inconsistency is retained as a
+nonblocking presentation finding; no new material defect is assigned here.
+
+The [cleanup proof](../docs/evidence/p17/native-render-cleanup-ee19deb.json)
+restores the camera and all seven saved GUI values, removes the temporary
+binding/attributes, stops Play and passes the main identity plus all ten target
+geometry chunks again. Actual viewport is 1153×579, native captures 1920×964,
+quality Automatic / FRM enabled: these are not benchmark settings. No complete
+thermal/input/full-orbit, multiplayer, performance or human A6 pass is claimed.
+
+Following repeated SDK read-only-document launches, the supported native UI
+adapter is [independently reviewed](../docs/evidence/p17/independent-manual-adapter-review-ee19deb.md).
+It preserves the v6 gameplay/ray/timing assertions and adds actual native mesh
+checks, with explicit completion and full bounded server-only report chunks.
+The [installation/readiness receipt](../docs/evidence/p17/manual-start-ee19deb.json)
+guards local Edit and exact original Sources, installs four temporary modules /
+two dispatchers (137 scripts), verifies the owner survives separate MCP calls,
+and selects only the local manual harness. The user confirms two native client
+windows, but read-only identity shows both clients/server belong to the cloud
+document and have no test reports or manual evidence. **Zero candidate cases
+ran.** The local document stays prepared; an actual local launch is required.
+
+The [wrong-document startup receipt](../docs/evidence/p17/manual-ee19deb-wrong-cloud-start.json)
+retains the actual server/two-client cloud IDs and empty test reports. One
+supported Stop request returns `GameStopped`, but subsequent state/list still
+show all three contexts playing; the [Stop discrepancy](../docs/evidence/p17/manual-ee19deb-wrong-cloud-stop.json)
+is preserved without a retry loop or cloud Source write. The user is asked to
+End Session in Studio, select `tests.rbxlx` through the Window menu and start
+the local two-client run. This does not waive the supported multiplayer gate.

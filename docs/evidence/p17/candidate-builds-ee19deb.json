@@ -16,7 +16,29 @@
     "server": 173,
     "client": 10
   },
-  "native_observed": null,
+  "native_observed": {
+    "server": {
+      "discovered": 173,
+      "passed": 173,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "client": {
+      "discovered": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "actual_clients": 1,
+    "actual_client_native_mesh_validation": 2256,
+    "client_collision_fidelity_counts": {
+      "Box": 2000,
+      "PreciseConvexDecomposition": 256
+    },
+    "scope": "Fresh ordinary Play and bounded actual render/floor-query correction; full multiplayer/navigation/fragments/performance/A6 separate."
+  },
   "builds": [
     {
       "path": "build/game.rbxlx",
@@ -40,5 +62,5 @@
     "Box": 320,
     "PreciseConvexDecomposition": 87
   },
-  "scope": "Host evidence only; final candidate native rendering, collision and multiplayer unverified."
+  "scope": "Host and explicitly scoped native results; full P17 acceptance remains open."
 }

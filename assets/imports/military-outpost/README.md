@@ -55,8 +55,11 @@ Five readable attributes (NativeGeometryVersion, NativeMeshId, NativeMeshSize,
 NativeCollisionFidelity and NativeRenderFidelity) bind public runtime checks to
 that construction data. Shared AssetMesh validates public MeshSize and fidelity;
 that does not prove rendered bounds, UV appearance, actual collision contacts or
-replication. The current constructor correction still requires fresh native
-acceptance, and previous pre-constructor observations remain historical.
+replication. Source `ee19deb5` now passes its ordinary one-client 173-server/10-client
+baseline, including constructor/preflight/floor fixtures; all 2,256 actual-client
+Outpost MeshParts pass public AssetMesh validation. That limited runtime proof
+and a corrected exterior view do not establish complete visual/physics/multiplayer
+acceptance. Previous pre-constructor observations remain historical.
 
 Check the committed reconstruction without uploading or changing files:
 

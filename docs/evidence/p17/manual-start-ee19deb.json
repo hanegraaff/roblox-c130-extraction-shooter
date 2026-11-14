@@ -1,0 +1,24 @@
+{
+  "source": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "tree": "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a",
+  "studio": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "install": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"modules\":4,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"started\":false,\"entries\":2,\"manualHarness\":\"P17Manual\",\"passed\":true,\"sdkLaunch\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "ready": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"ownerSurvivesMCPCalls\":true,\"expectedServer\":173,\"placeId\":0,\"requestedActualClients\":2,\"manualReady\":true,\"scripts\":137,\"passed\":true,\"expectedClientEach\":10,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\"}"
+      }
+    ],
+    "isError": false
+  },
+  "status": "User confirmed two windows, but actual contexts belong to the cloud document and contain no P17 reports. Zero candidate cases ran. Correct local launch remains required."
+}

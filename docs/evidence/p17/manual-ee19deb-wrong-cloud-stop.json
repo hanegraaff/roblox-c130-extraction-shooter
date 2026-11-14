@@ -1,0 +1,67 @@
+{
+  "scope": "One authorized supported Stop for accidentally started cloud Server&Clients. API returned Game Stopped but all three child contexts still report Play; no retries.",
+  "stop": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Game Stopped"
+      }
+    ],
+    "isError": false
+  },
+  "postStopStates": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "67c66b79-81a3-4e2c-bea9-d0f476b893f1",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "b7799cde-b2e5-401a-b874-59fbd146c523",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Server"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "f24e1985-da0a-4e3e-8567-94f2b0f1b149",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client"
+            }
+          ],
+          "isError": false
+        }
+      }
+    }
+  ],
+  "localPreserved": {
+    "studioId": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+    "edit": true,
+    "placeId": 0,
+    "gameId": 0,
+    "manualHarness": "P17Manual",
+    "ownerPresent": true
+  }
+}

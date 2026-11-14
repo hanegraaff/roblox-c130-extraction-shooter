@@ -59,15 +59,19 @@ metadata; a valid public check does not prove rendered bounds, UVs, actual
 collision contacts or multiplayer fidelity. Those need fresh native acceptance.
 
 Run a fresh source-confirmed local test document. The current mapping expects
-**173 server cases and ten per actual client** for the native-constructor fix
-`ee19deb5`; that corrected source still needs fresh native execution. Do not
-report the expected count as a pass. Source `51f8440` passed its earlier ordinary
-local Play baseline (171/171 server and 10/10 client, one actual client,
-Studio `0.747.0.7471481`, zero errors/failures/skips), before this native mesh
-payload repair. That result and later pre-constructor observations remain
-historical and cannot establish corrected rendering, fidelity or replication.
-All P17 criteria retain their full source-specific navigation, material/fire,
-multiplayer/reset, workload and human evidence.
+**173 server cases and ten per actual client**. Fresh ordinary local Studio Play
+on `ee19deb5` passes 173/173 server and 10/10 client, one actual client, with zero
+errors, failures or skips. Native constructor/preflight/floor-collision fixtures
+pass. That actual client also validates all 2,256 Outpost MeshParts with
+AssetMesh: 2,000 Box and 256 PreciseConvexDecomposition uses. This is runtime
+intrinsic/fidelity validity, separately from the 407-profile authoring-bank count.
+A bounded exterior camera review now shows a correctly scaled, textured Outpost
+without the earlier giant planes; it does not approve all art or damage states.
+
+Earlier `51f8440` 171/10 and later pre-constructor observations remain historical
+and cannot validate the corrected source. Multiplayer, material/native-fire and
+fragment coverage, complete operated normal/thermal review, workload metrics and
+human A6 approval remain open until their own evidence exists.
 
 | Suite / file | Intended native assertions |
 | --- | --- |
@@ -192,7 +196,7 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The integrated P17 mapping expects **173 server cases and ten cases per actual client** for the native-constructor correction. Fresh reports are required; this expected count is not execution evidence. The earlier one-client `51f8440` 171/10 baseline predates that correction and retains only its original source/fixture scope. The earlier P08 mapping had 156 server cases (55 unit, 65 integration and 36 server engine cases). Recorded P08 source `ef7826b` passed fresh ordinary one-client Play with **156 server / seven client**, zero failures/errors/skips, and an ordinary two-client SDK session passed 156 server/seven per actual client. These baseline results do not establish the complete three-client launcher harness or operated input. The [P08 record](../plans/08-rocket-launcher.md) identifies the actual tested candidate and passing/unavailable checks. Initial candidate `88732d4` passed 155 server/six client before its character-removal and GUI-intersection corrections. Require every current report to have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`. Preserve exact source/build and actual contexts; historical P06/P07 counts below apply only to their recorded source.
+5. The integrated P17 mapping expects **173 server cases and ten cases per actual client**. Fresh ordinary local `ee19deb5` execution passes 173/173 server and 10/10 client with one actual client and zero errors, failures or skips. Require fresh reports after changes; that solo baseline does not establish multiplayer or full P17 acceptance. The earlier one-client `51f8440` 171/10 baseline predates that correction and retains only its original source/fixture scope. The earlier P08 mapping had 156 server cases (55 unit, 65 integration and 36 server engine cases). Recorded P08 source `ef7826b` passed fresh ordinary one-client Play with **156 server / seven client**, zero failures/errors/skips, and an ordinary two-client SDK session passed 156 server/seven per actual client. These baseline results do not establish the complete three-client launcher harness or operated input. The [P08 record](../plans/08-rocket-launcher.md) identifies the actual tested candidate and passing/unavailable checks. Initial candidate `88732d4` passed 155 server/six client before its character-removal and GUI-intersection corrections. Require every current report to have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`. Preserve exact source/build and actual contexts; historical P06/P07 counts below apply only to their recorded source.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
