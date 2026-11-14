@@ -24,6 +24,12 @@ Have a tester complete both roles from in-game instructions. Inspect thermal con
 
 ## Documentation changes
 
+The dedicated military-outpost art work is scoped separately in
+[P16](16-blender-military-outpost-assets.md) (Blender assets and human approval)
+and [P17](17-integrate-military-outpost.md) (smaller-Outpost integration).
+P10 retains its presentation/onboarding scope and does not require those plans;
+describe their art only if it is actually present in the tested candidate.
+
 Make the README a truthful player guide to the whole current game, with actual controls and curated screenshots if available. Keep contributor setup elsewhere. Document asset credits and current limitations.
 
 ## Completion record

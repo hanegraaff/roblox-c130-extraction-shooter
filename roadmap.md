@@ -21,6 +21,20 @@ The integrated source on `main` includes the development shell, verification too
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
+| Asset refinement — Blender | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Ready | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
+| Asset refinement — Integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Planned | P16, P08, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
+
+2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
+asset set closely matching all three references in
+`src/images/military-outpost/`, with material-specific Pristine/Light/Heavy/Total
+variants and a saved Blender review scene. The user selected the smaller
+Outpost for P17 replacement and confirmed a close match to all three images.
+P16 requires explicit human approval of the actual asset revision; P17 consumes
+that approved revision and separately verifies in-game demolition, replication,
+reset and presentation. These plans do not depend on P12 publication or P15
+level selection, and do not make refined art a mandatory MVP prerequisite.
+P09 remains Ready; the normal lowest-numbered selection rule is unchanged.
+Neither new plan has started, and no Blender assets or replacement are claimed.
 
 2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
 host gate, 104 server and 3 per-client Studio smoke, and the eight-case
@@ -163,12 +177,14 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 - After **P07**, demonstrate the complete panel progression and physical fragments with simple graphics; art refinement cannot substitute for missing mechanics.
 - After **P09**, play the complete team-versus-plane loop and inspect destruction/elimination/timeout conflicts.
 - After **P12**, the MVP is ready only with the recorded gates and authorized publication; “code written” is not release completion.
+- After **P16**, the user must inspect the saved Blender scene, furnished interior/exterior and every material's damage gallery and explicitly like/approve the identified revision before P17 starts.
+- After **P17**, review the approved smaller Outpost in actual gameplay, including both floors, normal/thermal damage, real openings, fragments and pristine reset.
 
 ## Later asset refinement and other proposals
 
-Future ideas beyond P15 belong in separate post-MVP proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
+Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
 
-Dedicated later asset-generation plans should separately refine terrain dressing, building architecture/materials and damage/debris variants, and aircraft/equipment assets. Scope those proposals after the simple-graphics mechanics are demonstrated, retaining panel IDs/pivots, openings, collision, thermal readability and performance contracts. P10 supplies readable UI/effects/audio, without making high-detail art an MVP dependency. These are future planning topics, not newly authorized implementation increments.
+P16/P17 now scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 supplies readable UI/effects/audio without making high-detail art an MVP dependency. If P17 is integrated before an MVP release candidate, P11/P12 must profile and verify that actual candidate art. This update creates plans only; it does not start implementation.
 
 ## Initial delivery record
 

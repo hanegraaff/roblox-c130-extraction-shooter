@@ -24,6 +24,13 @@ The HUD shows role, life, time, survivors, ammunition and aircraft health. Deskt
 
 This is primitive development art and a local test candidate. Current checks pass the host gate, solo smoke, two-client combat/panning regressions, simulated-phone rifle/launcher controls and the full **11-case P08 native harness** with three actual clients. Ordinary route walking, raced pickup and selection also have separate review. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, with integration still pending. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity are unverified or planned. The MVP has one level; additional selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope.
 
+Detailed building art is planned separately: [P16](plans/16-blender-military-outpost-assets.md)
+will create a furnished military outpost in Blender closely matching the three
+supplied references, including material-specific damage variants for your review
+and approval. [P17](plans/17-integrate-military-outpost.md) will replace the smaller
+Outpost with the approved asset. These plans have not produced assets or changed
+the playable building yet.
+
 ## Set up locally
 
 For the complete local Studio workflow, use macOS with **Git**, **Python 3.10+**, system **curl**, and **Roblox Studio** installed. Sign in to Studio yourself and keep Play stopped while installing or connecting plugins. Setup downloads tools from GitHub and TestEZ from Wally, so network access is required. The setup/host checks also support Linux arm64/x86_64; automated Windows setup is not provided. See the [development guide](docs/development.md) for platform and tool details.

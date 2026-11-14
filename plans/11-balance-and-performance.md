@@ -12,6 +12,11 @@ Create deterministic combat/soak fixtures and bounded diagnostics for request ra
 
 ## Acceptance criteria
 
+If [P17's smaller-Outpost replacement](17-integrate-military-outpost.md) is
+included in the candidate, profile its actual imported art, material-specific
+variants and fragment workload against the same budgets. A previous primitive
+building measurement cannot establish the replacement's performance.
+
 - **A1:** Full gate and all prior required engine scenarios pass on the final candidate. Load/replay/flood tests cannot exceed configured queues or duplicate authoritative effects.
 - **A2:** Five accelerated rounds return owned temporary instances/connections to baseline with no stale state. A 30-minute soak meets the ≤10% retained-memory growth criterion in `docs/testing.md`.
 - **A3:** The scripted workload meets p95 client ≤33.3 ms and server ≤16.7 ms targets on the recorded environment. Report actual client count and metrics; ten fake roster entries are not a ten-client benchmark.

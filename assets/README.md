@@ -31,4 +31,27 @@ The battlefield manifest also records the authored aircraft AimEnvelope values a
 
 Generated place builds belong in ignored `build/`. Do not blanket-ignore authored model/place exports needed for reconstruction. Choose Git LFS or another documented versioned store before adding large binary source assets.
 
+## Planned Blender outpost package
+
+[P16](../plans/16-blender-military-outpost-assets.md) specifies a complete
+editable outpost with both furnished floors, exterior dressing, material-specific
+damage variants and actual Blender renders for the user's approval.
+[P17](../plans/17-integrate-military-outpost.md) consumes that approved package
+to replace the current smaller Outpost. The [three supplied references](../src/images/military-outpost/README.md)
+are reference illustrations outside runtime mappings; they are not current game
+assets or a replacement for a saved `.blend`.
+
+Proposed source/export roots are `assets/blender/military-outpost/` and
+`assets/exports/military-outpost/`. Create them during P16, with a package README,
+complete texture dependencies, scale/axis/export contracts, measured budgets and
+a material/shape panel catalog covering Pristine/Light/Heavy/Total and fragments.
+Keep final approved source/export hashes and feedback in P16 evidence. Extend
+the manifest/schema and coverage checker before adding these files: today's
+checker requires an exact match against `world/` and `models/`, so simply adding
+out-of-directory manifest entries is insufficient. Retain originals and versioned
+exports, document storage for large binaries, and exclude caches/backups.
+Only actual imported asset IDs/owners may be recorded. Import permissions and
+runtime collision/thermal/replication/reset are P17 checks, distinct from Blender
+visual approval. No Blender package or import is delivered by this planning update.
+
 The current P07 revision also versions the starting battlefield shelter’s panelization in the world source/manifest. It replaces the old seven collider envelopes with 76 wall/roof panels while preserving the pristine union/entrances/anchors; the revised source passes its reconstruction and acceptance checks. Runtime Light/Heavy scars and fragments are original code-generated primitives and must not be exported as pristine world assets. Keep registry descriptors, manifest coverage and reconstruction checks aligned; the separate outside lobby is unchanged.

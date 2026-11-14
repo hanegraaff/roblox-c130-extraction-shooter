@@ -117,6 +117,18 @@ At each server step, enforce deadline first; resolve accepted projectile/damage 
 
 ## Presentation and readiness
 
+The separately planned [P16 Blender asset kit](plans/16-blender-military-outpost-assets.md)
+closely follows all three images in `src/images/military-outpost/`: a weathered
+military exterior, ground-floor storage/workshop and upstairs command room.
+It includes indoor/outdoor props and material-specific panel damage/fragments,
+saved as editable assets for the user's inspection and explicit visual approval.
+[P17](plans/17-integrate-military-outpost.md) then replaces the **smaller Outpost**
+on this same level with the approved revision. Concrete, corrugated metal and
+roof materials must damage in visually appropriate ways while retaining the
+same shared three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment
+rules. Floors, stairs and supporting structure stay stable. This is planned art
+refinement, not a new level, current gameplay or a mandatory high-detail MVP gate.
+
 Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
 
 MVP readiness also requires walking every authored floor of all three buildings on the expanded terrain, panning across the full battlefield at both weapon zooms, demonstrating the six-heavy-hit and nine-second 30mm panel rules, real damaged-state openings, bounded physical debris and repeated pristine reconstruction. MVP readiness requires complete 6- and 10-player rounds for aircraft destruction, ground elimination and timeout; correct launcher recovery and weapon switching; rejection of invalid input; repeated clean resets; and readable counterplay. Automated checks prove rules, while operated multiplayer sessions assess feel, balance and performance.

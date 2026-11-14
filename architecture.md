@@ -285,6 +285,37 @@ Static map files and server-cloned templates have separate ownership. Do not syn
 
 The source includes the original normalized two-strip [PanelResidual template](assets/models/PanelResidual.model.json). DestructionRuntime scales it to each registered wall/roof/interior panel; no external art or cloud reference is required. Runtime fragments are generated primitives, not authored map content. Never export them, projectile effects or damaged live state as pristine source. The [progressive destruction contract](#progressive-panel-destruction-p07) governs their lifecycle.
 
+### Planned Blender source and material-aware panel assets
+
+[P16](plans/16-blender-military-outpost-assets.md) will retain an editable,
+self-contained outpost scene under `assets/blender/military-outpost/` and game
+exports under `assets/exports/military-outpost/`, with a versioned panel catalog
+for material/shape, source, dimensions, pivot, appearance variants, collision
+proxies and fragments. These proposed directories and catalog are not implemented
+yet. The current asset checker must be extended deliberately to cover them; its
+coverage rule currently includes only `assets/world` and `assets/models`.
+Blender source/review lighting stays outside Rojo runtime mappings. Record scale,
+axes, dependency hashes, actual provenance and export instructions; do not infer
+Roblox import success or permission from a local render.
+
+[P17](plans/17-integrate-military-outpost.md) will replace only the smaller
+Outpost using the human-approved package. Current `PanelGeometry` clones
+primitive Parts and applies generic scars/residuals, so mesh import alone cannot
+consume the new variants. Extend the shared asset/reconstruction boundary to
+select validated material-specific visuals, authoritative collision/query
+proxies and safe fragments. Preserve `PanelDamageRules`/`DestructionService`
+timing, damage authority and lifecycle. Material does not change durability.
+Keep existing primitive panels compatible; missing variants, bad IDs/geometry
+and stale reset references need explicit validation. Mesh appearance and proxy
+geometry must agree for actual openings and thermal/weapon obstruction.
+
+MapService retains pristine rebuild and registry ownership. Every new imported
+template needs a managed source/export and manifest record; deliberate Studio
+placement must return to Git. P16's Blender approval and P17's actual engine,
+two-client/reset and human presentation gates are distinct. This boundary is
+building-asset data for the current level, not an implementation of P15 level
+selection or a claim that material-aware authored variants already work.
+
 ## Tooling and verification
 
 Run `python3 scripts/setup.py` for the pinned tools, locked TestEZ and hash-checked Roblox engine definitions, then `python3 scripts/verify.py` for the complete non-Studio gate. It runs repository checks, StyLua, Selene, strict Roblox-aware analysis, deterministic Lune unit/service suites, deliberate failure/empty/type probes, both Rojo builds, canonical authored-geometry/corruption checks and XML release-isolation inspection. Missing tools, failed or empty suites fail the gate.
