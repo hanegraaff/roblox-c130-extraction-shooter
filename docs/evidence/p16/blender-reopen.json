@@ -2,7 +2,7 @@
   "suite": "P16BlenderReopen",
   "passed": true,
   "blender_version": "5.3.0",
-  "source_sha256": "08277437457c0538d0767c97bffa784a8b0e511d4f7bee2c1e37cf66a89b7c93",
+  "source_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c",
   "collection_count": 11,
   "cameras": [
     "Exterior",

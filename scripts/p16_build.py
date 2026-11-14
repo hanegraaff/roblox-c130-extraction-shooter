@@ -335,9 +335,12 @@ def make_panel(name,w,h,t,family,shape,state):
                 if high>low:objs.append(cube(f'{name}.stripe',((x0+x1)/2,side*(t/2+.09),(low+high)/2),(x1-x0,.025,high-low),'orange',0))
     if state=='Light':
         # Material-specific positive earned damage. Both faces; never opens cover.
+        # A garage retains narrow side jambs; the generic central pattern falls
+        # entirely in its aperture. Score both jambs explicitly, on both faces.
+        scar_points=([(x,z) for x in (-w/2+1,w/2-1) for z in (-h*.3,0,h*.3)]
+          if shape=='garage' else [(-w*.38+k*w*.09,math.sin(k*2.1)*h*.25) for k in range(9)])
         for side in (-1,1):
-            for k in range(9):
-                xx=-w*.38+k*w*.09;zz=math.sin(k*2.1)*h*.25
+            for xx,zz in scar_points:
                 if not any(a+1<=xx<=c-1 and b+1<=zz<=d-1 for a,b,c,d in base):continue
                 if family=='corrugated':
                     scar=cube(name+'.light_scored_crease',(xx,side*(t/2+.16),zz),(.08,.025,1.2),'dark',0);scar.rotation_euler[1]=.5

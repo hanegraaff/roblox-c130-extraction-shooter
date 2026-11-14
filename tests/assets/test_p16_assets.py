@@ -119,5 +119,21 @@ class P16RejectionTests(unittest.TestCase):
         path=self.root/'scripts/p16_blender_review.py';path.write_text(path.read_text()+'\n# changed render program\n')
         with self.assertRaisesRegex(AssertionError,'stale render script'):audit.validate_proofs(self.root)
 
+    def test_garage_pristine_substituted_for_light_is_rejected(self):
+        directory=self.root/'assets/exports/military-outpost'
+        (directory/'corrugated_garage-light.obj').write_bytes((directory/'corrugated_garage-pristine.obj').read_bytes())
+        with self.assertRaisesRegex(AssertionError,'earned scar'):self.check()
+
+    def test_renaming_or_vertex_permutation_does_not_create_light_scars(self):
+        pristine=audit.parse_obj(self.root/'assets/exports/military-outpost/corrugated_garage-pristine.obj')
+        shuffled=dict(pristine,vertices=list(reversed(pristine['vertices'])),
+          triangles=[tuple(len(pristine['vertices'])-1-i for i in tri) for tri in pristine['triangles']])
+        with self.assertRaisesRegex(AssertionError,'earned scar'):audit.validate_light_scars(pristine,shuffled,'garage-permuted')
+
+    def test_unused_dark_material_declaration_does_not_create_scars(self):
+        directory=self.root/'assets/exports/military-outpost';pristine=audit.parse_obj(directory/'corrugated_garage-pristine.obj')
+        path=directory/'corrugated_garage-light.obj';path.write_bytes((directory/'corrugated_garage-pristine.obj').read_bytes()+b'\nusemtl dark\n')
+        with self.assertRaisesRegex(AssertionError,'earned scar'):audit.validate_light_scars(pristine,audit.parse_obj(path),'garage-unused-material')
+
 
 if __name__=='__main__':unittest.main()

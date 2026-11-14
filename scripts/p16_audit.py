@@ -39,7 +39,7 @@ def write_lock(root=ROOT):
 
 
 def parse_obj(path):
-    vertices=[];uvs=[];triangles=[];materials=set();objects=[];triangle_objects=[];current_object='unnamed'
+    vertices=[];uvs=[];triangles=[];materials=set();objects=[];triangle_objects=[];triangle_materials=[];current_material=None;current_object='unnamed'
     for line in path.read_text().splitlines():
         p=line.split()
         if not p:continue
@@ -51,7 +51,8 @@ def parse_obj(path):
             uvs.append(uv)
         elif p[0]=='o':
             current_object=' '.join(p[1:]);objects.append(current_object)
-        elif p[0]=='usemtl':materials.add(p[1])
+        elif p[0]=='usemtl':
+            current_material=p[1];materials.add(current_material)
         elif p[0]=='f':
             assert len(p)==4,('not triangulated',path)
             corners=[]
@@ -59,8 +60,9 @@ def parse_obj(path):
                 fields=token.split('/');i=int(fields[0])-1;t=int(fields[1])-1
                 assert 0<=i<len(vertices) and 0<=t<len(uvs),('invalid face index',path)
                 corners.append(i)
-            triangles.append(tuple(corners));triangle_objects.append(current_object)
-    return dict(vertices=vertices,uvs=uvs,triangles=triangles,materials=materials,objects=objects,triangle_objects=triangle_objects)
+            assert current_material is not None,('face has no material',path)
+            triangles.append(tuple(corners));triangle_objects.append(current_object);triangle_materials.append(current_material)
+    return dict(vertices=vertices,uvs=uvs,triangles=triangles,materials=materials,objects=objects,triangle_objects=triangle_objects,triangle_materials=triangle_materials)
 
 
 def projected_mask(obj,w,h,res=128):
@@ -85,6 +87,35 @@ def projected_mask(obj,w,h,res=128):
                 v=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(z-c[1]))/denom
                 if u>=-1e-9 and v>=-1e-9 and u+v<=1+1e-9:mask.add(iz*nx+ix)
     return mask
+
+
+def validate_light_scars(pristine,light,family):
+    """Require actual new earned-scar faces on both sides, independent of names/order.
+
+    Every family uses explicit dark fracture/score geometry for hue-independent
+    Light cues. Merely listing a material, renaming objects or permuting vertex
+    indices cannot satisfy this check. Area is measured on exported triangles
+    outside the pristine face envelope; the separate mask audit preserves all
+    original blocking surfaces and apertures.
+    """
+    def canonical(obj):
+        return {(material,tuple(sorted(tuple(round(x,6) for x in obj['vertices'][i]) for i in tri)))
+          for tri,material in zip(obj['triangles'],obj['triangle_materials'])}
+    assert canonical(light)!=canonical(pristine),(family,'Light has no distinct earned scar geometry')
+    assert 'dark' not in pristine['triangle_materials'],(family,'Pristine contains earned scar material')
+    dark=[tri for tri,material in zip(light['triangles'],light['triangle_materials']) if material=='dark']
+    assert dark,(family,'Light missing actual earned scar faces')
+    faces=[]
+    for side in (-1,1):
+        extent=max(side*v[1] for v in pristine['vertices']);area=0;count=0
+        for tri in dark:
+            a,b,c=[light['vertices'][i] for i in tri]
+            if side*(a[1]+b[1]+c[1])/3<=extent+.002:continue
+            projected=abs((b[0]-a[0])*(c[2]-a[2])-(b[2]-a[2])*(c[0]-a[0]))/2
+            area+=projected;count+=1
+        assert count>0 and area>.03,(family,'Light has no measurable earned scar on face',side,count,area)
+        faces.append(dict(side=side,scar_triangles=count,projected_scar_area_studs2=area))
+    return dict(distinct_material_geometry=True,two_sided_scars=faces)
 
 
 def navigation_samples():
@@ -285,12 +316,13 @@ def inspect_package(root=ROOT,check_lock=True,check_evidence=True):
         w,t,h=family['dimensions_studs'];assert all(math.isfinite(v) and v>0 for v in (w,t,h))
         assert family['pivot']==[0,0,0]
         assert set(family['states'])=={'Pristine','Light','Heavy','Total'}
-        masks={};proxies={}
+        masks={};proxies={};variants={}
         for state,entry in family['states'].items():
-            obj=parse_obj(export/entry['mesh']);proxy=parse_obj(export/entry['collision'])
+            obj=parse_obj(export/entry['mesh']);proxy=parse_obj(export/entry['collision']);variants[state]=obj
             assert obj['materials']<=all_materials and proxy['materials']<=all_materials
             masks[state]=projected_mask(obj,w,h);proxies[state]=projected_mask(proxy,w,h)
             assert len(obj['triangles'])>0 if state!='Total' else len(obj['triangles'])==0
+        light_scars=validate_light_scars(variants['Pristine'],variants['Light'],family['id'])
         assert masks['Pristine']==proxies['Pristine'],family['id']+' pristine proxy mismatch'
         assert masks['Light']==masks['Pristine']==proxies['Light'],family['id']+' Light opens panel'
         assert not masks['Total'] and not proxies['Total'],family['id']+' Total has a solid'
@@ -309,7 +341,7 @@ def inspect_package(root=ROOT,check_lock=True,check_evidence=True):
             for axis in range(3):
                 size=max(v[axis] for v in obj['vertices'])-min(v[axis] for v in obj['vertices'])
                 assert 0<size<=1.5+1e-6,(family['id'],'oversized fragment',size)
-        geometry.append(dict(family=family['id'],actual_removed_fraction=removed,proxy_removed_fraction=proxy_removed,
+        geometry.append(dict(family=family['id'],light_scars=light_scars,actual_removed_fraction=removed,proxy_removed_fraction=proxy_removed,
           proxy_extra_cells=len(extra),cosmetic_silhouette_difference=difference,raster_width=128))
     passed('P16DamageCatalog',dict(families=6,states=24,fragments=24,legacy_pivots=25,new_panels=1))
     passed('P16PanelGeometry',geometry)

@@ -26,7 +26,7 @@
   },
   "measured": {
     "assembly_triangles": 89024,
-    "package_triangles": 136788,
+    "package_triangles": 137076,
     "reusable_kit_triangles": 11292,
     "materials": 12,
     "textures": 12,
@@ -415,11 +415,11 @@
   "collections": {
     "06_Damage_Gallery": {
       "mesh_objects": 162,
-      "triangles": 35296
+      "triangles": 35584
     },
     "07_Panel_Library": {
       "mesh_objects": 42,
-      "triangles": 33856
+      "triangles": 34144
     },
     "08_Collision_Proxies": {
       "mesh_objects": 218,
@@ -984,7 +984,7 @@
     {
       "name": "Gallery.corrugated_garage.Light",
       "collection": "06_Damage_Gallery",
-      "triangles": 780,
+      "triangles": 1068,
       "asset_category": null
     },
     {
@@ -1566,7 +1566,7 @@
     {
       "name": "corrugated_garage.Light",
       "collection": "07_Panel_Library",
-      "triangles": 780,
+      "triangles": 1068,
       "asset_category": null
     },
     {
