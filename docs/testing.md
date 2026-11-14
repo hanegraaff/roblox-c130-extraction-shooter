@@ -256,7 +256,7 @@ The [P06 plan](../plans/06-ground-combat.md) and linked source-specific evidence
 
 ## Run the P08 launcher harness
 
-Use the existing confirmed local `tests.rbxlx` Edit document, fully synced from `docs/studio-supported-acceptance` through `test.project.json` on port 34872. Verify mapped source signatures and the current smoke counts before attributing results to the candidate. P08 needs **three actual clients**: one operator and two ground players. Solo smoke, fake roster records and an SDK request for three do not establish that population.
+Use the existing confirmed local `tests.rbxlx` Edit document, fully synced from updated `main` through `test.project.json` on port 34872. Verify mapped source signatures and the current smoke counts before attributing results to the candidate. P08 needs **three actual clients**: one operator and two ground players. Solo smoke, fake roster records and an SDK request for three do not establish that population.
 
 Start the SDK route from MCP Edit/plugin context without blocking the call:
 

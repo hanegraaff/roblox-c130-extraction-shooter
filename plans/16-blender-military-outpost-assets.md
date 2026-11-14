@@ -181,3 +181,12 @@ passing candidate. The [integration record](../docs/evidence/p16/showcase-integr
 preserves scope, hashes and commands. The remaining parent stack's integration
 into `main` is separate. The approved asset bytes remain unchanged and P17 has
 not started.
+
+2026-11-13 main integration: the subsequent merge request folded PR #34 into
+#33, #33 into #32, then #32 into `main` at
+`87df925b58ca2cb87d243dfc610702bb48563f0d`. The approved source, user-selected
+`blender_outpost.png` and evidence are now available from `main`; the merged
+tree matches the fresh full-gate candidate exactly. See the
+[main integration record](../docs/evidence/p08-p16-main-integration.md) for
+commit/tree/build facts and the scope of reused evidence. The approved Blender
+bytes remain unchanged; P17 remains unstarted and no Roblox publication occurred.
