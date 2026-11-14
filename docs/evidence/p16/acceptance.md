@@ -114,6 +114,16 @@ The explicit human response, date, conditions and approved asset hash remain
 **pending**. Draft [PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
 delivers the candidate; P16 remains in progress and P17 has not started.
 
+Delivery commit `751f2ea16ea74e6a6de732b0ca6ab96978ea081c`, tree
+`f990792a3c750aa6448a60ab1b77ecd4d4a7404d`, contains the corrected source,
+all final views, report and guides.
+[GitHub Verify 43541991864](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43541991864)
+passes on that exact commit. PR #35 is draft/open/mergeable against the
+planning branch. The file-open command succeeded in a separate Blender
+instance; the user was asked to inspect and approve or request changes for
+source `e8fb840` / asset hash `4c1c5264…`. No response has been received or
+inferred. The final records commit does not alter the tested art or scripts.
+
 ## Intermediate package checks and required commands
 
 The 518a3b3 results in this section are historical, **not final A2 acceptance**.

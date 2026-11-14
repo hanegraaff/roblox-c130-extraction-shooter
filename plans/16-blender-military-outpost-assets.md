@@ -139,5 +139,15 @@ gameplay screenshot remains current because no playable geometry changed.
 Studio MCP listed no connected instances at preflight; no Studio session was
 launched or mutated. P16 requires Blender checks, with no new engine/player
 behavior or Studio pass claimed. P17 and Roblox publication have not started.
-Human feedback and final GitHub delivery facts will be appended after the
-concrete candidate is reviewed; roadmap completion is not yet claimed.
+Review source, all 29 renders, historical failures, independent report and
+documentation were committed/pushed at
+`751f2ea16ea74e6a6de732b0ca6ab96978ea081c`, tree
+`f990792a3c750aa6448a60ab1b77ecd4d4a7404d`. GitHub
+[Verify 43541991864](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43541991864)
+passes on that exact delivery head. The final prose checker passes 91 Markdown /
+223 JSON files and diff checks are clean. Draft PR #35 is open and mergeable,
+targeting `docs/military-outpost-blender-plans`; no merge was performed.
+The verified file was launched with `open -n -a /Applications/Blender.app`
+for inspection in a separate instance. An explicit approval/change request
+was presented for source `e8fb840` / `.blend` hash `4c1c5264…`; **human feedback
+is still pending**, so no roadmap completion or P17 promotion is claimed.
