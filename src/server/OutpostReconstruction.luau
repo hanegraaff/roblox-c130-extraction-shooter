@@ -12,6 +12,7 @@ local Approved = require(script.Parent.ApprovedOutpost)
 local Catalog = require(script.Parent.PanelAssetCatalog)
 local MaterialGeometry = require(script.Parent.MaterialPanelGeometry)
 local AssetRules = require(script.Parent.PanelAssetRules)
+local AssetMaterial = require(game:GetService("ReplicatedStorage").Shared.AssetMaterial)
 local OutpostReconstruction = {}
 export type Installation = { commit: () -> (), rollback: () -> () }
 local site = CFrame.new(144, 0, 164)
@@ -101,13 +102,8 @@ function OutpostReconstruction.prepare(assets: Instance): (Model?, string?)
             end
             if item:IsA("MeshPart") then
                 meshes += 1
-                local appearance = item:FindFirstChildOfClass("SurfaceAppearance")
-                if
-                    item.MeshId == ""
-                    or not appearance
-                    or appearance.ColorMap == ""
-                    or item.Color ~= Color3.new(1, 1, 1)
-                then
+                local material = AssetMaterial.read(item)
+                if item.MeshId == "" or not material or item.Color ~= Color3.new(1, 1, 1) then
                     return nil, "missing approved Outpost mesh/material repair"
                 end
                 local nonCover = item:GetAttribute("ThermalNonCover") == true

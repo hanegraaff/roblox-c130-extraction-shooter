@@ -7,6 +7,7 @@ local Reconstruction = require(Server.OutpostReconstruction)
 local BuildingGeometry = require(Server.BuildingGeometry)
 local DestructionRuntime = require(Server.DestructionRuntime)
 local Catalog = require(Server.PanelAssetCatalog)
+local AssetMaterial = require(game.ReplicatedStorage.Shared.AssetMaterial)
 local function fixture()
     local world = Instance.new("Folder")
     world.Name = "OutpostEngineFixture"
@@ -21,6 +22,39 @@ local function fixture()
 end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test(
+        "P17MaterialMetadata ordinary server reads compiled maps and rejects missing malformed or duplicate contracts",
+        function()
+            local source = Assets.MaterialPanels:FindFirstChildWhichIsA("MeshPart", true)
+            assert(source and source:IsA("MeshPart"), "actual material template absent")
+            local mesh = source:Clone()
+            local surface = mesh:FindFirstChildOfClass("SurfaceAppearance")
+            assert(surface, "actual material surface absent")
+            local ok, failure = pcall(function()
+                local material, reason = AssetMaterial.read(mesh)
+                assert(material, reason)
+                assert(
+                    material.key == mesh:GetAttribute("MaterialKey") and #material.colorPngSha256 == 64,
+                    "readable material identity differs"
+                )
+                local color = surface:GetAttribute("CompiledColorMap")
+                surface:SetAttribute("CompiledColorMap", nil)
+                assert(AssetMaterial.read(mesh) == nil, "missing compiled map accepted")
+                surface:SetAttribute("CompiledColorMap", "rbxassetid://0")
+                assert(AssetMaterial.read(mesh) == nil, "invalid compiled asset reference accepted")
+                surface:SetAttribute("CompiledColorMap", color)
+                local duplicate = surface:Clone()
+                duplicate.Name = "DuplicateSurfaceFixture"
+                duplicate.Parent = mesh
+                assert(AssetMaterial.read(mesh) == nil, "duplicate material surface accepted")
+                duplicate:Destroy()
+                surface:Destroy()
+                assert(AssetMaterial.read(mesh) == nil, "missing actual SurfaceAppearance accepted")
+            end)
+            mesh:Destroy()
+            assert(ok, failure)
+        end
+    )
     test(
         "P17OutpostIdentityPreflight rejects missing mismatched and non-archivable source identities before cloning",
         function()

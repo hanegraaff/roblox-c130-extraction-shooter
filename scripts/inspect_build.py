@@ -5,8 +5,64 @@ import json
 import math
 import tempfile
 import copy
+import base64
+import struct
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def compiled_surface_attributes(item: ET.Element) -> dict:
+    """Decode this contract's String/Float64 attributes from actual Rojo XML.
+
+    P17 surfaces intentionally have only those attribute types. Unknown/truncated
+    serialized metadata rejects rather than trusting the source JSON counterpart.
+    """
+    encoded = item.findtext("Properties/BinaryString[@name='AttributesSerialize']") or item.findtext("Properties/BinaryString[@name='AttributesSerialized']")
+    if not encoded:
+        raise RuntimeError("missing serialized compiled material metadata")
+    try:
+        data = base64.b64decode(encoded, validate=True)
+        offset = 0
+        def number(fmt):
+            nonlocal offset
+            value = struct.unpack_from(fmt, data, offset)[0]
+            offset += struct.calcsize(fmt)
+            return value
+        def string():
+            nonlocal offset
+            length = number("<I")
+            if length > 4096 or offset + length > len(data):
+                raise ValueError("invalid material attribute string")
+            value = data[offset:offset+length].decode("utf-8")
+            offset += length
+            return value
+        count = number("<I")
+        if count > 32: raise ValueError("unbounded material metadata")
+        values = {}
+        for _ in range(count):
+            key = string()
+            if key in values: raise ValueError("duplicate material metadata")
+            kind = number("<B")
+            if kind == 2: values[key] = string()
+            elif kind == 6: values[key] = number("<d")
+            else: raise ValueError("unexpected compiled material metadata type")
+        if offset != len(data): raise ValueError("trailing compiled material metadata")
+        return values
+    except (ValueError, struct.error, UnicodeError) as error:
+        raise RuntimeError("invalid serialized compiled material metadata") from error
+
+
+def check_surface_material(item: ET.Element, source: dict, full: str) -> None:
+    """Bind actual protected map slots AND serialized readable metadata to source."""
+    properties = source["Properties"]
+    actual_metadata = compiled_surface_attributes(item)
+    expected_metadata = {key: next(iter(value.values())) for key, value in properties.get("Attributes", {}).items()}
+    if actual_metadata != expected_metadata or actual_metadata.get("MaterialMetadataVersion") != 1:
+        raise RuntimeError(f"Compiled material metadata reconstruction mismatch: {full}")
+    for key in ("ColorMap", "NormalMap", "RoughnessMap", "MetalnessMap"):
+        actual_map = item.findtext(f"Properties/Content[@name='{key}Content']/uri") or item.findtext(f"Properties/Content[@name='{key}']/url") or ""
+        if actual_map != properties.get(key, "") or actual_metadata.get("Compiled"+key) != actual_map:
+            raise RuntimeError(f"Imported texture/metadata reconstruction mismatch: {full}/{key}")
 
 
 def paths(path: Path) -> dict[str, str]:
@@ -108,10 +164,7 @@ def check_authored_geometry(path: Path) -> int:
                     raise RuntimeError(f"Authored shape reconstruction mismatch: {full}")
             count += 1
         if source["ClassName"] == "SurfaceAppearance":
-            for key in ("ColorMap", "NormalMap", "RoughnessMap", "MetalnessMap"):
-                actual_map = item.findtext(f"Properties/Content[@name='{key}Content']/uri") or item.findtext(f"Properties/Content[@name='{key}']/url") or ""
-                if actual_map != source["Properties"].get(key, ""):
-                    raise RuntimeError(f"Imported texture reconstruction mismatch: {full}/{key}")
+            check_surface_material(item, source, full)
         for child in source.get("Children", []):
             walk(child, full + "/" + child["Name"])
 
@@ -453,6 +506,7 @@ def main() -> None:
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
+    expected_scripts.add("ReplicatedStorage/Shared/AssetMaterial")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")

@@ -9,6 +9,7 @@
 ]=]
 local Approved = require(script.Parent.ApprovedOutpost)
 local Rules = require(script.Parent.PanelAssetRules)
+local AssetMaterial = require(game:GetService("ReplicatedStorage").Shared.AssetMaterial)
 local PanelAssetCatalog = {}
 export type Appearance = "Pristine" | "Light" | "Heavy" | "Total"
 export type Rectangle = { number }
@@ -42,11 +43,10 @@ local function meshContent(root: Instance, bounds: { number }): (boolean, string
         names[parent] = siblings
         if item:IsA("MeshPart") then
             meshes += 1
-            local appearance = item:FindFirstChildOfClass("SurfaceAppearance")
+            local material = AssetMaterial.read(item)
             if
                 not assetId(item.MeshId)
-                or (item.TextureID ~= "" and not assetId(item.TextureID))
-                or (item.TextureID == "" and (not appearance or appearance.ColorMap == ""))
+                or not material
                 or not item.Anchored
                 or item.CanCollide
                 or item.CanQuery
@@ -62,11 +62,6 @@ local function meshContent(root: Instance, bounds: { number }): (boolean, string
         elseif item:IsA("SurfaceAppearance") then
             if not parent:IsA("MeshPart") or parent:FindFirstChildOfClass("SurfaceAppearance") ~= item then
                 return false, "invalid/duplicate material appearance child"
-            end
-            for _, value in { item.ColorMap, item.MetalnessMap, item.NormalMap, item.RoughnessMap } do
-                if value ~= "" and not assetId(value) then
-                    return false, "invalid material texture reference"
-                end
             end
         elseif not item:IsA("Model") and not item:IsA("Folder") then
             return false, "unexpected imported content: " .. item.ClassName

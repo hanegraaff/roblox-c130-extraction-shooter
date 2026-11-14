@@ -4,6 +4,9 @@ import builtins
 import importlib.util
 import json
 import math
+import base64
+import struct
+import xml.etree.ElementTree as ET
 from pathlib import Path
 import sys
 import unittest
@@ -15,6 +18,7 @@ SPEC = importlib.util.spec_from_file_location("p17_compile_outpost", SCRIPTS / "
 compiler = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(compiler)
 import p17_normalize as normalizer
+import inspect_build as artifact
 
 
 class P17OutpostReconstruction(unittest.TestCase):
@@ -74,6 +78,34 @@ class P17OutpostReconstruction(unittest.TestCase):
             else:
                 self.assertFalse(hidden)
         self.assertTrue({"CosmeticProp", "PanelAttachment", "StableStructure", "SolidPropCover"}.issubset(classes))
+
+    def test_readable_metadata_matches_actual_serialized_surface_maps_and_rejects_slot_drift(self):
+        surface = next(compiler.iter_class(self.outpost, "SurfaceAppearance"))
+        properties = surface["Properties"]
+        metadata = properties["Attributes"]
+        encoded = bytearray(struct.pack("<I", len(metadata)))
+        def string(value):
+            data = value.encode()
+            return struct.pack("<I", len(data))+data
+        for key, typed in metadata.items():
+            encoded.extend(string(key))
+            if "String" in typed: encoded.extend(b"\x02"+string(typed["String"]))
+            else: encoded.extend(b"\x06"+struct.pack("<d", typed["Float64"]))
+        node = ET.Element("Item", {"class":"SurfaceAppearance"})
+        props = ET.SubElement(node, "Properties")
+        ET.SubElement(props,"BinaryString",{"name":"AttributesSerialize"}).text=base64.b64encode(encoded).decode()
+        for key in ("ColorMap", "NormalMap", "RoughnessMap", "MetalnessMap"):
+            field=ET.SubElement(props,"Content",{"name":key+"Content"})
+            ET.SubElement(field,"uri" if properties[key] else "null").text=properties[key] or None
+            self.assertEqual(metadata["Compiled"+key]["String"],properties[key])
+        artifact.check_surface_material(node,surface,"SourceBoundMaterialFixture")
+        node.find("Properties/Content[@name='ColorMapContent']/uri").text="rbxassetid://1"
+        with self.assertRaisesRegex(RuntimeError,"texture/metadata reconstruction mismatch"):
+            artifact.check_surface_material(node,surface,"DriftedProtectedSlot")
+        node.find("Properties/Content[@name='ColorMapContent']/uri").text=properties["ColorMap"]
+        node.find("Properties/BinaryString[@name='AttributesSerialize']").text=""
+        with self.assertRaisesRegex(RuntimeError,"serialized compiled material metadata"):
+            artifact.check_surface_material(node,surface,"MissingSerializedMetadata")
 
     def test_missing_or_wrong_source_texture_cannot_fall_back_to_gray(self):
         textures = json.loads((compiler.ROOT / compiler.IMPORTS / "material-textures-v2.json").read_text())

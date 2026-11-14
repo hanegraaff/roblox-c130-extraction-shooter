@@ -149,7 +149,11 @@ def mesh_node(name, record, maps, solid=False, extra_attributes=None):
                        SourceEmission=appearance["source_emission"])
     attrs.update(extra_attributes or {})
     surface = dict(ClassName="SurfaceAppearance", Name=name + "_Surface", Properties=dict(
-        ColorMap=appearance["color_map"], NormalMap=appearance["normal_map"], RoughnessMap=appearance["roughness_map"], MetalnessMap=appearance["metalness_map"]))
+        ColorMap=appearance["color_map"], NormalMap=appearance["normal_map"], RoughnessMap=appearance["roughness_map"], MetalnessMap=appearance["metalness_map"],
+        Attributes=attributes(MaterialMetadataVersion=1, MaterialKey=material,
+            CompiledColorMap=appearance["color_map"], CompiledNormalMap=appearance["normal_map"],
+            CompiledRoughnessMap=appearance["roughness_map"], CompiledMetalnessMap=appearance["metalness_map"],
+            CompiledColorPngSha256=appearance["source_png_sha256"])))
     return dict(ClassName="MeshPart", Name=name, Properties=dict(
         MeshId=asset_id(record["mesh_id"]), TextureID="", CFrame=record["cframe"], Size=record["size"],
         Color=[1, 1, 1], Material=MATERIAL_ENUM[material], Transparency=0, Reflectance=0,

@@ -124,7 +124,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -195,7 +218,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -308,7 +354,30 @@
                     "ColorMap": "rbxassetid://118558085320552",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "dark"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://118558085320552"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e"
+                      }
+                    }
                   }
                 }
               ]
@@ -379,7 +448,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -450,7 +542,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -521,7 +636,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -634,7 +772,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -705,7 +866,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -776,7 +960,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -900,7 +1107,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -977,7 +1207,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -1054,7 +1307,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -1131,7 +1407,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -1250,7 +1549,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -1321,7 +1643,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -1434,7 +1779,30 @@
                     "ColorMap": "rbxassetid://118558085320552",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "dark"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://118558085320552"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e"
+                      }
+                    }
                   }
                 }
               ]
@@ -1505,7 +1873,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -1576,7 +1967,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -1647,7 +2061,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -1760,7 +2197,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -1831,7 +2291,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -1902,7 +2385,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2026,7 +2532,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2103,7 +2632,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2180,7 +2732,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2257,7 +2832,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2376,7 +2974,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -2447,7 +3068,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2560,7 +3204,30 @@
                     "ColorMap": "rbxassetid://118558085320552",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "dark"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://118558085320552"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e"
+                      }
+                    }
                   }
                 }
               ]
@@ -2631,7 +3298,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -2702,7 +3392,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -2773,7 +3486,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -2886,7 +3622,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -2957,7 +3716,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -3028,7 +3810,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -3152,7 +3957,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -3229,7 +4057,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -3306,7 +4157,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -3383,7 +4257,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -3502,7 +4399,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -3573,7 +4493,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -3686,7 +4629,30 @@
                     "ColorMap": "rbxassetid://118558085320552",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "dark"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://118558085320552"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e"
+                      }
+                    }
                   }
                 }
               ]
@@ -3757,7 +4723,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -3828,7 +4817,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -3899,7 +4911,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -4012,7 +5047,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -4083,7 +5141,30 @@
                     "ColorMap": "rbxassetid://109354452545782",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "orange"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://109354452545782"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "551998e5c5542e470e8b6c4554079c13e2499248d32ef9361e6347e08e4afafb"
+                      }
+                    }
                   }
                 }
               ]
@@ -4154,7 +5235,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -4278,7 +5382,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -4355,7 +5482,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -4432,7 +5582,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -4509,7 +5682,30 @@
                     "ColorMap": "rbxassetid://85019949077305",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "teal"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://85019949077305"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "582a7a313595a2d22fe6e052e991d2d9926e39bdbe957bc0cf79e2f3a943e05b"
+                      }
+                    }
                   }
                 }
               ]
@@ -4628,7 +5824,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -4741,7 +5960,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -4812,7 +6054,30 @@
                     "ColorMap": "rbxassetid://118558085320552",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "dark"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://118558085320552"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e"
+                      }
+                    }
                   }
                 }
               ]
@@ -4925,7 +6190,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -4996,7 +6284,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -5120,7 +6431,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -5197,7 +6531,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -5274,7 +6631,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -5351,7 +6731,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -5470,7 +6873,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -5541,7 +6967,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -5612,7 +7061,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]
@@ -5725,7 +7197,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -5796,7 +7291,30 @@
                     "ColorMap": "rbxassetid://118558085320552",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "dark"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://118558085320552"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "7861ed8b6bac1055b4a77ee2ae09e5bec60cf229672c3fadb831137ffd54568e"
+                      }
+                    }
                   }
                 }
               ]
@@ -5867,7 +7385,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -5938,7 +7479,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]
@@ -6051,7 +7615,30 @@
                     "ColorMap": "rbxassetid://96151745233480",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "concrete"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://96151745233480"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "d7765fecb4ef34fd9bb280a88415633dabce2e4a1350dce523a9c1e7dfa45bea"
+                      }
+                    }
                   }
                 }
               ]
@@ -6122,7 +7709,30 @@
                     "ColorMap": "rbxassetid://124187636737611",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "ivory"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://124187636737611"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "86e3b66cb0bfa5d3698bdc81997d35c6f21f5f38cee81bb8cd591180484f2233"
+                      }
+                    }
                   }
                 }
               ]
@@ -6193,7 +7803,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]
@@ -6264,7 +7897,30 @@
                     "ColorMap": "rbxassetid://135106155017244",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "steel"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://135106155017244"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "38f516603b37b3c788a8776311f3ad0cd34259b74ad9582c6c8a2c313d87e443"
+                      }
+                    }
                   }
                 }
               ]
@@ -6388,7 +8044,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]
@@ -6465,7 +8144,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]
@@ -6542,7 +8244,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]
@@ -6619,7 +8344,30 @@
                     "ColorMap": "rbxassetid://139291215981523",
                     "NormalMap": "",
                     "RoughnessMap": "",
-                    "MetalnessMap": ""
+                    "MetalnessMap": "",
+                    "Attributes": {
+                      "MaterialMetadataVersion": {
+                        "Float64": 1
+                      },
+                      "MaterialKey": {
+                        "String": "roof"
+                      },
+                      "CompiledColorMap": {
+                        "String": "rbxassetid://139291215981523"
+                      },
+                      "CompiledNormalMap": {
+                        "String": ""
+                      },
+                      "CompiledRoughnessMap": {
+                        "String": ""
+                      },
+                      "CompiledMetalnessMap": {
+                        "String": ""
+                      },
+                      "CompiledColorPngSha256": {
+                        "String": "33c232322836e435773d4a6997745a6c8c8617311bbaa05612a0ab2863a74e46"
+                      }
+                    }
                   }
                 }
               ]

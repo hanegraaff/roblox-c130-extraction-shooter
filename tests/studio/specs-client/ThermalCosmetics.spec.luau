@@ -1,8 +1,32 @@
 --!strict
 -- P17: real client-only transparency ownership; rendered depth review is separate.
 local Cosmetics = require(game.Players.LocalPlayer.PlayerScripts.Client.ThermalCosmetics)
+local AssetMaterial = require(game.ReplicatedStorage.Shared.AssetMaterial)
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test(
+        "P17MaterialMetadata ordinary client reads compiled material contract without Plugin property access",
+        function()
+            local outpost = workspace.World.Battlefield.Buildings:FindFirstChild("Outpost")
+            local source = if outpost then outpost:FindFirstChildWhichIsA("MeshPart", true) else nil
+            assert(source and source:IsA("MeshPart"), "replicated imported Outpost mesh absent")
+            local material, reason = AssetMaterial.read(source)
+            assert(material, reason)
+            assert(
+                material.colorMap:match("^rbxassetid://[1-9]%d*$") and #material.colorPngSha256 == 64,
+                "compiled runtime metadata malformed"
+            )
+            local clone = source:Clone()
+            local surface = clone:FindFirstChildOfClass("SurfaceAppearance")
+            assert(surface, "replicated actual surface absent")
+            surface:SetAttribute("MaterialMetadataVersion", 0)
+            local ok, failure = pcall(function()
+                assert(AssetMaterial.read(clone) == nil, "client accepted wrong material contract version")
+            end)
+            clone:Destroy()
+            assert(ok, failure)
+        end
+    )
     test(
         "P17ThermalFragments hides owned physical debris while rejecting marker-only impostors and real cover",
         function()
