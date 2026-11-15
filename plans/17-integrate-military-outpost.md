@@ -8,6 +8,14 @@
 
 Walk through the detailed military outpost approved in P16, including its storage/workshop downstairs, command room upstairs, exterior stairs/balcony and rooftop details. Aircraft fire produces persistent damage appropriate to each panel's material, real openings and bounded physical debris. Replace **only the existing smaller Outpost** in the current battlefield. Foundry and Warehouse remain the two larger buildings; this does not introduce a second level or level selection.
 
+**2026-11-15 clarification (D65–D66):** finish this current integration without
+resizing the Outpost, changing existing world dimensions or adding automatic
+interior zoom. Larger clearances (about 50%) and interior-camera adaptation are
+future-plan observations. After completing P17, finalize the requested reusable
+asset-creation and Blender-import skills from its complete lessons. Creation
+accepts a description, an image folder, or both; these tooling deliverables do
+not add new P17 gameplay acceptance criteria or start another roadmap plan.
+
 ## Input and boundaries
 
 The user approved P16 source `e8fb840a986969bdd3b7ac932469e3fa8cc99a9e`
@@ -870,3 +878,44 @@ show all three contexts playing; the [Stop discrepancy](../docs/evidence/p17/man
 is preserved without a retry loop or cloud Source write. The user is asked to
 End Session in Studio, select `tests.rbxlx` through the Window menu and start
 the local two-client run. This does not waive the supported multiplayer gate.
+
+### Source-bound two-client continuation and reopen — 2026-11-14–15
+
+The [actual local ordinary reports](../docs/evidence/p17/manual-ee19deb-local-ordinary-baselines.json)
+pass **173 server / ten on each of two actual clients**, all zero failures,
+errors and skips. The [client aggregate](../docs/evidence/p17/manual-ee19deb-local-client-native-corrected.json)
+validates all 2,256 Outpost meshes on both clients. After
+[saving the local driver](../docs/evidence/p17/manual-persisted-ee19deb.json), a
+fresh native UI launch [confirms source, roster and 173/10/10](../docs/evidence/p17/manual-ee19deb-saved-initial.json).
+
+The [complete raw attempt](../docs/evidence/p17/manual-ee19deb-full-attempt1.json)
+is recovered in full: 382,662 bytes / seven chunks, **five discovered / four
+passed / one failed / zero skipped**. Passing scopes are authority/rejection,
+2,332 native mesh checks and successful callbacks per client over 407 IDs,
+actual Humanoid internal 19 / external 29 waypoint routes, and six families'
+replicated geometry/earned openings across 42 stage records. Family progression
+uses controlled accepted service outcomes, separate from native-fired roof
+acceptance. One pristine reset/redeploy passes. The
+[summary](../docs/evidence/p17/manual-ee19deb-attempt1-summary.json) does not
+convert the later undiscovered cases to passes.
+
+The native M102 case times out at its sixth expected panel hit. Its
+[six-shot diagnostic](../docs/evidence/p17/manual-ee19deb-native-heavy-diagnostic.json)
+shows five actual panel impacts, Heavy on the third and progress 2/3 after the
+fifth. The sixth valid intent fires, but launch/receipt production sweeps first
+hit stable `Outpost_Imported1005` (`Roof parapet.002`) as the orbit moves; its
+impact has no panel ID. This is legitimate obstruction, not a failed six-hit
+rule. A bounded current-geometry selector is prepared without changing orbit,
+cover or damage rules. This attempt remains failed pending the actual retest.
+
+After the user restarts Studio, the [reopen audit](../docs/evidence/p17/studio-reopen-audit-2026-11-15.json)
+identifies local `f6c61b54-ab35-466b-ab8a-bf51c446b300` and separate cloud
+`c3b46f1d-6b93-4fe3-bda8-71c57a1999d2`. The persisted local file has 137
+scripts but its in-memory restoration owner is gone. Source/file-backed guards
+restore exactly two entries, remove four matched modules and clear the selector.
+The [saved normal-mode proof](../docs/evidence/p17/normal-restoration-identity-2026-11-15.json)
+passes 133 sources, all native/material checks and all ten target-geometry chunks
+in clean Edit. The cloud still has the older 50-script / zero-MeshSize
+reconstruction; reported place version 14 does not prove publication and is not
+this candidate. D65 now explicitly defers clearance/zoom changes. Reusable
+test-only harness promotion and full A1–A6 acceptance remain required.

@@ -1,0 +1,13 @@
+{
+  "source": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "localFile": "build/tests.rbxlx",
+  "savedTemporaryHarness": true,
+  "scripts": 137,
+  "patchedEntries": 2,
+  "addedModules": 4,
+  "bytes": 21640349,
+  "sha256": "fbf1f2187c09745bf9265676b6fea17ee6aa337a4f0320a61c322977792c7d71",
+  "cleanBackupPath": "build/p17-clean-tests-ee19deb-before-manual.rbxlx",
+  "cleanBackupSha256": "c1b467e1769c3c754b941442f28caa35a644e697132a69123a7de2614c4dce59",
+  "scope": "Saved local temporary test harness only; never cloud or release. Restore ordinary mappings/file after collection."
+}

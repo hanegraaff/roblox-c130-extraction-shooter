@@ -50,6 +50,13 @@ The 2026-11-13 damage revision requires persistent, clearly different Light/Heav
 
 ## Tests and evidence
 
+The 2026-11-15 clarification defers larger building clearances and automatic
+ground interior zoom to future plans (D65). Finish P17 with the current Outpost
+and world dimensions unchanged. After that integration is complete, finalize
+the requested asset-creation and Blender-import skills (D66), including these
+avatar/camera observations as future authoring/integration guidance. Do not
+implement those deferred gameplay changes merely because they appear in a skill.
+
 - Implement tests with each behavior change. Cover normal behavior, boundaries, invalid input, timing conflicts, disconnects, and cleanup as appropriate. Trace acceptance criteria to named tests.
 - Use fast deterministic Luau unit tests for rules; service integration tests with controlled adapters for orchestration; real Studio tests for Instances, raycasts, camera behavior, collision, and replication. Test doubles do not prove engine behavior.
 - Acceptance criteria must use operations Roblox Studio supports (D59). Actual same-identity reconnect is excluded; retain its runtime authority rules and deterministic service tests. Supported late joins and multiplayer sessions remain required where specified. Temporary tool/access failures do not make a supported check unsupported. Explicit Roblox-client release gates remain separate.

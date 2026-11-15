@@ -1,0 +1,146 @@
+{
+  "source": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "tree": "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a",
+  "studioId": "f6c61b54-ab35-466b-ab8a-bf51c446b300",
+  "scope": "Final read-only normal133 identity after primary restored from source-backed disk/backup. No Play/revisedscale/camera acceptance.",
+  "main": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"meshes\":2332,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"targetGeometry\":\"REQUIRES companion target-geometry chunks; see generated manifest\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"universeId\":0,\"nativeMeshParts\":2332,\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"version\":\"0.747.0.7471481\",\"scripts\":133,\"nativeMetadataFields\":11660,\"publicNativeProperties\":6996,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  },
+  "guard": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"gameId\":0,\"edit\":true,\"manualOwnerAbsent\":true,\"placeId\":0,\"ownedHooks\":[]}"
+      }
+    ],
+    "isError": false
+  },
+  "targetGeometryChunks": [
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-01.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":1,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-02.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":2,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-03.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":3,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-04.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":4,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-05.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":5,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-06.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":6,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-07.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":7,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-08.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":8,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-09.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":9,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-10.luau",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":28,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":84,\"chunk\":10,\"targetCFrameComponents\":336,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}
