@@ -39,6 +39,18 @@ end
 -- Uses actual mapped production owners. Returns only after automated test completion,
 -- or immediately after starting an ordinary manually operated local test runtime.
 function RoundHarness.run()
+    -- P17's native UI route is selected before consulting any SDK arguments.
+    -- The marker exists only in the local test mapping and has no client remote.
+    local p17Settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+    if
+        RunService:IsStudio()
+        and p17Settings
+        and p17Settings:IsA("ModuleScript")
+        and p17Settings:GetAttribute("ManualHarness") == "P17"
+    then
+        require(script.Parent.P17ManualRunner).run()
+        return
+    end
     local args = StudioTestService:GetTestArgs()
     -- A trusted, temporary server-only invocation marker supports Studio's native
     -- Server & Clients UI when the SDK spawn path is unavailable. It is absent from

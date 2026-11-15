@@ -1,0 +1,156 @@
+"""Bind the managed P17 native harness to unchanged approved production inputs.
+
+``--write`` refreshes only test-only P17Metadata.luau. The default rejects stale
+metadata, source drift and any semantic edit to the frozen v7 server/client body.
+No build, Studio operation, cloud upload or acceptance result is produced here.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[1]
+PRODUCT_COMMIT = "ee19deb5fe18090573ce0d9788b0c77555bca333"
+PRODUCT_TREE = "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a"
+OUTPUT = "tests/studio/server/P17Metadata.luau"
+FROZEN_BODIES = {
+    "tests/studio/server/P17MaterialHarness.luau": "c0b59d5d763f995de0636f6bac2170a0f87a93251ecde20c31bf54d6db69af1d",
+    "tests/studio/client/P17MaterialHarness.luau": "bc875d230df21811d23555c0d2c5e71db8f34707a0f7487410f8dd16b6d165ac",
+}
+
+
+def digest(data: bytes) -> str:
+    """Return a lowercase SHA-256 for exact source/artifact bytes."""
+    return hashlib.sha256(data).hexdigest()
+
+
+def canonical(value: object) -> bytes:
+    """Platform-independent sorted UTF-8 JSON for source-map fingerprints."""
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
+
+
+def production_path(path: str) -> bool:
+    """Select runtime Luau and authored assets, excluding package prose/cache."""
+    item = Path(path)
+    return (path.startswith("src/") and item.suffix == ".luau") or (
+        path.startswith("assets/") and item.suffix != ".md" and "__pycache__" not in item.parts
+        and item.suffix != ".pyc"
+    ) or path == "default.project.json"
+
+
+def source_inputs(root: Path) -> tuple[dict[str, str], dict[str, str]]:
+    """Discover exact production and test inputs; generated metadata excludes itself."""
+    production = {path.relative_to(root).as_posix(): digest(path.read_bytes())
+                  for area in ("src", "assets") for path in (root / area).rglob("*")
+                  if path.is_file() and production_path(path.relative_to(root).as_posix())}
+    production["default.project.json"] = digest((root / "default.project.json").read_bytes())
+    fixtures = {path.relative_to(root).as_posix(): digest(path.read_bytes())
+                for path in (root / "tests").rglob("*")
+                if path.is_file() and path.suffix in {".luau", ".json", ".py"}
+                and path.relative_to(root).as_posix() != OUTPUT}
+    for name in ("test.project.json", "rokit.toml", "wally.toml", "wally.lock",
+                 "scripts/p17_harness.py", "scripts/inspect_build.py", "scripts/verify.py"):
+        fixtures[name] = digest((root / name).read_bytes())
+    return dict(sorted(production.items())), dict(sorted(fixtures.items()))
+
+
+def check_inputs(root: Path, expected: dict[str, str], actual: dict[str, str]) -> None:
+    """Reject missing, added or changed bound files without mutating the checkout."""
+    if expected.keys() != actual.keys():
+        raise ValueError("source input coverage differs: " + str(sorted(expected.keys() ^ actual.keys())))
+    for name, value in expected.items():
+        if value != actual[name] or not (root / name).is_file():
+            raise ValueError("source fingerprint differs: " + name)
+
+
+def check_frozen_body(path: Path, expected: str) -> None:
+    """Permit documented header/module-name promotion only; preserve v7 executable bytes."""
+    contents = path.read_bytes()
+    marker = b"local Players ="
+    if marker not in contents or digest(contents[contents.index(marker):]) != expected:
+        raise ValueError("frozen v7 gameplay body differs: " + path.name)
+
+
+def check_production_revision(root: Path, production: dict[str, str]) -> None:
+    """Prove current runtime/art bytes are the approved ee19 product, not a new revision."""
+    tracked = subprocess.check_output(
+        ["git", "ls-tree", "-r", "--name-only", PRODUCT_COMMIT, "--", "src", "assets", "default.project.json"],
+        cwd=root, text=True,
+    ).splitlines()
+    expected = {name for name in tracked if production_path(name)}
+    if expected != production.keys():
+        raise ValueError("production file coverage differs from unchanged ee19 product")
+    result = subprocess.run(["git", "diff", "--quiet", PRODUCT_COMMIT, "--", *sorted(production)], cwd=root)
+    if result.returncode != 0:
+        raise ValueError("production inputs differ from unchanged ee19 product")
+
+
+def metadata(root: Path = ROOT) -> dict:
+    """Generate provenance data only; the future harness commit is supplied at invocation."""
+    for name, expected in FROZEN_BODIES.items():
+        check_frozen_body(root / name, expected)
+    production, fixtures = source_inputs(root)
+    check_production_revision(root, production)
+    manifest = json.loads((root / "assets/manifest.json").read_text())
+    bindings = [{key: asset.get(key) for key in ("id", "roblox_asset_id", "upload_owner", "uploaded_revision", "sha256")}
+                for asset in manifest["assets"] if asset.get("roblox_asset_id")]
+    return {
+        "schemaVersion": 1,
+        "productionCommit": PRODUCT_COMMIT,
+        "productionTree": PRODUCT_TREE,
+        "productionFingerprintSha256": digest(canonical(production)),
+        "harnessFingerprintSha256": digest(canonical(fixtures)),
+        "productionInputs": production,
+        "harnessInputs": fixtures,
+        "approvedAssetBindings": bindings,
+        "privateImportWorkspace": {"universeId": "10776653720", "placeId": "72732833195348", "owner": "2227341845"},
+        "expectedServerSmoke": 173,
+        "expectedClientSmokeEach": 10,
+        "expectedFullMaterialCases": 10,
+        "requestedActualClients": 2,
+        "manualFixtureVersion": "v7-bounded-roof-aim",
+        "frozenV7ServerSha256": "a2f7caf9170236c6c43ef80d14824868ae4a57e1fef92e1b00b705a007d68707",
+        "frozenV7ClientSha256": "fe55618bf35301b823cd73a7934a69f905f1a9012681b85f22d30dd5876ac7b9",
+        "status": "source-bound fixture; native acceptance must be recorded separately",
+    }
+
+
+def render(value: dict) -> str:
+    """Render trusted generated provenance; it does not claim tables are immutable."""
+    return ('--!strict\n-- Generated test-only provenance by scripts/p17_harness.py --write.\n'
+            '-- Trusted source data; no acceptance result or future commit is embedded.\n'
+            'return game:GetService("HttpService"):JSONDecode(\n    [==[' + canonical(value).decode() + ']==]\n)\n')
+
+
+def verify(root: Path = ROOT) -> dict:
+    """Reject stale generated metadata before any Studio or world mutation."""
+    expected = metadata(root)
+    path = root / OUTPUT
+    if not path.is_file():
+        raise ValueError("P17 harness metadata is missing")
+    text = path.read_text()
+    try:
+        stored = json.loads(text.split("[==[", 1)[1].rsplit("]==]", 1)[0])
+        check_inputs(root, stored["productionInputs"], expected["productionInputs"])
+        check_inputs(root, stored["harnessInputs"], expected["harnessInputs"])
+    except (IndexError, KeyError, TypeError, json.JSONDecodeError) as error:
+        raise ValueError("P17 harness metadata is malformed") from error
+    if text != render(expected):
+        raise ValueError("P17 harness metadata is stale; review source and run scripts/p17_harness.py --write")
+    return expected
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--write", action="store_true", help="refresh the test-only provenance module")
+    arguments = parser.parse_args()
+    if arguments.write:
+        (ROOT / OUTPUT).write_text(render(metadata()))
+    value = verify()
+    print(f"P17 harness binding passed: {len(value['productionInputs'])} unchanged production inputs, "
+          f"{len(value['harnessInputs'])} fixture inputs; v7 bodies exact, no native execution.")
+
+
+if __name__ == "__main__":
+    main()

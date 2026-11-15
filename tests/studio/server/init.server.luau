@@ -3,6 +3,26 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
 local HttpService = game:GetService("HttpService")
+-- Publish a single trusted selection before baseline execution/player arrival.
+-- Native staged runs start only that client's listener; no remote can select it.
+local manualSettings = ServerStorage:FindFirstChild("DevelopmentSettings")
+local manualMode = if manualSettings and manualSettings:IsA("ModuleScript")
+    then manualSettings:GetAttribute("ManualHarness")
+    else nil
+local selectedClientMode = ""
+if
+    game:GetService("RunService"):IsStudio()
+    and (
+        manualMode == "P08"
+        or manualMode == "P17"
+        or manualMode == "P07"
+        or manualMode == "P05"
+        or manualMode == "P14"
+    )
+then
+    selectedClientMode = manualMode
+end
+ReplicatedStorage:SetAttribute("ManualClientHarness", selectedClientMode)
 -- Vendor TestEZ is untyped. Narrow its public API once instead of disabling analysis.
 type TestResults = { successCount: number, failureCount: number, skippedCount: number, errors: { unknown } }
 type TestFramework = { TestBootstrap: { run: (unknown, { Instance }) -> TestResults } }

@@ -514,6 +514,21 @@ def check_manual_p05_isolation(release: dict[str, str], tests: dict[str, str]) -
             raise RuntimeError(f"P05 manual fixture missing from tests or leaked to release: {name}")
 
 
+MANUAL_P17_TEST_ONLY = (
+    "ServerScriptService/ServerTests/P17MaterialHarness",
+    "ServerScriptService/ServerTests/P17ManualRunner",
+    "ServerScriptService/ServerTests/P17Metadata",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/P17MaterialHarness",
+)
+
+
+def check_manual_p17_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
+    """Require complete P17 native fixtures exclusively in the test artifact."""
+    for name in MANUAL_P17_TEST_ONLY:
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P17 fixture missing from tests or leaked to release: {name}")
+
+
 def main() -> None:
     """Assert bootstraps/spawn exist and all test-only Instances are absent from release."""
     release = paths(ROOT / "build/game.rbxlx")
@@ -591,6 +606,8 @@ def main() -> None:
             else:
                 raise RuntimeError(f"P05 manual isolation failed to reject {fault}: {name}")
     print("P05 manual fixture isolation passed, including eight deliberate corruption probes.")
+    check_manual_p17_isolation(release, tests)
+    print("P17 native fixture isolation passed: four test-only modules, no release additions.")
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")
