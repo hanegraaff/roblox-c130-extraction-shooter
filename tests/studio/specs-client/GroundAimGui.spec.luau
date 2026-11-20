@@ -11,8 +11,12 @@ return function()
         local player = players.LocalPlayer
         local controller = require(player.PlayerScripts.Client.GroundCombatController)
         local http = game:GetService("HttpService")
+        local playerGui = player.PlayerGui
         local gui = Instance.new("ScreenGui")
         gui.Name = "GroundAimProjectionProbe"
+        -- Client smoke starts before the first character spawn can clear
+        -- resettable PlayerGui children. Match the production HUD lifetime.
+        gui.ResetOnSpawn = false
         gui.IgnoreGuiInset = true
         local origin = Instance.new("Frame")
         origin.Size = UDim2.fromOffset(0, 0)
@@ -22,7 +26,7 @@ return function()
         cross.Size = UDim2.fromOffset(24, 24)
         cross.AnchorPoint = Vector2.new(0.5, 0.5)
         cross.Parent = gui
-        gui.Parent = player.PlayerGui
+        gui.Parent = playerGui
         local ok, failure = pcall(function()
             local deadline = os.clock() + 10
             local ready = false
@@ -42,6 +46,7 @@ return function()
                     -- callback. Let its origin/layout resolve before sampling it.
                     runService.RenderStepped:Wait()
                     runService.RenderStepped:Wait()
+                    assert(gui.Parent == playerGui, "aim projection fixture detached before sampling")
                     local camera = workspace.CurrentCamera
                     assert(camera, "current camera disappeared")
                     local viewport = camera.ViewportSize
@@ -119,6 +124,7 @@ return function()
                     cross.Position = offset
                     runService.RenderStepped:Wait()
                     runService.RenderStepped:Wait()
+                    assert(gui.Parent == playerGui, "aim projection fixture detached after moving reticle")
                     local currentCamera = workspace.CurrentCamera
                     local currentViewport = if currentCamera then currentCamera.ViewportSize else Vector2.zero
                     local currentInset = guiService:GetGuiInset()
