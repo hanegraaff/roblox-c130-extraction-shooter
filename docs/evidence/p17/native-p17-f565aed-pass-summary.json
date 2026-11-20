@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "f565aed9e806016ebc1a20955f8ddcbb45e0c044",
+  "tree": "4e31513c25aafd65e3c72f586d39ae839b456050",
+  "ordinaryStartupCandidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "server": "1032186b-fee0-4ced-bbbb-f40384298917",
+  "launch": {
+    "server": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"commit\":\"f565aed9e806016ebc1a20955f8ddcbb45e0c044\",\"fixtureFolder\":\"P17VerifiedRetryf565aed\",\"at\":1795142121.10759,\"pristineImportedModels\":26,\"pristinePrimitivePanels\":162,\"preservedServerBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":173,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":173}\",\"oldEvidence\":\"P17ManualEvidenceAttempt3\",\"verifiedModules\":3}"
+        }
+      ],
+      "isError": false
+    },
+    "clients": [
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sourceBytes\":33771,\"newModule\":\"P17VerifiedRetryf565aed\",\"userId\":-1,\"originalBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sourceBytes\":33771,\"newModule\":\"P17VerifiedRetryf565aed\",\"userId\":-2,\"originalBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "selectionProbe": [
+    {
+      "target": [
+        130,
+        21.125,
+        148
+      ],
+      "id": "Outpost_S02_Roof_01_01",
+      "samples": 72,
+      "firstHits": {
+        "Outpost_S02_Roof_01_01_Proxy1": 35,
+        "Outpost_Imported1005": 37
+      },
+      "direct": 35
+    },
+    {
+      "target": [
+        130,
+        21.125,
+        164
+      ],
+      "id": "Outpost_S02_Roof_01_02",
+      "samples": 72,
+      "firstHits": {
+        "Outpost_Imported1005": 37,
+        "Outpost_S02_Roof_01_02_Proxy1": 35
+      },
+      "direct": 35
+    },
+    {
+      "target": [
+        130,
+        21.125,
+        180
+      ],
+      "id": "Outpost_S02_Roof_01_03",
+      "samples": 72,
+      "firstHits": {
+        "Outpost_Imported1005": 37,
+        "Outpost_S02_Roof_01_03_Proxy1": 35
+      },
+      "direct": 35
+    },
+    {
+      "target": [
+        146,
+        21.125,
+        148
+      ],
+      "id": "Outpost_S02_Roof_02_01",
+      "samples": 72,
+      "firstHits": {
+        "Outpost_S02_Roof_02_01_Proxy1": 72
+      },
+      "direct": 72
+    },
+    {
+      "target": [
+        146,
+        21.125,
+        164
+      ],
+      "id": "Outpost_S02_Roof_02_02",
+      "samples": 72,
+      "firstHits": {
+        "Outpost_S02_Roof_02_02_Proxy1": 72
+      },
+      "direct": 72
+    },
+    {
+      "target": [
+        146,
+        21.125,
+        180
+      ],
+      "id": "Outpost_S02_Roof_02_03",
+      "samples": 72,
+      "firstHits": {
+        "Outpost_S02_Roof_02_03_Proxy1": 72
+      },
+      "direct": 72
+    }
+  ],
+  "counts": {
+    "passed": 10,
+    "discovered": 10,
+    "failed": 0,
+    "skipped": 0,
+    "actualClients": 2
+  },
+  "cases": [
+    {
+      "passed": true,
+      "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+    },
+    {
+      "passed": true,
+      "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+    },
+    {
+      "passed": true,
+      "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+    },
+    {
+      "passed": true,
+      "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+    },
+    {
+      "passed": true,
+      "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+    },
+    {
+      "passed": true,
+      "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+    },
+    {
+      "passed": true,
+      "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+    },
+    {
+      "passed": true,
+      "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+    },
+    {
+      "passed": true,
+      "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+    },
+    {
+      "passed": true,
+      "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+    }
+  ],
+  "scopes": [
+    {
+      "kind": "persistent-30mm-bursts",
+      "panelId": "Outpost_S02_Roof_01_02",
+      "accepted": 63,
+      "earnedTotalSeconds": 11.016493082046509,
+      "transitionEarnedSeconds": 9.183772087097168
+    },
+    {
+      "panelId": "Warehouse_S01_North_04",
+      "crossingOwnership": {
+        "automatic": false,
+        "userId": -1
+      },
+      "serverObservationBudgetSeconds": 2,
+      "userId": -1,
+      "startServerPositionStuds": [
+        184,
+        3.125,
+        -110.5
+      ],
+      "serverRootPresent": true,
+      "clientReplyServerPositionStuds": [
+        183.9989013671875,
+        2.9961395263671875,
+        -106.08891296386719
+      ],
+      "restored": true,
+      "clientPlacement": {
+        "phase": "placement",
+        "initialPositionStuds": [
+          184,
+          3.0229525566101074,
+          -110.5
+        ],
+        "startDistanceStuds": 0.10204744338989258,
+        "userId": -1,
+        "startPositionStuds": [
+          184,
+          3.0229525566101074,
+          -110.5
+        ],
+        "elapsedSeconds": 0.00015804171562194824,
+        "finalPositionStuds": [
+          184,
+          3.0229525566101074,
+          -110.5
+        ],
+        "finalDistanceStuds": 0.10204744338989258,
+        "passed": true
+      },
+      "restoredServerPositionStuds": [
+        -20.00030517578125,
+        2.9980926513671875,
+        107.99969482421875
+      ],
+      "passed": true,
+      "serverObservationElapsedSeconds": 0.5331634166650474,
+      "elapsedSeconds": 1.2499442916596308,
+      "originalOwnership": {
+        "automatic": true,
+        "userId": -1
+      },
+      "finalServerDistanceStuds": 1.7596937417984009,
+      "clientReplyAfterSeconds": 0.7167781249736436,
+      "originalPositionStuds": [
+        -20.00030517578125,
+        2.9980926513671875,
+        107.99969482421875
+      ],
+      "clientCrossing": {
+        "phase": "walk",
+        "initialPositionStuds": [
+          184,
+          2.961686611175537,
+          -110.5
+        ],
+        "startDistanceStuds": 0.1633133888244629,
+        "userId": -1,
+        "finalPositionStuds": [
+          183.99957275390625,
+          3.1229631900787354,
+          -100.16358947753906
+        ],
+        "startPositionStuds": [
+          184,
+          2.961686611175537,
+          -110.5
+        ],
+        "elapsedSeconds": 0.6321484583313577,
+        "displacementStuds": 10.337668418884277,
+        "finalDistanceStuds": 1.6635907888412476,
+        "passed": true
+      },
+      "goalPositionStuds": [
+        184,
+        3.125,
+        -98.5
+      ],
+      "requestedStartPositionStuds": [
+        184,
+        3.125,
+        -110.5
+      ],
+      "finalServerOwnership": {
+        "automatic": false,
+        "userId": -1
+      },
+      "restoredOwnership": {
+        "automatic": true
+      },
+      "acknowledgedServerPositionStuds": [
+        184,
+        2.9881551265716553,
+        -110.5
+      ],
+      "kind": "actual-humanoid-opening",
+      "placementOwnership": {
+        "automatic": false
+      },
+      "finalServerPositionStuds": [
+        183.9989013671875,
+        3.1212267875671387,
+        -100.25968933105469
+      ]
+    },
+    {
+      "serverPanels": 188,
+      "kind": "all-panel-current-agreement",
+      "perClientQueriedPanels": 188,
+      "actualClients": 2
+    },
+    {
+      "panelId": "Shelter_Roof_R01_C04",
+      "liveFragments": 4,
+      "pendingProjectiles": 2,
+      "kind": "reset-pre-abort-work",
+      "sustainedSeconds": 0.18312788009643555,
+      "iteration": 1
+    },
+    {
+      "panelId": "Shelter_Roof_R01_C04",
+      "liveFragments": 4,
+      "pendingProjectiles": 2,
+      "kind": "reset-pre-abort-work",
+      "sustainedSeconds": 0.18465709686279297,
+      "iteration": 2
+    }
+  ],
+  "finalCleanup": {
+    "aircraftStateAbsent": true,
+    "groundEffectsAbsent": true,
+    "transportAbsent": true,
+    "fragmentFolderAbsent": true,
+    "combatEffectsAbsent": true,
+    "roundStateAbsent": true
+  },
+  "rawUtf8Bytes": 682183,
+  "chunks": 12
+}

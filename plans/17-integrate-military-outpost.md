@@ -1181,3 +1181,32 @@ Humanoid crossing. The server root stays at the exterior start during
 the entire two-second replication observation, 12 studs from the goal.
 The case fails and teardown passes. Later replication and reset cases
 remain open.
+
+### Managed native Outpost suite passes — 2026-11-19
+
+Candidate `f565aed9e806016ebc1a20955f8ddcbb45e0c044` verifies the actual ground client
+sees its starting position, hands native physics ownership to that client,
+and requires real Humanoid movement and server-observed arrival within the
+unchanged two-second and two-stud bounds. Cleanup restores the prior pose,
+velocity and ownership mode. The accumulating-panel fixture uses the
+existing bounded first-hit selector. A native diagnostic sampled the old
+fixed point on each Outpost roof at 72 canonical positions. The approved
+parapet blocked 37 of 72 samples for each first-row panel.
+
+The [native result summary](../docs/evidence/p17/native-p17-f565aed-pass-summary.json)
+and [full 12-chunk report](../docs/evidence/p17/native-p17-f565aed-pass-raw.json)
+record **10/10 cases**, zero failures and skips, and two actual clients.
+The new fixture modules start a fresh runtime on 188 verified pristine
+registrations in the same native session. The ordinary 173/10/10 boot
+reports come from the original `5fc5f0b` startup. The smoke inputs and
+production bytes match this candidate. For the ground avatar crossing of
+`Warehouse_S01_North_04`, the client and server reach within 1.664 and 1.760
+studs of the same goal, with a 0.533-second server observation after the
+client reply, and restoration passes.
+
+Both actual clients match all 188 current panel registrations. Two live
+resets each start with four fragments, two pending projectiles and
+earned partial credit. Both restore pristine state and fresh references.
+Native teardown passes. The [full host gate](../docs/evidence/p17/walk-fix-host-f565aed.txt)
+passes 59 unit, 65 integration, 48 asset and 14 tooling checks on the same
+candidate and reconstructs the unchanged release bytes.
