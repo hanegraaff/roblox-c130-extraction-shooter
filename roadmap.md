@@ -128,6 +128,13 @@ rays await execution after an SDK startup failure and closure of both local
 test documents; the unchanged clean test file is ready to reopen once. P17
 stays In progress and the PR stays draft; P09 remains unstarted.
 
+2026-11-19 P17 checkpoint. The managed harness and its test-source binding
+pass the full host gate and GitHub Verify #365. A fresh local Studio Edit
+audit confirms the candidate's source, native mesh properties, material slots
+and geometry. The current multiplayer runs, operated review, performance
+comparison and human approval remain open. See the
+[P17 completion record](plans/17-integrate-military-outpost.md#reopened-local-test-place--2026-11-19).
+
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
 equals the combined passing candidate `537a2ce` /

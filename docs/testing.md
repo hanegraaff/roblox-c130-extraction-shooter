@@ -7,11 +7,12 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 | Gate | Command used by the verifier |
 | --- | --- |
 | Repository inputs | `python3 scripts/check_repository.py` |
-| Asset provenance rejection tests | `python3 -m unittest discover -s tests/tooling -v` |
+| Asset provenance and native harness tooling tests | `python3 -m unittest discover -s tests/tooling -v` |
 | P16 committed asset package | `python3 scripts/p16_audit.py` |
 | P17 generated approved-source definition | `python3 scripts/p17_assets.py` |
 | P17 equivalent material-split GLB | `python3 scripts/p17_library_glb.py` |
 | P17 managed import reconstruction | `python3 scripts/p17_compile_outpost.py` |
+| P17 managed native harness source binding | `python3 scripts/p17_harness.py` |
 | Asset audit regression tests | `python3 -m unittest discover -s tests/assets -v` |
 | Format | `stylua --check src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau` |
 | Lint | `selene src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau` |
@@ -28,20 +29,23 @@ The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The current candidate checks **2,804 authored Parts** across source world/templates, **51 runtime scripts**, **5,296 release Instances** and **5,389 test Instances**. The base world retains 403 Battlefield Parts/187 primitive panels, while runtime Outpost installation produces 188 active panels. Earlier 422-part/187-panel and 353-part/111-panel artifact counts retain their original source scope. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The managed P17 build has **2,804 authored Parts** across source world/templates, **51 runtime scripts**, **5,296 release Instances** and **5,393 test Instances**. Artifact inspection requires all four managed P17 modules in the test build and rejects any that appear in the release build. The base world retains 403 Battlefield Parts/187 primitive panels, while runtime Outpost installation produces 188 active panels. Earlier 422-part/187-panel and 353-part/111-panel artifact counts retain their original source scope. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
 ## Verify the integrated P17 Outpost
 
 The host gate checks 59 unit / 65 integration cases, 48 asset regressions,
-ten manifest regressions, seven P16 audits and the P17 definition, GLB and
-reconstruction gates. `p17_assets.py` pins the approved Blender/catalog/lock
+14 tooling cases (ten manifest and four managed harness cases), seven P16
+audits and the P17 definition, GLB, reconstruction and source-binding gates.
+`p17_assets.py` pins the approved Blender/catalog/lock
 identity. `p17_library_glb.py` decodes the material-split derivative and compares
 its triangles, corner UVs, materials and embedded PNGs with the approved sources.
 `p17_compile_outpost.py` reconstructs the managed templates from native import
 receipts and repaired texture references, rejecting missing/changed data.
-These audits do not load assets in Roblox or establish native acceptance.
+`p17_harness.py` binds the frozen fixture and asset references to the exact
+production inputs and requires the pinned production commit in Git history.
+Asset loading and native acceptance require the Studio checks below.
 
 The candidate installs 26 detailed Outpost panels, preserving 25 legacy pivots
 and adding one partition, for 188 active panels overall. The source-built
@@ -78,6 +82,7 @@ human A6 approval remain open until their own evidence exists.
 | [`MaterialPanels.spec.luau`](../tests/studio/specs-server/MaterialPanels.spec.luau) | Controlled empty-cosmetic fixtures for catalog rejection, shared damage/proxies, real Heavy/Total rays and bounded fragment-template lifecycle |
 | [`Outpost.spec.luau`](../tests/studio/specs-server/Outpost.spec.luau) | Actual managed template validation, ordinary-server material/native-intrinsic reads, invalid-support/pivot rejection before mutation, exact site/legacy identities/rollback, material-family heavy thresholds and real openings |
 | [`ThermalCosmetics.spec.luau`](../tests/studio/specs-client/ThermalCosmetics.spec.luau) | Ordinary-client material/native-intrinsic reads; client-only non-cover hiding, native solid-cover retention and exact transparency/listener cleanup |
+| [`P17MaterialHarness`](../tests/studio/server/P17MaterialHarness.luau) | Two-client native checks for rejection, mesh availability, avatar traversal, all six material families, actual weapon fire, earned openings, fragment expiry and two damaged-to-pristine resets |
 
 Client readiness waits run inside bounded test callbacks, after the actual
 Outpost replacement and descendant compiled-material metadata are available.
@@ -97,14 +102,78 @@ rendered review remain separate. Twelve working color-map preload results do
 not establish the missing scalar roughness/metalness/emission appearance.
 That compromise requires explicit A6 review.
 
-Run the required current P07/P05/P14/P08 regressions against the same integrated
-source. In addition, P17 requires actual avatar navigation through both furnished
-floors and external stairs/balcony; full-orbit targeting at both zooms; every
-material family's normal/thermal damage/opening review; actual safe fragments;
-at least two actual clients agreeing on appearance/geometry across two live-work
-resets; baseline/candidate workload measurements; and explicit human approval of
-the identified in-game result. These gates remain open until their own evidence
-exists. Do not reuse primitive-source passes as imported-Outpost acceptance.
+### Run the managed P17 multiplayer harness
+
+1. Build from the selected source and use the separate local `tests.rbxlx`
+   document (`PlaceId` and `GameId` both zero). Confirm its identity through
+   Studio MCP in Edit mode. Match the 137 script Sources, 2,332 managed
+   template meshes, 9,328 serialized material slots and target Size/CFrame
+   values to the test artifact before Play. The generated harness metadata
+   supplies provenance. The Edit comparisons verify what Studio loaded.
+2. With the local test place stopped and no other test owner active, set these
+   temporary attributes on `ServerStorage.DevelopmentSettings`. Use the full
+   tested harness commit from the [P17 record](../plans/17-integrate-military-outpost.md).
+
+   ```luau
+   local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+   assert(game.PlaceId == 0 and game.GameId == 0 and not game:GetService("RunService"):IsRunning())
+   assert(settings and settings:IsA("ModuleScript"))
+   assert(settings:GetAttribute("ManualHarness") == nil)
+   assert(settings:GetAttribute("P17HarnessCommit") == nil)
+   settings:SetAttribute("P17HarnessCommit", "221d1a824529855db110712d61f0b1f8be5f68e8")
+   settings:SetAttribute("ManualHarness", "P17")
+   ```
+
+3. In Studio choose **Server & Clients**, set **2 clients**, and start. The
+   ordinary TestEZ reports must show 173 server and ten per actual client,
+   all passed with zero failures, errors and skips. Check the actual server
+   report counted two clients and the two client reports identify distinct
+   players. P17 starts through the local selector and keeps the session open
+   for collection. A roster or owner conflict can fail preflight before a
+   harness report exists.
+4. Read `P17ManualInvocation`, `P17ManualStage` and `P17ManualSummary` in the
+   actual Server DataModel. When `ServerStorage.P17ManualEvidence` has
+   `Complete=true`, collect the `Chunk0001`, `Chunk0002`, etc. StringValues
+   in order. Verify `ChunkCount` and the combined UTF-8 byte count against
+   `TotalBytes` and parse the complete JSON. Preserve the actual reports,
+   source/build and Studio identity, including any wrapper error. Require ten
+   discovered and ten passed with zero failures and skips, two distinct actual
+   clients, clean baselines, and passing cleanup observations. Review the
+   same-panel impact diagnostics, stage and opening checks, and both resets.
+   The fixture reports the six-family controlled stage outcomes and actual
+   fire as separate cases. Its printed case prefixes are fixture labels.
+   Use the plan's criteria for acceptance, including A6 human approval.
+5. Use **End Session** after collecting evidence. In the original local Edit
+   document restore both temporary attributes to their prior values, normally
+   nil, and check that the session, runtime and test transports are gone.
+   Keep selector attributes out of committed definitions and published places.
+
+P08 uses a separate three-client baseline. To retain that native session for
+P17, first archive its reports, including the stock carrier departure and
+cleanup. Verify two actual clients remain and the previous runtime and test
+transport are drained. Set the P17 selector and commit on the actual server and
+run fresh TestEZ server/client baselines at that two-client roster. Start
+`ServerTests.P17ManualRunner.run()` once on the server and each remaining
+client's `ClientTests.P17MaterialHarness.run()` once, within the harness
+readiness window. The startup client entrypoint exits after its selected
+listener, so switching the selector does not dispatch a new listener. Use a
+fresh P17 session if the retained roster or cleanup checks fail.
+
+### Collect the remaining P17 acceptance evidence
+
+Run current P07/P05/P14/P08 regressions on the same integrated source. Review
+both launcher approaches, deployment anchors, the furnished floors and
+stairs/balcony. Verify full-orbit targeting at both zooms, operated desktop and
+touch input, and each material family's openings and damage in normal and
+thermal views. Record actual approved-template fragment descent and static
+contact along with the bounds and character/query checks. The baseline
+fragment fixture and multiplayer expiry/reset assertions cover their own
+scopes. Compare baseline and candidate workload metrics on the same device
+and settings at 1920×1080 with two actual clients, a 30-second warmup and a
+300-second sample. Use the [objective budgets](#objective-release-budgets) and
+record explicit human approval of the identified in-game result. The
+[P17 record](../plans/17-integrate-military-outpost.md) tracks actual results and
+open gates.
 
 ## Verify and review the P16 Blender package
 
