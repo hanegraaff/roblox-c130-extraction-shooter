@@ -1145,3 +1145,13 @@ and isolation. The [local Edit sync](../docs/evidence/p17/p14-fix-edit-sync-5fc5
 matches all 137 Sources, 2,332 native meshes and 9,328 material slots with this
 candidate. The original local Edit place is ready for a fresh P17 launch,
 followed by the full P14 rerun after P17 evidence collection.
+
+### Corrected native launch reached one client — 2026-11-19
+
+The [startup record](../docs/evidence/p17/native-p17-5fc5f0b-one-client-startup.json)
+binds the locally saved file to all 137 script Paths, classes and Sources in
+the rebuilt candidate. The fresh server loaded the corrected commit and ran
+173/173 ordinary checks. One actual client joined after about 56 seconds.
+The second client process entered a Roblox sign-in flow. The two-client
+precondition prevented harness startup and the authored map remained
+pristine. The corrected gameplay run still needs a fresh two-client startup.
