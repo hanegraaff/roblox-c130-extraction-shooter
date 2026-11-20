@@ -922,9 +922,9 @@ function Harness.run(finish: (Report) -> ())
         assert(#points > 0, "material burst has no common solid across damage states")
         local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
         assert(type(epoch) == "number", "material burst forecast epoch unavailable")
-        local relativeMuzzle = workspace.Aircraft:GetPivot():PointToObjectSpace(
+        local actualMuzzle: Vector3 =
             assert(runtime.aircraft.muzzle("GAU23"), "material burst muzzle unavailable")
-        )
+        local relativeMuzzle = workspace.Aircraft:GetPivot():PointToObjectSpace(actualMuzzle)
         local handoffSeconds = 0.4
         local horizonSeconds = handoffSeconds + (count - 1) * DestructionService.gapSeconds
         local steps = math.ceil(horizonSeconds / 0.1)

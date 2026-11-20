@@ -18,7 +18,7 @@ FIXTURE_VERSION = "v8-bounded-native-burst"
 SERVER_PROBE = "tests/studio/server/P17MaterialHarness.luau"
 CLIENT_PROBE = "tests/studio/client/P17MaterialHarness.luau"
 FROZEN_BODIES = {
-    SERVER_PROBE: "118fb785bc1be2a5720993d8eb98bdef62ecc0cac6668affce1fc5545729c0c2",
+    SERVER_PROBE: "c615355db5df1ef8f7ef102912f76168df18759ae6d2e3bcda17ff4e39b536d8",
     CLIENT_PROBE: "bc875d230df21811d23555c0d2c5e71db8f34707a0f7487410f8dd16b6d165ac",
 }
 
