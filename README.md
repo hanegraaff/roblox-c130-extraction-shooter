@@ -4,175 +4,99 @@
 
 *User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
-**A Roblox game in development: one gunship against a united ground team.**
+One player operates a circling C-130 while 5–9 ground teammates try to bring it down. The ground team starts with M-7 rifles and can share one recoverable rocket launcher found on the map. Three direct rockets destroy an undamaged aircraft. Rifle hits reduce the same health pool.
 
-One player operates a circling C-130 while 5–9 teammates on the ground try to destroy it. Every ground player starts with an M-7 rifle. One shared map launcher provides recoverable rockets: three direct hits destroy an undamaged aircraft, and rifle fire wears down the same health pool.
+## Play a round
 
-## What you can play today
+Rounds start in the protected, walkable lobby. With 6–10 players, the server assigns one operator and deploys everyone else as one ground team. The C-130 automatically circles the edge of the 720-stud battlefield. The default round lasts ten minutes, and friendly fire is off.
 
-The detailed smaller Outpost is playable locally from `main`. Explore the ground-floor workshop, upstairs command room, exterior stairs, balcony and rooftop equipment. Walls and roofs show damage specific to their materials. Foundry and Warehouse remain the two larger buildings. Two-client Studio checks cover navigation, demolition, replication and reset on the merged build. [P17 test results](plans/17-integrate-military-outpost.md#final-native-outpost-acceptance-2026-11-20).
+- **Ground team.** Use the hills and buildings as cover while teammates fire on the aircraft. Follow the teal west route or ochre east route to the center launcher. Lead the moving plane when firing a rocket. The carrier keeps their M-7, and the launcher's four-second reload continues through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect while the round is active. If the drop position is invalid, the launcher returns to its original anchor.
+- **C-130 operator.** Scan the ground through the inward-facing thermal camera. The 30mm GAU-23/A Chain Gun gives a tighter view, and the 105mm M102 Howitzer gives a wider view and blast. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. Releasing the directional controls holds the camera angle relative to the plane through its orbit.
+- **Spectating.** Ground death, character reset or surrender consumes your round life. The spectator camera follows a living ground teammate when one is available. Late arrivals and reconnecting players wait for the next round. Operator reset replaces the protected station body and preserves aircraft health.
 
-Local Studio play is the way to try the current build. The private Roblox import workspace's last verified published version is the older primitive build.
+The ground team wins when it destroys the plane. The C-130 wins by eliminating every ground player or surviving until time runs out. A lethal impact must land before the deadline. The ground team wins if the plane is destroyed and the last ground player is eliminated in the same pre-deadline step. A rocket already in flight can still hit after its shooter dies while the round remains active.
 
-A normal round starts in the protected, walkable lobby with 6–10 players. The server assigns one operator, preferring eligible players who have waited longer, and deploys everyone else as one ground team. The aircraft circles the edge of the **720-stud battlefield** automatically. Ground wins by destroying it; the operator wins by eliminating all ground lives or surviving until timeout. The default limit is ten minutes. An operator disconnect forfeits to the remaining ground team. Results return everyone to a fresh lobby and restore the battlefield.
+If the operator leaves while a ground player is alive, the ground team wins by forfeit. If the last ground player leaves while the operator remains, the C-130 wins by departure. An empty match or failed deployment can end without a winner. All remaining players see the same result and reason. After Results, the lobby camera returns and the battlefield, aircraft and equipment reset for the next round.
 
-As **operator**, hold WASD to pan the inward thermal view: A moves left and D right. Touch devices use the labelled arrows. The mouse, or a separate touch, aims the reticle. Releasing the pan holds the view angle relative to the circling plane. At wide zoom the level edge can enter roughly the outer quarter of the screen. R / Recenter restores the safe view. Select **1 / 30mm GAU-23/A Chain Gun** for the tighter view or **2 / 105mm M102 Howitzer** for the wider view. Hold left mouse / FIRE to fire at a valid surface. Switching retains the pan and each weapon's ammunition and reload timing. Solid cover hides thermal highlights and protects players from blasts. The candidate operator view omits non-cover furnishings and debris so decorative props cannot masquerade as thermal cover; ground players keep the furnished scene.
+## Controls
 
-As **ground**, use WASD and Space to move and jump. Equip the M-7 from its tool slot, aim at the plane and hold left mouse to fire; R reloads the rifle. Touch players aim with the camera and use FIRE / RELOAD. Follow the teal western or ochre eastern route to the center launcher. Within reach, use **E / PICK UP** to claim it; another teammate can carry it only after it is released. Keep the rifle and select either weapon through the native tool slots, or the touch **M-7 / ROCKET** buttons. Rockets fly straight with travel time, so lead the moving plane. Their four-second automatic reload continues while holstered, dropped or passed to someone else. **G / DROP** releases the launcher for a teammate. Death, character reset or disconnect also releases it while the round remains active; an invalid recovery position sends it back to its original anchor. There are no separate ammo pickups. The team status shows whether the launcher is available or carried; use aircraft health to judge remaining damage, since earlier rifle hits can reduce the rockets still needed.
+| Action | Ground player | C-130 operator |
+| --- | --- | --- |
+| Move and aim | WASD to move, Space to jump, mouse or touch camera to aim | WASD or touch arrows pan, with A left and D right. The mouse or a separate touch aims |
+| Recenter view | — | R / Recenter |
+| Select weapon | Native tool slots or M-7 / ROCKET touch buttons | 1 / 30mm button or 2 / 105mm button |
+| Fire | Hold left mouse / FIRE while equipped | Hold left mouse / FIRE at a valid surface |
+| Reload | M-7 with R / RELOAD, launcher reloads automatically | Automatic for each weapon |
+| Pick up or drop launcher | E / PICK UP within reach, G / DROP while carrying | — |
+| Surrender | Surrender / spectate button during an active life | — |
 
-Use the eight grass/rock hills and all three two-story buildings for cover. Battlefield walls and roofs, including the starting shelter, take persistent damage. Light scars precede a real Heavy opening after three direct 105mm hits. Three more hits on the remaining solid sections remove the panel. Nine earned seconds of valid same-panel 30mm impacts advance each stage. Earned damage survives stops, misses, reloads and target changes. The first resumed hit earns zero paused time. Heavy panels retain their dark fractured appearance. Bounded fragments fall against scenery without damaging or blocking players. Floors, stairs, frames, terrain and the separate outside lobby remain stable.
+Both roles see the timer, remaining ground lives and aircraft health during play. Ground players can also see ammunition and whether the launcher is available or carried. Confirmed aircraft hits use **AIRCRAFT HIT −5** or **ROCKET HIT** on desktop, and **HIT** in the weapon readiness row on touch.
 
-The HUD shows role, life, time, survivors, ammunition and aircraft health. Desktop confirmed hits show **AIRCRAFT HIT −5** for the rifle or **ROCKET HIT** for the launcher; touch appends **HIT** to weapon readiness so feedback stays clear of the centered aim. Friendly fire is off. Ground death, character reset or Surrender / spectate consumes that round's life; eliminated players follow a living teammate. Late arrivals and reconnecting players cannot regain an active life or launcher. Operator reset replaces only the protected station body. An orange boundary marks the playable disk; leaving it or falling below the map returns an active ground player to shelter. Movement/origin checks can temporarily reject pickup or fire after implausible position jumps; they issue no automatic ban.
+## Cover and the Outpost
 
-In the Outpost's furnished rooms, the Ground camera moves closer as needed and returns to the outdoor zoom after exit. Both floors passed the solo Studio camera walkthrough. A live Studio round also verified indoor aim, spectating and camera restoration through reset. Launcher recovery, destruction, gunship combat and panning also passed on the merged source. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity remain unverified or planned. The MVP has one level. Selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope. [P17 acceptance record](plans/17-integrate-military-outpost.md).
+The battlefield has eight grass and rock hills and three usable two-story buildings. The detailed Outpost has a workshop, upstairs command room, balcony and exterior stairs. The ground camera moves closer inside its rooms as needed and restores the previous outdoor zoom at exit. The orange boundary marks the playable disk. Leaving it or falling below the map returns an active ground player to shelter.
 
-The owner approved the editable Blender source on 2026-11-13 and approved the in-game Outpost and its camera update for merge on 2026-11-20. [Blender source](assets/blender/military-outpost/README.md), [in-game review](plans/17-integrate-military-outpost.md#owner-approval-and-merge-2026-11-20).
+Solid walls hide ground thermal highlights and block shots and blasts. Walls and roofs, including the battlefield starting shelter, show persistent Light damage, open at Heavy damage after three direct 105mm hits, and disappear after three more. Nine earned seconds of valid same-panel 30mm hits advance a stage. Interruptions preserve earned damage and pause its timing. A new opening benefits later impacts. Debris falls against scenery, and floors, stairs, supports and the outside lobby stay intact. [Destruction rules](architecture.md#progressive-panel-destruction-p07)
+
+## Availability
+
+This branch is playable locally in Roblox Studio. The current match build is available for review on `plan/09-match-outcomes`. Integrated `main` includes the playable Outpost and its indoor camera. The older private import workspace is separate from current local play. Complete player guidance, combat audio, balance and performance checks, and real 6- and 10-player Roblox client acceptance are later work. The MVP has one level. [P09 review](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/41), [roadmap](roadmap.md)
 
 ## Set up locally
 
-For the complete local Studio workflow, use macOS with **Git**, **Python 3.10+**, system **curl**, and **Roblox Studio** installed. Sign in to Studio yourself and keep Play stopped while installing or connecting plugins. Setup downloads tools from GitHub and TestEZ from Wally, so network access is required. Setup is also provided for Linux arm64/x86_64; platform-specific gate results remain source-bound in the plan record. Automated Windows setup is not provided. See the [development guide](docs/development.md) for platform and tool details.
+Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Clone the source and enter the checkout:
+Clone the repository and select the match candidate. On an existing clone, fetch and switch to the corresponding local tracking branch while preserving local edits.
 
 ```sh
-git clone https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch plan/09-match-outcomes https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
-```
-
-Select `main` before building:
-
-```sh
-git fetch origin
-git switch main
-git pull --ff-only origin main
-```
-
-Do not discard local edits when switching source; select the same source for builds, Rojo sync and test evidence.
-
-The reconstruction guide explains imported dependencies and rebuilding the managed templates. [Reconstruct the Outpost](docs/development.md#reconstruct-the-approved-outpost)
-
-If you will make changes, create a dedicated task branch from the selected source before editing; see the [branch rules](docs/development.md#branches-ci-and-review).
-
-Install the pinned tools and dependencies, run the complete host gate, and make the tool commands available in this terminal:
-
-```sh
-python3 scripts/setup.py  # First-time setup; rerun if tool/dependency checks request it
+python3 scripts/setup.py
 python3 scripts/verify.py
 export PATH="$HOME/.rokit/bin:$PATH"
-rojo plugin install      # Install the matching Studio plugin once
+rojo plugin install
 ```
 
-The verifier builds `build/game.rbxlx` for local development and `build/tests.rbxlx` with automatic Studio test runners. It runs **65 unit and 65 integration tests**, formatting, lint, type, geometry and release isolation checks. It verifies the Blender package and managed Outpost reconstruction from committed assets. Blender 5.3.0 is needed to edit, export or freshly render the Outpost. Use Studio for the engine checks below. The dependency and build directories are generated locally.
+Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 
 ## Play and develop locally with Rojo
 
-Rojo's local server watches repository files and sends code/map changes to the Studio plugin. Keep the server terminal running while you work; **Ctrl+C** stops it. Reuse a matching server if it is already running.
-
-For the development place, run:
+From the repository root, start the development sync server. Keep its terminal running while working. Reuse it if it is already serving the same project and port.
 
 ```sh
 rojo serve default.project.json --address 127.0.0.1 --port 34873
 ```
 
-1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local development document. Reuse it if it is already open.
-2. Keep **Play stopped**. Open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the project is **PlayersVsC130** before applying the mapping. If the newly installed toolbar button is absent in Edit mode, save work and restart Studio once. If only the panel is hidden, reopen it with the Rojo toolbar button; Play is not needed.
-3. Click **Play**. The status panel reads **Development** / **Bootstrap running**, and the round panel shows a lobby waiting for six players. Your lobby character is protected and can move with WASD. A solo client cannot start a production round.
-4. For solo exploration or a small local round, use the separate test mapping below. A single client automatically previews the battlefield. Two clients support real role/round testing; use three for launcher transfer/recovery and teammate spectating while another ground player remains alive.
-5. Click **Stop** before editing repository files. Let Rojo sync changes into this same document, inspect the expected change, and start a fresh Play session. Reopening a new build after every edit is unnecessary.
-
-If Rojo reports **Http requests can only be executed by game server**, stop Play and reconnect in Edit mode. Keep a separate test document for the test mapping below. The [development guide](docs/development.md#sync-this-repository-with-studio) covers the guarded macOS launcher, MCP connection and further troubleshooting.
+1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local document. Reuse the document if it is already open.
+2. In Edit mode, open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the **PlayersVsC130** mapping before applying it. If a newly installed plugin's toolbar button is absent, save work and restart Studio once.
+3. Click **Play**. Expect **Development** and **Bootstrap running**, a walkable lobby and a round panel waiting for six players. Use the separate test mapping for solo exploration or a smaller active match.
+4. After repository edits, stop Play, confirm the same Edit document received the expected change through Rojo, and start fresh Play. If the server restarted or the plugin disconnected, reconnect the existing document in Edit mode. [MCP, sync and troubleshooting](docs/development.md#sync-this-repository-with-studio)
 
 ## Run local automated tests
 
-Run the full host gate after code/configuration changes:
+Run `python3 scripts/verify.py` after code or configuration changes. Use `python3 scripts/check_repository.py` for documentation-only changes.
 
-```sh
-python3 scripts/verify.py
-```
-
-For real-engine tests, start the test sync server in another terminal with Rokit's tools on PATH:
+Start the test sync server in another terminal with Rokit on PATH.
 
 ```sh
 export PATH="$HOME/.rokit/bin:$PATH"
 rojo serve test.project.json --address 127.0.0.1 --port 34872
 ```
 
-1. Open `build/tests.rbxlx` as a **separate local test document**. Keep Play stopped while connecting **Plugins → Rojo** to `localhost:34872`; confirm **PlayersVsC130Tests**. Never apply this mapping to a cloud/release place.
-2. Click **Play**. The panel should read **Test**. The mapped TestEZ runners execute automatically; do not start a second manual run.
-3. Open Studio's **Output** panel. Expect **179 server tests and 12 tests per actual client**, with every discovered test passing and zero failures, skips or errors. The test server waits up to 60 seconds for the first client. After the suites pass, a single client automatically enters the map in **Studio preview • Ground**. Use a multiplayer session for active-round checks. [Studio smoke suites](docs/testing.md#run-the-studio-smoke-suites).
-4. Click **Stop**, then **Play** again. Check fresh passing reports and one status panel plus one round panel. Stop before changing the mapping or source.
-5. Use the **STUDIO TESTING** panel at the bottom right. Click **Role** to cycle Auto → Ground → Operator. With one client, the choice changes your solo preview immediately: Ground can walk, while Operator previews the inward thermal view. Hold **WASD** to pan and move the mouse to aim, or use the touch directional pad and a separate aiming touch. Use **R / Recenter** to reset the safe view, and **1 / 2** or the named buttons to inspect both zoom profiles. Solo selection is cosmetic and does not grant an active role. Click **Next round** to cycle 30, 60, 180 or 600 seconds.
-6. For a real role/round test, use Studio **Server & Clients** with **2 clients** (or **3** for launcher recovery and teammate spectating). Choose your roles, then click **Start round now** to bypass the lobby wait. Two Operator choices, or everyone choosing Ground, produces an explanation rather than silently changing a tester's choice. **Auto** fills the required operator when nobody explicitly requests it.
-7. **Reset test / apply settings** ends the local test and restores preview/lobby. Role and duration choices apply to the next explicit **Start round now**; they do not change an active role or deadline. Use **End Session** to close multiplayer test clients when finished.
+1. Open `build/tests.rbxlx` as a separate **local** test document. With Play stopped, connect **Plugins → Rojo** to `localhost:34872` and confirm **PlayersVsC130Tests**. Use this mapping only in the local test document.
+2. Click **Play**. Expect **Test** and automatic TestEZ reports in Studio **Output**. The P09 mapping expects **191 server cases and 12 per actual client**, all passing with zero failures, skips or errors. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one status HUD and one round HUD. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
+3. With one client, Play opens the labelled Ground preview. Use the **STUDIO TESTING** panel to cycle **Role** through Auto, Ground and Operator, or move between **Explore map (solo)** and **Return to lobby**. Preview lets you walk the map or use the thermal camera and both zooms while waiting for a match.
+4. For an active local match, use Studio **Server & Clients** with **2 clients**, or **3** to exercise launcher transfer and teammate spectating. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
+5. Play through Results and wait for the lobby to return. Start the next round to inspect restored equipment and cover. **Reset test / apply settings** returns to the lobby or solo preview. Test-panel role and duration choices apply to the next explicit start. Use **End Session** when finished.
 
-For **solo exploration**, just click **Play** in the test document; no **Server & Clients** windows are needed. If the panel says **Development**, stop Play and connect this document to the test server on `localhost:34872`, confirming **PlayersVsC130Tests**.
-
-Use **Return to lobby** to inspect the walkable lobby, or **Explore map (solo)** to return to preview. No Command Bar commands are required. Solo previews are clearly labelled and do not grant an active round life, opponent or weapons. The panel and all override/settings code are excluded from the release mapping; production still requires 6–10 players and uses its normal role selection. See [test-control evidence](docs/evidence/lobby-preview.md) for verified cases.
-
-The Outpost has a [dedicated P17 Studio harness](docs/testing.md#run-the-managed-p17-multiplayer-harness) for two actual clients. It tests navigation, weapon impacts on imported panels, agreement on damage and openings, and both pristine resets.
-
-The [P08 launcher harness](docs/testing.md#run-the-p08-launcher-harness) requires **three actual clients**: one operator and two ground players. It checks raced acquisition, rejected requests, real rockets, reload-preserving drop/death/character-removal/disconnect recovery, replication and reset. D59 excludes unsupported actual same-identity reconnect; runtime rejoin authority remains covered by service tests. Supported late-join requirements in other plans remain. The revised [P07 destruction harness](docs/testing.md#run-the-p07-destruction-harness) requires **two actual clients**. It checks persistent Light/Heavy/Total progression, earned 30mm time across separated bursts, starting-shelter damage, openings, rejection, replication and resets. A real late join is waived for this P07 gate; no third client or mid-session Start action is required. Its plan links accepted source-specific reports and operated normal/thermal review; changed candidates need fresh applicable evidence. The [P14 pan harness](docs/testing.md#run-the-p14-panned-targeting-harness) requires two actual clients, a full orbit at each FOV, real terrain/upper-floor surface projections, selection coherence, role isolation and cleanup. Its automated pointer-input fixtures are separate from native mouse/keyboard/button review and 1280×720 / 1920×1080 rendered checks. The [P13 map harness](docs/testing.md#run-the-p13-expanded-map-harness) starts two actual clients, walks a ground avatar into all three upper floors, perturbs and resets the map twice, then requests a third actual late client to check rebuilt-map replication. The [P04 multiplayer harness](docs/testing.md#run-the-p04-aircraft-harness) uses two actual clients to sample a full 90-second orbit, check both zoom profiles and rejected selections, test thermal fixtures, reset/reentry and operator departure. The [P03 multiplayer harness](docs/testing.md#run-the-p03-multiplayer-harness) separately starts three clients, adds a late spectator and drives three accelerated rounds. The [P05 combat harness](docs/testing.md#run-the-p05-gunship-combat-harness) adds two-client firing, cover, rejection, result and reset checks. The [P06 harness](docs/testing.md#run-the-p06-ground-combat-harness) checks rifle and aircraft-health behavior; its earlier candidate fixture passed with two actual clients. A single-client TestEZ pass does not establish replicated combat or release capacity.
-
-After source changes, stop Play, rerun the host gate, confirm Rojo is connected to **PlayersVsC130Tests** on `localhost:34872`, verify it delivered the candidate and start a fresh session. If the sync server was restarted, reconnect the existing document's Rojo plugin in Edit before testing.
-
-For fresh serialized-world acceptance through Studio MCP, build the probe from the selected checkout:
-
-```sh
-python3 scripts/build_studio_world_probe.py
-```
-
-Run the generated `build/studio-world-probe.luau` through MCP in the existing **Edit** document. It loads a newly built native world artifact, verifies source geometry and terrain restoration, then removes its fixture and restores prior terrain. This world-load check needs no new Studio process; normal Play server/client tests remain separate. See the [fresh-world procedure](docs/testing.md#check-a-fresh-native-world-load) for generated files, report checks and source identity.
-
-For a documentation-only change, `python3 scripts/check_repository.py` checks local links, JSON, mappings and assets. See the [testing guide](docs/testing.md#run-the-studio-smoke-suites) for structured server/client reports and required evidence.
-
-## Controls and cover
-
-| Action | Ground player | C-130 operator |
-| --- | --- | --- |
-| Move / aim | WASD and mouse; Space to jump | WASD pans (A left, D right); touch arrows pan in their shown directions; mouse or a separate touch aims |
-| Recenter view | — | R / Recenter |
-| Select weapon and zoom | Native tool slots; M-7 / ROCKET touch buttons | 1 / 30mm button; 2 / 105mm button |
-| Fire | Hold left mouse / FIRE while equipped | Hold left mouse / FIRE at a valid aim point |
-| Reload | M-7: R / RELOAD; launcher: automatic | Automatic, independently per weapon |
-| Pick up / drop launcher | E / PICK UP within reach; G / DROP while carrying | — |
-| Surrender / spectate | On-screen button during an active life | — |
-
-The M-7 defaults are **5 damage**, a **30-round magazine**, **120 reserve rounds**, **0.15-second cadence** and **2-second reload**. Aircraft health starts at **300**. The faster 30mm holds **100 rounds**, fires every **0.15 seconds** and automatically reloads in **5 seconds**; the 105mm holds **one round** and automatically reloads in **4 seconds**. The 105mm has a wider blast. These values are tuning defaults; switching cannot refill ammunition or reset readiness.
-
-Panel damage counts server-resolved **direct gunship impacts**, separately from blast damage to players. The first 30mm hit, including the first after a pause or target change, starts timing with zero elapsed credit; trigger time alone does not count. Current mixing defaults let one heavy hit contribute one third of a stage and preserve it through interruptions. All earned per-panel heavy and 30mm damage persists until reset; only the timing connection between hits breaks. Light scars do not make holes. Primitive Heavy/Damaged panels leave two solid side strips around a central 50% opening. Imported Outpost families use their material-specific residual shapes and exact solid proxies, with roughly half the original blocking face removed. Remaining solids block movement, shots and thermal sight lines. A creating blast uses the cover present before the damage batch; later shots can exploit the hole. Up to 48 server-owned fragments fall against scenery and expire after eight seconds. They do not damage or collide with players or supply cover. See [destruction contracts](architecture.md#progressive-panel-destruction-p07) for timing and collision details.
-
-The launcher carries one ready rocket and automatically replenishes after four seconds. Its reload deadline follows the single round weapon through switching and transfers. A direct rocket applies 100 aircraft-health units once; three alone destroy a pristine 300-health plane. Cover, misses and near misses do not earn a direct hit. A rocket already flying may still count after its shooter dies if another ground player keeps the round active; a committed result cancels remaining work. See the [roadmap](roadmap.md) and [P08 evidence](docs/evidence/p08-launcher.md) for acceptance and integration state.
+The [P09 match harness](docs/testing.md#run-the-p09-match-outcome-harness) runs aircraft destruction, elimination, timeout, replay, departure and setup-abort scenarios in actual Studio server/client sessions. The [testing guide](docs/testing.md) also covers targeted launcher, gunship, destruction, camera and Outpost checks. Stop Play and confirm the updated source reached the same test document before collecting fresh evidence.
 
 ## Inspect the Blender outpost
 
-Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend)
-in **Blender 5.3.0**. It contains the exterior, furnished workshop and command
-room, a cutaway, reusable props and six material/shape damage families.
-The [asset review guide](assets/blender/military-outpost/README.md) explains
-orbiting, selecting the saved cameras, hiding the roof and inspecting every
-panel from both sides. It links the actual Blender renders and grayscale damage
-views. These show the Blender asset; the candidate branch reconstructs its imported counterpart for the separate in-game review.
-
-To check the committed package without launching Blender:
-
-```sh
-python3 scripts/p16_audit.py
-```
-
-The [P16 acceptance record](docs/evidence/p16/acceptance.md) identifies the
-reviewed source, tool checks and explicit human approval. The
-[P17 acceptance record](plans/17-integrate-military-outpost.md) documents Roblox
-navigation, cover, thermal visibility and replication on the integrated candidate.
+Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend) in **Blender 5.3.0** to explore the exterior, furnished rooms, saved views and six material and shape damage families. Run `python3 scripts/p16_audit.py` to check the committed package without launching Blender. [Asset review guide](assets/blender/military-outpost/README.md), [in-game Outpost record](plans/17-integrate-military-outpost.md)
 
 ## Follow development or contribute
 
-- [Author Roblox assets](.agents/skills/author-roblox-assets/SKILL.md) from a brief, references, or both, with scale and clearance checks for walkable assets.
-- [Import Blender assets into Roblox](.agents/skills/import-blender-to-roblox/SKILL.md) with native geometry and material verification, managed source and indoor camera setup when needed.
-- [Game design](game-design.md): intended rules and edge cases.
-- [Roadmap](roadmap.md): capabilities and current status.
-- [Requirements](requirements.md): acceptance obligations.
-- [Development guide](docs/development.md): installation, builds, Studio and source synchronization.
-- [Architecture](architecture.md): implemented boundaries and future systems.
-- [Testing guide](docs/testing.md): automated gates and real-engine verification.
-
-Source is maintained in [hanegraaff/roblox-c130-extraction-shooter](https://github.com/hanegraaff/roblox-c130-extraction-shooter). The repository retains its original name.
+- [Game design](game-design.md) and [requirements](requirements.md)
+- [Development guide](docs/development.md), [architecture](architecture.md) and [testing guide](docs/testing.md)
+- [Author Roblox assets](.agents/skills/author-roblox-assets/SKILL.md) and [import Blender assets into Roblox](.agents/skills/import-blender-to-roblox/SKILL.md)

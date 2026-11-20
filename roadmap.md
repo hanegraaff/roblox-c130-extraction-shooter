@@ -18,22 +18,25 @@ The integrated source on `main` includes the development shell, verification too
 | M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
 | M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Complete | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
-| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | In progress | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
-| M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
+| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
+| M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Ready | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
-**Next implementation order (user-directed, D63): P17 → P09.** P16 and
-P17 are inserted between P07 and P08 without renumbering existing plans. P16
-received the user's Blender approval before P17 starts. P08's already
-completed work and historical evidence remain valid; it is not undone or
-repeated. P09 waits for P17 and the completed P08 source. This priority takes
-precedence over lowest-numbered selection. P16's approved asset is delivered
-through PR #35, merged into `docs/military-outpost-blender-plans`.
-The remaining parent stack is now integrated on `main`; P17 starts on
-`plan/17-integrate-military-outpost` from updated `main`. See the
-[main integration record](docs/evidence/p08-p16-main-integration.md).
+**Implementation order selected in D63: P17 → P09.** P16 and P17 retain
+their original plan numbers. P16 received Blender approval before P17.
+P17 and the completed P08 launcher are both on `main`, which supplies the
+dependency source for P09. [P08 and P16 integration](docs/evidence/p08-p16-main-integration.md),
+[P17 integration and acceptance](plans/17-integrate-military-outpost.md#final-native-outpost-acceptance-2026-11-20)
+
+2026-11-20 P09 delivery. The round commits one result with a team, reason
+and server-derived credit where applicable. Four native Studio sessions
+passed all 12 multiplayer cases on `a1b0af0`, with three or two actual
+clients as required. An ordinary two-client review exercised all three
+competitive endings. P09 is complete in [PR #41](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/41),
+open against `main`. P10 is Ready and requires the P09 branch source until
+integration. [P09 completion record](plans/09-match-outcomes.md#completion-record)
 
 2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
 validated shared material-panel boundary and approved-source generation gate.
@@ -372,7 +375,12 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 
 Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
 
-P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. The planning update scheduled these increments; P16 has since delivered the approved package. P17 has delivered preparation and awaits authenticated imports before the actual replacement can proceed.
+P16 delivered the approved military-outpost Blender kit. P17 integrated it as
+the smaller Outpost, with material-specific damage and debris under the shared
+panel rules, and added the indoor Ground camera. The game has one level. P10
+retains its UI, effects and audio scope. P11 and P12 must profile and verify the
+integrated Outpost in their candidates. Terrain-wide dressing and equipment
+refinement are future proposals.
 
 ## Initial delivery record
 

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "4f1d25b1-0e5b-43a3-90d8-c20f32c5d398",
+    "context": "Server",
+    "result": "{\"phase\":\"A4: actual raw character removal eliminates the remaining ground life\",\"smoke\":{\"errors\":0,\"skipped\":0,\"passed\":191,\"discovered\":191,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"clientCount\":2}}"
+  },
+  {
+    "id": "a21545ca-e65e-494e-9311-d6bbe09b668f",
+    "context": "Client",
+    "result": "{\"phase\":\"A4: actual raw character removal eliminates the remaining ground life\",\"smoke\":{\"errors\":1,\"skipped\":0,\"passed\":11,\"discovered\":12,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"userId\":-1}}"
+  },
+  {
+    "id": "a699f759-e917-4ff5-a0d7-cf7d325f3ac3",
+    "context": "Client",
+    "result": "{\"phase\":\"A4: actual raw character removal eliminates the remaining ground life\",\"smoke\":{\"errors\":1,\"skipped\":0,\"passed\":11,\"discovered\":12,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"userId\":-2}}"
+  }
+]

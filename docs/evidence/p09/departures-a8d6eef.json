@@ -1,0 +1,38 @@
+{
+  "initialIds": [
+    -1,
+    -2,
+    -3
+  ],
+  "scenario": "Departures",
+  "skipped": 0,
+  "passed": 2,
+  "cases": [
+    {
+      "passed": true,
+      "name": "A4: actual carrier departure recovers exactly one launcher; operator departure forfeits"
+    },
+    {
+      "passed": true,
+      "name": "A6: stop drains the frame, combat, character resources and transport"
+    }
+  ],
+  "clientCount": 3,
+  "observations": [
+    {
+      "clientCount": 1,
+      "health": 300,
+      "result": {
+        "reason": "OperatorForfeit",
+        "winner": "Ground"
+      },
+      "roundId": 1
+    }
+  ],
+  "finalClients": 1,
+  "environment": "Studio",
+  "discovered": 2,
+  "suite": "P09-multiplayer",
+  "failed": 0,
+  "mode": "sdk"
+}

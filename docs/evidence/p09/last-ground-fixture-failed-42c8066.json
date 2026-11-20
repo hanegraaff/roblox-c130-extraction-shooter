@@ -1,0 +1,33 @@
+{
+  "initialIds": [
+    -1,
+    -2
+  ],
+  "scenario": "LastGround",
+  "skipped": 0,
+  "passed": 1,
+  "cases": [
+    {
+      "name": "A4: actual raw character removal eliminates the remaining ground life",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.MatchOutcomeHarness:141: P09 timeout: client fixture ready"
+    },
+    {
+      "name": "A4: actual last-ground departure awards the surviving C-130 by departure",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.MatchOutcomeHarness:141: P09 timeout: client fixture ready"
+    },
+    {
+      "passed": true,
+      "name": "A6: stop drains the frame, combat, character resources and transport"
+    }
+  ],
+  "clientCount": 2,
+  "observations": [],
+  "finalClients": 2,
+  "environment": "Studio",
+  "discovered": 3,
+  "suite": "P09-multiplayer",
+  "failed": 2,
+  "mode": "sdk"
+}

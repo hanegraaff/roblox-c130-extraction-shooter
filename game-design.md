@@ -56,7 +56,7 @@ Each aircraft weapon retains its own cadence/cooldown/reload state across switch
 
 Define an integer `rocketDamage` and derive `aircraftMaxHealth = 3 * rocketDamage`. A direct rocket impact applies that full damage once, without falloff or a second splash award to the same aircraft. With no other damage, the first two hits leave positive health and the third reaches zero. M-7 hits apply a small positive `rifleDamage`; mixed rifle/rocket damage can destroy the plane sooner. Do not add regeneration, armor modifiers or critical hits that invalidate the three-rocket guarantee. Misses and near-miss splash do not count as direct rocket hits.
 
-At zero aircraft health, commit **Destroyed** and a ground-team win immediately through MatchService. Cancel outstanding damage work and play cosmetic destruction after the result; there is no disabled-but-still-active mission phase and no damaging physics crash. The entire ground team receives the win, including already eliminated teammates.
+At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-team win through MatchService in that step. Cancel outstanding damage work and freeze the orbit. The entire ground team receives the win, including eliminated teammates. Cosmetic destruction belongs to the P10 presentation work. [Player guidance and presentation](plans/10-player-experience.md)
 
 ## Single rocket-launcher lifecycle
 
@@ -100,7 +100,8 @@ stateDiagram-v2
     [*] --> Lobby
     Lobby --> Deploying: roster ready
     Deploying --> Active: map and players ready
-    Deploying --> Lobby: deployment cancelled
+    Deploying --> Lobby: assigned player leaves
+    Deploying --> Results: setup fails or deployment times out
     Active --> Results: plane destroyed / ground eliminated / deadline / forfeit / abort
     Results --> Resetting
     Resetting --> Lobby
@@ -114,13 +115,16 @@ Player states are Waiting → ActiveGround / ActiveGunship → Eliminated / Spec
 | All active ground players eliminated before aircraft destruction | C-130 wins once |
 | Deadline reached with no earlier committed ground win | C-130 wins once; an impact at exactly the deadline is too late |
 | Aircraft and last ground player reach zero in the same pre-deadline simulation step | Ground win takes precedence (documented tie default) |
-| Operator disconnects during Active, with ground players remaining | Ground win by forfeit; do not invent rocket hits or destruction evidence |
-| Ground player leaves during Active | Remove active life; recover their launcher if held; rejoin cannot respawn |
-| Last ground player leaves | C-130 wins if operator remains; an empty server cleans up without a competitive winner |
+| Operator disconnects during Active, with ground players remaining | Ground win by forfeit with aircraft health preserved |
+| Ground player leaves during Active | Remove their life and recover any held launcher if play continues. Rejoin preserves the consumed life |
+| Last ground player leaves | C-130 wins by departure if the operator remains |
+| Both sides depart in one step, or nobody remains on the server | End without a competitive winner if the damage and deadline checks did not already settle the result |
 | Deployment loses a valid roster | Cancel deployment and return to lobby |
 | Invalid map or unrecoverable setup error | Abort with a reason and no competitive winner, then reset |
 
-At each server step, enforce deadline first; resolve accepted projectile/damage events as a batch against pre-impact geometry; then evaluate aircraft destruction before total ground elimination. If no result is committed, handle departures (empty server, no ground players, operator forfeit) and launcher interactions. Once Results is committed, no pending shot/pickup/disconnect can change it. A rocket already in flight can still count after its shooter dies if another ground player keeps the round active; if a prior step already ended the round, it cannot retroactively win. Never trust a client timestamp to change this order.
+Each server step samples server time. At or after the deadline the C-130 wins by timeout and the damage batch is skipped. Before the deadline, accepted gunship impacts, M-7 rays and rocket sweeps use the cover present at the start of the batch. The server applies structural changes, evaluates aircraft destruction before total ground elimination, then considers departures. Pickup, drop, recovery and launcher fire proceed only if play continues. A rocket already in flight can finish after its shooter dies while the round remains active.
+
+The server commits one result for the round. Aircraft destruction records the lethal shot's shooter, weapon and shot ID. C-130 wins credit the assigned operator. Departure and abort reasons remain distinct from aircraft destruction. Results freezes aircraft health and orbit, cancels outstanding damage work and clears active equipment. Reset restores pristine cover, weapon readiness, launcher state and the lobby camera before the next deployment.
 
 ## Presentation and readiness
 
@@ -130,18 +134,13 @@ upstairs command room and reusable indoor/outdoor props, based on all three
 images in `src/images/military-outpost/`. It includes six material/shape panel
 families with Pristine/Light/Heavy/Total appearances, matching fragments,
 explicit proxy candidates and saved review views. The user explicitly approved
-revision `e8fb840` on 2026-11-13 ([record](docs/evidence/p16/human-approval.json)); the playable smaller Outpost still uses
-primitive art.
+revision `e8fb840` on 2026-11-13. [Blender approval](docs/evidence/p16/human-approval.json)
 
-[P17](plans/17-integrate-military-outpost.md) will replace that **smaller Outpost**
-on the same level with the approved revision. Concrete, corrugated metal and
-roofing must retain their material-specific damage while shared systems retain
-the three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment rules.
-Floors, stairs and supporting structure stay stable. The package's declared
-fixed apertures and additional partition require P17 navigation/cover validation;
-Blender previews do not grant runtime acceptance. D63 schedules P16 approval,
-then P17, before P09 and remaining MVP work. Existing gameplay evidence remains
-bound to its recorded primitive-asset source.
+The playable **smaller Outpost** uses the imported revision on the same level.
+Concrete, corrugated metal and roofing retain material-specific damage under the
+shared three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment rules.
+Floors, stairs and supports stay stable. Its authored room bounds support closer
+Ground camera framing and restore prior zoom at exit. [Outpost integration and review](plans/17-integrate-military-outpost.md)
 
 Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
 

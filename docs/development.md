@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `main` for the integrated Outpost and indoor Ground camera. The game reconstructs the imported smaller Outpost before the map owner captures its reset snapshot. The owner approved the Outpost for merge. The P17 record links the passing active-round and native regression checks. [Local setup](../README.md#set-up-locally), [P17 record](../plans/17-integrate-military-outpost.md)
+Use `plan/09-match-outcomes` to work on the ordered match, result and replay loop. Use `main` for integrated work that only depends on the playable Outpost and indoor Ground camera. The game reconstructs the imported Outpost before the map owner captures its reset snapshot. [Local setup](../README.md#set-up-locally), [P09 record](../plans/09-match-outcomes.md), [P17 record](../plans/17-integrate-military-outpost.md)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -28,7 +28,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs the portable P16 asset audit, P17 definition/GLB/reconstruction gates, 48 asset and ten manifest rejection cases, formatting, lint, strict type analysis, 59 deterministic unit and 65 service tests, intentional rejection probes, both builds, canonical authored-geometry checks and artifact isolation checks. Builds are `build/game.rbxlx` (release mapping, currently a development combat/destruction candidate) and `build/tests.rbxlx` (test mapping). Open these files as separate local Studio documents; no cloud publication is needed.
+The full gate runs asset provenance and reconstruction, formatting, lint, strict type analysis, deterministic unit and service tests, intentional rejection probes, both builds, canonical geometry checks and artifact isolation. Open `build/game.rbxlx` (release mapping) and `build/tests.rbxlx` (test mapping) as separate local Studio documents. The verifier refreshes neither Studio document automatically. [Verification commands and coverage](testing.md#current-host-checks)
 
 For direct tool commands in a shell, add Rokit’s tool shims to PATH:
 
@@ -89,7 +89,7 @@ On this Mac, even an Open Documents request addressed to an existing Studio PID 
 
 See the official [Rojo live-sync workflow](https://rojo.space/docs/v7/getting-started/new-game/#live-syncing-into-studio) and [plugin installation](https://rojo.space/docs/v7/getting-started/installation/#installing-the-plugin).
 
-The development mapping labels its panel **Development** and starts the production round runtime with a six-player minimum and 600-second rounds. A solo Play session waits at the protected lobby. The test mapping labels it **Test** and starts server/client TestEZ runners automatically. After the foundation/map suites finish, its server runner starts a two-player-minimum runtime with human controls (default next round: 60 seconds). One client automatically previews the map; multiplayer tests start explicitly through the test panel. Use Studio **Server & Clients** with two clients to play both roles or three to test teammate spectating. This override and every test helper are absent from the release mapping.
+The development mapping labels its panel **Development** and starts the production round runtime with a six-player minimum and 600-second rounds. A solo Play session waits at the protected lobby. The test mapping labels it **Test** and starts server/client TestEZ runners automatically. After server suites finish, the ordinary test session opens the map preview for one client or supports explicit starts with at least two. The next round defaults to 60 seconds. Use **Server & Clients** with two clients for both roles or three to exercise teammate spectating and launcher transfer. Test controls exist only in the test mapping. [Complete-match Studio procedure](testing.md#run-the-p09-match-outcome-harness)
 
 Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites), [expanded-map harness](testing.md#run-the-p13-expanded-map-harness), [aircraft harness](testing.md#run-the-p04-aircraft-harness) and [three-round harness](testing.md#run-the-p03-multiplayer-harness) to collect actual reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
 
