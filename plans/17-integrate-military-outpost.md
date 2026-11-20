@@ -1155,3 +1155,29 @@ the rebuilt candidate. The fresh server loaded the corrected commit and ran
 The second client process entered a Roblox sign-in flow. The two-client
 precondition prevented harness startup and the authored map remained
 pristine. The corrected gameplay run still needs a fresh two-client startup.
+
+### Native burst proof and traversal replication failure — 2026-11-19
+
+Fresh native startup on `5fc5f0b` passes 173/173 server and 10/10 on each of
+two actual clients. [Attempt 2](../docs/evidence/p17/native-p17-5fc5f0b-attempt2-summary.json)
+passes its first five cases and stops before any GAU23 shot. A nested Luau
+`assert` forwarded both its vector and its message to the CFrame transform.
+The [raw report](../docs/evidence/p17/native-p17-5fc5f0b-attempt2-raw.json)
+preserves all eight report chunks and clean owned teardown.
+
+Test-only correction `0a6528e` supplies a single typed vector. The fresh
+runtime uses exact new fixture module identities in the same local server
+and actual clients. Their unchanged ordinary startup reports are retained.
+Native preflight verifies 162 pristine primitive panels, 26 pristine
+imported models, released character leases and no competing owners.
+[Attempt 3](../docs/evidence/p17/native-p17-0a6528e-attempt3-summary.json)
+passes 7/8 with zero skipped. The [full 11-chunk report](../docs/evidence/p17/native-p17-0a6528e-attempt3-raw.json)
+records all 63 actual GAU23 hits on `Outpost_S02_Roof_01_02`, 11.017 earned
+seconds, Heavy at 9.001 seconds and persistent credit across both pauses.
+All six starting-shelter hits pass.
+
+The Foundry wall reaches Heavy and the client reports completing its
+Humanoid crossing. The server root stays at the exterior start during
+the entire two-second replication observation, 12 studs from the goal.
+The case fails and teardown passes. Later replication and reset cases
+remain open.
