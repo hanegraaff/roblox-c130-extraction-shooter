@@ -4,7 +4,7 @@
     {
       "id": "battlefield-greybox",
       "kind": "world",
-      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts; original starting-shelter union faithfully retiled into 42 roof and 34 wall panels with explicit level registry descriptor",
+      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts; original starting-shelter union faithfully retiled into 42 roof and 34 wall panels with explicit level registry descriptor; local Ground camera descriptors for the Outpost's two enclosed stories",
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/world/Battlefield.model.json",

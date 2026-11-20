@@ -14690,6 +14690,44 @@
       ]
     },
     {
+      "Name": "GroundCameraInteriors",
+      "ClassName": "Folder",
+      "Children": [
+        {
+          "Name": "OutpostWorkshop",
+          "ClassName": "Configuration",
+          "Properties": {
+            "Attributes": {
+              "Frame": {
+                "CFrame": {
+                  "position": [144, 4.625, 164],
+                  "orientation": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+                }
+              },
+              "Size": {"Vector3": [31, 9, 47]},
+              "MaxDistanceStuds": {"Float64": 5}
+            }
+          }
+        },
+        {
+          "Name": "OutpostCommandRoom",
+          "ClassName": "Configuration",
+          "Properties": {
+            "Attributes": {
+              "Frame": {
+                "CFrame": {
+                  "position": [144, 14.625, 164],
+                  "orientation": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+                }
+              },
+              "Size": {"Vector3": [31, 11, 47]},
+              "MaxDistanceStuds": {"Float64": 5}
+            }
+          }
+        }
+      ]
+    },
+    {
       "Name": "AimEnvelope",
       "ClassName": "Folder",
       "Children": [
