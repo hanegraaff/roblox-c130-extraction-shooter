@@ -92,4 +92,5 @@ uses. Shared AssetMesh checks public intrinsics/fidelities against five native
 attributes; host audits bind those to the captured bytes. Source art, target
 poses and texture IDs are unchanged by this constructor correction. Native
 rendered bounds, navigation, openings, fragment physics, thermal readability,
-multiplayer reset, performance and human A6 approval remain separate P17 gates.
+and multiplayer reset have their own evidence in the [P17 plan](../plans/17-integrate-military-outpost.md).
+The integrated candidate awaits human approval under A6.

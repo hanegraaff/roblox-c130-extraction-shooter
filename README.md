@@ -24,7 +24,7 @@ Use the eight grass/rock hills and all three two-story buildings for cover. Batt
 
 The HUD shows role, life, time, survivors, ammunition and aircraft health. Desktop confirmed hits show **AIRCRAFT HIT −5** for the rifle or **ROCKET HIT** for the launcher; touch appends **HIT** to weapon readiness so feedback stays clear of the centered aim. Friendly fire is off. Ground death, character reset or Surrender / spectate consumes that round's life; eliminated players follow a living teammate. Late arrivals and reconnecting players cannot regain an active life or launcher. Operator reset replaces only the protected station body. An orange boundary marks the playable disk; leaving it or falling below the map returns an active ground player to shelter. Movement/origin checks can temporarily reject pickup or fire after implausible position jumps; they issue no automatic ban.
 
-The detailed Outpost is a development candidate. Its material finish and operated ground and thermal views still need human review. The detailed scene and primitive baseline both exceeded the client frame-time budget in the paired Studio benchmark. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity remain unverified or planned. The MVP has one level. Selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope. [P17 acceptance record](plans/17-integrate-military-outpost.md).
+The detailed Outpost is a development candidate awaiting in-game approval of its material finish and ground and thermal views. Physical-device mobile review, gamepad controls, combat audio, release performance and real 6/10-player capacity remain unverified or planned. The MVP has one level. Selectable levels, complete player guidance and balance/release acceptance are later work. Progression, purchases, ground vehicles and full structural collapse are outside scope. [P17 acceptance record](plans/17-integrate-military-outpost.md).
 
 The editable [P16 Blender package](assets/blender/military-outpost/README.md) was approved for source revision `e8fb840` on 2026-11-13 ([approval record](docs/evidence/p16/human-approval.json)). P17 imports that geometry without changing the approved source. Its actual in-game presentation needs a separate approval; Blender approval alone does not establish gameplay acceptance.
 
@@ -160,9 +160,9 @@ python3 scripts/p16_audit.py
 ```
 
 The [P16 acceptance record](docs/evidence/p16/acceptance.md) identifies the
-reviewed source, tool checks and explicit human approval. A Blender opening or
-render does not establish Roblox navigation, cover, thermal visibility,
-replication or runtime performance; P17 must establish those on the integrated candidate.
+reviewed source, tool checks and explicit human approval. The
+[P17 acceptance record](plans/17-integrate-military-outpost.md) documents Roblox
+navigation, cover, thermal visibility and replication on the integrated candidate.
 
 ## Follow development or contribute
 

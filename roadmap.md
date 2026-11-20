@@ -139,7 +139,14 @@ Later native P17 work passes the ten-case Outpost suite with two actual
 clients, including navigation, damage, replication and live-work resets.
 P08, P07, P05 and P14 native regressions pass on the same production source.
 Both completed performance scenes exceed the client frame-time budget.
-P17 stays In progress for the measured budget and operated/human review.
+At that checkpoint, P17 was still in progress for the measured budget and
+operated and human review.
+
+2026-11-20 P17 checkpoint. Operated desktop and simulated-touch review is
+recorded. The user waived the paired two-client performance gate under D67.
+P17 remains In progress in draft PR #39 pending explicit in-game Outpost
+approval. The two requested skills follow P17 under D66. See the
+[P17 evidence record](plans/17-integrate-military-outpost.md#performance-acceptance-revision-2026-11-20).
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree

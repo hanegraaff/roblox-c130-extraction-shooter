@@ -58,7 +58,7 @@ Rebuild from a clean checkout and sync the committed source into the confirmed S
 
 Use named deterministic/catalog and service tests for new asset-boundary validation, same-rule progression, invalid/stale request rejection without mutation, queued impact/reset ordering and cleanup. Use real Studio rays, overlap/collision and thermal observations to establish actual wall/roof openings, residual solidity, initial window/door apertures and fragment contact. Actual two-client checks must establish replicated appearance/current geometry and repeated pristine reconstruction. Do not rely on duplicated rule code, screenshots or Blender simulations as engine evidence.
 
-Profile the added art relative to the primitive baseline on the same recorded device/settings with actual client counts. Record mesh/material/texture/Instance counts, memory and frame times, including mass panel transitions and debris. Preserve the [testing budgets](../docs/testing.md); P11/P12 retain their broader soak/capacity gates. Keep tests, preview galleries, Blender cameras/lights and development overrides out of the release place.
+Retain the measured art comparison as diagnostic evidence under D67. P11 and P12 own release profiling, soak and capacity checks under the [testing budgets](../docs/testing.md). Keep tests, preview galleries, Blender cameras/lights and development overrides out of the release place.
 
 ## Acceptance criteria
 
@@ -66,7 +66,7 @@ Profile the added art relative to the primitive baseline on the same recorded de
 - **A2 — Playable interior and exterior:** `P17OutpostNavigation` uses real Studio floor/support/clearance checks and an actual avatar walkthrough to reach the furnished ground floor, upper floor and approved external stairs/balcony without blocked circulation or falling through decorative floors. Both launcher approaches and all deployment anchors remain valid. `P17OutpostTargeting` verifies authored height/range, full-orbit reach and reticle rays at both zooms; operated desktop/touch review covers normal and thermal readability.
 - **A3 — Material-aware authoritative demolition:** `P17MaterialPanelStates` covers every new material/shape family on walls and roofs: Pristine, persistent Light, Heavy after exactly three direct M102 hits or nine valid GAU23 seconds, and Total after the next equivalent stage. Include stopped/resumed and alternating-panel fire, mixed fire, ordered in-flight outcomes, duplicate/stale/unauthorized rejection and no paused-time credit. `P17OutpostOpenings` uses actual rays/collision/thermal checks through Heavy/Total openings and against remaining solids, with no phantom full-panel collider. Runtime thresholds and appearance must agree; attached props cannot hide or block an earned opening.
 - **A4 — Replication, reset and fragment safety:** `P17OutpostMultiplayer` runs with at least two actual clients and fresh server/per-client baseline reports. Both clients agree on panel identity, stage, progress, material appearance and real geometry. Across at least two damaged-to-pristine resets with live fragments/pending work, restore the exact approved pristine building once, clear all damage/old effects and reacquire fresh panel references. `P17MaterialFragments` verifies actual falling/static contact, bounds, expiry, stop/reset cleanup and no character/query interference. Keep supported spectator/late-join regressions where their existing suites require them; do not add unsupported same-identity reconnect acceptance (D59).
-- **A5 — Measured regression and presentation:** Required current P07/P05/P14 regression suites pass on the final source, including primitive-building damage and launcher-anchor accessibility. When completed P08 source is present, its launcher/recovery regressions also pass; this preserves existing behavior without making P08 a start prerequisite. Record nonzero discovered/passed counts, actual clients and source/build identity. `P17OutpostPerformance` records baseline/candidate workload metrics and complies with applicable testing budgets; missing engine evidence or placeholder cloud assets cannot pass. P11/P12 still own full soak and real 6/10-player release acceptance.
+- **A5 — Native gameplay regressions:** Required current P07/P05/P14 regression suites pass on the final source, including primitive-building damage and launcher-anchor accessibility. When completed P08 source is present, its launcher/recovery regressions also pass. Record nonzero discovered/passed counts, actual clients and source/build identity. D67 waives the paired `P17OutpostPerformance` workload and its frame-time threshold for P17. P11/P12 own release performance, soak and real 6/10-player acceptance.
 - **A6 — Human approves the in-game result:** The user inspects the actual integrated smaller Outpost from ground and operator views, both furnished floors, stairs/roof details and each material's damage progression, and explicitly likes/approves the identified candidate. Revisit P16 approval if integration materially changes the approved art. Record response, date, source/package hashes and conditions; silence or an agent's judgment is not approval.
 
 ## Documentation and completion record
@@ -1282,6 +1282,16 @@ desktop and the test role returns to Auto.
 Two 12-second single-client cadence samples in Ground preview at 1153×649
 measure 70.44 ms render frame p95 at Default (60 FPS) and 37.46 ms at
 240 FPS. The latter still exceeds the 33.3 ms two-client workload ceiling.
-The original frame-rate preference was restored. The paired performance
-gate and explicit user approval of the integrated in-game candidate remain
-open.
+The original frame-rate preference was restored. At that checkpoint, the
+paired performance gate and explicit user approval of the integrated in-game
+candidate were still open.
+
+### Performance acceptance revision (2026-11-20)
+
+The user waived the two-client performance run and its threshold for P17
+under [D67](../docs/decisions.md). The recorded paired workload and solo
+frame-pacing results retain their measured values. The gameplay portion of
+A5 is satisfied by the current-source P07, P05, P14 and P08 reports above.
+The two-client material replication and pristine reset evidence remains part
+of A4. Explicit user approval of the integrated Outpost remains the final
+P17 acceptance item.

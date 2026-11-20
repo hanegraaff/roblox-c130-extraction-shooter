@@ -160,7 +160,7 @@ world for P17. The surviving P08 clients and their world have already run
 through character lifecycle and Outpost installation, which prevents the
 ordinary startup fixtures from passing again in that DataModel.
 
-### Collect the remaining P17 acceptance evidence
+### Review P17 gameplay evidence and collect approval
 
 The native P08 launcher, P07 destruction, P05 combat and P14 panning
 regressions passed 11/11, 7/7, 8/8 and 6/6 respectively on the integrated
@@ -169,19 +169,21 @@ verifies two full 90-second orbits, both zooms and current thermal occlusion.
 Use the [P17 record](../plans/17-integrate-military-outpost.md) for
 source-specific results and previous attempts.
 
-Review both launcher approaches, deployment anchors, the furnished floors and
-stairs/balcony using the actual controls. Complete operated desktop and touch
-review and inspect each material family's openings and damage in normal and
-thermal views. Record explicit human approval of the identified in-game result.
+The [operated Studio preview](evidence/p17/operated-preview-2026-11-20.json)
+records ground navigation and desktop and simulated-touch operation. For the
+final in-game review, inspect the furnished floors, stairs/balcony, roof and
+each material family's openings and damage in normal and thermal views.
+Record explicit human approval of the identified in-game result under A6.
 
 The paired workloads used the same device and graphics settings at 1920×1080
 with two actual clients, a 30-second warmup and a 300-second sample per scene.
 The server scheduler p95 was 0.8 ms for each scene. Client render-frame p95 was
 70.4–71.3 ms for the primitive scene and 70.4–71.0 ms for the detailed scene.
-Both exceeded the [33.3 ms client budget](#objective-release-budgets), so the
-performance gate remains open. The idle diagnostic also measured roughly
-15 FPS on both clients at their ordinary viewport settings with the gameplay
-runtime stopped. [Paired workload evidence](evidence/p17/native-performance-comparison-711c5a8.json), [idle diagnostic](evidence/p17/native-performance-idle-diagnostic.json).
+Both exceeded the [33.3 ms client budget](#objective-release-budgets). D67
+waives the paired performance run and its threshold for P17. The measurements
+are historical diagnostics. The idle diagnostic also measured roughly 15 FPS
+on both clients at their ordinary viewport settings with the gameplay runtime
+stopped. [Paired workload evidence](evidence/p17/native-performance-comparison-711c5a8.json), [idle diagnostic](evidence/p17/native-performance-idle-diagnostic.json).
 
 ## Verify and review the P16 Blender package
 
