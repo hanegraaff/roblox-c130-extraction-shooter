@@ -148,16 +148,12 @@ That compromise requires explicit A6 review.
    nil, and check that the session, runtime and test transports are gone.
    Keep selector attributes out of committed definitions and published places.
 
-P08 uses a separate three-client baseline. To retain that native session for
-P17, first archive its reports, including the stock carrier departure and
-cleanup. Verify two actual clients remain and the previous runtime and test
-transport are drained. Set the P17 selector and commit on the actual server and
-run fresh TestEZ server/client baselines at that two-client roster. Start
-`ServerTests.P17ManualRunner.run()` once on the server and each remaining
-client's `ClientTests.P17MaterialHarness.run()` once, within the harness
-readiness window. The startup client entrypoint exits after its selected
-listener, so switching the selector does not dispatch a new listener. Use a
-fresh P17 session if the retained roster or cleanup checks fail.
+Run P08 and P17 in separate native sessions. P08 starts with three clients.
+Archive its reports, including the stock carrier departure and cleanup, then
+use **End Session**. The original local Edit document supplies the fresh
+world for P17. The surviving P08 clients and their world have already run
+through character lifecycle and Outpost installation, which prevents the
+ordinary startup fixtures from passing again in that DataModel.
 
 ### Collect the remaining P17 acceptance evidence
 

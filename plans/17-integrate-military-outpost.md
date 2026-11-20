@@ -1015,3 +1015,21 @@ query found the fragment. Expiry, the 48-piece cap, clear, stop and fixture
 cleanup passed. The first invocation had no avatar after P08 teardown and
 rejected before allocation. A4 still requires the live multiplayer replication
 and both reset iterations.
+
+### Launcher regression passes on the corrected fixture — 2026-11-19
+
+Fresh native Server & Clients on `711c5a8` passes **173/173 server and 10/10
+on each of three actual clients**, with zero failures, errors and skips.
+The [full P08 launcher report](../docs/evidence/p17/native-p08-711c5a8-pass.json)
+passes **11/11**, with 152 retained traces, zero dropped traces, and two
+clients remaining after the stock carrier disconnect. The transport, round,
+aircraft and launcher owners are gone at teardown. This closes the P08
+regression portion of A5 on the current production source.
+
+The [retained-session diagnostic](../docs/evidence/p17/p17-retained-session-711c5a8-failure.json)
+then recorded 168/173 server and 7/10 on each remaining client. The ordinary
+tests need fresh startup state, including the automatic characters and
+pre-installation Outpost. Those fixtures fail when rerun in the P08 DataModel
+after carrier departure, runtime teardown and Outpost installation. P17 was
+never started in that DataModel. The original local Edit document now selects
+P17 for a fresh two-client session.

@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "engine": "0.748.0.7481526",
+  "candidate": "711c5a86729e2fb2805dad473345936ba22d015e",
+  "scope": "diagnostic rerun of ordinary smoke in the previous P08 DataModel after stock departure and teardown",
+  "p08RegressionPassedBeforeAttempt": true,
+  "actualSurvivors": [
+    -3,
+    -1
+  ],
+  "server": {
+    "roster": 2,
+    "gameId": 0,
+    "boot": "{\"errors\":5,\"skipped\":0,\"passed\":168,\"clientCount\":2,\"environment\":\"Studio\",\"discovered\":173,\"suite\":\"P01-server\",\"failed\":5,\"seed\":1}",
+    "placeId": 0,
+    "reportBytes": 116741,
+    "owner": false
+  },
+  "serverConsole": "[TRUNCATED DUE TO LENGTH LIMIT]\n5 test nodes reported failures.\nErrors reported by tests:\n\nTestService: ServerStorage.Tests.Studio.CharacterOwner.spec:18: CharacterOwner timeout: initial automatic character\nServerStorage.Tests.Studio.CharacterOwner.spec:18 function waitFor\nServerStorage.Tests.Studio.CharacterOwner.spec:25\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:8\n\n\nTestService: ServerStorage.Tests.Studio.ExpandedMap.spec:45: ServerStorage.Tests.Studio.ExpandedMap.spec:92: panel must be part\nServerStorage.Tests.Studio.ExpandedMap.spec:45 function fixture\nServerStorage.Tests.Studio.ExpandedMap.spec:78\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:8\n\n\nTestService: ServerStorage.Tests.Studio.Outpost.spec:362: ServerStorage.Tests.Studio.Outpost.spec:353: idempotent installation failed\nServerStorage.Tests.Studio.Outpost.spec:362\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:8\n\n\nTestService: ServerStorage.Tests.Studio.PanelDestruction.spec:218: ServerStorage.Tests.Studio.PanelDestruction.spec:111: missing authored panel coverage\nServerStorage.Tests.Studio.PanelDestruction.spec:218\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:8\n\n\nTestService: ServerStorage.Tests.Studio.PanelDestruction.spec:519: actual physics avatar missing\nServerStorage.Tests.Studio.PanelDestruction.spec:519\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:8\n\n",
+  "reports": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "5bbda152-cb3e-49b2-9f3b-ec3c4c6eaa4a",
+        "d": "Server",
+        "error": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Network action ExecuteLuau.runCode sent to DMN_ID_PLAYSERVER failed - Target is not reachable (ExecuteLuau.runCode, DMN_ID_PLAYSERVER). No OnInvoke handler responded for this action. Sender: DMN_ID_STANDALONE."
+            }
+          ],
+          "isError": true
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "0f7ff99c-69d3-4afd-96c5-79c6f6e9ca5e",
+        "d": "Client",
+        "result": {
+          "report": {
+            "errors": 3,
+            "skipped": 0,
+            "userId": -3,
+            "environment": "Studio",
+            "seed": 1,
+            "discovered": 10,
+            "suite": "P01-client",
+            "failed": 3,
+            "passed": 7
+          },
+          "startTime": 1795136313.198769,
+          "finishTime": 1795136315.748712,
+          "errors": {
+            "1": "ReplicatedStorage.ClientSpecs.Foundation.spec:42: server fixtures failed: {\"errors\":5,\"skipped\":0,\"passed\":168,\"clientCount\":2,\"environment\":\"Studio\",\"discovered\":173,\"suite\":\"P01-server\",\"failed\":5,\"seed\":1}\nReplicatedStorage.ClientSpecs.Foundation.spec:42\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:5\n",
+            "2": "ReplicatedStorage.ClientSpecs.GroundAimGui.spec:681: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:398: layout fixture requires a ready actual character\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:681\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:5\n",
+            "3": "ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:35: server fixtures failed: {\"errors\":5,\"skipped\":0,\"passed\":168,\"clientCount\":2,\"environment\":\"Studio\",\"discovered\":173,\"suite\":\"P01-server\",\"failed\":5,\"seed\":1}\nReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:35 function importedMesh\nReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:67\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:5\n"
+          }
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "35c35272-0c1d-4110-9eea-fbdc9e765e0e",
+        "d": "Client",
+        "result": {
+          "report": {
+            "errors": 3,
+            "skipped": 0,
+            "userId": -1,
+            "environment": "Studio",
+            "seed": 1,
+            "discovered": 10,
+            "suite": "P01-client",
+            "failed": 3,
+            "passed": 7
+          },
+          "startTime": 1795136272.125206,
+          "finishTime": 1795136309.687963,
+          "errors": {
+            "1": "ReplicatedStorage.ClientSpecs.Foundation.spec:34: client startup timeout: {\"phase\":\"absent\",\"roundState\":false,\"hasRoot\":false,\"role\":\"nil\",\"hasCharacter\":false,\"loadLease\":\"nil\",\"elapsedSeconds\":35.00489970832132,\"life\":\"nil\",\"stage\":\"deferred round runtime\",\"serverBaselineComplete\":true}\nReplicatedStorage.ClientSpecs.Foundation.spec:34 function awaitReady\nReplicatedStorage.ClientSpecs.Foundation.spec:55\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:5\n",
+            "2": "ReplicatedStorage.ClientSpecs.GroundAimGui.spec:681: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:398: layout fixture requires a ready actual character\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:681\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:5\n",
+            "3": "ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:35: server fixtures failed: {\"errors\":5,\"skipped\":0,\"passed\":168,\"clientCount\":2,\"environment\":\"Studio\",\"discovered\":173,\"suite\":\"P01-server\",\"failed\":5,\"seed\":1}\nReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:35 function importedMesh\nReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:67\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nAssistantCommand:5\n"
+          }
+        }
+      }
+    }
+  ],
+  "p17HarnessInvoked": false,
+  "freshEditSelection": {
+    "runtime": false,
+    "gameId": 0,
+    "prior": "P08",
+    "placeId": 0,
+    "harnessCommit": "711c5a86729e2fb2805dad473345936ba22d015e",
+    "selector": "P17"
+  }
+}
