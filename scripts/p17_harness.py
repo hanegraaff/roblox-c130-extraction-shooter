@@ -14,12 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 PRODUCT_COMMIT = "ee19deb5fe18090573ce0d9788b0c77555bca333"
 PRODUCT_TREE = "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a"
 OUTPUT = "tests/studio/server/P17Metadata.luau"
-FIXTURE_VERSION = "v8-bounded-native-burst"
+FIXTURE_VERSION = "v9-verified-avatar-handoff"
 SERVER_PROBE = "tests/studio/server/P17MaterialHarness.luau"
 CLIENT_PROBE = "tests/studio/client/P17MaterialHarness.luau"
 FROZEN_BODIES = {
-    SERVER_PROBE: "c615355db5df1ef8f7ef102912f76168df18759ae6d2e3bcda17ff4e39b536d8",
-    CLIENT_PROBE: "bc875d230df21811d23555c0d2c5e71db8f34707a0f7487410f8dd16b6d165ac",
+    SERVER_PROBE: "150dc81a15bdd0e2eb52803bcc089e100e932eb78125142f024f31035285f4f9",
+    CLIENT_PROBE: "980b6023fc486e90cd11c08100cec9d50551df829f845fef9321e0edbb78abf2",
 }
 
 

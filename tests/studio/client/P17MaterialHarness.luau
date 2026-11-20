@@ -6,7 +6,7 @@
     rays, native MeshSize/fidelities and compiled material metadata. PreloadAsync
     proves callback availability only; SurfaceAppearance streaming/rendering is
     explicitly separate. The listener disconnects when its transport is removed.
-    Frozen gameplay body: v7 fe55618bf35301b823cd73a7934a69f905f1a9012681b85f22d30dd5876ac7b9.
+    Opening traversal observes the placed Ground avatar before issuing MoveTo.
     No client response authorizes gameplay damage or ownership.
 ]=]
 local Players = game:GetService("Players")
@@ -565,17 +565,63 @@ function Harness.run()
                         end
                         assert(matched, "P07 client timeout: " .. mismatch .. " state/credit/pivot/opening")
                     elseif kind == "Walk" then
-                        assert(typeof(payload) == "Vector3", "walking goal missing")
-                        local character = Players.LocalPlayer.Character
+                        assert(type(payload) == "table", "walking fixture missing")
+                        local walk = payload :: { start: Vector3, goal: Vector3? }
+                        local start, goal = walk.start, walk.goal
+                        assert(typeof(start) == "Vector3", "walking start missing")
+                        assert(goal == nil or typeof(goal) == "Vector3", "invalid walking goal")
+                        local player = Players.LocalPlayer
+                        local character = player.Character
                         local humanoid = if character
                             then character:FindFirstChildOfClass("Humanoid")
                             else nil
                         local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
-                        assert(humanoid and root and root:IsA("BasePart"), "actual ground avatar unavailable")
-                        humanoid:MoveTo(payload)
-                        waitFor(function()
-                            return (root.Position - payload).Magnitude < 2
-                        end, "actual Humanoid through opening")
+                        assert(
+                            character and humanoid and root and root:IsA("BasePart"),
+                            "actual ground avatar unavailable"
+                        )
+                        local function live(): boolean
+                            return player.Character == character
+                                and root:IsDescendantOf(character)
+                                and character:IsDescendantOf(workspace)
+                                and player:GetAttribute("Role") == "Ground"
+                                and humanoid.Health > 0
+                        end
+                        local function coordinates(point: Vector3): { number }
+                            return { point.X, point.Y, point.Z }
+                        end
+                        local startedAt = os.clock()
+                        local record: { [string]: unknown } = {
+                            userId = player.UserId,
+                            phase = if goal then "walk" else "placement",
+                            initialPositionStuds = coordinates(root.Position),
+                        }
+                        local walked, walkFailure = pcall(function()
+                            waitFor(function()
+                                return live() and (root.Position - start).Magnitude < 2
+                            end, "actual Ground start placement")
+                            local observedStart = root.Position
+                            record.startPositionStuds = coordinates(observedStart)
+                            record.startDistanceStuds = (observedStart - start).Magnitude
+                            if goal then
+                                humanoid:MoveTo(goal)
+                                waitFor(function()
+                                    return live() and (root.Position - goal).Magnitude < 2
+                                end, "actual Humanoid through opening")
+                                local displacement = (root.Position - observedStart).Magnitude
+                                record.displacementStuds = displacement
+                                assert(displacement > (goal - start).Magnitude - 4, "avatar did not cross")
+                            end
+                        end)
+                        record.finalPositionStuds = coordinates(root.Position)
+                        record.finalDistanceStuds = (root.Position - (goal or start)).Magnitude
+                        record.elapsedSeconds = os.clock() - startedAt
+                        record.passed = walked
+                        record.failure = if walked then nil else tostring(walkFailure)
+                        detail = HttpService:JSONEncode(record)
+                        if not walked then
+                            error(detail, 0)
+                        end
                     elseif kind == "NoFragments" then
                         waitFor(function()
                             local folder = workspace:FindFirstChild("PanelFragments")

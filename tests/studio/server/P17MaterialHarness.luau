@@ -510,7 +510,7 @@ function Harness.run(finish: (Report) -> ())
         end
     )
     transport.Parent = ReplicatedStorage
-    local function probe(player: Player, kind: string, payload: unknown)
+    local function probe(player: Player, kind: string, payload: unknown, captureReply: ((string) -> ())?)
         waitFor(function()
             return ready[player] == true
         end, "client P07 listener", 25)
@@ -540,7 +540,11 @@ function Harness.run(finish: (Report) -> ())
             })
             panelMismatchRecords[current] = nil
         end
-        assert(reply.player == player and reply.ok, reply.message)
+        assert(reply.player == player, "fixture reply sender mismatch")
+        if captureReply then
+            captureReply(reply.message)
+        end
+        assert(reply.ok, reply.message)
         return current
     end
     local function command(
@@ -1739,16 +1743,28 @@ function Harness.run(finish: (Report) -> ())
             assert(groundPlayer and groundPlayer.Character, "actual Ground character missing")
             local character = groundPlayer.Character
             local root = character:FindFirstChild("HumanoidRootPart")
-            assert(root and root:IsA("BasePart"), "Ground root missing")
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            assert(root and root:IsA("BasePart") and humanoid, "Ground avatar assembly missing")
+            local canSetOwnership, ownershipReason = root:CanSetNetworkOwnership()
+            assert(canSetOwnership, ownershipReason)
             local original = character:GetPivot()
             local originalServerPosition = root.Position
+            local originalOwner = root:GetNetworkOwner()
+            local originalAutomatic = root:GetNetworkOwnershipAuto()
+            local originalLinear = root.AssemblyLinearVelocity
+            local originalAngular = root.AssemblyAngularVelocity
             local groundY = wallPoint.Y - 1
             local start = Vector3.new(wallPoint.X, groundY, wallPoint.Z) + normal * 6
             local goal = Vector3.new(wallPoint.X, groundY, wallPoint.Z) - normal * 6
-            character:PivotTo(CFrame.new(start))
-            root.AssemblyLinearVelocity = Vector3.zero
             local function coordinates(point: Vector3): { number }
                 return { point.X, point.Y, point.Z }
+            end
+            local function owner()
+                local current = root:GetNetworkOwner()
+                return {
+                    automatic = root:GetNetworkOwnershipAuto(),
+                    userId = if current then current.UserId else nil,
+                }
             end
             local walkObservation: { [string]: unknown } = {
                 kind = "actual-humanoid-opening",
@@ -1756,8 +1772,8 @@ function Harness.run(finish: (Report) -> ())
                 userId = groundPlayer.UserId,
                 serverObservationBudgetSeconds = 2,
                 originalPositionStuds = coordinates(originalServerPosition),
+                originalOwnership = owner(),
                 requestedStartPositionStuds = coordinates(start),
-                startServerPositionStuds = coordinates(root.Position),
                 goalPositionStuds = coordinates(goal),
             }
             -- Preserve actual positions even if either the client movement or
@@ -1765,8 +1781,43 @@ function Harness.run(finish: (Report) -> ())
             table.insert(observations, walkObservation)
             local startedAt = os.clock()
             local observationStartedAt: number? = nil
+            local function capture(field: string, message: string)
+                local decoded, record = pcall(function()
+                    return HttpService:JSONDecode(message)
+                end)
+                walkObservation[field] = if decoded then record else message
+            end
             local walked, walkFailure = pcall(function()
-                probe(groundPlayer, "Walk", goal)
+                -- Place the actual avatar under server ownership, then let its
+                -- client confirm replication before handing off its assembly.
+                root:SetNetworkOwner(nil)
+                walkObservation.placementOwnership = owner()
+                assert(
+                    root:GetNetworkOwner() == nil and not root:GetNetworkOwnershipAuto(),
+                    "server placement not owned"
+                )
+                character:PivotTo(CFrame.new(start))
+                root.AssemblyLinearVelocity = Vector3.zero
+                root.AssemblyAngularVelocity = Vector3.zero
+                walkObservation.startServerPositionStuds = coordinates(root.Position)
+                assert((root.Position - start).Magnitude < 2, "server Ground start placement differs")
+                probe(groundPlayer, "Walk", { start = start }, function(message)
+                    capture("clientPlacement", message)
+                end)
+                walkObservation.acknowledgedServerPositionStuds = coordinates(root.Position)
+                assert(
+                    (root.Position - start).Magnitude < 2,
+                    "server Ground avatar left start before handoff"
+                )
+                root:SetNetworkOwner(groundPlayer)
+                walkObservation.crossingOwnership = owner()
+                assert(
+                    root:GetNetworkOwner() == groundPlayer and not root:GetNetworkOwnershipAuto(),
+                    "Ground client did not acquire crossing ownership"
+                )
+                probe(groundPlayer, "Walk", { start = start, goal = goal }, function(message)
+                    capture("clientCrossing", message)
+                end)
                 walkObservation.clientReplyAfterSeconds = os.clock() - startedAt
                 walkObservation.clientReplyServerPositionStuds = coordinates(root.Position)
                 observationStartedAt = os.clock()
@@ -1774,25 +1825,60 @@ function Harness.run(finish: (Report) -> ())
                 -- server physics update. Require the real server state within a
                 -- separate two-second fixture budget; timeout remains a failure.
                 waitFor(function()
-                    return root:IsDescendantOf(workspace) and (root.Position - goal).Magnitude < 2
+                    return groundPlayer.Character == character
+                        and root:IsDescendantOf(workspace)
+                        and root:GetNetworkOwner() == groundPlayer
+                        and not root:GetNetworkOwnershipAuto()
+                        and (root.Position - goal).Magnitude < 2
                 end, "actual server Ground traversal replication", 2)
                 return true
             end)
             walkObservation.finalServerPositionStuds = coordinates(root.Position)
             walkObservation.finalServerDistanceStuds = (root.Position - goal).Magnitude
             walkObservation.serverRootPresent = root:IsDescendantOf(workspace)
+            local finalOwnerObserved, finalOwner = pcall(owner)
+            walkObservation.finalServerOwnership = if finalOwnerObserved then finalOwner else nil
             walkObservation.elapsedSeconds = os.clock() - startedAt
             walkObservation.serverObservationElapsedSeconds = if observationStartedAt
                 then os.clock() - observationStartedAt
                 else nil
             walkObservation.passed = walked
             walkObservation.failure = if walked then nil else tostring(walkFailure)
-            -- Restore only after collecting the final actual observation, for
-            -- both success and failure. Cleanup cannot make traversal pass.
-            if character.Parent and root.Parent then
+            -- Reclaim the assembly before restoring placement and motion. Run
+            -- cleanup after every outcome, including either bounded timeout.
+            local restored, restoreFailure = pcall(function()
+                assert(
+                    character:IsDescendantOf(workspace) and root:IsDescendantOf(character),
+                    "crossing avatar lost before restoration"
+                )
+                root:SetNetworkOwner(nil)
+                humanoid:Move(Vector3.zero)
                 character:PivotTo(original)
-                root.AssemblyLinearVelocity = Vector3.zero
-            end
+                root.AssemblyLinearVelocity = originalLinear
+                root.AssemblyAngularVelocity = originalAngular
+                walkObservation.restoredServerPositionStuds = coordinates(root.Position)
+                if originalAutomatic then
+                    root:SetNetworkOwnershipAuto()
+                else
+                    root:SetNetworkOwner(originalOwner)
+                end
+                walkObservation.restoredOwnership = owner()
+                assert(
+                    (root.Position - originalServerPosition).Magnitude < 0.01,
+                    "Ground position not restored"
+                )
+                assert(
+                    root:GetNetworkOwnershipAuto() == originalAutomatic,
+                    "Ground ownership mode not restored"
+                )
+                assert(
+                    originalAutomatic or root:GetNetworkOwner() == originalOwner,
+                    "Ground manual owner not restored"
+                )
+            end)
+            walkObservation.restored = restored
+            walkObservation.restoreFailure = if restored then nil else tostring(restoreFailure)
+            assert(restored, tostring(restoreFailure))
             assert(walked, tostring(walkFailure))
         end)
         check(
@@ -1800,22 +1886,26 @@ function Harness.run(finish: (Report) -> ())
             function()
                 -- One real heavy impact leaves a separate accumulating panel.
                 selectWeapon(operator, "M102")
-                awaitReady("M102")
                 fireSequence += 1
                 local id = testedIds[3]
-                probe(
-                    operator,
-                    "Fire",
-                    (
-                        assert(
-                            command("M102", roofTarget(panel(id)), fireSequence),
-                            "accumulating panel target"
-                        )
-                    )
-                )
+                local _, payload = remainingRoofAim(id, fireSequence)
+                local factStart = #impactFacts
+                probe(operator, "Fire", payload)
                 waitFor(function()
                     return panel(id):GetAttribute("PanelProgress") == 1 / 3
                 end, "accumulating panel")
+                assert(#impactFacts == factStart + 1, "accumulating panel needs exactly one physical impact")
+                local actualImpact = impactFacts[factStart + 1]
+                assert(
+                    actualImpact.weapon == "M102" and actualImpact.panelId == id,
+                    "accumulating shot did not directly hit the selected panel"
+                )
+                table.insert(observations, {
+                    kind = "actual-heavy-accumulating-panel",
+                    panelId = id,
+                    shotId = actualImpact.shotId,
+                    positionStuds = actualImpact.impactPosition,
+                })
                 task.wait(8.2)
                 assert(runtime.destruction.resources().fragments == 0, "prior debris still live")
                 local entries = allPanelStates(false)
