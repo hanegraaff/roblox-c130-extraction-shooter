@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "dd7bb18a59988666874b604005e111cd5a622704",
+  "tree": "69dc04825f499e8f75e192908aeb645ead6eaf6f",
+  "studioId": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+  "productionUnchanged": true,
+  "artifactSha256": {
+    "release": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea",
+    "test": "101fd9753fa33a3281ed820fc00e1cb93211da7edc035a4aeea66320a0b06bd5"
+  },
+  "sync": {
+    "sourcesReplaced": 3,
+    "selector": "P17",
+    "verified": true,
+    "harnessCommit": "dd7bb18a59988666874b604005e111cd5a622704",
+    "worldOrAssetObjectsTouched": false
+  },
+  "identity": {
+    "meshes": 2332,
+    "source": "dd7bb18a59988666874b604005e111cd5a622704",
+    "targetGeometry": "REQUIRES companion target-geometry chunks; see generated manifest",
+    "scope": "Edit actual property/source identity, not ordinary runtime access",
+    "placeId": 0,
+    "passed": true,
+    "universeId": 0,
+    "nativeMeshParts": 2332,
+    "templates": {
+      "MaterialPanels": {
+        "meshes": 76,
+        "descendants": 188
+      },
+      "MilitaryOutpost": {
+        "meshes": 2256,
+        "descendants": 4592
+      }
+    },
+    "version": "0.748.0.7481526",
+    "scripts": 137,
+    "nativeMetadataFields": 11660,
+    "publicNativeProperties": 6996,
+    "mutated": false,
+    "actualProtectedSlots": 9328
+  },
+  "nativeAcceptanceExecuted": false
+}

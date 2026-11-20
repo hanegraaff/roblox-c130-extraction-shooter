@@ -1033,3 +1033,45 @@ pre-installation Outpost. Those fixtures fail when rerun in the P08 DataModel
 after carrier departure, runtime teardown and Outpost installation. P17 was
 never started in that DataModel. The original local Edit document now selects
 P17 for a fresh two-client session.
+
+### Fresh two-client Outpost run and obstruction diagnosis — 2026-11-19
+
+Fresh native Server & Clients on `711c5a8` passes **173/173 server and 10/10
+per client**, with two distinct actual clients and zero failures, errors or
+skips. The [full P17 report](../docs/evidence/p17/native-p17-711c5a8-attempt1-raw.json)
+contains 500,030 bytes recovered from all nine chunks. It records **5 passed,
+1 failed, 0 skipped**. Actual clients passed authority/rejection, asset
+availability, internal and exterior Humanoid routes, six-family replicated
+states and physical geometry, and all six direct native M102 impacts. The
+third hit opened the roof and the sixth removed the selected panel.
+
+The [impact and cleanup summary](../docs/evidence/p17/native-p17-711c5a8-attempt1-summary.json)
+identifies the next failure. The fixture completed all 21 first-burst GAU23
+launches, but its fixed point on `Outpost_S02_Roof_01_02` put the approved
+stable roof parapet `Outpost_Imported1005` first in every production sweep.
+All 21 genuine impact outcomes therefore had no registered panel ID. The
+first-resumed-credit assertion fired before the fixture checked the actual
+hit IDs. The trace establishes the obstruction and leaves native earned
+30mm credit and every later case open. Runtime and transport cleanup passed.
+
+The same two actual clients then completed the stock
+[P07 destruction regression](../docs/evidence/p17/native-p07-711c5a8-pass.json)
+at **7/7** and the [P05 combat regression](../docs/evidence/p17/native-p05-711c5a8-pass.json)
+at **8/8**, both with zero failures and skips. Each regression began from
+188 pristine registered panel inputs and reused the original fresh two-client
+startup reports. P07 reached Heavy through valid sustained 30mm hits on
+primitive cover and completed two damaged-to-pristine resets. Those scopes
+are separate from the imported Outpost's failed 30mm fixture.
+
+Test-only correction `dd7bb18a59988666874b604005e111cd5a622704` selects an approved point that remains solid
+through Light and Heavy. It checks genuine first hit and allowed view across
+the canonical orbit for each complete 21-shot window, then rechecks the current
+launch position. The fixture requires 63 actual same-panel outcomes and the
+original cadence, persistent credit, pause and nine-second assertions.
+Its independently reviewed client and all production bytes are unchanged.
+The [full host check](../docs/evidence/p17/burst-host-dd7bb18.txt) passed from
+a clean macOS checkout with 59 unit, 65 integration, 48 asset and 14 tooling
+cases, plus artifact isolation. The release SHA-256 still matches `ee19deb5`.
+The [local Edit proof](../docs/evidence/p17/burst-fix-edit-sync-dd7bb18.json)
+verifies the three changed modules, all 137 loaded Sources and the existing
+2,332 native meshes and 9,328 material slots. A fresh native run is pending.
