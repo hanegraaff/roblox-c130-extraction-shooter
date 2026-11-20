@@ -1,0 +1,48 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "tree": "7c75a118c6f887c3bf4f995448635dbfca895d5c",
+  "clients": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"life\":\"Alive\",\"errors\":\"[]\",\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"role\":\"Ground\",\"userId\":-2,\"telemetry\":\"{\\\"currentViewport\\\":[1153,649],\\\"sampledOrigin\\\":[0,-58],\\\"worldProjection\\\":[604.3060302734375,305.962646484375,100.00001525878906],\\\"currentInset\\\":[0,58],\\\"drawn\\\":[577,325],\\\"mode\\\":\\\"touch\\\",\\\"inset\\\":[0,58],\\\"world\\\":[-14,-14.284940719604493,22.446205139160158],\\\"rayDirection\\\":[0.0010789011139422656,-0.25986090302467348,-0.9656455516815186],\\\"cameraCFrame\\\":[-20,7.73326301574707,120.0740737915039,1,0,0,0,0.965925931930542,0.2588190734386444,0,-0.2588190734386444,0.965925931930542],\\\"currentOrigin\\\":[0,-58],\\\"pixels\\\":[577,325],\\\"fov\\\":70,\\\"viewport\\\":[1153,649],\\\"mouse\\\":[-1,-1],\\\"expected\\\":[576.5,324.5],\\\"rayOrigin\\\":[-19.99989128112793,7.707276821136475,119.97750854492188]}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"life\":\"Alive\",\"errors\":\"[]\",\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"role\":\"Gunship\",\"userId\":-1,\"telemetry\":\"{\\\"currentViewport\\\":[1081,618],\\\"sampledOrigin\\\":[0,-58],\\\"worldProjection\\\":[609.6921997070313,262.8719787597656,100.00001525878906],\\\"currentInset\\\":[0,58],\\\"drawn\\\":[541,309],\\\"mode\\\":\\\"touch\\\",\\\"inset\\\":[0,58],\\\"world\\\":[286.4300842285156,72.11774444580078,7.323949813842773],\\\"rayDirection\\\":[-0.7063220143318176,-0.7071067690849304,-0.033306241035461429],\\\"cameraCFrame\\\":[359.6107482910156,140,16.736268997192384,0.046489641070365909,-0.7063422799110413,0.7063422203063965,2.634178208893445e-9,0.7071067690849304,0.7071068286895752,-0.9989187717437744,-0.03287314251065254,0.032873138785362247],\\\"currentOrigin\\\":[0,-58],\\\"pixels\\\":[541,309],\\\"fov\\\":30,\\\"viewport\\\":[1081,618],\\\"mouse\\\":[-1,-1],\\\"expected\\\":[540.5,309],\\\"rayOrigin\\\":[359.5401306152344,139.92929077148438,16.732938766479493]}\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "The requested `studio_id` is not connected — that Roblox Studio instance may have been closed or its place unloaded. Call `list_roblox_studios` for the current instances, then continue on the one the user confirms (or the one whose `name` matches)."
+      }
+    ],
+    "isError": true
+  },
+  "summary": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"summary\":{\"ok\":true,\"observations\":1,\"clientDiagnostics\":{\"-1\":\"{\\\"aimTelemetry\\\":\\\"{\\\\\\\"currentViewport\\\\\\\":[1081,618],\\\\\\\"sampledOrigin\\\\\\\":[0,-58],\\\\\\\"worldProjection\\\\\\\":[609.6921997070313,262.8719787597656,100.00001525878906],\\\\\\\"currentInset\\\\\\\":[0,58],\\\\\\\"drawn\\\\\\\":[541,309],\\\\\\\"mode\\\\\\\":\\\\\\\"touch\\\\\\\",\\\\\\\"inset\\\\\\\":[0,58],\\\\\\\"world\\\\\\\":[286.4300842285156,72.11774444580078,7.323949813842773],\\\\\\\"rayDirection\\\\\\\":[-0.7063220143318176,-0.7071067690849304,-0.033306241035461429],\\\\\\\"cameraCFrame\\\\\\\":[359.6107482910156,140,16.736268997192384,0.046489641070365909,-0.7063422799110413,0.7063422203063965,2.634178208893445e-9,0.7071067690849304,0.7071068286895752,-0.9989187717437744,-0.03287314251065254,0.032873138785362247],\\\\\\\"currentOrigin\\\\\\\":[0,-58],\\\\\\\"pixels\\\\\\\":[541,309],\\\\\\\"fov\\\\\\\":30,\\\\\\\"viewport\\\\\\\":[1081,618],\\\\\\\"mouse\\\\\\\":[-1,-1],\\\\\\\"expected\\\\\\\":[540.5,309],\\\\\\\"rayOrigin\\\\\\\":[359.5401306152344,139.92929077148438,16.732938766479493]}\\\",\\\"readyAtServerSeconds\\\":1794682184.56118,\\\"errors\\\":\\\"[]\\\"}\",\"-2\":\"{\\\"aimTelemetry\\\":\\\"{\\\\\\\"currentViewport\\\\\\\":[1153,649],\\\\\\\"sampledOrigin\\\\\\\":[0,-58],\\\\\\\"worldProjection\\\\\\\":[604.3060302734375,305.962646484375,100.00001525878906],\\\\\\\"currentInset\\\\\\\":[0,58],\\\\\\\"drawn\\\\\\\":[577,325],\\\\\\\"mode\\\\\\\":\\\\\\\"touch\\\\\\\",\\\\\\\"inset\\\\\\\":[0,58],\\\\\\\"world\\\\\\\":[-14,-14.284940719604493,22.446205139160158],\\\\\\\"rayDirection\\\\\\\":[0.0010789011139422656,-0.25986090302467348,-0.9656455516815186],\\\\\\\"cameraCFrame\\\\\\\":[-20,7.73326301574707,120.0740737915039,1,0,0,0,0.965925931930542,0.2588190734386444,0,-0.2588190734386444,0.965925931930542],\\\\\\\"currentOrigin\\\\\\\":[0,-58],\\\\\\\"pixels\\\\\\\":[577,325],\\\\\\\"fov\\\\\\\":70,\\\\\\\"viewport\\\\\\\":[1153,649],\\\\\\\"mouse\\\\\\\":[-1,-1],\\\\\\\"expected\\\\\\\":[576.5,324.5],\\\\\\\"rayOrigin\\\\\\\":[-19.99989128112793,7.707276821136475,119.97750854492188]}\\\",\\\"readyAtServerSeconds\\\":1794682190.20774,\\\"errors\\\":\\\"[]\\\"}\"},\"clientBaselines\":{\"-1\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"-2\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"},\"passed\":1,\"discovered\":2,\"failed\":1,\"cases\":{\"1\":{\"name\":\"A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation\",\"passed\":true},\"2\":{\"passed\":false,\"name\":\"P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap\",\"detail\":\"ServerScriptService.ServerTests.P17MaterialHarness:833: ServerScriptService.ServerTests.P17MaterialHarness:355: Players.Player1.PlayerScripts.ClientTests.P17MaterialClient:386: {\\\"preloadCallbacks\\\":2332,\\\"callbackFailures\\\":[],\\\"uniqueMeshIds\\\":407,\\\"callbackRecords\\\":[{\\\"id\\\":\\\"rbxassetid://114862748538571\\\",\\\"state\\\":\\\"Success\\\"},{\\\"id\\\":\\\"rbxassetid://104002745956207\\\",\\\"state\\\":\\\"Success\\\"},{\\\"id\\\":\\\"rbxassetid://104002745956207\\\",\\\"state\\\":\\\"Success\\\"},{\\\"id\\\":\\\"rbxassetid://104002745956207\\\",\\\"state\\\":\\\"Success\\\"},{\\\"id\\\":\\\"rbxassetid://104002745956207\\\",\\\"state\\\":\\\"Success\\\"},{\\\"id\\\":\\\"rbxassetid://1040\"}}},\"length\":4270}"
+      }
+    ],
+    "isError": false
+  }
+}

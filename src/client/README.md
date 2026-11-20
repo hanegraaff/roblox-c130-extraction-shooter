@@ -36,6 +36,17 @@ The [P14 client harness](../../tests/studio/client/AircraftPanHarness.luau) adds
 
 ## Ground rifle and launcher
 
+`GroundIndoorCamera.start(player, roundState)` installs the local Outpost
+camera modifier and returns an idempotent stop closure. It requires a living
+Ground player or Studio Ground preview and the player's native Custom camera.
+It reads validated `GroundCameraInteriors` descriptors from the active
+Battlefield. Its callbacks restore the original stock frame at camera priority
+−1 and apply the room limit at priority +1. Roblox still owns the desired zoom,
+rotation, focus and occlusion. The modifier releases its frame when it loses
+camera ownership and reacquires descriptors after a Battlefield rebuild.
+`GroundCombatController` projects aim at camera priority +2 so its reticle rays
+use the rendered camera.
+
 `GroundCombatController.new(player, playerGui, roundState, touchProvider?)` returns a nonyielding idempotent Lifecycle owner. It owns one GroundCombatHUD and listeners for an active living Ground player. The optional nonyielding provider controls input-mode tests; production samples UserInputService. Role/round changes, unequip, focus loss or stop release held input; stop disconnects listeners and destroys the GUI.
 
 Desktop aim uses raw mouse viewport pixels; touch aim uses viewport center. `projectAim` rounds one pixel for ray and reticle and uses the measured GUI origin plus inset only for drawing. The equipped server-owned M-7 or launcher Tool chooses fire intent. Native tool slots select equipment; carriers on touch use M-7/ROCKET buttons. Hold left click or FIRE; R/RELOAD applies only to the M-7, while launcher reload is automatic. Ammo and reload timing come from replicated Tool attributes, so selection cannot refill a weapon.
@@ -45,3 +56,37 @@ LauncherState’s atomic Snapshot supplies current round/identity/owner/position
 Current-round server-resolved rifle shots flash the shooter’s reticle. On desktop, confirmed rifle damage shows AIRCRAFT HIT −5 for 1.2 seconds; launcher LastImpact shows ROCKET HIT only for a server-confirmed direct hit by that shooter. On touch, either confirmed hit appends HIT to the compact readiness row instead of drawing floating hit text over the centered reticle. RoundPanel’s shared aircraft-health readout is the team’s damage guide; the HUD does not promise a fixed remaining rocket count after rifle damage. Presentation cannot authorize hits, ownership, collision or results.
 
 `GroundAimGui.spec.luau` checks real ray/reticle alignment, mode changes, cleanup and production-created HUD rectangle separation/containment at desktop and phone sizes. The layout case constructs both production RoundPanel and GroundCombatController under distinct ScreenGui origins/insets, supplies client-only presentation state representing confirmed rifle/rocket feedback and checks shared coordinates, hit text, centered aim, native inventory/thumbstick reserves and teardown. This catches cross-ScreenGui overlap that a shared cloned coordinate space misses. Actual native CoreGui/simulator measurements remain separate, since Studio captures omit the hotbar. These fixtures supplement native mouse/keyboard/touch and moving-aircraft review. [P06](../../plans/06-ground-combat.md) retains earlier source-specific aiming/tracer evidence; [P08](../../plans/08-rocket-launcher.md) records eleven native harness cases passing on test source `07e77ea` with three actual clients and unchanged `ef7826b` presentation. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass and the source is integrated on `main`; the [main integration record](../../docs/evidence/p08-p16-main-integration.md) identifies its matching tree. The excluded client LauncherHarness sends production pickup/drop/fire intent and observes actual replicated ownership/reload/health; it is not shipped input code.
+
+
+## Non-cover art in the operator thermal view
+
+`ThermalCosmetics.start(root)` returns a nonyielding `{ stop, resources }` owner.
+It watches BaseParts under the selected subtree. Ordinary cosmetic furnishings
+require server-authored `ThermalNonCover = true` and both CanCollide/CanQuery false
+to hide. Physical fragments have a narrow exception: they must also carry
+`PanelFragmentVisual = true`, use the owned `PanelFragments` collision group, be
+unanchored and nontouching, and remain non-querying. Their scenery collision can
+stay enabled. Ground players keep the furnished view and visible debris. Solid
+cover without that complete fragment contract remains visible to native Occluded
+highlights. The owner reacts to replication ordering, late tags and changes into
+real cover, retains original LocalTransparencyModifier values, and restores them
+on removal/stop. `resources()` counts tracked Parts; `stop()` disconnects all
+root/property listeners idempotently. The operator camera starts/stops this
+owner with its own role lifecycle. It writes no physics, hit or damage authority.
+Rendered thermal legibility and workload cost require separate native review.
+
+
+Client imported-material observations use shared `AssetMaterial.read(mesh)`.
+It reads the compiled v1 attribute contract and requires one actual
+SurfaceAppearance without inspecting its protected map properties. The compiler,
+artifact checker and Edit audit bind slots/source receipts; metadata validation
+does not prove loading. Use actual Instance-based preload and rendered review
+for availability/appearance. See the [shared material contract](../shared/README.md#compiled-material-metadata).
+
+
+`AssetMesh.validate(mesh)` is the corresponding ordinary-context native
+reconstruction check. It compares public MeshSize and collision/render fidelity
+with the five compiled native attributes, without reading opaque payloads or
+loading cloud content. The managed compiler preserves genuine engine payloads;
+client metadata/intrinsic validity alone does not establish rendered bounds,
+UVs, contact behavior or replication acceptance.

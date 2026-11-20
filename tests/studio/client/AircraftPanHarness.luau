@@ -33,6 +33,32 @@ local function waitFor(predicate: () -> boolean, label: string, seconds: number?
     end
     assert(predicate(), "P14 client timeout: " .. label)
 end
+
+-- Native cover hits identify a direct solid of the registered panel Model.
+-- Primitive solids may repeat StoryId, but imported proxies leave it on the Model.
+local function isUpperPanelHit(hit: Instance, buildingName: string): boolean
+    if
+        not hit:IsA("BasePart")
+        or not hit.CanCollide
+        or not hit.CanQuery
+        or hit:GetAttribute("DamageVisual") == true
+    then
+        return false
+    end
+    local id = hit:GetAttribute("PanelId")
+    local building = workspace.World.Battlefield.Buildings:FindFirstChild(buildingName)
+    local registry = if building then building:FindFirstChild(buildingName .. "_Panels") else nil
+    if type(id) ~= "string" or not registry or not registry:IsA("Folder") then
+        return false
+    end
+    local model = registry:FindFirstChild(id)
+    return model ~= nil
+        and model:IsA("Model")
+        and model:GetAttribute("PanelId") == id
+        and model:GetAttribute("StoryId") == "02"
+        and hit.Parent == model
+end
+
 function Harness.run()
     task.spawn(function()
         local remote = ReplicatedStorage:WaitForChild("P14Harness", 120)
@@ -185,15 +211,7 @@ function Harness.run()
                                                     and hit.Position.Y > 0.5
                                                     and hit.Normal.Y < 0.999
                                             elseif aimRequest and aimRequest.building then
-                                                local building =
-                                                    workspace.World.Battlefield.Buildings:FindFirstChild(
-                                                        aimRequest.building
-                                                    )
-                                                correct = building ~= nil
-                                                    and hit.Instance:IsDescendantOf(building)
-                                                    and hit.Instance:GetAttribute("StoryId") == "02"
-                                                    and type(hit.Instance:GetAttribute("PanelId"))
-                                                        == "string"
+                                                correct = isUpperPanelHit(hit.Instance, aimRequest.building)
                                             end
                                             if correct then
                                                 identityHits += 1
@@ -406,6 +424,18 @@ function Harness.run()
                     and (raw - pointingPixels).Magnitude < 0.01
             end, "committed pointing frame with nearby required surface", 18)
         end
+        type ProjectionPair = {
+            hud: ScreenGui,
+            camera: Camera,
+            frame: number,
+            projectionTime: number,
+            projectionCamera: CFrame,
+            renderedCamera: CFrame,
+            aircraftPivot: CFrame,
+            hitbox: CFrame,
+            capturedTime: number,
+        }
+        local latestPair: ProjectionPair? = nil
         -- Mutate the caller-owned diagnostics before assertions. Failed samples
         -- must retain actual drawn/content/ray coordinates rather than losing the
         -- snapshot when the function throws before returning.
@@ -421,12 +451,39 @@ function Harness.run()
                 end
                 return tostring(value)
             end
-            local current = hud()
-            local camera = workspace.CurrentCamera
-            result.sampleSeconds = os.clock()
-            result.hudPresent = current ~= nil
-            result.cameraPresent = camera ~= nil
-            assert(current and camera, "operator view missing")
+            local selectedPair: ProjectionPair? = nil
+            local requestedAt = os.clock()
+            waitFor(function()
+                local current = hud()
+                local camera = workspace.CurrentCamera
+                local pair = latestPair
+                local frame = if current then current:GetAttribute("ProjectionFrame") else nil
+                result.hudPresent = current ~= nil
+                result.cameraPresent = camera ~= nil
+                result.waitingProjectionFrame = frame
+                result.latestPairedFrame = if pair then pair.frame else nil
+                if
+                    pair
+                    and current
+                    and current == pair.hud
+                    and camera == pair.camera
+                    and frame == pair.frame
+                    and current:GetAttribute("ProjectionTime") == pair.projectionTime
+                    and current:GetAttribute("ProjectionCamera") == pair.projectionCamera
+                then
+                    selectedPair = pair
+                    return true
+                end
+                return false
+            end, "same committed camera and canonical aircraft projection", 2)
+            local pair = assert(selectedPair, "paired projection disappeared")
+            local current, camera = pair.hud, pair.camera
+            local sampledAt = os.clock()
+            result.sampleSeconds = sampledAt
+            result.projectionPairWaitSeconds = sampledAt - requestedAt
+            result.pairedCaptureSeconds = pair.capturedTime
+            result.pairedAircraftPivot = packed(pair.aircraftPivot)
+            result.pairedHitbox = packed(pair.hitbox)
             local viewport = current:GetAttribute("ProjectionViewport")
             local pixels = current:GetAttribute("ReticlePixels")
             local endpoint = current:GetAttribute("AimEndpoint")
@@ -458,6 +515,7 @@ function Harness.run()
                     and typeof(frame) == "CFrame",
                 "projection metadata missing"
             )
+            assert(camera.CFrame == pair.renderedCamera, "camera changed after projection commit")
             assert((camera.ViewportSize - viewport).Magnitude < 0.01, "viewport changed during sample")
             local cornerGround: { unknown } = {}
             for _, corner in
@@ -546,26 +604,19 @@ function Harness.run()
             end
             if expected and expected.building then
                 assert(
-                    hit.Instance:GetAttribute("StoryId") == "02"
-                        and type(hit.Instance:GetAttribute("PanelId")) == "string",
-                    "required upper-floor panel was not reached"
-                )
-                assert(
-                    hit.Instance:IsDescendantOf(workspace.World.Battlefield.Buildings[expected.building]),
-                    "projection reached the wrong building"
+                    isUpperPanelHit(hit.Instance, expected.building),
+                    "required upper-floor panel of the requested building was not reached"
                 )
             end
             local center = focus()
             assert(Vector2.new(center.X, center.Z).Magnitude <= 360.001, "focus escaped disk")
             local radial = Vector3.new(-frame.X, 0, -frame.Z)
             assert(frame.LookVector:Dot(radial) >= -1e-6, "camera looked out of inward half-space")
-            local aircraft = workspace.Aircraft:GetPivot()
+            local originError = (frame.Position - pair.aircraftPivot.Position).Magnitude
             result.cameraPosition = packed(frame.Position)
             result.time = os.clock()
-            assert(
-                (frame.Position - aircraft.Position).Magnitude <= 2,
-                "camera moved from canonical aircraft"
-            )
+            result.canonicalOriginErrorStuds = originError
+            assert(originError <= 2, "camera moved from canonical aircraft")
             local hudCount, effects = 0, 0
             for _, item in playerGui:GetChildren() do
                 if item.Name == "ThermalHUD" then
@@ -644,6 +695,18 @@ function Harness.run()
                         "missing or mismatched projection commit"
                     )
                     local now = os.clock()
+                    local cameraFrame = camera.CFrame
+                    latestPair = {
+                        hud = current,
+                        camera = camera,
+                        frame = projectionFrame,
+                        projectionTime = projectionTime,
+                        projectionCamera = projectionCamera,
+                        renderedCamera = cameraFrame,
+                        aircraftPivot = pivot,
+                        hitbox = capturedHitbox,
+                        capturedTime = capturedTime,
+                    }
                     local stats = orbitStats[weapon]
                     if not stats then
                         stats = {
@@ -662,7 +725,6 @@ function Harness.run()
                     local position = pivot.Position
                     local angle = math.atan2(position.Z, position.X) % (2 * math.pi)
                     stats.bins[math.floor(angle / (2 * math.pi) * 16)] = true
-                    local cameraFrame = camera.CFrame
                     local inward = cameraFrame.LookVector:Dot(Vector3.new(-position.X, 0, -position.Z).Unit)
                     local originError = (cameraFrame.Position - position).Magnitude
                     local committedOriginError = (projectionCamera.Position - position).Magnitude
@@ -1297,6 +1359,7 @@ function Harness.run()
                 added:Disconnect()
                 removed:Disconnect()
                 orbitSamplingActive = false
+                latestPair = nil
                 scheduleOrbitSample = nil
                 if ancestry then
                     ancestry:Disconnect()

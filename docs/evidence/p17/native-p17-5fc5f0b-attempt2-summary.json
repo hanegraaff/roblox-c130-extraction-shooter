@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "serverId": "1032186b-fee0-4ced-bbbb-f40384298917",
+  "startup": [
+    {
+      "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":10,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":10}",
+      "errors": "[]",
+      "mode": "P17",
+      "placeId": 0,
+      "userId": -1,
+      "gameId": 0
+    },
+    {
+      "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}",
+      "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":7.096767125010956}",
+      "ids": [
+        -2,
+        -1
+      ],
+      "clientMode": "P17",
+      "placeId": 0,
+      "transportReady": "{\"serverTime\":1795140988.291526,\"actualPlayers\":2,\"readyUserIds\":[-2,-1],\"readyCount\":2}",
+      "complete": false,
+      "commit": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+      "engine": "0.748.0.7481526",
+      "invocation": "{\"approvedAssetBindings\":[{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-outpost-assembly-v1-fbx\",\"sha256\":\"7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8\",\"roblox_asset_id\":\"73311045122621\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-panel-library-v1-fbx\",\"sha256\":\"c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d\",\"roblox_asset_id\":\"126055228085421\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p17-panel-library-materials-v2-glb\",\"uploaded_revision\":\"2\",\"sha256\":\"a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e\",\"roblox_asset_id\":\"126055228085421\"}],\"automaticSessionEnd\":false,\"serverTime\":1795140979.67877,\"actualLateClientRequired\":false,\"manualFixtureVersion\":\"v8-bounded-native-burst\",\"requestedInitialClients\":2,\"clientProbeSha256\":\"ad3b24582ceb6bf8ac98796ea77b66ce607d47aaa3e7276bef2d1b537761a52a\",\"selectorValue\":\"P17\",\"productionFingerprintSha256\":\"7e7edb45ebb819b098c2f62518a89d1e630ec6cbae93cd6eb79f9c75e835a9c0\",\"serverProbeSha256\":\"f0bedb7ddb8207562641ff363cb54106f3029d98be1980c653b3a4980c07f521\",\"harness\":\"P17Manual-v8-bounded-native-burst\",\"harnessFingerprintSha256\":\"743fb28973864c689ee6497953c175f56d52db24a69b40ed85d4578827aa50d9\",\"productionCommit\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"mode\":\"manual-native-server-clients\",\"harnessCommit\":\"5fc5f0ba19752b8885f78229f62b9da22986aa4b\",\"selector\":\"ServerStorage.DevelopmentSettings.ManualHarness\"}",
+      "gameId": 0,
+      "stage": "{\"clientCount\":2,\"serverTime\":1795141013.540777,\"stage\":\"A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal\"}",
+      "selector": "P17"
+    },
+    {
+      "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":10,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":10}",
+      "errors": "[]",
+      "mode": "P17",
+      "placeId": 0,
+      "userId": -2,
+      "gameId": 0
+    }
+  ],
+  "final": {
+    "bytes": 455114,
+    "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}",
+    "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":7.096767125010956}",
+    "ids": [
+      -2,
+      -1
+    ],
+    "clientMode": "P17",
+    "placeId": 0,
+    "transportReady": "{\"serverTime\":1795140988.291526,\"actualPlayers\":2,\"readyUserIds\":[-2,-1],\"readyCount\":2}",
+    "complete": true,
+    "commit": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+    "engine": "0.748.0.7481526",
+    "invocation": "{\"approvedAssetBindings\":[{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-outpost-assembly-v1-fbx\",\"sha256\":\"7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8\",\"roblox_asset_id\":\"73311045122621\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-panel-library-v1-fbx\",\"sha256\":\"c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d\",\"roblox_asset_id\":\"126055228085421\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p17-panel-library-materials-v2-glb\",\"uploaded_revision\":\"2\",\"sha256\":\"a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e\",\"roblox_asset_id\":\"126055228085421\"}],\"automaticSessionEnd\":false,\"serverTime\":1795140979.67877,\"actualLateClientRequired\":false,\"manualFixtureVersion\":\"v8-bounded-native-burst\",\"requestedInitialClients\":2,\"clientProbeSha256\":\"ad3b24582ceb6bf8ac98796ea77b66ce607d47aaa3e7276bef2d1b537761a52a\",\"selectorValue\":\"P17\",\"productionFingerprintSha256\":\"7e7edb45ebb819b098c2f62518a89d1e630ec6cbae93cd6eb79f9c75e835a9c0\",\"serverProbeSha256\":\"f0bedb7ddb8207562641ff363cb54106f3029d98be1980c653b3a4980c07f521\",\"harness\":\"P17Manual-v8-bounded-native-burst\",\"harnessFingerprintSha256\":\"743fb28973864c689ee6497953c175f56d52db24a69b40ed85d4578827aa50d9\",\"productionCommit\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"mode\":\"manual-native-server-clients\",\"harnessCommit\":\"5fc5f0ba19752b8885f78229f62b9da22986aa4b\",\"selector\":\"ServerStorage.DevelopmentSettings.ManualHarness\"}",
+    "gameId": 0,
+    "chunks": 8,
+    "summary": "{\"bytes\":455114,\"chunks\":8,\"skipped\":0,\"passed\":5,\"complete\":true,\"actualClients\":2,\"storage\":\"ServerStorage.P17ManualEvidence\",\"suite\":\"P17-imported-material-multiplayer\",\"failed\":1,\"discovered\":6}",
+    "stage": "{\"clientCount\":2,\"serverTime\":1795141039.958639,\"stage\":\"failed\",\"detail\":{\"clientCount\":2,\"skipped\":0,\"discovered\":6,\"passed\":5,\"failed\":1}}",
+    "selector": "P17"
+  },
+  "cases": [
+    {
+      "passed": true,
+      "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+    },
+    {
+      "passed": true,
+      "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+    },
+    {
+      "passed": true,
+      "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+    },
+    {
+      "passed": true,
+      "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+    },
+    {
+      "passed": true,
+      "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+    },
+    {
+      "passed": false,
+      "name": "A7 earned 30mm Light damage persists through three bursts before Heavy",
+      "detail": "ServerScriptService.ServerTests.P17MaterialHarness:925: invalid argument #3 (Vector3 expected, got string)"
+    }
+  ],
+  "clean": {
+    "aircraftStateAbsent": true,
+    "groundEffectsAbsent": true,
+    "transportAbsent": true,
+    "fragmentFolderAbsent": true,
+    "combatEffectsAbsent": true,
+    "roundStateAbsent": true
+  },
+  "firstGauBurstRequested": false,
+  "sourceIssue": "Variadic Luau assert forwarded its message as a third engine argument to CFrame:PointToObjectSpace",
+  "rawUtf8Bytes": 455114,
+  "chunks": 8
+}

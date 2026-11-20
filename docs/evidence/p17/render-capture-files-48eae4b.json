@@ -1,0 +1,36 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "scope": "Failed-renderdiagnostics; notapprovedartreview",
+  "captures": [
+    {
+      "path": "docs/evidence/p17/48-render-diagnostic-import-hidden.jpg",
+      "bytes": 212579,
+      "sha256": "96e5bbf17c3c497924ab776c072e4fd845dccc65c7b18fd0d50fd02a05c38f5c"
+    },
+    {
+      "path": "docs/evidence/p17/48-render-high-outside.jpg",
+      "bytes": 167222,
+      "sha256": "22f7105dbe8e42ec98676c06abc86e4a25326d11fb0ce3f98b497491ac4a91e8"
+    },
+    {
+      "path": "docs/evidence/p17/48-render-operator-30-preview.jpg",
+      "bytes": 199616,
+      "sha256": "69894198c7b1d83340e156da8aac03d1636067dbf8b3aad72e34e1336d31b95d"
+    },
+    {
+      "path": "docs/evidence/p17/48-render-operator-40-panned-preview.jpg",
+      "bytes": 166931,
+      "sha256": "6c4738ba7f231cd6c5a8858c7d296a914575abd42f66b5c8805c1f01e021eb5c"
+    },
+    {
+      "path": "docs/evidence/p17/48-render-operator-40-preview.jpg",
+      "bytes": 190720,
+      "sha256": "ef3ab20dd459ec8f8fcf457b65d71f74a72ed88a9e37702ca492314f3b804451"
+    },
+    {
+      "path": "docs/evidence/p17/48-render-south-exterior.jpg",
+      "bytes": 146971,
+      "sha256": "261b88c963f75bd9aaaec90c0c1cce4cd9ff8df244fe04d8f59caddf7703bd84"
+    }
+  ]
+}

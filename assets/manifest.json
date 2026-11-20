@@ -4,7 +4,7 @@
     {
       "id": "battlefield-greybox",
       "kind": "world",
-      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts; original starting-shelter union faithfully retiled into 42 roof and 34 wall panels with explicit level registry descriptor",
+      "source": "Original primitive expanded 720-stud battlefield, three two-story buildings and deterministic bounded terrain sphere recipe v1/seed 0 authored in this repository; no external assets or scripts; original starting-shelter union faithfully retiled into 42 roof and 34 wall panels with explicit level registry descriptor; local Ground camera descriptors for the Outpost's two enclosed stories",
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/world/Battlefield.model.json",
@@ -1299,8 +1299,8 @@
       "author": "Project contributors",
       "license": "Original project-authored asset; no third-party mesh or texture content bundled. No additional redistribution license specified.",
       "local_path": "assets/exports/military-outpost/outpost-assembly-v1.fbx",
-      "roblox_asset_id": null,
-      "upload_owner": null,
+      "roblox_asset_id": "73311045122621",
+      "upload_owner": "User 2227341845",
       "sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8"
     },
     {
@@ -1321,8 +1321,8 @@
       "author": "Project contributors",
       "license": "Original project-authored asset; no third-party mesh or texture content bundled. No additional redistribution license specified.",
       "local_path": "assets/exports/military-outpost/panel-library-v1.fbx",
-      "roblox_asset_id": null,
-      "upload_owner": null,
+      "roblox_asset_id": "126055228085421",
+      "upload_owner": "User 2227341845",
       "sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d"
     },
     {
@@ -1456,6 +1456,128 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "e511b8255dfdce9a44599ad5bc146cd60c660cc505d276731291e032bfd4b283"
+    },
+    {
+      "id": "p17-panel-library-materials-v2-glb",
+      "kind": "import-derivative",
+      "source": "Equivalent approved P16 OBJ/MTL/PNG library split into one primitive per source-object/material by scripts/p17_library_glb.py; no source faces or UVs changed; collision proxies excluded from visual import",
+      "author": "Project contributors",
+      "license": "Original project-authored geometry and baked textures",
+      "local_path": "assets/imports/military-outpost/panel-library-materials-v2.glb",
+      "roblox_asset_id": "126055228085421",
+      "upload_owner": "User 2227341845",
+      "sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e",
+      "uploaded_revision": "2"
+    },
+    {
+      "id": "p17-panel-library-materials-v2-json",
+      "kind": "import-derivative-map",
+      "source": "Equivalent approved P16 OBJ/MTL/PNG library split into one primitive per source-object/material by scripts/p17_library_glb.py; no source faces or UVs changed; collision proxies excluded from visual import",
+      "author": "Project contributors",
+      "license": "Original project-authored geometry and baked textures",
+      "local_path": "assets/imports/military-outpost/panel-library-materials-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "94dc64fc13dac0b740b7cc4b0cb3fb9375cde26c42aa54047619e1ddcee9c86f"
+    },
+    {
+      "id": "p17-assembly-fbx-receipt-v1",
+      "kind": "import-receipt",
+      "source": "Actual MCP-observed private Studio import of approved assembly model 73311045122621 revision1, owner User2227341845; raw material-loss/scale metadata retained for audited normalization",
+      "author": "Project contributors",
+      "license": "Original project-authored geometry; receipt contains no credentials or player data",
+      "local_path": "assets/imports/military-outpost/assembly-fbx-receipt-v1.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "9ff1c7ec60efa72b8fbe0ce73576875f7091002a3c7e2d3d421b2c9b6aef993e"
+    },
+    {
+      "id": "p17-library-glb-receipt-v2-json",
+      "kind": "import-receipt",
+      "source": "Actual approved private import/texture receipt; source geometry/PNG hashes match the approved P16 package",
+      "author": "Project contributors",
+      "license": "Original project asset metadata; no credentials or player data",
+      "local_path": "assets/imports/military-outpost/library-glb-receipt-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "6fab3fe4546c175ba144b93ddb641ef6751e64b55f65a5675c3a111c3fb6365f"
+    },
+    {
+      "id": "p17-material-textures-v2-json",
+      "kind": "import-receipt",
+      "source": "Actual approved private import/texture receipt; source geometry/PNG hashes match the approved P16 package",
+      "author": "Project contributors",
+      "license": "Original project asset metadata; no credentials or player data",
+      "local_path": "assets/imports/military-outpost/material-textures-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "896d3213ba17f2bbf6ad1c0027200ccac44a7cc409459e7d4226d11a19e8d86e"
+    },
+    {
+      "id": "p17-MaterialPanels-model-json",
+      "kind": "material-templates",
+      "source": "Deterministic actual-import reconstruction from approved P16 geometry, native FBX/GLB receipts and exact baked PNG repairs; scripts/p17_compile_outpost.py",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "assets/models/MaterialPanels.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "e8e6e8e08f2cfd7e02ed333e84f13c3adb4f6bdc32cab1a0c3e339af22a14433"
+    },
+    {
+      "id": "p17-MilitaryOutpost-model-json",
+      "kind": "building-template",
+      "source": "Deterministic actual-import reconstruction from approved P16 geometry, native FBX/GLB receipts and exact baked PNG repairs; scripts/p17_compile_outpost.py",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "assets/models/MilitaryOutpost.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "fd1b20cda4ed15b90fe7e1899f8fea7c878f55a219d812e357c38961ab921f2e"
+    },
+    {
+      "id": "p17-construction-v2-json",
+      "kind": "construction-contract",
+      "source": "Deterministic actual-import reconstruction from approved P16 geometry, native FBX/GLB receipts and exact baked PNG repairs; scripts/p17_compile_outpost.py",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "assets/imports/military-outpost/construction-v2.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "eae643eb7b9f48155aafc2eb56c403c078709fd17b0ab69cd5554f1bec07e8f7"
+    },
+    {
+      "id": "p17-native-mesh-profiles-v1-rbxm",
+      "kind": "native-mesh-payload",
+      "source": "Exact approved imported mesh IDs, native AssetService constructor with declared Box/PreciseConvexDecomposition + Automatic policy, SerializationService export and all-407 public native roundtrip; compiler preserves genuine intrinsic/collision payload bytes without a runtime factory.",
+      "author": "Project contributors",
+      "license": "Original project authoring; engine serialization of approved project meshes",
+      "local_path": "assets/imports/military-outpost/native-mesh-profiles-v1.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": "User 2227341845",
+      "sha256": "73a7f6dfc224f677453966ae950081016ac71cd195db4a84cd305c0b98e6cc1c"
+    },
+    {
+      "id": "p17-native-mesh-profiles-v1-json",
+      "kind": "native-mesh-receipt",
+      "source": "Exact approved imported mesh IDs, native AssetService constructor with declared Box/PreciseConvexDecomposition + Automatic policy, SerializationService export and all-407 public native roundtrip; compiler preserves genuine intrinsic/collision payload bytes without a runtime factory.",
+      "author": "Project contributors",
+      "license": "Original project authoring; engine serialization of approved project meshes",
+      "local_path": "assets/imports/military-outpost/native-mesh-profiles-v1.json",
+      "roblox_asset_id": null,
+      "upload_owner": "User 2227341845",
+      "sha256": "decf0d70598c6cc5e805b0bf3d9cbf3fe2d73ffd9fe9bd31bd32fbfe8a07de57"
+    },
+    {
+      "id": "p17-native-mesh-requests-v1-json",
+      "kind": "native-mesh-policy",
+      "source": "Exact approved imported mesh IDs, native AssetService constructor with declared Box/PreciseConvexDecomposition + Automatic policy, SerializationService export and all-407 public native roundtrip; compiler preserves genuine intrinsic/collision payload bytes without a runtime factory.",
+      "author": "Project contributors",
+      "license": "Original project authoring; engine serialization of approved project meshes",
+      "local_path": "assets/imports/military-outpost/native-mesh-requests-v1.json",
+      "roblox_asset_id": null,
+      "upload_owner": "User 2227341845",
+      "sha256": "d916f5cb5897bb9727c3603a2c8d8eaeac83f1044b3b44a772ca40a6bd8f067c"
     }
   ],
   "runtime_recipes": [
@@ -1477,6 +1599,17 @@
       "local_path": "src/server/LauncherRuntime.luau",
       "maximum_flight_seconds": 5,
       "maximum_flight_studs": 1200
+    },
+    {
+      "id": "approved-outpost-materials",
+      "kind": "material-panel-definition",
+      "source": "Exact geometry rectangles and export identities generated from the user-approved P16 catalog by scripts/p17_assets.py; no uploaded assets or verified cloud availability",
+      "author": "Project contributors",
+      "license": "Original project authoring",
+      "local_path": "src/server/ApprovedOutpost.luau",
+      "sha256": "32fd2b7bcccf27c9888a4cd7894d4c10f97d7ca201ef08107d8dc7a2476160bd",
+      "asset_revision": "p16-v1",
+      "cloud_import_verified": false
     }
   ]
 }

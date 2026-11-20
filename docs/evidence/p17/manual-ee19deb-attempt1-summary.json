@@ -1,0 +1,750 @@
+{
+  "source": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "tree": "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a",
+  "cases": [
+    {
+      "passed": true,
+      "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+    },
+    {
+      "passed": true,
+      "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+    },
+    {
+      "passed": true,
+      "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+    },
+    {
+      "passed": true,
+      "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+    },
+    {
+      "passed": false,
+      "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal",
+      "detail": "ServerScriptService.ServerTests.P17ManualServer:208: P07 timeout: heavy hit 6"
+    }
+  ],
+  "serverBaseline": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 173,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 173
+  },
+  "clientBaselines": {
+    "-1": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10,
+      "userId": -1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 10
+    },
+    "-2": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10,
+      "userId": -2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 10
+    }
+  },
+  "initialUserIds": [
+    -1,
+    -2
+  ],
+  "cleanup": {
+    "aircraftStateAbsent": true,
+    "groundEffectsAbsent": true,
+    "transportAbsent": true,
+    "fragmentFolderAbsent": true,
+    "combatEffectsAbsent": true,
+    "roundStateAbsent": true
+  },
+  "actualMeshChecks": [
+    {
+      "userId": -1,
+      "replyOk": true,
+      "preloadCallbacks": 2332,
+      "uniqueMeshIds": 407,
+      "nativeConstructorChecks": 2332,
+      "callbackFailures": [],
+      "missingExpectedMeshSuccessCallbacks": [],
+      "surfaceAvailability": "UNVERIFIED: SurfaceAppearance texture packs are unsupported by PreloadAsync; rendered streaming must be checked separately"
+    },
+    {
+      "userId": -2,
+      "replyOk": true,
+      "preloadCallbacks": 2332,
+      "uniqueMeshIds": 407,
+      "nativeConstructorChecks": 2332,
+      "callbackFailures": [],
+      "missingExpectedMeshSuccessCallbacks": [],
+      "surfaceAvailability": "UNVERIFIED: SurfaceAppearance texture packs are unsupported by PreloadAsync; rendered streaming must be checked separately"
+    }
+  ],
+  "navigation": [
+    {
+      "routes": {
+        "internal": {
+          "seconds": 2.6997642916394398,
+          "finalPosition": [
+            140.1995086669922,
+            13.123024940490723,
+            144.4173583984375
+          ],
+          "waypoints": 19
+        },
+        "external": {
+          "seconds": 3.300012916675769,
+          "finalPosition": [
+            158.9337615966797,
+            13.10759162902832,
+            148.3349151611328
+          ],
+          "waypoints": 29
+        }
+      },
+      "kind": "actual-outpost-humanoid-navigation",
+      "teleports": "initial route placement only; MoveTo between every waypoint"
+    }
+  ],
+  "materialStageRecords": [
+    {
+      "solidSamples": 3,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Pristine",
+      "hit": 0,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 3,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Light",
+      "hit": 1,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 3,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Light",
+      "hit": 2,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Heavy",
+      "hit": 3,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Heavy",
+      "hit": 4,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Heavy",
+      "hit": 5,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 0,
+      "panelId": "Outpost_S01_South_01",
+      "appearance": "Total",
+      "hit": 6,
+      "family": "corrugated_garage",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        129.1999969482422,
+        4.925000190734863,
+        188
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Pristine",
+      "hit": 0,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Light",
+      "hit": 1,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Light",
+      "hit": 2,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Heavy",
+      "hit": 3,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Heavy",
+      "hit": 4,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Heavy",
+      "hit": 5,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 0,
+      "panelId": "Outpost_v2_Interior01",
+      "appearance": "Total",
+      "hit": 6,
+      "family": "concrete_partition",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        149.39999389648438,
+        1.7249999046325684,
+        148
+      ]
+    },
+    {
+      "solidSamples": 3,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Pristine",
+      "hit": 0,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 3,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Light",
+      "hit": 1,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 3,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Light",
+      "hit": 2,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Heavy",
+      "hit": 3,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Heavy",
+      "hit": 4,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Heavy",
+      "hit": 5,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 0,
+      "panelId": "Outpost_S02_East_01",
+      "appearance": "Total",
+      "hit": 6,
+      "family": "corrugated_door",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        11.725000381469727,
+        153
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Pristine",
+      "hit": 0,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Light",
+      "hit": 1,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Light",
+      "hit": 2,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Heavy",
+      "hit": 3,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Heavy",
+      "hit": 4,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Heavy",
+      "hit": 5,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 0,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "appearance": "Total",
+      "hit": 6,
+      "family": "layered_roof",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        20.625,
+        143.1999969482422
+      ]
+    },
+    {
+      "solidSamples": 4,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Pristine",
+      "hit": 0,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 4,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Light",
+      "hit": 1,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 4,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Light",
+      "hit": 2,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Heavy",
+      "hit": 3,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Heavy",
+      "hit": 4,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Heavy",
+      "hit": 5,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 0,
+      "panelId": "Outpost_S01_East_02",
+      "appearance": "Total",
+      "hit": 6,
+      "family": "corrugated_window",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        160,
+        1.7249999046325684,
+        168.8000030517578
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Pristine",
+      "hit": 0,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Light",
+      "hit": 1,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    },
+    {
+      "solidSamples": 1,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Light",
+      "hit": 2,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Heavy",
+      "hit": 3,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Heavy",
+      "hit": 4,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    },
+    {
+      "solidSamples": 32,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Heavy",
+      "hit": 5,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    },
+    {
+      "solidSamples": 0,
+      "panelId": "Outpost_S01_North_01",
+      "appearance": "Total",
+      "hit": 6,
+      "family": "corrugated_wall",
+      "kind": "approved-material-stage-ray-replication",
+      "bothActualClients": true,
+      "earnedPoint": [
+        134.39999389648438,
+        1.7249999046325684,
+        140
+      ]
+    }
+  ],
+  "actualNativeHeavy": [
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "hit": 1,
+      "progress": 0.3333333333333333,
+      "kind": "actual-heavy",
+      "stage": "Intact"
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "hit": 2,
+      "progress": 0.6666666666666666,
+      "kind": "actual-heavy",
+      "stage": "Intact"
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "hit": 3,
+      "progress": 0,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "hit": 4,
+      "progress": 0.3333333333333333,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "hit": 5,
+      "progress": 0.6666666666666666,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    }
+  ],
+  "fullReport": "build/p17-manual-ee19deb-full-attempt1.json"
+}

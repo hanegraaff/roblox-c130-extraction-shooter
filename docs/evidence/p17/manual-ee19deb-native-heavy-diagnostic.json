@@ -1,0 +1,912 @@
+{
+  "candidate": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "cases": [
+    {
+      "passed": true,
+      "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+    },
+    {
+      "passed": true,
+      "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+    },
+    {
+      "passed": true,
+      "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+    },
+    {
+      "passed": true,
+      "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+    },
+    {
+      "passed": false,
+      "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal",
+      "detail": "ServerScriptService.ServerTests.P17ManualServer:208: P07 timeout: heavy hit 6"
+    }
+  ],
+  "launches": [
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "sequence": 1,
+      "hit": 1,
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 0,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      },
+      "selected": "M102",
+      "geometry": {
+        "firstSize": [
+          16,
+          16,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          359.5399475097656,
+          140,
+          18.194408416748047,
+          -0.9987221956253052,
+          0,
+          0.0505371168255806,
+          0,
+          1,
+          0,
+          -0.0505371168255806,
+          0,
+          -0.9987221956253052
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 295.26361083984375,
+        "muzzle": [
+          364.8367919921875,
+          138,
+          12.454760551452637
+        ],
+        "hitLocalEndpoint": [
+          -6,
+          3.0616171314629196e-17,
+          -0.5
+        ],
+        "time": 1794687337.770694,
+        "hitPosition": [
+          130.10044860839844,
+          21.125,
+          147.94203186035156
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1"
+      },
+      "roundId": 2
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "sequence": 2,
+      "hit": 2,
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687338.819868,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      },
+      "selected": "M102",
+      "geometry": {
+        "firstSize": [
+          16,
+          16,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          329.6487731933594,
+          140,
+          144.67788696289062,
+          -0.9156906008720398,
+          0,
+          0.40188395977020264,
+          0,
+          1,
+          0,
+          -0.40188395977020264,
+          0,
+          -0.9156906008720398
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 237.4985809326172,
+        "muzzle": [
+          336.6385192871094,
+          138,
+          141.1931610107422
+        ],
+        "hitLocalEndpoint": [
+          -6,
+          0,
+          -0.5
+        ],
+        "time": 1794687342.970011,
+        "hitPosition": [
+          130.08839416503906,
+          21.125,
+          147.99708557128906
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1"
+      },
+      "roundId": 2
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "sequence": 3,
+      "hit": 3,
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687344.019922,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      },
+      "selected": "M102",
+      "geometry": {
+        "firstSize": [
+          16,
+          16,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          259.98760986328125,
+          140,
+          249.0109405517578,
+          -0.7221783995628357,
+          0,
+          0.6917068362236023,
+          0,
+          1,
+          0,
+          -0.6917068362236023,
+          0,
+          -0.7221783995628357
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 206.5472869873047,
+        "muzzle": [
+          267.7487487792969,
+          138,
+          248.1363983154297
+        ],
+        "hitLocalEndpoint": [
+          -6,
+          0,
+          -0.5
+        ],
+        "time": 1794687347.986581,
+        "hitPosition": [
+          130.05894470214844,
+          21.125,
+          148.0428466796875
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1"
+      },
+      "roundId": 2
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "sequence": 4,
+      "hit": 4,
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687349.03582,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      },
+      "selected": "M102",
+      "geometry": {
+        "firstSize": [
+          4,
+          1,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          161.4103240966797,
+          140,
+          321.7867431640625,
+          -0.44836682081222534,
+          0,
+          0.8938497304916382,
+          0,
+          1.0000001192092896,
+          0,
+          -0.8938497304916382,
+          0,
+          -0.44836682081222534
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 214.4884796142578,
+        "muzzle": [
+          169.0152587890625,
+          138,
+          323.5657958984375
+        ],
+        "hitLocalEndpoint": [
+          0,
+          -0.5,
+          -0.5
+        ],
+        "time": 1794687352.885771,
+        "hitPosition": [
+          130.01669311523438,
+          21.125,
+          148.07510375976562
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy17"
+      },
+      "roundId": 2
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "sequence": 5,
+      "hit": 5,
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687353.919157,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      },
+      "selected": "M102",
+      "geometry": {
+        "firstSize": [
+          4,
+          1,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          43.27762985229492,
+          140,
+          357.38922119140625,
+          -0.12020878493785858,
+          0,
+          0.9927487373352051,
+          0,
+          1.0000001192092896,
+          0,
+          -0.9927486181259155,
+          0,
+          -0.12020879983901978
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 256.36822509765625,
+        "muzzle": [
+          49.835166931152344,
+          138,
+          361.6317138671875
+        ],
+        "hitLocalEndpoint": [
+          0,
+          -0.5,
+          -0.5
+        ],
+        "time": 1794687357.820319,
+        "hitPosition": [
+          129.96571350097656,
+          21.125,
+          148.0913848876953
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy17"
+      },
+      "roundId": 2
+    },
+    {
+      "panelId": "Outpost_S02_Roof_01_01",
+      "sequence": 6,
+      "hit": 6,
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687358.868997,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      },
+      "selected": "M102",
+      "geometry": {
+        "firstSize": [
+          1,
+          1.5000097751617432,
+          46
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          -83.99624633789062,
+          140,
+          350.0637512207031,
+          0.2333371788263321,
+          0,
+          0.9723958969116211,
+          0,
+          1,
+          0,
+          -0.9723958969116211,
+          0,
+          0.2333371788263321
+        ],
+        "firstPanelId": "unregistered",
+        "distance": 317.6127014160156,
+        "muzzle": [
+          -79.32855987548828,
+          138,
+          356.32574462890625
+        ],
+        "hitLocalEndpoint": [
+          -1.5,
+          -0.27499961853027344,
+          16
+        ],
+        "time": 1794687362.91971,
+        "hitPosition": [
+          128.07461547851562,
+          22.149995803833008,
+          149.9161376953125
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported1005"
+      },
+      "roundId": 2
+    }
+  ],
+  "nativeReceipts": [
+    {
+      "viewValid": true,
+      "receivedAt": 1794687337.819862,
+      "sequence": 1,
+      "phase": "Active",
+      "gauAmmo": 100,
+      "gauNextFire": 0,
+      "readinessJSON": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+      "fireGeometryJSON": "{\"firstSize\":[16,16,1],\"point\":[130,21.125,148],\"aircraft\":[359.47320556640627,140,19.468524932861329,-0.9985368251800537,0,0.054077137261629108,0,1.0000001192092896,0,-0.054077137261629108,0,-0.9985368251800537],\"firstPanelId\":\"Outpost_S02_Roof_01_01\",\"distance\":294.6352844238281,\"muzzle\":[364.79034423828127,138,13.747690200805664],\"hitLocalEndpoint\":[-6,3.0616171314629199e-17,-0.5],\"time\":1794687337.819813,\"hitPosition\":[130.10043334960938,21.125,147.94256591796876],\"firstPath\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1\"}",
+      "selectedWeapon": "M102",
+      "pendingProjectiles": 0,
+      "roundId": 2,
+      "fireGeometry": {
+        "firstSize": [
+          16,
+          16,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          359.47320556640625,
+          140,
+          19.468524932861328,
+          -0.9985368251800537,
+          0,
+          0.054077137261629105,
+          0,
+          1.0000001192092896,
+          0,
+          -0.054077137261629105,
+          0,
+          -0.9985368251800537
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 294.6352844238281,
+        "muzzle": [
+          364.79034423828125,
+          138,
+          13.747690200805664
+        ],
+        "hitLocalEndpoint": [
+          -6,
+          3.0616171314629196e-17,
+          -0.5
+        ],
+        "time": 1794687337.819813,
+        "hitPosition": [
+          130.10043334960938,
+          21.125,
+          147.94256591796875
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1"
+      },
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 0,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      }
+    },
+    {
+      "viewValid": true,
+      "receivedAt": 1794687343.019915,
+      "sequence": 2,
+      "phase": "Active",
+      "gauAmmo": 100,
+      "gauNextFire": 0,
+      "readinessJSON": "{\"M102\":{\"ammo\":1,\"nextFire\":1794687338.819868,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+      "fireGeometryJSON": "{\"firstSize\":[16,16,1],\"point\":[130,21.125,148],\"aircraft\":[329.14300537109377,140,145.82481384277345,-0.9142904281616211,0,0.4050593674182892,0,1.0000001192092896,0,-0.4050593674182892,0,-0.9142904281616211],\"firstPanelId\":\"Outpost_S02_Roof_01_01\",\"distance\":237.0384063720703,\"muzzle\":[336.1448059082031,138,142.36436462402345],\"hitLocalEndpoint\":[-6,0,-0.5],\"time\":1794687343.019862,\"hitPosition\":[130.0881805419922,21.125,147.99758911132813],\"firstPath\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1\"}",
+      "selectedWeapon": "M102",
+      "pendingProjectiles": 0,
+      "roundId": 2,
+      "fireGeometry": {
+        "firstSize": [
+          16,
+          16,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          329.14300537109375,
+          140,
+          145.82481384277344,
+          -0.9142904281616211,
+          0,
+          0.4050593674182892,
+          0,
+          1.0000001192092896,
+          0,
+          -0.4050593674182892,
+          0,
+          -0.9142904281616211
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 237.0384063720703,
+        "muzzle": [
+          336.1448059082031,
+          138,
+          142.36436462402344
+        ],
+        "hitLocalEndpoint": [
+          -6,
+          0,
+          -0.5
+        ],
+        "time": 1794687343.019862,
+        "hitPosition": [
+          130.0881805419922,
+          21.125,
+          147.99758911132812
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1"
+      },
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687338.819868,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      }
+    },
+    {
+      "viewValid": true,
+      "receivedAt": 1794687348.035812,
+      "sequence": 3,
+      "phase": "Active",
+      "gauAmmo": 100,
+      "gauNextFire": 0,
+      "readinessJSON": "{\"M102\":{\"ammo\":1,\"nextFire\":1794687344.019922,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+      "fireGeometryJSON": "{\"firstSize\":[16,16,1],\"point\":[130,21.125,148],\"aircraft\":[259.1173400878906,140,249.9163818359375,-0.7197705507278442,0,0.6942121386528015,0,1.0000001192092896,0,-0.6942121386528015,0,-0.7197705507278442],\"firstPanelId\":\"Outpost_S02_Roof_01_01\",\"distance\":206.42483520507813,\"muzzle\":[266.8814697265625,138,249.06881713867188],\"hitLocalEndpoint\":[-6,0,-0.5],\"time\":1794687348.035751,\"hitPosition\":[130.05857849121095,21.125,148.04324340820313],\"firstPath\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1\"}",
+      "selectedWeapon": "M102",
+      "pendingProjectiles": 0,
+      "roundId": 2,
+      "fireGeometry": {
+        "firstSize": [
+          16,
+          16,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          259.1173400878906,
+          140,
+          249.9163818359375,
+          -0.7197705507278442,
+          0,
+          0.6942121386528015,
+          0,
+          1.0000001192092896,
+          0,
+          -0.6942121386528015,
+          0,
+          -0.7197705507278442
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 206.42483520507812,
+        "muzzle": [
+          266.8814697265625,
+          138,
+          249.06881713867188
+        ],
+        "hitLocalEndpoint": [
+          -6,
+          0,
+          -0.5
+        ],
+        "time": 1794687348.035751,
+        "hitPosition": [
+          130.05857849121094,
+          21.125,
+          148.04324340820312
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy1"
+      },
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687344.019922,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      }
+    },
+    {
+      "viewValid": true,
+      "receivedAt": 1794687352.919148,
+      "sequence": 4,
+      "phase": "Active",
+      "gauAmmo": 100,
+      "gauNextFire": 0,
+      "readinessJSON": "{\"M102\":{\"ammo\":1,\"nextFire\":1794687349.03582,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+      "fireGeometryJSON": "{\"firstSize\":[4,1,1],\"point\":[130,21.125,148],\"aircraft\":[160.65780639648438,140,322.1631164550781,-0.4462611973285675,0,0.894902765750885,0,1,0,-0.894902765750885,0,-0.4462611973285675],\"firstPanelId\":\"Outpost_S02_Roof_01_01\",\"distance\":214.67515563964845,\"muzzle\":[168.25852966308595,138,323.9600524902344],\"hitLocalEndpoint\":[0,-0.5,-0.5],\"time\":1794687352.919084,\"hitPosition\":[130.016357421875,21.125,148.0752716064453],\"firstPath\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy17\"}",
+      "selectedWeapon": "M102",
+      "pendingProjectiles": 0,
+      "roundId": 2,
+      "fireGeometry": {
+        "firstSize": [
+          4,
+          1,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          160.65780639648438,
+          140,
+          322.1631164550781,
+          -0.4462611973285675,
+          0,
+          0.894902765750885,
+          0,
+          1,
+          0,
+          -0.894902765750885,
+          0,
+          -0.4462611973285675
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 214.67515563964844,
+        "muzzle": [
+          168.25852966308594,
+          138,
+          323.9600524902344
+        ],
+        "hitLocalEndpoint": [
+          0,
+          -0.5,
+          -0.5
+        ],
+        "time": 1794687352.919084,
+        "hitPosition": [
+          130.016357421875,
+          21.125,
+          148.0752716064453
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy17"
+      },
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687349.03582,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      }
+    },
+    {
+      "viewValid": true,
+      "receivedAt": 1794687357.868992,
+      "sequence": 5,
+      "phase": "Active",
+      "gauAmmo": 100,
+      "gauNextFire": 0,
+      "readinessJSON": "{\"M102\":{\"ammo\":1,\"nextFire\":1794687353.919157,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+      "fireGeometryJSON": "{\"firstSize\":[4,1,1],\"point\":[130,21.125,148],\"aircraft\":[42.039207458496097,140,357.5369873046875,-0.1167907863855362,0,0.9931565523147583,0,1,0,-0.9931565523147583,0,-0.1167907863855362],\"firstPanelId\":\"Outpost_S02_Roof_01_01\",\"distance\":256.9045715332031,\"muzzle\":[48.58209991455078,138,361.8020324707031],\"hitLocalEndpoint\":[0,-0.5,-0.5],\"time\":1794687357.868947,\"hitPosition\":[129.96517944335938,21.125,148.09146118164063],\"firstPath\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy17\"}",
+      "selectedWeapon": "M102",
+      "pendingProjectiles": 0,
+      "roundId": 2,
+      "fireGeometry": {
+        "firstSize": [
+          4,
+          1,
+          1
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          42.039207458496094,
+          140,
+          357.5369873046875,
+          -0.1167907863855362,
+          0,
+          0.9931565523147583,
+          0,
+          1,
+          0,
+          -0.9931565523147583,
+          0,
+          -0.1167907863855362
+        ],
+        "firstPanelId": "Outpost_S02_Roof_01_01",
+        "distance": 256.9045715332031,
+        "muzzle": [
+          48.58209991455078,
+          138,
+          361.8020324707031
+        ],
+        "hitLocalEndpoint": [
+          0,
+          -0.5,
+          -0.5
+        ],
+        "time": 1794687357.868947,
+        "hitPosition": [
+          129.96517944335938,
+          21.125,
+          148.09146118164062
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_Roof_01_01.Outpost_S02_Roof_01_01_Proxy17"
+      },
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687353.919157,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      }
+    },
+    {
+      "viewValid": true,
+      "receivedAt": 1794687362.969211,
+      "sequence": 6,
+      "phase": "Active",
+      "gauAmmo": 100,
+      "gauNextFire": 0,
+      "readinessJSON": "{\"M102\":{\"ammo\":1,\"nextFire\":1794687358.868997,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+      "fireGeometryJSON": "{\"firstSize\":[1,1.5000097751617432,46],\"point\":[130,21.125,148],\"aircraft\":[-85.21590423583985,140,349.76885986328127,0.23672397434711457,0,0.9715770483016968,0,1.0000001192092896,0,-0.9715769290924072,0,0.23672400414943696],\"firstPanelId\":\"unregistered\",\"distance\":318.25006103515627,\"muzzle\":[-80.57006072998047,138,356.0470886230469],\"hitLocalEndpoint\":[-1.5,-0.27499961853027346,16],\"time\":1794687362.969134,\"hitPosition\":[128.07000732421876,22.149995803833009,149.91360473632813],\"firstPath\":\"Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported1005\"}",
+      "selectedWeapon": "M102",
+      "pendingProjectiles": 0,
+      "roundId": 2,
+      "fireGeometry": {
+        "firstSize": [
+          1,
+          1.5000097751617432,
+          46
+        ],
+        "point": [
+          130,
+          21.125,
+          148
+        ],
+        "aircraft": [
+          -85.21590423583984,
+          140,
+          349.76885986328125,
+          0.23672397434711456,
+          0,
+          0.9715770483016968,
+          0,
+          1.0000001192092896,
+          0,
+          -0.9715769290924072,
+          0,
+          0.23672400414943695
+        ],
+        "firstPanelId": "unregistered",
+        "distance": 318.25006103515625,
+        "muzzle": [
+          -80.57006072998047,
+          138,
+          356.0470886230469
+        ],
+        "hitLocalEndpoint": [
+          -1.5,
+          -0.27499961853027344,
+          16
+        ],
+        "time": 1794687362.969134,
+        "hitPosition": [
+          128.07000732421875,
+          22.149995803833008,
+          149.91360473632812
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported1005"
+      },
+      "readiness": {
+        "M102": {
+          "ammo": 1,
+          "nextFire": 1794687358.868997,
+          "reloadUntil": 0
+        },
+        "GAU23": {
+          "ammo": 100,
+          "nextFire": 0,
+          "reloadUntil": 0
+        }
+      }
+    }
+  ],
+  "impacts": [
+    {
+      "impactAt": 1794687338.786276,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "progress": 0.3333333333333333,
+      "scoredThroughShotId": 1,
+      "shotId": 1,
+      "firedAt": 1794687337.819868,
+      "scoredThroughFiredAt": 1794687337.819868,
+      "earnedSeconds": 0,
+      "stage": 0,
+      "weapon": "M102"
+    },
+    {
+      "impactAt": 1794687343.80298,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "progress": 0.6666666666666666,
+      "scoredThroughShotId": 2,
+      "shotId": 2,
+      "firedAt": 1794687343.019922,
+      "scoredThroughFiredAt": 1794687343.019922,
+      "earnedSeconds": 0,
+      "stage": 0,
+      "weapon": "M102"
+    },
+    {
+      "impactAt": 1794687348.719109,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "progress": 0,
+      "scoredThroughShotId": 3,
+      "shotId": 3,
+      "firedAt": 1794687348.03582,
+      "scoredThroughFiredAt": 1794687348.03582,
+      "earnedSeconds": 0,
+      "stage": 1,
+      "weapon": "M102"
+    },
+    {
+      "impactAt": 1794687353.619102,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "progress": 0.3333333333333333,
+      "scoredThroughShotId": 4,
+      "shotId": 4,
+      "firedAt": 1794687352.919157,
+      "scoredThroughFiredAt": 1794687352.919157,
+      "earnedSeconds": 0,
+      "stage": 1,
+      "weapon": "M102"
+    },
+    {
+      "impactAt": 1794687358.71893,
+      "panelId": "Outpost_S02_Roof_01_01",
+      "progress": 0.6666666666666666,
+      "scoredThroughShotId": 5,
+      "shotId": 5,
+      "firedAt": 1794687357.868997,
+      "scoredThroughFiredAt": 1794687357.868997,
+      "earnedSeconds": 0,
+      "stage": 1,
+      "weapon": "M102"
+    },
+    {
+      "impactAt": 1794687364.019472,
+      "scoredThroughShotId": 6,
+      "shotId": 6,
+      "firedAt": 1794687362.96922,
+      "scoredThroughFiredAt": 1794687362.96922,
+      "weapon": "M102"
+    }
+  ],
+  "cleanup": {
+    "aircraftStateAbsent": true,
+    "groundEffectsAbsent": true,
+    "transportAbsent": true,
+    "fragmentFolderAbsent": true,
+    "combatEffectsAbsent": true,
+    "roundStateAbsent": true
+  }
+}

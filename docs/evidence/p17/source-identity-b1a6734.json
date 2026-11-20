@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "source_commit": "b1a67341100e8f72ab87e7fb44166ec8b807fa32",
+  "source_tree": "7c22149fb8d1be70383bdf25f5904f71862d2837",
+  "delivery_commit": "db628e917d7e1a01fa8ce934894a8020a0e5db37",
+  "studio_id": "d26e7b2c-23eb-4007-9db2-3dae43e5ee33",
+  "document": "tests.rbxlx",
+  "date_local": "2026-11-14",
+  "scope": "Read-only Edit source identity before exclusive tester handoff; not Play/native acceptance",
+  "historical_probe_diagnostics": [
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: AssistantCommand:16: script source differs: ReplicatedStorage/ClientSpecs/Foundation.spec"
+          }
+        ],
+        "isError": true
+      },
+      "cause": "Probe expected XML ProtectedString Source; actual serialized source uses another tag. Fixed expected-source parsing to Properties/*[@name=Source]. The native source was not empty or mismatched."
+    },
+    {
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: AssistantCommand:22: missing imported template: MaterialPanels"
+          }
+        ],
+        "isError": true
+      },
+      "cause": "Probe expected MaterialPanels Model; actual managed schema is Folder. Corrected expected class; all 131 script fingerprints had already matched."
+    }
+  ],
+  "final_result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"scripts\":131,\"universeId\":0,\"version\":\"0.747.0.7471481\",\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"mutated\":false,\"placeId\":0,\"passed\":true,\"source\":\"b1a67341100e8f72ab87e7fb44166ec8b807fa32\"}"
+      }
+    ],
+    "isError": false
+  },
+  "mutations_performed": false
+}

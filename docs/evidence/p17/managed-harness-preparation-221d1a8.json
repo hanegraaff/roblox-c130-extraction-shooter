@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "status": "host-passed-native-unexecuted",
+  "productionCommit": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "productionUnchanged": true,
+  "harnessCommit": "coordinator supplies actual commit AFTER freeze",
+  "harnessFingerprintSha256": "ad8bd91f097f111f58ca88907c5b0396e26fede0340a97b2ae51391662525c78",
+  "productionFingerprintSha256": "7e7edb45ebb819b098c2f62518a89d1e630ec6cbae93cd6eb79f9c75e835a9c0",
+  "frozenV7Bodies": {
+    "tests/studio/server/P17MaterialHarness.luau": "c0b59d5d763f995de0636f6bac2170a0f87a93251ecde20c31bf54d6db69af1d",
+    "tests/studio/client/P17MaterialHarness.luau": "bc875d230df21811d23555c0d2c5e71db8f34707a0f7487410f8dd16b6d165ac"
+  },
+  "managedFiles": {
+    "scripts/inspect_build.py": "5aac13ef40571062409842a1d9f49b10acd30a16add491a2ac5e33bf4e26ca49",
+    "scripts/verify.py": "021376272b0eb2dd369059a157ed095e5c9f5d999bf1a54a2cba1d9c77408606",
+    "scripts/p17_harness.py": "9bc2bf14a3061c1442645738ec209bf6c2cbab8876724842ee664911df4dacc7",
+    "tests/tooling/test_p17_harness.py": "c45d8fa914768a7dfb9d9b396e30d6e7acda04cf40f7bea960a4adcd16b79107",
+    "tests/studio/server/P17MaterialHarness.luau": "dce51a369a3bae2e95499a54c5543a07858786e1d3b12fc4ac6f6e9e68a0c5e7",
+    "tests/studio/server/P17ManualRunner.luau": "1f5f6a58e14e6a1c84ac76cad581e1a6674fc74ae3d6f53ef871b128893ae3bc",
+    "tests/studio/server/P17Metadata.luau": "10588c76fc4e464203a117377d9935e1a3d27b83a1e92aff0d4ad89fcf688c8c",
+    "tests/studio/server/RoundHarness.luau": "1b1760c3bae2e6e3ad08539f7ca6fe6409d0081ca89e7471f93cdfb2dd7b7744",
+    "tests/studio/server/init.server.luau": "b8b237ca1dace8249d3f959dcbef8630fb6d7a47c8e63180bec1d3ef743521b5",
+    "tests/studio/client/P17MaterialHarness.luau": "ad3b24582ceb6bf8ac98796ea77b66ce607d47aaa3e7276bef2d1b537761a52a",
+    "tests/studio/client/init.client.luau": "de827a4455da2195325d592728b8944d71bef1c878a91fa4426160d8fb7e282e"
+  },
+  "gate": {
+    "command": "python3 scripts/verify.py",
+    "log": "build/P17ManagedHarnessFullGate.log",
+    "sha256": "e18f0d18f7709e2e9528d82ca634b1dccbd660407dc4f536872c16135e8028ed",
+    "unitPassed": 59,
+    "integrationPassed": 65,
+    "assetPassed": 48,
+    "toolingPassed": 14,
+    "requiredSkipped": 0,
+    "intentionalNegativeProbes": "expected failures observed; not counted as actual passing suites"
+  },
+  "builds": {
+    "build/game.rbxlx": {
+      "sha256": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea",
+      "bytes": 10077248
+    },
+    "build/tests.rbxlx": {
+      "sha256": "b3c378607be999da3175b9df6908385b8001d3d5d8dfab344f503eb345fe6d11",
+      "bytes": 11122017
+    }
+  },
+  "expectedNative": {
+    "sourceCount": 137,
+    "templateMeshes": 2332,
+    "actualProtectedMaterialSlots": 9328,
+    "serverBaseline": 173,
+    "clientBaselineEach": 10,
+    "actualInitialClients": 2,
+    "materialCases": 10,
+    "runtimeScripts": 51,
+    "releaseInstances": 5296,
+    "testInstances": 5393,
+    "authoredPartsEach": 2804
+  },
+  "sourceManifest": {
+    "path": "build/P17ManagedHarnessSourceManifest.json",
+    "sha256": "47d4697f62cc54034fc5a9595f2439f8129955303064ee86b0f9413d5a85700b"
+  },
+  "manualSelection": {
+    "serverOnlySelector": "ServerStorage.DevelopmentSettings.ManualHarness",
+    "value": "P17",
+    "frozenCommitAttribute": "P17HarnessCommit",
+    "startupPublishedClientMode": "ReplicatedStorage.ManualClientHarness",
+    "allowedIsolatedModes": [
+      "P08",
+      "P17",
+      "P07",
+      "P05",
+      "P14"
+    ],
+    "reportFolder": "ServerStorage.P17ManualEvidence",
+    "chunkLimitBytes": 60000,
+    "maxReportBytes": 16000000,
+    "completeWrittenLast": true,
+    "sdkRequired": false
+  },
+  "nativeAcceptanceRun": false,
+  "guide": "build/P17ManagedHarnessGuide.md",
+  "preflightRejection": {
+    "beforeAnyNewResource": true,
+    "actualRosterRequired": 2,
+    "serverBaselineClientCountRequired": 2,
+    "competingOwnersRejected": true,
+    "hostControlFlow": "valid positive +4wrong/stale counts +12individualowners pass under actual Luau with controlled adapters; native IO unverified"
+  }
+}

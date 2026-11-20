@@ -11,8 +11,12 @@ return function()
         local player = players.LocalPlayer
         local controller = require(player.PlayerScripts.Client.GroundCombatController)
         local http = game:GetService("HttpService")
+        local playerGui = player.PlayerGui
         local gui = Instance.new("ScreenGui")
         gui.Name = "GroundAimProjectionProbe"
+        -- Client smoke starts before the first character spawn can clear
+        -- resettable PlayerGui children. Match the production HUD lifetime.
+        gui.ResetOnSpawn = false
         gui.IgnoreGuiInset = true
         local origin = Instance.new("Frame")
         origin.Size = UDim2.fromOffset(0, 0)
@@ -22,7 +26,7 @@ return function()
         cross.Size = UDim2.fromOffset(24, 24)
         cross.AnchorPoint = Vector2.new(0.5, 0.5)
         cross.Parent = gui
-        gui.Parent = player.PlayerGui
+        gui.Parent = playerGui
         local ok, failure = pcall(function()
             local deadline = os.clock() + 10
             local ready = false
@@ -36,90 +40,150 @@ return function()
             end
             assert(ready, "camera viewport did not reach 200×200 within 10 seconds")
             for _, mode in { "world", "native", "touch" } do
-                local camera = workspace.CurrentCamera
-                assert(camera, "current camera disappeared")
-                local viewport = camera.ViewportSize
-                local inset = guiService:GetGuiInset()
-                local worldPoint = camera.CFrame:PointToWorldSpace(Vector3.new(6, 4, -100))
-                local projected = camera:WorldToViewportPoint(worldPoint)
-                local mouse = if mode == "world"
-                    then Vector2.new(projected.X, projected.Y)
-                    else input:GetMouseLocation()
-                -- Native mouse and its engine UnitRay are sampled together,
-                -- without rendering waits between them.
-                local nativeRay = if mode == "native" then player:GetMouse().UnitRay else nil
-                local pixels, offset =
-                    controller.projectAim(viewport, mouse, mode == "touch", inset, origin.AbsolutePosition)
-                local actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
-                local diagnostic = {
-                    mode = mode,
-                    viewport = { viewport.X, viewport.Y },
-                    inset = { inset.X, inset.Y },
-                    fov = camera.FieldOfView,
-                    cameraCFrame = { camera.CFrame:GetComponents() },
-                    mouse = { mouse.X, mouse.Y },
-                    pixels = { pixels.X, pixels.Y },
-                    world = { worldPoint.X, worldPoint.Y, worldPoint.Z },
-                    worldProjection = { projected.X, projected.Y, projected.Z },
-                    rayOrigin = { actualRay.Origin.X, actualRay.Origin.Y, actualRay.Origin.Z },
-                    rayDirection = { actualRay.Direction.X, actualRay.Direction.Y, actualRay.Direction.Z },
-                }
-                local detail = http:JSONEncode(diagnostic)
-                if nativeRay then
-                    local rawRay = camera:ViewportPointToRay(mouse.X, mouse.Y)
-                    assert(
-                        rawRay.Direction.Unit:Dot(nativeRay.Direction.Unit) > 0.99999,
-                        "raw viewport ray disagrees with native Mouse.UnitRay: " .. detail
+                local layoutDeadline = os.clock() + 5
+                repeat
+                    -- This disposable GUI is not driven by the production render
+                    -- callback. Let its origin/layout resolve before sampling it.
+                    runService.RenderStepped:Wait()
+                    runService.RenderStepped:Wait()
+                    assert(gui.Parent == playerGui, "aim projection fixture detached before sampling")
+                    local camera = workspace.CurrentCamera
+                    assert(camera, "current camera disappeared")
+                    local viewport = camera.ViewportSize
+                    local inset = guiService:GetGuiInset()
+                    local projectedOrigin = origin.AbsolutePosition
+                    local worldPoint = camera.CFrame:PointToWorldSpace(Vector3.new(6, 4, -100))
+                    local projected = camera:WorldToViewportPoint(worldPoint)
+                    local mouse = if mode == "world"
+                        then Vector2.new(projected.X, projected.Y)
+                        else input:GetMouseLocation()
+                    -- Native mouse and its engine UnitRay are sampled together,
+                    -- without rendering waits between them.
+                    local nativeRay = if mode == "native" then player:GetMouse().UnitRay else nil
+                    local pixels, offset =
+                        controller.projectAim(viewport, mouse, mode == "touch", inset, projectedOrigin)
+                    local actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
+                    local diagnostic = {
+                        mode = mode,
+                        viewport = { viewport.X, viewport.Y },
+                        inset = { inset.X, inset.Y },
+                        fov = camera.FieldOfView,
+                        cameraCFrame = { camera.CFrame:GetComponents() },
+                        mouse = { mouse.X, mouse.Y },
+                        pixels = { pixels.X, pixels.Y },
+                        world = { worldPoint.X, worldPoint.Y, worldPoint.Z },
+                        worldProjection = { projected.X, projected.Y, projected.Z },
+                        rayOrigin = { actualRay.Origin.X, actualRay.Origin.Y, actualRay.Origin.Z },
+                        rayDirection = { actualRay.Direction.X, actualRay.Direction.Y, actualRay.Direction.Z },
+                    }
+                    local detail = http:JSONEncode(diagnostic)
+                    if nativeRay then
+                        local rawRay = camera:ViewportPointToRay(mouse.X, mouse.Y)
+                        assert(
+                            rawRay.Direction.Unit:Dot(nativeRay.Direction.Unit) > 0.99999,
+                            "raw viewport ray disagrees with native Mouse.UnitRay: " .. detail
+                        )
+                        local nativePoint = nativeRay.Origin + nativeRay.Direction.Unit * 100
+                        local nativeProjection = camera:WorldToViewportPoint(nativePoint)
+                        local nativePixelError = (
+                            pixels - Vector2.new(nativeProjection.X, nativeProjection.Y)
+                        ).Magnitude
+                        assert(
+                            nativePixelError <= 1,
+                            "production aim differs from native Mouse.UnitRay by "
+                                .. tostring(nativePixelError)
+                                .. " pixels: "
+                                .. detail
+                        )
+                    end
+                    if mode == "world" then
+                        -- Compare the independently projected world point to the
+                        -- reprojected actual production ray in pixels. This tests
+                        -- integer rasterization independently of viewport FOV.
+                        local along = (worldPoint - actualRay.Origin).Magnitude
+                        local actualProjection =
+                            camera:WorldToViewportPoint(actualRay.Origin + actualRay.Direction.Unit * along)
+                        local errorPixels = (Vector2.new(actualProjection.X, actualProjection.Y) - mouse).Magnitude
+                        assert(
+                            errorPixels <= 1,
+                            "ground ray misses independently projected world point by "
+                                .. tostring(errorPixels)
+                                .. " pixels: "
+                                .. detail
+                        )
+                        -- The old double-inset subtraction must fail the same
+                        -- independent projection even on zero-inset machines.
+                        local oldRay = camera:ViewportPointToRay(mouse.X, mouse.Y - 58)
+                        local oldProjection =
+                            camera:WorldToViewportPoint(oldRay.Origin + oldRay.Direction.Unit * along)
+                        assert(
+                            (Vector2.new(oldProjection.X, oldProjection.Y) - mouse).Magnitude > 40,
+                            "old inset error was not detected: " .. detail
+                        )
+                    end
+                    cross.Position = offset
+                    runService.RenderStepped:Wait()
+                    runService.RenderStepped:Wait()
+                    assert(gui.Parent == playerGui, "aim projection fixture detached after moving reticle")
+                    local currentCamera = workspace.CurrentCamera
+                    local currentViewport = if currentCamera then currentCamera.ViewportSize else Vector2.zero
+                    local currentInset = guiService:GetGuiInset()
+                    local currentOrigin = origin.AbsolutePosition
+                    local drawn = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + currentInset
+                    local expected = if mode == "touch" then viewport * 0.5 else mouse
+                    local concise = string.format(
+                        "m=%s d=%.1f,%.1f e=%.1f,%.1f p=%.1f,%.1f o=%.1f,%.1f>%.1f,%.1f v=%.0f,%.0f>%.0f,%.0f i=%.0f,%.0f>%.0f,%.0f",
+                        mode,
+                        drawn.X,
+                        drawn.Y,
+                        expected.X,
+                        expected.Y,
+                        pixels.X,
+                        pixels.Y,
+                        projectedOrigin.X,
+                        projectedOrigin.Y,
+                        currentOrigin.X,
+                        currentOrigin.Y,
+                        viewport.X,
+                        viewport.Y,
+                        currentViewport.X,
+                        currentViewport.Y,
+                        inset.X,
+                        inset.Y,
+                        currentInset.X,
+                        currentInset.Y
                     )
-                    local nativePoint = nativeRay.Origin + nativeRay.Direction.Unit * 100
-                    local nativeProjection = camera:WorldToViewportPoint(nativePoint)
-                    local nativePixelError = (pixels - Vector2.new(nativeProjection.X, nativeProjection.Y)).Magnitude
+                    diagnostic.drawn = { drawn.X, drawn.Y }
+                    diagnostic.expected = { expected.X, expected.Y }
+                    diagnostic.sampledOrigin = { projectedOrigin.X, projectedOrigin.Y }
+                    diagnostic.currentOrigin = { currentOrigin.X, currentOrigin.Y }
+                    diagnostic.currentViewport = { currentViewport.X, currentViewport.Y }
+                    diagnostic.currentInset = { currentInset.X, currentInset.Y }
+                    script:SetAttribute("P06AimProjectionTelemetry", http:JSONEncode(diagnostic))
+                    if
+                        currentCamera ~= camera
+                        or currentViewport ~= viewport
+                        or currentInset ~= inset
+                        or currentOrigin ~= projectedOrigin
+                    then
+                        -- Retry only a measured coordinate-system change. A stable
+                        -- incorrect reticle still fails the unchanged pixel bounds.
+                        assert(
+                            os.clock() < layoutDeadline,
+                            "reticle layout changed throughout budget: " .. concise
+                        )
+                        continue
+                    end
+                    assert((drawn - expected).Magnitude <= 1, "reticle/aim " .. concise)
+                    assert((drawn - pixels).Magnitude <= 1, "reticle/ray " .. concise)
+                    local drawnRay = camera:ViewportPointToRay(drawn.X, drawn.Y)
+                    actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
                     assert(
-                        nativePixelError <= 1,
-                        "production aim differs from native Mouse.UnitRay by "
-                            .. tostring(nativePixelError)
-                            .. " pixels: "
-                            .. detail
+                        (actualRay.Direction - drawnRay.Direction).Magnitude < 0.002,
+                        "firing ray/reticle " .. concise
                     )
-                end
-                if mode == "world" then
-                    -- Compare the independently projected world point to the
-                    -- reprojected actual production ray in pixels. This tests
-                    -- integer rasterization independently of viewport FOV.
-                    local along = (worldPoint - actualRay.Origin).Magnitude
-                    local actualProjection =
-                        camera:WorldToViewportPoint(actualRay.Origin + actualRay.Direction.Unit * along)
-                    local errorPixels = (Vector2.new(actualProjection.X, actualProjection.Y) - mouse).Magnitude
-                    assert(
-                        errorPixels <= 1,
-                        "ground ray misses independently projected world point by "
-                            .. tostring(errorPixels)
-                            .. " pixels: "
-                            .. detail
-                    )
-                    -- The old double-inset subtraction must fail the same
-                    -- independent projection even on zero-inset machines.
-                    local oldRay = camera:ViewportPointToRay(mouse.X, mouse.Y - 58)
-                    local oldProjection =
-                        camera:WorldToViewportPoint(oldRay.Origin + oldRay.Direction.Unit * along)
-                    assert(
-                        (Vector2.new(oldProjection.X, oldProjection.Y) - mouse).Magnitude > 40,
-                        "old inset error was not detected: " .. detail
-                    )
-                end
-                cross.Position = offset
-                runService.RenderStepped:Wait()
-                runService.RenderStepped:Wait()
-                local drawn = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + guiService:GetGuiInset()
-                local expected = if mode == "touch" then viewport * 0.5 else mouse
-                assert((drawn - expected).Magnitude <= 1, "reticle does not follow viewport aim: " .. detail)
-                assert((drawn - pixels).Magnitude <= 1, "drawn reticle and ray pixels diverge: " .. detail)
-                local drawnRay = camera:ViewportPointToRay(drawn.X, drawn.Y)
-                actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
-                assert(
-                    (actualRay.Direction - drawnRay.Direction).Magnitude < 0.002,
-                    "firing ray misses the actual drawn reticle: " .. detail
-                )
+                    break
+                until false
             end
         end)
         gui:Destroy()

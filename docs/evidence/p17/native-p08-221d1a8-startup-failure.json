@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "engine": "0.748.0.7481526",
+  "candidate": "221d1a824529855db110712d61f0b1f8be5f68e8",
+  "localPlace": {
+    "placeId": 0,
+    "gameId": 0,
+    "edit": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+    "server": "539063f4-514a-4d8d-bdfe-59db164a1f31",
+    "clientStudios": [
+      "623bce2d-9a97-4ff8-b542-ecbdae6e73e4",
+      "7af8d96a-d7fc-42b6-a080-6b705609a33c",
+      "7bc2cbe8-b644-4140-a118-e44e7f1546fa"
+    ]
+  },
+  "server": {
+    "players": {
+      "1": {
+        "name": "Player1",
+        "id": -1
+      },
+      "2": {
+        "name": "Player2",
+        "id": -2
+      },
+      "3": {
+        "name": "Player3",
+        "id": -3
+      }
+    },
+    "baseline": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 173,
+      "clientCount": 3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 173
+    },
+    "clientMode": "P08",
+    "placeId": 0,
+    "commit": "221d1a824529855db110712d61f0b1f8be5f68e8",
+    "universe": 0,
+    "invocation": {
+      "requestedClients": 3,
+      "mode": "manual-server-clients",
+      "harness": "P08"
+    },
+    "p08Bytes": 3900,
+    "reportBytes": 3994,
+    "selector": "P08"
+  },
+  "clientBaselines": [
+    {
+      "report": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 10,
+        "userId": -3,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 10
+      },
+      "player": -3,
+      "errors": [],
+      "placeId": 0,
+      "universe": 0
+    },
+    {
+      "report": {
+        "errors": 1,
+        "skipped": 0,
+        "passed": 9,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 1,
+        "discovered": 10
+      },
+      "player": -1,
+      "errors": [
+        "ReplicatedStorage.ClientSpecs.GroundAimGui.spec:184: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:171: reticle/aim m=world d=12.0,70.0 e=567.0,291.3 p=567.0,291.0 o=0.0,0.0>0.0,0.0 v=1081,618>1081,618 i=0,58>0,58\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:184\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nPlayers.Player1.PlayerScripts.ClientTests:9\n"
+      ],
+      "placeId": 0,
+      "universe": 0
+    },
+    {
+      "report": {
+        "errors": 1,
+        "skipped": 0,
+        "passed": 9,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 1,
+        "discovered": 10
+      },
+      "player": -2,
+      "errors": [
+        "ReplicatedStorage.ClientSpecs.GroundAimGui.spec:184: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:171: reticle/aim m=world d=12.0,70.0 e=649.2,276.1 p=649.0,276.0 o=0.0,0.0>0.0,0.0 v=1153,649>1153,649 i=0,58>0,58\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:184\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\nPlayers.Player2.PlayerScripts.ClientTests:9\n"
+      ],
+      "placeId": 0,
+      "universe": 0
+    }
+  ],
+  "clientAimTelemetry": [
+    {
+      "player": -3,
+      "lastInput": "Enum.UserInputType.MouseMovement",
+      "viewport": "1081, 618",
+      "inset": "0, 58",
+      "telemetry": {
+        "currentViewport": [
+          1081,
+          618
+        ],
+        "sampledOrigin": [
+          0,
+          -58
+        ],
+        "worldProjection": [
+          566.9778442382812,
+          291.34808349609375,
+          100.00001525878906
+        ],
+        "currentInset": [
+          0,
+          58
+        ],
+        "drawn": [
+          541,
+          309
+        ],
+        "mode": "touch",
+        "inset": [
+          0,
+          58
+        ],
+        "world": [
+          -14,
+          -14.284940719604492,
+          22.446205139160156
+        ],
+        "rayDirection": [
+          0.0011330213164910674,
+          -0.2588188946247101,
+          -0.9659252166748047
+        ],
+        "cameraCFrame": [
+          -20,
+          7.73326301574707,
+          120.0740737915039,
+          1,
+          0,
+          0,
+          0,
+          0.965925931930542,
+          0.2588190734386444,
+          0,
+          -0.2588190734386444,
+          0.965925931930542
+        ],
+        "currentOrigin": [
+          0,
+          -58
+        ],
+        "pixels": [
+          541,
+          309
+        ],
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "mouse": [
+          -1,
+          -1
+        ],
+        "expected": [
+          540.5,
+          309
+        ],
+        "rayOrigin": [
+          -19.999887466430664,
+          7.707381248474121,
+          119.97747802734375
+        ]
+      }
+    },
+    {
+      "player": -1,
+      "lastInput": "Enum.UserInputType.MouseMovement",
+      "viewport": "1081, 618",
+      "inset": "0, 58",
+      "telemetry": {
+        "currentViewport": [
+          1081,
+          618
+        ],
+        "sampledOrigin": [
+          0,
+          0
+        ],
+        "worldProjection": [
+          566.9778442382812,
+          291.34808349609375,
+          100.0000228881836
+        ],
+        "currentInset": [
+          0,
+          58
+        ],
+        "drawn": [
+          12,
+          70
+        ],
+        "mode": "world",
+        "inset": [
+          0,
+          58
+        ],
+        "world": [
+          6,
+          -14.28494644165039,
+          22.446205139160156
+        ],
+        "rayDirection": [
+          0.05989256128668785,
+          -0.2188442200422287,
+          -0.9739199876785278
+        ],
+        "cameraCFrame": [
+          0,
+          7.733257293701172,
+          120.0740737915039,
+          1,
+          0,
+          0,
+          0,
+          0.965925931930542,
+          0.2588190734386444,
+          0,
+          -0.2588190734386444,
+          0.965925931930542
+        ],
+        "currentOrigin": [
+          0,
+          0
+        ],
+        "pixels": [
+          567,
+          291
+        ],
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "mouse": [
+          566.9778442382812,
+          291.34808349609375
+        ],
+        "expected": [
+          566.9778442382812,
+          291.34808349609375
+        ],
+        "rayOrigin": [
+          0.006005015689879656,
+          7.711315155029297,
+          119.97642517089844
+        ]
+      }
+    },
+    {
+      "player": -2,
+      "lastInput": "Enum.UserInputType.MouseMovement",
+      "viewport": "1153, 649",
+      "inset": "0, 58",
+      "telemetry": {
+        "currentViewport": [
+          1153,
+          649
+        ],
+        "sampledOrigin": [
+          0,
+          0
+        ],
+        "worldProjection": [
+          649.1630859375,
+          276.05792236328125,
+          99.99998474121094
+        ],
+        "currentInset": [
+          0,
+          58
+        ],
+        "drawn": [
+          12,
+          70
+        ],
+        "mode": "world",
+        "inset": [
+          0,
+          58
+        ],
+        "world": [
+          286.44586181640625,
+          72.11775207519531,
+          6.679939270019531
+        ],
+        "rayDirection": [
+          -0.7301645874977112,
+          -0.6770347952842712,
+          -0.09210600703954697
+        ],
+        "cameraCFrame": [
+          359.6474914550781,
+          140,
+          15.92770004272461,
+          0.04424361139535904,
+          -0.7064144015312195,
+          0.7064144015312195,
+          0,
+          0.70710688829422,
+          0.7071067690849304,
+          -0.9990208745002747,
+          -0.03128495812416077,
+          0.03128495812416077
+        ],
+        "currentOrigin": [
+          0,
+          0
+        ],
+        "pixels": [
+          649,
+          276
+        ],
+        "fov": 30,
+        "viewport": [
+          1153,
+          649
+        ],
+        "mouse": [
+          649.1630859375,
+          276.05792236328125
+        ],
+        "expected": [
+          649.1630859375,
+          276.05792236328125
+        ],
+        "rayOrigin": [
+          359.57427978515625,
+          139.93211364746094,
+          15.918465614318848
+        ]
+      }
+    }
+  ],
+  "manualP08Report": {
+    "invocation": {
+      "requestedClients": 3,
+      "mode": "manual-server-clients",
+      "harness": "P08"
+    },
+    "result": {
+      "requestedClients": 3,
+      "peakClientCount": 3,
+      "passed": 1,
+      "droppedTraceRecords": 0,
+      "unsupportedChecks": [
+        "actual same-identity reconnect"
+      ],
+      "suite": "P08-multiplayer",
+      "currentClientCount": 3,
+      "departureMethod": "server-kick",
+      "initialClientCount": 3,
+      "clientCount": 3,
+      "requiredUnverified": [],
+      "discovered": 3,
+      "actualReconnectVerified": false,
+      "cases": [
+        {
+          "passed": false,
+          "name": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "detail": "ServerScriptService.ServerTests.LauncherHarness:44: P08 timeout: actual client ready"
+        },
+        {
+          "passed": false,
+          "name": "Harness completion",
+          "detail": "ServerScriptService.ServerTests.LauncherHarness:427: ServerScriptService.ServerTests.LauncherHarness:44: P08 timeout: actual client ready"
+        },
+        {
+          "name": "A6 teardown invalidates deferred callbacks and removes every owned resource",
+          "passed": true
+        }
+      ],
+      "environment": "Studio",
+      "skipped": 0,
+      "failed": 2,
+      "traces": [
+        {
+          "aircraft": [
+            360,
+            140,
+            0.00027563716867007315
+          ],
+          "resources": {
+            "flights": 0,
+            "connections": 5,
+            "queued": 0,
+            "representations": 0
+          },
+          "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "wallTime": 21.573034583358094,
+          "launcher": {
+            "state": "Inactive",
+            "readyAt": 0,
+            "launcherId": "",
+            "position": {
+              "y": 0,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 0,
+            "ammo": 0,
+            "roundId": 0
+          },
+          "rockets": [],
+          "health": 300,
+          "phase": "Lobby",
+          "serverTime": 1795134086.148718,
+          "stage": "case-start",
+          "roundId": 0
+        },
+        {
+          "aircraft": [
+            360,
+            140,
+            0.00027563716867007315
+          ],
+          "resources": {
+            "flights": 0,
+            "connections": 5,
+            "queued": 0,
+            "representations": 0
+          },
+          "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "wallTime": 21.61661695834482,
+          "launcher": {
+            "state": "Inactive",
+            "readyAt": 0,
+            "launcherId": "",
+            "position": {
+              "y": 0,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 0,
+            "ammo": 0,
+            "roundId": 0
+          },
+          "rockets": [],
+          "health": 300,
+          "phase": "Deploying",
+          "serverTime": 1795134086.192301,
+          "stage": "observed-state",
+          "roundId": 1
+        },
+        {
+          "aircraft": [
+            360,
+            140,
+            0.0008748483960516751
+          ],
+          "resources": {
+            "flights": 0,
+            "connections": 5,
+            "queued": 0,
+            "representations": 1
+          },
+          "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "wallTime": 21.73983029165538,
+          "launcher": {
+            "state": "Available",
+            "readyAt": 0,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 1,
+            "ammo": 1,
+            "roundId": 1
+          },
+          "rockets": [],
+          "health": 300,
+          "phase": "Deploying",
+          "serverTime": 1795134086.315515,
+          "stage": "observed-state",
+          "roundId": 1
+        },
+        {
+          "aircraft": [
+            359.95709228515625,
+            140,
+            5.558985233306885
+          ],
+          "resources": {
+            "flights": 0,
+            "connections": 5,
+            "queued": 0,
+            "representations": 1
+          },
+          "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "wallTime": 21.945160750008654,
+          "launcher": {
+            "state": "Available",
+            "readyAt": 0,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 1,
+            "ammo": 1,
+            "roundId": 1
+          },
+          "rockets": [],
+          "health": 300,
+          "phase": "Active",
+          "serverTime": 1795134086.520847,
+          "stage": "observed-state",
+          "roundId": 1
+        },
+        {
+          "aircraft": [
+            173.79843139648438,
+            140,
+            315.268310546875
+          ],
+          "resources": {
+            "flights": 0,
+            "connections": 5,
+            "queued": 0,
+            "representations": 1
+          },
+          "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "wallTime": 37.01156645832816,
+          "extra": {
+            "passed": false,
+            "detail": "ServerScriptService.ServerTests.LauncherHarness:44: P08 timeout: actual client ready"
+          },
+          "launcher": {
+            "state": "Available",
+            "readyAt": 0,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 1,
+            "ammo": 1,
+            "roundId": 1
+          },
+          "rockets": [],
+          "health": 300,
+          "phase": "Active",
+          "serverTime": 1795134101.587354,
+          "stage": "case-failed",
+          "roundId": 1
+        },
+        {
+          "aircraft": [
+            173.79843139648438,
+            140,
+            315.268310546875
+          ],
+          "resources": {
+            "flights": 0,
+            "connections": 5,
+            "queued": 0,
+            "representations": 1
+          },
+          "case": "A1/A5 three clients see one map launcher with M-7-only initial loadouts",
+          "wallTime": 37.011601875012275,
+          "launcher": {
+            "state": "Available",
+            "readyAt": 0,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 1,
+            "ammo": 1,
+            "roundId": 1
+          },
+          "rockets": [],
+          "health": 300,
+          "phase": "Active",
+          "serverTime": 1795134101.58739,
+          "stage": "before-runtime-cleanup",
+          "roundId": 1
+        }
+      ],
+      "mode": "manual-server-clients"
+    }
+  },
+  "cleanup": {
+    "round": false,
+    "p08": false,
+    "aircraft": false
+  },
+  "spawnControl": {
+    "before": {
+      "reset": true,
+      "persistent": false,
+      "absReset": "198, 105",
+      "absPersistent": "198, 105"
+    },
+    "spawn": {
+      "temporaryCharacterCreated": true,
+      "userId": -1
+    },
+    "after": {
+      "resetPresent": false,
+      "persistentAbs": "198, 105",
+      "guisCleared": true,
+      "characterPresent": true,
+      "persistentPresent": true
+    },
+    "temporaryAvatarCleared": true
+  }
+}

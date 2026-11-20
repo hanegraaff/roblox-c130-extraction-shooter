@@ -1,0 +1,39 @@
+{
+  "source": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "scope": "Focused diagnostic attempt, assertions unchanged; client records TestEZ errors, excluded listener timeout90",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":2,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":171,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":171}\",\"stage\":\"{\\\"clientCount\\\":2,\\\"serverTime\\\":1794681454.787734,\\\"stage\\\":\\\"A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation\\\"}\",\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":7.2571659999666739}\"}"
+      }
+    ],
+    "isError": false
+  },
+  "clients": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"baseline\":\"{\\\"errors\\\":2,\\\"skipped\\\":0,\\\"passed\\\":8,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":2,\\\"discovered\\\":10}\",\"errors\":\"[\\\"ReplicatedStorage.ClientSpecs.GroundAimGui.spec:126: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:115: reticle does not follow viewport aim: {\\\\\\\"cameraCFrame\\\\\\\":[359.94525146484377,140,6.278241157531738,0.01743955910205841,-0.7069992423057556,0.7069992423057556,0,0.7071067690849304,0.7071067690849304,-0.999847948551178,-0.012331630103290081,0.012331630103290081],\\\\\\\"worldProjection\\\\\\\":[609.6922607421875,262.8719482421875,99.99996948242188],\\\\\\\"rayOrigin\\\\\\\":[359.871826171875,139.93211364746095,6.270933151245117],\\\\\\\"rayDirection\\\\\\\":[-0.732239842414856,-0.6771349906921387,-0.\\\\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:126\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\\\\nPlayers.Player1.PlayerScripts.ClientTests:9\\\\n\\\",\\\"ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:191: stop leaked transparency/listeners\\\\nReplicatedStorage.ClientSpecs.ThermalCosmetics.spec:191\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\\\\nPlayers.Player1.PlayerScripts.ClientTests:9\\\\n\\\"]\",\"life\":\"Alive\",\"userId\":-1,\"role\":\"Gunship\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"errors\":\"[]\",\"life\":\"Alive\",\"userId\":-2,\"role\":\"Ground\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}

@@ -3,8 +3,10 @@
 These P16 exports accompany the editable
 [Blender source and review guide](../../blender/military-outpost/README.md).
 The user approved their source revision `e8fb840` on 2026-11-13
-([approval record](../../../docs/evidence/p16/human-approval.json)). They await P17's
-Roblox import/engine checks. The playable map still uses its original Outpost.
+([approval record](../../../docs/evidence/p16/human-approval.json)). The P17 candidate uses managed native imports
+of these assets to replace the smaller Outpost. Actual engine/gameplay and human
+acceptance remain open; [import receipts and reconstruction](../../imports/military-outpost/README.md)
+identify the current packages, owner and material-finish limits.
 
 | Files | Contract |
 | --- | --- |
@@ -65,6 +67,6 @@ checks remain separate. Hashes are in
 
 All meshes/textures were authored locally with seed 1601; supplied images were
 visual references only. Creator/license information for those references was
-not supplied. No reference pixels, third-party meshes, uploaded IDs or cloud
-ownership are asserted. Binary source/exports use ordinary Git below the
+not supplied. No reference pixels or third-party meshes are included. P17's separate import
+receipts and manifest record actual uploaded IDs and ownership. Binary source/exports use ordinary Git below the
 documented file/package limits; backups and caches are excluded.

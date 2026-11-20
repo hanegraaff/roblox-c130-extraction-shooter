@@ -37,6 +37,7 @@ do
                     ) :: ((string, () -> ()) -> (), unknown) -> ()
                     local serverModules = {
                         PanelDamageRules = true,
+                        PanelAssetRules = true,
                         DestructionService = true,
                         RoleService = true,
                         RoundRules = true,

@@ -1,0 +1,195 @@
+{
+  "before": [
+    {
+      "chunk": 0,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":47,\"checked\":80,\"parts\":24}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 1,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":79}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 2,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":77}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 3,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":74}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 4,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":75}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 5,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":75}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 6,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":48,\"checked\":80,\"parts\":18}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 7,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":32,\"checked\":34,\"parts\":0}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: AssistantCommand:36: release script count differs"
+      }
+    ],
+    "isError": true
+  },
+  "after": [
+    {
+      "chunk": 0,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":47,\"checked\":80,\"parts\":24}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 1,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":79}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 2,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":77}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 3,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":74}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 4,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":75}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 5,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":80,\"parts\":75}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "chunk": 6,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mutated\":false,\"scripts\":0,\"checked\":24,\"parts\":18}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}

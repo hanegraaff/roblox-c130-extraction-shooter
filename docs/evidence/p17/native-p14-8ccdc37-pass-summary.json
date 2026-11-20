@@ -1,0 +1,866 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "8ccdc371ed02a5cc5af109a9d012e7adb0707780",
+  "tree": "75157befd426a4c713af16554ca7543dca244b39",
+  "scope": "Native rerun in the same local DataModel after restoring both verified normal client subtrees and using fresh P14 test modules",
+  "startupCandidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "normalClientRestore": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"foundationStatus\":1,\"user\":-1,\"entry\":\"Players.Player1.PlayerScripts.Client\",\"verifiedScripts\":6,\"originalBaselineUnchanged\":true}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"foundationStatus\":1,\"user\":-2,\"entry\":\"Players.Player2.PlayerScripts.Client\",\"verifiedScripts\":6,\"originalBaselineUnchanged\":true}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "launch": {
+    "server": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"at\":1795142837.061367,\"pristinePanels\":188,\"started\":\"P14\"}"
+        }
+      ],
+      "isError": false
+    },
+    "clients": [
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"module\":\"P14VerifiedFrame8ccdc37\",\"sourceBytes\":74770,\"userId\":-1,\"originalBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"module\":\"P14VerifiedFrame8ccdc37\",\"sourceBytes\":74770,\"userId\":-2,\"originalBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "counts": {
+    "discovered": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0
+  },
+  "initialClients": [
+    -2,
+    -1
+  ],
+  "finalClients": [
+    -1
+  ],
+  "orbits": [
+    {
+      "weapon": "GAU23",
+      "seconds": 90.98161875002552,
+      "maximumOriginError": 0,
+      "phaseBins": 16,
+      "frames": 2137,
+      "maximumOriginErrorSample": {
+        "cameraToProjectionStuds": 0,
+        "pivotToHitboxStuds": 0,
+        "cameraProjectionLookDot": 1,
+        "capturedTime": 1873.8683697083034,
+        "sampledFrame": 1,
+        "aircraftPivot": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ],
+        "ordering": "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+        "serverTime": 1795142838.232716,
+        "localFocus": [
+          220,
+          0
+        ],
+        "projectionAdvanced": false,
+        "time": 1873.8705063333036,
+        "providerPreviousFrame": "missing",
+        "projectionFrame": 1,
+        "liveToCapturedHitboxStuds": 0,
+        "committedOriginError": 0,
+        "projectionAge": 0.0013187916483730078,
+        "panDirection": [
+          0,
+          0
+        ],
+        "expectedProjectionFrame": 1,
+        "projectionCamera": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          0.036825306713581085,
+          -0.7066271901130676,
+          0.7066271901130676,
+          0,
+          0.7071068286895752,
+          0.7071067690849304,
+          -0.9993217587471008,
+          -0.026039423421025276,
+          0.026039425283670425
+        ],
+        "cameraType": "Scriptable",
+        "previousProjectionFrame": "missing",
+        "inward": 0.7071068286895752,
+        "worldFocus": [
+          219.8507843017578,
+          0,
+          8.101566314697266
+        ],
+        "cameraFrame": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          0.036825306713581085,
+          -0.7066271901130676,
+          0.7066271901130676,
+          0,
+          0.7071068286895752,
+          0.7071067690849304,
+          -0.9993217587471008,
+          -0.026039423421025276,
+          0.026039425283670425
+        ],
+        "deferredDelaySeconds": 0.0021366250002756715,
+        "hitboxFrame": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ],
+        "originError": 0,
+        "projectionTime": 1873.8691875416553,
+        "liveHitboxFrame": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ],
+        "cameraToHitboxStuds": 0,
+        "inputBlocked": false,
+        "liveAircraftPivot": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ]
+      },
+      "maximumCommittedOriginError": 0,
+      "minimumInward": 0.21532204747200012,
+      "maximumCommittedOriginErrorSample": {
+        "cameraToProjectionStuds": 0,
+        "pivotToHitboxStuds": 0,
+        "cameraProjectionLookDot": 1,
+        "capturedTime": 1873.8683697083034,
+        "sampledFrame": 1,
+        "aircraftPivot": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ],
+        "ordering": "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+        "serverTime": 1795142838.232716,
+        "localFocus": [
+          220,
+          0
+        ],
+        "projectionAdvanced": false,
+        "time": 1873.8705063333036,
+        "providerPreviousFrame": "missing",
+        "projectionFrame": 1,
+        "liveToCapturedHitboxStuds": 0,
+        "committedOriginError": 0,
+        "projectionAge": 0.0013187916483730078,
+        "panDirection": [
+          0,
+          0
+        ],
+        "expectedProjectionFrame": 1,
+        "projectionCamera": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          0.036825306713581085,
+          -0.7066271901130676,
+          0.7066271901130676,
+          0,
+          0.7071068286895752,
+          0.7071067690849304,
+          -0.9993217587471008,
+          -0.026039423421025276,
+          0.026039425283670425
+        ],
+        "cameraType": "Scriptable",
+        "previousProjectionFrame": "missing",
+        "inward": 0.7071068286895752,
+        "worldFocus": [
+          219.8507843017578,
+          0,
+          8.101566314697266
+        ],
+        "cameraFrame": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          0.036825306713581085,
+          -0.7066271901130676,
+          0.7066271901130676,
+          0,
+          0.7071068286895752,
+          0.7071067690849304,
+          -0.9993217587471008,
+          -0.026039423421025276,
+          0.026039425283670425
+        ],
+        "deferredDelaySeconds": 0.0021366250002756715,
+        "hitboxFrame": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ],
+        "originError": 0,
+        "projectionTime": 1873.8691875416553,
+        "liveHitboxFrame": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ],
+        "cameraToHitboxStuds": 0,
+        "inputBlocked": false,
+        "liveAircraftPivot": [
+          359.7558288574219,
+          140,
+          13.257109642028809,
+          -0.9993207454681396,
+          0,
+          0.03685324266552925,
+          0,
+          1,
+          0,
+          -0.03685324266552925,
+          0,
+          -0.9993207454681396
+        ]
+      },
+      "minimumInwardSample": {
+        "cameraToProjectionStuds": 0,
+        "pivotToHitboxStuds": 0,
+        "cameraProjectionLookDot": 1,
+        "capturedTime": 1917.8352877916768,
+        "sampledFrame": 652,
+        "aircraftPivot": [
+          -359.80419921875,
+          140,
+          11.871356010437012,
+          0.9994563460350037,
+          0,
+          0.03297053650021553,
+          0,
+          1,
+          0,
+          -0.03297053650021553,
+          0,
+          0.9994563460350037
+        ],
+        "ordering": "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+        "serverTime": 1795142882.198776,
+        "localFocus": [
+          329.0052185058594,
+          12.640413284301758
+        ],
+        "projectionAdvanced": true,
+        "time": 1917.8355709166499,
+        "providerPreviousFrame": 651,
+        "projectionFrame": 652,
+        "liveToCapturedHitboxStuds": 0,
+        "committedOriginError": 0,
+        "projectionAge": 0.0000822083093225956,
+        "panDirection": [
+          0,
+          0
+        ],
+        "expectedProjectionFrame": 652,
+        "projectionCamera": [
+          -359.80419921875,
+          140,
+          11.871356010437012,
+          0.051819805055856705,
+          0.975827693939209,
+          -0.21230921149253845,
+          -0.08573753386735916,
+          0.21615710854530334,
+          0.9725868701934814,
+          0.9949693083763123,
+          -0.032196395099163055,
+          0.09486626833677292
+        ],
+        "cameraType": "Scriptable",
+        "previousProjectionFrame": 651,
+        "inward": 0.21532204747200012,
+        "worldFocus": [
+          -329.2431335449219,
+          0,
+          -1.7842652797698975
+        ],
+        "cameraFrame": [
+          -359.80419921875,
+          140,
+          11.871356010437012,
+          0.051819805055856705,
+          0.975827693939209,
+          -0.21230921149253845,
+          -0.08573753386735916,
+          0.21615710854530334,
+          0.9725868701934814,
+          0.9949693083763123,
+          -0.032196395099163055,
+          0.09486626833677292
+        ],
+        "deferredDelaySeconds": 0.00028312497306615114,
+        "hitboxFrame": [
+          -359.80419921875,
+          140,
+          11.871356010437012,
+          0.9994563460350037,
+          0,
+          0.03297053650021553,
+          0,
+          1,
+          0,
+          -0.03297053650021553,
+          0,
+          0.9994563460350037
+        ],
+        "originError": 0,
+        "projectionTime": 1917.8354887083406,
+        "liveHitboxFrame": [
+          -359.80419921875,
+          140,
+          11.871356010437012,
+          0.9994563460350037,
+          0,
+          0.03297053650021553,
+          0,
+          1,
+          0,
+          -0.03297053650021553,
+          0,
+          0.9994563460350037
+        ],
+        "cameraToHitboxStuds": 0,
+        "inputBlocked": false,
+        "liveAircraftPivot": [
+          -359.80419921875,
+          140,
+          11.871356010437012,
+          0.9994563460350037,
+          0,
+          0.03297053650021553,
+          0,
+          1,
+          0,
+          -0.03297053650021553,
+          0,
+          0.9994563460350037
+        ]
+      },
+      "pairingFailures": 0
+    },
+    {
+      "weapon": "M102",
+      "seconds": 90.89360712503549,
+      "maximumOriginError": 0,
+      "phaseBins": 16,
+      "frames": 1548,
+      "maximumOriginErrorSample": {
+        "cameraToProjectionStuds": 0,
+        "pivotToHitboxStuds": 0,
+        "cameraProjectionLookDot": 1,
+        "capturedTime": 1965.0518222916871,
+        "sampledFrame": 1,
+        "aircraftPivot": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ],
+        "ordering": "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+        "serverTime": 1795142929.416673,
+        "localFocus": [
+          75.8141860961914,
+          94.08879089355469
+        ],
+        "projectionAdvanced": false,
+        "time": 1965.0534653333016,
+        "providerPreviousFrame": 2139,
+        "projectionFrame": 2140,
+        "liveToCapturedHitboxStuds": 0,
+        "committedOriginError": 0,
+        "projectionAge": 0.0009579582838341594,
+        "panDirection": [
+          0,
+          0
+        ],
+        "expectedProjectionFrame": 2140,
+        "projectionCamera": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.13719025254249573,
+          -0.43865519762039185,
+          0.8881218433380127,
+          -0.1258179247379303,
+          0.897054135799408,
+          0.42363157868385315,
+          -0.9825215935707092,
+          -0.05362352356314659,
+          -0.1782577782869339
+        ],
+        "cameraType": "Scriptable",
+        "previousProjectionFrame": "missing",
+        "inward": 0.8599292039871216,
+        "worldFocus": [
+          63.837059020996094,
+          0,
+          102.59298706054688
+        ],
+        "cameraFrame": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.13719025254249573,
+          -0.43865519762039185,
+          0.8881218433380127,
+          -0.1258179247379303,
+          0.897054135799408,
+          0.42363157868385315,
+          -0.9825215935707092,
+          -0.05362352356314659,
+          -0.1782577782869339
+        ],
+        "deferredDelaySeconds": 0.0016430416144430637,
+        "hitboxFrame": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ],
+        "originError": 0,
+        "projectionTime": 1965.0525073750177,
+        "liveHitboxFrame": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ],
+        "cameraToHitboxStuds": 0,
+        "inputBlocked": false,
+        "liveAircraftPivot": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ]
+      },
+      "maximumCommittedOriginError": 0,
+      "minimumInward": 0.4336490035057068,
+      "maximumCommittedOriginErrorSample": {
+        "cameraToProjectionStuds": 0,
+        "pivotToHitboxStuds": 0,
+        "cameraProjectionLookDot": 1,
+        "capturedTime": 1965.0518222916871,
+        "sampledFrame": 1,
+        "aircraftPivot": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ],
+        "ordering": "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+        "serverTime": 1795142929.416673,
+        "localFocus": [
+          75.8141860961914,
+          94.08879089355469
+        ],
+        "projectionAdvanced": false,
+        "time": 1965.0534653333016,
+        "providerPreviousFrame": 2139,
+        "projectionFrame": 2140,
+        "liveToCapturedHitboxStuds": 0,
+        "committedOriginError": 0,
+        "projectionAge": 0.0009579582838341594,
+        "panDirection": [
+          0,
+          0
+        ],
+        "expectedProjectionFrame": 2140,
+        "projectionCamera": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.13719025254249573,
+          -0.43865519762039185,
+          0.8881218433380127,
+          -0.1258179247379303,
+          0.897054135799408,
+          0.42363157868385315,
+          -0.9825215935707092,
+          -0.05362352356314659,
+          -0.1782577782869339
+        ],
+        "cameraType": "Scriptable",
+        "previousProjectionFrame": "missing",
+        "inward": 0.8599292039871216,
+        "worldFocus": [
+          63.837059020996094,
+          0,
+          102.59298706054688
+        ],
+        "cameraFrame": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.13719025254249573,
+          -0.43865519762039185,
+          0.8881218433380127,
+          -0.1258179247379303,
+          0.897054135799408,
+          0.42363157868385315,
+          -0.9825215935707092,
+          -0.05362352356314659,
+          -0.1782577782869339
+        ],
+        "deferredDelaySeconds": 0.0016430416144430637,
+        "hitboxFrame": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ],
+        "originError": 0,
+        "projectionTime": 1965.0525073750177,
+        "liveHitboxFrame": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ],
+        "cameraToHitboxStuds": 0,
+        "inputBlocked": false,
+        "liveAircraftPivot": [
+          357.3398742675781,
+          140,
+          43.68309783935547,
+          -0.9926141500473022,
+          0,
+          0.12131678313016891,
+          0,
+          1,
+          0,
+          -0.12131678313016891,
+          0,
+          -0.9926141500473022
+        ]
+      },
+      "minimumInwardSample": {
+        "cameraToProjectionStuds": 0,
+        "pivotToHitboxStuds": 0,
+        "cameraProjectionLookDot": 1,
+        "capturedTime": 1991.5825972083258,
+        "sampledFrame": 399,
+        "aircraftPivot": [
+          -141.25929260253906,
+          140,
+          331.1280822753906,
+          0.39243197441101074,
+          0,
+          0.9197810292243958,
+          0,
+          1,
+          0,
+          -0.9197810292243958,
+          0,
+          0.39243197441101074
+        ],
+        "ordering": "non-yielding provider aircraft snapshot paired with its deferred projection commit",
+        "serverTime": 1795142955.946109,
+        "localFocus": [
+          269.3506164550781,
+          -126.01516723632812
+        ],
+        "projectionAdvanced": true,
+        "time": 1991.5829094999935,
+        "providerPreviousFrame": 2537,
+        "projectionFrame": 2538,
+        "liveToCapturedHitboxStuds": 0,
+        "committedOriginError": 0,
+        "projectionAge": 0.00015154166612774134,
+        "panDirection": [
+          0,
+          0
+        ],
+        "expectedProjectionFrame": 2538,
+        "projectionCamera": [
+          -141.25929260253906,
+          140,
+          331.1280822753906,
+          0.6053155660629272,
+          0.3293707072734833,
+          -0.7246432900428772,
+          0.5060189366340637,
+          0.5435096025466919,
+          0.6697328090667725,
+          0.6144409775733948,
+          -0.7720829248428345,
+          0.16232705116271973
+        ],
+        "cameraType": "Scriptable",
+        "previousProjectionFrame": 2537,
+        "inward": 0.4336490035057068,
+        "worldFocus": [
+          10.219120025634766,
+          0,
+          297.1954650878906
+        ],
+        "cameraFrame": [
+          -141.25929260253906,
+          140,
+          331.1280822753906,
+          0.6053155660629272,
+          0.3293707072734833,
+          -0.7246432900428772,
+          0.5060189366340637,
+          0.5435096025466919,
+          0.6697328090667725,
+          0.6144409775733948,
+          -0.7720829248428345,
+          0.16232705116271973
+        ],
+        "deferredDelaySeconds": 0.0003122916677966714,
+        "hitboxFrame": [
+          -141.25929260253906,
+          140,
+          331.1280822753906,
+          0.39243197441101074,
+          0,
+          0.9197810292243958,
+          0,
+          1,
+          0,
+          -0.9197810292243958,
+          0,
+          0.39243197441101074
+        ],
+        "originError": 0,
+        "projectionTime": 1991.5827579583274,
+        "liveHitboxFrame": [
+          -141.25929260253906,
+          140,
+          331.1280822753906,
+          0.39243197441101074,
+          0,
+          0.9197810292243958,
+          0,
+          1,
+          0,
+          -0.9197810292243958,
+          0,
+          0.39243197441101074
+        ],
+        "cameraToHitboxStuds": 0,
+        "inputBlocked": false,
+        "liveAircraftPivot": [
+          -141.25929260253906,
+          140,
+          331.1280822753906,
+          0.39243197441101074,
+          0,
+          0.9197810292243958,
+          0,
+          1,
+          0,
+          -0.9197810292243958,
+          0,
+          0.39243197441101074
+        ]
+      },
+      "pairingFailures": 0
+    }
+  ],
+  "cases": [
+    {
+      "passed": true,
+      "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits"
+    },
+    {
+      "passed": true,
+      "name": "P14 acknowledged zoom and rejected selection preserve world-space pan and ground camera"
+    },
+    {
+      "passed": true,
+      "name": "P14 blocked UI outside-window input and recenter retain bounded ownership"
+    },
+    {
+      "passed": true,
+      "name": "P14 slope and upper-floor targets retain actual occluded thermal configuration"
+    },
+    {
+      "passed": true,
+      "name": "P14 result role loss and new-round operator entry reset focus without duplicate ownership"
+    },
+    {
+      "passed": true,
+      "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+    }
+  ],
+  "rawUtf8Bytes": 168396,
+  "chunks": 3
+}

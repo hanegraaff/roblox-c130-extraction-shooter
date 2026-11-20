@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "source_commit": "010289d3945f862a2af377455a62a950e76d3e45",
+  "source_tree": "5e7a5d86e336054ed4bdb970a7a314aa0d543245",
+  "studio_id": "d26e7b2c-23eb-4007-9db2-3dae43e5ee33",
+  "scope": "Read-only Edit actual source/mesh/protected-slot identity, not ordinary runtime API access",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"source\":\"010289d3945f862a2af377455a62a950e76d3e45\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"version\":\"0.747.0.7471481\",\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"meshes\":2332,\"scripts\":132,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  },
+  "sync": "Final Rojo changes already present. Old-b1 manualsync precondition failed beforemutation; newcandidateprobe thenmatchedall132scripts/2332meshes/9328slots, so no manualsyncperformed.",
+  "runtime_native_expected": {
+    "server": 170,
+    "client": 10
+  },
+  "ordinary_play_result": "Pending tester"
+}

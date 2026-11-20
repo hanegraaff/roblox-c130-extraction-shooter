@@ -1,0 +1,106 @@
+{
+  "candidate": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "scope": "Wrong-parent manual UI startup; read-only identity only; no candidate tests executed, no mutation/Stop/publish",
+  "intendedLocalStudio": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "observedStates": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "67c66b79-81a3-4e2c-bea9-d0f476b893f1",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "b7799cde-b2e5-401a-b874-59fbd146c523",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Server"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "f24e1985-da0a-4e3e-8567-94f2b0f1b149",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client"
+            }
+          ],
+          "isError": false
+        }
+      }
+    }
+  ],
+  "observedIdentity": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "b7799cde-b2e5-401a-b874-59fbd146c523",
+        "datamodel_type": "Server",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"players\":[{\"userId\":-1,\"name\":\"Player1\"},{\"userId\":-2,\"name\":\"Player2\"}],\"isClient\":false,\"placeId\":72732833195348,\"workspaceAttributes\":[],\"gameId\":10776653720,\"clientReports\":[],\"isServer\":true}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "67c66b79-81a3-4e2c-bea9-d0f476b893f1",
+        "datamodel_type": "Client",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"players\":[{\"userId\":-2,\"name\":\"Player2\"},{\"userId\":-1,\"name\":\"Player1\"}],\"isClient\":true,\"placeId\":72732833195348,\"workspaceAttributes\":[],\"gameId\":10776653720,\"clientReports\":[],\"localUserId\":-2,\"isServer\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "f24e1985-da0a-4e3e-8567-94f2b0f1b149",
+        "datamodel_type": "Client",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"players\":[{\"userId\":-1,\"name\":\"Player1\"},{\"userId\":-2,\"name\":\"Player2\"}],\"isClient\":true,\"placeId\":72732833195348,\"workspaceAttributes\":[],\"gameId\":10776653720,\"clientReports\":[],\"localUserId\":-1,\"isServer\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    }
+  ],
+  "observedPlaceId": 72732833195348,
+  "observedGameId": 10776653720,
+  "discoveredCandidateTests": 0,
+  "passedCandidateTests": 0
+}

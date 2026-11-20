@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-14",
+  "source_commit": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "studio_id": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "scope": "Controlled unparented-clone Edit rendering isolation; not full repaired building acceptance",
+  "sample": "Outpost_GroundFloor / rbxassetid://115500378831807",
+  "metadata": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"afterMeshSize\":{\"1\":1365.3333740234376,\"3\":2048,\"2\":42.66699981689453},\"sameCFrame\":true,\"originalSourceUnchanged\":true,\"sameSize\":true,\"beforeMeshSize\":{\"1\":0,\"3\":0,\"2\":0}}"
+      }
+    ],
+    "isError": false
+  },
+  "camera_position": [
+    650,
+    45,
+    60
+  ],
+  "look_at": [
+    600,
+    2,
+    0
+  ],
+  "before": "Compiled MeshPart clone with MeshSize0 produces giant planes",
+  "after": "ApplyMesh from AssetService-created same MeshID preserves Size/CFrame and renders intended32x48 texturedslab",
+  "changed_only": "Which of the same-position diagnostic clones is visible",
+  "original_assets_changed": false,
+  "owned_diagnostic_removed": true,
+  "full_reconstruction_fix_pending": true
+}

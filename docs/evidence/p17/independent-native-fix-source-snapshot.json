@@ -1,0 +1,19 @@
+{
+  "head": "b57c49c96227635189ab52a02fd0624a0c073e37",
+  "tree": "b4c99cc60c4780ae19df5fcfcaf7a8eb009cfc91",
+  "scope": "Working-tree native constructor fix; exact file hashes, not a committed final candidate",
+  "files": {
+    "scripts/p17_native_meshes.py": "593242e082f9b0f7d8e3891d70139b4cadfe5450d86a2a77eb40acb1c5fb5b29",
+    "scripts/p17_native_mesh_xml.luau": "78b45834f3d2894ad0235327097bedb23ebd5dc0ab3d26fc778ca8076af5f247",
+    "scripts/p17_compile_outpost.py": "e7bc61b9b3605ab7c54b2db20e8d35c134053827c44cb67b746c81de08b423cf",
+    "scripts/inspect_build.py": "bba35629c7f990f48196cbe98776aa159f417b25986ca25cb5ee1011b7e4aaf9",
+    "src/shared/AssetMesh.luau": "d3cb60a8b4f4e460db7e4051b68cd3163a25d2f793afbe4f6fd9b44893e1aa03",
+    "src/server/PanelAssetCatalog.luau": "69cbd5f5c04d49d805a6bd26ea98db4d445bc33de36b96decfc0517db77a01d9",
+    "src/server/OutpostReconstruction.luau": "6e89bf049ab296e8e2b83dbffaf927ec44d32774b31c70df5567e98e5dbf3307",
+    "tests/assets/test_p17_native_meshes.py": "03e9f27bd07a4a6b06963c8c2a47c4c8089da0832439074f38759b78d9ebc522",
+    "tests/studio/specs-server/Outpost.spec.luau": "1fc62dd3447f81c3d65c1def816f86253586aa60631a1f0532d38f0504446055",
+    "tests/studio/specs-client/ThermalCosmetics.spec.luau": "af8f5206cf4ca8b342dee765c63815327bbf3f4290100d6ccf830bf83024a7d8",
+    "assets/models/MaterialPanels.model.json": "e8e6e8e08f2cfd7e02ed333e84f13c3adb4f6bdc32cab1a0c3e339af22a14433",
+    "assets/models/MilitaryOutpost.model.json": "fd1b20cda4ed15b90fe7e1899f8fea7c878f55a219d812e357c38961ab921f2e"
+  }
+}

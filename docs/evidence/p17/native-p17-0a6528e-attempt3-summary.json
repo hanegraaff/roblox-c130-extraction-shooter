@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "0a6528e47fea5497197217c74248401e58d51de2",
+  "tree": "d1c9b1c46446a90a24fbd7798c4c29fe9ae12afd",
+  "ordinaryBaselineCandidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "actualNativeServer": "1032186b-fee0-4ced-bbbb-f40384298917",
+  "launch": {
+    "server": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"commit\":\"0a6528e47fea5497197217c74248401e58d51de2\",\"fixtureFolder\":\"P17VerifiedRetry0a6528e\",\"at\":1795141264.593456,\"pristineImportedModels\":26,\"pristinePrimitivePanels\":162,\"preservedServerBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":173,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":173}\",\"oldEvidence\":\"P17ManualEvidenceAttempt2\",\"verifiedModules\":3}"
+        }
+      ],
+      "isError": false
+    },
+    "clients": [
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sourceBytes\":30896,\"newModule\":\"P17VerifiedRetry0a6528e\",\"userId\":-1,\"originalBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sourceBytes\":30896,\"newModule\":\"P17VerifiedRetry0a6528e\",\"userId\":-2,\"originalBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "results": {
+    "commit": "0a6528e47fea5497197217c74248401e58d51de2",
+    "cleanup": {
+      "aircraftStateAbsent": true,
+      "groundEffectsAbsent": true,
+      "transportAbsent": true,
+      "roundStateAbsent": true,
+      "combatEffectsAbsent": true,
+      "fragmentFolderAbsent": true
+    },
+    "cases": [
+      {
+        "passed": true,
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+      },
+      {
+        "passed": true,
+        "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+      },
+      {
+        "passed": true,
+        "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+      },
+      {
+        "passed": true,
+        "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+      },
+      {
+        "passed": true,
+        "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+      },
+      {
+        "passed": true,
+        "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+      },
+      {
+        "name": "A3 actual ground Humanoid walks through an authored damaged wall opening",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.P17VerifiedRetry0a6528e.P17MaterialHarness:1796: ServerScriptService.ServerTests.P17VerifiedRetry0a6528e.P17MaterialHarness:216: P07 timeout: actual server Ground traversal replication"
+      }
+    ],
+    "burst": {
+      "threshold": 9.00100326538086,
+      "panelId": "Outpost_S02_Roof_01_02",
+      "wall": {
+        "windowSeconds": 16,
+        "kind": "wall-forecast",
+        "minimumExteriorExposure": 0.3910159468650818,
+        "panelId": "Foundry_S01_East_01"
+      },
+      "earnedTotal": 11.017404079437256,
+      "accepted": 63
+    }
+  },
+  "walk": {
+    "panelId": "Foundry_S01_East_01",
+    "serverObservationBudgetSeconds": 2,
+    "userId": -1,
+    "failure": "ServerScriptService.ServerTests.P17VerifiedRetry0a6528e.P17MaterialHarness:216: P07 timeout: actual server Ground traversal replication",
+    "startServerPositionStuds": [
+      -129.5,
+      3.125,
+      -120
+    ],
+    "clientReplyServerPositionStuds": [
+      -129.5,
+      3.125,
+      -120
+    ],
+    "clientReplyAfterSeconds": 0.6324023333145306,
+    "originalPositionStuds": [
+      -20.00030517578125,
+      2.9980926513671875,
+      107.99969482421875
+    ],
+    "passed": false,
+    "goalPositionStuds": [
+      -141.5,
+      3.125,
+      -120
+    ],
+    "finalServerDistanceStuds": 12,
+    "serverObservationElapsedSeconds": 2.033327874960378,
+    "serverRootPresent": true,
+    "elapsedSeconds": 2.6657346666324884,
+    "kind": "actual-humanoid-opening",
+    "requestedStartPositionStuds": [
+      -129.5,
+      3.125,
+      -120
+    ],
+    "finalServerPositionStuds": [
+      -129.5,
+      3.125,
+      -120
+    ]
+  },
+  "rawUtf8Bytes": 646161,
+  "chunks": 11
+}

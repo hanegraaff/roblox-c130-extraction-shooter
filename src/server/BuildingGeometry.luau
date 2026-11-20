@@ -7,6 +7,35 @@
 ]=]
 local BuildingLayout = require(game:GetService("ReplicatedStorage").Shared.BuildingLayout)
 local BuildingGeometry = {}
+-- Imported panels retain one stable Model identity and expose only actual
+-- rectangle proxies as solids. Primitive registries retain their BasePart API.
+local function panelPose(panel: Instance): (CFrame?, Vector3?)
+    if panel:IsA("BasePart") then
+        if not panel.CanCollide or not panel.CanQuery then
+            return nil, nil
+        end
+        return panel.CFrame, panel.Size
+    end
+    if panel:IsA("Model") and type(panel:GetAttribute("PanelAssetFamily")) == "string" then
+        local size = panel:GetAttribute("IntactSize")
+        if typeof(size) ~= "Vector3" then
+            return nil, nil
+        end
+        local solids = 0
+        for _, child in panel:GetDescendants() do
+            if child:IsA("BasePart") and child.CanCollide and child.CanQuery then
+                if child.Parent ~= panel or child:GetAttribute("PanelProxy") ~= true then
+                    return nil, nil
+                end
+                solids += 1
+            end
+        end
+        if solids > 0 then
+            return panel:GetPivot(), size
+        end
+    end
+    return nil, nil
+end
 -- A level-supplied registry root. Formal buildings infer story from stable IDs;
 -- ancillary one-floor envelopes use an explicit default story. Damage rules do
 -- not depend on the name/count/footprint of any registry.
@@ -69,15 +98,19 @@ function BuildingGeometry.validate(
         end
         local registry: { BuildingLayout.Panel } = {}
         for _, panel in panels:GetChildren() do
-            if not panel:IsA("BasePart") or not panel.CanCollide or not panel.CanQuery then
+            local pivot = panelPose(panel)
+            if not pivot then
                 return false, "panel must provide authoritative collision and queries"
             end
             table.insert(registry, {
                 id = panel.Name,
-                story = tonumber(string.match(panel.Name, "_S(%d%d)_")) or 0,
+                story = tonumber(panel:GetAttribute("StoryId")) or tonumber(
+                    string.match(panel.Name, "_S(%d%d)_")
+                ) or 0,
                 roof = string.find(panel.Name, "_Roof_", 1, true) ~= nil,
-                interior = string.find(panel.Name, "_Interior_", 1, true) ~= nil,
-                pivot = { panel.CFrame:GetComponents() },
+                interior = panel:GetAttribute("InteriorPanel") == true
+                    or string.find(panel.Name, "_Interior_", 1, true) ~= nil,
+                pivot = { pivot:GetComponents() },
             })
         end
         local upper = supports:FindFirstChild(building.Name .. "_UpperMain")
@@ -227,6 +260,7 @@ function BuildingGeometry.validate(
             stepRise = stepRise,
             stepRun = stepRun,
             panels = registry,
+            panelLayoutVersion = if building:GetAttribute("PanelLayoutVersion") == 2 then 2 else nil,
         })
     end
     local valid, reason = BuildingLayout.validate(layouts)
@@ -239,7 +273,7 @@ function BuildingGeometry.validate(
     end
     for _, registry in registries do
         for _, part in registry.panels:GetChildren() do
-            if not part:IsA("BasePart") or not part.CanCollide or not part.CanQuery then
+            if not panelPose(part) then
                 return false, "registered panel must be a real solid"
             end
         end
@@ -254,15 +288,19 @@ function BuildingGeometry.decorate(map: Model)
     assert(registries, reason)
     for _, registry in registries do
         for _, panel in registry.panels:GetChildren() do
-            if panel:IsA("BasePart") then
+            local pivot, size = panelPose(panel)
+            if pivot and size then
                 panel:SetAttribute("PanelId", panel.Name)
                 panel:SetAttribute("BuildingId", registry.buildingId)
-                panel:SetAttribute("StoryId", registry.storyId or string.match(panel.Name, "_S(%d%d)_"))
+                panel:SetAttribute(
+                    "StoryId",
+                    registry.storyId or panel:GetAttribute("StoryId") or string.match(panel.Name, "_S(%d%d)_")
+                )
                 panel:SetAttribute("CoverKind", "BuildingPanel")
                 panel:SetAttribute("PanelState", "Intact")
                 panel:SetAttribute("DamageAppearance", "Pristine")
-                panel:SetAttribute("IntactPivot", panel.CFrame)
-                panel:SetAttribute("IntactSize", panel.Size)
+                panel:SetAttribute("IntactPivot", pivot)
+                panel:SetAttribute("IntactSize", size)
                 panel:SetAttribute("VariantContract", "Intact/Damaged/Destroyed:v1")
             end
         end

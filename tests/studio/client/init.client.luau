@@ -20,10 +20,35 @@ local report = {
     userId = game:GetService("Players").LocalPlayer.UserId,
 }
 script:SetAttribute("ClientTestReport", HttpService:JSONEncode(report))
+script:SetAttribute("P17ManualTestErrors", HttpService:JSONEncode(results.errors))
 assert(
     count > 0 and report.failed == 0 and report.skipped == 0 and report.errors == 0,
     "client suite failed or empty"
 )
+-- One trusted server string commits readiness and selection together. Waiters
+-- for later stages must not attach before their coordinator explicitly runs them.
+local manualReadyDeadline = os.clock() + 10
+while ReplicatedStorage:GetAttribute("ManualClientHarness") == nil and os.clock() < manualReadyDeadline do
+    task.wait()
+end
+local manualMode = ReplicatedStorage:GetAttribute("ManualClientHarness")
+assert(type(manualMode) == "string", "server manual-client dispatch readiness timeout")
+if manualMode == "P08" then
+    require(script.LauncherHarness).run()
+    return
+elseif manualMode == "P17" then
+    require(script.P17MaterialHarness).run()
+    return
+elseif manualMode == "P07" then
+    require(script.DestructionHarness).run()
+    return
+elseif manualMode == "P05" then
+    require(script.CombatHarness).run()
+    return
+elseif manualMode == "P14" then
+    require(script.AircraftPanHarness).run()
+    return
+end
 require(script.CombatHarness).run()
 require(script.DestructionHarness).run()
 require(script.GroundCombatHarness).run()

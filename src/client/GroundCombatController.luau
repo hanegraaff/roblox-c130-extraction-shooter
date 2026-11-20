@@ -14,6 +14,7 @@ local GuiService = game:GetService("GuiService")
 local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local GroundCombatController = {}
+local renderOwnerCount = 0
 type LauncherView = {
     roundId: number,
     launcherId: string,
@@ -85,6 +86,8 @@ function GroundCombatController.new(
     return Lifecycle.new({
         function()
             local gui = Instance.new("ScreenGui")
+            renderOwnerCount += 1
+            local renderBinding = "GroundCombatAim:" .. tostring(renderOwnerCount)
             gui.Name = "GroundCombatHUD"
             gui.ResetOnSpawn = false
             gui.IgnoreGuiInset = true
@@ -311,9 +314,9 @@ function GroundCombatController.new(
                     fireTouch = nil
                 end)
             )
-            table.insert(
-                connections,
-                RunService.RenderStepped:Connect(function()
+            -- Aim from the displayed camera after Roblox and the indoor modifier commit it.
+            do
+                local function renderAim()
                     local touch = touchEnabled()
                     local origin = projectionOrigin.AbsolutePosition
                     local layoutInset = GuiService:GetGuiInset()
@@ -547,9 +550,11 @@ function GroundCombatController.new(
                             z = target.Z,
                         })
                     end
-                end)
-            )
+                end
+                RunService:BindToRenderStep(renderBinding, Enum.RenderPriority.Camera.Value + 2, renderAim)
+            end
             return function()
+                RunService:UnbindFromRenderStep(renderBinding)
                 clearTool()
                 for _, connection in connections do
                     connection:Disconnect()

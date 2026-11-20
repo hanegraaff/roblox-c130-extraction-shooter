@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/p17_export_probe.py", line 22, in <module>
+    generated=p17.compile_definition(root);(root/p17.OUTPUT).write_text(generated)
+  File "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/scripts/p17_assets.py", line 43, in compile_definition
+    catalog = approved_catalog(root)
+  File "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/scripts/p17_assets.py", line 37, in approved_catalog
+    raise ValueError(f"P17 requires the approved P16 input: {name}")
+ValueError: P17 requires the approved P16 input: package-lock.json

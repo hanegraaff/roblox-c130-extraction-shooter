@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "localPlace": {
+    "placeId": 0,
+    "gameId": 0,
+    "edit": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+    "server": "f7222655-0eaf-4d47-ad91-1c25311ac420"
+  },
+  "savedArtifact": {
+    "sourcePathsClassesAndContentsMatched": 137,
+    "sha256": "43fff80ac27feb542a6a7a1d36631973ba1fb9151fad9f412b2c124dfa4896d3"
+  },
+  "atStartup": {
+    "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}",
+    "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":55.744862916646528}",
+    "ids": [
+      -1
+    ],
+    "clientMode": "P17",
+    "placeId": 0,
+    "commit": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+    "engine": "0.748.0.7481526",
+    "gameId": 0,
+    "selector": "P17"
+  },
+  "actualBootScope": {
+    "localPlace": true,
+    "roster": 1,
+    "transport": false,
+    "outpostNorthDefinitionClass": "Part",
+    "round": false,
+    "autoSpawn": true,
+    "initialBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}"
+  },
+  "authenticationObservation": "Two new client processes launched. The second emitted a sign-in flow marker and did not join the native Server DataModel.",
+  "nativeGameplayExecuted": false
+}

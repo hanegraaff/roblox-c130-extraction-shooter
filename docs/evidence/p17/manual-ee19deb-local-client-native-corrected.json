@@ -1,0 +1,36 @@
+{
+  "scope": "Read-only actualtwo-client nativeconstructoraggregate beforemanualhooks/restart; no multiplayerdemolitionclaim",
+  "probeCorrection": "First attempt parsererror from missing whitespace in excludedprobe 'or0'; no candidatecodeexecuted. Correctedprobeonly; preserved originalerrorseparately.",
+  "results": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "911b3a87-05c1-4a50-80a7-c91489e6f2df",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"life\":\"Waiting\",\"role\":\"Waiting\",\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"uniqueProfiles\":373,\"fidelityHistogram\":{\"Box\":2000,\"PreciseConvexDecomposition\":256},\"failures\":[],\"userId\":-2,\"checked\":2256}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "studio_id": "d1426086-3750-414d-b3ec-08ea4b99d568",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"life\":\"Waiting\",\"role\":\"Waiting\",\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"uniqueProfiles\":373,\"fidelityHistogram\":{\"Box\":2000,\"PreciseConvexDecomposition\":256},\"failures\":[],\"userId\":-1,\"checked\":2256}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    }
+  ]
+}

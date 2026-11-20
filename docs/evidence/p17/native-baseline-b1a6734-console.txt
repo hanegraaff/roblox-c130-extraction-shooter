@@ -1,0 +1,106 @@
+[TRUNCATED DUE TO LENGTH LIMIT]
+4 test nodes reported failures.
+Errors reported by tests:
+
+TestService: ServerStorage.Tests.Studio.Outpost.spec:46: malformed identity threw or produced an unowned clone
+ServerStorage.Tests.Studio.Outpost.spec:46
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run
+ServerScriptService.ServerTests:55
+
+
+TestService: The current thread cannot read 'ColorMap' (lacking capability Plugin)
+ServerScriptService.Server.PanelAssetCatalog:49 function meshContent
+ServerScriptService.Server.PanelAssetCatalog:115 function load
+ServerScriptService.Server.OutpostReconstruction:21 function prepare
+ServerStorage.Tests.Studio.Outpost.spec:70
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run
+ServerScriptService.ServerTests:55
+
+
+TestService: The current thread cannot read 'ColorMap' (lacking capability Plugin)
+ServerScriptService.Server.PanelAssetCatalog:49 function meshContent
+ServerScriptService.Server.PanelAssetCatalog:115 function load
+ServerStorage.Tests.Studio.Outpost.spec:85
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run
+ServerScriptService.ServerTests:55
+
+
+TestService: The current thread cannot read 'ColorMap' (lacking capability Plugin)
+ServerScriptService.Server.PanelAssetCatalog:49 function meshContent
+ServerScriptService.Server.PanelAssetCatalog:115 function load
+ServerScriptService.Server.OutpostReconstruction:21 function prepare
+ServerScriptService.Server.OutpostReconstruction:178 function install
+ServerStorage.Tests.Studio.Outpost.spec:15 function fixture
+ServerStorage.Tests.Studio.Outpost.spec:131
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run
+ServerScriptService.ServerTests:55
+
+
+ServerScriptService.ServerTests:69: server suite failed or empty
+Stack Begin
+Script 'ServerScriptService.ServerTests', Line 69
+Stack End
+Test results:
+[-] ClientSpecs
+   [-] Foundation
+      [-] client receives server status and an explicit character or late-spectator state
+      [+] panel renders environment and restarts twice with one GUI
+   [+] GroundAimGui
+      [+] P06 existing ground HUD follows input capability changes and cleans up
+      [+] P06 ground mouse and touch reticles agree with viewport rays
+      [+] P08 phone readiness text fits beside health and clears centered aim
+      [+] P08 production cross-GUI layouts preserve native controls aim headers and confirmed hits
+   [+] PointerGui
+      [+] P14 mouse and touch input classify normal, full-bleed and safe-area GUI buttons with current inset
+   [+] ThermalCosmetics
+      [+] P17ThermalFragments hides owned physical debris while rejecting marker-only impostors and real cover
+      [+] P17ThermalNonCover hides marked art restores exact values and retains native solid cover
+8 passed, 1 failed, 0 skipped
+1 test nodes reported failures.
+Errors reported by tests:
+
+TestService: ReplicatedStorage.ClientSpecs.Foundation.spec:42: server fixtures failed: {"errors":4,"skipped":0,"passed":165,"clientCount":1,"environment":"Studio","seed":1,"suite":"P01-server","failed":4,"discovered":169}
+ReplicatedStorage.ClientSpecs.Foundation.spec:42
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run
+Players.KingKunkank.PlayerScripts.ClientTests:9
+
+
+Players.KingKunkank.PlayerScripts.ClientTests:23: client suite failed or empty
+Stack Begin
+Script 'Players.KingKunkank.PlayerScripts.ClientTests', Line 23
+Stack End

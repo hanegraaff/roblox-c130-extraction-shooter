@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-Integrated `main` contains the 720-stud battlefield, bounded terrain and three two-story buildings; authoritative rounds; the perimeter aircraft with inward thermal panning/zoom; gunship and M-7 combat; shared aircraft health/results; persistent panel damage, real openings and bounded fragments; and the P08 recoverable launcher. The [P07 integration record](docs/evidence/p07-integration.md) and [P08/P16 main integration record](docs/evidence/p08-p16-main-integration.md) distinguish original source-specific engine evidence from merge verification. P08's eleven native cases pass on harness `07e77ea` / production `ef7826b`, with supported-Studio scope in D59 and runtime rejoin authority retained. The approved P16 Blender kit is available outside runtime mappings; P17 still owns import and actual integrated presentation/engine checks. Additional levels remain future work.
+Integrated `main` contains the 720-stud battlefield, bounded terrain, three two-story buildings, authoritative rounds, the circling aircraft with thermal panning and zoom, gunship and M-7 combat, the recoverable launcher, and persistent panel damage with real openings and bounded fragments. It reconstructs the imported smaller Outpost from managed templates before map snapshotting and provides indoor Ground camera zoom for that building. The plan records tie native results to the source they exercised. Additional levels remain future work. [P07 integration](docs/evidence/p07-integration.md), [P08/P16 integration](docs/evidence/p08-p16-main-integration.md), [P17 record](plans/17-integrate-military-outpost.md)
 
 Server-only services own roles, UserId membership, deadlines, readiness, damage and results. Engine adapters own characters, map reconstruction and replicated presentation. Clients display state, send bounded intent and manage role cameras; they never award structural or player damage.
 
@@ -63,7 +63,7 @@ contract is part of that work; this document does not claim it already exists.
 
 Server-only `MapService` validates geometry, supported/clear anchors and lobby separation with actual Workspace queries, then retains an unparented pristine clone. Its injected character provider and Heartbeat keep orchestration explicit. `GameRuntime` supplies only active living ground characters and disables the optional station exception. Exterior or below-threshold ground characters return to `Ground05` with velocities cleared. The protected lobby lies outside the disk at X=520; Waiting bodies can walk and only the assigned operator placeholder is anchored. Containment is not a general movement-exploit detector.
 
-Pure `BuildingLayout` validates exactly two 64×48 and one 32×48-stud two-story footprints, stairs and complete wall/roof/interior panel registries. Server-only `BuildingGeometry` checks actual floor separation, tread geometry, headroom, swept entry corridors, five navigation markers and representative 32-stud room bays. It decorates building IDs, building-scoped story IDs (`01`/`02`), globally unique panel IDs, the Intact pivot and `Intact/Damaged/Destroyed:v1` variant contract. The three formal buildings supply 111 panels; the starting shelter adds 76, for 187 registered panels. Its level descriptor is the direct map-folder reference `PanelRegistries/SpawnShelter` (`StringValue.Value = "SpawnShelterPanels"`), not an arbitrary recursive path. DestructionRuntime captures all registries into stable identity Models and supplies their shared damage geometry. Floors, stairs and frames stay static.
+Pure `BuildingLayout` validates exactly two 64×48 and one 32×48-stud two-story footprints, stairs and complete wall/roof/interior panel registries. Server-only `BuildingGeometry` checks actual floor separation, tread geometry, headroom, swept entry corridors, five navigation markers and representative 32-stud room bays. It decorates building IDs, building-scoped story IDs (`01`/`02`), globally unique panel IDs, the Intact pivot and `Intact/Damaged/Destroyed:v1` variant contract. The base world defines 111 formal-building panels and 76 starting-shelter panels (187 total). Candidate startup replaces the smaller Outpost with its 26-panel imported revision, preserving 25 legacy pivots and adding one interior partition, for 112 formal/188 total active panels. Its level descriptor is the direct map-folder reference `PanelRegistries/SpawnShelter` (`StringValue.Value = "SpawnShelterPanels"`), not an arbitrary recursive path. DestructionRuntime captures all registries into stable identity Models and supplies their shared damage geometry. Floors, stairs and frames stay static.
 
 Server-only `TerrainRecipe` reads the authored invisible descriptors for eight Grass/Rock caps. Manifest version 1 / seed 0 uses no randomness and four-stud voxels. Reconstruction clears only the axis-aligned owned volume `(-368,-112,-368)`–`(368,32,368)` and writes the fixed spheres. Invalid bounds, spheres or materials reject before terrain writes; unrelated terrain outside the box remains untouched. Terrain writes are nonyielding, while engine collision/query updates may converge afterward. The test suite permits a bounded five-second readiness wait.
 
@@ -78,6 +78,13 @@ The phase loop is Lobby → Deploying → Active → Results → Resetting → L
 `MatchRuntime` owns teams, noncolliding character groups, one heartbeat and the `RoundState.Surrender` RemoteEvent. `CharacterOwner` serializes yielding avatar loads, invalidates queued requests with tokens and uses a per-player load lease to keep an older runtime from destroying a newer character. Ground death, unexpected owned-character removal or raw Model destruction, reset or surrender eliminates. Humanoid.Died, Player.CharacterRemoving and the owned Model.Destroying signal consume that generation once, including when Destroy leaves Player.Character referencing an unparented model. Internal clear/replacement disconnects those callbacks before destroying the old body. Operator reset replaces only the protected placeholder body. `GameRuntime` explicitly composes map, round, aircraft, destruction, gunship, ground-combat and launcher owners. Stop releases launcher, ground combat, gunship combat, destruction, aircraft, rounds and finally the map snapshot; partial startup rolls back in reverse acquisition order. See package contracts for cleanup and load-drain behavior.
 
 `RoundPanel` reads replicated phase/role/life/deadline/result attributes and computes its timer using `GetServerTimeNow`. Eliminated players and late spectators follow the lowest-UserId living ground teammate, falling back to a fixed overview when no target exists. Lobby restores the local character camera. There is no manual spectator target selector yet. `RoundPanel` delegates the living operator and labelled solo Operator preview to its owned `ThermalCameraController`; other roles retain normal round/spectator cameras.
+
+`GroundIndoorCamera` adapts the local Ground view in level-authored interiors.
+Its render callbacks run immediately before and after the stock camera. It
+restores the previous stock frame before Roblox processes input and occlusion,
+then moves the rendered camera along the stock focus ray as room clearance
+requires. Ground aim uses the resulting view. Room metadata belongs to the
+active Battlefield. It is presentation data with no collision or combat role.
 
 ## Target layers and dependencies
 
@@ -249,7 +256,7 @@ DestructionRuntime owns the engine boundary. `sync(roundId)` reacquires the curr
 
 `PanelGeometry` wraps each authored panel in a stable identity Model, preserving its panel ID, Intact pivot, thickness and original clone. Damaged geometry scales the two 25%-width side strips along the longest face axis, leaving a central 50% opening. Destroyed retains the identity without solids. D52 adds a separate Pristine/Light/Heavy/Total appearance: positive credit gives persistent Light scars, structural stage 1 stays visibly Heavy at zero local progress, and stage 2 has no panel. D54 proposes hue-independent crack/luminance cues on both faces with Concrete/Slate rather than glowing CrackedLava. Cosmetic marks cannot collide, enter queries or identify as real panel colliders. Floors, stairs and frames remain static; genuine holes have no invisible full-panel collider. Stage/progress/credit/appearance replicate as current state.
 
-The active coverage revision adds the starting shelter's entire wall/roof union to level-supplied panel registries, alongside the three multi-story buildings. D53 proposes replacing seven legacy permanent surfaces with 76 panels, for 187 total. No duplicate old collider may remain; spawn anchors and existing entrances stay fixed. The separate outside waiting lobby and standalone nonbuilding barriers are unchanged. The shelter is an ancillary one-floor structure, not a fourth formal two-story-building requirement. The same rules, geometry and fragment owner consume every registered surface; no map-specific damage implementation is added.
+The active coverage revision adds the starting shelter's entire wall/roof union to level-supplied panel registries, alongside the three multi-story buildings. D53 replaces seven legacy permanent surfaces with 76 panels, making 187 in that primitive revision; P17 adds one Outpost partition for 188 total. No duplicate old collider may remain; spawn anchors and existing entrances stay fixed. The separate outside waiting lobby and standalone nonbuilding barriers are unchanged. The shelter is an ancillary one-floor structure, not a fourth formal two-story-building requirement. The same rules, geometry and fragment owner consume every registered surface; no map-specific damage implementation is added.
 
 `PanelFragments` owns one Workspace folder and the global `PanelFragments`/`PanelStatic` collision groups exclusively. Defaults emit four server-network-owned Parts per transition, retire the oldest at a 48-live cap and expire each after eight seconds. Initial linear speed is at most 12 studs/second, angular speed at most 4 radians/second; dimensions are capped at 1.5 studs per axis with density 1, bounding generated mass to 3.375 and initial linear momentum to 40.5 mass·studs/second. Gravity/contact evolve velocity afterward. Fragments collide only with owned anchored scenery and Terrain, excluding characters and each other. They have no damage callback, forces or structural constraints. Their trajectories cannot decide cover state.
 
@@ -283,7 +290,7 @@ Each authored Part/SpawnLocation in `.model.json` uses a twelve-component canoni
 
 Static map files and server-cloned templates have separate ownership. Do not synchronize a live simulation back as authored source. Studio edits to managed objects must be exported to the mapped source and verified with a clean build. Avoid mixed ownership of the same Instance subtree.
 
-The source includes the original normalized two-strip [PanelResidual template](assets/models/PanelResidual.model.json). DestructionRuntime scales it to each registered wall/roof/interior panel; no external art or cloud reference is required. Runtime fragments are generated primitives, not authored map content. Never export them, projectile effects or damaged live state as pristine source. The [progressive destruction contract](#progressive-panel-destruction-p07) governs their lifecycle.
+The source includes the original normalized two-strip [PanelResidual template](assets/models/PanelResidual.model.json). DestructionRuntime scales it for primitive wall/roof/interior panels. Imported Outpost panels instead use approved material-specific variants and rectangle proxies, plus material MeshPart fragments; their actual mesh/texture references and ownership are managed in Git. Fragments are transient runtime content, not authored map state. Never export them, projectile effects or damaged live state as pristine source. The [progressive destruction contract](#progressive-panel-destruction-p07) governs their lifecycle.
 
 ### Blender source and material-aware panel assets
 
@@ -315,26 +322,81 @@ construction inputs; the external balcony/stair and declared aperture migration
 need actual P17 clearance/cover checks. Local Blender round trips do not infer
 Roblox import success, thermal visibility, runtime physics or upload permission.
 
-[P17](plans/17-integrate-military-outpost.md) will replace only the smaller
-Outpost using the human-approved package. Current `PanelGeometry` clones
-primitive Parts and applies generic scars/residuals, so mesh import alone cannot
-consume the new variants. Extend the shared asset/reconstruction boundary to
-select validated material-specific visuals, authoritative collision/query
-proxies and safe fragments. Preserve `PanelDamageRules`/`DestructionService`
-timing, damage authority and lifecycle. Material does not change durability.
-Keep existing primitive panels compatible; missing variants, bad IDs/geometry
-and stale reset references need explicit validation. Mesh appearance and proxy
-geometry must agree for actual openings and thermal/weapon obstruction.
+The P17 candidate replaces only the smaller Outpost using managed
+`MilitaryOutpost` and `MaterialPanels` templates in `ServerStorage.Assets`.
+`GameRuntime` invokes `OutpostReconstruction.install` before constructing
+`MapService`, so pristine reset snapshots contain the integrated building.
+`prepare` validates references, geometry, support contracts, IDs and inert
+content before world mutation; installation exposes commit/rollback ownership.
+It retains the canonical site, 25 original pivots and world anchors, with one
+added partition and 188 active panels overall. The source base world remains
+primitive for reconstructable replacement and rollback. Actual native navigation
+and regression acceptance must still confirm the integrated geometry.
 
-MapService retains pristine rebuild and registry ownership. Every new imported
-template needs a managed source/export and manifest record; deliberate Studio
-placement must return to Git. P16's Blender approval and P17's actual engine,
-two-client/reset and human presentation gates are distinct. This boundary is
-building-asset data for the current level, not an implementation of P15 level
-selection or a claim that material-aware authored variants already work.
-The user-directed D63 order schedules P16 then P17 before continuing P09;
-P17 consumes the P07/P13/P14 core without requiring P08 to start. Preserve and
-regression-test completed P08 source when present in the selected branch.
+Generated `ApprovedOutpost` data retains family dimensions, approved rectangle
+proxies and source-file hashes. Its generator pins the approved Blender,
+catalog and package-lock hashes before reading exports. The P16 bytes remain
+unchanged. A material-split GLB derivative preserves approved triangles, corner
+UVs and material boundaries. Native assembly/library receipts and twelve
+source-bound PNG color-map references drive deterministic managed-template
+compilation. See the [import package](assets/imports/military-outpost/README.md)
+for actual IDs, owner and reconstruction commands.
+
+`PanelAssetRules` checks finite rigid transforms, bounds and receipt identities.
+`PanelAssetCatalog.load` validates the private material tree and rejects missing
+variants, invalid references/geometry and unintended content before ownership
+mutation. `PanelGeometry` accepts a validated material identity Model as well as
+primitive Parts. The rotation-only `PanelAssetBasis` attribute maps canonical
+family coordinates to preserved legacy panel frames without changing pivots.
+`MaterialPanelGeometry` installs Pristine/Light/Heavy/Total cosmetic meshes and
+exact rectangle collision/query proxies; Total has no solids. Panel-owned
+lights/conduits/dressing persist at Pristine/Light and are removed for Heavy/Total,
+then restored with pristine state. Stage-local progress tints the imported base
+appearance. Primitive panels retain generic scars/two-strip residuals.
+`PanelFragments` clones material MeshPart templates through the same bounded
+server-owned lifecycle. Shared damage timing, ordered impacts, thresholds and
+reset authority remain in the existing rules/services; there is no new remote.
+
+Shared `AssetMaterial.read(mesh)` validates readable compiled v1 material
+attributes from exactly one SurfaceAppearance in ordinary server/client code.
+The contract contains the material key, four compiled map references and the
+approved color-PNG digest. Runtime code never reads protected SurfaceAppearance
+map properties or Content variants. Compiler/artifact/Edit audits bind actual
+serialized slots to those attributes and the source receipt. This separates
+metadata validity from actual Instance preload, asset access and rendered
+appearance; public replicated metadata grants no new client authority.
+
+Shared `AssetMesh.validate(mesh)` separately checks public intrinsic MeshSize
+and collision/render fidelity against five readable native attributes. MeshId
+plus target Size alone is insufficient. The managed compiler preserves genuine
+engine InitialSize, PhysicalConfigData, PhysicsData and AeroMeshData from a
+hash-bound 407-profile RBXM/receipt (87 PreciseConvexDecomposition, 320 Box) for
+2,332 template uses. These bytes are not inferred from normalized geometry.
+Host audits bind payloads and metadata; runtime checks are nonyielding ordinary
+API reads. Rendering, UV appearance, contact and multiplayer fidelity remain
+independent native acceptance, with previous pre-constructor results historical.
+
+Source roughness, metalness and emission scalars remain metadata. The current
+Roblox reconstruction repairs base-color textures but does not reproduce those
+scalars as SurfaceAppearance maps. That visual compromise requires A6 approval.
+`ThermalCosmetics`, owned by the operator camera, locally hides classified
+non-cover art that cannot collide or enter queries. A narrow exception also hides
+server-marked, non-querying, unanchored fragment visuals in the owned PanelFragments
+collision group with touch disabled; their scenery contact does not make them
+cover. Real solid/queryable cover keeps native Occluded-highlight depth; ground
+views retain furnishings. It owns and
+restores each LocalTransparencyModifier and listener at role/map/fragment teardown.
+Actual rendered readability and performance remain separate engine checks.
+
+MapService retains pristine rebuild/registry ownership, and consumers reacquire
+fresh panel references after replacement. The original empty-cosmetic proxy
+fixtures and the new managed-template/thermal fixtures each retain their narrow
+assertion scope. Neither source inspection nor a successful build proves native
+asset loading, avatar traversal, thermal cover, fragment contact, two-client reset
+or workload budgets. P16 approval and P17's identified in-game A6 approval are
+separate. D63 continues to place P17 before P09; the completed P08 source remains
+present and requires applicable regressions. This changes one building on the
+current level and does not implement P15 level selection.
 
 ## Tooling and verification
 

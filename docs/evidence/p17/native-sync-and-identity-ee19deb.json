@@ -1,0 +1,177 @@
+{
+  "source": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "tree": "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a",
+  "studio": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "apply": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"rollbackAvailable\":true,\"stageParentBudget\":450,\"originalsDestroyed\":false,\"previousSource\":\"48eae4b2f0ebb4b0f069fb21a41973b9a37a297a\",\"negativeFixtureSha256\":\"d6e23d4d0a325b8bcb8645307244e26c7eafe81683731d2fce75e6875ce34f13\",\"updatedSources\":5,\"transferBufferRetained\":true,\"assetAdler32\":1094359077,\"scripts\":133,\"assetSha256\":\"7aaa72cb1f025f74674d0d0151f79a0453a3f28de8456f440607070d6d11675a\",\"nativeProfiles\":407,\"phase\":\"AppliedVerified\",\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"meshes\":2332}"
+      }
+    ],
+    "isError": false
+  },
+  "identity": [
+    {
+      "path": "build/p17-test-source-and-material-identity.luau",
+      "sha256": "fa200960c7b3d19ab3760ceb97e2e9419097b67487b2bdcdc9e6230d7e98dd31",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"meshes\":2332,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"targetGeometry\":\"REQUIRES companion target-geometry chunks; see generated manifest\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"universeId\":0,\"nativeMeshParts\":2332,\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"version\":\"0.747.0.7471481\",\"scripts\":133,\"nativeMetadataFields\":11660,\"publicNativeProperties\":6996,\"mutated\":false,\"actualProtectedSlots\":9328}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-01.luau",
+      "sha256": "5f746cf88b6fe22833f8ddc5efd71309e6cd48687b6c961d19be3c979f5a4449",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":1,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-02.luau",
+      "sha256": "a61bfb91f4a187c104e6f6b21d51f49876d2a329459e25f5ce35c971e7337415",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":2,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-03.luau",
+      "sha256": "4729fb9098d690b41335163c6968674b9ab9b7665646b91a8a764c522a1ff772",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":3,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-04.luau",
+      "sha256": "10d65e6caec3f500bb2a36396695531b3b0f7f5a296534db09c3e2840dedb1fc",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":4,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-05.luau",
+      "sha256": "7788bb10c4661cfc13d149d67e294c2f96993d6d2a620feebf2d564f0b5adfc8",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":5,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-06.luau",
+      "sha256": "fe4602589dfc5ec636dc6901609d57fecdb8c09f144e0a91420d644bec518448",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":6,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-07.luau",
+      "sha256": "b06e06e298972e8b7eed2b22e62193ed070e88ecae2ff113f2a7dd355dbc8a4b",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":7,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-08.luau",
+      "sha256": "008e3553014bee54cc66c43cbe303755ff098934bad92284751dfcd51faa879f",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":8,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-09.luau",
+      "sha256": "e5931d795ecf8c6b09e05510f6937de0069c112526f05ca97eed72fae3e75e90",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":256,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":9,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "path": "build/p17-test-target-geometry-ee19deb-10.luau",
+      "sha256": "b38c26293b271aaa7060b661aa09766721daf10746189bf8ac37a9db28541f18",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"targetMeshes\":28,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":84,\"chunk\":10,\"targetCFrameComponents\":336,\"chunks\":10,\"mutated\":false}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "finalize": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"nativeProfiles\":407,\"meshes\":2332,\"source\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"scripts\":133,\"actualCompiledSlots\":9328}"
+      }
+    ],
+    "isError": false
+  },
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"universeId\":0,\"transferBufferRemoved\":true,\"placeId\":0,\"passed\":true,\"rollbackStateRemoved\":true}"
+      }
+    ],
+    "isError": false
+  }
+}

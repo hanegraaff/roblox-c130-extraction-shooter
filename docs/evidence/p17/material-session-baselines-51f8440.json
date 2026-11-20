@@ -1,0 +1,40 @@
+{
+  "source": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "tree": "d280d1cfd941e17646d900f76a84a18a8a8b2530",
+  "invocation": "ExecuteMultiplayerTestAsync(2,{kind='P17Material'}) with excluded test-only probe dispatchers",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":{\"1\":{\"id\":-1,\"life\":\"Alive\",\"name\":\"Player1\",\"role\":\"Gunship\"},\"2\":{\"id\":-2,\"life\":\"Alive\",\"name\":\"Player2\",\"role\":\"Ground\"}},\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":10.645475124998484}\",\"phase\":{\"RoundId\":1,\"Revision\":6,\"MinimumPlayers\":2,\"Reason\":\"\",\"Phase\":\"Active\",\"DeadlineSeconds\":1794681937.843112,\"Winner\":\"\",\"GroundAlive\":1},\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":171,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":171}\",\"attrs\":{\"ServerTestReport\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":171,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":171}\",\"P07Stage\":\"{\\\"clientCount\\\":2,\\\"serverTime\\\":1794681331.269961,\\\"stage\\\":\\\"A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation\\\"}\",\"ServerTestStartup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":10.645475124998484}\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "clients": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"life\":\"Alive\",\"name\":\"Player2\",\"role\":\"Ground\",\"userId\":-2,\"readiness\":\"{\\\"elapsedSeconds\\\":17.897788624977694,\\\"avatarSeconds\\\":6.124093666672707,\\\"state\\\":\\\"{\\\\\\\"phase\\\\\\\":\\\\\\\"Active\\\\\\\",\\\\\\\"roundState\\\\\\\":true,\\\\\\\"hasRoot\\\\\\\":true,\\\\\\\"role\\\\\\\":\\\\\\\"Ground\\\\\\\",\\\\\\\"hasCharacter\\\\\\\":true,\\\\\\\"loadLease\\\\\\\":\\\\\\\"nil\\\\\\\",\\\\\\\"elapsedSeconds\\\\\\\":17.897791333321949,\\\\\\\"life\\\\\\\":\\\\\\\"Alive\\\\\\\",\\\\\\\"stage\\\\\\\":\\\\\\\"ready\\\\\\\",\\\\\\\"serverBaselineComplete\\\\\\\":true}\\\"}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"report\":\"{\\\"errors\\\":1,\\\"skipped\\\":0,\\\"passed\\\":9,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":1,\\\"discovered\\\":10}\",\"life\":\"Alive\",\"name\":\"Player1\",\"role\":\"Gunship\",\"userId\":-1,\"readiness\":\"{\\\"elapsedSeconds\\\":18.24990029167384,\\\"avatarSeconds\\\":6.130110791651532,\\\"state\\\":\\\"{\\\\\\\"phase\\\\\\\":\\\\\\\"Active\\\\\\\",\\\\\\\"roundState\\\\\\\":true,\\\\\\\"hasRoot\\\\\\\":true,\\\\\\\"role\\\\\\\":\\\\\\\"Gunship\\\\\\\",\\\\\\\"hasCharacter\\\\\\\":true,\\\\\\\"loadLease\\\\\\\":\\\\\\\"nil\\\\\\\",\\\\\\\"elapsedSeconds\\\\\\\":18.249901000002866,\\\\\\\"life\\\\\\\":\\\\\\\"Alive\\\\\\\",\\\\\\\"stage\\\\\\\":\\\\\\\"ready\\\\\\\",\\\\\\\"serverBaselineComplete\\\\\\\":true}\\\"}\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}

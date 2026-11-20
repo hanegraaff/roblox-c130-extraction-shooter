@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "711c5a86729e2fb2805dad473345936ba22d015e",
+  "production": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "environment": "MacBookPro18,3 Apple M1 Pro 16 GiB, macOS 26.6.2 (25G83), Roblox Studio 0.748.0.7481526, native Server & Clients 2, two desktop simulator clients 1920x1080 ActualResolution, saved QualityLevel10 / render Level21, frame-rate manager Automatic, same retained windows and default background scheduling",
+  "serverStudio": "ae8560ea-af5a-4a47-a6f5-7c718e6c7607",
+  "clientPreflight": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"playerId\":-1,\"frameTimeSeconds\":0.07123800367116928,\"gpuRenderSeconds\":1.2497184798121453e-7,\"cpuRenderSeconds\":0.0015657083131372929,\"savedQuality\":\"QualityLevel10\",\"render\":{\"graphicsMode\":\"Automatic\",\"frameRateManager\":\"Automatic\",\"quality\":\"Level21\"},\"viewport\":{\"1\":1920,\"2\":1080},\"keyboardEnabled\":true,\"mouseEnabled\":true,\"touchEnabled\":false}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"playerId\":-2,\"frameTimeSeconds\":0.06914016604423523,\"gpuRenderSeconds\":7.083290256559849e-7,\"cpuRenderSeconds\":0.0017770417034626008,\"savedQuality\":\"QualityLevel10\",\"render\":{\"graphicsMode\":\"Automatic\",\"frameRateManager\":\"Automatic\",\"quality\":\"Level21\"},\"viewport\":{\"1\":1920,\"2\":1080},\"keyboardEnabled\":true,\"mouseEnabled\":true,\"touchEnabled\":false}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "configurationToolResponses": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: std::exception"
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: std::exception"
+          }
+        ],
+        "isError": true
+      }
+    }
+  ],
+  "configurationReadback": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"quality\":\"QualityLevel10\",\"id\":-1,\"viewport\":\"1920, 1080\",\"hasDevice\":true,\"resolution\":\"1920, 1080\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"quality\":\"QualityLevel10\",\"id\":-2,\"viewport\":\"1920, 1080\",\"hasDevice\":true,\"resolution\":\"1920, 1080\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "install": {
+    "server": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"installed\":{\"P17PerformanceMetrics\":7839,\"P17PerformanceServer\":22134,\"P17PerformanceRunner\":6593,\"P17PerformanceMetadata\":36280},\"roster\":{\"1\":-2,\"2\":-1},\"source\":\"711c5a86729e2fb2805dad473345936ba22d015e\",\"dispatchersChanged\":false,\"primitiveParts\":62,\"primitiveSourceSha256\":\"debcea466fa4270a632f68da2cdd02474701a748b42e5ecaafbe996550d29d9e\",\"baselineSha256\":\"7806ea30cd436ad81bc8b5a23b1c0025bc8a16ab0ba262baab341dd39ec9658b\"}"
+        }
+      ],
+      "isError": false
+    },
+    "client": [
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"module\":\"P17PerformanceClient\",\"savedQuality\":\"QualityLevel10\",\"viewport\":{\"1\":1920,\"2\":1080},\"sourceBytes\":15820,\"userId\":-1,\"dispatcherChanged\":false}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"module\":\"P17PerformanceClient\",\"savedQuality\":\"QualityLevel10\",\"viewport\":{\"1\":1920,\"2\":1080},\"sourceBytes\":15820,\"userId\":-2,\"dispatcherChanged\":false}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  },
+  "launch": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"at\":1795137115.227587,\"started\":\"primitive\"}"
+        }
+      ],
+      "isError": false
+    },
+    [
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"at\":1795137127.464199,\"actualUser\":-1,\"subscribed\":true}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"at\":1795137131.422294,\"actualUser\":-2,\"subscribed\":true}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  ],
+  "result": {
+    "completed": false,
+    "failure": "ServerScriptService.ServerTests.P17PerformanceServer:420: missing real native weapon/Outpost impact evidence",
+    "native": {
+      "rifleDamage": 0,
+      "GAU23": 253,
+      "M102": 28,
+      "rifleAccepted": 0,
+      "outpostImpacts": 74,
+      "impacts": 193
+    },
+    "groundFireReasons": [],
+    "clientReports": 0,
+    "actualClientCount": 2,
+    "controlledOutcomeCount": 1122,
+    "measuredDurationSeconds": 300,
+    "cleanup": {
+      "rounds": {
+        "spawnTasks": 0,
+        "connections": 0
+      },
+      "combat": {
+        "projectiles": 0,
+        "connections": 0
+      },
+      "aircraft": {
+        "connections": 0
+      },
+      "destruction": {
+        "pending": 0,
+        "panels": 0,
+        "fragments": 0
+      },
+      "ground": {
+        "tools": 0,
+        "connections": 0
+      },
+      "launcher": {
+        "flights": 0,
+        "connections": 0,
+        "queued": 0,
+        "representations": 0
+      }
+    }
+  },
+  "baselineSceneOnly": true,
+  "rawUtf8Bytes": 144941
+}

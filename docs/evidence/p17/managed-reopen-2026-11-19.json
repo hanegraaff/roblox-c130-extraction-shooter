@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-11-19",
+  "studioId": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+  "mode": "Edit",
+  "file": "build/tests.rbxlx",
+  "savedLocalArtifactSha256": "522fc75f3dff438e189b53a53566fa7abe4af8f8bbdfb19457318d0a040ecd99",
+  "candidate": "221d1a824529855db110712d61f0b1f8be5f68e8",
+  "head": "bc3e3f980d92d4f3380d32d0df2ba2549854c019",
+  "engineIdentity": {
+    "meshes": 2332,
+    "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+    "targetGeometry": "REQUIRES companion target-geometry chunks; see generated manifest",
+    "scope": "Edit actual property/source identity, not ordinary runtime access",
+    "placeId": 0,
+    "passed": true,
+    "universeId": 0,
+    "nativeMeshParts": 2332,
+    "templates": {
+      "MaterialPanels": {
+        "meshes": 76,
+        "descendants": 188
+      },
+      "MilitaryOutpost": {
+        "meshes": 2256,
+        "descendants": 4592
+      }
+    },
+    "version": "0.748.0.7481526",
+    "scripts": 137,
+    "nativeMetadataFields": 11660,
+    "publicNativeProperties": 6996,
+    "mutated": false,
+    "actualProtectedSlots": 9328
+  },
+  "targetGeometry": [
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 1,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 2,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 3,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 4,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 5,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 6,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 7,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 8,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 256,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 768,
+      "chunk": 9,
+      "targetCFrameComponents": 3072,
+      "chunks": 10,
+      "mutated": false
+    },
+    {
+      "targetMeshes": 28,
+      "source": "221d1a824529855db110712d61f0b1f8be5f68e8",
+      "scope": "read-only Edit target geometry",
+      "passed": true,
+      "targetSizeComponents": 84,
+      "chunk": 10,
+      "targetCFrameComponents": 336,
+      "chunks": 10,
+      "mutated": false
+    }
+  ],
+  "verifiedSelector": "P08",
+  "pinnedP17HarnessCommit": "221d1a824529855db110712d61f0b1f8be5f68e8",
+  "nativeGameplayExecuted": false
+}

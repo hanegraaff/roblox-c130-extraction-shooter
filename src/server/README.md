@@ -4,7 +4,7 @@ Rojo maps this package to `ServerScriptService.Server`. Rules and authority stay
 
 ## Composition and character ownership
 
-`GameRuntime.start(settings)` starts one `MapService`, `MatchRuntime`, `AircraftService`, `DestructionRuntime`, `CombatRuntime`, `GroundCombatRuntime` and `LauncherRuntime`, returning `{ rounds, aircraft, destruction, combat, groundCombat, launcher, stop }` or `nil, reason`. Partial startup rolls back acquired owners. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops launcher, ground combat, gunship combat, destruction, aircraft and rounds, then destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
+`GameRuntime.start(settings)` validates/installs the managed smaller Outpost before the map snapshot, then starts one `MapService`, `MatchRuntime`, `AircraftService`, `DestructionRuntime`, `CombatRuntime`, `GroundCombatRuntime` and `LauncherRuntime`, returning `{ rounds, aircraft, destruction, combat, groundCombat, launcher, stop }` or `nil, reason`. Partial startup rolls back acquired owners. It injects only active living ground characters into containment with `allowStations = false`. Its idempotent `stop()` stops launcher, ground combat, gunship combat, destruction, aircraft and rounds, then destroys the map's private snapshot. Dependencies remain explicit; there is no runtime registry.
 
 The current runtime owns one fixed battlefield. The future
 [level contract](../../architecture.md#level-interchange-boundary-target-architecture)
@@ -87,13 +87,107 @@ The persistent-damage revision is integrated on `main` with passing acceptance a
 
 All earned heavy and 30mm credit persists **per panel** through pauses, misses, obstruction, changing target/weapon, reload and eligibility loss. Only same-panel consecutive GAU23 outcomes earn elapsed accepted `firedAt` intervals; every first/resumed hit earns zero. A gap above the default or an interruption breaks the continuity anchor without changing any panel’s earned credit. `interrupt(afterShotId?)` queues a barrier after the accepted prefix, allowing earlier valid in-flight outcomes to finish before breaking timing; repeated/stale barriers are idempotent and nil breaks timing immediately. Later fire cannot count paused/off-target time. Terminal cancellation rejects unfinished outcomes rather than waiting. D50–D54 define the revised acceptance, persistence, appearance and coverage; no client duration/panel ID/blast damage authorizes progression.
 
-`DestructionRuntime.start(world, fragmentSettings?)` consumes the registry list returned by `BuildingGeometry.registries(world.Battlefield)`. This includes formal building `_Panels` folders and additional level-supplied registry descriptors, so the same thresholds apply to all structures. The candidate registers 111 formal-building panels and 76 starting-shelter panels. It returns an owner or `nil, reason`, without remotes or result authority. `sync(roundId)` reacquires a changed map by Instance identity and resets panel/fragment/outcome state, closing same-ID replacement to stale outcomes until a new generation. `identify(hit)` accepts only actual current registered collidable solids; visual marks, copied tags, model roots, supports and old maps return nil. Nonpanels consume miss outcomes rather than blocking ordered scoring. `resolve` changes rules only; `flush(nowSeconds)` installs geometry/appearance after the entire CombatRuntime collision/blast batch. `cancel` closes the ledger; idempotent `stop` restores pristine panels and releases fragments/groups. Calls do not yield.
+`DestructionRuntime.start(world, fragmentSettings?)` consumes the registry list returned by `BuildingGeometry.registries(world.Battlefield)`. This includes formal building `_Panels` folders and additional level-supplied registry descriptors, so the same thresholds apply to all structures. The integrated candidate registers 112 formal-building panels and 76 starting-shelter panels (188 total), including 26 Outpost panels. It returns an owner or `nil, reason`, without remotes or result authority. `sync(roundId)` reacquires a changed map by Instance identity and resets panel/fragment/outcome state, closing same-ID replacement to stale outcomes until a new generation. `identify(hit)` accepts only actual current registered collidable solids; visual marks, copied tags, model roots, supports and old maps return nil. Nonpanels consume miss outcomes rather than blocking ordered scoring. `resolve` changes rules only; `flush(nowSeconds)` installs geometry/appearance after the entire CombatRuntime collision/blast batch. `cancel` closes the ledger; idempotent `stop` restores pristine panels and releases fragments/groups. Calls do not yield.
 
-`PanelGeometry.capture(part)` keeps a pristine clone and creates a stable ID/pivot/IntactSize Model. `setStage` installs Intact, two-strip Damaged or no-solid Destroyed geometry; side strips preserve thickness and leave a central 50% opening along the longest face axis. Static supports are untouched. `publish(..., appearance)` publishes `PanelState`, `DamageAppearance`, `PanelProgress`, `HeavySeconds` and `SustainedSeconds`. Pristine retains the original material/color. Light uses slate tint and at least three charcoal face scars, increasing to seven with progress. Heavy uses a permanent darker slate base, seven pale fracture marks and real openings, including at zero local progress. D54 colors/mark dimensions are tuning defaults. Marks live in owned `DamageVisuals`, are clipped to both faces of each remaining solid, have no structural PanelId and cannot collide, touch, query or count as structural hits. Rebuild them only when the appearance/count bucket changes; stage/reset/stop remove them with the owner. Clients observe current state rather than replayed fragment events.
+The primitive `PanelGeometry.capture(part, nil)` path keeps a pristine clone and creates a stable ID/pivot/IntactSize Model. `setStage` installs Intact, two-strip Damaged or no-solid Destroyed geometry; side strips preserve thickness and leave a central 50% opening along the longest face axis. Static supports are untouched. `publish(..., appearance)` publishes `PanelState`, `DamageAppearance`, `PanelProgress`, `HeavySeconds` and `SustainedSeconds`. Pristine retains the original material/color. Light uses slate tint and at least three charcoal face scars, increasing to seven with progress. Heavy uses a permanent darker slate base, seven pale fracture marks and real openings, including at zero local progress. D54 colors/mark dimensions are tuning defaults. Marks live in owned `DamageVisuals`, are clipped to both faces of each remaining solid, have no structural PanelId and cannot collide, touch, query or count as structural hits. Rebuild them only when the appearance/count bucket changes; stage/reset/stop remove them with the owner. Clients observe current state rather than replayed fragment events.
 
-`PanelFragments.start(root, settings?)` owns exclusive global `PanelFragments`/`PanelStatic` collision groups and `Workspace.PanelFragments`; invalid settings or conflicting group ownership reject before mutation. `emit(pivot, size, color, nowSeconds)` creates four default server-network-owned Parts, capped at 48 with oldest-first retirement and eight-second expiry. Initial speed is at most 12 studs/second, angular speed at most 4 radians/second, dimensions at most 1.5 studs per axis and density 1, hence generated mass at most 3.375 and initial momentum at most 40.5 mass·studs/second; subsequent motion follows gravity/contact. `static(instance)` enrolls owned anchored scenery while retaining prior groups; Terrain is enrolled separately. Fragments collide only with `PanelStatic`, excluding characters and other debris, and have no damage callback. `step(nowSeconds)` expires without delayed tasks; `clear()` removes fragments; idempotent `stop()` also restores captured scenery/Terrain groups and unregisters owned groups.
+`PanelFragments.start(root, settings?)` owns exclusive global `PanelFragments`/`PanelStatic` collision groups and `Workspace.PanelFragments`; invalid settings or conflicting group ownership reject before mutation. `emit(pivot, size, color, nowSeconds, templates?)` creates four default server-network-owned Parts, capped at 48 with oldest-first retirement and eight-second expiry. Initial speed is at most 12 studs/second, angular speed at most 4 radians/second, dimensions at most 1.5 studs per axis and density 1, hence generated mass at most 3.375 and initial momentum at most 40.5 mass·studs/second; subsequent motion follows gravity/contact. `static(instance)` enrolls owned anchored scenery while retaining prior groups; Terrain is enrolled separately. Fragments collide only with `PanelStatic`, excluding characters and other debris, and have no damage callback. `step(nowSeconds)` expires without delayed tasks; `clear()` removes fragments; idempotent `stop()` also restores captured scenery/Terrain groups and unregisters owned groups.
 
 Fragments set `CanQuery = false`, but a collidable Part can still participate in some query modes. Combat, movement-origin and thermal queries therefore also use explicit authoritative-world include filters and collision-group exclusions; keep those filters when adding consumers. Physical fragments never authorize cover or structural support. See [architecture](../../architecture.md#progressive-panel-destruction-p07), [asset provenance](../../assets/models/README.md) and the [P07 acceptance procedure](../../docs/testing.md#run-the-p07-destruction-harness). Required multiplayer/operated evidence is separate from module/API inspection.
+
+## Imported material panels and Outpost reconstruction (P17)
+
+The candidate replaces the smaller Outpost from managed imported templates and
+retains primitive Foundry/Warehouse/starting-shelter panels. It registers 188
+active panels. Actual native integration/performance and human approval remain
+separate acceptance gates.
+
+The generator `scripts/p17_assets.py` checks the approved Blender/catalog/lock
+hashes and exports before producing trusted server-only `ApprovedOutpost` data.
+The manifest binds that generated definition to its content hash.
+
+`PanelAssetRules.geometry(size, pose, halfBounds, maximumDimensionStuds?)` accepts finite positive stud
+dimensions, a rigid right-handed twelve-component CFrame and an enclosing
+canonical envelope; invalid, scaled, sheared, reflected or out-of-bounds data
+returns false without mutation. `receipt(value)` accepts a lowercase SHA-256
+identifier. The dimension limit defaults to 40 studs and may be explicitly set
+up to 64 for reconstruction support. Neither API yields or proves cloud availability.
+
+`PanelAssetCatalog.load(root)` returns `Catalog` or `nil, reason` without writes.
+The root is `ServerStorage.Assets.MaterialPanels`, with approved revision,
+Blender hash and import-receipt hash attributes. It requires all six family
+folders, four named appearance Models and four indexed fragment MeshParts per
+family. Each source path/hash must match the generated definition. Canonical
+Roblox face axes are X/Y, thickness Z. Cosmetic mesh/texture references must be
+nonempty asset IDs, geometry must fit the approved bounds, and scripts,
+unexpected content, duplicate names or colliding/queryable/touchable cosmetics
+reject. Runtime material checks use shared `AssetMaterial.read`: exactly one
+SurfaceAppearance and its readable compiled v1 attributes, with mesh/surface
+MaterialKey agreement and bounded references/PNG digest. Ordinary game code never
+reads protected SurfaceAppearance map slots or Content variants. Compiler and
+artifact/Edit audits bind real serialized slots to the attributes and approved
+receipt. Actual content loading, ownership/access and appearance remain separate
+preload/import/render observations.
+
+`MaterialPanelGeometry.validate(model, family)` checks the pristine Model's
+canonical geometry and complete exact proxy set, rejecting phantom solids.
+The larger attachment allowance applies only to a MeshPart explicitly marked
+PanelAttachment with AttachmentPanelId equal to the owning panel's name: each
+dimension is at most 64 studs and all canonical bounds fit a 32-stud half-envelope.
+Ordinary panel geometry retains the 40-stud default and its family-specific bounds;
+attachment allowance never makes dressing solid/queryable/touchable.
+`basis(model)` validates the optional rotation-only `PanelAssetBasis` attribute;
+`identitySize(family, basis)` computes its stable identity-frame dimensions.
+`install(model, materialPivot, family, appearance, identityPivot?, attachments?)`
+replaces caller-owned children with the selected cosmetic meshes and authoritative
+rectangle proxies. It preserves a separate legacy identity pivot when supplied.
+Pristine/Light restore panel-owned attachments from the captured original;
+Heavy/Total remove that dressing, and Total leaves no solids.
+`progress(model, fraction)` tints original imported colors within a stage without accumulating repeated tint or changing solidity.
+These APIs are nonyielding and use already validated trusted family data.
+
+`PanelGeometry.capture(partOrModel, family?)` preserves a primitive Part or
+validated material Model in the same stable panel lifecycle. Material Models
+require a family, identity/pivot and IntactSize. Publish selects their approved
+appearance and replicates the same stage/progress/credit attributes; primitive
+panels retain generic scars and two-strip residuals. `DestructionRuntime.start`
+preflights registered IDs and the material catalog/proxies before acquiring
+fragment collision groups. Shared `AssetMesh.validate` additionally requires
+public native MeshSize/collision/render fidelity to match five compiled native
+attributes; a MeshId/Size-only object cannot pass as reconstructed native art. Damage timing and ordering remain in the existing
+shared rules and service; no new client remote selects materials or panels.
+
+`PanelFragments.emit(pivot, size, color, nowSeconds, templates?)` optionally
+clones validated material MeshParts through the existing count, mass, impulse,
+query, ownership, expiry and reset/stop bounds. Captured pristine Models and
+collision groups restore through the same owner teardown. The controlled
+MaterialPanels fixtures use empty cosmetic meshes; separate
+Outpost fixtures use the actual managed templates. Each needs fresh native
+reports and remains distinct from operated texture/UV, navigation, rendered
+cover and multiplayer acceptance.
+
+`OutpostReconstruction.prepare(assets)` returns an unparented site-positioned
+Model or `nil, reason`, without world writes. It validates imported catalog,
+managed revision/receipt, exact floor/internal-stair support geometry, mesh/material
+references, compiled material metadata and public native intrinsics/fidelities, inert content, unique component IDs
+and 26 pristine panel Models.
+`install(world, assets)` replaces only `Battlefield.Buildings.Outpost` and returns
+`{ commit, rollback }` or `nil, reason`. Both closures are nonyielding/idempotent;
+commit releases the original, rollback restores it before snapshot acceptance.
+An already installed approved revision is preserved, including live damage.
+`GameRuntime` installs before `MapService.new`, rolls back if map construction
+rejects, then commits once the map owns its pristine snapshot. Subsequent resets
+reconstruct that snapshot and require fresh panel references.
+
+The managed templates contain twelve repaired base-color texture maps. Source
+roughness/metalness/emission scalars are metadata rather than equivalent
+SurfaceAppearance maps; the resulting material finish requires explicit A6 review.
+The compiler also preserves genuine engine InitialSize, PhysicalConfigData,
+PhysicsData and AeroMeshData from 407 managed native profiles across 2,332 uses.
+It never invents payloads from target sizes. Public runtime checks remain separate
+from host payload audits and actual rendered/contact/replication acceptance.
+Import owner/IDs and deterministic reconstruction receipts are documented in the
+[asset package](../../assets/imports/military-outpost/README.md).
 
 ## MapService
 

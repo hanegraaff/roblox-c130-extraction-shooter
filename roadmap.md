@@ -1,6 +1,6 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P08 and the approved P16 source/export package are now integrated on `main` through PRs #34 → #33 → #32; the [main integration record](docs/evidence/p08-p16-main-integration.md) identifies matching trees and fresh host verification. P17 still owns replacing the playable Outpost. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P08 and the approved P16 source/export package are now integrated on `main` through PRs #34 → #33 → #32; the [main integration record](docs/evidence/p08-p16-main-integration.md) identifies matching trees and fresh host verification. PR #39 integrates the detailed Outpost, indoor Ground camera and two asset skills. P15 reserves future interchangeable levels with a circling C-130 and shared game systems. Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 ## Milestones and plans
 
@@ -16,7 +16,7 @@ The integrated source on `main` includes the development shell, verification too
 | M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
 | M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
-| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Ready | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
+| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | In progress | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Planned | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Player guidance, spectating and presentation](plans/10-player-experience.md) | Planned | P09 | Understand each role, weapons, launcher, elimination and team result without developer help |
@@ -31,9 +31,135 @@ completed work and historical evidence remain valid; it is not undone or
 repeated. P09 waits for P17 and the completed P08 source. This priority takes
 precedence over lowest-numbered selection. P16's approved asset is delivered
 through PR #35, merged into `docs/military-outpost-blender-plans`.
-The remaining parent stack is now integrated on `main`; P17 has not started
-and can branch from updated `main`. See the
+The remaining parent stack is now integrated on `main`; P17 starts on
+`plan/17-integrate-military-outpost` from updated `main`. See the
 [main integration record](docs/evidence/p08-p16-main-integration.md).
+
+2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
+validated shared material-panel boundary and approved-source generation gate.
+Final code/tooling `03c9c06` passes 59 unit / 65 integration, 27 asset
+regressions, ten manifest cases and all host gates. The independent reviewer
+found and rechecked an approved-export provenance defect; the correction pins
+the exact approved package lock. Fresh local Studio fixtures and source-bound
+primitive regressions are recorded in the [P17 record](plans/17-integrate-military-outpost.md).
+The playable Outpost remains primitive; no cloud assets or replacement are
+delivered. P17 is Blocked on a cloud-saved import workspace and asset upload
+authorization/access: Studio requires saving to Roblox before managing MCP
+permissions, and both required asset scopes are ungranted. Local tests can run
+in the separate Rojo-connected test document. Actual import/reconstruction,
+integrated-art acceptance/performance and human in-game approval remain open.
+P09 stays Planned. No cloud save, asset upload, merge or Roblox publication
+has occurred.
+
+P17 preparation is delivered for review in [draft PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39),
+targeting `main`. Initial evidence delivery `916713e` passes
+[GitHub Verify #335](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43605942429).
+The code/tooling source remains `03c9c06`; the plan records source-bound
+Studio results and remaining evidence limitations. This draft does not complete
+P17. The user's subsequent authorization below covers its private cloud
+workspace/assets.
+
+2026-11-14 private-upload authorization: the user explicitly approved uploading
+the identified release build and approved assets while keeping the experience
+private. The [P17 authorization record](docs/evidence/p17/private-upload-authorization.json)
+preserves the response, build hash, owner and scope. Consent is resolved and
+must not be requested again. The access blocker remains: the current document
+is local, MCP's publishing scope is ungranted, and the initial private cloud
+save requires the user to complete Studio's dialog. The release build matches
+the authorized hash and passes artifact isolation; tests remain local. No cloud
+upload or private-audience verification was claimed at that checkpoint.
+
+2026-11-14 private upload completed: **C130 P17 Import**, universe
+`10776653720` / place `72732833195348`, is verified `PRIVATE` and owned by user
+`2227341845`. The initial cloud document had the test mapping; all matching
+test-only trees were removed after release-artifact comparison. Clean place
+revision **5** is verified published/Approved, with 47 runtime script fingerprints
+and 422 authored Parts checked. The approved assembly and library packages
+uploaded successfully with actual IDs in the manifest. The access blocker is
+cleared and P17 resumes. Native FBX import preserved 2,225 / 260 meshes but
+dropped all colors/textures; source-bound normalization/material repair and
+actual replacement/acceptance continue. The playable building remains primitive.
+See the [cloud receipt](docs/evidence/p17/cloud-import-progress.json). P09 remains
+Planned; this private upload is not P12 multiplayer/release acceptance.
+
+2026-11-14 integrated candidate: source `f378733` replaces the smaller Outpost
+through managed imported templates, retaining 25 panel identity pivots and
+registering 26 Outpost / 188 battlefield panels. The material-preserving library
+revision and twelve actual color-map references are recorded in Git. Both
+developer and independent macOS host gates pass. Fresh Linux CI exposes a
+reconstruction portability failure; independent review also identifies pivot
+preflight and thermal-fragment defects. Corrections and the integrated native
+acceptance are underway. P17 remains In progress; A1–A6, performance and human
+in-game approval are still open. The private published version remains the older
+primitive source. The [P17 record](plans/17-integrate-military-outpost.md) preserves
+exact source/build identities, evidence and historical failures. P09 has not
+started.
+
+Correction `b1a6734` preserves the managed art bytes while making float reduction
+portable and adding pivot/thermal-fragment preflight regressions. Its macOS full
+host gate and independent focused review pass; Linux CI confirmation and actual
+integrated Studio acceptance remain pending. The test mapping now expects
+169 server / nine per actual client, with no passing native result claimed.
+
+Fresh [Verify #343](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43624006036)
+passes on Linux / Python 3.12 for documentation delivery `821bfd5`, with the
+same `b1a6734` runtime/test source. The portability failure is closed. The fresh
+local test document still awaits opening; integrated native/performance and
+human acceptance remain open, so P17 stays In progress and PR #39 stays draft.
+
+The local test document is now open and source-verified. Native testing exposed
+ordinary-script texture-property restrictions; correction `010289d` introduces
+compiled material metadata and passes macOS plus Linux Verify #347. Actual Edit
+inspection matches 132 scripts, 2,332 imported mesh identities and 9,328 texture
+slot/metadata comparisons. A second ordinary run passes the new metadata case
+but still blocks startup on two approved roof attachments and a client fixture
+readiness race. Those corrections are in progress; no integrated native pass
+is claimed. An accidental cloud test sync was stopped, the six test-only trees
+removed and clean unpublished draft 11 saved; the universe remains Private.
+P17 remains In progress, PR #39 stays draft and P09 has not started. Exact
+failed/passing scopes are preserved in the [plan record](plans/17-integrate-military-outpost.md).
+
+Current source `48eae4b` preserves product `51f8440` byte-for-byte and corrects
+two client fixtures. Native baselines now pass 171 server and ten on each of
+two actual clients; actual mesh loading and controlled internal/external avatar
+navigation also pass. Full material/native-fire/reset, rendered views, current
+regressions, performance and A6 remain open. Corrected catalog-based material
+rays await execution after an SDK startup failure and closure of both local
+test documents; the unchanged clean test file is ready to reopen once. P17
+stays In progress and the PR stays draft; P09 remains unstarted.
+
+2026-11-19 P17 checkpoint. The managed harness and its test-source binding
+pass the full host gate and GitHub Verify #365. A fresh local Studio Edit
+audit confirms the candidate's source, native mesh properties, material slots
+and geometry. The current multiplayer runs, operated review, performance
+comparison and human approval remain open. See the
+[P17 completion record](plans/17-integrate-military-outpost.md#reopened-local-test-place--2026-11-19).
+
+Later native P17 work passes the ten-case Outpost suite with two actual
+clients, including navigation, damage, replication and live-work resets.
+P08, P07, P05 and P14 native regressions pass on the same production source.
+Both completed performance scenes exceed the client frame-time budget.
+At that checkpoint, P17 was still in progress for the measured budget and
+operated and human review.
+
+2026-11-20 P17 checkpoint. Operated desktop and simulated-touch review is
+recorded. The user waived the paired two-client performance gate under D67.
+P17 remains In progress in draft PR #39 pending explicit in-game Outpost
+approval. The two requested skills follow P17 under D66. See the
+[P17 evidence record](plans/17-integrate-military-outpost.md#performance-acceptance-revision-2026-11-20).
+
+Later on 2026-11-20, the user added automatic Ground interior zoom and both
+reusable asset skills to P17 under D68. The existing Outpost is the first
+configured building. The revised scope is in progress in PR #39. See the
+[P17 camera and skills revision](plans/17-integrate-military-outpost.md#indoor-camera-and-reusable-skills-scope-revision-2026-11-20).
+Both skills passed an independent trial, and the revised camera passed the
+solo Studio walkthrough on both Outpost floors. The current-source active
+round and native regressions await a Studio session with the required clients.
+
+Later on 2026-11-20, the owner approved P17 and authorized the [PR #39 merge](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39).
+The detailed Outpost, indoor camera and both asset skills ship in the source
+on `main`. The remaining current-source native verification is tracked by
+[P17](plans/17-integrate-military-outpost.md#owner-approval-and-merge-2026-11-20).
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
@@ -241,7 +367,7 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 
 Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14; interchangeable levels belong to P15. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
 
-P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. The planning update scheduled these increments; P16 has since delivered the approved package. P17 remains the next unstarted increment.
+P16/P17 scope the requested military-outpost Blender kit and replacement of the current smaller Outpost, after P07/P13 demonstrated the simple-graphics mechanics. D63 schedules them as the next two increments before P09 and the remaining MVP work. The asset catalog supplies material-specific appearance and debris while shared systems retain thresholds, authority, openings, collision, thermal readability and cleanup. P16's final visual gate belongs to the human; P17 also requires real-engine acceptance. They change one building on the current level, without implementing P15. Terrain-wide dressing and aircraft/equipment refinement remain separately scoped future proposals. P10 retains its UI/effects/audio scope; P11/P12 must profile and verify the actual approved replacement in their candidate. The planning update scheduled these increments; P16 has since delivered the approved package. P17 has delivered preparation and awaits authenticated imports before the actual replacement can proceed.
 
 ## Initial delivery record
 

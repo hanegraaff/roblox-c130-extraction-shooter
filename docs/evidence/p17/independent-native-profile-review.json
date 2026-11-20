@@ -1,0 +1,48 @@
+{
+  "base_source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "current_head": "b57c49c96227635189ab52a02fd0624a0c073e37",
+  "scope": "Independent read-only host inspection of genuine capture and WIP compiler output; not native engine proof",
+  "bank_sha256": "73a7f6dfc224f677453966ae950081016ac71cd195db4a84cd305c0b98e6cc1c",
+  "request_sha256": "d916f5cb5897bb9727c3603a2c8d8eaeac83f1044b3b44a772ca40a6bd8f067c",
+  "profiles": 407,
+  "profile_fidelities": {
+    "Box": 320,
+    "PreciseConvexDecomposition": 87
+  },
+  "target_mesh_parts": 2332,
+  "target_constructor_bound": 2332,
+  "exact_profile_use_coverage": true,
+  "non_constructor_art_unchanged": true,
+  "max_intrinsic_vs_target_axis_ratio": 42.666667607097544,
+  "ground_floor": {
+    "mesh_id": "rbxassetid://115500378831807",
+    "target_size": [
+      32.00000024835116,
+      1.0000077861669454,
+      47.999998942015296
+    ],
+    "intrinsic_mesh_size": [
+      1365.3333740234375,
+      42.66699981689453,
+      2048
+    ]
+  },
+  "native_payload_fields": [
+    "PhysicalConfigData",
+    "PhysicsData",
+    "AeroMeshData"
+  ],
+  "native_shared_payload_records": 89,
+  "models": [
+    {
+      "path": "assets/models/MaterialPanels.model.json",
+      "sha256": "e8e6e8e08f2cfd7e02ed333e84f13c3adb4f6bdc32cab1a0c3e339af22a14433",
+      "mesh_parts": 76
+    },
+    {
+      "path": "assets/models/MilitaryOutpost.model.json",
+      "sha256": "fd1b20cda4ed15b90fe7e1899f8fea7c878f55a219d812e357c38961ab921f2e",
+      "mesh_parts": 2256
+    }
+  ]
+}

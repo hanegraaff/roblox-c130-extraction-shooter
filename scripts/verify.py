@@ -67,6 +67,10 @@ def main() -> int:
     run([sys.executable, "scripts/check_repository.py"])
     run([sys.executable, "-m", "unittest", "discover", "-s", "tests/tooling", "-v"])
     run([sys.executable, "scripts/p16_audit.py"])
+    run([sys.executable, "scripts/p17_assets.py"])
+    run([sys.executable, "scripts/p17_library_glb.py"])
+    run([sys.executable, "scripts/p17_compile_outpost.py"])
+    run([sys.executable, "scripts/p17_harness.py"])
     run([sys.executable, "-m", "unittest", "discover", "-s", "tests/assets", "-v"])
     # Refuse accidental upgrades or tool substitutions; Rokit pins are the source of truth.
     for name, pin in re.findall(r'([\w-]+)\s*=\s*"[^"@]+@([\d.]+)"', (ROOT / "rokit.toml").read_text()):
@@ -83,10 +87,10 @@ def main() -> int:
     if not (ROOT / "Packages/TestEZ.lua").exists():
         raise RuntimeError("Missing Wally dependencies; run python3 scripts/setup.py")
     (ROOT / "build").mkdir(exist_ok=True)
-    run(["stylua", "--check", "src", "tests", "scripts/run_tests.luau"])
-    run(["selene", "src", "tests", "scripts/run_tests.luau"])
+    run(["stylua", "--check", "src", "tests", "scripts/run_tests.luau", "scripts/p17_native_mesh_xml.luau"])
+    run(["selene", "src", "tests", "scripts/run_tests.luau", "scripts/p17_native_mesh_xml.luau"])
     run(["rojo", "sourcemap", "test.project.json", "--output", "build/sourcemap.json"])
-    run(analysis_arguments() + ["src", "tests", "scripts/run_tests.luau"])
+    run(analysis_arguments() + ["src", "tests", "scripts/run_tests.luau", "scripts/p17_native_mesh_xml.luau"])
     for suite in ("unit", "integration"):
         run(["lune", "run", "scripts/run_tests.luau", suite])
     negative_probes()

@@ -1,0 +1,34 @@
+{
+  "source_commit": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "source_tree": "7c75a118c6f887c3bf4f995448635dbfca895d5c",
+  "command": "python3 scripts/verify.py",
+  "environment": "macOS26.6.2ARM/Python3.10.4",
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 43,
+  "manifest_regressions": 10,
+  "authored_parts_each_build": 2804,
+  "release_instances": 5295,
+  "test_instances": 5387,
+  "release_runtime_scripts": 50,
+  "native_expected": {
+    "server": 171,
+    "client": 10
+  },
+  "native_observed": null,
+  "builds": [
+    {
+      "path": "build/game.rbxlx",
+      "bytes": 8468498,
+      "sha256": "7240a3ec7b4e7b070a9eb27b5b2de61e5019b9a184d12c6c6e71d9f302fd1205",
+      "test_only": false
+    },
+    {
+      "path": "build/tests.rbxlx",
+      "bytes": 9343562,
+      "sha256": "53e8fb79fa034a2d0fdb51631bee74e77a1d34300c4184442b7ae2d0e78aa4ad",
+      "test_only": true
+    }
+  ],
+  "product_source_unchanged_from": "51f8440ee728e641ec47b85a3b95370981fdc813"
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "status": "host-checked-native-execution-pending",
+  "adapterRevision": "p17-native-ground-transport-v2",
+  "source": "711c5a86729e2fb2805dad473345936ba22d015e",
+  "production": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "baselinePinSha256": "7806ea30cd436ad81bc8b5a23b1c0025bc8a16ab0ba262baab341dd39ec9658b",
+  "failedReport": {
+    "path": "docs/evidence/p17/primitive-performance-711c5a8-attempt1-raw.json",
+    "sha256": "ca2ca9657de1a97ec495a29f441d1478131ef2bc3a870e7f174e127424103270",
+    "actualNative": {
+      "rifleDamage": 0,
+      "GAU23": 253,
+      "M102": 28,
+      "rifleAccepted": 0,
+      "outpostImpacts": 74,
+      "impacts": 193
+    },
+    "measuredSeconds": 300,
+    "controlledOutcomes": 1122
+  },
+  "diagnosis": "Benchmark client queried root ReplicatedStorage while the production M-7 remotes are children of AircraftState.",
+  "repair": "Shared client intent sender resolves AircraftState child remotes. It must produce an authoritative actual M-7 warmup shot inside the existing 30-second warmup. Rifle coverage accepts server-observed shots only within native measurement seconds 0\u2013230. Exact-source swaps replace two ModuleScript identities to bypass old require caches.",
+  "unchangedGates": {
+    "warmupSeconds": 30,
+    "measuredSeconds": 300,
+    "actualClientCount": 2,
+    "viewport": [
+      1920,
+      1080
+    ],
+    "serverP95Ms": 16.7,
+    "clientP95Ms": 33.3,
+    "stagedDemolitionBatches": 6
+  },
+  "sourceAndSwapHashes": {
+    "server": {
+      "previousSourceSha256": "3d2fe83bf832bacbd56639dc3dc647287e075bed3b81a86c83788b2d95a798ce",
+      "correctedSourceSha256": "ac8a0a10625f6eafd0269195415d8c10c110a7181700c77286c13c88230b2857",
+      "swapPayloadSha256": "c80c34255053d20215f44b0841aecdb0e7f4a570554e5a1e5d670ba0f69f25e1"
+    },
+    "client": {
+      "previousSourceSha256": "71d6131b06dfab1223a90d790a3420b7c5edc839628a6446842ce7399d780685",
+      "correctedSourceSha256": "9f904dfc8602e370149888681569f392641a439036e75000b7e107910ddd85ef",
+      "swapPayloadSha256": "f353f8a322d0e3be3be74c5acbe0e490827130fb1cdd46fc017db4760e418bb7"
+    }
+  },
+  "focusedChecks": {
+    "styluaCheck": "pass",
+    "selene": "pass, cached Roblox API",
+    "luauLsp": "pass",
+    "gitDiffCheck": "pass",
+    "oldRawFailureIdentity": "pass"
+  }
+}

@@ -19,6 +19,7 @@ Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initial
 | `SpawnShelterPanels`, `PanelRegistries/SpawnShelter` | Revised candidate: 42 roof and 34 wall panels replace the seven old Permanent shelter colliders, preserving their union, entrances and anchors. The descriptor points to the direct `SpawnShelterPanels` Folder. Pristine geometry must protect all nine spawn anchors; later damage can open it. |
 | `Routes` | Teal western and ochre eastern launcher approaches through X=−60/+60. Both remain usable without destruction. |
 | `Buildings` | Foundry and Warehouse are 64×48 studs each; Outpost is 32×48. All have two usable floors and stairs. |
+| `GroundCameraInteriors` | Optional Folder of local camera metadata. Each Configuration has a room-oriented `Frame` (CFrame), full `Size` (Vector3 in studs) and `MaxDistanceStuds` (number). The Outpost's workshop and upstairs command room each use a five-stud cap. |
 | `TerrainRecipe` | Eight invisible sphere descriptors plus the exact `TerrainBounds` ownership box; `TerrainRecipe.restore` supplies actual smooth terrain at runtime. |
 | `AimEnvelope/MinimumY`, `MaximumY` | NumberValues authoring inclusive aircraft aim-height bounds in world studs, currently −1 and 32. These are configuration, not visible/colliding geometry. AircraftService validates/captures them and retains independent selected-muzzle obstruction checks. |
 
@@ -29,6 +30,12 @@ All descendant names must be unique and authored BaseParts anchored. Ground/laun
 Each building owns named `_Static`, `_Panels` and `_Navigation` groups. Static floors, landings, frames and stairs stay separate from panel destruction. Ground-floor top is Y=0.125, separated from the battlefield surface; upper-floor top is Y=10.125; each stair has sixteen 0.625-stud rises, two-stud runs and eight-stud tread width. Wall panel faces use the 16×8-stud default; 16×16×1-stud roof tiles are centered at Y=20.625. The two larger buildings have 32-stud room bays, registered interior divider panels and inert 32×8×48 room bounds. Five numbered navigation markers define outside entry, circulation, stair ascent and upper-room traversal.
 
 Server `BuildingGeometry` validates actual geometry and decorates `BuildingId`, `StoryId`, globally unique `PanelId`, Intact state/pivot and variant metadata. `StoryId` is `01` or `02` within a formal BuildingId. The candidate’s 111 formal-building panels plus 76 starting-shelter pieces give **187 registered panels**. `BuildingGeometry.registries` reads formal `_Panels` folders plus `PanelRegistries` StringValues. A StringValue’s Name is the ancillary building ID; Value is a direct Battlefield child Folder name, not a recursive path. `SpawnShelter` points to `SpawnShelterPanels` with StoryId `01`. No new two-story requirement applies to this ancillary envelope. The outside waiting deck/lobby at X=520 remains protected.
+
+For a compact interior, center the descriptor on the usable room, put its
+local +Y boundary at the ceiling, and keep exterior balconies and roofs outside
+the bounds. Validate both sides of doors and the height of stair landings in
+Studio. Base the cap on observed avatar and camera clearance. A spacious
+room can use the ordinary third-person camera without an interior descriptor.
 
 DestructionRuntime captures these Parts into identity Models and publishes structural Intact/Damaged/Destroyed separately from appearance Pristine/Light/Heavy/Total. Earned damage persists per panel across interruptions until reset. Light face scars preserve intact collision; Heavy keeps two solids around a genuine central 50% opening and a distinct dark fractured style at zero stage progress; Total has no solids. Visual scars cannot collide, query or identify as structural hits. Static floors/stairs/frames, terrain and standalone nonbuilding barriers remain unchanged. Restore pristine Parts before reacquiring the registry; do not author live damage, scars or debris back into this file.
 

@@ -5,8 +5,67 @@ import json
 import math
 import tempfile
 import copy
+import base64
+import struct
+from p17_native_meshes import PAYLOAD_FIELDS, decode_payload, float32_vector
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def compiled_surface_attributes(item: ET.Element) -> dict:
+    """Decode compiled String/Bool/Float64/Vector3 attributes from Rojo XML.
+
+    P17 surfaces intentionally have only those attribute types. Unknown/truncated
+    serialized metadata rejects rather than trusting the source JSON counterpart.
+    """
+    encoded = item.findtext("Properties/BinaryString[@name='AttributesSerialize']") or item.findtext("Properties/BinaryString[@name='AttributesSerialized']")
+    if not encoded:
+        raise RuntimeError("missing serialized compiled material metadata")
+    try:
+        data = base64.b64decode(encoded, validate=True)
+        offset = 0
+        def number(fmt):
+            nonlocal offset
+            value = struct.unpack_from(fmt, data, offset)[0]
+            offset += struct.calcsize(fmt)
+            return value
+        def string():
+            nonlocal offset
+            length = number("<I")
+            if length > 4096 or offset + length > len(data):
+                raise ValueError("invalid material attribute string")
+            value = data[offset:offset+length].decode("utf-8")
+            offset += length
+            return value
+        count = number("<I")
+        if count > 32: raise ValueError("unbounded material metadata")
+        values = {}
+        for _ in range(count):
+            key = string()
+            if key in values: raise ValueError("duplicate material metadata")
+            kind = number("<B")
+            if kind == 2: values[key] = string()
+            elif kind == 3: values[key] = bool(number("<B"))
+            elif kind == 6: values[key] = number("<d")
+            elif kind == 17: values[key] = [number("<f") for _ in range(3)]
+            else: raise ValueError("unexpected compiled material metadata type")
+        if offset != len(data): raise ValueError("trailing compiled material metadata")
+        return values
+    except (ValueError, struct.error, UnicodeError) as error:
+        raise RuntimeError("invalid serialized compiled material metadata") from error
+
+
+def check_surface_material(item: ET.Element, source: dict, full: str) -> None:
+    """Bind actual protected map slots AND serialized readable metadata to source."""
+    properties = source["Properties"]
+    actual_metadata = compiled_surface_attributes(item)
+    expected_metadata = {key: next(iter(value.values())) for key, value in properties.get("Attributes", {}).items()}
+    if actual_metadata != expected_metadata or actual_metadata.get("MaterialMetadataVersion") != 1:
+        raise RuntimeError(f"Compiled material metadata reconstruction mismatch: {full}")
+    for key in ("ColorMap", "NormalMap", "RoughnessMap", "MetalnessMap"):
+        actual_map = item.findtext(f"Properties/Content[@name='{key}Content']/uri") or item.findtext(f"Properties/Content[@name='{key}']/url") or ""
+        if actual_map != properties.get(key, "") or actual_metadata.get("Compiled"+key) != actual_map:
+            raise RuntimeError(f"Imported texture/metadata reconstruction mismatch: {full}/{key}")
 
 
 def paths(path: Path) -> dict[str, str]:
@@ -29,7 +88,7 @@ def paths(path: Path) -> dict[str, str]:
 
 
 CFRAME_COMPONENTS = ("X", "Y", "Z", "R00", "R01", "R02", "R10", "R11", "R12", "R20", "R21", "R22")
-PART_CLASSES = {"Part", "SpawnLocation"}
+PART_CLASSES = {"Part", "SpawnLocation", "MeshPart"}
 
 
 def instance_nodes(path: Path) -> dict[str, ET.Element]:
@@ -61,6 +120,36 @@ def numeric_property(item: ET.Element, tag: str, name: str, components: tuple[st
     return numbers
 
 
+def check_native_mesh(item: ET.Element, source: dict, shared: dict[str, bytes], full: str) -> None:
+    """Require native intrinsic/payload preservation, independently of part Size.
+
+    These opaque bytes are compared to the source-bound factory capture rather
+    than synthesized or treated as collision/rendering proof in a host process.
+    """
+    properties = source["Properties"]
+    initial = numeric_property(item, "Vector3", "InitialSize", ("X", "Y", "Z"), full)
+    expected = properties.get("InitialSize")
+    if not expected or any(value <= 0 for value in initial) or float32_vector(initial) != expected:
+        raise RuntimeError(f"Native mesh intrinsic reconstruction mismatch: {full}")
+    metadata = compiled_surface_attributes(item)
+    for key in ("NativeGeometryVersion", "NativeMeshId", "NativeMeshSize", "NativeCollisionFidelity", "NativeRenderFidelity"):
+        typed = properties.get("Attributes", {}).get(key, {})
+        expected_value = next(iter(typed.values()), None)
+        if expected_value is None or metadata.get(key) != expected_value:
+            raise RuntimeError(f"Native mesh metadata reconstruction mismatch: {full}/{key}")
+    for field, kind in PAYLOAD_FIELDS.items():
+        node = item.find(f"Properties/{kind}[@name='{field}']")
+        source_value = properties.get(field, {}).get(kind)
+        if node is None or source_value is None:
+            raise RuntimeError(f"Missing native mesh payload: {full}/{field}")
+        if kind == "SharedString":
+            actual = shared.get(node.text)
+        else:
+            actual = decode_payload(node.text)
+        if actual != decode_payload(source_value) or (field == "PhysicalConfigData" and not actual):
+            raise RuntimeError(f"Native mesh payload reconstruction mismatch: {full}/{field}")
+
+
 def check_authored_geometry(path: Path) -> int:
     """Compare every authored part pose/size/shape/collision against the actual XML.
 
@@ -69,6 +158,7 @@ def check_authored_geometry(path: Path) -> int:
     before Studio. This gate verifies reconstruction, not engine navigation/rays.
     """
     nodes = instance_nodes(path)
+    shared = {node.attrib["md5"]: decode_payload(node.text) for node in ET.parse(path).getroot().findall("SharedStrings/SharedString")}
     count = 0
     manifest = json.loads((ROOT / "assets/manifest.json").read_text())
 
@@ -98,10 +188,18 @@ def check_authored_geometry(path: Path) -> int:
                 actual_bool = True if serialized is None else serialized == "true"
                 if actual_bool != expected_bool:
                     raise RuntimeError(f"Authored {boolean} reconstruction mismatch: {full}")
-            expected_shape = {"Block": "1", "Ball": "0", "Cylinder": "2"}[properties.get("Shape", "Block")]
-            if item.findtext("Properties/token[@name='shape']", "1") != expected_shape:
-                raise RuntimeError(f"Authored shape reconstruction mismatch: {full}")
+            if source["ClassName"] == "MeshPart":
+                actual_mesh = item.findtext("Properties/Content[@name='MeshContent']/uri") or item.findtext("Properties/Content[@name='MeshId']/url")
+                if actual_mesh != properties["MeshId"]:
+                    raise RuntimeError(f"Imported MeshId reconstruction mismatch: {full}")
+                check_native_mesh(item, source, shared, full)
+            else:
+                expected_shape = {"Block": "1", "Ball": "0", "Cylinder": "2"}[properties.get("Shape", "Block")]
+                if item.findtext("Properties/token[@name='shape']", "1") != expected_shape:
+                    raise RuntimeError(f"Authored shape reconstruction mismatch: {full}")
             count += 1
+        if source["ClassName"] == "SurfaceAppearance":
+            check_surface_material(item, source, full)
         for child in source.get("Children", []):
             walk(child, full + "/" + child["Name"])
 
@@ -416,6 +514,21 @@ def check_manual_p05_isolation(release: dict[str, str], tests: dict[str, str]) -
             raise RuntimeError(f"P05 manual fixture missing from tests or leaked to release: {name}")
 
 
+MANUAL_P17_TEST_ONLY = (
+    "ServerScriptService/ServerTests/P17MaterialHarness",
+    "ServerScriptService/ServerTests/P17ManualRunner",
+    "ServerScriptService/ServerTests/P17Metadata",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/P17MaterialHarness",
+)
+
+
+def check_manual_p17_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
+    """Require complete P17 native fixtures exclusively in the test artifact."""
+    for name in MANUAL_P17_TEST_ONLY:
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P17 fixture missing from tests or leaked to release: {name}")
+
+
 def main() -> None:
     """Assert bootstraps/spawn exist and all test-only Instances are absent from release."""
     release = paths(ROOT / "build/game.rbxlx")
@@ -434,13 +547,19 @@ def main() -> None:
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
+    expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
+    expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundIndoorCamera")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
+    expected_scripts.add("ReplicatedStorage/Shared/GroundCameraRules")
+    expected_scripts.add("ReplicatedStorage/Shared/AssetMaterial")
+    expected_scripts.add("ReplicatedStorage/Shared/AssetMesh")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
     if allowed_scripts != expected_scripts:
         raise RuntimeError(f"Unexpected/missing release scripts: {allowed_scripts ^ expected_scripts}")
@@ -454,6 +573,7 @@ def main() -> None:
         "ServerScriptService/ServerTests/DestructionHarness",
         "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",
         "ServerStorage/Tests/Studio/PanelDestruction.spec",
+        "ServerStorage/Tests/Studio/MaterialPanels.spec",
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P07 destruction fixture missing from tests or leaked to release: {name}")
@@ -488,6 +608,8 @@ def main() -> None:
             else:
                 raise RuntimeError(f"P05 manual isolation failed to reject {fault}: {name}")
     print("P05 manual fixture isolation passed, including eight deliberate corruption probes.")
+    check_manual_p17_isolation(release, tests)
+    print("P17 native fixture isolation passed: four test-only modules, no release additions.")
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")

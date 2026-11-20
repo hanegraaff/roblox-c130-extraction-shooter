@@ -1,0 +1,40 @@
+{
+  "source": "48eae4b2f0ebb4b0f069fb21a41973b9a37a297a",
+  "studio": "61a9a1b7-8b1d-4834-8adb-1df099229ce3",
+  "scope": "OneSDK2 recoveryattempt on newlyverifiedcleanlocaldoc; correctedv5materialrays",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":{\"1\":{\"id\":-1,\"life\":\"Alive\",\"role\":\"Gunship\"},\"2\":{\"id\":-2,\"life\":\"Alive\",\"role\":\"Ground\"}},\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":171,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":171}\",\"now\":1794683375.452956,\"stage\":\"{\\\"clientCount\\\":2,\\\"serverTime\\\":1794683365.917149,\\\"stage\\\":\\\"A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation\\\"}\",\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":6.7160065833013509}\"}"
+      }
+    ],
+    "isError": false
+  },
+  "clients": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"errors\":\"[]\",\"telemetry\":\"{\\\"currentViewport\\\":[1153,649],\\\"sampledOrigin\\\":[0,-58],\\\"worldProjection\\\":[604.3060302734375,305.962646484375,100.0000228881836],\\\"currentInset\\\":[0,58],\\\"drawn\\\":[577,325],\\\"mode\\\":\\\"touch\\\",\\\"inset\\\":[0,58],\\\"world\\\":[-14,-14.284955978393555,22.446205139160158],\\\"rayDirection\\\":[0.0010789011139422656,-0.25986090302467348,-0.9656455516815186],\\\"cameraCFrame\\\":[-20,7.733247756958008,120.0740737915039,1,0,0,0,0.965925931930542,0.2588190734386444,0,-0.2588190734386444,0.965925931930542],\\\"currentOrigin\\\":[0,-58],\\\"pixels\\\":[577,325],\\\"fov\\\":70,\\\"viewport\\\":[1153,649],\\\"mouse\\\":[1108,239],\\\"expected\\\":[576.5,324.5],\\\"rayOrigin\\\":[-19.99989128112793,7.707261562347412,119.97750854492188]}\",\"userId\":-2,\"role\":\"Ground\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"errors\":\"[]\",\"telemetry\":\"{\\\"currentViewport\\\":[1081,618],\\\"sampledOrigin\\\":[0,-58],\\\"worldProjection\\\":[609.6922607421875,262.87158203125,99.99998474121094],\\\"currentInset\\\":[0,58],\\\"drawn\\\":[541,309],\\\"mode\\\":\\\"touch\\\",\\\"inset\\\":[0,58],\\\"world\\\":[285.972900390625,72.11775207519531,17.7580509185791],\\\"rayDirection\\\":[-0.7046389579772949,-0.7071067094802856,-0.059026069939136508],\\\"cameraCFrame\\\":[358.76190185546877,140,29.831192016601564,0.0828644186258316,-0.7046749591827393,0.7046749591827393,-5.26835597369768e-9,0.7071068286895752,0.7071067690849304,-0.9965608716011047,-0.0585939958691597,0.0585939921438694],\\\"currentOrigin\\\":[0,-58],\\\"pixels\\\":[541,309],\\\"fov\\\":30,\\\"viewport\\\":[1081,618],\\\"mouse\\\":[990,9],\\\"expected\\\":[540.5,309],\\\"rayOrigin\\\":[358.6914367675781,139.92929077148438,29.825288772583009]}\",\"userId\":-1,\"role\":\"Gunship\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ]
+}

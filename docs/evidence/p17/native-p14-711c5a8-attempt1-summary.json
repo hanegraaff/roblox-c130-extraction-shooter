@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "711c5a86729e2fb2805dad473345936ba22d015e",
+  "engine": "0.748.0.7481526",
+  "nativeServer": "ae8560ea-af5a-4a47-a6f5-7c718e6c7607",
+  "launch": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"at\":1795138540.41299,\"pristinePanels\":188,\"started\":\"P14\"}"
+        }
+      ],
+      "isError": false
+    },
+    [
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"P14\",\"actualUser\":-1}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "status": "fulfilled",
+        "value": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"mode\":\"P14\",\"actualUser\":-2}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ]
+  ],
+  "probedIdentities": {
+    "proxy": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_North_01.Outpost_S02_North_01_Proxy1",
+    "modelStoryId": "02",
+    "canQuery": true,
+    "canCollide": true,
+    "proxyStoryId": "absent",
+    "placeId": 0,
+    "actors": 2,
+    "modelPanelId": "Outpost_S02_North_01",
+    "gameId": 0,
+    "model": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_North_01",
+    "registeredParent": "Outpost_Panels",
+    "proxyPanelId": "Outpost_S02_North_01",
+    "runtimeAbsent": true,
+    "proxyTag": true
+  },
+  "summary": {
+    "bytes": 56184,
+    "chunks": 1,
+    "transport": false,
+    "failed": 2,
+    "players": {
+      "1": -1,
+      "2": -2
+    },
+    "at": 1795138645.53493,
+    "passed": 1,
+    "complete": true
+  }
+}

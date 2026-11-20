@@ -15,6 +15,7 @@ export type Building = {
     stepRise: number,
     stepRun: number,
     panels: { Panel },
+    panelLayoutVersion: number?,
 }
 
 -- Validates exact population, dimensions, stairs and registry without mutation. Expected
@@ -76,8 +77,15 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
                 stories[panel.story] += 1
             end
         end
+        if building.panelLayoutVersion ~= nil and building.panelLayoutVersion ~= 2 then
+            return false, "unknown panel-layout version"
+        end
+        if building.panelLayoutVersion == 2 and building.id ~= "Outpost" then
+            return false, "panel-layout migration applies only to Outpost"
+        end
         local interiorCount = if building.width == 64 then 2 else 0
-        if interior[1] ~= interiorCount or interior[2] ~= interiorCount then
+        local groundInterior = if building.panelLayoutVersion == 2 then 1 else interiorCount
+        if interior[1] ~= groundInterior or interior[2] ~= interiorCount then
             return false, "large buildings require panelized room dividers on both stories"
         end
         local wallCount = 2 * (building.width / 16 + building.depth / 16)

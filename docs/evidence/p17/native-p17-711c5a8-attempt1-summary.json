@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "711c5a86729e2fb2805dad473345936ba22d015e",
+  "tree": "3d6911e7ccbcfe9ff49df45acc6c9a0b2ed7158a",
+  "initial": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ae8560ea-af5a-4a47-a6f5-7c718e6c7607",
+        "result": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}",
+          "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":3.8260718749952504}",
+          "ids": [
+            -2,
+            -1
+          ],
+          "clientMode": "P17",
+          "placeId": 0,
+          "transportReady": "{\"serverTime\":1795136548.854919,\"actualPlayers\":2,\"readyUserIds\":[-2,-1],\"readyCount\":2}",
+          "complete": false,
+          "commit": "711c5a86729e2fb2805dad473345936ba22d015e",
+          "engine": "0.748.0.7481526",
+          "invocation": "{\"approvedAssetBindings\":[{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-outpost-assembly-v1-fbx\",\"sha256\":\"7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8\",\"roblox_asset_id\":\"73311045122621\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-panel-library-v1-fbx\",\"sha256\":\"c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d\",\"roblox_asset_id\":\"126055228085421\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p17-panel-library-materials-v2-glb\",\"uploaded_revision\":\"2\",\"sha256\":\"a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e\",\"roblox_asset_id\":\"126055228085421\"}],\"automaticSessionEnd\":false,\"serverTime\":1795136540.214493,\"actualLateClientRequired\":false,\"manualFixtureVersion\":\"v7-bounded-roof-aim\",\"requestedInitialClients\":2,\"clientProbeSha256\":\"fe55618bf35301b823cd73a7934a69f905f1a9012681b85f22d30dd5876ac7b9\",\"selectorValue\":\"P17\",\"productionFingerprintSha256\":\"7e7edb45ebb819b098c2f62518a89d1e630ec6cbae93cd6eb79f9c75e835a9c0\",\"serverProbeSha256\":\"a2f7caf9170236c6c43ef80d14824868ae4a57e1fef92e1b00b705a007d68707\",\"harness\":\"P17Manual-v7-bounded-roof-aim\",\"harnessFingerprintSha256\":\"22427621c49e158b731400537ee916734e624dbf5f3522d4cb0111dab463b243\",\"productionCommit\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"mode\":\"manual-native-server-clients\",\"harnessCommit\":\"711c5a86729e2fb2805dad473345936ba22d015e\",\"selector\":\"ServerStorage.DevelopmentSettings.ManualHarness\"}",
+          "gameId": 0,
+          "stage": "{\"clientCount\":2,\"serverTime\":1795136553.255855,\"stage\":\"P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor\"}",
+          "selector": "P17"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "b16c2a7e-0d53-442e-8882-8842b5cd3948",
+        "result": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":10,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":10}",
+          "errors": "[]",
+          "mode": "P17",
+          "placeId": 0,
+          "userId": -1,
+          "gameId": 0
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "id": "ecea25bf-6490-456c-97d8-0b310cf5b165",
+        "result": {
+          "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":10,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":10}",
+          "errors": "[]",
+          "mode": "P17",
+          "placeId": 0,
+          "userId": -2,
+          "gameId": 0
+        }
+      }
+    }
+  ],
+  "final": {
+    "bytes": 500030,
+    "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}",
+    "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":3.8260718749952504}",
+    "ids": [
+      -2,
+      -1
+    ],
+    "clientMode": "P17",
+    "placeId": 0,
+    "transportReady": "{\"serverTime\":1795136548.854919,\"actualPlayers\":2,\"readyUserIds\":[-2,-1],\"readyCount\":2}",
+    "complete": true,
+    "commit": "711c5a86729e2fb2805dad473345936ba22d015e",
+    "engine": "0.748.0.7481526",
+    "invocation": "{\"approvedAssetBindings\":[{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-outpost-assembly-v1-fbx\",\"sha256\":\"7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8\",\"roblox_asset_id\":\"73311045122621\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p16-exports-military-outpost-panel-library-v1-fbx\",\"sha256\":\"c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d\",\"roblox_asset_id\":\"126055228085421\"},{\"upload_owner\":\"User 2227341845\",\"id\":\"p17-panel-library-materials-v2-glb\",\"uploaded_revision\":\"2\",\"sha256\":\"a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e\",\"roblox_asset_id\":\"126055228085421\"}],\"automaticSessionEnd\":false,\"serverTime\":1795136540.214493,\"actualLateClientRequired\":false,\"manualFixtureVersion\":\"v7-bounded-roof-aim\",\"requestedInitialClients\":2,\"clientProbeSha256\":\"fe55618bf35301b823cd73a7934a69f905f1a9012681b85f22d30dd5876ac7b9\",\"selectorValue\":\"P17\",\"productionFingerprintSha256\":\"7e7edb45ebb819b098c2f62518a89d1e630ec6cbae93cd6eb79f9c75e835a9c0\",\"serverProbeSha256\":\"a2f7caf9170236c6c43ef80d14824868ae4a57e1fef92e1b00b705a007d68707\",\"harness\":\"P17Manual-v7-bounded-roof-aim\",\"harnessFingerprintSha256\":\"22427621c49e158b731400537ee916734e624dbf5f3522d4cb0111dab463b243\",\"productionCommit\":\"ee19deb5fe18090573ce0d9788b0c77555bca333\",\"mode\":\"manual-native-server-clients\",\"harnessCommit\":\"711c5a86729e2fb2805dad473345936ba22d015e\",\"selector\":\"ServerStorage.DevelopmentSettings.ManualHarness\"}",
+    "gameId": 0,
+    "chunks": 9,
+    "summary": "{\"bytes\":500030,\"chunks\":9,\"skipped\":0,\"passed\":5,\"complete\":true,\"actualClients\":2,\"storage\":\"ServerStorage.P17ManualEvidence\",\"suite\":\"P17-imported-material-multiplayer\",\"failed\":1,\"discovered\":6}",
+    "stage": "{\"clientCount\":2,\"serverTime\":1795136608.363246,\"stage\":\"failed\",\"detail\":{\"clientCount\":2,\"skipped\":0,\"discovered\":6,\"passed\":5,\"failed\":1}}",
+    "selector": "P17"
+  },
+  "cases": {
+    "players": 2,
+    "cleanup": {
+      "aircraftStateAbsent": true,
+      "groundEffectsAbsent": true,
+      "transportAbsent": true,
+      "roundStateAbsent": true,
+      "combatEffectsAbsent": true,
+      "fragmentFolderAbsent": true
+    },
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":173,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":173}",
+    "keys": [
+      "serverBaseline",
+      "initialObservedAtServerSeconds",
+      "clientCount",
+      "initialUserIds",
+      "passed",
+      "suite",
+      "discovered",
+      "observations",
+      "environment",
+      "clientBaselines",
+      "cases",
+      "clientDiagnostics",
+      "failed",
+      "skipped"
+    ],
+    "cases": [
+      {
+        "passed": true,
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+      },
+      {
+        "passed": true,
+        "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+      },
+      {
+        "passed": true,
+        "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+      },
+      {
+        "passed": true,
+        "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+      },
+      {
+        "name": "A7 earned 30mm Light damage persists through three bursts before Heavy",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.P17MaterialHarness:1462: first resumed impact earned paused/off-target time"
+      }
+    ]
+  },
+  "firstGauBurst": {
+    "expectedPanelId": "Outpost_S02_Roof_01_02",
+    "observedGauFacts": 21,
+    "observedPanelIds": [
+      null
+    ],
+    "receiptCount": 21,
+    "paths": {
+      "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported1005": 21
+    },
+    "first": {
+      "sequence": 7,
+      "geometry": {
+        "firstSize": [
+          1,
+          1.5000097751617432,
+          46
+        ],
+        "point": [
+          130,
+          21.125,
+          164
+        ],
+        "aircraft": [
+          -131.24172973632812,
+          140,
+          335.2247009277344,
+          0.3645615875720978,
+          0,
+          0.9311792850494385,
+          0,
+          1,
+          0,
+          -0.9311792850494385,
+          0,
+          0.3645615875720978
+        ],
+        "firstPanelId": "unregistered",
+        "distance": 341.14141845703125,
+        "muzzle": [
+          -139.58279418945312,
+          138,
+          337.32867431640625
+        ],
+        "hitLocalEndpoint": [
+          -1.5,
+          -0.27499961853027344,
+          0
+        ],
+        "time": 1795136603.86685,
+        "hitPosition": [
+          128,
+          22.01375389099121,
+          165.3180694580078
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported1005"
+      }
+    },
+    "last": {
+      "sequence": 27,
+      "geometry": {
+        "firstSize": [
+          1,
+          1.5000097751617432,
+          46
+        ],
+        "point": [
+          130,
+          21.125,
+          164
+        ],
+        "aircraft": [
+          -212.0430145263672,
+          140,
+          290.9256896972656,
+          0.5890188217163086,
+          0,
+          0.8081193566322327,
+          0,
+          1.0000001192092896,
+          0,
+          -0.8081193566322327,
+          0,
+          0.5890188217163086
+        ],
+        "firstPanelId": "unregistered",
+        "distance": 390.7695617675781,
+        "muzzle": [
+          -220.6449432373047,
+          138,
+          290.8431396484375
+        ],
+        "hitLocalEndpoint": [
+          -1.5,
+          -0.27499961853027344,
+          0
+        ],
+        "time": 1795136607.548379,
+        "hitPosition": [
+          128,
+          21.80829429626465,
+          164.7415771484375
+        ],
+        "firstPath": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported1005"
+      }
+    }
+  },
+  "rawUtf8Bytes": 500030,
+  "chunks": 9
+}

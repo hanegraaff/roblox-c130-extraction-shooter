@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"ok\":true,\"report\":{\"requestedClients\":3,\"serverBaseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":164,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":164}\",\"actualClients\":2,\"suite\":\"P17-separate-three-client-baseline\",\"complete\":false,\"reason\":\"Only two actual clients connected during this bounded attempt; third-client baseline remains unavailable\"}}"
+    }
+  ],
+  "isError": false
+}

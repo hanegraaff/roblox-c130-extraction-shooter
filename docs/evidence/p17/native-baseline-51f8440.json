@@ -1,0 +1,24 @@
+{
+  "source": "51f8440ee728e641ec47b85a3b95370981fdc813",
+  "tree": "d280d1cfd941e17646d900f76a84a18a8a8b2530",
+  "studio": "d26e7b2c-23eb-4007-9db2-3dae43e5ee33",
+  "invocation": "Fresh ordinary Play",
+  "server": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"players\":1,\"revision\":\"p16-v1\",\"startup\":\"{\\\"status\\\":\\\"first-client-arrived\\\",\\\"clientCount\\\":1,\\\"budgetSeconds\\\":60,\\\"elapsedSeconds\\\":0.14521116664400325}\",\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":171,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":171}\"}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"userId\\\":2227341845,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"life\":\"Waiting\",\"readiness\":\"{\\\"elapsedSeconds\\\":10.541492499993183,\\\"avatarSeconds\\\":0.00001695833634585142,\\\"state\\\":\\\"{\\\\\\\"phase\\\\\\\":\\\\\\\"Lobby\\\\\\\",\\\\\\\"roundState\\\\\\\":true,\\\\\\\"hasRoot\\\\\\\":true,\\\\\\\"role\\\\\\\":\\\\\\\"Waiting\\\\\\\",\\\\\\\"hasCharacter\\\\\\\":true,\\\\\\\"loadLease\\\\\\\":\\\\\\\"nil\\\\\\\",\\\\\\\"elapsedSeconds\\\\\\\":10.541493333294057,\\\\\\\"life\\\\\\\":\\\\\\\"Waiting\\\\\\\",\\\\\\\"stage\\\\\\\":\\\\\\\"ready\\\\\\\",\\\\\\\"serverBaselineComplete\\\\\\\":true}\\\"}\",\"userId\":2227341845,\"role\":\"Waiting\"}"
+      }
+    ],
+    "isError": false
+  }
+}

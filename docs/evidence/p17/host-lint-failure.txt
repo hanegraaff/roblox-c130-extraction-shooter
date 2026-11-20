@@ -1,0 +1,267 @@
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/check_repository.py
+Repository checks passed: 94 Markdown files, 225 JSON files.
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/tooling -v
+test_backup_rejects_even_when_recorded (test_asset_manifest.AssetManifestTests) ... ok
+test_changed_source_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_complete_source_and_export_coverage (test_asset_manifest.AssetManifestTests) ... ok
+test_duplicate_path_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_large_binary_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_manifest_path_cannot_escape_checkout (test_asset_manifest.AssetManifestTests) ... ok
+test_missing_dependency_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_noncanonical_path_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_package_requires_hash (test_asset_manifest.AssetManifestTests) ... ok
+test_unrecorded_texture_rejects (test_asset_manifest.AssetManifestTests) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.044s
+
+OK
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p16_audit.py
+{"suite": "P16-assets", "discovered": 7, "passed": 7, "failed": 0, "skipped": 0, "results": [{"name": "P16AssetInventory", "passed": true, "detail": {"categories": 36, "mesh_objects": 3093, "furnished_floors": 2}}, {"name": "P16DamageCatalog", "passed": true, "detail": {"families": 6, "states": 24, "fragments": 24, "legacy_pivots": 25, "new_panels": 1}}, {"name": "P16PanelGeometry", "passed": true, "detail": [{"family": "corrugated_wall", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}]}, "actual_removed_fraction": 0.494140625, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.005859375, "raster_width": 128}, {"family": "corrugated_window", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}, {"side": 1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}]}, "actual_removed_fraction": 0.4921875, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0078125, "raster_width": 128}, {"family": "corrugated_door", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}, {"side": 1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}]}, "actual_removed_fraction": 0.4883720930232558, "proxy_removed_fraction": 0.49709302325581395, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.00872093023255814, "raster_width": 128}, {"family": "corrugated_garage", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}, {"side": 1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}]}, "actual_removed_fraction": 0.4829545454545454, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.017045454545454544, "raster_width": 128}, {"family": "concrete_partition", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 405, "projected_scar_area_studs2": 0.9212782372151346}, {"side": 1, "scar_triangles": 405, "projected_scar_area_studs2": 0.921278159933692}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}, {"family": "layered_roof", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}]}, {"name": "P16Navigation", "passed": true, "detail": {"name": "P16Navigation", "passed": true, "body_dimensions_studs": [4, 6, 4], "foot_clearance_studs": 0.065, "support_height_tolerance_studs": 0.11, "profile_method": "6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays", "body_samples": 185, "support_rays": 1850, "internal_samples": 98, "external_samples": 87, "scope": "Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17"}}, {"name": "P16ExportAudit", "passed": true, "detail": {"assembly_triangles": 89024, "materials": 12, "textures": 12, "reusable_kit_assets": 8, "package_bytes": 31876595}}, {"name": "P16BlenderReopen", "passed": true, "detail": {"source_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c", "blender_version": "5.3.0", "missing_dependencies": 0, "fbx_meshes": 2225, "panel_library_meshes": 260, "kit_imports": 8, "required_renders": 29}}, {"name": "P16Dependencies", "passed": true, "detail": {"files": 109, "sha256_verified": true}}]}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p17_assets.py
+{"appearances": 24, "cloud_import_verified": false, "discovered": 1, "failed": 0, "families": 6, "fragment_sources": 24, "passed": 1, "suite": "P17AssetDefinition"}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/assets -v
+test_all_current_tool_and_render_proofs (test_p16_assets.P16RejectionTests) ... ok
+test_body_width_obstruction_missed_by_center_ray_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_empty_fbx_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_garage_pristine_substituted_for_light_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_internal_stair_beam_corruption_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_invalid_uv_index_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_invisible_heavy_collider_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_light_opening_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_baked_texture_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_required_render_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_oversized_fragment_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_real_saved_package (test_p16_assets.P16RejectionTests) ... ok
+test_renaming_or_vertex_permutation_does_not_create_light_scars (test_p16_assets.P16RejectionTests) ... ok
+test_restored_external_full_deck_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_shifted_legacy_identity_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_kit_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_panel_library_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_bytes_are_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_script_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_source_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_total_hidden_solid_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_unused_dark_material_declaration_does_not_create_scars (test_p16_assets.P16RejectionTests) ... ok
+test_changed_approval_input_rejects_before_generation (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_export_rejects_without_writing_runtime_definition (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_generated_values_fail_while_formatter_whitespace_is_allowed (test_p17_assets.P17AssetDefinition) ... ok
+test_exact_approved_definition_is_reproducible_and_does_not_assert_cloud_access (test_p17_assets.P17AssetDefinition) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 10.311s
+
+OK
+Rojo 7.7.1
+stylua 2.6.0
+selene 0.32.0
+lune 0.11.1
+wally 0.3.2
+1.70.1
++ stylua --check src tests scripts/run_tests.luau
++ selene src tests scripts/run_tests.luau
+ERROR: There was an error generating a new Roblox standard library: error when getting API dump
+Using the cached one instead.
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:19:17
+   │
+19 │                 assert(not Rules.geometry({ invalid, 8, 1 }, identity, { 8, 4, 0.9 }))
+   │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:24:17
+   │
+24 │                 assert(not Rules.geometry({ 16, 8, 1 }, pose, { 8, 4, 0.9 }))
+   │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:28:13
+   │
+28 │             assert(not Rules.geometry({ 16, 8, 1 }, reflected, { 8, 4, 0.9 }))
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:31:13
+   │
+31 │             assert(not Rules.geometry({ 16, 8, 1 }, shifted, { 8, 4, 0.9 }))
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:33:13
+   │
+33 │             assert(not Rules.geometry({}, identity, { 8, 4, 0.9 }))
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:34:13
+   │
+34 │             assert(not Rules.geometry({ 16, 8, 1 }, identity, { 0, 4, 0.9 }))
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:41:13
+   │
+41 │             assert(not Rules.receipt(invalid))
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/unit/PanelAssetRules.spec.luau:43:9
+   │
+43 │         assert(not Rules.receipt(nil))
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:55:9
+   │
+55 │         assert(Catalog.load(nil) == nil)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:60:9
+   │
+60 │         assert(Catalog.load(metadata) == nil)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:67:9
+   │
+67 │         assert(registries)
+   │         ^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:74:9
+   │
+74 │         assert(owner == nil and reason == "invalid/duplicate registered panel identity")
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+   ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:76:9
+   │
+76 │         assert(PhysicsService:IsCollisionGroupRegistered("PanelFragments") == previousGroup)
+   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   │
+   = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:105:25
+    │  
+105 │ ╭                         assert(
+106 │ │                             model:GetAttribute("DamageAppearance")
+107 │ │                                 == (if hit < 3 then "Light" elseif hit < 6 then "Heavy" else "Total")
+108 │ │                         )
+    │ ╰─────────────────────────^
+    │  
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:113:33
+    │
+113 │                                 assert(item:GetAttribute("PanelId") == model.Name)
+    │                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:162:21
+    │  
+162 │ ╭                     assert(
+163 │ │                         workspace:Raycast(pivot:PointToWorldSpace(Vector3.new(0, 0, -4)), direction, rays)
+164 │ │                             == nil
+165 │ │                     )
+    │ ╰─────────────────────^
+    │  
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:166:21
+    │  
+166 │ ╭                     assert(
+167 │ │                         workspace:Raycast(pivot:PointToWorldSpace(Vector3.new(7, 0, -4)), direction, rays)
+168 │ │                             ~= nil
+169 │ │                     )
+    │ ╰─────────────────────^
+    │  
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:172:21
+    │  
+172 │ ╭                     assert(
+173 │ │                         workspace:Raycast(pivot:PointToWorldSpace(Vector3.new(7, 0, -4)), direction, rays)
+174 │ │                             == nil
+175 │ │                     )
+    │ ╰─────────────────────^
+    │  
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:207:17
+    │
+207 │                 assert(owner.count() == 48 and template.Parent == nil and template.Anchored)
+    │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:209:21
+    │  
+209 │ ╭                     assert(
+210 │ │                         part:IsA("MeshPart") and not part.Anchored and not part.CanQuery and not part.CanTouch
+211 │ │                     )
+    │ ╰─────────────────────^
+    │  
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:212:21
+    │
+212 │                     assert(part.CollisionGroup == "PanelFragments" and part:GetNetworkOwner() == nil)
+    │                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:215:17
+    │
+215 │                 assert(owner.count() == 0)
+    │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    = A failed assertion without a message is unhelpful to users.
+
+error[incorrect_standard_library_use]: standard library function `assert` requires 2 parameters, 1 passed
+    ┌─ tests/studio/specs-server/MaterialPanels.spec.luau:224:17
+    │
+224 │                 assert(owner.count() == 0)
+    │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    = A failed assertion without a message is unhelpful to users.
+
+Results:
+23 errors
+0 warnings
+0 parse errors
+Verification failed: Command '['selene', 'src', 'tests', 'scripts/run_tests.luau']' returned non-zero exit status 1.

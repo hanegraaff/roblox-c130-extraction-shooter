@@ -1,0 +1,561 @@
+{
+  "observedOn": "2026-11-20",
+  "productionCommit": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+  "testSource": "5176197ca819314f181ccf5580f40be2dc753268",
+  "rojoTestBuildSha256": "22b67b63bb09ce8f5f5ec7cf19e956fe060c1caa45f9cc9064683ed6de0b5f1f",
+  "savedLocalTestPlaceSha256": "d67aba47dc61a211a338855ae12e635b89bcff2deeb8d38efa54396baf38e560",
+  "releaseBuildSha256": "98ae28408e6c4a54b6ac16b71f960c180d8ab3ec521d74e1c1048f8f5a8e3b21",
+  "verifiedEdit": {
+    "scripts": 141,
+    "cameraDescriptors": 2,
+    "preservedSiteParts": 62,
+    "managedMeshes": 2332
+  },
+  "mode": "Ordinary local Studio solo Ground and Operator preview, one actual client",
+  "ordinarySmoke": {
+    "serverPassed": 179,
+    "clientPassed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "cameraInput": "Native keyboard, wheel and Studio Testing role button. Passive post-camera measurement.",
+  "activeRoundAttempt": {
+    "mode": "Studio SDK multiplayer with the ordinary HumanTestSession",
+    "requestedClients": 2,
+    "joinedClients": 1,
+    "firstArrivalSeconds": 10.89,
+    "serverPassed": 179,
+    "oneClientPassed": 12,
+    "serverTeardownSeconds": 92.23,
+    "originalEditRestoredAfterWallSeconds": 101.3,
+    "result": "Second client did not join. Active Ground and Operator gameplay and current-source A5 reruns remain open."
+  },
+  "workshopCapture": "p17-indoor-workshop.jpg",
+  "upperRoomCapture": "p17-indoor-command-room.jpg",
+  "upperRoomCaptureState": {
+    "source": "Fresh solo preview after the owned SDK attempt ended",
+    "rootPosition": [149.076, 13.123, 146.371],
+    "cameraPosition": [149.076, 15.917, 151.201],
+    "cameraDistanceStuds": 5.0000067,
+    "clientPassed": 12,
+    "imageSha256": "1076c903ff6253e10bcb94ebbca2a046e5c5a7816890ff0926b35c516baac306"
+  },
+  "closeZoomStuds": {
+    "outside": 3.2777796,
+    "inside": 3.2777796
+  },
+  "ceilingYStuds": {
+    "workshop": 9.125,
+    "upperRoom": 20.125
+  },
+  "probes": {
+    "ground": {
+      "frames": 889,
+      "stages": {
+        "outdoor-before": {
+          "frames": 286,
+          "elapsedSeconds": 18.999,
+          "startingDistance": 19.75,
+          "lastDistance": 19.75,
+          "settledDistance": 19.75,
+          "minDistance": 19.75,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            9.61,
+            9.61
+          ],
+          "firstRoot": [
+            151.15182495117188,
+            2.99802565574646,
+            202.70098876953125
+          ],
+          "lastRoot": [
+            151.15182495117188,
+            2.99802565574646,
+            202.70098876953125
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 286,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "ground-doorway-entry": {
+          "frames": 104,
+          "elapsedSeconds": 6.864,
+          "startingDistance": 19.75,
+          "lastDistance": 5.0,
+          "settledDistance": 5.0,
+          "minDistance": 5.0,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 7.313,
+          "cameraYAxis": [
+            5.917,
+            9.638
+          ],
+          "firstRoot": [
+            151.15182495117188,
+            2.99802565574646,
+            202.70098876953125
+          ],
+          "lastRoot": [
+            151.15106201171875,
+            3.123028039932251,
+            180.33460998535156
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 104,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "ground-interior": {
+          "frames": 369,
+          "elapsedSeconds": 24.53,
+          "startingDistance": 5.0,
+          "lastDistance": 5.0,
+          "settledDistance": 5.0,
+          "minDistance": 5.0,
+          "maxDistance": 5.0,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            5.917,
+            5.917
+          ],
+          "firstRoot": [
+            151.15106201171875,
+            3.123028039932251,
+            180.33460998535156
+          ],
+          "lastRoot": [
+            151.15106201171875,
+            3.123028039932251,
+            180.33460998535156
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 369,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "ground-threshold-hover": {
+          "frames": 81,
+          "elapsedSeconds": 5.334,
+          "startingDistance": 5.0,
+          "lastDistance": 19.75,
+          "settledDistance": 19.75,
+          "minDistance": 5.0,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 7.277,
+          "cameraYAxis": [
+            5.917,
+            9.647
+          ],
+          "firstRoot": [
+            151.15106201171875,
+            3.123028039932251,
+            180.33460998535156
+          ],
+          "lastRoot": [
+            151.14768981933594,
+            2.9980251789093018,
+            203.90963745117188
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 81,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "outdoor-after": {
+          "frames": 49,
+          "elapsedSeconds": 3.202,
+          "startingDistance": 19.75,
+          "lastDistance": 19.75,
+          "settledDistance": 19.75,
+          "minDistance": 19.75,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            9.61,
+            9.61
+          ],
+          "firstRoot": [
+            151.14768981933594,
+            2.9980251789093018,
+            203.90963745117188
+          ],
+          "lastRoot": [
+            151.14768981933594,
+            2.9980251789093018,
+            203.90963745117188
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 49,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        }
+      }
+    },
+    "upper": {
+      "frames": 952,
+      "stages": {
+        "exterior-stairs": {
+          "frames": 210,
+          "elapsedSeconds": 13.93,
+          "startingDistance": 19.75,
+          "lastDistance": 19.75,
+          "settledDistance": 19.75,
+          "minDistance": 19.75,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            9.596,
+            19.735
+          ],
+          "firstRoot": [
+            162.72479248046875,
+            2.99802565574646,
+            194.8712921142578
+          ],
+          "lastRoot": [
+            162.72503662109375,
+            13.123026847839355,
+            169.73294067382812
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 210,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "uncovered-upper-balcony": {
+          "frames": 105,
+          "elapsedSeconds": 6.931,
+          "startingDistance": 19.75,
+          "lastDistance": 19.75,
+          "settledDistance": 19.75,
+          "minDistance": 19.75,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            19.728,
+            19.735
+          ],
+          "firstRoot": [
+            162.72503662109375,
+            13.123026847839355,
+            169.73294067382812
+          ],
+          "lastRoot": [
+            162.72503662109375,
+            13.12302303314209,
+            147.46661376953125
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 105,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "upper-doorway": {
+          "frames": 53,
+          "elapsedSeconds": 3.464,
+          "startingDistance": 19.75,
+          "lastDistance": 5.0,
+          "settledDistance": 5.0,
+          "minDistance": 5.0,
+          "maxDistance": 19.75,
+          "maxSampleDistanceChange": 6.377,
+          "cameraYAxis": [
+            15.917,
+            19.735
+          ],
+          "firstRoot": [
+            162.72503662109375,
+            13.12302303314209,
+            147.46661376953125
+          ],
+          "lastRoot": [
+            155.27239990234375,
+            13.12302303314209,
+            147.4669952392578
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 53,
+          "blockedCenter": [],
+          "blockedTopLeft": [
+            "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_East_02.Outpost_S02_East_02_Proxy2",
+            "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0807"
+          ],
+          "blockedTopRight": [
+            "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_East_01.Outpost_S02_East_01_Proxy1",
+            "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0807"
+          ]
+        },
+        "upper-interior": {
+          "frames": 330,
+          "elapsedSeconds": 21.931,
+          "startingDistance": 5.0,
+          "lastDistance": 5.0,
+          "settledDistance": 5.0,
+          "minDistance": 5.0,
+          "maxDistance": 5.0,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            15.917,
+            15.917
+          ],
+          "firstRoot": [
+            155.27239990234375,
+            13.12302303314209,
+            147.4669952392578
+          ],
+          "lastRoot": [
+            155.27239990234375,
+            13.12302303314209,
+            147.4669952392578
+          ],
+          "cameraTypes": [
+            "Custom"
+          ],
+          "fovValues": [
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 330,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "role-handoff-from-upper": {
+          "frames": 96,
+          "elapsedSeconds": 6.351,
+          "startingDistance": 5.0,
+          "lastDistance": 20.0,
+          "settledDistance": 20.0,
+          "minDistance": 5.0,
+          "maxDistance": 20.0,
+          "maxSampleDistanceChange": 13.348,
+          "cameraYAxis": [
+            9.249,
+            140
+          ],
+          "firstRoot": [
+            155.27239990234375,
+            13.12302303314209,
+            147.4669952392578
+          ],
+          "lastRoot": [
+            520,
+            3,
+            -15
+          ],
+          "cameraTypes": [
+            "Custom",
+            "Scriptable"
+          ],
+          "fovValues": [
+            30,
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 96,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "thermal-command": {
+          "frames": 80,
+          "elapsedSeconds": 5.273,
+          "startingDistance": 20.0,
+          "lastDistance": 20.0,
+          "settledDistance": 20.0,
+          "minDistance": 20.0,
+          "maxDistance": 20.0,
+          "maxSampleDistanceChange": 0.0,
+          "cameraYAxis": [
+            140,
+            140
+          ],
+          "firstRoot": [
+            520,
+            3,
+            -15
+          ],
+          "lastRoot": [
+            520,
+            3,
+            -15
+          ],
+          "cameraTypes": [
+            "Scriptable"
+          ],
+          "fovValues": [
+            30,
+            40
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 80,
+          "blockedCenter": [],
+          "blockedTopLeft": [],
+          "blockedTopRight": []
+        },
+        "ground-role-reacquired": {
+          "frames": 78,
+          "elapsedSeconds": 5.149,
+          "startingDistance": 20.0,
+          "lastDistance": 19.75,
+          "settledDistance": 19.75,
+          "minDistance": 19.398,
+          "maxDistance": 20.0,
+          "maxSampleDistanceChange": 0.602,
+          "cameraYAxis": [
+            9.695,
+            140
+          ],
+          "firstRoot": [
+            520,
+            3,
+            -15
+          ],
+          "lastRoot": [
+            -1.886292011477053e-09,
+            3.09802508354187,
+            120
+          ],
+          "cameraTypes": [
+            "Custom",
+            "Scriptable"
+          ],
+          "fovValues": [
+            40,
+            70
+          ],
+          "zoomBounds": [
+            [
+              0.5,
+              400
+            ]
+          ],
+          "groundOwnSubject": 78,
+          "blockedCenter": [
+            "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R04_C04.Solid"
+          ],
+          "blockedTopLeft": [
+            "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R04_C04.Solid"
+          ],
+          "blockedTopRight": [
+            "Workspace.World.Battlefield.SpawnShelterPanels.Shelter_Roof_R04_C04.Solid"
+          ]
+        }
+      }
+    }
+  }
+}

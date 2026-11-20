@@ -1,0 +1,66 @@
+{
+  "source_commit": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "source_tree": "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a",
+  "command": "python3 scripts/verify.py",
+  "environment": "macOS26.6.2ARM/Python3.10.4",
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 48,
+  "manifest_regressions": 10,
+  "release_instances": 5296,
+  "test_instances": 5389,
+  "runtime_scripts": 51,
+  "test_scripts": 133,
+  "authored_parts": 2804,
+  "native_expected": {
+    "server": 173,
+    "client": 10
+  },
+  "native_observed": {
+    "server": {
+      "discovered": 173,
+      "passed": 173,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "client": {
+      "discovered": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "actual_clients": 1,
+    "actual_client_native_mesh_validation": 2256,
+    "client_collision_fidelity_counts": {
+      "Box": 2000,
+      "PreciseConvexDecomposition": 256
+    },
+    "scope": "Fresh ordinary Play and bounded actual render/floor-query correction; full multiplayer/navigation/fragments/performance/A6 separate."
+  },
+  "builds": [
+    {
+      "path": "build/game.rbxlx",
+      "sha256": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea",
+      "bytes": 10077248
+    },
+    {
+      "path": "build/tests.rbxlx",
+      "sha256": "c1b467e1769c3c754b941442f28caa35a644e697132a69123a7de2614c4dce59",
+      "bytes": 10960098
+    },
+    {
+      "path": "build/p17-native-corrected-assets-v1.rbxm",
+      "sha256": "7aaa72cb1f025f74674d0d0151f79a0453a3f28de8456f440607070d6d11675a",
+      "bytes": 138209
+    }
+  ],
+  "native_profiles": 407,
+  "native_mesh_uses": 2332,
+  "native_collision_profiles": {
+    "Box": 320,
+    "PreciseConvexDecomposition": 87
+  },
+  "scope": "Host and explicitly scoped native results; full P17 acceptance remains open."
+}

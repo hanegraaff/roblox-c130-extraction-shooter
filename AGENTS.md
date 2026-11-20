@@ -50,6 +50,12 @@ The 2026-11-13 damage revision requires persistent, clearly different Light/Heav
 
 ## Tests and evidence
 
+The 2026-11-20 revision (D68) adds automatic ground interior zoom and the
+requested asset-creation and Blender-import skills to P17. Keep the current
+Outpost and world dimensions. Use the Outpost to verify reusable indoor camera
+behavior. Teach designers to measure avatar and camera clearance and to give
+future buildings enough room for ordinary third-person play where feasible.
+
 - Implement tests with each behavior change. Cover normal behavior, boundaries, invalid input, timing conflicts, disconnects, and cleanup as appropriate. Trace acceptance criteria to named tests.
 - Use fast deterministic Luau unit tests for rules; service integration tests with controlled adapters for orchestration; real Studio tests for Instances, raycasts, camera behavior, collision, and replication. Test doubles do not prove engine behavior.
 - Acceptance criteria must use operations Roblox Studio supports (D59). Actual same-identity reconnect is excluded; retain its runtime authority rules and deterministic service tests. Supported late joins and multiplayer sessions remain required where specified. Temporary tool/access failures do not make a supported check unsupported. Explicit Roblox-client release gates remain separate.

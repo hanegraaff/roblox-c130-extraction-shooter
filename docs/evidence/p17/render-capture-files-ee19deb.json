@@ -1,0 +1,53 @@
+{
+  "source": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "files": [
+    {
+      "path": "build/p17-ee19-render-command-screens-close.jpg",
+      "bytes": 284356,
+      "sha256": "1d6500d873b6e1187236e3b2e7fcc0c96b4c321271f31d50d2ff1d756e31fae1",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-command-screens-close.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-ground-floor.jpg",
+      "bytes": 266612,
+      "sha256": "d1d19b45fbbea2636627b51f3165366bfdf71124c006746bd11cadf92928a08f",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-ground-floor.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-high-outside.jpg",
+      "bytes": 144747,
+      "sha256": "9437cfb86cb6e0bd0a6cc5797099c02907d8cffdfed4ef6da6b84fa2f5e751b5",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-high-outside.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-south-exterior-unobscured.jpg",
+      "bytes": 189480,
+      "sha256": "c35f96ccf754770d31aa2db95b6a0cd2429417181ba0f5cd19625712ce60d936",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-south-exterior-unobscured.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-south-exterior.jpg",
+      "bytes": 283532,
+      "sha256": "5aaf5bd15670c688cdffce1e593959ad42c220e029d4ff37f8a4670bc6a275ad",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-south-exterior.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-stairs-balcony-roof.jpg",
+      "bytes": 209614,
+      "sha256": "66f0036c5bb578a6366b0e9117f4e92ba192e0587540e55445b3f98be0a72b37",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-stairs-balcony-roof.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-upper-floor.jpg",
+      "bytes": 278358,
+      "sha256": "10a8ea4a2ec3117bbcd02b5976ce0fb1b33481ad1111579940eb515275966009",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-upper-floor.jpg"
+    },
+    {
+      "path": "build/p17-ee19-render-workshop-wood-close.jpg",
+      "bytes": 300763,
+      "sha256": "2a6d262e57a6d9546698b5d0533c7ff54ad0adb2c223df1fd79cdd644a702178",
+      "repository_path": "docs/evidence/p17/p17-ee19-render-workshop-wood-close.jpg"
+    }
+  ]
+}
