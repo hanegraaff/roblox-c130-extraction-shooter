@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "scope": "P17 A7 current-source three-actual-client active-round camera verification; ordinary native Server & Clients",
+  "source": {
+    "mainAtVerification": "f91a032b251938de8a8f21837266f611e9a90813",
+    "verifiedTestSource": "5176197ca819314f181ccf5580f40be2dc753268",
+    "production": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+    "localSavedBuildSha256": "d67aba47dc61a211a338855ae12e635b89bcff2deeb8d38efa54396baf38e560",
+    "reproductionBuildSha256": "22b67b63bb09ce8f5f5ec7cf19e956fe060c1caa45f9cc9064683ed6de0b5f1f",
+    "studioVersion": "0.748.0.7481526",
+    "localPlace": {
+      "place": 0,
+      "game": 0
+    },
+    "artifactsChecked": "Parent checked verified Studio file hash and zero runtime/test/asset diff between 5176197 and integrated main."
+  },
+  "baseline": {
+    "server": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 179,
+      "clientCount": 3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 179
+    },
+    "clients": [
+      {
+        "slot": "Player1",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      },
+      {
+        "slot": "Player2",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      },
+      {
+        "slot": "Player3",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      }
+    ],
+    "firstArrival": {
+      "status": "first-client-arrived",
+      "clientCount": 1,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 4.795357875002082
+    }
+  },
+  "method": {
+    "roles": "Real clients use StudioTestControls typed Role, Duration=600, Start via test-only control transport; normal server deployment.",
+    "walk": "Actual Player2 Humanoid navigation to south of Workshop, then native W and S at ordinary speed; camera sampled without editing camera state.",
+    "aim": "Native One equipped M-7 rifle; native pointer button down/up. Passive local sampler at Camera+12 independently recomputed the projection ray and native world hit; passive server remote observer and accepted GroundShot read.",
+    "spectate": "Real production Surrender button click inside; Ground teammate moved outdoors by native navigation.",
+    "reset": "Actual Operator client sent StudioTestControls Reset, exercising round teardown/rebuild and new runtime owner. Server ObjectValues compared previous Battlefield, room folder and RoundState identities."
+  },
+  "activeRoster": {
+    "players": [
+      {
+        "role": "Gunship",
+        "slot": "Player1",
+        "tools": 0,
+        "root": [
+          520,
+          3,
+          -15
+        ],
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "slot": "Player2",
+        "tools": 1,
+        "root": [
+          0,
+          2.9980926513671875,
+          107.99969482421875
+        ],
+        "life": "Alive"
+      },
+      {
+        "role": "Ground",
+        "slot": "Player3",
+        "tools": 1,
+        "root": [
+          -20.00030517578125,
+          2.9980926513671875,
+          107.99969482421875
+        ],
+        "life": "Alive"
+      }
+    ],
+    "round": 1,
+    "phase": "Active",
+    "generation": 2
+  },
+  "entry": {
+    "outside": {
+      "slot": "Player2",
+      "phase": "Active",
+      "hud": true,
+      "dist": 12.499994277954102,
+      "fov": 70,
+      "life": "Alive",
+      "look": [
+        0,
+        -0.258819043636322,
+        -0.9659258127212524
+      ],
+      "root": [
+        151.3183135986328,
+        2.9980251789093018,
+        202.759765625
+      ],
+      "guiInset": "0, 58"
+    },
+    "inside": {
+      "viewTransition": [
+        8.813433647155762,
+        6.011634826660156,
+        5.264512538909912,
+        5.069735050201416
+      ],
+      "phase": "Active",
+      "rows": 150,
+      "own": true,
+      "camera": {
+        "y": 5.917123794555664,
+        "type": "Custom",
+        "fov": 70,
+        "dist": 5.000006675720215
+      },
+      "role": "Ground",
+      "slot": "Player2",
+      "life": "Alive",
+      "projectionOriginType": "Frame",
+      "root": [
+        151.3175506591797,
+        3.123028039932251,
+        179.32675170898438
+      ]
+    }
+  },
+  "aim": {
+    "clientRayCount": 14,
+    "cameraDistance": 5.000006675720215,
+    "hit": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_GroundFloor",
+    "pixel": [
+      535,
+      383
+    ],
+    "clientTarget": [
+      149.95529174804688,
+      0.1250009536743164,
+      169.95932006835938
+    ],
+    "passiveServerReceipt": [
+      {
+        "engineTime": 1795203102.205165,
+        "sequence": 1,
+        "target": [
+          149.95529174804688,
+          0.1250009536743164,
+          169.95932006835938
+        ],
+        "roundId": 1,
+        "slot": "Player2"
+      },
+      {
+        "engineTime": 1795203102.404399,
+        "sequence": 2,
+        "target": [
+          149.95529174804688,
+          0.1250009536743164,
+          169.95932006835938
+        ],
+        "roundId": 1,
+        "slot": "Player2"
+      },
+      {
+        "engineTime": 1795203102.604152,
+        "sequence": 3,
+        "target": [
+          149.95529174804688,
+          0.1250009536743164,
+          169.95932006835938
+        ],
+        "roundId": 1,
+        "slot": "Player2"
+      },
+      {
+        "engineTime": 1795203102.804247,
+        "sequence": 4,
+        "target": [
+          149.95529174804688,
+          0.1250009536743164,
+          169.95932006835938
+        ],
+        "roundId": 1,
+        "slot": "Player2"
+      },
+      {
+        "engineTime": 1795203103.004452,
+        "sequence": 5,
+        "target": [
+          149.95529174804688,
+          0.1250009536743164,
+          169.95932006835938
+        ],
+        "roundId": 1,
+        "slot": "Player2"
+      }
+    ],
+    "maxMismatchStuds": 0,
+    "ammoBefore": 30,
+    "ammoAfter": 25,
+    "acceptedLastShot": {
+      "y": 0.1250009536743164,
+      "x": 149.95529174804688,
+      "sequence": 5,
+      "z": 169.95932006835938,
+      "aircraftHit": false,
+      "roundId": 1,
+      "slot": "Player2"
+    }
+  },
+  "exit": {
+    "life": "Alive",
+    "dist": 12.499994277954102,
+    "root": [
+      151.31613159179688,
+      2.9980251789093018,
+      197.25828552246094
+    ],
+    "phase": "Active",
+    "own": true
+  },
+  "surrender": {
+    "before": [
+      {
+        "life": "Alive",
+        "slot": "Player2",
+        "root": [
+          151.31394958496094,
+          3.123028039932251,
+          176.99571228027344
+        ],
+        "distance": 5.000006675720215,
+        "phase": "Active",
+        "surrender": true
+      },
+      {
+        "roomCount": 2,
+        "round": 1,
+        "generation": 2
+      },
+      {
+        "life": "Alive",
+        "fov": 30,
+        "camera": "Scriptable",
+        "slot": "Player1",
+        "thermal": true,
+        "role": "Gunship"
+      }
+    ],
+    "after": {
+      "life": "Eliminated",
+      "role": "Ground",
+      "slot": "Player2",
+      "phase": "Active",
+      "surrenderVisible": false,
+      "subjectSlot": "Player3",
+      "hasOwnCharacter": false,
+      "min": 0.5,
+      "camera": "Custom",
+      "oldCharacterAlive": false,
+      "fov": 70,
+      "subjectTeammate": true,
+      "distance": 12.499994277954102,
+      "thermal": false,
+      "max": 400
+    }
+  },
+  "reset": {
+    "server": {
+      "generation": 3,
+      "roster": [
+        {
+          "life": "Waiting",
+          "hasCharacter": true,
+          "role": "Waiting",
+          "slot": "Player1"
+        },
+        {
+          "life": "Waiting",
+          "hasCharacter": true,
+          "role": "Waiting",
+          "slot": "Player2"
+        },
+        {
+          "life": "Waiting",
+          "hasCharacter": true,
+          "role": "Waiting",
+          "slot": "Player3"
+        }
+      ],
+      "round": 0,
+      "battlefieldRebuilt": true,
+      "roundStateReplaced": true,
+      "cameraRoomsRebuilt": true,
+      "roomEntries": [
+        {
+          "at": [
+            144,
+            4.625,
+            164
+          ],
+          "cap": 5,
+          "name": "OutpostWorkshop",
+          "size": [
+            31,
+            9,
+            47
+          ]
+        },
+        {
+          "at": [
+            144,
+            14.625,
+            164
+          ],
+          "cap": 5,
+          "name": "OutpostCommandRoom",
+          "size": [
+            31,
+            11,
+            47
+          ]
+        }
+      ],
+      "phase": "Lobby"
+    },
+    "groundClient": {
+      "formerCharacterGone": true,
+      "slot": "Player2",
+      "ownSubject": true,
+      "life": "Waiting",
+      "dist": 12.5,
+      "fov": 70,
+      "role": "Waiting",
+      "camera": "Custom",
+      "oldGroundHUDCopies": 1,
+      "ancestorReady": true
+    },
+    "formerOperatorClient": {
+      "camera": "Custom",
+      "fov": 70,
+      "slot": "Player1",
+      "thermal": false,
+      "role": "Waiting"
+    }
+  },
+  "cleanup": [
+    {
+      "probeRemoved": true
+    },
+    {
+      "clientCount": 3,
+      "probeRemoved": true,
+      "phase": "Lobby"
+    }
+  ],
+  "limits": "This run verifies active A7. It does not rerun the frozen P17 replication/reset suite or A5 P05/P07/P08/P14 suites."
+}

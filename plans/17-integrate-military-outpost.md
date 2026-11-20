@@ -1380,3 +1380,25 @@ and authorized merging it to `main`. The reviewed PR head was
 `cd7071b9ed00452ee2bba06d7bc9ccbde22c3976` and the P16 Blender package bound
 above. That approval satisfies A6 and authorizes source integration. A5 and
 the active-round parts of A7 still require their Studio evidence.
+
+### Active-round Ground camera acceptance (2026-11-20)
+
+The [active round receipt](../docs/evidence/p17/indoor-camera-active-5176197.json)
+binds the source-verified local build to merged `main` at `f91a032`. Native
+Server & Clients joined three actual players. Server smoke passed 179/179 and
+all three client reports passed 12/12 with zero failures, skips or errors.
+
+The live Ground camera eased from 12.5 to five studs during actual Workshop
+entry and returned to 12.5 on foot after exit. Fourteen independently sampled
+camera rays and all five actual server-received M-7 aim requests matched the
+same rendered target, and the magazine moved from 30 to 25. Surrender from
+the Workshop removed the Ground character and handed the Custom camera to
+the other living Ground client. The operator retained the Scriptable thermal
+view during the active round.
+
+The real test reset rebuilt the Battlefield, camera room descriptors and round
+state. Ground reacquired a fresh avatar and stock outdoor zoom. The former
+operator returned to the normal lobby camera and cleared the thermal effect.
+The disposable camera and server observers were removed. A7 passes with the
+earlier independent solo traversal of both floors. The managed P17
+multiplayer suite and the A5 gameplay regressions have separate records.

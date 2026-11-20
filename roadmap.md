@@ -159,7 +159,9 @@ round and native regressions await a Studio session with the required clients.
 Later on 2026-11-20, the owner approved P17 and authorized the [PR #39 merge](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39).
 The detailed Outpost, indoor camera and both asset skills ship in the source
 on `main`. The remaining current-source native verification is tracked by
-[P17](plans/17-integrate-military-outpost.md#owner-approval-and-merge-2026-11-20).
+[P17](plans/17-integrate-military-outpost.md#owner-approval-and-merge-2026-11-20). The three-client
+[active-round camera review](plans/17-integrate-military-outpost.md#active-round-ground-camera-acceptance-2026-11-20)
+passed indoor aim, spectating and reset on the merged source.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
