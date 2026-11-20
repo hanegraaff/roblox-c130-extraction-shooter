@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "tree": "d612bfb22cad7c41d36fa1e507b0552476ff2e74",
+  "studioId": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+  "sync": {
+    "sourcesReplaced": 2,
+    "selector": "P17",
+    "verified": true,
+    "harnessCommit": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+    "worldOrAssetObjectsTouched": false
+  },
+  "identity": {
+    "meshes": 2332,
+    "source": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+    "targetGeometry": "REQUIRES companion target-geometry chunks; see generated manifest",
+    "scope": "Edit actual property/source identity, not ordinary runtime access",
+    "placeId": 0,
+    "passed": true,
+    "universeId": 0,
+    "nativeMeshParts": 2332,
+    "templates": {
+      "MaterialPanels": {
+        "meshes": 76,
+        "descendants": 188
+      },
+      "MilitaryOutpost": {
+        "meshes": 2256,
+        "descendants": 4592
+      }
+    },
+    "version": "0.748.0.7481526",
+    "scripts": 137,
+    "nativeMetadataFields": 11660,
+    "publicNativeProperties": 6996,
+    "mutated": false,
+    "actualProtectedSlots": 9328
+  },
+  "testArtifactSha256": "8e39da45d5469744c2b2c28b3be7125214e1310a9f613e67b90cadd69ddd6e27",
+  "releaseArtifactSha256": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea",
+  "geometry": "Source-only edit retained the same world validated by the ten-chunk Edit audit",
+  "freshNativeRerunExecuted": false
+}

@@ -120,7 +120,7 @@ That compromise requires explicit A6 review.
    assert(settings and settings:IsA("ModuleScript"))
    assert(settings:GetAttribute("ManualHarness") == nil)
    assert(settings:GetAttribute("P17HarnessCommit") == nil)
-   settings:SetAttribute("P17HarnessCommit", "dd7bb18a59988666874b604005e111cd5a622704")
+   settings:SetAttribute("P17HarnessCommit", "5fc5f0ba19752b8885f78229f62b9da22986aa4b")
    settings:SetAttribute("ManualHarness", "P17")
    ```
 

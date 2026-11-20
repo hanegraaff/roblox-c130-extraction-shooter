@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "5fc5f0ba19752b8885f78229f62b9da22986aa4b",
+  "sourcePath": "tests/studio/client/AircraftPanHarness.luau",
+  "sourceSha256": "c8132be35f7c84b25e5f4014b22aea86d111b5abfd11a87229617b55bc79cc24",
+  "focusedHostControls": 8,
+  "sourceReview": "both checks use registered panel Model metadata with exact native hit ownership",
+  "actualClients": [
+    {
+      "supportingStructureAccepted": false,
+      "wrongBuildingAccepted": false,
+      "exactExpectedProxy": true,
+      "lowerStoryAccepted": false,
+      "passed": true,
+      "correctUpperPanel": true,
+      "userId": -1,
+      "actualRayHit": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_North_01.Outpost_S02_North_01_Proxy1"
+    },
+    {
+      "supportingStructureAccepted": false,
+      "wrongBuildingAccepted": false,
+      "exactExpectedProxy": true,
+      "lowerStoryAccepted": false,
+      "passed": true,
+      "correctUpperPanel": true,
+      "userId": -2,
+      "actualRayHit": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_S02_North_01.Outpost_S02_North_01_Proxy1"
+    }
+  ],
+  "fullP14NativeRerunExecuted": false
+}

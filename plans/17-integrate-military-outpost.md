@@ -1089,3 +1089,59 @@ zero rifle shots. The temporary client had looked for the rifle remotes under
 ReplicatedStorage, while production parents them to AircraftState. No
 benchmark comparison or performance budget pass is claimed from this run.
 Runtime and effect ownership returned to zero after completion.
+
+### Completed paired performance workloads — 2026-11-19
+
+The corrected test adapter resolves the production rifle remotes under
+AircraftState. An accepted rifle shot verifies warmup independently of native
+measurement. The same two actual clients completed both 30-second warmups,
+300-second workloads and six controlled demolition batches per scene.
+The [primitive report](../docs/evidence/p17/primitive-performance-711c5a8-repaired-raw.json)
+and [detailed Outpost report](../docs/evidence/p17/candidate-performance-711c5a8-repaired-raw.json)
+retain both clients' full metrics. The [comparison](../docs/evidence/p17/native-performance-comparison-711c5a8.json)
+records commands, matching settings, timing, counters, results and cleanup.
+
+| p95 metric, ms | Primitive | Detailed Outpost | Budget |
+| --- | ---: | ---: | ---: |
+| Server scheduler | 0.8 | 0.8 | 16.7 |
+| Client −1 render frame | 70.4 | 70.4 | 33.3 |
+| Client −2 render frame | 71.3 | 71.0 | 33.3 |
+
+Both scenes missed both client budgets. They had equal rifle and M102 counts
+and within one GAU23 shot and one impact overall. Outpost-specific impacts
+were 74 and 48, so the native damage workloads differed at the building.
+The server ran 1,122 primitive and 1,128 detailed controlled outcomes.
+All temporary modules and selectors were removed from the running session.
+The two clients returned to their original viewports and Automatic quality.
+A5 remains open on measured client frame time.
+
+### Aircraft panning regression and model identity diagnosis — 2026-11-19
+
+The [P14 native report](../docs/evidence/p17/native-p14-711c5a8-attempt1-raw.json)
+records one passed teardown case and two failures, with two actual clients
+and zero skipped. During the first full-orbit case, the real 30mm camera
+passed its edge, ground, slope, Foundry and Warehouse samples. The Outpost
+sample timed out before completing either weapon's full-orbit case. The
+actual ray hit the expected query and collision proxy at its upper-story
+north wall. The [identity receipt](../docs/evidence/p17/native-p14-711c5a8-attempt1-summary.json)
+verifies the owning Model has the correct StoryId and PanelId. The collision
+proxy has its correct PanelId; the fixture mistakenly looked for StoryId on
+the proxy itself. The retained regression runtime cleaned up. P14 remains an
+open gate pending the model-aware fixture rerun.
+
+Candidate `5fc5f0ba19752b8885f78229f62b9da22986aa4b` applies that correction in both P14
+ray checks. It verifies the actual collision solid against the registered
+panel Model and preserves the three-building, both-FOV, full-orbit and
+projection tolerances. The [focused native proof](../docs/evidence/p17/native-p14-panel-identity-5fc5f0b.json)
+passes on both actual clients at the former failing camera and target. It
+accepts the exact upper-floor hit and rejects the lower floor, other
+building and support. Eight independent in-memory identity controls also
+pass. The burst correction and production bytes are unchanged from the
+current frozen inputs.
+
+The [full host gate](../docs/evidence/p17/p14-fix-host-5fc5f0b.txt) passes
+59 unit, 65 integration, 48 asset and 14 tooling checks, plus reconstruction
+and isolation. The [local Edit sync](../docs/evidence/p17/p14-fix-edit-sync-5fc5f0b.json)
+matches all 137 Sources, 2,332 native meshes and 9,328 material slots with this
+candidate. The original local Edit place is ready for a fresh P17 launch,
+followed by the full P14 rerun after P17 evidence collection.
