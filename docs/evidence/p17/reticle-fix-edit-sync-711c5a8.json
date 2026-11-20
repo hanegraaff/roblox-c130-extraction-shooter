@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "localPlace": {
+    "file": "build/tests.rbxlx",
+    "edit": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+    "runtimeServerFromPreviousAttempt": "539063f4-514a-4d8d-bdfe-59db164a1f31",
+    "placeId": 0,
+    "gameId": 0
+  },
+  "candidate": "711c5a86729e2fb2805dad473345936ba22d015e",
+  "tree": "3d6911e7ccbcfe9ff49df45acc6c9a0b2ed7158a",
+  "hostTestArtifactSha256": "4f34d8d7a78285aae5d28ebd0582d1c33ca45b36d936d31d9178a29508d370a9",
+  "scope": "guarded source-only replacement and independent Edit identity",
+  "sync": {
+    "sourcesReplaced": 2,
+    "selector": "P08",
+    "verified": true,
+    "harnessCommit": "711c5a86729e2fb2805dad473345936ba22d015e",
+    "worldOrAssetObjectsTouched": false
+  },
+  "identity": {
+    "meshes": 2332,
+    "source": "711c5a86729e2fb2805dad473345936ba22d015e",
+    "targetGeometry": "REQUIRES companion target-geometry chunks; see generated manifest",
+    "scope": "Edit actual property/source identity, not ordinary runtime access",
+    "placeId": 0,
+    "passed": true,
+    "universeId": 0,
+    "nativeMeshParts": 2332,
+    "templates": {
+      "MaterialPanels": {
+        "meshes": 76,
+        "descendants": 188
+      },
+      "MilitaryOutpost": {
+        "meshes": 2256,
+        "descendants": 4592
+      }
+    },
+    "version": "0.748.0.7481526",
+    "scripts": 137,
+    "nativeMetadataFields": 11660,
+    "publicNativeProperties": 6996,
+    "mutated": false,
+    "actualProtectedSlots": 9328
+  },
+  "geometryProof": "Managed mesh object identity retained; the immediately preceding full local Edit audit compared all ten geometry chunks. Transaction wrote only two ModuleScript Sources and the test selector commit.",
+  "previousSessionStop": {
+    "toolResponse": "Game Stopped",
+    "observedPostCallModes": [
+      "Play (server)",
+      "Play (client)",
+      "Play (client)",
+      "Play (client)"
+    ],
+    "nativeEndSessionRequired": true
+  },
+  "freshNativeSessionStarted": false
+}

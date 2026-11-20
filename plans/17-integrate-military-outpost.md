@@ -998,6 +998,11 @@ macOS from a separate checkout of the correction, with 59 unit, 65 integration,
 `4f34d8d7a78285aae5d28ebd0582d1c33ca45b36d936d31d9178a29508d370a9`.
 The release SHA-256 is still
 `b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea`.
+The [local Edit sync receipt](../docs/evidence/p17/reticle-fix-edit-sync-711c5a8.json)
+confirms both changed Sources, the new harness commit, all 137 loaded Sources,
+2,332 native meshes and 9,328 material slots. The separate play-session
+processes stayed active after the MCP stop response, so the next run starts
+through Studio's native End Session and Server & Clients controls.
 
 The [focused imported fragment run](../docs/evidence/p17/imported-fragment-contact-221d1a8.json)
 uses the unchanged production source and all 24 approved fragments across six
