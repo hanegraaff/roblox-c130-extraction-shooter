@@ -424,6 +424,18 @@ function Harness.run()
                     and (raw - pointingPixels).Magnitude < 0.01
             end, "committed pointing frame with nearby required surface", 18)
         end
+        type ProjectionPair = {
+            hud: ScreenGui,
+            camera: Camera,
+            frame: number,
+            projectionTime: number,
+            projectionCamera: CFrame,
+            renderedCamera: CFrame,
+            aircraftPivot: CFrame,
+            hitbox: CFrame,
+            capturedTime: number,
+        }
+        local latestPair: ProjectionPair? = nil
         -- Mutate the caller-owned diagnostics before assertions. Failed samples
         -- must retain actual drawn/content/ray coordinates rather than losing the
         -- snapshot when the function throws before returning.
@@ -439,12 +451,39 @@ function Harness.run()
                 end
                 return tostring(value)
             end
-            local current = hud()
-            local camera = workspace.CurrentCamera
-            result.sampleSeconds = os.clock()
-            result.hudPresent = current ~= nil
-            result.cameraPresent = camera ~= nil
-            assert(current and camera, "operator view missing")
+            local selectedPair: ProjectionPair? = nil
+            local requestedAt = os.clock()
+            waitFor(function()
+                local current = hud()
+                local camera = workspace.CurrentCamera
+                local pair = latestPair
+                local frame = if current then current:GetAttribute("ProjectionFrame") else nil
+                result.hudPresent = current ~= nil
+                result.cameraPresent = camera ~= nil
+                result.waitingProjectionFrame = frame
+                result.latestPairedFrame = if pair then pair.frame else nil
+                if
+                    pair
+                    and current
+                    and current == pair.hud
+                    and camera == pair.camera
+                    and frame == pair.frame
+                    and current:GetAttribute("ProjectionTime") == pair.projectionTime
+                    and current:GetAttribute("ProjectionCamera") == pair.projectionCamera
+                then
+                    selectedPair = pair
+                    return true
+                end
+                return false
+            end, "same committed camera and canonical aircraft projection", 2)
+            local pair = assert(selectedPair, "paired projection disappeared")
+            local current, camera = pair.hud, pair.camera
+            local sampledAt = os.clock()
+            result.sampleSeconds = sampledAt
+            result.projectionPairWaitSeconds = sampledAt - requestedAt
+            result.pairedCaptureSeconds = pair.capturedTime
+            result.pairedAircraftPivot = packed(pair.aircraftPivot)
+            result.pairedHitbox = packed(pair.hitbox)
             local viewport = current:GetAttribute("ProjectionViewport")
             local pixels = current:GetAttribute("ReticlePixels")
             local endpoint = current:GetAttribute("AimEndpoint")
@@ -476,6 +515,7 @@ function Harness.run()
                     and typeof(frame) == "CFrame",
                 "projection metadata missing"
             )
+            assert(camera.CFrame == pair.renderedCamera, "camera changed after projection commit")
             assert((camera.ViewportSize - viewport).Magnitude < 0.01, "viewport changed during sample")
             local cornerGround: { unknown } = {}
             for _, corner in
@@ -572,13 +612,11 @@ function Harness.run()
             assert(Vector2.new(center.X, center.Z).Magnitude <= 360.001, "focus escaped disk")
             local radial = Vector3.new(-frame.X, 0, -frame.Z)
             assert(frame.LookVector:Dot(radial) >= -1e-6, "camera looked out of inward half-space")
-            local aircraft = workspace.Aircraft:GetPivot()
+            local originError = (frame.Position - pair.aircraftPivot.Position).Magnitude
             result.cameraPosition = packed(frame.Position)
             result.time = os.clock()
-            assert(
-                (frame.Position - aircraft.Position).Magnitude <= 2,
-                "camera moved from canonical aircraft"
-            )
+            result.canonicalOriginErrorStuds = originError
+            assert(originError <= 2, "camera moved from canonical aircraft")
             local hudCount, effects = 0, 0
             for _, item in playerGui:GetChildren() do
                 if item.Name == "ThermalHUD" then
@@ -657,6 +695,18 @@ function Harness.run()
                         "missing or mismatched projection commit"
                     )
                     local now = os.clock()
+                    local cameraFrame = camera.CFrame
+                    latestPair = {
+                        hud = current,
+                        camera = camera,
+                        frame = projectionFrame,
+                        projectionTime = projectionTime,
+                        projectionCamera = projectionCamera,
+                        renderedCamera = cameraFrame,
+                        aircraftPivot = pivot,
+                        hitbox = capturedHitbox,
+                        capturedTime = capturedTime,
+                    }
                     local stats = orbitStats[weapon]
                     if not stats then
                         stats = {
@@ -675,7 +725,6 @@ function Harness.run()
                     local position = pivot.Position
                     local angle = math.atan2(position.Z, position.X) % (2 * math.pi)
                     stats.bins[math.floor(angle / (2 * math.pi) * 16)] = true
-                    local cameraFrame = camera.CFrame
                     local inward = cameraFrame.LookVector:Dot(Vector3.new(-position.X, 0, -position.Z).Unit)
                     local originError = (cameraFrame.Position - position).Magnitude
                     local committedOriginError = (projectionCamera.Position - position).Magnitude
@@ -1310,6 +1359,7 @@ function Harness.run()
                 added:Disconnect()
                 removed:Disconnect()
                 orbitSamplingActive = false
+                latestPair = nil
                 scheduleOrbitSample = nil
                 if ancestry then
                     ancestry:Disconnect()
