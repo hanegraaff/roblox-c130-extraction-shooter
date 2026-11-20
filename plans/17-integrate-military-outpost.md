@@ -974,3 +974,39 @@ P08 selector and exact P17 harness commit were verified in the local place.
 The independent reviewer reran the harness binding and all 14 tooling tests
 and verified the 137 script hashes in both local test and standalone builds.
 The Edit audit leaves the native gameplay and human approval gates open.
+
+### Three-client startup failure and focused fragment proof — 2026-11-19
+
+In native Server & Clients on Studio `0.748.0.7481526`, candidate `221d1a8`
+reported 173/173 server checks and client results of 9/10, 9/10 and 10/10.
+The two failed clients computed correct world points and viewport rays. Their
+disposable reticle had a zero absolute position after startup character spawn.
+The [P08 report and GUI control](../docs/evidence/p17/native-p08-221d1a8-startup-failure.json)
+record 1 passed / 2 failed / 0 skipped. P08 timed out waiting for the failed
+clients to start their listeners. Teardown passed and all three clients
+remained, so the retained two-client P17 stage could not start.
+
+An actual spawn on one failing client removed a resettable GUI and preserved
+the otherwise identical persistent GUI and its layout. Test-only correction
+`711c5a86729e2fb2805dad473345936ba22d015e` / tree `3d6911e7ccbcfe9ff49df45acc6c9a0b2ed7158a` matches the production HUD's spawn lifetime.
+The two attachment checks bracket native samples. The independently reviewed
+fix retains all ray, input and 1-pixel assertions. This fix needs a fresh
+three-client run with passing baselines and a complete P08 report.
+The [full host gate](../docs/evidence/p17/reticle-host-711c5a8.txt) passed on
+macOS from a separate checkout of the correction, with 59 unit, 65 integration,
+48 asset and 14 tooling tests. The rebuilt test place SHA-256 is
+`4f34d8d7a78285aae5d28ebd0582d1c33ca45b36d936d31d9178a29508d370a9`.
+The release SHA-256 is still
+`b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea`.
+
+The [focused imported fragment run](../docs/evidence/p17/imported-fragment-contact-221d1a8.json)
+uses the unchanged production source and all 24 approved fragments across six
+families through the production owner, with three actual clients connected.
+All 24 descended and settled on an actual static surface. The isolated floor
+and one temporary spawned avatar provided the contact and interference
+controls. The avatar overlapped a fragment without losing health or moving
+horizontally. The default ray and sweep reached the floor, while a static-only
+query found the fragment. Expiry, the 48-piece cap, clear, stop and fixture
+cleanup passed. The first invocation had no avatar after P08 teardown and
+rejected before allocation. A4 still requires the live multiplayer replication
+and both reset iterations.
