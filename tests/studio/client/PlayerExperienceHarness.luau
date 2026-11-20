@@ -72,7 +72,13 @@ local function checkBounds(element: GuiObject, root: ScreenGui)
             and start.Y >= 0
             and finish.X <= camera.ViewportSize.X + 1
             and finish.Y <= camera.ViewportSize.Y + 1,
-        string.format("%s is outside %s: %s to %s", element.Name, camera.ViewportSize, start, finish)
+        string.format(
+            "%s is outside %s: %s to %s",
+            element.Name,
+            tostring(camera.ViewportSize),
+            tostring(start),
+            tostring(finish)
+        )
     )
     if element:IsA("TextLabel") or element:IsA("TextButton") then
         assert(element.TextFits, element.Name .. " text clips: " .. element.Text)
