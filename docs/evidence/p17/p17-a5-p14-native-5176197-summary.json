@@ -1,0 +1,51 @@
+{
+  "mode": "P14",
+  "source": "5176197ca819314f181ccf5580f40be2dc753268",
+  "production": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+  "main": "f91a032b251938de8a8f21837266f611e9a90813",
+  "studio": {
+    "bytes": 167889,
+    "actualAfter": 1,
+    "version": "0.748.0.7481526",
+    "sha": "1cd900da86495ec07bdd766ad21c3eb347e707efeb0d791f000d3300742c357e",
+    "summary": {
+      "clientCount": 2,
+      "cases": [
+        {
+          "passed": true,
+          "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits"
+        },
+        {
+          "passed": true,
+          "name": "P14 acknowledged zoom and rejected selection preserve world-space pan and ground camera"
+        },
+        {
+          "passed": true,
+          "name": "P14 blocked UI outside-window input and recenter retain bounded ownership"
+        },
+        {
+          "passed": true,
+          "name": "P14 slope and upper-floor targets retain actual occluded thermal configuration"
+        },
+        {
+          "passed": true,
+          "name": "P14 result role loss and new-round operator entry reset focus without duplicate ownership"
+        },
+        {
+          "passed": true,
+          "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+        }
+      ],
+      "skipped": 0,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    "stageFinish": 1795204161.153034,
+    "active": [],
+    "stageStart": 1795203963.227502
+  },
+  "exactRawCaptured": true,
+  "invocation": "Stock test fixture on two actual native survivors, after previous runtime emptied",
+  "baseline": "p17-a5-p08-native-5176197-summary.json"
+}

@@ -1380,3 +1380,89 @@ and authorized merging it to `main`. The reviewed PR head was
 `cd7071b9ed00452ee2bba06d7bc9ccbde22c3976` and the P16 Blender package bound
 above. That approval satisfies A6 and authorizes source integration. A5 and
 the active-round parts of A7 still require their Studio evidence.
+
+### Active-round Ground camera acceptance (2026-11-20)
+
+The [active round receipt](../docs/evidence/p17/indoor-camera-active-5176197.json)
+binds the source-verified local build to merged `main` at `f91a032`. Native
+Server & Clients joined three actual players. Server smoke passed 179/179 and
+all three client reports passed 12/12 with zero failures, skips or errors.
+
+The live Ground camera eased from 12.5 to five studs during actual Workshop
+entry and returned to 12.5 on foot after exit. Fourteen independently sampled
+camera rays and all five actual server-received M-7 aim requests matched the
+same rendered target, and the magazine moved from 30 to 25. Surrender from
+the Workshop removed the Ground character and handed the Custom camera to
+the other living Ground client. The operator retained the Scriptable thermal
+view during the active round.
+
+The real test reset rebuilt the Battlefield, camera room descriptors and round
+state. Ground reacquired a fresh avatar and stock outdoor zoom. The former
+operator returned to the normal lobby camera and cleared the thermal effect.
+The disposable camera and server observers were removed. A7 passes with the
+earlier independent solo traversal of both floors. The managed P17
+multiplayer suite and the A5 gameplay regressions have separate records.
+
+### Current-source launcher, destruction and combat regressions (2026-11-20)
+
+Native Server & Clients loaded the same source-bound local test artifact
+`5176197` and production `cd7071b` as the active camera review. The server
+passed 179/179 with three joined clients and each passed 12/12. The
+[launcher report](../docs/evidence/p17/p17-a5-p08-native-5176197-summary.json)
+passed 11/11 with zero failures or skips, 151 retained traces and no dropped
+traces. Its deliberate carrier departure used the native server kick and left
+two actual clients after clean teardown.
+
+The two survivors kept their original passing startup reports. Before each
+subsequent regression, the coordinator checked that the prior runtime,
+test transports and fragment owner were gone and the Battlefield was
+pristine. Each stock server fixture then started and owned its own runtime.
+The [destruction report](../docs/evidence/p17/p17-a5-p07-native-5176197-summary.json)
+passed 7/7, including six actual 105mm impacts, sustained and interrupted
+30mm fire, walking through a damaged opening and both pristine resets.
+The [gunship combat report](../docs/evidence/p17/p17-a5-p05-native-5176197-summary.json)
+passed 8/8, including cover and muzzle sweep, readiness, both weapon profiles,
+results and stale-work cleanup. The raw reports retain the actual native
+test output and their summaries record the verified hashes.
+
+The [panning report](../docs/evidence/p17/p17-a5-p14-native-5176197-summary.json)
+passed 6/6 on the same two actual starting clients, with a full orbit per
+weapon, upper-floor targeting across all three buildings, recenter and
+ownership cleanup. Its deliberate operator departure left one native client.
+A5 passes on the merged runtime and test source. The separate managed P17
+run requires its own fresh two-client startup for Outpost-specific evidence.
+
+### Managed Outpost preflight rejects the retained three-client setting
+
+The [native preflight receipt](../docs/evidence/p17/p17-native-three-client-preflight-5176197.json)
+records a fresh local launch with the intended source and P17 selector.
+Ordinary server smoke passed 179/179 with three actual joined clients.
+The exact-two-client preflight stopped before creating a managed runtime or
+running any acceptance cases. The owned test ended and the original Edit
+document retained the staged P17 selector and exact fixture commit.
+
+### Final native Outpost acceptance (2026-11-20)
+
+The [final native summary](../docs/evidence/p17/p17-native-managed-5176197-summary.json)
+and [exact Studio report](../docs/evidence/p17/p17-native-managed-5176197-raw.json)
+bind the final managed run to test source
+`5176197ca819314f181ccf5580f40be2dc753268`, production
+`cd7071b9ed00452ee2bba06d7bc9ccbde22c3976`, and the runtime already
+integrated through PR #39 at `f91a032`. Fresh native Server & Clients
+joined two actual clients. Ordinary smoke passed 179/179 on the server and
+12/12 on both clients. The ten managed cases passed with zero failures or
+skips. Studio delivered 682,790 bytes in 12 ordered chunks. Each reset began with four active fragments and two pending projectiles.
+Both clients matched the server's 188 pristine panels after each reset. The
+launcher, aircraft, rounds, effects, fragments and test transport were clear
+after the run. The local Edit selectors were cleared after collecting the report.
+
+| Criterion | Final evidence |
+| --- | --- |
+| A1 | The [full host gate](../docs/evidence/p17/indoor-camera-host-cd7071b.txt) verifies approved assets, reconstruction, geometry and release isolation. A fresh host run also passed on the matching merged tree. |
+| A2 | The final managed suite verifies both floors and the external route with a real Humanoid. The [panning report](../docs/evidence/p17/p17-a5-p14-native-5176197-summary.json) verifies both zooms and full-orbit targeting. The operated normal, thermal and simulated-touch reviews are recorded above. |
+| A3 | The final native suite verifies each material family, real cannon impacts, persistent earned 30mm credit and authoritative openings. |
+| A4 | Both actual clients agree on the Outpost and on both pristine resets. The [native fragment contact record](../docs/evidence/p17/imported-fragment-contact-221d1a8.json) exercises all 24 approved fragments through the unchanged server fragment owner. |
+| A5 | The current-source native launcher, destruction, gunship combat and panning suites passed 11/11, 7/7, 8/8 and 6/6. D67 waives the paired performance gate. |
+| A6 | The owner approved the in-game result and authorized merging [PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39). |
+| A7 | The [solo walkthrough](../docs/evidence/p17/indoor-camera-studio-solo-5176197.json) and [active round](../docs/evidence/p17/indoor-camera-active-5176197.json) verify adaptive indoor zoom, Ground aim, spectating and reset. |
+| A8 | Both reusable skills are in the merged source and passed the [independent forward test](../docs/evidence/p17/asset-skills-forward-test.md). |

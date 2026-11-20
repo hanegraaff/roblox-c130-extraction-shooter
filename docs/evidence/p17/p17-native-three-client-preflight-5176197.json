@@ -1,0 +1,55 @@
+{
+  "scope": "P17 managed harness native preflight rejection",
+  "testSource": "5176197ca819314f181ccf5580f40be2dc753268",
+  "actualPlayers": 3,
+  "serverSmoke": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 179,
+    "clientCount": 3,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 179
+  },
+  "actualSlots": [
+    {
+      "slot": "Player1"
+    },
+    {
+      "slot": "Player2"
+    },
+    {
+      "slot": "Player3"
+    }
+  ],
+  "serverId": "fa87f1da-6269-4ee2-8a24-ccf7faef92a8",
+  "studioVersion": "0.748.0.7481526",
+  "localPlace": [
+    0,
+    0
+  ],
+  "selector": "P17",
+  "baselineClients": [
+    {
+      "clients": 3,
+      "slot": "Player2"
+    },
+    {
+      "clients": 3,
+      "slot": "Player3"
+    },
+    {
+      "clients": 3,
+      "slot": "Player1"
+    }
+  ],
+  "log": {
+    "1": "ServerScriptService.ServerTests.P17ManualRunner:54: fresh two-client server baseline and roster required",
+    "2": "Script 'ServerScriptService.ServerTests.P17ManualRunner', Line 54 - function run"
+  },
+  "invocationPresent": false,
+  "reportPresent": false,
+  "limits": "Native start retained the prior 3-client setting. P17 requires exactly two clients and rejected before opening its runtime. No managed case or completed per-client smoke report is claimed."
+}

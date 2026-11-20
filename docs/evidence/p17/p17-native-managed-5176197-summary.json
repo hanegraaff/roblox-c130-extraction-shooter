@@ -1,0 +1,398 @@
+{
+  "schemaVersion": 1,
+  "scope": "Final-source P17 A1–A4 managed material and replication acceptance",
+  "source": {
+    "testSource": "5176197ca819314f181ccf5580f40be2dc753268",
+    "production": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+    "integratedMainCandidate": "f91a032b251938de8a8f21837266f611e9a90813",
+    "savedLocalTestPlaceSha256": "d67aba47dc61a211a338855ae12e635b89bcff2deeb8d38efa54396baf38e560",
+    "rojoBuildSha256": "22b67b63bb09ce8f5f5ec7cf19e956fe060c1caa45f9cc9064683ed6de0b5f1f",
+    "liveEditIdentity": {
+      "harness": "5176197ca819314f181ccf5580f40be2dc753268",
+      "metadataSha": "c8ade874e95429c1fbbd9fcd07079a63c0b29451db320a67b641965a43d1c08e",
+      "game": 0,
+      "place": 0,
+      "cameraSha": "25685176cde60328f12f864d2a7e2e319a7d5426de3471d69dee12b92f39efef",
+      "cameraRooms": 2,
+      "selector": "P17"
+    }
+  },
+  "environment": {
+    "mode": "fresh native Studio Server & Clients, exact two",
+    "studioVersion": "0.748.0.7481526",
+    "placeId": 0,
+    "gameId": 0,
+    "serverStudioId": "8eb20a7d-1e88-4dba-b96e-bd3df5bfea5d",
+    "startup": {
+      "status": "first-client-arrived",
+      "clientCount": 1,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 3.92292870831443
+    },
+    "activeSlots": [
+      {
+        "life": "Alive",
+        "testSlot": true,
+        "role": "Ground",
+        "slot": "Player1"
+      },
+      {
+        "life": "Alive",
+        "testSlot": true,
+        "role": "Gunship",
+        "slot": "Player2"
+      }
+    ],
+    "terminalSlots": [
+      "Player1",
+      "Player2"
+    ]
+  },
+  "baseline": {
+    "server": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 179,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 179
+    },
+    "clients": [
+      {
+        "slot": "Player1",
+        "reportedClients": 2,
+        "roleAtCapture": "Ground",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      },
+      {
+        "slot": "Player2",
+        "reportedClients": 2,
+        "roleAtCapture": "Gunship",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      }
+    ]
+  },
+  "terminal": {
+    "bytes": 682790,
+    "chunks": 12,
+    "skipped": 0,
+    "passed": 10,
+    "complete": true,
+    "actualClients": 2,
+    "storage": "ServerStorage.P17ManualEvidence",
+    "suite": "P17-imported-material-multiplayer",
+    "failed": 0,
+    "discovered": 10,
+    "directAfterHarness": {
+      "runtime": false,
+      "fragments": false,
+      "harness": false,
+      "aircraft": false,
+      "launcher": false
+    }
+  },
+  "raw": {
+    "file": "p17-native-managed-5176197-raw.json",
+    "bytes": 682790,
+    "chunkBytes": [
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      60000,
+      22790
+    ],
+    "sha256": "3231cb68b5ff6ccf030a561e3e6551dbac8da89f887e444d9abc7ebef914d7c3"
+  },
+  "invocation": {
+    "mode": "manual-native-server-clients",
+    "harness": "P17Manual-v9-verified-avatar-handoff",
+    "harnessCommit": "5176197ca819314f181ccf5580f40be2dc753268",
+    "productionCommit": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+    "productionFingerprintSha256": "864fb023b050dc55f2333acca8a9a05a65eacf7e288822c51f53230845d02de2",
+    "harnessFingerprintSha256": "5a562c0f469326b772201aa906cb4b3a989494b1435df138cc10e34d879709d3",
+    "serverProbeSha256": "77f502e03756db14dd5f7ac9e6f3e4a487e3a92834cce156ec0d70089868fd68",
+    "clientProbeSha256": "3726af2dc63b175bac366f5d9ea51ed6b3ad78ba468c8ae356d4b355d8f1a292",
+    "requestedInitialClients": 2,
+    "actualLateClientRequired": false,
+    "selectorValue": "P17"
+  },
+  "result": {
+    "suite": "P17-imported-material-multiplayer",
+    "discovered": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+      },
+      {
+        "passed": true,
+        "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+      },
+      {
+        "passed": true,
+        "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+      },
+      {
+        "passed": true,
+        "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+      },
+      {
+        "passed": true,
+        "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+      },
+      {
+        "passed": true,
+        "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+      },
+      {
+        "passed": true,
+        "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+      },
+      {
+        "passed": true,
+        "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+      }
+    ],
+    "clientCount": 2
+  },
+  "actualClientsAtDelivery": 2,
+  "cleanupObservedAfterHarness": {
+    "aircraftStateAbsent": true,
+    "groundEffectsAbsent": true,
+    "transportAbsent": true,
+    "fragmentFolderAbsent": true,
+    "combatEffectsAbsent": true,
+    "roundStateAbsent": true
+  },
+  "observations": {
+    "allCurrentPanels": [
+      {
+        "serverPanels": 188,
+        "kind": "all-panel-current-agreement",
+        "perClientQueriedPanels": 188,
+        "actualClients": 2
+      }
+    ],
+    "workInFlightBeforeResets": [
+      {
+        "panelId": "Shelter_Roof_R01_C04",
+        "liveFragments": 4,
+        "pendingProjectiles": 2,
+        "kind": "reset-pre-abort-work",
+        "sustainedSeconds": 0.18377113342285156,
+        "iteration": 1
+      },
+      {
+        "panelId": "Shelter_Roof_R01_C04",
+        "liveFragments": 4,
+        "pendingProjectiles": 2,
+        "kind": "reset-pre-abort-work",
+        "sustainedSeconds": 0.18346405029296875,
+        "iteration": 2
+      }
+    ],
+    "pristinePanelsAfterResets": [
+      {
+        "actualClients": 2,
+        "perClientQueriedPanels": 188,
+        "serverPanels": 188,
+        "kind": "all-panel-pristine-reset-agreement",
+        "iteration": 1
+      },
+      {
+        "actualClients": 2,
+        "perClientQueriedPanels": 188,
+        "serverPanels": 188,
+        "kind": "all-panel-pristine-reset-agreement",
+        "iteration": 2
+      }
+    ],
+    "physicalOpeningTraversal": [
+      {
+        "panelId": "Warehouse_S01_North_04",
+        "crossingOwnership": {
+          "automatic": false,
+          "userId": -1
+        },
+        "serverObservationBudgetSeconds": 2,
+        "userId": -1,
+        "startServerPositionStuds": [
+          184,
+          3.125,
+          -110.5
+        ],
+        "serverRootPresent": true,
+        "clientReplyServerPositionStuds": [
+          183.9989013671875,
+          3.065688133239746,
+          -103.30319213867188
+        ],
+        "restored": true,
+        "clientPlacement": {
+          "phase": "placement",
+          "initialPositionStuds": [
+            184,
+            3.125,
+            -110.5
+          ],
+          "startDistanceStuds": 0,
+          "userId": -1,
+          "startPositionStuds": [
+            184,
+            3.125,
+            -110.5
+          ],
+          "elapsedSeconds": 1.629168400540948e-05,
+          "finalPositionStuds": [
+            184,
+            3.125,
+            -110.5
+          ],
+          "finalDistanceStuds": 0,
+          "passed": true
+        },
+        "restoredServerPositionStuds": [
+          -20.00030517578125,
+          2.9980926513671875,
+          107.99969482421875
+        ],
+        "passed": true,
+        "serverObservationElapsedSeconds": 0.2003287500119768,
+        "elapsedSeconds": 0.9004010833450593,
+        "originalOwnership": {
+          "automatic": true,
+          "userId": -1
+        },
+        "finalServerDistanceStuds": 1.381994366645813,
+        "clientReplyAfterSeconds": 0.700070874998346,
+        "originalPositionStuds": [
+          -20.00030517578125,
+          2.9980926513671875,
+          107.99969482421875
+        ],
+        "clientCrossing": {
+          "phase": "walk",
+          "initialPositionStuds": [
+            183.9989013671875,
+            3.074265718460083,
+            -110.5016860961914
+          ],
+          "startDistanceStuds": 0.05077417567372322,
+          "userId": -1,
+          "finalPositionStuds": [
+            183.99949645996094,
+            3.1229631900787354,
+            -100.17937469482422
+          ],
+          "startPositionStuds": [
+            183.9989013671875,
+            3.074265718460083,
+            -110.5016860961914
+          ],
+          "elapsedSeconds": 0.6335128333303146,
+          "displacementStuds": 10.322425842285156,
+          "finalDistanceStuds": 1.6793760061264038,
+          "passed": true
+        },
+        "goalPositionStuds": [
+          184,
+          3.125,
+          -98.5
+        ],
+        "requestedStartPositionStuds": [
+          184,
+          3.125,
+          -110.5
+        ],
+        "finalServerOwnership": {
+          "automatic": false,
+          "userId": -1
+        },
+        "restoredOwnership": {
+          "automatic": true
+        },
+        "acknowledgedServerPositionStuds": [
+          184,
+          2.983698844909668,
+          -110.5
+        ],
+        "kind": "actual-humanoid-opening",
+        "placementOwnership": {
+          "automatic": false
+        },
+        "finalServerPositionStuds": [
+          183.99891662597656,
+          3.1211414337158203,
+          -99.88198852539062
+        ]
+      }
+    ]
+  },
+  "observationCounts": {
+    "six-family-actual-replication": 6,
+    "approved-material-stage-ray-replication": 42,
+    "actual-heavy": 6,
+    "persistent-30mm-bursts": 1,
+    "actual-outpost-humanoid-navigation": 1
+  },
+  "nativeMeshes": [
+    {
+      "slot": "Player1",
+      "instanceChecks": 2332,
+      "uniqueMeshIds": 407,
+      "successfulPreloadCallbacks": 2332,
+      "callbackFailures": 0,
+      "constructorChecks": 2332,
+      "surfaceAvailability": "UNVERIFIED: SurfaceAppearance texture packs are unsupported by PreloadAsync; rendered streaming must be checked separately"
+    },
+    {
+      "slot": "Player2",
+      "instanceChecks": 2332,
+      "uniqueMeshIds": 407,
+      "successfulPreloadCallbacks": 2332,
+      "callbackFailures": 0,
+      "constructorChecks": 2332,
+      "surfaceAvailability": "UNVERIFIED: SurfaceAppearance texture packs are unsupported by PreloadAsync; rendered streaming must be checked separately"
+    }
+  ],
+  "limits": "This run verifies final managed P17 gameplay. The automatic SurfaceAppearance preload limitation, earlier rendered review and user approval remain independently documented. The performance workload was waived under D67."
+}

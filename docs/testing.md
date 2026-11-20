@@ -111,7 +111,7 @@ That compromise requires explicit A6 review.
 
 1. Build from the selected source and use the separate local `tests.rbxlx`
    document (`PlaceId` and `GameId` both zero). Confirm its identity through
-   Studio MCP in Edit mode. Match the 137 script Sources, 2,332 managed
+   Studio MCP in Edit mode. Match the current test artifact's 141 script Sources, 2,332 managed
    template meshes, 9,328 serialized material slots and target Size/CFrame
    values to the test artifact before Play. The generated harness metadata
    supplies provenance. The Edit comparisons verify what Studio loaded.
