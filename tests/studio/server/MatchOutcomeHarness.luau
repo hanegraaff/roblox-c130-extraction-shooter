@@ -18,6 +18,8 @@ local Pan = require(Shared.AircraftPanRules)
 local AircraftRules = require(Shared.AircraftRules)
 local Harness = {}
 type Case = { name: string, passed: boolean, detail: string? }
+type SmokeReport = { [string]: unknown }
+type SmokeEvidence = { server: SmokeReport?, clients: { [string]: SmokeReport } }
 export type Report = {
     suite: string,
     environment: string,
@@ -32,6 +34,7 @@ export type Report = {
     skipped: number,
     cases: { Case },
     observations: { unknown },
+    smoke: SmokeEvidence,
 }
 
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
@@ -51,6 +54,18 @@ local function json(state: Instance, key: string): { [string]: unknown }
     return HttpService:JSONDecode(value)
 end
 
+-- Preserve the test entrypoints' own reports. These are fixture diagnostics,
+-- never production authority or a second source of suite totals.
+local function smokeReport(encoded: unknown): SmokeReport?
+    if type(encoded) ~= "string" or #encoded > 1024 then
+        return nil
+    end
+    local ok, decoded = pcall(function(): unknown
+        return HttpService:JSONDecode(encoded)
+    end)
+    return if ok and type(decoded) == "table" then decoded :: SmokeReport else nil
+end
+
 -- Outcomes and Departures start with three real clients. LastGround and Empty
 -- start with two. Manual mode retains the report until the coordinator stops it.
 function Harness.run(scenario: string, finish: ((Report) -> ())?)
@@ -62,6 +77,10 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
     local cases: { Case } = {}
     local observations: { unknown } = {}
     local initialIds: { number } = {}
+    local smoke: SmokeEvidence = {
+        server = smokeReport(workspace:GetAttribute("ServerTestReport")),
+        clients = {},
+    }
     local function deliver()
         local passed = 0
         for _, case in cases do
@@ -83,6 +102,7 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
             skipped = 0,
             cases = cases,
             observations = observations,
+            smoke = smoke,
         }
         workspace:SetAttribute("P09MultiplayerReport", HttpService:JSONEncode(report))
         if finish then
@@ -101,7 +121,8 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
         deliver()
         return
     end
-    for _, player in Players:GetPlayers() do
+    local initialPlayers = Players:GetPlayers()
+    for _, player in initialPlayers do
         table.insert(initialIds, player.UserId)
     end
     local runtime, reason = GameRuntime.start({
@@ -123,13 +144,15 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
     local aircraftState = ReplicatedStorage.AircraftState
     local transport = Instance.new("RemoteEvent")
     transport.Name = "P09Harness"
-    local ready: { [Player]: boolean } = {}
     local tickets: { [number]: { player: Player, ok: boolean?, detail: string? } } = {}
     local sequence = 0
     local listener = transport.OnServerEvent:Connect(
         function(player: Player, token: unknown, ok: unknown, detail: unknown)
-            if token == 0 then
-                ready[player] = true
+            if token == 0 and ok == true then
+                local report = smokeReport(detail)
+                if report and report.userId == player.UserId then
+                    smoke.clients[tostring(player.UserId)] = report
+                end
             elseif type(token) == "number" and tickets[token] and tickets[token].player == player then
                 tickets[token].ok, tickets[token].detail = ok == true, tostring(detail)
             end
@@ -137,9 +160,12 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
     )
     transport.Parent = ReplicatedStorage
 
+    local function clientReady(player: Player): boolean
+        return smoke.clients[tostring(player.UserId)] ~= nil
+    end
     local function beginProbe(player: Player, action: string, payload: unknown): number
         waitFor(function()
-            return ready[player] == true
+            return clientReady(player)
         end, "client fixture ready")
         sequence += 1
         tickets[sequence] = { player = player }
@@ -505,6 +531,56 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
         end, "actual client departures")
     end
 
+    local function teardown()
+        check("A6: stop drains the frame, combat, character resources and transport", function()
+            runtime.stop()
+            runtime.stop()
+            waitFor(function()
+                return runtime.rounds.resources().spawnTasks == 0
+            end, "character loads drained")
+            assert(
+                runtime.resources().frameConnections == 0
+                    and runtime.rounds.resources().connections == 0
+                    and runtime.aircraft.resources().connections == 0
+                    and runtime.combat.resources().connections == 0
+                    and runtime.launcher.resources().connections == 0
+                    and runtime.groundCombat.resources().connections == 0,
+                "owned connections survived stop"
+            )
+            assert(
+                not ReplicatedStorage:FindFirstChild("RoundState")
+                    and not ReplicatedStorage:FindFirstChild("AircraftState")
+                    and not ReplicatedStorage:FindFirstChild("LauncherState"),
+                "owned state survived stop"
+            )
+        end)
+        listener:Disconnect()
+        transport:Destroy()
+        workspace:SetAttribute("P09Stage", "finished")
+        deliver()
+    end
+
+    workspace:SetAttribute("P09Stage", "Waiting for client smoke")
+    local clientsReady, startupFailure = pcall(function()
+        waitFor(function()
+            for _, player in initialPlayers do
+                if player.Parent ~= Players or not clientReady(player) then
+                    return false
+                end
+            end
+            return true
+        end, "all initial clients passed smoke and connected the test fixture", 35)
+        return true
+    end)
+    if not clientsReady then
+        table.insert(
+            cases,
+            { name = "Client smoke startup", passed = false, detail = tostring(startupFailure) }
+        )
+        teardown()
+        return
+    end
+
     if scenario == "Outcomes" then
         local activeRound = 0
         local originalMap: Instance? = nil
@@ -755,32 +831,7 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
             end
         )
     end
-    check("A6: stop drains the frame, combat, character resources and transport", function()
-        runtime.stop()
-        runtime.stop()
-        waitFor(function()
-            return runtime.rounds.resources().spawnTasks == 0
-        end, "character loads drained")
-        assert(
-            runtime.resources().frameConnections == 0
-                and runtime.rounds.resources().connections == 0
-                and runtime.aircraft.resources().connections == 0
-                and runtime.combat.resources().connections == 0
-                and runtime.launcher.resources().connections == 0
-                and runtime.groundCombat.resources().connections == 0,
-            "owned connections survived stop"
-        )
-        assert(
-            not ReplicatedStorage:FindFirstChild("RoundState")
-                and not ReplicatedStorage:FindFirstChild("AircraftState")
-                and not ReplicatedStorage:FindFirstChild("LauncherState"),
-            "owned state survived stop"
-        )
-    end)
-    listener:Disconnect()
-    transport:Destroy()
-    workspace:SetAttribute("P09Stage", "finished")
-    deliver()
+    teardown()
 end
 
 return Harness

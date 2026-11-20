@@ -116,7 +116,9 @@ function Harness.run()
         transport.Destroying:Once(function()
             listener:Disconnect()
         end)
-        transport:FireServer(0, true)
+        -- The client entrypoint publishes this exact TestEZ result and asserts
+        -- success before starting the harness listener.
+        transport:FireServer(0, true, script.Parent:GetAttribute("ClientTestReport"))
     end)
 end
 
