@@ -1337,3 +1337,36 @@ descriptors and two runtime modules account for the production additions.
 The preserved native suite bodies now bind to the actual camera production
 source and expect 179 server and 12 client smoke cases. Fresh operated camera
 and applicable native regression results remain to be collected.
+
+### Native Outpost camera walkthrough (2026-11-20)
+
+The [solo Studio record](../docs/evidence/p17/indoor-camera-studio-solo-5176197.json)
+binds the `5176197` test source to all 141 local script identities, both
+authored camera rooms and the previously verified native mesh bank. Fresh
+ordinary startup passed 179/179 server and 12/12 client checks with one
+actual client and zero failures, skips or errors.
+
+Using native keyboard and scroll input, the independent tester walked
+through the south garage, outside stairs, uncovered balcony and upper
+door. In the [workshop](../docs/evidence/p17/p17-indoor-workshop.jpg), the
+19.75-stud outdoor view eased to five studs, with the camera eye at Y=5.917
+below the Y=9.125 ceiling. The outdoor view returned to 19.75 studs after
+exit. A manually selected 3.28-stud view retained its distance indoors.
+The [command room](../docs/evidence/p17/p17-indoor-command-room.jpg) held
+five studs at camera Y=15.917 below its Y=20.125 roof. The center probe was
+clear during the upper threshold crossing and two transient edge probes
+touched the jamb before the indoor inset. All settled indoor probes were clear.
+
+Switching from the command room to Operator changed the camera to Scriptable,
+enabled thermal presentation and used both weapon zooms. Returning to Ground
+restored the 70-degree Custom camera and its prior outdoor distance. These
+results cover solo operated behavior. Active-round checks and the scoped
+native regressions on the revised candidate require their own reports.
+
+The ordinary SDK attempt requested two actual clients on the same source.
+One joined at 10.89 seconds, and the server and first client passed 179/179
+and 12/12. The second client did not enter the session. The tester ended the
+owned attempt from the actual server at 92.23 simulation seconds, verified
+the original local Edit returned and kept the reproducible solo test place.
+Active-round camera/aim verification and current-source native regressions
+remain open. The SDK attempt is recorded in the solo evidence file above.

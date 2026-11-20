@@ -152,6 +152,9 @@ Later on 2026-11-20, the user added automatic Ground interior zoom and both
 reusable asset skills to P17 under D68. The existing Outpost is the first
 configured building. The revised scope is in progress in PR #39. See the
 [P17 camera and skills revision](plans/17-integrate-military-outpost.md#indoor-camera-and-reusable-skills-scope-revision-2026-11-20).
+Both skills passed an independent trial, and the revised camera passed the
+solo Studio walkthrough on both Outpost floors. The current-source active
+round and native regressions await a Studio session with the required clients.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
