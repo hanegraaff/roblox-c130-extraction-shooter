@@ -33,6 +33,32 @@ local function waitFor(predicate: () -> boolean, label: string, seconds: number?
     end
     assert(predicate(), "P14 client timeout: " .. label)
 end
+
+-- Native cover hits identify a direct solid of the registered panel Model.
+-- Primitive solids may repeat StoryId, but imported proxies leave it on the Model.
+local function isUpperPanelHit(hit: Instance, buildingName: string): boolean
+    if
+        not hit:IsA("BasePart")
+        or not hit.CanCollide
+        or not hit.CanQuery
+        or hit:GetAttribute("DamageVisual") == true
+    then
+        return false
+    end
+    local id = hit:GetAttribute("PanelId")
+    local building = workspace.World.Battlefield.Buildings:FindFirstChild(buildingName)
+    local registry = if building then building:FindFirstChild(buildingName .. "_Panels") else nil
+    if type(id) ~= "string" or not registry or not registry:IsA("Folder") then
+        return false
+    end
+    local model = registry:FindFirstChild(id)
+    return model ~= nil
+        and model:IsA("Model")
+        and model:GetAttribute("PanelId") == id
+        and model:GetAttribute("StoryId") == "02"
+        and hit.Parent == model
+end
+
 function Harness.run()
     task.spawn(function()
         local remote = ReplicatedStorage:WaitForChild("P14Harness", 120)
@@ -185,15 +211,7 @@ function Harness.run()
                                                     and hit.Position.Y > 0.5
                                                     and hit.Normal.Y < 0.999
                                             elseif aimRequest and aimRequest.building then
-                                                local building =
-                                                    workspace.World.Battlefield.Buildings:FindFirstChild(
-                                                        aimRequest.building
-                                                    )
-                                                correct = building ~= nil
-                                                    and hit.Instance:IsDescendantOf(building)
-                                                    and hit.Instance:GetAttribute("StoryId") == "02"
-                                                    and type(hit.Instance:GetAttribute("PanelId"))
-                                                        == "string"
+                                                correct = isUpperPanelHit(hit.Instance, aimRequest.building)
                                             end
                                             if correct then
                                                 identityHits += 1
@@ -546,13 +564,8 @@ function Harness.run()
             end
             if expected and expected.building then
                 assert(
-                    hit.Instance:GetAttribute("StoryId") == "02"
-                        and type(hit.Instance:GetAttribute("PanelId")) == "string",
-                    "required upper-floor panel was not reached"
-                )
-                assert(
-                    hit.Instance:IsDescendantOf(workspace.World.Battlefield.Buildings[expected.building]),
-                    "projection reached the wrong building"
+                    isUpperPanelHit(hit.Instance, expected.building),
+                    "required upper-floor panel of the requested building was not reached"
                 )
             end
             local center = focus()
