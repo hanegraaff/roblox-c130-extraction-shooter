@@ -8,7 +8,15 @@ A new player understands their role, controls, aircraft health, launcher availab
 
 ## Implementation
 
-Consolidate role-specific HUD/help, launcher ownership/recovery messages, mouse-pan/recenter guidance, panel-damage progression and weapon-specific zoom feedback, ammunition/cooldown/health, accessible result reasons and spectator target cycling. Add readable stylized cues/audio/effects within the asset manifest, retaining simple greybox models where adequate. Full terrain/building/destruction mechanics already come from P13/P07; this plan does not postpone them or require refined assets. Higher-detail terrain, buildings, damage variants and equipment receive separate later asset-generation plans. Important sounds have visible cues; color has text/icon equivalents. Add effect/camera-shake intensity controls. Keep full functionality at 1280×720 and 1920×1080 desktop viewports. Do not add touch/gamepad, purchases or progression.
+Consolidate role-specific HUD and help, launcher ownership and recovery messages,
+WASD pan, mouse aim and recenter guidance, panel-damage progression, weapon-specific
+zoom, ammunition, cooldown and health feedback, accessible result reasons, and
+spectator target cycling. Add readable stylized cues, audio and effects with
+provenance in the asset manifest. P13 and P07 already supply terrain, buildings
+and destruction, and P16/P17 supply the detailed Outpost. Important sounds have
+visible cues, and labels or icons convey information also shown by color. Add
+effect and camera-shake intensity controls. Keep full functionality at 1280×720
+and 1920×1080 desktop viewports, and preserve the existing touch controls.
 
 ## Acceptance criteria
 
@@ -20,7 +28,11 @@ Consolidate role-specific HUD/help, launcher ownership/recovery messages, mouse-
 
 ## Focused human check
 
-Have a tester complete both roles from in-game instructions. Inspect thermal contrast, warning/impact frames, launcher ownership/reload, both weapon zoom levels while panning, building-panel stages and physical debris, aircraft destruction and team-result states, defeat/spectate and two viewport sizes. Capture actual gameplay screenshots for the README only after reviewing them; label the build shown.
+Have a tester complete both roles from in-game instructions. Inspect thermal
+contrast, warning and impact frames, launcher ownership and reload, both weapon
+zoom levels while panning, building-panel stages and physical debris, aircraft
+destruction and team results, defeat and spectating, and both desktop viewport
+sizes. Keep reviewed gameplay captures in the linked evidence record.
 
 ## Documentation changes
 
@@ -31,7 +43,9 @@ P10 retains its presentation/onboarding scope. D63 schedules P16/P17 before
 P09 and this plan, so onboarding and presentation must describe the approved
 Outpost actually present in the tested candidate.
 
-Make the README a truthful player guide to the whole current game, with actual controls and curated screenshots if available. Keep contributor setup elsewhere. Document asset credits and current limitations.
+Update the README's player guide and local setup for the current game. Keep the
+selected P16 Blender authoring image in the README and link reviewed gameplay
+captures in the evidence guide. Document asset credits and current limitations.
 
 ## Completion record
 

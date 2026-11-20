@@ -18,6 +18,7 @@ local GuiService = game:GetService("GuiService")
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
 local AircraftPanRules = require(ReplicatedStorage.Shared.AircraftPanRules)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
+local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local Validation = require(ReplicatedStorage.Shared.Validation)
 local ThermalCosmetics = require(script.Parent.ThermalCosmetics)
 local ThermalCameraController = {}
@@ -186,6 +187,8 @@ function ThermalCameraController.new(
     local recenterRequested = false
     local frameNumber = 0
     local windowFocused = true
+    local seenReadiness: string? = nil
+    local weaponReadiness: { [string]: PlayerPresentation.Readiness } = {}
     local lastAspect: number? = nil
     local cachedWidestFov: number? = nil
     local heldPad: { [InputObject]: Vector2 } = {}
@@ -218,6 +221,10 @@ function ThermalCameraController.new(
         frame.panRight = keyboardRight
         frame.panUp = keyboardUp
         return frame
+    end
+    local function overlayOpen(): boolean
+        local hud = playerGui:FindFirstChild("RoundHUD")
+        return hud ~= nil and hud:GetAttribute("InputOverlayOpen") == true
     end
     local function eligible(): boolean
         return running
@@ -293,7 +300,7 @@ function ThermalCameraController.new(
         saved = nil
     end
     local function selectWeapon(weapon: string)
-        if (weapon ~= "GAU23" and weapon ~= "M102") or not eligible() then
+        if (weapon ~= "GAU23" and weapon ~= "M102") or not eligible() or overlayOpen() then
             return
         end
         if player:GetAttribute("LocalMapPreview") == true and roundState:GetAttribute("Phase") == "Lobby" then
@@ -411,7 +418,7 @@ function ThermalCameraController.new(
         caption.Name = "Profile"
         caption.AnchorPoint = if touchControls then Vector2.new(0.5, 0) else Vector2.new(0.5, 1)
         caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 8) else UDim2.new(0.5, 0, 1, -72)
-        caption.Size = if touchControls then UDim2.fromOffset(260, 42) else UDim2.fromOffset(580, 60)
+        caption.Size = if touchControls then UDim2.fromOffset(260, 42) else UDim2.fromOffset(580, 66)
         caption.BackgroundColor3 = Color3.fromRGB(12, 15, 16)
         caption.BackgroundTransparency = 0.15
         caption.TextColor3 = Color3.new(1, 1, 1)
@@ -462,7 +469,7 @@ function ThermalCameraController.new(
         table.insert(
             buttons,
             recenter.Activated:Connect(function()
-                recenterRequested = true
+                recenterRequested = not overlayOpen()
             end)
         )
         if touchControls then
@@ -572,7 +579,7 @@ function ThermalCameraController.new(
         table.insert(
             buttons,
             UserInputService.InputBegan:Connect(function(event, processed)
-                if not processed and eligible() then
+                if not processed and eligible() and not overlayOpen() then
                     if event.UserInputType == Enum.UserInputType.MouseButton1 then
                         fireHeld = true
                     elseif event.KeyCode == Enum.KeyCode.One then
@@ -696,8 +703,13 @@ function ThermalCameraController.new(
             and input.position.Y >= 0
             and input.position.Y <= viewport.Y
         local pointer = if pointerValid then input.position else viewport * 0.5
-        local blocked = input.blocked or not pointerValid
-        if recenterRequested or input.recenter == true then
+        local overlay = overlayOpen()
+        local blocked = input.blocked or not pointerValid or overlay
+        if overlay then
+            fireHeld = false
+            recenterRequested = false
+        end
+        if not overlay and (recenterRequested or input.recenter == true) then
             currentFocus = assert(
                 AircraftPanRules.recenter(map, aspect, widestFov),
                 "validated view must have a reset focus"
@@ -783,36 +795,68 @@ function ThermalCameraController.new(
             local guiPosition = ThermalCameraController.guiOffset(Vector2.new(x, y), guiOrigin)
             assert(guiPosition, "finite projection pixels and GUI origin must define a reticle offset")
             cross.Position = guiPosition
+            cross.Text = if validAim then "+" else "×"
             cross.TextColor3 = if validAim then Color3.new(1, 1, 1) else Color3.fromRGB(255, 140, 90)
-            local readinessText = ""
-            local readinessJson = state:GetAttribute("Readiness")
-            if not preview and type(readinessJson) == "string" then
-                local ok, decoded = pcall(function()
-                    return HttpService:JSONDecode(readinessJson)
-                end)
-                local readiness = if ok and type(decoded) == "table" then decoded[weapon] else nil
-                if
-                    type(readiness) == "table"
-                    and type(readiness.ammo) == "number"
-                    and type(readiness.reloadUntil) == "number"
-                then
-                    local remaining = math.max(0, readiness.reloadUntil - workspace:GetServerTimeNow())
-                    readinessText = if remaining > 0
-                        then string.format(" • Reload %.1fs", remaining)
-                        else string.format(" • %d rounds", readiness.ammo)
+            local rawReadiness = state:GetAttribute("Readiness")
+            local encoded = if type(rawReadiness) == "string" then rawReadiness else nil
+            if seenReadiness ~= encoded then
+                seenReadiness = encoded
+                table.clear(weaponReadiness)
+                if encoded then
+                    local ok, decoded = pcall(function()
+                        return HttpService:JSONDecode(encoded)
+                    end)
+                    if ok and type(decoded) == "table" then
+                        for _, id in { "GAU23", "M102" } do
+                            local entry = decoded[id]
+                            if
+                                type(entry) == "table"
+                                and type(entry.ammo) == "number"
+                                and type(entry.reloadUntil) == "number"
+                                and type(entry.nextFire) == "number"
+                            then
+                                weaponReadiness[id] = {
+                                    ammo = entry.ammo,
+                                    reloadUntil = entry.reloadUntil,
+                                    nextFire = entry.nextFire,
+                                }
+                            end
+                        end
+                    end
                 end
             end
-            caption.Text = (if preview then "Studio preview • " else "")
-                .. (if UserInputService.TouchEnabled
-                    then (if weapon == "GAU23" then "30mm GAU-23/A" else "105mm M102")
-                    else AircraftRules.names[weapon])
-                .. readinessText
-                .. string.format(
-                    if UserInputService.TouchEnabled
-                        then " • %d° FOV\nPan • drag to aim • hold FIRE"
-                        else " • %d° FOV\nWASD pan • mouse aims • hold click to fire • R recenter • 1 / 2 select",
+            local touch = UserInputService.TouchEnabled
+            local zoom = if weapon == "GAU23" then "Close" else "Wide"
+            local info = weaponReadiness[weapon]
+            local now = workspace:GetServerTimeNow()
+            if touch then
+                local name = if weapon == "GAU23" then "30mm GAU-23/A" else "105mm M102"
+                local detail = if preview
+                    then "Studio preview"
+                    elseif info then (if info.reloadUntil > now
+                        then string.format("Reload %.1fs", info.reloadUntil - now)
+                        else string.format("%d rounds", info.ammo))
+                    else "Readiness updating"
+                caption.Text = string.format(
+                    "%s • %s • %d° FOV\nPan • drag to aim • hold FIRE",
+                    name,
+                    detail,
                     fov
                 )
+            else
+                local aim = if validAim then "Aim on battlefield" else "Aim outside firing area"
+                local readiness = if preview
+                    then "Studio preview"
+                    else PlayerPresentation.weaponText(info, now)
+                caption.Text = string.format(
+                    "%s  •  %s zoom %d°\n%s  ·  %s\nWASD pan  •  mouse aim  •  R recenter  •  H help",
+                    AircraftRules.names[weapon],
+                    zoom,
+                    fov,
+                    readiness,
+                    aim
+                )
+            end
             -- Observable projection commit used by engine tests and accessibility tooling.
             screen:SetAttribute("Weapon", weapon)
             screen:SetAttribute("FOV", fov)
