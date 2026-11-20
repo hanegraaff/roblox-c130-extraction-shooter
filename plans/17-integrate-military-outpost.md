@@ -1431,3 +1431,38 @@ weapon, upper-floor targeting across all three buildings, recenter and
 ownership cleanup. Its deliberate operator departure left one native client.
 A5 passes on the merged runtime and test source. The separate managed P17
 run requires its own fresh two-client startup for Outpost-specific evidence.
+
+### Managed Outpost preflight rejects the retained three-client setting
+
+The [native preflight receipt](../docs/evidence/p17/p17-native-three-client-preflight-5176197.json)
+records a fresh local launch with the intended source and P17 selector.
+Ordinary server smoke passed 179/179 with three actual joined clients.
+The exact-two-client preflight stopped before creating a managed runtime or
+running any acceptance cases. The owned test ended and the original Edit
+document retained the staged P17 selector and exact fixture commit.
+
+### Final native Outpost acceptance (2026-11-20)
+
+The [final native summary](../docs/evidence/p17/p17-native-managed-5176197-summary.json)
+and [exact Studio report](../docs/evidence/p17/p17-native-managed-5176197-raw.json)
+bind the final managed run to test source
+`5176197ca819314f181ccf5580f40be2dc753268`, production
+`cd7071b9ed00452ee2bba06d7bc9ccbde22c3976`, and the runtime already
+integrated through PR #39 at `f91a032`. Fresh native Server & Clients
+joined two actual clients. Ordinary smoke passed 179/179 on the server and
+12/12 on both clients. The ten managed cases passed with zero failures or
+skips. Studio delivered 682,790 bytes in 12 ordered chunks. Each reset began with four active fragments and two pending projectiles.
+Both clients matched the server's 188 pristine panels after each reset. The
+launcher, aircraft, rounds, effects, fragments and test transport were clear
+after the run. The local Edit selectors were cleared after collecting the report.
+
+| Criterion | Final evidence |
+| --- | --- |
+| A1 | The [full host gate](../docs/evidence/p17/indoor-camera-host-cd7071b.txt) verifies approved assets, reconstruction, geometry and release isolation. A fresh host run also passed on the matching merged tree. |
+| A2 | The final managed suite verifies both floors and the external route with a real Humanoid. The [panning report](../docs/evidence/p17/p17-a5-p14-native-5176197-summary.json) verifies both zooms and full-orbit targeting. The operated normal, thermal and simulated-touch reviews are recorded above. |
+| A3 | The final native suite verifies each material family, real cannon impacts, persistent earned 30mm credit and authoritative openings. |
+| A4 | Both actual clients agree on the Outpost and on both pristine resets. The [native fragment contact record](../docs/evidence/p17/imported-fragment-contact-221d1a8.json) exercises all 24 approved fragments through the unchanged server fragment owner. |
+| A5 | The current-source native launcher, destruction, gunship combat and panning suites passed 11/11, 7/7, 8/8 and 6/6. D67 waives the paired performance gate. |
+| A6 | The owner approved the in-game result and authorized merging [PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39). |
+| A7 | The [solo walkthrough](../docs/evidence/p17/indoor-camera-studio-solo-5176197.json) and [active round](../docs/evidence/p17/indoor-camera-active-5176197.json) verify adaptive indoor zoom, Ground aim, spectating and reset. |
+| A8 | Both reusable skills are in the merged source and passed the [independent forward test](../docs/evidence/p17/asset-skills-forward-test.md). |

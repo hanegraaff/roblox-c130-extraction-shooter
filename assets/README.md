@@ -93,4 +93,4 @@ attributes; host audits bind those to the captured bytes. Source art, target
 poses and texture IDs are unchanged by this constructor correction. Native
 rendered bounds, navigation, openings, fragment physics, thermal readability,
 and multiplayer reset have their own evidence in the [P17 plan](../plans/17-integrate-military-outpost.md).
-The integrated candidate awaits human approval under A6.
+The owner approved the integrated Outpost, and the final two-client Studio suite passed on the merged source. [P17 acceptance](../plans/17-integrate-military-outpost.md#final-native-outpost-acceptance-2026-11-20)

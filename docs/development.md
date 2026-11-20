@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `main` for the integrated Outpost and indoor Ground camera. The game reconstructs the imported smaller Outpost before the map owner captures its reset snapshot. The owner approved the Outpost for merge. The P17 record tracks the remaining active-round and native regression evidence. [Local setup](../README.md#set-up-locally), [P17 record](../plans/17-integrate-military-outpost.md)
+Use `main` for the integrated Outpost and indoor Ground camera. The game reconstructs the imported smaller Outpost before the map owner captures its reset snapshot. The owner approved the Outpost for merge. The P17 record links the passing active-round and native regression checks. [Local setup](../README.md#set-up-locally), [P17 record](../plans/17-integrate-military-outpost.md)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
