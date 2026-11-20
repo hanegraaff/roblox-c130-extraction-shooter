@@ -1259,3 +1259,29 @@ matches all 137 source paths, classes and script contents from the final
 test build and uses ordinary startup with both temporary selectors cleared.
 Operated desktop/touch review, human in-game approval and the client
 frame-time budget remain open.
+
+### Operated review and frame pacing diagnostic (2026-11-20)
+
+The [operated preview record](../docs/evidence/p17/operated-preview-2026-11-20.json)
+uses the saved local `8ccdc37` review build and one actual Studio client.
+Ordinary startup passes 173/173 on the server and 10/10 on the client.
+Keyboard movement climbs the [Outpost exterior stairs](../docs/evidence/p17/p17-nov20-desktop-stairs.jpg)
+and enters the upper room. The default ground camera has a cramped view
+near the upper command wall. D65 keeps clearance and automatic interior
+zoom in future work.
+
+Desktop WASD, mouse aim, both optical zooms and recenter respond in the
+operator preview. The [thermal view](../docs/evidence/p17/p17-nov20-outpost-thermal.jpg)
+shows the Outpost roof and exterior staircase. On the iPhone 17 Pro
+landscape simulator, actual touch input moves the operator camera in all
+four labelled directions. The [touch controls](../docs/evidence/p17/p17-nov20-simulated-touch.jpg)
+select both zooms, retain the pan through the weapon change and allow a
+separate world touch to move the reticle. The device simulator returns to
+desktop and the test role returns to Auto.
+
+Two 12-second single-client cadence samples in Ground preview at 1153×649
+measure 70.44 ms render frame p95 at Default (60 FPS) and 37.46 ms at
+240 FPS. The latter still exceeds the 33.3 ms two-client workload ceiling.
+The original frame-rate preference was restored. The paired performance
+gate and explicit user approval of the integrated in-game candidate remain
+open.

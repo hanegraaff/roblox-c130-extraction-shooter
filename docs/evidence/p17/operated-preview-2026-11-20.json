@@ -1,0 +1,439 @@
+{
+  "observedOn": "2026-11-20",
+  "mode": "Ordinary local Roblox Studio Server & Clients, solo role preview",
+  "productionSource": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "testSource": "8ccdc371ed02a5cc5af109a9d012e7adb0707780",
+  "localFile": "build/tests.rbxlx",
+  "localFileIdentityEvidence": "ordinary-review-sync-8ccdc37.json",
+  "actualClients": 1,
+  "ordinarySmoke": {
+    "server": {
+      "passed": 173,
+      "discovered": 173
+    },
+    "client": {
+      "passed": 10,
+      "discovered": 10
+    },
+    "failed": 0,
+    "skipped": 0
+  },
+  "ground": {
+    "route": "Native character navigation staged the avatar at the exterior stairs. Keyboard W climbed the stairs. W and A entered the upper room. Native camera scroll zoomed near the command wall.",
+    "positionsStuds": {
+      "stairsBase": [
+        163.2895,
+        2.998,
+        194.4332
+      ],
+      "topOfStairs": [
+        163.288,
+        13.123,
+        171.012
+      ],
+      "upperRoom": [
+        155.888,
+        13.123,
+        148.5605
+      ],
+      "nearCommandWall": [
+        142.69,
+        13.123,
+        144.23
+      ]
+    },
+    "cameraDistanceAtWallStuds": 3.53,
+    "observation": "The normal ground camera can give a cramped near-wall view. D65 defers authored clearance and automatic interior zoom changes.",
+    "stairsCapture": "p17-nov20-desktop-stairs.jpg"
+  },
+  "desktopOperator": {
+    "thermalEffect": true,
+    "reticle": true,
+    "keyboardZoom": {
+      "GAU23": 30,
+      "M102": 40
+    },
+    "mouseAimRawPointer": [
+      690,
+      358
+    ],
+    "keyboardPanFocus": {
+      "before": {
+        "panLocalFocus": [
+          220,
+          0
+        ],
+        "lookVectorY": -0.7071068286895752,
+        "fieldOfView": 40,
+        "inputBlocked": false
+      },
+      "left": {
+        "panLocalFocus": [
+          220,
+          95.99545288085938
+        ],
+        "lookVectorY": -0.6362642049789429,
+        "fieldOfView": 40,
+        "inputBlocked": false
+      },
+      "right": {
+        "panLocalFocus": [
+          220,
+          8.083065032958984
+        ],
+        "lookVectorY": -0.7065181732177734,
+        "fieldOfView": 40,
+        "inputBlocked": false
+      },
+      "up": {
+        "panLocalFocus": [
+          132.18553161621094,
+          8.083065032958984
+        ],
+        "lookVectorY": -0.5233333110809326,
+        "fieldOfView": 40,
+        "inputBlocked": false
+      },
+      "down": {
+        "panLocalFocus": [
+          211.77859497070312,
+          8.083065032958984
+        ],
+        "lookVectorY": -0.6861185431480408,
+        "fieldOfView": 40,
+        "inputBlocked": false
+      },
+      "recenter": {
+        "panLocalFocus": [
+          220,
+          0
+        ],
+        "lookVectorY": -0.7071067690849304,
+        "fieldOfView": 40,
+        "inputBlocked": false
+      }
+    }
+  },
+  "simulatedTouch": {
+    "profile": "iPhone 17 Pro",
+    "orientation": "LandscapeLeft",
+    "nominalDeviceResolution": [
+      874,
+      402
+    ],
+    "actualViewport": [
+      750,
+      381
+    ],
+    "touchEnabled": true,
+    "keyboardEnabled": false,
+    "padHoldMilliseconds": 700,
+    "afterTouchRoleEntry": {
+      "before": {
+        "pointer": [
+          375,
+          190.5
+        ],
+        "lookY": -0.7072585821151733,
+        "thermal": true,
+        "role": "Gunship",
+        "lastInput": "Touch",
+        "focus": [
+          220.06008911132812,
+          0.03338366746902466
+        ],
+        "viewport": [
+          750,
+          381
+        ],
+        "blocked": false,
+        "reticle": [
+          375,
+          191
+        ],
+        "fov": 30
+      },
+      "left": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            375,
+            190.5
+          ],
+          "lookY": -0.6047458052635193,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            220.06008911132812,
+            120.04207611083984
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            375,
+            191
+          ],
+          "fov": 30
+        }
+      },
+      "right": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            375,
+            190.5
+          ],
+          "lookY": -0.7072584629058838,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            220.06008911132812,
+            0.10854452848434448
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            375,
+            191
+          ],
+          "fov": 30
+        }
+      },
+      "up": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            375,
+            190.5
+          ],
+          "lookY": -0.4741811156272888,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            100.05750274658203,
+            0.10854452848434448
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            375,
+            191
+          ],
+          "fov": 30
+        }
+      },
+      "down": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            375,
+            190.5
+          ],
+          "lookY": -0.7072107791900635,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            220.0412139892578,
+            0.10854452848434448
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            375,
+            191
+          ],
+          "fov": 30
+        }
+      },
+      "wideZoom": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            375,
+            190.5
+          ],
+          "lookY": -0.7072107195854187,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            220.0412139892578,
+            0.10854452848434448
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            375,
+            191
+          ],
+          "fov": 40
+        }
+      },
+      "tightZoom": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            375,
+            190.5
+          ],
+          "lookY": -0.7072107791900635,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            220.0412139892578,
+            0.10854452848434448
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            375,
+            191
+          ],
+          "fov": 30
+        }
+      },
+      "worldAim": {
+        "tool": "Success",
+        "state": {
+          "pointer": [
+            346,
+            193
+          ],
+          "lookY": -0.7072107195854187,
+          "thermal": true,
+          "role": "Gunship",
+          "lastInput": "Touch",
+          "focus": [
+            220.0412139892578,
+            0.10854452848434448
+          ],
+          "viewport": [
+            750,
+            381
+          ],
+          "blocked": false,
+          "reticle": [
+            346,
+            193
+          ],
+          "fov": 30
+        }
+      }
+    },
+    "thermalOutpostCapture": "p17-nov20-outpost-thermal.jpg",
+    "thermalOutpostCaptureContext": "Phone viewport with operator thermal effect before cycling back into the operator role to create the touch pad.",
+    "directionalPadCapture": "p17-nov20-simulated-touch.jpg",
+    "restoredDesktop": {
+      "simulatedResolutionAvailable": false,
+      "touch": false,
+      "size": "1153, 649",
+      "keyboard": true
+    },
+    "restoredRoleChoice": {
+      "role": "Auto",
+      "touchPad": false,
+      "preview": "Ground"
+    }
+  },
+  "cadenceDiagnostic": {
+    "scope": "Single ordinary Ground preview, 1153 x 649, no active round, menu closed for both samples. Focus state at entry was not independently determined. Diagnostic only.",
+    "default60FPS": {
+      "renderGpu": {
+        "p50": 0.0002500019036233425,
+        "p95": 0.0007500057108700275
+      },
+      "duration": 12.00169524998637,
+      "frames": 176,
+      "renderCpu": {
+        "p50": 1.9634999334812164,
+        "p95": 6.861791480332613
+      },
+      "menu": false,
+      "statFrame": {
+        "p50": 66.70304387807846,
+        "p95": 70.63750177621841
+      },
+      "viewport": [
+        1153,
+        649
+      ],
+      "frame": {
+        "p50": 66.74528867006302,
+        "p95": 70.43879479169846
+      },
+      "focusTransitions": [],
+      "menuValue": "Default (60 FPS)"
+    },
+    "maximum240FPS": {
+      "renderGpu": {
+        "p50": 0.0001666485331952572,
+        "p95": 0.0006249756552278996
+      },
+      "duration": 12.007477374980226,
+      "frames": 354,
+      "renderCpu": {
+        "p50": 1.8274167086929083,
+        "p95": 6.300083361566067
+      },
+      "menu": false,
+      "statFrame": {
+        "p50": 33.32916647195816,
+        "p95": 37.49508410692215
+      },
+      "viewport": [
+        1153,
+        649
+      ],
+      "frame": {
+        "p50": 33.333126455545425,
+        "p95": 37.45812550187111
+      },
+      "focusTransitions": [],
+      "menuValue": "240 FPS"
+    },
+    "frameTimeBudgetMsForPairedWorkload": 33.3,
+    "restoredMaximumFrameRate": "Default (60 FPS)",
+    "menuClosedAfterRestore": true,
+    "focusObservation": {
+      "viewport": "1153, 649",
+      "duration": 50,
+      "segments": [
+        {
+          "cpuP95": 5.485499743372202,
+          "time": 0,
+          "renderP95": 70.3706219792366,
+          "phase": "focus unobserved",
+          "count": 697,
+          "renderP50": 66.63466989994049
+        }
+      ],
+      "graphics": "Enum.SavedQualitySetting.Automatic",
+      "conclusion": "No WindowFocused or WindowFocusReleased event was captured. Initial focus was unobserved, so these samples cannot establish the effect of foreground focus."
+    }
+  },
+  "inGameUserApproval": "Pending",
+  "pairedFiveMinutePerformanceAcceptance": "Pending"
+}
