@@ -1,0 +1,2577 @@
+{
+  "skipped": 0,
+  "passed": 7,
+  "cases": [
+    {
+      "passed": true,
+      "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+    },
+    {
+      "passed": true,
+      "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+    },
+    {
+      "passed": true,
+      "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+    },
+    {
+      "passed": true,
+      "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+    },
+    {
+      "passed": true,
+      "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+    },
+    {
+      "passed": true,
+      "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+    },
+    {
+      "passed": true,
+      "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+    }
+  ],
+  "clientCount": 2,
+  "observations": [
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 1,
+      "progress": 0.3333333333333333,
+      "kind": "actual-heavy",
+      "stage": "Intact"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 2,
+      "progress": 0.6666666666666666,
+      "kind": "actual-heavy",
+      "stage": "Intact"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 3,
+      "progress": 0,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 4,
+      "progress": 0.3333333333333333,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 5,
+      "progress": 0.6666666666666666,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 6,
+      "progress": 1,
+      "kind": "actual-heavy",
+      "stage": "Destroyed"
+    },
+    {
+      "clientTimingByToken": {
+        "70": [
+          {
+            "sequence": 83,
+            "sentAt": 1795209517.604864
+          },
+          {
+            "sequence": 84,
+            "sentAt": 1795209517.789282
+          },
+          {
+            "sequence": 85,
+            "sentAt": 1795209517.972745
+          },
+          {
+            "sequence": 86,
+            "sentAt": 1795209518.156099
+          }
+        ],
+        "82": [
+          {
+            "sequence": 90,
+            "sentAt": 1795209529.257491
+          },
+          {
+            "sequence": 91,
+            "sentAt": 1795209529.440281
+          },
+          {
+            "sequence": 92,
+            "sentAt": 1795209529.623461
+          },
+          {
+            "sequence": 93,
+            "sentAt": 1795209529.805672
+          }
+        ]
+      },
+      "transitionEarnedSeconds": 9.16697096824646,
+      "receipts": [
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060096,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060154,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060171,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060186,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060202,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06022,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060235,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06025,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060263,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060276,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060289,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060302,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060314,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060328,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060338,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060349,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060358,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060376,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060386,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06041,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060421,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060431,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06044,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060449,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06046,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06047,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06048,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06049,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060509,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060518,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060528,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060539,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060548,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060565,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060575,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060636,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060669,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060695,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.060707,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.06072,
+          "sequence": 1,
+          "viewReason": "invalid view shape",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.109002,
+          "sequence": 1,
+          "viewReason": "aircraft pose outside bounded replication age",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": false,
+          "receivedAt": 1795209413.158265,
+          "sequence": 1,
+          "viewReason": "aircraft pose outside bounded replication age",
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209415.241529,
+          "sequence": 1,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209421.424753,
+          "sequence": 2,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209427.642252,
+          "sequence": 3,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209433.741623,
+          "sequence": 4,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209439.641802,
+          "sequence": 5,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209445.342448,
+          "sequence": 6,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209446.725194,
+          "sequence": 7,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209446.907606,
+          "sequence": 8,
+          "gauAmmo": 99,
+          "gauNextFire": 1795209446.875199
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209447.091672,
+          "sequence": 9,
+          "gauAmmo": 98,
+          "gauNextFire": 1795209447.0576122
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209447.258766,
+          "sequence": 10,
+          "gauAmmo": 97,
+          "gauNextFire": 1795209447.241678
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209447.458882,
+          "sequence": 11,
+          "gauAmmo": 96,
+          "gauNextFire": 1795209447.408772
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209447.640761,
+          "sequence": 12,
+          "gauAmmo": 95,
+          "gauNextFire": 1795209447.6088881
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209447.82359,
+          "sequence": 13,
+          "gauAmmo": 94,
+          "gauNextFire": 1795209447.7907672
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209448.007297,
+          "sequence": 14,
+          "gauAmmo": 93,
+          "gauNextFire": 1795209447.9735951
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209448.19042,
+          "sequence": 15,
+          "gauAmmo": 92,
+          "gauNextFire": 1795209448.157303
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209448.374022,
+          "sequence": 16,
+          "gauAmmo": 91,
+          "gauNextFire": 1795209448.340425
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209448.557467,
+          "sequence": 17,
+          "gauAmmo": 90,
+          "gauNextFire": 1795209448.524029
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209448.742166,
+          "sequence": 18,
+          "gauAmmo": 89,
+          "gauNextFire": 1795209448.707472
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209448.908721,
+          "sequence": 19,
+          "gauAmmo": 88,
+          "gauNextFire": 1795209448.892172
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209449.108161,
+          "sequence": 20,
+          "gauAmmo": 87,
+          "gauNextFire": 1795209449.058727
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209449.2912,
+          "sequence": 21,
+          "gauAmmo": 86,
+          "gauNextFire": 1795209449.2581692
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209449.474827,
+          "sequence": 22,
+          "gauAmmo": 85,
+          "gauNextFire": 1795209449.441205
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209449.657244,
+          "sequence": 23,
+          "gauAmmo": 84,
+          "gauNextFire": 1795209449.6248322
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209449.841298,
+          "sequence": 24,
+          "gauAmmo": 83,
+          "gauNextFire": 1795209449.807251
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209450.024083,
+          "sequence": 25,
+          "gauAmmo": 82,
+          "gauNextFire": 1795209449.9913042
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209450.208087,
+          "sequence": 26,
+          "gauAmmo": 81,
+          "gauNextFire": 1795209450.174088
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209450.392194,
+          "sequence": 27,
+          "gauAmmo": 80,
+          "gauNextFire": 1795209450.358094
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209451.508069,
+          "sequence": 28,
+          "gauAmmo": 79,
+          "gauNextFire": 1795209450.542201
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209451.691609,
+          "sequence": 29,
+          "gauAmmo": 78,
+          "gauNextFire": 1795209451.658075
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209451.874016,
+          "sequence": 30,
+          "gauAmmo": 77,
+          "gauNextFire": 1795209451.8416162
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209452.05773,
+          "sequence": 31,
+          "gauAmmo": 76,
+          "gauNextFire": 1795209452.024023
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209452.241993,
+          "sequence": 32,
+          "gauAmmo": 75,
+          "gauNextFire": 1795209452.207736
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209452.424513,
+          "sequence": 33,
+          "gauAmmo": 74,
+          "gauNextFire": 1795209452.391999
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209452.607742,
+          "sequence": 34,
+          "gauAmmo": 73,
+          "gauNextFire": 1795209452.5745192
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209452.791181,
+          "sequence": 35,
+          "gauAmmo": 72,
+          "gauNextFire": 1795209452.7577481
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209452.97349,
+          "sequence": 36,
+          "gauAmmo": 71,
+          "gauNextFire": 1795209452.9411871
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209453.157984,
+          "sequence": 37,
+          "gauAmmo": 70,
+          "gauNextFire": 1795209453.1234982
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209453.340101,
+          "sequence": 38,
+          "gauAmmo": 69,
+          "gauNextFire": 1795209453.3079891
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209453.524339,
+          "sequence": 39,
+          "gauAmmo": 68,
+          "gauNextFire": 1795209453.490113
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209453.708653,
+          "sequence": 40,
+          "gauAmmo": 67,
+          "gauNextFire": 1795209453.67435
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209453.875299,
+          "sequence": 41,
+          "gauAmmo": 66,
+          "gauNextFire": 1795209453.858659
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209454.074899,
+          "sequence": 42,
+          "gauAmmo": 65,
+          "gauNextFire": 1795209454.025304
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209454.257314,
+          "sequence": 43,
+          "gauAmmo": 64,
+          "gauNextFire": 1795209454.224905
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209454.440273,
+          "sequence": 44,
+          "gauAmmo": 63,
+          "gauNextFire": 1795209454.40732
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209454.623653,
+          "sequence": 45,
+          "gauAmmo": 62,
+          "gauNextFire": 1795209454.5902781
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209454.806695,
+          "sequence": 46,
+          "gauAmmo": 61,
+          "gauNextFire": 1795209454.773658
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209454.989992,
+          "sequence": 47,
+          "gauAmmo": 60,
+          "gauNextFire": 1795209454.956702
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209455.175179,
+          "sequence": 48,
+          "gauAmmo": 59,
+          "gauNextFire": 1795209455.139997
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209456.157407,
+          "sequence": 49,
+          "gauAmmo": 58,
+          "gauNextFire": 1795209455.325184
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209456.341903,
+          "sequence": 50,
+          "gauAmmo": 57,
+          "gauNextFire": 1795209456.3074121
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209456.523993,
+          "sequence": 51,
+          "gauAmmo": 56,
+          "gauNextFire": 1795209456.49191
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209456.708401,
+          "sequence": 52,
+          "gauAmmo": 55,
+          "gauNextFire": 1795209456.674005
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209456.889991,
+          "sequence": 53,
+          "gauAmmo": 54,
+          "gauNextFire": 1795209456.8584082
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209457.075189,
+          "sequence": 54,
+          "gauAmmo": 53,
+          "gauNextFire": 1795209457.0399961
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209457.257496,
+          "sequence": 55,
+          "gauAmmo": 52,
+          "gauNextFire": 1795209457.2251952
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209457.439871,
+          "sequence": 56,
+          "gauAmmo": 51,
+          "gauNextFire": 1795209457.4075022
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209457.623893,
+          "sequence": 57,
+          "gauAmmo": 50,
+          "gauNextFire": 1795209457.5898762
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209457.807308,
+          "sequence": 58,
+          "gauAmmo": 49,
+          "gauNextFire": 1795209457.773899
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209457.990266,
+          "sequence": 59,
+          "gauAmmo": 48,
+          "gauNextFire": 1795209457.9573162
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209458.174948,
+          "sequence": 60,
+          "gauAmmo": 47,
+          "gauNextFire": 1795209458.1402721
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209458.357523,
+          "sequence": 61,
+          "gauAmmo": 46,
+          "gauNextFire": 1795209458.324954
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209458.541382,
+          "sequence": 62,
+          "gauAmmo": 45,
+          "gauNextFire": 1795209458.507529
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209458.723289,
+          "sequence": 63,
+          "gauAmmo": 44,
+          "gauNextFire": 1795209458.6913881
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209458.908457,
+          "sequence": 64,
+          "gauAmmo": 43,
+          "gauNextFire": 1795209458.873295
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209459.090756,
+          "sequence": 65,
+          "gauAmmo": 42,
+          "gauNextFire": 1795209459.058463
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209459.275089,
+          "sequence": 66,
+          "gauAmmo": 41,
+          "gauNextFire": 1795209459.240762
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209459.457738,
+          "sequence": 67,
+          "gauAmmo": 40,
+          "gauNextFire": 1795209459.4250941
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209459.641374,
+          "sequence": 68,
+          "gauAmmo": 39,
+          "gauNextFire": 1795209459.607762
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209459.823106,
+          "sequence": 69,
+          "gauAmmo": 38,
+          "gauNextFire": 1795209459.7913852
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209460.807484,
+          "sequence": 70,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209464.874014,
+          "sequence": 71,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209468.939655,
+          "sequence": 72,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209472.990148,
+          "sequence": 73,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209477.056816,
+          "sequence": 74,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209481.139797,
+          "sequence": 75,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209485.239573,
+          "sequence": 76,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209489.32271,
+          "sequence": 77,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209493.388984,
+          "sequence": 78,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209497.439409,
+          "sequence": 79,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209508.28908,
+          "sequence": 80,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209512.388538,
+          "sequence": 81,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209516.438442,
+          "sequence": 82,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209517.621973,
+          "sequence": 83,
+          "gauAmmo": 37,
+          "gauNextFire": 1795209459.9731112
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209517.806343,
+          "sequence": 84,
+          "gauAmmo": 36,
+          "gauNextFire": 1795209517.771979
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209517.988514,
+          "sequence": 85,
+          "gauAmmo": 35,
+          "gauNextFire": 1795209517.9563491
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209518.172999,
+          "sequence": 86,
+          "gauAmmo": 34,
+          "gauNextFire": 1795209518.13852
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209519.85538,
+          "sequence": 87,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209523.937824,
+          "sequence": 88,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209528.005411,
+          "sequence": 89,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209529.27265,
+          "sequence": 90,
+          "gauAmmo": 100,
+          "gauNextFire": 0
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209529.454533,
+          "sequence": 91,
+          "gauAmmo": 99,
+          "gauNextFire": 1795209529.4226582
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209529.639281,
+          "sequence": 92,
+          "gauAmmo": 98,
+          "gauNextFire": 1795209529.6045432
+        },
+        {
+          "viewValid": true,
+          "receivedAt": 1795209529.821661,
+          "sequence": 93,
+          "gauAmmo": 97,
+          "gauNextFire": 1795209529.789287
+        }
+      ],
+      "impacts": [
+        {
+          "impactAt": 1795209417.22584,
+          "panelId": "Foundry_S02_Roof_01_02",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 1,
+          "shotId": 1,
+          "firedAt": 1795209415.241535,
+          "scoredThroughFiredAt": 1795209415.241535,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209423.407999,
+          "panelId": "Foundry_S02_Roof_01_02",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 2,
+          "shotId": 2,
+          "firedAt": 1795209421.424759,
+          "scoredThroughFiredAt": 1795209421.424759,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209429.52461,
+          "panelId": "Foundry_S02_Roof_01_02",
+          "progress": 0,
+          "scoredThroughShotId": 3,
+          "shotId": 3,
+          "firedAt": 1795209427.642257,
+          "scoredThroughFiredAt": 1795209427.642257,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209435.458817,
+          "panelId": "Foundry_S02_Roof_01_02",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 4,
+          "shotId": 4,
+          "firedAt": 1795209433.741629,
+          "scoredThroughFiredAt": 1795209433.741629,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209441.140616,
+          "panelId": "Foundry_S02_Roof_01_02",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 5,
+          "shotId": 5,
+          "firedAt": 1795209439.641809,
+          "scoredThroughFiredAt": 1795209439.641809,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209446.575263,
+          "panelId": "Foundry_S02_Roof_01_02",
+          "progress": 1,
+          "scoredThroughShotId": 6,
+          "shotId": 6,
+          "firedAt": 1795209445.342461,
+          "scoredThroughFiredAt": 1795209445.342461,
+          "earnedSeconds": 0,
+          "stage": 2,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209447.224912,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0,
+          "scoredThroughShotId": 7,
+          "shotId": 7,
+          "firedAt": 1795209446.725199,
+          "scoredThroughFiredAt": 1795209446.725199,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209447.407926,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.02026812235514323,
+          "scoredThroughShotId": 8,
+          "shotId": 8,
+          "firedAt": 1795209446.907612,
+          "scoredThroughFiredAt": 1795209446.907612,
+          "earnedSeconds": 0.18241310119628906,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209447.592495,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.04071987999810113,
+          "scoredThroughShotId": 9,
+          "shotId": 9,
+          "firedAt": 1795209447.091678,
+          "scoredThroughFiredAt": 1795209447.091678,
+          "earnedSeconds": 0.36647891998291016,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209447.757258,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.059285879135131836,
+          "scoredThroughShotId": 10,
+          "shotId": 10,
+          "firedAt": 1795209447.258772,
+          "scoredThroughFiredAt": 1795209447.258772,
+          "earnedSeconds": 0.5335729122161865,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209447.941518,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.08152100774976942,
+          "scoredThroughShotId": 11,
+          "shotId": 11,
+          "firedAt": 1795209447.458888,
+          "scoredThroughFiredAt": 1795209447.458888,
+          "earnedSeconds": 0.7336890697479248,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209448.123684,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.1017297903696696,
+          "scoredThroughShotId": 12,
+          "shotId": 12,
+          "firedAt": 1795209447.640767,
+          "scoredThroughFiredAt": 1795209447.640767,
+          "earnedSeconds": 0.9155681133270264,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209448.307462,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.12204400698343913,
+          "scoredThroughShotId": 13,
+          "shotId": 13,
+          "firedAt": 1795209447.823595,
+          "scoredThroughFiredAt": 1795209447.823595,
+          "earnedSeconds": 1.0983960628509521,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209448.49042,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.14245600170559353,
+          "scoredThroughShotId": 14,
+          "shotId": 14,
+          "firedAt": 1795209448.007303,
+          "scoredThroughFiredAt": 1795209448.007303,
+          "earnedSeconds": 1.2821040153503418,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209448.657465,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.16280288166469997,
+          "scoredThroughShotId": 15,
+          "shotId": 15,
+          "firedAt": 1795209448.190425,
+          "scoredThroughFiredAt": 1795209448.190425,
+          "earnedSeconds": 1.4652259349822998,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209448.841485,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.1832033263312446,
+          "scoredThroughShotId": 16,
+          "shotId": 16,
+          "firedAt": 1795209448.374029,
+          "scoredThroughFiredAt": 1795209448.374029,
+          "earnedSeconds": 1.6488299369812012,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209449.02463,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.20358588960435656,
+          "scoredThroughShotId": 17,
+          "shotId": 17,
+          "firedAt": 1795209448.557472,
+          "scoredThroughFiredAt": 1795209448.557472,
+          "earnedSeconds": 1.832273006439209,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209449.208477,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.22410811318291557,
+          "scoredThroughShotId": 18,
+          "shotId": 18,
+          "firedAt": 1795209448.742172,
+          "scoredThroughFiredAt": 1795209448.742172,
+          "earnedSeconds": 2.0169730186462402,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209449.358213,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.24261421627468532,
+          "scoredThroughShotId": 19,
+          "shotId": 19,
+          "firedAt": 1795209448.908727,
+          "scoredThroughFiredAt": 1795209448.908727,
+          "earnedSeconds": 2.183527946472168,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209449.557302,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.2647744549645318,
+          "scoredThroughShotId": 20,
+          "shotId": 20,
+          "firedAt": 1795209449.108169,
+          "scoredThroughFiredAt": 1795209449.108169,
+          "earnedSeconds": 2.382970094680786,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209449.741248,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.28511177168952095,
+          "scoredThroughShotId": 21,
+          "shotId": 21,
+          "firedAt": 1795209449.291205,
+          "scoredThroughFiredAt": 1795209449.291205,
+          "earnedSeconds": 2.5660059452056885,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209449.925531,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.3055147859785292,
+          "scoredThroughShotId": 22,
+          "shotId": 22,
+          "firedAt": 1795209449.474832,
+          "scoredThroughFiredAt": 1795209449.474832,
+          "earnedSeconds": 2.7496330738067627,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209450.09117,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.32578354411655003,
+          "scoredThroughShotId": 23,
+          "shotId": 23,
+          "firedAt": 1795209449.657251,
+          "scoredThroughFiredAt": 1795209449.657251,
+          "earnedSeconds": 2.93205189704895,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209450.274273,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.34623389773898655,
+          "scoredThroughShotId": 24,
+          "shotId": 24,
+          "firedAt": 1795209449.841304,
+          "scoredThroughFiredAt": 1795209449.841304,
+          "earnedSeconds": 3.116105079650879,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209450.458964,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.3665432135264079,
+          "scoredThroughShotId": 25,
+          "shotId": 25,
+          "firedAt": 1795209450.024088,
+          "scoredThroughFiredAt": 1795209450.024088,
+          "earnedSeconds": 3.298888921737671,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209450.641203,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.3869883219401042,
+          "scoredThroughShotId": 26,
+          "shotId": 26,
+          "firedAt": 1795209450.208094,
+          "scoredThroughFiredAt": 1795209450.208094,
+          "earnedSeconds": 3.4828948974609375,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209450.824277,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.40744466251797146,
+          "scoredThroughShotId": 27,
+          "shotId": 27,
+          "firedAt": 1795209450.392201,
+          "scoredThroughFiredAt": 1795209450.392201,
+          "earnedSeconds": 3.667001962661743,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209451.907404,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.40744466251797146,
+          "scoredThroughShotId": 28,
+          "shotId": 28,
+          "firedAt": 1795209451.508075,
+          "scoredThroughFiredAt": 1795209451.508075,
+          "earnedSeconds": 3.667001962661743,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209452.091074,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.4278381135728624,
+          "scoredThroughShotId": 29,
+          "shotId": 29,
+          "firedAt": 1795209451.691616,
+          "scoredThroughFiredAt": 1795209451.691616,
+          "earnedSeconds": 3.8505430221557617,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209452.275165,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.4481055471632216,
+          "scoredThroughShotId": 30,
+          "shotId": 30,
+          "firedAt": 1795209451.874023,
+          "scoredThroughFiredAt": 1795209451.874023,
+          "earnedSeconds": 4.032949924468994,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209452.45753,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.46851809819539386,
+          "scoredThroughShotId": 31,
+          "shotId": 31,
+          "firedAt": 1795209452.057736,
+          "scoredThroughFiredAt": 1795209452.057736,
+          "earnedSeconds": 4.216662883758545,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209452.623594,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.48899176385667587,
+          "scoredThroughShotId": 32,
+          "shotId": 32,
+          "firedAt": 1795209452.241999,
+          "scoredThroughFiredAt": 1795209452.241999,
+          "earnedSeconds": 4.400925874710083,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209452.808724,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.5092717806498209,
+          "scoredThroughShotId": 33,
+          "shotId": 33,
+          "firedAt": 1795209452.424519,
+          "scoredThroughFiredAt": 1795209452.424519,
+          "earnedSeconds": 4.583446025848389,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209452.990322,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.5296305550469292,
+          "scoredThroughShotId": 34,
+          "shotId": 34,
+          "firedAt": 1795209452.607748,
+          "scoredThroughFiredAt": 1795209452.607748,
+          "earnedSeconds": 4.766674995422363,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209453.17363,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.5500126679738363,
+          "scoredThroughShotId": 35,
+          "shotId": 35,
+          "firedAt": 1795209452.791187,
+          "scoredThroughFiredAt": 1795209452.791187,
+          "earnedSeconds": 4.950114011764526,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209453.340603,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.5702694522009956,
+          "scoredThroughShotId": 36,
+          "shotId": 36,
+          "firedAt": 1795209452.973498,
+          "scoredThroughFiredAt": 1795209452.973498,
+          "earnedSeconds": 5.13242506980896,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209453.524835,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.5907684432135688,
+          "scoredThroughShotId": 37,
+          "shotId": 37,
+          "firedAt": 1795209453.157989,
+          "scoredThroughFiredAt": 1795209453.157989,
+          "earnedSeconds": 5.316915988922119,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209453.709191,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.6110044320424398,
+          "scoredThroughShotId": 38,
+          "shotId": 38,
+          "firedAt": 1795209453.340113,
+          "scoredThroughFiredAt": 1795209453.340113,
+          "earnedSeconds": 5.499039888381958,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209453.891196,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.6314752101898193,
+          "scoredThroughShotId": 39,
+          "shotId": 39,
+          "firedAt": 1795209453.52435,
+          "scoredThroughFiredAt": 1795209453.52435,
+          "earnedSeconds": 5.683276891708374,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209454.075355,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.6519539886050754,
+          "scoredThroughShotId": 40,
+          "shotId": 40,
+          "firedAt": 1795209453.708659,
+          "scoredThroughFiredAt": 1795209453.708659,
+          "earnedSeconds": 5.867585897445679,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209454.242084,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.6704701052771674,
+          "scoredThroughShotId": 41,
+          "shotId": 41,
+          "firedAt": 1795209453.875304,
+          "scoredThroughFiredAt": 1795209453.875304,
+          "earnedSeconds": 6.034230947494507,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209454.423919,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.6926479869418674,
+          "scoredThroughShotId": 42,
+          "shotId": 42,
+          "firedAt": 1795209454.074905,
+          "scoredThroughFiredAt": 1795209454.074905,
+          "earnedSeconds": 6.233831882476807,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209454.608706,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.7129163212246366,
+          "scoredThroughShotId": 43,
+          "shotId": 43,
+          "firedAt": 1795209454.25732,
+          "scoredThroughFiredAt": 1795209454.25732,
+          "earnedSeconds": 6.4162468910217285,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209454.791268,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.7332450018988715,
+          "scoredThroughShotId": 44,
+          "shotId": 44,
+          "firedAt": 1795209454.440278,
+          "scoredThroughFiredAt": 1795209454.440278,
+          "earnedSeconds": 6.599205017089844,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209454.975132,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.7536205450693766,
+          "scoredThroughShotId": 45,
+          "shotId": 45,
+          "firedAt": 1795209454.623658,
+          "scoredThroughFiredAt": 1795209454.623658,
+          "earnedSeconds": 6.78258490562439,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209455.157762,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.7739587624867758,
+          "scoredThroughShotId": 46,
+          "shotId": 46,
+          "firedAt": 1795209454.806702,
+          "scoredThroughFiredAt": 1795209454.806702,
+          "earnedSeconds": 6.9656288623809814,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209455.324436,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.7943248748779297,
+          "scoredThroughShotId": 47,
+          "shotId": 47,
+          "firedAt": 1795209454.989997,
+          "scoredThroughFiredAt": 1795209454.989997,
+          "earnedSeconds": 7.148923873901367,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209455.50862,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.8149012194739448,
+          "scoredThroughShotId": 48,
+          "shotId": 48,
+          "firedAt": 1795209455.175184,
+          "scoredThroughFiredAt": 1795209455.175184,
+          "earnedSeconds": 7.334110975265503,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209456.475212,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.8149012194739448,
+          "scoredThroughShotId": 49,
+          "shotId": 49,
+          "firedAt": 1795209456.157412,
+          "scoredThroughFiredAt": 1795209456.157412,
+          "earnedSeconds": 7.334110975265503,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209456.65785,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.8354009787241617,
+          "scoredThroughShotId": 50,
+          "shotId": 50,
+          "firedAt": 1795209456.34191,
+          "scoredThroughFiredAt": 1795209456.34191,
+          "earnedSeconds": 7.518608808517456,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209456.84057,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.8556337621476915,
+          "scoredThroughShotId": 51,
+          "shotId": 51,
+          "firedAt": 1795209456.524005,
+          "scoredThroughFiredAt": 1795209456.524005,
+          "earnedSeconds": 7.700703859329224,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209457.024362,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.8761230044894748,
+          "scoredThroughShotId": 52,
+          "shotId": 52,
+          "firedAt": 1795209456.708408,
+          "scoredThroughFiredAt": 1795209456.708408,
+          "earnedSeconds": 7.885107040405273,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209457.208503,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.8962994416554769,
+          "scoredThroughShotId": 53,
+          "shotId": 53,
+          "firedAt": 1795209456.889996,
+          "scoredThroughFiredAt": 1795209456.889996,
+          "earnedSeconds": 8.066694974899292,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209457.390999,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.9168771107991537,
+          "scoredThroughShotId": 54,
+          "shotId": 54,
+          "firedAt": 1795209457.075195,
+          "scoredThroughFiredAt": 1795209457.075195,
+          "earnedSeconds": 8.251893997192383,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209457.557699,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.937133444680108,
+          "scoredThroughShotId": 55,
+          "shotId": 55,
+          "firedAt": 1795209457.257502,
+          "scoredThroughFiredAt": 1795209457.257502,
+          "earnedSeconds": 8.434201002120972,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209457.740585,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.9573972225189209,
+          "scoredThroughShotId": 56,
+          "shotId": 56,
+          "firedAt": 1795209457.439876,
+          "scoredThroughFiredAt": 1795209457.439876,
+          "earnedSeconds": 8.616575002670288,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209457.923785,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.9778442117902968,
+          "scoredThroughShotId": 57,
+          "shotId": 57,
+          "firedAt": 1795209457.623899,
+          "scoredThroughFiredAt": 1795209457.623899,
+          "earnedSeconds": 8.800597906112671,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209458.107752,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.9982238875495063,
+          "scoredThroughShotId": 58,
+          "shotId": 58,
+          "firedAt": 1795209457.807316,
+          "scoredThroughFiredAt": 1795209457.807316,
+          "earnedSeconds": 8.984014987945557,
+          "stage": 0,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209458.290883,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0,
+          "scoredThroughShotId": 59,
+          "shotId": 59,
+          "firedAt": 1795209457.990272,
+          "scoredThroughFiredAt": 1795209457.990272,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209458.474396,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.02052021026611328,
+          "scoredThroughShotId": 60,
+          "shotId": 60,
+          "firedAt": 1795209458.174954,
+          "scoredThroughFiredAt": 1795209458.174954,
+          "earnedSeconds": 0.18468189239501953,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209458.656934,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.040806319978502065,
+          "scoredThroughShotId": 61,
+          "shotId": 61,
+          "firedAt": 1795209458.357529,
+          "scoredThroughFiredAt": 1795209458.357529,
+          "earnedSeconds": 0.36725687980651855,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209458.841432,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.06123510996500651,
+          "scoredThroughShotId": 62,
+          "shotId": 62,
+          "firedAt": 1795209458.541388,
+          "scoredThroughFiredAt": 1795209458.541388,
+          "earnedSeconds": 0.5511159896850586,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209459.008671,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.081446992026435,
+          "scoredThroughShotId": 63,
+          "shotId": 63,
+          "firedAt": 1795209458.723295,
+          "scoredThroughFiredAt": 1795209458.723295,
+          "earnedSeconds": 0.733022928237915,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209459.190922,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.1020212173461914,
+          "scoredThroughShotId": 64,
+          "shotId": 64,
+          "firedAt": 1795209458.908463,
+          "scoredThroughFiredAt": 1795209458.908463,
+          "earnedSeconds": 0.9181909561157227,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209459.391201,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.12227665053473578,
+          "scoredThroughShotId": 65,
+          "shotId": 65,
+          "firedAt": 1795209459.090762,
+          "scoredThroughFiredAt": 1795209459.090762,
+          "earnedSeconds": 1.100489854812622,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209459.556774,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.14275799857245552,
+          "scoredThroughShotId": 66,
+          "shotId": 66,
+          "firedAt": 1795209459.275094,
+          "scoredThroughFiredAt": 1795209459.275094,
+          "earnedSeconds": 1.2848219871520996,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209459.740032,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.16305443975660536,
+          "scoredThroughShotId": 67,
+          "shotId": 67,
+          "firedAt": 1795209459.457762,
+          "scoredThroughFiredAt": 1795209459.457762,
+          "earnedSeconds": 1.4674899578094482,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209459.925216,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.18345700369940865,
+          "scoredThroughShotId": 68,
+          "shotId": 68,
+          "firedAt": 1795209459.641385,
+          "scoredThroughFiredAt": 1795209459.641385,
+          "earnedSeconds": 1.6511130332946777,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209460.107162,
+          "panelId": "Foundry_S02_Roof_01_03",
+          "progress": 0.2036487791273329,
+          "scoredThroughShotId": 69,
+          "shotId": 69,
+          "firedAt": 1795209459.823111,
+          "scoredThroughFiredAt": 1795209459.823111,
+          "earnedSeconds": 1.832839012145996,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209462.075085,
+          "panelId": "Shelter_Roof_R01_C02",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 70,
+          "shotId": 70,
+          "firedAt": 1795209460.807489,
+          "scoredThroughFiredAt": 1795209460.807489,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209466.224245,
+          "panelId": "Shelter_Roof_R01_C02",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 71,
+          "shotId": 71,
+          "firedAt": 1795209464.874019,
+          "scoredThroughFiredAt": 1795209464.874019,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209470.357053,
+          "panelId": "Shelter_Roof_R01_C02",
+          "progress": 0,
+          "scoredThroughShotId": 72,
+          "shotId": 72,
+          "firedAt": 1795209468.939661,
+          "scoredThroughFiredAt": 1795209468.939661,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209474.458032,
+          "panelId": "Shelter_Roof_R01_C02",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 73,
+          "shotId": 73,
+          "firedAt": 1795209472.990162,
+          "scoredThroughFiredAt": 1795209472.990162,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209478.556741,
+          "panelId": "Shelter_Roof_R01_C02",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 74,
+          "shotId": 74,
+          "firedAt": 1795209477.056823,
+          "scoredThroughFiredAt": 1795209477.056823,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209482.673471,
+          "panelId": "Shelter_Roof_R01_C02",
+          "progress": 1,
+          "scoredThroughShotId": 75,
+          "shotId": 75,
+          "firedAt": 1795209481.13981,
+          "scoredThroughFiredAt": 1795209481.13981,
+          "earnedSeconds": 0,
+          "stage": 2,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209486.523193,
+          "panelId": "Foundry_S01_East_01",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 76,
+          "shotId": 76,
+          "firedAt": 1795209485.239579,
+          "scoredThroughFiredAt": 1795209485.239579,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209490.756419,
+          "panelId": "Foundry_S01_East_01",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 77,
+          "shotId": 77,
+          "firedAt": 1795209489.322717,
+          "scoredThroughFiredAt": 1795209489.322717,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209494.97406,
+          "panelId": "Foundry_S01_East_01",
+          "progress": 0,
+          "scoredThroughShotId": 78,
+          "shotId": 78,
+          "firedAt": 1795209493.388989,
+          "scoredThroughFiredAt": 1795209493.388989,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209499.257053,
+          "panelId": "Foundry_S02_Roof_02_01",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 79,
+          "shotId": 79,
+          "firedAt": 1795209497.439416,
+          "scoredThroughFiredAt": 1795209497.439416,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209509.48878,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 80,
+          "shotId": 80,
+          "firedAt": 1795209508.289091,
+          "scoredThroughFiredAt": 1795209508.289091,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209513.523296,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 81,
+          "shotId": 81,
+          "firedAt": 1795209512.388544,
+          "scoredThroughFiredAt": 1795209512.388544,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209517.521881,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0,
+          "scoredThroughShotId": 82,
+          "shotId": 82,
+          "firedAt": 1795209516.438447,
+          "scoredThroughFiredAt": 1795209516.438447,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209518.10651,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0,
+          "scoredThroughShotId": 83,
+          "shotId": 83,
+          "firedAt": 1795209517.621979,
+          "scoredThroughFiredAt": 1795209517.621979,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209518.288624,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0.020485560099283855,
+          "scoredThroughShotId": 84,
+          "shotId": 84,
+          "firedAt": 1795209517.806349,
+          "scoredThroughFiredAt": 1795209517.806349,
+          "earnedSeconds": 0.1843700408935547,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209521.171853,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0.3333333333333333,
+          "scoredThroughShotId": 1,
+          "shotId": 1,
+          "firedAt": 1795209519.855387,
+          "scoredThroughFiredAt": 1795209519.855387,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209525.189266,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0.6666666666666666,
+          "scoredThroughShotId": 2,
+          "shotId": 2,
+          "firedAt": 1795209523.937829,
+          "scoredThroughFiredAt": 1795209523.937829,
+          "earnedSeconds": 0,
+          "stage": 0,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209529.188057,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0,
+          "scoredThroughShotId": 3,
+          "shotId": 3,
+          "firedAt": 1795209528.005417,
+          "scoredThroughFiredAt": 1795209528.005417,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "M102"
+        },
+        {
+          "impactAt": 1795209529.804888,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0,
+          "scoredThroughShotId": 4,
+          "shotId": 4,
+          "firedAt": 1795209529.272658,
+          "scoredThroughFiredAt": 1795209529.272658,
+          "earnedSeconds": 0,
+          "stage": 1,
+          "weapon": "GAU23"
+        },
+        {
+          "impactAt": 1795209529.988519,
+          "panelId": "Shelter_Roof_R01_C04",
+          "progress": 0.020209444893731013,
+          "scoredThroughShotId": 5,
+          "shotId": 5,
+          "firedAt": 1795209529.454543,
+          "scoredThroughFiredAt": 1795209529.454543,
+          "earnedSeconds": 0.1818850040435791,
+          "stage": 1,
+          "weapon": "GAU23"
+        }
+      ],
+      "earnedTotalSeconds": 10.999809980392456,
+      "firstFactIndex": 7,
+      "requested": 63,
+      "accepted": 63,
+      "kind": "persistent-30mm-bursts",
+      "bursts": [
+        {
+          "earnedAfterPause": 3.667001962661743,
+          "earnedTotalSeconds": 3.667001962661743,
+          "index": 1,
+          "appearance": "Light",
+          "clientSends": [
+            {
+              "sequence": 7,
+              "sentAt": 1795209446.707054
+            },
+            {
+              "sequence": 8,
+              "sentAt": 1795209446.8923
+            },
+            {
+              "sequence": 9,
+              "sentAt": 1795209447.075046
+            },
+            {
+              "sequence": 10,
+              "sentAt": 1795209447.257685
+            },
+            {
+              "sequence": 11,
+              "sentAt": 1795209447.442467
+            },
+            {
+              "sequence": 12,
+              "sentAt": 1795209447.626065
+            },
+            {
+              "sequence": 13,
+              "sentAt": 1795209447.808774
+            },
+            {
+              "sequence": 14,
+              "sentAt": 1795209447.99165
+            },
+            {
+              "sequence": 15,
+              "sentAt": 1795209448.174116
+            },
+            {
+              "sequence": 16,
+              "sentAt": 1795209448.358813
+            },
+            {
+              "sequence": 17,
+              "sentAt": 1795209448.542151
+            },
+            {
+              "sequence": 18,
+              "sentAt": 1795209448.725097
+            },
+            {
+              "sequence": 19,
+              "sentAt": 1795209448.907013
+            },
+            {
+              "sequence": 20,
+              "sentAt": 1795209449.091425
+            },
+            {
+              "sequence": 21,
+              "sentAt": 1795209449.275687
+            },
+            {
+              "sequence": 22,
+              "sentAt": 1795209449.458134
+            },
+            {
+              "sequence": 23,
+              "sentAt": 1795209449.642276
+            },
+            {
+              "sequence": 24,
+              "sentAt": 1795209449.825491
+            },
+            {
+              "sequence": 25,
+              "sentAt": 1795209450.007782
+            },
+            {
+              "sequence": 26,
+              "sentAt": 1795209450.192304
+            },
+            {
+              "sequence": 27,
+              "sentAt": 1795209450.375161
+            }
+          ],
+          "firstFactIndex": 7
+        },
+        {
+          "earnedAfterPause": 7.334110975265503,
+          "earnedTotalSeconds": 7.334110975265503,
+          "index": 2,
+          "appearance": "Light",
+          "clientSends": [
+            {
+              "sequence": 28,
+              "sentAt": 1795209451.49183
+            },
+            {
+              "sequence": 29,
+              "sentAt": 1795209451.674828
+            },
+            {
+              "sequence": 30,
+              "sentAt": 1795209451.858777
+            },
+            {
+              "sequence": 31,
+              "sentAt": 1795209452.041921
+            },
+            {
+              "sequence": 32,
+              "sentAt": 1795209452.224683
+            },
+            {
+              "sequence": 33,
+              "sentAt": 1795209452.408754
+            },
+            {
+              "sequence": 34,
+              "sentAt": 1795209452.592097
+            },
+            {
+              "sequence": 35,
+              "sentAt": 1795209452.775488
+            },
+            {
+              "sequence": 36,
+              "sentAt": 1795209452.958855
+            },
+            {
+              "sequence": 37,
+              "sentAt": 1795209453.141944
+            },
+            {
+              "sequence": 38,
+              "sentAt": 1795209453.325068
+            },
+            {
+              "sequence": 39,
+              "sentAt": 1795209453.508726
+            },
+            {
+              "sequence": 40,
+              "sentAt": 1795209453.691786
+            },
+            {
+              "sequence": 41,
+              "sentAt": 1795209453.874235
+            },
+            {
+              "sequence": 42,
+              "sentAt": 1795209454.058542
+            },
+            {
+              "sequence": 43,
+              "sentAt": 1795209454.242036
+            },
+            {
+              "sequence": 44,
+              "sentAt": 1795209454.423178
+            },
+            {
+              "sequence": 45,
+              "sentAt": 1795209454.608658
+            },
+            {
+              "sequence": 46,
+              "sentAt": 1795209454.791508
+            },
+            {
+              "sequence": 47,
+              "sentAt": 1795209454.974987
+            },
+            {
+              "sequence": 48,
+              "sentAt": 1795209455.157614
+            }
+          ],
+          "firstFactIndex": 28
+        },
+        {
+          "earnedAfterPause": 1.832839012145996,
+          "earnedTotalSeconds": 10.999809980392456,
+          "index": 3,
+          "appearance": "Heavy",
+          "clientSends": [
+            {
+              "sequence": 49,
+              "sentAt": 1795209456.141483
+            },
+            {
+              "sequence": 50,
+              "sentAt": 1795209456.325004
+            },
+            {
+              "sequence": 51,
+              "sentAt": 1795209456.507666
+            },
+            {
+              "sequence": 52,
+              "sentAt": 1795209456.690854
+            },
+            {
+              "sequence": 53,
+              "sentAt": 1795209456.874917
+            },
+            {
+              "sequence": 54,
+              "sentAt": 1795209457.058119
+            },
+            {
+              "sequence": 55,
+              "sentAt": 1795209457.241993
+            },
+            {
+              "sequence": 56,
+              "sentAt": 1795209457.424327
+            },
+            {
+              "sequence": 57,
+              "sentAt": 1795209457.608309
+            },
+            {
+              "sequence": 58,
+              "sentAt": 1795209457.790282
+            },
+            {
+              "sequence": 59,
+              "sentAt": 1795209457.975235
+            },
+            {
+              "sequence": 60,
+              "sentAt": 1795209458.156528
+            },
+            {
+              "sequence": 61,
+              "sentAt": 1795209458.341667
+            },
+            {
+              "sequence": 62,
+              "sentAt": 1795209458.525284
+            },
+            {
+              "sequence": 63,
+              "sentAt": 1795209458.706875
+            },
+            {
+              "sequence": 64,
+              "sentAt": 1795209458.890952
+            },
+            {
+              "sequence": 65,
+              "sentAt": 1795209459.075029
+            },
+            {
+              "sequence": 66,
+              "sentAt": 1795209459.258045
+            },
+            {
+              "sequence": 67,
+              "sentAt": 1795209459.441292
+            },
+            {
+              "sequence": 68,
+              "sentAt": 1795209459.624943
+            },
+            {
+              "sequence": 69,
+              "sentAt": 1795209459.808246
+            }
+          ],
+          "firstFactIndex": 49
+        }
+      ],
+      "panelId": "Foundry_S02_Roof_01_03"
+    },
+    {
+      "windowSeconds": 16,
+      "panelId": "Foundry_S01_East_01",
+      "minimumExteriorExposure": 0.7772549390792847,
+      "kind": "wall-forecast"
+    },
+    {
+      "passed": true,
+      "panelId": "Foundry_S01_East_01",
+      "originalPositionStuds": [
+        -20.00030517578125,
+        2.9980926513671875,
+        107.99969482421875
+      ],
+      "startServerPositionStuds": [
+        -129.5,
+        3.125,
+        -120
+      ],
+      "serverObservationBudgetSeconds": 2,
+      "clientReplyAfterSeconds": 0.6987233749823645,
+      "userId": -2,
+      "elapsedSeconds": 0.8655140000046231,
+      "goalPositionStuds": [
+        -141.5,
+        3.125,
+        -120
+      ],
+      "requestedStartPositionStuds": [
+        -129.5,
+        3.125,
+        -120
+      ],
+      "finalServerDistanceStuds": 1.5514881610870361,
+      "clientReplyServerPositionStuds": [
+        -137.11061096191406,
+        3.0898640155792236,
+        -119.9979248046875
+      ],
+      "serverObservationElapsedSeconds": 0.16678641666658223,
+      "kind": "actual-humanoid-opening",
+      "serverRootPresent": true,
+      "finalServerPositionStuds": [
+        -139.94851684570312,
+        3.1211414337158203,
+        -119.99903869628906
+      ]
+    },
+    {
+      "serverPanels": 188,
+      "kind": "all-panel-current-agreement",
+      "actualClients": 2,
+      "perClientQueriedPanels": 188
+    },
+    {
+      "sampleIntervalSeconds": 0.5,
+      "panelId": "Shelter_Roof_R01_C04",
+      "startedAtServerSeconds": 1795209508.178747,
+      "windowSeconds": 16,
+      "kind": "reset-roof-forecast",
+      "candidateIndex": 1,
+      "selectedAtServerSeconds": 1795209508.240282
+    },
+    {
+      "panelId": "Shelter_Roof_R01_C04",
+      "pendingProjectiles": 2,
+      "kind": "reset-pre-abort-work",
+      "liveFragments": 4,
+      "sustainedSeconds": 0.1843700408935547,
+      "iteration": 1
+    },
+    {
+      "actualClients": 2,
+      "perClientQueriedPanels": 188,
+      "serverPanels": 188,
+      "kind": "all-panel-pristine-reset-agreement",
+      "iteration": 1
+    },
+    {
+      "sampleIntervalSeconds": 0.5,
+      "panelId": "Shelter_Roof_R01_C04",
+      "startedAtServerSeconds": 1795209519.776152,
+      "windowSeconds": 16,
+      "kind": "reset-roof-forecast",
+      "candidateIndex": 1,
+      "selectedAtServerSeconds": 1795209519.838671
+    },
+    {
+      "panelId": "Shelter_Roof_R01_C04",
+      "pendingProjectiles": 2,
+      "kind": "reset-pre-abort-work",
+      "liveFragments": 4,
+      "sustainedSeconds": 0.1818850040435791,
+      "iteration": 2
+    },
+    {
+      "actualClients": 2,
+      "perClientQueriedPanels": 188,
+      "serverPanels": 188,
+      "kind": "all-panel-pristine-reset-agreement",
+      "iteration": 2
+    }
+  ],
+  "discovered": 7,
+  "environment": "Studio",
+  "initialObservedAtServerSeconds": 1795209410.237886,
+  "suite": "P07-multiplayer",
+  "initialUserIds": [
+    -1,
+    -2
+  ],
+  "failed": 0
+}

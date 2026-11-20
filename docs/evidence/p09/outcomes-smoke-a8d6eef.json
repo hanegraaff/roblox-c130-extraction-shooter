@@ -1,0 +1,84 @@
+[
+  {
+    "id": -1,
+    "view": [
+      1081,
+      618
+    ],
+    "role": "Gunship",
+    "smoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 12,
+      "userId": -1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 12
+    },
+    "camera": "Custom",
+    "round": "Deploying • Gunship / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map"
+  },
+  {
+    "id": -3,
+    "view": [
+      1081,
+      618
+    ],
+    "role": "Ground",
+    "smoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 12,
+      "userId": -3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 12
+    },
+    "camera": "Custom",
+    "round": "0:25 remaining • 2 ground alive • Aircraft 300/300"
+  },
+  {
+    "id": -2,
+    "view": [
+      1153,
+      618
+    ],
+    "role": "Ground",
+    "smoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 12,
+      "userId": -2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 12
+    },
+    "camera": "Custom",
+    "round": "0:28 remaining • 2 ground alive • Aircraft 300/300"
+  },
+  {
+    "id": "8289500d-e049-4cd9-a4f5-98f5fe775927",
+    "players": 3,
+    "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":4.267978708317969}",
+    "phase": "Results",
+    "smoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 187,
+      "clientCount": 3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 187
+    },
+    "stage": "A5/A6: third full round restores cooldowns and zoom and ends at the deadline",
+    "result": "{\"reason\":\"GroundEliminated\",\"winner\":\"Gunship\",\"userId\":-3,\"roundId\":2}"
+  }
+]

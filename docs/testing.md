@@ -2,7 +2,7 @@
 
 ## Current host checks
 
-Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 scripts/verify.py`. The verifier is the full non-Studio gate for the foundation, map, round, aircraft/view, gunship/ground combat, panel-destruction, P08 launcher source, P16 asset package and P17 imported-Outpost reconstruction. It fails on missing tools, type/lint/format errors, test failures, empty required suites or leaked test content. Future plans extend this entrypoint as their behaviors arrive.
+Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scripts/verify.py`. The full non-Studio gate exercises the match and its underlying map, view, weapons, launcher, panel destruction and Outpost reconstruction. It fails on missing tools, type/lint/format errors, failed or empty required suites and test content in release builds.
 
 | Gate | Command used by the verifier |
 | --- | --- |
@@ -25,7 +25,7 @@ Run `python3 scripts/setup.py` once for the pinned dependencies, then `python3 s
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and emits JSON with `suite`, `discovered`, `passed`, `failed` and `skipped`. The P17 camera candidate has **65 unit and 65 integration cases**; integrated P08 source has 55/65. Source-bound outcomes belong to the [P17 record](../plans/17-integrate-military-outpost.md) and [P08 evidence](evidence/p08-launcher.md), preserving earlier counts and failures. Coverage includes validation/config/rate, map/building layout, orbit/pan/zoom, roles/outcomes, weapon readiness, shared aircraft health, movement-origin checks, ordered panel destruction, single-launcher identity/reload/recovery and imported-panel metadata bounds. These suites load production modules with deterministic boundaries. They do not establish real collision, rigid-body contact, actual traversal or multiplayer replication. Server-only policy stays under `src/server`.
+The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The P09 mapping contains **66 unit and 73 integration cases**, including conflict ordering, single result credit and stale-event rejection. Production modules run behind deterministic boundaries. Actual collision, rigid-body contact, traversal and multiplayer replication have separate Studio gates. [P09 evidence record](../plans/09-match-outcomes.md)
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
@@ -35,17 +35,19 @@ Update the allowlist deliberately when adding runtime modules and keep canonical
 
 ## Verify the integrated P17 Outpost
 
-The host gate checks 59 unit / 65 integration cases, 48 asset regressions,
-14 tooling cases (ten manifest and four managed harness cases), seven P16
-audits and the P17 definition, GLB, reconstruction and source-binding gates.
+The Outpost gate includes 48 asset regression cases, native harness tooling,
+seven P16 audits and the P17 definition, GLB, reconstruction and source-binding gates.
 `p17_assets.py` pins the approved Blender/catalog/lock
 identity. `p17_library_glb.py` decodes the material-split derivative and compares
 its triangles, corner UVs, materials and embedded PNGs with the approved sources.
 `p17_compile_outpost.py` reconstructs the managed templates from native import
 receipts and repaired texture references, rejecting missing/changed data.
-`p17_harness.py` binds the frozen fixture and asset references to the exact
-production inputs and requires the pinned production commit in Git history.
-Asset loading and native acceptance require the Studio checks below.
+`p17_harness.py` checks the frozen fixture bodies and fingerprints current
+production and test inputs. The pinned reference commit and tree in Git history
+identify the historical P17 provenance separately. If a bound source change
+stales the generated metadata, review the change and refresh with
+`python3 scripts/p17_harness.py --write` before rerunning the host gate. Native
+acceptance still requires the Studio checks below.
 
 The candidate installs 26 detailed Outpost panels, preserving 25 legacy pivots
 and adding one partition, for 188 active panels overall. The source-built
@@ -62,7 +64,7 @@ metadata in ordinary server/client contexts. Host checks bind payload bytes and
 metadata; a valid public check does not prove rendered bounds, UVs, actual
 collision contacts or multiplayer fidelity. Those need fresh native acceptance.
 
-Run a fresh source-confirmed local test document. The current mapping expects
+Run a fresh source-confirmed local test document. The recorded P17 camera mapping expected
 **179 server cases and twelve per actual client**. Earlier ordinary local Studio Play
 on `ee19deb5` passes 173/173 server and 10/10 client, one actual client, with zero
 errors, failures or skips. Native constructor/preflight/floor-collision fixtures
@@ -111,13 +113,14 @@ That compromise requires explicit A6 review.
 
 1. Build from the selected source and use the separate local `tests.rbxlx`
    document (`PlaceId` and `GameId` both zero). Confirm its identity through
-   Studio MCP in Edit mode. Match the current test artifact's 141 script Sources, 2,332 managed
+   Studio MCP in Edit mode. Match its script Sources, 2,332 managed
    template meshes, 9,328 serialized material slots and target Size/CFrame
    values to the test artifact before Play. The generated harness metadata
    supplies provenance. The Edit comparisons verify what Studio loaded.
 2. With the local test place stopped and no other test owner active, set these
    temporary attributes on `ServerStorage.DevelopmentSettings`. Use the full
-   tested harness commit from the [P17 record](../plans/17-integrate-military-outpost.md).
+   commit of the test build being exercised. Historical P17 runs record their
+   own source. [P17 evidence record](../plans/17-integrate-military-outpost.md)
 
    ```luau
    local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
@@ -130,8 +133,8 @@ That compromise requires explicit A6 review.
    ```
 
 3. In Studio choose **Server & Clients**, set **2 clients**, and start. The
-   ordinary TestEZ reports must show 179 server and twelve per actual client,
-   all passed with zero failures, errors and skips. Check the actual server
+   ordinary TestEZ reports must show nonzero discovery, current-source case counts,
+   all cases passed and zero failures, errors and skips. Check the actual server
    report counted two clients and the two client reports identify distinct
    players. P17 starts through the local selector and keeps the session open
    for collection. A roster or owner conflict can fail preflight before a
@@ -286,7 +289,7 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The P17 camera mapping expects **179 server cases and twelve cases per actual client**. Fresh ordinary local `ee19deb5` execution passes 173/173 server and 10/10 client with one actual client and zero errors, failures or skips. Require fresh reports after changes; that solo baseline does not establish multiplayer or full P17 acceptance. The earlier one-client `51f8440` 171/10 baseline predates that correction and retains only its original source/fixture scope. The earlier P08 mapping had 156 server cases (55 unit, 65 integration and 36 server engine cases). Recorded P08 source `ef7826b` passed fresh ordinary one-client Play with **156 server / seven client**, zero failures/errors/skips, and an ordinary two-client SDK session passed 156 server/seven per actual client. These baseline results do not establish the complete three-client launcher harness or operated input. The [P08 record](../plans/08-rocket-launcher.md) identifies the actual tested candidate and passing/unavailable checks. Initial candidate `88732d4` passed 155 server/six client before its character-removal and GUI-intersection corrections. Require every current report to have `discovered > 0`, `passed == discovered`, and zero `failed`, `skipped` and `errors`. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1`, and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server`/`P01-client`. Preserve exact source/build and actual contexts; historical P06/P07 counts below apply only to their recorded source.
+5. The P09 mapping expects **191 server cases and 12 per actual client**. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
 
@@ -298,7 +301,7 @@ The P08 aggregate includes launcher geometry/reload lifecycle and owned-characte
 - Correct exterior/below-threshold characters, preserve legal disk/station positions, and disconnect containment on stop.
 - Rebuild twice after removed cover and transient debris; compare descendant counts, stable part names and poses, then exercise idempotent destruction.
 
-The earlier P08 client suite had seven Foundation, P14 PointerGui and GroundAimGui cases. The integrated P17 candidate expects ten, adding ordinary material metadata and thermal-cosmetic checks. The added P08 case constructs production RoundPanel and GroundCombatController in distinct ScreenGuis with measured origins/insets, then checks actual HUD rectangle separation/containment at desktop and phone sizes. Source `ef7826b` aligns the compact active-Ground touch header in shared GUI-content coordinates and tests client-only presentation state representing confirmed rifle/rocket feedback, text fit, native inventory/thumbstick reserves, centered aim, actionable controls and cleanup. Touch confirmed hits append HIT to readiness; desktop keeps floating hit text. These fixtures do not establish native touch input or prove actual CoreGui placement; inspect native inventory independently because Studio captures omit it. `PointerGui.spec.luau` calls the production default-input adapter against actual normal/full-bleed GUI buttons and an actual focused TextBox, verifies window-focus blocking and unchanged raw pointer coordinates, then releases focus and destroys its fixtures. `ClientTests.PointerGuiInset` records the observed inset. GroundAimGui checks rifle reticle/ray agreement and touch layout. Prior reports are source-specific; each new multiplayer session needs fresh reports. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
+The client suite covers camera input, material metadata, thermal-cosmetic behavior and Ground aim layout. The layout case constructs production RoundPanel and GroundCombatController in distinct ScreenGuis with measured origins/insets, then checks actual HUD rectangle separation/containment at desktop and phone sizes. Source `ef7826b` aligns the compact active-Ground touch header in shared GUI-content coordinates and tests client-only presentation state representing confirmed rifle/rocket feedback, text fit, native inventory/thumbstick reserves, centered aim, actionable controls and cleanup. Touch confirmed hits append HIT to readiness; desktop keeps floating hit text. These fixtures do not establish native touch input or prove actual CoreGui placement; inspect native inventory independently because Studio captures omit it. `PointerGui.spec.luau` calls the production default-input adapter against actual normal/full-bleed GUI buttons and an actual focused TextBox, verifies window-focus blocking and unchanged raw pointer coordinates, then releases focus and destroys its fixtures. `ClientTests.PointerGuiInset` records the observed inset. GroundAimGui checks rifle reticle/ray agreement and touch layout. Prior reports are source-specific; each new multiplayer session needs fresh reports. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
 
 ### Preserve Edit state around a zero-client Run
 
@@ -332,6 +335,42 @@ The test-only server [RoundHarness](../tests/studio/server/RoundHarness.luau) st
 The named scenarios target replicated roles/phase/deadline/UI; characterless late-join spectating; death without respawn and teammate camera; wrong-role/stale/eliminated command rejection; protected operator reset; elimination, timeout and operator-forfeit outcomes; ground departure while a teammate remains; three map/camera/roster resets; stable connections and draining-load teardown. Each round perturbs cover and adds transient map content before checking pristine restoration. Deterministic service tests separately cover deployment departures, reconnect tombstones, exact deadlines and result conflicts. The [P03 record](../plans/03-rounds-and-roles.md) distinguishes which engine scenarios actually ran and any open gaps.
 
 For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 30°/40° profiles, then confirm role loss restores the normal camera. Exercise active gunship and M-7 firing and cover separately; launcher gameplay is available in the P08 candidate during a real active round. Record readability and camera observations separately from automated pass counts. End the test session when finished.
+
+## Run the P09 match outcome harness
+
+Use the Rojo-synced local `tests.rbxlx` in Edit mode. Run one scenario per fresh session. The runner starts production `GameRuntime` after server TestEZ and waits in the lobby for every initial client to pass its smoke tests before beginning the scenario. It uses shortened rounds, actual clients and production remotes. Trusted fixture positions make impact and cover cases reproducible.
+
+| Scenario | Initial clients | Expected cases | Coverage |
+| --- | --- | --- | --- |
+| `Outcomes` | 3 | 5 | Three back-to-back wins by destruction, elimination and timeout. Client results, friendly fire, delayed lethal rocket credit, Outpost/equipment/camera restoration, stale work, invalid deployment and teardown |
+| `Departures` | 3 | 2 | Carrier departure, one launcher recovered by the teammate, operator forfeit and teardown |
+| `LastGround` | 2 | 3 | Raw model removal leaves the client connected and ends the round by elimination. Last ground departure with operator present ends by departure. Terminal launcher cleanup and teardown |
+| `Empty` | 2 | 2 | Same-step participant departures, empty server without winner and teardown |
+
+From the confirmed Studio MCP Edit context, start a session and retain the return report while it runs:
+
+```luau
+local scenario, clients = "Outcomes", 3
+local reportKey = "P09LastReport"
+assert(not game:GetService("RunService"):IsRunning())
+assert(workspace:GetAttribute(reportKey) == nil)
+task.spawn(function()
+    local report = game:GetService("StudioTestService"):ExecuteMultiplayerTestAsync(clients, {
+        kind = "P09",
+        scenario = scenario,
+    })
+    workspace:SetAttribute(reportKey, game:GetService("HttpService"):JSONEncode(report))
+end)
+return scenario .. " started"
+```
+
+In the Server DataModel, `Workspace.P09Stage` reports the current case. The SDK run returns the result to Edit after owned teardown. It includes the original server and per-client smoke reports in `smoke`, including clients that disconnected during the scenario. Preserve the `P09LastReport` JSON and clear that temporary attribute before the next scenario.
+
+For native Studio **Server & Clients**, set the temporary `ManualHarness = "P09"` and `ManualP09Scenario = "Outcomes"` attributes on `ServerStorage.DevelopmentSettings` in the local Edit DataModel. Change the scenario name and client count using the table. Collect `Workspace.ManualP09Report` and the smoke reports before **End Session**. In Edit, restore both selector attributes to their prior values, normally nil. Native runs use server kicks for departures. SDK runs also use grouped server kicks for `Empty` to initiate simultaneous departures from one server callback. Individual SDK departures use `LeaveTest`.
+
+Check each report's scenario, actual distinct client IDs, final client count, cases, observations and cleanup before recording a pass. Preserve failed launches and legitimate timing failures separately. The exact deadline and same-step damage ordering have an injected-clock native spherecast fixture in the ordinary server suite. Deterministic service tests cover same-identity reconnect authority under D59. [Native outcome fixture](../tests/studio/specs-server/MatchOutcome.spec.luau), [P09 evidence record](../plans/09-match-outcomes.md)
+
+Review the experience in an ordinary multiplayer test session or observe the active harness clients through Results and into the lobby. Check winning-team and reason text, equipment restoration, and return from the operator or spectator camera. Record the actual viewport and any controlled fixture positions. Keep operated observations distinct from automated case totals.
 
 ## Run the P05 gunship combat harness
 
@@ -469,7 +508,7 @@ return "P08 native three-client selector ready"
 
 Choose Studio **Server & Clients**, set **3 clients**, and start the session. Capture actual Server workspace `ManualP08Invocation`, `ManualP08Report` and `P08MultiplayerReport`, plus each client's fresh smoke report. Native departure uses a server kick; SDK departure uses the client's LeaveTest. Preserve the mode and method. After report collection, end only the owned simulation from its actual Server context with `StudioTestService:EndTest({reason = "P08 manual cleanup after report collection"})`. Confirm the original document is back in Edit, then clear `ServerStorage.DevelopmentSettings.ManualHarness` and verify nil. This temporary server-only selector is absent from Git defaults and release artifacts. Do not restart the runner on top of an existing runtime or launch extra Studio processes to refresh source.
 
-Separately operate both painted approaches, E/PICK UP, native tool selection, M-7/rocket firing and reload, G/DROP and teammate recovery in an ordinary real round. Check ground movement and mouse aim; use a simulator/device for touch pickup, M-7/ROCKET/DROP and FIRE while aiming. Review desktop/phone status readability, real rocket travel/cover, ownership agreement and shared aircraft-health feedback without a fixed remaining-hit promise. Refresh the representative README capture from the actual candidate, disclosing any fixture pose/camera. Rerun affected P05/P06/P14 and character/lifecycle scenarios after shared authority or cleanup changes; preserve each result separately. The [P08 plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) own actual results and remaining limitations.
+Separately operate both painted approaches, E/PICK UP, native tool selection, M-7/rocket firing and reload, G/DROP and teammate recovery in an ordinary real round. Check ground movement and mouse aim; use a simulator/device for touch pickup, M-7/ROCKET/DROP and FIRE while aiming. Review desktop/phone status readability, real rocket travel/cover, ownership agreement and shared aircraft-health feedback without a fixed remaining-hit promise. Keep captured gameplay in the linked evidence and disclose any controlled fixture poses or cameras. Rerun affected P05/P06/P14 and character/lifecycle scenarios after shared authority or cleanup changes; preserve each result separately. The [P08 plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) own actual results and remaining limitations.
 
 ## Run the P07 destruction harness
 

@@ -3,9 +3,9 @@
     LauncherRuntime: server engine/network owner of the one recoverable launcher.
     Depends on MatchService, P06 ground movement/origin/rocket authority, level geometry
     and LauncherService. Intents are bounded/rate-limited, then processed atomically
-    after MatchRuntime's deferred outcome commit. Results/deadline beat transfers.
-    Rockets sweep real solids before damage and may outlive their shooter only while
-    the round remains Active. stop invalidates deferred work and destroys all owned
+    after the authoritative frame's outcome commit. Results/deadline beat transfers.
+    Rockets sweep pre-impact solids and may outlive their shooter only while the
+    round remains Active. stop invalidates work and destroys all owned
     transport, tools, pickup and flights. No gameplay callback yields.
 ]=]
 local Players = game:GetService("Players")
@@ -23,6 +23,10 @@ local LauncherRuntime = {}
 export type Controller = {
     stop: () -> (),
     snapshot: () -> LauncherService.Snapshot,
+    -- Sweep previously accepted flights at the frame timestamp in server seconds.
+    advance: (number) -> (),
+    -- Sync generations and process validated launcher intent after round results.
+    interact: (number) -> (),
     resources: () -> { connections: number, representations: number, flights: number, queued: number },
 }
 type Request = { player: Player, action: string, payload: unknown }
@@ -45,9 +49,11 @@ local function vector(position: LauncherService.Position): Vector3
 end
 -- Starts beside the real P06 owner. The level has already been validated by
 -- MapService. Rejects duplicate transport ownership without acquiring anything.
+-- GameRuntime owns both frame steps when externallyStepped is true.
 function LauncherRuntime.start(
     match: MatchService.Controller,
-    ground: GroundCombatRuntime.Controller
+    ground: GroundCombatRuntime.Controller,
+    externallyStepped: boolean?
 ): (Controller?, string?)
     if ReplicatedStorage:FindFirstChild("LauncherState") then
         return nil, "launcher already owned"
@@ -80,11 +86,7 @@ function LauncherRuntime.start(
     end
     local function active(now: number): boolean
         local round = match.snapshot()
-        local aircraft = ReplicatedStorage:FindFirstChild("AircraftState")
-        return running
-            and round.phase == "Active"
-            and now < round.deadlineSeconds
-            and (not aircraft or aircraft:GetAttribute("Destroyed") ~= true)
+        return running and round.phase == "Active" and now < round.deadlineSeconds
     end
     local function eligible(player: Player, now: number): boolean
         local round = match.snapshot()
@@ -287,122 +289,133 @@ function LauncherRuntime.start(
         connections,
         Players.PlayerRemoving:Connect(function(player)
             buckets[player] = nil
-            -- MatchRuntime records the departure first. Recovery occurs in the
-            -- deferred step after any terminal result, using the saved trusted spot.
         end)
     )
-    table.insert(
-        connections,
-        RunService.Heartbeat:Connect(function()
-            local now = workspace:GetServerTimeNow()
-            local round = match.snapshot()
-            -- Flights resolve in the damage batch, before MatchRuntime's deferred
-            -- result evaluation. No new shot can resolve retroactively after Results.
-            for index = #flights, 1, -1 do
-                local flight = flights[index]
-                if not active(now) or round.roundId ~= flight.roundId then
+    local function advance(now: number)
+        if not running then
+            return
+        end
+        local round = match.snapshot()
+        for index = #flights, 1, -1 do
+            local flight = flights[index]
+            if not active(now) or round.roundId ~= flight.roundId then
+                flight.part:Destroy()
+                table.remove(flights, index)
+            else
+                local endTime = math.min(now, flight.expires)
+                local distance = math.min(
+                    flight.remaining,
+                    math.max(0, endTime - flight.lastTime) * LauncherService.speedStudsPerSecond
+                )
+                local displacement = flight.direction * distance
+                local collision: Vector3? = nil
+                local awarded = false
+                if distance > 0 then
+                    collision, awarded = ground.rocketCast(
+                        flight.roundId,
+                        flight.shotId,
+                        flight.position,
+                        displacement,
+                        flight.userId
+                    )
+                end
+                if collision then
+                    state:SetAttribute(
+                        "LastImpact",
+                        HttpService:JSONEncode({
+                            roundId = flight.roundId,
+                            shotId = flight.shotId,
+                            userId = flight.userId,
+                            aircraftHit = awarded,
+                            x = collision.X,
+                            y = collision.Y,
+                            z = collision.Z,
+                        })
+                    )
+                end
+                if collision or now >= flight.expires or distance >= flight.remaining then
                     flight.part:Destroy()
                     table.remove(flights, index)
                 else
-                    local endTime = math.min(now, flight.expires)
-                    local distance = math.min(
-                        flight.remaining,
-                        math.max(0, endTime - flight.lastTime) * LauncherService.speedStudsPerSecond
-                    )
-                    local displacement = flight.direction * distance
-                    local collision: Vector3? = nil
-                    local awarded = false
-                    if distance > 0 then
-                        collision, awarded =
-                            ground.rocketCast(flight.roundId, flight.shotId, flight.position, displacement)
-                    end
-                    if collision then
-                        state:SetAttribute(
-                            "LastImpact",
-                            HttpService:JSONEncode({
-                                roundId = flight.roundId,
-                                shotId = flight.shotId,
-                                userId = flight.userId,
-                                aircraftHit = awarded,
-                                x = collision.X,
-                                y = collision.Y,
-                                z = collision.Z,
-                            })
-                        )
-                    end
-                    if collision or now >= flight.expires or distance >= flight.remaining then
-                        flight.part:Destroy()
-                        table.remove(flights, index)
-                    else
-                        flight.position += displacement
-                        flight.remaining -= distance
-                        flight.lastTime = now
-                        flight.part.CFrame =
-                            CFrame.lookAt(flight.position, flight.position + flight.direction)
-                    end
+                    flight.position += displacement
+                    flight.remaining -= distance
+                    flight.lastTime = now
+                    flight.part.CFrame = CFrame.lookAt(flight.position, flight.position + flight.direction)
                 end
             end
-            task.defer(function()
-                if not running then
-                    return
+        end
+    end
+    local function interact(tickNow: number)
+        if not running then
+            return
+        end
+        local current = match.snapshot()
+        if current.phase == "Deploying" or active(tickNow) then
+            local initial = anchor()
+            assert(initial, "validated launcher anchor missing")
+            local before = rules.snapshot(tickNow)
+            if current.roundId ~= before.roundId then
+                destroyRepresentation()
+                clearFlights()
+                table.clear(lastValid)
+                lastSample = 0
+                rules.reset(current.roundId, scalar(initial))
+                state:SetAttribute("LastShot", nil)
+                state:SetAttribute("LastImpact", nil)
+            end
+            local snapshot = rules.snapshot(tickNow)
+            local carrier = if snapshot.ownerId then Players:GetPlayerByUserId(snapshot.ownerId) else nil
+            if snapshot.ownerId and (not carrier or not eligible(carrier, tickNow)) then
+                recover(snapshot.ownerId)
+            end
+            if carrier and eligible(carrier, tickNow) and tickNow - lastSample >= 0.1 then
+                lastSample = tickNow
+                local map, character = battlefield(), carrier.Character
+                local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+                if
+                    map
+                    and root
+                    and root:IsA("BasePart")
+                    and ground.validateGround(carrier)
+                    and Geometry.supported(map, MapRules.defaults, root.Position)
+                then
+                    lastValid[carrier.UserId] = root.Position
                 end
-                local current = match.snapshot()
-                local tickNow = workspace:GetServerTimeNow()
-                if current.phase == "Deploying" or active(tickNow) then
-                    local initial = anchor()
-                    assert(initial, "validated launcher anchor missing")
-                    local before = rules.snapshot(tickNow)
-                    if current.roundId ~= before.roundId then
-                        destroyRepresentation()
-                        clearFlights()
-                        table.clear(lastValid)
-                        rules.reset(current.roundId, scalar(initial))
-                        state:SetAttribute("LastShot", nil)
-                        state:SetAttribute("LastImpact", nil)
-                    end
-                    local snapshot = rules.snapshot(tickNow)
-                    local carrier = if snapshot.ownerId
-                        then Players:GetPlayerByUserId(snapshot.ownerId)
-                        else nil
-                    if snapshot.ownerId and (not carrier or not eligible(carrier, tickNow)) then
-                        recover(snapshot.ownerId)
-                    end
-                    if carrier and eligible(carrier, tickNow) and tickNow - lastSample >= 0.1 then
-                        lastSample = tickNow
-                        local map, character = battlefield(), carrier.Character
-                        local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
-                        if
-                            map
-                            and root
-                            and root:IsA("BasePart")
-                            and ground.validateGround(carrier)
-                            and Geometry.supported(map, MapRules.defaults, root.Position)
-                        then
-                            lastValid[carrier.UserId] = root.Position
-                        end
-                    end
-                    local requests = pending
-                    pending = {}
-                    for _, request in requests do
-                        process(request, tickNow)
-                    end
-                    represent(tickNow)
-                else
-                    rules.clear()
-                    destroyRepresentation()
-                    clearFlights()
-                    table.clear(pending)
-                    table.clear(lastValid)
-                    state:SetAttribute("LastShot", nil)
-                    state:SetAttribute("LastImpact", nil)
-                    publish(tickNow)
-                end
+            end
+            local requests = pending
+            pending = {}
+            for _, request in requests do
+                process(request, tickNow)
+            end
+            represent(tickNow)
+        else
+            rules.clear()
+            destroyRepresentation()
+            clearFlights()
+            table.clear(pending)
+            table.clear(lastValid)
+            if current.phase == "Lobby" or current.phase == "Resetting" then
+                state:SetAttribute("LastShot", nil)
+                state:SetAttribute("LastImpact", nil)
+            end
+            publish(tickNow)
+        end
+    end
+    if not externallyStepped then
+        table.insert(
+            connections,
+            RunService.Heartbeat:Connect(function()
+                local now = workspace:GetServerTimeNow()
+                advance(now)
+                interact(now)
             end)
-        end)
-    )
+        )
+    end
     state.Parent = ReplicatedStorage
     publish(workspace:GetServerTimeNow())
     return {
+        advance = advance,
+        interact = interact,
         snapshot = function()
             return rules.snapshot(workspace:GetServerTimeNow())
         end,

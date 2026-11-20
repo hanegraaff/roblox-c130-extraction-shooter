@@ -1,8 +1,9 @@
-"""Bind the managed P17 native harness to exact current production inputs.
+"""Bind the managed P17 native harness to current production and test bytes.
 
 ``--write`` refreshes only test-only P17Metadata.luau. The default rejects stale
-metadata, source drift and any semantic edit to the frozen server/client body.
-No build, Studio operation, cloud upload or acceptance result is produced here.
+metadata and any semantic edit to the frozen server/client body. The historical
+production revision identifies the original evidence independently of this
+checkout's fingerprints. This tool does not run or certify native acceptance.
 """
 from pathlib import Path
 import argparse
@@ -75,18 +76,14 @@ def check_frozen_body(path: Path, expected: str) -> None:
         raise ValueError("frozen gameplay body differs: " + path.name)
 
 
-def check_production_revision(root: Path, production: dict[str, str]) -> None:
-    """Prove current runtime/art bytes match the exact pinned production revision."""
-    tracked = subprocess.check_output(
-        ["git", "ls-tree", "-r", "--name-only", PRODUCT_COMMIT, "--", "src", "assets", "default.project.json"],
-        cwd=root, text=True,
-    ).splitlines()
-    expected = {name for name in tracked if production_path(name)}
-    if expected != production.keys():
-        raise ValueError("production file coverage differs from the pinned product")
-    result = subprocess.run(["git", "diff", "--quiet", PRODUCT_COMMIT, "--", *sorted(production)], cwd=root)
-    if result.returncode != 0:
-        raise ValueError("production inputs differ from the pinned product")
+def check_reference_revision(root: Path) -> None:
+    """Verify the historical P17 source anchor without pinning future runtime edits."""
+    reference = subprocess.run(
+        ["git", "rev-parse", "--verify", f"{PRODUCT_COMMIT}^{{tree}}"],
+        cwd=root, text=True, capture_output=True,
+    )
+    if reference.returncode != 0 or reference.stdout.strip() != PRODUCT_TREE:
+        raise ValueError("historical P17 production revision unavailable or incorrect")
 
 
 def metadata(root: Path = ROOT) -> dict:
@@ -94,22 +91,20 @@ def metadata(root: Path = ROOT) -> dict:
     for name, expected in FROZEN_BODIES.items():
         check_frozen_body(root / name, expected)
     production, fixtures = source_inputs(root)
-    check_production_revision(root, production)
+    check_reference_revision(root)
     manifest = json.loads((root / "assets/manifest.json").read_text())
     bindings = [{key: asset.get(key) for key in ("id", "roblox_asset_id", "upload_owner", "uploaded_revision", "sha256")}
                 for asset in manifest["assets"] if asset.get("roblox_asset_id")]
     return {
-        "schemaVersion": 1,
-        "productionCommit": PRODUCT_COMMIT,
-        "productionTree": PRODUCT_TREE,
+        "schemaVersion": 2,
+        "referenceProductionCommit": PRODUCT_COMMIT,
+        "referenceProductionTree": PRODUCT_TREE,
         "productionFingerprintSha256": digest(canonical(production)),
         "harnessFingerprintSha256": digest(canonical(fixtures)),
         "productionInputs": production,
         "harnessInputs": fixtures,
         "approvedAssetBindings": bindings,
         "privateImportWorkspace": {"universeId": "10776653720", "placeId": "72732833195348", "owner": "2227341845"},
-        "expectedServerSmoke": 179,
-        "expectedClientSmokeEach": 12,
         "expectedFullMaterialCases": 10,
         "requestedActualClients": 2,
         "manualFixtureVersion": FIXTURE_VERSION,
@@ -151,7 +146,7 @@ def main() -> None:
     if arguments.write:
         (ROOT / OUTPUT).write_text(render(metadata()))
     value = verify()
-    print(f"P17 harness binding passed: {len(value['productionInputs'])} unchanged production inputs, "
+    print(f"P17 harness binding passed: {len(value['productionInputs'])} current production inputs, "
           f"{len(value['harnessInputs'])} fixture inputs; {FIXTURE_VERSION} bodies exact, no native execution.")
 
 

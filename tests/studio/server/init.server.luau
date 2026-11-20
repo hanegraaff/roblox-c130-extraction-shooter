@@ -14,6 +14,7 @@ if
     game:GetService("RunService"):IsStudio()
     and (
         manualMode == "P08"
+        or manualMode == "P09"
         or manualMode == "P17"
         or manualMode == "P07"
         or manualMode == "P05"

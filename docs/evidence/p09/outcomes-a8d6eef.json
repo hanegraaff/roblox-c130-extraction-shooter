@@ -1,0 +1,82 @@
+{
+  "initialIds": [
+    -1,
+    -2,
+    -3
+  ],
+  "scenario": "Outcomes",
+  "skipped": 0,
+  "passed": 5,
+  "cases": [
+    {
+      "passed": true,
+      "name": "A3/A5: real rifle friendly fire rejected, three rockets win after carrier death"
+    },
+    {
+      "passed": true,
+      "name": "A5/A6: replay resets equipment, Outpost, aircraft and cameras; shell wins elimination"
+    },
+    {
+      "passed": true,
+      "name": "A5/A6: third full round restores cooldowns and zoom and ends at the deadline"
+    },
+    {
+      "passed": true,
+      "name": "A4: invalid deployment aborts with no winner and restores authored anchors"
+    },
+    {
+      "passed": true,
+      "name": "A6: stop drains the frame, combat, character resources and transport"
+    }
+  ],
+  "clientCount": 3,
+  "observations": [
+    {
+      "clientCount": 3,
+      "health": 0,
+      "result": {
+        "reason": "AircraftDestroyed",
+        "shotId": "rocket:1:3",
+        "winner": "Ground",
+        "userId": -3,
+        "weapon": "RocketLauncher"
+      },
+      "roundId": 1
+    },
+    {
+      "clientCount": 3,
+      "health": 300,
+      "result": {
+        "winner": "Gunship",
+        "userId": -3,
+        "reason": "GroundEliminated"
+      },
+      "roundId": 2
+    },
+    {
+      "clientCount": 3,
+      "health": 300,
+      "result": {
+        "winner": "Gunship",
+        "userId": -1,
+        "reason": "Timeout"
+      },
+      "roundId": 3
+    },
+    {
+      "clientCount": 3,
+      "health": 300,
+      "result": {
+        "reason": "CharacterIncomplete",
+        "winner": "None"
+      },
+      "roundId": 4
+    }
+  ],
+  "finalClients": 3,
+  "environment": "Studio",
+  "discovered": 5,
+  "suite": "P09-multiplayer",
+  "failed": 0,
+  "mode": "sdk"
+}

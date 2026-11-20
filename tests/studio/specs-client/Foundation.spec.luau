@@ -101,7 +101,7 @@ return function()
             })
         )
     end)
-    test("panel renders environment and restarts twice with one GUI", function()
+    test("panel renders bootstrap and available equipment and restarts twice with one GUI", function()
         local playerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui", 10) :: PlayerGui
         local status = game:GetService("ReplicatedStorage"):WaitForChild("BootstrapStatus", 10)
         assert(status, "expected status")
@@ -116,10 +116,10 @@ return function()
             local gui = playerGui:FindFirstChild("FoundationStatus")
             assert(gui and gui:IsA("ScreenGui"), 'expected gui and gui:IsA("ScreenGui")')
             local label = gui:FindFirstChild("Status")
-            assert(
-                label and label:IsA("TextLabel") and string.find(label.Text, "Test", 1, true),
-                'expected label and label:IsA("TextLabel") and string.find(label.Text, "Test", 1, true)'
-            )
+            assert(label and label:IsA("TextLabel"), "foundation status label unavailable")
+            assert(string.find(label.Text, "Test", 1, true), "bootstrap environment missing")
+            assert(string.find(label.Text, "Bootstrap running", 1, true), "bootstrap running state missing")
+            assert(string.find(label.Text, "One map rocket launcher", 1, true), "available launcher missing")
             runtime.stop()
             runtime.stop()
             assert(

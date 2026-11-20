@@ -1,0 +1,1804 @@
+{
+  "candidate": "a1b0af0b27bffbe028ba388725829c60dca4c9ff",
+  "studioVersion": "0.748.0.7481526",
+  "environment": "local Studio 2-client ordinary SDK",
+  "inputs": "Native Studio Testing controls, ordinary Ground Humanoid navigation, native E/2 pickup/equip, native ground pointer fire with explicitly temporary camera-only lead, native Operator 2/W/mouse switch/pan/105mm fire with stock camera, ordinary third 30-second timeout",
+  "contexts": [
+    {
+      "studioId": "230882f7-d732-4189-9f07-124c5fddf95e",
+      "side": "Client",
+      "userId": -1,
+      "observations": [
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 1,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 0
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Active • Ground / Deploying\n3:00 remaining • 1 ground alive • Aircraft 300/300\nGround players start with M-7 • One launcher on the map",
+          "generation": 1,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Active • Ground / Deploying\n3:00 remaining • 1 ground alive • Aircraft 300/300\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "3:00 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 2,
+          "team": "Ground",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1057,
+            84
+          ],
+          "textBounds": [
+            209,
+            40
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Ground team wins\nThe C-130 was destroyed.",
+          "generation": 2,
+          "team": "Ground",
+          "localCameraSubject": false,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1057,
+            84
+          ],
+          "textBounds": [
+            209,
+            40
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Ground team wins\nThe C-130 was destroyed.",
+          "generation": 2,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Waiting",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Ground / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Ground / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Ground / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Ground",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "3:00 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 3,
+          "team": "Ground",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1057,
+            84
+          ],
+          "textBounds": [
+            297,
+            40
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nAll ground players were eliminated.",
+          "generation": 3,
+          "team": "Ground",
+          "localCameraSubject": false,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1057,
+            84
+          ],
+          "textBounds": [
+            297,
+            40
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nAll ground players were eliminated.",
+          "generation": 3,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Waiting",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Ground / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 4,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "0:30 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 4,
+          "team": "Ground",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1057,
+            84
+          ],
+          "textBounds": [
+            312,
+            40
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nThe C-130 survived until time ran out.",
+          "generation": 4,
+          "team": "Ground",
+          "localCameraSubject": false,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1057,
+            84
+          ],
+          "textBounds": [
+            312,
+            40
+          ],
+          "playerRole": "Ground",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nThe C-130 survived until time ran out.",
+          "generation": 4,
+          "team": "Ground",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 4,
+          "team": "Waiting",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1081,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 4,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        }
+      ]
+    },
+    {
+      "studioId": "6edf8864-95d9-444a-9590-4cdb1cf74da9",
+      "side": "Client",
+      "userId": -2,
+      "observations": [
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 1,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 0
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Active • Gunship / Deploying\n3:00 remaining • 1 ground alive • Aircraft 300/300\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Gunship",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Active • Gunship / Deploying\n3:00 remaining • 1 ground alive • Aircraft 300/300\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 30,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "3:00 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 2,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 30,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            209,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Ground team wins\nThe C-130 was destroyed.",
+          "generation": 2,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            209,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Ground team wins\nThe C-130 was destroyed.",
+          "generation": 2,
+          "team": "Gunship",
+          "localCameraSubject": false,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            209,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "Ground team wins\nThe C-130 was destroyed.",
+          "generation": 2,
+          "team": "Gunship",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Waiting",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 2,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Gunship / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Gunship",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Gunship / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "3:00 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 3,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 30,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "3:00 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 3,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 40,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "2:48 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 3,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 40,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            297,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "C-130 wins\nAll ground players were eliminated.",
+          "generation": 3,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            297,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nAll ground players were eliminated.",
+          "generation": 3,
+          "team": "Gunship",
+          "localCameraSubject": false,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            297,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nAll ground players were eliminated.",
+          "generation": 3,
+          "team": "Gunship",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Waiting",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 3,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Deploying",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Deploying • Gunship / Deploying\nPreparing characters…\nGround players start with M-7 • One launcher on the map",
+          "generation": 4,
+          "team": "Gunship",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "0:30 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 4,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 30,
+          "quality": "Automatic",
+          "phase": "Active",
+          "size": [
+            300,
+            38
+          ],
+          "textBounds": [
+            283,
+            14
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "0:30 remaining • 1 ground alive • Aircraft 300/300",
+          "generation": 4,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 30,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            312,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "C-130 wins\nThe C-130 survived until time ran out.",
+          "generation": 4,
+          "team": "Gunship",
+          "localCameraSubject": true,
+          "thermal": true,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            312,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nThe C-130 survived until time ran out.",
+          "generation": 4,
+          "team": "Gunship",
+          "localCameraSubject": false,
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Results",
+          "size": [
+            1129,
+            84
+          ],
+          "textBounds": [
+            312,
+            40
+          ],
+          "playerRole": "Gunship",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Scriptable",
+          "status": "C-130 wins\nThe C-130 survived until time ran out.",
+          "generation": 4,
+          "team": "Gunship",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 4,
+          "team": "Waiting",
+          "thermal": false,
+          "roundId": 1
+        },
+        {
+          "view": [
+            1153,
+            618
+          ],
+          "fieldOfView": 70,
+          "quality": "Automatic",
+          "phase": "Lobby",
+          "size": [
+            540,
+            102
+          ],
+          "textBounds": [
+            435,
+            54
+          ],
+          "playerRole": "Waiting",
+          "foundationText": "Players vs C-130 • Test\nBootstrap running • Gunship weapons available\nGround M-7 rifles • One map rocket launcher",
+          "camera": "Custom",
+          "status": "Lobby • Waiting / Waiting\nWaiting for 2 players\nGround players start with M-7 • One launcher on the map",
+          "generation": 4,
+          "team": "Waiting",
+          "localCameraSubject": true,
+          "thermal": false,
+          "roundId": 1
+        }
+      ]
+    },
+    {
+      "studioId": "98c57acb-d4f5-4b96-86c9-5bcc354c5867",
+      "side": "Server",
+      "userId": null,
+      "observations": [
+        {
+          "at": 40.71928099996876,
+          "roster": {
+            "-1": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            },
+            "-2": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            }
+          },
+          "health": 300,
+          "generation": 1,
+          "phase": "Lobby",
+          "kind": "phase",
+          "roundId": 0
+        },
+        {
+          "at": 40.71932616666891,
+          "health": 300,
+          "generation": 1,
+          "phase": "Lobby",
+          "kind": "health"
+        },
+        {
+          "at": 48.20499449997442,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [],
+              "team": "Ground",
+              "life": "Deploying"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Deploying"
+            }
+          },
+          "health": 300,
+          "generation": 2,
+          "phase": "Deploying",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 48.384231666626874,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [
+                "M-7 rifle"
+              ],
+              "team": "Ground",
+              "life": "Alive"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Alive"
+            }
+          },
+          "health": 300,
+          "generation": 2,
+          "phase": "Active",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "value": {
+            "state": "Held",
+            "readyAt": 0,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 2,
+            "ammo": 1,
+            "ownerId": -1,
+            "roundId": 1
+          },
+          "kind": "launcherHeld",
+          "at": 63.43581799999811
+        },
+        {
+          "value": {
+            "roundId": 1,
+            "userId": -1,
+            "shotId": "rocket:1:1"
+          },
+          "kind": "shot",
+          "at": 84.48281783331186
+        },
+        {
+          "value": {
+            "state": "Held",
+            "readyAt": 1795209997.061081,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 3,
+            "ammo": 0,
+            "ownerId": -1,
+            "roundId": 1
+          },
+          "kind": "launcherHeld",
+          "at": 84.48287720832741
+        },
+        {
+          "at": 86.06620683328947,
+          "health": 200,
+          "generation": 2,
+          "phase": "Active",
+          "kind": "health"
+        },
+        {
+          "value": {
+            "y": 137.6636962890625,
+            "aircraftHit": true,
+            "z": 166.66445922851562,
+            "roundId": 1,
+            "x": -312.3134765625,
+            "userId": -1,
+            "shotId": "rocket:1:1"
+          },
+          "kind": "impact",
+          "at": 86.06624891667161
+        },
+        {
+          "value": {
+            "state": "Held",
+            "readyAt": 1795209997.061081,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 3,
+            "ammo": 1,
+            "ownerId": -1,
+            "roundId": 1
+          },
+          "kind": "launcherHeld",
+          "at": 88.48310041666264
+        },
+        {
+          "value": {
+            "roundId": 1,
+            "userId": -1,
+            "shotId": "rocket:1:2"
+          },
+          "kind": "shot",
+          "at": 89.44958979164949
+        },
+        {
+          "value": {
+            "state": "Held",
+            "readyAt": 1795210002.028018,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 4,
+            "ammo": 0,
+            "ownerId": -1,
+            "roundId": 1
+          },
+          "kind": "launcherHeld",
+          "at": 89.44963112496771
+        },
+        {
+          "at": 91.03355762496358,
+          "health": 100,
+          "generation": 2,
+          "phase": "Active",
+          "kind": "health"
+        },
+        {
+          "value": {
+            "y": 137.6654052734375,
+            "aircraftHit": true,
+            "z": 50.56254196166992,
+            "roundId": 1,
+            "x": -350.3715515136719,
+            "userId": -1,
+            "shotId": "rocket:1:2"
+          },
+          "kind": "impact",
+          "at": 91.03362633328652
+        },
+        {
+          "value": {
+            "state": "Held",
+            "readyAt": 1795210002.028018,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 4,
+            "ammo": 1,
+            "ownerId": -1,
+            "roundId": 1
+          },
+          "kind": "launcherHeld",
+          "at": 93.46515333332354
+        },
+        {
+          "value": {
+            "roundId": 1,
+            "userId": -1,
+            "shotId": "rocket:1:3"
+          },
+          "kind": "shot",
+          "at": 94.39857699995628
+        },
+        {
+          "value": {
+            "state": "Held",
+            "readyAt": 1795210006.977109,
+            "launcherId": "launcher:1",
+            "position": {
+              "y": 3,
+              "x": 0,
+              "z": 0
+            },
+            "revision": 5,
+            "ammo": 0,
+            "ownerId": -1,
+            "roundId": 1
+          },
+          "kind": "launcherHeld",
+          "at": 94.39861258328892
+        },
+        {
+          "at": 95.9883190416731,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [],
+              "team": "Ground",
+              "life": "Eliminated"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Eliminated"
+            }
+          },
+          "health": 0,
+          "generation": 2,
+          "phase": "Results",
+          "kind": "phase",
+          "result": {
+            "roundId": 1,
+            "weapon": "RocketLauncher",
+            "reason": "AircraftDestroyed",
+            "winner": "Ground",
+            "userId": -1,
+            "shotId": "rocket:1:3"
+          },
+          "roundId": 1
+        },
+        {
+          "at": 95.98836174997268,
+          "health": 0,
+          "generation": 2,
+          "phase": "Results",
+          "kind": "health"
+        },
+        {
+          "value": {
+            "y": 137.66281127929688,
+            "aircraftHit": true,
+            "z": -71.13272094726562,
+            "roundId": 1,
+            "x": -346.7809753417969,
+            "userId": -1,
+            "shotId": "rocket:1:3"
+          },
+          "kind": "impact",
+          "at": 95.98839295830112
+        },
+        {
+          "at": 99.20755933329929,
+          "roster": {
+            "-1": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            },
+            "-2": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            }
+          },
+          "health": 300,
+          "generation": 2,
+          "phase": "Lobby",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 99.20760004164185,
+          "health": 300,
+          "generation": 2,
+          "phase": "Lobby",
+          "kind": "health"
+        },
+        {
+          "at": 123.36604799999623,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [],
+              "team": "Ground",
+              "life": "Deploying"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Deploying"
+            }
+          },
+          "health": 300,
+          "generation": 3,
+          "phase": "Deploying",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 123.69182654161705,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [
+                "M-7 rifle"
+              ],
+              "team": "Ground",
+              "life": "Alive"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Alive"
+            }
+          },
+          "health": 300,
+          "generation": 3,
+          "phase": "Active",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 199.94121679163072,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [],
+              "team": "Ground",
+              "life": "Eliminated"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Eliminated"
+            }
+          },
+          "health": 300,
+          "generation": 3,
+          "phase": "Results",
+          "kind": "phase",
+          "result": {
+            "roundId": 1,
+            "winner": "Gunship",
+            "userId": -2,
+            "reason": "GroundEliminated"
+          },
+          "roundId": 1
+        },
+        {
+          "at": 203.1697265416733,
+          "roster": {
+            "-1": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            },
+            "-2": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            }
+          },
+          "health": 300,
+          "generation": 3,
+          "phase": "Lobby",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 224.18365962500684,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [],
+              "team": "Ground",
+              "life": "Deploying"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Deploying"
+            }
+          },
+          "health": 300,
+          "generation": 4,
+          "phase": "Deploying",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 224.49613908329047,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [
+                "M-7 rifle"
+              ],
+              "team": "Ground",
+              "life": "Alive"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Alive"
+            }
+          },
+          "health": 300,
+          "generation": 4,
+          "phase": "Active",
+          "kind": "phase",
+          "roundId": 1
+        },
+        {
+          "at": 254.51782558328705,
+          "roster": {
+            "-1": {
+              "role": "Ground",
+              "tools": [],
+              "team": "Ground",
+              "life": "Eliminated"
+            },
+            "-2": {
+              "role": "Gunship",
+              "tools": [],
+              "team": "Gunship",
+              "life": "Eliminated"
+            }
+          },
+          "health": 300,
+          "generation": 4,
+          "phase": "Results",
+          "kind": "phase",
+          "result": {
+            "roundId": 1,
+            "winner": "Gunship",
+            "userId": -2,
+            "reason": "Timeout"
+          },
+          "roundId": 1
+        },
+        {
+          "at": 257.7493624166236,
+          "roster": {
+            "-1": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            },
+            "-2": {
+              "role": "Waiting",
+              "tools": [],
+              "team": "Waiting",
+              "life": "Waiting"
+            }
+          },
+          "health": 300,
+          "generation": 4,
+          "phase": "Lobby",
+          "kind": "phase",
+          "roundId": 1
+        }
+      ]
+    }
+  ]
+}

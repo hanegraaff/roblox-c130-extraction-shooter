@@ -1,0 +1,13 @@
+{
+  "studio": "{\"running\":false,\"worldAttributes\":[],\"devSettings\":[],\"formerSDKReturn\":\"{\\\"players\\\":2,\\\"phase\\\":\\\"Lobby\\\",\\\"health\\\":300,\\\"reason\\\":\\\"P09 operated review completed\\\"}\",\"placeId\":0}",
+  "instances": [
+    {
+      "file": "tests.rbxlx",
+      "id": "ab518170-fef9-42b0-93e1-fbb623fa961e",
+      "mode": "Edit",
+      "name": "tests.rbxlx",
+      "persistedToCloud": false,
+      "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+    }
+  ]
+}

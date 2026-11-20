@@ -85,6 +85,16 @@ function RoundHarness.run()
     local selector = if development and development:IsA("ModuleScript")
         then development:GetAttribute("ManualHarness")
         else nil
+    if RunService:IsStudio() and args == nil and selector == "P09" and development then
+        local scenario = development:GetAttribute("ManualP09Scenario")
+        require(script.Parent.MatchOutcomeHarness).run(
+            if type(scenario) == "string" then scenario else "Outcomes",
+            function(report)
+                workspace:SetAttribute("ManualP09Report", HttpService:JSONEncode(report))
+            end
+        )
+        return
+    end
     if RunService:IsStudio() and args == nil and selector == "P08" then
         local invocation = { mode = "manual-server-clients", harness = "P08", requestedClients = 3 }
         workspace:SetAttribute("ManualP08Invocation", HttpService:JSONEncode(invocation))
@@ -161,6 +171,13 @@ function RoundHarness.run()
     end
     if type(args) == "table" and args.kind == "P08" then
         require(script.Parent.LauncherHarness).run()
+        return
+    end
+    if type(args) == "table" and args.kind == "P09" then
+        local scenario = args.scenario
+        require(script.Parent.MatchOutcomeHarness).run(
+            if type(scenario) == "string" then scenario else "Outcomes"
+        )
         return
     end
     if type(args) == "table" and args.kind == "P07" then

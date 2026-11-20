@@ -17,8 +17,10 @@ local AircraftSelection = require(script.Parent.AircraftSelection)
 local MatchService = require(script.Parent.MatchService)
 local AircraftService = {}
 export type Controller = {
-    -- Idempotently destroys model, selection transport and all three owned connections.
+    -- Idempotently destroys model, selection transport and all owned connections.
     stop: () -> (),
+    -- Synchronizes selection and canonical pose at trusted server seconds.
+    step: (number) -> (),
     -- Pure canonical tangent CFrame at injected elapsed seconds; invalid time asserts.
     sample: (number) -> CFrame,
     -- Server-only finite disk/height and solid-world sight-line check; never fires.
@@ -39,8 +41,13 @@ export type Controller = {
 -- gameplay pose; visible parts participate in shot queries but do not collide or
 -- touch. No smoothing shell.
 -- Optional clock supplies finite monotonic seconds for engine fixtures; production
--- uses GetServerTimeNow. match remains owned by GameRuntime, never destroyed here.
-function AircraftService.start(match: MatchService.Controller, clock: (() -> number)?): (Controller?, string?)
+-- uses GetServerTimeNow. externallyStepped lets GameRuntime own the frame order.
+-- match remains caller-owned.
+function AircraftService.start(
+    match: MatchService.Controller,
+    clock: (() -> number)?,
+    externallyStepped: boolean?
+): (Controller?, string?)
     local now: () -> number = clock or function(): number
         return workspace:GetServerTimeNow()
     end
@@ -114,18 +121,25 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
     local epoch = now()
     local previousPhase = ""
     local previousRound = -1
-    local function tick()
+    local function step(time: number)
+        if not running then
+            return
+        end
         local state = match.snapshot()
         if state.roundId ~= previousRound or (state.phase ~= previousPhase and state.phase == "Lobby") then
-            epoch = now()
+            epoch = time
             selection.reset(state.roundId, state.phase == "Lobby")
             publish()
         end
         previousRound = state.roundId
         previousPhase = state.phase
         status:SetAttribute("EpochSeconds", epoch)
-        if state.phase ~= "Results" and state.phase ~= "Resetting" then
-            model:PivotTo(sample(now() - epoch))
+        if
+            state.phase ~= "Results"
+            and state.phase ~= "Resetting"
+            and (state.phase ~= "Active" or time < state.deadlineSeconds)
+        then
+            model:PivotTo(sample(time - epoch))
         end
     end
     table.insert(
@@ -163,11 +177,19 @@ function AircraftService.start(match: MatchService.Controller, clock: (() -> num
     )
     model:PivotTo(sample(0))
     model.Parent = workspace
-    tick()
+    step(epoch)
     status.Parent = ReplicatedStorage
-    table.insert(connections, RunService.Heartbeat:Connect(tick))
+    if not externallyStepped then
+        table.insert(
+            connections,
+            RunService.Heartbeat:Connect(function()
+                step(now())
+            end)
+        )
+    end
     return {
         sample = sample,
+        step = step,
         weapon = function()
             return selection.snapshot().weapon
         end,

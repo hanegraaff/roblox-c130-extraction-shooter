@@ -37,6 +37,11 @@ export type Controller = {
     stop: () -> (),
     resources: () -> { connections: number, projectiles: number },
     onImpact: (Impact) -> (),
+    -- Synchronizes the round/reset generation and clears nonactive flights.
+    maintain: (number) -> (),
+    -- Resolves live shells against current cover. Managed frames flush cover
+    -- after all gunship and ground collisions have finished.
+    advance: (number, number) -> (),
 }
 type Projectile = {
     shot: CombatService.Shot,
@@ -98,13 +103,15 @@ end
 -- it must not yield or reenter the owner. A valid callback is not a destruction award.
 -- Optional monotonic clock and heartbeat are injected boundaries; production defaults
 -- use synchronized server seconds and RunService.Heartbeat. Caller owns the signal.
+-- GameRuntime sets externallyStepped and owns both steps and final cover flush.
 function CombatRuntime.start(
     match: MatchService.Controller,
     aircraft: AircraftService.Controller,
     onImpact: ((Impact) -> ())?,
     clock: (() -> number)?,
     heartbeat: RBXScriptSignal?,
-    structure: DestructionRuntime.Controller?
+    structure: DestructionRuntime.Controller?,
+    externallyStepped: boolean?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("FireWeapon") then
@@ -133,6 +140,7 @@ function CombatRuntime.start(
     local projectiles: { Projectile } = {}
     local running = true
     local lastRound = -1
+    local lastPhase = ""
     local lastReadiness = ""
     local lastAcceptedAt = -math.huge
     local lastAcceptedShotId = 0
@@ -142,12 +150,15 @@ function CombatRuntime.start(
         return workspace:GetServerTimeNow()
     end
     local frameSignal = heartbeat or RunService.Heartbeat
-    local function clear()
+    local function clearFlights()
         for _, projectile in projectiles do
             projectile.visual:Destroy()
             projectile.marker:Destroy()
         end
         table.clear(projectiles)
+    end
+    local function clear()
+        clearFlights()
         table.clear(buckets)
         effects:ClearAllChildren()
     end
@@ -421,121 +432,139 @@ function CombatRuntime.start(
             buckets[player] = nil
         end)
     )
-    table.insert(
-        connections,
-        frameSignal:Connect(function(dt)
-            local time = now()
-            local state = match.snapshot()
+    local function maintain(time: number)
+        if not running then
+            return
+        end
+        local state = match.snapshot()
+        if structure then
+            structure.sync(state.roundId)
+        end
+        if state.roundId ~= lastRound or (state.phase == "Lobby" and lastPhase ~= "Lobby") then
+            clear()
+            aircraftState:SetAttribute("Impact", nil)
+            lastRound = state.roundId
+            lastAcceptedShotId = 0
+            lastAcceptedAt = -math.huge
+            if state.phase == "Lobby" then
+                combat = CombatService.new(map, minimumY, maximumY)
+            end
+            combat.reset(lastRound)
+            publish(time)
+        end
+        local previousPhase = lastPhase
+        lastPhase = state.phase
+        if state.phase ~= "Active" or time >= state.deadlineSeconds then
             if structure then
-                structure.sync(state.roundId)
+                if state.phase ~= "Deploying" then
+                    structure.cancel()
+                end
             end
-            if state.roundId ~= lastRound then
-                clear()
-                aircraftState:SetAttribute("Impact", nil)
-                lastRound = state.roundId
-                lastAcceptedShotId = 0
-                lastAcceptedAt = -math.huge
-                combat.reset(lastRound)
-                publish(time)
+            lastAcceptedShotId = 0
+            lastAcceptedAt = -math.huge
+            lastSelected = aircraft.weapon()
+            if previousPhase == "Active" or #projectiles > 0 then
+                clearFlights()
             end
-            if state.phase ~= "Active" or time >= state.deadlineSeconds then
+            return
+        end
+    end
+    local function advance(time: number, dt: number)
+        if not running then
+            return
+        end
+        local state = match.snapshot()
+        if state.phase ~= "Active" or time >= state.deadlineSeconds then
+            return
+        end
+        if structure then
+            local selected = aircraft.weapon()
+            if selected ~= lastSelected then
+                structure.interrupt(lastAcceptedShotId)
+            end
+            lastSelected = selected
+            if time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7 then
+                structure.interrupt(lastAcceptedShotId)
+            end
+        end
+        for i = #projectiles, 1, -1 do
+            local projectile = projectiles[i]
+            if projectile.initialHit then
+                if
+                    not impact(
+                        projectile,
+                        projectile.position,
+                        projectile.initialHit,
+                        time,
+                        projectile.embeddedInCover
+                    )
+                then
+                    projectile.marker:Destroy()
+                end
+                projectile.visual:Destroy()
+                table.remove(projectiles, i)
+                continue
+            end
+            local profile = CombatService.profiles[projectile.shot.weapon]
+            local distance, expired = 0, true
+            if profile then
+                distance, expired =
+                    CombatService.flight(profile, time - projectile.shot.firedAt, projectile.remaining, dt)
+            end
+            if expired then
+                outcome(projectile, nil)
+                projectile.visual:Destroy()
+                projectile.marker:Destroy()
+                table.remove(projectiles, i)
+                continue
+            end
+            local step = projectile.direction * distance
+            -- Sweep the physical shell volume through each frame. The finite
+            -- radius catches shallow terrain contacts even when the aircraft
+            -- moves between client surface sampling and the server launch.
+            -- Empty-space endpoints still cannot create an impact.
+            local hit = if profile
+                then CombatRuntime.sweep(
+                    projectile.position,
+                    profile.collisionRadius,
+                    step,
+                    rayParameters(true)
+                )
+                else nil
+            projectile.position = if hit then hit.Position else projectile.position + step
+            projectile.remaining -= distance
+            projectile.visual.Position = projectile.position
+            if hit or projectile.remaining <= 0 then
+                -- Client endpoints bound travel only; they do not create impacts.
+                if not hit then
+                    outcome(projectile, nil)
+                end
+                if not hit or not impact(projectile, projectile.position, hit.Instance, time) then
+                    projectile.marker:Destroy()
+                end
+                projectile.visual:Destroy()
+                table.remove(projectiles, i)
+            end
+        end
+        publish(time)
+    end
+    if not externallyStepped then
+        table.insert(
+            connections,
+            frameSignal:Connect(function(dt)
+                local time = now()
+                maintain(time)
+                advance(time, dt)
                 if structure then
-                    if state.phase ~= "Deploying" then
-                        structure.cancel()
-                    end
                     structure.flush(time)
                 end
-                lastAcceptedShotId = 0
-                lastAcceptedAt = -math.huge
-                lastSelected = aircraft.weapon()
-                if #projectiles > 0 then
-                    clear()
-                end
-                return
-            end
-            if structure then
-                local selected = aircraft.weapon()
-                if selected ~= lastSelected then
-                    structure.interrupt(lastAcceptedShotId)
-                end
-                lastSelected = selected
-                if time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7 then
-                    structure.interrupt(lastAcceptedShotId)
-                end
-            end
-            for i = #projectiles, 1, -1 do
-                local projectile = projectiles[i]
-                if projectile.initialHit then
-                    if
-                        not impact(
-                            projectile,
-                            projectile.position,
-                            projectile.initialHit,
-                            time,
-                            projectile.embeddedInCover
-                        )
-                    then
-                        projectile.marker:Destroy()
-                    end
-                    projectile.visual:Destroy()
-                    table.remove(projectiles, i)
-                    continue
-                end
-                local profile = CombatService.profiles[projectile.shot.weapon]
-                local distance, expired = 0, true
-                if profile then
-                    distance, expired = CombatService.flight(
-                        profile,
-                        time - projectile.shot.firedAt,
-                        projectile.remaining,
-                        dt
-                    )
-                end
-                if expired then
-                    outcome(projectile, nil)
-                    projectile.visual:Destroy()
-                    projectile.marker:Destroy()
-                    table.remove(projectiles, i)
-                    continue
-                end
-                local step = projectile.direction * distance
-                -- Sweep the physical shell volume through each frame. The finite
-                -- radius catches shallow terrain contacts even when the aircraft
-                -- moves between client surface sampling and the server launch.
-                -- Empty-space endpoints still cannot create an impact.
-                local hit = if profile
-                    then CombatRuntime.sweep(
-                        projectile.position,
-                        profile.collisionRadius,
-                        step,
-                        rayParameters(true)
-                    )
-                    else nil
-                projectile.position = if hit then hit.Position else projectile.position + step
-                projectile.remaining -= distance
-                projectile.visual.Position = projectile.position
-                if hit or projectile.remaining <= 0 then
-                    -- Client endpoints bound travel only; they do not create impacts.
-                    if not hit then
-                        outcome(projectile, nil)
-                    end
-                    if not hit or not impact(projectile, projectile.position, hit.Instance, time) then
-                        projectile.marker:Destroy()
-                    end
-                    projectile.visual:Destroy()
-                    table.remove(projectiles, i)
-                end
-            end
-            -- All projectile sweeps and splash rays above observed the pre-impact
-            -- cover. No callback may open it halfway through this batch.
-            if structure then
-                structure.flush(time)
-            end
-            publish(time)
-        end)
-    )
+            end)
+        )
+    end
     return {
         onImpact = emit,
+        maintain = maintain,
+        advance = advance,
         resources = function()
             return { connections = #connections, projectiles = #projectiles }
         end,

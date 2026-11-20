@@ -48,7 +48,11 @@ export type Controller = {
     rocketSweep: (number, string, Vector3, Vector3) -> boolean,
     -- Sweeps the first authoritative solid. Returns collision and aircraft award;
     -- nil collision means clear travel, never permission to skip solid cover.
-    rocketCast: (number, string, Vector3, Vector3) -> (Vector3?, boolean),
+    rocketCast: (number, string, Vector3, Vector3, number?) -> (Vector3?, boolean),
+    -- Applies accepted rifle rays against pre-impact geometry during the frame.
+    resolveRifles: () -> (),
+    -- Synchronizes equipment, cosmetics and health with the committed phase.
+    maintain: (number) -> (),
     -- Shared movement/origin authority for equipped launcher fire and pickup.
     validateGround: (Player) -> boolean,
     -- Only a trusted server owner may acknowledge its own spawn/correction.
@@ -59,9 +63,12 @@ export type Controller = {
 }
 -- match is the sole result owner. rocketImpact is a server-only fixture seam;
 -- directness must be established by the server's swept collision before invocation.
+-- Live rocket casts supply their originating UserId for lethal-hit attribution.
+-- GameRuntime owns both frame steps when externallyStepped is true.
 function GroundCombatRuntime.start(
     match: MatchService.Controller,
-    dependencies: Dependencies?
+    dependencies: Dependencies?,
+    externallyStepped: boolean?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("GroundFire") then
@@ -86,6 +93,17 @@ function GroundCombatRuntime.start(
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local connections: { RBXScriptConnection } = {}
     local tracers: { { part: Part, origin: Vector3, endpoint: Vector3, started: number, duration: number } } =
+        {}
+    local pendingRifles: {
+        {
+            player: Player,
+            roundId: number,
+            origin: Vector3,
+            target: Vector3,
+            sequence: number,
+            firedAt: number,
+        }
+    } =
         {}
     local running = true
     local lastRound = -1
@@ -235,15 +253,14 @@ function GroundCombatRuntime.start(
         end
         return RateLimit.take(bucket, now)
     end
-    local function award(roundId: number, shotId: string, weapon: string, direct: boolean): boolean
-        local state = match.snapshot()
-        local now = workspace:GetServerTimeNow()
-        if
-            not running
-            or state.phase ~= "Active"
-            or state.roundId ~= roundId
-            or now >= state.deadlineSeconds
-        then
+    local function award(
+        roundId: number,
+        shotId: string,
+        weapon: string,
+        direct: boolean,
+        userId: number?
+    ): boolean
+        if not running or not match.damageAllowed(roundId) then
             return false
         end
         local amount, destroyed = health.impact(roundId, shotId, weapon, direct)
@@ -252,7 +269,10 @@ function GroundCombatRuntime.start(
         end
         publish()
         if destroyed then
-            match.proposeAircraftDestroyed(roundId)
+            match.proposeAircraftDestroyed(
+                roundId,
+                if userId then { userId = userId, weapon = weapon, shotId = shotId } else nil
+            )
         end
         return true
     end
@@ -260,7 +280,8 @@ function GroundCombatRuntime.start(
         roundId: number,
         shotId: string,
         origin: Vector3,
-        displacement: Vector3
+        displacement: Vector3,
+        userId: number?
     ): (Vector3?, boolean)
         if
             not running
@@ -293,8 +314,116 @@ function GroundCombatRuntime.start(
             return nil, false
         end
         local applied = hit.Instance:IsDescendantOf(aircraft)
-            and award(roundId, shotId, "RocketLauncher", true)
+            and award(roundId, shotId, "RocketLauncher", true, userId)
         return hit.Position, applied
+    end
+    local function resolveRifles()
+        if not running then
+            return
+        end
+        for _, shot in pendingRifles do
+            if not match.damageAllowed(shot.roundId) then
+                continue
+            end
+            local player, origin, target, now = shot.player, shot.origin, shot.target, shot.firedAt
+            local params = RaycastParams.new()
+            params.FilterType = Enum.RaycastFilterType.Include
+            local aircraft = workspace:FindFirstChild("Aircraft")
+            local battlefield = workspace.World:FindFirstChild("Battlefield")
+            local roots: { Instance } = { workspace.Terrain }
+            if battlefield then
+                table.insert(roots, battlefield)
+            end
+            if aircraft then
+                table.insert(roots, aircraft)
+            end
+            params.FilterDescendantsInstances = roots
+            params.RespectCanCollide = false
+            -- The target establishes direction, not a claimed hit. Cast the
+            -- entire bounded range so a moving aircraft can still intersect
+            -- beyond its previously sampled surface; server cover wins first.
+            local delta = target - origin
+            local hit = workspace:Raycast(origin, delta.Unit * GroundCombatService.range, params)
+            local endpoint = if hit then hit.Position else origin + delta.Unit * GroundCombatService.range
+            local tracer = Instance.new("Part")
+            tracer.Name = "M7Tracer"
+            tracer.Anchored = true
+            tracer.CanCollide = false
+            tracer.CanTouch = false
+            tracer.CanQuery = false
+            tracer.Material = Enum.Material.Neon
+            tracer.Color = Color3.fromRGB(255, 220, 120)
+            -- Moving presentation follows the authoritative ray resolved in
+            -- this frame; it never predicts a future hit.
+            tracer.Size = Vector3.new(0.35, 0.35, 0.01)
+            tracer.CFrame = CFrame.lookAt(origin, endpoint)
+            tracer.Parent = effects
+            local duration = math.max(MIN_TRACER_SECONDS, (endpoint - origin).Magnitude / TRACER_SPEED)
+            table.insert(tracers, {
+                part = tracer,
+                origin = origin,
+                endpoint = endpoint,
+                started = now,
+                duration = duration,
+            })
+            local ownedTool = tools[player]
+            local barrel = if ownedTool then ownedTool:FindFirstChild("Barrel") else nil
+            if barrel and barrel:IsA("BasePart") then
+                local flash = Instance.new("Part")
+                flash.Name = "M7MuzzleFlash"
+                flash.Shape = Enum.PartType.Ball
+                flash.Size = Vector3.new(1.2, 1.2, 1.2)
+                flash.Anchored = true
+                flash.CanCollide = false
+                flash.CanTouch = false
+                flash.CanQuery = false
+                flash.Material = Enum.Material.Neon
+                flash.Color = Color3.fromRGB(255, 206, 80)
+                flash.CFrame = barrel.CFrame * CFrame.new(0, 0, -barrel.Size.Z / 2)
+                flash.Parent = effects
+                Debris:AddItem(flash, 0.15)
+            end
+            local healthBefore = health.snapshot().health
+            local applied = false
+            if hit and aircraft and hit.Instance:IsDescendantOf(aircraft) then
+                applied = award(
+                    shot.roundId,
+                    tostring(player.UserId) .. ":" .. tostring(shot.sequence),
+                    "M7",
+                    true,
+                    player.UserId
+                )
+            end
+            aircraftState:SetAttribute(
+                "GroundShot",
+                HttpService:JSONEncode({
+                    roundId = shot.roundId,
+                    userId = player.UserId,
+                    sequence = shot.sequence,
+                    x = endpoint.X,
+                    y = endpoint.Y,
+                    z = endpoint.Z,
+                    aircraftHit = applied,
+                })
+            )
+            if dependencies and dependencies.observeShot then
+                local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
+                dependencies.observeShot({
+                    userId = player.UserId,
+                    sequence = shot.sequence,
+                    serverTime = now,
+                    origin = origin,
+                    requestedTarget = target,
+                    hitPosition = endpoint,
+                    hitName = if hit then hit.Instance:GetFullName() else "none",
+                    aircraftPosition = if hitbox and hitbox:IsA("BasePart") then hitbox.Position else nil,
+                    healthBefore = healthBefore,
+                    healthAfter = health.snapshot().health,
+                    applied = applied,
+                })
+            end
+        end
+        table.clear(pendingRifles)
     end
     table.insert(
         connections,
@@ -304,7 +433,7 @@ function GroundCombatRuntime.start(
                 observe(player, "rate", now)
                 return
             end
-            if not active(player, now) then
+            if not active(player, now) or #pendingRifles >= 32 then
                 observe(player, "inactive", now)
                 return
             end
@@ -342,103 +471,14 @@ function GroundCombatRuntime.start(
             end
             observe(player, "accepted", now)
             publishRifle(player, now)
-            local target = Vector3.new(intent.x, intent.y, intent.z)
-            local params = RaycastParams.new()
-            params.FilterType = Enum.RaycastFilterType.Include
-            local aircraft = workspace:FindFirstChild("Aircraft")
-            local battlefield = workspace.World:FindFirstChild("Battlefield")
-            local roots: { Instance } = { workspace.Terrain }
-            if battlefield then
-                table.insert(roots, battlefield)
-            end
-            if aircraft then
-                table.insert(roots, aircraft)
-            end
-            params.FilterDescendantsInstances = roots
-            params.RespectCanCollide = false
-            -- The target establishes direction, not a claimed hit. Cast the
-            -- entire bounded range so a moving aircraft can still intersect
-            -- beyond its previously sampled surface; server cover wins first.
-            local delta = target - origin
-            local hit = workspace:Raycast(origin, delta.Unit * GroundCombatService.range, params)
-            local endpoint = if hit then hit.Position else origin + delta.Unit * GroundCombatService.range
-            local tracer = Instance.new("Part")
-            tracer.Name = "M7Tracer"
-            tracer.Anchored = true
-            tracer.CanCollide = false
-            tracer.CanTouch = false
-            tracer.CanQuery = false
-            tracer.Material = Enum.Material.Neon
-            tracer.Color = Color3.fromRGB(255, 220, 120)
-            -- Moving presentation follows the resolved authoritative ray; hit
-            -- evaluation remains immediate. It never predicts a future hit.
-            tracer.Size = Vector3.new(0.35, 0.35, 0.01)
-            tracer.CFrame = CFrame.lookAt(origin, endpoint)
-            tracer.Parent = effects
-            local duration = math.max(MIN_TRACER_SECONDS, (endpoint - origin).Magnitude / TRACER_SPEED)
-            table.insert(tracers, {
-                part = tracer,
+            table.insert(pendingRifles, {
+                player = player,
+                roundId = match.snapshot().roundId,
                 origin = origin,
-                endpoint = endpoint,
-                started = now,
-                duration = duration,
+                target = Vector3.new(intent.x, intent.y, intent.z),
+                sequence = intent.sequence,
+                firedAt = now,
             })
-            local ownedTool = tools[player]
-            local barrel = if ownedTool then ownedTool:FindFirstChild("Barrel") else nil
-            if barrel and barrel:IsA("BasePart") then
-                local flash = Instance.new("Part")
-                flash.Name = "M7MuzzleFlash"
-                flash.Shape = Enum.PartType.Ball
-                flash.Size = Vector3.new(1.2, 1.2, 1.2)
-                flash.Anchored = true
-                flash.CanCollide = false
-                flash.CanTouch = false
-                flash.CanQuery = false
-                flash.Material = Enum.Material.Neon
-                flash.Color = Color3.fromRGB(255, 206, 80)
-                flash.CFrame = barrel.CFrame * CFrame.new(0, 0, -barrel.Size.Z / 2)
-                flash.Parent = effects
-                Debris:AddItem(flash, 0.15)
-            end
-            local state = match.snapshot()
-            local healthBefore = health.snapshot().health
-            local applied = false
-            if hit and aircraft and hit.Instance:IsDescendantOf(aircraft) then
-                applied = award(
-                    state.roundId,
-                    tostring(player.UserId) .. ":" .. tostring(intent.sequence),
-                    "M7",
-                    true
-                )
-            end
-            aircraftState:SetAttribute(
-                "GroundShot",
-                HttpService:JSONEncode({
-                    roundId = state.roundId,
-                    userId = player.UserId,
-                    sequence = intent.sequence,
-                    x = endpoint.X,
-                    y = endpoint.Y,
-                    z = endpoint.Z,
-                    aircraftHit = applied,
-                })
-            )
-            if dependencies and dependencies.observeShot then
-                local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
-                dependencies.observeShot({
-                    userId = player.UserId,
-                    sequence = intent.sequence,
-                    serverTime = now,
-                    origin = origin,
-                    requestedTarget = target,
-                    hitPosition = endpoint,
-                    hitName = if hit then hit.Instance:GetFullName() else "none",
-                    aircraftPosition = if hitbox and hitbox:IsA("BasePart") then hitbox.Position else nil,
-                    healthBefore = healthBefore,
-                    healthAfter = health.snapshot().health,
-                    applied = applied,
-                })
-            end
         end)
     )
     table.insert(
@@ -463,68 +503,85 @@ function GroundCombatRuntime.start(
             movement[player] = nil
         end)
     )
-    table.insert(
-        connections,
-        RunService.Heartbeat:Connect(function()
-            local now = workspace:GetServerTimeNow()
-            local state = match.snapshot()
-            for i = #tracers, 1, -1 do
-                local tracer = tracers[i]
-                local elapsed = now - tracer.started
-                if elapsed >= tracer.duration + TRACER_TAIL_SECONDS or not tracer.part.Parent then
-                    tracer.part:Destroy()
-                    table.remove(tracers, i)
-                else
-                    local progress = math.clamp(elapsed / tracer.duration, 0, 1)
-                    local direction = (tracer.endpoint - tracer.origin).Unit
-                    local traveled = (tracer.endpoint - tracer.origin).Magnitude * progress
-                    local length = math.max(0.01, math.min(3, traveled))
-                    local position = tracer.origin + direction * (traveled - length * 0.5)
-                    tracer.part.Size = Vector3.new(0.35, 0.35, length)
-                    tracer.part.CFrame = CFrame.lookAt(position, position + direction)
-                end
+    local function maintain(now: number)
+        if not running then
+            return
+        end
+        local state = match.snapshot()
+        for i = #tracers, 1, -1 do
+            local tracer = tracers[i]
+            local elapsed = now - tracer.started
+            if elapsed >= tracer.duration + TRACER_TAIL_SECONDS or not tracer.part.Parent then
+                tracer.part:Destroy()
+                table.remove(tracers, i)
+            else
+                local progress = math.clamp(elapsed / tracer.duration, 0, 1)
+                local direction = (tracer.endpoint - tracer.origin).Unit
+                local traveled = (tracer.endpoint - tracer.origin).Magnitude * progress
+                local length = math.max(0.01, math.min(3, traveled))
+                local position = tracer.origin + direction * (traveled - length * 0.5)
+                tracer.part.Size = Vector3.new(0.35, 0.35, length)
+                tracer.part.CFrame = CFrame.lookAt(position, position + direction)
             end
-            if state.phase == "Resetting" and lastPhase ~= "Resetting" then
-                aircraftState:SetAttribute("GroundShot", nil)
-                clearTracers()
+        end
+        if state.phase == "Resetting" and lastPhase ~= "Resetting" then
+            aircraftState:SetAttribute("GroundShot", nil)
+            clearTracers()
+        end
+        if state.phase == "Lobby" and lastPhase ~= "Lobby" then
+            clearTracers()
+            health = AircraftHealth.new()
+            health.reset(state.roundId)
+            rifles = GroundCombatService.new()
+            rifles.reset(state.roundId)
+            aircraftState:SetAttribute("GroundShot", nil)
+            publish()
+        end
+        lastPhase = state.phase
+        if state.roundId ~= lastRound then
+            lastRound = state.roundId
+            health.reset(lastRound)
+            rifles.reset(lastRound)
+            table.clear(movement)
+            aircraftState:SetAttribute("GroundShot", nil)
+            publish()
+        end
+        for _, player in Players:GetPlayers() do
+            local member = state.members[player.UserId]
+            if
+                member
+                and member.role == "Ground"
+                and (state.phase == "Deploying" or state.phase == "Active")
+            then
+                track(player, now, false)
+            else
+                movement[player] = nil
             end
-            if state.phase == "Lobby" and lastPhase ~= "Lobby" then
-                health = AircraftHealth.new()
-                health.reset(state.roundId)
-                aircraftState:SetAttribute("GroundShot", nil)
-                publish()
+            if active(player, now) then
+                ensureTool(player)
+                publishRifle(player, now)
+            else
+                removeTool(player)
             end
-            lastPhase = state.phase
-            if state.roundId ~= lastRound then
-                lastRound = state.roundId
-                health.reset(lastRound)
-                rifles.reset(lastRound)
-                table.clear(movement)
-                aircraftState:SetAttribute("GroundShot", nil)
-                publish()
-            end
-            for _, player in Players:GetPlayers() do
-                local member = state.members[player.UserId]
-                if
-                    member
-                    and member.role == "Ground"
-                    and (state.phase == "Deploying" or state.phase == "Active")
-                then
-                    track(player, now, false)
-                else
-                    movement[player] = nil
-                end
-                if active(player, now) then
-                    ensureTool(player)
-                    publishRifle(player, now)
-                else
-                    removeTool(player)
-                end
-            end
-        end)
-    )
+        end
+        if state.phase ~= "Active" then
+            table.clear(pendingRifles)
+        end
+    end
+    if not externallyStepped then
+        table.insert(
+            connections,
+            RunService.Heartbeat:Connect(function()
+                local now = workspace:GetServerTimeNow()
+                maintain(now)
+                resolveRifles()
+            end)
+        )
+    end
     publish()
     return {
+        resolveRifles = resolveRifles,
+        maintain = maintain,
         readiness = function(player)
             return rifles.readiness(player.UserId, workspace:GetServerTimeNow())
         end,
@@ -574,6 +631,7 @@ function GroundCombatRuntime.start(
             end
             table.clear(buckets)
             table.clear(movement)
+            table.clear(pendingRifles)
             clearTracers()
             fire:Destroy()
             reload:Destroy()

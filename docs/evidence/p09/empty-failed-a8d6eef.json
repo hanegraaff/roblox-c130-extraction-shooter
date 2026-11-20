@@ -1,0 +1,28 @@
+{
+  "initialIds": [
+    -1,
+    -2
+  ],
+  "scenario": "Empty",
+  "skipped": 0,
+  "passed": 1,
+  "cases": [
+    {
+      "name": "A4: same-step actual operator and ground departures empty the server without a winner",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.MatchOutcomeHarness:295: unexpected result: {\"winner\":\"Gunship\",\"userId\":-1,\"reason\":\"GroundEliminated\"}"
+    },
+    {
+      "passed": true,
+      "name": "A6: stop drains the frame, combat, character resources and transport"
+    }
+  ],
+  "clientCount": 2,
+  "observations": [],
+  "finalClients": 0,
+  "environment": "Studio",
+  "discovered": 2,
+  "suite": "P09-multiplayer",
+  "failed": 1,
+  "mode": "sdk"
+}

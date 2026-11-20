@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "a1b0af0b27bffbe028ba388725829c60dca4c9ff",
+  "sourceTree": "8f6ed749d576f70c9e77a30aea77feb80de4315c",
+  "host": {
+    "environment": "Darwin arm64, Python 3.10.4",
+    "command": "python3 scripts/verify.py",
+    "unitPassed": 66,
+    "integrationPassed": 73,
+    "toolingPassed": 15,
+    "assetRegressionsPassed": 48,
+    "releaseInstances": 5301,
+    "testInstances": 5403,
+    "releaseRuntimeScripts": 53,
+    "authoredTransformsPerArtifact": 2804,
+    "releaseSha256": "7fd2191f3b229d51b46cb179da0b3628c091d18be8eb64cc9dc964bf5a4cba9e",
+    "testSha256": "1de588842c4c1033b106700e59756b13d6270b03bfd0e447ea120a71915f1734"
+  },
+  "studioEdit": {
+    "studioId": "ab518170-fef9-42b0-93e1-fbb623fa961e",
+    "studioVersion": "0.748.0.7481526",
+    "place": "tests.rbxlx",
+    "placeId": 0,
+    "project": "PlayersVsC130Tests",
+    "rojoListenAddress": "127.0.0.1:34872",
+    "sourceComparison": {
+      "method": "SHA-256 of full Luau Source bytes for each mapped Script, LocalScript and ModuleScript compared with Rojo XML by full path and class",
+      "checked": 144,
+      "mismatches": []
+    }
+  },
+  "productionAlsoAtCommit": "42c806639a311c2d72d6b3c06ccac9ca638f7f6e"
+}

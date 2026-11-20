@@ -3,14 +3,21 @@
     MatchService: server-only deterministic round/roster owner. Depends on RoleService,
     RoundRules and an injected monotonic clock. No Instances, transport or yielding.
     All queued work carries round IDs. State leaves this module only as fresh snapshots.
-    The adapter calls step after batching damage/departures; deadline is evaluated first.
+    The adapter submits damage in step. Deadline, damage, outcomes and cleanup use
+    one captured server time; departures become competitive facts after damage.
 ]=]
 local RoleService = if script then require(script.Parent.RoleService) else require("./RoleService")
-local RoundRules = if script then require(script.Parent.RoundRules) else require("./RoundRules")
+local loadPath = (require :: unknown) :: (string) -> unknown
+local RoundRules = (
+    if script then require(script.Parent.RoundRules) else loadPath("./RoundRules")
+) :: typeof(require(script.Parent.RoundRules))
 local MatchService = {}
 
 export type Phase = "Lobby" | "Deploying" | "Active" | "Results" | "Resetting"
-export type Result = { winner: string, reason: string }
+-- Optional server-derived credit identifies the operator or lethal aircraft hit.
+export type Result = { winner: string, reason: string, userId: number?, weapon: string?, shotId: string? }
+-- Server-resolved attribution for the direct hit that reduced aircraft health to zero.
+export type AircraftCredit = { userId: number, weapon: string, shotId: string }
 export type Member = {
     userId: number,
     role: string,
@@ -37,10 +44,15 @@ export type Controller = {
     deploy: () -> (boolean, string?),
     ready: (number, number) -> boolean,
     activate: () -> (boolean, string?),
+    -- Confirmed grounded death/surrender. Can refine a pending character loss.
     eliminate: (number, number) -> boolean,
-    proposeAircraftDestroyed: (number) -> boolean,
+    -- Revokes life immediately or defers an ambiguous deployment failure until
+    -- activation. A same-step departure can explain the model removal.
+    characterRemoved: (number, number) -> boolean,
+    damageAllowed: (number) -> boolean,
+    proposeAircraftDestroyed: (number, AircraftCredit?) -> boolean,
     abort: (number, string) -> boolean,
-    step: () -> (),
+    step: (((number) -> ())?, number?) -> (),
     beginReset: () -> boolean,
     finishReset: () -> boolean,
     command: (number, unknown) -> (boolean, string?),
@@ -69,15 +81,22 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     local waited: { [number]: number } = {}
     local previousOperator: number? = nil
     local aircraftDestroyed = false
+    local aircraftCredit: AircraftCredit? = nil
     local ownedLives: { [number]: boolean } = {}
     local pendingRelease: { [number]: boolean } = {}
+    local departingGround: { [number]: boolean } = {}
+    local removedCharacters: { [number]: boolean } = {}
     local lastNow = -math.huge
+    local damageSeconds: number? = nil
     local service: Controller
-    local function now(): number
-        local value = adapters.now()
+    local function now(atSeconds: number?): number
+        local value = damageSeconds or atSeconds or adapters.now()
         assert(value == value and math.abs(value) < math.huge and value >= lastNow, "clock must be monotonic")
         lastNow = value
         return value
+    end
+    local function damageAllowed(roundId: number): boolean
+        return state.phase == "Active" and roundId == state.roundId and now() < state.deadlineSeconds
     end
     local function changed()
         state.revision += 1
@@ -105,9 +124,33 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             return false
         end
         state.result = result
+        table.clear(departingGround)
+        table.clear(removedCharacters)
         for _, member in state.members do
             release(member, false)
         end
+        return true
+    end
+    local function loseGround(id: number, roundId: number, confirmed: boolean): boolean
+        local member = state.members[id]
+        if not damageAllowed(roundId) or not member or not member.connected or member.role ~= "Ground" then
+            return false
+        end
+        if member.life ~= "Alive" then
+            if confirmed and removedCharacters[id] then
+                -- Death can be reported after the owned model's removal.
+                -- Keep the same consumed life but retain the confirmed cause.
+                removedCharacters[id] = nil
+                return true
+            end
+            return false
+        end
+        member.life = "Eliminated"
+        pendingRelease[id] = true
+        if not confirmed then
+            removedCharacters[id] = true
+        end
+        changed()
         return true
     end
     local function cancelDeployment()
@@ -115,6 +158,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             release(member, false)
         end
         table.clear(state.members)
+        table.clear(removedCharacters)
         state.deadlineSeconds = 0
         transition("Lobby")
     end
@@ -164,6 +208,12 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             if member then
                 member.connected = false
                 if state.phase == "Active" then
+                    if member.life == "Alive" or removedCharacters[id] then
+                        if member.role == "Ground" then
+                            departingGround[id] = true
+                        end
+                    end
+                    removedCharacters[id] = nil
                     if member.life == "Alive" then
                         member.life = "Eliminated"
                         pendingRelease[id] = true
@@ -197,6 +247,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             state.result = nil
             state.deadlineSeconds = 0
             aircraftDestroyed = false
+            aircraftCredit = nil
             for _, candidate in candidates do
                 state.members[candidate.userId] = {
                     userId = candidate.userId,
@@ -230,6 +281,10 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             if state.phase ~= "Deploying" then
                 return false, "not deploying"
             end
+            if next(removedCharacters) then
+                commit({ winner = "None", reason = "CharacterRemovedDuringDeployment" })
+                return false, "deployed character removed"
+            end
             for _, member in state.members do
                 if member.role ~= "Spectator" and (not member.connected or not member.ready) then
                     return false, "roster not ready"
@@ -250,32 +305,33 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             return true, nil
         end,
         eliminate = function(id, roundId)
-            local member = state.members[id]
-            if
-                state.phase ~= "Active"
-                or roundId ~= state.roundId
-                or now() >= state.deadlineSeconds
-                or not member
-                or member.role ~= "Ground"
-                or member.life ~= "Alive"
-            then
-                return false
-            end
-            member.life = "Eliminated"
-            pendingRelease[id] = true
-            changed()
-            return true
+            return loseGround(id, roundId, true)
         end,
-        proposeAircraftDestroyed = function(roundId)
-            if
-                state.phase ~= "Active"
-                or roundId ~= state.roundId
-                or now() >= state.deadlineSeconds
-                or aircraftDestroyed
-            then
+        characterRemoved = function(id, roundId)
+            if state.phase == "Deploying" and roundId == state.roundId then
+                local member = state.members[id]
+                if
+                    not member
+                    or not member.connected
+                    or member.role == "Spectator"
+                    or removedCharacters[id]
+                then
+                    return false
+                end
+                removedCharacters[id] = true
+                member.ready = false
+                changed()
+                return true
+            end
+            return loseGround(id, roundId, false)
+        end,
+        damageAllowed = damageAllowed,
+        proposeAircraftDestroyed = function(roundId, credit)
+            if not damageAllowed(roundId) or aircraftDestroyed then
                 return false
             end
             aircraftDestroyed = true
+            aircraftCredit = if credit then table.clone(credit) else nil
             changed()
             return true
         end,
@@ -285,33 +341,57 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             end
             return commit({ winner = "None", reason = reason })
         end,
-        step = function()
-            if state.phase ~= "Active" then
+        -- The optional server callback must not yield, reenter step or throw.
+        -- The callback runs strictly before expiry and may submit only damage facts.
+        step = function(resolveDamage, atSeconds)
+            if state.phase ~= "Active" or damageSeconds ~= nil then
                 return
             end
-            local groundAlive, count = 0, 0
+            local stepSeconds = now(atSeconds)
+            if resolveDamage and stepSeconds < state.deadlineSeconds then
+                damageSeconds = stepSeconds
+                resolveDamage(stepSeconds)
+                damageSeconds = nil
+            end
+            local groundAlive, groundDeparted, count = 0, 0, 0
             local operatorConnected = false
+            local operatorId: number? = nil
             for _, member in state.members do
                 if member.role == "Gunship" then
                     operatorConnected = member.connected and member.life == "Alive"
+                    operatorId = member.userId
                 elseif member.role == "Ground" and member.life == "Alive" then
                     groundAlive += 1
                 end
             end
+            for _ in departingGround do
+                groundDeparted += 1
+            end
             for _ in connected do
                 count += 1
             end
-            local result = RoundRules.outcome({
-                nowSeconds = now(),
+            local outcome = RoundRules.outcome({
+                nowSeconds = stepSeconds,
                 deadlineSeconds = state.deadlineSeconds,
                 aircraftDestroyed = aircraftDestroyed,
                 groundAlive = groundAlive,
+                groundEliminated = groundAlive == 0 and groundDeparted == 0,
                 operatorConnected = operatorConnected,
                 connectedCount = count,
             })
-            if result then
+            if outcome then
+                local result: Result = { winner = outcome.winner, reason = outcome.reason }
+                if result.reason == "AircraftDestroyed" and aircraftCredit then
+                    result.userId = aircraftCredit.userId
+                    result.weapon = aircraftCredit.weapon
+                    result.shotId = aircraftCredit.shotId
+                elseif result.winner == "Gunship" then
+                    result.userId = operatorId
+                end
                 commit(result)
             else
+                table.clear(departingGround)
+                table.clear(removedCharacters)
                 for id in pendingRelease do
                     local member = state.members[id]
                     release(member, true)
@@ -329,6 +409,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             state.result = nil
             state.deadlineSeconds = 0
             aircraftDestroyed = false
+            aircraftCredit = nil
             return transition("Lobby")
         end,
         command = function(id, value)
