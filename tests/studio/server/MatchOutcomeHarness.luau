@@ -484,12 +484,13 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
     end
 
     local function leaveAll(targets: { Player })
-        if finish then
+        -- One server callback initiates grouped departures. Distinct client
+        -- LeaveTest requests can otherwise reach separate authoritative frames.
+        if finish or #targets > 1 then
             for _, player in targets do
                 player:Kick("P09 local departure fixture")
             end
         else
-            -- Dispatch the entire departure group before waiting for removals.
             for _, player in targets do
                 beginProbe(player, "Leave", nil)
             end
@@ -715,6 +716,20 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
             end
         )
     elseif scenario == "LastGround" then
+        check("A4: actual raw character removal eliminates the remaining ground life", function()
+            deploy()
+            local operator, ground = roles()
+            local character = assert(ground[1].Character, "ground model unavailable for raw removal")
+            character:Destroy()
+            result(
+                "Gunship",
+                "GroundEliminated",
+                "C-130 wins\nAll ground players were eliminated.",
+                operator.UserId
+            )
+            assert(ground[1].Parent == Players, "raw model removal disconnected the player")
+            lobby()
+        end)
         check("A4: actual last-ground departure awards the surviving C-130 by departure", function()
             deploy()
             local operator, ground = roles()

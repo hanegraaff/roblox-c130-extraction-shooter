@@ -353,8 +353,8 @@ function GroundCombatRuntime.start(
             tracer.CanQuery = false
             tracer.Material = Enum.Material.Neon
             tracer.Color = Color3.fromRGB(255, 220, 120)
-            -- Moving presentation follows the resolved authoritative ray; hit
-            -- evaluation remains immediate. It never predicts a future hit.
+            -- Moving presentation follows the authoritative ray resolved in
+            -- this frame; it never predicts a future hit.
             tracer.Size = Vector3.new(0.35, 0.35, 0.01)
             tracer.CFrame = CFrame.lookAt(origin, endpoint)
             tracer.Parent = effects

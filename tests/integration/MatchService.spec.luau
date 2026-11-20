@@ -103,6 +103,34 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             'expected service.snapshot().phase == "Lobby" and next(service.snapshot().members) == nil'
         )
     end)
+    test("model removal during deployment follows roster cancellation or a setup abort", function()
+        for _, departing in { true, false } do
+            local service = fixture(2)
+            assert(service.deploy(), "expected deployment")
+            local state = service.snapshot()
+            for id in state.members do
+                assert(service.ready(id, state.roundId), "fixture member did not ready")
+            end
+            local id = ground(state)
+            assert(service.characterRemoved(id, state.roundId), "deployment removal rejected")
+            assert(not service.snapshot().members[id].ready, "removed model retained readiness")
+            if departing then
+                service.leave(id)
+                local canceled = service.snapshot()
+                assert(canceled.phase == "Lobby" and canceled.result == nil, "roster loss did not cancel")
+            else
+                assert(not service.activate(), "deployment activated with an invalid model")
+                local failed = service.snapshot()
+                local result = assert(failed.result, "deployment did not abort")
+                assert(
+                    failed.phase == "Results"
+                        and result.winner == "None"
+                        and result.reason == "CharacterRemovedDuringDeployment",
+                    "invalid setup created a competitive result"
+                )
+            end
+        end
+    end)
     test("exact injected deadline commits timeout once and late proposals cannot change it", function()
         local service, active, advance = fixture()
         local state = active()
@@ -285,9 +313,73 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(not release.recover, "expected not release.recover")
         end
     end)
+    test("native model removal and roster departure can arrive in either order in one step", function()
+        for _, removalFirst in { true, false } do
+            local service, active, _, released = fixture(2)
+            local state = active()
+            local id = ground(state)
+            if removalFirst then
+                assert(service.characterRemoved(id, state.roundId), "model loss was rejected")
+                assert(service.snapshot().members[id].life == "Eliminated", "model loss left an active life")
+                assert(not service.characterRemoved(id, state.roundId), "model loss duplicated")
+                assert(
+                    not service.command(id, { roundId = state.roundId, sequence = 1, action = "Surrender" }),
+                    "lost character retained command authority"
+                )
+                service.leave(id)
+            else
+                service.leave(id)
+                assert(
+                    not service.characterRemoved(id, state.roundId),
+                    "departed player reported a live loss"
+                )
+            end
+            service.step()
+            local result = assert(service.snapshot().result, "departure did not commit")
+            assert(result.reason == "GroundDeparted" and result.userId == operator(state), "wrong cause")
+            assert(#released == 2, "roster did not release each life once")
+        end
+    end)
+    test("confirmed death is retained across native model removal and later player departure", function()
+        for _, removalFirst in { true, false } do
+            local service, active = fixture(2)
+            local state = active()
+            local id = ground(state)
+            if removalFirst then
+                assert(service.characterRemoved(id, state.roundId), "model loss was rejected")
+                assert(service.eliminate(id, state.roundId), "confirmed death did not refine model loss")
+            else
+                assert(service.eliminate(id, state.roundId), "confirmed death was rejected")
+                assert(not service.characterRemoved(id, state.roundId), "model removal changed known death")
+            end
+            service.leave(id)
+            service.leave(operator(state))
+            service.step()
+            local result = assert(service.snapshot().result, "death did not commit")
+            assert(result.reason == "GroundEliminated" and result.winner == "Gunship", "death cause lost")
+        end
+    end)
+    test("raw model removal alone eliminates; a later departure cannot rewrite the result", function()
+        local service, active = fixture(2)
+        local state = active()
+        local id = ground(state)
+        assert(service.characterRemoved(id, state.roundId), "model loss was rejected")
+        service.step()
+        local before = assert(service.snapshot().result, "raw removal did not commit")
+        assert(before.reason == "GroundEliminated", "raw model removal did not eliminate")
+        service.leave(id)
+        service.leave(operator(state))
+        service.step()
+        local after = assert(service.snapshot().result, "terminal result disappeared")
+        assert(
+            after.reason == before.reason and after.winner == before.winner and after.userId == before.userId,
+            "later departure rewrote the result"
+        )
+    end)
     test("empty server has no winner; a physical kill takes precedence over operator departure", function()
         local empty, deployEmpty = fixture(2)
         local emptyRound = deployEmpty()
+        assert(empty.characterRemoved(ground(emptyRound), emptyRound.roundId), "departure model removal")
         empty.leave(operator(emptyRound))
         empty.leave(ground(emptyRound))
         empty.step()

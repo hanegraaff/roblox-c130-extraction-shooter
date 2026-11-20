@@ -126,24 +126,43 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                         protection.Parent = character
                     end
                     -- A character can disappear without Humanoid.Died (for
-                    -- example an explicit reset/removal). All signals consume
-                    -- this owned generation's life once. Internal clear/request
-                    -- disconnects them before destroying its old character.
+                    -- example an explicit reset/removal or a departure). A
+                    -- ground model loss immediately revokes life; MatchService
+                    -- distinguishes it from a confirmed death during the batch.
+                    -- Internal clear/request disconnects the old generation first.
                     local characterLost = false
-                    local function loseCharacter(deploymentReason: string)
-                        if not running or token ~= request.token or characterLost then
+                    local function loseCharacter(deploymentReason: string, died: boolean)
+                        if not running or token ~= request.token then
                             return
                         end
                         local state = match.snapshot()
                         if state.roundId ~= request.roundId then
                             return
                         end
+                        if state.phase == "Active" and request.role == "Ground" then
+                            if died then
+                                match.eliminate(player.UserId, request.roundId)
+                            else
+                                match.characterRemoved(player.UserId, request.roundId)
+                            end
+                            return
+                        end
+                        if characterLost then
+                            return
+                        end
                         characterLost = true
                         if state.phase == "Deploying" then
-                            match.abort(request.roundId, deploymentReason)
-                        elseif request.role == "Ground" then
-                            match.eliminate(player.UserId, request.roundId)
-                        elseif state.phase == "Lobby" or state.phase == "Active" then
+                            if died then
+                                match.abort(request.roundId, deploymentReason)
+                            else
+                                match.characterRemoved(player.UserId, request.roundId)
+                                -- A deferred death signal may supply a definite
+                                -- reason while the roster is still deploying.
+                                characterLost = false
+                            end
+                        elseif
+                            request.role ~= "Ground" and (state.phase == "Lobby" or state.phase == "Active")
+                        then
                             -- Operator reset rebuilds only the protected placeholder body.
                             owner.request(request.anchor, request.role, request.roundId)
                         end
@@ -151,14 +170,14 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                     table.insert(
                         connections,
                         humanoid.Died:Connect(function()
-                            loseCharacter("DeathDuringDeployment")
+                            loseCharacter("DeathDuringDeployment", true)
                         end)
                     )
                     table.insert(
                         connections,
                         player.CharacterRemoving:Connect(function(removed)
                             if removed == character then
-                                loseCharacter("CharacterRemovedDuringDeployment")
+                                loseCharacter("CharacterRemovedDuringDeployment", false)
                             end
                         end)
                     )
@@ -168,7 +187,7 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                     table.insert(
                         connections,
                         character.Destroying:Connect(function()
-                            loseCharacter("CharacterRemovedDuringDeployment")
+                            loseCharacter("CharacterRemovedDuringDeployment", false)
                         end)
                     )
                     match.ready(player.UserId, request.roundId)

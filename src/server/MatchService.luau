@@ -44,7 +44,11 @@ export type Controller = {
     deploy: () -> (boolean, string?),
     ready: (number, number) -> boolean,
     activate: () -> (boolean, string?),
+    -- Confirmed grounded death/surrender. Can refine a pending character loss.
     eliminate: (number, number) -> boolean,
+    -- Revokes life immediately or defers an ambiguous deployment failure until
+    -- activation. A same-step departure can explain the model removal.
+    characterRemoved: (number, number) -> boolean,
     damageAllowed: (number) -> boolean,
     proposeAircraftDestroyed: (number, AircraftCredit?) -> boolean,
     abort: (number, string) -> boolean,
@@ -81,6 +85,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     local ownedLives: { [number]: boolean } = {}
     local pendingRelease: { [number]: boolean } = {}
     local departingGround: { [number]: boolean } = {}
+    local removedCharacters: { [number]: boolean } = {}
     local lastNow = -math.huge
     local damageSeconds: number? = nil
     local service: Controller
@@ -120,9 +125,32 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
         end
         state.result = result
         table.clear(departingGround)
+        table.clear(removedCharacters)
         for _, member in state.members do
             release(member, false)
         end
+        return true
+    end
+    local function loseGround(id: number, roundId: number, confirmed: boolean): boolean
+        local member = state.members[id]
+        if not damageAllowed(roundId) or not member or not member.connected or member.role ~= "Ground" then
+            return false
+        end
+        if member.life ~= "Alive" then
+            if confirmed and removedCharacters[id] then
+                -- Death can be reported after the owned model's removal.
+                -- Keep the same consumed life but retain the confirmed cause.
+                removedCharacters[id] = nil
+                return true
+            end
+            return false
+        end
+        member.life = "Eliminated"
+        pendingRelease[id] = true
+        if not confirmed then
+            removedCharacters[id] = true
+        end
+        changed()
         return true
     end
     local function cancelDeployment()
@@ -130,6 +158,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             release(member, false)
         end
         table.clear(state.members)
+        table.clear(removedCharacters)
         state.deadlineSeconds = 0
         transition("Lobby")
     end
@@ -179,12 +208,15 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             if member then
                 member.connected = false
                 if state.phase == "Active" then
-                    if member.life == "Alive" then
-                        member.life = "Eliminated"
-                        pendingRelease[id] = true
+                    if member.life == "Alive" or removedCharacters[id] then
                         if member.role == "Ground" then
                             departingGround[id] = true
                         end
+                    end
+                    removedCharacters[id] = nil
+                    if member.life == "Alive" then
+                        member.life = "Eliminated"
+                        pendingRelease[id] = true
                     end
                 end
             end
@@ -249,6 +281,10 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             if state.phase ~= "Deploying" then
                 return false, "not deploying"
             end
+            if next(removedCharacters) then
+                commit({ winner = "None", reason = "CharacterRemovedDuringDeployment" })
+                return false, "deployed character removed"
+            end
             for _, member in state.members do
                 if member.role ~= "Spectator" and (not member.connected or not member.ready) then
                     return false, "roster not ready"
@@ -269,19 +305,25 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             return true, nil
         end,
         eliminate = function(id, roundId)
-            local member = state.members[id]
-            if
-                not damageAllowed(roundId)
-                or not member
-                or member.role ~= "Ground"
-                or member.life ~= "Alive"
-            then
-                return false
+            return loseGround(id, roundId, true)
+        end,
+        characterRemoved = function(id, roundId)
+            if state.phase == "Deploying" and roundId == state.roundId then
+                local member = state.members[id]
+                if
+                    not member
+                    or not member.connected
+                    or member.role == "Spectator"
+                    or removedCharacters[id]
+                then
+                    return false
+                end
+                removedCharacters[id] = true
+                member.ready = false
+                changed()
+                return true
             end
-            member.life = "Eliminated"
-            pendingRelease[id] = true
-            changed()
-            return true
+            return loseGround(id, roundId, false)
         end,
         damageAllowed = damageAllowed,
         proposeAircraftDestroyed = function(roundId, credit)
@@ -349,6 +391,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                 commit(result)
             else
                 table.clear(departingGround)
+                table.clear(removedCharacters)
                 for id in pendingRelease do
                     local member = state.members[id]
                     release(member, true)
