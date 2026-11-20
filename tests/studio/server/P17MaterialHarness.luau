@@ -3,12 +3,13 @@
     P17MaterialHarness: test-only server acceptance for imported Outpost materials.
     Uses real GameRuntime owners, two actual clients and production fire intents.
     Six-family controlled service outcomes are labeled separately from actual
-    weapon impacts. The v7 roof selector samples current residual geometry and
-    checks production sweep/view; it never awards damage or changes aircraft motion.
+    weapon impacts. Roof selectors sample real panel geometry and check production
+    sweep/view; they never award damage or change aircraft motion.
     run(finish) yields for bounded roster/gameplay waits and calls finish once
     after stopping its transport, impact observer and runtime. Reports retain
     ordinary baselines, client diagnostics, actual hits and replicated geometry.
-    Frozen gameplay body: v7 a2f7caf9170236c6c43ef80d14824868ae4a57e1fef92e1b00b705a007d68707.
+    The burst selector includes the Heavy residual in its preflight so the same
+    real panel remains the target when an earned opening appears in flight.
     This test mapping grants fixture orchestration only; never ship it in release.
 ]=]
 local Players = game:GetService("Players")
@@ -19,6 +20,7 @@ local GameRuntime = require(Server.GameRuntime)
 local CombatViewRules = require(Server.CombatViewRules)
 local CombatRuntime = require(Server.CombatRuntime)
 local CombatService = require(Server.CombatService)
+local DestructionService = require(Server.DestructionService)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
@@ -119,12 +121,8 @@ local function p17MaterialSamples(model: Model, appearance: string): ({ Vector3 
     end
     return points, earned
 end
-local function p17FireGeometry(runtime: GameRuntime.Controller, weapon: string, point: Vector3): string
-    local muzzle = runtime.aircraft.muzzle(weapon)
-    if not muzzle then
-        return "muzzle unavailable"
-    end
-    local delta = point - muzzle
+-- Same query roots and CanQuery semantics as the production projectile sweep.
+local function fireParameters(): RaycastParams
     local roots: { Instance } = { workspace.World.Battlefield, workspace.Terrain }
     for _, player in Players:GetPlayers() do
         if
@@ -139,12 +137,20 @@ local function p17FireGeometry(runtime: GameRuntime.Controller, weapon: string, 
     params.FilterType = Enum.RaycastFilterType.Include
     params.FilterDescendantsInstances = roots
     params.RespectCanCollide = false
+    return params
+end
+local function p17FireGeometry(runtime: GameRuntime.Controller, weapon: string, point: Vector3): string
+    local muzzle = runtime.aircraft.muzzle(weapon)
+    if not muzzle then
+        return "muzzle unavailable"
+    end
+    local delta = point - muzzle
     local hit = if delta.Magnitude > 0
         then CombatRuntime.sweep(
             muzzle,
             CombatService.profiles[weapon].collisionRadius,
             delta.Unit * math.min(delta.Magnitude + 0.25, CombatService.profiles[weapon].range),
-            params
+            fireParameters()
         )
         else nil
     local frame = workspace.Aircraft:GetPivot()
@@ -312,6 +318,7 @@ function Harness.run(finish: (Report) -> ())
             panelId: string?,
             firedAt: number,
             impactAt: number,
+            impactPosition: { number },
             scoredThroughShotId: number,
             scoredThroughFiredAt: number?,
             stage: number?,
@@ -362,6 +369,7 @@ function Harness.run(finish: (Report) -> ())
                 panelId = impact.panelId,
                 firedAt = impact.firedAt,
                 impactAt = impact.time,
+                impactPosition = { impact.position.X, impact.position.Y, impact.position.Z },
                 scoredThroughShotId = contiguousShotId,
                 scoredThroughFiredAt = resolvedTimes[contiguousShotId],
                 stage = if current then current.stage else nil,
@@ -764,23 +772,6 @@ function Harness.run(finish: (Report) -> ())
         local started, tries, queries = os.clock(), 0, 0
         local rejected: { { point: { number }, forecastSeconds: number, firstPath: string, firstPanelId: string? } } =
             {}
-        local function parameters(): RaycastParams
-            -- Same query roots/CanQuery semantics as production rayParameters(true).
-            local roots: { Instance } = { workspace.World.Battlefield, workspace.Terrain }
-            for _, player in Players:GetPlayers() do
-                if
-                    player.Character
-                    and player:GetAttribute("Role") == "Ground"
-                    and player:GetAttribute("Life") == "Alive"
-                then
-                    table.insert(roots, player.Character)
-                end
-            end
-            local params = RaycastParams.new()
-            params.FilterType, params.FilterDescendantsInstances, params.RespectCanCollide =
-                Enum.RaycastFilterType.Include, roots, false
-            return params
-        end
         local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
         assert(type(epoch) == "number", "native roof forecast epoch unavailable")
         repeat
@@ -789,7 +780,7 @@ function Harness.run(finish: (Report) -> ())
                     break
                 end
                 tries += 1
-                local params = parameters()
+                local params = fireParameters()
                 local muzzle = assert(runtime.aircraft.muzzle("M102"), "native roof muzzle unavailable")
                 local localMuzzle = workspace.Aircraft:GetPivot():PointToObjectSpace(muzzle)
                 local now = workspace:GetServerTimeNow()
@@ -838,7 +829,7 @@ function Harness.run(finish: (Report) -> ())
                     -- is converted into damage or a claimed accepted impact.
                     local currentMuzzle =
                         assert(runtime.aircraft.muzzle("M102"), "native roof muzzle unavailable")
-                    local first = aimHit("M102", point, currentMuzzle, parameters())
+                    local first = aimHit("M102", point, currentMuzzle, fireParameters())
                     queries += 1
                     local payload = command("M102", point, sequence)
                     if payload and first and runtime.destruction.identify(first.Instance) == id then
@@ -877,6 +868,143 @@ function Harness.run(finish: (Report) -> ())
             rejected = rejected,
         })
         error("no current roof residual has production first-hit/view and bounded handoff margin")
+    end
+    -- The third 21-shot burst can cross into Heavy while rounds are already in
+    -- flight. Use the top of a common solid in every approved state, then require
+    -- a first hit of that same actual panel along the canonical moving muzzle.
+    -- Search uses a bounded eight-second budget and never moves cover or the plane.
+    local function materialBurstAim(
+        id: string,
+        firstSequence: number,
+        count: number
+    ): (Vector3, number, number)
+        awaitReady("GAU23")
+        local model = panel(id)
+        local familyId = model:GetAttribute("PanelAssetFamily")
+        assert(type(familyId) == "string", "burst target requires an approved material family")
+        local family = assert(p17Catalog[familyId], "burst material family missing")
+        local basis = model:GetAttribute("PanelAssetBasis")
+        assert(typeof(basis) == "CFrame", "burst roof basis missing")
+        local frame = pose(id) * basis
+        local normalY = frame.ZVector.Y
+        assert(math.abs(normalY) > 0.99, "burst material query face is not horizontal")
+        local top = family.size.Z / 2 * (if normalY > 0 then 1 else -1)
+        local inset = CombatService.profiles.GAU23.collisionRadius + 0.1
+        local function contains(rectangle: { number }, x: number, y: number): boolean
+            return x >= rectangle[1] + inset
+                and x <= rectangle[3] - inset
+                and y >= rectangle[2] + inset
+                and y <= rectangle[4] - inset
+        end
+        local function insideAppearance(appearance: string, x: number, y: number): boolean
+            for _, rectangle in family.states[appearance].rectangles do
+                if contains(rectangle, x, y) then
+                    return true
+                end
+            end
+            return false
+        end
+        local points: { Vector3 } = {}
+        for _, rectangle in family.states.Heavy.rectangles do
+            local y = (rectangle[2] + rectangle[4]) / 2
+            for _, fraction in { 0.5, 0.25, 0.75 } do
+                local x = rectangle[1] + (rectangle[3] - rectangle[1]) * fraction
+                if
+                    contains(rectangle, x, y)
+                    and insideAppearance("Pristine", x, y)
+                    and insideAppearance("Light", x, y)
+                then
+                    table.insert(points, frame:PointToWorldSpace(Vector3.new(x, y, top)))
+                    assert(#points <= 128, "material burst aim exceeds explicit candidate bound")
+                end
+            end
+        end
+        assert(#points > 0, "material burst has no common solid across damage states")
+        local epoch = ReplicatedStorage.AircraftState:GetAttribute("EpochSeconds")
+        assert(type(epoch) == "number", "material burst forecast epoch unavailable")
+        local relativeMuzzle = workspace.Aircraft:GetPivot():PointToObjectSpace(
+            assert(runtime.aircraft.muzzle("GAU23"), "material burst muzzle unavailable")
+        )
+        local handoffSeconds = 0.4
+        local horizonSeconds = handoffSeconds + (count - 1) * DestructionService.gapSeconds
+        local steps = math.ceil(horizonSeconds / 0.1)
+        local started, attempts, queries = os.clock(), 0, 0
+        local rejected: { { firstPath: string, reason: string, offsetSeconds: number } } = {}
+        repeat
+            for _, point in points do
+                if os.clock() - started >= 8 then
+                    break
+                end
+                attempts += 1
+                local from = workspace:GetServerTimeNow()
+                local params = fireParameters()
+                local clear = true
+                for step = 0, steps do
+                    local offset = step * horizonSeconds / steps
+                    local predicted = assert(
+                        AircraftRules.pose(MapRules.defaults, AircraftRules.defaults, from - epoch + offset),
+                        "material burst forecast pose unavailable"
+                    )
+                    local camera = Vector3.new(predicted.x, predicted.y, predicted.z)
+                    local aircraftFrame =
+                        CFrame.lookAt(camera, camera + Vector3.new(predicted.tangentX, 0, predicted.tangentZ))
+                    local hit =
+                        aimHit("GAU23", point, aircraftFrame:PointToWorldSpace(relativeMuzzle), params)
+                    queries += 1
+                    local direct = hit ~= nil and runtime.destruction.identify(hit.Instance) == id
+                    clear = direct and command("GAU23", point, firstSequence, camera, true) ~= nil
+                    if queries % 12 == 0 then
+                        task.wait()
+                    end
+                    if not clear then
+                        if #rejected < 8 then
+                            table.insert(rejected, {
+                                firstPath = if hit then hit.Instance:GetFullName() else "none",
+                                reason = if direct then "outside fixture view" else "first hit differs",
+                                offsetSeconds = offset,
+                            })
+                        end
+                        break
+                    end
+                end
+                if clear and workspace:GetServerTimeNow() - from < handoffSeconds then
+                    local muzzle =
+                        assert(runtime.aircraft.muzzle("GAU23"), "material burst muzzle unavailable")
+                    local current = aimHit("GAU23", point, muzzle, fireParameters())
+                    if
+                        current
+                        and runtime.destruction.identify(current.Instance) == id
+                        and command("GAU23", point, firstSequence, nil, true)
+                    then
+                        table.insert(observations, {
+                            kind = "native-material-burst-bounded-aim",
+                            panelId = id,
+                            firstSequence = firstSequence,
+                            candidates = #points,
+                            tried = attempts,
+                            sphereQueries = queries + 1,
+                            forecastStartsAt = from,
+                            forecastEndsAt = from + horizonSeconds,
+                            forecastSampleSeconds = horizonSeconds / steps,
+                            currentFirstPath = current.Instance:GetFullName(),
+                            point = { point.X, point.Y, point.Z },
+                            rejected = rejected,
+                        })
+                        return point, from, from + horizonSeconds
+                    end
+                end
+            end
+            task.wait(0.03)
+        until os.clock() - started >= 8
+        table.insert(observations, {
+            kind = "native-material-burst-aim-timeout",
+            panelId = id,
+            candidates = #points,
+            tried = attempts,
+            sphereQueries = queries,
+            rejected = rejected,
+        })
+        error("no common roof solid has production first-hit/view for the full burst")
     end
     local function stableExteriorWall(): (string, Vector3, Vector3)
         awaitReady("M102")
@@ -1443,44 +1571,58 @@ function Harness.run(finish: (Report) -> ())
                 local before = assert(runtime.destruction.snapshot(id), "panel missing")
                 local factStart = #impactFacts
                 local firstSequence = fireSequence + 1
+                local point, forecastStartsAt, forecastEndsAt = materialBurstAim(id, firstSequence, 21)
+                local burstRecord: { [string]: unknown } = { index = burst, firstFactIndex = factStart + 1 }
+                table.insert(bursts, burstRecord)
                 fireSequence += 21
                 local timingToken = probe(operator, "Burst", {
-                    point = roofTarget(panel(id)),
+                    point = point,
                     roundId = runtime.rounds.match.snapshot().roundId,
                     firstSequence = firstSequence,
                     count = 21,
                     cadence = 0.18,
                 })
-                local burstRecord: { [string]: unknown } =
-                    { index = burst, clientSends = burstTiming[timingToken], firstFactIndex = factStart + 1 }
-                table.insert(bursts, burstRecord)
+                burstRecord.clientSends = burstTiming[timingToken]
                 burstTiming[timingToken] = nil
                 waitFor(function()
                     return #impactFacts >= factStart + 21 and runtime.combat.resources().projectiles == 0
                 end, "21 actual on-panel burst impacts", 8)
-                local firstPhysical = impactFacts[factStart + 1]
-                assert(
-                    firstPhysical.earnedSeconds
-                        and math.abs(firstPhysical.earnedSeconds - before.sustainedSeconds) < 1e-7
-                        and firstPhysical.stage == before.stage,
-                    "first resumed impact earned paused/off-target time"
-                )
-                local ordered: { typeof(firstPhysical) } = {}
+                local ordered: { typeof(impactFacts[1]) } = {}
                 for index = factStart + 1, #impactFacts do
                     local fact = impactFacts[index]
                     assert(
                         fact.weapon == "GAU23" and fact.panelId == id,
-                        "burst outcome missed or hit another panel"
+                        string.format(
+                            "burst %d shot %d hit %s instead of %s",
+                            burst,
+                            fact.shotId,
+                            fact.panelId or "unregistered geometry",
+                            id
+                        )
                     )
                     table.insert(ordered, fact)
                     if not transition and fact.stage == 1 then
                         transition = fact
                     end
                 end
-                assert(#ordered == 21, "bounded burst did not produce21 actual impacts")
+                assert(#ordered == 21, "bounded burst did not produce 21 actual impacts")
                 table.sort(ordered, function(a, b)
                     return a.shotId < b.shotId
                 end)
+                local first, last = ordered[1], ordered[#ordered]
+                burstRecord.firstAcceptedAt = first.firedAt
+                burstRecord.lastAcceptedAt = last.firedAt
+                assert(
+                    first.firedAt >= forecastStartsAt and last.firedAt <= forecastEndsAt,
+                    "actual burst was outside the verified fire window"
+                )
+                assert(first.scoredThroughShotId == first.shotId, "no isolated first-impact scoring snapshot")
+                assert(
+                    first.earnedSeconds
+                        and math.abs(first.earnedSeconds - before.sustainedSeconds) < 1e-7
+                        and first.stage == before.stage,
+                    "first resumed impact earned paused/off-target time"
+                )
                 for index, fact in ordered do
                     if index > 1 then
                         local previous = ordered[index - 1]
@@ -1488,7 +1630,7 @@ function Harness.run(finish: (Report) -> ())
                         assert(
                             fact.shotId == previous.shotId + 1
                                 and gap + 1e-9 >= CombatService.profiles.GAU23.cadence
-                                and gap <= 0.225 + 1e-7,
+                                and gap <= DestructionService.gapSeconds + 1e-7,
                             "accepted burst cadence/gap invalid"
                         )
                         earnedTotal += gap

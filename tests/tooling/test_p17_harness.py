@@ -126,7 +126,7 @@ print("PASS actual Luau runner preflight rejects stale roster/owners without res
                 body = source.read_bytes()
                 self.assertTrue(b"AssetMesh.validate" in body, "native constructor guard missing")
                 altered.write_bytes(body.replace(b"AssetMesh.validate", b"AssetMesh.invalid", 1))
-                with self.assertRaisesRegex(ValueError, "frozen v7 gameplay body differs"):
+                with self.assertRaisesRegex(ValueError, "frozen gameplay body differs"):
                     HARNESS.check_frozen_body(altered, expected)
 
     def test_bound_runtime_native_bank_and_fixture_drift_reject(self):

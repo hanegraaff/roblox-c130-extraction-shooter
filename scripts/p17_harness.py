@@ -1,7 +1,7 @@
 """Bind the managed P17 native harness to unchanged approved production inputs.
 
 ``--write`` refreshes only test-only P17Metadata.luau. The default rejects stale
-metadata, source drift and any semantic edit to the frozen v7 server/client body.
+metadata, source drift and any semantic edit to the frozen server/client body.
 No build, Studio operation, cloud upload or acceptance result is produced here.
 """
 from pathlib import Path
@@ -14,9 +14,12 @@ ROOT = Path(__file__).resolve().parents[1]
 PRODUCT_COMMIT = "ee19deb5fe18090573ce0d9788b0c77555bca333"
 PRODUCT_TREE = "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a"
 OUTPUT = "tests/studio/server/P17Metadata.luau"
+FIXTURE_VERSION = "v8-bounded-native-burst"
+SERVER_PROBE = "tests/studio/server/P17MaterialHarness.luau"
+CLIENT_PROBE = "tests/studio/client/P17MaterialHarness.luau"
 FROZEN_BODIES = {
-    "tests/studio/server/P17MaterialHarness.luau": "c0b59d5d763f995de0636f6bac2170a0f87a93251ecde20c31bf54d6db69af1d",
-    "tests/studio/client/P17MaterialHarness.luau": "bc875d230df21811d23555c0d2c5e71db8f34707a0f7487410f8dd16b6d165ac",
+    SERVER_PROBE: "118fb785bc1be2a5720993d8eb98bdef62ecc0cac6668affce1fc5545729c0c2",
+    CLIENT_PROBE: "bc875d230df21811d23555c0d2c5e71db8f34707a0f7487410f8dd16b6d165ac",
 }
 
 
@@ -69,7 +72,7 @@ def check_frozen_body(path: Path, expected: str) -> None:
     contents = path.read_bytes()
     marker = b"local Players ="
     if marker not in contents or digest(contents[contents.index(marker):]) != expected:
-        raise ValueError("frozen v7 gameplay body differs: " + path.name)
+        raise ValueError("frozen gameplay body differs: " + path.name)
 
 
 def check_production_revision(root: Path, production: dict[str, str]) -> None:
@@ -109,9 +112,9 @@ def metadata(root: Path = ROOT) -> dict:
         "expectedClientSmokeEach": 10,
         "expectedFullMaterialCases": 10,
         "requestedActualClients": 2,
-        "manualFixtureVersion": "v7-bounded-roof-aim",
-        "frozenV7ServerSha256": "a2f7caf9170236c6c43ef80d14824868ae4a57e1fef92e1b00b705a007d68707",
-        "frozenV7ClientSha256": "fe55618bf35301b823cd73a7934a69f905f1a9012681b85f22d30dd5876ac7b9",
+        "manualFixtureVersion": FIXTURE_VERSION,
+        "serverProbeSha256": fixtures[SERVER_PROBE],
+        "clientProbeSha256": fixtures[CLIENT_PROBE],
         "status": "source-bound fixture; native acceptance must be recorded separately",
     }
 
@@ -149,7 +152,7 @@ def main() -> None:
         (ROOT / OUTPUT).write_text(render(metadata()))
     value = verify()
     print(f"P17 harness binding passed: {len(value['productionInputs'])} unchanged production inputs, "
-          f"{len(value['harnessInputs'])} fixture inputs; v7 bodies exact, no native execution.")
+          f"{len(value['harnessInputs'])} fixture inputs; {FIXTURE_VERSION} bodies exact, no native execution.")
 
 
 if __name__ == "__main__":

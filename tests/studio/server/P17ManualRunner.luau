@@ -2,7 +2,7 @@
 -- P17ManualRunner: test-only local native Server & Clients invocation/storage adapter.
 -- Uses the existing trusted ManualHarness selector and real Players only.
 -- Never calls GetTestArgs/EndTest, never starts Studio, never changes core rules.
--- The source-bound v7 owner disconnects observers/stops runtime before delivering here.
+-- The source-bound harness disconnects observers and stops runtime before delivery.
 -- Report chunks are server-only and remain until coordinator collection/Stop.
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
@@ -76,7 +76,7 @@ function Runner.run()
     end
     local invocation = {
         mode = "manual-native-server-clients",
-        harness = "P17Manual-v7-bounded-roof-aim",
+        harness = "P17Manual-" .. Metadata.manualFixtureVersion,
         requestedInitialClients = 2,
         actualLateClientRequired = false,
         selector = "ServerStorage.DevelopmentSettings.ManualHarness",
@@ -85,8 +85,8 @@ function Runner.run()
         productionFingerprintSha256 = Metadata.productionFingerprintSha256,
         harnessCommit = harnessCommit,
         harnessFingerprintSha256 = Metadata.harnessFingerprintSha256,
-        serverProbeSha256 = Metadata.frozenV7ServerSha256,
-        clientProbeSha256 = Metadata.frozenV7ClientSha256,
+        serverProbeSha256 = Metadata.serverProbeSha256,
+        clientProbeSha256 = Metadata.clientProbeSha256,
         manualFixtureVersion = Metadata.manualFixtureVersion,
         approvedAssetBindings = Metadata.approvedAssetBindings,
         serverTime = workspace:GetServerTimeNow(),
