@@ -12,6 +12,7 @@ export type Facts = {
     deadlineSeconds: number,
     aircraftDestroyed: boolean,
     groundAlive: number,
+    groundEliminated: boolean,
     operatorConnected: boolean,
     connectedCount: number,
 }
@@ -33,6 +34,9 @@ function RoundRules.outcome(facts: Facts): Result?
     if facts.aircraftDestroyed then
         return { winner = "Ground", reason = "AircraftDestroyed" }
     end
+    if facts.groundEliminated then
+        return { winner = "Gunship", reason = "GroundEliminated" }
+    end
     if facts.connectedCount == 0 then
         return { winner = "None", reason = "EmptyServer" }
     end
@@ -40,7 +44,7 @@ function RoundRules.outcome(facts: Facts): Result?
         if not facts.operatorConnected then
             return { winner = "None", reason = "NoParticipants" }
         end
-        return { winner = "Gunship", reason = "GroundEliminated" }
+        return { winner = "Gunship", reason = "GroundDeparted" }
     end
     if not facts.operatorConnected then
         return { winner = "Ground", reason = "OperatorForfeit" }

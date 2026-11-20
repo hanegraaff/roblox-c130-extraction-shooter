@@ -1,5 +1,5 @@
 --!strict
--- P03 A2-A4/A6: actual service with controlled monotonic time and equipment-release adapter.
+-- P03 A2-A4/A6 and P09 A1-A4/A6: controlled monotonic time and equipment release.
 type API = typeof(require(game:GetService("ServerScriptService").Server.MatchService))
 type Member = {
     userId: number,
@@ -15,7 +15,7 @@ type Snapshot = {
     phase: "Lobby" | "Deploying" | "Active" | "Results" | "Resetting",
     deadlineSeconds: number,
     members: { [number]: Member },
-    result: { winner: string, reason: string }?,
+    result: { winner: string, reason: string, userId: number?, weapon: string?, shotId: string? }?,
 }
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local Match = candidate :: API
@@ -148,6 +148,82 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(not release.recover, "expected not release.recover")
         end
     end)
+    test("one pre-deadline damage batch preserves lethal rocket credit across clock rollover", function()
+        local service, active, advance = fixture(2)
+        local state = active()
+        local id = ground(state)
+        local credit = { userId = id, weapon = "RocketLauncher", shotId = "rocket:1:3" }
+        advance(109.999)
+        service.step(function(seconds)
+            assert(seconds == 109.999, "batch time differs from deadline sample")
+            -- A slow frame must resolve all accepted damage at its captured time.
+            advance(110)
+            assert(service.damageAllowed(state.roundId), "clock rollover rejected valid damage")
+            assert(service.eliminate(id, state.roundId), "same-step ground elimination rejected")
+            assert(service.proposeAircraftDestroyed(state.roundId, credit), "valid lethal rocket rejected")
+            assert(not service.proposeAircraftDestroyed(state.roundId), "duplicate destruction accepted")
+            credit.userId = 99
+        end)
+        local resolved = service.snapshot()
+        local result = assert(resolved.result, "the pre-deadline batch did not commit")
+        assert(result.winner == "Ground" and result.reason == "AircraftDestroyed", "wrong tie result")
+        assert(
+            result.userId == id and result.weapon == "RocketLauncher" and result.shotId == "rocket:1:3",
+            "lethal hit attribution changed"
+        )
+        service.step(function()
+            error("terminal batch reentered")
+        end)
+        assert(service.snapshot().revision == resolved.revision, "committed result changed")
+    end)
+    test("deadline equality and later steps skip queued damage and commit timeout", function()
+        for _, expiredAt in { 110, 111 } do
+            local service, active, advance = fixture(2)
+            local state = active()
+            advance(expiredAt)
+            service.step(function()
+                error("expired batch ran damage")
+            end)
+            local ended = service.snapshot()
+            local result = assert(ended.result, "deadline did not commit a result")
+            assert(
+                result.winner == "Gunship" and result.reason == "Timeout",
+                "deadline produced the wrong result"
+            )
+            assert(
+                result.userId == operator(state) and result.shotId == nil,
+                "timeout incorrectly attributed damage"
+            )
+            assert(not service.damageAllowed(state.roundId), "expired round still accepts damage")
+            assert(
+                not service.proposeAircraftDestroyed(state.roundId),
+                "expired round accepted an aircraft destruction claim"
+            )
+            assert(
+                service.snapshot().revision == ended.revision,
+                "rejected damage changed the terminal revision"
+            )
+        end
+    end)
+    test("earlier total ground elimination closes the round to later rocket damage", function()
+        local service, active, advance = fixture(2)
+        local state = active()
+        service.step(function()
+            assert(service.eliminate(ground(state), state.roundId))
+        end)
+        local ended = service.snapshot()
+        local result = assert(ended.result, "ground elimination did not commit a result")
+        assert(
+            result.reason == "GroundEliminated" and result.userId == operator(state),
+            "ground elimination assigned wrong reason or credit"
+        )
+        advance(101)
+        assert(
+            not service.damageAllowed(state.roundId) and not service.proposeAircraftDestroyed(state.roundId),
+            "earlier elimination allowed late aircraft damage"
+        )
+        assert(service.snapshot().revision == ended.revision, "late damage changed the terminal revision")
+    end)
     test("aircraft destruction before last ground elimination also resolves ground win once", function()
         local service, active = fixture(2)
         local state = active()
@@ -200,10 +276,43 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         service.leave(ground(state))
         service.step()
         local result = service.snapshot().result
-        assert(result and result.winner == "Gunship", 'expected result and result.winner == "Gunship"')
+        assert(
+            result and result.winner == "Gunship" and result.reason == "GroundDeparted",
+            "ground departure did not award the surviving gunship"
+        )
+        assert(result.userId == operator(state) and result.shotId == nil, "departure invented a hit")
         for _, release in released do
             assert(not release.recover, "expected not release.recover")
         end
+    end)
+    test("empty server has no winner; a physical kill takes precedence over operator departure", function()
+        local empty, deployEmpty = fixture(2)
+        local emptyRound = deployEmpty()
+        empty.leave(operator(emptyRound))
+        empty.leave(ground(emptyRound))
+        empty.step()
+        local emptyResult = assert(empty.snapshot().result, "empty server did not commit a result")
+        assert(
+            emptyResult.winner == "None" and emptyResult.reason == "EmptyServer",
+            "empty server awarded a competitive result"
+        )
+        assert(
+            emptyResult.userId == nil and emptyResult.shotId == nil,
+            "empty-server cleanup awarded a hit or credit"
+        )
+
+        local eliminated, deployElimination = fixture(2)
+        local finalRound = deployElimination()
+        eliminated.leave(operator(finalRound))
+        eliminated.step(function()
+            assert(eliminated.eliminate(ground(finalRound), finalRound.roundId))
+        end)
+        local eliminationResult =
+            assert(eliminated.snapshot().result, "ground elimination did not commit a result")
+        assert(
+            eliminationResult.winner == "Gunship" and eliminationResult.reason == "GroundEliminated",
+            "ground elimination lost precedence to operator departure"
+        )
     end)
     test("both participant departures with a late spectator produce no competitive winner", function()
         local service, active = fixture(2)

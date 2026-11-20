@@ -5,6 +5,7 @@ type Facts = {
     deadlineSeconds: number,
     aircraftDestroyed: boolean,
     groundAlive: number,
+    groundEliminated: boolean,
     operatorConnected: boolean,
     connectedCount: number,
 }
@@ -41,6 +42,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             deadlineSeconds = 10,
             aircraftDestroyed = true,
             groundAlive = 0,
+            groundEliminated = true,
             operatorConnected = true,
             connectedCount = 2,
         })
@@ -55,6 +57,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             deadlineSeconds = 10,
             aircraftDestroyed = true,
             groundAlive = 0,
+            groundEliminated = true,
             operatorConnected = true,
             connectedCount = 2,
         })
@@ -67,10 +70,35 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                 deadlineSeconds = 10,
                 aircraftDestroyed = false,
                 groundAlive = 0,
+                groundEliminated = false,
                 operatorConnected = false,
                 connectedCount = count,
             })
             assert(result and result.winner == "None", 'expected result and result.winner == "None"')
         end
+    end)
+    test("last ground departure and physical ground elimination have distinct reasons", function()
+        local facts = {
+            nowSeconds = 9,
+            deadlineSeconds = 10,
+            aircraftDestroyed = false,
+            groundAlive = 0,
+            groundEliminated = false,
+            operatorConnected = true,
+            connectedCount = 1,
+        }
+        local departed = Rules.outcome(facts)
+        assert(
+            departed and departed.winner == "Gunship" and departed.reason == "GroundDeparted",
+            "ground departure did not award the surviving gunship"
+        )
+        facts.groundEliminated = true
+        facts.operatorConnected = false
+        facts.connectedCount = 0
+        local eliminated = Rules.outcome(facts)
+        assert(
+            eliminated and eliminated.winner == "Gunship" and eliminated.reason == "GroundEliminated",
+            "ground elimination did not precede the operator departure"
+        )
     end)
 end

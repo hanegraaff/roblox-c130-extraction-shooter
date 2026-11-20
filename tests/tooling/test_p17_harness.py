@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -42,7 +43,7 @@ end]====]))()
 local server = assert(loadstring([====[return function(ServerStorage, ReplicatedStorage, game)
 SERVER_BLOCK
 end]====]))()
-local expected = {P08="LauncherHarness",P17="P17MaterialHarness",P07="DestructionHarness",P05="CombatHarness",P14="AircraftPanHarness"}
+local expected = {P08="LauncherHarness",P09="MatchOutcomeHarness",P17="P17MaterialHarness",P07="DestructionHarness",P05="CombatHarness",P14="AircraftPanHarness"}
 local function published(mode, studio)
     local value = nil
     server({FindFirstChild=function() return {IsA=function() return true end,GetAttribute=function() return mode end} end},
@@ -66,14 +67,20 @@ for mode,name in expected do
 end
 assert(published(nil,true)=="" and published("unknown",true)=="","ordinary selection changed")
 local ordinary=started("")
-local prior={"CombatHarness","DestructionHarness","GroundCombatHarness","LauncherHarness","RoundHarness","AircraftHarness","AircraftPanHarness","ExpandedMapHarness"}
-assert(#ordinary==#prior,"ordinary listener population changed")
-for i,name in prior do assert(ordinary[i]==name,"ordinary listener ordering changed") end
+local ordinaryListeners={"CombatHarness","DestructionHarness","GroundCombatHarness","LauncherHarness","MatchOutcomeHarness","RoundHarness","AircraftHarness","AircraftPanHarness","ExpandedMapHarness"}
+assert(#ordinary==#ordinaryListeners,"ordinary listener population changed")
+for _,name in ordinaryListeners do
+    local occurrences=0
+    for _,started in ordinary do
+        if started==name then occurrences+=1 end
+    end
+    assert(occurrences==1,"ordinary listener missing or started twice: "..name)
+end
 print("PASS actual Luau manual/ordinary dispatch control flow")
 local preflight = assert(loadstring([====[return function(RunService, game, ServerStorage, ReplicatedStorage, Players, HttpService, workspace, Metadata, Instance)
 PREFLIGHT_BLOCK
 end]====]))()
-local function attempt(actualCount, baselineCount, area, blockedName)
+local function attempt(actualCount, baselineCount, area, blockedName, baseline)
     local function lookup(owner,name)
         if owner==area and name==blockedName then return {} end
         return nil
@@ -86,13 +93,20 @@ local function attempt(actualCount, baselineCount, area, blockedName)
         {FindFirstChild=function(_,name) return if name=="DevelopmentSettings" then settings else lookup("server",name) end},
         {FindFirstChild=function(_,name) return lookup("replicated",name) end},
         {GetPlayers=function() return table.create(actualCount,true) end},
-        {JSONDecode=function() return {discovered=173,passed=173,failed=0,errors=0,skipped=0,clientCount=baselineCount} end},
+        {JSONDecode=function() return baseline or {discovered=181,passed=181,failed=0,errors=0,skipped=0,clientCount=baselineCount} end},
         {GetAttribute=function() return "baseline" end,FindFirstChild=function(_,name) return lookup("world",name) end,
             SetAttribute=function() error("preflight mutated status") end},
-        {expectedServerSmoke=173}, {new=function() error("preflight allocated resource") end})
+        {}, {new=function() error("preflight allocated resource") end})
 end
 -- A valid positive control must finish with no status writes/allocations.
 assert(attempt(2,2),"valid retained-session preflight rejected")
+for _,baseline in {
+    {discovered=0,passed=0,failed=0,errors=0,skipped=0,clientCount=2},
+    {discovered=181,passed=180,failed=0,errors=0,skipped=1,clientCount=2},
+} do
+    local ok,why=attempt(2,2,nil,nil,baseline)
+    assert(not ok and string.find(tostring(why),"ordinary server baseline failed"),"invalid smoke passed")
+end
 for _,counts in {{3,2},{2,3},{1,2},{2,1}} do
     local ok,why=attempt(counts[1],counts[2])
     assert(not ok and string.find(tostring(why),"fresh two%-client server baseline"),"stale/wrong roster not rejected")
@@ -150,6 +164,18 @@ print("PASS actual Luau runner preflight rejects stale roster/owners without res
                             dict(expected, unexpected="f" * 64)):
                 with self.assertRaisesRegex(ValueError, "source input coverage differs"):
                     HARNESS.check_inputs(root, expected, changed)
+
+    def test_current_metadata_keeps_historical_tree_and_fingerprints_separate(self):
+        production = {"src/server/owner.luau": "a" * 64}
+        fixtures = {path: "b" * 64 for path in HARNESS.FROZEN_BODIES}
+        with mock.patch.object(HARNESS, "source_inputs", return_value=(production, fixtures)):
+            metadata = HARNESS.metadata(ROOT)
+        self.assertEqual(metadata["referenceProductionTree"], HARNESS.PRODUCT_TREE)
+        self.assertEqual(metadata["productionInputs"], production)
+        self.assertEqual(metadata["productionFingerprintSha256"], HARNESS.digest(HARNESS.canonical(production)))
+        with mock.patch.object(HARNESS, "PRODUCT_TREE", "0" * 40):
+            with self.assertRaisesRegex(ValueError, "historical P17 production revision unavailable or incorrect"):
+                HARNESS.check_reference_revision(ROOT)
 
     def test_p17_artifact_isolation_positive_and_each_missing_leaked_module(self):
         valid = {name: "ModuleScript" for name in BUILD.MANUAL_P17_TEST_ONLY}

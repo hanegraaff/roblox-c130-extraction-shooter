@@ -6,6 +6,7 @@
     combat, aircraft and round owners, then destroys the map snapshot.
 ]=]
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 local MapService = require(script.Parent.MapService)
 local MatchRuntime = require(script.Parent.MatchRuntime)
 local AircraftService = require(script.Parent.AircraftService)
@@ -22,6 +23,7 @@ export type Controller = {
     destruction: DestructionRuntime.Controller,
     groundCombat: GroundCombatRuntime.Controller,
     launcher: LauncherRuntime.Controller,
+    resources: () -> { frameConnections: number },
     stop: () -> (),
 }
 
@@ -50,7 +52,7 @@ function GameRuntime.start(
             end
             return characters
         end,
-        heartbeat = game:GetService("RunService").Heartbeat,
+        heartbeat = RunService.Heartbeat,
         allowStations = false,
         corrected = function(character)
             if onCorrection then
@@ -74,7 +76,7 @@ function GameRuntime.start(
         map.destroy()
         return nil, roundReason
     end
-    local aircraft, aircraftReason = AircraftService.start(rounds.match)
+    local aircraft, aircraftReason = AircraftService.start(rounds.match, nil, true)
     if not aircraft then
         rounds.stop()
         map.destroy()
@@ -88,7 +90,7 @@ function GameRuntime.start(
         return nil, destructionReason
     end
     destruction.sync(rounds.match.snapshot().roundId)
-    local combat, combatReason = CombatRuntime.start(rounds.match, aircraft, nil, nil, nil, destruction)
+    local combat, combatReason = CombatRuntime.start(rounds.match, aircraft, nil, nil, nil, destruction, true)
     if not combat then
         destruction.stop()
         aircraft.stop()
@@ -96,7 +98,7 @@ function GameRuntime.start(
         map.destroy()
         return nil, combatReason
     end
-    local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match, groundDependencies)
+    local groundCombat, groundReason = GroundCombatRuntime.start(rounds.match, groundDependencies, true)
     if not groundCombat then
         combat.stop()
         destruction.stop()
@@ -105,7 +107,7 @@ function GameRuntime.start(
         map.destroy()
         return nil, groundReason
     end
-    local launcher, launcherReason = LauncherRuntime.start(rounds.match, groundCombat)
+    local launcher, launcherReason = LauncherRuntime.start(rounds.match, groundCombat, true)
     if not launcher then
         groundCombat.stop()
         combat.stop()
@@ -121,6 +123,25 @@ function GameRuntime.start(
             groundCombat.trustCorrection(player)
         end
     end
+    -- One ordered frame owns match damage and interactions. All casts observe
+    -- the same pre-impact cover and deadline. Phase publication and equipment
+    -- cleanup follow the result commit, before launcher intent is processed.
+    local frame = RunService.Heartbeat:Connect(function(dt)
+        local time = workspace:GetServerTimeNow()
+        aircraft.step(time)
+        rounds.step(time, function(batchSeconds)
+            combat.advance(batchSeconds, dt)
+            groundCombat.resolveRifles()
+            launcher.advance(batchSeconds)
+            destruction.flush(batchSeconds)
+        end)
+        if rounds.match.snapshot().phase ~= "Active" then
+            destruction.flush(time)
+        end
+        combat.maintain(time)
+        groundCombat.maintain(time)
+        launcher.interact(time)
+    end)
     return {
         launcher = launcher,
         groundCombat = groundCombat,
@@ -128,7 +149,11 @@ function GameRuntime.start(
         aircraft = aircraft,
         combat = combat,
         destruction = destruction,
+        resources = function()
+            return { frameConnections = if frame.Connected then 1 else 0 }
+        end,
         stop = function()
+            frame:Disconnect()
             onCorrection = nil
             launcher.stop()
             groundCombat.stop()

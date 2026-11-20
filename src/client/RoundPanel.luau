@@ -8,9 +8,31 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
 local Lifecycle = require(game:GetService("ReplicatedStorage").Shared.Lifecycle)
 local RoundPanel = {}
 local ThermalCameraController = require(script.Parent.ThermalCameraController)
+local winnerText = {
+    Ground = "Ground team wins",
+    Gunship = "C-130 wins",
+    None = "Round ended",
+}
+local reasonText = {
+    AircraftDestroyed = "The C-130 was destroyed.",
+    GroundEliminated = "All ground players were eliminated.",
+    GroundDeparted = "The last ground player left the round.",
+    Timeout = "The C-130 survived until time ran out.",
+    OperatorForfeit = "The C-130 operator left the round.",
+    NoParticipants = "Both sides left the round.",
+    EmptyServer = "All players left the server.",
+    DeploymentTimeout = "The teams could not deploy in time.",
+    CharacterLoadFailed = "A team could not deploy.",
+    CharacterIncomplete = "A team could not deploy.",
+    DeadDeploymentCharacter = "A player was lost during deployment.",
+    DeathDuringDeployment = "A player was lost during deployment.",
+    CharacterRemovedDuringDeployment = "A player was lost during deployment.",
+}
+type Result = { roundId: number, winner: string, reason: string }
 
 -- Creates a controller for existing player/status owners; start/stop are idempotent.
 -- Optional nonyielding touch capability supports the same responsive layout in
@@ -63,6 +85,8 @@ function RoundPanel.new(
             surrender.Parent = gui
             local sequence = 0
             local oldRoundId = -1
+            local lastEncodedResult: string? = nil
+            local result: Result? = nil
             local thermal = ThermalCameraController.new(player, playerGui, state, inputProvider)
             local function update()
                 local roundId = state:GetAttribute("RoundId")
@@ -85,10 +109,6 @@ function RoundPanel.new(
                         seconds % 60,
                         tostring(state:GetAttribute("GroundAlive"))
                     )
-                elseif phase == "Results" then
-                    detail = tostring(state:GetAttribute("Winner"))
-                        .. " • "
-                        .. tostring(state:GetAttribute("Reason"))
                 elseif phase == "Deploying" then
                     detail = "Preparing characters…"
                 elseif phase == "Resetting" then
@@ -132,7 +152,24 @@ function RoundPanel.new(
                 healthLabel.Size =
                     UDim2.fromOffset(if compactGround then 240 else 250, if compactGround then 22 else 34)
                 healthLabel.TextSize = if compactGround then 14 else 17
-                if thermal.ownsCamera() or activeGround then
+                if phase == "Results" then
+                    local encoded = state:GetAttribute("Result")
+                    if type(encoded) == "string" and encoded ~= lastEncodedResult then
+                        lastEncodedResult = encoded
+                        result = HttpService:JSONDecode(encoded) :: Result
+                    end
+                    label.AnchorPoint = Vector2.new(0.5, 0)
+                    label.Position = UDim2.new(0.5, 0, 0, 112)
+                    label.Size = UDim2.new(1, -24, 0, 84)
+                    label.TextSize = 20
+                    if result and result.roundId == roundId then
+                        label.Text = (winnerText[result.winner] or "Round ended")
+                            .. "\n"
+                            .. (reasonText[result.reason] or "The round was canceled.")
+                    else
+                        label.Text = "Round ended"
+                    end
+                elseif thermal.ownsCamera() or activeGround then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
                     label.Size = if compactGround
@@ -193,7 +230,7 @@ function RoundPanel.new(
                     end
                     if target then
                         camera.CameraSubject = target
-                    elseif phase == "Active" and life ~= "Alive" then
+                    elseif phase == "Results" or (phase == "Active" and life ~= "Alive") then
                         camera.CameraType = Enum.CameraType.Scriptable
                         camera.CFrame = CFrame.lookAt(Vector3.new(0, 150, 140), Vector3.zero)
                     end

@@ -36,6 +36,9 @@ assert(type(manualMode) == "string", "server manual-client dispatch readiness ti
 if manualMode == "P08" then
     require(script.LauncherHarness).run()
     return
+elseif manualMode == "P09" then
+    require(script.MatchOutcomeHarness).run()
+    return
 elseif manualMode == "P17" then
     require(script.P17MaterialHarness).run()
     return
@@ -53,6 +56,7 @@ require(script.CombatHarness).run()
 require(script.DestructionHarness).run()
 require(script.GroundCombatHarness).run()
 require(script.LauncherHarness).run()
+require(script.MatchOutcomeHarness).run()
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
 require(script.AircraftPanHarness).run()

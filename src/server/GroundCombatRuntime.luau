@@ -48,7 +48,11 @@ export type Controller = {
     rocketSweep: (number, string, Vector3, Vector3) -> boolean,
     -- Sweeps the first authoritative solid. Returns collision and aircraft award;
     -- nil collision means clear travel, never permission to skip solid cover.
-    rocketCast: (number, string, Vector3, Vector3) -> (Vector3?, boolean),
+    rocketCast: (number, string, Vector3, Vector3, number?) -> (Vector3?, boolean),
+    -- Applies accepted rifle rays against pre-impact geometry during the frame.
+    resolveRifles: () -> (),
+    -- Synchronizes equipment, cosmetics and health with the committed phase.
+    maintain: (number) -> (),
     -- Shared movement/origin authority for equipped launcher fire and pickup.
     validateGround: (Player) -> boolean,
     -- Only a trusted server owner may acknowledge its own spawn/correction.
@@ -59,9 +63,12 @@ export type Controller = {
 }
 -- match is the sole result owner. rocketImpact is a server-only fixture seam;
 -- directness must be established by the server's swept collision before invocation.
+-- Live rocket casts supply their originating UserId for lethal-hit attribution.
+-- GameRuntime owns both frame steps when externallyStepped is true.
 function GroundCombatRuntime.start(
     match: MatchService.Controller,
-    dependencies: Dependencies?
+    dependencies: Dependencies?,
+    externallyStepped: boolean?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("GroundFire") then
@@ -86,6 +93,17 @@ function GroundCombatRuntime.start(
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local connections: { RBXScriptConnection } = {}
     local tracers: { { part: Part, origin: Vector3, endpoint: Vector3, started: number, duration: number } } =
+        {}
+    local pendingRifles: {
+        {
+            player: Player,
+            roundId: number,
+            origin: Vector3,
+            target: Vector3,
+            sequence: number,
+            firedAt: number,
+        }
+    } =
         {}
     local running = true
     local lastRound = -1
@@ -235,15 +253,14 @@ function GroundCombatRuntime.start(
         end
         return RateLimit.take(bucket, now)
     end
-    local function award(roundId: number, shotId: string, weapon: string, direct: boolean): boolean
-        local state = match.snapshot()
-        local now = workspace:GetServerTimeNow()
-        if
-            not running
-            or state.phase ~= "Active"
-            or state.roundId ~= roundId
-            or now >= state.deadlineSeconds
-        then
+    local function award(
+        roundId: number,
+        shotId: string,
+        weapon: string,
+        direct: boolean,
+        userId: number?
+    ): boolean
+        if not running or not match.damageAllowed(roundId) then
             return false
         end
         local amount, destroyed = health.impact(roundId, shotId, weapon, direct)
@@ -252,7 +269,10 @@ function GroundCombatRuntime.start(
         end
         publish()
         if destroyed then
-            match.proposeAircraftDestroyed(roundId)
+            match.proposeAircraftDestroyed(
+                roundId,
+                if userId then { userId = userId, weapon = weapon, shotId = shotId } else nil
+            )
         end
         return true
     end
@@ -260,7 +280,8 @@ function GroundCombatRuntime.start(
         roundId: number,
         shotId: string,
         origin: Vector3,
-        displacement: Vector3
+        displacement: Vector3,
+        userId: number?
     ): (Vector3?, boolean)
         if
             not running
@@ -293,56 +314,18 @@ function GroundCombatRuntime.start(
             return nil, false
         end
         local applied = hit.Instance:IsDescendantOf(aircraft)
-            and award(roundId, shotId, "RocketLauncher", true)
+            and award(roundId, shotId, "RocketLauncher", true, userId)
         return hit.Position, applied
     end
-    table.insert(
-        connections,
-        fire.OnServerEvent:Connect(function(player: Player, payload: unknown)
-            local now = workspace:GetServerTimeNow()
-            if not spendBudget(player, now) then
-                observe(player, "rate", now)
-                return
+    local function resolveRifles()
+        if not running then
+            return
+        end
+        for _, shot in pendingRifles do
+            if not match.damageAllowed(shot.roundId) then
+                continue
             end
-            if not active(player, now) then
-                observe(player, "inactive", now)
-                return
-            end
-            if not ownedEquipped(player) then
-                observe(player, "not-equipped", now)
-                return
-            end
-            local character = player.Character
-            local head = if character then character:FindFirstChild("Head") else nil
-            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
-            if not head or not head:IsA("BasePart") or not root or not root:IsA("BasePart") then
-                observe(player, "body-missing", now)
-                return
-            end
-            local origin = head.Position
-            -- Reject malformed, replayed, out-of-range or cooldown requests
-            -- before the movement, voxel, overlap and world-ray checks.
-            if not rifles.preflight(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z) then
-                observe(player, "preflight", now)
-                return
-            end
-            if not track(player, now, false) then
-                observe(player, "movement", now)
-                return
-            end
-            local allowed, originReason = originGeometry.allows(root, head)
-            if not allowed then
-                observe(player, "origin:" .. tostring(originReason), now)
-                return
-            end
-            local intent = rifles.fire(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z)
-            if not intent then
-                observe(player, "fire-rejected", now)
-                return
-            end
-            observe(player, "accepted", now)
-            publishRifle(player, now)
-            local target = Vector3.new(intent.x, intent.y, intent.z)
+            local player, origin, target, now = shot.player, shot.origin, shot.target, shot.firedAt
             local params = RaycastParams.new()
             params.FilterType = Enum.RaycastFilterType.Include
             local aircraft = workspace:FindFirstChild("Aircraft")
@@ -400,23 +383,23 @@ function GroundCombatRuntime.start(
                 flash.Parent = effects
                 Debris:AddItem(flash, 0.15)
             end
-            local state = match.snapshot()
             local healthBefore = health.snapshot().health
             local applied = false
             if hit and aircraft and hit.Instance:IsDescendantOf(aircraft) then
                 applied = award(
-                    state.roundId,
-                    tostring(player.UserId) .. ":" .. tostring(intent.sequence),
+                    shot.roundId,
+                    tostring(player.UserId) .. ":" .. tostring(shot.sequence),
                     "M7",
-                    true
+                    true,
+                    player.UserId
                 )
             end
             aircraftState:SetAttribute(
                 "GroundShot",
                 HttpService:JSONEncode({
-                    roundId = state.roundId,
+                    roundId = shot.roundId,
                     userId = player.UserId,
-                    sequence = intent.sequence,
+                    sequence = shot.sequence,
                     x = endpoint.X,
                     y = endpoint.Y,
                     z = endpoint.Z,
@@ -427,7 +410,7 @@ function GroundCombatRuntime.start(
                 local hitbox = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
                 dependencies.observeShot({
                     userId = player.UserId,
-                    sequence = intent.sequence,
+                    sequence = shot.sequence,
                     serverTime = now,
                     origin = origin,
                     requestedTarget = target,
@@ -439,6 +422,63 @@ function GroundCombatRuntime.start(
                     applied = applied,
                 })
             end
+        end
+        table.clear(pendingRifles)
+    end
+    table.insert(
+        connections,
+        fire.OnServerEvent:Connect(function(player: Player, payload: unknown)
+            local now = workspace:GetServerTimeNow()
+            if not spendBudget(player, now) then
+                observe(player, "rate", now)
+                return
+            end
+            if not active(player, now) or #pendingRifles >= 32 then
+                observe(player, "inactive", now)
+                return
+            end
+            if not ownedEquipped(player) then
+                observe(player, "not-equipped", now)
+                return
+            end
+            local character = player.Character
+            local head = if character then character:FindFirstChild("Head") else nil
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            if not head or not head:IsA("BasePart") or not root or not root:IsA("BasePart") then
+                observe(player, "body-missing", now)
+                return
+            end
+            local origin = head.Position
+            -- Reject malformed, replayed, out-of-range or cooldown requests
+            -- before the movement, voxel, overlap and world-ray checks.
+            if not rifles.preflight(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z) then
+                observe(player, "preflight", now)
+                return
+            end
+            if not track(player, now, false) then
+                observe(player, "movement", now)
+                return
+            end
+            local allowed, originReason = originGeometry.allows(root, head)
+            if not allowed then
+                observe(player, "origin:" .. tostring(originReason), now)
+                return
+            end
+            local intent = rifles.fire(player.UserId, payload, true, now, origin.X, origin.Y, origin.Z)
+            if not intent then
+                observe(player, "fire-rejected", now)
+                return
+            end
+            observe(player, "accepted", now)
+            publishRifle(player, now)
+            table.insert(pendingRifles, {
+                player = player,
+                roundId = match.snapshot().roundId,
+                origin = origin,
+                target = Vector3.new(intent.x, intent.y, intent.z),
+                sequence = intent.sequence,
+                firedAt = now,
+            })
         end)
     )
     table.insert(
@@ -463,68 +503,85 @@ function GroundCombatRuntime.start(
             movement[player] = nil
         end)
     )
-    table.insert(
-        connections,
-        RunService.Heartbeat:Connect(function()
-            local now = workspace:GetServerTimeNow()
-            local state = match.snapshot()
-            for i = #tracers, 1, -1 do
-                local tracer = tracers[i]
-                local elapsed = now - tracer.started
-                if elapsed >= tracer.duration + TRACER_TAIL_SECONDS or not tracer.part.Parent then
-                    tracer.part:Destroy()
-                    table.remove(tracers, i)
-                else
-                    local progress = math.clamp(elapsed / tracer.duration, 0, 1)
-                    local direction = (tracer.endpoint - tracer.origin).Unit
-                    local traveled = (tracer.endpoint - tracer.origin).Magnitude * progress
-                    local length = math.max(0.01, math.min(3, traveled))
-                    local position = tracer.origin + direction * (traveled - length * 0.5)
-                    tracer.part.Size = Vector3.new(0.35, 0.35, length)
-                    tracer.part.CFrame = CFrame.lookAt(position, position + direction)
-                end
+    local function maintain(now: number)
+        if not running then
+            return
+        end
+        local state = match.snapshot()
+        for i = #tracers, 1, -1 do
+            local tracer = tracers[i]
+            local elapsed = now - tracer.started
+            if elapsed >= tracer.duration + TRACER_TAIL_SECONDS or not tracer.part.Parent then
+                tracer.part:Destroy()
+                table.remove(tracers, i)
+            else
+                local progress = math.clamp(elapsed / tracer.duration, 0, 1)
+                local direction = (tracer.endpoint - tracer.origin).Unit
+                local traveled = (tracer.endpoint - tracer.origin).Magnitude * progress
+                local length = math.max(0.01, math.min(3, traveled))
+                local position = tracer.origin + direction * (traveled - length * 0.5)
+                tracer.part.Size = Vector3.new(0.35, 0.35, length)
+                tracer.part.CFrame = CFrame.lookAt(position, position + direction)
             end
-            if state.phase == "Resetting" and lastPhase ~= "Resetting" then
-                aircraftState:SetAttribute("GroundShot", nil)
-                clearTracers()
+        end
+        if state.phase == "Resetting" and lastPhase ~= "Resetting" then
+            aircraftState:SetAttribute("GroundShot", nil)
+            clearTracers()
+        end
+        if state.phase == "Lobby" and lastPhase ~= "Lobby" then
+            clearTracers()
+            health = AircraftHealth.new()
+            health.reset(state.roundId)
+            rifles = GroundCombatService.new()
+            rifles.reset(state.roundId)
+            aircraftState:SetAttribute("GroundShot", nil)
+            publish()
+        end
+        lastPhase = state.phase
+        if state.roundId ~= lastRound then
+            lastRound = state.roundId
+            health.reset(lastRound)
+            rifles.reset(lastRound)
+            table.clear(movement)
+            aircraftState:SetAttribute("GroundShot", nil)
+            publish()
+        end
+        for _, player in Players:GetPlayers() do
+            local member = state.members[player.UserId]
+            if
+                member
+                and member.role == "Ground"
+                and (state.phase == "Deploying" or state.phase == "Active")
+            then
+                track(player, now, false)
+            else
+                movement[player] = nil
             end
-            if state.phase == "Lobby" and lastPhase ~= "Lobby" then
-                health = AircraftHealth.new()
-                health.reset(state.roundId)
-                aircraftState:SetAttribute("GroundShot", nil)
-                publish()
+            if active(player, now) then
+                ensureTool(player)
+                publishRifle(player, now)
+            else
+                removeTool(player)
             end
-            lastPhase = state.phase
-            if state.roundId ~= lastRound then
-                lastRound = state.roundId
-                health.reset(lastRound)
-                rifles.reset(lastRound)
-                table.clear(movement)
-                aircraftState:SetAttribute("GroundShot", nil)
-                publish()
-            end
-            for _, player in Players:GetPlayers() do
-                local member = state.members[player.UserId]
-                if
-                    member
-                    and member.role == "Ground"
-                    and (state.phase == "Deploying" or state.phase == "Active")
-                then
-                    track(player, now, false)
-                else
-                    movement[player] = nil
-                end
-                if active(player, now) then
-                    ensureTool(player)
-                    publishRifle(player, now)
-                else
-                    removeTool(player)
-                end
-            end
-        end)
-    )
+        end
+        if state.phase ~= "Active" then
+            table.clear(pendingRifles)
+        end
+    end
+    if not externallyStepped then
+        table.insert(
+            connections,
+            RunService.Heartbeat:Connect(function()
+                local now = workspace:GetServerTimeNow()
+                maintain(now)
+                resolveRifles()
+            end)
+        )
+    end
     publish()
     return {
+        resolveRifles = resolveRifles,
+        maintain = maintain,
         readiness = function(player)
             return rifles.readiness(player.UserId, workspace:GetServerTimeNow())
         end,
@@ -574,6 +631,7 @@ function GroundCombatRuntime.start(
             end
             table.clear(buckets)
             table.clear(movement)
+            table.clear(pendingRifles)
             clearTracers()
             fire:Destroy()
             reload:Destroy()

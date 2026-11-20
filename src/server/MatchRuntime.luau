@@ -2,13 +2,12 @@
 --[=[
     MatchRuntime: server engine adapter for MatchService. Owns explicit character loads,
     death/listener generations, protected stations, teams, collision group and replicated
-    round attributes. Depends on Players/RunService/PhysicsService and injected map owner.
+    round attributes. Depends on Players/PhysicsService and the injected map owner.
     start/stop are nonyielding and idempotent. Character loads run in owned guarded tasks;
     stop invalidates them before disconnecting/destroying owned resources.
 ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
 local Teams = game:GetService("Teams")
 local PhysicsService = game:GetService("PhysicsService")
 local HttpService = game:GetService("HttpService")
@@ -42,12 +41,15 @@ export type Controller = {
     start: () -> (boolean, string?),
     stop: () -> (),
     match: MatchService.Controller,
+    -- Owned GameRuntime frame, in server seconds. Only a live pre-deadline round
+    -- invokes resolveDamage. Publishes the resulting state before returning.
+    step: (number, (number) -> ()) -> (),
     resources: () -> { connections: number, spawnTasks: number },
 }
 type PlayerOwner = { characters: CharacterOwner.Controller, bucket: RateLimit.Bucket }
 
 -- Creates an inactive adapter. Caller owns the supplied map; stop does not destroy it.
--- releaseLife is currently equipment cleanup only; launcher recovery is connected in P08.
+-- releaseLife clears equipment. The frame owner runs launcher recovery after results.
 function MatchRuntime.new(map: MapService.Controller, settings: Settings): Controller
     assert(
         settings.automaticDeployment == nil or type(settings.automaticDeployment) == "boolean",
@@ -133,6 +135,22 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         status:SetAttribute("DeadlineSeconds", state.deadlineSeconds)
         status:SetAttribute("Winner", if state.result then state.result.winner else "")
         status:SetAttribute("Reason", if state.result then state.result.reason else "")
+        if state.result then
+            local result = state.result
+            status:SetAttribute(
+                "Result",
+                HttpService:JSONEncode({
+                    roundId = state.roundId,
+                    winner = result.winner,
+                    reason = result.reason,
+                    userId = result.userId,
+                    weapon = result.weapon,
+                    shotId = result.shotId,
+                })
+            )
+        else
+            status:SetAttribute("Result", nil)
+        end
         status:SetAttribute("MinimumPlayers", settings.minimumPlayers)
         local alive = 0
         for _, member in state.members do
@@ -177,9 +195,9 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         end
         publish(state)
     end
-    local function applyPhase(state: MatchService.Snapshot)
+    local function applyPhase(state: MatchService.Snapshot, time: number)
         phase = state.phase
-        phaseStarted = workspace:GetServerTimeNow()
+        phaseStarted = time
         if state.phase == "Deploying" then
             local groundIndex = 0
             local ids: { number } = {}
@@ -218,13 +236,16 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             match.finishReset()
         end
     end
-    local function tick()
+    local function step(time: number, resolveDamage: (number) -> ())
+        if not running then
+            return
+        end
         local state = match.snapshot()
         if state.phase ~= phase then
-            applyPhase(state)
+            applyPhase(state, time)
             state = match.snapshot()
         end
-        local elapsed = workspace:GetServerTimeNow() - phaseStarted
+        local elapsed = time - phaseStarted
         if
             state.phase == "Lobby"
             and settings.automaticDeployment ~= false
@@ -237,21 +258,13 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
                 match.abort(state.roundId, "DeploymentTimeout")
             end
         elseif state.phase == "Active" then
-            -- Combat owners submit proposals during this Heartbeat. Commit only
-            -- after its callbacks have run so a same-step aircraft destruction
-            -- and last-ground death resolve together under RoundRules precedence.
-            local batchRound = state.roundId
-            task.defer(function()
-                if running and match.snapshot().roundId == batchRound then
-                    match.step()
-                end
-            end)
+            match.step(resolveDamage, time)
         elseif state.phase == "Results" and elapsed >= settings.resultsSeconds then
             match.beginReset()
         end
         state = match.snapshot()
         if state.phase ~= phase then
-            applyPhase(state)
+            applyPhase(state, time)
             state = match.snapshot()
         end
         if state.revision ~= lastRevision then
@@ -319,6 +332,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
     end
     return {
         match = match,
+        step = step,
         start = function()
             if running then
                 return true, nil
@@ -395,7 +409,6 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
                 addPlayer(player)
             end
             publish(match.snapshot())
-            table.insert(connections, RunService.Heartbeat:Connect(tick))
             return true, nil
         end,
         stop = stop,
