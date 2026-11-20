@@ -1370,3 +1370,13 @@ owned attempt from the actual server at 92.23 simulation seconds, verified
 the original local Edit returned and kept the reproducible solo test place.
 Active-round camera/aim verification and current-source native regressions
 remain open. The SDK attempt is recorded in the solo evidence file above.
+
+### Owner approval and merge (2026-11-20)
+
+After the in-game Outpost review and the requested indoor zoom update, the
+owner explicitly approved [PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39)
+and authorized merging it to `main`. The reviewed PR head was
+`eddf45f863e645ff20ab470d13542c29ea7a9661`, with camera production
+`cd7071b9ed00452ee2bba06d7bc9ccbde22c3976` and the P16 Blender package bound
+above. That approval satisfies A6 and authorizes source integration. A5 and
+the active-round parts of A7 still require their Studio evidence.
