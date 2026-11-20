@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "8ccdc371ed02a5cc5af109a9d012e7adb0707780",
+  "tree": "75157befd426a4c713af16554ca7543dca244b39",
+  "studioId": "8754df0f-6ce0-4415-b4ee-0407471ebb06",
+  "scope": "Canonical managed source synced into the original local document in ordinary review mode",
+  "sync": {
+    "updated": 4,
+    "manualCommitPresent": false,
+    "source": "8ccdc371ed02a5cc5af109a9d012e7adb0707780",
+    "worldOrAssetObjectsTouched": false,
+    "exactSha256Verified": true,
+    "localPlace": true,
+    "selector": "ordinary"
+  },
+  "identity": {
+    "meshes": 2332,
+    "source": "8ccdc371ed02a5cc5af109a9d012e7adb0707780",
+    "targetGeometry": "REQUIRES companion target-geometry chunks; see generated manifest",
+    "scope": "Edit actual property/source identity, not ordinary runtime access",
+    "placeId": 0,
+    "passed": true,
+    "universeId": 0,
+    "nativeMeshParts": 2332,
+    "templates": {
+      "MaterialPanels": {
+        "meshes": 76,
+        "descendants": 188
+      },
+      "MilitaryOutpost": {
+        "meshes": 2256,
+        "descendants": 4592
+      }
+    },
+    "version": "0.748.0.7481526",
+    "scripts": 137,
+    "nativeMetadataFields": 11660,
+    "publicNativeProperties": 6996,
+    "mutated": false,
+    "actualProtectedSlots": 9328
+  },
+  "save": {
+    "status": "Saved",
+    "location": "LocalFile",
+    "filePath": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/build/tests.rbxlx",
+    "message": "Saved to the local place file."
+  },
+  "testBuildSha256": "58dbe725a06109fab59fc0238f82e0be6bda4d3758bcbcc3f00029d2e9d17362",
+  "savedLocalFileSha256": "72d45f09797be39b4dbfb42856cbe1835fafecf9ccf7c32b9a245cd8e9b71813",
+  "releaseSha256": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea",
+  "all137PersistedPathsClassesAndSourcesMatch": true,
+  "temporarySelectorsAbsentInPersistedLocalFile": true,
+  "geometry": "Previously completed all ten geometry chunks on the same native world. Source-only transaction retains those objects."
+}

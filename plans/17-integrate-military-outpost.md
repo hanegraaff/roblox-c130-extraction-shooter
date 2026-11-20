@@ -1210,3 +1210,52 @@ earned partial credit. Both restore pristine state and fresh references.
 Native teardown passes. The [full host gate](../docs/evidence/p17/walk-fix-host-f565aed.txt)
 passes 59 unit, 65 integration, 48 asset and 14 tooling checks on the same
 candidate and reconstructs the unchanged release bytes.
+
+### Full-orbit targeting and paired camera fixture — 2026-11-19
+
+The [P14 rerun](../docs/evidence/p17/native-p14-f565aed-attempt2-summary.json)
+passes both 90-second orbits, including genuine rays to the upper floor of all
+three buildings. It still fails the following weapon-selection case. The
+[raw rejection sample](../docs/evidence/p17/native-p14-f565aed-attempt2-raw.json)
+records a correct committed camera and zero reticle/ray error. The one-shot
+fixture read the replicated aircraft about 66 ms after the render commit.
+Its check compared positions from different instants.
+
+Test-only correction `8ccdc371ed02a5cc5af109a9d012e7adb0707780` waits
+boundedly for the matching HUD, camera, frame and timestamp from the
+existing independent render-commit observer. It retains the two-stud
+aircraft-origin limit and the one-pixel and half-stud ray limits. The
+paired comparator still fails an actual excessive error. Both normal
+client entrypoints were restored from their verified six-script templates
+before the next native run. The original startup reports remain unchanged.
+
+After the reset, the [idle cadence diagnostic](../docs/evidence/p17/native-performance-idle-diagnostic.json)
+measured 45 actual rendered frames per client at the original viewport and
+Automatic graphics. Both clients still ran at about 15 FPS with no round
+runtime. Client render CPU p95 was 2.6–3.5 ms, while frame p95 remained
+70.2–71.2 ms. The observed cadence persists outside the measured gameplay
+and beyond the high-quality simulator configuration. The gameplay budget
+remains open.
+
+### Native camera regression passes — 2026-11-19
+
+The [native P14 report](../docs/evidence/p17/native-p14-8ccdc37-pass-raw.json)
+and [summary](../docs/evidence/p17/native-p14-8ccdc37-pass-summary.json)
+record **6/6 cases** on `8ccdc37` with two actual initial clients.
+The stock operator departure leaves one client at the end. The seven
+focused host controls also passed before native testing. GAU23 covers
+90.982 seconds and 2,137 frames. M102 covers 90.894 seconds and 1,548
+frames. Both cover 16 phase bins, with zero pairing failures and zero
+maximum committed origin error. Both zooms target all three buildings.
+Weapon selection, blocking, reset, thermal occlusion, role loss and
+cleanup pass.
+
+The P17 mechanics fixture and production bytes match the accepted
+`f565aed` run. P08, P07, P05 and P14 all have passing native regressions
+for this production source. The [final full host gate](../docs/evidence/p17/frame-pair-host-8ccdc37.txt)
+passes 59 unit, 65 integration, 48 asset and 14 tooling cases.
+The [saved local review file](../docs/evidence/p17/ordinary-review-sync-8ccdc37.json)
+matches all 137 source paths, classes and script contents from the final
+test build and uses ordinary startup with both temporary selectors cleared.
+Operated desktop/touch review, human in-game approval and the client
+frame-time budget remain open.

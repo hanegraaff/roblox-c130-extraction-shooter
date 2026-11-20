@@ -135,12 +135,11 @@ and geometry. The current multiplayer runs, operated review, performance
 comparison and human approval remain open. See the
 [P17 completion record](plans/17-integrate-military-outpost.md#reopened-local-test-place--2026-11-19).
 
-Later native P17 work on the same production source passes the P08 launcher,
-P07 destruction and P05 combat regressions. The fresh Outpost session passes
-two-client startup, navigation, six-family geometry and direct 105mm hits.
-The 30mm and P14 fixture failures have reviewed corrections awaiting full
-reruns. Both completed performance scenes exceed the client frame-time
-budget. P17 stays In progress while those gates and human review remain open.
+Later native P17 work passes the ten-case Outpost suite with two actual
+clients, including navigation, damage, replication and live-work resets.
+P08, P07, P05 and P14 native regressions pass on the same production source.
+Both completed performance scenes exceed the client frame-time budget.
+P17 stays In progress for the measured budget and operated/human review.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree

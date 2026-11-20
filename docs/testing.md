@@ -72,10 +72,15 @@ intrinsic/fidelity validity, separately from the 407-profile authoring-bank coun
 A bounded exterior camera review now shows a correctly scaled, textured Outpost
 without the earlier giant planes; it does not approve all art or damage states.
 
-Earlier `51f8440` 171/10 and later pre-constructor observations remain historical
-and cannot validate the corrected source. Multiplayer, material/native-fire and
-fragment coverage, complete operated normal/thermal review, workload metrics and
-human A6 approval remain open until their own evidence exists.
+The managed P17 suite passed all ten cases on `f565aed` with two actual
+clients and zero failures or skips. Its ordinary 173/10/10 baselines were
+collected at `5fc5f0b` startup. Production and the ordinary smoke inputs match
+the passing candidate. The suite exercised native avatar routes, real weapon
+impacts, replicated material stages and openings, and both live-work resets of
+all 188 panels. A separate native probe on the same production source verified
+descent and static contact for all 24 approved fragments across six families,
+plus character/query isolation, expiry and owner cleanup.
+[Managed suite report](evidence/p17/native-p17-f565aed-pass-summary.json), [imported fragment probe](evidence/p17/imported-fragment-contact-221d1a8.json).
 
 | Suite / file | Intended native assertions |
 | --- | --- |
@@ -120,7 +125,7 @@ That compromise requires explicit A6 review.
    assert(settings and settings:IsA("ModuleScript"))
    assert(settings:GetAttribute("ManualHarness") == nil)
    assert(settings:GetAttribute("P17HarnessCommit") == nil)
-   settings:SetAttribute("P17HarnessCommit", "f565aed9e806016ebc1a20955f8ddcbb45e0c044")
+   settings:SetAttribute("P17HarnessCommit", "8ccdc371ed02a5cc5af109a9d012e7adb0707780")
    settings:SetAttribute("ManualHarness", "P17")
    ```
 
@@ -157,19 +162,26 @@ ordinary startup fixtures from passing again in that DataModel.
 
 ### Collect the remaining P17 acceptance evidence
 
-Run current P07/P05/P14/P08 regressions on the same integrated source. Review
-both launcher approaches, deployment anchors, the furnished floors and
-stairs/balcony. Verify full-orbit targeting at both zooms, operated desktop and
-touch input, and each material family's openings and damage in normal and
-thermal views. Record actual approved-template fragment descent and static
-contact along with the bounds and character/query checks. The baseline
-fragment fixture and multiplayer expiry/reset assertions cover their own
-scopes. Compare baseline and candidate workload metrics on the same device
-and settings at 1920×1080 with two actual clients, a 30-second warmup and a
-300-second sample. Use the [objective budgets](#objective-release-budgets) and
-record explicit human approval of the identified in-game result. The
-[P17 record](../plans/17-integrate-military-outpost.md) tracks actual results and
-open gates.
+The native P08 launcher, P07 destruction, P05 combat and P14 panning
+regressions passed 11/11, 7/7, 8/8 and 6/6 respectively on the integrated
+production source. The [P14 rerun](evidence/p17/native-p14-8ccdc37-pass-summary.json)
+verifies two full 90-second orbits, both zooms and current thermal occlusion.
+Use the [P17 record](../plans/17-integrate-military-outpost.md) for
+source-specific results and previous attempts.
+
+Review both launcher approaches, deployment anchors, the furnished floors and
+stairs/balcony using the actual controls. Complete operated desktop and touch
+review and inspect each material family's openings and damage in normal and
+thermal views. Record explicit human approval of the identified in-game result.
+
+The paired workloads used the same device and graphics settings at 1920×1080
+with two actual clients, a 30-second warmup and a 300-second sample per scene.
+The server scheduler p95 was 0.8 ms for each scene. Client render-frame p95 was
+70.4–71.3 ms for the primitive scene and 70.4–71.0 ms for the detailed scene.
+Both exceeded the [33.3 ms client budget](#objective-release-budgets), so the
+performance gate remains open. The idle diagnostic also measured roughly
+15 FPS on both clients at their ordinary viewport settings with the gameplay
+runtime stopped. [Paired workload evidence](evidence/p17/native-performance-comparison-711c5a8.json), [idle diagnostic](evidence/p17/native-performance-idle-diagnostic.json).
 
 ## Verify and review the P16 Blender package
 

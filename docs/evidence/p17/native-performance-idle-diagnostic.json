@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-19",
+  "candidate": "f565aed9e806016ebc1a20955f8ddcbb45e0c044",
+  "studio": "0.748.0.7481526",
+  "scope": "Read-only 45 actual RenderStepped frames on each existing native client at original viewports and Automatic quality after the test runtime stopped",
+  "actualClients": [
+    {
+      "p95CpuRenderMs": 3.498833393678069,
+      "seconds": 2.967630375002045,
+      "user": -1,
+      "frames": 45,
+      "roundAbsent": true,
+      "savedQuality": "Automatic",
+      "viewport": "1081, 618",
+      "p95FrameMs": 71.23874872922897,
+      "engineFramesPerSecond": 15.163613494139744,
+      "p95GpuRenderMs": 0.0009166542440652847
+    },
+    {
+      "p95CpuRenderMs": 2.576458267867565,
+      "seconds": 2.995631208352279,
+      "user": -2,
+      "frames": 45,
+      "roundAbsent": true,
+      "savedQuality": "Automatic",
+      "viewport": "1153, 649",
+      "p95FrameMs": 70.19412517547607,
+      "engineFramesPerSecond": 15.02187581519818,
+      "p95GpuRenderMs": 0.0009166542440652847
+    }
+  ],
+  "rootCauseVerified": false,
+  "gameplayBudgetPassed": false
+}
