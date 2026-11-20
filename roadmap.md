@@ -162,6 +162,8 @@ on `main`. The remaining current-source native verification is tracked by
 [P17](plans/17-integrate-military-outpost.md#owner-approval-and-merge-2026-11-20). The three-client
 [active-round camera review](plans/17-integrate-military-outpost.md#active-round-ground-camera-acceptance-2026-11-20)
 passed indoor aim, spectating and reset on the merged source.
+The current-source launcher, destruction, gunship combat and panning regressions
+then passed. The final managed P17 Outpost run needs a fresh two-client launch.
 
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree

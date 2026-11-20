@@ -1,0 +1,59 @@
+{
+  "mode": "P05",
+  "source": "5176197ca819314f181ccf5580f40be2dc753268",
+  "production": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+  "main": "f91a032b251938de8a8f21837266f611e9a90813",
+  "studio": {
+    "bytes": 17989,
+    "actualAfter": 2,
+    "version": "0.748.0.7481526",
+    "sha": "f4c21be35df4b65c56793d584c556eac2e17003c722e859690bb724f363ee776",
+    "summary": {
+      "clientCount": 2,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 rejected client traffic leaves readiness intact"
+        },
+        {
+          "passed": true,
+          "name": "A4 swept muzzle path hits thin cover before the visible target"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged airborne endpoint cannot create damage or an impact"
+        },
+        {
+          "passed": true,
+          "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+        },
+        {
+          "passed": true,
+          "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots"
+        },
+        {
+          "passed": true,
+          "name": "A4 both profiles strike real terrain slopes and authored second-story panels"
+        },
+        {
+          "passed": true,
+          "name": "A4 muzzle starting inside solid cover resolves that cover before flight"
+        },
+        {
+          "passed": true,
+          "name": "A1 actual projectile survives exact lifetime and expires cleanly afterward"
+        }
+      ],
+      "skipped": 0,
+      "discovered": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    "stageFinish": 1795203928.840107,
+    "active": [],
+    "stageStart": 1795203881.413121
+  },
+  "exactRawCaptured": true,
+  "invocation": "Stock test fixture on two actual native survivors, after previous runtime emptied",
+  "baseline": "p17-a5-p08-native-5176197-summary.json"
+}

@@ -1,0 +1,55 @@
+{
+  "mode": "P07",
+  "source": "5176197ca819314f181ccf5580f40be2dc753268",
+  "production": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+  "main": "f91a032b251938de8a8f21837266f611e9a90813",
+  "studio": {
+    "bytes": 45394,
+    "actualAfter": 2,
+    "version": "0.748.0.7481526",
+    "sha": "5876ae796e5fb277da30104bab748d5cab58133cfc06f984db11ed7243904de1",
+    "summary": {
+      "clientCount": 2,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+        },
+        {
+          "passed": true,
+          "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+        },
+        {
+          "passed": true,
+          "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+        },
+        {
+          "passed": true,
+          "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+        },
+        {
+          "passed": true,
+          "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+        },
+        {
+          "passed": true,
+          "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+        },
+        {
+          "passed": true,
+          "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+        }
+      ],
+      "skipped": 0,
+      "discovered": 7,
+      "passed": 7,
+      "failed": 0
+    },
+    "stageFinish": 1795203833.33918,
+    "active": [],
+    "stageStart": 1795203714.639523
+  },
+  "exactRawCaptured": true,
+  "invocation": "Stock test fixture on two actual native survivors, after previous runtime emptied",
+  "baseline": "p17-a5-p08-native-5176197-summary.json"
+}

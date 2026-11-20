@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "scope": "P17 A5 current-source native P08 gameplay regression",
+  "source": {
+    "verifiedTestSource": "5176197ca819314f181ccf5580f40be2dc753268",
+    "production": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+    "mainProductionEquivalent": "f91a032b251938de8a8f21837266f611e9a90813",
+    "localSavedBuildSha256": "d67aba47dc61a211a338855ae12e635b89bcff2deeb8d38efa54396baf38e560",
+    "reproductionBuildSha256": "22b67b63bb09ce8f5f5ec7cf19e956fe060c1caa45f9cc9064683ed6de0b5f1f",
+    "liveEdit": {
+      "metadataSha": "c8ade874e95429c1fbbd9fcd07079a63c0b29451db320a67b641965a43d1c08e",
+      "place": 0,
+      "cameraSha": "25685176cde60328f12f864d2a7e2e319a7d5426de3471d69dee12b92f39efef",
+      "game": 0,
+      "selector": "P08"
+    }
+  },
+  "environment": {
+    "studioVersion": "0.748.0.7481526",
+    "placeId": 0,
+    "gameId": 0,
+    "invocation": {
+      "requestedClients": 3,
+      "mode": "manual-server-clients",
+      "harness": "P08"
+    },
+    "departureMethod": "server-kick",
+    "initialClientCount": 3,
+    "peakClientCount": 3,
+    "currentClientCount": 2,
+    "survivors": [
+      "Player1",
+      "Player3"
+    ]
+  },
+  "baseline": {
+    "server": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 179,
+      "clientCount": 3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 179
+    },
+    "client": [
+      {
+        "slot": "Player1",
+        "observedPlayers": 3,
+        "roleAtCapture": "Gunship",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      },
+      {
+        "slot": "Player2",
+        "observedPlayers": 3,
+        "roleAtCapture": "Ground",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      },
+      {
+        "slot": "Player3",
+        "observedPlayers": 3,
+        "roleAtCapture": "Ground",
+        "report": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 12,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 12
+        }
+      }
+    ],
+    "startup": {
+      "status": "first-client-arrived",
+      "clientCount": 1,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 4.852091000007931
+    }
+  },
+  "result": {
+    "discovered": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A1/A5 three clients see one map launcher with M-7-only initial loadouts"
+      },
+      {
+        "passed": true,
+        "name": "A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged"
+      },
+      {
+        "passed": true,
+        "name": "A1/A2 raced real-client pickups claim once; carrier keeps M-7"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual miss drop transfer switching and early fire preserve identity and reload"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual carrier character removal while reloading preserves one recoverable identity"
+      },
+      {
+        "passed": true,
+        "name": "A6 real reset removes old state and rejects delayed prior-round intent"
+      },
+      {
+        "passed": true,
+        "name": "A4 three actual fired rockets leave 200 then 100 then commit one ground win"
+      },
+      {
+        "passed": true,
+        "name": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool"
+      },
+      {
+        "passed": true,
+        "name": "A3/A5 actual disconnect preserves reload and permits living teammate recovery"
+      },
+      {
+        "name": "A6 teardown invalidates deferred callbacks and removes every owned resource",
+        "passed": true
+      }
+    ],
+    "retainedTraceRecords": 151,
+    "droppedTraceRecords": 0,
+    "requiredUnverified": [],
+    "unsupportedChecks": [
+      "actual same-identity reconnect"
+    ]
+  },
+  "cleanup": {
+    "players": 2,
+    "battlefield": true,
+    "harness": false,
+    "aircraft": false,
+    "round": false,
+    "fragments": false,
+    "launcher": false
+  },
+  "raw": {
+    "file": "p17-a5-p08-native-5176197-raw.json",
+    "bytes": 115745,
+    "sha256": "d9e5cfcfd008284cbbfb1575e6c0df212fc74b526143697238cc9a4cd95c8541"
+  },
+  "limits": "This captures only the P08 gameplay regression. The ordinary boot baseline belongs to its native three-client run."
+}

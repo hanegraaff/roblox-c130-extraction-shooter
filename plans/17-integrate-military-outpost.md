@@ -1402,3 +1402,32 @@ operator returned to the normal lobby camera and cleared the thermal effect.
 The disposable camera and server observers were removed. A7 passes with the
 earlier independent solo traversal of both floors. The managed P17
 multiplayer suite and the A5 gameplay regressions have separate records.
+
+### Current-source launcher, destruction and combat regressions (2026-11-20)
+
+Native Server & Clients loaded the same source-bound local test artifact
+`5176197` and production `cd7071b` as the active camera review. The server
+passed 179/179 with three joined clients and each passed 12/12. The
+[launcher report](../docs/evidence/p17/p17-a5-p08-native-5176197-summary.json)
+passed 11/11 with zero failures or skips, 151 retained traces and no dropped
+traces. Its deliberate carrier departure used the native server kick and left
+two actual clients after clean teardown.
+
+The two survivors kept their original passing startup reports. Before each
+subsequent regression, the coordinator checked that the prior runtime,
+test transports and fragment owner were gone and the Battlefield was
+pristine. Each stock server fixture then started and owned its own runtime.
+The [destruction report](../docs/evidence/p17/p17-a5-p07-native-5176197-summary.json)
+passed 7/7, including six actual 105mm impacts, sustained and interrupted
+30mm fire, walking through a damaged opening and both pristine resets.
+The [gunship combat report](../docs/evidence/p17/p17-a5-p05-native-5176197-summary.json)
+passed 8/8, including cover and muzzle sweep, readiness, both weapon profiles,
+results and stale-work cleanup. The raw reports retain the actual native
+test output and their summaries record the verified hashes.
+
+The [panning report](../docs/evidence/p17/p17-a5-p14-native-5176197-summary.json)
+passed 6/6 on the same two actual starting clients, with a full orbit per
+weapon, upper-floor targeting across all three buildings, recenter and
+ownership cleanup. Its deliberate operator departure left one native client.
+A5 passes on the merged runtime and test source. The separate managed P17
+run requires its own fresh two-client startup for Outpost-specific evidence.
