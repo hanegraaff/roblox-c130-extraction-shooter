@@ -1,0 +1,36 @@
+{
+  "source_commit": "221d1a824529855db110712d61f0b1f8be5f68e8",
+  "source_tree": "e75df24d61a8fed9c15d3f8b2f7240f1b03c0305",
+  "production_commit": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "production_unchanged": true,
+  "command": "python3 scripts/verify.py",
+  "unit": 59,
+  "integration": 65,
+  "asset_regressions": 48,
+  "tooling": 14,
+  "builds": {
+    "build/game.rbxlx": {
+      "sha256": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea",
+      "bytes": 10077248
+    },
+    "build/tests.rbxlx": {
+      "sha256": "b3c378607be999da3175b9df6908385b8001d3d5d8dfab344f503eb345fe6d11",
+      "bytes": 11122017
+    }
+  },
+  "counts": {
+    "sourceCount": 137,
+    "templateMeshes": 2332,
+    "actualProtectedMaterialSlots": 9328,
+    "serverBaseline": 173,
+    "clientBaselineEach": 10,
+    "actualInitialClients": 2,
+    "materialCases": 10,
+    "runtimeScripts": 51,
+    "releaseInstances": 5296,
+    "testInstances": 5393,
+    "authoredPartsEach": 2804
+  },
+  "native_status": "new managed V7 unexecuted; older source-bound observations remain historical",
+  "release_sha256_unchanged": "b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea"
+}

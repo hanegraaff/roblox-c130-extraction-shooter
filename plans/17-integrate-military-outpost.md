@@ -919,3 +919,58 @@ in clean Edit. The cloud still has the older 50-script / zero-MeshSize
 reconstruction; reported place version 14 does not prove publication and is not
 this candidate. D65 now explicitly defers clearance/zoom changes. Reusable
 test-only harness promotion and full A1–A6 acceptance remain required.
+
+### Managed native acceptance candidate — 2026-11-15
+
+Test-only source `221d1a824529855db110712d61f0b1f8be5f68e8`, tree
+`e75df24d61a8fed9c15d3f8b2f7240f1b03c0305`, promotes the reviewed native
+material harness into the local test mapping. Its bounded roof selector checks
+current registered residual geometry and the production shot sweep before each
+of exactly six M102 intents; each must produce a new same-panel impact. It does
+not change orbit, cover, damage or cooldown rules. Manual client dispatch starts
+only the selected public harness, preventing old waiting listeners from issuing
+duplicate intents during a retained multiplayer session.
+
+The [full host gate](../docs/evidence/p17/developer-host-221d1a8.txt) passes
+59 unit / 65 integration / 48 asset / 14 tooling cases, plus required
+format/lint/type/reconstruction/isolation checks. The
+[preparation](../docs/evidence/p17/managed-harness-preparation-221d1a8.json),
+[source manifest](../docs/evidence/p17/managed-harness-source-manifest-221d1a8.json)
+and [build record](../docs/evidence/p17/candidate-builds-221d1a8.json) bind 137
+test Sources. Production is unchanged from `ee19deb5`; the release still hashes
+to `b9e0d6eb851586c9989248ce169968c24228f6c8eab5afe1ae8554500bf10fea`.
+The [independent review](../docs/evidence/p17/independent-managed-review-221d1a8.md)
+passes the focused host gates and confirms the launch and teardown guards.
+
+[Verify #363](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43731333059)
+failed because its shallow checkout omitted the pinned production tree. The
+[failure receipt](../docs/evidence/p17/ci-363-shallow-history-failure.json)
+preserves the actual error and local shallow/full-history reproduction.
+Commit `bc3e3f980d92d4f3380d32d0df2ba2549854c019` fetches full history;
+[Verify #365](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43731755351)
+then passes. No product change is attributed to this CI correction.
+
+The [local sync proof](../docs/evidence/p17/managed-source-sync-221d1a8.json)
+guards every old Source, replaces three entries/modules and adds four modules,
+then independently verifies all 137 Sources, 2,332 native meshes, 9,328 material
+slots and all ten target-geometry chunks in the same local Edit document. It
+preserves every world/asset object. The selected P08 three-client startup is
+saved locally for the next native session; no cloud document is modified.
+New managed V7 gameplay acceptance remains unexecuted at this checkpoint.
+
+The separate `build/preview.rbxlx` remains a normal, unselected standalone test
+build, SHA-256 `b3c378607be999da3175b9df6908385b8001d3d5d8dfab344f503eb345fe6d11`.
+It includes the corrected native mesh payload and current managed source, opens
+directly in Studio and needs neither VS Code nor Rojo for previewing. Larger
+clearances and automatic interior zoom remain deferred under D65.
+
+### Reopened local test place — 2026-11-19
+
+The [fresh Edit audit](../docs/evidence/p17/managed-reopen-2026-11-19.json)
+confirms the same managed candidate in local `tests.rbxlx` after Studio updated
+to `0.748.0.7481526`. It verifies all 137 script sources, 2,332 native meshes,
+9,328 protected material slots and all ten target-geometry chunks. The saved
+P08 selector and exact P17 harness commit were verified in the local place.
+The independent reviewer reran the harness binding and all 14 tooling tests
+and verified the 137 script hashes in both local test and standalone builds.
+The Edit audit leaves the native gameplay and human approval gates open.

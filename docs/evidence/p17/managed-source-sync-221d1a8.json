@@ -1,0 +1,152 @@
+{
+  "candidate": "221d1a824529855db110712d61f0b1f8be5f68e8",
+  "tree": "e75df24d61a8fed9c15d3f8b2f7240f1b03c0305",
+  "studioId": "f6c61b54-ab35-466b-ab8a-bf51c446b300",
+  "scope": "Local Edit source-only sync, main+all10geometry probes, persisted manualP08selector; no gameplay evidence",
+  "sync": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ok\":true,\"waypointAfterVerification\":true,\"newArtifactSha256\":\"b3c378607be999da3175b9df6908385b8001d3d5d8dfab344f503eb345fe6d11\",\"addedModules\":4,\"replacedSources\":3,\"worldAssetsTouched\":false,\"oldArtifactSha256\":\"c1b467e1769c3c754b941442f28caa35a644e697132a69123a7de2614c4dce59\",\"oldSourcesVerified\":133,\"candidateCommit\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"postSourcesVerified\":137}"
+      }
+    ],
+    "isError": false
+  },
+  "identity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"meshes\":2332,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"targetGeometry\":\"REQUIRES companion target-geometry chunks; see generated manifest\",\"scope\":\"Edit actual property/source identity, not ordinary runtime access\",\"placeId\":0,\"passed\":true,\"universeId\":0,\"nativeMeshParts\":2332,\"templates\":{\"MaterialPanels\":{\"meshes\":76,\"descendants\":188},\"MilitaryOutpost\":{\"meshes\":2256,\"descendants\":4592}},\"version\":\"0.747.0.7471481\",\"scripts\":137,\"nativeMetadataFields\":11660,\"publicNativeProperties\":6996,\"mutated\":false,\"actualProtectedSlots\":9328}"
+      }
+    ],
+    "isError": false
+  },
+  "geometry": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":1,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":2,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":3,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":4,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":5,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":6,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":7,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":8,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":256,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":768,\"chunk\":9,\"targetCFrameComponents\":3072,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"targetMeshes\":28,\"source\":\"221d1a824529855db110712d61f0b1f8be5f68e8\",\"scope\":\"read-only Edit target geometry\",\"passed\":true,\"targetSizeComponents\":84,\"chunk\":10,\"targetCFrameComponents\":336,\"chunks\":10,\"mutated\":false}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "save": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Saved: Saved to the local place file."
+      },
+      {
+        "type": "text",
+        "text": "{\"status\":\"Saved\",\"location\":\"LocalFile\",\"filePath\":\"/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/build/tests.rbxlx\",\"message\":\"Saved to the local place file.\"}"
+      }
+    ],
+    "isError": false
+  },
+  "CI": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "workflow_runs": [
+        {
+          "id": 43731755351,
+          "name": "Verify",
+          "status": "completed",
+          "conclusion": "success",
+          "run_number": 365,
+          "jobs_url": "https://api.github.com/repos/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43731755351/jobs",
+          "logs_url": "https://api.github.com/repos/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43731755351/logs",
+          "workflow_id": 410653479
+        }
+      ]
+    },
+    "isError": false
+  }
+}

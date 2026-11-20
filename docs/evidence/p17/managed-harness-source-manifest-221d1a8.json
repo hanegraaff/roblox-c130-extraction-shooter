@@ -1,0 +1,692 @@
+{
+  "productionCommit": "ee19deb5fe18090573ce0d9788b0c77555bca333",
+  "scope": "Expected compiled137Sources; native Edit comparison required",
+  "sourceCount": 137,
+  "sources": {
+    "ReplicatedStorage/ClientSpecs/Foundation.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "97da3c6e629f86d2105c18cbd6bc39d9ad03670b31f54b4c9516ecc10ed661fd",
+      "sourceBytes": 6972
+    },
+    "ReplicatedStorage/ClientSpecs/GroundAimGui.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "c139e835e180cb7e3337dc9647863dc8b92569829a554222ecbc17256ae5e5de",
+      "sourceBytes": 37509
+    },
+    "ReplicatedStorage/ClientSpecs/PointerGui.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "1c8c524b80e3cc596623c718efe67855b17093efab68f33acd3ab3acae3d478a",
+      "sourceBytes": 10799
+    },
+    "ReplicatedStorage/ClientSpecs/ThermalCosmetics.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "af8f5206cf4ca8b342dee765c63815327bbf3f4290100d6ccf830bf83024a7d8",
+      "sourceBytes": 10194
+    },
+    "ReplicatedStorage/Shared/AircraftPanRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "c4ffcf452a3c082a0729eb970744cfa4eaa73c38772c29e165dc74e1fd14a068",
+      "sourceBytes": 11439
+    },
+    "ReplicatedStorage/Shared/AircraftRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "3e8482b5ca9354155af6d63322b6979b7b6c4b1d6a41e148e5ec17dd4542cc67",
+      "sourceBytes": 4208
+    },
+    "ReplicatedStorage/Shared/AssetMaterial": {
+      "className": "ModuleScript",
+      "sourceSha256": "a9e0f1760dd6f52c53455d73688d34307b8772705e87ae58d25e5469d18a9220",
+      "sourceBytes": 2896
+    },
+    "ReplicatedStorage/Shared/AssetMesh": {
+      "className": "ModuleScript",
+      "sourceSha256": "d3cb60a8b4f4e460db7e4051b68cd3163a25d2f793afbe4f6fd9b44893e1aa03",
+      "sourceBytes": 2133
+    },
+    "ReplicatedStorage/Shared/BuildingLayout": {
+      "className": "ModuleScript",
+      "sourceSha256": "fa8d7b12078458b153eaf4ed2e07d0ff933597b4db7cfaf3d52d21aa5dd8fa4c",
+      "sourceBytes": 4195
+    },
+    "ReplicatedStorage/Shared/Config": {
+      "className": "ModuleScript",
+      "sourceSha256": "86cfa53d23b317cc943fa694e4798ca09135eec362eb64bc25f6ea201beb119d",
+      "sourceBytes": 1713
+    },
+    "ReplicatedStorage/Shared/Lifecycle": {
+      "className": "ModuleScript",
+      "sourceSha256": "98f939cf04eec21ae00498a441818733e0cb4abea7edafee72267844d01e1255",
+      "sourceBytes": 1525
+    },
+    "ReplicatedStorage/Shared/MapRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "0964b17c879a22f959033ad5ead64945873b918297787e964c4c9126f606a3a0",
+      "sourceBytes": 3459
+    },
+    "ReplicatedStorage/Shared/RateLimit": {
+      "className": "ModuleScript",
+      "sourceSha256": "57305bbbbd840a662a5d87b7855b0c7ed9e78fbbbaf8a538d7bee50d3ca1b537",
+      "sourceBytes": 1791
+    },
+    "ReplicatedStorage/Shared/Validation": {
+      "className": "ModuleScript",
+      "sourceSha256": "0285f008d424b9400e3a300304cafd2ecfd8d9d73d7b13687c96a2b7c6d6c59e",
+      "sourceBytes": 2404
+    },
+    "ReplicatedStorage/TestPackages/TestEZ": {
+      "className": "ModuleScript",
+      "sourceSha256": "6c4ec4011c5d92aa192db5c04638c4d7dacdd972143541e7faffbb2898abad56",
+      "sourceBytes": 70
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez": {
+      "className": "ModuleScript",
+      "sourceSha256": "c05dc3e27dded6d9531e6faa8439d104054fdb91c1227fe6650ec8151cc77dec",
+      "sourceBytes": 1168
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/Context": {
+      "className": "ModuleScript",
+      "sourceSha256": "333abe72ea8f2847999e608ee55372577a46c79b33d0e76197637cc1fa232115",
+      "sourceBytes": 584
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/Expectation": {
+      "className": "ModuleScript",
+      "sourceSha256": "0b4f99c71d356ef3a6641c6dddbbb4dd7fcc23b33f16f6bb4b407eb0e50754e5",
+      "sourceBytes": 6927
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/ExpectationContext": {
+      "className": "ModuleScript",
+      "sourceSha256": "bff2998a77f1c8012992053f856eb7280d7c6899ab0ac859a16a8c04f2891378",
+      "sourceBytes": 974
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/LifecycleHooks": {
+      "className": "ModuleScript",
+      "sourceSha256": "0acf9eae4f492c4440808fb617e791983a8a54b47e1a0646d817267b1f84572a",
+      "sourceBytes": 2081
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/Reporters/TeamCityReporter": {
+      "className": "ModuleScript",
+      "sourceSha256": "9f36169fe44ebdead319727f4e588df7e105897d3a180a3019efa78176a70e00",
+      "sourceBytes": 2677
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/Reporters/TextReporter": {
+      "className": "ModuleScript",
+      "sourceSha256": "718569ebb4aecbf1d35cab8074fedccbaeafdf36a307fded4fe41246e0076883",
+      "sourceBytes": 2110
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/Reporters/TextReporterQuiet": {
+      "className": "ModuleScript",
+      "sourceSha256": "032eff53d5efac0275015819de6b2a19aaa842f42c89c80d7f86c3d5dad16a2d",
+      "sourceBytes": 1943
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestBootstrap": {
+      "className": "ModuleScript",
+      "sourceSha256": "3a55c338bdb3427af11b42e53ff5f5af4152bab1fef4305098038cd73193ce62",
+      "sourceBytes": 3680
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestEnum": {
+      "className": "ModuleScript",
+      "sourceSha256": "e8a07795dbe46924231184a56badf4a09cbf31fcc56f6e97755a7f0e44b715d5",
+      "sourceBytes": 429
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestPlan": {
+      "className": "ModuleScript",
+      "sourceSha256": "a6fa8cdcaabfd8f37fbb523cce5950fe4bfeaee240094b70e7569d6a4dc03654",
+      "sourceBytes": 7917
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestPlanner": {
+      "className": "ModuleScript",
+      "sourceSha256": "de047c33344d8e870aeb123e8d419dd55d9eff152b6a8bfc07d107b8891aee51",
+      "sourceBytes": 1374
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestResults": {
+      "className": "ModuleScript",
+      "sourceSha256": "4fbe5e6ebbf2986f67b529de7db337d53aa80c15991da8d4335509f4e16df717",
+      "sourceBytes": 2267
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestRunner": {
+      "className": "ModuleScript",
+      "sourceSha256": "4a8180e4658d5f8d040595e41b8a90a6bcfe810dc1ed7fe240dd5e767ec35478",
+      "sourceBytes": 5051
+    },
+    "ReplicatedStorage/TestPackages/_Index/roblox_testez@0.4.1/testez/TestSession": {
+      "className": "ModuleScript",
+      "sourceSha256": "6eb8a49e118cd84d8e6eb973cafef30d844ff3cc53c29ac9f44a882fe9da4942",
+      "sourceBytes": 6643
+    },
+    "ServerScriptService/Server": {
+      "className": "Script",
+      "sourceSha256": "0dd25efa3eb3f1d987d7fee90f3e17fbeb204c436f4338ba5cd3128ca144b129",
+      "sourceBytes": 925
+    },
+    "ServerScriptService/Server/AircraftHealth": {
+      "className": "ModuleScript",
+      "sourceSha256": "f7ed71a055ddf5babccd92bbb865754da150c184a7c85d9b9dc6722447431445",
+      "sourceBytes": 2380
+    },
+    "ServerScriptService/Server/AircraftSelection": {
+      "className": "ModuleScript",
+      "sourceSha256": "a9e0766826a0b3a63e0b9d5feb127ed0916eed188a2617d54a7b5b56081ccf71",
+      "sourceBytes": 2965
+    },
+    "ServerScriptService/Server/AircraftService": {
+      "className": "ModuleScript",
+      "sourceSha256": "37b9f609afba8ace155b848deea4410f64e8bf11678957716512bd5d408b9a00",
+      "sourceBytes": 9752
+    },
+    "ServerScriptService/Server/ApprovedOutpost": {
+      "className": "ModuleScript",
+      "sourceSha256": "32fd2b7bcccf27c9888a4cd7894d4c10f97d7ca201ef08107d8dc7a2476160bd",
+      "sourceBytes": 20705
+    },
+    "ServerScriptService/Server/Bootstrap": {
+      "className": "ModuleScript",
+      "sourceSha256": "c0365a5516ef6ead74739927ae92952ce3a899a926b42f1218e1a5c02220ac47",
+      "sourceBytes": 1691
+    },
+    "ServerScriptService/Server/BuildingGeometry": {
+      "className": "ModuleScript",
+      "sourceSha256": "b8f55d3b14a7c1939e72d3fbd70f8b2a2983b7988f822360a683613b9bddcf80",
+      "sourceBytes": 14928
+    },
+    "ServerScriptService/Server/CharacterOwner": {
+      "className": "ModuleScript",
+      "sourceSha256": "f213a60fdbffea4d8cf71851d66253b292e4489242ab2bc43673e39ceb8d9114",
+      "sourceBytes": 8749
+    },
+    "ServerScriptService/Server/CombatRuntime": {
+      "className": "ModuleScript",
+      "sourceSha256": "aefee87adccc8a172b6622822bce975147d95014a91178569c0f74e4464458d4",
+      "sourceBytes": 23267
+    },
+    "ServerScriptService/Server/CombatService": {
+      "className": "ModuleScript",
+      "sourceSha256": "f6bc05f787ff92aa9267c84e1c54322baaea4f2a40d1981098e03c075196a167",
+      "sourceBytes": 8916
+    },
+    "ServerScriptService/Server/CombatViewRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "b931de5dba6a566508c4040561b24d00327d4258eb2ecbefacb799d6e5272643",
+      "sourceBytes": 8656
+    },
+    "ServerScriptService/Server/DamageRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "cdd96377fd28842ff584ba932d714eca9d9934831c0cda47c57a9b73bfe4d9f6",
+      "sourceBytes": 1712
+    },
+    "ServerScriptService/Server/DestructionRuntime": {
+      "className": "ModuleScript",
+      "sourceSha256": "9102704a99ab1cd62d711605327a2391fb8075bbb28e4d755a2638ef4bc32726",
+      "sourceBytes": 10764
+    },
+    "ServerScriptService/Server/DestructionService": {
+      "className": "ModuleScript",
+      "sourceSha256": "29fe18942aa03abe646930d93a4aef6ce5b3ffe5cf6f6334465b4b47c24aab0c",
+      "sourceBytes": 8991
+    },
+    "ServerScriptService/Server/GameRuntime": {
+      "className": "ModuleScript",
+      "sourceSha256": "1850f310abe50925a400243112fada17226bb11c0ca03e22a4d7ad8682ff8773",
+      "sourceBytes": 4927
+    },
+    "ServerScriptService/Server/GroundCombatRuntime": {
+      "className": "ModuleScript",
+      "sourceSha256": "fc4c4bbf374d688a425de931d59265be4d8b08340aed24b7641b29c0af28e186",
+      "sourceBytes": 24779
+    },
+    "ServerScriptService/Server/GroundCombatService": {
+      "className": "ModuleScript",
+      "sourceSha256": "1a5cb6c8668dad76943c920d4e6ad6d4edcedfcbbbe201404b4d94ba454dc710",
+      "sourceBytes": 7107
+    },
+    "ServerScriptService/Server/GroundMovementGuard": {
+      "className": "ModuleScript",
+      "sourceSha256": "86e935b15f9e48b0b0aa07d870b89a1bba1d655198f0bd785a44b3ddac40c42f",
+      "sourceBytes": 2904
+    },
+    "ServerScriptService/Server/GroundOriginGeometry": {
+      "className": "ModuleScript",
+      "sourceSha256": "eaefdd394dbdd1fb1d6cc9a8fbca52b8e84c3164cceacf648e313d5a40e484a2",
+      "sourceBytes": 6373
+    },
+    "ServerScriptService/Server/LauncherGeometry": {
+      "className": "ModuleScript",
+      "sourceSha256": "6f0f0c3e902540ff0c1bd764f5b05296dfdba0cc9720cfbc650354cfaf41c497",
+      "sourceBytes": 5348
+    },
+    "ServerScriptService/Server/LauncherRuntime": {
+      "className": "ModuleScript",
+      "sourceSha256": "f8c8c678fee7dd0bec378476581bb08c21e28741c8dde1394af6fc0b19eb4a4e",
+      "sourceBytes": 18750
+    },
+    "ServerScriptService/Server/LauncherService": {
+      "className": "ModuleScript",
+      "sourceSha256": "fe895b805e4b936a922cd08792634f957c6497d4a51e114a18f08ddaadef4216",
+      "sourceBytes": 8130
+    },
+    "ServerScriptService/Server/MapService": {
+      "className": "ModuleScript",
+      "sourceSha256": "ac58da9965468231c4b49f137b812187523f08c0e2c85508e583c03750eef545",
+      "sourceBytes": 13629
+    },
+    "ServerScriptService/Server/MatchRuntime": {
+      "className": "ModuleScript",
+      "sourceSha256": "9de00ce8e12977905c472f9d35065b780dc11ad2549dfcffa0d648b169bb7504",
+      "sourceBytes": 16700
+    },
+    "ServerScriptService/Server/MatchService": {
+      "className": "ModuleScript",
+      "sourceSha256": "b9238d9a57859319b729d59d461014723f9b2165aefeaf3d71ec5318e481ed3b",
+      "sourceBytes": 13827
+    },
+    "ServerScriptService/Server/MaterialPanelGeometry": {
+      "className": "ModuleScript",
+      "sourceSha256": "a70f5785f98089966619827634077152821a26edff0cf41f5a405dffae7bf240",
+      "sourceBytes": 9112
+    },
+    "ServerScriptService/Server/OutpostReconstruction": {
+      "className": "ModuleScript",
+      "sourceSha256": "6e89bf049ab296e8e2b83dbffaf927ec44d32774b31c70df5567e98e5dbf3307",
+      "sourceBytes": 8810
+    },
+    "ServerScriptService/Server/PanelAssetCatalog": {
+      "className": "ModuleScript",
+      "sourceSha256": "69cbd5f5c04d49d805a6bd26ea98db4d445bc33de36b96decfc0517db77a01d9",
+      "sourceBytes": 7156
+    },
+    "ServerScriptService/Server/PanelAssetRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "53b477e9fd9456d4fae099033e636dc582965721bbb90cc07b48bb8489fcb0f7",
+      "sourceBytes": 2558
+    },
+    "ServerScriptService/Server/PanelDamageRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "bbf66feb810d3c1e3f2e843bf40c2f2389bbca0f41b1d039b28aed0004846161",
+      "sourceBytes": 2469
+    },
+    "ServerScriptService/Server/PanelFragments": {
+      "className": "ModuleScript",
+      "sourceSha256": "b92b7c1661035cba9cd9f810269255fee6eb6b28c37a3f28d8dd736bd0921d67",
+      "sourceBytes": 8136
+    },
+    "ServerScriptService/Server/PanelGeometry": {
+      "className": "ModuleScript",
+      "sourceSha256": "56eb18cfd43249fa5974716dc15ac8f8f06c13a3e3dfa71308ca7de5f478111e",
+      "sourceBytes": 11307
+    },
+    "ServerScriptService/Server/RoleService": {
+      "className": "ModuleScript",
+      "sourceSha256": "f20f38b73f69593520ea2df3761d9085b053f61c5a66456842ebc56fd7d320c3",
+      "sourceBytes": 2912
+    },
+    "ServerScriptService/Server/RoundRules": {
+      "className": "ModuleScript",
+      "sourceSha256": "14407c812e16a176bf7cabde077fd9166ce031d8308178bb57206ef2083cfc45",
+      "sourceBytes": 1940
+    },
+    "ServerScriptService/Server/TerrainRecipe": {
+      "className": "ModuleScript",
+      "sourceSha256": "54154c4cd4dbaf16d89f9b903af6ca78983d25241aef16a536f03f655be0bace",
+      "sourceBytes": 3300
+    },
+    "ServerScriptService/ServerTests": {
+      "className": "Script",
+      "sourceSha256": "b8b237ca1dace8249d3f959dcbef8630fb6d7a47c8e63180bec1d3ef743521b5",
+      "sourceBytes": 3858
+    },
+    "ServerScriptService/ServerTests/AircraftHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "2cb522e7e8e88ec14875a97a619b3afeae004997ca8c4048fa1ee63d48288879",
+      "sourceBytes": 17226
+    },
+    "ServerScriptService/ServerTests/AircraftPanHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "3b7b09a14d052fcd388a0d2f92a3a214db49c3be8d9a4bcded478e1246d6e421",
+      "sourceBytes": 19231
+    },
+    "ServerScriptService/ServerTests/CharacterCleanup": {
+      "className": "ModuleScript",
+      "sourceSha256": "61db76ad8a500442e2b1d6a689e72638bf76454df09fc23c7be067a934fe04c0",
+      "sourceBytes": 2825
+    },
+    "ServerScriptService/ServerTests/CombatHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "0bcf1db36f8223b4861b7a411dd52e0ab553120b2c76481a1b885c04bdad36dc",
+      "sourceBytes": 48146
+    },
+    "ServerScriptService/ServerTests/DestructionHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "0af37234d1270dcdd57d3afcaf75c851bd15eb755a47d28ce09688b383b6bd04",
+      "sourceBytes": 55428
+    },
+    "ServerScriptService/ServerTests/ExpandedMapHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "625ccc49411d3e5fb73f113a6bfc7fabdca2f1dd23798297d54fb5dd4f090670",
+      "sourceBytes": 12092
+    },
+    "ServerScriptService/ServerTests/GroundCombatHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "39bf0b133a3df813d24e18f748e1752ed9492824931642804316997ff447490a",
+      "sourceBytes": 52432
+    },
+    "ServerScriptService/ServerTests/HumanTestCheck": {
+      "className": "ModuleScript",
+      "sourceSha256": "d4ec505ce8aca2a3cdd98611715d1a95426bd59263eb04e9b567d6a87bdc7671",
+      "sourceBytes": 1033
+    },
+    "ServerScriptService/ServerTests/HumanTestSession": {
+      "className": "ModuleScript",
+      "sourceSha256": "6f6b813c7435bdee8e91c244ae2b6fb92ee7edb892afc3553dac15a6153f3a3c",
+      "sourceBytes": 12310
+    },
+    "ServerScriptService/ServerTests/HumanTestSession.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "a9404d9188c2a21cbeeb9dabf1bd71c3e6b742c2c6ad12df9e57b9de8fcadddf",
+      "sourceBytes": 12522
+    },
+    "ServerScriptService/ServerTests/LauncherHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "64f7ce8e940755360abd326b1d389c9fd6338309984d6c8963b8f4b470b37ad6",
+      "sourceBytes": 35890
+    },
+    "ServerScriptService/ServerTests/LocalTestControls": {
+      "className": "ModuleScript",
+      "sourceSha256": "6a8f55bfa1cab5cba688a198cf0c0459e5e75e5a759e44e7a1ec5332d4d5f3c0",
+      "sourceBytes": 6595
+    },
+    "ServerScriptService/ServerTests/LocalTestControls.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "6d7b673da4d24b2f471794dd8d86f626ee72e6118cf36469ad2dc54c17f63fe5",
+      "sourceBytes": 4026
+    },
+    "ServerScriptService/ServerTests/LocalTestControlsCheck": {
+      "className": "ModuleScript",
+      "sourceSha256": "2fd6cab070cf3d5b877b70f2c97d55602b4cd3f0ad09217fc1eefc6e4d339246",
+      "sourceBytes": 1053
+    },
+    "ServerScriptService/ServerTests/P17ManualRunner": {
+      "className": "ModuleScript",
+      "sourceSha256": "1f5f6a58e14e6a1c84ac76cad581e1a6674fc74ae3d6f53ef871b128893ae3bc",
+      "sourceBytes": 8395
+    },
+    "ServerScriptService/ServerTests/P17MaterialHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "dce51a369a3bae2e95499a54c5543a07858786e1d3b12fc4ac6f6e9e68a0c5e7",
+      "sourceBytes": 87281
+    },
+    "ServerScriptService/ServerTests/P17Metadata": {
+      "className": "ModuleScript",
+      "sourceSha256": "10588c76fc4e464203a117377d9935e1a3d27b83a1e92aff0d4ad89fcf688c8c",
+      "sourceBytes": 32207
+    },
+    "ServerScriptService/ServerTests/RoundHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "1b1760c3bae2e6e3ad08539f7ca6fe6409d0081ca89e7471f93cdfb2dd7b7744",
+      "sourceBytes": 25133
+    },
+    "ServerStorage/DevelopmentSettings": {
+      "className": "ModuleScript",
+      "sourceSha256": "2179ebc6da84d661a82e7d2d5ad58c172cd5a3a20e833b292e3a4192a9ab0eed",
+      "sourceBytes": 148
+    },
+    "ServerStorage/Tests/Fixtures/DevelopmentSettings": {
+      "className": "ModuleScript",
+      "sourceSha256": "2179ebc6da84d661a82e7d2d5ad58c172cd5a3a20e833b292e3a4192a9ab0eed",
+      "sourceBytes": 148
+    },
+    "ServerStorage/Tests/Integration/AircraftHealth.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "4ce54bdc711dac61fb30817bd503f3ab1544dc596a3876f7c79f4331fdfd21b6",
+      "sourceBytes": 2055
+    },
+    "ServerStorage/Tests/Integration/AircraftSelection.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "4236b0dc2bcf7b295670c449bc25b46bfd9b014d01af9920e697c24b223ff395",
+      "sourceBytes": 5196
+    },
+    "ServerStorage/Tests/Integration/CombatService.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "2b975c5183fde961ee37011ac3f19c00aed6bfe4a3f3a32c867293d3d0d14881",
+      "sourceBytes": 7472
+    },
+    "ServerStorage/Tests/Integration/CombatViewRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "eba8ecd400973ad7493146fa083b081ebd0e70bda0a233537ce3c330f00f3a39",
+      "sourceBytes": 6369
+    },
+    "ServerStorage/Tests/Integration/DamageRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "d717293f04ddc40e7a5e75d6f82a014d75dee21c2cf97530be21964723b8b8ba",
+      "sourceBytes": 1817
+    },
+    "ServerStorage/Tests/Integration/DestructionService.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "184c7f85f9d1e962986de1aab3a7743fc60902a85b8271ea3b35b2b469380458",
+      "sourceBytes": 16418
+    },
+    "ServerStorage/Tests/Integration/GroundCombatService.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "5ca0ce3d8007b833e8577c9ca390bc36b329337012df0c7e30851739f4d8a37a",
+      "sourceBytes": 4952
+    },
+    "ServerStorage/Tests/Integration/GroundMovementGuard.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "89a2fc31da4bf458240e876a9b5e7973e898124de799b5dd004557cf8b8ca65e",
+      "sourceBytes": 1970
+    },
+    "ServerStorage/Tests/Integration/LauncherService.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "8fa93e71dd7a9af41e05e0ef76788b65653697155c82dfd6d3e35c96c150e763",
+      "sourceBytes": 11666
+    },
+    "ServerStorage/Tests/Integration/Lifecycle.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "e2b73b19e6545267931fa4e11cb7dd5aae815bb91185a8386d0742b93b530e9b",
+      "sourceBytes": 2197
+    },
+    "ServerStorage/Tests/Integration/MatchService.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "3ad2067cc30f148c22dab8ec9fe7acee1f03cad446bdafe898cf78fce1194db2",
+      "sourceBytes": 14257
+    },
+    "ServerStorage/Tests/Studio/Aircraft.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "d814e622bf6b8c1cd5e275e57e980f997fc2061443e7392967bcc3c2916819a9",
+      "sourceBytes": 9736
+    },
+    "ServerStorage/Tests/Studio/CharacterOwner.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "549c2bfda797bf41b1416d09ffb9029b3a91aeb09e2ab5b54bacba3b9ccced45",
+      "sourceBytes": 7704
+    },
+    "ServerStorage/Tests/Studio/CombatCollision.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "161a97a0bb7df2526f62f2bf0bf249fa6a2128e01c87c84f896ff59b2353381a",
+      "sourceBytes": 6255
+    },
+    "ServerStorage/Tests/Studio/CombatView.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "c3edc66213b1c1f93488d87f13c6d381b793e3c32cfc4113e70728c6df8690dd",
+      "sourceBytes": 3934
+    },
+    "ServerStorage/Tests/Studio/ExpandedMap.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "fb15e063a1f9366ef5cab8caa708ff023ece2f168f7c30cb007e5e0c35328196",
+      "sourceBytes": 16203
+    },
+    "ServerStorage/Tests/Studio/Foundation.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "b6f43d3dbf763edb3086120da3c249c1adcb3d6e1956059c5c7509893b8f9d0b",
+      "sourceBytes": 4361
+    },
+    "ServerStorage/Tests/Studio/GroundOriginGeometry.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "3a990e6bdc0502463e58b261ac90b381cb10f231e8524302a5421529d0f1e379",
+      "sourceBytes": 7467
+    },
+    "ServerStorage/Tests/Studio/Launcher.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "2a15ead6799a5273ac0ae5de9f842a9eb2ad7d4fca5800b9d785c38b903e533d",
+      "sourceBytes": 8744
+    },
+    "ServerStorage/Tests/Studio/Map.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "74b9438ed9d9ad4236a6aef9ab2cba9cb51879a2aa770047b83c0f5d697f3d6c",
+      "sourceBytes": 12989
+    },
+    "ServerStorage/Tests/Studio/MaterialPanels.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "c0e31c645f06d74158b152f6896a6dae36ec739456a82446e75bc4789e29c6c5",
+      "sourceBytes": 15557
+    },
+    "ServerStorage/Tests/Studio/Outpost.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "1fc62dd3447f81c3d65c1def816f86253586aa60631a1f0532d38f0504446055",
+      "sourceBytes": 23226
+    },
+    "ServerStorage/Tests/Studio/PanelDestruction.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "b1d729e127a4638defb791f1dbaab5396c629822fb8dfcdd222e51cca1ebb88a",
+      "sourceBytes": 36794
+    },
+    "ServerStorage/Tests/Unit/AircraftPanRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "d4070746d7ac8e6699e2834f8a12bbe0aa7bae75cbbb06f29acc66014ec0b5c1",
+      "sourceBytes": 14939
+    },
+    "ServerStorage/Tests/Unit/AircraftRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "804edb17b62e7bc6ee5773b868896b1d3e3096cef5e2ca65cba3107c7f2238f6",
+      "sourceBytes": 5825
+    },
+    "ServerStorage/Tests/Unit/BuildingLayout.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "18418680e9ae0d70f6b29a19a3008b600ca6b0e28acab6a99d2c00e391fbcb39",
+      "sourceBytes": 5316
+    },
+    "ServerStorage/Tests/Unit/Config.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "0f243a1e8340048306741c759760c3a9f4cecad36562249309a274c962990e7c",
+      "sourceBytes": 2447
+    },
+    "ServerStorage/Tests/Unit/MapRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "f0347bd56a45bc192539b19f39c432b00005a30232c6a4b0e9224c15a010583f",
+      "sourceBytes": 4915
+    },
+    "ServerStorage/Tests/Unit/PanelAssetRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "8c7417282b9bbc0537a05916eac0793ba276615a3cb49f5a770a71da583068ec",
+      "sourceBytes": 3746
+    },
+    "ServerStorage/Tests/Unit/PanelDamageRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "8de4bb80f56b7433ca563fe48f83e634d722cea349fb2218e4adbf80dc8bebf0",
+      "sourceBytes": 4167
+    },
+    "ServerStorage/Tests/Unit/RateLimit.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "34979b2e676b93a87eb2d337451f5134a765cc73e2ee61e301b681dc31dac846",
+      "sourceBytes": 2299
+    },
+    "ServerStorage/Tests/Unit/RoleService.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "1563927c44e8c1cfa5ca0b93018d2a8a887807aebc30db7fa8951ec13399a1f5",
+      "sourceBytes": 3727
+    },
+    "ServerStorage/Tests/Unit/RoundRules.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "9afed5dfbf404da051611fea2843c6678c29877010cfd8efec24e26d30917b3c",
+      "sourceBytes": 2936
+    },
+    "ServerStorage/Tests/Unit/Validation.spec": {
+      "className": "ModuleScript",
+      "sourceSha256": "7344d2d7548b88e80935c5098d99f30eb4719b8ca2c85d67be3cacf3cc77763e",
+      "sourceBytes": 3073
+    },
+    "StarterPlayer/StarterPlayerScripts/Client": {
+      "className": "LocalScript",
+      "sourceSha256": "6e44ed2b5f3900f741e5c638172bf5513ce422dd088e90f528b0806a6d45485d",
+      "sourceBytes": 2187
+    },
+    "StarterPlayer/StarterPlayerScripts/Client/GroundCombatController": {
+      "className": "ModuleScript",
+      "sourceSha256": "a54821a33796c1eeefaa50c2b9f8acad52ae75a1a4881d808acbd42bdb1e1e88",
+      "sourceBytes": 27198
+    },
+    "StarterPlayer/StarterPlayerScripts/Client/RoundPanel": {
+      "className": "ModuleScript",
+      "sourceSha256": "a938df052e35a70d568eee1cf1a46a0c6d41d29ebab74f340531081244def835",
+      "sourceBytes": 12118
+    },
+    "StarterPlayer/StarterPlayerScripts/Client/StatusPanel": {
+      "className": "ModuleScript",
+      "sourceSha256": "01ff2577617465d1ed8c487624bfb1d7f10a670cf6933616cdef650985b52a8a",
+      "sourceBytes": 2775
+    },
+    "StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController": {
+      "className": "ModuleScript",
+      "sourceSha256": "23ac0a6363c3d7882bef7bc840e283ce51e564d311c8de4e4749271dedff443f",
+      "sourceBytes": 38816
+    },
+    "StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics": {
+      "className": "ModuleScript",
+      "sourceSha256": "c4aa20c32a9cff7a373885144cc1aa5a7473be74d5d22a09b0298a247c44c9f5",
+      "sourceBytes": 4484
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests": {
+      "className": "LocalScript",
+      "sourceSha256": "de827a4455da2195325d592728b8944d71bef1c878a91fa4426160d8fb7e282e",
+      "sourceBytes": 2694
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/AircraftHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "59f89c89329ef99db4aa5688a01cc21ec73e46bc06857ba8636416d369fb81cd",
+      "sourceBytes": 34160
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/AircraftPanHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "ecc6776fab79aa846f791202f275482aebf380c70a5ddb2ff19ca6451df40ff9",
+      "sourceBytes": 72253
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/CombatHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "22c993e3448323158dca13d0764b0d425b20881e2ab5761350438dd960ebb584",
+      "sourceBytes": 7475
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "0ff7edffd45d7d843f9832e6699bf6bd397b3b20239e89c5869e75f02fc33fba",
+      "sourceBytes": 14801
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/ExpandedMapHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "59d12b74dc398d2c318d4afad2fa9bbaa64b971de97067c50d3747f5698d1d5f",
+      "sourceBytes": 8185
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/GroundCombatHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "ce3d4ec82391d3d5902bca61d34e12fe4e6aa532c202d30c058873883fc41956",
+      "sourceBytes": 4995
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/HumanTestPanel": {
+      "className": "ModuleScript",
+      "sourceSha256": "e8da985455271e5abde54fcc2a475a5b73154c155fba609a814376093ffa3123",
+      "sourceBytes": 6129
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/LauncherHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "23d1f2d7389d506e7ddad317aa789d800882dc45d645e295d01a9c554228bc7b",
+      "sourceBytes": 5399
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/P17MaterialHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "ad3b24582ceb6bf8ac98796ea77b66ce607d47aaa3e7276bef2d1b537761a52a",
+      "sourceBytes": 30896
+    },
+    "StarterPlayer/StarterPlayerScripts/ClientTests/RoundHarness": {
+      "className": "ModuleScript",
+      "sourceSha256": "3ab60fac76b82844686e8bdcb6ebfe9bc1222e03e085113bb4b247b0e0a145b0",
+      "sourceBytes": 5892
+    }
+  }
+}
