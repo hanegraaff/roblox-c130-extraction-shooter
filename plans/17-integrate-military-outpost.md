@@ -1075,3 +1075,17 @@ cases, plus artifact isolation. The release SHA-256 still matches `ee19deb5`.
 The [local Edit proof](../docs/evidence/p17/burst-fix-edit-sync-dd7bb18.json)
 verifies the three changed modules, all 137 loaded Sources and the existing
 2,332 native meshes and 9,328 material slots. A fresh native run is pending.
+
+### Primitive performance preflight and incomplete run — 2026-11-19
+
+The [primitive workload receipt](../docs/evidence/p17/primitive-performance-711c5a8-attempt1-summary.json)
+records two actual 1920×1080 desktop-simulator clients at fixed
+`QualityLevel10` on a MacBook Pro with M1 Pro and Studio `0.748.0.7481526`.
+The [raw report](../docs/evidence/p17/primitive-performance-711c5a8-attempt1-raw.json)
+records 300 seconds of server sampling and all six 187-panel demolition batches.
+The fixture recorded 253 GAU23, 28 M102 and 193 impacts, including 74 Outpost
+impacts. It stopped before obtaining the client reports because it measured
+zero rifle shots. The temporary client had looked for the rifle remotes under
+ReplicatedStorage, while production parents them to AircraftState. No
+benchmark comparison or performance budget pass is claimed from this run.
+Runtime and effect ownership returned to zero after completion.
