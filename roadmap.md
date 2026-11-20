@@ -148,6 +148,11 @@ P17 remains In progress in draft PR #39 pending explicit in-game Outpost
 approval. The two requested skills follow P17 under D66. See the
 [P17 evidence record](plans/17-integrate-military-outpost.md#performance-acceptance-revision-2026-11-20).
 
+Later on 2026-11-20, the user added automatic Ground interior zoom and both
+reusable asset skills to P17 under D68. The existing Outpost is the first
+configured building. The revised scope is in progress in PR #39. See the
+[P17 camera and skills revision](plans/17-integrate-military-outpost.md#indoor-camera-and-reusable-skills-scope-revision-2026-11-20).
+
 2026-11-13 main integration: under the user's merge request, PR #34 merged
 into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
 equals the combined passing candidate `537a2ce` /

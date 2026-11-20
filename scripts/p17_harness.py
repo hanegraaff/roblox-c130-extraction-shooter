@@ -1,4 +1,4 @@
-"""Bind the managed P17 native harness to unchanged approved production inputs.
+"""Bind the managed P17 native harness to exact current production inputs.
 
 ``--write`` refreshes only test-only P17Metadata.luau. The default rejects stale
 metadata, source drift and any semantic edit to the frozen server/client body.
@@ -11,8 +11,8 @@ import json
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-PRODUCT_COMMIT = "ee19deb5fe18090573ce0d9788b0c77555bca333"
-PRODUCT_TREE = "4f9798fe52f9bdd83af6a6f1b7dcab87c4727e6a"
+PRODUCT_COMMIT = "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976"
+PRODUCT_TREE = "1f8d4d231b7081adfe3bafe8ade5dc6acf9e2d47"
 OUTPUT = "tests/studio/server/P17Metadata.luau"
 FIXTURE_VERSION = "v9-verified-avatar-handoff"
 SERVER_PROBE = "tests/studio/server/P17MaterialHarness.luau"
@@ -76,17 +76,17 @@ def check_frozen_body(path: Path, expected: str) -> None:
 
 
 def check_production_revision(root: Path, production: dict[str, str]) -> None:
-    """Prove current runtime/art bytes are the approved ee19 product, not a new revision."""
+    """Prove current runtime/art bytes match the exact pinned production revision."""
     tracked = subprocess.check_output(
         ["git", "ls-tree", "-r", "--name-only", PRODUCT_COMMIT, "--", "src", "assets", "default.project.json"],
         cwd=root, text=True,
     ).splitlines()
     expected = {name for name in tracked if production_path(name)}
     if expected != production.keys():
-        raise ValueError("production file coverage differs from unchanged ee19 product")
+        raise ValueError("production file coverage differs from the pinned product")
     result = subprocess.run(["git", "diff", "--quiet", PRODUCT_COMMIT, "--", *sorted(production)], cwd=root)
     if result.returncode != 0:
-        raise ValueError("production inputs differ from unchanged ee19 product")
+        raise ValueError("production inputs differ from the pinned product")
 
 
 def metadata(root: Path = ROOT) -> dict:
@@ -108,8 +108,8 @@ def metadata(root: Path = ROOT) -> dict:
         "harnessInputs": fixtures,
         "approvedAssetBindings": bindings,
         "privateImportWorkspace": {"universeId": "10776653720", "placeId": "72732833195348", "owner": "2227341845"},
-        "expectedServerSmoke": 173,
-        "expectedClientSmokeEach": 10,
+        "expectedServerSmoke": 179,
+        "expectedClientSmokeEach": 12,
         "expectedFullMaterialCases": 10,
         "requestedActualClients": 2,
         "manualFixtureVersion": FIXTURE_VERSION,

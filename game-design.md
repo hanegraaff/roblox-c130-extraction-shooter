@@ -34,7 +34,14 @@ The P14 candidate uses **WASD** camera panning for the operator and an on-screen
 
 The C-130 circles **every** future level automatically. A level definition supplies its playable boundary, orbit center/radius/altitude, aim envelope, terrain and buildings, spawn/launcher anchors and stable destructible-panel identities. Shared camera/pan/zoom, weapon damage, panel progression and fragment rules consume that definition instead of living in map-specific scripts. An orbit may enclose a future noncircular playable footprint; the MVP keeps its authored circular equal-radius orbit. Selecting, validating and switching among multiple levels is future scope, with reset and late-join reconstruction required before a second level can ship.
 
-Weapon selection determines the camera field of view: the 30mm uses a narrower, more magnified view than the 105mm. Exact FOV angles are tuning values. There is no independent free-zoom control in the MVP. Rejected or stale weapon selections must not leave the HUD, reticle projection and active weapon in different states.
+Weapon selection determines the camera field of view: the 30mm uses a narrower, more magnified view than the 105mm. Exact FOV angles are tuning values. The operator has no independent free-zoom control in the MVP. Rejected or stale weapon selections must not leave the HUD, reticle projection and active weapon in different states.
+
+Ground third-person camera distance adapts in authored interiors under D68.
+The first configured building is the smaller Outpost. Where room clearance
+requires it, the ground camera moves in on entry and restores the player's
+previous zoom when leaving. Camera adaptation is local presentation and keeps
+walls, ceilings and roofs opaque. Future construction should allow enough
+space for both avatar movement and the ordinary third-person camera.
 
 ## Weapons and aircraft health
 

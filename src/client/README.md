@@ -36,6 +36,17 @@ The [P14 client harness](../../tests/studio/client/AircraftPanHarness.luau) adds
 
 ## Ground rifle and launcher
 
+`GroundIndoorCamera.start(player, roundState)` installs the local Outpost
+camera modifier and returns an idempotent stop closure. It requires a living
+Ground player or Studio Ground preview and the player's native Custom camera.
+It reads validated `GroundCameraInteriors` descriptors from the active
+Battlefield. Its callbacks restore the original stock frame at camera priority
+−1 and apply the room limit at priority +1. Roblox still owns the desired zoom,
+rotation, focus and occlusion. The modifier releases its frame when it loses
+camera ownership and reacquires descriptors after a Battlefield rebuild.
+`GroundCombatController` projects aim at camera priority +2 so its reticle rays
+use the rendered camera.
+
 `GroundCombatController.new(player, playerGui, roundState, touchProvider?)` returns a nonyielding idempotent Lifecycle owner. It owns one GroundCombatHUD and listeners for an active living Ground player. The optional nonyielding provider controls input-mode tests; production samples UserInputService. Role/round changes, unequip, focus loss or stop release held input; stop disconnects listeners and destroys the GUI.
 
 Desktop aim uses raw mouse viewport pixels; touch aim uses viewport center. `projectAim` rounds one pixel for ray and reticle and uses the measured GUI origin plus inset only for drawing. The equipped server-owned M-7 or launcher Tool chooses fire intent. Native tool slots select equipment; carriers on touch use M-7/ROCKET buttons. Hold left click or FIRE; R/RELOAD applies only to the M-7, while launcher reload is automatic. Ammo and reload timing come from replicated Tool attributes, so selection cannot refill a weapon.

@@ -1,6 +1,6 @@
 # P17 — Replace the smaller Outpost with the approved asset
 
-**Milestone:** M4 / Outpost integration. **Dependencies:** P16, P07, P13, P14. **Requirements:** R01, R05, R06, R09, R10, R12, R15, R16, R19, R20. Status: [roadmap](../roadmap.md).
+**Milestone:** M4 / Outpost integration. **Dependencies:** P16, P07, P13, P14. **Requirements:** R01, R05, R06, R09, R10, R12, R15, R16, R19, R20, R21. Status: [roadmap](../roadmap.md).
 
 **Sequence (D63):** Implement immediately after the approved P16 package, before continuing P09. This plan sits between P07 and P08 in roadmap order and does not require P08 to start; preserve the already completed launcher implementation when present in the selected source.
 
@@ -8,13 +8,13 @@
 
 Walk through the detailed military outpost approved in P16, including its storage/workshop downstairs, command room upstairs, exterior stairs/balcony and rooftop details. Aircraft fire produces persistent damage appropriate to each panel's material, real openings and bounded physical debris. Replace **only the existing smaller Outpost** in the current battlefield. Foundry and Warehouse remain the two larger buildings; this does not introduce a second level or level selection.
 
-**2026-11-15 clarification (D65–D66):** finish this current integration without
-resizing the Outpost, changing existing world dimensions or adding automatic
-interior zoom. Larger clearances (about 50%) and interior-camera adaptation are
-future-plan observations. After completing P17, finalize the requested reusable
-asset-creation and Blender-import skills from its complete lessons. Creation
-accepts a description, an image folder, or both; these tooling deliverables do
-not add new P17 gameplay acceptance criteria or start another roadmap plan.
+**2026-11-20 revision (D68):** include automatic ground zoom in the current
+Outpost and deliver both reusable skills within P17. Keep existing dimensions.
+Use the current Outpost to validate camera behavior and teach future authors
+how avatar routes, room dimensions and camera clearance affect the need for
+indoor zoom. The asset-creation skill accepts a description, an image folder,
+or both. The Blender-import skill takes the result through a verifiable Roblox
+integration.
 
 ## Input and boundaries
 
@@ -60,6 +60,20 @@ Use named deterministic/catalog and service tests for new asset-boundary validat
 
 Retain the measured art comparison as diagnostic evidence under D67. P11 and P12 own release profiling, soak and capacity checks under the [testing budgets](../docs/testing.md). Keep tests, preview galleries, Blender cameras/lights and development overrides out of the release place.
 
+### 4. Add adaptive ground zoom and capture the asset workflows
+
+Use shared Ground presentation with data authored for the current smaller
+Outpost. Shorten the camera distance smoothly when indoor clearance calls for
+it, then restore the player's pre-entry zoom outside. Keep the active camera
+inside available clearance. Preserve native aiming and controls, opacity and
+combat geometry. Confirm that the operator and spectator retain camera ownership
+on their paths and normal lifecycle changes release the Ground zoom adjustment.
+
+Package two reusable Codex skills. Authoring covers reference interpretation,
+real avatar fit and third-person camera space. Blender import covers scale,
+pivots, materials, collision, source reconstruction and native review, including
+adaptive camera setup when compact rooms need it.
+
 ## Acceptance criteria
 
 - **A1 — Exactly the intended replacement:** `P17OutpostReconstruction` and `P17AssetCatalog` pass alongside the full `python3 scripts/verify.py` gate. A clean checkout reconstructs the approved smaller-Outpost asset with the manifest, exports, actual asset references and no unintended scripts/test content. Foundry, Warehouse, terrain, the starting shelter, protected waiting lobby, 720-stud boundary and canonical orbit are preserved. Building/story/panel counts and registered IDs match the revised source; missing/invalid imports fail clearly.
@@ -68,10 +82,12 @@ Retain the measured art comparison as diagnostic evidence under D67. P11 and P12
 - **A4 — Replication, reset and fragment safety:** `P17OutpostMultiplayer` runs with at least two actual clients and fresh server/per-client baseline reports. Both clients agree on panel identity, stage, progress, material appearance and real geometry. Across at least two damaged-to-pristine resets with live fragments/pending work, restore the exact approved pristine building once, clear all damage/old effects and reacquire fresh panel references. `P17MaterialFragments` verifies actual falling/static contact, bounds, expiry, stop/reset cleanup and no character/query interference. Keep supported spectator/late-join regressions where their existing suites require them; do not add unsupported same-identity reconnect acceptance (D59).
 - **A5 — Native gameplay regressions:** Required current P07/P05/P14 regression suites pass on the final source, including primitive-building damage and launcher-anchor accessibility. When completed P08 source is present, its launcher/recovery regressions also pass. Record nonzero discovered/passed counts, actual clients and source/build identity. D67 waives the paired `P17OutpostPerformance` workload and its frame-time threshold for P17. P11/P12 own release performance, soak and real 6/10-player acceptance.
 - **A6 — Human approves the in-game result:** The user inspects the actual integrated smaller Outpost from ground and operator views, both furnished floors, stairs/roof details and each material's damage progression, and explicitly likes/approves the identified candidate. Revisit P16 approval if integration materially changes the approved art. Record response, date, source/package hashes and conditions; silence or an agent's judgment is not approval.
+- **A7 — Adapt the ground camera indoors.** Test the stock third-person camera on entry to both Outpost floors, at doorway boundaries and on exit. Verify smooth inward adjustment and recovery of the prior outdoor zoom, including an already-close view. Exercise role, character and world-reset transitions. Verify cover opacity, actual geometry and other role cameras retain their contracts.
+- **A8 — Deliver both reusable asset skills.** Validate skill discovery metadata and independently exercise authoring from written and visual inputs and a Blender-to-Roblox integration scenario. Confirm the skills explain measuring avatar and camera clearance and use P17's reconstruction, import and native validation lessons.
 
 ## Documentation and completion record
 
-Update the root player README with the implemented building. Preserve the user's selected `blender_outpost.png` as its first and only embedded image immediately after the title, with an accurate Blender-authoring caption, as required by the current `AGENTS.md`. Keep actual Studio/playtest captures in linked P17 evidence; do not present Blender images as gameplay. Update asset/package READMEs, reconstruction instructions, manifest, architecture and named test/evidence links together. Record A1–A6, dependency/package hashes, source/PR, actual import ownership, tool commands, test counts, clients, navigation/normal/thermal observations, performance metrics, reset/cleanup and human feedback here when executed. Status remains in the roadmap.
+Update the root player README with the implemented building. Preserve the user's selected `blender_outpost.png` as its first and only embedded image immediately after the title, with an accurate Blender-authoring caption, as required by the current `AGENTS.md`. Keep actual Studio/playtest captures in linked P17 evidence; do not present Blender images as gameplay. Update asset/package READMEs, reconstruction instructions, manifest, architecture and named test/evidence links together. Record A1–A8, dependency/package hashes, source/PR, actual import ownership, tool commands, test counts, clients, navigation/normal/thermal observations, reset/cleanup, human feedback and skill evaluations here when executed. Status remains in the roadmap.
 
 ### Implementation preflight — 2026-11-14
 
@@ -1295,3 +1311,29 @@ A5 is satisfied by the current-source P07, P05, P14 and P08 reports above.
 The two-client material replication and pristine reset evidence remains part
 of A4. Explicit user approval of the integrated Outpost remains the final
 P17 acceptance item.
+
+### Indoor camera and reusable skills scope revision (2026-11-20)
+
+In the integrated in-game review, the user reported that everything looked good
+and identified the missing indoor zoom. The review used the ordinary local
+`8ccdc37` test candidate with `ee19deb` production and the approved P16 package
+identified above. They then requested adding automatic ground interior zoom to
+P17 and delivering both requested asset skills as part of the plan.
+[D68](../docs/decisions.md) records that decision. The revised camera and skill
+acceptance items are A7 and A8.
+
+The two new project skills pass skill metadata and repository link validation.
+Their [independent forward test](../docs/evidence/p17/asset-skills-forward-test.md)
+uses all three references, a saved editable Blender trial, a clean FBX
+round-trip and an actual managed-import source audit. The reviewer tested
+clearance measurement, native mesh identity, material bindings and the
+handoff to source-managed Studio verification.
+
+The [full host gate](../docs/evidence/p17/indoor-camera-host-cd7071b.txt)
+on production `cd7071b9ed00452ee2bba06d7bc9ccbde22c3976` with the updated
+harness binding passed 65 unit, 65 integration, 48 asset and 14 tooling
+checks. Both variants reconstruct 2,804 authored Parts. Two local camera
+descriptors and two runtime modules account for the production additions.
+The preserved native suite bodies now bind to the actual camera production
+source and expect 179 server and 12 client smoke cases. Fresh operated camera
+and applicable native regression results remain to be collected.

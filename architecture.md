@@ -79,6 +79,13 @@ The phase loop is Lobby → Deploying → Active → Results → Resetting → L
 
 `RoundPanel` reads replicated phase/role/life/deadline/result attributes and computes its timer using `GetServerTimeNow`. Eliminated players and late spectators follow the lowest-UserId living ground teammate, falling back to a fixed overview when no target exists. Lobby restores the local character camera. There is no manual spectator target selector yet. `RoundPanel` delegates the living operator and labelled solo Operator preview to its owned `ThermalCameraController`; other roles retain normal round/spectator cameras.
 
+`GroundIndoorCamera` adapts the local Ground view in level-authored interiors.
+Its render callbacks run immediately before and after the stock camera. It
+restores the previous stock frame before Roblox processes input and occlusion,
+then moves the rendered camera along the stock focus ray as room clearance
+requires. Ground aim uses the resulting view. Room metadata belongs to the
+active Battlefield. It is presentation data with no collision or combat role.
+
 ## Target layers and dependencies
 
 ```mermaid

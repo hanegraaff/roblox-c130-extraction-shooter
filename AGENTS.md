@@ -50,12 +50,11 @@ The 2026-11-13 damage revision requires persistent, clearly different Light/Heav
 
 ## Tests and evidence
 
-The 2026-11-15 clarification defers larger building clearances and automatic
-ground interior zoom to future plans (D65). Finish P17 with the current Outpost
-and world dimensions unchanged. After that integration is complete, finalize
-the requested asset-creation and Blender-import skills (D66), including these
-avatar/camera observations as future authoring/integration guidance. Do not
-implement those deferred gameplay changes merely because they appear in a skill.
+The 2026-11-20 revision (D68) adds automatic ground interior zoom and the
+requested asset-creation and Blender-import skills to P17. Keep the current
+Outpost and world dimensions. Use the Outpost to verify reusable indoor camera
+behavior. Teach designers to measure avatar and camera clearance and to give
+future buildings enough room for ordinary third-person play where feasible.
 
 - Implement tests with each behavior change. Cover normal behavior, boundaries, invalid input, timing conflicts, disconnects, and cleanup as appropriate. Trace acceptance criteria to named tests.
 - Use fast deterministic Luau unit tests for rules; service integration tests with controlled adapters for orchestration; real Studio tests for Instances, raycasts, camera behavior, collision, and replication. Test doubles do not prove engine behavior.
