@@ -44,7 +44,7 @@ Solid walls hide ground thermal highlights and block shots and blasts. Walls and
 
 ## Availability
 
-Play this candidate locally in Roblox Studio from `fix/p10-combat-presentation`. Integrated `main` contains the playable Outpost, indoor camera and full match and replay loop. The current game has one level. Balance, performance and 6- and 10-player Roblox client acceptance remain later work. [P10 review](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42), [roadmap](roadmap.md)
+Play this candidate locally in Roblox Studio from `fix/p10-combat-presentation`. Integrated `main` contains the playable Outpost, indoor camera and full match and replay loop. The current game has one level. Balance, performance and 6- and 10-player Roblox client acceptance remain later work. [P10 revision](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43), [roadmap](roadmap.md)
 
 ## Set up locally
 

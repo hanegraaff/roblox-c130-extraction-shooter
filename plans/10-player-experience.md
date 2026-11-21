@@ -177,4 +177,5 @@ awaits a listening pass. [Revision evidence](../docs/evidence/p10/combat-present
 
 The original four-client run remains the evidence for two-target spectator
 cycling and spectator authority. The revision's two-client smoke exercised
-the neutral camera, and its ordinary session verified replay cleanup.
+the neutral camera, and its ordinary session verified replay cleanup. The
+review branch builds on the original P10 branch. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43)

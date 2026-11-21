@@ -52,7 +52,8 @@ weapons have delayed positional reports. Ground rifles and the launcher
 have distinct shot sounds, and rockets leave an exhaust trail and make a
 separate impact sound. The host gate and two-client Studio revision checks
 passed. Use `fix/p10-combat-presentation` as P11's dependency source until
-the P10 changes are integrated. [Revision evidence](docs/evidence/p10/combat-presentation-revision.json)
+the P10 changes are integrated. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43),
+[revision evidence](docs/evidence/p10/combat-presentation-revision.json)
 
 2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
 validated shared material-panel boundary and approved-source generation gate.
