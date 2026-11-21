@@ -186,7 +186,7 @@ The release project excludes tests, test dependencies, fixtures and development 
 | `MapService` | Implemented geometry/anchor/lobby validation, containment, bounded terrain reconstruction, multi-story buildings and pristine panel registry rebuild | P02; expanded P13 |
 | `MatchService`, `RoleService`, `RoundRules` | Implemented roster, phase/deadline, round identity, assignment and outcome policy | P03 |
 | `GameRuntime`, `MatchRuntime`, `CharacterOwner` | Implemented map/round composition, character ownership, replication and cleanup | P03 |
-| `RoundPanel` | Round HUD, readable results, surrender intent, role help and session-local settings | P03, P09, P10 |
+| `RoundPanel` | Round HUD, readable results, aircraft health bar, surrender intent and session-local settings | P03, P09, P10 |
 | `AircraftService`, `AircraftSelection`, `AircraftRules` | Implemented canonical perimeter orbit, validated aim geometry and authoritative targeting-profile selection; P06 implementation adds health/destruction | P04; health in P06 |
 | `ThermalCameraController`, `AircraftPanRules` | P14 implements verified inward WASD/touch pad pan, recenter, acknowledged zoom and actual-surface reticle projection on `main` | P04; panning P14 |
 | `CombatService` / `CombatRuntime` | Validates gunship intent/readiness and resolves server-side flight, impact and ground damage | P05; ground combat P06 |
@@ -222,7 +222,7 @@ Use a small named RemoteEvent surface, not an unrestricted generic RPC dispatche
 | Server → result | `RoundState.Result` JSON with round ID, winner, reason and optional attribution | Committed once by `MatchService` and cleared on replay. Clients display results for the matching round |
 | Client → sync request (target) | bounded request token | Per-player rate budget; return only that role's permitted snapshot |
 | Server → snapshot/update | round ID, revision, permitted state | Immutable view model; client discards stale rounds/revisions |
-| Server → effects | round ID, shot/event ID, bounded effect data | Cosmetic only; client deduplicates and caps lifetime/count |
+| Server → weapon audio | round ID, cue ID, origin, server time and optional shooter | Emitted after accepted shots and resolved impacts. Clients cap and expire the queue, apply a local propagation delay and clear playback on mute or phase change |
 
 Aircraft destruction is computed from server-resolved damage, never a client win claim or rocket-hit count. Validate server-observed movement for implausible travel before granting launcher pickup or accepting a ground firing origin; reject or correct suspicious movement without automatically banning from a single noisy observation. Roblox character network ownership does not make client movement authoritative for rewards.
 

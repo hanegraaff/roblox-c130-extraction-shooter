@@ -1,6 +1,6 @@
 --!strict
 --[=[
-    RoundPanel: client-owned match HUD, desktop help/settings and spectator input.
+    RoundPanel: client-owned match HUD, desktop settings and spectator input.
     Reads RoundState, aircraft public state and player attributes. Only the
     existing eligible surrender intent is sent to the server. Local options
     affect feedback and the Results overview. start/stop never yield and own
@@ -14,13 +14,13 @@ local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local ThermalCameraController = require(script.Parent.ThermalCameraController)
 local PresentationEffects = require(script.Parent.PresentationEffects)
+local WeaponAudio = require(script.Parent.WeaponAudio)
 local SpectatorCamera = require(script.Parent.SpectatorCamera)
 
 local RoundPanel = {}
 type View = PlayerPresentation.View
 type Intensity = PlayerPresentation.Intensity
 export type Settings = { effects: Intensity, shake: Intensity }
-type Menu = "Help" | "Settings"
 type Setting = "Effects" | "CameraShake"
 
 local background = Color3.fromRGB(17, 25, 31)
@@ -28,18 +28,7 @@ local surface = Color3.fromRGB(37, 51, 58)
 local selectedSurface = Color3.fromRGB(55, 78, 81)
 local textColor = Color3.fromRGB(242, 249, 247)
 local attention = Color3.fromRGB(255, 218, 155)
-
-local help: { [View]: string } = {
-    Waiting = "A team round needs one operator and a Ground team.\n\nGround wins by destroying the plane. The operator wins by eliminating Ground or lasting until the timer expires.\n\nH closes this guide. P opens local settings.",
-    Deploying = "The teams are deploying. Watch for your role and objective.\n\nH closes this guide. P opens local settings.",
-    Ground = "WASD to move. Mouse to aim. Hold left click to fire.\n\nEquip the M-7 or launcher with the numbered Roblox inventory slots. R reloads the M-7.\n\nE picks up the launcher when close. G drops it. The launcher reloads automatically. Three direct rockets destroy a healthy aircraft. Rifle fire also reduces its health.\n\nUse solid cover and leave damaged panels before they open. One life per round. Surrender gives up your life and enters spectating.",
-    Operator = "WASD pans the thermal camera. Mouse aims the reticle. Hold left click to fire. R recenters.\n\n1 selects the 30mm GAU-23/A Chain Gun (closer view). 2 selects the 105mm M102 Howitzer (wider view). Each weapon keeps its own ammo and recovery timer.\n\nSolid cover blocks exposed-player highlights and protects Ground. Light damage leaves scars. Heavy damage opens about half the panel. Total damage removes the panel. Three direct 105mm hits create a Heavy opening and three more remove it. Sustained 30mm fire also damages panels.",
-    Spectator = "[ and ] switch between living Ground players. You can also use the Previous and Next buttons.\n\nYou cannot fire, pick up equipment or respawn during this round. Without a living teammate, the camera shows the battlefield overview.\n\nThe next round returns you to play.",
-    Results = "The banner explains which team won and how. Ground shares its win, even if you were eliminated earlier.\n\nThe battlefield, equipment and roles reset before the next round.",
-    Resetting = "The battlefield, equipment and cameras are resetting. Your next role is assigned at deployment.",
-    GroundPreview = "WASD to move, Space to jump and the mouse to look. Explore the two-story Outpost.\n\nThis local preview has no live battle or player results.",
-    OperatorPreview = "WASD to pan, mouse to aim and R to recenter. Press 1 for the 30mm close view and 2 for the 105mm wide view.\n\nThis local preview has no live battle or player results.",
-}
+local emptyTrack = Color3.fromRGB(47, 57, 65)
 
 local function style(item: GuiObject)
     item.BackgroundColor3 = background
@@ -148,9 +137,21 @@ function RoundPanel.new(
             local label = makeLabel(gui, "Round", UDim2.fromOffset(12, 8), UDim2.fromOffset(300, 38))
             local health =
                 makeLabel(gui, "AircraftHealth", UDim2.fromOffset(12, 55), UDim2.fromOffset(250, 34))
-            health.TextColor3 = attention
-            local guide = makeLabel(gui, "Guide", UDim2.fromOffset(12, 97), UDim2.fromOffset(300, 64))
-            guide.TextSize = 14
+            health.TextColor3 = textColor
+            local meter = Instance.new("Frame")
+            meter.Name = "Meter"
+            meter.BackgroundColor3 = emptyTrack
+            meter.BorderSizePixel = 0
+            meter.ClipsDescendants = true
+            meter.Parent = health
+            local fill = Instance.new("Frame")
+            fill.Name = "Fill"
+            fill.BorderSizePixel = 0
+            fill.Parent = meter
+            local displayedHealth: number? = nil
+            local lowHealth = Color3.fromRGB(238, 70, 62)
+            local mediumHealth = Color3.fromRGB(247, 185, 67)
+            local fullHealth = Color3.fromRGB(68, 216, 118)
             local cue = makeLabel(gui, "Cue", UDim2.new(0.5, 0, 0, 8), UDim2.fromOffset(252, 34))
             cue.AnchorPoint = Vector2.new(0.5, 0)
             cue.TextColor3 = attention
@@ -164,9 +165,6 @@ function RoundPanel.new(
             )
             surrender.AnchorPoint = Vector2.new(1, 0)
             surrender.TextSize = 13
-            local helpButton =
-                makeButton(gui, "Help", "H  Help", UDim2.new(1, -127, 0, 52), UDim2.fromOffset(100, 34))
-            helpButton.AnchorPoint = Vector2.new(1, 0)
             local settingsButton = makeButton(
                 gui,
                 "Settings",
@@ -195,16 +193,6 @@ function RoundPanel.new(
             )
             previous.AnchorPoint = Vector2.new(0.5, 1)
             nextTarget.AnchorPoint = Vector2.new(0.5, 1)
-
-            local helpContent = makeMenu(gui, "HelpContent", 365)
-            local helpHeader =
-                makeLabel(helpContent, "Heading", UDim2.fromOffset(12, 6), UDim2.fromOffset(380, 32))
-            helpHeader.Font = Enum.Font.GothamBold
-            local helpBody =
-                makeLabel(helpContent, "Instructions", UDim2.fromOffset(18, 43), UDim2.fromOffset(369, 306))
-            helpBody.TextXAlignment = Enum.TextXAlignment.Left
-            helpBody.TextYAlignment = Enum.TextYAlignment.Top
-            helpBody.TextSize = 15
 
             local settingsContent = makeMenu(gui, "SettingsContent", 223)
             local settingsHeader =
@@ -238,6 +226,7 @@ function RoundPanel.new(
             local thermal = ThermalCameraController.new(player, playerGui, state, inputProvider)
             local spectator = SpectatorCamera.new(player)
             local effects = PresentationEffects.new(player)
+            local weaponAudio = WeaponAudio.new(state, player)
             local connections: { RBXScriptConnection } = {}
             local sequence, oldRoundId = 0, -1
             local seenResult: string? = nil
@@ -245,7 +234,7 @@ function RoundPanel.new(
             local view: View = "Waiting"
             local direction = 0
             local canCycle = false
-            local menu: Menu? = nil
+            local settingsOpen = false
             local setting: Setting = "Effects"
 
             local function touchEnabled(): boolean
@@ -253,9 +242,8 @@ function RoundPanel.new(
             end
 
             local function updateMenu()
-                helpContent.Visible = menu == "Help"
-                settingsContent.Visible = menu == "Settings"
-                gui:SetAttribute("InputOverlayOpen", menu ~= nil)
+                settingsContent.Visible = settingsOpen
+                gui:SetAttribute("InputOverlayOpen", settingsOpen)
                 gui:SetAttribute("Effects", options.effects)
                 gui:SetAttribute("CameraShake", options.shake)
                 gui:SetAttribute("SettingsSelection", setting)
@@ -269,12 +257,12 @@ function RoundPanel.new(
                     .. options.shake
             end
 
-            local function toggle(value: Menu)
+            local function toggleSettings()
                 if touchEnabled() then
                     return
                 end
-                menu = if menu == value then nil else value
-                if menu == "Settings" then
+                settingsOpen = not settingsOpen
+                if settingsOpen then
                     setting = "Effects"
                 end
                 updateMenu()
@@ -291,12 +279,12 @@ function RoundPanel.new(
             end
 
             local function cycle(targetDirection: number)
-                if view == "Spectator" and canCycle and menu == nil then
+                if view == "Spectator" and canCycle and not settingsOpen then
                     direction = targetDirection
                 end
             end
 
-            local function update()
+            local function update(deltaSeconds: number?)
                 local phase = state:GetAttribute("Phase")
                 local role = player:GetAttribute("Role")
                 local life = player:GetAttribute("Life")
@@ -310,27 +298,27 @@ function RoundPanel.new(
                 if roundId ~= oldRoundId then
                     oldRoundId = roundId
                     sequence = 0
+                    displayedHealth = nil
                 end
-                if view ~= nextView or (touch and menu ~= nil) then
-                    menu = nil
+                if view ~= nextView or (touch and settingsOpen) then
+                    settingsOpen = false
                     direction = 0
                     updateMenu()
                 end
                 view = nextView
                 gui:SetAttribute("View", view)
-                helpButton.Visible, settingsButton.Visible = not touch, not touch
-                local title, purpose = PlayerPresentation.guide(view, life == "Eliminated")
-                helpHeader.Text = title
-                helpBody.Text = help[view]
+                settingsButton.Visible = not touch
+                local title = PlayerPresentation.title(view, life == "Eliminated")
 
                 local active = phase == "Active"
+                local serverSeconds = workspace:GetServerTimeNow()
+                local effectScale = PlayerPresentation.intensity(options.effects)
+                weaponAudio.update(roundId, active, effectScale, serverSeconds)
                 local compact = touch and view == "Ground"
                 local activeDetail = ""
                 if active then
-                    local seconds = PlayerPresentation.remaining(
-                        state:GetAttribute("DeadlineSeconds"),
-                        workspace:GetServerTimeNow()
-                    )
+                    local seconds =
+                        PlayerPresentation.remaining(state:GetAttribute("DeadlineSeconds"), serverSeconds)
                     local count = state:GetAttribute("GroundAlive")
                     local timer = if seconds
                         then string.format("%d:%02d", math.floor(seconds / 60), seconds % 60)
@@ -342,18 +330,37 @@ function RoundPanel.new(
                 end
                 local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
                 local aircraftText: string? = nil
-                if active and aircraftState then
-                    aircraftText = PlayerPresentation.aircraftText(
-                        aircraftState:GetAttribute("Health"),
-                        aircraftState:GetAttribute("MaxHealth"),
-                        aircraftState:GetAttribute("Destroyed") == true
-                    )
+                local fraction: number? = nil
+                if (active or phase == "Results") and aircraftState then
+                    local current = aircraftState:GetAttribute("Health")
+                    local maximum = aircraftState:GetAttribute("MaxHealth")
+                    local destroyed = aircraftState:GetAttribute("Destroyed") == true
+                    aircraftText = PlayerPresentation.aircraftText(current, maximum, destroyed)
+                    fraction = PlayerPresentation.aircraftFraction(current, maximum, destroyed)
                 end
-                health.Visible = aircraftText ~= nil
+                health.Visible = fraction ~= nil
                 health.Text = aircraftText or ""
                 health.Position = UDim2.fromOffset(12, if compact then 44 else 55)
                 health.Size = UDim2.fromOffset(if compact then 240 else 250, if compact then 22 else 34)
-                health.TextSize = if compact then 14 else 17
+                health.TextSize = if compact then 13 else 16
+                local thickness = if compact then 3 else 6
+                meter.Position = UDim2.new(0, 4, 1, -thickness - 1)
+                meter.Size = UDim2.new(1, -8, 0, thickness)
+                if fraction then
+                    local previousFraction = displayedHealth or fraction
+                    local opacity = 1 - math.exp(-18 * (deltaSeconds or 0))
+                    local displayed = previousFraction + (fraction - previousFraction) * opacity
+                    local value = if math.abs(displayed - fraction) < 0.002 then fraction else displayed
+                    displayedHealth = value
+                    fill.Size = UDim2.fromScale(value, 1)
+                    fill.BackgroundColor3 = if value < 0.5
+                        then lowHealth:Lerp(mediumHealth, value * 2)
+                        else mediumHealth:Lerp(fullHealth, (value - 0.5) * 2)
+                    meter.BackgroundColor3 = if fraction == 0 then lowHealth else emptyTrack
+                else
+                    displayedHealth = nil
+                end
+                health:SetAttribute("Fraction", fraction)
 
                 if active or thermal.ownsCamera() then
                     label.AnchorPoint = Vector2.zero
@@ -364,9 +371,6 @@ function RoundPanel.new(
                         then activeDetail
                         elseif active then title .. "\n" .. activeDetail
                         else title
-                    guide.AnchorPoint = Vector2.zero
-                    guide.Position = UDim2.fromOffset(12, if health.Visible then 97 else 55)
-                    guide.Size = UDim2.fromOffset(300, 64)
                 else
                     label.AnchorPoint = Vector2.new(0.5, 0)
                     label.Position = UDim2.new(0.5, 0, 0, 112)
@@ -377,12 +381,7 @@ function RoundPanel.new(
                             state:GetAttribute("MinimumPlayers") or "enough"
                         ) .. " players"
                         else title
-                    guide.AnchorPoint = Vector2.new(0.5, 0)
-                    guide.Position = UDim2.new(0.5, 0, 0, 196)
-                    guide.Size = UDim2.new(0.5, 0, 0, 50)
                 end
-                guide.Text = purpose
-                guide.Visible = not touch or not active
                 surrender.Visible = view == "Ground"
                 surrender.Size = UDim2.fromOffset(150, if compact then 32 else 36)
 
@@ -402,13 +401,7 @@ function RoundPanel.new(
                     seenResult, result = nil, nil
                 end
 
-                local frame = effects.update(
-                    view,
-                    roundId,
-                    reason,
-                    os.clock(),
-                    PlayerPresentation.intensity(options.effects)
-                )
+                local frame = effects.update(view, roundId, reason, os.clock(), effectScale)
                 cue.Text = frame.text or ""
                 cue.Visible = frame.text ~= nil
                 cue.BackgroundTransparency = 0.19 - frame.pulse * 0.13
@@ -432,14 +425,8 @@ function RoundPanel.new(
 
             table.insert(
                 connections,
-                helpButton.Activated:Connect(function()
-                    toggle("Help")
-                end)
-            )
-            table.insert(
-                connections,
                 settingsButton.Activated:Connect(function()
-                    toggle("Settings")
+                    toggleSettings()
                 end)
             )
             table.insert(
@@ -470,7 +457,7 @@ function RoundPanel.new(
                 connections,
                 surrender.Activated:Connect(function()
                     local remote = state:FindFirstChild("Surrender")
-                    if view == "Ground" and not menu and remote and remote:IsA("RemoteEvent") then
+                    if view == "Ground" and not settingsOpen and remote and remote:IsA("RemoteEvent") then
                         sequence += 1
                         remote:FireServer({ roundId = oldRoundId, sequence = sequence, action = "Surrender" })
                     end
@@ -483,7 +470,7 @@ function RoundPanel.new(
                         return
                     end
                     local key = input.KeyCode
-                    if menu == "Settings" then
+                    if settingsOpen then
                         if key == Enum.KeyCode.Up or key == Enum.KeyCode.Down then
                             setting = if key == Enum.KeyCode.Up then "Effects" else "CameraShake"
                             updateMenu()
@@ -496,10 +483,8 @@ function RoundPanel.new(
                     if processed then
                         return
                     end
-                    if key == Enum.KeyCode.H then
-                        toggle("Help")
-                    elseif key == Enum.KeyCode.P then
-                        toggle("Settings")
+                    if key == Enum.KeyCode.P then
+                        toggleSettings()
                     elseif key == Enum.KeyCode.LeftBracket then
                         cycle(-1)
                     elseif key == Enum.KeyCode.RightBracket then
@@ -522,6 +507,7 @@ function RoundPanel.new(
                     connection:Disconnect()
                 end
                 effects.stop()
+                weaponAudio.stop()
                 thermal.stop()
                 spectator.stop()
                 gui:Destroy()

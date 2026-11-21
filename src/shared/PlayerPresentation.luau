@@ -91,26 +91,32 @@ function PlayerPresentation.remaining(deadline: unknown, now: number): number?
     return math.max(0, math.ceil(deadline - now))
 end
 
--- Uses both values from one sampled aircraft state. Destroyed remains visible
--- even while the zero-health result is crossing the replication boundary.
-function PlayerPresentation.aircraftText(health: unknown, maximum: unknown, destroyed: boolean): string?
+-- Returns the share of aircraft health in [0, 1] or nil while state is incomplete.
+-- A replicated destruction flag is decisive even if health is still arriving.
+function PlayerPresentation.aircraftFraction(health: unknown, maximum: unknown, destroyed: boolean): number?
     if destroyed then
-        return "C-130 DESTROYED"
+        return 0
     end
     if
         type(health) ~= "number"
         or type(maximum) ~= "number"
         or maximum < 1
-        or health < 0
-        or health > maximum
-        or not (maximum < math.huge and health <= maximum)
+        or not (maximum < math.huge and health >= 0 and health <= maximum)
     then
         return nil
     end
-    if health == 0 then
+    return health / maximum
+end
+
+-- Keeps numeric health or the terminal label available independently of color.
+function PlayerPresentation.aircraftText(health: unknown, maximum: unknown, destroyed: boolean): string?
+    local fraction = PlayerPresentation.aircraftFraction(health, maximum, destroyed)
+    if fraction == nil then
+        return nil
+    elseif fraction == 0 then
         return "C-130 DESTROYED"
     end
-    return string.format("C-130 HEALTH  %d / %d", health, maximum)
+    return string.format("C-130 HEALTH  %d / %d", health :: number, maximum :: number)
 end
 
 -- Chooses only from a caller-filtered set of live teammate IDs. With direction
@@ -140,29 +146,23 @@ function PlayerPresentation.spectatorTarget(
     return adjacent or edge
 end
 
--- A tagged title restates the game role or phase. The second line provides
--- the shortest actionable instruction without requiring the help panel.
-function PlayerPresentation.guide(view: View, eliminated: boolean): (string, string)
-    if view == "Ground" then
-        return "GROUND TEAM", "Destroy the C-130. Find the launcher or chip away at its health with your M-7."
-    elseif view == "Operator" then
-        return "C-130 OPERATOR",
-            "Eliminate the ground team or survive the timer. Thermal shows exposed players."
-    elseif view == "Spectator" then
-        return if eliminated then "ELIMINATED • SPECTATING" else "SPECTATING",
-            "Follow living Ground players. You'll rejoin when a new round starts."
-    elseif view == "Deploying" then
-        return "DEPLOYING", "Your role and controls appear when deployment is ready."
-    elseif view == "Results" then
-        return "ROUND RESULTS", "The next round starts after the battlefield resets."
-    elseif view == "Resetting" then
-        return "RESTORING BATTLEFIELD", "Preparing the map and equipment for the next round."
-    elseif view == "GroundPreview" then
-        return "STUDIO GROUND PREVIEW", "Explore the battlefield with Ground movement and camera."
-    elseif view == "OperatorPreview" then
-        return "STUDIO OPERATOR PREVIEW", "Practice panning and switch between thermal zoom levels."
+local titles: { [View]: string } = table.freeze({
+    Ground = "GROUND TEAM",
+    Operator = "C-130 OPERATOR",
+    Deploying = "DEPLOYING",
+    Results = "ROUND RESULTS",
+    Resetting = "RESTORING BATTLEFIELD",
+    GroundPreview = "STUDIO GROUND PREVIEW",
+    OperatorPreview = "STUDIO OPERATOR PREVIEW",
+    Waiting = "WAITING FOR PLAYERS",
+})
+
+-- Status-only round title. Lobby onboarding is independent of this view.
+function PlayerPresentation.title(view: View, eliminated: boolean): string
+    if view == "Spectator" then
+        return if eliminated then "ELIMINATED • SPECTATING" else "SPECTATING"
     end
-    return "WAITING FOR PLAYERS", "One operator, one Ground team, one launcher."
+    return titles[view]
 end
 
 -- Required HUD warnings are separate from optional effects. This text

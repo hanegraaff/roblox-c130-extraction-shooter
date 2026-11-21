@@ -80,7 +80,6 @@ function PresentationEffects.new(player: Player): Controller
     local cueStarted, cueUntil = 0, 0
     local resultStarted: number? = nil
     local lastImpact: string? = nil
-    local warning = false
     local nextWarningScan = 0
     local burst: Part? = nil
     local stopped = false
@@ -106,7 +105,6 @@ function PresentationEffects.new(player: Player): Controller
         cueUntil = 0
         resultStarted = nil
         lastImpact = nil
-        warning = false
         nextWarningScan = 0
     end
 
@@ -155,14 +153,9 @@ function PresentationEffects.new(player: Player): Controller
         blast.Volume = math.min(blast.Volume, 0.32 * scale)
         if view == "Ground" and now >= nextWarningScan then
             nextWarningScan = now + 0.08
-            local near = warningNearby(player)
-            if near then
-                if not warning then
-                    play(ping, 0.24 * scale)
-                end
+            if warningNearby(player) then
                 setCue("INCOMING GUNSHIP FIRE", now, 0.45)
             end
-            warning = near
         elseif view == "Operator" then
             local state = ReplicatedStorage:FindFirstChild("AircraftState")
             local encoded = if state then state:GetAttribute("Impact") else nil
@@ -171,9 +164,6 @@ function PresentationEffects.new(player: Player): Controller
                 local text = impactText(encoded, roundId)
                 if text then
                     setCue(text, now, 1.1)
-                    if not string.find(text, "30MM", 1, true) or not ping.IsPlaying then
-                        play(ping, 0.13 * scale)
-                    end
                 end
             end
         elseif view == "Results" and result and resultStarted == nil then

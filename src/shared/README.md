@@ -78,3 +78,5 @@ the managed native profile bank; host/native authoring audits bind the five
 attributes to those bytes. Runtime validity, rendered bounds/UVs, contact
 behavior and replication are separate checks. Public metadata is not an authority
 or secrecy boundary.
+
+`WeaponSoundRules` maps supported sound cues to frozen mix profiles and converts server emission time and camera distance to a bounded playback time. It performs no engine I/O.

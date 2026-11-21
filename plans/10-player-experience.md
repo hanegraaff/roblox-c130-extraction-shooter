@@ -1,54 +1,52 @@
-# P10 — Player guidance, spectating and presentation
+# P10 — Combat presentation and spectating
 
-**Milestone:** M6. **Dependencies:** P09. **Requirements:** R04, R12, R15. Status: [roadmap](../roadmap.md).
+**Milestone:** M6. **Dependencies:** P09. **Requirements:** R04, R12, R15. Status is tracked in the [roadmap](../roadmap.md).
 
 ## Capability and player experience
 
-A new player understands their role, controls, aircraft health, launcher availability and result without a developer narrating the session. Spectating, thermal view, effects and audio feel like one coherent game.
+Both teams see the round state, equipment readiness and aircraft health.
+Spectators can cycle through living Ground players. Aircraft and ground
+weapons have distinct positional sound.
 
 ## Implementation
 
-Consolidate role-specific HUD and help, launcher ownership and recovery messages,
-WASD pan, mouse aim and recenter guidance, panel-damage progression, weapon-specific
-zoom, ammunition, cooldown and health feedback, accessible result reasons, and
-spectator target cycling. Add readable stylized cues, audio and effects with
-provenance in the asset manifest. P13 and P07 already supply terrain, buildings
-and destruction, and P16/P17 supply the detailed Outpost. Important sounds have
-visible cues, and labels or icons convey information also shown by color. Add
-effect and camera-shake intensity controls. Keep full functionality at 1280×720
-and 1920×1080 desktop viewports. The new controls target desktop, alongside
-the existing touch controls.
+Show one shared aircraft health bar based on server-confirmed health. Its
+width decreases with damage and its fill moves from green through amber to red.
+Keep numeric health and the destruction label readable independently of color.
+Show weapon names, zoom, cooldown and ammunition, launcher ownership and
+recovery, and team results. Keep the Settings and spectator controls.
+
+Play distant 30mm thumps and a deeper 105mm report with a local propagation
+delay. Give the M-7 a sharp muzzle report and rockets a launch rush, exhaust
+trail and separate impact. Base playback on accepted shots and resolved
+impacts. Record asset provenance and preserve visible warnings with effects
+muted. Check the HUD at 1280×720 and 1920×1080 and preserve the compact touch
+layout.
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes; view-model tests cover each phase/role, death, destroyed aircraft, operator forfeit, no living spectator targets, rejected actions and result reason.
-- **A2:** Engine UI tests show correct role controls, legible aircraft-health/timer/ammo/launcher state and both named aircraft weapons, bounded layout at both target resolutions, and keyboard-operable help/settings.
-- **A3:** Spectators follow living teammates only, never gain weapon/interact authority and recover to a neutral view when targets disappear. Role/reset transitions restore camera/input and clear duplicate UI.
-- **A4:** Settings change effects without gameplay advantage or state mutation. Required warnings/results have visual equivalents independent of audio/color.
-- **A5:** All added assets have provenance and ownership records; their source/reference dependencies build cleanly and no imported unintended scripts remain.
+- **A1.** The host gate passes. Deterministic tests cover health fractions,
+  results, spectator selection, settings and sound timing boundaries.
+- **A2.** Studio shows the health bar at full, damaged and destroyed states.
+  Both desktop viewports fit the HUD, and touch retains its compact layout.
+  Settings remain keyboard operable.
+- **A3.** Spectators follow only living Ground targets and get a neutral view
+  when targets are unavailable. Reset restores the camera and removes old UI.
+- **A4.** Confirmed fire and impacts play weapon-specific effects with staged
+  timing. Muting and reset clear queued audio. Warning and result text stay
+  visible across effect settings.
+- **A5.** The manifest records the audio sources. Both artifacts build and the
+  release mapping contains only the required runtime modules.
 
-## Focused human check
+## Focused Studio check
 
-Have a tester complete both roles from in-game instructions. Inspect thermal
-contrast, warning and impact frames, launcher ownership and reload, both weapon
-zoom levels while panning, building-panel stages and physical debris, aircraft
-destruction and team results, defeat and spectating, and both desktop viewport
-sizes. Keep reviewed gameplay captures in the linked evidence record.
-
-## Documentation changes
-
-The dedicated military-outpost art work is scoped separately in
-[P16](16-blender-military-outpost-assets.md) (Blender assets and human approval)
-and [P17](17-integrate-military-outpost.md) (smaller-Outpost integration).
-P10 retains its presentation/onboarding scope. D63 schedules P16/P17 before
-P09 and this plan, so onboarding and presentation must describe the approved
-Outpost actually present in the tested candidate.
-
-Update the README's player guide and local setup for the current game. Keep the
-selected P16 Blender authoring image in the README and link reviewed gameplay
-captures in the evidence guide. Document asset credits and current limitations.
+Check both zooms, launcher status and reload, distinct gunship reports, ground
+muzzle and rocket effects, aircraft health through several hits, and lobby
+restoration. Record the exact source, Studio environment and playback evidence.
 
 ## Completion record
+
+### Original P10 candidate
 
 P10 adds desktop role help, readiness and launcher status, teammate spectator
 cycling, neutral camera fallback, and separate local effects and camera-shake

@@ -1595,6 +1595,35 @@
       "upload_owner": null
     },
     {
+      "id": "positional-weapon-audio",
+      "kind": "runtime-effect",
+      "source": "Original positional mix and delayed cue sequencing. The rifle uses Assault Rifle 5 (SFX), the rocket launch uses Whoosh Impact 1 (SFX), the 105mm report uses Thunder Distant Boom Thud Rapid Hits 18 (SFX), and impacts reuse the bundled Roblox explosion.",
+      "author": "Project contributors for the mix, Pro Sound Effects for Creator Store recordings, and Roblox Corporation for bundled audio",
+      "license": "Original mix code, Roblox Creator Store in-experience use for referenced recordings, and Roblox bundled platform content",
+      "local_path": "src/shared/WeaponSoundRules.luau",
+      "creator_store_audio": [
+        {
+          "id": "9113189096",
+          "url": "https://create.roblox.com/store/asset/9113189096/Assault-Rifle-5-SFX",
+          "owner": "ProSoundEffects"
+        },
+        {
+          "id": "9120729973",
+          "url": "https://create.roblox.com/store/asset/9120729973/Whoosh-Impact-1-SFX",
+          "owner": "ProSoundEffects"
+        },
+        {
+          "id": "9120018088",
+          "url": "https://create.roblox.com/store/asset/9120018088/Thunder-Distant-Boom-Thud-Rapid-Hits-18-SFX",
+          "owner": "ProSoundEffects"
+        }
+      ],
+      "bundled_sound_references": [
+        "rbxasset://sounds/impact_explosion_03.mp3"
+      ],
+      "upload_owner": null
+    },
+    {
       "id": "launcher-primitives",
       "kind": "runtime-model",
       "source": "Original three-part launcher tube/bands and pickup label authored entirely in first-party Luau; no external assets or scripts",
@@ -1606,7 +1635,7 @@
     {
       "id": "rocket-presentation",
       "kind": "runtime-effect",
-      "source": "Original one-part noninteractive swept rocket presentation authored entirely in first-party Luau; server collision and P06 health decide damage",
+      "source": "Original noninteractive swept rocket with an exhaust Trail authored in first-party Luau. Server collision and P06 health decide damage.",
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "src/server/LauncherRuntime.luau",
