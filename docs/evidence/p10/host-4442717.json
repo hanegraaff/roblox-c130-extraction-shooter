@@ -1,0 +1,59 @@
+{
+  "commit": "4442717370a5a2567ae2c1698b3ea1e7c4dea280",
+  "tree": "154cb4eb72b635a9bf2feace3f75d25cd7db3832",
+  "command": "python3 scripts/verify.py",
+  "environment": {
+    "platform": "macOS 26.6.2 arm64",
+    "python": "3.10.4",
+    "tools": "rokit.toml pinned tools"
+  },
+  "exitCode": 0,
+  "suites": {
+    "unit": {
+      "discovered": 77,
+      "passed": 77,
+      "failed": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "discovered": 73,
+      "passed": 73,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tooling": {
+      "discovered": 15,
+      "passed": 15
+    },
+    "assetRegressions": {
+      "discovered": 48,
+      "passed": 48
+    },
+    "P16Audits": {
+      "discovered": 7,
+      "passed": 7
+    }
+  },
+  "gates": [
+    "repository and asset provenance",
+    "P17 generated definition, derivative, reconstruction and source binding",
+    "StyLua",
+    "Selene",
+    "Roblox-aware strict types",
+    "deliberate failure, empty-suite and invalid-type rejection",
+    "Rojo release and test builds",
+    "geometry and artifact isolation"
+  ],
+  "builds": {
+    "release": {
+      "sha256": "94e6fdb55c3f6aa8856ad37239e1b8f2a3d0b5d0146754381d695d0a1cb9cf31",
+      "instances": 5304,
+      "runtimeScripts": 56
+    },
+    "test": {
+      "sha256": "0d275d43178685da9fb2d70b1477a96859c09c9cd9919f8a7db85c36358f3793",
+      "instances": 5410
+    },
+    "matchedAuthoredTransformsPerBuild": 2804
+  }
+}

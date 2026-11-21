@@ -1,0 +1,179 @@
+{
+  "sourceCommit": "61c63c95dba705a90b0e66b42858bf3780db5558",
+  "sourceTree": "8352f82aba74f681b4fd1227298c53f2506a8d77",
+  "sourceIdentity": "Same production bytes as acceptance candidate 23bf7ba2bcda17dc45b68b610d2f3628e8e94249; intervening commit changes fixture code and fixture metadata.",
+  "environment": {
+    "studioVersion": "0.748.0.7481526",
+    "macOS": "26.6.2 (25G83) arm64",
+    "placeId": 0,
+    "gameId": 0,
+    "mode": "Ordinary Studio SDK Server and Clients",
+    "launcherCommand": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P10Operated'})",
+    "serverMcpStudioId": "c95f9a48-2571-430c-97ab-fadcb815c918",
+    "groundMcpStudioId": "484b28f6-6bcc-4816-a9e9-3c27cbe9414d",
+    "operatorMcpStudioId": "9a43e588-0cd5-4d05-802c-665cdfacf3e9",
+    "actualClientIds": [
+      -1,
+      -2
+    ],
+    "viewportSelection": "StudioDeviceSimulatorService:SetDeviceAsync followed by SetScalingModeAsync(ActualResolution) on each rendering client; HD 720 and HD 1080; FitToWindow rounded width down by one."
+  },
+  "smoke": {
+    "server": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 191,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 191
+    },
+    "clients": [
+      {
+        "userId": -1,
+        "discovered": 13,
+        "passed": 13,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "userId": -2,
+        "discovered": 13,
+        "passed": 13,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  "layoutFiles": [
+    "ground-1280x720.json",
+    "operator-1920x1080.json",
+    "ground-help-1280x720.json",
+    "operator-help-1920x1080.json",
+    "ground-help-1920x1080.json",
+    "operator-help-1280x720.json",
+    "ground-settings-1920x1080.json",
+    "operator-settings-1280x720.json"
+  ],
+  "captures": [
+    {
+      "file": "ground-desktop.jpg",
+      "actualViewport": [
+        1280,
+        720
+      ],
+      "encodedImage": [
+        1920,
+        1080
+      ],
+      "note": "Studio captures upscaled to 1920x1080 JPEG"
+    },
+    {
+      "file": "operator-desktop.jpg",
+      "actualViewport": [
+        1920,
+        1080
+      ],
+      "encodedImage": [
+        1920,
+        1080
+      ],
+      "note": "Actual wide-zoom thermal view"
+    }
+  ],
+  "ground": {
+    "input": "H help; native One; Humanoid navigation to map launcher; native E, Two, mouse click",
+    "initial": "M-7 • 30 / 120 • R reload",
+    "pickup": {
+      "readiness": "ROCKET • 1 ready • G drop",
+      "position": "-0.1557295173406601, 2.99802565574646, 0.8409395217895508",
+      "status": "LAUNCHER • yours • G to drop",
+      "ground": "YOUR HEALTH  100 / 100",
+      "launcher": "{\"state\":\"Held\",\"readyAt\":0,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"revision\":2,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}"
+    },
+    "reload": {
+      "status": "LAUNCHER • yours • G to drop",
+      "readiness": "ROCKET • Reload 1.4s",
+      "launcher": "{\"state\":\"Held\",\"readyAt\":1795219602.027759,\"launcherId\":\"launcher:1\",\"position\":{\"y\":3,\"x\":0,\"z\":0},\"revision\":3,\"ammo\":0,\"ownerId\":-1,\"roundId\":1}"
+    },
+    "aircraftDestruction": {
+      "startHealth": 300,
+      "phase": "Active",
+      "endHealth": 0,
+      "attempts": [
+        {
+          "before": 300,
+          "after": 200,
+          "view": "Ground",
+          "ready": "ROCKET • 1 ready • G drop",
+          "impact": "{\"y\":137.6660614013672,\"aircraftHit\":true,\"z\":187.69100952148438,\"x\":300.15277099609377,\"shotId\":\"rocket:1:2\",\"userId\":-1,\"roundId\":1}"
+        },
+        {
+          "before": 200,
+          "after": 100,
+          "view": "Ground",
+          "ready": "ROCKET • 1 ready • G drop",
+          "impact": "{\"y\":137.6653289794922,\"aircraftHit\":true,\"z\":265.3493957519531,\"x\":234.32762145996095,\"shotId\":\"rocket:1:3\",\"userId\":-1,\"roundId\":1}"
+        },
+        {
+          "before": 100,
+          "after": 0,
+          "view": "Ground",
+          "ready": "ROCKET • 1 ready • G drop",
+          "impact": "{\"y\":137.6638641357422,\"aircraftHit\":true,\"z\":321.0477600097656,\"x\":149.15701293945313,\"shotId\":\"rocket:1:4\",\"userId\":-1,\"roundId\":1}"
+        }
+      ]
+    },
+    "destructionCameraFixture": "Temporary local Camera render binding only to keep three native mouse clicks aimed at the moving Roblox aircraft. The launcher and direct impacts were actual server-owned game behavior. The binding was removed after the result."
+  },
+  "operator": {
+    "input": "H help; native Two, W; native One, D; native Two, R; actual native pointer and virtual mouse clicks at world geometry",
+    "wide": {
+      "fov": 40,
+      "width": 1920,
+      "height": 1080,
+      "panLocalFocusBefore": "220, 0",
+      "panLocalFocusAfter": "157.990891, 0"
+    },
+    "close": {
+      "fov": 30,
+      "width": 1280,
+      "height": 720,
+      "focus": "157.990891, -36.0296211",
+      "profile": "30mm GAU-23/A Chain Gun  •  Close zoom 30°\n100 rounds ready  ·  Aim on battlefield\nWASD pan  •  mouse aim  •  R recenter  •  H help"
+    },
+    "impact": {
+      "visible": true,
+      "after": "Pristine",
+      "progress": 0,
+      "impact": "{\"y\":4.461573600769043,\"x\":128.19139099121095,\"z\":188.8000030517578,\"weapon\":\"M102\",\"shotId\":1,\"roundId\":1}",
+      "state": "Intact",
+      "profile": "105mm M102 Howitzer  •  Wide zoom 40°\nReload 3.2s  ·  Aim on battlefield\nWASD pan  •  mouse aim  •  R recenter  •  H help",
+      "cue": "105MM • IMPACT",
+      "target": "Outpost_S01_South_01",
+      "before": "Pristine",
+      "projected": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0347",
+      "weapon": "M102"
+    },
+    "panelImpact": {
+      "visible": true,
+      "after": "Light",
+      "progress": 0.3333333333333333,
+      "impact": "{\"y\":5.977267265319824,\"x\":-146.67916870117188,\"z\":-79.5,\"panelId\":\"Foundry_S01_South_04\",\"weapon\":\"M102\",\"shotId\":2,\"roundId\":1}",
+      "state": "Intact",
+      "profile": "105mm M102 Howitzer  •  Wide zoom 40°\nReload 3.0s  ·  Aim on battlefield\nWASD pan  •  mouse aim  •  R recenter  •  H help",
+      "cue": "105MM • PANEL IMPACT",
+      "target": "Foundry_S01_South_04",
+      "before": "Pristine",
+      "projected": "Workspace.World.Battlefield.GroundDisk",
+      "weapon": "M102"
+    },
+    "limitations": "Operated one Light panel hit. Heavy/Total panel and physical fragment checks are distinct from this ordinary run."
+  },
+  "restoration": "Both clients returned to Lobby, local custom-camera subject, clean role UI and aircraft health 300. Separate simulator state stopped/restored to FitToWindow on both clients before voluntarily ending local session while in Lobby.",
+  "restorationFile": "lobby-recovery.json"
+}

@@ -419,8 +419,11 @@ from authoritative facts. The P09 harness separately exercises the actual
 match-ending projectile and competitive result loop. [Client harness](../tests/studio/client/PlayerExperienceHarness.luau), [server harness](../tests/studio/server/PlayerExperienceHarness.luau), [P10 plan](../plans/10-player-experience.md)
 
 Use live desktop Studio viewports of **1280×720** and **1920×1080** for layout
-evidence. Record actual camera viewport sizes and inspect readable, bounded
-HUD rows, weapon controls and open menus. Drive both roles from their in-game
+evidence. In a rendering Client DataModel, select the **HD 720** or
+**HD 1080** simulator preset with **Actual Resolution** scaling. Verify the
+client's `workspace.CurrentCamera.ViewportSize`, since the simulator setting
+and the rendered viewport can differ. Restore default simulation when done.
+Inspect readable, bounded HUD rows, weapon controls and open menus. Drive both roles from their in-game
 instructions with ordinary controls. Inspect thermal contrast, both zooms while
 panning, warnings and impacts, launcher ownership and reload, Light/Heavy/Total
 cover and falling fragments, aircraft destruction, defeat/spectating and team
