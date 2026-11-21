@@ -18,6 +18,7 @@ local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
+local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
 local TRACER_SPEED = 1200 -- studs per second; cosmetic travel, not damage timing
 local MIN_TRACER_SECONDS = 0.15
 local TRACER_TAIL_SECONDS = 0.1
@@ -68,7 +69,8 @@ export type Controller = {
 function GroundCombatRuntime.start(
     match: MatchService.Controller,
     dependencies: Dependencies?,
-    externallyStepped: boolean?
+    externallyStepped: boolean?,
+    emitSound: WeaponSoundRules.Emit?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("GroundFire") then
@@ -384,6 +386,10 @@ function GroundCombatRuntime.start(
                 flash.CFrame = barrel.CFrame * CFrame.new(0, 0, -barrel.Size.Z / 2)
                 flash.Parent = effects
                 Debris:AddItem(flash, 0.15)
+            end
+            if emitSound then
+                local muzzle = if barrel and barrel:IsA("BasePart") then barrel.Position else origin
+                emitSound("M7", shot.roundId, muzzle, now, player.UserId)
             end
             local healthBefore = health.snapshot().health
             local applied = false

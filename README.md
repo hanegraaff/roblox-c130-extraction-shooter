@@ -30,11 +30,11 @@ If the operator leaves while a ground player is alive, the ground team wins by f
 | Pick up or drop launcher | E / PICK UP within reach, G / DROP while carrying | — |
 | Surrender | Surrender / spectate button during an active life | — |
 
-On desktop, press **H** or select **Help** for your current role's objective and controls. While spectating, press **[** or **]**, or select **Previous** or **Next**, to switch among living Ground players when more than one is available. The spectator view lets you watch until the round resets.
+On desktop, while spectating, press **[** or **]**, or select **Previous** or **Next**, to switch among living Ground players when more than one is available. The spectator view lets you watch until the round resets.
 
 Press **P** or select **Settings** to adjust **Effects** and **Camera shake**. Use **↑/↓** to select a setting and **←/→** to change it, or click the setting to cycle through **Off**, **Reduced** and **Full**. Effects start at Full and camera shake at Reduced. Your choices last for the play session. Effects control cue sounds, HUD pulses and the aircraft destruction flash. Shake applies to the results camera after aircraft destruction.
 
-Both roles see the timer, remaining Ground lives and aircraft health during play. Ground players see their equipped weapon's ammunition and reload, launcher ownership or recovery, and health on the desktop HUD. The operator sees the selected weapon's name, zoom and readiness. Incoming fire, impacts and round results have text cues at every effects setting. Confirmed aircraft hits use **AIRCRAFT HIT −5** or **ROCKET HIT** on desktop, and **HIT** in the weapon readiness row on touch.
+Both roles see the timer, remaining Ground lives and aircraft health during play. Ground players see their equipped weapon's ammunition and reload, launcher ownership or recovery, and health on the desktop HUD. The operator sees the selected weapon's name, zoom and readiness. Incoming fire, impacts and round results have text cues at every effects setting. The aircraft health bar shrinks from green through amber to red as damage accumulates, with numeric health for both roles. The gunship reports and impacts arrive as delayed thumps. The M-7 has a sharp positional shot sound, and rockets have a launch rush, exhaust trail and separate impact.
 
 ## Cover and the Outpost
 
@@ -44,7 +44,7 @@ Solid walls hide ground thermal highlights and block shots and blasts. Walls and
 
 ## Availability
 
-Play this candidate locally in Roblox Studio from `plan/10-player-experience`. Integrated `main` contains the playable Outpost, indoor camera and full match and replay loop. The current game has one level. Balance, performance and 6- and 10-player Roblox client acceptance remain later work. [P10 review](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42), [roadmap](roadmap.md)
+Play this candidate locally in Roblox Studio from `fix/p10-combat-presentation`. Integrated `main` contains the playable Outpost, indoor camera and full match and replay loop. The current game has one level. Balance, performance and 6- and 10-player Roblox client acceptance remain later work. [P10 revision](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43), [roadmap](roadmap.md)
 
 ## Set up locally
 
@@ -53,7 +53,7 @@ Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** 
 Clone the repository and select the player experience candidate.
 
 ```sh
-git clone --branch plan/10-player-experience https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch fix/p10-combat-presentation https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 python3 scripts/setup.py
 python3 scripts/verify.py
@@ -61,7 +61,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch to `plan/10-player-experience`. If you have never checked it out, use `git switch --track origin/plan/10-player-experience`. Run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits, run `git fetch origin` and switch to `fix/p10-combat-presentation`. If you have never checked it out, use `git switch --track origin/fix/p10-combat-presentation`. Run the same setup and verification commands from the repository root.
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 

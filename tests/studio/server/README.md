@@ -11,7 +11,7 @@ After TestEZ passes, `RoundHarness.run()` starts the actual GameRuntime. Without
 P10 selects `PlayerExperienceHarness.run()` through SDK args
 `{ kind = "P10" }` or the local Edit `ManualHarness` selector. It requires
 four actual clients and waits for their individual smoke reports before
-deploying. It validates role and weapon feedback, keyboard help/settings,
+deploying. It validates role and weapon feedback, keyboard settings,
 teammate cycling and rejection, result overview, replay and teardown. The SDK
 returns its report through `EndTest`. Manual mode publishes
 `Workspace.ManualP10Report` for collection before ending the session. [Player experience harness](../../../docs/testing.md#run-the-player-experience-harness)

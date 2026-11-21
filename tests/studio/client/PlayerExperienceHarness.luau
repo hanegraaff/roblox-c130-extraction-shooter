@@ -134,21 +134,24 @@ local function verifyView(expected: Expected): unknown
         return round:GetAttribute("View") == expected.view
     end, "expected " .. tostring(expected.view) .. ", observed " .. tostring(round:GetAttribute("View")))
     verifyCamera(expected, round)
-    local hint = label(round, "Guide")
-    if expected.phrase then
-        expectText(hint, expected.phrase)
-    end
+    assert(
+        round:FindFirstChild("Guide") == nil and round:FindFirstChild("Help") == nil,
+        "match guidance remains"
+    )
     local roundText = label(round, "Round")
     RunService.RenderStepped:Wait()
     checkBounds(roundText, round)
-    if hint.Visible then
-        checkBounds(hint, round)
-    end
     if expected.result then
         expectText(roundText, expected.result)
     elseif expected.view == "Ground" or expected.view == "Operator" then
         assert(string.match(roundText.Text, "%d+:%d%d"), "round timer missing: " .. roundText.Text)
         expectText(label(round, "AircraftHealth"), "300")
+        local health = label(round, "AircraftHealth")
+        local fill = object(health, "Fill")
+        assert(
+            health:GetAttribute("Fraction") == 1 and fill.Size.X.Scale == 1,
+            "fresh round health bar not full"
+        )
     end
     if expected.view == "Ground" then
         local ground = hud("GroundCombatHUD")
@@ -212,16 +215,12 @@ local function perform(action: string, payload: unknown): unknown
     elseif action == "NextTarget" or action == "PreviousTarget" then
         key(if action == "NextTarget" then Enum.KeyCode.RightBracket else Enum.KeyCode.LeftBracket)
         return verifyView(expected)
-    elseif action == "HelpAndSettings" then
+    elseif action == "Settings" then
         key(Enum.KeyCode.H)
-        local help = object(round, "HelpContent")
-        assert(help.Visible, "H did not open help")
-        checkBounds(help, round)
-        checkBounds(label(help, "Instructions"), round)
+        assert(round:FindFirstChild("HelpContent") == nil, "H opened match guidance")
         key(Enum.KeyCode.P)
         local settings = object(round, "SettingsContent")
         assert(settings.Visible, "P did not open settings")
-        assert(not help.Visible, "help and settings both visible")
         checkBounds(settings, round)
         checkBounds(label(settings, "Instructions"), round)
         for _ = 1, 3 do

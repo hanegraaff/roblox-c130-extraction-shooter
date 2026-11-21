@@ -837,19 +837,14 @@ function ThermalCameraController.new(
                         then string.format("Reload %.1fs", info.reloadUntil - now)
                         else string.format("%d rounds", info.ammo))
                     else "Readiness updating"
-                caption.Text = string.format(
-                    "%s • %s • %d° FOV\nPan • drag to aim • hold FIRE",
-                    name,
-                    detail,
-                    fov
-                )
+                caption.Text = string.format("%s • %s • %d° FOV", name, detail, fov)
             else
                 local aim = if validAim then "Aim on battlefield" else "Aim outside firing area"
                 local readiness = if preview
                     then "Studio preview"
                     else PlayerPresentation.weaponText(info, now)
                 caption.Text = string.format(
-                    "%s  •  %s zoom %d°\n%s  ·  %s\nWASD pan  •  mouse aim  •  R recenter  •  H help",
+                    "%s  •  %s zoom %d°\n%s  ·  %s",
                     AircraftRules.names[weapon],
                     zoom,
                     fov,

@@ -1,0 +1,32 @@
+--!strict
+-- Portable timing and mix boundaries for cosmetic playback.
+type API = typeof(require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules))
+
+return function(test: (string, () -> ()) -> (), candidate: unknown)
+    local rules = candidate :: API
+    test("Distant cannon fire and impacts arrive later than a local rifle or rocket launch", function()
+        local light = assert(rules.profile("GAU23"), "30mm profile missing")
+        local heavy = assert(rules.profile("M102"), "105mm profile missing")
+        local rifle = assert(rules.profile("M7"), "rifle profile missing")
+        local rocket = assert(rules.profile("RocketLaunch"), "launcher profile missing")
+        assert(rules.due(rifle, 12, 9.95, 10, true) == 10, "local rifle lagged")
+        assert(rules.due(rocket, 12, 9.95, 10, true) == 10, "local rocket lagged")
+        assert(rifle.asset ~= rocket.asset, "ground weapons share identical cues")
+        local nearby = assert(rules.due(light, 100, 10, 10, false), "missing nearby shot")
+        local distant = assert(rules.due(light, 450, 10, 10, false), "missing distant shot")
+        local howitzer = assert(rules.due(heavy, 450, 10, 10, false), "missing howitzer shot")
+        assert(nearby > 10 and distant > nearby and howitzer > distant, "ranged timing collapsed")
+        local impact = assert(rules.profile("HeavyImpact"), "missing heavy impact")
+        local arrival = assert(rules.due(impact, 400, 12, 12, false), "missing impact")
+        assert(arrival > 12, "impact had no propagation delay")
+    end)
+    test("Weapon audio drops unsupported, stale, future, nonfinite and out-of-range signals", function()
+        local profile = assert(rules.profile("GAU23"), "30mm profile missing")
+        assert(rules.profile("invalid") == nil, "unknown cue admitted")
+        assert(rules.due(profile, profile.far, 10, 10, false) == nil, "outside audible range")
+        assert(rules.due(profile, 0 / 0, 10, 10, false) == nil, "nonfinite range admitted")
+        assert(rules.due(profile, 20, 1, 10, false) == nil, "stale event admitted")
+        assert(rules.due(profile, 20, 11, 10, false) == nil, "future event admitted")
+        assert(rules.due(profile, 20, 10, math.huge, false) == nil, "nonfinite client clock")
+    end)
+end

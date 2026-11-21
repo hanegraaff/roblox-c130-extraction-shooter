@@ -1,56 +1,54 @@
-# P10 — Player guidance, spectating and presentation
+# P10 — Combat presentation and spectating
 
-**Milestone:** M6. **Dependencies:** P09. **Requirements:** R04, R12, R15. Status: [roadmap](../roadmap.md).
+**Milestone:** M6. **Dependencies:** P09. **Requirements:** R04, R12, R15. Status is tracked in the [roadmap](../roadmap.md).
 
 ## Capability and player experience
 
-A new player understands their role, controls, aircraft health, launcher availability and result without a developer narrating the session. Spectating, thermal view, effects and audio feel like one coherent game.
+Both teams see the round state, equipment readiness and aircraft health.
+Spectators can cycle through living Ground players. Aircraft and ground
+weapons have distinct positional sound.
 
 ## Implementation
 
-Consolidate role-specific HUD and help, launcher ownership and recovery messages,
-WASD pan, mouse aim and recenter guidance, panel-damage progression, weapon-specific
-zoom, ammunition, cooldown and health feedback, accessible result reasons, and
-spectator target cycling. Add readable stylized cues, audio and effects with
-provenance in the asset manifest. P13 and P07 already supply terrain, buildings
-and destruction, and P16/P17 supply the detailed Outpost. Important sounds have
-visible cues, and labels or icons convey information also shown by color. Add
-effect and camera-shake intensity controls. Keep full functionality at 1280×720
-and 1920×1080 desktop viewports. The new controls target desktop, alongside
-the existing touch controls.
+Show one shared aircraft health bar based on server-confirmed health. Its
+width decreases with damage and its fill moves from green through amber to red.
+Keep numeric health and the destruction label readable independently of color.
+Show weapon names, zoom, cooldown and ammunition, launcher ownership and
+recovery, and team results. Keep the Settings and spectator controls.
+
+Play distant 30mm thumps and a deeper 105mm report with a local propagation
+delay. Give the M-7 a sharp muzzle report and rockets a launch rush, exhaust
+trail and separate impact. Base playback on accepted shots and resolved
+impacts. Record asset provenance and preserve visible warnings with effects
+muted. Check the HUD at 1280×720 and 1920×1080 and preserve the compact touch
+layout.
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes; view-model tests cover each phase/role, death, destroyed aircraft, operator forfeit, no living spectator targets, rejected actions and result reason.
-- **A2:** Engine UI tests show correct role controls, legible aircraft-health/timer/ammo/launcher state and both named aircraft weapons, bounded layout at both target resolutions, and keyboard-operable help/settings.
-- **A3:** Spectators follow living teammates only, never gain weapon/interact authority and recover to a neutral view when targets disappear. Role/reset transitions restore camera/input and clear duplicate UI.
-- **A4:** Settings change effects without gameplay advantage or state mutation. Required warnings/results have visual equivalents independent of audio/color.
-- **A5:** All added assets have provenance and ownership records; their source/reference dependencies build cleanly and no imported unintended scripts remain.
+- **A1.** The host gate passes. Deterministic tests cover health fractions,
+  results, spectator selection, settings and sound timing boundaries.
+- **A2.** Studio shows the health bar at full, damaged and destroyed states.
+  Both desktop viewports fit the HUD, and touch retains its compact layout.
+  Settings remain keyboard operable.
+- **A3.** Spectators follow only living Ground targets and get a neutral view
+  when targets are unavailable. Reset restores the camera and removes old UI.
+- **A4.** Confirmed fire and impacts play weapon-specific effects with staged
+  timing. Muting and reset clear queued audio. Warning and result text stay
+  visible across effect settings.
+- **A5.** The manifest records the audio sources. Both artifacts build and the
+  release mapping contains only the required runtime modules.
 
-## Focused human check
+## Focused Studio check
 
-Have a tester complete both roles from in-game instructions. Inspect thermal
-contrast, warning and impact frames, launcher ownership and reload, both weapon
-zoom levels while panning, building-panel stages and physical debris, aircraft
-destruction and team results, defeat and spectating, and both desktop viewport
-sizes. Keep reviewed gameplay captures in the linked evidence record.
-
-## Documentation changes
-
-The dedicated military-outpost art work is scoped separately in
-[P16](16-blender-military-outpost-assets.md) (Blender assets and human approval)
-and [P17](17-integrate-military-outpost.md) (smaller-Outpost integration).
-P10 retains its presentation/onboarding scope. D63 schedules P16/P17 before
-P09 and this plan, so onboarding and presentation must describe the approved
-Outpost actually present in the tested candidate.
-
-Update the README's player guide and local setup for the current game. Keep the
-selected P16 Blender authoring image in the README and link reviewed gameplay
-captures in the evidence guide. Document asset credits and current limitations.
+Check both zooms, launcher status and reload, distinct gunship reports, ground
+muzzle and rocket effects, aircraft health through several hits, and lobby
+restoration. Record the exact source, Studio environment and playback evidence.
 
 ## Completion record
 
-P10 adds desktop role help, readiness and launcher status, teammate spectator
+### Original P10 candidate
+
+The original HUD added readiness and launcher status, teammate spectator
 cycling, neutral camera fallback, and separate local effects and camera-shake
 settings. The default settings are Full effects and Reduced shake. Shake is
 confined to the aircraft-destruction view in Results. Essential warning and
@@ -86,7 +84,7 @@ client, with zero failures, errors or skips. [Four-client report](../docs/eviden
 | A4 | With both settings Off, the incoming-fire and aircraft-destruction text cues remained visible, the cue pulse was zero, and the destruction view stayed steady during the sampled interval. A settings change preserved authoritative aircraft, launcher and rifle state. The ordinary clients loaded both bundled sounds and displayed 105mm impact and panel-impact cues. |
 | A5 | The manifest records the original Luau effect and both Roblox-bundled audio references. The references were present in installed Studio and Roblox Player. Both builds passed artifact isolation, reconstruction, and the runtime-script allowlist. [Asset manifest](../assets/manifest.json) |
 
-The ordinary two-client run used the in-game instructions at 1280×720 and
+The ordinary two-client run exercised both roles at 1280×720 and
 1920×1080. Ground reached, picked up and equipped the launcher, read its
 reload, and made three actual direct hits reducing aircraft health from 300
 to zero. A temporary local camera binding tracked the Roblox aircraft for
@@ -145,3 +143,39 @@ defaults and package contracts after reviewing the source. The repository
 checker and `git diff --check` passed on the delivery records. P10 is in
 [PR #42](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42)
 against `main`.
+
+### Combat presentation revision
+
+The revised HUD keeps one aircraft health bar for both teams. The old
+per-hit labels and the match Help panel were removed. Settings and teammate
+spectating retain their existing inputs. [Presentation decisions](../docs/decisions.md)
+
+The full host gate passed on `3f6c6f2` with 79 unit tests, 73 integration
+tests, 15 tooling checks, 48 asset regression tests and both Rojo builds.
+The native layout case checks full, half, nearly empty and destroyed states,
+including the disappearance of the former hit overlays. The new timing
+tests cover local muzzle response, distant propagation and rejection of
+stale or out-of-range cues.
+
+A two-client Studio session on `3f6c6f2` matched all 154 mapped scripts
+to the Rojo build. The server passed 191/191 smoke cases and each client
+passed 13/13 with zero failures, skips or errors. Actual launcher hits took
+health through 300, 200, 100 and zero on both clients. At 100 health the
+bar filled one third of its track and fit in the Ground 1280×720 and
+Operator 1920×1080 viewports. Both clients displayed the empty red track
+and destruction text at zero, then restored their lobby cameras and full
+aircraft health.
+
+Both clients loaded and played the 30mm, 105mm, M-7 and launcher fire cues
+and the three impact cues. On Ground, measured fire-to-playback times were
+about 0.60 seconds for the 30mm, 0.65 seconds for the 105mm and 0.01 seconds
+for the local M-7. The live rocket had an exhaust trail. With effects Off,
+the Ground client received the final launch and impact and played neither.
+Destruction text remained visible, and both clients cleared weapon audio on
+reset. Studio telemetry establishes playback and timing. Perceived realism
+awaits a listening pass. [Revision evidence](../docs/evidence/p10/combat-presentation-revision.json)
+
+The original four-client run remains the evidence for two-target spectator
+cycling and spectator authority. The revision's two-client smoke exercised
+the neutral camera, and its ordinary session verified replay cleanup. The
+review branch builds on the original P10 branch. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43)

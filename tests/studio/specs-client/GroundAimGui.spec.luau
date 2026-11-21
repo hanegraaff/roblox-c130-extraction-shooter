@@ -312,7 +312,7 @@ return function()
         assert(ok, tostring(failure))
     end)
     test(
-        "P08 production cross-GUI layouts preserve native controls aim headers and confirmed hits",
+        "P10 aircraft health and combat HUD fit desktop and touch safe areas without the old hit overlays",
         function()
             local players, runService = game:GetService("Players"), game:GetService("RunService")
             local replicated, guiService = game:GetService("ReplicatedStorage"), game:GetService("GuiService")
@@ -337,14 +337,9 @@ return function()
                 aircraft:SetAttribute("Health", 300)
                 aircraft:SetAttribute("MaxHealth", 300)
             end
-            local launcher = replicated:FindFirstChild("LauncherState")
-            local ownsLauncher = launcher == nil
-            if not launcher then
-                launcher = Instance.new("Folder")
-                launcher.Name, launcher.Parent = "LauncherState", replicated
-            end
-            local oldShot, oldImpact =
-                aircraft:GetAttribute("GroundShot"), launcher:GetAttribute("LastImpact")
+            local oldHealth = aircraft:GetAttribute("Health")
+            local oldMaximum = aircraft:GetAttribute("MaxHealth")
+            local oldDestroyed = aircraft:GetAttribute("Destroyed")
             local touch = false
             local state = Instance.new("Folder")
             state:SetAttribute("RoundId", 7001)
@@ -432,7 +427,36 @@ return function()
                     end
                 end
                 assert(sourceGround and sourceRound, "production HUD sources unavailable")
-                local shotSequence = 0
+                aircraft:SetAttribute("MaxHealth", 300)
+                aircraft:SetAttribute("Destroyed", false)
+                local healthLabel = child(sourceRound, "AircraftHealth")
+                local meter = child(healthLabel, "Meter")
+                local fill = child(meter, "Fill")
+                for _, sample in { { 300, 1 }, { 150, 0.5 }, { 3, 0.01 }, { 0, 0 } } do
+                    aircraft:SetAttribute("Health", sample[1])
+                    local deadline = os.clock() + 2
+                    repeat
+                        frames()
+                    until math.abs(fill.Size.X.Scale - sample[2]) <= 0.002 or os.clock() >= deadline
+                    assert(
+                        healthLabel.Visible and healthLabel:GetAttribute("Fraction") == sample[2],
+                        "live health label ratio"
+                    )
+                    assert(
+                        math.abs(fill.Size.X.Scale - sample[2]) <= 0.002,
+                        "health bar width did not settle"
+                    )
+                    if sample[1] == 300 then
+                        assert(fill.BackgroundColor3.G > fill.BackgroundColor3.R, "full bar is not green")
+                    elseif sample[1] < 10 then
+                        assert(fill.BackgroundColor3.R > fill.BackgroundColor3.G, "depleted bar is not red")
+                    end
+                end
+                aircraft:SetAttribute("Health", 150)
+                assert(
+                    sourceRound:FindFirstChild("Help") == nil and sourceRound:FindFirstChild("Guide") == nil,
+                    "in-round guidance remains"
+                )
                 for _, mode in { false, true } do
                     touch = mode
                     local insetModes: { boolean } = if mode then { true, false } else { true }
@@ -440,45 +464,17 @@ return function()
                         sourceGround.IgnoreGuiInset = ignoreInset
                         for _, weapon in { "M7", "Rocket" } do
                             tool.Name = if weapon == "M7" then "M-7 rifle" else "Rocket launcher"
-                            shotSequence += 1
-                            if weapon == "M7" then
-                                aircraft:SetAttribute(
-                                    "GroundShot",
-                                    http:JSONEncode({
-                                        roundId = 7001,
-                                        userId = player.UserId,
-                                        sequence = shotSequence,
-                                        aircraftHit = true,
-                                    })
-                                )
-                            else
-                                launcher:SetAttribute(
-                                    "LastImpact",
-                                    http:JSONEncode({
-                                        roundId = 7001,
-                                        userId = player.UserId,
-                                        shotId = "P08layout" .. tostring(shotSequence),
-                                        aircraftHit = true,
-                                    })
-                                )
-                            end
                             frames()
                             local sourceStatus = child(sourceGround, "RifleStatus")
-                            local sourceFeedback = child(sourceGround, "AircraftHit")
                             assert(sourceStatus:IsA("TextLabel"), "readiness label missing")
-                            if mode then
-                                assert(
-                                    not sourceFeedback.Visible
-                                        and string.find(sourceStatus.Text, "HIT", 1, true),
-                                    "confirmed touch hit is not inline with named readiness"
-                                )
-                                assert(
-                                    sourceStatus.TextBounds.X <= sourceStatus.AbsoluteSize.X,
-                                    "confirmed-hit/readiness text clipped"
-                                )
-                            else
-                                assert(sourceFeedback.Visible, "confirmed desktop feedback disappeared")
-                            end
+                            assert(
+                                sourceGround:FindFirstChild("AircraftHit") == nil,
+                                "aircraft hit overlay remains"
+                            )
+                            assert(
+                                not string.find(sourceStatus.Text, "HIT", 1, true),
+                                "hit text remains in touch readiness"
+                            )
                             local groundGui, groundViewport =
                                 copyScreen(sourceGround, "P08GroundCrossGuiProbe")
                             local roundGui, roundViewport = copyScreen(sourceRound, "P08RoundCrossGuiProbe")
@@ -501,9 +497,6 @@ return function()
                                     origin.AbsolutePosition
                                 )
                                 reticle.Position = position
-                                local feedback = child(groundViewport, "AircraftHit")
-                                feedback.Position = position
-                                    + (sourceFeedback.Position - child(sourceGround, "Reticle").Position)
                                 local reserves: { GuiObject } = {}
                                 local function reserve(
                                     name: string,
@@ -552,8 +545,6 @@ return function()
                                         if weapon == "M7" then
                                             table.insert(items, child(groundViewport, "Reload"))
                                         end
-                                    else
-                                        table.insert(items, feedback)
                                     end
                                     if scenario == "Available" then
                                         table.insert(items, child(groundViewport, "Pickup"))
@@ -652,13 +643,11 @@ return function()
             if fixtureTool then
                 fixtureTool:Destroy()
             end
-            aircraft:SetAttribute("GroundShot", oldShot)
-            launcher:SetAttribute("LastImpact", oldImpact)
+            aircraft:SetAttribute("Health", oldHealth)
+            aircraft:SetAttribute("MaxHealth", oldMaximum)
+            aircraft:SetAttribute("Destroyed", oldDestroyed)
             if ownsAircraft then
                 aircraft:Destroy()
-            end
-            if ownsLauncher then
-                launcher:Destroy()
             end
             player:SetAttribute("Role", oldRole)
             player:SetAttribute("Life", oldLife)
