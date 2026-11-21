@@ -19,8 +19,8 @@ The integrated source on `main` includes the development shell, verification too
 | M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Complete | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
-| M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | In progress | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
-| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Planned | P10 | Play repeated stable rounds with readable counterplay |
+| M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
+| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Ready | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
@@ -44,8 +44,15 @@ native four-client cases, both exact desktop layouts and a seven-case panel
 regression. A narrow final ammo-copy correction passed its focused Studio
 retest at both resolutions. P10 is ready for review in
 [PR #42](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42).
-Use the P10 branch as P11's dependency source until PR #42 is integrated.
 [P10 completion record](plans/10-player-experience.md#completion-record)
+
+2026-11-21 P10 presentation revision. The in-round Help panel is removed,
+and aircraft hits update a shared green-to-red health bar. Both gunship
+weapons have delayed positional reports. Ground rifles and the launcher
+have distinct shot sounds, and rockets leave an exhaust trail and make a
+separate impact sound. The host gate and two-client Studio revision checks
+passed. Use `fix/p10-combat-presentation` as P11's dependency source until
+the P10 changes are integrated. [Revision evidence](docs/evidence/p10/combat-presentation-revision.json)
 
 2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
 validated shared material-panel boundary and approved-source generation gate.

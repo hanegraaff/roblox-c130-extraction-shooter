@@ -423,13 +423,14 @@ evidence. In a rendering Client DataModel, select the **HD 720** or
 **HD 1080** simulator preset with **Actual Resolution** scaling. Verify the
 client's `workspace.CurrentCamera.ViewportSize`, since the simulator setting
 and the rendered viewport can differ. Restore default simulation when done.
-Inspect readable, bounded HUD rows, weapon controls and the Settings menu. Operate both roles with their ordinary controls. Inspect thermal contrast, both zooms while
-panning, warnings and impacts, launcher ownership and reload, Light/Heavy/Total
-cover and falling fragments, aircraft destruction, defeat/spectating and team
-results. Check text cues with effects off and record the audio and shake
-behavior separately. Keep reviewed captures and observations with the tested
-source record. Synthetic input and GUI bounds establish interaction and layout
-facts. Operated review establishes presentation and playability.
+Inspect readable, bounded HUD rows, weapon controls and the Settings menu.
+Use a live round to compare aircraft health and fill on both clients after
+server-confirmed hits. Check the green full bar, red depleted bar and readable
+numeric or destroyed state. Fire both gunship weapons, the M-7 and the launcher.
+Record the loaded, playing positional cues and the difference between server
+emission and client playback time. Check the exhaust trail, warning text with
+effects off, and cleanup after Results and replay. Keep audio telemetry and
+listening observations separate. [Revision evidence](evidence/p10/combat-presentation-revision.json)
 
 ## Run the P05 gunship combat harness
 

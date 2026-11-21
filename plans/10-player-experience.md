@@ -48,7 +48,7 @@ restoration. Record the exact source, Studio environment and playback evidence.
 
 ### Original P10 candidate
 
-P10 adds desktop role help, readiness and launcher status, teammate spectator
+The original HUD added readiness and launcher status, teammate spectator
 cycling, neutral camera fallback, and separate local effects and camera-shake
 settings. The default settings are Full effects and Reduced shake. Shake is
 confined to the aircraft-destruction view in Results. Essential warning and
@@ -84,7 +84,7 @@ client, with zero failures, errors or skips. [Four-client report](../docs/eviden
 | A4 | With both settings Off, the incoming-fire and aircraft-destruction text cues remained visible, the cue pulse was zero, and the destruction view stayed steady during the sampled interval. A settings change preserved authoritative aircraft, launcher and rifle state. The ordinary clients loaded both bundled sounds and displayed 105mm impact and panel-impact cues. |
 | A5 | The manifest records the original Luau effect and both Roblox-bundled audio references. The references were present in installed Studio and Roblox Player. Both builds passed artifact isolation, reconstruction, and the runtime-script allowlist. [Asset manifest](../assets/manifest.json) |
 
-The ordinary two-client run used the in-game instructions at 1280×720 and
+The ordinary two-client run exercised both roles at 1280×720 and
 1920×1080. Ground reached, picked up and equipped the launcher, read its
 reload, and made three actual direct hits reducing aircraft health from 300
 to zero. A temporary local camera binding tracked the Roblox aircraft for
@@ -143,3 +143,38 @@ defaults and package contracts after reviewing the source. The repository
 checker and `git diff --check` passed on the delivery records. P10 is in
 [PR #42](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42)
 against `main`.
+
+### Combat presentation revision
+
+The revised HUD keeps one aircraft health bar for both teams. The old
+per-hit labels and the match Help panel were removed. Settings and teammate
+spectating retain their existing inputs. [Presentation decisions](../docs/decisions.md)
+
+The full host gate passed on `3f6c6f2` with 79 unit tests, 73 integration
+tests, 15 tooling checks, 48 asset regression tests and both Rojo builds.
+The native layout case checks full, half, nearly empty and destroyed states,
+including the disappearance of the former hit overlays. The new timing
+tests cover local muzzle response, distant propagation and rejection of
+stale or out-of-range cues.
+
+A two-client Studio session on `3f6c6f2` matched all 154 mapped scripts
+to the Rojo build. The server passed 191/191 smoke cases and each client
+passed 13/13 with zero failures, skips or errors. Actual launcher hits took
+health through 300, 200, 100 and zero on both clients. At 100 health the
+bar filled one third of its track and fit in the Ground 1280×720 and
+Operator 1920×1080 viewports. Both clients displayed the empty red track
+and destruction text at zero, then restored their lobby cameras and full
+aircraft health.
+
+Both clients loaded and played the 30mm, 105mm, M-7 and launcher fire cues
+and the three impact cues. On Ground, measured fire-to-playback times were
+about 0.60 seconds for the 30mm, 0.65 seconds for the 105mm and 0.01 seconds
+for the local M-7. The live rocket had an exhaust trail. With effects Off,
+the Ground client received the final launch and impact and played neither.
+Destruction text remained visible, and both clients cleared weapon audio on
+reset. Studio telemetry establishes playback and timing. Perceived realism
+awaits a listening pass. [Revision evidence](../docs/evidence/p10/combat-presentation-revision.json)
+
+The original four-client run remains the evidence for two-target spectator
+cycling and spectator authority. The revision's two-client smoke exercised
+the neutral camera, and its ordinary session verified replay cleanup.
