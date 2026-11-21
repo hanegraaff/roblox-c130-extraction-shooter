@@ -10,6 +10,12 @@ After the foundational specs, `RoundHarness.run()` starts a bounded discovery ta
 
 `MatchOutcomeHarness.run()` discovers the test-only P09 transport after ordinary TestEZ. It sends production weapon and launcher intent and checks the current client's result payload, HUD text, camera mode and subject, loadout and aircraft zoom through replay. It disconnects when the transport is removed. Manual P09 selects this listener alone. [P09 scenario procedure](../../../docs/testing.md#run-the-p09-match-outcome-harness)
 
+`PlayerExperienceHarness.run()` starts after passing client TestEZ when the
+server selects P10. It uses Studio virtual keyboard input and production UI
+and camera Instances. It reports HUD bounds, weapon and settings observations,
+and spectator targets or overview. Selected remote probes exercise spectator
+authority. Removing the harness transport disconnects the listener. [Player experience harness](../../../docs/testing.md#run-the-player-experience-harness)
+
 `HumanTestPanel.start()` discovers the test-only session and creates one bottom-right Studio panel. Its role/duration/start/reset/location buttons send bounded server intent tagged with sequence and generation. Server feedback and authoritative attributes drive labels. The GUI persists through character respawn; stopping or removing the session disconnects listeners, cancels pending discovery and destroys the panel. It is never mapped into release builds.
 
 `AircraftHarness.run()` adds P04 actual-client probes through its own excluded transport. It measures replicated canonical pose error, map presence/tangent/altitude, inward operator view, acknowledged weapon/FOV/reticle coherence, singleton ThermalHUD/effect/highlights, original FOV/mouse restoration and real LeaveTest departure. Its transport listener disconnects on removal. Failed probes retain their collected observations. Reticle failures include numeric pixels, viewport/GUI sizes, rendered-frame counts and role/phase/life context while preserving the existing bounds and render timing. Both aircraft harnesses also require the actual drawn reticle center, converted back to viewport space with current GuiInset, to agree with ray pixels within one pixel. These observations supplement the source-specific client TestEZ cases; rendering occlusion still requires actual visual review. Follow the [P04 procedure](../../../docs/testing.md#run-the-p04-aircraft-harness).
