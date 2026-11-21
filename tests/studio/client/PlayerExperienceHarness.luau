@@ -161,7 +161,10 @@ local function verifyView(expected: Expected): unknown
         expectText(profile, expected.profile)
     elseif expected.view == "Spectator" or expected.view == "Results" or expected.view == "Waiting" then
         assert(player.PlayerGui:FindFirstChild("ThermalHUD") == nil, "thermal controls persisted")
-        assert(not object(hud("GroundCombatHUD"), "RifleStatus").Visible, "spectator rifle actions visible")
+        local ground = hud("GroundCombatHUD")
+        waitFor(function()
+            return not ground.Enabled
+        end, "spectator rifle actions visible")
     end
     for _, name in { "RoundHUD", "GroundCombatHUD", "ThermalHUD" } do
         local total = 0
