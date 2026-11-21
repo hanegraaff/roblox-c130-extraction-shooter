@@ -1,0 +1,117 @@
+{
+  "view": "Operator",
+  "touch": false,
+  "cameraFov": 40,
+  "objects": [
+    {
+      "y": 66,
+      "path": "RoundHUD.Round",
+      "fits": true,
+      "height": 38,
+      "text": "C-130 OPERATOR\n7:35 remaining • 1 Ground alive",
+      "x": 12,
+      "width": 300
+    },
+    {
+      "y": 113,
+      "path": "RoundHUD.AircraftHealth",
+      "fits": true,
+      "height": 34,
+      "text": "C-130 HEALTH  300 / 300",
+      "x": 12,
+      "width": 250
+    },
+    {
+      "y": 155,
+      "path": "RoundHUD.Guide",
+      "fits": true,
+      "height": 64,
+      "text": "Eliminate the ground team or survive the timer. Thermal shows exposed players.",
+      "x": 12,
+      "width": 300
+    },
+    {
+      "y": 110,
+      "path": "RoundHUD.Help",
+      "fits": true,
+      "height": 34,
+      "text": "H  Help",
+      "x": 1053,
+      "width": 100
+    },
+    {
+      "y": 110,
+      "path": "RoundHUD.Settings",
+      "fits": true,
+      "height": 34,
+      "text": "P  Settings",
+      "x": 1160,
+      "width": 108
+    },
+    {
+      "y": 158,
+      "path": "RoundHUD.HelpContent.Heading",
+      "fits": true,
+      "height": 32,
+      "text": "C-130 OPERATOR",
+      "x": 875,
+      "width": 380
+    },
+    {
+      "y": 195,
+      "path": "RoundHUD.HelpContent.Instructions",
+      "fits": true,
+      "height": 306,
+      "text": "WASD pans the thermal camera. Mouse aims the reticle. Hold left click to fire. R recenters.\n\n1 selects the 30mm GAU-23/A Chain Gun (closer view). 2 selects the 105mm M102 Howitzer (wider view). Each weapon keeps its own ammo and recovery timer.\n\nSolid cover blocks exposed-player highlights and protects Ground. Light damage leaves scars. Heavy damage opens about half the panel. Total damage removes the panel. Three direct 105mm hits create a Heavy opening and three more remove it. Sustained 30mm fire also damages panels.",
+      "x": 881,
+      "width": 369
+    },
+    {
+      "y": 582,
+      "path": "ThermalHUD.Profile",
+      "fits": true,
+      "height": 66,
+      "text": "105mm M102 Howitzer  •  Wide zoom 40°\n1 rounds ready  ·  Aim on battlefield\nWASD pan  •  mouse aim  •  R recenter  •  H help",
+      "x": 350,
+      "width": 580
+    },
+    {
+      "y": 656,
+      "path": "ThermalHUD.GAU23",
+      "fits": true,
+      "height": 36,
+      "text": "1 • 30mm GAU-23/A Chain Gun",
+      "x": 355,
+      "width": 280
+    },
+    {
+      "y": 656,
+      "path": "ThermalHUD.M102",
+      "fits": true,
+      "height": 36,
+      "text": "2 • 105mm M102 Howitzer",
+      "x": 645,
+      "width": 280
+    },
+    {
+      "y": 16,
+      "path": "ThermalHUD.Recenter",
+      "fits": true,
+      "height": 32,
+      "text": "R • Recenter",
+      "x": 1114,
+      "width": 150
+    }
+  ],
+  "cameraType": "Enum.CameraType.Scriptable",
+  "viewport": [
+    1280,
+    720
+  ],
+  "overlaps": [],
+  "inset": [
+    0,
+    58
+  ],
+  "invalid": []
+}

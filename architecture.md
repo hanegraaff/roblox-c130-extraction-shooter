@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-Integrated `main` contains the 720-stud battlefield, three two-story buildings, authoritative rounds, the circling aircraft with thermal panning and zoom, recoverable launcher and persistent destruction. It reconstructs the imported smaller Outpost before map snapshotting and provides indoor Ground camera zoom. The P09 branch adds ordered combat and result resolution, readable team results and coordinated replay cleanup. Additional levels remain future work. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md)
+Integrated `main` contains the 720-stud battlefield, three two-story buildings, authoritative rounds, the circling aircraft with thermal panning and zoom, recoverable launcher, persistent destruction and ordered match results and replay. It reconstructs the imported smaller Outpost before map snapshotting and provides indoor Ground camera zoom. The P10 candidate adds role guidance, spectator cycling, readable weapon and launcher states, and client-local audiovisual settings. Additional levels remain future work. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md), [P10 plan](plans/10-player-experience.md)
 
 Server-only services own roles, UserId membership, deadlines, readiness, damage and results. Engine adapters own characters, map reconstruction and replicated presentation. Clients display state, send bounded intent and manage role cameras; they never award structural or player damage.
 
@@ -18,7 +18,7 @@ MCP and Rojo have different responsibilities. Rojo maps repository-owned Luau an
 
 `ServerScriptService.Server` starts `Bootstrap`, which validates public defaults and owns one `ReplicatedStorage.BootstrapStatus` Folder plus a Heartbeat connection. The release mapping then starts `GameRuntime` with production defaults: 6–10 players and 600-second rounds. Server-only `DevelopmentSettings` exists only in the test mapping, selects the **Test** label and defers gameplay startup to the test runner. That runner completes foundational TestEZ suites before starting the two-player-minimum test runtime, so map tests and round rebuilds do not race. The release label remains **Development**; no cloud publication is implied.
 
-The client entrypoint waits for PlayerGui and server status, then starts `StatusPanel`. It also attaches one `RoundPanel` to `ReplicatedStorage.RoundState` and replaces it when the server owner changes. The controllers own their GUIs and listeners; stopping disconnects them and restores the local camera. `Lifecycle` composes nonyielding components with idempotent start/stop and rollback on partial start failure. Component cleanup callbacks must not throw or reenter the controller.
+The client entrypoint waits for PlayerGui and server status, then starts `StatusPanel`. It attaches one `RoundPanel` to `ReplicatedStorage.RoundState` and replaces it when the server owner changes. The bootstrap panel hides once the round HUD owns the view. The entrypoint keeps one local settings record across round-owner replacements. Controllers own their GUIs and listeners, and teardown disconnects them and restores the local camera. `Lifecycle` composes nonyielding components with idempotent start/stop and rollback on partial start failure. Component cleanup callbacks must avoid throwing or reentering the controller.
 
 `Validation` accepts finite numbers and bounded flat scalar payloads. `Config` decodes validated public defaults, and `RateLimit` consumes a deterministic token bucket using caller-supplied monotonic seconds. `MatchService.command` adds active-ground role/life, round and sequence validation for surrender; `MatchRuntime` rate-limits its RemoteEvent. The P06 implementation validates ground equipment and server-derived world checks at its weapon boundary. Shared modules contain no secret authority state.
 
@@ -77,7 +77,32 @@ The phase loop is Lobby → Deploying → Active → Results → Resetting → L
 
 `MatchRuntime` owns teams, noncolliding character groups and the `RoundState.Surrender` RemoteEvent. `CharacterOwner` serializes avatar loads and uses request tokens and a per-player lease to invalidate stale work. Death and owned-body removal revoke one active ground life. If a departure also arrives in the same step, `MatchService` can attribute the body removal to that departure while preserving a confirmed death. Internal replacement disconnects character signals before destroying the old body. Operator reset replaces the protected station body while aircraft health persists. `GameRuntime` composes the owners and disconnects its combat frame before stopping them in reverse acquisition order. [Server package contracts](src/server/README.md)
 
-`RoundPanel` computes its timer from the replicated deadline using `GetServerTimeNow`. A single `RoundState.Result` JSON attribute carries `roundId`, `winner`, `reason` and optional `userId`, `weapon` and `shotId`. The client displays winning team and reason as readable text only for the matching round. Aircraft destruction credits the server-resolved lethal shot, and C-130 wins credit the assigned operator. Forfeit and abort results carry their own reasons without impact credit. Eliminated players and late spectators follow the lowest-UserId living ground teammate or fall back to a fixed overview. Results releases the role camera, and Lobby restores the local character camera. The living operator and labelled solo Operator preview use `ThermalCameraController`.
+`RoundPanel` computes its timer from the replicated deadline using `GetServerTimeNow`. A single `RoundState.Result` JSON attribute carries `roundId`, `winner`, `reason` and optional `userId`, `weapon` and `shotId`. The client displays winning team and reason as readable text only for the matching round. Aircraft destruction credits the server-resolved lethal shot, and C-130 wins credit the assigned operator. Forfeit and abort results carry their own reasons without impact credit.
+
+### Player presentation
+
+`PlayerPresentation` maps replicated facts into deterministic view, readiness,
+result and action feedback, and resolves the selected ID from an eligible
+spectator roster. It owns no Instances or transport. `RoundPanel` selects the
+desktop help page from the current view and routes settings and spectator
+controls. The help and settings panels block combat input while open. Server
+validation still owns all actions.
+
+`SpectatorCamera` filters targets to living Ground players in the current round
+with a live Humanoid in Workspace. It retains the selected target when eligible
+and cycles by UserId. With no eligible target it owns a local inert camera
+subject for the neutral overview. The living operator and labelled solo
+Operator preview use `ThermalCameraController`. Results releases the active
+role camera, and Lobby restores the local character camera.
+
+`PresentationEffects` reads the replicated warning, impact and result facts.
+It owns temporary local effects and two Roblox-bundled sound references. The
+effect level scales audible cues and optional pulse and flash intensity. The
+independent shake level applies after the aircraft destruction result, when
+the client owns the Results overview. Readable warning and result text stays
+available at each setting. Phase and round changes clear transient effects.
+The settings record stays on the local client for the session and changes
+neither combat geometry, readiness nor targeting. [Client package contracts](src/client/README.md), [asset provenance](assets/manifest.json)
 
 `GroundIndoorCamera` adapts the local Ground view in level-authored interiors.
 Its render callbacks run immediately before and after the stock camera. It
@@ -161,14 +186,14 @@ The release project excludes tests, test dependencies, fixtures and development 
 | `MapService` | Implemented geometry/anchor/lobby validation, containment, bounded terrain reconstruction, multi-story buildings and pristine panel registry rebuild | P02; expanded P13 |
 | `MatchService`, `RoleService`, `RoundRules` | Implemented roster, phase/deadline, round identity, assignment and outcome policy | P03 |
 | `GameRuntime`, `MatchRuntime`, `CharacterOwner` | Implemented map/round composition, character ownership, replication and cleanup | P03 |
-| `RoundPanel` | Round HUD, readable results, surrender intent and teammate spectating | P03, P09. Expanded guidance in P10 |
+| `RoundPanel` | Round HUD, readable results, surrender intent, role help and session-local settings | P03, P09, P10 |
 | `AircraftService`, `AircraftSelection`, `AircraftRules` | Implemented canonical perimeter orbit, validated aim geometry and authoritative targeting-profile selection; P06 implementation adds health/destruction | P04; health in P06 |
 | `ThermalCameraController`, `AircraftPanRules` | P14 implements verified inward WASD/touch pad pan, recenter, acknowledged zoom and actual-surface reticle projection on `main` | P04; panning P14 |
 | `CombatService` / `CombatRuntime` | Validates gunship intent/readiness and resolves server-side flight, impact and ground damage | P05; ground combat P06 |
 | `PanelDamageRules`, `DestructionService`, `DestructionRuntime` | Implemented server-only stage arithmetic, ordered shot outcomes, replicated progress, residual colliders and bounded fragments | P07 |
 | `LauncherService`, `LauncherRuntime`, `LauncherGeometry` | One identity, atomic ownership, reload-preserving recovery, validated rocket flights and primitive representations | P08 |
 | `MatchService` outcome integration | Aircraft destruction, ground elimination, timeout and forfeit resolution | P09 (basic outcomes P03/P06) |
-| `GroundController`, `HUDController`, `SpectatorController` | Role-specific controls and complete player feedback | Introduced with features; completed P10 |
+| `GroundCombatController`, `PlayerPresentation`, `SpectatorCamera`, `PresentationEffects` | Ground control and readiness, pure presentation rules, teammate cycling, neutral camera and local effects | P06, P08, P10 |
 
 Use one combat orchestration boundary with weapon-specific modules rather than three independent damage systems. `MatchService` alone commits outcomes. Other services propose changes through explicit calls/events; they never independently set the winner. Keep reset and cleanup centralized while each component owns its resources.
 

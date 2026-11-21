@@ -554,10 +554,12 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundIndoorCamera")
+    expected_scripts |= {f"StarterPlayer/StarterPlayerScripts/Client/{name}" for name in ("PresentationEffects", "SpectatorCamera")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts.add("ReplicatedStorage/Shared/GroundCameraRules")
+    expected_scripts.add("ReplicatedStorage/Shared/PlayerPresentation")
     expected_scripts.add("ReplicatedStorage/Shared/AssetMaterial")
     expected_scripts.add("ReplicatedStorage/Shared/AssetMesh")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}
@@ -610,6 +612,14 @@ def main() -> None:
     print("P05 manual fixture isolation passed, including eight deliberate corruption probes.")
     check_manual_p17_isolation(release, tests)
     print("P17 native fixture isolation passed: four test-only modules, no release additions.")
+    for name in (
+        "ServerScriptService/ServerTests/PlayerExperienceHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/PlayerExperienceHarness",
+        "ReplicatedStorage/ClientSpecs/SpectatorCamera.spec",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P10 presentation fixture missing from tests or leaked to release: {name}")
+    print("P10 presentation fixture isolation passed: three test-only modules, no release additions.")
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")

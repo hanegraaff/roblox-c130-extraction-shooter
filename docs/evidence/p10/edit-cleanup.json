@@ -1,0 +1,19 @@
+{
+  "studioVersion": "0.748.0.7481526",
+  "simulatorActive": false,
+  "gameId": 0,
+  "manualSelectorClear": true,
+  "placeId": 0,
+  "mode": "Edit",
+  "reportAttributesClear": true,
+  "studios": [
+    {
+      "file": "tests.rbxlx",
+      "id": "73cf3128-b457-4bef-b2ea-8eaf9c90aa1c",
+      "mode": "Edit",
+      "name": "tests.rbxlx",
+      "persistedToCloud": false,
+      "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+    }
+  ]
+}

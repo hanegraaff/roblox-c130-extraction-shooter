@@ -85,6 +85,12 @@ function RoundHarness.run()
     local selector = if development and development:IsA("ModuleScript")
         then development:GetAttribute("ManualHarness")
         else nil
+    if RunService:IsStudio() and args == nil and selector == "P10" then
+        require(script.Parent.PlayerExperienceHarness).run(function(report)
+            workspace:SetAttribute("ManualP10Report", HttpService:JSONEncode(report))
+        end)
+        return
+    end
     if RunService:IsStudio() and args == nil and selector == "P09" and development then
         local scenario = development:GetAttribute("ManualP09Scenario")
         require(script.Parent.MatchOutcomeHarness).run(
@@ -178,6 +184,10 @@ function RoundHarness.run()
         require(script.Parent.MatchOutcomeHarness).run(
             if type(scenario) == "string" then scenario else "Outcomes"
         )
+        return
+    end
+    if type(args) == "table" and args.kind == "P10" then
+        require(script.Parent.PlayerExperienceHarness).run()
         return
     end
     if type(args) == "table" and args.kind == "P07" then

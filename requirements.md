@@ -5,7 +5,7 @@ WASD and an on-screen touch directional pad. Mouse movement aims the reticle.
 The current MVP has one level; future level interchange must preserve the
 circling C-130 and shared camera, zoom, combat and destruction rules.
 
-These requirements describe the MVP target and future level boundary. Integrated `main` includes the recoverable launcher, persistent destruction, detailed playable Outpost and indoor Ground camera. The P09 branch adds ordered combat, a single attributed result, shared result text and coordinated replay cleanup. The table lists required test levels. Plan records identify the source and environments each check exercised. D59 retains deterministic reconnect authority tests and excludes same-identity reconnect from Studio acceptance. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md)
+These requirements describe the MVP target and future level boundary. Integrated `main` includes the recoverable launcher, persistent destruction, playable Outpost, indoor Ground camera, and ordered combat with one attributed result and coordinated replay cleanup. P10 adds role guidance, spectator cycling and client-local presentation controls. The table lists required test levels. Plan records identify the source and environments each check exercised. D59 retains deterministic reconnect authority tests and excludes same-identity reconnect from Studio acceptance. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md), [P10 plan](plans/10-player-experience.md)
 
 | ID | Requirement | Plans | Required automated evidence |
 | --- | --- | --- | --- |

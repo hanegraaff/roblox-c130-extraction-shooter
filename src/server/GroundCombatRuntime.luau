@@ -242,6 +242,8 @@ function GroundCombatRuntime.start(
         end
         local state = rifles.readiness(player.UserId, now)
         tool:SetAttribute("Ammo", state.ammo)
+        tool:SetAttribute("MaxAmmo", GroundCombatService.capacity)
+        tool:SetAttribute("NextFire", state.nextFire)
         tool:SetAttribute("Reserve", state.reserve)
         tool:SetAttribute("ReloadUntil", state.reloadUntil)
     end

@@ -10,18 +10,23 @@ local manualMode = if manualSettings and manualSettings:IsA("ModuleScript")
     then manualSettings:GetAttribute("ManualHarness")
     else nil
 local selectedClientMode = ""
-if
-    game:GetService("RunService"):IsStudio()
-    and (
+if game:GetService("RunService"):IsStudio() then
+    if
         manualMode == "P08"
         or manualMode == "P09"
+        or manualMode == "P10"
         or manualMode == "P17"
         or manualMode == "P07"
         or manualMode == "P05"
         or manualMode == "P14"
-    )
-then
-    selectedClientMode = manualMode
+    then
+        selectedClientMode = manualMode
+    else
+        local args = game:GetService("StudioTestService"):GetTestArgs()
+        if type(args) == "table" and args.kind == "P10" then
+            selectedClientMode = "P10"
+        end
+    end
 end
 ReplicatedStorage:SetAttribute("ManualClientHarness", selectedClientMode)
 -- Vendor TestEZ is untyped. Narrow its public API once instead of disabling analysis.

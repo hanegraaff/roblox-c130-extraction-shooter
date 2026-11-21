@@ -1,0 +1,135 @@
+{
+  "view": "Ground",
+  "touch": false,
+  "cameraFov": 70,
+  "objects": [
+    {
+      "y": 944,
+      "path": "GroundCombatHUD.RifleStatus",
+      "fits": true,
+      "height": 36,
+      "text": "ROCKET • 1 ready • G drop",
+      "x": 795,
+      "width": 330
+    },
+    {
+      "y": 848,
+      "path": "GroundCombatHUD.LauncherStatus",
+      "fits": true,
+      "height": 28,
+      "text": "LAUNCHER • yours • G to drop",
+      "x": 780,
+      "width": 360
+    },
+    {
+      "y": 285,
+      "path": "GroundCombatHUD.GroundHealth",
+      "fits": true,
+      "height": 28,
+      "text": "YOUR HEALTH  100 / 100",
+      "x": 12,
+      "width": 188
+    },
+    {
+      "y": 66,
+      "path": "RoundHUD.Round",
+      "fits": true,
+      "height": 38,
+      "text": "GROUND TEAM\n7:20 remaining • 1 Ground alive",
+      "x": 12,
+      "width": 300
+    },
+    {
+      "y": 113,
+      "path": "RoundHUD.AircraftHealth",
+      "fits": true,
+      "height": 34,
+      "text": "C-130 HEALTH  300 / 300",
+      "x": 12,
+      "width": 250
+    },
+    {
+      "y": 155,
+      "path": "RoundHUD.Guide",
+      "fits": true,
+      "height": 64,
+      "text": "Destroy the C-130. Find the launcher or chip away at its health with your M-7.",
+      "x": 12,
+      "width": 300
+    },
+    {
+      "y": 66,
+      "path": "RoundHUD.Surrender",
+      "fits": true,
+      "height": 36,
+      "text": "Surrender / spectate",
+      "x": 1758,
+      "width": 150
+    },
+    {
+      "y": 110,
+      "path": "RoundHUD.Help",
+      "fits": true,
+      "height": 34,
+      "text": "H  Help",
+      "x": 1693,
+      "width": 100
+    },
+    {
+      "y": 110,
+      "path": "RoundHUD.Settings",
+      "fits": true,
+      "height": 34,
+      "text": "P  Settings",
+      "x": 1800,
+      "width": 108
+    },
+    {
+      "y": 158,
+      "path": "RoundHUD.SettingsContent.Heading",
+      "fits": true,
+      "height": 32,
+      "text": "PRESENTATION SETTINGS",
+      "x": 1515,
+      "width": 380
+    },
+    {
+      "y": 196,
+      "path": "RoundHUD.SettingsContent.Effects",
+      "fits": true,
+      "height": 38,
+      "text": "›  Effects  ·  Full",
+      "x": 1519,
+      "width": 373
+    },
+    {
+      "y": 241,
+      "path": "RoundHUD.SettingsContent.CameraShake",
+      "fits": true,
+      "height": 38,
+      "text": "Camera shake  ·  Reduced",
+      "x": 1519,
+      "width": 373
+    },
+    {
+      "y": 289,
+      "path": "RoundHUD.SettingsContent.Instructions",
+      "fits": true,
+      "height": 71,
+      "text": "↑ ↓ select  •  ← → change  •  P close\n\nEffects change cue motion and sound. Shake applies only after aircraft destruction.",
+      "x": 1519,
+      "width": 373
+    }
+  ],
+  "cameraType": "Enum.CameraType.Custom",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "overlaps": [],
+  "inset": [
+    0,
+    58
+  ],
+  "invalid": []
+}

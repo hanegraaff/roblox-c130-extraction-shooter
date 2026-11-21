@@ -1,0 +1,117 @@
+{
+  "view": "Ground",
+  "touch": false,
+  "cameraFov": 70,
+  "objects": [
+    {
+      "y": 944,
+      "path": "GroundCombatHUD.RifleStatus",
+      "fits": true,
+      "height": 36,
+      "text": "ROCKET • 1 ready • G drop",
+      "x": 795,
+      "width": 330
+    },
+    {
+      "y": 848,
+      "path": "GroundCombatHUD.LauncherStatus",
+      "fits": true,
+      "height": 28,
+      "text": "LAUNCHER • yours • G to drop",
+      "x": 780,
+      "width": 360
+    },
+    {
+      "y": 285,
+      "path": "GroundCombatHUD.GroundHealth",
+      "fits": true,
+      "height": 28,
+      "text": "YOUR HEALTH  100 / 100",
+      "x": 12,
+      "width": 188
+    },
+    {
+      "y": 66,
+      "path": "RoundHUD.Round",
+      "fits": true,
+      "height": 38,
+      "text": "GROUND TEAM\n7:33 remaining • 1 Ground alive",
+      "x": 12,
+      "width": 300
+    },
+    {
+      "y": 113,
+      "path": "RoundHUD.AircraftHealth",
+      "fits": true,
+      "height": 34,
+      "text": "C-130 HEALTH  300 / 300",
+      "x": 12,
+      "width": 250
+    },
+    {
+      "y": 155,
+      "path": "RoundHUD.Guide",
+      "fits": true,
+      "height": 64,
+      "text": "Destroy the C-130. Find the launcher or chip away at its health with your M-7.",
+      "x": 12,
+      "width": 300
+    },
+    {
+      "y": 66,
+      "path": "RoundHUD.Surrender",
+      "fits": true,
+      "height": 36,
+      "text": "Surrender / spectate",
+      "x": 1758,
+      "width": 150
+    },
+    {
+      "y": 110,
+      "path": "RoundHUD.Help",
+      "fits": true,
+      "height": 34,
+      "text": "H  Help",
+      "x": 1693,
+      "width": 100
+    },
+    {
+      "y": 110,
+      "path": "RoundHUD.Settings",
+      "fits": true,
+      "height": 34,
+      "text": "P  Settings",
+      "x": 1800,
+      "width": 108
+    },
+    {
+      "y": 158,
+      "path": "RoundHUD.HelpContent.Heading",
+      "fits": true,
+      "height": 32,
+      "text": "GROUND TEAM",
+      "x": 1515,
+      "width": 380
+    },
+    {
+      "y": 195,
+      "path": "RoundHUD.HelpContent.Instructions",
+      "fits": true,
+      "height": 306,
+      "text": "WASD to move. Mouse to aim. Hold left click to fire.\n\nEquip the M-7 or launcher with the numbered Roblox inventory slots. R reloads the M-7.\n\nE picks up the launcher when close. G drops it. The launcher reloads automatically. Three direct rockets destroy a healthy aircraft. Rifle fire also reduces its health.\n\nUse solid cover and leave damaged panels before they open. One life per round. Surrender gives up your life and enters spectating.",
+      "x": 1521,
+      "width": 369
+    }
+  ],
+  "cameraType": "Enum.CameraType.Custom",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "overlaps": [],
+  "inset": [
+    0,
+    58
+  ],
+  "invalid": []
+}

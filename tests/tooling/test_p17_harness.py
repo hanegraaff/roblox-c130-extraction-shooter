@@ -43,12 +43,16 @@ end]====]))()
 local server = assert(loadstring([====[return function(ServerStorage, ReplicatedStorage, game)
 SERVER_BLOCK
 end]====]))()
-local expected = {P08="LauncherHarness",P09="MatchOutcomeHarness",P17="P17MaterialHarness",P07="DestructionHarness",P05="CombatHarness",P14="AircraftPanHarness"}
-local function published(mode, studio)
+local expected = {P08="LauncherHarness",P09="MatchOutcomeHarness",P10="PlayerExperienceHarness",P17="P17MaterialHarness",P07="DestructionHarness",P05="CombatHarness",P14="AircraftPanHarness"}
+local function published(mode, studio, args)
     local value = nil
     server({FindFirstChild=function() return {IsA=function() return true end,GetAttribute=function() return mode end} end},
         {SetAttribute=function(_,name,nextValue) assert(name=="ManualClientHarness") value=nextValue end},
-        {GetService=function(_,name) assert(name=="RunService") return {IsStudio=function() return studio end} end})
+        {GetService=function(_,name)
+            if name=="RunService" then return {IsStudio=function() return studio end} end
+            assert(name=="StudioTestService")
+            return {GetTestArgs=function() return args end}
+        end})
     return value
 end
 local function started(mode)
@@ -66,6 +70,8 @@ for mode,name in expected do
     assert(published(mode,false)=="","non-Studio selected a manual mode")
 end
 assert(published(nil,true)=="" and published("unknown",true)=="","ordinary selection changed")
+assert(published(nil,true,{kind="P10"})=="P10","SDK P10 did not select its single listener")
+assert(published(nil,false,{kind="P10"})=="","non-Studio selected SDK P10")
 local ordinary=started("")
 local ordinaryListeners={"CombatHarness","DestructionHarness","GroundCombatHarness","LauncherHarness","MatchOutcomeHarness","RoundHarness","AircraftHarness","AircraftPanHarness","ExpandedMapHarness"}
 assert(#ordinary==#ordinaryListeners,"ordinary listener population changed")

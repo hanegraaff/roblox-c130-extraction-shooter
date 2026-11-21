@@ -39,6 +39,9 @@ if manualMode == "P08" then
 elseif manualMode == "P09" then
     require(script.MatchOutcomeHarness).run()
     return
+elseif manualMode == "P10" then
+    require(script.PlayerExperienceHarness).run()
+    return
 elseif manualMode == "P17" then
     require(script.P17MaterialHarness).run()
     return
