@@ -200,12 +200,6 @@ local function perform(action: string, payload: unknown): unknown
     local round = hud("RoundHUD")
     if action == "View" then
         return verifyView(expected)
-    elseif action == "EquipRifle" then
-        key(Enum.KeyCode.One)
-        waitFor(function()
-            return player.Character ~= nil and player.Character:FindFirstChild("M-7 rifle") ~= nil
-        end, "1 did not equip the M-7")
-        return verifyView(expected)
     elseif action == "RejectFullReload" then
         key(Enum.KeyCode.R)
         local feedback = label(hud("GroundCombatHUD"), "ActionFeedback")
@@ -213,9 +207,6 @@ local function perform(action: string, payload: unknown): unknown
         return { feedback = feedback.Text }
     elseif action == "NextTarget" or action == "PreviousTarget" then
         key(if action == "NextTarget" then Enum.KeyCode.RightBracket else Enum.KeyCode.LeftBracket)
-        return verifyView(expected)
-    elseif action == "SwitchWeapon" then
-        key(Enum.KeyCode.Two)
         return verifyView(expected)
     elseif action == "HelpAndSettings" then
         key(Enum.KeyCode.H)

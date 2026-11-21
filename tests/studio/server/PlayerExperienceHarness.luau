@@ -211,7 +211,13 @@ function Harness.run(finish: ((Report) -> ())?)
         local gunship = assert(operator, "Operator disappeared after deployment")
         local eliminated, first, second = ground[1], ground[2], ground[3]
         check("Role HUD, shared readiness and both acknowledged weapon views", function()
-            probe(first, "EquipRifle", { view = "Ground", phrase = "M-7", ammo = true })
+            -- Roblox reserves the number keys for its CoreGui inventory.
+            -- Equip the actual Tool, then verify its live replicated HUD.
+            local backpack = assert(first:FindFirstChildOfClass("Backpack"), "Ground backpack missing")
+            local tool = backpack:FindFirstChild("M-7 rifle")
+            assert(tool and tool:IsA("Tool"), "Ground M-7 rifle missing")
+            body(first):EquipTool(tool)
+            probe(first, "View", { view = "Ground", phrase = "M-7", ammo = true })
             local rifle = runtime.groundCombat.readiness(first)
             probe(first, "RejectFullReload", {})
             local after = runtime.groundCombat.readiness(first)
@@ -227,12 +233,13 @@ function Harness.run(finish: ((Report) -> ())?)
                 profile = "30mm GAU-23/A Chain Gun",
                 fov = 30,
             })
-            probe(gunship, "SwitchWeapon", {
+            probe(gunship, "AircraftState/SelectWeapon", { roundId = roundId, weapon = "M102", sequence = 1 })
+            probe(gunship, "View", {
                 view = "Operator",
                 profile = "105mm M102 Howitzer",
                 fov = 40,
             })
-            assert(runtime.aircraft.weapon() == "M102", "keyboard switch did not reach authoritative server")
+            assert(runtime.aircraft.weapon() == "M102", "weapon selection did not reach authoritative server")
         end)
         check("Keyboard help/settings and muted visual warning preserve authority", function()
             local aircraft = ReplicatedStorage.AircraftState
@@ -286,16 +293,17 @@ function Harness.run(finish: ((Report) -> ())?)
             local launcher = runtime.launcher.snapshot()
             local aircraft = ReplicatedStorage.AircraftState
             local health, readiness = aircraft:GetAttribute("Health"), aircraft:GetAttribute("Readiness")
+            local selected = runtime.aircraft.weapon()
             probe(eliminated, "LauncherState/Pickup", {
                 roundId = roundId,
                 launcherId = launcher.launcherId,
                 sequence = 1,
             })
-            probe(
-                eliminated,
-                "AircraftState/SelectWeapon",
-                { roundId = roundId, weapon = "GAU23", sequence = 1 }
-            )
+            probe(eliminated, "AircraftState/SelectWeapon", {
+                roundId = roundId,
+                weapon = if selected == "M102" then "GAU23" else "M102",
+                sequence = 1,
+            })
             probe(eliminated, "AircraftState/GroundFire", {
                 roundId = roundId,
                 sequence = 1,
@@ -317,7 +325,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 "spectator action changed aircraft state"
             )
             assert(
-                runtime.aircraft.weapon() == "M102" and eliminated.Character == nil,
+                runtime.aircraft.weapon() == selected and eliminated.Character == nil,
                 "spectator selected a weapon or gained a character"
             )
             body(first).Health = 0
