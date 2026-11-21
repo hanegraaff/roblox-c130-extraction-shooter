@@ -230,12 +230,13 @@ function PlayerPresentation.weaponText(readiness: Readiness?, now: number): stri
     end
     local reload = readiness.reloadUntil - now
     local cooldown = (readiness.nextFire or 0) - now
+    local unit = if readiness.ammo == 1 then "round" else "rounds"
     if reload > 0 then
         return string.format("Reload %.1fs", reload)
     elseif cooldown > 0 then
-        return string.format("%d rounds • Cooldown %.1fs", readiness.ammo, cooldown)
+        return string.format("%d %s • Cooldown %.1fs", readiness.ammo, unit, cooldown)
     end
-    return string.format("%d rounds ready", readiness.ammo)
+    return string.format("%d %s ready", readiness.ammo, unit)
 end
 
 -- Local settings cycle through a bounded set independently. Wave amplitude

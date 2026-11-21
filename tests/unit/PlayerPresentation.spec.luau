@@ -139,6 +139,11 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local readiness = { ammo = 4, reloadUntil = 0, nextFire = 5.5 }
         expect(rules.weaponText(readiness, 5.0), "4 rounds • Cooldown 0.5s")
         expect(rules.weaponText(readiness, 5.5), "4 rounds ready")
+        readiness.ammo = 1
+        expect(rules.weaponText(readiness, 5.0), "1 round • Cooldown 0.5s")
+        expect(rules.weaponText(readiness, 5.5), "1 round ready")
+        readiness.ammo = 0
+        expect(rules.weaponText(readiness, 5.5), "0 rounds ready")
         readiness.reloadUntil = 8
         expect(rules.weaponText(readiness, 5.0), "Reload 3.0s")
         expect(rules.weaponText(nil, 5.0), "Readiness updating")

@@ -16,6 +16,7 @@ type Expected = {
     result: string?,
     phrase: string?,
     profile: string?,
+    readiness: string?,
     fov: number?,
     ammo: boolean?,
 }
@@ -159,6 +160,9 @@ local function verifyView(expected: Expected): unknown
     elseif expected.profile then
         local profile = label(hud("ThermalHUD"), "Profile")
         expectText(profile, expected.profile)
+        if expected.readiness then
+            expectText(profile, expected.readiness)
+        end
     elseif expected.view == "Spectator" or expected.view == "Results" or expected.view == "Waiting" then
         assert(player.PlayerGui:FindFirstChild("ThermalHUD") == nil, "thermal controls persisted")
         local ground = hud("GroundCombatHUD")

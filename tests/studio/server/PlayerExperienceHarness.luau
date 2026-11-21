@@ -237,6 +237,7 @@ function Harness.run(finish: ((Report) -> ())?)
             probe(gunship, "View", {
                 view = "Operator",
                 profile = "105mm M102 Howitzer",
+                readiness = "1 round ready",
                 fov = 40,
             })
             assert(runtime.aircraft.weapon() == "M102", "weapon selection did not reach authoritative server")
