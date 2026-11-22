@@ -1,0 +1,164 @@
+{
+  "testedCommit": "3f6c6f245e37661ac35042a32a82efceb12e2799",
+  "testedTree": "14c668d6845ba2222ff4c8042b8d826da90a192c",
+  "host": {
+    "command": "python3 scripts/verify.py",
+    "environment": "macOS arm64, Python 3.10.4 and pinned Rokit tools",
+    "unit": {
+      "passed": 79,
+      "failed": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "passed": 73,
+      "failed": 0,
+      "skipped": 0
+    },
+    "toolingPassed": 15,
+    "assetRegressionPassed": 48,
+    "releaseBuildSha256": "76b4f4920c82a4a8c4f9c2e8119c8273f9b90c37a6f91ae8ef0188a3cec4a326",
+    "testBuildSha256": "097a2ec866ffd81120abc87aeafcae1885a56b4a7e54ed1e67009d8dda484239",
+    "runtimeScripts": 58,
+    "releaseInstances": 5306,
+    "testInstances": 5413
+  },
+  "studio": {
+    "localSessionDate": "2026-11-20",
+    "version": "0.748.0.7481526",
+    "gameId": 0,
+    "placeId": 0,
+    "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = 'P10RevisionNative'})",
+    "sourceMethod": "Live Rojo connection was unavailable. In the existing local Edit document, staged exact changed scripts from the current Rojo build after checking all 151 original mapped Sources. Compared 154 candidate Sources with the Rojo test artifact by SHA-256 before Play.",
+    "candidateSourcesMatched": 154,
+    "sourceMismatches": 0,
+    "actualClientIds": [
+      -1,
+      -2
+    ],
+    "serverSmoke": {
+      "passed": 191,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "clientSmoke": [
+      {
+        "userId": -1,
+        "passed": 13,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "userId": -2,
+        "passed": 13,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "input": "Native Studio Start, aircraft selection and fire, M-7 equip and fire, and launcher pickup and equip. Three targeted launcher intents from the Ground test client used the current simulated aircraft orbit. The server owned projectile flight, collision and damage.",
+    "aircraftHealth": [
+      300,
+      200,
+      100,
+      0
+    ],
+    "healthBar": [
+      {
+        "userId": -1,
+        "role": "Ground",
+        "viewport": [
+          1280,
+          720
+        ],
+        "at100": {
+          "text": "C-130 HEALTH  100 / 300",
+          "widthFraction": 0.3333333432674408,
+          "rgb": [
+            0.95686274766922,
+            0.5751634240150452,
+            0.2562091648578644
+          ],
+          "bounds": [
+            12,
+            113,
+            262,
+            147
+          ],
+          "textFits": true
+        }
+      },
+      {
+        "userId": -2,
+        "role": "Gunship",
+        "viewport": [
+          1920,
+          1080
+        ],
+        "at100": {
+          "text": "C-130 HEALTH  100 / 300",
+          "widthFraction": 0.3333333432674408,
+          "rgb": [
+            0.95686274766922,
+            0.5751634240150452,
+            0.2562091648578644
+          ],
+          "bounds": [
+            12,
+            113,
+            262,
+            147
+          ],
+          "textFits": true
+        }
+      }
+    ],
+    "destroyedOnBoth": {
+      "barVisible": true,
+      "widthFraction": 0,
+      "text": "C-130 DESTROYED",
+      "redTrackRgb": [
+        0.933333,
+        0.27451,
+        0.243137
+      ],
+      "cueVisible": true,
+      "weaponAudioFolderAbsent": true
+    },
+    "launchTrailSeconds": 0.3199999928474426,
+    "nativeAudio": {
+      "allFourWeaponLaunchOrFireCuesLoadedAndPlayingOnBoth": true,
+      "bothClientsPlayedResolvedLightHeavyAndRocketImpacts": true,
+      "groundObservedSecondsFromServerEmissionToLocalPlayback": [
+        {
+          "cue": "GAU23",
+          "seconds": 0.5965
+        },
+        {
+          "cue": "M102",
+          "seconds": 0.6467
+        },
+        {
+          "cue": "M7",
+          "seconds": 0.0132
+        }
+      ],
+      "groundMuted": {
+        "sightReadout": "C-130 DESTROYED",
+        "audioPacketsBeforeFinalShot": 17,
+        "audioPacketsAfterFinalShot": 19,
+        "voicesBeforeFinalShot": 17,
+        "voicesAfterFinalShot": 17
+      },
+      "scope": "Engine asset loading, IsPlaying, timing and lifecycle observations."
+    },
+    "lobbyAfterResetOnBoth": {
+      "camera": "Custom",
+      "restoredAircraftHealth": 300,
+      "weaponAudioFolderAbsent": true,
+      "deviceSimulationStopped": true
+    },
+    "sessionReturnedResult": true
+  }
+}

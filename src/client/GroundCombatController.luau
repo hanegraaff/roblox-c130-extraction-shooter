@@ -151,18 +151,6 @@ function GroundCombatController.new(
             reticle.TextColor3 = Color3.new(1, 1, 1)
             reticle.TextStrokeTransparency = 0
             reticle.Parent = gui
-            local hitMarker = Instance.new("TextLabel")
-            hitMarker.Name = "AircraftHit"
-            hitMarker.AnchorPoint = Vector2.new(0.5, 0)
-            hitMarker.Size = UDim2.fromOffset(180, 26)
-            hitMarker.BackgroundTransparency = 1
-            hitMarker.Text = "AIRCRAFT HIT"
-            hitMarker.TextSize = 20
-            hitMarker.Font = Enum.Font.GothamBold
-            hitMarker.TextColor3 = Color3.fromRGB(255, 215, 80)
-            hitMarker.TextStrokeTransparency = 0
-            hitMarker.Visible = false
-            hitMarker.Parent = gui
             local fireButton = Instance.new("TextButton")
             fireButton.Name = "Fire"
             fireButton.AnchorPoint = Vector2.new(1, 1)
@@ -239,9 +227,7 @@ function GroundCombatController.new(
             local round = -1
             local nextAttempt = 0
             local lastShot: string? = nil
-            local lastRocketImpact: string? = nil
             local feedbackUntil = 0
-            local hitUntil = 0
             local shotUntil = 0
             local function clearTool()
                 held = false
@@ -477,8 +463,8 @@ function GroundCombatController.new(
                         sequence = 0
                         launcherSequence = 0
                         held = false
-                        hitUntil, shotUntil, feedbackUntil, nextAttempt = 0, 0, 0, 0
-                        lastShot, lastRocketImpact = nil, nil
+                        shotUntil, feedbackUntil, nextAttempt = 0, 0, 0
+                        lastShot = nil
                     end
                     local character = player.Character
                     local tool = if character
@@ -589,7 +575,6 @@ function GroundCombatController.new(
                         projectionOrigin.AbsolutePosition
                     )
                     reticle.Position = offset
-                    hitMarker.Position = offset + UDim2.fromOffset(0, 18)
                     local now = os.clock()
                     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
                     local shot = if aircraftState then aircraftState:GetAttribute("GroundShot") else nil
@@ -605,33 +590,7 @@ function GroundCombatController.new(
                             and value.roundId == round
                         then
                             shotUntil = now + 0.2
-                            if value.aircraftHit == true then
-                                hitUntil = now + 1.2
-                                hitMarker.Text = "AIRCRAFT HIT"
-                            end
                         end
-                    end
-                    local impact = if launcherState then launcherState:GetAttribute("LastImpact") else nil
-                    if type(impact) == "string" and impact ~= lastRocketImpact then
-                        lastRocketImpact = impact
-                        gui:SetAttribute("LastRocketImpact", impact)
-                        local parsed, value = pcall(function()
-                            return HttpService:JSONDecode(impact)
-                        end)
-                        if
-                            parsed
-                            and type(value) == "table"
-                            and value.userId == player.UserId
-                            and value.roundId == round
-                            and value.aircraftHit == true
-                        then
-                            hitUntil = now + 1.2
-                            hitMarker.Text = "ROCKET HIT"
-                        end
-                    end
-                    hitMarker.Visible = not touch and now < hitUntil
-                    if touch and now < hitUntil then
-                        label.Text ..= " • HIT"
                     end
                     reticle.TextColor3 = if now < shotUntil
                         then Color3.fromRGB(255, 205, 55)

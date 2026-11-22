@@ -554,12 +554,13 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundIndoorCamera")
-    expected_scripts |= {f"StarterPlayer/StarterPlayerScripts/Client/{name}" for name in ("PresentationEffects", "SpectatorCamera")}
+    expected_scripts |= {f"StarterPlayer/StarterPlayerScripts/Client/{name}" for name in ("PresentationEffects", "SpectatorCamera", "WeaponAudio")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts.add("ReplicatedStorage/Shared/GroundCameraRules")
     expected_scripts.add("ReplicatedStorage/Shared/PlayerPresentation")
+    expected_scripts.add("ReplicatedStorage/Shared/WeaponSoundRules")
     expected_scripts.add("ReplicatedStorage/Shared/AssetMaterial")
     expected_scripts.add("ReplicatedStorage/Shared/AssetMesh")
     expected_scripts |= {f"ReplicatedStorage/Shared/{name}" for name in ("Config", "Validation", "RateLimit", "Lifecycle", "MapRules", "BuildingLayout")}

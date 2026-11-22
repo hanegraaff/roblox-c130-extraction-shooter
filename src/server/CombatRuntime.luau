@@ -20,6 +20,7 @@ local DamageRules = require(script.Parent.DamageRules)
 local DestructionRuntime = require(script.Parent.DestructionRuntime)
 local DestructionService = require(script.Parent.DestructionService)
 local CombatRuntime = {}
+local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
 
 -- Impact is a server-resolved direct collision observation, never client authority.
 -- panelId is nil for terrain/players or unregistered solids. Observers must not
@@ -104,6 +105,7 @@ end
 -- Optional monotonic clock and heartbeat are injected boundaries; production defaults
 -- use synchronized server seconds and RunService.Heartbeat. Caller owns the signal.
 -- GameRuntime sets externallyStepped and owns both steps and final cover flush.
+-- Optional emitSound relays cosmetic feedback after accepted fire and impact.
 function CombatRuntime.start(
     match: MatchService.Controller,
     aircraft: AircraftService.Controller,
@@ -111,7 +113,8 @@ function CombatRuntime.start(
     clock: (() -> number)?,
     heartbeat: RBXScriptSignal?,
     structure: DestructionRuntime.Controller?,
-    externallyStepped: boolean?
+    externallyStepped: boolean?,
+    emitSound: WeaponSoundRules.Emit?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("FireWeapon") then
@@ -298,6 +301,15 @@ function CombatRuntime.start(
         projectile.marker.Transparency = 0.2
         Debris:AddItem(projectile.marker, 0.35)
         outcome(projectile, panelId)
+        if emitSound then
+            emitSound(
+                if projectile.shot.weapon == "M102" then "HeavyImpact" else "LightImpact",
+                state.roundId,
+                position,
+                time,
+                nil
+            )
+        end
         emit({
             roundId = state.roundId,
             shotId = projectile.shot.shotId,
@@ -358,6 +370,15 @@ function CombatRuntime.start(
             -- exact nine-second burst can therefore complete after release.
             lastAcceptedAt = time
             lastAcceptedShotId = shot.shotId
+            if emitSound then
+                emitSound(
+                    if shot.weapon == "M102" then "M102" else "GAU23",
+                    shot.roundId,
+                    muzzle,
+                    time,
+                    player.UserId
+                )
+            end
             local target = Vector3.new(shot.x, shot.y, shot.z)
             local delta = target - muzzle
             local visual = Instance.new("Part")

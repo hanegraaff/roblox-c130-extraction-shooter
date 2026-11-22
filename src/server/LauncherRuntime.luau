@@ -20,6 +20,7 @@ local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
 local LauncherService = require(script.Parent.LauncherService)
 local Geometry = require(script.Parent.LauncherGeometry)
 local LauncherRuntime = {}
+local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
 export type Controller = {
     stop: () -> (),
     snapshot: () -> LauncherService.Snapshot,
@@ -53,7 +54,8 @@ end
 function LauncherRuntime.start(
     match: MatchService.Controller,
     ground: GroundCombatRuntime.Controller,
-    externallyStepped: boolean?
+    externallyStepped: boolean?,
+    emitSound: WeaponSoundRules.Emit?
 ): (Controller?, string?)
     if ReplicatedStorage:FindFirstChild("LauncherState") then
         return nil, "launcher already owned"
@@ -198,7 +200,20 @@ function LauncherRuntime.start(
         part.Size = Vector3.new(0.4, 0.4, 2)
         part.Anchored, part.CanCollide, part.CanQuery, part.CanTouch = true, false, false, false
         part.Material, part.Color = Enum.Material.Neon, Color3.fromRGB(255, 168, 50)
+        local left, right = Instance.new("Attachment"), Instance.new("Attachment")
+        left.Position, right.Position = Vector3.new(-0.18, 0, 0.5), Vector3.new(0.18, 0, 0.5)
+        left.Parent, right.Parent = part, part
+        local trail = Instance.new("Trail")
+        trail.Name = "Exhaust"
+        trail.Attachment0, trail.Attachment1 = left, right
+        trail.Color = ColorSequence.new(Color3.fromRGB(255, 195, 121), Color3.fromRGB(104, 103, 102))
+        trail.Transparency = NumberSequence.new(0.25, 1)
+        trail.Lifetime, trail.MinLength = 0.32, 0.05
+        trail.Parent = part
         part.CFrame, part.Parent = CFrame.lookAt(origin, origin + direction), effects
+        if emitSound then
+            emitSound("RocketLaunch", match.snapshot().roundId, origin, now, player.UserId)
+        end
         table.insert(flights, {
             roundId = match.snapshot().roundId,
             shotId = shotId,
@@ -320,6 +335,9 @@ function LauncherRuntime.start(
                     )
                 end
                 if collision then
+                    if emitSound then
+                        emitSound("RocketImpact", flight.roundId, collision, endTime, nil)
+                    end
                     state:SetAttribute(
                         "LastImpact",
                         HttpService:JSONEncode({
