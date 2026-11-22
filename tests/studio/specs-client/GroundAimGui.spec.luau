@@ -194,6 +194,7 @@ return function()
         local runService = game:GetService("RunService")
         local controller = require(player.PlayerScripts.Client.GroundCombatController)
         local gui = Instance.new("ScreenGui")
+        gui.ResetOnSpawn = false
         gui.Name, gui.IgnoreGuiInset, gui.Parent = "GroundReadinessProbe", true, player.PlayerGui
         local viewport = Instance.new("Frame")
         viewport.BackgroundTransparency, viewport.Parent = 1, gui
@@ -368,11 +369,17 @@ return function()
             end
             local function child(parent: Instance, name: string): GuiObject
                 local item = parent:FindFirstChild(name)
-                assert(item and item:IsA("GuiObject"), "production GUI item missing: " .. name)
+                assert(
+                    item and item:IsA("GuiObject"),
+                    "production GUI item missing: " .. name .. " under " .. parent:GetFullName()
+                )
                 return item
             end
             local function copyScreen(source: ScreenGui, name: string): (ScreenGui, Frame)
                 local gui = Instance.new("ScreenGui")
+                -- These copies model the production HUD across real avatar
+                -- loads, including while P03 deploys before smoke ends.
+                gui.ResetOnSpawn = false
                 gui.Name, gui.IgnoreGuiInset, gui.ScreenInsets =
                     name, source.IgnoreGuiInset, source.ScreenInsets
                 gui.ClipToDeviceSafeArea, gui.Parent = source.ClipToDeviceSafeArea, player.PlayerGui
