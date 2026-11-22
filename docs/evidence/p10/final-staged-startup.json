@@ -1,0 +1,37 @@
+{
+  "testedCommit": "4442717370a5a2567ae2c1698b3ea1e7c4dea280",
+  "reason": "Studio AddPlayers staged both additional requests but only three actual clients connected before timeout",
+  "report": {
+    "initialIds": [],
+    "skipped": 0,
+    "smoke": {
+      "clients": [],
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 191,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 191,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    "passed": 0,
+    "cases": [
+      {
+        "name": "Four actual clients connected",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.PlayerExperienceHarness:98: P10 timeout: four actual clients"
+      }
+    ],
+    "observations": [],
+    "finalClients": 3,
+    "environment": "Studio",
+    "discovered": 1,
+    "suite": "P10-multiplayer",
+    "failed": 1,
+    "mode": "sdk"
+  }
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "view": "Waiting",
+    "combat": false,
+    "aircraft": 300,
+    "state": "Lobby",
+    "hud": "WAITING FOR PLAYERS\nWaiting for 2 players",
+    "priorRole": "Ground",
+    "ownCamera": true,
+    "sounds": {
+      "RoundCueSound": {
+        "id": "rbxasset://sounds/volume_slider.ogg",
+        "length": 0.8454166666666667,
+        "loaded": true,
+        "volume": 0.2800000011920929
+      },
+      "RoundDestructionSound": {
+        "id": "rbxasset://sounds/impact_explosion_03.mp3",
+        "length": 2.5861224489795918,
+        "loaded": true,
+        "volume": 0.3199999928474426
+      }
+    },
+    "round": 1,
+    "thermal": false,
+    "camera": "Enum.CameraType.Custom"
+  },
+  {
+    "view": "Waiting",
+    "combat": false,
+    "aircraft": 300,
+    "state": "Lobby",
+    "hud": "WAITING FOR PLAYERS\nWaiting for 2 players",
+    "priorRole": "Operator",
+    "ownCamera": true,
+    "sounds": {
+      "RoundCueSound": {
+        "id": "rbxasset://sounds/volume_slider.ogg",
+        "length": 0.8454166666666667,
+        "loaded": true,
+        "volume": 0.12999999523162842
+      },
+      "RoundDestructionSound": {
+        "id": "rbxasset://sounds/impact_explosion_03.mp3",
+        "length": 2.5861224489795918,
+        "loaded": true,
+        "volume": 0.3199999928474426
+      }
+    },
+    "round": 1,
+    "thermal": false,
+    "camera": "Enum.CameraType.Custom"
+  }
+]

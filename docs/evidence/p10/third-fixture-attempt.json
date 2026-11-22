@@ -1,0 +1,242 @@
+{
+  "initialIds": [
+    -1,
+    -2,
+    -3,
+    -4
+  ],
+  "skipped": 0,
+  "smoke": {
+    "clients": {
+      "-4": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -4,
+        "discovered": 13,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 13
+      },
+      "-2": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -2,
+        "discovered": 13,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 13
+      },
+      "-1": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -1,
+        "discovered": 13,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 13
+      },
+      "-3": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -3,
+        "discovered": 13,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 13
+      }
+    },
+    "server": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 191,
+      "clientCount": 4,
+      "seed": 1,
+      "discovered": 191,
+      "suite": "P01-server",
+      "failed": 0,
+      "environment": "Studio"
+    }
+  },
+  "passed": 4,
+  "cases": [
+    {
+      "passed": true,
+      "name": "Four actual clients connected"
+    },
+    {
+      "passed": true,
+      "name": "Native smoke, lobby view and role assignment"
+    },
+    {
+      "name": "Role HUD, shared readiness and both acknowledged weapon views",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.PlayerExperienceHarness:160: VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key."
+    },
+    {
+      "passed": true,
+      "name": "Keyboard help/settings and muted visual warning preserve authority"
+    },
+    {
+      "name": "Elimination cycles only living teammates and rejects action",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.PlayerExperienceHarness:319: spectator selected a weapon or gained a character"
+    },
+    {
+      "name": "No living target yields neutral result, then restores all local cameras",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.PlayerExperienceHarness:328: P10 timeout: ground elimination result"
+    },
+    {
+      "name": "Destruction result and steady view remain visible with both settings off",
+      "passed": false,
+      "detail": "ServerScriptService.ServerTests.PlayerExperienceHarness:342: could not deploy the replay round"
+    },
+    {
+      "passed": true,
+      "name": "Runtime teardown removes HUD, camera subjects and fixture owners"
+    }
+  ],
+  "observations": [
+    {
+      "view": "Waiting",
+      "action": "View",
+      "fov": 70,
+      "viewport": [
+        1081,
+        618
+      ],
+      "userId": -1,
+      "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+    },
+    {
+      "view": "Waiting",
+      "action": "View",
+      "fov": 70,
+      "viewport": [
+        1153,
+        618
+      ],
+      "userId": -2,
+      "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+    },
+    {
+      "view": "Waiting",
+      "action": "View",
+      "fov": 70,
+      "viewport": [
+        1081,
+        618
+      ],
+      "userId": -3,
+      "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+    },
+    {
+      "view": "Waiting",
+      "action": "View",
+      "fov": 70,
+      "viewport": [
+        1081,
+        618
+      ],
+      "userId": -4,
+      "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+    },
+    {
+      "shake": "Off",
+      "action": "HelpAndSettings",
+      "userId": -3,
+      "effects": "Off"
+    },
+    {
+      "action": "Cue",
+      "cue": "INCOMING GUNSHIP FIRE",
+      "userId": -3,
+      "effects": "Off"
+    },
+    {
+      "view": "Spectator",
+      "targetId": -3,
+      "fov": 70,
+      "viewport": [
+        1081,
+        618
+      ],
+      "action": "View",
+      "userId": -4,
+      "timerOrResult": "ELIMINATED • SPECTATING\n2:00 remaining • 2 Ground alive"
+    },
+    {
+      "view": "Spectator",
+      "targetId": -2,
+      "fov": 70,
+      "viewport": [
+        1081,
+        618
+      ],
+      "action": "NextTarget",
+      "userId": -4,
+      "timerOrResult": "ELIMINATED • SPECTATING\n2:00 remaining • 2 Ground alive"
+    },
+    {
+      "view": "Spectator",
+      "targetId": -3,
+      "fov": 70,
+      "viewport": [
+        1081,
+        618
+      ],
+      "action": "PreviousTarget",
+      "userId": -4,
+      "timerOrResult": "ELIMINATED • SPECTATING\n2:00 remaining • 2 Ground alive"
+    },
+    {
+      "sent": "LauncherState/Pickup",
+      "userId": -4,
+      "action": "LauncherState/Pickup"
+    },
+    {
+      "sent": "AircraftState/SelectWeapon",
+      "userId": -4,
+      "action": "AircraftState/SelectWeapon"
+    },
+    {
+      "sent": "AircraftState/GroundFire",
+      "userId": -4,
+      "action": "AircraftState/GroundFire"
+    },
+    {
+      "removed": true,
+      "userId": -1,
+      "action": "NoHud"
+    },
+    {
+      "removed": true,
+      "userId": -2,
+      "action": "NoHud"
+    },
+    {
+      "removed": true,
+      "userId": -3,
+      "action": "NoHud"
+    },
+    {
+      "removed": true,
+      "userId": -4,
+      "action": "NoHud"
+    }
+  ],
+  "finalClients": 4,
+  "environment": "Studio",
+  "discovered": 8,
+  "suite": "P10-multiplayer",
+  "failed": 4,
+  "mode": "sdk"
+}

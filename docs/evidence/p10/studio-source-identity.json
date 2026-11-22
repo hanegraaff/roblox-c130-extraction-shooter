@@ -1,0 +1,59 @@
+{
+  "studio": {
+    "version": "0.748.0.7481526",
+    "document": "tests.rbxlx",
+    "studioId": "73cf3128-b457-4bef-b2ea-8eaf9c90aa1c",
+    "placeId": 0,
+    "gameId": 0,
+    "rojoProject": "PlayersVsC130Tests",
+    "rojoLoopback": "127.0.0.1:34872",
+    "method": "Compare class, full DataModel path and SHA-256 of exact Luau Source bytes between Rojo XML and Studio Edit"
+  },
+  "runs": [
+    {
+      "commit": "fdf2e55c881ef36150a6d2305d024c28a512511e",
+      "tree": "cfb7d280039b67ba9f37b9a4dbd572667fd20551",
+      "testBuildSha256": "17e1b3eb1c7fbb67828e03e73d6be35faa53670805e9d959e75656b19926aca3",
+      "sourcesCompared": 151,
+      "sourcesMatching": 151,
+      "mismatches": [],
+      "unexpectedScripts": []
+    },
+    {
+      "commit": "866d2ec6146d5abf559b116b1f1e1b9512afb5a5",
+      "tree": "23059f0c4f50397a2dcdae77e8f57c92fa057d51",
+      "testBuildSha256": "8aecde3b3f82abda25da1b614d4b277244edda7689db772f2fc8c3a388714d3a",
+      "sourcesCompared": 151,
+      "sourcesMatching": 151,
+      "mismatches": [],
+      "unexpectedScripts": []
+    },
+    {
+      "commit": "61c63c95dba705a90b0e66b42858bf3780db5558",
+      "tree": "8352f82aba74f681b4fd1227298c53f2506a8d77",
+      "testBuildSha256": "a3dd1bb86f80c1c7a2d2500174f95816fa69350334401c60b2052746242682d5",
+      "sourcesCompared": 151,
+      "sourcesMatching": 151,
+      "mismatches": [],
+      "unexpectedScripts": []
+    },
+    {
+      "commit": "23bf7ba2bcda17dc45b68b610d2f3628e8e94249",
+      "tree": "97b7f6edc3640a4e1d012b8a38c2509653c3490c",
+      "testBuildSha256": "722a81d5c11431eaa36ec062b0334d78a129eb9113c73c3910d1a5c9b639c912",
+      "sourcesCompared": 151,
+      "sourcesMatching": 151,
+      "mismatches": [],
+      "unexpectedScripts": []
+    },
+    {
+      "commit": "4442717370a5a2567ae2c1698b3ea1e7c4dea280",
+      "tree": "154cb4eb72b635a9bf2feace3f75d25cd7db3832",
+      "testBuildSha256": "0d275d43178685da9fb2d70b1477a96859c09c9cd9919f8a7db85c36358f3793",
+      "sourcesCompared": 151,
+      "sourcesMatching": 151,
+      "mismatches": [],
+      "unexpectedScripts": []
+    }
+  ]
+}

@@ -56,7 +56,7 @@ Each aircraft weapon retains its own cadence/cooldown/reload state across switch
 
 Define an integer `rocketDamage` and derive `aircraftMaxHealth = 3 * rocketDamage`. A direct rocket impact applies that full damage once, without falloff or a second splash award to the same aircraft. With no other damage, the first two hits leave positive health and the third reaches zero. M-7 hits apply a small positive `rifleDamage`; mixed rifle/rocket damage can destroy the plane sooner. Do not add regeneration, armor modifiers or critical hits that invalidate the three-rocket guarantee. Misses and near-miss splash do not count as direct rocket hits.
 
-At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-team win through MatchService in that step. Cancel outstanding damage work and freeze the orbit. The entire ground team receives the win, including eliminated teammates. Cosmetic destruction belongs to the P10 presentation work. [Player guidance and presentation](plans/10-player-experience.md)
+At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-team win through MatchService in that step. Cancel outstanding damage work and freeze the orbit. The entire ground team receives the win, including eliminated teammates. The results view shows an aircraft destruction cue and optional local audiovisual effects. [Combat presentation and spectating](plans/10-player-experience.md)
 
 ## Single rocket-launcher lifecycle
 
@@ -142,6 +142,17 @@ shared three/six-heavy-hit, persistent 30mm, real-opening and safe-fragment rule
 Floors, stairs and supports stay stable. Its authored room bounds support closer
 Ground camera framing and restore prior zoom at exit. [Outpost integration and review](plans/17-integrate-military-outpost.md)
 
-Ground HUD shows health, M-7/launcher availability and ammo/reload, shared aircraft health, launcher available/carried state, surviving teammates and time. Operator HUD shows selected named weapon, its zoom/cooldown, aircraft health, surviving opponents and time. Both show clear team win/loss/forfeit reasons. Labels/icons supplement color and visual cues supplement important sounds; provide effect/camera-shake controls.
+On desktop, the Ground HUD shows personal health, the equipped M-7 or
+launcher's ammunition and readiness, aircraft health, launcher status,
+surviving teammates and time. The operator HUD shows the selected named
+weapon, zoom and readiness, aircraft health, surviving opponents and time.
+Both see the winner and reason. The role guide explains objectives and current
+inputs. Spectators can cycle among living Ground targets and fall back to a
+battlefield overview when no eligible target remains.
+
+Text identifies warnings, impacts and results alongside optional audio and
+motion. Desktop settings adjust effect intensity and aircraft destruction
+shake. The shake is confined to Results. The local options carry through
+the current play session. [Presentation defaults](docs/decisions.md)
 
 MVP readiness also requires walking every authored floor of all three buildings on the expanded terrain, panning across the full battlefield at both weapon zooms, demonstrating the six-heavy-hit and nine-second 30mm panel rules, real damaged-state openings, bounded physical debris and repeated pristine reconstruction. MVP readiness requires complete 6- and 10-player rounds for aircraft destruction, ground elimination and timeout; correct launcher recovery and weapon switching; rejection of invalid input; repeated clean resets; and readable counterplay. Automated checks prove rules, while operated multiplayer sessions assess feel, balance and performance.

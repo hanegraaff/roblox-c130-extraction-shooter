@@ -8,6 +8,14 @@ Follow the [run and restart procedure](../../../docs/testing.md#run-the-studio-s
 
 After TestEZ passes, `RoundHarness.run()` starts the actual GameRuntime. Without automation args it starts the human test session (default next duration: 60 seconds, explicit start, solo previews). With StudioTestService args `{ kind = "P03" }`, it drives the three-round multiplayer scenario and returns structured evidence through `EndTest`. Its test transport and shortened settings never enter release artifacts. See the [harness instructions](../../../docs/testing.md#run-the-p03-multiplayer-harness) for required actual clients and reports.
 
+P10 selects `PlayerExperienceHarness.run()` through SDK args
+`{ kind = "P10" }` or the local Edit `ManualHarness` selector. It requires
+four actual clients and waits for their individual smoke reports before
+deploying. It validates role and weapon feedback, keyboard settings,
+teammate cycling and rejection, result overview, replay and teardown. The SDK
+returns its report through `EndTest`. Manual mode publishes
+`Workspace.ManualP10Report` for collection before ending the session. [Player experience harness](../../../docs/testing.md#run-the-player-experience-harness)
+
 `CharacterCleanup.run()` supplies the final harness regression: stop actual avatar loads while pending, assert truthful task accounting and ownership rejection, wait for drain, then acquire/stop a fresh owner. It checks automatic spawning restoration and lease/listener cleanup using real engine loads.
 
 `LocalTestControls.start(rounds)` runs only in ordinary Studio test sessions after GameRuntime starts. One client automatically previews the battlefield after its body is ready, retaining Waiting/Lobby and a clear preview label. ServerStorage BindableFunctions `LocalTestControls.ExploreMap` and `ReturnToLobby` offer explicit navigation; they reject wrong phases, unavailable characters and non-solo preview. A heartbeat contains preview movement to the disk; cleanup disconnects it, clears the preview marker and destroys the functions. No client remote or test role override exists.

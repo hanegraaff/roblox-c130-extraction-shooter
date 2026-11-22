@@ -25,11 +25,13 @@ Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scrip
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The P09 mapping contains **66 unit and 73 integration cases**, including conflict ordering, single result credit and stale-event rejection. Production modules run behind deterministic boundaries. Actual collision, rigid-body contact, traversal and multiplayer replication have separate Studio gates. [P09 evidence record](../plans/09-match-outcomes.md)
+The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The P10 mapping contains **79 unit and 73 integration cases**. The presentation cases cover roles and phases, aircraft health, elimination, target cycling and empty recovery, settings, readiness, rejection text and result reason. `WeaponSoundRules.spec.luau` checks immediate local muzzle playback, delayed distant fire and rejection of stale or out-of-range cues. Existing service cases cover conflict ordering, single result credit and stale-event rejection. The verifier also runs **15 tooling checks and 48 asset regression checks**. Actual collision, rigid-body contact, traversal and multiplayer replication have separate Studio gates. [P10 record](../plans/10-player-experience.md), [P09 record](../plans/09-match-outcomes.md)
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds: twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The revised artifact contract includes the manifest terrain recipe, three formal footprints/stairs and all registered panels, including the starting shelter. The managed P17 build has **2,804 authored Parts** across source world/templates, **53 runtime scripts**, **5,301 release Instances** and **5,400 test Instances**. Artifact inspection requires all four managed P17 modules in the test build and rejects any that appear in the release build. The base world retains 403 Battlefield Parts/187 primitive panels, while runtime Outpost installation produces 188 active panels. Earlier 422-part/187-panel and 353-part/111-panel artifact counts retain their original source scope. `Position`/`Orientation` aliases in source or serialized output reject. Five disposable corruptions must fail the production geometry checker: a pose alias, wrong pose, wrong size, NaN pose component and missing CFrame. These expected rejections are artifact probes, separate from Luau suite counts. A separate building-surface guard checks visible-part pairs in the current source for exposed coplanar faces, allowing ordinary edge/contact joins and intersections hidden inside opaque supports. Three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel; these are also artifact probes, not extra Luau cases.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds, checking twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The artifact contract includes the manifest terrain recipe, three formal footprints and stairs, and all registered panels including the starting shelter. The P10 build has **2,804 authored Parts** across source world and templates, **58 runtime scripts**, **5,306 release Instances** and **5,413 test Instances**. Artifact inspection requires the four P17 and three P10 fixture modules in the test build and rejects them in the release build. The base world retains 403 Battlefield Parts and 187 primitive panels, while runtime Outpost installation produces 188 active panels.
+
+Five deliberate corruptions check rejection of a pose alias, wrong pose, wrong size, nonfinite pose component and missing CFrame. A separate building-surface guard checks visible-part pairs for exposed coplanar faces. It allows ordinary edge/contact joins and intersections hidden inside opaque supports. Its three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel. These are artifact probes outside Luau suite totals.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
@@ -289,9 +291,9 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The P09 mapping expects **191 server cases and 12 per actual client**. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
-6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one round HUD after round startup, with no leftover `EntrypointStatus` or `EntrypointPanel`. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
-7. In the separate development document, Play and confirm **Development** / **Bootstrap running**, a protected lobby character and a round panel waiting for six players. The test build reads **Test** and waits for two after its suites. Review actual viewport readability and Output, then stop when finished.
+5. The P10 mapping expects **191 server cases and 13 per actual client**. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
+6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one visible round HUD after startup. The round HUD hides the locally owned bootstrap panel after startup. Check for leftover `EntrypointStatus` or `EntrypointPanel` Instances. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
+7. In the separate development document, Play and confirm a protected lobby character and a round panel waiting for six players. **Development** appears on the bootstrap panel before the round HUD takes over. The test build shows **Test** at bootstrap and then opens solo preview or offers an explicit start at two actual clients. Review actual viewport readability and Output, then stop when finished.
 
 The P08 aggregate includes launcher geometry/reload lifecycle and owned-character removal alongside panel/appearance, persistent-credit, shelter-geometry and shared host cases. A passing one-client baseline establishes only those assertions, not P07's required two-client/reset or operated checks. Foundation checks cover bootstrap ownership and the anchored spawn raycast. [`Map.spec.luau`](../tests/studio/specs-server/Map.spec.luau) exercises actual `MapService` with disposable Instance fixtures:
 
@@ -301,7 +303,7 @@ The P08 aggregate includes launcher geometry/reload lifecycle and owned-characte
 - Correct exterior/below-threshold characters, preserve legal disk/station positions, and disconnect containment on stop.
 - Rebuild twice after removed cover and transient debris; compare descendant counts, stable part names and poses, then exercise idempotent destruction.
 
-The client suite covers camera input, material metadata, thermal-cosmetic behavior and Ground aim layout. The layout case constructs production RoundPanel and GroundCombatController in distinct ScreenGuis with measured origins/insets, then checks actual HUD rectangle separation/containment at desktop and phone sizes. Source `ef7826b` aligns the compact active-Ground touch header in shared GUI-content coordinates and tests client-only presentation state representing confirmed rifle/rocket feedback, text fit, native inventory/thumbstick reserves, centered aim, actionable controls and cleanup. Touch confirmed hits append HIT to readiness; desktop keeps floating hit text. These fixtures do not establish native touch input or prove actual CoreGui placement; inspect native inventory independently because Studio captures omit it. `PointerGui.spec.luau` calls the production default-input adapter against actual normal/full-bleed GUI buttons and an actual focused TextBox, verifies window-focus blocking and unchanged raw pointer coordinates, then releases focus and destroys its fixtures. `ClientTests.PointerGuiInset` records the observed inset. GroundAimGui checks rifle reticle/ray agreement and touch layout. Prior reports are source-specific; each new multiplayer session needs fresh reports. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
+The client suite covers camera input, material metadata, thermal-cosmetic behavior and Ground aim layout. The layout case constructs production RoundPanel and GroundCombatController in distinct ScreenGuis with measured origins/insets, then checks actual HUD rectangle separation/containment at desktop and phone sizes. Source `ef7826b` aligns the compact active-Ground touch header in shared GUI-content coordinates and tests client-only presentation state representing confirmed rifle/rocket feedback, text fit, native inventory/thumbstick reserves, centered aim, actionable controls and cleanup. The current layout fixture exercises the shared aircraft health bar at several damage levels and verifies that the old hit overlays are absent. These fixtures do not establish native touch input or prove actual CoreGui placement; inspect native inventory independently because Studio captures omit it. `PointerGui.spec.luau` calls the production default-input adapter against actual normal/full-bleed GUI buttons and an actual focused TextBox, verifies window-focus blocking and unchanged raw pointer coordinates, then releases focus and destroys its fixtures. `ClientTests.PointerGuiInset` records the observed inset. GroundAimGui checks rifle reticle/ray agreement and touch layout. Prior reports are source-specific; each new multiplayer session needs fresh reports. It does not prove round replication, no-respawn behavior or spectator cameras; the separate multiplayer harness below targets those. Prior P02 map/walking evidence is recorded in its plan. A new geometry candidate still needs engine checks; host success cannot satisfy them. The 4×6×4-stud clearance fixture and the operated R15 avatar are separate evidence, not proof for all avatar proportions or accessories.
 
 ### Preserve Edit state around a zero-client Run
 
@@ -371,6 +373,64 @@ For native Studio **Server & Clients**, set the temporary `ManualHarness = "P09"
 Check each report's scenario, actual distinct client IDs, final client count, cases, observations and cleanup before recording a pass. Preserve failed launches and legitimate timing failures separately. The exact deadline and same-step damage ordering have an injected-clock native spherecast fixture in the ordinary server suite. Deterministic service tests cover same-identity reconnect authority under D59. [Native outcome fixture](../tests/studio/specs-server/MatchOutcome.spec.luau), [P09 evidence record](../plans/09-match-outcomes.md)
 
 Review the experience in an ordinary multiplayer test session or observe the active harness clients through Results and into the lobby. Check winning-team and reason text, equipment restoration, and return from the operator or spectator camera. Record the actual viewport and any controlled fixture positions. Keep operated observations distinct from automated case totals.
+
+## Run the player experience harness
+
+Use the confirmed local `tests.rbxlx` document in Edit mode, synced through
+Rojo to **PlayersVsC130Tests** on port **34872**. Confirm the source commit and
+build before starting. The P10 harness needs four actual clients so one
+eliminated Ground player can cycle between two living teammates while the
+operator remains active. The fixture waits in the lobby for the clients'
+ordinary TestEZ reports before deploying.
+
+Start the SDK run asynchronously from the Studio Edit context.
+
+```luau
+local reportKey = "P10LastReport"
+assert(not game:GetService("RunService"):IsRunning())
+assert(game.PlaceId == 0 and game.GameId == 0)
+assert(workspace:GetAttribute(reportKey) == nil)
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(4, { kind = "P10" })
+    workspace:SetAttribute(reportKey, game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P10 started"
+```
+
+During the run, `Workspace.P10Stage` names the current server case. The
+SDK returns `P10LastReport` to Edit after session teardown. For the native
+**Server & Clients** route, set `ManualHarness = "P10"` on the local Edit
+document's `ServerStorage.DevelopmentSettings`, then start **4 clients**.
+Read `Workspace.ManualP10Report` in the Server context before **End Session**.
+Preserve reports, then clear the temporary SDK attribute or restore the
+manual selector in Edit before subsequent sessions.
+
+Require eight discovered and passing harness cases, four distinct initial
+client IDs and a final count of four, clean smoke totals of **191
+server cases and 13 per actual client**, and zero reported skips, failures
+or errors. Record source and Studio version, observations, and cleanup. The
+test-only client uses Studio virtual keyboard input for production actions
+and samples real GUI and camera Instances. The harness checks the role HUD,
+weapon zoom and readiness, known rejected reload, spectator selection and
+authority, settings and warning text, result views and reset cleanup. Its
+controlled warning and aircraft-destruction fixtures exercise presentation
+from authoritative facts. The P09 harness separately exercises the actual
+match-ending projectile and competitive result loop. [Client harness](../tests/studio/client/PlayerExperienceHarness.luau), [server harness](../tests/studio/server/PlayerExperienceHarness.luau), [P10 plan](../plans/10-player-experience.md)
+
+Use live desktop Studio viewports of **1280×720** and **1920×1080** for layout
+evidence. In a rendering Client DataModel, select the **HD 720** or
+**HD 1080** simulator preset with **Actual Resolution** scaling. Verify the
+client's `workspace.CurrentCamera.ViewportSize`, since the simulator setting
+and the rendered viewport can differ. Restore default simulation when done.
+Inspect readable, bounded HUD rows, weapon controls and the Settings menu.
+Use a live round to compare aircraft health and fill on both clients after
+server-confirmed hits. Check the green full bar, red depleted bar and readable
+numeric or destroyed state. Fire both gunship weapons, the M-7 and the launcher.
+Record the loaded, playing positional cues and the difference between server
+emission and client playback time. Check the exhaust trail, warning text with
+effects off, and cleanup after Results and replay. Keep audio telemetry and
+listening observations separate. [Revision evidence](evidence/p10/combat-presentation-revision.json)
 
 ## Run the P05 gunship combat harness
 

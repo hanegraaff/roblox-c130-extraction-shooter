@@ -1,5 +1,5 @@
 --!strict
---[=[ Client entrypoint: waits at most ten seconds for server status, then owns one status panel. ]=]
+--[=[ Client entrypoint: boot status, session-local options and round presentation owners. ]=]
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StatusPanel = require(script.StatusPanel)
@@ -16,6 +16,7 @@ assert(ok, reason)
 script.Destroying:Connect(runtime.stop)
 -- The test mapping starts rounds after its foundation suites. Reattach when the
 -- explicit server owner is replaced rather than retaining a stale status Folder.
+local settings = RoundPanel.newSettings()
 local rounds: { stop: () -> () }? = nil
 local ground: { stop: () -> () }? = nil
 local stopIndoor: (() -> ())? = nil
@@ -43,7 +44,7 @@ local function attach(instance: Instance)
     local controller = GroundCombatController.new(Players.LocalPlayer, playerGui, instance)
     assert(controller.start(), "expected ground controller.start()")
     ground = controller
-    local panel = RoundPanel.new(Players.LocalPlayer, playerGui, instance)
+    local panel = RoundPanel.new(Players.LocalPlayer, playerGui, instance, nil, nil, settings)
     assert(panel.start(), "expected panel.start()")
     rounds = panel
     stopIndoor = GroundIndoorCamera.start(Players.LocalPlayer, instance)
