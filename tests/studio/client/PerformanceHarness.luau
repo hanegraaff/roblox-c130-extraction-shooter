@@ -10,6 +10,7 @@ local Stats = game:GetService("Stats")
 local Metrics = require(ReplicatedStorage.P11Metrics)
 local Harness = {}
 local player = Players.LocalPlayer
+local graphics = UserSettings():GetService("UserGameSettings")
 
 type Intent = { owner: string, remote: string, body: { [string]: unknown }, repetitions: number? }
 type Check = {
@@ -95,6 +96,8 @@ function Harness.run()
         local viewportStart: Vector2? = nil
         local viewportEnd: Vector2? = nil
         local viewportChanged = false
+        local graphicsStart = ""
+        local graphicsChanged = false
         local frameConnection: RBXScriptConnection? = nil
         local started = 0
         local profileRole: unknown
@@ -108,17 +111,29 @@ function Harness.run()
                     elseif action == "Memory" then
                         assert(Stats.MemoryTrackingEnabled, "client engine memory tracking disabled")
                         return Stats:GetTotalMemoryUsageMb()
+                    elseif action == "ProfileEnvironment" then
+                        local camera = workspace.CurrentCamera
+                        local size = if camera then camera.ViewportSize else Vector2.zero
+                        return { width = size.X, height = size.Y, graphics = graphics.SavedQualityLevel.Name }
                     elseif action == "ProfileStart" then
                         local camera = assert(workspace.CurrentCamera, "profile camera missing")
                         assert(not frameConnection, "client profiling already active")
                         local recorder = Metrics.frames()
                         frames = recorder
                         viewportStart, viewportEnd = camera.ViewportSize, camera.ViewportSize
-                        viewportChanged = false
+                        graphicsStart = graphics.SavedQualityLevel.Name
+                        assert(
+                            viewportStart == Vector2.new(Metrics.profile.width, Metrics.profile.height)
+                                and graphicsStart == Metrics.profile.graphics,
+                            "profile settings changed after preflight"
+                        )
+                        viewportChanged, graphicsChanged = false, false
                         profileRole = player:GetAttribute("Role")
                         started = os.clock()
                         frameConnection = RunService.PreRender:Connect(function(seconds)
                             recorder.record(seconds)
+                            graphicsChanged = graphicsChanged
+                                or graphics.SavedQualityLevel.Name ~= graphicsStart
                             local current = workspace.CurrentCamera
                             if current then
                                 viewportEnd = current.ViewportSize
@@ -140,7 +155,8 @@ function Harness.run()
                             width = viewportStart.X,
                             height = viewportStart.Y,
                             viewportChanged = viewportChanged,
-                            graphics = UserSettings():GetService("UserGameSettings").SavedQualityLevel.Name,
+                            graphics = graphicsStart,
+                            graphicsChanged = graphicsChanged,
                         }
                     elseif action ~= "Ping" then
                         error("unknown client fixture action: " .. action)

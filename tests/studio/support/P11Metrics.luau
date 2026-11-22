@@ -3,6 +3,8 @@
 -- It has no engine, clock or transport dependencies. Frame storage is a fixed-size
 -- histogram at 0.1 ms resolution; one percentile report never contains raw frames.
 local Metrics = {}
+-- P11 benchmark controls are pinned for both actual render clients.
+Metrics.profile = table.freeze({ width = 1920, height = 1080, graphics = "QualityLevel5" })
 local maximumBin = 2500
 local binsPerSecond = 10000
 

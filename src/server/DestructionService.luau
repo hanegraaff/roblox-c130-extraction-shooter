@@ -18,6 +18,9 @@ local Combat = (
     if script then require(script.Parent.CombatService) else loadPath("./CombatService")
 ) :: typeof(require(script.Parent.CombatService))
 local DestructionService = {}
+-- A missing frontier may retain this many later outcomes. Interruption
+-- boundaries can additionally include the frontier itself.
+DestructionService.outcomeWindow = 512
 DestructionService.gapSeconds = Combat.profiles.GAU23.cadence * 1.5
 -- Outcome identity and firedAt come exclusively from an accepted CombatService
 -- shot. A nil panelId means miss, obstruction, expiry or an unregistered solid.
@@ -81,7 +84,7 @@ function DestructionService.new(gapSeconds: number?): Controller
             afterShotId == afterShotId
                 and afterShotId % 1 == 0
                 and afterShotId >= 0
-                and afterShotId <= frontier + 512,
+                and afterShotId <= frontier + DestructionService.outcomeWindow,
             "invalid accepted-shot interruption boundary"
         )
         if afterShotId <= lastBarrier or afterShotId < frontier - 1 then
@@ -155,7 +158,7 @@ function DestructionService.new(gapSeconds: number?): Controller
                 or outcome.shotId ~= outcome.shotId
                 or outcome.shotId % 1 ~= 0
                 or outcome.shotId < frontier
-                or outcome.shotId > frontier + 512
+                or outcome.shotId > frontier + DestructionService.outcomeWindow
                 or pending[outcome.shotId]
             then
                 return false, "stale, duplicate or unbounded shot"

@@ -16,6 +16,7 @@ local LauncherRuntime = require(Server.LauncherRuntime)
 local GroundCombatService = require(Server.GroundCombatService)
 local AircraftHealth = require(Server.AircraftHealth)
 local CombatService = require(Server.CombatService)
+local DestructionService = require(Server.DestructionService)
 local PanelFragments = require(Server.PanelFragments)
 local Fixture = require(script.Parent.P11CombatFixture)
 local Metrics = require(ReplicatedStorage.P11Metrics)
@@ -32,7 +33,12 @@ type Case = { name: string, passed: boolean, detail: string? }
 type Payload = { [string]: unknown }
 type Ticket = { player: Player, result: unknown, ok: boolean? }
 type Counts = { [string]: number }
-type Crew = { operator: Player, ground: { Player }, roundId: number }
+type Crew = {
+    operator: Player,
+    ground: { Player },
+    roundId: number,
+    activeBodies: { [Player]: Model },
+}
 type Report = {
     suite: string,
     mode: Mode,
@@ -85,6 +91,7 @@ local function resources(runtime: GameRuntime.Controller): Counts
         panels = destruction.panels,
         fragments = destruction.fragments,
         pendingOutcomes = destruction.pending,
+        pendingBarriers = destruction.barriers,
         launcherQueue = launcher.queued,
         launcherQueuePeak = launcher.peakQueued,
         launcherRepresentations = launcher.representations,
@@ -99,11 +106,16 @@ local function resources(runtime: GameRuntime.Controller): Counts
     }
 end
 
--- Both asynchronous queues are checked at their enqueue high-water marks, not
--- just at later frames. Current effect/flight counts are sampled each probe tick.
+-- Rifle and launcher queues track enqueue high-water marks. Structural
+-- boundaries, effects and flights are sampled on each probe tick.
 local function checkBounds(counts: Counts)
     assert(counts.launcherQueuePeak <= LauncherRuntime.queueCapacity, "launcher queue exceeded capacity")
     assert(counts.rifleQueuePeak <= GroundCombatRuntime.queueCapacity, "rifle queue exceeded capacity")
+    assert(counts.pendingOutcomes <= DestructionService.outcomeWindow, "structural outcome window exceeded")
+    assert(
+        counts.pendingBarriers <= DestructionService.outcomeWindow + 1,
+        "structural barrier window exceeded"
+    )
     assert(counts.launcherRepresentations <= 1, "launcher representation duplicated")
     assert(counts.fragments <= PanelFragments.defaults.maximum, "fragment cap exceeded")
 end
@@ -329,7 +341,9 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
         local snapshot = match.snapshot()
         local operator: Player? = nil
         local ground = {}
+        local activeBodies: { [Player]: Model } = {}
         for _, player in roster do
+            activeBodies[player] = assert(player.Character, "deployed client has no character")
             local member = assert(snapshot.members[player.UserId], "actual client missing from roster")
             if member.role == "Gunship" then
                 assert(not operator, "duplicate operator")
@@ -340,14 +354,60 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             end
         end
         assert(operator and #ground == #roster - 1, "incomplete role assignment")
-        return { operator = operator, ground = ground, roundId = snapshot.roundId }
+        return {
+            operator = operator,
+            ground = ground,
+            roundId = snapshot.roundId,
+            activeBodies = activeBodies,
+        }
     end
-    local function waitLobby()
+
+    -- The round can publish Lobby before launching replacement avatars on the
+    -- next frame. Sample character generation, placement and zero load tasks
+    -- together so an intermediate Lobby cannot establish a misleading baseline.
+    local function waitLobby(previousBodies: { [Player]: Model }?)
         waitFor(function()
-            return match.snapshot().phase == "Lobby" and runtime.rounds.resources().spawnTasks == 0
-        end, "lobby and completed character loads", 15)
+            assertRoster()
+            if match.snapshot().phase ~= "Lobby" or runtime.rounds.resources().spawnTasks ~= 0 then
+                return false
+            end
+            local deck = workspace.World.Battlefield.LobbyStation:FindFirstChild("LobbyDeck")
+            if not deck or not deck:IsA("BasePart") then
+                return false
+            end
+            for _, player in roster do
+                local body = player.Character
+                if not body or body == (if previousBodies then previousBodies[player] else nil) then
+                    return false
+                end
+                local humanoid = body:FindFirstChildOfClass("Humanoid")
+                local root = body:FindFirstChild("HumanoidRootPart")
+                if
+                    player:GetAttribute("Role") ~= "Waiting"
+                    or not humanoid
+                    or humanoid.Health <= 0
+                    or not root
+                    or not root:IsA("BasePart")
+                    or root.Anchored
+                then
+                    return false
+                end
+                local offset = deck.CFrame:PointToObjectSpace(root.Position)
+                local half = deck.Size / 2
+                if
+                    math.abs(offset.X) > half.X
+                    or math.abs(offset.Z) > half.Z
+                    or offset.Y < half.Y
+                    or offset.Y > half.Y + 20
+                then
+                    return false
+                end
+            end
+            return true
+        end, "fresh mobile lobby characters on the protected deck with zero load tasks", 15)
     end
-    local function finishRound(roundId: number)
+    local function finishRound(crew: Crew)
+        local roundId = crew.roundId
         waitFor(function()
             return match.snapshot().phase == "Results"
         end, "competitive result", duration + 3)
@@ -361,7 +421,9 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             resultReason = "Timeout",
             winner = "Gunship",
         })
-        waitLobby()
+        waitFor(function()
+            return match.snapshot().phase == "Lobby"
+        end, "Lobby committed", 15)
         allClients("Check", {
             roundId = roundId,
             phase = "Lobby",
@@ -369,6 +431,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             launcherState = "Inactive",
             weapon = "GAU23",
         })
+        waitLobby(crew.activeBodies)
     end
     local function selectWeapon(crew: Crew, weapon: string, serial: number, copies: number?)
         send(crew.operator, {
@@ -510,7 +573,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             counts.launcherQueuePeak > 0 and counts.rifleQueuePeak > 0 and next(rendered),
             "workload did not reach production queues"
         )
-        finishRound(crew.roundId)
+        finishRound(crew)
         assertDrained(resources(runtime), baseline)
         assert(workspace.World.Battlefield ~= battlefield, "round did not restore map generation")
         for _, restored in Fixture.outpost() do
@@ -700,6 +763,40 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
         )
     end
 
+    -- Native Studio presents each actual client in a separate window. Wait
+    -- for operators to set the recorded graphics controls before any sampling.
+    local function awaitProfileEnvironment()
+        stage("Waiting for pinned viewport and graphics on actual clients")
+        local deadline = os.clock() + 40
+        local sampled: { [string]: unknown }
+        repeat
+            assertRoster()
+            sampled = allClients("ProfileEnvironment", nil)
+            observations.profilePreflight = sampled
+            local configured = true
+            for _, player in roster do
+                local value = sampled[tostring(player.UserId)]
+                local settings = if type(value) == "table" then value :: Payload else nil
+                if
+                    not settings
+                    or settings.width ~= Metrics.profile.width
+                    or settings.height ~= Metrics.profile.height
+                    or settings.graphics ~= Metrics.profile.graphics
+                then
+                    configured = false
+                end
+            end
+            if configured then
+                return
+            end
+            task.wait(0.75)
+        until os.clock() >= deadline
+        error(
+            "P11 requires stable 1920x1080 and QualityLevel5 for each client; observed "
+                .. HttpService:JSONEncode(sampled)
+        )
+    end
+
     local serverFrameConnection: RBXScriptConnection? = nil
     if ready then
         if mode == "Replay" then
@@ -728,6 +825,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             end
         elseif mode == "Profile" then
             check("Five-minute loaded Studio p95 budgets for both roles and server", function()
+                awaitProfileEnvironment()
                 local crew = deploy()
                 local ownerId = pickup(crew, 1)
                 local heartbeat, elapsed = Metrics.frames(), Metrics.frames()
@@ -748,7 +846,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                     serverFrameInterval = elapsed.summary(),
                     clients = frames,
                 }
-                finishRound(crew.roundId)
+                finishRound(crew)
                 assertDrained(resources(runtime), baseline)
                 validateLoad(counts)
                 assert(
@@ -768,6 +866,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                         height: number,
                         viewportChanged: boolean,
                         graphics: string,
+                        graphicsChanged: boolean,
                         seconds: number,
                         role: string,
                         frames: Metrics.FrameSummary,
@@ -776,10 +875,11 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                     local role = if player == crew.operator then "Gunship" else "Ground"
                     assert(result.role == role, "render role did not match actual assigned role")
                     assert(
-                        result.width == 1920
-                            and result.height == 1080
+                        result.width == Metrics.profile.width
+                            and result.height == Metrics.profile.height
                             and not result.viewportChanged
-                            and result.graphics == "QualityLevel5",
+                            and result.graphics == Metrics.profile.graphics
+                            and not result.graphicsChanged,
                         "requires stable 1920x1080 and graphics level 5 on each client"
                     )
                     assert(
@@ -811,7 +911,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                     local ownerId = pickup(crew, 1)
                     local counts = workload(crew, soakActiveSeconds, ownerId)
                     table.insert(loads, counts)
-                    finishRound(crew.roundId)
+                    finishRound(crew)
                     task.wait(3)
                     assertDrained(resources(runtime), baseline)
                     assert(Stats.MemoryTrackingEnabled, "server engine memory tracking disabled")
