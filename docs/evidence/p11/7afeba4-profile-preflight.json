@@ -1,0 +1,177 @@
+{
+  "candidate": "7afeba47df6e73b507faba2ea9de3cb29c28fe0a",
+  "tree": "447f11e160f41b8a7804c752cab63ffcb589a06c",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Profile',clients=2})",
+  "initialClientSettingErrors": {
+    "831c498f-4bad-405a-a4ca-3ef842f49262": {
+      "content": [
+        {
+          "type": "text",
+          "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: StudioDeviceSimulatorService: orientation can only be set on mobile (phone or tablet) devices"
+        }
+      ],
+      "isError": true
+    },
+    "6f903f97-6df1-4f18-b51c-4a9a01e5b9d3": {
+      "content": [
+        {
+          "type": "text",
+          "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: StudioDeviceSimulatorService: orientation can only be set on mobile (phone or tablet) devices"
+        }
+      ],
+      "isError": true
+    }
+  },
+  "laterClientSettingInfo": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "The requested `studio_id` is not connected — that Roblox Studio instance may have been closed or its place unloaded. Call `list_roblox_studios` for the current instances, then continue on the one the user confirms (or the one whose `name` matches)."
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"user\":-1,\"viewport\":\"1920, 1080\",\"quality\":\"QualityLevel8\",\"device\":\"hd_1080\",\"attempts\":{\"render\":{\"result\":\"Level5 is not a valid member of \\\"Enum.QualityLevel\\\"\",\"ok\":false},\"setDevice\":{\"result\":\"nil\",\"ok\":true},\"saved\":{\"result\":\"std::exception\",\"ok\":false},\"setScaling\":{\"result\":\"nil\",\"ok\":true},\"startDevice\":{\"result\":\"hd_1080\",\"ok\":true}}}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "ok": true,
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "name": "Five-minute loaded Studio p95 budgets for both roles and server",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.PerformanceHarness:794: P11 requires stable 1920x1080 and QualityLevel5 for each client; observed {\"-1\":{\"height\":1080,\"width\":1920,\"graphics\":\"QualityLevel8\"},\"-2\":{\"height\":1080,\"width\":1920,\"graphics\":\"QualityLevel8\"}}"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 3,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "clientRequests": [],
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "profilePreflight": {
+        "-1": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        },
+        "-2": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        }
+      },
+      "groundFireDecisions": []
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 4,
+    "suite": "P11",
+    "failed": 1,
+    "mode": "Profile"
+  }
+}

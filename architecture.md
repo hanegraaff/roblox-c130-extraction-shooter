@@ -2,7 +2,7 @@
 
 ## Current state and target
 
-Integrated `main` contains the 720-stud battlefield, three two-story buildings, authoritative rounds, the circling aircraft with thermal panning and zoom, recoverable launcher, persistent destruction and ordered match results and replay. It reconstructs the imported smaller Outpost before map snapshotting and provides indoor Ground camera zoom. The P10 candidate adds role guidance, spectator cycling, readable weapon and launcher states, and client-local audiovisual settings. Additional levels remain future work. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md), [P10 plan](plans/10-player-experience.md)
+Integrated `main` contains the 720-stud battlefield, three two-story buildings, authoritative rounds, the circling aircraft with thermal panning and zoom, recoverable launcher, persistent destruction and ordered match results and replay. It reconstructs the imported smaller Outpost before map snapshotting and provides indoor Ground camera zoom. Both roles see the shared aircraft health bar and weapon readiness cues. The client owns teammate spectating and session-local audiovisual settings. Additional levels remain future work. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md), [P10 plan](plans/10-player-experience.md)
 
 Server-only services own roles, UserId membership, deadlines, readiness, damage and results. Engine adapters own characters, map reconstruction and replicated presentation. Clients display state, send bounded intent and manage role cameras; they never award structural or player damage.
 
@@ -83,10 +83,10 @@ The phase loop is Lobby → Deploying → Active → Results → Resetting → L
 
 `PlayerPresentation` maps replicated facts into deterministic view, readiness,
 result and action feedback, and resolves the selected ID from an eligible
-spectator roster. It owns no Instances or transport. `RoundPanel` selects the
-desktop help page from the current view and routes settings and spectator
-controls. The help and settings panels block combat input while open. Server
-validation still owns all actions.
+spectator roster. It owns no Instances or transport. `RoundPanel` renders the
+aircraft health bar and routes desktop settings and spectator controls. The
+settings panel blocks combat input while open. The server validates gameplay
+actions.
 
 `SpectatorCamera` filters targets to living Ground players in the current round
 with a live Humanoid in Workspace. It retains the selected target when eligible
@@ -173,6 +173,7 @@ build/                    Generated artifacts; ignored by Git
 | `tests/studio/server` | `ServerScriptService.ServerTests` in test project only | Automatic server TestEZ runner |
 | `tests/studio/client` | `StarterPlayerScripts.ClientTests` in test project only | Automatic client TestEZ runner |
 | `tests/studio/specs-client`, `Packages` | `ReplicatedStorage.ClientSpecs`, `ReplicatedStorage.TestPackages` in test project only | Client specs and locked TestEZ dependency |
+| `tests/studio/support/P11Metrics.luau` | `ReplicatedStorage.P11Metrics` in test project only | Bounded frame and memory summaries shared by actual Studio clients and server |
 | `tests/fixtures/DevelopmentSettings.luau` | `ServerStorage.DevelopmentSettings` in test project only | Server-only test label and deferred gameplay startup marker |
 
 The release project excludes tests, test dependencies, fixtures and development overrides by construction, with generated-artifact inspection enforcing the boundary. Bootstrap must not run server-only modules on clients.
@@ -227,6 +228,17 @@ Use a small named RemoteEvent surface, not an unrestricted generic RPC dispatche
 Aircraft destruction is computed from server-resolved damage, never a client win claim or rocket-hit count. Validate server-observed movement for implausible travel before granting launcher pickup or accepting a ground firing origin; reject or correct suspicious movement without automatically banning from a single noisy observation. Roblox character network ownership does not make client movement authoritative for rewards.
 
 Apply cheap shape/size checks and per-player/per-action budgets before expensive raycasts. Bound strings, tables, vectors, shot counts and queued work. Tests cover NaN, infinity, malformed nested payloads, unknown IDs, replay, stale round IDs, floods, spectators and eliminated players. Rejected requests must leave state unchanged.
+
+### Studio combat diagnostics
+
+P11's Studio coordinator sends bounded test commands to real clients, which
+call the production combat remotes. The clients also acknowledge replicated
+state and supply local frame and memory observations. Server runtime
+`resources()` snapshots expose queue sizes and peaks, projectiles, effects,
+structural work, fragments and owned connections to the coordinator. Replay and
+soak compare live resources after both roles reach fresh Lobby characters.
+Client reports and resource snapshots are observational. The test transport,
+coordinator and sample reducers belong to the test mapping. [P11 procedure](docs/testing.md#run-the-p11-performance-harness)
 
 ## Implemented aircraft and targeting view
 

@@ -42,6 +42,16 @@ The P08 `LauncherHarness.run()` listens on excluded P08Harness transport, sends 
 
 On `75b1e88`, an ordinary native session with three actual clients passes 156 server/seven client cases per player and verifies route walking, raced E pickup, native 1/2 equipment selection and actual inventory separation. The capture at P08 delivery shows one Ground carrier in the final `ef7826b` ordinary two-client SDK session, after natural walking with default camera and the test-only panel temporarily hidden/restored. Native CoreGui is omitted by the capture tool and was measured separately. This ordinary review is separate from the final eleven-case native P08 harness, which passes on test source `07e77ea` against production/UI `ef7826b`, with three initial/peak clients, two after carrier Kick, 156-server smoke and seven passes on each actual client. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass, and the source is integrated on `main`. The separate two-client P06/P05/P14 SDK regression results are recorded in [P08 evidence](../../../docs/evidence/p08-launcher.md).
 
+## P11 combat workloads
+
+The P11 client `PerformanceHarness` starts after the ordinary client smoke
+report when the server selects P11. The test transport prompts bounded
+production combat intents and checks actual replicated state. Each client
+echoes latency probes or reports viewport, graphics quality, bounded
+`PreRender` timing summaries and engine memory. The client disconnects its
+transport and frame listeners when the transport is destroyed.
+[P11 procedure](../../../docs/testing.md#run-the-p11-performance-harness)
+
 ## Managed P17 native harness
 
 The managed mapping expects ten TestEZ cases per actual client. After publishing `ClientTestReport` and the raw `P17ManualTestErrors` list, the entrypoint waits for the server's `ReplicatedStorage.ManualClientHarness` attribute. In named P08, P17, P07, P05 and P14 sessions it starts only that selected listener and returns. An empty string selects the ordinary startup path. A retained multiplayer session requires explicit starts for later stages after prior owners drain.

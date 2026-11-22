@@ -1,0 +1,66 @@
+{
+  "candidate": "4152ed2a81d73a7637a9ef44afed77481e491627",
+  "tree": "a79e9fb185e7672824aa53bc48a2e8a4a7aa118c",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Latency',clients=2})",
+  "liveClients": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"jitterIn\":0,\"outgoing\":65,\"lossOut\":0,\"pingMs\":{\"1\":134.16200256347657,\"4\":134.5070037841797,\"3\":133.9739990234375,\"2\":133.34500122070313},\"incoming\":65,\"client\":-1,\"lossIn\":0,\"jitterOut\":0}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "secondClientConsole": "File is in use or is not writable. Opened for read-only.",
+  "ok": true,
+  "restored": {
+    "OutboundNetworkMinDelayMs": 0,
+    "OutboundNetworkJitterMs": 0,
+    "OutboundNetworkLossPercent": 0,
+    "InboundNetworkMinDelayMs": 0,
+    "InboundNetworkLossPercent": 0,
+    "InboundNetworkJitterMs": 0
+  },
+  "original": {
+    "OutboundNetworkMinDelayMs": 0,
+    "OutboundNetworkJitterMs": 0,
+    "OutboundNetworkLossPercent": 0,
+    "InboundNetworkMinDelayMs": 0,
+    "InboundNetworkLossPercent": 0,
+    "InboundNetworkJitterMs": 0
+  },
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "name": "Actual roster and server smoke",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.PerformanceHarness:194: P11 timeout: actual client count"
+      }
+    ],
+    "passed": 0,
+    "seed": 11021,
+    "clientCount": 0,
+    "observations": [],
+    "finalClients": 1,
+    "environment": "Studio",
+    "discovered": 1,
+    "suite": "P11",
+    "failed": 1,
+    "mode": "Latency"
+  },
+  "applied": {
+    "OutboundNetworkMinDelayMs": 65,
+    "OutboundNetworkJitterMs": 0,
+    "OutboundNetworkLossPercent": 0,
+    "InboundNetworkMinDelayMs": 65,
+    "InboundNetworkLossPercent": 0,
+    "InboundNetworkJitterMs": 0
+  }
+}

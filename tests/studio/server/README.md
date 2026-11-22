@@ -16,6 +16,16 @@ teammate cycling and rejection, result overview, replay and teardown. The SDK
 returns its report through `EndTest`. Manual mode publishes
 `Workspace.ManualP10Report` for collection before ending the session. [Player experience harness](../../../docs/testing.md#run-the-player-experience-harness)
 
+P11 selects `PerformanceHarness.run()` with SDK args
+`{ kind = "P11", scenario = "Replay", clients = 2 }` or the local Edit
+selector. The four scenarios are Replay, Latency, Profile and Soak. The
+coordinator requires passing smoke from each actual client and exercises the
+real combat owners, current Outpost panels and post-round cleanup. The
+test-only `P11CombatFixture` chooses checked aim and placement for repeatable
+loads. The server records `workspace.P11Stage` and `workspace.P11Report`,
+returns the result through SDK `EndTest` and also exposes
+`workspace.ManualP11Report` in native mode. [P11 procedure](../../../docs/testing.md#run-the-p11-performance-harness)
+
 `CharacterCleanup.run()` supplies the final harness regression: stop actual avatar loads while pending, assert truthful task accounting and ownership rejection, wait for drain, then acquire/stop a fresh owner. It checks automatic spawning restoration and lease/listener cleanup using real engine loads.
 
 `LocalTestControls.start(rounds)` runs only in ordinary Studio test sessions after GameRuntime starts. One client automatically previews the battlefield after its body is ready, retaining Waiting/Lobby and a clear preview label. ServerStorage BindableFunctions `LocalTestControls.ExploreMap` and `ReturnToLobby` offer explicit navigation; they reject wrong phases, unavailable characters and non-solo preview. A heartbeat contains preview movement to the disk; cleanup disconnects it, clears the preview marker and destroys the functions. No client remote or test role override exists.

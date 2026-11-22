@@ -8,7 +8,7 @@ Repeated rounds remain responsive and clean. The gunship has threatening firepow
 
 ## Implementation
 
-Create deterministic combat/soak fixtures and bounded diagnostics for request rates, projectile/effect counts, cleanup and frame/memory metrics. Record reference desktop, resolution, graphics setting and sampling procedure before profiling. Tune only named configuration values with written reasons. Preserve three direct rockets from full health, positive M-7 chip damage, one launcher, the two weapon-linked zoom profiles with mouse panning, 720-stud diameter/three multi-story buildings, and selected panel thresholds (3 + 3 heavy hits; nine seconds sustained 30mm to damage). Tune cadence/gaps and fragment caps without silently changing those selected rules. Optimize demonstrated bottlenecks; do not add a framework or enable streaming without evidence and the required architecture/test revision.
+Create deterministic combat/soak fixtures and bounded diagnostics for request rates, projectile/effect counts, cleanup and frame/memory metrics. Record reference desktop, resolution, graphics setting and sampling procedure before profiling. Tune only named configuration values with written reasons. Preserve three direct rockets from full health, positive M-7 chip damage, one launcher, two weapon-linked zoom profiles with WASD and directional touch panning and separate mouse aim, the 720-stud diameter and three multi-story buildings, and the selected panel thresholds (3 + 3 heavy hits and nine seconds of sustained 30mm fire to damage a panel). Tune cadence, gaps and fragment caps only while preserving those rules. Optimize demonstrated bottlenecks and revise architecture and testing before introducing streaming.
 
 ## Acceptance criteria
 
@@ -37,17 +37,79 @@ The reference machine for this increment is a MacBook Pro (`MacBookPro18,3`,
 Apple M1 Pro, 16 GiB RAM) running macOS 26.6.2 (`25G83`) and Roblox Studio
 `0.748.0.7481526`. Use the separate local `PlayersVsC130Tests` place with the
 imported Outpost and two actual clients, one for each role. Run the five-minute
-profile at a verified 1920×1080 viewport per client and fixed graphics quality
-5 of 10. Record the observed viewport, graphics settings and actual client
-count. Report other settings separately from this reference.
+profile at a verified 1920×1080 viewport per client and fixed graphics
+quality 8 of 10. The initial preflight reached 1920×1080 on both SDK clients at
+level 8 and Studio rejected attempts to apply the original level 5 reference.
+Set the observed higher level as the reference before collecting frame samples.
+Record the actual setup and client count for each run.
 
-Measure client render intervals and server Heartbeat intervals over the same
-workload. Record p95, sample counts and elapsed time alongside the concurrent
-combat resource peaks. For the 30-minute soak, compare the same reset point
+Measure client render intervals, server scheduler time (`Stats.HeartbeatTime`)
+and server frame intervals over the same workload. Record p95, sample counts
+and elapsed time alongside the concurrent combat resource peaks. For the
+30-minute soak, compare the same reset point
 after warmup and after each sampled round, with engine memory separate from
 game-owned resource counts. Run the near-150 ms round-trip check separately
 from the unshaped profile and record the applied delays and measured ping.
 
 ## Completion record
 
-Not implemented. Record A1–A5, source, workload/seed, metric samples, actual client counts, tuning decisions and any capacity scenario still assigned to P12.
+Draft delivery is tracked in [PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45).
+The fixture seed is `11021`. Weapon, timing, camera and destruction settings
+retain their existing values during this increment.
+
+### Initial candidate and independent findings
+
+- `4152ed2a81d73a7637a9ef44afed77481e491627` (tree
+  `a79e9fb185e7672824aa53bc48a2e8a4a7aa118c`) passed
+  `python3 scripts/verify.py` on macOS arm64 with 82 unit, 73 integration,
+  15 tooling and 48 asset regression cases, both builds and artifact
+  isolation. The independent tester reproduced the exact-source unit and
+  integration counts with Lune 0.11.1.
+- `ExecuteMultiplayerTestAsync(2, {kind = "P11", scenario = "Replay", clients = 2})`
+  passed seven of eight cases with two actual clients, 191 server smoke
+  cases and 13 smoke cases per client. The first four replays and shutdown
+  passed. The fifth replay sampled 15 instead of 23 connections while two
+  replacement avatar loads were active. `7afeba4` waits for fresh, live
+  lobby characters and no active loads before asserting exact resource counts.
+  [Initial replay report](../docs/evidence/p11/4152ed2-replay.json)
+- The first Latency attempt configured 65 ms each way with zero jitter or
+  loss. The sole connected client's Studio Ping samples were 133–135 ms.
+  The SDK timed out with one actual client and no passing scenario. The
+  six original network settings were restored. [Initial latency report](../docs/evidence/p11/4152ed2-latency.json)
+- `python3 scripts/build_studio_world_probe.py` and the fresh binary probe
+  in Studio Edit passed five of five native world-load cases on the same
+  source. The probe verified 434 nodes and 403 parts, the eight hills, two
+  perturbed rebuilds and cleanup. [Fresh world report](../docs/evidence/p11/fresh-native-world.json)
+
+### Revised candidate checks
+
+- The full host gate passed on `62fd4d2b78dd2cdf2a5c3fe66c74ae659b3afe66`
+  (tree `0b3819f70eb2c3e0c3c647e7f9e35709d998893e`) with 82 unit,
+  74 integration, 15 tooling and 48 asset cases. Both Rojo builds passed
+  artifact isolation and all 2,804 authored transform checks per build.
+  The additional structural test fills the 512-outcome window and its
+  513 interruption boundaries, then verifies overflow/replay rejection,
+  ordered drain and pristine reset.
+- Independent Replay on `7afeba47df6e73b507faba2ea9de3cb29c28fe0a`
+  (tree `447f11e160f41b8a7804c752cab63ffcb589a06c`) passed eight of
+  eight cases with two actual clients, 192 server smoke cases and 13 smoke
+  cases per client. All five rounds restored 188 pristine panels and 23
+  owned runtime connections in Lobby. Rifle and launcher queues peaked at
+  1 and 8 respectively, each below its 32-entry bound. Duplicated input
+  caused one launcher pickup, one rifle hit (300→295 aircraft health),
+  and one heavy-cannon panel credit per round. No active flights, effects,
+  temporary tools, debris, barriers or load tasks remained at the reset
+  checkpoint. The later host commit formats the structural test and
+  refreshes the P17 source binding. Its P11 runtime/harness source bytes
+  match this independent replay. [Revised replay report](../docs/evidence/p11/7afeba4-replay.json)
+- The initial Profile preflight on `7afeba4` completed three of four cases with
+  two actual clients. Both rendered at 1920×1080. Studio reported quality level
+  8 and the setter for level 5 raised a native exception. The preflight stopped
+  before the five-minute sample, so the frame budgets were unmeasured in this
+  invocation. [Initial profiling preflight](../docs/evidence/p11/7afeba4-profile-preflight.json)
+- `60467f620154fc39adcb7b854f6c5c6511682add` (tree
+  `d85f80fa59ae7e4f3825bf59dba2b8b815f2fa1b`) sets the Profile reference to
+  graphics quality 8 and passed the full host gate at the same counts. Only
+  the Profile setting, its error text and the generated test-source binding
+  changed. Production, Replay and Soak inputs used by their active code paths
+  match their recorded candidates.

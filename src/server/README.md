@@ -242,4 +242,22 @@ Pickup/fire reuse `groundCombat.validateGround`; pickup additionally checks eigh
 
 The runtime exposes fresh `snapshot()`, bounded `resources()` diagnostics and idempotent `stop()`. Stop disconnects observers, invalidates deferred work and destroys all owned transport, models, tools, flights and requests. `GameRuntime` stops it before the ground damage owner. The [P08 record](../../plans/08-rocket-launcher.md) links eleven passing native cases on harness `07e77ea` against production/UI `ef7826b`, with three actual initial/peak clients and two after intentional carrier Kick. D59 removes unsupported actual same-identity reconnect from acceptance; runtime rejoin protections remain covered by service tests. The supported P08 checks pass and the source is integrated on `main`; the [main integration record](../../docs/evidence/p08-p16-main-integration.md) identifies its matching tree.
 
+## Combat workload diagnostics
+
+Server-only, nonyielding `resources()` calls return fresh counts for Studio
+observations. `GroundCombatRuntime` reports connections, tools, queued rifle
+intents, lifetime queue peak and live tracers. `LauncherRuntime` reports
+connections, representations, flights, queued requests, lifetime queue peak
+and effect instances. Each queue is capped at its published
+`queueCapacity` of 32. Queue peaks describe the runtime owner's lifetime,
+so replay compares live counts to the Lobby baseline separately from peaks.
+
+`CombatRuntime` counts connections, live projectiles and owned effect
+instances. `DestructionRuntime` counts registered panels, fragments, queued
+outcomes and interruption barriers. `DestructionService.outcomeWindow` is
+512 accepted-shot positions beyond the next unresolved shot. The pending
+outcome count is bounded at 512 and the barrier count at 513. The Studio
+harness reads these snapshots at load and after cleanup.
+[P11 procedure](../../docs/testing.md#run-the-p11-performance-harness)
+
 `GameRuntime` owns the server-to-client `RoundState.WeaponAudio` transport. The combat runtimes emit shot and impact cues after admission or collision through a nonyielding callback. The event owns no client-request handler and has no role, damage or equipment authority.

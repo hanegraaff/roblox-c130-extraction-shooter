@@ -25,11 +25,11 @@ Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scrip
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The P10 mapping contains **79 unit and 73 integration cases**. The presentation cases cover roles and phases, aircraft health, elimination, target cycling and empty recovery, settings, readiness, rejection text and result reason. `WeaponSoundRules.spec.luau` checks immediate local muzzle playback, delayed distant fire and rejection of stale or out-of-range cues. Existing service cases cover conflict ordering, single result credit and stale-event rejection. The verifier also runs **15 tooling checks and 48 asset regression checks**. Actual collision, rigid-body contact, traversal and multiplayer replication have separate Studio gates. [P10 record](../plans/10-player-experience.md), [P09 record](../plans/09-match-outcomes.md)
+The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The P11 mapping contains **82 unit and 74 integration cases**. It adds three cases for frame distributions and retained-memory samples and one case for the structural outcome and barrier bounds. The verifier also runs **15 tooling checks and 48 asset regression checks**. Client frame measurements, physical fragments, collision and multiplayer replication require Studio evidence. [P11 record](../plans/11-balance-and-performance.md), [P10 record](../plans/10-player-experience.md)
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds, checking twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The artifact contract includes the manifest terrain recipe, three formal footprints and stairs, and all registered panels including the starting shelter. The P10 build has **2,804 authored Parts** across source world and templates, **58 runtime scripts**, **5,306 release Instances** and **5,413 test Instances**. Artifact inspection requires the four P17 and three P10 fixture modules in the test build and rejects them in the release build. The base world retains 403 Battlefield Parts and 187 primitive panels, while runtime Outpost installation produces 188 active panels.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds, checking twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The artifact contract includes the manifest terrain recipe, three formal footprints and stairs, and all registered panels including the starting shelter. The P11 build has **2,804 authored Parts** across source world and templates, **58 runtime scripts**, **5,306 release Instances** and **5,418 test Instances**. Artifact inspection requires the four P11, four P17 and three P10 fixture modules in the test build and rejects them in the release build. The base world retains 403 Battlefield Parts and 187 primitive panels, and runtime Outpost installation produces 188 active panels.
 
 Five deliberate corruptions check rejection of a pose alias, wrong pose, wrong size, nonfinite pose component and missing CFrame. A separate building-surface guard checks visible-part pairs for exposed coplanar faces. It allows ordinary edge/contact joins and intersections hidden inside opaque supports. Its three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel. These are artifact probes outside Luau suite totals.
 
@@ -291,7 +291,7 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. The P10 mapping expects **191 server cases and 13 per actual client**. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
+5. Expect **192 server cases** with P11 or **191** with P10, and **13 per actual client**. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one visible round HUD after startup. The round HUD hides the locally owned bootstrap panel after startup. Check for leftover `EntrypointStatus` or `EntrypointPanel` Instances. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm a protected lobby character and a round panel waiting for six players. **Development** appears on the bootstrap panel before the round HUD takes over. The test build shows **Test** at bootstrap and then opens solo preview or offers an explicit start at two actual clients. Review actual viewport readability and Output, then stop when finished.
 
@@ -407,8 +407,8 @@ Preserve reports, then clear the temporary SDK attribute or restore the
 manual selector in Edit before subsequent sessions.
 
 Require eight discovered and passing harness cases, four distinct initial
-client IDs and a final count of four, clean smoke totals of **191
-server cases and 13 per actual client**, and zero reported skips, failures
+client IDs and a final count of four, clean [current-source smoke](#run-the-studio-smoke-suites),
+and zero reported skips, failures
 or errors. Record source and Studio version, observations, and cleanup. The
 test-only client uses Studio virtual keyboard input for production actions
 and samples real GUI and camera Instances. The harness checks the role HUD,
@@ -431,6 +431,125 @@ Record the loaded, playing positional cues and the difference between server
 emission and client playback time. Check the exhaust trail, warning text with
 effects off, and cleanup after Results and replay. Keep audio telemetry and
 listening observations separate. [Revision evidence](evidence/p10/combat-presentation-revision.json)
+
+## Run the P11 performance harness
+
+From the P11 branch, build with the full verifier and sync
+`test.project.json` to the local **PlayersVsC130Tests** document on port
+**34872**. Confirm the candidate source commit or tree, the installed Outpost
+templates and the local document through Studio MCP. Leave the document in
+Edit before starting each scenario. Use two actual clients for the reference
+runs. The harness accepts 2–8 and checks the connected count. Record initial
+client IDs and the final count from each report.
+
+### Start a scenario and collect evidence
+
+Use the Studio Edit/plugin context for the SDK route. Change `scenario` to
+`Replay`, `Latency`, `Profile` or `Soak`. The SDK call yields until the
+test ends. The detached task keeps Edit available for the result.
+
+```luau
+local scenario, clients = "Replay", 2
+local reportKey, errorKey = "P11LastReport", "P11LastError"
+assert(not game:GetService("RunService"):IsRunning())
+assert(game.PlaceId == 0 and game.GameId == 0)
+assert(workspace:GetAttribute(reportKey) == nil and workspace:GetAttribute(errorKey) == nil)
+
+task.spawn(function()
+    local sdk = game:GetService("StudioTestService")
+    local ok, result = pcall(function()
+        return sdk:ExecuteMultiplayerTestAsync(clients, {
+            kind = "P11",
+            scenario = scenario,
+            clients = clients,
+        })
+    end)
+    if ok then
+        workspace:SetAttribute(reportKey, game:GetService("HttpService"):JSONEncode(result))
+    else
+        workspace:SetAttribute(errorKey, tostring(result))
+    end
+end)
+```
+
+For native **Server & Clients**, record the original attribute values on
+`ServerStorage.DevelopmentSettings` in the local Edit document. Set
+`ManualHarness` to the string `P11`, `ManualP11Scenario` to the scenario
+name and `ManualP11Clients` to the number `2`. Start **Server & Clients**
+with the same client count. Collect `workspace.ManualP11Report` from the
+Server context before using **End Session**. Restore the original selector
+values in Edit, including absent attributes.
+
+Watch `workspace.P11Stage` in the running Server context. On SDK return,
+collect `P11LastReport` or `P11LastError` in Edit and clear the temporary
+attribute after capture. A startup timeout or missing roster may stop the
+test before a P11 report exists. Collect `workspace.ServerTestStartup`,
+the smoke reports that arrived, and Studio Output for those attempts.
+
+| Scenario | Passing cases | Required observations |
+| --- | ---: | --- |
+| Replay | 8 | Five accelerated rounds. Repeated requests preserve one launcher, one rifle damage award and one heavy panel credit per accepted shot. Each round produces a fresh map and fresh mobile lobby bodies before comparing live owned resources with the baseline. |
+| Latency | 5 | Seven real echoes per client. Each client's median falls within 100–200 ms around the 150 ms target. Both clients observe the correct aircraft health, launcher owner, weapon and result at the replay checkpoints. |
+| Profile | 4 | Five loaded minutes, both gunship weapons, accepted M-7 and rocket fire, opened Outpost panels and live imported fragments. Both client render p95 values are ≤33.3 ms and server scheduler p95 is ≤16.7 ms. |
+| Soak | 4 | One warmup round and ten 180-second loaded windows. Allow at least 33 loaded minutes including warmup, plus setup, results and resets. Each server and client process supplies 11 equivalent post-reset memory samples, with ≤10% endpoint growth and a series that levels off or drops at least once. |
+
+Require the full case count, every case passing, zero failures/skips, 192
+clean server smoke cases and 13 clean smoke cases from each actual client.
+Check the report's `seed = 11021`, mode and cleanup. Record the source,
+Studio version, final resource counts and any missing diagnostics. Under
+`observations`, read `actualRoundTripMs` for latency, `profile` for frame
+and load measures, and `soakSamplesMb` and `retainedMemory` for soak.
+The queue limits are 32 accepted rifle intents and 32 pending launcher requests. Structural
+processing allows 512 queued outcomes and 513 barriers, and live debris is
+capped at 48. Review the peaks and effect counts alongside each workload.
+[P11 server harness](../tests/studio/server/PerformanceHarness.luau),
+[client harness](../tests/studio/client/PerformanceHarness.luau)
+
+### Configure profiling and latency runs
+
+The [reference machine](../plans/11-balance-and-performance.md#local-performance-reference)
+is an Apple M1 Pro MacBook Pro with 16 GiB RAM, macOS 26.6.2 and Studio
+`0.748.0.7481526`. For Profile, set both rendering clients to **HD 1080**
+with **Actual Resolution** and verify graphics quality **8 of 10**.
+Verify `CurrentCamera.ViewportSize = Vector2.new(1920, 1080)` and
+`SavedQualityLevel = Enum.SavedQualitySetting.QualityLevel8` on each
+client. The harness waits up to 40 seconds for the two clients to reach
+those settings after smoke readiness. Keep viewport, quality and background
+load stable during sample collection. Record focus or any environment changes
+that affect rendering. Restore the previous simulator and graphics settings
+after the run.
+
+Record p95, elapsed seconds, sample counts and invalid or overflow counts
+for each role's `PreRender` frames and the server's `Stats.HeartbeatTime`
+samples. The server's observed Heartbeat interval is reported separately.
+The fixed histograms round p95 upward to 0.1 ms. Each budget requires at
+least 3,000 valid samples with zero invalid samples. For Soak, record each
+process's `Stats:GetTotalMemoryUsageMb()` after warmup and after each later
+reset. Keep those engine MB readings with the separately counted game-owned
+resources at the same Lobby checkpoints. [Roblox Stats reference](https://create.roblox.com/docs/reference/engine/classes/Stats)
+
+Use a separate fresh session for Latency. Save both directions' original
+simulator values. Start with 65 ms added inbound and outbound, zero jitter
+and zero loss, then confirm the applied values on each actual client. Compare
+the harness echo samples and their medians with live client ping measurements.
+Record both measurements and all six applied delay, jitter and loss settings.
+Inspect the full convergence case even if the ping is in range. Restore and
+verify all six original simulator values after the run, including on a failed
+launch. Use zero-added-delay settings for the reference Replay, Profile and
+Soak. [Roblox Network Simulator](https://create.roblox.com/docs/studio/network-simulator)
+
+### Review multiplayer balance
+
+In a separate ordinary local multiplayer session, record time to reach and
+pick up the launcher from each painted route, launcher recovery between
+teammates, and time to destroy the aircraft. Use both gunship weapons and
+compare pan reach at both zooms. Observe counterfire from covered and upper
+floor positions, mixed-weapon damage, actual Outpost openings and fragment
+load. Record how the roles stay engaged through each round. Local balance
+observations and the instrumented workloads supplement the prior engine
+regression suites. P12 tracks actual Roblox client sessions at 6 and 10
+players. [P11 plan](../plans/11-balance-and-performance.md),
+[P12 release plan](../plans/12-mvp-release.md)
 
 ## Run the P05 gunship combat harness
 
