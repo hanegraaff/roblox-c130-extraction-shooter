@@ -21,7 +21,7 @@ The integrated source on `main` includes the development shell, verification too
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
-| M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Ready | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
+| M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | In progress | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
 **Implementation order selected in D63: P17 → P09.** P16 and P17 retain
