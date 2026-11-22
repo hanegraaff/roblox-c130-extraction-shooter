@@ -31,6 +31,23 @@ Review whether each role has useful choices. Use playtest observations to identi
 
 Record metrics, hardware/settings, tuning rationale and known limits in the plan evidence. Update public claims only to match measured results.
 
+## Local performance reference
+
+The reference machine for this increment is a MacBook Pro (`MacBookPro18,3`,
+Apple M1 Pro, 16 GiB RAM) running macOS 26.6.2 (`25G83`) and Roblox Studio
+`0.748.0.7481526`. Use the separate local `PlayersVsC130Tests` place with the
+imported Outpost and two actual clients, one for each role. Run the five-minute
+profile at a verified 1920×1080 viewport per client and fixed graphics quality
+5 of 10. Record the observed viewport, graphics settings and actual client
+count. Report other settings separately from this reference.
+
+Measure client render intervals and server Heartbeat intervals over the same
+workload. Record p95, sample counts and elapsed time alongside the concurrent
+combat resource peaks. For the 30-minute soak, compare the same reset point
+after warmup and after each sampled round, with engine memory separate from
+game-owned resource counts. Run the near-150 ms round-trip check separately
+from the unshaped profile and record the applied delays and measured ping.
+
 ## Completion record
 
 Not implemented. Record A1–A5, source, workload/seed, metric samples, actual client counts, tuning decisions and any capacity scenario still assigned to P12.

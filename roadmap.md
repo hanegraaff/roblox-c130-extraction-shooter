@@ -20,7 +20,7 @@ The integrated source on `main` includes the development shell, verification too
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
-| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Ready | P10 | Play repeated stable rounds with readable counterplay |
+| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | In progress | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
@@ -51,8 +51,8 @@ and aircraft hits update a shared green-to-red health bar. Both gunship
 weapons have delayed positional reports. Ground rifles and the launcher
 have distinct shot sounds, and rockets leave an exhaust trail and make a
 separate impact sound. The host gate and two-client Studio revision checks
-passed. Use `fix/p10-combat-presentation` as P11's dependency source until
-the P10 changes are integrated. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43),
+passed. P10 and its revision were integrated into `main` through PRs #42 and
+#43; integrated `main` supplies P11's dependency source. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43),
 [revision evidence](docs/evidence/p10/combat-presentation-revision.json)
 
 2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the

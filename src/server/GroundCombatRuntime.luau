@@ -19,6 +19,8 @@ local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
 local GroundOriginGeometry = require(script.Parent.GroundOriginGeometry)
 local GroundCombatRuntime = {}
 local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
+-- Maximum accepted rifle intents waiting for the next authoritative damage batch.
+GroundCombatRuntime.queueCapacity = 32
 local TRACER_SPEED = 1200 -- studs per second; cosmetic travel, not damage timing
 local MIN_TRACER_SECONDS = 0.15
 local TRACER_TAIL_SECONDS = 0.1
@@ -60,7 +62,8 @@ export type Controller = {
     trustCorrection: (Player) -> boolean,
     -- Fresh readiness copy for a server-owned diagnostic, at server time.
     readiness: (Player) -> GroundCombatService.Readiness,
-    resources: () -> { connections: number, tools: number },
+    resources: (
+    ) -> { connections: number, tools: number, queued: number, peakQueued: number, tracers: number },
 }
 -- match is the sole result owner. rocketImpact is a server-only fixture seam;
 -- directness must be established by the server's swept collision before invocation.
@@ -109,6 +112,7 @@ function GroundCombatRuntime.start(
         {}
     local running = true
     local lastRound = -1
+    local peakQueued = 0
     local function clearTracers()
         for _, tracer in tracers do
             tracer.part:Destroy()
@@ -441,7 +445,7 @@ function GroundCombatRuntime.start(
                 observe(player, "rate", now)
                 return
             end
-            if not active(player, now) or #pendingRifles >= 32 then
+            if not active(player, now) or #pendingRifles >= GroundCombatRuntime.queueCapacity then
                 observe(player, "inactive", now)
                 return
             end
@@ -487,6 +491,7 @@ function GroundCombatRuntime.start(
                 sequence = intent.sequence,
                 firedAt = now,
             })
+            peakQueued = math.max(peakQueued, #pendingRifles)
         end)
     )
     table.insert(
@@ -623,7 +628,13 @@ function GroundCombatRuntime.start(
             for _ in tools do
                 count += 1
             end
-            return { connections = #connections, tools = count }
+            return {
+                connections = #connections,
+                tools = count,
+                queued = #pendingRifles,
+                peakQueued = peakQueued,
+                tracers = #tracers,
+            }
         end,
         stop = function()
             if not running then

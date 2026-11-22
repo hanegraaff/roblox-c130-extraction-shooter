@@ -621,6 +621,15 @@ def main() -> None:
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P10 presentation fixture missing from tests or leaked to release: {name}")
     print("P10 presentation fixture isolation passed: three test-only modules, no release additions.")
+    for name in (
+        "ReplicatedStorage/P11Metrics",
+        "ServerScriptService/ServerTests/P11CombatFixture",
+        "ServerScriptService/ServerTests/PerformanceHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/PerformanceHarness",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P11 performance fixture missing from tests or leaked to release: {name}")
+    print("P11 performance fixture isolation passed: four test-only modules, no release additions.")
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")
