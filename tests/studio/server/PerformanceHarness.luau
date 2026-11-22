@@ -792,7 +792,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             task.wait(0.75)
         until os.clock() >= deadline
         error(
-            "P11 requires stable 1920x1080 and QualityLevel5 for each client; observed "
+            "P11 requires stable 1920x1080 and QualityLevel8 for each client; observed "
                 .. HttpService:JSONEncode(sampled)
         )
     end
