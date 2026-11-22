@@ -64,7 +64,7 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
         durationSeconds = 600,
         lobbySeconds = 0,
         deploymentSeconds = 25,
-        resultsSeconds = 1,
+        resultsSeconds = 4, -- Gives the actual client time to acknowledge its Results view.
         seed = 1,
     })
     assert(runtime, reason)
@@ -362,10 +362,11 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
                     runtime.rounds.match.abort(runtime.rounds.match.snapshot().roundId, "P14Reset"),
                     "round abort failed"
                 )
-                probe(operator, { kind = "Normal" })
+                probe(operator, { kind = "ResultsOverview" })
                 waitFor(function()
                     return runtime.rounds.match.snapshot().phase == "Lobby"
                 end, "reset lobby")
+                probe(operator, { kind = "LobbyCamera" })
                 deploy()
                 operator, ground = roles()
                 probe(operator, { kind = "ResetInput", expectFresh = true })
@@ -375,7 +376,13 @@ function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
                 waitFor(function()
                     return #Players:GetPlayers() == 1 and runtime.rounds.match.snapshot().phase == "Results"
                 end, "actual departure")
-                probe(ground, { kind = "Normal" })
+                local result = runtime.rounds.match.snapshot().result
+                assert(result and result.reason == "OperatorForfeit", "operator departure did not forfeit")
+                probe(ground, { kind = "ResultsOverview" })
+                waitFor(function()
+                    return runtime.rounds.match.snapshot().phase == "Lobby"
+                end, "lobby after actual departure")
+                probe(ground, { kind = "LobbyCamera" })
             end
         )
         return true

@@ -7,6 +7,8 @@ local StudioTestService = game:GetService("StudioTestService")
 local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local GroundOriginGeometry = require(game:GetService("ServerScriptService").Server.GroundOriginGeometry)
+local GroundCombatRuntime = require(game:GetService("ServerScriptService").Server.GroundCombatRuntime)
+local GroundCombatService = require(game:GetService("ServerScriptService").Server.GroundCombatService)
 local Harness = {}
 -- Fixture-only ballistic default; the production launcher and its final tuning
 -- arrive in P08. A 1/6-second step at 300 studs/second sweeps 50 studs.
@@ -14,6 +16,14 @@ local FIXTURE_ROCKET_SPEED = 300
 local FIXTURE_ROCKET_STEP_SECONDS = 1 / 6
 local FIXTURE_ROCKET_STEP = Vector3.new(0, -FIXTURE_ROCKET_SPEED * FIXTURE_ROCKET_STEP_SECONDS, 0)
 type Case = { name: string, passed: boolean, detail: string? }
+type ResolvedRifle = {
+    shot: GroundCombatRuntime.ShotObservation,
+    resolvedAt: number,
+    muzzleFlash: boolean,
+    tracer: BasePart?,
+    initialTip: Vector3?,
+    crossedTeammate: boolean?,
+}
 export type Report = {
     suite: string,
     environment: string,
@@ -83,10 +93,8 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
     local traceEnabled = false
     local fireDecisions: { unknown } = {}
     local shotObservations: { unknown } = {}
-    local tracerObservations: { { origin: Vector3, endpoint: Vector3, initialTip: Vector3, part: BasePart } } =
-        {}
-    local lastHitName = ""
-    local sawMuzzleFlash = false
+    local resolvedRifles: { ResolvedRifle } = {}
+    local teammateOnExposedRay: Model? = nil
     local started, runtimeOrFailure = pcall(function()
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
@@ -115,30 +123,51 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             end,
             observeShot = function(shot)
                 if traceEnabled then
-                    lastHitName = shot.hitName
+                    local resolvedAt = workspace:GetServerTimeNow()
                     local effects = workspace:FindFirstChild("GroundCombatEffects")
-                    sawMuzzleFlash = effects ~= nil and effects:FindFirstChild("M7MuzzleFlash") ~= nil
-                    local tracer: Instance? = nil
+                    local tracer: BasePart? = nil
                     if effects then
                         for _, child in effects:GetChildren() do
-                            if child.Name == "M7Tracer" then
+                            if
+                                child.Name == "M7Tracer"
+                                and child:IsA("BasePart")
+                                and (child.Position - shot.origin).Magnitude < 0.001
+                            then
                                 tracer = child
+                                break
                             end
                         end
                     end
-                    if tracer and tracer:IsA("BasePart") then
-                        table.insert(tracerObservations, {
-                            origin = shot.origin,
-                            endpoint = shot.hitPosition,
-                            initialTip = tracer.Position + tracer.CFrame.LookVector * tracer.Size.Z * 0.5,
-                            part = tracer,
-                        })
+                    -- Read-only companion query of exactly the resolved shot's
+                    -- segment while the teammate remains in its fixture pose.
+                    local crossedTeammate: boolean? = nil
+                    if shot.sequence == 2 and teammateOnExposedRay then
+                        local filter = RaycastParams.new()
+                        filter.FilterType = Enum.RaycastFilterType.Include
+                        filter.FilterDescendantsInstances = { teammateOnExposedRay }
+                        crossedTeammate = workspace:Raycast(
+                            shot.origin,
+                            shot.hitPosition - shot.origin,
+                            filter
+                        ) ~= nil
                     end
+                    table.insert(resolvedRifles, {
+                        shot = shot,
+                        resolvedAt = resolvedAt,
+                        muzzleFlash = effects ~= nil and effects:FindFirstChild("M7MuzzleFlash") ~= nil,
+                        tracer = tracer,
+                        initialTip = if tracer
+                            then tracer.Position + tracer.CFrame.LookVector * tracer.Size.Z * 0.5
+                            else nil,
+                        crossedTeammate = crossedTeammate,
+                    })
                     local aircraftPosition = shot.aircraftPosition
                     table.insert(shotObservations, {
                         userId = shot.userId,
                         sequence = shot.sequence,
                         serverTime = shot.serverTime,
+                        resolvedAt = resolvedAt,
+                        crossedTeammate = crossedTeammate,
                         origin = { shot.origin.X, shot.origin.Y, shot.origin.Z },
                         requestedTarget = {
                             shot.requestedTarget.X,
@@ -605,6 +634,19 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                     requestedTarget = if requested then { requested.X, requested.Y, requested.Z } else nil,
                 })
             end
+            local function resolvedShot(shotSequence: number): ResolvedRifle
+                local observed: ResolvedRifle? = nil
+                waitFor(function()
+                    for _, entry in resolvedRifles do
+                        if entry.shot.userId == ground.UserId and entry.shot.sequence == shotSequence then
+                            observed = entry
+                            return true
+                        end
+                    end
+                    return false
+                end, "resolved rifle sequence " .. shotSequence, 8)
+                return assert(observed, "resolved rifle observation missing")
+            end
             sample("trusted-position", nil)
             local embedded = Instance.new("Part")
             embedded.Name = "P06EmbeddedCover"
@@ -649,103 +691,132 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
             target = hitbox().Position
             target = head.Position + (target - head.Position).Unit * 3
             sample("before-solid-cover-shot", target)
+            local dispatchedAt = workspace:GetServerTimeNow()
             probe(
                 ground,
                 "Fire",
                 { roundId = roundId, sequence = 1, weapon = "M7", x = target.X, y = target.Y, z = target.Z }
             )
-            waitFor(function()
-                return tool:GetAttribute("Ammo") == 29
-            end, "blocked shot")
-            assert(health() == 300, "cover failed to block damage")
+            -- Ammunition is spent on admission. Keep real cover in place
+            -- until the matching authoritative ray has actually hit it.
+            local blocked = resolvedShot(1)
+            assert(
+                wall.Parent == fixture and blocked.shot.hitName == wall:GetFullName(),
+                "first rifle ray did not hit installed cover"
+            )
+            assert(
+                not blocked.shot.applied
+                    and blocked.shot.healthBefore == 300
+                    and blocked.shot.healthAfter == 300
+                    and health() == 300
+                    and tool:GetAttribute("Ammo") == 29,
+                "cover failed to block damage"
+            )
             sample("after-solid-cover-shot", nil)
             wall:Destroy()
-            task.wait(0.2)
+            waitFor(function()
+                return workspace:GetServerTimeNow() >= runtime.groundCombat.readiness(ground).nextFire
+            end, "rifle cooldown after the cover shot", 5)
+
             local aircraftModel = workspace:FindFirstChild("Aircraft")
-            local wing = if aircraftModel then aircraftModel:FindFirstChild("Wing") else nil
+            assert(aircraftModel and aircraftModel:IsA("Model"), "aircraft model missing")
+            local wing = aircraftModel:FindFirstChild("Wing")
             assert(wing and wing:IsA("BasePart"), "visible wing missing")
-            local wingTarget = wing.CFrame:PointToWorldSpace(Vector3.new(20, 0, 2))
+            local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
+            local epoch = if aircraftState then aircraftState:GetAttribute("EpochSeconds") else nil
+            assert(type(epoch) == "number", "aircraft orbit epoch missing")
+            local pivot = aircraftModel:GetPivot()
+            local inwardX = if wing.CFrame.RightVector:Dot(
+                    pivot.Position - Vector3.new(level.centerX, pivot.Y, level.centerZ)
+                ) > 0
+                then -17
+                else 17
+            -- Choose the inward wing span between the two nacelles. The
+            -- previous request's time to the actual ray supplies orbit lead.
+            -- A world preflight still requires this direction to meet Wing.
+            local lead = blocked.resolvedAt - dispatchedAt
+            local predicted = runtime.aircraft.sample(workspace:GetServerTimeNow() - epoch + lead)
+            local wingFrame = predicted * pivot:ToObjectSpace(wing.CFrame)
+            local wingTarget = wingFrame:PointToWorldSpace(Vector3.new(inwardX, 0, 0))
+            assert(character, "ground character missing")
+            character:PivotTo(CFrame.new(wingTarget - Vector3.yAxis * 25))
+            assert(runtime.groundCombat.trustCorrection(ground), "trusted wing-fixture placement failed")
+            local origin = head.Position
+
             local teammateHumanoid: Humanoid? = nil
-            local teammateModel: Model? = nil
             if expected >= 3 then
                 for _, player in Players:GetPlayers() do
                     if player ~= ground and player:GetAttribute("Role") == "Ground" then
-                        local teammateCharacter = player.Character
-                        teammateModel = teammateCharacter
-                        local teammateRoot = if teammateCharacter
-                            then teammateCharacter:FindFirstChild("HumanoidRootPart")
-                            else nil
-                        teammateHumanoid = if teammateCharacter
-                            then teammateCharacter:FindFirstChildOfClass("Humanoid")
-                            else nil
+                        local teammate = assert(player.Character, "teammate character missing")
+                        local teammateRoot = teammate:FindFirstChild("HumanoidRootPart")
+                        teammateHumanoid = teammate:FindFirstChildOfClass("Humanoid")
                         assert(
                             teammateRoot and teammateRoot:IsA("BasePart") and teammateHumanoid,
                             "teammate fixture missing"
                         )
                         teammateRoot.Anchored = true
-                        teammateRoot.CFrame = CFrame.new(head.Position:Lerp(wingTarget, 0.55))
+                        teammate:PivotTo(CFrame.new(origin:Lerp(wingTarget, 0.55)))
                         assert(
                             runtime.groundCombat.trustCorrection(player),
                             "trusted teammate fixture placement failed"
                         )
+                        teammateOnExposedRay = teammate
                     end
                 end
                 assert(teammateHumanoid, "teammate missing")
-                task.wait(0.1)
             end
             local teammateHealth = if teammateHumanoid then teammateHumanoid.Health else 0
-            wingTarget = wing.CFrame:PointToWorldSpace(Vector3.new(20, 0, 2))
-            target = wingTarget
-            -- A client-sampled point can be before the aircraft's current
-            -- surface. Verify the server casts beyond the direction point,
-            -- while the preceding real-cover case still blocks first.
-            target = head.Position + (target - head.Position).Unit * 12
+            local direction = (wingTarget - origin).Unit
+            local filter = RaycastParams.new()
+            filter.FilterType = Enum.RaycastFilterType.Include
+            filter.FilterDescendantsInstances =
+                { workspace.World.Battlefield, workspace.Terrain, aircraftModel }
+            local firstHit = workspace:Raycast(origin, direction * GroundCombatService.range, filter)
+            assert(
+                firstHit and firstHit.Instance == wing,
+                "open fixture ray did not initially target the actual wing"
+            )
+            -- The request still supplies a point before the actual aircraft.
+            -- The server extends the ray past it using its existing range.
+            target = origin + direction * 12
             sample("before-exposed-shot", target)
-            if teammateModel then
-                local filter = RaycastParams.new()
-                filter.FilterType = Enum.RaycastFilterType.Include
-                filter.FilterDescendantsInstances = { teammateModel }
-                assert(
-                    workspace:Raycast(head.Position, (wingTarget - head.Position), filter),
-                    "rifle path did not cross teammate"
-                )
-            end
             probe(
                 ground,
                 "Fire",
                 { roundId = roundId, sequence = 2, weapon = "M7", x = target.X, y = target.Y, z = target.Z }
             )
-            local deadline = os.clock() + 8
-            local nextSample = 0
-            while health() ~= 295 and os.clock() < deadline do
-                if os.clock() >= nextSample then
-                    sample("waiting-exposed-shot", nil)
-                    nextSample = os.clock() + 0.25
-                end
-                task.wait(0.03)
-            end
+            local exposed = resolvedShot(2)
             sample("after-exposed-shot", nil)
-            assert(health() == 295, "real rifle hit aircraft failed: " .. HttpService:JSONEncode(diagnostic))
             assert(
-                string.find(lastHitName, "Aircraft.Wing", 1, true),
-                "shot missed visible wing: " .. lastHitName
+                exposed.shot.hitName == wing:GetFullName(),
+                "shot missed visible wing: " .. exposed.shot.hitName
             )
-            local latestTracer = tracerObservations[#tracerObservations]
-            assert(latestTracer, "moving tracer missing")
-            assert(sawMuzzleFlash, "server rifle muzzle flash missing")
             assert(
-                (latestTracer.initialTip - latestTracer.origin).Magnitude < 0.1,
+                exposed.shot.applied
+                    and exposed.shot.healthBefore == 300
+                    and exposed.shot.healthAfter == 295
+                    and health() == 295
+                    and tool:GetAttribute("Ammo") == 28,
+                "real rifle hit aircraft failed: " .. HttpService:JSONEncode(diagnostic)
+            )
+            if teammateHumanoid then
+                assert(exposed.crossedTeammate == true, "resolved rifle segment did not cross the teammate")
+            end
+            local tracer, initialTip = exposed.tracer, exposed.initialTip
+            assert(tracer and initialTip, "moving tracer for the resolved shot missing")
+            assert(exposed.muzzleFlash, "server rifle muzzle flash missing")
+            assert(
+                (initialTip - exposed.shot.origin).Magnitude < 0.1,
                 "tracer did not start at server origin"
             )
-            local tracerDirection = (latestTracer.endpoint - latestTracer.origin).Unit
-            local tracerDistance = (latestTracer.endpoint - latestTracer.origin).Magnitude
+            local tracerDirection = (exposed.shot.hitPosition - exposed.shot.origin).Unit
+            local tracerDistance = (exposed.shot.hitPosition - exposed.shot.origin).Magnitude
             local lastProgress = 0
             local reached = false
             local tracerDeadline = os.clock() + 3
-            while latestTracer.part.Parent and os.clock() < tracerDeadline do
-                local tip = latestTracer.part.Position
-                    + latestTracer.part.CFrame.LookVector * latestTracer.part.Size.Z * 0.5
-                local offset = tip - latestTracer.origin
+            while tracer.Parent and os.clock() < tracerDeadline do
+                local tip = tracer.Position + tracer.CFrame.LookVector * tracer.Size.Z * 0.5
+                local offset = tip - exposed.shot.origin
                 local progress = offset:Dot(tracerDirection)
                 assert((offset - tracerDirection * progress).Magnitude < 0.05, "tracer left resolved ray")
                 assert(
@@ -753,16 +824,18 @@ function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
                     "tracer reversed or overshot"
                 )
                 lastProgress = progress
-                reached = reached or (tip - latestTracer.endpoint).Magnitude < 0.05
+                reached = reached or (tip - exposed.shot.hitPosition).Magnitude < 0.05
                 task.wait(0.01)
             end
-            assert(not latestTracer.part.Parent and reached, "tracer did not reach endpoint and clean up")
+            assert(not tracer.Parent and reached, "tracer did not reach endpoint and clean up")
             if teammateHumanoid then
                 assert(teammateHumanoid.Health == teammateHealth, "rifle damaged a ground teammate")
             end
             probe(op, "Observe", { health = 295, shotSequence = 2, shotAircraftHit = true, hud = true })
             probe(ground, "Observe", { health = 295, shotSequence = 2, shotAircraftHit = true, hud = true })
             traceEnabled = false
+            teammateOnExposedRay = nil
+            table.clear(resolvedRifles)
             fireDecisions = {}
             shotObservations = {}
         end)
