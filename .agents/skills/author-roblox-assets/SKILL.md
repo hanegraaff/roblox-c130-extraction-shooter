@@ -18,9 +18,16 @@ Deliver editable source and an export package sized for the target experience. U
 
 For walkable assets, read the [avatar and camera clearance guide](references/walkable-clearance.md). Fit the real game avatar, controls and third-person camera to the blockout before locking the facade. If the reference proportions leave too little room, preserve its visible character while adjusting interior layout or clearances when the game permits. Record any intentional camera assist and the areas that need it.
 
-- Keep stable structure, visual dressing, playable collision and optional damage pieces identifiable. Give reusable props functional pivots, such as the floor-level center for a freestanding crate.
-- Model openings in both the visible shell and the geometry that owns collision and queries. Separate prop details that should have no game interactions. For destructible pieces, agree on stable IDs, aligned origins, stage visibility and residual blocking geometry with the game's integration contract.
+- Keep stable structure, visual dressing and playable collision identifiable. Give reusable props functional pivots, such as the floor-level center for a freestanding crate.
+- Model openings in both the visible shell and the geometry that owns collision and queries. Separate prop details that should have no game interactions. Match destructible props to the target game's contract for identities, pivots and residual geometry.
 - Set asset limits from the target experience and devices. Track assembled and unique triangles, object and material counts, and texture dimensions and decoded memory where relevant. Reuse repeated meshes and materials. Preserve UVs and the cues players use for navigation and recognition when simplifying.
+
+## Prepare battlefield buildings for progressive damage
+
+For this project's battlefield buildings, including the starting shelter, plan destructible exterior wall panels on every story and destructible roof panels during blockout. Apply this default even to a Blender-only package intended for the battlefield. The outside waiting lobby is protected. Read the [current destruction rules](../../../game-design.md#combat-cover-and-destruction) and [world panel contract](../../../assets/world/README.md#buildings-and-panel-identities).
+
+- Separate wall and roof panels from stable floors, stairs and frames. Give each panel a stable identity and an aligned pivot across its intact and damaged geometry. Associate any dressing that spans a future opening with its panel.
+- Record the panel IDs, pivots, wall or roof placement and how each panel will produce a real partial opening and then clear its opening fully. Use the shared runtime geometry where it fits the asset. For custom imported panels, follow the [material panel contract](../../../src/server/README.md#imported-material-panels-and-outpost-reconstruction-p17) for aligned visual variants and their collision and query proxies. The standard runtime panels supply their own visual cues.
 
 ## Package and inspect
 
