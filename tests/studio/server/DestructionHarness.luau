@@ -257,7 +257,7 @@ function Harness.run(finish: ((Report) -> ())?)
         end
     )
     transport.Parent = ReplicatedStorage
-    local function probe(player: Player, kind: string, payload: unknown)
+    local function probe(player: Player, kind: string, payload: unknown, captureReply: ((string) -> ())?)
         waitFor(function()
             return ready[player] == true
         end, "client P07 listener", 25)
@@ -269,7 +269,11 @@ function Harness.run(finish: ((Report) -> ())?)
         end, "probe reply")
         local reply = replies[current]
         replies[current] = nil
-        assert(reply.player == player and reply.ok, reply.message)
+        assert(reply.player == player, "unexpected probe responder")
+        if captureReply then
+            captureReply(reply.message)
+        end
+        assert(reply.ok, reply.message)
         return current
     end
     local function command(
@@ -941,14 +945,19 @@ function Harness.run(finish: ((Report) -> ())?)
             assert(groundPlayer and groundPlayer.Character, "actual Ground character missing")
             local character = groundPlayer.Character
             local root = character:FindFirstChild("HumanoidRootPart")
-            assert(root and root:IsA("BasePart"), "Ground root missing")
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            assert(root and root:IsA("BasePart") and humanoid, "Ground avatar assembly missing")
+            local canSetOwnership, ownershipReason = root:CanSetNetworkOwnership()
+            assert(canSetOwnership, ownershipReason)
             local original = character:GetPivot()
             local originalServerPosition = root.Position
+            local originalOwner = root:GetNetworkOwner()
+            local originalAutomatic = root:GetNetworkOwnershipAuto()
+            local originalLinear = root.AssemblyLinearVelocity
+            local originalAngular = root.AssemblyAngularVelocity
             local groundY = wallPoint.Y - 1
             local start = Vector3.new(wallPoint.X, groundY, wallPoint.Z) + normal * 6
             local goal = Vector3.new(wallPoint.X, groundY, wallPoint.Z) - normal * 6
-            character:PivotTo(CFrame.new(start))
-            root.AssemblyLinearVelocity = Vector3.zero
             local function coordinates(point: Vector3): { number }
                 return { point.X, point.Y, point.Z }
             end
@@ -958,8 +967,9 @@ function Harness.run(finish: ((Report) -> ())?)
                 userId = groundPlayer.UserId,
                 serverObservationBudgetSeconds = 2,
                 originalPositionStuds = coordinates(originalServerPosition),
+                originalAutomaticOwnership = originalAutomatic,
+                originalOwnerUserId = if originalOwner then originalOwner.UserId else nil,
                 requestedStartPositionStuds = coordinates(start),
-                startServerPositionStuds = coordinates(root.Position),
                 goalPositionStuds = coordinates(goal),
             }
             -- Preserve actual positions even if either the client movement or
@@ -967,8 +977,41 @@ function Harness.run(finish: ((Report) -> ())?)
             table.insert(observations, walkObservation)
             local startedAt = os.clock()
             local observationStartedAt: number? = nil
+            local function capture(field: string, message: string)
+                local decoded, record = pcall(function()
+                    return HttpService:JSONDecode(message)
+                end)
+                walkObservation[field] = if decoded then record else message
+            end
             local walked, walkFailure = pcall(function()
-                probe(groundPlayer, "Walk", goal)
+                -- Establish the start under server ownership before the Ground client
+                -- takes over. An automatic client owner can overwrite a fresh PivotTo.
+                root:SetNetworkOwner(nil)
+                assert(
+                    root:GetNetworkOwner() == nil and not root:GetNetworkOwnershipAuto(),
+                    "server placement not owned"
+                )
+                character:PivotTo(CFrame.new(start))
+                root.AssemblyLinearVelocity = Vector3.zero
+                root.AssemblyAngularVelocity = Vector3.zero
+                walkObservation.startServerPositionStuds = coordinates(root.Position)
+                assert((root.Position - start).Magnitude < 2, "server Ground start placement differs")
+                probe(groundPlayer, "Walk", { start = start }, function(message)
+                    capture("clientPlacement", message)
+                end)
+                walkObservation.acknowledgedServerPositionStuds = coordinates(root.Position)
+                assert(
+                    groundPlayer.Character == character and (root.Position - start).Magnitude < 2,
+                    "server Ground avatar left start before handoff"
+                )
+                root:SetNetworkOwner(groundPlayer)
+                assert(
+                    root:GetNetworkOwner() == groundPlayer and not root:GetNetworkOwnershipAuto(),
+                    "Ground client did not acquire crossing ownership"
+                )
+                probe(groundPlayer, "Walk", { start = start, goal = goal }, function(message)
+                    capture("clientCrossing", message)
+                end)
                 walkObservation.clientReplyAfterSeconds = os.clock() - startedAt
                 walkObservation.clientReplyServerPositionStuds = coordinates(root.Position)
                 observationStartedAt = os.clock()
@@ -976,7 +1019,10 @@ function Harness.run(finish: ((Report) -> ())?)
                 -- server physics update. Require the real server state within a
                 -- separate two-second fixture budget; timeout remains a failure.
                 waitFor(function()
-                    return root:IsDescendantOf(workspace) and (root.Position - goal).Magnitude < 2
+                    return groundPlayer.Character == character
+                        and root:IsDescendantOf(workspace)
+                        and root:GetNetworkOwner() == groundPlayer
+                        and (root.Position - goal).Magnitude < 2
                 end, "actual server Ground traversal replication", 2)
                 return true
             end)
@@ -991,10 +1037,38 @@ function Harness.run(finish: ((Report) -> ())?)
             walkObservation.failure = if walked then nil else tostring(walkFailure)
             -- Restore only after collecting the final actual observation, for
             -- both success and failure. Cleanup cannot make traversal pass.
-            if character.Parent and root.Parent then
+            local restored, restoreFailure = pcall(function()
+                assert(
+                    character:IsDescendantOf(workspace) and root:IsDescendantOf(character),
+                    "Ground assembly lost before restoration"
+                )
+                root:SetNetworkOwner(nil)
+                humanoid:Move(Vector3.zero)
                 character:PivotTo(original)
-                root.AssemblyLinearVelocity = Vector3.zero
-            end
+                root.AssemblyLinearVelocity = originalLinear
+                root.AssemblyAngularVelocity = originalAngular
+                if originalAutomatic then
+                    root:SetNetworkOwnershipAuto()
+                else
+                    root:SetNetworkOwner(originalOwner)
+                end
+                walkObservation.restoredPositionStuds = coordinates(root.Position)
+                assert(
+                    (root.Position - originalServerPosition).Magnitude < 0.01,
+                    "Ground position not restored"
+                )
+                assert(
+                    root:GetNetworkOwnershipAuto() == originalAutomatic,
+                    "Ground ownership mode not restored"
+                )
+                assert(
+                    originalAutomatic or root:GetNetworkOwner() == originalOwner,
+                    "Ground manual owner not restored"
+                )
+            end)
+            walkObservation.restored = restored
+            walkObservation.restoreFailure = if restored then nil else tostring(restoreFailure)
+            assert(restored, tostring(restoreFailure))
             assert(walked, tostring(walkFailure))
         end)
         check(
