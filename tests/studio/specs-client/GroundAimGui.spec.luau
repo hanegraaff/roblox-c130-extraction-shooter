@@ -194,6 +194,7 @@ return function()
         local runService = game:GetService("RunService")
         local controller = require(player.PlayerScripts.Client.GroundCombatController)
         local gui = Instance.new("ScreenGui")
+        gui.ResetOnSpawn = false
         gui.Name, gui.IgnoreGuiInset, gui.Parent = "GroundReadinessProbe", true, player.PlayerGui
         local viewport = Instance.new("Frame")
         viewport.BackgroundTransparency, viewport.Parent = 1, gui
@@ -328,6 +329,7 @@ return function()
             local oldCameraType = if camera then camera.CameraType else nil
             local oldSubject = if camera then camera.CameraSubject else nil
             local oldCFrame = if camera then camera.CFrame else nil
+            local oldFocus = if camera then camera.Focus else nil
             local oldFov = if camera then camera.FieldOfView else nil
             local aircraft = replicated:FindFirstChild("AircraftState")
             local ownsAircraft = aircraft == nil
@@ -352,6 +354,7 @@ return function()
             local groundCopy: ScreenGui? = nil
             local roundCopy: ScreenGui? = nil
             local fixtureTool: Tool? = nil
+            local fixtureBody: Model? = nil
             local renamedTool: Tool? = nil
             local oldToolName: string? = nil
             local observations: { unknown } = {}
@@ -366,11 +369,17 @@ return function()
             end
             local function child(parent: Instance, name: string): GuiObject
                 local item = parent:FindFirstChild(name)
-                assert(item and item:IsA("GuiObject"), "production GUI item missing: " .. name)
+                assert(
+                    item and item:IsA("GuiObject"),
+                    "production GUI item missing: " .. name .. " under " .. parent:GetFullName()
+                )
                 return item
             end
             local function copyScreen(source: ScreenGui, name: string): (ScreenGui, Frame)
                 local gui = Instance.new("ScreenGui")
+                -- These copies model the production HUD across real avatar
+                -- loads, including while P03 deploys before smoke ends.
+                gui.ResetOnSpawn = false
                 gui.Name, gui.IgnoreGuiInset, gui.ScreenInsets =
                     name, source.IgnoreGuiInset, source.ScreenInsets
                 gui.ClipToDeviceSafeArea, gui.Parent = source.ClipToDeviceSafeArea, player.PlayerGui
@@ -390,7 +399,32 @@ return function()
                 player:SetAttribute("Role", "Ground")
                 player:SetAttribute("Life", "Alive")
                 local character = player.Character
-                assert(character, "layout fixture requires a ready actual character")
+                if not character then
+                    -- Late spectators have no server-owned avatar. Use an
+                    -- inert local body inside PlayerScripts for the HUD only.
+                    -- No spawn call or fixture geometry enters Workspace.
+                    local body = Instance.new("Model")
+                    fixtureBody = body
+                    body.Name = "P10GroundLayoutBody"
+                    for _, name in { "HumanoidRootPart", "Head" } do
+                        local part = Instance.new("Part")
+                        part.Name = name
+                        part.Anchored = true
+                        part.Transparency = 1
+                        part.CanCollide, part.CanQuery, part.CanTouch = false, false, false
+                        part.Parent = body
+                    end
+                    local humanoid = Instance.new("Humanoid")
+                    humanoid.RequiresNeck = false
+                    humanoid.Parent = body
+                    body.Parent = player.PlayerScripts
+                    player.Character = body
+                    assert(
+                        player.Character == body and body.Parent == player.PlayerScripts,
+                        "private layout body unavailable"
+                    )
+                    character = body
+                end
                 local existing = character:FindFirstChild("M-7 rifle")
                 local tool: Tool
                 if existing and existing:IsA("Tool") then
@@ -467,6 +501,11 @@ return function()
                             frames()
                             local sourceStatus = child(sourceGround, "RifleStatus")
                             assert(sourceStatus:IsA("TextLabel"), "readiness label missing")
+                            local weaponText = if weapon == "M7" then "M-7 • " else "ROCKET • "
+                            assert(
+                                string.find(sourceStatus.Text, weaponText, 1, true) == 1,
+                                "layout did not observe the equipped tool"
+                            )
                             assert(
                                 sourceGround:FindFirstChild("AircraftHit") == nil,
                                 "aircraft hit overlay remains"
@@ -643,6 +682,14 @@ return function()
             if fixtureTool then
                 fixtureTool:Destroy()
             end
+            if fixtureBody then
+                -- A real replication update can replace the local pointer.
+                -- Clear it only while it still identifies our fixture.
+                if player.Character == fixtureBody then
+                    player.Character = nil
+                end
+                fixtureBody:Destroy()
+            end
             aircraft:SetAttribute("Health", oldHealth)
             aircraft:SetAttribute("MaxHealth", oldMaximum)
             aircraft:SetAttribute("Destroyed", oldDestroyed)
@@ -654,9 +701,9 @@ return function()
             if originalRound and originalRoundName then
                 originalRound.Name = originalRoundName
             end
-            if camera and oldCameraType and oldCFrame and oldFov then
-                camera.CameraType, camera.CameraSubject, camera.CFrame, camera.FieldOfView =
-                    oldCameraType, oldSubject, oldCFrame, oldFov
+            if camera and oldCameraType and oldCFrame and oldFocus and oldFov then
+                camera.CameraType, camera.CameraSubject, camera.CFrame, camera.Focus, camera.FieldOfView =
+                    oldCameraType, oldSubject, oldCFrame, oldFocus, oldFov
             end
             state:Destroy()
             local tests = player.PlayerScripts:FindFirstChild("ClientTests")
@@ -666,6 +713,10 @@ return function()
             assert(
                 starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack) == backpackEnabled,
                 "layout fixture changed native inventory state"
+            )
+            assert(
+                not fixtureBody or (player.Character ~= fixtureBody and fixtureBody.Parent == nil),
+                "private layout body survived cleanup"
             )
             assert(ok, tostring(failure))
         end

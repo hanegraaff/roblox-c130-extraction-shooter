@@ -146,9 +146,8 @@ On desktop, the Ground HUD shows personal health, the equipped M-7 or
 launcher's ammunition and readiness, aircraft health, launcher status,
 surviving teammates and time. The operator HUD shows the selected named
 weapon, zoom and readiness, aircraft health, surviving opponents and time.
-Both see the winner and reason. The role guide explains objectives and current
-inputs. Spectators can cycle among living Ground targets and fall back to a
-battlefield overview when no eligible target remains.
+Both see the winner and reason. Spectators can cycle among living Ground
+targets and fall back to a battlefield overview when no eligible target remains.
 
 Text identifies warnings, impacts and results alongside optional audio and
 motion. Desktop settings adjust effect intensity and aircraft destruction

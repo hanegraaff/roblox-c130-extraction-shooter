@@ -1,0 +1,14 @@
+2026-11-22T19:33:26.932Z,5.932112,6c547000,6,Error [FLog::CreatorError] Error: TestService: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:670: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:393: layout fixture requires a ready actual character
+ReplicatedStorage.ClientSpecs.GroundAimGui.spec:670
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode
+ReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan
+ReplicatedStorage.TestPackages._Index.roblox_tes
+2026-11-22T19:33:26.932Z,5.932131,6c547000,6,Info [FLog::CreatorOutput]
+2026-11-22T19:33:26.932Z,5.932227,6c547000,6,Error [FLog::CreatorError] Error: Players.Player3.PlayerScripts.ClientTests:24: client suite failed or empty
+2026-11-22T19:33:26.932Z,5.932246,6c547000,6,Info [FLog::CreatorOutput] Info: Stack Begin
+2026-11-22T19:33:26.932Z,5.932280,6c547000,6,Info [FLog::CreatorOutput] Info: Script 'Players.Player3.PlayerScripts.ClientTests', Line 24

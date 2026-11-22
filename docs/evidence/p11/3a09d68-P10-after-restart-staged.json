@@ -1,0 +1,429 @@
+{
+  "candidate": "3a09d68b8f435d0e2dd08d5b5817e1256cb228c2",
+  "tree": "2f99292b5cf0b0e24163d29c3ef6afa9444a557a",
+  "docsCommit": "7c72a73ae48e01ca88d28d6607e203ce2a14b26b",
+  "artifactSha256": "55f494bb04e6ac0570fe8da97fe7a8ac5e8b02690b509a58d8737481762365a2",
+  "studioId": "393b5242-5671-4b38-89b7-4ad134ea5c7d",
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"client\":\"a507edcafbfc44a4974d50542e4f465c52658df9e70cf364a95eaf7889bd9ff1\",\"binding\":\"5f04166ea508dad0fa86f8040c119abdef7d1a5086d8919df15139ae3b79b4d0\",\"p10\":\"548cbc88d5ff4a4348e6cb2a5ae1ba2f6ad60a2bfe32a3f0805a72ef74cd70c0\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P10\",\"reportKey\":\"P11RestartP10\",\"initialRequested\":3}"
+      }
+    ],
+    "isError": false
+  },
+  "command": "ExecuteMultiplayerTestAsync(3,{kind='P10'}); tester calls supported AddPlayers(1) in owned Server once initial roster =3 before gameplay",
+  "stagedAdd": {
+    "id": "d2aec3d6-96bb-4bcb-992a-4b3e17f40bda",
+    "r": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"initialActual\":3,\"clock\":1795383464.209174,\"scheduled\":1,\"args\":{\"kind\":\"P10\"}}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "liveFourClientRoster": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"ids\":{\"1\":{\"id\":-1,\"character\":false,\"life\":\"Eliminated\",\"role\":\"Gunship\"},\"4\":{\"id\":-4,\"character\":false,\"life\":\"Eliminated\",\"role\":\"Ground\"},\"3\":{\"id\":-3,\"character\":false,\"life\":\"Eliminated\",\"role\":\"Ground\"},\"2\":{\"id\":-2,\"character\":false,\"life\":\"Eliminated\",\"role\":\"Ground\"}},\"phase\":\"Results\",\"staged\":\"AddPlayers(1) returned\",\"stage\":\"No living target yields neutral result, then restores all local cameras\",\"clock\":1795383475.15965}"
+      }
+    ],
+    "isError": false
+  },
+  "ok": true,
+  "result": {
+    "initialIds": [
+      -1,
+      -2,
+      -3,
+      -4
+    ],
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-4": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -4,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 3,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    "passed": 8,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Four actual clients connected"
+      },
+      {
+        "passed": true,
+        "name": "Native smoke, lobby view and role assignment"
+      },
+      {
+        "passed": true,
+        "name": "Role HUD, shared readiness and both acknowledged weapon views"
+      },
+      {
+        "passed": true,
+        "name": "Keyboard settings and muted visual warning preserve authority"
+      },
+      {
+        "passed": true,
+        "name": "Elimination cycles only living teammates and rejects action"
+      },
+      {
+        "passed": true,
+        "name": "No living target yields neutral result, then restores all local cameras"
+      },
+      {
+        "passed": true,
+        "name": "Destruction result and steady view remain visible with both settings off"
+      },
+      {
+        "passed": true,
+        "name": "Runtime teardown removes HUD, camera subjects and fixture owners"
+      }
+    ],
+    "observations": [
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -1,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1153,
+          618
+        ],
+        "userId": -2,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -3,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -4,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Ground",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -3,
+        "timerOrResult": "GROUND TEAM\n2:00 remaining • 3 Ground alive"
+      },
+      {
+        "feedback": "The M-7 magazine is full.",
+        "userId": -3,
+        "action": "RejectFullReload"
+      },
+      {
+        "view": "Operator",
+        "action": "View",
+        "fov": 30,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -1,
+        "timerOrResult": "C-130 OPERATOR\n2:00 remaining • 3 Ground alive"
+      },
+      {
+        "sent": "AircraftState/SelectWeapon",
+        "userId": -1,
+        "action": "AircraftState/SelectWeapon"
+      },
+      {
+        "view": "Operator",
+        "action": "View",
+        "fov": 40,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -1,
+        "timerOrResult": "C-130 OPERATOR\n2:00 remaining • 3 Ground alive"
+      },
+      {
+        "shake": "Off",
+        "action": "Settings",
+        "userId": -3,
+        "effects": "Off"
+      },
+      {
+        "action": "Cue",
+        "cue": "INCOMING GUNSHIP FIRE",
+        "userId": -3,
+        "effects": "Off"
+      },
+      {
+        "view": "Spectator",
+        "targetId": -3,
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "action": "View",
+        "userId": -4,
+        "timerOrResult": "ELIMINATED • SPECTATING\n2:00 remaining • 2 Ground alive"
+      },
+      {
+        "view": "Spectator",
+        "targetId": -2,
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "action": "NextTarget",
+        "userId": -4,
+        "timerOrResult": "ELIMINATED • SPECTATING\n2:00 remaining • 2 Ground alive"
+      },
+      {
+        "view": "Spectator",
+        "targetId": -3,
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "action": "PreviousTarget",
+        "userId": -4,
+        "timerOrResult": "ELIMINATED • SPECTATING\n2:00 remaining • 2 Ground alive"
+      },
+      {
+        "sent": "LauncherState/Pickup",
+        "userId": -4,
+        "action": "LauncherState/Pickup"
+      },
+      {
+        "sent": "AircraftState/SelectWeapon",
+        "userId": -4,
+        "action": "AircraftState/SelectWeapon"
+      },
+      {
+        "sent": "AircraftState/GroundFire",
+        "userId": -4,
+        "action": "AircraftState/GroundFire"
+      },
+      {
+        "view": "Spectator",
+        "targetId": -2,
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "action": "View",
+        "userId": -4,
+        "timerOrResult": "ELIMINATED • SPECTATING\n1:59 remaining • 2 Ground alive"
+      },
+      {
+        "view": "Results",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -1,
+        "timerOrResult": "C-130 wins\nAll ground players were eliminated."
+      },
+      {
+        "view": "Results",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1153,
+          618
+        ],
+        "userId": -2,
+        "timerOrResult": "C-130 wins\nAll ground players were eliminated."
+      },
+      {
+        "view": "Results",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -3,
+        "timerOrResult": "C-130 wins\nAll ground players were eliminated."
+      },
+      {
+        "view": "Results",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -4,
+        "timerOrResult": "C-130 wins\nAll ground players were eliminated."
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -1,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1153,
+          618
+        ],
+        "userId": -2,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -3,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "view": "Waiting",
+        "action": "View",
+        "fov": 70,
+        "viewport": [
+          1081,
+          618
+        ],
+        "userId": -4,
+        "timerOrResult": "WAITING FOR PLAYERS\nWaiting for 4 players"
+      },
+      {
+        "stillSeconds": 0.2,
+        "action": "StillDestruction",
+        "cue": "C-130 DESTROYED",
+        "shake": "Off",
+        "userId": -3,
+        "effects": "Off"
+      },
+      {
+        "removed": true,
+        "userId": -1,
+        "action": "NoHud"
+      },
+      {
+        "removed": true,
+        "userId": -2,
+        "action": "NoHud"
+      },
+      {
+        "removed": true,
+        "userId": -3,
+        "action": "NoHud"
+      },
+      {
+        "removed": true,
+        "userId": -4,
+        "action": "NoHud"
+      }
+    ],
+    "finalClients": 4,
+    "environment": "Studio",
+    "discovered": 8,
+    "suite": "P10-multiplayer",
+    "failed": 0,
+    "mode": "sdk"
+  },
+  "elapsedSeconds": 43.900227541686036
+}

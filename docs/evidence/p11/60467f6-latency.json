@@ -1,0 +1,242 @@
+{
+  "candidate": {
+    "commit": "60467f620154fc39adcb7b854f6c5c6511682add",
+    "tree": "d85f80fa59ae7e4f3825bf59dba2b8b815f2fa1b",
+    "server": "8d6175a8a475bfa49de30a948cc279ae1b0c6cefaca536145fc8e42bc5a6884e",
+    "metrics": "83ec4c9969747e4729771fb1e58a246183a7f5c5278c046de9f2eec5a64c5453",
+    "p17": "866146615223250e2cb88209dee805c3ea8e118675afe975448cd1e517211f43"
+  },
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Latency',clients=2})",
+  "actualClientNetwork": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"jitterIn\":0,\"outgoing\":65,\"lossOut\":0,\"pingMs\":{\"1\":134.9429931640625,\"4\":134.3159942626953,\"3\":132.61099243164063,\"2\":132.40699768066407},\"incoming\":65,\"client\":-1,\"lossIn\":0,\"jitterOut\":0}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Lobby\",\"round\":0,\"stage\":\"Actual client smoke and convergence probes ready\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"jitterIn\":0,\"outgoing\":65,\"lossOut\":0,\"pingMs\":{\"1\":132.4340057373047,\"4\":132.82000732421876,\"3\":133.64700317382813,\"2\":132.38800048828126},\"incoming\":65,\"client\":-2,\"lossIn\":0,\"jitterOut\":0}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "ok": true,
+  "restored": {
+    "OutboundNetworkMinDelayMs": 0,
+    "OutboundNetworkJitterMs": 0,
+    "OutboundNetworkLossPercent": 0,
+    "InboundNetworkMinDelayMs": 0,
+    "InboundNetworkLossPercent": 0,
+    "InboundNetworkJitterMs": 0
+  },
+  "original": {
+    "OutboundNetworkMinDelayMs": 0,
+    "OutboundNetworkJitterMs": 0,
+    "OutboundNetworkLossPercent": 0,
+    "InboundNetworkMinDelayMs": 0,
+    "InboundNetworkLossPercent": 0,
+    "InboundNetworkJitterMs": 0
+  },
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "passed": true,
+        "name": "Seven measured replication round trips per real client"
+      },
+      {
+        "passed": true,
+        "name": "Convergent replicated health, ownership, weapon and result under measured RTT"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 5,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "replayRound1": {
+        "owner": -2,
+        "resources": {
+          "rifleQueue": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "pendingOutcomes": 0,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "launcherFlights": 0,
+          "pendingBarriers": 0,
+          "connections": 23,
+          "rifleTools": 1,
+          "fragments": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "gunshipEffects": 1,
+          "launcherQueuePeak": 8,
+          "launcherQueue": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 1
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "clientRequests": {
+        "AircraftState/FireWeapon": 64,
+        "AircraftState/GroundFire": 128,
+        "AircraftState/SelectWeapon": 64,
+        "LauncherState/Pickup": 64
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 8,
+        "launcherQueue": 0
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "actualRoundTripMs": {
+        "-1": [
+          150.03520832397044,
+          150.52529168315232,
+          166.05954169062898,
+          166.28191666677594,
+          166.35229164967313,
+          166.7072083801031,
+          166.72424995340407
+        ],
+        "-2": [
+          149.31979164248332,
+          166.4255000068806,
+          166.46216670051217,
+          166.6856666561216,
+          166.74887499539182,
+          166.80866671958938,
+          166.93424998084083
+        ]
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "groundFireDecisions": {
+        "preflight": 16,
+        "rate": 111,
+        "accepted": 1
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 5,
+    "suite": "P11",
+    "failed": 0,
+    "mode": "Latency"
+  },
+  "applied": {
+    "OutboundNetworkMinDelayMs": 65,
+    "OutboundNetworkJitterMs": 0,
+    "OutboundNetworkLossPercent": 0,
+    "InboundNetworkMinDelayMs": 65,
+    "InboundNetworkLossPercent": 0,
+    "InboundNetworkJitterMs": 0
+  }
+}

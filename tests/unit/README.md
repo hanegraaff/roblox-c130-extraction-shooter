@@ -4,11 +4,17 @@
 
 `MapRules.spec.luau` adds P02/P13/R05 expanded circle configuration, finite/mismatched geometry settings, inclusive disk boundaries, 720-stud diameter/equal 360-stud radius invariants and sampled orbit positions. It is pure math/configuration evidence; it does not spawn an aircraft or prove world clearance. RoleService.spec.luau adds production population boundaries, exact role counts, seeded rotation and bounded seed validation. RoundRules.spec.luau covers legal phase edges, exact expiry, mutual destruction and noncompetitive empty-server cleanup. AircraftRules.spec.luau adds six P04/R05/R06 cases for periodicity/negative phase wrap, tangent/altitude/perimeter geometry, invalid settings/derived overflow, finite distinct FOVs and inclusive aim boundaries. `BuildingLayout.spec.luau` adds three P13/R16 cases for exact footprints, stories, stairs, IDs and pivots. `AircraftPanRules.spec.luau` adds fourteen P14/R05/R06/R17 cases for local WASD/touch axes, frame-rate independence, input rejection, viewport-corner containment at desktop/phone sizes and both zooms, sustained edge holds, ultra-wide adaptation, rigid orbit-relative view, alternate level geometry and integer reticle rasterization. `PanelDamageRules.spec.luau` covers revised P07/R09 heavy 0–6 boundaries, exact nine-second arithmetic, proportional mixed persistent credit, invalid/overflow inputs and independent appearance tiers. Light follows positive earned credit, Heavy remains distinct at zero current-stage progress and Total cannot regress. These deterministic cases do not establish rendered normal/thermal distinction.
 
-`PlayerPresentation.spec.luau` adds eleven P10 cases for role and phase,
-result reasons, empty and changing spectator targets, launcher/readiness
-feedback, rejected actions and effects settings. These bring the standalone
-suite to 77 cases. Native client layout, target lifecycle and keyboard behavior
-have separate Studio checks. [Player experience harness](../../docs/testing.md#run-the-player-experience-harness)
+`PlayerPresentation.spec.luau` covers role and phase, result reasons, empty
+and changing spectator targets, launcher/readiness feedback, rejected actions
+and effects settings. `WeaponSoundRules.spec.luau` covers positional playback
+timing and stale or out-of-range cue rejection. Native layout, targeting and
+keyboard behavior have separate Studio checks. [Player experience harness](../../docs/testing.md#run-the-player-experience-harness)
+
+`P11Metrics.spec.luau` drives the test-only metrics module in Lune. Three
+cases cover empty and invalid frame samples, upward-rounded nearest-rank p95
+with overflow, and retained-memory growth at equivalent reset points. The
+actual timing and memory measurements are collected from Studio processes.
+[P11 procedure](../../docs/testing.md#run-the-p11-performance-harness)
 
 Run `lune run scripts/run_tests.luau unit` from the repository root after setup, with Rokit tools on PATH. Each spec returns a function accepting `(test, actualModule)`; it does not copy production rules. The standalone runner discovers these files and loads filesystem modules. The Studio server wrapper registers the same cases with TestEZ using mapped ModuleScripts, proving dependency loading in both runtimes.
 

@@ -22,7 +22,7 @@ export type Controller = {
     interrupt: (number?) -> (),
     flush: (number) -> (),
     snapshot: (string) -> DestructionService.Snapshot?,
-    resources: () -> { panels: number, fragments: number, pending: number },
+    resources: () -> { panels: number, fragments: number, pending: number, barriers: number },
     stop: () -> (),
 }
 
@@ -232,7 +232,12 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         snapshot = rules.snapshot,
         resources = function()
             local resources = rules.resources()
-            return { panels = resources.panels, pending = resources.pending, fragments = fragments.count() }
+            return {
+                panels = resources.panels,
+                pending = resources.pending,
+                barriers = resources.barriers,
+                fragments = fragments.count(),
+            }
         end,
         stop = function()
             if not running then

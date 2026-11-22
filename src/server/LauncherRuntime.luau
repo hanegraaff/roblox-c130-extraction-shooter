@@ -21,6 +21,8 @@ local LauncherService = require(script.Parent.LauncherService)
 local Geometry = require(script.Parent.LauncherGeometry)
 local LauncherRuntime = {}
 local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
+-- Shared bound for waiting pickup, drop and fire intents across the roster.
+LauncherRuntime.queueCapacity = 32
 export type Controller = {
     stop: () -> (),
     snapshot: () -> LauncherService.Snapshot,
@@ -28,7 +30,15 @@ export type Controller = {
     advance: (number) -> (),
     -- Sync generations and process validated launcher intent after round results.
     interact: (number) -> (),
-    resources: () -> { connections: number, representations: number, flights: number, queued: number },
+    resources: (
+    ) -> {
+        connections: number,
+        representations: number,
+        flights: number,
+        queued: number,
+        peakQueued: number,
+        effects: number,
+    },
 }
 type Request = { player: Player, action: string, payload: unknown }
 type Flight = {
@@ -66,6 +76,7 @@ function LauncherRuntime.start(
     local effects = Instance.new("Folder")
     effects.Name, effects.Parent = "LauncherEffects", workspace
     local running = true
+    local peakQueued = 0
     local connections: { RBXScriptConnection } = {}
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local pending: { Request } = {}
@@ -292,11 +303,12 @@ function LauncherRuntime.start(
                 if
                     not RateLimit.take(bucket, now)
                     or not Validation.flatPayload(payload, 6, 64)
-                    or #pending >= 32
+                    or #pending >= LauncherRuntime.queueCapacity
                 then
                     return
                 end
                 table.insert(pending, { player = player, action = action, payload = payload })
+                peakQueued = math.max(peakQueued, #pending)
             end)
         )
     end
@@ -443,6 +455,8 @@ function LauncherRuntime.start(
                 representations = (if held then 1 else 0) + (if available then 1 else 0),
                 flights = #flights,
                 queued = #pending,
+                peakQueued = peakQueued,
+                effects = #effects:GetChildren(),
             }
         end,
         stop = function()

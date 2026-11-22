@@ -28,6 +28,39 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             'Expected owner.resolve({ roundId = 1, shotId = id, firedAt = time, panelId = panel, weapon = weapon or "GAU23", })'
         )
     end
+    test("P11 fills the structural outcome window, rejects overflow/replay and drains in order", function()
+        local owner = fixture()
+        local cap = Service.outcomeWindow
+        for id = cap + 1, 2, -1 do
+            owner.interrupt(id)
+            shot(owner, id, 100 + id, nil)
+        end
+        owner.interrupt(1)
+        local full = owner.resources()
+        assert(full.pending == cap and full.barriers == cap + 1, "window did not reach its configured bounds")
+        for _, id in { cap + 1, cap + 2 } do
+            assert(not owner.resolve({
+                roundId = 1,
+                shotId = id,
+                weapon = "M102",
+                firedAt = 99,
+                panelId = "wall",
+            }), "duplicate or overflow entered the structural queue")
+        end
+        assert(owner.resources().pending == cap, "rejection changed the queue")
+        shot(owner, 1, 100, "wall", "M102")
+        local drained = owner.resources()
+        assert(drained.pending == 0 and drained.barriers == 0, "frontier did not drain both queues")
+        assert(
+            assert(owner.snapshot("wall"), "wall missing").heavySeconds == 3,
+            "overflow or replay altered panel damage"
+        )
+        owner.reset(2, { "wall" })
+        assert(
+            assert(owner.snapshot("wall"), "wall missing after reset").heavySeconds == 0,
+            "stale panel damage survived"
+        )
+    end)
     test(
         "SustainedPanelFire first hit earns zero and exact cadence reaches nine then eighteen seconds",
         function()

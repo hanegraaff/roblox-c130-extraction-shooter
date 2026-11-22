@@ -36,7 +36,7 @@ export type Impact = {
 }
 export type Controller = {
     stop: () -> (),
-    resources: () -> { connections: number, projectiles: number },
+    resources: () -> { connections: number, projectiles: number, effects: number },
     onImpact: (Impact) -> (),
     -- Synchronizes the round/reset generation and clears nonactive flights.
     maintain: (number) -> (),
@@ -587,7 +587,7 @@ function CombatRuntime.start(
         maintain = maintain,
         advance = advance,
         resources = function()
-            return { connections = #connections, projectiles = #projectiles }
+            return { connections = #connections, projectiles = #projectiles, effects = #effects:GetChildren() }
         end,
         stop = function()
             if not running then

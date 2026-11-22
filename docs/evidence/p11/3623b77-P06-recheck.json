@@ -1,0 +1,1238 @@
+{
+  "candidate": "3623b7761702be16a7454beee502d4aa54b8724f",
+  "tree": "2374b9bd61d8132fe7bc2d8521e845b812c4f8c5",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P06\"})",
+  "start": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"requestedClients\":2,\"version\":\"0.748.0.7481526\",\"kind\":\"P06\",\"reportKey\":\"P11RecheckP06\",\"hashes\":{\"AircraftPanHarness\":\"6ca1344653533b24b61033794b917e0ffabaa05aa0dafee83f5291c6ac6fcd2e\",\"P17Metadata\":\"725b218f1b0cf3028e2686e319eb0ae2371caa486768e4d9eab13d613f7f9c35\",\"GroundCombatHarness\":\"5b2a588fc31b561f1441a1f947db23a91aedfc8c42b11037f7285341656fdc3c\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "live": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-1,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":13,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":13}\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"ids\":{\"1\":-1,\"2\":-2},\"args\":{\"kind\":\"P06\"}}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-2,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":13,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":13}\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "ok": true,
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "passed": 10,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A1 ground receives one rifle and no launcher"
+      },
+      {
+        "passed": true,
+        "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+      },
+      {
+        "passed": true,
+        "name": "A1 server raycast stops rifle at cover then damages aircraft"
+      },
+      {
+        "passed": true,
+        "name": "A2 direct swept rocket fixtures destroy once"
+      },
+      {
+        "passed": true,
+        "name": "A5 reset restores aircraft and no stale equipment"
+      },
+      {
+        "passed": true,
+        "name": "A3 terrain-query failure rejects remote without mutation then recovers"
+      },
+      {
+        "passed": true,
+        "name": "A4 last ground elimination then aircraft destruction share one simulation batch"
+      },
+      {
+        "passed": true,
+        "name": "A4 aircraft destruction then last ground elimination share one simulation batch"
+      },
+      {
+        "passed": true,
+        "name": "A4 actual operator disconnect has separate forfeit reason"
+      },
+      {
+        "passed": true,
+        "name": "A5 repeated-round teardown releases tools and listeners"
+      }
+    ],
+    "clientCount": 2,
+    "observations": [
+      {
+        "shots": [
+          {
+            "applied": false,
+            "sequence": 1,
+            "origin": [
+              305.938720703125,
+              116.4552230834961,
+              147.27978515625
+            ],
+            "userId": -2,
+            "healthAfter": 300,
+            "healthBefore": 300,
+            "resolvedAt": 1795375658.309507,
+            "aircraftPosition": [
+              313.5599365234375,
+              140,
+              176.8620147705078
+            ],
+            "requestedTarget": [
+              306.5840759277344,
+              118.3148422241211,
+              149.52676391601562
+            ],
+            "hitName": "Workspace.World.Battlefield.P06Fixture.P06Cover",
+            "serverTime": 1795375658.308451,
+            "hitPosition": [
+              309.77166748046875,
+              127.5,
+              160.6251983642578
+            ]
+          },
+          {
+            "applied": true,
+            "sequence": 2,
+            "origin": [
+              295.21759033203125,
+              118.41763305664062,
+              173.4456024169922
+            ],
+            "userId": -2,
+            "healthAfter": 295,
+            "healthBefore": 300,
+            "resolvedAt": 1795375658.508005,
+            "aircraftPosition": [
+              311.0735168457031,
+              140,
+              181.1995086669922
+            ],
+            "requestedTarget": [
+              295.2927551269531,
+              130.41299438476562,
+              173.94186401367188
+            ],
+            "hitName": "Workspace.Aircraft.Wing",
+            "serverTime": 1795375658.507372,
+            "hitPosition": [
+              295.3597106933594,
+              141.10000610351562,
+              174.38400268554688
+            ]
+          }
+        ],
+        "inwardMarginStuds": 20,
+        "samples": [
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.9546813964844,
+              116.457763671875,
+              147.26535034179688
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              322.21124267578125,
+              140,
+              160.5612335205078
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375657.591068,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "trusted-position",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              322.21124267578125,
+              140,
+              160.5612335205078
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.9546813964844,
+              116.457763671875,
+              147.26535034179688
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              322.21124267578125,
+              140,
+              160.5612335205078
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375657.591193,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "before-embedded-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.818115234375,
+              116.374267578125,
+              147.06857299804688
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              318.3731384277344,
+              140,
+              168.0432891845703
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375657.924646,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "after-embedded-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              322.21124267578125,
+              140,
+              160.5612335205078
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.818115234375,
+              116.374267578125,
+              147.06857299804688
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              318.3731384277344,
+              140,
+              168.0432891845703
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375657.924797,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "before-body-wall-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.9295654296875,
+              116.44869232177734,
+              147.27085876464844
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              314.1896667480469,
+              140,
+              175.7408905029297
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375658.274359,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "after-body-wall-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              306.5840759277344,
+              118.3148422241211,
+              149.52676391601562
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.9295654296875,
+              116.44869232177734,
+              147.27085876464844
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              314.1896667480469,
+              140,
+              175.7408905029297
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375658.27454,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "before-solid-cover-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375658.458451,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.9539794921875,
+              116.46548461914062,
+              147.2938232421875
+            ],
+            "phase": "Active",
+            "ammo": 29,
+            "aircraftPosition": [
+              313.3599548339844,
+              140,
+              177.216064453125
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375658.342181,
+            "role": "Ground",
+            "root": [
+              306.0554504394531,
+              115,
+              148.08799743652344
+            ],
+            "stage": "after-solid-cover-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              295.2927551269531,
+              130.41299438476562,
+              173.94186401367188
+            ],
+            "readiness": {
+              "nextFire": 1795375658.458451,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              295.22564697265625,
+              118.42273712158203,
+              173.4632568359375
+            ],
+            "phase": "Active",
+            "ammo": 29,
+            "aircraftPosition": [
+              311.7077331542969,
+              140,
+              180.10633850097656
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375658.474577,
+            "role": "Ground",
+            "root": [
+              295.35760498046875,
+              117,
+              174.4043731689453
+            ],
+            "stage": "before-exposed-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375658.657372,
+              "ammo": 28,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              295.1937255859375,
+              118.40338134765625,
+              173.4018096923828
+            ],
+            "phase": "Active",
+            "ammo": 28,
+            "aircraftPosition": [
+              310.85870361328125,
+              140,
+              181.5678253173828
+            ],
+            "life": "Alive",
+            "health": 295,
+            "serverTime": 1795375658.541875,
+            "role": "Ground",
+            "root": [
+              295.35760498046875,
+              117,
+              174.4043731689453
+            ],
+            "stage": "after-exposed-shot",
+            "roundId": 1
+          }
+        ],
+        "kind": "rifle-cover-and-open-shot",
+        "userId": -2,
+        "decisions": [
+          {
+            "decision": "origin:body overlaps cover",
+            "userId": -2,
+            "serverTime": 1795375657.60736
+          },
+          {
+            "decision": "origin:body overlaps cover",
+            "userId": -2,
+            "serverTime": 1795375657.957851
+          },
+          {
+            "decision": "accepted",
+            "userId": -2,
+            "serverTime": 1795375658.308451
+          },
+          {
+            "decision": "accepted",
+            "userId": -2,
+            "serverTime": 1795375658.507372
+          }
+        ]
+      },
+      {
+        "healthAfter": 195,
+        "origin": [
+          306.99169921875,
+          165,
+          188.0321502685547
+        ],
+        "shot": 1,
+        "sweptDistanceStuds": 50,
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "kind": "live-orbit-rocket-sweep",
+        "aircraftPosition": [
+          306.99169921875,
+          140,
+          188.0321502685547
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666
+      },
+      {
+        "healthAfter": 95,
+        "origin": [
+          306.99169921875,
+          165,
+          188.0321502685547
+        ],
+        "shot": 2,
+        "sweptDistanceStuds": 50,
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "kind": "live-orbit-rocket-sweep",
+        "aircraftPosition": [
+          306.99169921875,
+          140,
+          188.0321502685547
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666
+      },
+      {
+        "healthAfter": 0,
+        "origin": [
+          306.99169921875,
+          165,
+          188.0321502685547
+        ],
+        "shot": 3,
+        "sweptDistanceStuds": 50,
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "kind": "live-orbit-rocket-sweep",
+        "aircraftPosition": [
+          306.99169921875,
+          140,
+          188.0321502685547
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666
+      },
+      {
+        "kind": "terrain-query-recovery",
+        "command": {
+          "y": 4.511355400085449,
+          "x": 0.01631496660411358,
+          "sequence": 3,
+          "z": 149.99598693847656,
+          "roundId": 2,
+          "weapon": "M7"
+        },
+        "samples": [
+          {
+            "readiness": {
+              "nextFire": 1795375665.009195,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.01631496660411358,
+              4.511355400085449,
+              119.99598693847656
+            ],
+            "root": [
+              0,
+              3,
+              120
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 29,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 0,
+            "stage": "before-readiness-wait",
+            "serverTime": 1795375664.859695
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375665.009195,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.019462421536445618,
+              4.508382797241211,
+              120.00077056884766
+            ],
+            "root": [
+              0,
+              3,
+              120
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 29,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 0,
+            "stage": "ready-before-fault",
+            "serverTime": 1795375665.026006
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375665.009195,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.020041516050696373,
+              4.507905960083008,
+              120.0015869140625
+            ],
+            "root": [
+              0,
+              3,
+              120
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 29,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 1,
+            "stage": "after-fault-attempt",
+            "serverTime": 1795375665.058613
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375665.242335,
+              "ammo": 28,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.02061760611832142,
+              4.599270820617676,
+              120.00215148925781
+            ],
+            "root": [
+              0,
+              3.0918471813201904,
+              119.9998779296875
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 28,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 1,
+            "stage": "after-recovery-attempt",
+            "serverTime": 1795375665.092731
+          }
+        ],
+        "userId": -1,
+        "decisions": [
+          {
+            "decision": "origin:terrain query failed",
+            "userId": -1,
+            "serverTime": 1795375665.058214
+          },
+          {
+            "decision": "accepted",
+            "userId": -1,
+            "serverTime": 1795375665.092335
+          }
+        ]
+      },
+      {
+        "callbackErrors": [],
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "order": [
+          "ground",
+          "aircraft"
+        ],
+        "calibration": {
+          "order": [
+            "second-registered",
+            "first-registered"
+          ],
+          "heartbeatDeltas": [
+            0.01801033318042755,
+            0.01801033318042755
+          ],
+          "simulationFrames": [
+            2,
+            2
+          ],
+          "simulationTimes": [
+            25.07916831970215,
+            25.07916831970215
+          ]
+        },
+        "simulationFrames": [
+          4,
+          4
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666,
+        "aircraftPositions": [
+          [
+            359.46240234375,
+            140,
+            19.6668758392334
+          ]
+        ],
+        "sweptDistanceStuds": 50,
+        "heartbeatDeltas": [
+          0.018161792308092117,
+          0.018161792308092117
+        ],
+        "simulationTimes": [
+          25.11250114440918,
+          25.11250114440918
+        ],
+        "events": [
+          {
+            "heartbeatDelta": 0.01801033318042755,
+            "heartbeatFrame": 2,
+            "label": "calibration-second-registered",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.07916831970215,
+            "distributedGameTime": 25.079167982097715,
+            "clock": 30.50052187498659,
+            "winner": "",
+            "serverTime": 1795375665.126128,
+            "simulationFrame": 2
+          },
+          {
+            "heartbeatDelta": 0.01801033318042755,
+            "heartbeatFrame": 2,
+            "label": "calibration-first-registered",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.07916831970215,
+            "distributedGameTime": 25.079167982097715,
+            "clock": 30.50053154170746,
+            "winner": "",
+            "serverTime": 1795375665.126138,
+            "simulationFrame": 2
+          },
+          {
+            "heartbeatDelta": 0.01801033318042755,
+            "heartbeatFrame": 3,
+            "label": "heartbeat-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.07916831970215,
+            "distributedGameTime": 25.079167982097715,
+            "clock": 30.500534791674,
+            "winner": "",
+            "serverTime": 1795375665.126141,
+            "simulationFrame": 2
+          },
+          {
+            "heartbeatFrame": 3,
+            "label": "stepped-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.095834732055664,
+            "distributedGameTime": 25.079167982097715,
+            "clock": 30.515561833337415,
+            "winner": "",
+            "serverTime": 1795375665.141168,
+            "simulationFrame": 3
+          },
+          {
+            "heartbeatDelta": 0.015159583650529385,
+            "heartbeatFrame": 4,
+            "label": "heartbeat-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.095834732055664,
+            "distributedGameTime": 25.095834649633616,
+            "clock": 30.515665708342567,
+            "winner": "",
+            "serverTime": 1795375665.141272,
+            "simulationFrame": 3
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "stepped-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.095834649633616,
+            "clock": 30.533725375018548,
+            "winner": "",
+            "serverTime": 1795375665.159332,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "callbacks-registered",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.533812291687354,
+            "winner": "",
+            "serverTime": 1795375665.159419,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatDelta": 0.018161792308092117,
+            "heartbeatFrame": 4,
+            "label": "ground-start",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.533852958353236,
+            "winner": "",
+            "serverTime": 1795375665.159459,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "ground-end",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.533869625010993,
+            "winner": "",
+            "serverTime": 1795375665.159475,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatDelta": 0.018161792308092117,
+            "heartbeatFrame": 4,
+            "label": "aircraft-start",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.53388154169079,
+            "winner": "",
+            "serverTime": 1795375665.159487,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "aircraft-end",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 0,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.534021791652776,
+            "winner": "",
+            "serverTime": 1795375665.159627,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatDelta": 0.018161792308092117,
+            "heartbeatFrame": 5,
+            "label": "heartbeat-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 0,
+            "simulationTime": 25.11250114440918,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.534025791683234,
+            "winner": "",
+            "serverTime": 1795375665.159631,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 5,
+            "label": "stepped-marker",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 25.129167556762695,
+            "distributedGameTime": 25.112501317169517,
+            "clock": 30.548993833363056,
+            "winner": "Ground",
+            "serverTime": 1795375665.1746,
+            "simulationFrame": 5
+          },
+          {
+            "heartbeatDelta": 0.015233583748340607,
+            "heartbeatFrame": 6,
+            "label": "heartbeat-marker",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 25.129167556762695,
+            "distributedGameTime": 25.12916798470542,
+            "clock": 30.549055166658945,
+            "winner": "Ground",
+            "serverTime": 1795375665.174662,
+            "simulationFrame": 5
+          },
+          {
+            "heartbeatFrame": 6,
+            "label": "stepped-marker",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 25.14583396911621,
+            "distributedGameTime": 25.12916798470542,
+            "clock": 30.566904458333738,
+            "winner": "Ground",
+            "serverTime": 1795375665.192511,
+            "simulationFrame": 6
+          },
+          {
+            "heartbeatFrame": 6,
+            "label": "callbacks-complete-or-timeout",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 25.14583396911621,
+            "distributedGameTime": 25.14583465224132,
+            "clock": 30.56694520835299,
+            "winner": "Ground",
+            "serverTime": 1795375665.192552,
+            "simulationFrame": 6
+          }
+        ],
+        "kind": "mutual-batch",
+        "heartbeatFrames": [
+          4,
+          4
+        ],
+        "requestedOrder": "ground-first"
+      },
+      {
+        "callbackErrors": [],
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "order": [
+          "aircraft",
+          "ground"
+        ],
+        "calibration": {
+          "order": [
+            "second-registered",
+            "first-registered"
+          ],
+          "heartbeatDeltas": [
+            0.016428666189312935,
+            0.016428666189312935
+          ],
+          "simulationFrames": [
+            2,
+            2
+          ],
+          "simulationTimes": [
+            30.583335876464844,
+            30.583335876464844
+          ]
+        },
+        "simulationFrames": [
+          4,
+          4
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666,
+        "aircraftPositions": [
+          [
+            359.8330383300781,
+            140,
+            10.96261215209961
+          ]
+        ],
+        "sweptDistanceStuds": 50,
+        "heartbeatDeltas": [
+          0.01709125004708767,
+          0.01709125004708767
+        ],
+        "simulationTimes": [
+          30.616668701171875,
+          30.616668701171875
+        ],
+        "events": [
+          {
+            "heartbeatDelta": 0.016428666189312935,
+            "heartbeatFrame": 2,
+            "label": "calibration-second-registered",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.583335876464844,
+            "distributedGameTime": 30.583334935363382,
+            "clock": 36.19847800000571,
+            "winner": "",
+            "serverTime": 1795375670.824166,
+            "simulationFrame": 2
+          },
+          {
+            "heartbeatDelta": 0.016428666189312935,
+            "heartbeatFrame": 2,
+            "label": "calibration-first-registered",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.583335876464844,
+            "distributedGameTime": 30.583334935363382,
+            "clock": 36.19848612503847,
+            "winner": "",
+            "serverTime": 1795375670.824174,
+            "simulationFrame": 2
+          },
+          {
+            "heartbeatDelta": 0.016428666189312935,
+            "heartbeatFrame": 3,
+            "label": "heartbeat-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.583335876464844,
+            "distributedGameTime": 30.583334935363382,
+            "clock": 36.19848879170604,
+            "winner": "",
+            "serverTime": 1795375670.824176,
+            "simulationFrame": 2
+          },
+          {
+            "heartbeatFrame": 3,
+            "label": "stepped-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.60000228881836,
+            "distributedGameTime": 30.583334935363382,
+            "clock": 36.2148621249944,
+            "winner": "",
+            "serverTime": 1795375670.84055,
+            "simulationFrame": 3
+          },
+          {
+            "heartbeatDelta": 0.01654762588441372,
+            "heartbeatFrame": 4,
+            "label": "heartbeat-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.60000228881836,
+            "distributedGameTime": 30.600001602899283,
+            "clock": 36.21495133335702,
+            "winner": "",
+            "serverTime": 1795375670.840639,
+            "simulationFrame": 3
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "stepped-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.600001602899283,
+            "clock": 36.23194191668881,
+            "winner": "",
+            "serverTime": 1795375670.85763,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "callbacks-registered",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.232013458327856,
+            "winner": "",
+            "serverTime": 1795375670.857702,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatDelta": 0.01709125004708767,
+            "heartbeatFrame": 4,
+            "label": "aircraft-start",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 300,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.232070500031114,
+            "winner": "",
+            "serverTime": 1795375670.857759,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "aircraft-end",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 0,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.23218724998878,
+            "winner": "",
+            "serverTime": 1795375670.857875,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatDelta": 0.01709125004708767,
+            "heartbeatFrame": 4,
+            "label": "ground-start",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 0,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.23219266667729,
+            "winner": "",
+            "serverTime": 1795375670.85788,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 4,
+            "label": "ground-end",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 0,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.232196333352476,
+            "winner": "",
+            "serverTime": 1795375670.857884,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatDelta": 0.01709125004708767,
+            "heartbeatFrame": 5,
+            "label": "heartbeat-marker",
+            "phase": "Active",
+            "reason": "",
+            "aircraftHealth": 0,
+            "simulationTime": 30.616668701171875,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.23219883337151,
+            "winner": "",
+            "serverTime": 1795375670.857887,
+            "simulationFrame": 4
+          },
+          {
+            "heartbeatFrame": 5,
+            "label": "stepped-marker",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 30.63333511352539,
+            "distributedGameTime": 30.616668270435184,
+            "clock": 36.248308999987785,
+            "winner": "Ground",
+            "serverTime": 1795375670.873997,
+            "simulationFrame": 5
+          },
+          {
+            "heartbeatDelta": 0.016357459127902985,
+            "heartbeatFrame": 6,
+            "label": "heartbeat-marker",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 30.63333511352539,
+            "distributedGameTime": 30.633334937971085,
+            "clock": 36.248398833326064,
+            "winner": "Ground",
+            "serverTime": 1795375670.874087,
+            "simulationFrame": 5
+          },
+          {
+            "heartbeatFrame": 6,
+            "label": "stepped-marker",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 30.650001525878906,
+            "distributedGameTime": 30.633334937971085,
+            "clock": 36.26501512504183,
+            "winner": "Ground",
+            "serverTime": 1795375670.890703,
+            "simulationFrame": 6
+          },
+          {
+            "heartbeatFrame": 6,
+            "label": "callbacks-complete-or-timeout",
+            "phase": "Results",
+            "reason": "AircraftDestroyed",
+            "aircraftHealth": 0,
+            "simulationTime": 30.650001525878906,
+            "distributedGameTime": 30.650001605506986,
+            "clock": 36.26513775001513,
+            "winner": "Ground",
+            "serverTime": 1795375670.890826,
+            "simulationFrame": 6
+          }
+        ],
+        "kind": "mutual-batch",
+        "heartbeatFrames": [
+          4,
+          4
+        ],
+        "requestedOrder": "aircraft-first"
+      }
+    ],
+    "departureMethod": "client-leave",
+    "environment": "Studio",
+    "discovered": 10,
+    "suite": "P06-multiplayer",
+    "failed": 0,
+    "mode": "sdk"
+  },
+  "elapsedSeconds": 43.84599970834097
+}

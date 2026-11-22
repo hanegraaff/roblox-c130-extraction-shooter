@@ -1,0 +1,361 @@
+{
+  "runtimeAndFixtureCommit": "f653142739b365adb0e603ac1af94d08b2daf02b",
+  "tree": "016e65397e61b7723f168822e094b3ef7a270aca",
+  "originalOpenedArtifactSha256": "55f494bb04e6ac0570fe8da97fe7a8ac5e8b02690b509a58d8737481762365a2",
+  "rebuiltCandidateArtifactSha256": "61e992339530e75b4a8e1b1a3b521c77ca53fa1adabf528f84b4bb418e5db802",
+  "studioId": "393b5242-5671-4b38-89b7-4ad134ea5c7d",
+  "sourceBinding": "Rojo sync; exact Luau checksums verified in previously-open local Edit document, independent rebuilt artifact retained",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind=\"P11\",scenario=\"Profile\",clients=2})",
+  "editLaunch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"binding\":\"99b1ee6b4fa23d4924e3508533e6a6b8b20b4980ae2c247890335a589d21bab0\",\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\",\"pointer\":\"f9cd89585fdf75a7e6769ac880a2172f22b156496c879eb9e3d2a6cf70b3fd1f\",\"metrics\":\"83ec4c9969747e4729771fb1e58a246183a7f5c5278c046de9f2eec5a64c5453\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"client\":\"96d13c13bebcd953d4f7a8b599363342a1b493004f3fd13a3d21a0bab8e8a1b4\",\"serverProfile\":\"8d6175a8a475bfa49de30a948cc279ae1b0c6cefaca536145fc8e42bc5a6884e\",\"p10\":\"548cbc88d5ff4a4348e6cb2a5ae1ba2f6ad60a2bfe32a3f0805a72ef74cd70c0\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P11\",\"reportKey\":\"P11ProfileAfterRestart\",\"initialRequested\":2}"
+      }
+    ],
+    "isError": false
+  },
+  "clientPreflight": {
+    "states": {
+      "ee64a068-2cf5-48aa-be79-61e1f2720afa": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client",
+      "d6b48044-304f-4472-b7a0-8c5eb97dbfa2": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client",
+      "443611b0-4091-431a-801b-02a713c8d392": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Server"
+    },
+    "out": {
+      "ee64a068-2cf5-48aa-be79-61e1f2720afa": {
+        "ready": true,
+        "details": {
+          "id": -1,
+          "width": 1920,
+          "frameRateManager": "Automatic",
+          "qualityOk": true,
+          "before": {
+            "device": "default",
+            "scaling": "ScaleToPhysicalSize",
+            "graphics": "Automatic"
+          },
+          "role": "Waiting",
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "renderer": "Level17",
+          "scaling": "ActualResolution",
+          "error": "nil",
+          "device": "hd_1080"
+        },
+        "receipt": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"id\":-1,\"width\":1920,\"frameRateManager\":\"Automatic\",\"qualityOk\":true,\"before\":{\"device\":\"default\",\"scaling\":\"ScaleToPhysicalSize\",\"graphics\":\"Automatic\"},\"role\":\"Waiting\",\"height\":1080,\"graphics\":\"QualityLevel8\",\"renderer\":\"Level17\",\"scaling\":\"ActualResolution\",\"error\":\"nil\",\"device\":\"hd_1080\"}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      "d6b48044-304f-4472-b7a0-8c5eb97dbfa2": {
+        "ready": true,
+        "details": {
+          "id": -2,
+          "width": 1920,
+          "frameRateManager": "Automatic",
+          "qualityOk": true,
+          "before": {
+            "device": "default",
+            "scaling": "ScaleToPhysicalSize",
+            "graphics": "Automatic"
+          },
+          "role": "Waiting",
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "renderer": "Level17",
+          "scaling": "ActualResolution",
+          "error": "nil",
+          "device": "hd_1080"
+        },
+        "receipt": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"id\":-2,\"width\":1920,\"frameRateManager\":\"Automatic\",\"qualityOk\":true,\"before\":{\"device\":\"default\",\"scaling\":\"ScaleToPhysicalSize\",\"graphics\":\"Automatic\"},\"role\":\"Waiting\",\"height\":1080,\"graphics\":\"QualityLevel8\",\"renderer\":\"Level17\",\"scaling\":\"ActualResolution\",\"error\":\"nil\",\"device\":\"hd_1080\"}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    }
+  },
+  "activeDiagnostic": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"id\":-1,\"role\":\"Gunship\",\"clock\":1795383818.206931,\"graphics\":\"QualityLevel8\",\"height\":1080,\"samples\":{\"1\":{\"gpuMs\":6.017458625137806,\"frameMs\":15.581374987959862,\"cpuMs\":1.7877500504255295},\"4\":{\"gpuMs\":3.703000023961067,\"frameMs\":17.662208527326585,\"cpuMs\":1.7875416669994593},\"3\":{\"gpuMs\":4.509166814386845,\"frameMs\":18.417375162243844,\"cpuMs\":1.6983749810606242},\"2\":{\"gpuMs\":3.7003750912845136,\"frameMs\":16.993584111332895,\"cpuMs\":1.7028333386406303}},\"sampling\":\"Waiting for pinned viewport and graphics on actual clients\",\"width\":1920}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"id\":-2,\"role\":\"Ground\",\"clock\":1795383821.008317,\"graphics\":\"QualityLevel8\",\"height\":1080,\"samples\":{\"1\":{\"gpuMs\":2.0698332227766516,\"frameMs\":16.682999208569528,\"cpuMs\":1.7795832827687264},\"4\":{\"gpuMs\":3.2718332950025799,\"frameMs\":15.909584239125252,\"cpuMs\":1.7128749750554562},\"3\":{\"gpuMs\":5.620500072836876,\"frameMs\":16.481459140777589,\"cpuMs\":1.9210833124816418},\"2\":{\"gpuMs\":8.445166982710362,\"frameMs\":17.1509999781847,\"cpuMs\":1.536041614599526}},\"sampling\":\"Waiting for pinned viewport and graphics on actual clients\",\"width\":1920}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"phase\":\"Active\",\"clock\":1795383823.026845,\"frameMs\":17.506875097751619,\"heartbeatMs\":0.4208821046631783,\"serverSmoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"roles\":2,\"stage\":\"Waiting for pinned viewport and graphics on actual clients\",\"deadline\":1795384130.322275}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "midLoadDiagnostic": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clock\":1795383961.874107,\"role\":\"Gunship\",\"viewport\":{\"1\":1920,\"2\":1080},\"graphics\":\"QualityLevel8\",\"id\":-1,\"samples\":{\"1\":{\"gpuMs\":7.763875182718039,\"frameMs\":15.426833182573319,\"cpuMs\":1.6281666466966272},\"4\":{\"gpuMs\":8.91658291220665,\"frameMs\":16.38345792889595,\"cpuMs\":1.6957917250692845},\"3\":{\"gpuMs\":11.0450005158782,\"frameMs\":16.78779162466526,\"cpuMs\":2.378083299845457},\"2\":{\"gpuMs\":5.354916676878929,\"frameMs\":15.940375626087189,\"cpuMs\":1.6763750463724137}},\"renderer\":\"Level17\",\"life\":\"Alive\"}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clock\":1795383967.143406,\"role\":\"Ground\",\"viewport\":{\"1\":1920,\"2\":1080},\"graphics\":\"QualityLevel8\",\"id\":-2,\"samples\":{\"1\":{\"gpuMs\":4.848000127822161,\"frameMs\":16.19037427008152,\"cpuMs\":1.6935000894591213},\"4\":{\"gpuMs\":7.404083386063576,\"frameMs\":17.627833411097528,\"cpuMs\":1.517374999821186},\"3\":{\"gpuMs\":6.212375126779079,\"frameMs\":16.275083646178247,\"cpuMs\":1.5708750579506159},\"2\":{\"gpuMs\":6.349249742925167,\"frameMs\":16.81249961256981,\"cpuMs\":1.541291712783277}},\"renderer\":\"Level17\",\"life\":\"Alive\"}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clock\":1795383964.328008,\"frameMs\":16.32566750049591,\"heartbeatMs\":0.3868128405883908,\"phase\":\"Active\",\"deadline\":1795384130.322275,\"outpostStates\":{\"Light\":3,\"Total\":2,\"Pristine\":20,\"Heavy\":1},\"actual\":2}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "lateServerDiagnostic": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"phase\":\"Active\",\"clock\":1795384094.613329,\"frameMs\":16.592416912317277,\"heartbeatMs\":0.42562626185826959,\"serverSmoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"roles\":2,\"stage\":\"Waiting for pinned viewport and graphics on actual clients\",\"deadline\":1795384130.322275}"
+      }
+    ],
+    "isError": false
+  },
+  "ok": true,
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "passed": true,
+        "name": "Five-minute loaded Studio p95 budgets for both roles and server"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 4,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "profile": {
+        "clients": {
+          "-1": {
+            "role": "Gunship",
+            "seconds": 300.0550220416626,
+            "graphics": "QualityLevel8",
+            "viewportChanged": false,
+            "height": 1080,
+            "graphicsChanged": false,
+            "frames": {
+              "p95Ms": 18.1,
+              "samples": 17928,
+              "invalid": 0,
+              "overflow": 1
+            },
+            "width": 1920
+          },
+          "-2": {
+            "role": "Ground",
+            "seconds": 300.0863447916927,
+            "graphics": "QualityLevel8",
+            "viewportChanged": false,
+            "height": 1080,
+            "graphicsChanged": false,
+            "frames": {
+              "p95Ms": 18.3,
+              "samples": 17890,
+              "invalid": 0,
+              "overflow": 2
+            },
+            "width": 1920
+          }
+        },
+        "server": {
+          "p95Ms": 0.6,
+          "samples": 17905,
+          "invalid": 0,
+          "overflow": 0
+        },
+        "load": {
+          "panelOpenings": 5,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 798,
+          "rifleAccepted": 150,
+          "rockets": 71,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 1,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 300.0211922916933,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 4,
+          "peak_projectiles": 5,
+          "heavyAccepted": 32,
+          "peak_launcherQueuePeak": 2
+        },
+        "serverFrameInterval": {
+          "p95Ms": 17.9,
+          "samples": 17905,
+          "invalid": 0,
+          "overflow": 2
+        }
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "clientRequests": {
+        "LauncherState/Fire": 73,
+        "AircraftState/SelectWeapon": 33,
+        "AircraftState/FireWeapon": 833,
+        "AircraftState/GroundFire": 150,
+        "AircraftState/GroundReload": 4,
+        "LauncherState/Pickup": 1
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "profilePreflight": {
+        "-1": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        },
+        "-2": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        }
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 2,
+        "launcherQueue": 0
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "groundFireDecisions": {
+        "accepted": 150
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 4,
+    "suite": "P11",
+    "failed": 0,
+    "mode": "Profile"
+  },
+  "elapsedSeconds": 353.8355942083872
+}

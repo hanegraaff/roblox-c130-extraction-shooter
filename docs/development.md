@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `plan/10-player-experience` to review the player guidance, spectator controls and presentation candidate. Integrated `main` includes the playable Outpost, indoor Ground camera and ordered match and replay loop. The game reconstructs the imported Outpost before the map owner captures its reset snapshot. [Local setup](../README.md#set-up-locally), [P10 review](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42), [P17 record](../plans/17-integrate-military-outpost.md)
+Use `main` for routine play and development. It includes the revised combat HUD and audio, teammate spectating, indoor Ground camera and full match and replay loop. The game reconstructs the imported Outpost before the map owner captures its reset snapshot. Use `plan/11-balance-and-performance` to run the P11 Studio workloads while the candidate is under review. [Local setup](../README.md#set-up-locally), [P11 procedure](testing.md#run-the-p11-performance-harness), [P17 record](../plans/17-integrate-military-outpost.md)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 

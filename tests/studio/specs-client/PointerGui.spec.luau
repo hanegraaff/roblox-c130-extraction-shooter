@@ -20,6 +20,8 @@ return function()
             local function screen(name: string, ignoreInset: boolean): ScreenGui
                 local gui = Instance.new("ScreenGui")
                 gui.Name = name
+                -- Initial avatar loads can overlap this independent client smoke.
+                gui.ResetOnSpawn = false
                 gui.IgnoreGuiInset = ignoreInset
                 if ignoreInset then
                     gui.ScreenInsets = Enum.ScreenInsets.None
@@ -49,20 +51,49 @@ return function()
             box.Position = UDim2.fromOffset(24, 440)
             box.Size = UDim2.fromOffset(180, 48)
             box.Parent = containers[1]
+            local function nativeButtonCenter(control: TextButton): Vector2
+                -- AbsoluteSize can be set before the native input registry
+                -- sees the button. Wait at most four render steps for that
+                -- exact button, without consulting the adapter under test.
+                for frame = 0, 4 do
+                    local owner = control:FindFirstAncestorOfClass("ScreenGui")
+                    assert(
+                        owner and owner.Parent == playerGui,
+                        "pointer probe GUI was removed before hit testing"
+                    )
+                    local size = control.AbsoluteSize
+                    local center = control.AbsolutePosition + size * 0.5
+                    local hits = playerGui:GetGuiObjectsAtPosition(math.floor(center.X), math.floor(center.Y))
+                    if size.X > 0 and size.Y > 0 and table.find(hits, control) then
+                        return center
+                    end
+                    if frame == 4 then
+                        local camera = workspace.CurrentCamera
+                        error(
+                            string.format(
+                                "native hit test missed %s at %s (size %s, viewport %s, inset %s)",
+                                owner.Name,
+                                tostring(center),
+                                tostring(size),
+                                if camera then tostring(camera.ViewportSize) else "missing",
+                                tostring(GuiService:GetGuiInset())
+                            )
+                        )
+                    end
+                    RunService.RenderStepped:Wait()
+                end
+                error("pointer probe exhausted its render samples")
+            end
             local ok, failure = pcall(function()
                 RunService.RenderStepped:Wait()
                 RunService.RenderStepped:Wait()
-                local inset = GuiService:GetGuiInset()
                 for _, control in { normal, full, safe } do
-                    assert(
-                        control.AbsoluteSize.X > 0 and control.AbsoluteSize.Y > 0,
-                        "GUI layout did not render"
-                    )
-                    local raw = control.AbsolutePosition + control.AbsoluteSize * 0.5 + inset
+                    local touch = nativeButtonCenter(control)
+                    local inset = GuiService:GetGuiInset()
+                    local raw = touch + inset
                     local frame = CameraController.input(playerGui, raw, true)
                     assert(frame.blocked, "actual GUI button did not block edge-pan input")
                     assert(frame.position == raw, "GUI conversion changed raw camera/pan coordinates")
-                    local touch = control.AbsolutePosition + control.AbsoluteSize * 0.5
                     local touchFrame = CameraController.touchInput(playerGui, touch, false)
                     assert(touchFrame.blocked, "actual GUI button did not block touch aiming")
                     assert(touchFrame.position == touch + inset, "touch GUI-to-viewport offset is wrong")
@@ -135,6 +166,7 @@ return function()
                     not CameraController.input(playerGui, openPointer, true).blocked,
                     "empty viewport falsely blocked"
                 )
+                local inset = GuiService:GetGuiInset()
                 local openTouch = openPointer - inset
                 local openTouchFrame = CameraController.touchInput(playerGui, openTouch, false)
                 assert(not openTouchFrame.blocked, "empty world touch falsely blocked")

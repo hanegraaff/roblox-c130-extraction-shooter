@@ -1,0 +1,353 @@
+{
+  "candidate": {
+    "commit": "60467f620154fc39adcb7b854f6c5c6511682add",
+    "tree": "d85f80fa59ae7e4f3825bf59dba2b8b815f2fa1b",
+    "server": "8d6175a8a475bfa49de30a948cc279ae1b0c6cefaca536145fc8e42bc5a6884e",
+    "metrics": "83ec4c9969747e4729771fb1e58a246183a7f5c5278c046de9f2eec5a64c5453",
+    "p17": "866146615223250e2cb88209dee805c3ea8e118675afe975448cd1e517211f43"
+  },
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Profile',clients=2})",
+  "editStart": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"serverSource\":\"8d6175a8a475bfa49de30a948cc279ae1b0c6cefaca536145fc8e42bc5a6884e\",\"p17Metadata\":\"866146615223250e2cb88209dee805c3ea8e118675afe975448cd1e517211f43\",\"version\":\"0.748.0.7481526\",\"started\":\"P11TesterProfileLevel8\",\"quality\":\"Automatic\"}"
+      }
+    ],
+    "isError": false
+  },
+  "actualClientSetup": {
+    "e29ea869-3043-4695-9e3d-33e86782fc57": {
+      "done": true,
+      "valid": true,
+      "version": {
+        "rendererQuality": "Level17",
+        "editQuality": "Level17",
+        "frameRateManager": "Automatic",
+        "before": {
+          "viewport": "1081, 618",
+          "scaling": "ScaleToPhysicalSize",
+          "device": "default",
+          "quality": "Automatic"
+        },
+        "device": "hd_1080",
+        "setQualityOK": true,
+        "controller": -1,
+        "viewport": "1920, 1080",
+        "scaling": "ActualResolution",
+        "setQualityDetails": "nil",
+        "quality": "QualityLevel8"
+      },
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"rendererQuality\":\"Level17\",\"editQuality\":\"Level17\",\"frameRateManager\":\"Automatic\",\"before\":{\"viewport\":\"1081, 618\",\"scaling\":\"ScaleToPhysicalSize\",\"device\":\"default\",\"quality\":\"Automatic\"},\"device\":\"hd_1080\",\"setQualityOK\":true,\"controller\":-1,\"viewport\":\"1920, 1080\",\"scaling\":\"ActualResolution\",\"setQualityDetails\":\"nil\",\"quality\":\"QualityLevel8\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "44c89de2-f084-455b-8def-bdc347546528": {
+      "done": true,
+      "valid": true,
+      "version": {
+        "rendererQuality": "Level17",
+        "editQuality": "Level17",
+        "frameRateManager": "Automatic",
+        "before": {
+          "viewport": "1153, 649",
+          "scaling": "ScaleToPhysicalSize",
+          "device": "default",
+          "quality": "Automatic"
+        },
+        "device": "hd_1080",
+        "setQualityOK": true,
+        "controller": -2,
+        "viewport": "1920, 1080",
+        "scaling": "ActualResolution",
+        "setQualityDetails": "nil",
+        "quality": "QualityLevel8"
+      },
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"rendererQuality\":\"Level17\",\"editQuality\":\"Level17\",\"frameRateManager\":\"Automatic\",\"before\":{\"viewport\":\"1153, 649\",\"scaling\":\"ScaleToPhysicalSize\",\"device\":\"default\",\"quality\":\"Automatic\"},\"device\":\"hd_1080\",\"setQualityOK\":true,\"controller\":-2,\"viewport\":\"1920, 1080\",\"scaling\":\"ActualResolution\",\"setQualityDetails\":\"nil\",\"quality\":\"QualityLevel8\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  },
+  "earlyDiagnostic": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"samples\":{\"1\":{\"drawCalls\":71,\"gpuMs\":0.000125030055642128,\"frameMs\":52.59033292531967,\"cpuMs\":1.801666570827365},\"4\":{\"drawCalls\":73,\"gpuMs\":0.0001666485331952572,\"frameMs\":65.91920554637909,\"cpuMs\":1.8092917744070292},\"3\":{\"drawCalls\":75,\"gpuMs\":0.0001666485331952572,\"frameMs\":66.812165081501,\"cpuMs\":1.820541569031775},\"2\":{\"drawCalls\":74,\"gpuMs\":0.0004166504368185997,\"frameMs\":66.06808304786682,\"cpuMs\":1.7769166734069586}},\"frameRateManager\":\"Automatic\",\"at\":1795372666.337742,\"player\":-1,\"renderer\":\"Level17\",\"viewport\":{\"1\":1920,\"2\":1080},\"role\":\"Gunship\",\"stage\":\"Waiting for pinned viewport and graphics on actual clients\",\"quality\":\"QualityLevel8\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"samples\":{\"1\":{\"drawCalls\":41,\"gpuMs\":0.0006666523404419422,\"frameMs\":66.84395670890808,\"cpuMs\":1.9654999487102032},\"4\":{\"drawCalls\":41,\"gpuMs\":0.000500003807246685,\"frameMs\":66.87866896390915,\"cpuMs\":1.7088749445974827},\"3\":{\"drawCalls\":41,\"gpuMs\":0.0002916785888373852,\"frameMs\":67.05053895711899,\"cpuMs\":2.8525416273623707},\"2\":{\"drawCalls\":41,\"gpuMs\":0.0007500057108700275,\"frameMs\":62.26754188537598,\"cpuMs\":3.3645418006926777}},\"frameRateManager\":\"Automatic\",\"at\":1795372671.067364,\"player\":-2,\"renderer\":\"Level17\",\"viewport\":{\"1\":1920,\"2\":1080},\"role\":\"Ground\",\"stage\":\"Waiting for pinned viewport and graphics on actual clients\",\"quality\":\"QualityLevel8\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"deadline\":1795372991.82752,\"frameMs\":66.67712330818176,\"heartbeatMs\":0.3724000998772681,\"serverSmoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"clock\":1795372673.384733,\"stage\":\"Waiting for pinned viewport and graphics on actual clients\",\"actual\":2}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "43f041",
+        "wall_time_seconds": 0.0000115,
+        "exit_code": 0,
+        "original_token_count": 3,
+        "output": "[ NULL ] \n"
+      }
+    }
+  ],
+  "midLoad": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"deadline\":1795372991.82752,\"clock\":1795372776.391568,\"outpostHeavy\":0,\"phase\":\"Active\",\"outpostTotal\":1,\"stage\":\"Waiting for pinned viewport and graphics on actual clients\",\"actual\":2}"
+      }
+    ],
+    "isError": false
+  },
+  "originalEditAfter": {
+    "device": "default",
+    "quality": "Automatic"
+  },
+  "ok": true,
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "name": "Five-minute loaded Studio p95 budgets for both roles and server",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.PerformanceHarness:889: client render p95 exceeded 33.3 ms or sampling was incomplete"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 3,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "profile": {
+        "clients": {
+          "-1": {
+            "role": "Gunship",
+            "seconds": 300.04215933335945,
+            "graphics": "QualityLevel8",
+            "viewportChanged": false,
+            "height": 1080,
+            "graphicsChanged": false,
+            "frames": {
+              "p95Ms": 67.7,
+              "samples": 4615,
+              "invalid": 0,
+              "overflow": 6
+            },
+            "width": 1920
+          },
+          "-2": {
+            "role": "Ground",
+            "seconds": 300.0705707083107,
+            "graphics": "QualityLevel8",
+            "viewportChanged": false,
+            "height": 1080,
+            "graphicsChanged": false,
+            "frames": {
+              "p95Ms": 67.5,
+              "samples": 6653,
+              "invalid": 0,
+              "overflow": 8
+            },
+            "width": 1920
+          }
+        },
+        "server": {
+          "p95Ms": 0.6,
+          "samples": 17629,
+          "invalid": 0,
+          "overflow": 0
+        },
+        "load": {
+          "panelOpenings": 6,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 799,
+          "rifleAccepted": 150,
+          "rockets": 71,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 1,
+          "peak_launcherQueue": 1,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 300.00089816667605,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 32,
+          "peak_launcherQueuePeak": 2
+        },
+        "serverFrameInterval": {
+          "p95Ms": 17.5,
+          "samples": 17629,
+          "invalid": 0,
+          "overflow": 6
+        }
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "clientRequests": {
+        "LauncherState/Fire": 74,
+        "AircraftState/SelectWeapon": 33,
+        "AircraftState/FireWeapon": 834,
+        "AircraftState/GroundFire": 152,
+        "AircraftState/GroundReload": 4,
+        "LauncherState/Pickup": 1
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "profilePreflight": {
+        "-1": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        },
+        "-2": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        }
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 2,
+        "launcherQueue": 0
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "groundFireDecisions": {
+        "accepted": 150,
+        "preflight": 2
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 4,
+    "suite": "P11",
+    "failed": 1,
+    "mode": "Profile"
+  },
+  "sdkSeconds": 367.2372307916521
+}

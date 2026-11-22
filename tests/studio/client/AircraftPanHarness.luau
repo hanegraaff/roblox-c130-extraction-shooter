@@ -1310,19 +1310,78 @@ function Harness.run()
                     end, "committed default focus after recenter", 5)
                     resetDiagnostics.stage = "recenter committed"
                     observations = sample(nil, observations)
-                elseif request.kind == "Normal" then
+                elseif request.kind == "ResultsOverview" or request.kind == "LobbyCamera" then
+                    -- P10 owns a neutral camera during Results. Roblox's Custom
+                    -- view returns when Lobby has the player's replacement avatar.
+                    local results = request.kind == "ResultsOverview"
+                    local phaseWanted = if results then "Results" else "Lobby"
+                    local viewWanted = if results then "Results" else "Waiting"
                     waitFor(function()
-                        return hud() == nil
-                    end, "role-loss view cleanup")
-                    local camera = workspace.CurrentCamera
-                    assert(camera and camera.CameraType == Enum.CameraType.Custom, "camera remained trapped")
-                    assert(not camera:FindFirstChild("OperatorThermal"), "thermal effect leaked")
-                    assert(not camera:FindFirstChild("OperatorGroundBackdrop"), "operator backdrop leaked")
-                    observations = {
-                        cameraType = camera.CameraType.Name,
-                        mouse = Input.MouseBehavior.Name,
-                        icon = Input.MouseIconEnabled,
-                    }
+                        local roundState = ReplicatedStorage:FindFirstChild("RoundState")
+                        local roundHud = playerGui:FindFirstChild("RoundHUD")
+                        local camera = workspace.CurrentCamera
+                        if not camera or not roundState or not roundHud then
+                            return false
+                        end
+                        local phase = roundState:GetAttribute("Phase")
+                        local view = roundHud:GetAttribute("View")
+                        local overviewCount, thermalObjects = 0, 0
+                        for _, child in camera:GetChildren() do
+                            if child.Name == "RoundOverviewSubject" then
+                                overviewCount += 1
+                            elseif
+                                child.Name == "OperatorThermal"
+                                or child.Name == "OperatorGroundBackdrop"
+                                or child.Name == "OperatorThermalTarget"
+                            then
+                                thermalObjects += 1
+                            end
+                        end
+                        local subject = camera.CameraSubject
+                        local character = player.Character
+                        local humanoid = if character
+                            then character:FindFirstChildOfClass("Humanoid")
+                            else nil
+                        local thermalHud = playerGui:FindFirstChild("ThermalHUD") ~= nil
+                        observations = {
+                            phase = phase,
+                            view = view,
+                            cameraType = camera.CameraType.Name,
+                            subject = if subject then subject.Name else "missing",
+                            ownHumanoid = humanoid ~= nil and subject == humanoid,
+                            neutralSubjects = overviewCount,
+                            thermalHud = thermalHud,
+                            thermalObjects = thermalObjects,
+                            mouse = Input.MouseBehavior.Name,
+                            icon = Input.MouseIconEnabled,
+                        }
+                        if
+                            phase ~= phaseWanted
+                            or view ~= viewWanted
+                            or thermalHud
+                            or thermalObjects ~= 0
+                        then
+                            return false
+                        end
+                        if results then
+                            return camera.CameraType == Enum.CameraType.Scriptable
+                                and subject ~= nil
+                                and subject.Name == "RoundOverviewSubject"
+                                and subject.Parent == camera
+                                and subject:IsA("BasePart")
+                                and subject.Anchored
+                                and subject.Transparency == 1
+                                and not subject.CanCollide
+                                and overviewCount == 1
+                                and roundHud:GetAttribute("SpectatorUserId") == nil
+                        end
+                        return player:GetAttribute("Role") == "Waiting"
+                            and camera.CameraType == Enum.CameraType.Custom
+                            and humanoid ~= nil
+                            and humanoid.Health > 0
+                            and subject == humanoid
+                            and overviewCount == 0
+                    end, phaseWanted .. " camera ownership and thermal cleanup")
                 elseif request.kind == "Physical" then
                     goal = nil
                     aimPoint = nil

@@ -15,6 +15,7 @@ if game:GetService("RunService"):IsStudio() then
         manualMode == "P08"
         or manualMode == "P09"
         or manualMode == "P10"
+        or manualMode == "P11"
         or manualMode == "P17"
         or manualMode == "P07"
         or manualMode == "P05"
@@ -23,8 +24,8 @@ if game:GetService("RunService"):IsStudio() then
         selectedClientMode = manualMode
     else
         local args = game:GetService("StudioTestService"):GetTestArgs()
-        if type(args) == "table" and args.kind == "P10" then
-            selectedClientMode = "P10"
+        if type(args) == "table" and (args.kind == "P10" or args.kind == "P11") then
+            selectedClientMode = args.kind
         end
     end
 end

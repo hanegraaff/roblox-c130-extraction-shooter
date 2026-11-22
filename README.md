@@ -44,16 +44,16 @@ Solid walls hide ground thermal highlights and block shots and blasts. Walls and
 
 ## Availability
 
-Play this candidate locally in Roblox Studio from `fix/p10-combat-presentation`. Integrated `main` contains the playable Outpost, indoor camera and full match and replay loop. The current game has one level. Balance, performance and 6- and 10-player Roblox client acceptance remain later work. [P10 revision](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43), [roadmap](roadmap.md)
+Play locally in Roblox Studio from `main`. The current game has one battlefield with the playable Outpost, indoor camera and full match and replay loop. P11 tracks local balance, frame times and repeated-round cleanup. P12 tracks release and 6- and 10-player Roblox client acceptance. [Roadmap](roadmap.md)
 
 ## Set up locally
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Clone the repository and select the player experience candidate.
+Clone the repository on `main`.
 
 ```sh
-git clone --branch fix/p10-combat-presentation https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 python3 scripts/setup.py
 python3 scripts/verify.py
@@ -61,7 +61,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch to `fix/p10-combat-presentation`. If you have never checked it out, use `git switch --track origin/fix/p10-combat-presentation`. Run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 
@@ -90,12 +90,12 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 ```
 
 1. Open `build/tests.rbxlx` as a separate **local** test document. With Play stopped, connect **Plugins → Rojo** to `localhost:34872` and confirm **PlayersVsC130Tests**. Use this mapping only in the local test document.
-2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. This mapping expects **191 server cases and 13 per actual client**, all passing with zero failures, skips or errors. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
+2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. Expect **13 cases per actual client** and **192 server cases** with P11, or **191 server cases** with P10. All should pass with zero failures, skips or errors. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
 3. With one client, Play opens the labelled Ground preview. Use the **STUDIO TESTING** panel to cycle **Role** through Auto, Ground and Operator, or move between **Explore map (solo)** and **Return to lobby**. Preview lets you walk the map or use the thermal camera and both zooms while waiting for a match.
 4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** to exercise launcher transfer and teammate spectating, or **4** to give an eliminated player two targets to cycle through. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
 5. Play through Results and wait for the lobby to return. Start the next round to inspect restored equipment and cover. **Reset test / apply settings** returns to the lobby or solo preview. Test-panel role and duration choices apply to the next explicit start. Use **End Session** when finished.
 
-The four-client player experience harness checks role HUDs, keyboard controls, spectator targeting and authority, and camera and UI cleanup. The match harness covers competitive endings, departures and replay. Stop Play and confirm the updated source reached the same test document before collecting fresh evidence. [Player experience harness](docs/testing.md#run-the-player-experience-harness), [match harness](docs/testing.md#run-the-p09-match-outcome-harness), [testing guide](docs/testing.md)
+The four-client player experience harness checks role HUDs, keyboard controls, spectator targeting and camera cleanup. The match harness covers competitive endings, departures and replay. The P11 branch adds Studio workloads for combat load, cleanup, frame time, memory and latency. Stop Play and confirm the updated source reached the same test document before collecting fresh evidence. [Player experience harness](docs/testing.md#run-the-player-experience-harness), [match harness](docs/testing.md#run-the-p09-match-outcome-harness), [P11 workloads](docs/testing.md#run-the-p11-performance-harness)
 
 ## Inspect the Blender outpost
 

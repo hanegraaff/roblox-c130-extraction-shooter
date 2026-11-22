@@ -1,0 +1,278 @@
+{
+  "candidate": "4152ed2a81d73a7637a9ef44afed77481e491627",
+  "tree": "a79e9fb185e7672824aa53bc48a2e8a4a7aa118c",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Replay',clients=2})",
+  "editIdentity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"place\":0,\"gameId\":0,\"version\":\"0.748.0.7481526\",\"hashes\":{\"StarterPlayer.StarterPlayerScripts.ClientTests\":\"db8793a7b0f8128ef79af04b273e95e2600774dcf3163a83888ee542fc983f64\",\"StarterPlayer.StarterPlayerScripts.ClientTests.PerformanceHarness\":\"23250c2bf772efa4b3b66948466f41e7f6de6026c31dac53d771340dffbb8170\",\"ServerScriptService.ServerTests.PerformanceHarness\":\"5f37804bc4c1d994932d8f055e76707d47905a34544c3c9676a6f7dcc15d21cc\",\"ServerScriptService.Server.GroundCombatRuntime\":\"9a0e895114d5d1b2b71aa58f9a79369484959a2ee715d91c05036264c18a0c39\",\"ServerScriptService.ServerTests.P11CombatFixture\":\"754913ead63940d9317d44771d39de2d52b0c6def1840a29c079aa36f50f02cf\",\"ServerScriptService.Server.LauncherRuntime\":\"440a004b7e1717a8fa4d5dd4742fa804d68365d4d92ea115304ded122cc9f430\",\"ServerScriptService.ServerTests.RoundHarness\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"ReplicatedStorage.P11Metrics\":\"d577b6481d444cda20cd7a1e12899fa3e5ba84e2d12a758e9284f9d5c631a166\",\"ServerScriptService.Server.CombatRuntime\":\"5d91769731846a2e62c6cfaf89b4d5fa3548be782b1094b09ac22f83d00dbad9\",\"ServerScriptService.ServerTests\":\"61bcf1151f2bcc8b629f6df768b23e4aa458523c45b0914a4db80984dc8b1413\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "liveServerIdentity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"stage\":\"Accelerated flood and pristine replay 2\",\"hashes\":{\"ServerScriptService.ServerTests.PerformanceHarness\":\"5f37804bc4c1d994932d8f055e76707d47905a34544c3c9676a6f7dcc15d21cc\",\"ServerScriptService.ServerTests.P11CombatFixture\":\"754913ead63940d9317d44771d39de2d52b0c6def1840a29c079aa36f50f02cf\",\"ServerScriptService.ServerTests.RoundHarness\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"ReplicatedStorage.P11Metrics\":\"d577b6481d444cda20cd7a1e12899fa3e5ba84e2d12a758e9284f9d5c631a166\",\"ServerScriptService.Server.LauncherRuntime\":\"440a004b7e1717a8fa4d5dd4742fa804d68365d4d92ea115304ded122cc9f430\",\"ServerScriptService.Server.GroundCombatRuntime\":\"9a0e895114d5d1b2b71aa58f9a79369484959a2ee715d91c05036264c18a0c39\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "liveClientIdentity": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"stats\":{\"1\":\"Memory\",\"3\":\"CPU\",\"2\":\"MaxMemory\",\"5\":\"GPU\",\"4\":\"MaxCPU\",\"7\":\"Ping\",\"6\":\"MaxGPU\",\"9\":\"NetworkReceived\",\"8\":\"MaxPing\",\"12\":\"MaxNetworkSent\",\"11\":\"NetworkSent\",\"10\":\"MaxNetworkReceived\"},\"user\":-1,\"device\":\"default\",\"renderQuality\":\"Automatic\",\"outgoing\":0,\"privateDigest\":\"23250c2bf772efa4b3b66948466f41e7f6de6026c31dac53d771340dffbb8170\",\"role\":\"Gunship\",\"viewport\":\"1081, 618\",\"incoming\":0,\"renderMode\":\"Automatic\",\"quality\":\"Automatic\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"stats\":{\"1\":\"Memory\",\"3\":\"CPU\",\"2\":\"MaxMemory\",\"5\":\"GPU\",\"4\":\"MaxCPU\",\"7\":\"Ping\",\"6\":\"MaxGPU\",\"9\":\"NetworkReceived\",\"8\":\"MaxPing\",\"12\":\"MaxNetworkSent\",\"11\":\"NetworkSent\",\"10\":\"MaxNetworkReceived\"},\"user\":-2,\"device\":\"default\",\"renderQuality\":\"Automatic\",\"outgoing\":0,\"privateDigest\":\"23250c2bf772efa4b3b66948466f41e7f6de6026c31dac53d771340dffbb8170\",\"role\":\"Ground\",\"viewport\":\"1153, 618\",\"incoming\":0,\"renderMode\":\"Automatic\",\"quality\":\"Automatic\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "ok": true,
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 1"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 2"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 3"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 4"
+      },
+      {
+        "name": "Accelerated flood and pristine replay 5",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.PerformanceHarness:114: retained connections: expected 23, found 15"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 7,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "replayRound1": {
+        "owner": -2,
+        "resources": {
+          "connections": 23,
+          "rifleQueue": 0,
+          "launcherFlights": 0,
+          "launcherQueue": 0,
+          "fragments": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "launcherQueuePeak": 8,
+          "pendingOutcomes": 0,
+          "rifleTools": 1,
+          "gunshipEffects": 1,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 1
+      },
+      "replayRound3": {
+        "owner": -2,
+        "resources": {
+          "connections": 23,
+          "rifleQueue": 0,
+          "launcherFlights": 0,
+          "launcherQueue": 0,
+          "fragments": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "launcherQueuePeak": 8,
+          "pendingOutcomes": 0,
+          "rifleTools": 1,
+          "gunshipEffects": 1,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 3
+      },
+      "finalResources": {
+        "connections": 15,
+        "rifleQueue": 0,
+        "launcherFlights": 0,
+        "launcherQueue": 0,
+        "fragments": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "launcherQueuePeak": 8,
+        "pendingOutcomes": 0,
+        "rifleTools": 0,
+        "gunshipEffects": 0,
+        "spawnTasks": 2,
+        "rifleTracers": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0
+      },
+      "lobbyBaseline": {
+        "connections": 23,
+        "rifleQueue": 0,
+        "launcherFlights": 0,
+        "launcherQueue": 0,
+        "fragments": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "launcherQueuePeak": 0,
+        "pendingOutcomes": 0,
+        "rifleTools": 0,
+        "gunshipEffects": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0
+      },
+      "clientRequests": {
+        "AircraftState/FireWeapon": 320,
+        "AircraftState/GroundFire": 640,
+        "AircraftState/SelectWeapon": 320,
+        "LauncherState/Pickup": 320
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "groundFireDecisions": {
+        "preflight": 73,
+        "rate": 562,
+        "accepted": 5
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 191,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 191,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "replayRound4": {
+        "owner": -1,
+        "resources": {
+          "connections": 23,
+          "rifleQueue": 0,
+          "launcherFlights": 0,
+          "launcherQueue": 0,
+          "fragments": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "launcherQueuePeak": 8,
+          "pendingOutcomes": 0,
+          "rifleTools": 1,
+          "gunshipEffects": 1,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 4
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "replayRound2": {
+        "owner": -1,
+        "resources": {
+          "connections": 23,
+          "rifleQueue": 0,
+          "launcherFlights": 0,
+          "launcherQueue": 0,
+          "fragments": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "launcherQueuePeak": 8,
+          "pendingOutcomes": 0,
+          "rifleTools": 1,
+          "gunshipEffects": 1,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 2
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 8,
+    "suite": "P11",
+    "failed": 1,
+    "mode": "Replay"
+  }
+}

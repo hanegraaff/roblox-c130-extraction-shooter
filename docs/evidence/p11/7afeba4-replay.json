@@ -1,0 +1,345 @@
+{
+  "candidate": "7afeba47df6e73b507faba2ea9de3cb29c28fe0a",
+  "tree": "447f11e160f41b8a7804c752cab63ffcb589a06c",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Replay',clients=2})",
+  "editStart": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"started\":\"P11TesterReplayRevised\",\"version\":\"0.748.0.7481526\",\"harness\":\"510f9fd47ea28f012bc75d1e06c21c6f51f1673bb87ffd237c0f28807f222809\",\"metadata\":\"0d46c91c60a5b9c5ff323b017f51a796894032815a2f0fe4aa3abd20ab837732\"}"
+      }
+    ],
+    "isError": false
+  },
+  "liveServer": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"clients\":2,\"round\":1,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"stage\":\"Accelerated flood and pristine replay 1\",\"sourceSha256\":\"510f9fd47ea28f012bc75d1e06c21c6f51f1673bb87ffd237c0f28807f222809\"}"
+      }
+    ],
+    "isError": false
+  },
+  "liveClients": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"hash\":\"177f36f652c4f4693eb3b493caa270914b056b4b401b6cceb5d20c80ddd069d2\",\"device\":\"default\",\"viewport\":\"1153, 618\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":13,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":13}\",\"client\":-2,\"quality\":\"Automatic\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"hash\":\"177f36f652c4f4693eb3b493caa270914b056b4b401b6cceb5d20c80ddd069d2\",\"device\":\"default\",\"viewport\":\"1081, 618\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":13,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":13}\",\"client\":-1,\"quality\":\"Automatic\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "memoryPreflight": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"enabled\":true,\"stage\":\"Accelerated flood and pristine replay 2\",\"megabytes\":2541.7685546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"enabled\":true,\"megabytes\":2866.565673828125,\"stage\":\"Accelerated flood and pristine replay 2\",\"user\":-2}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"enabled\":true,\"megabytes\":2714.659423828125,\"stage\":\"Accelerated flood and pristine replay 2\",\"user\":-1}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "result": {
+    "requestedClients": 2,
+    "clientCount": 2,
+    "seed": 11021,
+    "passed": 8,
+    "cases": {
+      "1": {
+        "name": "Actual roster and server smoke",
+        "passed": true
+      },
+      "2": {
+        "name": "Actual client smoke and convergence probes ready",
+        "passed": true
+      },
+      "3": {
+        "name": "Accelerated flood and pristine replay 1",
+        "passed": true
+      },
+      "4": {
+        "name": "Accelerated flood and pristine replay 2",
+        "passed": true
+      },
+      "5": {
+        "name": "Accelerated flood and pristine replay 3",
+        "passed": true
+      },
+      "6": {
+        "name": "Accelerated flood and pristine replay 4",
+        "passed": true
+      },
+      "7": {
+        "name": "Accelerated flood and pristine replay 5",
+        "passed": true
+      },
+      "8": {
+        "name": "Owned combat, connections and transport drain on shutdown",
+        "passed": true
+      }
+    },
+    "discovered": 8,
+    "observations": {
+      "replayRound5": {
+        "owner": -2,
+        "resources": {
+          "rifleQueue": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "gunshipEffects": 1,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "fragments": 0,
+          "pendingBarriers": 0,
+          "launcherQueuePeak": 8,
+          "rifleTools": 1,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "connections": 23,
+          "launcherQueue": 0,
+          "pendingOutcomes": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 5
+      },
+      "replayRound1": {
+        "owner": -2,
+        "resources": {
+          "rifleQueue": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "gunshipEffects": 1,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "fragments": 0,
+          "pendingBarriers": 0,
+          "launcherQueuePeak": 8,
+          "rifleTools": 1,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "connections": 23,
+          "launcherQueue": 0,
+          "pendingOutcomes": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 1
+      },
+      "replayRound3": {
+        "owner": -2,
+        "resources": {
+          "rifleQueue": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "gunshipEffects": 1,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "fragments": 0,
+          "pendingBarriers": 0,
+          "launcherQueuePeak": 8,
+          "rifleTools": 1,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "connections": 23,
+          "launcherQueue": 0,
+          "pendingOutcomes": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 3
+      },
+      "replayRound2": {
+        "owner": -1,
+        "resources": {
+          "rifleQueue": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "gunshipEffects": 1,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "fragments": 0,
+          "pendingBarriers": 0,
+          "launcherQueuePeak": 8,
+          "rifleTools": 1,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "connections": 23,
+          "launcherQueue": 0,
+          "pendingOutcomes": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 2
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "gunshipEffects": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "fragments": 0,
+        "pendingBarriers": 0,
+        "launcherQueuePeak": 0,
+        "rifleTools": 0,
+        "launcherFlights": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "connections": 23,
+        "launcherQueue": 0,
+        "pendingOutcomes": 0
+      },
+      "clientRequests": {
+        "AircraftState/FireWeapon": 320,
+        "AircraftState/GroundFire": 640,
+        "AircraftState/SelectWeapon": 320,
+        "LauncherState/Pickup": 320
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "discovered": 13,
+          "failed": 0,
+          "userId": -1
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "discovered": 13,
+          "failed": 0,
+          "userId": -2
+        }
+      },
+      "groundFireDecisions": {
+        "preflight": 72,
+        "rate": 563,
+        "accepted": 5
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "clientCount": 2,
+        "passed": 192,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "discovered": 192,
+        "failed": 0,
+        "skipped": 0
+      },
+      "replayRound4": {
+        "owner": -1,
+        "resources": {
+          "rifleQueue": 0,
+          "launcherRepresentations": 1,
+          "panels": 188,
+          "gunshipEffects": 1,
+          "rifleQueuePeak": 1,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "fragments": 0,
+          "pendingBarriers": 0,
+          "launcherQueuePeak": 8,
+          "rifleTools": 1,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "connections": 23,
+          "launcherQueue": 0,
+          "pendingOutcomes": 0
+        },
+        "healthAfterFlood": 295,
+        "roundId": 4
+      },
+      "initialUserIds": {
+        "1": -2,
+        "2": -1
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "gunshipEffects": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "fragments": 0,
+        "pendingBarriers": 0,
+        "launcherQueuePeak": 8,
+        "rifleTools": 0,
+        "launcherFlights": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "connections": 23,
+        "launcherQueue": 0,
+        "pendingOutcomes": 0
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "mode": "Replay",
+    "suite": "P11",
+    "failed": 0,
+    "skipped": 0
+  },
+  "ok": true
+}

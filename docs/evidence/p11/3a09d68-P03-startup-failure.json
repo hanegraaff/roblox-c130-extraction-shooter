@@ -1,0 +1,238 @@
+{
+  "candidate": "3a09d68b8f435d0e2dd08d5b5817e1256cb228c2",
+  "tree": "2f99292b5cf0b0e24163d29c3ef6afa9444a557a",
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"binding\":\"5f04166ea508dad0fa86f8040c119abdef7d1a5086d8919df15139ae3b79b4d0\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"client\":\"a507edcafbfc44a4974d50542e4f465c52658df9e70cf364a95eaf7889bd9ff1\",\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P03\",\"reportKey\":\"P11LateFixP03\",\"initialRequested\":3}"
+      }
+    ],
+    "isError": false
+  },
+  "receipts": [
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376446.101983,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Client",
+      "id": "17896db2-7a7d-4d7f-9f58-6fe871e6620e",
+      "data": {
+        "id": -2,
+        "character": true,
+        "clock": 1795376450.54249
+      }
+    },
+    {
+      "type": "Client",
+      "id": "43520152-618b-4526-92c6-362fd11a8ce8",
+      "data": {
+        "id": -1,
+        "character": true,
+        "clock": 1795376448.298361
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376459.016543,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376467.151227,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376474.533763,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376482.165256,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376489.732357,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376497.049011,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    },
+    {
+      "type": "Server",
+      "id": "3c83148a-b149-46e9-82fe-3491f683ad8a",
+      "data": {
+        "clock": 1795376504.416861,
+        "kind": {
+          "kind": "P03"
+        },
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true
+          },
+          "2": {
+            "id": -2,
+            "character": true
+          }
+        },
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}"
+      }
+    }
+  ],
+  "console": [
+    "      [+] Ground camera keeps the upper and lower story bounds separate",
+    "      [+] Ground camera preserves a closer chosen or stock-occluded distance",
+    "      [+] Ground camera stays below a ceiling on an upward stock ray",
+    "      [+] Ground camera transition uses elapsed time and bounds stalled frames",
+    "      [+] Ground camera uses the avatar root and applies doorway hysteresis",
+    "      [+] ground departure during deployment also cancels without partial members",
+    "      [+] ground spawn is solid anchored and reachable",
+    "      [+] last ground departure and physical ground elimination have distinct reasons",
+    "      [+] last ground departure wins for remaining operator with no weapon recovery",
+    "      [+] mutual destruction batch gives ground win and terminal cleanup suppresses recovery",
+    "      [+] operator departure followed by immediate reconnect still forfeits assigned round",
+    "      [+] P08 A3 re-picking and same-round reset cannot refill or replay a prior holder's command",
+    "      [+] P08 A4 replenishment permits three shots well within the normal round",
+    "      [+] P08 A6 terminal cleanup beats recovery and next round rejects old callbacks",
+    "      [+] PanelDamageRules nine seconds never advance early and apply epsilon only at rounding boundary",
+    "      [+] pre-deadline aircraft destruction beats mutual ground elimination",
+    "      [+] six and ten players receive exactly one operator and one united ground roster",
+    "      [+] SustainedPanelFire stale-round cancellation resets stream pending and heavy history",
+    "      [+] three accelerated rounds clear roster result and deadline while rotating operator",
+    "   [+] GroundOriginGeometry",
+    "      [+] ExpandedMapRules defaults decode to independent matching circle and ground focus",
+    "      [+] P09 A2 lethal rocket before deadline beats last-ground death in the same batch",
+    "      [+] PanelDestructionReset reacquires a replaced map without stale rounds or group leaks",
+    "ServerScriptService.ServerTests.RoundHarness:36: timeout: three actual clients join"
+  ],
+  "ok": true,
+  "result": {
+    "actualConnected": 2,
+    "initialRequested": 3,
+    "failed": 1,
+    "discovered": 0,
+    "suite": "P03-startup",
+    "passed": 0,
+    "detail": "timed out waiting for three actual clients before game runtime; tester ended this owned SDK session"
+  },
+  "elapsedSeconds": 115.9479307916481
+}

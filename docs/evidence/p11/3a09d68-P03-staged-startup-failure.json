@@ -1,0 +1,37 @@
+{
+  "candidate": "3a09d68b8f435d0e2dd08d5b5817e1256cb228c2",
+  "tree": "2f99292b5cf0b0e24163d29c3ef6afa9444a557a",
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"binding\":\"5f04166ea508dad0fa86f8040c119abdef7d1a5086d8919df15139ae3b79b4d0\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"client\":\"a507edcafbfc44a4974d50542e4f465c52658df9e70cf364a95eaf7889bd9ff1\",\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P03\",\"reportKey\":\"P11LateFixP03Staged\",\"initialRequested\":2}"
+      }
+    ],
+    "isError": false
+  },
+  "confirmedSessions": [],
+  "studioStop": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Game Stopped"
+      }
+    ],
+    "isError": false
+  },
+  "studioEditEnd": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ok\":false,\"detail\":\"EndTest: can only be called from the server DataModel of a running Studio play session\",\"edit\":true}"
+      }
+    ],
+    "isError": false
+  },
+  "notes": [
+    "Studio log records successful OS launch of the owned SDK server process 71414 on 2026-11-22 19:42:46 UTC.",
+    "The child log shows entry into Studio's sign-in flow, with no SDK test DataModel available in MCP. No client or in-game smoke execution took place.",
+    "Stopping the original Studio place returned Game Stopped but did not yield the detached SDK invocation. EndTest cannot run in Edit."
+  ]
+}

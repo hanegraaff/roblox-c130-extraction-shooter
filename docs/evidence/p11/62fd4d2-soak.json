@@ -1,0 +1,938 @@
+{
+  "candidate": {
+    "commit": "62fd4d2b78dd2cdf2a5c3fe66c74ae659b3afe66",
+    "tree": "0b3819f70eb2c3e0c3c647e7f9e35709d998893e",
+    "serverSource": "510f9fd47ea28f012bc75d1e06c21c6f51f1673bb87ffd237c0f28807f222809",
+    "p17Metadata": "5cd0aca0bf416256e69f7e5c42f9221494e1c707d7cafa498ccee328cdbde3ac"
+  },
+  "invocation": "ExecuteMultiplayerTestAsync(2,{kind='P11',scenario='Soak',clients=2})",
+  "editStart": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"serverSource\":\"510f9fd47ea28f012bc75d1e06c21c6f51f1673bb87ffd237c0f28807f222809\",\"p17Metadata\":\"5cd0aca0bf416256e69f7e5c42f9221494e1c707d7cafa498ccee328cdbde3ac\",\"version\":\"0.748.0.7481526\",\"started\":\"P11TesterSoak\",\"quality\":\"Automatic\"}"
+      }
+    ],
+    "isError": false
+  },
+  "activeStart": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370369.397378,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370557.578245,\"aircraftHealth\":300,\"round\":1,\"stage\":\"Soak round 1 of 11\",\"mb\":2536.3310546875}"
+      }
+    ],
+    "isError": false
+  },
+  "warmupWorkload": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"fragments\":4,\"readiness\":\"{\\\"M102\\\":{\\\"ammo\\\":1,\\\"nextFire\\\":1795370398.928164,\\\"reloadUntil\\\":0},\\\"GAU23\\\":{\\\"ammo\\\":85,\\\"nextFire\\\":1795370402.5280653,\\\"reloadUntil\\\":0}}\",\"phase\":\"Active\",\"panels\":{\"Light\":1,\"Total\":0,\"Pristine\":24,\"Heavy\":1},\"sourceSha256\":\"510f9fd47ea28f012bc75d1e06c21c6f51f1673bb87ffd237c0f28807f222809\",\"now\":1795370402.634122,\"launcher\":\"{\\\"state\\\":\\\"Held\\\",\\\"readyAt\\\":1795370404.630884,\\\"launcherId\\\":\\\"launcher:1\\\",\\\"position\\\":{\\\"y\\\":3,\\\"x\\\":0,\\\"z\\\":0},\\\"revision\\\":12,\\\"ammo\\\":0,\\\"ownerId\\\":-2,\\\"roundId\\\":1}\",\"statsEnabled\":true,\"stage\":\"Soak round 1 of 11\",\"clients\":2}"
+      }
+    ],
+    "isError": false
+  },
+  "liveRecords": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370576.157485,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370759.624381,\"aircraftHealth\":300,\"round\":2,\"stage\":\"Soak round 2 of 11\",\"mb\":2594.9560546875}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370663.975265,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370759.624381,\"aircraftHealth\":300,\"round\":2,\"stage\":\"Soak round 2 of 11\",\"mb\":2570.5029296875}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370749.925138,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370759.624381,\"aircraftHealth\":300,\"round\":2,\"stage\":\"Soak round 2 of 11\",\"mb\":2562.6123046875}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370782.221093,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370961.745204,\"aircraftHealth\":300,\"round\":3,\"stage\":\"Soak round 3 of 11\",\"mb\":2582.0498046875}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "at": "2026-11-22T18:07:42.038Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370862.000646,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370961.745204,\"aircraftHealth\":300,\"round\":3,\"stage\":\"Soak round 3 of 11\",\"mb\":2579.9091796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:08:36.719Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370916.683009,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795370961.745204,\"aircraftHealth\":300,\"round\":3,\"stage\":\"Soak round 3 of 11\",\"mb\":2579.6591796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:09:31.117Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795370971.080872,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371163.798993,\"aircraftHealth\":300,\"round\":4,\"stage\":\"Soak round 4 of 11\",\"mb\":2612.6279296875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:10:25.552Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371025.513372,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371163.798993,\"aircraftHealth\":300,\"round\":4,\"stage\":\"Soak round 4 of 11\",\"mb\":2613.9560546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:11:19.757Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371079.714776,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371163.798993,\"aircraftHealth\":300,\"round\":4,\"stage\":\"Soak round 4 of 11\",\"mb\":2618.3154296875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:12:13.997Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371133.96087,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371163.798993,\"aircraftHealth\":300,\"round\":4,\"stage\":\"Soak round 4 of 11\",\"mb\":2618.4404296875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:13:08.815Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371188.776449,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371365.761797,\"aircraftHealth\":300,\"round\":5,\"stage\":\"Soak round 5 of 11\",\"mb\":2588.6591796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:14:03.221Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371243.177344,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371365.761797,\"aircraftHealth\":300,\"round\":5,\"stage\":\"Soak round 5 of 11\",\"mb\":2585.7685546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:14:59.161Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371299.123145,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371365.761797,\"aircraftHealth\":300,\"round\":5,\"stage\":\"Soak round 5 of 11\",\"mb\":2583.6591796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:15:53.708Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371353.67165,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371365.761797,\"aircraftHealth\":300,\"round\":5,\"stage\":\"Soak round 5 of 11\",\"mb\":2592.8623046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:16:48.525Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371408.488068,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371567.762877,\"aircraftHealth\":300,\"round\":6,\"stage\":\"Soak round 6 of 11\",\"mb\":2608.7685546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:17:42.838Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371462.802329,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371567.762877,\"aircraftHealth\":300,\"round\":6,\"stage\":\"Soak round 6 of 11\",\"mb\":2601.4091796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:18:37.370Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371517.3342522,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371567.762877,\"aircraftHealth\":300,\"round\":6,\"stage\":\"Soak round 6 of 11\",\"mb\":2598.0966796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:19:31.685Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Lobby\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371571.64913,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":0,\"aircraftHealth\":300,\"round\":6,\"stage\":\"Soak round 6 of 11\",\"mb\":2608.7841796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:20:26.534Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371626.497133,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371769.69851,\"aircraftHealth\":300,\"round\":7,\"stage\":\"Soak round 7 of 11\",\"mb\":2603.0966796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:21:21.516Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371681.480741,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371769.69851,\"aircraftHealth\":300,\"round\":7,\"stage\":\"Soak round 7 of 11\",\"mb\":2601.2216796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:22:15.764Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371735.728018,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371769.69851,\"aircraftHealth\":300,\"round\":7,\"stage\":\"Soak round 7 of 11\",\"mb\":2601.1435546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:23:09.947Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371789.910238,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371971.694458,\"aircraftHealth\":300,\"round\":8,\"stage\":\"Soak round 8 of 11\",\"mb\":2631.1748046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:24:04.212Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371844.175178,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371971.694458,\"aircraftHealth\":300,\"round\":8,\"stage\":\"Soak round 8 of 11\",\"mb\":2631.5185546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:24:58.310Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371898.274015,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371971.694458,\"aircraftHealth\":300,\"round\":8,\"stage\":\"Soak round 8 of 11\",\"mb\":2631.6904296875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:25:52.876Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795371952.839199,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795371971.694458,\"aircraftHealth\":300,\"round\":8,\"stage\":\"Soak round 8 of 11\",\"mb\":2631.6591796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:26:47.325Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372007.287959,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372173.705617,\"aircraftHealth\":300,\"round\":9,\"stage\":\"Soak round 9 of 11\",\"mb\":2610.6123046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:27:41.823Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372061.78583,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372173.705617,\"aircraftHealth\":300,\"round\":9,\"stage\":\"Soak round 9 of 11\",\"mb\":2607.8310546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:28:36.189Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372116.152999,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372173.705617,\"aircraftHealth\":300,\"round\":9,\"stage\":\"Soak round 9 of 11\",\"mb\":2594.8779296875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:29:30.741Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372170.701685,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372173.705617,\"aircraftHealth\":300,\"round\":9,\"stage\":\"Soak round 9 of 11\",\"mb\":2593.7841796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:30:25.238Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372225.200188,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372376.166885,\"aircraftHealth\":300,\"round\":10,\"stage\":\"Soak round 10 of 11\",\"mb\":2607.5498046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:31:22.026Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372281.982695,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372376.166885,\"aircraftHealth\":300,\"round\":10,\"stage\":\"Soak round 10 of 11\",\"mb\":2607.1748046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:32:16.232Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372336.19823,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372376.166885,\"aircraftHealth\":300,\"round\":10,\"stage\":\"Soak round 10 of 11\",\"mb\":2604.3623046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:33:10.499Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372390.462521,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372578.177554,\"aircraftHealth\":300,\"round\":11,\"stage\":\"Soak round 11 of 11\",\"mb\":2613.3935546875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:34:05.482Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372445.4474,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372578.177554,\"aircraftHealth\":300,\"round\":11,\"stage\":\"Soak round 11 of 11\",\"mb\":2620.1904296875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:35:00.731Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372500.69329,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372578.177554,\"aircraftHealth\":300,\"round\":11,\"stage\":\"Soak round 11 of 11\",\"mb\":2606.7373046875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:35:55.410Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"clients\":2,\"phase\":\"Active\",\"smoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"memoryTracking\":true,\"elapsed\":1795372555.3743,\"scenarios\":{\"kind\":\"P11\",\"clients\":2,\"scenario\":\"Soak\"},\"version\":\"0.748.0.7481526\",\"deadline\":1795372578.177554,\"aircraftHealth\":300,\"round\":11,\"stage\":\"Soak round 11 of 11\",\"mb\":2606.4716796875}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "at": "2026-11-22T18:36:50.606Z",
+      "live": {
+        "content": [
+          {
+            "type": "text",
+            "text": "The requested `studio_id` is not connected — that Roblox Studio instance may have been closed or its place unloaded. Call `list_roblox_studios` for the current instances, then continue on the one the user confirms (or the one whose `name` matches)."
+          }
+        ],
+        "isError": true
+      }
+    }
+  ],
+  "ok": true,
+  "result": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "passed": true,
+        "name": "Equivalent lobby resets during thirty loaded minutes after warmup"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 4,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "retainedMemory": {
+        "-2": {
+          "growthPercent": 2.649508332017224,
+          "monotonicGrowth": false
+        },
+        "-1": {
+          "growthPercent": 1.3270787267117163,
+          "monotonicGrowth": false
+        },
+        "server": {
+          "growthPercent": 1.64468722248455,
+          "monotonicGrowth": false
+        }
+      },
+      "soakLoads": [
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 1,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.0738110000384,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 1
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 496,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 2,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.00901949999388,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 4,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.02585104166064,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 2,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.02552579168696,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 499,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 2,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 1,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.0578995833639,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 452,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 2,
+          "peak_rifleQueue": 1,
+          "peak_launcherQueue": 1,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.0414950416889,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.07549537502928,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 4,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.05945562501438,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 2,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.06120037502842,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 2,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.05966420832556,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        },
+        {
+          "panelOpenings": 3,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 1,
+          "chainAccepted": 500,
+          "rifleAccepted": 150,
+          "rockets": 43,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 188,
+          "peak_launcherEffects": 2,
+          "seconds": 180.05798070831224,
+          "peak_launcherFlights": 2,
+          "importedFragments": 4,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 4,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 11,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 20,
+          "peak_launcherQueuePeak": 2
+        }
+      ],
+      "soakSamplesMb": {
+        "-2": [
+          2746.971923828125,
+          2781.800048828125,
+          2792.909423828125,
+          2811.190673828125,
+          2806.534423828125,
+          2825.268798828125,
+          2810.471923828125,
+          2818.815673828125,
+          2813.456298828125,
+          2826.596923828125,
+          2819.753173828125
+        ],
+        "-1": [
+          2758.643798828125,
+          2739.487548828125,
+          2755.393798828125,
+          2759.878173828125,
+          2775.596923828125,
+          2777.643798828125,
+          2786.159423828125,
+          2773.237548828125,
+          2785.175048828125,
+          2785.143798828125,
+          2795.253173828125
+        ],
+        "server": [
+          2583.1279296875,
+          2570.7216796875,
+          2601.6435546875,
+          2597.0966796875,
+          2602.6435546875,
+          2605.4873046875,
+          2621.2685546875,
+          2606.9248046875,
+          2605.6748046875,
+          2619.0810546875,
+          2625.6123046875
+        ]
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "clientRequests": {
+        "LauncherState/Fire": 475,
+        "AircraftState/SelectWeapon": 220,
+        "AircraftState/FireWeapon": 5671,
+        "AircraftState/GroundFire": 1654,
+        "AircraftState/GroundReload": 44,
+        "LauncherState/Pickup": 11
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 13,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 13
+        }
+      },
+      "soakLoadedSeconds": 1800.4735872501042,
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 188,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 2,
+        "launcherQueue": 0
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "groundFireDecisions": {
+        "accepted": 1650,
+        "preflight": 4
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 4,
+    "suite": "P11",
+    "failed": 0,
+    "mode": "Soak"
+  },
+  "sdkSeconds": 2242.5312164999777
+}

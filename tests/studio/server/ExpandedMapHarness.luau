@@ -12,6 +12,17 @@ local GameRuntime = require(game.ServerScriptService.Server.GameRuntime)
 local Harness = {}
 local HttpService = game:GetService("HttpService")
 type Case = { name: string, passed: boolean, detail: string? }
+type Observation = {
+    path: string,
+    className: string,
+    shape: string,
+    pose: { number },
+    size: { number },
+    anchored: boolean,
+    collide: boolean,
+    query: boolean,
+    touch: boolean,
+}
 local function awaitCondition(predicate: () -> boolean, label: string, seconds: number?)
     local deadline = os.clock() + (seconds or 20)
     while not predicate() and os.clock() < deadline do
@@ -19,27 +30,33 @@ local function awaitCondition(predicate: () -> boolean, label: string, seconds: 
     end
     assert(predicate(), "P13 timeout: " .. label)
 end
+-- Paths are relative to the specific Battlefield generation. Escape separators
+-- inside a name so distinct parent segments cannot alias the same part identity.
+local function partPath(map: Instance, part: BasePart): string
+    local segments: { string } = {}
+    local item: Instance? = part
+    while item and item ~= map do
+        local escaped = item.Name:gsub("~", "~0"):gsub("/", "~1")
+        table.insert(segments, 1, escaped)
+        item = item.Parent
+    end
+    assert(item == map, "part does not descend from the fixture root")
+    return "/" .. table.concat(segments, "/")
+end
+
 -- Clients compare numeric components with a 0.001-stud/component tolerance,
--- without rounded-string boundaries. Sorted names keep observations reviewable.
-local function observationsJSON(): string
-    local values: {
-        {
-            name: string,
-            className: string,
-            shape: string,
-            pose: { number },
-            size: { number },
-            anchored: boolean,
-            collide: boolean,
-            query: boolean,
-            touch: boolean,
-        }
-    } =
-        {}
-    for _, item in workspace.World.Battlefield:GetDescendants() do
+-- without rounded-string boundaries. Order and identity use full relative paths.
+local function observeGeometry(): { Observation }
+    local map = workspace.World.Battlefield
+    local values: { Observation } = {}
+    local seen: { [string]: boolean } = {}
+    for _, item in map:GetDescendants() do
         if item:IsA("BasePart") then
+            local path = partPath(map, item)
+            assert(not seen[path], "duplicate Battlefield part path " .. path)
+            seen[path] = true
             table.insert(values, {
-                name = item.Name,
+                path = path,
                 className = item.ClassName,
                 shape = if item:IsA("Part") then item.Shape.Name else item.ClassName,
                 pose = { item.CFrame:GetComponents() },
@@ -52,34 +69,30 @@ local function observationsJSON(): string
         end
     end
     table.sort(values, function(first, second)
-        return first.name < second.name
+        return first.path < second.path
     end)
-    return HttpService:JSONEncode(values)
+    return values
 end
 
--- Same-server reset equality has no network float conversion. Explicitly ordered
--- fields avoid relying on JSON object-key serialization order for exact comparisons.
+-- Same-server reset equality uses ordered arrays of the raw observed fields.
+-- A moved or renumbered part must fail even if its leaf name stays the same.
 local function signature(): string
-    local values: { string } = {}
-    for _, item in workspace.World.Battlefield:GetDescendants() do
-        if item:IsA("BasePart") then
-            table.insert(
-                values,
-                table.concat({
-                    item.Name,
-                    item.ClassName,
-                    tostring(item.CFrame),
-                    tostring(item.Size),
-                    tostring(item.Anchored),
-                    tostring(item.CanCollide),
-                    tostring(item.CanQuery),
-                    tostring(item.CanTouch),
-                }, ":")
-            )
-        end
+    local values: { { unknown } } = {}
+    for _, entry in observeGeometry() do
+        local fields: { unknown } = {
+            entry.path,
+            entry.className,
+            entry.shape,
+            entry.pose,
+            entry.size,
+            entry.anchored,
+            entry.collide,
+            entry.query,
+            entry.touch,
+        }
+        table.insert(values, fields)
     end
-    table.sort(values)
-    return table.concat(values, "|")
+    return HttpService:JSONEncode(values)
 end
 
 -- ExecuteMultiplayerTestAsync(2,{kind="P13"}); returns a structured actual-client report.
@@ -128,7 +141,7 @@ function Harness.run()
             serial += 1
             local token = serial
             replies[token] = {}
-            remote:FireClient(player, token, observationsJSON())
+            remote:FireClient(player, token, HttpService:JSONEncode(observeGeometry()))
             awaitCondition(function()
                 return replies[token][player] ~= nil
             end, "replicated world", 16)

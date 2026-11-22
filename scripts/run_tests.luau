@@ -52,7 +52,10 @@ do
                         GroundMovementGuard = true,
                     }
                     local area = if serverModules[moduleName] then "server" else "shared"
-                    local rules = loadModule("../src/" .. area .. "/" .. moduleName)
+                    local path = if moduleName == "P11Metrics"
+                        then "../tests/studio/support/P11Metrics"
+                        else "../src/" .. area .. "/" .. moduleName
+                    local rules = loadModule(path)
                     cases(test, rules)
                 end
             end

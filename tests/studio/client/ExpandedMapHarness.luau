@@ -5,7 +5,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Harness = {}
 local HttpService = game:GetService("HttpService")
 type Observation = {
-    name: string,
+    path: string,
     className: string,
     shape: string,
     pose: { number },
@@ -16,11 +16,25 @@ type Observation = {
     touch: boolean,
 }
 
+-- Paths are relative to the specific Battlefield generation. Escape separators
+-- inside a name so distinct parent segments cannot alias the same part identity.
+local function partPath(map: Instance, part: BasePart): string
+    local segments: { string } = {}
+    local item: Instance? = part
+    while item and item ~= map do
+        local escaped = item.Name:gsub("~", "~0"):gsub("/", "~1")
+        table.insert(segments, 1, escaped)
+        item = item.Parent
+    end
+    assert(item == map, "part does not descend from the fixture root")
+    return "/" .. table.concat(segments, "/")
+end
+
 -- Numeric component comparison accepts signed zero and float serialization differences
 -- within 0.001 studs/components, without rounding-boundary false mismatches. Identity,
 -- population, class, shape and collision/query/touch ownership must match exactly.
-local function geometryMatches(expected: { Observation }): (boolean, string?)
-    local map = workspace.World:FindFirstChild("Battlefield")
+local function geometryMatches(expected: { Observation }, fixture: Instance?): (boolean, string?)
+    local map = fixture or workspace.World:FindFirstChild("Battlefield")
     if not map then
         return false, "Battlefield missing"
     end
@@ -28,20 +42,26 @@ local function geometryMatches(expected: { Observation }): (boolean, string?)
     local count = 0
     for _, item in map:GetDescendants() do
         if item:IsA("BasePart") then
-            if parts[item.Name] then
-                return false, "duplicate part " .. item.Name
+            local path = partPath(map, item)
+            if parts[path] then
+                return false, "duplicate actual part path " .. path
             end
-            parts[item.Name] = item
+            parts[path] = item
             count += 1
         end
     end
     if count ~= #expected then
         return false, "part count differs"
     end
+    local seenExpected: { [string]: boolean } = {}
     for _, entry in expected do
-        local actual = parts[entry.name]
+        if seenExpected[entry.path] then
+            return false, "duplicate expected part path " .. entry.path
+        end
+        seenExpected[entry.path] = true
+        local actual = parts[entry.path]
         if not actual then
-            return false, "part missing: " .. entry.name
+            return false, "part missing: " .. entry.path
         end
         local shape = if actual:IsA("Part") then actual.Shape.Name else actual.ClassName
         if
@@ -52,7 +72,7 @@ local function geometryMatches(expected: { Observation }): (boolean, string?)
             or actual.CanQuery ~= entry.query
             or actual.CanTouch ~= entry.touch
         then
-            return false, "class/shape/flags differ: " .. entry.name
+            return false, "class/shape/flags differ: " .. entry.path
         end
         local pose = { actual.CFrame:GetComponents() }
         for index, value in entry.pose do
@@ -62,7 +82,7 @@ local function geometryMatches(expected: { Observation }): (boolean, string?)
                 or math.abs(component) == math.huge
                 or math.abs(component - value) > 0.001
             then
-                return false, "CFrame component differs: " .. entry.name .. ":" .. tostring(index)
+                return false, "CFrame component differs: " .. entry.path .. ":" .. tostring(index)
             end
         end
         for index, component in { actual.Size.X, actual.Size.Y, actual.Size.Z } do
@@ -71,11 +91,64 @@ local function geometryMatches(expected: { Observation }): (boolean, string?)
                 or math.abs(component) == math.huge
                 or math.abs(component - entry.size[index]) > 0.001
             then
-                return false, "size differs: " .. entry.name .. ":" .. tostring(index)
+                return false, "size differs: " .. entry.path .. ":" .. tostring(index)
             end
         end
     end
     return true, nil
+end
+
+-- Exercise the same path index on private Instances. Equal leaf names and
+-- separator-like name segments must work, while a sibling with the same name
+-- or a duplicate expected path of equal cardinality must fail.
+local function verifyPathFixture()
+    local fixture = Instance.new("Folder")
+    local function panel(name: string, position: Vector3): BasePart
+        local parent = Instance.new("Folder")
+        parent.Name = name
+        parent.Parent = fixture
+        local solid = Instance.new("Part")
+        solid.Name = "Solid"
+        solid.Anchored = true
+        solid.Position = position
+        solid.Parent = parent
+        return solid
+    end
+    local function expected(part: BasePart, path: string): Observation
+        return {
+            path = path,
+            className = "Part",
+            shape = "Block",
+            pose = { part.CFrame:GetComponents() },
+            size = { part.Size.X, part.Size.Y, part.Size.Z },
+            anchored = true,
+            collide = part.CanCollide,
+            query = part.CanQuery,
+            touch = part.CanTouch,
+        }
+    end
+    local ok, problem = pcall(function()
+        local first = panel("Panel/A", Vector3.zero)
+        local second = panel("Panel~1A", Vector3.xAxis * 12)
+        local one = expected(first, "/Panel~1A/Solid")
+        local two = expected(second, "/Panel~01A/Solid")
+        local matched, mismatch = geometryMatches({ one, two }, fixture)
+        assert(matched, "distinct part paths rejected: " .. tostring(mismatch))
+        matched, mismatch = geometryMatches({ one, one }, fixture)
+        assert(
+            not matched and mismatch == "duplicate expected part path " .. one.path,
+            "duplicate expectation accepted"
+        )
+        local duplicate = first:Clone()
+        duplicate.Parent = first.Parent
+        matched, mismatch = geometryMatches({ one, two }, fixture)
+        assert(
+            not matched and mismatch == "duplicate actual part path " .. one.path,
+            "duplicate actual path accepted"
+        )
+    end)
+    fixture:Destroy()
+    assert(ok, tostring(problem))
 end
 
 -- Installs asynchronously in every actual client, including a late join.
@@ -87,8 +160,13 @@ function Harness.run()
         end
         local listener: RBXScriptConnection? = nil
         local removal: RBXScriptConnection? = nil
+        local pathFixtureVerified = false
         listener = remote.OnClientEvent:Connect(function(token: number, expected: string)
             local ok, reason = pcall(function()
+                if not pathFixtureVerified then
+                    verifyPathFixture()
+                    pathFixtureVerified = true
+                end
                 local observations = HttpService:JSONDecode(expected) :: { Observation }
                 local deadline = os.clock() + 12
                 while not geometryMatches(observations) and os.clock() < deadline do
@@ -109,10 +187,10 @@ function Harness.run()
                 entry.pose[1] = originalX + 0.0011
                 assert(not geometryMatches(observations), "beyond-tolerance geometry accepted")
                 entry.pose[1] = originalX
-                local originalName = entry.name
-                entry.name = "P13MissingObservationPart"
+                local originalPath = entry.path
+                entry.path = "/P13MissingObservationPart"
                 assert(not geometryMatches(observations), "missing part identity accepted")
-                entry.name = originalName
+                entry.path = originalPath
                 entry.collide = not entry.collide
                 assert(not geometryMatches(observations), "changed collision flag accepted")
                 entry.collide = not entry.collide

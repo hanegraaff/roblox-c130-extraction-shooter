@@ -14,6 +14,9 @@
       },
       "ClientSpecs": {
         "$path": "tests/studio/specs-client"
+      },
+      "P11Metrics": {
+        "$path": "tests/studio/support/P11Metrics.luau"
       }
     },
     "ServerScriptService": {
