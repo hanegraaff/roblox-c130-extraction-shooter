@@ -44,7 +44,7 @@ Solid walls hide ground thermal highlights and block shots and blasts. Walls and
 
 ## Availability
 
-Play locally in Roblox Studio from `main`. One battlefield is playable, including the detailed Outpost, indoor ground camera, both roles and the full match and replay loop. The main branch includes Studio workloads for balance, frame time and repeated-round cleanup. The earlier private cloud place served the Outpost import workflow. Roblox client availability for the MVP is pending the authorized release and real 6- and 10-player sessions. [Roadmap](roadmap.md)
+Play locally in Roblox Studio from `main`. One battlefield is playable, including the detailed Outpost, indoor ground camera, both roles and the full match and replay loop. To host a session in the Roblox app, follow [Publish and play privately](#publish-and-play-privately). The MVP release and real 6- and 10-player acceptance are pending. [Roadmap](roadmap.md)
 
 ## Set up locally
 
@@ -64,6 +64,15 @@ rojo plugin install
 On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
+
+## Publish and play privately
+
+1. In Creator Dashboard, select the approved test experience. Open **Publish settings → Manage Audience → Manage access → Playtest**, set the audience to **Playtesters**, and save. Set the start place’s player limit to **10**. [Roblox audience settings](https://create.roblox.com/docs/production/publishing/publish-games-and-places#target-audience)
+2. Note the place’s current published version for rollback. Open `build/game.rbxlx` in Studio, choose **File → Publish As**, and select the approved experience and its existing start place. [Roblox Version History](https://create.roblox.com/docs/projects/version-history)
+3. Open the published place in Studio and use **Collaborate** to grant each invited tester **Play** access. In Creator Dashboard, use **⋯ → Copy URL** on the experience tile and share it with those testers. [Roblox collaborator permissions](https://create.roblox.com/docs/projects/collaboration#manage-collaborators), [Copy the Roblox link](https://create.roblox.com/docs/projects/configure-games#copy-landing-page-link)
+4. Have everyone open the link in the **Roblox app** and join the same server. The game starts with **six players**, including you. For a ten-player match, keep everyone connected and begin counting rounds once all ten deploy together.
+
+The [P12 release plan](plans/12-mvp-release.md#authorization-and-destination-access) records the team’s approved destination. The [release runbook](docs/release.md) covers asset permissions and the full live test checklist.
 
 ## Play and develop locally with Rojo
 
