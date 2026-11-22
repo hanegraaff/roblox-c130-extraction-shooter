@@ -1,0 +1,479 @@
+{
+  "sourceCommit": "6d1a352196277a89a5b7dec41181035707f766c7",
+  "sourceTree": "397296697c02caac615bacd0102c1b41715a28e6",
+  "testArtifactSha256": "8b419cb8d9e42d0f62f1e99bbad1c2cb5e014b9b47442acb7fa02ce063ea6f5f",
+  "releaseArtifactSha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+  "studioVersion": "0.748.0.7481526",
+  "sourceAudit": {
+    "universeId": 0,
+    "p07AndP17Sources": {
+      "ServerScriptService/ServerTests/P17Metadata": "63a6387697f3703d7d9774978bca4c778c4316df463110bab58755c481340dde",
+      "ServerScriptService/ServerTests/DestructionHarness": "019997b2ba1637519905a14864d413a5157002505d945f9e3c77aab9c5352a29",
+      "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness": "701dcec79347ec5aa2b170c61a4c22ec4d5e931487b6a13e5c2d165db3ce37f3"
+    },
+    "missing": [],
+    "placeId": 0,
+    "version": "0.748.0.7481526",
+    "extra": [],
+    "gameName": "PlayersVsC130Tests",
+    "expected": 159,
+    "mismatched": [],
+    "matched": 159
+  },
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P14\"})",
+  "reportBytes": 168414,
+  "result": {
+    "serverBaseline": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 192,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 192
+    },
+    "projectionPixelTolerance": 1,
+    "clientCount": 2,
+    "cases": [
+      {
+        "passed": true,
+        "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits"
+      },
+      {
+        "passed": true,
+        "name": "P14 acknowledged zoom and rejected selection preserve world-space pan and ground camera"
+      },
+      {
+        "passed": true,
+        "name": "P14 blocked UI outside-window input and recenter retain bounded ownership"
+      },
+      {
+        "passed": true,
+        "name": "P14 slope and upper-floor targets retain actual occluded thermal configuration"
+      },
+      {
+        "passed": true,
+        "name": "P14 result role loss and new-round operator entry reset focus without duplicate ownership"
+      },
+      {
+        "passed": true,
+        "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+      }
+    ],
+    "passed": 6,
+    "orbitSecondsPerWeapon": 90,
+    "environment": "Studio",
+    "suite": "P14-multiplayer",
+    "clientBaselines": [
+      {
+        "userId": -2,
+        "report": {
+          "baseline": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 13,
+            "userId": -2,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "discovered": 13
+          }
+        }
+      },
+      {
+        "userId": -1,
+        "report": {
+          "baseline": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 13,
+            "userId": -1,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "discovered": 13
+          }
+        }
+      }
+    ],
+    "projectionWorldToleranceStuds": 0.5,
+    "discovered": 6,
+    "failed": 0,
+    "skipped": 0
+  },
+  "observations": [
+    {
+      "request": "EdgeFrames",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "TerrainSlope",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "TerrainSlope",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Foundry",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Warehouse",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Outpost",
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "request": "OrbitSummary",
+      "userId": -1,
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "request": "Ground",
+      "passed": true,
+      "userId": -2,
+      "detail": "observed"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Ground",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "TerrainSlope",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "TerrainSlope",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Foundry",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Warehouse",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "userId": -1,
+      "request": "Projection",
+      "target": "Outpost",
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "detail": "observed",
+      "request": "OrbitSummary",
+      "userId": -1,
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "request": "Ground",
+      "passed": true,
+      "userId": -2,
+      "detail": "observed"
+    },
+    {
+      "detail": "observed",
+      "request": "Projection",
+      "userId": -1,
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "detail": "observed",
+      "request": "Coherence",
+      "userId": -1,
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "request": "Reject",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "detail": "observed",
+      "request": "Coherence",
+      "userId": -1,
+      "passed": true,
+      "weapon": "GAU23"
+    },
+    {
+      "request": "Ground",
+      "passed": true,
+      "userId": -2,
+      "detail": "observed"
+    },
+    {
+      "request": "PanHold",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "GroundMove",
+      "passed": true,
+      "userId": -2,
+      "detail": "observed"
+    },
+    {
+      "overlapSeconds": 2.998621940612793,
+      "afterOrbitErrorStuds": 0.4286194145679474,
+      "beforeOrbitErrorStuds": 0.4211313724517822,
+      "request": "ConcurrentGroundPan"
+    },
+    {
+      "request": "Blocked",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "Thermal",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "ResetInput",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "ResultsOverview",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "LobbyCamera",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "ResetInput",
+      "passed": true,
+      "userId": -2,
+      "detail": "observed"
+    },
+    {
+      "request": "Ground",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "detail": "observed",
+      "request": "Projection",
+      "userId": -2,
+      "passed": true,
+      "weapon": "M102"
+    },
+    {
+      "request": "ResultsOverview",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    },
+    {
+      "request": "LobbyCamera",
+      "passed": true,
+      "userId": -1,
+      "detail": "observed"
+    }
+  ],
+  "retention": "Named cases, baseline reports and scalar observations retained. Nested native ray and orbit sample arrays omitted. The harness covers acknowledged profile, contained camera and cleanup on actual clients. Operated desktop or touch input and grayscale readability were not run in this session."
+}

@@ -1,0 +1,354 @@
+{
+  "sourceCommit": "6d1a352196277a89a5b7dec41181035707f766c7",
+  "sourceTree": "397296697c02caac615bacd0102c1b41715a28e6",
+  "testArtifactSha256": "8b419cb8d9e42d0f62f1e99bbad1c2cb5e014b9b47442acb7fa02ce063ea6f5f",
+  "releaseArtifactSha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+  "studioVersion": "0.748.0.7481526",
+  "sourceAudit": {
+    "universeId": 0,
+    "p07AndP17Sources": {
+      "ServerScriptService/ServerTests/P17Metadata": "63a6387697f3703d7d9774978bca4c778c4316df463110bab58755c481340dde",
+      "ServerScriptService/ServerTests/DestructionHarness": "019997b2ba1637519905a14864d413a5157002505d945f9e3c77aab9c5352a29",
+      "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness": "701dcec79347ec5aa2b170c61a4c22ec4d5e931487b6a13e5c2d165db3ce37f3"
+    },
+    "missing": [],
+    "placeId": 0,
+    "version": "0.748.0.7481526",
+    "extra": [],
+    "gameName": "PlayersVsC130Tests",
+    "expected": 159,
+    "mismatched": [],
+    "matched": 159
+  },
+  "launch": {
+    "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P12ManagedOutpost\"})",
+    "actualMode": "SDK launch of native Server and Clients; test-only ManualHarness P17 dispatch takes precedence over SDK kind",
+    "selector": "ManualHarness=P17",
+    "commitSelector": "P17HarnessCommit=6d1a352196277a89a5b7dec41181035707f766c7"
+  },
+  "clock": 211.41484349995153,
+  "evidence": {
+    "ChunkCount": 12,
+    "TotalBytes": 684697,
+    "DeliveredAtServerSeconds": 1795386294.247961,
+    "ChunkBytesLimit": 60000,
+    "Complete": true
+  },
+  "clients": 2,
+  "delivered": {
+    "cleanupObservedAfterHarness": {
+      "aircraftStateAbsent": true,
+      "groundEffectsAbsent": true,
+      "transportAbsent": true,
+      "roundStateAbsent": true,
+      "combatEffectsAbsent": true,
+      "fragmentFolderAbsent": true
+    },
+    "invocation": {
+      "approvedAssetBindings": [
+        {
+          "upload_owner": "User 2227341845",
+          "roblox_asset_id": "73311045122621",
+          "sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8",
+          "id": "p16-exports-military-outpost-outpost-assembly-v1-fbx"
+        },
+        {
+          "upload_owner": "User 2227341845",
+          "roblox_asset_id": "126055228085421",
+          "sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d",
+          "id": "p16-exports-military-outpost-panel-library-v1-fbx"
+        },
+        {
+          "upload_owner": "User 2227341845",
+          "id": "p17-panel-library-materials-v2-glb",
+          "uploaded_revision": "2",
+          "sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e",
+          "roblox_asset_id": "126055228085421"
+        }
+      ],
+      "serverProbeSha256": "77f502e03756db14dd5f7ac9e6f3e4a487e3a92834cce156ec0d70089868fd68",
+      "requestedInitialClients": 2,
+      "referenceProductionCommit": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+      "harness": "P17Manual-v9-verified-avatar-handoff",
+      "mode": "manual-native-server-clients",
+      "selector": "ServerStorage.DevelopmentSettings.ManualHarness",
+      "referenceProductionTree": "1f8d4d231b7081adfe3bafe8ade5dc6acf9e2d47",
+      "actualLateClientRequired": false,
+      "manualFixtureVersion": "v9-verified-avatar-handoff",
+      "selectorValue": "P17",
+      "productionFingerprintSha256": "3d7977674caa83c344bc2ddfc7871920230e4275a081a5f7cd22e31f7e786193",
+      "harnessFingerprintSha256": "692ec53546ed1f0c8cd8a5254572c5ceeef027563b558afb99e901240a333a9b",
+      "clientProbeSha256": "3726af2dc63b175bac366f5d9ea51ed6b3ad78ba468c8ae356d4b355d8f1a292",
+      "harnessCommit": "6d1a352196277a89a5b7dec41181035707f766c7",
+      "serverTime": 1795386148.643522,
+      "automaticSessionEnd": false
+    },
+    "result": {
+      "serverBaseline": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 192
+      },
+      "skipped": 0,
+      "clientCount": 2,
+      "passed": 10,
+      "observationCounts": {
+        "all-panel-pristine-reset-agreement": 2,
+        "reset-pre-abort-work": 2,
+        "wall-forecast": 1,
+        "six-family-actual-replication": 6,
+        "all-panel-current-agreement": 1,
+        "actual-heavy-accumulating-panel": 1,
+        "native-heavy-bounded-aim": 7,
+        "actual-heavy": 6,
+        "persistent-30mm-bursts": 1,
+        "native-heavy-diagnostic": 1,
+        "actual-humanoid-opening": 1,
+        "reset-roof-forecast": 2,
+        "native-material-burst-bounded-aim": 3,
+        "native-mesh-instance-preload-and-surface-streaming-gap": 2,
+        "approved-material-stage-ray-replication": 42,
+        "actual-outpost-humanoid-navigation": 1
+      },
+      "clientBaselines": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 13,
+          "userId": -1,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 13
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 13,
+          "userId": -2,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "discovered": 13
+        }
+      },
+      "cases": [
+        {
+          "passed": true,
+          "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+        },
+        {
+          "passed": true,
+          "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+        },
+        {
+          "passed": true,
+          "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+        },
+        {
+          "passed": true,
+          "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+        },
+        {
+          "passed": true,
+          "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+        },
+        {
+          "passed": true,
+          "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+        },
+        {
+          "passed": true,
+          "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+        },
+        {
+          "passed": true,
+          "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+        },
+        {
+          "passed": true,
+          "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+        }
+      ],
+      "selectedObservations": [
+        {
+          "replyOk": true,
+          "kind": "native-mesh-instance-preload-and-surface-streaming-gap",
+          "userId": -1,
+          "detailBytes": 131179
+        },
+        {
+          "replyOk": true,
+          "kind": "native-mesh-instance-preload-and-surface-streaming-gap",
+          "userId": -2,
+          "detailBytes": 131179
+        },
+        {
+          "kind": "actual-outpost-humanoid-navigation",
+          "teleports": "initial route placement only; MoveTo between every waypoint",
+          "routesCount": 2
+        },
+        {
+          "earnedTotalSeconds": 11.000824213027954,
+          "firstFactIndex": 7,
+          "requested": 63,
+          "transitionEarnedSeconds": 9.167355060577393,
+          "kind": "persistent-30mm-bursts",
+          "panelId": "Outpost_S02_Roof_01_02",
+          "accepted": 63
+        },
+        {
+          "panelId": "Warehouse_S01_North_04",
+          "crossingOwnership": {
+            "automatic": false,
+            "userId": -1
+          },
+          "clientPlacement": {
+            "phase": "placement",
+            "initialPositionStuds": [
+              184,
+              3.125,
+              -110.5
+            ],
+            "startDistanceStuds": 0,
+            "passed": true,
+            "startPositionStuds": [
+              184,
+              3.125,
+              -110.5
+            ],
+            "elapsedSeconds": 0.000032374984584748745,
+            "finalDistanceStuds": 0,
+            "finalPositionStuds": [
+              184,
+              3.125,
+              -110.5
+            ],
+            "userId": -1
+          },
+          "originalOwnershipCount": 2,
+          "passed": true,
+          "startServerPositionStuds": [
+            184,
+            3.125,
+            -110.5
+          ],
+          "userId": -1,
+          "restoredServerPositionStudsCount": 3,
+          "acknowledgedServerPositionStudsCount": 3,
+          "serverObservationBudgetSeconds": 2,
+          "finalServerOwnershipCount": 2,
+          "requestedStartPositionStudsCount": 3,
+          "serverObservationElapsedSeconds": 0.13346641667885706,
+          "originalPositionStudsCount": 3,
+          "serverRootPresent": true,
+          "clientReplyAfterSeconds": 0.6993877500062808,
+          "restored": true,
+          "clientCrossing": {
+            "phase": "walk",
+            "initialPositionStuds": [
+              183.9989013671875,
+              3.1250476837158203,
+              -110.5016860961914
+            ],
+            "startDistanceStuds": 0.0020130048505961895,
+            "passed": true,
+            "finalDistanceStuds": 1.6793760061264038,
+            "startPositionStuds": [
+              183.9989013671875,
+              3.1250476837158203,
+              -110.5016860961914
+            ],
+            "elapsedSeconds": 0.6330471666879021,
+            "displacementStuds": 10.322311401367188,
+            "finalPositionStuds": [
+              183.99949645996094,
+              3.1229631900787354,
+              -100.17937469482422
+            ],
+            "userId": -1
+          },
+          "goalPositionStuds": [
+            184,
+            3.125,
+            -98.5
+          ],
+          "finalServerDistanceStuds": 1.4846090078353882,
+          "clientReplyServerPositionStudsCount": 3,
+          "restoredOwnership": {
+            "automatic": true
+          },
+          "elapsedSeconds": 0.8328593749902211,
+          "kind": "actual-humanoid-opening",
+          "placementOwnership": {
+            "automatic": false
+          },
+          "finalServerPositionStuds": [
+            183.9989013671875,
+            3.121259927749634,
+            -99.98460388183594
+          ]
+        },
+        {
+          "panelId": "Shelter_Roof_R01_C04",
+          "liveFragments": 4,
+          "pendingProjectiles": 2,
+          "kind": "reset-pre-abort-work",
+          "sustainedSeconds": 0.18381285667419434,
+          "iteration": 1
+        },
+        {
+          "actualClients": 2,
+          "perClientQueriedPanels": 188,
+          "serverPanels": 188,
+          "kind": "all-panel-pristine-reset-agreement",
+          "iteration": 1
+        },
+        {
+          "panelId": "Shelter_Roof_R01_C04",
+          "liveFragments": 4,
+          "pendingProjectiles": 2,
+          "kind": "reset-pre-abort-work",
+          "sustainedSeconds": 0.18375706672668457,
+          "iteration": 2
+        },
+        {
+          "actualClients": 2,
+          "perClientQueriedPanels": 188,
+          "serverPanels": 188,
+          "kind": "all-panel-pristine-reset-agreement",
+          "iteration": 2
+        }
+      ],
+      "environment": "Studio",
+      "initialUserIds": [
+        -1,
+        -2
+      ],
+      "suite": "P17-imported-material-multiplayer",
+      "failed": 0,
+      "discovered": 10
+    },
+    "actualClientsAtDelivery": 2
+  },
+  "finalSessionCleanup": {
+    "ownedActualServerEnded": true,
+    "originalInvocationReturned": true,
+    "testDocumentReturnedToEdit": true,
+    "manualSelectorCleared": true,
+    "commitSelectorCleared": true
+  },
+  "retention": "Actual Server retained 12 ordered chunks. The tester joined the chunks and verified the byte count before decoding. This bounded record preserves all cases, native baselines, timeline totals, selected diagnostics and teardown facts. Destination asset permissions and published Roblox clients are separate."
+}

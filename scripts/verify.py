@@ -41,6 +41,11 @@ def analysis_arguments() -> list[str]:
     return ["luau-lsp", "analyze", "--platform=roblox", "--sourcemap=build/sourcemap.json", "--definitions=@roblox=.tools/globalTypes.d.luau"]
 
 
+def tool_pins(root: Path = ROOT) -> dict[str, str]:
+    """Read the exact version pins enforced by verification and recorded for release."""
+    return dict(re.findall(r'([\w-]+)\s*=\s*"[^"@]+@([\d.]+)"', (root / "rokit.toml").read_text()))
+
+
 def negative_probes() -> None:
     """Prove failures and zero discovery fail the same runner in disposable source copies."""
     with tempfile.TemporaryDirectory(prefix="c130-gate-") as directory:
@@ -73,7 +78,7 @@ def main() -> int:
     run([sys.executable, "scripts/p17_harness.py"])
     run([sys.executable, "-m", "unittest", "discover", "-s", "tests/assets", "-v"])
     # Refuse accidental upgrades or tool substitutions; Rokit pins are the source of truth.
-    for name, pin in re.findall(r'([\w-]+)\s*=\s*"[^"@]+@([\d.]+)"', (ROOT / "rokit.toml").read_text()):
+    for name, pin in tool_pins().items():
         executable = shutil.which(name, path=ENVIRONMENT["PATH"])
         if executable is None:
             raise RuntimeError(f"Missing {name}; run python3 scripts/setup.py")

@@ -44,7 +44,7 @@ Solid walls hide ground thermal highlights and block shots and blasts. Walls and
 
 ## Availability
 
-Play locally in Roblox Studio from `main`. The current game has one battlefield with the playable Outpost, indoor camera and full match and replay loop. P11 tracks local balance, frame times and repeated-round cleanup. P12 tracks release and 6- and 10-player Roblox client acceptance. [Roadmap](roadmap.md)
+Play locally in Roblox Studio from `main`. One battlefield is playable, including the detailed Outpost, indoor ground camera, both roles and the full match and replay loop. To host a session in the Roblox app, follow [Publish and play privately](#publish-and-play-privately). The MVP release and real 6- and 10-player acceptance are pending. [Roadmap](roadmap.md)
 
 ## Set up locally
 
@@ -64,6 +64,15 @@ rojo plugin install
 On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
+
+## Publish and play privately
+
+1. In Creator Dashboard, select the approved test experience. Open **Publish settings → Manage Audience → Manage access → Playtest**, set the audience to **Playtesters**, and save. Set the start place’s player limit to **10**. [Roblox audience settings](https://create.roblox.com/docs/production/publishing/publish-games-and-places#target-audience)
+2. Note the place’s current published version for rollback. Open `build/game.rbxlx` in Studio, choose **File → Publish As**, and select the approved experience and its existing start place. [Roblox Version History](https://create.roblox.com/docs/projects/version-history)
+3. Open the published place in Studio and use **Collaborate** to grant each invited tester **Play** access. In Creator Dashboard, use **⋯ → Copy URL** on the experience tile and share it with those testers. [Roblox collaborator permissions](https://create.roblox.com/docs/projects/collaboration#manage-collaborators), [Copy the Roblox link](https://create.roblox.com/docs/projects/configure-games#copy-landing-page-link)
+4. Have everyone open the link in the **Roblox app** and join the same server. The game starts with **six players**, including you. For a ten-player match, keep everyone connected and begin counting rounds once all ten deploy together.
+
+The [P12 release plan](plans/12-mvp-release.md#authorization-and-destination-access) records the team’s approved destination. The [release runbook](docs/release.md) covers asset permissions and the full live test checklist.
 
 ## Play and develop locally with Rojo
 
@@ -90,12 +99,12 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 ```
 
 1. Open `build/tests.rbxlx` as a separate **local** test document. With Play stopped, connect **Plugins → Rojo** to `localhost:34872` and confirm **PlayersVsC130Tests**. Use this mapping only in the local test document.
-2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. Expect **13 cases per actual client** and **192 server cases** with P11, or **191 server cases** with P10. All should pass with zero failures, skips or errors. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
+2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. The current mapping discovers **192 server cases** and **13 per actual client**. All should pass with zero failures, skips or errors. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
 3. With one client, Play opens the labelled Ground preview. Use the **STUDIO TESTING** panel to cycle **Role** through Auto, Ground and Operator, or move between **Explore map (solo)** and **Return to lobby**. Preview lets you walk the map or use the thermal camera and both zooms while waiting for a match.
 4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** to exercise launcher transfer and teammate spectating, or **4** to give an eliminated player two targets to cycle through. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
 5. Play through Results and wait for the lobby to return. Start the next round to inspect restored equipment and cover. **Reset test / apply settings** returns to the lobby or solo preview. Test-panel role and duration choices apply to the next explicit start. Use **End Session** when finished.
 
-The four-client player experience harness checks role HUDs, keyboard controls, spectator targeting and camera cleanup. The match harness covers competitive endings, departures and replay. The P11 branch adds Studio workloads for combat load, cleanup, frame time, memory and latency. Stop Play and confirm the updated source reached the same test document before collecting fresh evidence. [Player experience harness](docs/testing.md#run-the-player-experience-harness), [match harness](docs/testing.md#run-the-p09-match-outcome-harness), [P11 workloads](docs/testing.md#run-the-p11-performance-harness)
+The four-client player experience harness checks role HUDs, keyboard controls, spectator targeting and camera cleanup. The match harness covers competitive endings, departures and replay. The performance harness exercises combat load, cleanup, frame time, memory and latency. Stop Play and confirm the updated source reached the same test document before collecting fresh evidence. [Player experience harness](docs/testing.md#run-the-player-experience-harness), [match harness](docs/testing.md#run-the-p09-match-outcome-harness), [P11 workloads](docs/testing.md#run-the-p11-performance-harness)
 
 ## Inspect the Blender outpost
 
@@ -105,4 +114,5 @@ Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.b
 
 - [Game design](game-design.md) and [requirements](requirements.md)
 - [Development guide](docs/development.md), [architecture](architecture.md) and [testing guide](docs/testing.md)
+- [Release preparation and live acceptance](docs/release.md)
 - [Author Roblox assets](.agents/skills/author-roblox-assets/SKILL.md) and [import Blender assets into Roblox](.agents/skills/import-blender-to-roblox/SKILL.md)

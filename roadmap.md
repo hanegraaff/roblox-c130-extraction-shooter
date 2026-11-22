@@ -21,7 +21,7 @@ The integrated source on `main` includes the development shell, verification too
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
-| M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Ready | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
+| M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Blocked | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
 **Implementation order selected in D63: P17 → P09.** P16 and P17 retain
@@ -60,10 +60,20 @@ convergence and local balance review passed. The repeated five-minute
 1080p profile at quality 8 passed with 18.1 ms and 18.3 ms client p95 and
 0.6 ms server scheduler p95. After the Studio restart, P13 passed 5/5,
 P10 passed 8/8 with four actual clients, and P03 passed 9/9 after the GUI
-fixture fix. Both live late-join checks passed. PR #45 is open and unmerged.
-P12 is Ready and needs P11's branch until integration.
+fixture fix. Both live late-join checks passed. PR #45 merged P11 into `main`
+at `5fa47e8`, which supplies the P12 dependency source.
 [PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45),
 [P11 evidence](plans/11-balance-and-performance.md#completion-record)
+
+2026-11-22 P12 handoff. A clean checkout reproduced the authorized release
+artifact. Studio passed fresh smoke, match outcomes and departures, panning
+and Outpost scenarios. The multiplayer SDK repeatedly stalled during startup,
+leaving parts of the final Studio gate open. The user authorized invited
+playtester publication on C130 P17 Import. The current Studio connection is
+local and lacks cloud read access for destination verification. Publication,
+the live six- and ten-player rounds, and the live performance and soak checks
+are pending. [Draft PR #46](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/46),
+[P12 evidence](plans/12-mvp-release.md#completion-record)
 
 2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
 validated shared material-panel boundary and approved-source generation gate.

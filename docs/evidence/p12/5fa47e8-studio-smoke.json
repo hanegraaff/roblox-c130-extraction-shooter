@@ -1,0 +1,105 @@
+{
+  "sourceCommit": "5fa47e8a0251c12ea8639f0ae0a75c2c5409748e",
+  "sourceTree": "5521ef140c703183049058a28325eb64c69ff377",
+  "testArtifactSha256": "5cfcff1a19fc8be8f747a852532374442ebaf09d85a26bf829512d6b58c099d6",
+  "releaseArtifactSha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+  "sourceAudit": {
+    "missing": [],
+    "universeId": 0,
+    "version": "0.748.0.7481526",
+    "gameName": "PlayersVsC130Tests",
+    "mismatched": [],
+    "placeId": 0,
+    "extra": [],
+    "matched": 159,
+    "method": "Read-only Studio Edit comparison of mapped Source byte lengths, classes and SHA-256 digests to Rojo test XML."
+  },
+  "invocation": "Roblox Studio MCP start_stop_play on separate local tests.rbxlx, repeated after Stop",
+  "runs": [
+    {
+      "run": 1,
+      "actualClients": 1,
+      "startup": {
+        "status": "first-client-arrived",
+        "clientCount": 1,
+        "budgetSeconds": 60,
+        "elapsedSeconds": 0.16548925003735349
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 192
+      },
+      "client": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      },
+      "bootstrapCopies": 1,
+      "gui": [
+        {
+          "enabled": false,
+          "name": "FoundationStatus"
+        },
+        {
+          "enabled": false,
+          "name": "GroundCombatHUD"
+        },
+        {
+          "enabled": true,
+          "name": "RoundHUD"
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "actualClients": 1,
+      "startup": {
+        "status": "first-client-arrived",
+        "clientCount": 1,
+        "budgetSeconds": 60,
+        "elapsedSeconds": 0.06502029165858403
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 192
+      },
+      "client": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      },
+      "bootstrapCopies": 1,
+      "guiCounts": {
+        "RoundHUD": 1,
+        "GroundCombatHUD": 1,
+        "FoundationStatus": 1
+      },
+      "enabledRound": 1,
+      "foundationVisible": false
+    }
+  ]
+}

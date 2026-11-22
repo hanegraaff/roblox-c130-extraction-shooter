@@ -1,0 +1,73 @@
+{
+  "sourceCommit": "7c04172a9dc8baec573796caa3c381daaa893f8e",
+  "sourceTree": "b48c1ed2b7e7b0732d5923159690af29a1d7644b",
+  "testArtifactSha256": "7847add000e06d5385e02860730d1887efa254a106ec592a18208de0e7bf970b",
+  "releaseArtifactSha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+  "studioVersion": "0.748.0.7481526",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(3, {kind = \"P03\"})",
+  "attempt": 2,
+  "actualInitialClients": 2,
+  "serverHarnessStarted": false,
+  "liveProbe": [
+    {
+      "model": "Server",
+      "data": {
+        "people": {
+          "1": {
+            "id": -1
+          },
+          "2": {
+            "id": -2
+          }
+        },
+        "count": 2,
+        "args": {
+          "kind": "P03"
+        },
+        "smoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 192,
+          "clientCount": 2,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-server",
+          "failed": 0,
+          "discovered": 192
+        },
+        "startup": {
+          "status": "first-client-arrived",
+          "clientCount": 1,
+          "budgetSeconds": 60,
+          "elapsedSeconds": 5.4792731666821055
+        }
+      }
+    },
+    {
+      "model": "Client",
+      "data": {
+        "id": -1
+      }
+    },
+    {
+      "model": "Client",
+      "data": {
+        "id": -2
+      }
+    }
+  ],
+  "studioOutput": [
+    "ServerScriptService.ServerTests.RoundHarness:36: timeout: three actual clients join",
+    "Script 'ServerScriptService.ServerTests.RoundHarness', Line 36 - function awaitCondition",
+    "Script 'ServerScriptService.ServerTests.RoundHarness', Line 239 - function run"
+  ],
+  "cleanup": {
+    "ok": true,
+    "result": {
+      "actualClients": 2,
+      "externalCleanup": true,
+      "reason": "P03 documented three-client wait failed; two actual clients, no round runtime"
+    }
+  },
+  "notes": "Only two actual clients joined before the server timed out. The test harness did not deliver a result; the operator ended only the verified P03 SDK Server session and cleared its temporary Edit report attribute."
+}

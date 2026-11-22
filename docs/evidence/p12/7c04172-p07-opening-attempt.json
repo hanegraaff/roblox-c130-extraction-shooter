@@ -1,0 +1,199 @@
+{
+  "sourceCommit": "7c04172a9dc8baec573796caa3c381daaa893f8e",
+  "sourceTree": "b48c1ed2b7e7b0732d5923159690af29a1d7644b",
+  "testArtifactSha256": "7847add000e06d5385e02860730d1887efa254a106ec592a18208de0e7bf970b",
+  "releaseArtifactSha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+  "studioVersion": "0.748.0.7481526",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P07\"})",
+  "reportBytes": 39818,
+  "initialStudioClientIds": [
+    -1,
+    -2
+  ],
+  "result": {
+    "passed": 4,
+    "failed": 1,
+    "discovered": 5,
+    "skipped": 0,
+    "suite": "P07-multiplayer",
+    "cases": [
+      {
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation",
+        "passed": true
+      },
+      {
+        "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal",
+        "passed": true
+      },
+      {
+        "name": "A7 earned 30mm Light damage persists through three bursts before Heavy",
+        "passed": true
+      },
+      {
+        "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits",
+        "passed": true
+      },
+      {
+        "passed": false,
+        "name": "A3 actual ground Humanoid walks through an authored damaged wall opening",
+        "detail": "ServerScriptService.ServerTests.DestructionHarness:998: ServerScriptService.ServerTests.DestructionHarness:272: Players.Player2.PlayerScripts.ClientTests.DestructionHarness:175: P07 client timeout: actual Humanoid through opening"
+      }
+    ],
+    "clientCount": 2
+  },
+  "observations": [
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 1,
+      "progress": 0.3333333333333333,
+      "kind": "actual-heavy",
+      "stage": "Intact"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 2,
+      "progress": 0.6666666666666666,
+      "kind": "actual-heavy",
+      "stage": "Intact"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 3,
+      "progress": 0,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 4,
+      "progress": 0.3333333333333333,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 5,
+      "progress": 0.6666666666666666,
+      "kind": "actual-heavy",
+      "stage": "Damaged"
+    },
+    {
+      "panelId": "Foundry_S02_Roof_01_02",
+      "hit": 6,
+      "progress": 1,
+      "kind": "actual-heavy",
+      "stage": "Destroyed"
+    },
+    {
+      "clientTimingByToken": "table: 0 keys",
+      "panelId": "Foundry_S02_Roof_01_03",
+      "receipts": "table: 120 keys",
+      "impacts": "table: 78 keys",
+      "earnedTotalSeconds": 10.994508028030396,
+      "firstFactIndex": 7,
+      "requested": 63,
+      "accepted": 63,
+      "kind": "persistent-30mm-bursts",
+      "bursts": "table: 3 keys",
+      "transitionEarnedSeconds": 9.1617751121521
+    },
+    {
+      "windowSeconds": 16,
+      "panelId": "Foundry_S01_East_03",
+      "minimumExteriorExposure": 0.8682929873466492,
+      "kind": "wall-forecast"
+    },
+    {
+      "panelId": "Foundry_S01_East_03",
+      "userId": -2,
+      "serverObservationBudgetSeconds": 2,
+      "passed": false,
+      "originalPositionStuds": [
+        -11.96590518951416,
+        2.9980926513671875,
+        50.88352584838867
+      ],
+      "failure": "ServerScriptService.ServerTests.DestructionHarness:272: Players.Player2.PlayerScripts.ClientTests.DestructionHarness:175: P07 client timeout: actual Humanoid through opening",
+      "startServerPositionStuds": [
+        -129.5,
+        3.125,
+        -88
+      ],
+      "finalServerDistanceStuds": 92.02455139160156,
+      "serverRootPresent": true,
+      "goalPositionStuds": [
+        -141.5,
+        3.125,
+        -88
+      ],
+      "elapsedSeconds": 8.065758000011556,
+      "kind": "actual-humanoid-opening",
+      "requestedStartPositionStuds": [
+        -129.5,
+        3.125,
+        -88
+      ],
+      "finalServerPositionStuds": [
+        -53.822418212890625,
+        2.9980926513671875,
+        -60.05106735229492
+      ]
+    }
+  ],
+  "liveProbe": [
+    {
+      "model": "Client",
+      "id": -2,
+      "role": "Ground",
+      "life": "Alive",
+      "client": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      }
+    },
+    {
+      "model": "Server",
+      "actualClients": 2,
+      "metadataSha256": "87cf526c91da8833a32a7cb1f6af08b3e5b53db025b587706aab5db518b0c304",
+      "stages": {
+        "P07Stage": "{\"clientCount\":2,\"serverTime\":1795385188.326036,\"stage\":\"A7 earned 30mm Light damage persists through three bursts before Heavy\"}"
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 192
+      }
+    },
+    {
+      "model": "Client",
+      "id": -1,
+      "role": "Gunship",
+      "life": "Alive",
+      "client": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      }
+    }
+  ],
+  "notes": "The server began the controlled fixture at the requested start. Its final avatar was outside the expected opening route. Client receipt of the starting pose was not measured, so the timeout does not distinguish fixture placement replication from traversal failure. Subsequent replication and reset cases did not run."
+}

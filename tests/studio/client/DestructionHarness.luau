@@ -1,6 +1,7 @@
 --!strict
 -- P07 test-only real-client probes. Sends only production aim/selection intent.
 -- Panel assertions inspect replicated current state/rays; they do not award damage.
+local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
@@ -182,6 +183,7 @@ function Harness.run()
         end
         local listener = transport.OnClientEvent:Connect(
             function(token: number, kind: string, payload: unknown)
+                local detail = "ok"
                 local ok, failure = pcall(function()
                     if kind == "Fire" or kind == "Select" or kind == "Flood" then
                         local state = ReplicatedStorage:WaitForChild("AircraftState", 5)
@@ -261,17 +263,55 @@ function Harness.run()
                         end
                         assert(matched, "P07 client timeout: " .. mismatch .. " state/credit/pivot/opening")
                     elseif kind == "Walk" then
-                        assert(typeof(payload) == "Vector3", "walking goal missing")
-                        local character = Players.LocalPlayer.Character
+                        assert(type(payload) == "table", "walking fixture missing")
+                        local walk = payload :: { start: Vector3, goal: Vector3? }
+                        local start, goal = walk.start, walk.goal
+                        assert(typeof(start) == "Vector3", "walking start missing")
+                        assert(goal == nil or typeof(goal) == "Vector3", "invalid walking goal")
+                        local player = Players.LocalPlayer
+                        local character = player.Character
                         local humanoid = if character
                             then character:FindFirstChildOfClass("Humanoid")
                             else nil
                         local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
-                        assert(humanoid and root and root:IsA("BasePart"), "actual ground avatar unavailable")
-                        humanoid:MoveTo(payload)
-                        waitFor(function()
-                            return (root.Position - payload).Magnitude < 2
-                        end, "actual Humanoid through opening")
+                        assert(
+                            character and humanoid and root and root:IsA("BasePart"),
+                            "actual ground avatar unavailable"
+                        )
+                        local function at(point: Vector3): boolean
+                            return player.Character == character
+                                and root:IsDescendantOf(workspace)
+                                and player:GetAttribute("Role") == "Ground"
+                                and humanoid.Health > 0
+                                and (root.Position - point).Magnitude < 2
+                        end
+                        local function coordinates(point: Vector3): { number }
+                            return { point.X, point.Y, point.Z }
+                        end
+                        local startedAt = os.clock()
+                        local record: { [string]: unknown } =
+                            { initialPositionStuds = coordinates(root.Position) }
+                        local walked, walkFailure = pcall(function()
+                            if goal then
+                                assert(at(start), "actual Ground avatar left acknowledged start")
+                                humanoid:MoveTo(goal)
+                                waitFor(function()
+                                    return at(goal)
+                                end, "actual Humanoid through opening")
+                            else
+                                waitFor(function()
+                                    return at(start)
+                                end, "actual Ground start placement")
+                            end
+                        end)
+                        record.finalPositionStuds = coordinates(root.Position)
+                        record.distanceStuds = (root.Position - (goal or start)).Magnitude
+                        record.elapsedSeconds = os.clock() - startedAt
+                        record.failure = if walked then nil else tostring(walkFailure)
+                        detail = HttpService:JSONEncode(record)
+                        if not walked then
+                            error(detail, 0)
+                        end
                     elseif kind == "NoFragments" then
                         waitFor(function()
                             local folder = workspace:FindFirstChild("PanelFragments")
@@ -289,7 +329,7 @@ function Harness.run()
                         error("unknown P07 probe")
                     end
                 end)
-                transport:FireServer(token, ok, if ok then "ok" else tostring(failure))
+                transport:FireServer(token, ok, if ok then detail else tostring(failure))
             end
         )
         transport.AncestryChanged:Connect(function()

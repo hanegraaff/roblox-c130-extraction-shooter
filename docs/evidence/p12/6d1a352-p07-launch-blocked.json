@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "6d1a352196277a89a5b7dec41181035707f766c7",
+  "sourceTree": "397296697c02caac615bacd0102c1b41715a28e6",
+  "testArtifactSha256": "8b419cb8d9e42d0f62f1e99bbad1c2cb5e014b9b47442acb7fa02ce063ea6f5f",
+  "studioVersion": "0.748.0.7481526",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P07\"}) after completed P17 and selector cleanup",
+  "requestedInitialClients": 2,
+  "actualClients": 0,
+  "outcome": "An SDK StartServer child opened a duplicate local Edit document. No actual Server DataModel, client or harness result was observed.",
+  "cleanup": {
+    "mcpStop": "Game Stopped",
+    "confirmedLocalEdit": {
+      "p09EmptyReportPresent": false,
+      "universeId": 0,
+      "p07RetryReportPresent": false,
+      "p09LastGroundReportPresent": false,
+      "players": 0,
+      "placeId": 0,
+      "running": false,
+      "selectors": []
+    },
+    "duplicateChildEdit": {
+      "p09EmptyReportPresent": false,
+      "universeId": 0,
+      "p07RetryReportPresent": false,
+      "p09LastGroundReportPresent": false,
+      "players": 0,
+      "placeId": 0,
+      "running": false,
+      "selectors": []
+    },
+    "status": "MCP Stop did not make the pending SDK result arrive at the verification checkpoint. Both documents were in Edit with no test selectors or players; no unsaved documents were closed."
+  },
+  "knownLog": "2026-11-22T22:26:15.328Z Studio logged successful StartServer child launch. The child identified StartServer startup and initialized the AutoRecovery prompt before remaining in Edit. No additional launch was attempted in this document."
+}

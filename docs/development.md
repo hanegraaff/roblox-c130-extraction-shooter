@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `main` for routine play and development. It includes the revised combat HUD and audio, teammate spectating, indoor Ground camera and full match and replay loop. The game reconstructs the imported Outpost before the map owner captures its reset snapshot. Use `plan/11-balance-and-performance` to run the P11 Studio workloads while the candidate is under review. [Local setup](../README.md#set-up-locally), [P11 procedure](testing.md#run-the-p11-performance-harness), [P17 record](../plans/17-integrate-military-outpost.md)
+Use `main` for routine play and development. It includes the revised combat HUD and audio, teammate spectating, indoor Ground camera and full match and replay loop. The game reconstructs the imported Outpost before the map owner captures its reset snapshot. The current test mapping includes the P11 Studio workloads. Check out the exact candidate commit for release verification. [Local setup](../README.md#set-up-locally), [P11 procedure](testing.md#run-the-p11-performance-harness), [P17 record](../plans/17-integrate-military-outpost.md)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -284,9 +284,7 @@ After verifying the final candidate, commit and push the source and evidence. Ma
 
 ## Release preparation and publication
 
-P12 creates a release record with the verified source commit, build hash, asset-manifest version, exact universe/place IDs, audience, test evidence and rollback build. A release uses `default.project.json`, never the test mapping. Verify that test helpers and development overrides are absent.
-
-Publishing requires explicit authorization for that destination and audience. Source pushes and draft PRs are part of development; they are not Roblox publication. If authorization or access is missing, keep the tested candidate ready and report what is needed. Do not invent IDs or silently create a new experience.
+Run `python3 scripts/prepare_release.py` after setup in a clean checkout of the candidate commit. It runs the full verifier, checks the runtime script sources in both builds and writes `build/release-receipt.json` with the source identity, artifact hashes, tool pins and cloud asset inventory. Use the release artifact `build/game.rbxlx` for an explicitly authorized Roblox destination and `build/tests.rbxlx` for local Studio acceptance. Record the exact place, audience, rollback version and actual live test evidence separately. [Release runbook](release.md)
 
 Player data is not stored in Git. The MVP has no persistent inventory/progression and needs no DataStore access. Future persistence must add isolated test data and migration/failure tests before use.
 
