@@ -23,6 +23,8 @@ local Metrics = require(ReplicatedStorage.P11Metrics)
 local Harness = {}
 local seed = 11021
 local profileSeconds = 300
+local profileSettings =
+    string.format("%dx%d and %s", Metrics.profile.width, Metrics.profile.height, Metrics.profile.graphics)
 local soakRounds = 10 -- after one completed warmup round
 local soakActiveSeconds = 180
 local air = "AircraftState"
@@ -792,7 +794,9 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             task.wait(0.75)
         until os.clock() >= deadline
         error(
-            "P11 requires stable 1920x1080 and QualityLevel8 for each client; observed "
+            "P11 requires stable "
+                .. profileSettings
+                .. " for each client; observed "
                 .. HttpService:JSONEncode(sampled)
         )
     end
@@ -880,7 +884,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                             and not result.viewportChanged
                             and result.graphics == Metrics.profile.graphics
                             and not result.graphicsChanged,
-                        "requires stable 1920x1080 and graphics level 5 on each client"
+                        "requires stable " .. profileSettings .. " on each client"
                     )
                     assert(
                         result.seconds >= profileSeconds and result.seconds <= profileSeconds + 10,

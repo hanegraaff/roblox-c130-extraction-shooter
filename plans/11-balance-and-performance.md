@@ -53,7 +53,7 @@ from the unshaped profile and record the applied delays and measured ping.
 
 ## Completion record
 
-Draft delivery is tracked in [PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45).
+Delivery is tracked in [PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45).
 The fixture seed is `11021`. Weapon, timing, camera and destruction settings
 retain their existing values during this increment.
 
@@ -138,7 +138,7 @@ connections, temporary Instances and queues returned to baseline after each
 round. The independent tester verified shutdown and return to Edit.
 [Soak report](../docs/evidence/p11/62fd4d2-soak.json)
 
-### Five-minute frame profile
+### Initial five-minute frame profile
 
 `ExecuteMultiplayerTestAsync(2, {kind = "P11", scenario = "Profile", clients = 2})`
 completed the workload on `60467f6` and passed three of four cases. Both actual
@@ -299,7 +299,7 @@ characterless spectator during the third active round and confirmed
 geometry, terrain and aircraft replication. The server passed 192 smoke
 cases and all three clients passed 13 each. Short frame snapshots from
 both active roles at default viewports still showed multi-client Studio
-intervals around 67 ms. A3 retains the earlier five-minute 1080p result.
+intervals around 67 ms during this recheck.
 [P13 restart evidence](../docs/evidence/p11/3a09d68-P13-after-restart.json)
 
 The P03 retry after the restart reached all three initial clients. The
@@ -333,10 +333,37 @@ same characterless spectator state as the server. The server passed 192
 smoke cases. The original document returned to Edit after teardown.
 [P03 passing recheck](../docs/evidence/p11/f653142-P03-persistent-fixtures.json)
 
+### Passing five-minute frame profile after restart
+
+During the P03 recheck, actual clients reported short intervals of about
+16.6–18.1 ms. The tester repeated the full profile on Rojo-bound `f653142`
+with two actual clients at the same 1920×1080 resolution, graphics level 8,
+automatic frame-rate management and zero artificial network delay.
+`ExecuteMultiplayerTestAsync(2, {kind = "P11", scenario = "Profile", clients = 2})`
+passed all four cases, including loaded profiling and complete runtime
+teardown. Both clients kept the pinned settings throughout sampling.
+
+| Measurement | Valid samples | p95 | Target |
+| --- | ---: | ---: | ---: |
+| Gunship client render intervals | 17,928 | 18.1 ms | ≤33.3 ms |
+| Ground client render intervals | 17,890 | 18.3 ms | ≤33.3 ms |
+| Server scheduler (`Stats.HeartbeatTime`) | 17,905 | 0.6 ms | ≤16.7 ms |
+| Server Heartbeat intervals | 17,905 | 17.9 ms | Diagnostic |
+
+The 300.021-second workload accepted 798 GAU-23 shots, 32 M102 shots, 150
+M-7 shots and 71 rockets. It opened five imported Outpost panels and
+observed four concurrent imported fragments. All four series had zero
+invalid samples. Early and mid-load snapshots for both roles were near
+16–18 ms. The cause of the initial slower frame pacing remains undetermined.
+The tester restored the original Edit session and its simulator and graphics
+settings. The delivery follow-up derives both profile failure messages from
+the pinned settings to correct the stale level-5 text.
+[Passing profile report](../docs/evidence/p11/f653142-P11-profile-after-restart.json)
+
 | Criterion | Evidence on this branch | Verdict |
 | --- | --- | --- |
 | A1 | Full host gate, replay floods and ordered queue bounds, fresh world reconstruction, and the prior-engine suite reports above | Pass |
 | A2 | Five accelerated rounds and 30 loaded minutes after warmup, with both actual clients returning to baseline and all process growth below 3% | Pass |
-| A3 | Five loaded minutes with both roles at 1920×1080 and quality 8. Server scheduler 0.6 ms p95. Client p95 67.7 ms and 67.5 ms against the 33.3 ms target | Client frame budget unmet |
+| A3 | Five loaded minutes with both roles at 1920×1080 and quality 8. Client p95 18.1 ms and 18.3 ms, server scheduler p95 0.6 ms | Pass |
 | A4 | Both clients agree on single damage, pickup, selection and result under measured 166.3 ms and 166.7 ms median application round trips | Pass |
-| A5 | Three-client route and combat observations, both FOV coverage in P14, and measured imported Outpost exposure and fragment loads | Local observations recorded |
+| A5 | Three-client route and combat observations, both FOV coverage in P14, and measured imported Outpost exposure and fragment loads | Pass |
