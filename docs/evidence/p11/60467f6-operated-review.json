@@ -1,0 +1,271 @@
+{
+  "candidate": "60467f620154fc39adcb7b854f6c5c6511682add",
+  "tree": "d85f80fa59ae7e4f3825bf59dba2b8b815f2fa1b",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(3, {kind = \"P11OperatedReview\"})",
+  "testControls": {
+    "roundSeconds": 180,
+    "requestedOperator": -1,
+    "scene": "ordinary local RoundHarness gameplay"
+  },
+  "sourceIdentity": {
+    "candidate": "60467f620154fc39adcb7b854f6c5c6511682add",
+    "tree": "d85f80fa59ae7e4f3825bf59dba2b8b815f2fa1b",
+    "testBuildSha256": "8e9ab387e293f0f1d59809628bc21d5f25be072f21ad87c42d9351662ca7a404",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"checked\":159,\"unexpected\":[],\"gameId\":0,\"version\":\"0.748.0.7481526\",\"placeId\":0,\"mismatches\":[],\"matched\":159}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "clients": [
+    {
+      "id": "9a3174b5-d912-422c-9477-7bd1dc457069",
+      "result": {
+        "viewport": "1153, 649",
+        "role": "Waiting",
+        "report": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "id": -2
+      }
+    },
+    {
+      "id": "a24c1056-054b-47a1-a0b8-09ace4dcba52",
+      "result": {
+        "viewport": "1081, 618",
+        "role": "Waiting",
+        "report": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "id": -1
+      }
+    },
+    {
+      "id": "a5b3ed90-eec6-4d71-a58a-e3bcde89b71e",
+      "result": {
+        "viewport": "1081, 618",
+        "role": "Waiting",
+        "report": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "id": -3
+      }
+    }
+  ],
+  "viewportSetup": [
+    {
+      "priorDevice": "default",
+      "priorQuality": "Automatic",
+      "viewport": "1153, 649",
+      "id": -2,
+      "quality": "Automatic"
+    },
+    {
+      "priorDevice": "default",
+      "priorQuality": "Automatic",
+      "viewport": "1920, 1080",
+      "id": -1,
+      "quality": "QualityLevel8"
+    },
+    {
+      "priorDevice": "default",
+      "priorQuality": "Automatic",
+      "viewport": "1920, 1080",
+      "id": -3,
+      "quality": "QualityLevel8"
+    }
+  ],
+  "routeAndInitialFrame": [
+    {
+      "travel": "{\"ok\":true,\"result\":{\"side\":\"East\",\"waypointsSeconds\":[1.0977301597595215,1.3486239910125733,3.8813560009002687,5.998094081878662,9.914550065994263,13.514545202255249],\"travelSeconds\":13.514645099639893,\"approximateDistanceStuds\":215.8369124084711,\"arrivalServerSeconds\":1795373246.879148,\"ownerId\":-2,\"player\":-2,\"startServerSeconds\":1795373233.364503,\"launcherId\":\"launcher:1\",\"walkSpeed\":16,\"roundId\":1}}",
+      "user": -2
+    },
+    {
+      "user": -1,
+      "frame": "{\"seconds\":7.014292625011876,\"id\":-1,\"frames\":105,\"role\":\"Gunship\",\"p95\":67.47978925704956,\"median\":66.66887551546097,\"cpuP95\":2.366625005379319,\"viewport\":\"1920, 1080\",\"quality\":\"QualityLevel8\"}"
+    },
+    {
+      "travel": "{\"ok\":true,\"result\":{\"side\":\"West\",\"waypointsSeconds\":[0.00011301040649414063,0.09754085540771485,2.6317689418792726,4.748090028762817,8.664819955825806,12.264017820358277],\"travelSeconds\":12.26411485671997,\"approximateDistanceStuds\":195.83605873584748,\"arrivalServerSeconds\":1795373247.802538,\"ownerId\":-2,\"player\":-3,\"startServerSeconds\":1795373235.538423,\"launcherId\":\"launcher:1\",\"walkSpeed\":16,\"roundId\":1}}",
+      "user": -3
+    }
+  ],
+  "drop": {
+    "state": "Available",
+    "dropAt": 1795373310.166766,
+    "readyBefore": 0,
+    "readyAfter": 0,
+    "identity": "launcher:1",
+    "previousOwner": -2,
+    "observedAt": 1795373310.229,
+    "position": {
+      "y": 1.100000023841858,
+      "x": 0.5591397881507874,
+      "z": 0.02346041053533554
+    }
+  },
+  "recoveryAndRocketTiming": [
+    {
+      "phase": "Lobby",
+      "user": -2
+    },
+    {
+      "phase": "Lobby",
+      "user": -1
+    },
+    {
+      "rockets": "{\"ok\":true,\"result\":{\"samples\":[{\"flightEstimate\":1.6005826314290366,\"sequence\":3,\"fired\":1795373341.083746,\"to\":200,\"observedAt\":1795373342.683773,\"from\":300},{\"flightEstimate\":1.6004873911539715,\"sequence\":4,\"fired\":1795373345.117082,\"to\":100,\"observedAt\":1795373346.71677,\"from\":200},{\"flightEstimate\":1.6006034851074218,\"sequence\":5,\"fired\":1795373349.149497,\"to\":0,\"observedAt\":1795373350.808272,\"from\":100}],\"launcherId\":\"launcher:1\",\"requested\":1795373340.603723,\"phase\":\"Active\",\"owner\":-3,\"recovered\":1795373340.68391,\"lastHealth\":0}}",
+      "phase": "Lobby",
+      "user": -3
+    }
+  ],
+  "initialKeyInput": {
+    "phase": "Active",
+    "localRole": "Gunship",
+    "pan": "{\"ok\":false,\"result\":\"VirtualInput::SendKey: key is permanently bound to a CoreGUI core action. VirtualInput cannot process this key.\"}"
+  },
+  "zoomAndPanAfterSelection": {
+    "viewport": "1920, 1080",
+    "rows": {
+      "1": {
+        "restored": {
+          "weapon": "GAU23",
+          "pan": {
+            "x": 220,
+            "z": 0
+          },
+          "fov": 30,
+          "blocked": true
+        },
+        "left": {
+          "weapon": "GAU23",
+          "pan": {
+            "x": 220,
+            "z": 0
+          },
+          "fov": 30,
+          "blocked": true
+        },
+        "initial": {
+          "weapon": "GAU23",
+          "pan": {
+            "x": 220,
+            "z": 0
+          },
+          "fov": 30,
+          "blocked": true
+        }
+      },
+      "2": {
+        "restored": {
+          "weapon": "M102",
+          "pan": {
+            "x": 220,
+            "z": 0
+          },
+          "fov": 40,
+          "blocked": true
+        },
+        "left": {
+          "weapon": "M102",
+          "pan": {
+            "x": 220,
+            "z": 0
+          },
+          "fov": 40,
+          "blocked": true
+        },
+        "initial": {
+          "weapon": "M102",
+          "pan": {
+            "x": 220,
+            "z": 0
+          },
+          "fov": 40,
+          "blocked": true
+        }
+      }
+    }
+  },
+  "upperRoomAndBalcony": {
+    "aircraftHealth": 300,
+    "round": "Active",
+    "balcony": "{\"ok\":true,\"result\":{\"root\":\"163.30075073242188, 13.123024940490723, 147.9796905517578\",\"healthBefore\":300,\"rays\":[\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_02_01_Proxy1\",\"Outpost_S02_Roof_01_01_Proxy1\",\"Outpost_S02_Roof_01_01_Proxy1\",\"Outpost_S02_Roof_01_01_Proxy1\",\"Outpost_S02_Roof_01_01_Proxy1\"],\"healthAfter\":300}}",
+    "upper": "{\"ok\":true,\"result\":{\"worldPosition\":\"151.88270568847656, 13.123021125793457, 145.00999450683594\",\"healthBefore\":300,\"rayAttempts\":[{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":1,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":2,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":3,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":4,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":5,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":6,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":7,\"aircraftRay\":false},{\"collider\":\"Outpost_S02_North_02_Proxy1\",\"sample\":8,\"aircraftRay\":false}],\"user\":-2,\"waypoints\":55,\"healthAfter\":300,\"arrivalSeconds\":17.997832750028466,\"rootY\":13.123021125793457}}"
+  },
+  "clearance": {
+    "clearAngles": 21,
+    "scheduled": true,
+    "head": "163.29299926757812, 14.628538131713867, 148.0016326904297"
+  },
+  "balconyCounterfire": {
+    "clearAnglesDegrees": [
+      0,
+      7.5,
+      15,
+      22.5,
+      30,
+      37.5,
+      45,
+      52.5,
+      60,
+      67.5,
+      277.5,
+      285,
+      292.5,
+      300,
+      307.5,
+      315,
+      322.5,
+      330,
+      337.5,
+      345,
+      352.5
+    ],
+    "healthBefore": 300,
+    "timedFlightSeconds": 4.479862625012174,
+    "fired": 1,
+    "healthAfter": 295
+  },
+  "focusRequests": [
+    {
+      "activationAccepted": true,
+      "foregroundPidChanged": false,
+      "focusVerified": false
+    },
+    {
+      "activationAccepted": true,
+      "foregroundPidChanged": false,
+      "targetActive": true,
+      "focusVerified": false
+    }
+  ],
+  "postFocusRequestFrames": [
+    {
+      "frame": "{\"seconds\":7.015935500035994,\"id\":-1,\"frames\":105,\"role\":\"Gunship\",\"p95\":67.28379428386688,\"median\":66.67958199977875,\"cpuP95\":2.425458515062928,\"viewport\":\"1920, 1080\",\"quality\":\"QualityLevel8\"}",
+      "user": -1,
+      "blocked": true
+    },
+    {
+      "user": -3,
+      "frame": "{\"seconds\":7.014646541676484,\"id\":-3,\"frames\":105,\"role\":\"Ground\",\"p95\":67.50749796628952,\"median\":66.68604165315628,\"cpuP95\":2.0252917893230917,\"viewport\":\"1920, 1080\",\"quality\":\"QualityLevel8\"}"
+    }
+  ],
+  "restoreClientSettings": [
+    {
+      "device": "default",
+      "user": -1,
+      "quality": "Automatic"
+    },
+    {
+      "device": "default",
+      "user": -3,
+      "quality": "Automatic"
+    }
+  ],
+  "close": {
+    "actualClients": 3,
+    "ending": true
+  },
+  "editCleanup": {
+    "result": "{\"ok\":true,\"result\":{\"actualClients\":3,\"suite\":\"P11-operated-review\",\"closed\":true}}",
+    "mode": true
+  }
+}

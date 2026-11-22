@@ -113,3 +113,93 @@ retain their existing values during this increment.
   the Profile setting, its error text and the generated test-source binding
   changed. Production, Replay and Soak inputs used by their active code paths
   match their recorded candidates.
+
+### Retained-memory soak
+
+`ExecuteMultiplayerTestAsync(2, {kind = "P11", scenario = "Soak", clients = 2})`
+passed four of four cases on `62fd4d2` with two actual clients and clean
+192-server/13-per-client smoke reports. The SDK session took 2,242.53 seconds.
+Ten loaded cycles after warmup totaled 1,800.47 seconds. Each cycle exercised
+both gunship weapons, M-7 fire, rockets and imported Outpost damage. The ten
+measured cycles accepted 4,947 30mm shots, 200 105mm shots, 1,500 rifle
+shots and 430 rockets. Every measured round opened at least two Outpost
+panels and produced four concurrent physical imported fragments. Each reset
+restored the runtime resource baseline before memory collection.
+
+| Studio process | Samples | Post-warmup MB | Last reset MB | Retained growth |
+| --- | ---: | ---: | ---: | ---: |
+| Server | 11 | 2583.13 | 2625.61 | 1.64% |
+| Client `-1` | 11 | 2758.64 | 2795.25 | 1.33% |
+| Client `-2` | 11 | 2746.97 | 2819.75 | 2.65% |
+
+Each series stayed below 10% endpoint growth and declined at least once.
+These are process-level engine readings. The separately counted game-owned
+connections, temporary Instances and queues returned to baseline after each
+round. The independent tester verified shutdown and return to Edit.
+[Soak report](../docs/evidence/p11/62fd4d2-soak.json)
+
+### Five-minute frame profile
+
+`ExecuteMultiplayerTestAsync(2, {kind = "P11", scenario = "Profile", clients = 2})`
+completed the workload on `60467f6` and passed three of four cases. Both actual
+clients held 1920×1080 at quality level 8, with Studio renderer level 17 and
+automatic frame-rate management. The workload ran for 300.0009 seconds and
+accepted 799 30mm, 32 105mm, 150 rifle and 71 rocket shots. Six Outpost
+panels opened. Peaks included four imported fragments, five gunship
+projectiles, two rocket flights and eleven gunship effect Instances.
+
+| Measurement | Valid samples | p95 | Target |
+| --- | ---: | ---: | ---: |
+| Gunship client render intervals | 4615 | 67.7 ms | ≤33.3 ms |
+| Ground client render intervals | 6653 | 67.5 ms | ≤33.3 ms |
+| Server scheduler (`Stats.HeartbeatTime`) | 17629 | 0.6 ms | ≤16.7 ms |
+| Server Heartbeat intervals | 17629 | 17.5 ms | Diagnostic |
+
+The two client intervals exceeded the budget. Four live samples per client
+showed 1.7–3.4 ms reported CPU render time and near-zero reported GPU render
+time alongside 52.6–67.1 ms frame intervals. This suggests Studio frame
+pacing deserves investigation. A separate seven-second check reproduced about
+67 ms p95 with roughly 2 ms CPU render work. macOS accepted the activation
+request but retained the prior foreground application, and the observed
+Gunship input remained blocked. The focus experiment could not isolate the
+cause. Shutdown passed and the original settings and Edit document were
+verified. [Full profile report](../docs/evidence/p11/60467f6-profile.json), [focus check](../docs/evidence/p11/60467f6-operated-review.json)
+
+### Two-client latency convergence
+
+`ExecuteMultiplayerTestAsync(2, {kind = "P11", scenario = "Latency", clients = 2})`
+passed all five cases on `60467f6`, with clean 192-server/13-per-client smoke.
+The two actual clients both read back 65 ms inbound and 65 ms outbound, with
+zero jitter and loss. Engine Ping was 132.39–134.94 ms, while seven application
+echoes per client yielded medians of 166.282 ms and 166.686 ms. Both clients
+converged on the same launcher owner, M102 selection, exactly one 300→295
+rifle damage award, and one Gunship timeout result. Shutdown passed and the
+six original zero network settings were restored.
+[Latency verdict and samples](../docs/evidence/p11/60467f6-latency.json)
+
+### Operated balance observations
+
+An ordinary local session on `60467f6` used three actual clients, one
+Gunship and two Ground, with clean 192-server/13-per-client smoke. Real
+Ground Humanoids walked both painted approaches with `MoveTo`, without
+teleporting. The west route took 12.26 seconds and about 196 studs from its
+deployment anchor. The east route took 13.51 seconds and about 216 studs
+from the neighboring deployment anchor. The east player reached the
+pickup first. After a voluntary drop, the west player recovered the same
+`launcher:1`. Three real projectile hits used controlled moving-target aim
+from the center and produced 300→200→100→0 in 9.72 seconds from the first
+fire request. This measures the shot sequence from ready equipment. The
+actual round took about 137 seconds to reach zero health, including pauses
+to coordinate test commands.
+
+In the second round, a Ground player reached the upper Outpost room in
+18.0 seconds from deployment. All eight sampled room rays hit a solid
+wall. On the balcony, 21 of 48 sampled orbit positions offered a clear
+line. An actual M-7 shot when the aircraft entered that opening chipped
+health from 300 to 295. This illustrates the tradeoff between protection
+and an exposed firing opportunity. Both operator weapon selections
+produced their expected 30° and 40° FOVs. Native background input was
+blocked, so this run did not compare actual pan reach. The scripted profile
+and soak separately exercised both gunship weapons, observed real Outpost
+openings and measured concurrent material-fragment load. The local
+observations cannot establish population-scale balance. [Operated report](../docs/evidence/p11/60467f6-operated-review.json)
