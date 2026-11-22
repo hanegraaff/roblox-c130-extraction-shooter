@@ -2,7 +2,9 @@
 
 **Milestone:** M7 / future levels. **Dependencies:** P12. **Requirements:** R01, R05, R06, R09, R10, R16, R18. Status: [roadmap](../roadmap.md).
 
-## Capability and player experience
+The 2026-11-22 direction replaces this proposed feature with a Blender asset for a large building site on the existing battlefield. The original design below is retained for reference. See the [radar asset review](../assets/blender/radar-outpost/README.md) and [roadmap](../roadmap.md).
+
+## Original capability and player experience
 
 Players can choose or rotate among at least two validated levels. Every level has one C-130 circling it. The operator's directional pan, weapon-linked zoom and aim work on each level; weapons, health, rocket rule, building-panel damage thresholds and physical fragment limits keep the same game rules. The current 720-stud circular industrial battlefield remains the MVP's only playable level until this plan is implemented.
 
@@ -26,4 +28,4 @@ Define a versioned, immutable `LevelDefinition` with a stable level ID and sourc
 level using P16's approved Blender assets. That replacement does not satisfy
 P15's distinct-level, level-selection or switch/reconstruction acceptance.
 
-This plan is future work. The 2026-11-10 architecture revision defines the target contract; it does not claim that current `MapRules.defaults`, `TerrainRecipe`, `BuildingLayout`, `MapService` or the Rojo world mapping can switch levels today. Implement only after the preceding MVP plans are complete or a user-directed dependency revision supplies the needed source and acceptance scope. Do not mark P15 complete from a second mock map or host-only tests.
+The original proposal specified the 2026-11-10 target architecture. The current map uses a single fixed level.

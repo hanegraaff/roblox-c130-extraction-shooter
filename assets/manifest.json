@@ -1578,6 +1578,50 @@
       "roblox_asset_id": null,
       "upload_owner": "User 2227341845",
       "sha256": "d916f5cb5897bb9727c3603a2c8d8eaeac83f1044b3b44a772ca40a6bd8f067c"
+    },
+    {
+      "id": "vesper-array-source",
+      "kind": "source",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/blender/radar-outpost/vesper-array.blend",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "f114c37ec45febbc6a2c91e18aecfac28d59bcacc836e6577709bce176b534b7"
+    },
+    {
+      "id": "vesper-array-panels",
+      "kind": "catalog",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/blender/radar-outpost/panel-catalog.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "10733c2b31ab877c0d41ceecc5c7c00c86e633547de683c9d6e037e9c80e9ce8"
+    },
+    {
+      "id": "vesper-array-assembly",
+      "kind": "mesh",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/exports/radar-outpost/vesper-array.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "646ed135104c93f2c0580905a54deb376a26bd744fd0d6134131d30de8af0b56"
+    },
+    {
+      "id": "vesper-array-variants",
+      "kind": "mesh",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/exports/radar-outpost/damage-library.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "3dffa07167fb221db25bb5529c25a8fb32864c949aab9b257f6642f02daaaae6"
     }
   ],
   "runtime_recipes": [

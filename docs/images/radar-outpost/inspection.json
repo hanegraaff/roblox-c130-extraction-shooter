@@ -1,0 +1,65 @@
+{
+  "blender": "5.3.0",
+  "sourceSha256": "f114c37ec45febbc6a2c91e18aecfac28d59bcacc836e6577709bce176b534b7",
+  "siteBoundsBlenderXYZ": [
+    [
+      -32.0,
+      -24.0,
+      -0.66
+    ],
+    [
+      32.0,
+      24.0,
+      31.7504
+    ]
+  ],
+  "pristineAssembly": {
+    "bytes": 6540032,
+    "objects": 113,
+    "uniqueMeshes": 109,
+    "materials": 20,
+    "packedTextures": 18,
+    "uniqueTriangles": 85728,
+    "largestPrimitiveTriangles": 2280,
+    "sha256": "646ed135104c93f2c0580905a54deb376a26bd744fd0d6134131d30de8af0b56",
+    "assembledTriangles": 86832
+  },
+  "damageLibrary": {
+    "bytes": 5854952,
+    "objects": 226,
+    "uniqueMeshes": 226,
+    "materials": 16,
+    "packedTextures": 14,
+    "uniqueTriangles": 72132,
+    "largestPrimitiveTriangles": 1440,
+    "sha256": "3dffa07167fb221db25bb5529c25a8fb32864c949aab9b257f6642f02daaaae6"
+  },
+  "decodedSourceTexturesRGBA8Bytes": 4292608,
+  "panelCount": 54,
+  "panelRaysPerRepresentation": 1188,
+  "routesSourceAndReimport": {
+    "stairFootAndHeadProbes": 96,
+    "stairMinimumOverheadStuds": 8.42,
+    "clearWidthsStuds": {
+      "north console to curved gallery rail": 4.78,
+      "west stair between top rails": 7.67
+    },
+    "gateCrossings": 36,
+    "upperLoopSamples": 198,
+    "cameraClearanceStuds": {
+      "court toward south gate": "clear to 12.5",
+      "gallery along south walkway": "clear to 12.5",
+      "gallery looking through an empty bay": "clear to 12.5",
+      "gallery backed toward a column": 2.1,
+      "west stair midway": "clear to 12.5"
+    },
+    "openSkyAtCourtSamples": {
+      "-9,-8": true,
+      "9,-8": true,
+      "10,5": false,
+      "-10,7": false,
+      "0,-12": true,
+      "0,13": true
+    }
+  }
+}

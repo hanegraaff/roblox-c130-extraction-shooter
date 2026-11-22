@@ -32,6 +32,10 @@ The battlefield manifest also records the authored aircraft AimEnvelope values a
 
 Generated place builds belong in ignored `build/`. Do not blanket-ignore authored model/place exports needed for reconstruction. Choose Git LFS or another documented versioned store before adding large binary source assets.
 
+## Radar outpost review package
+
+[Vesper Array](blender/radar-outpost/README.md) is a Blender-only candidate for the Warehouse site. Its guide links the editable scene, game-scale exports and five saved-camera renders. The playable map still uses the Warehouse.
+
 ## Blender outpost review package
 
 [P16](../plans/16-blender-military-outpost-assets.md) now provides editable
