@@ -65,3 +65,15 @@ results and release-session results are tracked below this mapping.
 | R15 | Repository checker, StyLua, Selene, strict Roblox-aware analysis, independent tester and technical-writer review. [Host gate](../docs/testing.md#current-host-checks) |
 | R16 | `BuildingLayout.spec.luau`, native P13 terrain, buildings and traversal, P07 openings, P17 Outpost, and P11 load/route review. [P13 record](13-terrain-and-buildings.md), [P17 record](17-integrate-military-outpost.md) |
 | R19–R21 | P16 approved `.blend` and exports, P17 native integrated-art and reset review, `GroundCameraRules.spec.luau` and native indoor-camera acceptance. [P16 record](16-blender-military-outpost-assets.md), [P17 record](17-integrate-military-outpost.md#final-native-outpost-acceptance-2026-11-20) |
+
+### Authorization and destination access
+
+On 2026-11-22 the user approved the release artifact at SHA-256
+`266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7` for
+**C130 P17 Import**, universe `10776653720`, place `72732833195348`, with
+access limited to invited playtesters. Studio's connected document was the
+local test place. Its Open Cloud token request rejected `universe:read` and
+`asset:read`, and browser control could not reach Creator Dashboard. Current
+owner, place capacity, destination asset grants, rollback version and audience
+settings await destination access. Roblox publication and live-player evidence
+are pending. [P12 authorization receipt](../docs/evidence/p12/playtest-publication-authorization.json), [release procedures](../docs/release.md)

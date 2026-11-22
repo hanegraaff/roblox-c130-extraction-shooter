@@ -7,7 +7,7 @@ Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scrip
 | Gate | Command used by the verifier |
 | --- | --- |
 | Repository inputs | `python3 scripts/check_repository.py` |
-| Asset provenance and native harness tooling tests | `python3 -m unittest discover -s tests/tooling -v` |
+| Asset provenance, native harness and release preparation tooling tests | `python3 -m unittest discover -s tests/tooling -v` |
 | P16 committed asset package | `python3 scripts/p16_audit.py` |
 | P17 generated approved-source definition | `python3 scripts/p17_assets.py` |
 | P17 equivalent material-split GLB | `python3 scripts/p17_library_glb.py` |
@@ -25,11 +25,11 @@ Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scrip
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The P11 mapping contains **82 unit and 74 integration cases**. It adds three cases for frame distributions and retained-memory samples and one case for the structural outcome and barrier bounds. The verifier also runs **15 tooling checks and 48 asset regression checks**. Client frame measurements, physical fragments, collision and multiplayer replication require Studio evidence. [P11 record](../plans/11-balance-and-performance.md), [P10 record](../plans/10-player-experience.md)
+The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The current mapping contains **82 unit and 74 integration cases**, including frame distributions, retained-memory samples, and structural outcome and barrier bounds. The verifier also runs **18 tooling checks and 48 asset regression checks**. The release preparation checks cover clean source, runtime script parity and cloud asset inventory. Client frame measurements, physical fragments, collision and multiplayer replication require engine evidence. [P11 record](../plans/11-balance-and-performance.md), [release runbook](release.md#prepare-the-candidate-from-git)
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds, checking twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The artifact contract includes the manifest terrain recipe, three formal footprints and stairs, and all registered panels including the starting shelter. The P11 build has **2,804 authored Parts** across source world and templates, **58 runtime scripts**, **5,306 release Instances** and **5,418 test Instances**. Artifact inspection requires the four P11, four P17 and three P10 fixture modules in the test build and rejects them in the release build. The base world retains 403 Battlefield Parts and 187 primitive panels, and runtime Outpost installation produces 188 active panels.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds, checking twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The artifact contract includes the manifest terrain recipe, three formal footprints and stairs, and all registered panels including the starting shelter. The current builds have **2,804 authored Parts** across source world and templates, **58 runtime scripts**, **5,306 release Instances** and **5,418 test Instances**. Artifact inspection requires the four P11, four P17 and three P10 fixture modules in the test build and rejects them in the release build. The base world retains 403 Battlefield Parts and 187 primitive panels, and runtime Outpost installation produces 188 active panels.
 
 Five deliberate corruptions check rejection of a pose alias, wrong pose, wrong size, nonfinite pose component and missing CFrame. A separate building-surface guard checks visible-part pairs for exposed coplanar faces. It allows ordinary edge/contact joins and intersections hidden inside opaque supports. Its three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel. These are artifact probes outside Luau suite totals.
 
@@ -291,7 +291,7 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. Expect **192 server cases** with P11 or **191** with P10, and **13 per actual client**. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
+5. Expect **192 server cases** and **13 per actual client** with the current mapping. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one visible round HUD after startup. The round HUD hides the locally owned bootstrap panel after startup. Check for leftover `EntrypointStatus` or `EntrypointPanel` Instances. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, Play and confirm a protected lobby character and a round panel waiting for six players. **Development** appears on the bootstrap panel before the round HUD takes over. The test build shows **Test** at bootstrap and then opens solo preview or offers an explicit start at two actual clients. Review actual viewport readability and Output, then stop when finished.
 
@@ -434,7 +434,7 @@ listening observations separate. [Revision evidence](evidence/p10/combat-present
 
 ## Run the P11 performance harness
 
-From the P11 branch, build with the full verifier and sync
+From the selected candidate commit, build with the full verifier and sync
 `test.project.json` to the local **PlayersVsC130Tests** document on port
 **34872**. Confirm the candidate source commit or tree, the installed Outpost
 templates and the local document through Studio MCP. Leave the document in
@@ -898,7 +898,7 @@ These are initial engineering targets; P11 records a named reference desktop bef
 - Complete five consecutive accelerated deterministic rounds with no stale damage, launcher ownership, results, listeners or map state. Server-owned temporary instance/connection counts must return to the baseline after each reset.
 - Run a 30-minute multiplayer soak. After warmup and equivalent reset points, retained memory growth must be ≤10%, with no monotonic leak; record actual samples and separate engine caches from owned allocations.
 - Exercise a controlled latency scenario near 150 ms round-trip, recording actual simulator settings/measurements, and confirm state converges without duplicated damage/rewards.
-- Run actual 6-player and 10-player sessions before release. Studio supports up to eight locally simulated clients per current documentation; use an authorized Roblox test experience for the ten-player case. Recheck the platform limit if tooling changes.
+- Run the 6-player and 10-player sessions in actual Roblox clients in the authorized test experience. Follow the release runbook for roster, measurement and evidence collection. [Live acceptance procedure](release.md#run-the-6-and-10-player-acceptance-sessions)
 
 Budgets do not promise performance on unspecified hardware. If a target is missed, optimize or record a scoped design decision; do not mark the gate passed.
 

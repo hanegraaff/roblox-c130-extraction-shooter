@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-22",
+  "timezone": "America/New_York",
+  "response_verbatim": "I authorize",
+  "context": "Reply to the request to publish the verified P12 release artifact to C130 P17 Import for invited playtesters only.",
+  "authorized_artifact": {
+    "source_commit": "7c04172a9dc8baec573796caa3c381daaa893f8e",
+    "path": "build/game.rbxlx",
+    "mapping": "default.project.json",
+    "sha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+    "bytes": 10154160
+  },
+  "destination": {
+    "experience_name": "C130 P17 Import",
+    "universe_id": 10776653720,
+    "place_id": 72732833195348,
+    "authorized_audience": "Invited playtesters only"
+  },
+  "access_preflight": {
+    "studio_document": "Local tests.rbxlx, Edit document with PlaceId and GameId zero",
+    "universe_read": "Open Cloud token request rejected: universe:read has not been granted",
+    "asset_read": "Open Cloud token request rejected: asset:read has not been granted",
+    "creator_dashboard": "Browser access host unavailable"
+  },
+  "publication_at_authorization": null,
+  "confirmed_live_playtest_roster_at_authorization": null
+}
