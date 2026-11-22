@@ -39,16 +39,13 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local full = owner.resources()
         assert(full.pending == cap and full.barriers == cap + 1, "window did not reach its configured bounds")
         for _, id in { cap + 1, cap + 2 } do
-            assert(
-                not owner.resolve({
-                    roundId = 1,
-                    shotId = id,
-                    weapon = "M102",
-                    firedAt = 99,
-                    panelId = "wall",
-                }),
-                "duplicate or overflow entered the structural queue"
-            )
+            assert(not owner.resolve({
+                roundId = 1,
+                shotId = id,
+                weapon = "M102",
+                firedAt = 99,
+                panelId = "wall",
+            }), "duplicate or overflow entered the structural queue")
         end
         assert(owner.resources().pending == cap, "rejection changed the queue")
         shot(owner, 1, 100, "wall", "M102")
