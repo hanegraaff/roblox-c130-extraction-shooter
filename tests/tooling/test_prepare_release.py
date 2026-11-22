@@ -27,14 +27,21 @@ class ReleasePreparationTests(unittest.TestCase):
     def git(self, *arguments):
         return subprocess.check_output(["git", *arguments], cwd=self.root, text=True).strip()
 
-    def test_clean_revision_accepts_ignored_build_but_rejects_dirty_source(self):
+    def test_clean_revision_allows_generated_dependencies_but_rejects_dirty_rojo_inputs(self):
         self.git("init", "--quiet")
-        self.write(".gitignore", "build/\n*.local.luau\n")
+        self.write(".gitignore", "build/\nPackages/\n__pycache__/\n*.local.luau\n")
         self.write("src/Game.luau", "return 1\n")
-        self.git("add", "--", ".gitignore", "src/Game.luau")
+        self.write("tests/studio/server/Game.spec.luau", "return 1\n")
+        self.write(release.RELEASE_PROJECT, json.dumps({"tree": {"Runtime": {"$path": "src"}}}))
+        self.write(release.STUDIO_TEST_PROJECT, json.dumps({"tree": {"Server": {
+            "Tests": {"$path": "tests/studio/server"}, "TestPackages": {"$path": "Packages"},
+        }}}))
+        self.git("add", "--", ".")
         self.git("-c", "user.name=Release fixture", "-c", "user.email=fixture@example.invalid",
                  "-c", "commit.gpgSign=false", "commit", "--quiet", "-m", "Fixture")
         self.write("build/game.rbxlx", "generated")
+        self.write("Packages/TestEZ.lua", "generated")
+        self.write("tests/tooling/__pycache__/fixture.pyc", "generated")
         self.assertEqual(release.clean_revision(self.root), {"commit": self.git("rev-parse", "HEAD"),
                                                             "tree": self.git("rev-parse", "HEAD^{tree}")})
 
@@ -46,9 +53,12 @@ class ReleasePreparationTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "clean Git checkout"):
             release.clean_revision(self.root)
         self.git("restore", "--", "src/Game.luau")
-        self.write("src/Game.local.luau", "return 4\n")
-        with self.assertRaisesRegex(RuntimeError, "Ignored files in Rojo runtime inputs"):
-            release.clean_revision(self.root)
+        for name in ("src/Game.local.luau", "tests/studio/server/Game.local.luau"):
+            with self.subTest(name=name):
+                self.write(name, "return 4\n")
+                with self.assertRaisesRegex(RuntimeError, "Ignored files in authored Rojo inputs"):
+                    release.clean_revision(self.root)
+                (self.root / name).unlink()
 
     def test_runtime_audit_excludes_test_fixtures_and_compares_both_builds(self):
         self.write("src/Game.luau", "return 1\n")
