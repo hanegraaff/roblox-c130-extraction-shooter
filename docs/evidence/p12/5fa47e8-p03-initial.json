@@ -1,0 +1,40 @@
+{
+  "sourceCommit": "5fa47e8a0251c12ea8639f0ae0a75c2c5409748e",
+  "sourceTree": "5521ef140c703183049058a28325eb64c69ff377",
+  "testArtifactSha256": "5cfcff1a19fc8be8f747a852532374442ebaf09d85a26bf829512d6b58c099d6",
+  "studioVersion": "0.748.0.7481526",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(3, {kind = \"P03\"})",
+  "attempt": 1,
+  "outcome": {
+    "ok": true,
+    "result": {
+      "initialClientCount": 3,
+      "skipped": 0,
+      "passed": 0,
+      "cases": [
+        {
+          "name": "A5 three actual clients receive assigned roles, phase, deadline and UI",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.RoundHarness:341: client slot 3: Players.Player1.PlayerScripts.ClientTests.RoundHarness:29: client timeout: replicated role/phase/deadline"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.RoundHarness:326: ServerScriptService.ServerTests.RoundHarness:341: client slot 3: Players.Player1.PlayerScripts.ClientTests.RoundHarness:29: client timeout: replicated role/phase/deadline"
+        }
+      ],
+      "clientCount": 3,
+      "environment": "Studio",
+      "completedRoundIds": [
+        1,
+        0,
+        0
+      ],
+      "suite": "P03-multiplayer",
+      "failed": 2,
+      "discovered": 2
+    }
+  },
+  "lateJoinReached": false,
+  "notes": "Three actual clients connected. The expected Active role/phase/deadline acknowledgement did not arrive before the client deadline; the reported harness stopped before its actual late-join step. The original Edit document returned and the temporary report attribute was cleared."
+}

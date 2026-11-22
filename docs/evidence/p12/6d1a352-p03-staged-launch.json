@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "6d1a352196277a89a5b7dec41181035707f766c7",
+  "sourceTree": "397296697c02caac615bacd0102c1b41715a28e6",
+  "testArtifactSha256": "8b419cb8d9e42d0f62f1e99bbad1c2cb5e014b9b47442acb7fa02ce063ea6f5f",
+  "studioVersion": "0.748.0.7481526",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P03\"}) with an actual Server tasked to AddPlayers(1) after observing exactly two initial actual clients",
+  "start": {
+    "expectedBeforeGameplay": 3,
+    "queueComplete": true,
+    "requested": 2,
+    "returnedToEdit": true,
+    "clearedCollectedReports": true
+  },
+  "server": {
+    "startup": {
+      "status": "first-client-arrived",
+      "clientCount": 1,
+      "budgetSeconds": 60,
+      "elapsedSeconds": 11.339671708352398
+    },
+    "ids": {
+      "1": {
+        "userId": -1
+      }
+    },
+    "clock": 54.81558474997291,
+    "smoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 192,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 192
+    },
+    "stage": {
+      "observed": 1,
+      "reason": "actual roster differs from two",
+      "attempted": false
+    },
+    "actual": 1
+  },
+  "studioOutput": [
+    "ServerScriptService.ServerTests.RoundHarness:36: timeout: three actual clients join",
+    "Script 'ServerScriptService.ServerTests.RoundHarness', Line 36 - function awaitCondition",
+    "Script 'ServerScriptService.ServerTests.RoundHarness', Line 239 - function run"
+  ],
+  "cleanup": {
+    "server": {
+      "actualClients": 1,
+      "endedOwnedSession": true
+    },
+    "edit": {
+      "localEdit": true,
+      "allSelectorsCleared": true,
+      "result": {
+        "ok": true,
+        "result": {
+          "actualClients": 1,
+          "externalCleanup": true,
+          "reason": "P03 staged roster timed out before gameplay"
+        }
+      }
+    }
+  },
+  "verdict": "The supported staged path did not reach its initial actual roster. One of two requested clients joined, so AddPlayers was not invoked and P03 did not start gameplay or reach its own late-join check."
+}

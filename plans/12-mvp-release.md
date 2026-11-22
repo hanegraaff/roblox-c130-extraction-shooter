@@ -4,7 +4,7 @@
 
 ## Capability and player experience
 
-The verified game runs in a named, explicitly authorized Roblox experience. Players can complete repeated 6- and 10-player matches with both roles, both aircraft weapons/zoom levels, M-7 fire, the single launcher, cover/aircraft destruction, spectating and results. The 720-stud battlefield, terrain, three accessible multi-story buildings, panning and progressive physical panel destruction are required even with simple graphics. Refined assets can follow in dedicated later plans. The README supplies the real play link and accurate availability.
+The verified game runs in a named, explicitly authorized Roblox experience. Players can complete repeated 6- and 10-player matches with both roles, both aircraft weapons and zoom levels, M-7 fire, the single launcher, cover and aircraft destruction, spectating and results. The 720-stud battlefield includes terrain and three accessible multi-story buildings, including the approved detailed Outpost. Panning and progressive physical panel destruction are part of the release. The README supplies the verified play link and availability.
 
 ## Implementation
 
@@ -77,3 +77,76 @@ local test place. Its Open Cloud token request rejected `universe:read` and
 owner, place capacity, destination asset grants, rollback version and audience
 settings await destination access. Roblox publication and live-player evidence
 are pending. [P12 authorization receipt](../docs/evidence/p12/playtest-publication-authorization.json), [release procedures](../docs/release.md)
+
+The committed mesh capture and all twelve texture records identify owner
+`2227341845`, the same owner identified by the historical P17 workspace
+receipt. These are source-side provenance. Destination-specific availability
+and permissions require a fresh cloud check.
+
+### Clean-checkout verification
+
+`python3 scripts/setup.py` installed the pinned tools, TestEZ and Roblox types
+in a full-history local clone. `python3 scripts/prepare_release.py` ran
+`python3 scripts/verify.py` from a clean, detached checkout at
+`6d1a352196277a89a5b7dec41181035707f766c7`, tree
+`397296697c02caac615bacd0102c1b41715a28e6`, on macOS arm64 with Python 3.10.4.
+The checkout stayed clean. The initial implementation required a generated P17
+provenance refresh. Independent review also found that an ignored file under a
+Studio test mapping could enter the test build. The corrected preparation gate
+checks authored inputs of both mappings and the focused tooling case checks both
+release and test probes. [Passing candidate CI](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45076381222)
+
+- **Host gate:** 82/82 unit cases, 74/74 integration cases, 18/18 tooling cases,
+  48/48 asset regressions and 7/7 P16 audits. P17 reconstruction and provenance,
+  format, lint, strict types, and deliberate rejection probes passed.
+- **Release artifact:** `default.project.json` produced `build/game.rbxlx`,
+  10,154,160 bytes, SHA-256
+  `266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7`.
+  The authorized build from `7c04172` is byte-identical. Artifact inspection
+  verified 5,306 release Instances, 58 runtime scripts and release isolation
+  from test dependencies, runners, fixtures and two-player settings.
+- **Studio artifact:** `test.project.json` produced `build/tests.rbxlx`,
+  11,418,054 bytes, SHA-256
+  `8b419cb8d9e42d0f62f1e99bbad1c2cb5e014b9b47442acb7fa02ce063ea6f5f`.
+  Both artifacts passed 2,804 authored transform comparisons and their 58
+  runtime scripts matched committed source. Independent repeat builds were
+  byte-identical.
+- **Asset inventory:** manifest schema 1, 407 mesh IDs, 12 textures and 3
+  Creator Store audio IDs. The receipt lists the pinned inputs and exact
+  artifact and manifest hashes. [Release receipt](../docs/evidence/p12/6d1a352-release-receipt.json)
+
+### Independent Studio verification
+
+The tester used macOS Studio `0.748.0.7481526` and the local `tests.rbxlx`
+document with both cloud IDs zero. The initial and corrected candidate's 159
+mapped source containers matched their corresponding builds. The release file
+remained byte-identical throughout. Native reports record the actual fixture
+source and client counts for each run.
+
+| Studio scenario | Observed result |
+| --- | --- |
+| Ordinary Play and fresh restart | 192/192 server and 13/13 client tests in each one-client run, with one status owner and one visible round HUD after startup. [Smoke report](../docs/evidence/p12/5fa47e8-studio-smoke.json) |
+| P03 deployment and late join | The first run reached three clients and timed out on a replicated role/phase/deadline acknowledgement before late join. The second had two of three requested clients. A staged attempt brought up only one of two initial clients and timed out before the three-client harness. [Initial run](../docs/evidence/p12/5fa47e8-p03-initial.json), [retry](../docs/evidence/p12/7c04172-p03-retry.json), [staged attempt](../docs/evidence/p12/6d1a352-p03-staged-launch.json) |
+| P07 destruction, first attempt | Four of five started checks passed with two clients, including shelter damage and 9.1618 earned seconds for the 30mm Heavy transition. Traversal failed before replication and reset checks. The Ground avatar was still near its prior spawn after a server-only placement. `6d1a352` makes the test confirm the actual client's replicated start before client-owned movement, retaining the same opening, arrival thresholds and server replication check. [Original run](../docs/evidence/p12/7c04172-p07-opening-attempt.json) |
+| P07 destruction, corrected fixture | Two actual clients passed request authority and the six heavy-hit thresholds. Two successive accepted 30mm shots arrived 0.231936 seconds apart against the 0.225-second rule, stopping the fixture before the corrected traversal or reset. The final retry stalled before a Server DataModel or client joined. [Cadence report](../docs/evidence/p12/6d1a352-p07-cadence-attempt.json), [startup failure](../docs/evidence/p12/6d1a352-p07-launch-blocked.json) |
+| P09 outcomes and departures | Two three-client runs passed 5/5 and 2/2, including aircraft destruction, elimination, timeout, replay and operator forfeit. LastGround stalled before a reported client start and ended with no suite result. Empty then passed 2/2 with two actual clients. [P09 reports](../docs/evidence/p12/p09-studio-outcomes-and-departures.json) |
+| P14 full-orbit native panning | 6/6 with two actual clients on `6d1a352`, after 192/192 server and 13/13 per-client smoke. Both 90-second weapon profiles passed targeting, cover and near-edge projection, role reset and teardown. [P14 native report](../docs/evidence/p12/6d1a352-p14-native.json) |
+| P17 managed Outpost | 10/10 with two actual clients on `6d1a352`, after 192/192 server and 13/13 per-client smoke. Both stair routes, six material families, a Heavy stage at 9.167355 earned 30mm seconds, a replicated opening traversal, and two pristine 188-panel resets passed. The SDK launched the native fixture through its server-only manual selector. [P17 native report](../docs/evidence/p12/6d1a352-p17-native.json) |
+
+The original local document returned to Edit with its temporary selectors
+cleared after the final P03 attempt. The final P07 SDK launch remained pending
+in its alternate local document, and its owned child opened in Edit. Neither
+reported a running test. P04, P05, P06/P06Team, P08, P10, P11, P13, human test
+controls and operated layout, thermal and mobile checks retain their
+source-specific earlier evidence and await fresh release acceptance.
+
+### Release gates
+
+| Criterion | Evidence and remaining work |
+| --- | --- |
+| A1 | Passed from clean Git with repeat-build checksum agreement and a release-only artifact. The committed receipt records inputs and hashes. |
+| A2 | The linked Studio reports record fresh results and failures. P03 late join, full P07 traversal and reset, P09 LastGround, and the remaining fresh scenarios above stay open. |
+| A3 | The user granted publication for the exact hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
+| A4 | Six- and ten-player Roblox client rounds require an accessible published candidate and confirmed player rosters. |
+| A5 | The live ten-player five-minute workload and 30-minute soak require the published candidate and a ten-player roster. The P11 Studio baseline remains recorded above. |
+| A6 | The technical writer reviewed the player and contributor guides and added smoke, rollback and live acceptance steps. The player experience link and live limitations await platform verification. [Runbook](../docs/release.md), [draft PR #46](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/46) |

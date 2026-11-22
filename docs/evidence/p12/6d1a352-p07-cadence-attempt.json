@@ -1,0 +1,203 @@
+{
+  "sourceCommit": "6d1a352196277a89a5b7dec41181035707f766c7",
+  "sourceTree": "397296697c02caac615bacd0102c1b41715a28e6",
+  "testArtifactSha256": "8b419cb8d9e42d0f62f1e99bbad1c2cb5e014b9b47442acb7fa02ce063ea6f5f",
+  "releaseArtifactSha256": "266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7",
+  "sourceAudit": {
+    "universeId": 0,
+    "p07AndP17Sources": {
+      "ServerScriptService/ServerTests/P17Metadata": "63a6387697f3703d7d9774978bca4c778c4316df463110bab58755c481340dde",
+      "ServerScriptService/ServerTests/DestructionHarness": "019997b2ba1637519905a14864d413a5157002505d945f9e3c77aab9c5352a29",
+      "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness": "701dcec79347ec5aa2b170c61a4c22ec4d5e931487b6a13e5c2d165db3ce37f3"
+    },
+    "missing": [],
+    "placeId": 0,
+    "version": "0.748.0.7481526",
+    "extra": [],
+    "gameName": "tests.rbxlx",
+    "expected": 159,
+    "mismatched": [],
+    "matched": 159
+  },
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P07\"}) in separately verified existing local Edit child; AddPlayers(1) in actual SDK Server before deployment when only one of two requested clients joined",
+  "smoke": [
+    {
+      "model": "Server",
+      "players": 2,
+      "smoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "discovered": 192
+      },
+      "stage": {
+        "clientCount": 2,
+        "serverTime": 1795385751.558003,
+        "stage": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+      },
+      "clock": 86.95954545831773
+    },
+    {
+      "model": "Client",
+      "id": -2,
+      "life": "Alive",
+      "role": "Ground",
+      "smoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      }
+    },
+    {
+      "model": "Client",
+      "id": -1,
+      "life": "Alive",
+      "role": "Gunship",
+      "smoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      }
+    }
+  ],
+  "launchRecovery": {
+    "args": {
+      "kind": "P07"
+    },
+    "ids": {
+      "1": -1,
+      "2": -2
+    },
+    "clock": 60.41116445831722,
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+    "stage": "{\"clientCount\":2,\"serverTime\":1795385739.787921,\"stage\":\"A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation\"}",
+    "add": "{\"ok\":true,\"detail\":\"one SDK client requested\"}"
+  },
+  "result": {
+    "skipped": 0,
+    "passed": 2,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+      },
+      {
+        "passed": true,
+        "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+      },
+      {
+        "name": "A7 earned 30mm Light damage persists through three bursts before Heavy",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.DestructionHarness:836: accepted burst cadence/gap invalid"
+      }
+    ],
+    "clientCount": 2,
+    "observations": [
+      {
+        "panelId": "Foundry_S02_Roof_01_02",
+        "hit": 1,
+        "progress": 0.3333333333333333,
+        "kind": "actual-heavy",
+        "stage": "Intact"
+      },
+      {
+        "panelId": "Foundry_S02_Roof_01_02",
+        "hit": 2,
+        "progress": 0.6666666666666666,
+        "kind": "actual-heavy",
+        "stage": "Intact"
+      },
+      {
+        "panelId": "Foundry_S02_Roof_01_02",
+        "hit": 3,
+        "progress": 0,
+        "kind": "actual-heavy",
+        "stage": "Damaged"
+      },
+      {
+        "panelId": "Foundry_S02_Roof_01_02",
+        "hit": 4,
+        "progress": 0.3333333333333333,
+        "kind": "actual-heavy",
+        "stage": "Damaged"
+      },
+      {
+        "panelId": "Foundry_S02_Roof_01_02",
+        "hit": 5,
+        "progress": 0.6666666666666666,
+        "kind": "actual-heavy",
+        "stage": "Damaged"
+      },
+      {
+        "panelId": "Foundry_S02_Roof_01_02",
+        "hit": 6,
+        "progress": 1,
+        "kind": "actual-heavy",
+        "stage": "Destroyed"
+      }
+    ],
+    "discovered": 3,
+    "environment": "Studio",
+    "initialObservedAtServerSeconds": 1795385739.4408,
+    "suite": "P07-multiplayer",
+    "initialUserIds": [
+      -1,
+      -2
+    ],
+    "failed": 1
+  },
+  "cadence": {
+    "panelId": "Foundry_S02_Roof_01_03",
+    "minimumServerGapSeconds": 0.15,
+    "maximumServerGapSeconds": 0.225,
+    "expectedFixtureSendIntervalSeconds": 0.18,
+    "observedBursts": [
+      {
+        "burst": 1,
+        "sent": 21,
+        "impacts": 21,
+        "minServerGapSeconds": 0.18270206451416016,
+        "maxServerGapSeconds": 0.21744489669799805,
+        "outOfBounds": [],
+        "validCreditAtPauseSeconds": 3.733273983001709
+      },
+      {
+        "burst": 2,
+        "sent": 21,
+        "impacts": 21,
+        "minServerGapSeconds": 0.18273711204528809,
+        "maxServerGapSeconds": 0.23193597793579102,
+        "outOfBounds": [
+          {
+            "shotIdFrom": 32,
+            "shotIdTo": 33,
+            "fromSequence": 32,
+            "toSequence": 33,
+            "earlierFiredAt": 1795385787.374524,
+            "laterFiredAt": 1795385787.60646,
+            "serverGapSeconds": 0.23193597793579102,
+            "clientSendGapSeconds": 0.2268998622894287
+          }
+        ]
+      }
+    ]
+  },
+  "notes": "A real admitted shot interval exceeded the production continuity limit. The strict case stopped in the second burst before the corrected opening traversal, later replication and round resets. This attempt did not exercise the new avatar placement and restoration handshake."
+}
