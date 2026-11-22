@@ -1,0 +1,52 @@
+{
+  "candidate": "3a09d68b8f435d0e2dd08d5b5817e1256cb228c2",
+  "tree": "2f99292b5cf0b0e24163d29c3ef6afa9444a557a",
+  "docsCommit": "7c72a73ae48e01ca88d28d6607e203ce2a14b26b",
+  "artifactSha256": "55f494bb04e6ac0570fe8da97fe7a8ac5e8b02690b509a58d8737481762365a2",
+  "studioId": "393b5242-5671-4b38-89b7-4ad134ea5c7d",
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"client\":\"a507edcafbfc44a4974d50542e4f465c52658df9e70cf364a95eaf7889bd9ff1\",\"binding\":\"5f04166ea508dad0fa86f8040c119abdef7d1a5086d8919df15139ae3b79b4d0\",\"p10\":\"548cbc88d5ff4a4348e6cb2a5ae1ba2f6ad60a2bfe32a3f0805a72ef74cd70c0\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P03\",\"reportKey\":\"P11RestartP03\",\"initialRequested\":3}"
+      }
+    ],
+    "isError": false
+  },
+  "command": "ExecuteMultiplayerTestAsync(3,{kind='P03'})",
+  "sourceLinkedErrors": [
+    "0.748.0.7481526_20261122T213409Z_Studio_d7ab7_last.log:1318:2026-11-22T21:34:36.846Z,27.846504,6db4f000,6,Error [FLog::CreatorError] Error: TestService: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:714: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:371: production GUI item missing: RifleStatus",
+    "0.748.0.7481526_20261122T213409Z_Studio_d7ab7_last.log:1329:2026-11-22T21:34:36.846Z,27.846628,6db4f000,6,Error [FLog::CreatorError] Error: Players.Player2.PlayerScripts.ClientTests:24: client suite failed or empty",
+    "0.748.0.7481526_20261122T213407Z_Studio_97a1a_last.log:1319:2026-11-22T21:34:35.280Z,28.280821,6f607000,6,Error [FLog::CreatorError] Error: TestService: ReplicatedStorage.ClientSpecs.PointerGui.spec:198: ReplicatedStorage.ClientSpecs.PointerGui.spec:63: actual GUI button did not block edge-pan input",
+    "0.748.0.7481526_20261122T213407Z_Studio_97a1a_last.log:1330:2026-11-22T21:34:35.280Z,28.280947,6f607000,6,Error [FLog::CreatorError] Error: Players.Player1.PlayerScripts.ClientTests:24: client suite failed or empty"
+  ],
+  "ok": true,
+  "result": {
+    "initialClientCount": 3,
+    "skipped": 0,
+    "passed": 0,
+    "cases": [
+      {
+        "name": "A5 three actual clients receive assigned roles, phase, deadline and UI",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.RoundHarness:36: timeout: client harness ready 3"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.RoundHarness:326: ServerScriptService.ServerTests.RoundHarness:36: timeout: client harness ready 3"
+      }
+    ],
+    "clientCount": 3,
+    "environment": "Studio",
+    "completedRoundIds": [
+      1,
+      0,
+      0
+    ],
+    "suite": "P03-multiplayer",
+    "failed": 2,
+    "discovered": 2
+  },
+  "elapsedSeconds": 47.359987208328675
+}

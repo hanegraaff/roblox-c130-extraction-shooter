@@ -1,0 +1,411 @@
+{
+  "candidate": "3a09d68b8f435d0e2dd08d5b5817e1256cb228c2",
+  "tree": "2f99292b5cf0b0e24163d29c3ef6afa9444a557a",
+  "docsCommit": "7c72a73ae48e01ca88d28d6607e203ce2a14b26b",
+  "artifactSha256": "55f494bb04e6ac0570fe8da97fe7a8ac5e8b02690b509a58d8737481762365a2",
+  "studioId": "393b5242-5671-4b38-89b7-4ad134ea5c7d",
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"client\":\"a507edcafbfc44a4974d50542e4f465c52658df9e70cf364a95eaf7889bd9ff1\",\"binding\":\"5f04166ea508dad0fa86f8040c119abdef7d1a5086d8919df15139ae3b79b4d0\",\"p10\":\"548cbc88d5ff4a4348e6cb2a5ae1ba2f6ad60a2bfe32a3f0805a72ef74cd70c0\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P13\",\"reportKey\":\"P11RestartP13\",\"initialRequested\":2}"
+      }
+    ],
+    "isError": false
+  },
+  "receipts": [
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383178.566327
+      }
+    },
+    {
+      "id": "268dba35-2fdd-446f-81b2-02fc33a4c084",
+      "type": "Client",
+      "data": {
+        "id": -1,
+        "renderCPUSeconds": 0.0019403334008529782,
+        "frameSeconds": 0.016616541892290115,
+        "life": "Alive",
+        "renderGPUSeconds": 0.000995416659861803,
+        "clock": 1795383176.160158,
+        "role": "Ground",
+        "character": true,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        }
+      }
+    },
+    {
+      "id": "643a1628-43a7-4180-897c-90f56d5d6b72",
+      "type": "Client",
+      "data": {
+        "frameSeconds": 0.06554920971393585,
+        "character": true,
+        "renderGPUSeconds": 2.500019036233425e-7,
+        "viewport": {
+          "1": 1153,
+          "2": 649
+        },
+        "id": -2,
+        "clock": 1795383174.094598,
+        "renderCPUSeconds": 0.0016477915924042463
+      }
+    },
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383182.198387
+      }
+    },
+    {
+      "id": "268dba35-2fdd-446f-81b2-02fc33a4c084",
+      "type": "Client",
+      "data": {
+        "errors": "[]",
+        "id": -1,
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "renderCPUSeconds": 0.0017671666573733091,
+        "frameSeconds": 0.06819833070039749,
+        "character": true,
+        "renderGPUSeconds": 3.7497375160455704e-7,
+        "clock": 1795383186.242267,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        },
+        "life": "Alive",
+        "role": "Gunship"
+      }
+    },
+    {
+      "id": "643a1628-43a7-4180-897c-90f56d5d6b72",
+      "type": "Client",
+      "data": {
+        "id": -2,
+        "renderCPUSeconds": 0.0014459583908319473,
+        "frameSeconds": 0.07058358192443848,
+        "life": "Alive",
+        "renderGPUSeconds": 0.000001500011421740055,
+        "clock": 1795383184.211744,
+        "role": "Ground",
+        "character": true,
+        "viewport": {
+          "1": 1153,
+          "2": 649
+        }
+      }
+    },
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383189.667875
+      }
+    },
+    {
+      "id": "643a1628-43a7-4180-897c-90f56d5d6b72",
+      "type": "Client",
+      "data": {
+        "errors": "[]",
+        "id": -2,
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "renderCPUSeconds": 0.0016431666444987059,
+        "frameSeconds": 0.06240108236670494,
+        "character": true,
+        "renderGPUSeconds": 3.3335527405142784e-7,
+        "clock": 1795383191.829866,
+        "viewport": {
+          "1": 1153,
+          "2": 649
+        },
+        "life": "Alive",
+        "role": "Ground"
+      }
+    },
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383196.583071
+      }
+    },
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383202.098165
+      }
+    },
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": false,
+            "life": "Eliminated",
+            "role": "Ground"
+          },
+          "2": {
+            "id": -2,
+            "character": false,
+            "life": "Eliminated",
+            "role": "Gunship"
+          }
+        },
+        "round": 2,
+        "phase": "Results",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383207.647435
+      }
+    },
+    {
+      "id": "d3b648e6-6da1-4d2d-aaa9-381706148b28",
+      "type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          },
+          "3": {
+            "id": -3,
+            "character": false,
+            "life": "Spectating",
+            "role": "Spectator"
+          }
+        },
+        "round": 3,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P13"
+        },
+        "clock": 1795383214.105947
+      }
+    },
+    {
+      "id": "8513c646-33b0-4185-8919-d5299f06c4d3",
+      "type": "Client",
+      "data": {
+        "id": -3,
+        "renderCPUSeconds": 0.0015824167057871819,
+        "frameSeconds": 0.016103709116578102,
+        "life": "Alive",
+        "renderGPUSeconds": 0.00446075014770031,
+        "clock": 1795383218.212022,
+        "role": "Ground",
+        "character": true,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        }
+      }
+    }
+  ],
+  "command": "ExecuteMultiplayerTestAsync(2,{kind='P13'}); harness adds one live client",
+  "ok": true,
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+    "skipped": 0,
+    "passed": 5,
+    "cases": [
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication two actual clients agree on source geometry terrain panels and aircraft"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapNavigation actual ground avatar enters every building and walks every upper floor"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication two perturbed round resets restore terrain geometry IDs and panels"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication actual late third client observes rebuilt map and stays spectator"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapCleanup repeated teardown releases round aircraft transport ownership"
+      }
+    ],
+    "initialClientCount": 2,
+    "observations": [
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -3,
+        "detail": "geometry/terrain/aircraft observed"
+      }
+    ],
+    "walkedBuildings": [
+      "Foundry",
+      "Warehouse",
+      "Outpost"
+    ],
+    "environment": "Studio",
+    "clientCount": 3,
+    "suite": "P13-multiplayer",
+    "failed": 0,
+    "discovered": 5
+  },
+  "elapsedSeconds": 65.73431462503504
+}

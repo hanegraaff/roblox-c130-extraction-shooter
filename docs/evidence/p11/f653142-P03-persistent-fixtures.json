@@ -1,0 +1,258 @@
+{
+  "runtimeAndFixtureCommit": "f653142739b365adb0e603ac1af94d08b2daf02b",
+  "tree": "016e65397e61b7723f168822e094b3ef7a270aca",
+  "openedArtifactSha256": "55f494bb04e6ac0570fe8da97fe7a8ac5e8b02690b509a58d8737481762365a2",
+  "rebuiltCandidateArtifactSha256": "61e992339530e75b4a8e1b1a3b521c77ca53fa1adabf528f84b4bb418e5db802",
+  "liveBinding": "edited with Rojo against existing test document, source checksums from launch",
+  "studioId": "393b5242-5671-4b38-89b7-4ad134ea5c7d",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(3,{kind='P03'}); harness adds one live client during Active",
+  "launch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"checksums\":{\"map\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\",\"client\":\"96d13c13bebcd953d4f7a8b599363342a1b493004f3fd13a3d21a0bab8e8a1b4\",\"round\":\"de23665d37a808699adf2ac2791e07f446e5b4c7a6d1d698333175dd6f49a53e\",\"pointer\":\"f9cd89585fdf75a7e6769ac880a2172f22b156496c879eb9e3d2a6cf70b3fd1f\",\"binding\":\"99b1ee6b4fa23d4924e3508533e6a6b8b20b4980ae2c247890335a589d21bab0\",\"p10\":\"548cbc88d5ff4a4348e6cb2a5ae1ba2f6ad60a2bfe32a3f0805a72ef74cd70c0\"},\"version\":\"0.748.0.7481526\",\"kind\":\"P03\",\"reportKey\":\"P11P03PersistentFixtures\",\"initialRequested\":3}"
+      }
+    ],
+    "isError": false
+  },
+  "receipts": [
+    {
+      "id": "a1a8606f-5f41-4bde-a4da-fc0e571926b1",
+      "datamodel_type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": false,
+            "life": "Waiting",
+            "role": "Waiting"
+          },
+          "2": {
+            "id": -2,
+            "character": false,
+            "life": "Waiting",
+            "role": "Waiting"
+          },
+          "3": {
+            "id": -3,
+            "character": false,
+            "life": "Waiting",
+            "role": "Waiting"
+          }
+        },
+        "round": 0,
+        "phase": "Lobby",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P03"
+        },
+        "clock": 1795383634.711573
+      }
+    },
+    {
+      "id": "b61512d0-faac-45d7-95dd-2369a00ec5c5",
+      "datamodel_type": "Client",
+      "data": {
+        "id": -1,
+        "renderCPUSeconds": 0.0020778749603778124,
+        "frameSeconds": 0.014755167067050934,
+        "life": "Alive",
+        "renderGPUSeconds": 0.0009514166740700603,
+        "clock": 1795383636.90388,
+        "role": "Ground",
+        "character": true,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        }
+      }
+    },
+    {
+      "id": "1265de5f-028d-4b64-ae57-00136d2adc99",
+      "datamodel_type": "Client",
+      "data": {
+        "errors": "[]",
+        "id": -3,
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "renderCPUSeconds": 0.0015537916915491223,
+        "frameSeconds": 0.017090875655412674,
+        "character": true,
+        "renderGPUSeconds": 0.001300208386965096,
+        "clock": 1795383638.997612,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        },
+        "life": "Waiting",
+        "role": "Waiting"
+      }
+    },
+    {
+      "id": "a1a8606f-5f41-4bde-a4da-fc0e571926b1",
+      "datamodel_type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "3": {
+            "id": -3,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P03"
+        },
+        "clock": 1795383643.990945
+      }
+    },
+    {
+      "id": "b61512d0-faac-45d7-95dd-2369a00ec5c5",
+      "datamodel_type": "Client",
+      "data": {
+        "errors": "[]",
+        "id": -1,
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "renderCPUSeconds": 0.002477791626006365,
+        "frameSeconds": 0.016622457653284073,
+        "character": true,
+        "renderGPUSeconds": 0.0017283332999795675,
+        "clock": 1795383646.838183,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        },
+        "life": "Alive",
+        "role": "Ground"
+      }
+    },
+    {
+      "id": "a1a8606f-5f41-4bde-a4da-fc0e571926b1",
+      "datamodel_type": "Server",
+      "data": {
+        "clients": {
+          "1": {
+            "id": -1,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          },
+          "2": {
+            "id": -2,
+            "character": true,
+            "life": "Alive",
+            "role": "Gunship"
+          },
+          "3": {
+            "id": -3,
+            "character": true,
+            "life": "Alive",
+            "role": "Ground"
+          },
+          "4": {
+            "id": -4,
+            "character": false,
+            "life": "Spectating",
+            "role": "Spectator"
+          }
+        },
+        "round": 1,
+        "phase": "Active",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+        "kind": {
+          "kind": "P03"
+        },
+        "clock": 1795383652.341506
+      }
+    },
+    {
+      "id": "3af59353-c3fb-42da-a288-65877f9d667b",
+      "datamodel_type": "Client",
+      "data": {
+        "errors": "[]",
+        "id": -4,
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-4,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "renderCPUSeconds": 0.004376166965812445,
+        "frameSeconds": 0.018050916492938995,
+        "character": false,
+        "renderGPUSeconds": 0.001491291681304574,
+        "clock": 1795383654.719245,
+        "viewport": {
+          "1": 1081,
+          "2": 618
+        },
+        "life": "Spectating",
+        "role": "Spectator"
+      }
+    }
+  ],
+  "ok": true,
+  "result": {
+    "initialClientCount": 3,
+    "skipped": 0,
+    "passed": 9,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A5 three actual clients receive assigned roles, phase, deadline and UI"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 actual late join remains a characterless spectator and cannot act"
+      },
+      {
+        "passed": true,
+        "name": "A3/A4 death does not respawn; teammate spectating and command rejection"
+      },
+      {
+        "passed": true,
+        "name": "A6 first reset restores lobby camera, roster and perturbed map"
+      },
+      {
+        "passed": true,
+        "name": "A5/A6 operator reset retains assignment and timeout is authoritative"
+      },
+      {
+        "passed": true,
+        "name": "A6 second reset restores roster, camera and map"
+      },
+      {
+        "passed": true,
+        "name": "A6 actual ground departure removes life; operator departure forfeits"
+      },
+      {
+        "passed": true,
+        "name": "A6 third reset restores camera, map and complete runtime teardown"
+      },
+      {
+        "passed": true,
+        "name": "A6 pending actual avatar loads retain ownership and accounting until drained"
+      }
+    ],
+    "clientCount": 4,
+    "environment": "Studio",
+    "completedRoundIds": [
+      1,
+      2,
+      3
+    ],
+    "suite": "P03-multiplayer",
+    "failed": 0,
+    "discovered": 9
+  },
+  "elapsedSeconds": 93.43718966667075
+}

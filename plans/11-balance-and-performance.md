@@ -289,14 +289,53 @@ The first P03 recheck requested three clients and stopped at two actual
 clients before deployment. The staged SDK retry stalled when its server
 child opened Studio sign-in instead of the test DataModel. The original
 document remained in Edit with the test selector cleared and the launcher
-continued waiting for that child. The corrected late-client path awaits
-native rechecks for P03 and P13 plus a completed four-client P10 run.
+continued waiting for that child until Studio was restarted.
 [P03 launch report](../docs/evidence/p11/3a09d68-P03-startup-failure.json),
 [staged launch report](../docs/evidence/p11/3a09d68-P03-staged-startup-failure.json)
 
+After the restart, the same test artifact passed all five P13 cases with
+two initial clients and one actual late join. The late player stayed a
+characterless spectator during the third active round and confirmed
+geometry, terrain and aircraft replication. The server passed 192 smoke
+cases and all three clients passed 13 each. Short frame snapshots from
+both active roles at default viewports still showed multi-client Studio
+intervals around 67 ms. A3 retains the earlier five-minute 1080p result.
+[P13 restart evidence](../docs/evidence/p11/3a09d68-P13-after-restart.json)
+
+The P03 retry after the restart reached all three initial clients. The
+PointerGui button hit-test assertion failed in one client and GroundAimGui
+could not find the production `RifleStatus` item in another. The server
+timed out waiting for the client harnesses before the late-join step and
+reported zero of two cases passing.
+[P03 restart evidence](../docs/evidence/p11/3a09d68-P03-after-restart.json)
+
+The P10 staged retry passed all eight cases on the same artifact. The
+tester started three actual clients and added one through Studio's supported
+`AddPlayers(1)` before gameplay. All four clients passed 13 smoke cases each,
+and the server passed 192. The roster stayed at four through gameplay and
+the runtime teardown passed.
+[P10 staged restart evidence](../docs/evidence/p11/3a09d68-P10-after-restart-staged.json)
+
+The test-only follow-up `f653142` sets `ResetOnSpawn` to `false` for the
+PointerGui and GroundAimGui fixtures, matching the production HUD during
+character loading. The pointer check waits for the real button in Studio's
+hit map and then verifies both production input adapters in that frame.
+P17's generated fixture fingerprint records the new spec hashes.
+`python3 scripts/verify.py` passed on macOS arm64 with 82 unit, 74
+integration, 15 tooling and 48 asset cases, both Rojo builds and test-place
+isolation. The local test build SHA-256 was
+`61e992339530e75b4a8e1b1a3b521c77ca53fa1adabf528f84b4bb418e5db802`.
+
+The tester verified the changed fixture hashes in the Rojo-synced Edit
+document. P03 passed all nine cases across rounds 1–3 at peak four actual
+clients. The late fourth client passed 13 smoke cases and reported the
+same characterless spectator state as the server. The server passed 192
+smoke cases. The original document returned to Edit after teardown.
+[P03 passing recheck](../docs/evidence/p11/f653142-P03-persistent-fixtures.json)
+
 | Criterion | Evidence on this branch | Verdict |
 | --- | --- | --- |
-| A1 | Full host gate, replay floods and ordered queue bounds, fresh world reconstruction, prior-engine suite reports above | Open for the P03 and P13 late-client rechecks and the P10 four-client suite |
+| A1 | Full host gate, replay floods and ordered queue bounds, fresh world reconstruction, and the prior-engine suite reports above | Pass |
 | A2 | Five accelerated rounds and 30 loaded minutes after warmup, with both actual clients returning to baseline and all process growth below 3% | Pass |
 | A3 | Five loaded minutes with both roles at 1920×1080 and quality 8. Server scheduler 0.6 ms p95. Client p95 67.7 ms and 67.5 ms against the 33.3 ms target | Client frame budget unmet |
 | A4 | Both clients agree on single damage, pickup, selection and result under measured 166.3 ms and 166.7 ms median application round trips | Pass |

@@ -58,8 +58,9 @@ passed. P10 and its revision were integrated into `main` through PRs #42 and
 2026-11-22 P11 draft delivery. Replay, the 30-minute loaded soak and
 two-client latency convergence passed. The five-minute 1080p profile
 measured 67.7 ms and 67.5 ms client p95 against a 33.3 ms target, with
-0.6 ms server scheduler p95. The frame budget keeps P11 Blocked. A stalled
-Studio sign-in child also interrupted the remaining prior-engine rechecks.
+0.6 ms server scheduler p95. The frame budget keeps P11 Blocked. After the
+Studio restart, P13 passed 5/5, P10 passed 8/8 with four actual clients, and
+P03 passed 9/9 after the GUI fixture fix. Both live late-join checks passed.
 [Draft PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45),
 [P11 evidence](plans/11-balance-and-performance.md#completion-record)
 
