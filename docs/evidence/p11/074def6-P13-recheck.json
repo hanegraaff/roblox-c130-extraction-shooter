@@ -1,0 +1,149 @@
+{
+  "candidate": "074def6e61f7ae6054c918ae58f303adbc3cbf6b",
+  "tree": "dde25ec3e99394b07606e9b9377331393e2be93e",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind=\"P13\"}); server calls AddPlayers(1)",
+  "start": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"requestedClients\":2,\"version\":\"0.748.0.7481526\",\"kind\":\"P13\",\"reportKey\":\"P11RecheckP13\",\"hashes\":{\"AircraftPanHarness\":\"6ca1344653533b24b61033794b917e0ffabaa05aa0dafee83f5291c6ac6fcd2e\",\"P17Metadata\":\"50f3f4e5a6aa46193612c65f0532ec70719096d5c3b15ce6c22966533b857ed0\",\"GroundCombatHarness\":\"5b2a588fc31b561f1441a1f947db23a91aedfc8c42b11037f7285341656fdc3c\",\"ExpandedMapHarness\":\"0bf85f4b6cfb2a16847fb0270ed5a2e1076f494736b9cd5fdde0b26d706b3a67\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "live": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"networkHarness\":true,\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"clients\":{\"1\":{\"id\":-1,\"character\":true,\"role\":\"Gunship\"},\"3\":{\"id\":-3,\"character\":false,\"role\":\"Spectator\"},\"2\":{\"id\":-2,\"character\":true,\"role\":\"Ground\"}},\"args\":{\"kind\":\"P13\"},\"phase\":\"Active\",\"round\":3}"
+      }
+    ],
+    "isError": false
+  },
+  "lateClientStudioReceipts": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "The requested `studio_id` is not connected — that Roblox Studio instance may have been closed or its place unloaded. Call `list_roblox_studios` for the current instances, then continue on the one the user confirms (or the one whose `name` matches)."
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "The requested `studio_id` is not connected — that Roblox Studio instance may have been closed or its place unloaded. Call `list_roblox_studios` for the current instances, then continue on the one the user confirms (or the one whose `name` matches)."
+          }
+        ],
+        "isError": true
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"id\":-1,\"character\":true,\"role\":\"Gunship\",\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":13,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":13}\"}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "ok": true,
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+    "skipped": 0,
+    "passed": 4,
+    "cases": [
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication two actual clients agree on source geometry terrain panels and aircraft"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapNavigation actual ground avatar enters every building and walks every upper floor"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapReplication two perturbed round resets restore terrain geometry IDs and panels"
+      },
+      {
+        "name": "ExpandedMapReplication actual late third client observes rebuilt map and stays spectator",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:31: P13 timeout: client ready"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:134: ServerScriptService.ServerTests.ExpandedMapHarness:31: P13 timeout: client ready"
+      },
+      {
+        "passed": true,
+        "name": "ExpandedMapCleanup repeated teardown releases round aircraft transport ownership"
+      }
+    ],
+    "initialClientCount": 2,
+    "observations": [
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -1,
+        "detail": "geometry/terrain/aircraft observed"
+      },
+      {
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+        "userId": -2,
+        "detail": "geometry/terrain/aircraft observed"
+      }
+    ],
+    "walkedBuildings": [
+      "Foundry",
+      "Warehouse",
+      "Outpost"
+    ],
+    "environment": "Studio",
+    "clientCount": 3,
+    "suite": "P13-multiplayer",
+    "failed": 2,
+    "discovered": 6
+  },
+  "elapsedSeconds": 78.57079887500731
+}

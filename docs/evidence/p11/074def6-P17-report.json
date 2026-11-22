@@ -1,0 +1,121 @@
+{
+  "candidate": "074def6e61f7ae6054c918ae58f303adbc3cbf6b",
+  "testBuildSha256": "5e98407f5473a04c8d88e43977b099543c0001aa7bb15eb0df854c6dd46674d2",
+  "sdkInvocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P11ManagedOutpost\"})",
+  "manualSelector": "P17",
+  "rawBytes": 684694,
+  "chunkCount": 12,
+  "actualClientsAtDelivery": 2,
+  "invocation": {
+    "approvedAssetBindings": [
+      {
+        "upload_owner": "User 2227341845",
+        "id": "p16-exports-military-outpost-outpost-assembly-v1-fbx",
+        "sha256": "7cd7549dd8c8852e016e1e32f867a2a2626b6a8d5ef0f0f5d11095e6b44fd6d8",
+        "roblox_asset_id": "73311045122621"
+      },
+      {
+        "upload_owner": "User 2227341845",
+        "id": "p16-exports-military-outpost-panel-library-v1-fbx",
+        "sha256": "c5e1f1a7d722018cdacfbf0348a3ff860cc4e48efa55c486c6403b1302d5ae9d",
+        "roblox_asset_id": "126055228085421"
+      },
+      {
+        "upload_owner": "User 2227341845",
+        "id": "p17-panel-library-materials-v2-glb",
+        "uploaded_revision": "2",
+        "sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e",
+        "roblox_asset_id": "126055228085421"
+      }
+    ],
+    "serverProbeSha256": "77f502e03756db14dd5f7ac9e6f3e4a487e3a92834cce156ec0d70089868fd68",
+    "requestedInitialClients": 2,
+    "referenceProductionCommit": "cd7071b9ed00452ee2bba06d7bc9ccbde22c3976",
+    "harness": "P17Manual-v9-verified-avatar-handoff",
+    "mode": "manual-native-server-clients",
+    "selector": "ServerStorage.DevelopmentSettings.ManualHarness",
+    "referenceProductionTree": "1f8d4d231b7081adfe3bafe8ade5dc6acf9e2d47",
+    "actualLateClientRequired": false,
+    "manualFixtureVersion": "v9-verified-avatar-handoff",
+    "selectorValue": "P17",
+    "productionFingerprintSha256": "3d7977674caa83c344bc2ddfc7871920230e4275a081a5f7cd22e31f7e786193",
+    "harnessFingerprintSha256": "eac5900c5877a590e4d244769ed16bfc39bfa13a1c7dc634ac32ef936e5ccadd",
+    "automaticSessionEnd": false,
+    "serverTime": 1795376103.483198,
+    "harnessCommit": "074def6e61f7ae6054c918ae58f303adbc3cbf6b",
+    "clientProbeSha256": "3726af2dc63b175bac366f5d9ea51ed6b3ad78ba468c8ae356d4b355d8f1a292"
+  },
+  "result": {
+    "suite": "P17-imported-material-multiplayer",
+    "discovered": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "clientCount": 2,
+    "initialUserIds": [
+      -1,
+      -2
+    ],
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":192,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":192}",
+    "clientBaselines": {
+      "-1": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}",
+      "-2": "{\"errors\":0,\"skipped\":0,\"passed\":13,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":13}"
+    },
+    "cases": [
+      {
+        "passed": true,
+        "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+      },
+      {
+        "passed": true,
+        "name": "P17MeshAvailability both actual clients preload actual managed mesh dependencies with explicit SurfaceAppearance streaming gap"
+      },
+      {
+        "passed": true,
+        "name": "P17OutpostNavigation actual ground avatar walks internal stairs and exterior stairs balcony into upper floor"
+      },
+      {
+        "passed": true,
+        "name": "P17MaterialPanelStates all six actual families replicate Pristine Light Heavy Total and physical geometry to both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+      },
+      {
+        "passed": true,
+        "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+      },
+      {
+        "passed": true,
+        "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+      },
+      {
+        "passed": true,
+        "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+      },
+      {
+        "passed": true,
+        "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+      },
+      {
+        "passed": true,
+        "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+      }
+    ]
+  },
+  "cleanup": {
+    "aircraftStateAbsent": true,
+    "groundEffectsAbsent": true,
+    "transportAbsent": true,
+    "fragmentFolderAbsent": true,
+    "combatEffectsAbsent": true,
+    "roundStateAbsent": true
+  },
+  "rawSha256": "819a0aedb6e4f29a0e55630e4ecd438225a1719c2377239a4356dda7d96ab7d1",
+  "editCleanup": {
+    "report": "{\"ok\":true,\"result\":{\"summary\":\"{\\\"bytes\\\":684694,\\\"chunks\\\":12,\\\"skipped\\\":0,\\\"passed\\\":10,\\\"complete\\\":true,\\\"actualClients\\\":2,\\\"storage\\\":\\\"ServerStorage.P17ManualEvidence\\\",\\\"suite\\\":\\\"P17-imported-material-multiplayer\\\",\\\"failed\\\":0,\\\"discovered\\\":10}\",\"actualClients\":2}}",
+    "selectorCleared": true,
+    "edit": true
+  }
+}

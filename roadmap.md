@@ -20,7 +20,7 @@ The integrated source on `main` includes the development shell, verification too
 | M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
-| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | In progress | P10 | Play repeated stable rounds with readable counterplay |
+| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Blocked | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Planned | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 — Future levels | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Planned | P12 | Choose among validated levels, each with a circling C-130 and the same camera, zoom, combat and demolition rules |
 
@@ -54,6 +54,14 @@ separate impact sound. The host gate and two-client Studio revision checks
 passed. P10 and its revision were integrated into `main` through PRs #42 and
 #43; integrated `main` supplies P11's dependency source. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43),
 [revision evidence](docs/evidence/p10/combat-presentation-revision.json)
+
+2026-11-22 P11 draft delivery. Replay, the 30-minute loaded soak and
+two-client latency convergence passed. The five-minute 1080p profile
+measured 67.7 ms and 67.5 ms client p95 against a 33.3 ms target, with
+0.6 ms server scheduler p95. The frame budget keeps P11 Blocked. A stalled
+Studio sign-in child also interrupted the remaining prior-engine rechecks.
+[Draft PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45),
+[P11 evidence](plans/11-balance-and-performance.md#completion-record)
 
 2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
 validated shared material-panel boundary and approved-source generation gate.

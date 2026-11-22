@@ -233,14 +233,38 @@ following suites passed on that source. [Initial native regression records](../d
   assertion expected `Custom` during P10's deliberate Results overview.
   `3623b77` checks the neutral Results camera and thermal teardown, then
   checks that Lobby restores the player's own Humanoid and `Custom` view.
+  The independent recheck on `074def6` passed 6/6 with two actual clients
+  and 192-server/13-per-client smoke. Both full orbits and both camera
+  transitions passed after abort and actual operator departure.
+  [P14 recheck](../docs/evidence/p11/074def6-P14-recheck.json)
 - P13's first two-client run rejected the legitimate repeated `Solid` names
   under separately identified building panels. `074def6` compares stable
   Battlefield-relative paths, retains exact duplicate rejection and
   numerical tolerances, and keeps the actual third-client check.
+  The recheck passed geometry agreement, upper-floor traversal, two
+  perturbed resets and teardown. A third actual client arrived during
+  Active as a characterless spectator and failed its startup layout fixture.
+  [P13 recheck](../docs/evidence/p11/074def6-P13-recheck.json), [late-client error](../docs/evidence/p11/P13-late-client-error.txt)
 - P03 reached four actual clients and verified server-side spectator state.
-  Client slot four never acknowledged harness readiness. P10 requested four
-  actual clients and timed out with three. Their required scenarios remain
-  unverified on this run.
+  The fourth client's `GroundAimGui` fixture required an actual character
+  even though the server correctly left that spectator characterless. The
+  failed startup smoke suite prevented its harness acknowledgement.
+  [P03 late-client error](../docs/evidence/p11/P03-late-client-error.txt)
+- P10 requested four actual clients and timed out with three before gameplay.
+- The managed P17 suite passed 10/10 on `074def6` with two actual clients,
+  192 server smoke cases and 13 per client. The local SDK invocation used
+  the existing P17 manual selector. Both clients verified loaded meshes,
+  Outpost traversal, and all six material damage families through the actual
+  openings and two resets. The runner reported complete owned cleanup. The
+  original Edit document's temporary selector and report attributes were
+  cleared after collecting the 12-chunk archive.
+  [Managed Outpost suite](../docs/evidence/p11/074def6-P17-report.json)
+
+`3a09d68` corrects the shared client layout fixture used at P03 and P13
+startup. A characterless client now performs the same M-7 and launcher layout
+assertions using an inert Model under its local PlayerScripts. The fixture
+removes the temporary local reference and restores the camera. The actual
+late-join role and no-avatar assertions remain in each native harness.
 
 The fixture corrections change earlier suite setup and observations. The
 P11 runtime, workload and sampling source remain byte-identical to `60467f6`
@@ -254,3 +278,26 @@ The corresponding test artifact hashes to
 `5e98407f5473a04c8d88e43977b099543c0001aa7bb15eb0df854c6dd46674d2`.
 The writer reviewed the player README and mapping descriptions and provided
 exact SDK and native procedures in the [testing guide](../docs/testing.md#run-the-p11-performance-harness).
+
+The full host gate also passed on `3a09d68b8f435d0e2dd08d5b5817e1256cb228c2`
+(tree `2f99292b5cf0b0e24163d29c3ef6afa9444a557a`) at the same counts. The
+release artifact retains the same hash. The updated test build hashes to
+`55f494bb04e6ac0570fe8da97fe7a8ac5e8b02690b509a58d8737481762365a2`.
+[GitHub Verify #449](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45062411282)
+
+The first P03 recheck requested three clients and stopped at two actual
+clients before deployment. The staged SDK retry stalled when its server
+child opened Studio sign-in instead of the test DataModel. The original
+document remained in Edit with the test selector cleared and the launcher
+continued waiting for that child. The corrected late-client path awaits
+native rechecks for P03 and P13 plus a completed four-client P10 run.
+[P03 launch report](../docs/evidence/p11/3a09d68-P03-startup-failure.json),
+[staged launch report](../docs/evidence/p11/3a09d68-P03-staged-startup-failure.json)
+
+| Criterion | Evidence on this branch | Verdict |
+| --- | --- | --- |
+| A1 | Full host gate, replay floods and ordered queue bounds, fresh world reconstruction, prior-engine suite reports above | Open for the P03 and P13 late-client rechecks and the P10 four-client suite |
+| A2 | Five accelerated rounds and 30 loaded minutes after warmup, with both actual clients returning to baseline and all process growth below 3% | Pass |
+| A3 | Five loaded minutes with both roles at 1920×1080 and quality 8. Server scheduler 0.6 ms p95. Client p95 67.7 ms and 67.5 ms against the 33.3 ms target | Client frame budget unmet |
+| A4 | Both clients agree on single damage, pickup, selection and result under measured 166.3 ms and 166.7 ms median application round trips | Pass |
+| A5 | Three-client route and combat observations, both FOV coverage in P14, and measured imported Outpost exposure and fragment loads | Local observations recorded |
