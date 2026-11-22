@@ -203,3 +203,54 @@ blocked, so this run did not compare actual pan reach. The scripted profile
 and soak separately exercised both gunship weapons, observed real Outpost
 openings and measured concurrent material-fragment load. The local
 observations cannot establish population-scale balance. [Operated report](../docs/evidence/p11/60467f6-operated-review.json)
+
+### Prior engine regressions
+
+The source-bound Edit audit compared 159 mapped Luau sources to the `60467f6`
+test artifact with identical classes and SHA-256 digests at every path. The
+following suites passed on that source. [Initial native regression records](../docs/evidence/p11/prior-regressions.json)
+
+| Suite | Actual clients | Passed |
+| --- | ---: | ---: |
+| Lobby Controls, Human Test Controls | 1 each | 4/4 and 6/6 |
+| Human Test Multiplayer | 2 | 4/4 |
+| P04 aircraft, P05 gunship | 2 each | 6/6 and 8/8 |
+| P06 ground, P07 destruction | 2 each | 10/10 and 7/7 |
+| P08 launcher | 3 initial | 11/11 |
+| P09 Outcomes and Departures | 3 initial each | 5/5 and 2/2 |
+| P09 LastGround and Empty | 2 initial each | 3/3 and 2/2 |
+
+- P06Team initially saw aircraft damage before it sent the exposed shot.
+  The fixture removed the wall after ammunition admission and before the
+  corresponding ray resolved. `3623b77` checks the resolved numbered shot
+  while the wall remains installed, then checks the Wing collision and
+  teammate overlap on the second resolved shot. Independent rechecks passed
+  10/10 on two actual clients and 7/7 on three. [P06 recheck](../docs/evidence/p11/3623b77-P06-recheck.json), [P06Team recheck](../docs/evidence/p11/3623b77-P06Team-recheck.json)
+- P14's first SDK launch had one actual client and timed out before
+  deployment. The two-client retry passed full 90-second projections at
+  each FOV, pan preservation, ground-camera isolation, blocked-input and
+  recenter checks, thermal occlusion and resource teardown. The old role-loss
+  assertion expected `Custom` during P10's deliberate Results overview.
+  `3623b77` checks the neutral Results camera and thermal teardown, then
+  checks that Lobby restores the player's own Humanoid and `Custom` view.
+- P13's first two-client run rejected the legitimate repeated `Solid` names
+  under separately identified building panels. `074def6` compares stable
+  Battlefield-relative paths, retains exact duplicate rejection and
+  numerical tolerances, and keeps the actual third-client check.
+- P03 reached four actual clients and verified server-side spectator state.
+  Client slot four never acknowledged harness readiness. P10 requested four
+  actual clients and timed out with three. Their required scenarios remain
+  unverified on this run.
+
+The fixture corrections change earlier suite setup and observations. The
+P11 runtime, workload and sampling source remain byte-identical to `60467f6`
+across those corrections. The full `python3 scripts/verify.py` gate passed
+on `074def6e61f7ae6054c918ae58f303adbc3cbf6b` (tree
+`dde25ec3e99394b07606e9b9377331393e2be93e`) with the same 82 unit, 74
+integration, 15 tooling, 48 asset and 2,804-per-artifact transform counts.
+The release artifact retains SHA-256
+`266c2322717eebc081b110eba391cde626edb65bcbe245dc4a25404b70022cf7`.
+The corresponding test artifact hashes to
+`5e98407f5473a04c8d88e43977b099543c0001aa7bb15eb0df854c6dd46674d2`.
+The writer reviewed the player README and mapping descriptions and provided
+exact SDK and native procedures in the [testing guide](../docs/testing.md#run-the-p11-performance-harness).

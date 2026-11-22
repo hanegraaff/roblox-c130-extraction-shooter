@@ -1,0 +1,1005 @@
+{
+  "sourceCommit": "60467f620154fc39adcb7b854f6c5c6511682add",
+  "sourceTree": "d85f80fa59ae7e4f3825bf59dba2b8b815f2fa1b",
+  "testBuildSha256": "8e9ab387e293f0f1d59809628bc21d5f25be072f21ad87c42d9351662ca7a404",
+  "studioVersion": "0.748.0.7481526",
+  "studioDocument": "local PlayersVsC130Tests",
+  "matchedMappedSources": 159,
+  "mismatches": 0,
+  "runs": [
+    {
+      "scenario": "LobbyControls",
+      "command": "testService:ExecutePlayModeAsync({kind = \"LobbyControls\"})",
+      "suite": "LobbyControls",
+      "requestedClients": 1,
+      "initialActualClients": 1,
+      "currentActualClients": 1,
+      "peakActualClients": null,
+      "expectedCases": 4,
+      "discovered": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 20.534,
+      "cases": []
+    },
+    {
+      "scenario": "HumanTestControls",
+      "command": "testService:ExecutePlayModeAsync({kind = \"HumanTestControls\"})",
+      "suite": "HumanTestControls",
+      "requestedClients": 1,
+      "initialActualClients": 1,
+      "currentActualClients": 1,
+      "peakActualClients": null,
+      "expectedCases": 6,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 21.433,
+      "cases": []
+    },
+    {
+      "scenario": "HumanTestMultiplayer",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"HumanTestMultiplayer\"})",
+      "suite": "HumanTestControls",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 4,
+      "discovered": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 38.001,
+      "cases": []
+    },
+    {
+      "scenario": "P03",
+      "command": "testService:ExecuteMultiplayerTestAsync(3, {kind = \"P03\"})",
+      "suite": "P03-multiplayer",
+      "requestedClients": 3,
+      "initialActualClients": 3,
+      "currentActualClients": 4,
+      "peakActualClients": null,
+      "expectedCases": 9,
+      "discovered": 3,
+      "passed": 1,
+      "failed": 2,
+      "skipped": 0,
+      "engineElapsedSeconds": 55.427,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A5 three actual clients receive assigned roles, phase, deadline and UI"
+        },
+        {
+          "name": "A3/A4 actual late join remains a characterless spectator and cannot act",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.RoundHarness:36: timeout: client harness ready 4"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.RoundHarness:326: ServerScriptService.ServerTests.RoundHarness:36: timeout: client harness ready 4"
+        }
+      ],
+      "completedRoundIds": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "scenario": "P04",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P04\"})",
+      "suite": "P04-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 6,
+      "discovered": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 125.083,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward"
+        },
+        {
+          "passed": true,
+          "name": "A4 stale malformed wrong-role duplicate and unknown selections preserve acknowledged view"
+        },
+        {
+          "passed": true,
+          "name": "A5 exposed and covered real geometry uses occluded thermal rendering"
+        },
+        {
+          "passed": true,
+          "name": "A2/A3 two actual clients converge at nine samples spanning a complete production orbit"
+        },
+        {
+          "passed": true,
+          "name": "A2/A5 result and reset restore initial profile camera input and effects"
+        },
+        {
+          "passed": true,
+          "name": "A5 actual operator disconnect forfeits and server teardown removes all aircraft ownership"
+        }
+      ]
+    },
+    {
+      "scenario": "P05",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P05\"})",
+      "suite": "P05-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 8,
+      "discovered": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 75.128,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 rejected client traffic leaves readiness intact"
+        },
+        {
+          "passed": true,
+          "name": "A4 swept muzzle path hits thin cover before the visible target"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged airborne endpoint cannot create damage or an impact"
+        },
+        {
+          "passed": true,
+          "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+        },
+        {
+          "passed": true,
+          "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots"
+        },
+        {
+          "passed": true,
+          "name": "A4 both profiles strike real terrain slopes and authored second-story panels"
+        },
+        {
+          "passed": true,
+          "name": "A4 muzzle starting inside solid cover resolves that cover before flight"
+        },
+        {
+          "passed": true,
+          "name": "A1 actual projectile survives exact lifetime and expires cleanly afterward"
+        }
+      ]
+    },
+    {
+      "scenario": "P06",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P06\"})",
+      "suite": "P06-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 10,
+      "discovered": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 49.868,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A1 ground receives one rifle and no launcher"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+        },
+        {
+          "passed": true,
+          "name": "A1 server raycast stops rifle at cover then damages aircraft"
+        },
+        {
+          "passed": true,
+          "name": "A2 direct swept rocket fixtures destroy once"
+        },
+        {
+          "passed": true,
+          "name": "A5 reset restores aircraft and no stale equipment"
+        },
+        {
+          "passed": true,
+          "name": "A3 terrain-query failure rejects remote without mutation then recovers"
+        },
+        {
+          "passed": true,
+          "name": "A4 last ground elimination then aircraft destruction share one simulation batch"
+        },
+        {
+          "passed": true,
+          "name": "A4 aircraft destruction then last ground elimination share one simulation batch"
+        },
+        {
+          "passed": true,
+          "name": "A4 actual operator disconnect has separate forfeit reason"
+        },
+        {
+          "passed": true,
+          "name": "A5 repeated-round teardown releases tools and listeners"
+        }
+      ]
+    },
+    {
+      "scenario": "P06Team",
+      "command": "testService:ExecuteMultiplayerTestAsync(3, {kind = \"P06Team\"})",
+      "suite": "P06-multiplayer",
+      "requestedClients": 3,
+      "initialActualClients": 3,
+      "currentActualClients": 3,
+      "peakActualClients": null,
+      "expectedCases": 7,
+      "discovered": 4,
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0,
+      "engineElapsedSeconds": 29.367,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A1 ground receives one rifle and no launcher"
+        },
+        {
+          "passed": true,
+          "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+        },
+        {
+          "name": "A1 server raycast stops rifle at cover then damages aircraft",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:729: shot missed visible wing: Workspace.Aircraft.Hitbox"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.GroundCombatHarness:448: ServerScriptService.ServerTests.GroundCombatHarness:729: shot missed visible wing: Workspace.Aircraft.Hitbox"
+        }
+      ],
+      "diagnostic": {
+        "shots": [
+          {
+            "requestedTarget": [
+              306.83782958984375,
+              118.3210678100586,
+              149.0138397216797
+            ],
+            "sequence": 1,
+            "origin": [
+              306.1683349609375,
+              116.45020294189453,
+              146.7829132080078
+            ],
+            "userId": -3,
+            "healthAfter": 295,
+            "healthBefore": 300,
+            "hitPosition": [
+              312.8064270019531,
+              135,
+              168.9027557373047
+            ],
+            "aircraftPosition": [
+              314.05645751953125,
+              140,
+              175.97879028320312
+            ],
+            "applied": true,
+            "serverTime": 1795374992.662049,
+            "hitName": "Workspace.Aircraft.Hitbox"
+          }
+        ],
+        "inwardMarginStuds": 20,
+        "samples": [
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.1928405761719,
+              116.46361541748047,
+              146.79383850097656
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              322.64251708984375,
+              140,
+              159.69287109375
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374991.946036,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "trusted-position",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              322.64251708984375,
+              140,
+              159.69287109375
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.1928405761719,
+              116.46361541748047,
+              146.79383850097656
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              322.64251708984375,
+              140,
+              159.69287109375
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374991.946219,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "before-embedded-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0597839355469,
+              116.37522888183594,
+              146.5745086669922
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              318.8598327636719,
+              140,
+              167.1179656982422
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374992.27958,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "after-embedded-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              322.64251708984375,
+              140,
+              159.69287109375
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0597839355469,
+              116.37522888183594,
+              146.5745086669922
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              318.8598327636719,
+              140,
+              167.1179656982422
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374992.279775,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "before-body-wall-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.1600036621094,
+              116.44407653808594,
+              146.7738800048828
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              314.66680908203125,
+              140,
+              174.88511657714844
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374992.628701,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "after-body-wall-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              306.83782958984375,
+              118.3210678100586,
+              149.0138397216797
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.1600036621094,
+              116.44407653808594,
+              146.7738800048828
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              314.66680908203125,
+              140,
+              174.88511657714844
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374992.628916,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "before-solid-cover-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 1795374992.8120492,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.1754455566406,
+              116.4552230834961,
+              146.7895965576172
+            ],
+            "phase": "Active",
+            "ammo": 29,
+            "aircraftPosition": [
+              314.2544250488281,
+              140,
+              175.6250457763672
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795374992.662627,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "after-solid-cover-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              302.01849365234375,
+              124.28494262695312,
+              154.6254119873047
+            ],
+            "readiness": {
+              "nextFire": 1795374992.8120492,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0966491699219,
+              116.38523864746094,
+              146.5654296875
+            ],
+            "phase": "Active",
+            "ammo": 29,
+            "aircraftPosition": [
+              310.10113525390625,
+              140,
+              182.858642578125
+            ],
+            "life": "Alive",
+            "health": 295,
+            "serverTime": 1795374992.99532,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "before-exposed-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 1795374993.178219,
+              "ammo": 28,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.08001708984375,
+              116.38001251220703,
+              146.5660400390625
+            ],
+            "phase": "Active",
+            "ammo": 28,
+            "aircraftPosition": [
+              309.6750793457031,
+              140,
+              183.57925415039062
+            ],
+            "life": "Alive",
+            "health": 295,
+            "serverTime": 1795374993.028566,
+            "role": "Ground",
+            "root": [
+              306.29217529296875,
+              115,
+              147.59780883789062
+            ],
+            "stage": "after-exposed-shot",
+            "roundId": 1
+          }
+        ],
+        "kind": "rifle-cover-and-open-shot",
+        "userId": -3,
+        "decisions": [
+          {
+            "decision": "origin:body overlaps cover",
+            "userId": -3,
+            "serverTime": 1795374991.961928
+          },
+          {
+            "decision": "origin:body overlaps cover",
+            "userId": -3,
+            "serverTime": 1795374992.294902
+          },
+          {
+            "decision": "accepted",
+            "userId": -3,
+            "serverTime": 1795374992.662049
+          },
+          {
+            "decision": "accepted",
+            "userId": -3,
+            "serverTime": 1795374993.028219
+          }
+        ]
+      }
+    },
+    {
+      "scenario": "P07",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P07\"})",
+      "suite": "P07-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 7,
+      "discovered": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 157.184,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation"
+        },
+        {
+          "passed": true,
+          "name": "A7 actual six direct 105mm hits show progress third-hit hole and sixth-hit removal"
+        },
+        {
+          "passed": true,
+          "name": "A7 earned 30mm Light damage persists through three bursts before Heavy"
+        },
+        {
+          "passed": true,
+          "name": "A7 battlefield starting-shelter roof follows Light Heavy Total through six real M102 hits"
+        },
+        {
+          "passed": true,
+          "name": "A3 actual ground Humanoid walks through an authored damaged wall opening"
+        },
+        {
+          "passed": true,
+          "name": "A6 current state reaches both initial clients and prior fragments expire before current-state comparisons"
+        },
+        {
+          "passed": true,
+          "name": "A6 reset during fragmentation and pending work restores panels through two rounds"
+        }
+      ]
+    },
+    {
+      "scenario": "P08",
+      "command": "testService:ExecuteMultiplayerTestAsync(3, {kind = \"P08\"})",
+      "suite": "P08-multiplayer",
+      "requestedClients": 3,
+      "initialActualClients": 3,
+      "currentActualClients": 2,
+      "peakActualClients": 3,
+      "expectedCases": 11,
+      "discovered": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 95.773,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A1/A5 three clients see one map launcher with M-7-only initial loadouts"
+        },
+        {
+          "passed": true,
+          "name": "A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged"
+        },
+        {
+          "passed": true,
+          "name": "A1/A2 raced real-client pickups claim once; carrier keeps M-7"
+        },
+        {
+          "passed": true,
+          "name": "A3 actual miss drop transfer switching and early fire preserve identity and reload"
+        },
+        {
+          "passed": true,
+          "name": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages"
+        },
+        {
+          "passed": true,
+          "name": "A3 actual carrier character removal while reloading preserves one recoverable identity"
+        },
+        {
+          "passed": true,
+          "name": "A6 real reset removes old state and rejects delayed prior-round intent"
+        },
+        {
+          "passed": true,
+          "name": "A4 three actual fired rockets leave 200 then 100 then commit one ground win"
+        },
+        {
+          "passed": true,
+          "name": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool"
+        },
+        {
+          "passed": true,
+          "name": "A3/A5 actual disconnect preserves reload and permits living teammate recovery"
+        },
+        {
+          "passed": true,
+          "name": "A6 teardown invalidates deferred callbacks and removes every owned resource"
+        }
+      ]
+    },
+    {
+      "scenario": "P09Outcomes",
+      "command": "testService:ExecuteMultiplayerTestAsync(3, {kind = \"P09\", scenario = \"Outcomes\"})",
+      "suite": "P09-multiplayer",
+      "requestedClients": 3,
+      "initialActualClients": 3,
+      "currentActualClients": 3,
+      "peakActualClients": null,
+      "expectedCases": 5,
+      "discovered": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 116.868,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3/A5: real rifle friendly fire rejected, three rockets win after carrier death"
+        },
+        {
+          "passed": true,
+          "name": "A5/A6: replay resets equipment, Outpost, aircraft and cameras; shell wins elimination"
+        },
+        {
+          "passed": true,
+          "name": "A5/A6: third full round restores cooldowns and zoom and ends at the deadline"
+        },
+        {
+          "passed": true,
+          "name": "A4: invalid deployment aborts with no winner and restores authored anchors"
+        },
+        {
+          "passed": true,
+          "name": "A6: stop drains the frame, combat, character resources and transport"
+        }
+      ]
+    },
+    {
+      "scenario": "P09Departures",
+      "command": "testService:ExecuteMultiplayerTestAsync(3, {kind = \"P09\", scenario = \"Departures\"})",
+      "suite": "P09-multiplayer",
+      "requestedClients": 3,
+      "initialActualClients": 3,
+      "currentActualClients": 1,
+      "peakActualClients": null,
+      "expectedCases": 2,
+      "discovered": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 41.255,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A4: actual carrier departure recovers exactly one launcher; operator departure forfeits"
+        },
+        {
+          "passed": true,
+          "name": "A6: stop drains the frame, combat, character resources and transport"
+        }
+      ]
+    },
+    {
+      "scenario": "P09LastGround",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P09\", scenario = \"LastGround\"})",
+      "suite": "P09-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 1,
+      "peakActualClients": null,
+      "expectedCases": 3,
+      "discovered": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 49.348,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A4: actual raw character removal eliminates the remaining ground life"
+        },
+        {
+          "passed": true,
+          "name": "A4: actual last-ground departure awards the surviving C-130 by departure"
+        },
+        {
+          "passed": true,
+          "name": "A6: stop drains the frame, combat, character resources and transport"
+        }
+      ]
+    },
+    {
+      "scenario": "P09Empty",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P09\", scenario = \"Empty\"})",
+      "suite": "P09-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 0,
+      "peakActualClients": null,
+      "expectedCases": 2,
+      "discovered": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "engineElapsedSeconds": 39.184,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A4: same-step actual operator and ground departures empty the server without a winner"
+        },
+        {
+          "passed": true,
+          "name": "A6: stop drains the frame, combat, character resources and transport"
+        }
+      ]
+    },
+    {
+      "scenario": "P10",
+      "command": "testService:ExecuteMultiplayerTestAsync(4, {kind = \"P10\"})",
+      "suite": "P10-multiplayer",
+      "requestedClients": 4,
+      "initialActualClients": null,
+      "currentActualClients": 3,
+      "peakActualClients": null,
+      "expectedCases": 8,
+      "discovered": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "engineElapsedSeconds": 76.403,
+      "cases": [
+        {
+          "name": "Four actual clients connected",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.PlayerExperienceHarness:98: P10 timeout: four actual clients"
+        }
+      ],
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 192,
+        "clientCount": 3,
+        "seed": 1,
+        "discovered": 192,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    {
+      "scenario": "P13",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P13\"})",
+      "suite": "P13-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 5,
+      "discovered": 3,
+      "passed": 1,
+      "failed": 2,
+      "skipped": 0,
+      "engineElapsedSeconds": 38.452,
+      "cases": [
+        {
+          "name": "ExpandedMapReplication two actual clients agree on source geometry terrain panels and aircraft",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:136: Players.Player1.PlayerScripts.ClientTests.ExpandedMapHarness:98: actual client geometry differs after replication deadline: duplicate part Solid"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.ExpandedMapHarness:121: ServerScriptService.ServerTests.ExpandedMapHarness:136: Players.Player1.PlayerScripts.ClientTests.ExpandedMapHarness:98: actual client geometry differs after replication deadline: duplicate part Solid"
+        },
+        {
+          "passed": true,
+          "name": "ExpandedMapCleanup repeated teardown releases round aircraft transport ownership"
+        }
+      ]
+    },
+    {
+      "scenario": "P14",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P14\"})",
+      "suite": "P14-startup",
+      "requestedClients": 2,
+      "initialActualClients": 1,
+      "currentActualClients": 1,
+      "peakActualClients": null,
+      "expectedCases": 6,
+      "discovered": 0,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "engineElapsedSeconds": 312.799,
+      "cases": [],
+      "console": [
+        "ServerScriptService.ServerTests.AircraftPanHarness:51: P14 server timeout: two actual clients",
+        "Script 'ServerScriptService.ServerTests.AircraftPanHarness', Line 51 - function waitFor",
+        "Script 'ServerScriptService.ServerTests.AircraftPanHarness', Line 58 - function run"
+      ]
+    },
+    {
+      "scenario": "P14-retry",
+      "command": "testService:ExecuteMultiplayerTestAsync(2, {kind = \"P14\"})",
+      "suite": "P14-multiplayer",
+      "requestedClients": 2,
+      "initialActualClients": 2,
+      "currentActualClients": 2,
+      "peakActualClients": null,
+      "expectedCases": 6,
+      "discovered": 7,
+      "passed": 5,
+      "failed": 2,
+      "skipped": 0,
+      "engineElapsedSeconds": 253.976,
+      "cases": [
+        {
+          "passed": true,
+          "name": "PannedTargetProjection both FOVs cover center quadrants boundary slopes and three upper-floor panels over full orbits"
+        },
+        {
+          "passed": true,
+          "name": "P14 acknowledged zoom and rejected selection preserve world-space pan and ground camera"
+        },
+        {
+          "passed": true,
+          "name": "P14 blocked UI outside-window input and recenter retain bounded ownership"
+        },
+        {
+          "passed": true,
+          "name": "P14 slope and upper-floor targets retain actual occluded thermal configuration"
+        },
+        {
+          "name": "P14 result role loss and new-round operator entry reset focus without duplicate ownership",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.AircraftPanHarness:116: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:1318: camera remained trapped"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.AircraftPanHarness:92: ServerScriptService.ServerTests.AircraftPanHarness:116: Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:1318: camera remained trapped"
+        },
+        {
+          "passed": true,
+          "name": "P14 repeated teardown releases runtime aircraft and transport ownership"
+        }
+      ],
+      "orbitSecondsPerWeapon": 90,
+      "cameraTransitionProbes": [
+        {
+          "request": "Normal",
+          "passed": true,
+          "userId": -1,
+          "detail": "observed"
+        },
+        {
+          "request": "Normal",
+          "passed": false,
+          "userId": -1,
+          "detail": "Players.Player1.PlayerScripts.ClientTests.AircraftPanHarness:1318: camera remained trapped"
+        }
+      ]
+    }
+  ]
+}

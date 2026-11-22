@@ -1,0 +1,656 @@
+{
+  "candidate": "3623b7761702be16a7454beee502d4aa54b8724f",
+  "tree": "2374b9bd61d8132fe7bc2d8521e845b812c4f8c5",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(3, {kind = \"P06Team\"})",
+  "start": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"requestedClients\":3,\"version\":\"0.748.0.7481526\",\"kind\":\"P06Team\",\"reportKey\":\"P11RecheckP06Team\",\"hashes\":{\"AircraftPanHarness\":\"6ca1344653533b24b61033794b917e0ffabaa05aa0dafee83f5291c6ac6fcd2e\",\"P17Metadata\":\"725b218f1b0cf3028e2686e319eb0ae2371caa486768e4d9eab13d613f7f9c35\",\"GroundCombatHarness\":\"5b2a588fc31b561f1441a1f947db23a91aedfc8c42b11037f7285341656fdc3c\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "live": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"args\":{\"kind\":\"P06Team\"},\"baseline\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":192,\\\"clientCount\\\":3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":192}\",\"source\":56451,\"ids\":{\"1\":-1,\"3\":-3,\"2\":-2}}"
+      }
+    ],
+    "isError": false
+  },
+  "ok": true,
+  "result": {
+    "requestedClients": 3,
+    "skipped": 0,
+    "passed": 7,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A1 ground receives one rifle and no launcher"
+      },
+      {
+        "passed": true,
+        "name": "A3 forged and wrong-role requests cannot mutate health or ammo"
+      },
+      {
+        "passed": true,
+        "name": "A1 server raycast stops rifle at cover then damages aircraft"
+      },
+      {
+        "passed": true,
+        "name": "A2 direct swept rocket fixtures destroy once"
+      },
+      {
+        "passed": true,
+        "name": "A5 reset restores aircraft and no stale equipment"
+      },
+      {
+        "passed": true,
+        "name": "A3 terrain-query failure rejects remote without mutation then recovers"
+      },
+      {
+        "passed": true,
+        "name": "A5 repeated-round teardown releases tools and listeners"
+      }
+    ],
+    "clientCount": 3,
+    "observations": [
+      {
+        "shots": [
+          {
+            "applied": false,
+            "sequence": 1,
+            "origin": [
+              306.0315856933594,
+              116.45890045166016,
+              147.10385131835938
+            ],
+            "userId": -3,
+            "healthAfter": 300,
+            "healthBefore": 300,
+            "resolvedAt": 1795375612.007241,
+            "aircraftPosition": [
+              313.8822326660156,
+              140,
+              176.28936767578125
+            ],
+            "requestedTarget": [
+              306.70294189453125,
+              118.33348846435547,
+              149.33807373046875
+            ],
+            "hitName": "Workspace.World.Battlefield.P06Fixture.P06Cover",
+            "serverTime": 1795375612.006343,
+            "hitPosition": [
+              309.98577880859375,
+              127.5,
+              160.26315307617188
+            ]
+          },
+          {
+            "applied": true,
+            "sequence": 2,
+            "origin": [
+              295.53033447265625,
+              118.41320037841797,
+              172.886474609375
+            ],
+            "crossedTeammate": true,
+            "userId": -3,
+            "healthAfter": 295,
+            "healthBefore": 300,
+            "resolvedAt": 1795375612.205803,
+            "aircraftPosition": [
+              311.4075012207031,
+              140,
+              180.62493896484375
+            ],
+            "requestedTarget": [
+              295.60858154296875,
+              130.40634155273438,
+              173.38690185546875
+            ],
+            "hitName": "Workspace.Aircraft.Wing",
+            "serverTime": 1795375612.205016,
+            "hitPosition": [
+              295.6783447265625,
+              141.09999084472656,
+              173.83309936523438
+            ]
+          }
+        ],
+        "inwardMarginStuds": 20,
+        "samples": [
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0404052734375,
+              116.44975280761719,
+              147.0595703125
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              322.5115661621094,
+              140,
+              159.9571533203125
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375611.289196,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "trusted-position",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              322.5115661621094,
+              140,
+              159.9571533203125
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0404052734375,
+              116.44975280761719,
+              147.0595703125
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              322.5115661621094,
+              140,
+              159.9571533203125
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375611.289477,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "before-embedded-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.8953552246094,
+              116.37228393554688,
+              146.898681640625
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              318.4902648925781,
+              140,
+              167.82119750976562
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375611.638709,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "after-embedded-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              322.5115661621094,
+              140,
+              159.9571533203125
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              305.8953552246094,
+              116.37228393554688,
+              146.898681640625
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              318.4902648925781,
+              140,
+              167.82119750976562
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375611.6389,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "before-body-wall-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0262145996094,
+              116.4552230834961,
+              147.0988311767578
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              314.5091247558594,
+              140,
+              175.1685028076172
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375611.973523,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "after-body-wall-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              306.70294189453125,
+              118.33348846435547,
+              149.33807373046875
+            ],
+            "readiness": {
+              "nextFire": 0,
+              "ammo": 30,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0262145996094,
+              116.4552230834961,
+              147.0988311767578
+            ],
+            "phase": "Active",
+            "ammo": 30,
+            "aircraftPosition": [
+              314.5091247558594,
+              140,
+              175.1685028076172
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375611.973698,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "before-solid-cover-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375612.156343,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              306.0437316894531,
+              116.4669418334961,
+              147.1148681640625
+            ],
+            "phase": "Active",
+            "ammo": 29,
+            "aircraftPosition": [
+              313.6918029785156,
+              140,
+              176.62799072265625
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375612.039175,
+            "role": "Ground",
+            "root": [
+              306.1429443359375,
+              115,
+              147.90704345703125
+            ],
+            "stage": "after-solid-cover-shot",
+            "roundId": 1
+          },
+          {
+            "requestedTarget": [
+              295.60858154296875,
+              130.40634155273438,
+              173.38690185546875
+            ],
+            "readiness": {
+              "nextFire": 1795375612.156343,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              295.536376953125,
+              118.41653442382812,
+              172.8975830078125
+            ],
+            "phase": "Active",
+            "ammo": 29,
+            "aircraftPosition": [
+              312.0305480957031,
+              140,
+              179.54647827148438
+            ],
+            "life": "Alive",
+            "health": 300,
+            "serverTime": 1795375612.17412,
+            "role": "Ground",
+            "root": [
+              295.6783752441406,
+              117,
+              173.86004638671875
+            ],
+            "stage": "before-exposed-shot",
+            "roundId": 1
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375612.355016,
+              "ammo": 28,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              295.5101318359375,
+              118.40023803710938,
+              172.84959411621094
+            ],
+            "phase": "Active",
+            "ammo": 28,
+            "aircraftPosition": [
+              311.1936340332031,
+              140,
+              180.99317932128906
+            ],
+            "life": "Alive",
+            "health": 295,
+            "serverTime": 1795375612.238562,
+            "role": "Ground",
+            "root": [
+              295.6783752441406,
+              117,
+              173.86004638671875
+            ],
+            "stage": "after-exposed-shot",
+            "roundId": 1
+          }
+        ],
+        "kind": "rifle-cover-and-open-shot",
+        "userId": -3,
+        "decisions": [
+          {
+            "decision": "origin:body overlaps cover",
+            "userId": -3,
+            "serverTime": 1795375611.323247
+          },
+          {
+            "decision": "origin:body overlaps cover",
+            "userId": -3,
+            "serverTime": 1795375611.67211
+          },
+          {
+            "decision": "accepted",
+            "userId": -3,
+            "serverTime": 1795375612.006343
+          },
+          {
+            "decision": "accepted",
+            "userId": -3,
+            "serverTime": 1795375612.205016
+          }
+        ]
+      },
+      {
+        "healthAfter": 195,
+        "origin": [
+          303.1232604980469,
+          165,
+          194.2068328857422
+        ],
+        "shot": 1,
+        "sweptDistanceStuds": 50,
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "kind": "live-orbit-rocket-sweep",
+        "aircraftPosition": [
+          303.1232604980469,
+          140,
+          194.2068328857422
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666
+      },
+      {
+        "healthAfter": 95,
+        "origin": [
+          303.1232604980469,
+          165,
+          194.2068328857422
+        ],
+        "shot": 2,
+        "sweptDistanceStuds": 50,
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "kind": "live-orbit-rocket-sweep",
+        "aircraftPosition": [
+          303.1232604980469,
+          140,
+          194.2068328857422
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666
+      },
+      {
+        "healthAfter": 0,
+        "origin": [
+          303.1232604980469,
+          165,
+          194.2068328857422
+        ],
+        "shot": 3,
+        "sweptDistanceStuds": 50,
+        "fixtureRocketSpeedStudsPerSecond": 300,
+        "kind": "live-orbit-rocket-sweep",
+        "aircraftPosition": [
+          303.1232604980469,
+          140,
+          194.2068328857422
+        ],
+        "fixtureRocketStepSeconds": 0.16666666666666666
+      },
+      {
+        "kind": "terrain-query-recovery",
+        "command": {
+          "y": 4.51113748550415,
+          "x": 0.01660318300127983,
+          "sequence": 3,
+          "z": 149.99635314941406,
+          "roundId": 2,
+          "weapon": "M7"
+        },
+        "samples": [
+          {
+            "readiness": {
+              "nextFire": 1795375619.221765,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.01660318300127983,
+              4.51113748550415,
+              119.99635314941406
+            ],
+            "root": [
+              0,
+              3,
+              120
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 29,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 0,
+            "stage": "before-readiness-wait",
+            "serverTime": 1795375619.072268
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375619.221765,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.01974850334227085,
+              4.508144378662109,
+              120.00108337402344
+            ],
+            "root": [
+              0,
+              3,
+              120
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 29,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 0,
+            "stage": "ready-before-fault",
+            "serverTime": 1795375619.238655
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375619.221765,
+              "ammo": 29,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.02033141814172268,
+              4.586008071899414,
+              120.00183868408203
+            ],
+            "root": [
+              0,
+              3.078345775604248,
+              119.9998779296875
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 29,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 1,
+            "stage": "after-fault-attempt",
+            "serverTime": 1795375619.271763
+          },
+          {
+            "readiness": {
+              "nextFire": 1795375619.4550052,
+              "ammo": 28,
+              "reloadUntil": 0,
+              "reserve": 120
+            },
+            "head": [
+              0.02077367901802063,
+              4.594465732574463,
+              120.0026626586914
+            ],
+            "root": [
+              0,
+              3.087282180786133,
+              119.9998779296875
+            ],
+            "faultArmed": false,
+            "actualRoundId": 2,
+            "toolAmmo": 28,
+            "phase": "Active",
+            "role": "Ground",
+            "health": 300,
+            "life": "Alive",
+            "toolEquipped": true,
+            "queryFailures": 1,
+            "stage": "after-recovery-attempt",
+            "serverTime": 1795375619.3058
+          }
+        ],
+        "userId": -2,
+        "decisions": [
+          {
+            "decision": "origin:terrain query failed",
+            "userId": -2,
+            "serverTime": 1795375619.271406
+          },
+          {
+            "decision": "accepted",
+            "userId": -2,
+            "serverTime": 1795375619.305005
+          }
+        ]
+      }
+    ],
+    "departureMethod": "not-exercised",
+    "environment": "Studio",
+    "discovered": 7,
+    "suite": "P06-multiplayer",
+    "failed": 0,
+    "mode": "sdk"
+  },
+  "elapsedSeconds": 31.83479824999813
+}
