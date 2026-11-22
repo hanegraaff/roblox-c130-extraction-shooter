@@ -2,7 +2,7 @@
 
 ## Purpose and sources of truth
 
-Build the Roblox players-versus-C-130 game described in [game-design.md](game-design.md): one operator circles a circular battlefield while one team of 5–9 M-7-equipped ground players tries to destroy the plane. One rocket launcher is placed on the map; three direct hits destroy an undamaged plane, and rifle fire also chips away at its health. Read that document, [requirements.md](requirements.md), [architecture.md](architecture.md), [roadmap.md](roadmap.md), and the selected plan before implementation.
+Build the Roblox players-versus-C-130 game described in [game-design.md](game-design.md): one operator circles a circular battlefield while one team of 1–9 M-7-equipped ground players tries to destroy the plane. One rocket launcher is placed on the map; three direct hits destroy an undamaged plane, and rifle fire also chips away at its health. Read that document, [requirements.md](requirements.md), [architecture.md](architecture.md), [roadmap.md](roadmap.md), and the selected plan before implementation.
 
 Use this conventional uppercase filename for Codex discovery. Do not create a second, case-only `agents.md` file. User instructions take precedence; update the affected design and plans when the user changes direction. Distinguish decisions from tuning defaults in [docs/decisions.md](docs/decisions.md).
 

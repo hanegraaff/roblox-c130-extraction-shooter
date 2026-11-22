@@ -1,5 +1,10 @@
 --!strict
 -- P03 A2-A4/A6 and P09 A1-A4/A6: controlled monotonic time and equipment release.
+type ConfigModule = typeof(require(game:GetService("ReplicatedStorage").Shared.Config))
+local loadModule = (require :: unknown) :: (string) -> unknown
+local Config = if script
+    then require(game:GetService("ReplicatedStorage").Shared.Config)
+    else loadModule("../../src/shared/Config") :: ConfigModule
 type API = typeof(require(game:GetService("ServerScriptService").Server.MatchService))
 type Member = {
     userId: number,
@@ -75,6 +80,31 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         end
         error("fixture has no operator")
     end
+    test("production defaults keep one player waiting and activate a two-player match", function()
+        local service = Match.new({
+            minimumPlayers = Config.defaults.minPlayers,
+            durationSeconds = Config.defaults.roundDurationSeconds,
+            seed = 1,
+        }, {
+            now = function()
+                return 100
+            end,
+            releaseLife = function() end,
+        })
+        service.join(1)
+        assert(not service.deploy(), "one player cannot deploy")
+        local waiting = service.snapshot()
+        assert(waiting.phase == "Lobby" and waiting.roundId == 0, "solo lobby advanced")
+
+        service.join(2)
+        assert(service.deploy(), "two players must deploy with production defaults")
+        local deploying = service.snapshot()
+        assert(service.ready(operator(deploying), deploying.roundId), "operator must be able to ready")
+        assert(service.ready(ground(deploying), deploying.roundId), "Ground player must be able to ready")
+        assert(service.activate(), "the two ready players must be able to start")
+        local active = service.snapshot()
+        assert(active.phase == "Active" and active.deadlineSeconds == 700, "wrong active phase or deadline")
+    end)
     test("deployment waits for every roster member and cancellation clears partial readiness", function()
         local service = fixture()
         assert(not service.activate(), "expected not service.activate()")

@@ -10,20 +10,21 @@ return function(
     }
 )
     test("default and valid endpoints decode without aliasing", function()
-        local value = { minPlayers = 6, maxPlayers = 10, roundDurationSeconds = 1 }
+        local value = { minPlayers = 2, maxPlayers = 2, roundDurationSeconds = 1 }
         local settings, reason = Config.validate(value)
         assert(
             settings and not reason and settings ~= value,
             "expected settings and not reason and settings ~= value"
         )
-        assert(Config.validate(Config.defaults), "expected Config.validate(Config.defaults)")
+        local defaults = assert(Config.validate(Config.defaults), "production defaults must validate")
+        assert(defaults.minPlayers == 2 and defaults.maxPlayers == 10, "expected two to ten players")
         assert(
             Config.validate({ minPlayers = 10, maxPlayers = 10, roundDurationSeconds = 3600 }),
             "expected Config.validate({ minPlayers = 10, maxPlayers = 10, roundDurationSeconds = 3600 })"
         )
     end)
     test("malformed and nonfinite config reject without mutation", function()
-        for _, bad in { 0 / 0, math.huge, -math.huge, 0, 5, 6.5, 11 } do
+        for _, bad in { 0 / 0, math.huge, -math.huge, 0, 1, 2.5, 11 } do
             local value = { minPlayers = bad, maxPlayers = 10, roundDurationSeconds = 600 }
             local settings, reason = Config.validate(value)
             assert(not settings and reason, "expected not settings and reason")

@@ -9,7 +9,7 @@ Rojo maps this package to `ReplicatedStorage.Shared`. Its rule modules are stric
 | `Validation.isFinite(value)` | Accepts finite numbers, including zero; rejects NaN, infinity and nonnumbers. |
 | `Validation.inRange(value, minimum, maximum)` | Inclusive finite bounds; malformed bounds reject. |
 | `Validation.flatPayload(value, maxFields, maxStringBytes)` | Accepts plain flat string-keyed tables of finite numbers, strings or booleans. Rejects metatables, nested/cyclic values and excess fields/bytes. Bounds must be integral: fields 0–1024, bytes 0–65536. |
-| `Config.validate(value)` | Returns a fresh typed settings record or `nil, reason`, without mutating input. Integral population is 6–10 with minimum ≤ maximum; duration is 1–3600 seconds. Frozen defaults are 6/10/600. |
+| `Config.validate(value)` | Returns a fresh typed settings record or `nil, reason`, without mutating input. Integral population is 2–10 with minimum ≤ maximum. Duration is 1–3600 seconds. Frozen defaults are 2/10/600. |
 | `RateLimit.new(capacity, refillPerSecond, nowSeconds)` | Returns a full independent bucket or `nil, reason`. Capacity is 1–1000 tokens; refill is 0.001–1000 tokens/second; time must be finite. |
 | `RateLimit.take(bucket, nowSeconds)` | Consumes one token when ready, using injected monotonic seconds. Rejected requests leave tokens and timestamp unchanged; no global timer or task is created. |
 | `MapRules.validate(value)` | Returns a fresh typed map contract or `nil, reason`. Requires finite fields, radius >8 studs, altitude >16 studs, kill threshold below ground, matching map/orbit centers/radii and a focus at ground-level center. |

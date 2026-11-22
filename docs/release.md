@@ -25,7 +25,7 @@ candidate to the existing test document with `test.project.json`. Collect fresh
 [engine and multiplayer reports](testing.md#studio-execution-and-evidence) for
 the candidate. Keep the test build local. The upload candidate is
 `build/game.rbxlx`, built from `default.project.json` with the production
-six-player minimum and ten-minute rounds. The host checks establish release
+two-player minimum and ten-minute rounds. The host checks establish release
 isolation. Destination permissions, live asset loading and play are separate
 checks below.
 
@@ -66,10 +66,10 @@ confirm the running place/version and expected audience. Use the running server
 version where available to distinguish new servers from those already running an
 older build. [Running place version](https://create.roblox.com/docs/reference/engine/classes/DataModel#PlaceVersion)
 
-- Confirm an authorized tester can join, the lobby is walkable and a solo
-  player sees the six-player wait. Check that the test panel and overrides
-  are absent.
-- Once enough testers join, verify one C-130 operator and one Ground team.
+- Confirm an authorized tester can join and walk in the lobby while waiting for
+  a second player. Check that the test panel and development fixtures are absent.
+- When a second tester joins, verify the round starts with one C-130 operator
+  and one Ground player.
   Check the Outpost exterior, rooms and panel stages for loaded meshes and
   textures, and check the in-game audio cues and asset-load errors under the
   target experience. Save the observed client/device and error results.
@@ -83,10 +83,10 @@ older build. [Running place version](https://create.roblox.com/docs/reference/en
 ## Run the 6- and 10-player acceptance sessions
 
 Run with six and with ten connected Roblox player clients in the same server
-for each cohort. A round can deploy as soon as six players are present after
-the lobby wait. If that happens while the ten-player group is joining, let the
-setup round end and keep all ten connected. Start the measured rounds with a
-fresh deployment of one operator and nine active Ground teammates. Repeat each
+for each cohort. A round can deploy as soon as two players are present after
+the lobby wait. If that happens while the group is joining, let the setup round
+end and keep the full group connected. Start measured rounds at the desired
+roster size, with one operator and everyone else on Ground. Repeat each
 of the three outcome paths at each full roster size, keeping the roster connected
 through Results and reset.
 

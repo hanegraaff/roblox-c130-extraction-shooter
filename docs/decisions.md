@@ -1,10 +1,10 @@
 # Decisions, defaults, and open release details
 
-Updated 2026-11-20. “Selected” records user choices. “Default” records concrete implementation or tuning choices that can be revised. Stable IDs carry forward through revisions.
+Updated 2026-11-22. “Selected” records user choices. “Default” records concrete implementation or tuning choices that can be revised. Stable IDs carry forward through revisions.
 
 | ID | State | Decision and reason | Revisit when |
 | --- | --- | --- | --- |
-| D01 | Selected | 6–10 players: one operator versus one united team of 5–9 ground players | User changes match scope |
+| D01 | Superseded by D71 | Original range of 6–10 players, with one operator and one Ground team | See D71 |
 | D02 | Selected | Thermal targeting, circular map, scripted perimeter orbit, view always toward the main map | User changes view/flight scope |
 | D03 | Selected | MVP building panels have visible progressive destruction and real fragment physics, using prefabricated residual geometry; full structural collapse remains excluded | User changes structural scope |
 | D04 | Selected | No respawns during a round; eliminated players spectate | User changes survival rules |
@@ -75,6 +75,7 @@ Updated 2026-11-20. “Selected” records user choices. “Default” records c
 | D68 | Selected indoor camera and skill scope, 2026-11-20 | Include automatic ground-player indoor zoom and both reusable skills in P17. The existing Outpost is the first configured building. Bring the camera closer in authored indoor spaces as needed, keep cover opaque and restore the previous outdoor zoom on exit. Preserve the existing Outpost and battlefield dimensions. Teach future authors to size rooms, openings, stairs and ceilings for avatar and third-person camera clearance, and teach importers to validate that clearance and configure indoor zoom when useful. This updates the indoor-zoom deferral in D65 and skill sequencing in D66 | User changes camera behavior, construction scope or skill deliverables |
 | D69 | P10 presentation defaults, 2026-11-20 | Desktop P opens settings. Arrow keys change settings and bracket keys cycle living current-round Ground targets in UserId order. Effects start at Full and camera shake at Reduced. Both offer Off, Reduced and Full for the current play session. Effects scale audio, HUD pulse and destruction flash. Shake applies only to the aircraft destruction results camera. The Ground warning is based on replicated warning markers within 24 studs. Warning and result text stays available at all settings | Accessibility and operated review warrant input, layout or cue tuning |
 | D70 | Revised P10 presentation | Reserve onboarding for later lobby work. In-round aircraft health uses a numeric green-to-red bar. Weapon audio plays from accepted shots and resolved impacts. Gunship delay, attenuation, clip lengths and equalization are presentation defaults. | User changes the mix or lobby scope |
+| D71 | Selected match minimum, 2026-11-22 | Start standard matches with 2–10 eligible players. At the minimum, one player operates the C-130 and one plays Ground. A solo player waits in the lobby. Keep the live 6- and 10-player capacity checks. | User changes match scope |
 
 Aircraft health is derived as three times direct rocket damage. Rifle damage is positive and small; previous rifle hits may reduce the further rockets needed. First and second rockets alone do not destroy a pristine plane. These are hard test invariants, not tuning defaults. Each C-130 weapon retains its independent cooldown/reload across switching.
 
