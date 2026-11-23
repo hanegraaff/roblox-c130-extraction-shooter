@@ -39,6 +39,10 @@ Generated place builds belong in ignored `build/`. Do not blanket-ignore authore
 - Keep environmental materials darker than the white target silhouettes. An imported Model can carry a `ThermalBrightness` multiplier from 0 to 1 before it enters the battlefield. For legacy `TextureID` meshes also set `ThermalSurfacePalette` to the name of an authored folder in `ReplicatedStorage.Shared`. Bind each `ImportMaterialKey` to a `SurfaceAppearance` using the same color map. The operator tints the surfaces locally, including replacement panels. A value of 1 uses the original appearance. Check native rendering with the intended material channels.
 - Review both weapon zooms in a native operator client. Compare an exposed player against the building, a player behind solid cover and a player visible through an opening. Check that ground materials, collision, queries and pristine reset retain their authored behavior.
 
+## Sandbreak bunker
+
+The [editable Sandbreak package](blender/spawn-bunker/README.md) contains the proposed spawn shelter, three wrecks and a radio relay. It includes a reproducible Blender-to-GLB staging command and the Studio pilot procedure.
+
 ## Radar outpost review package
 
 [Vesper Array](blender/radar-outpost/README.md) supplies the two-story radar building for the Warehouse site. The [native import receipt](imports/radar-outpost/native-receipt.json) records the source hashes, managed Studio models, owner and texture IDs. The editable scene and six review views are in the Blender package.
