@@ -1,0 +1,92 @@
+{
+  "blender": "5.3.0",
+  "sourceSha256": "460918e405c1f1eae99aaf689a9d58892b533d539db3855bd5808edb0265a7ec",
+  "sourceAndReimportWorldBounds": [
+    [
+      -104.0,
+      -72.0,
+      -3.223
+    ],
+    [
+      104.0,
+      71.998,
+      40.0
+    ]
+  ],
+  "textureDecodedBytes": 11927552,
+  "sourceAndReimportRoutes": {
+    "treadSamples": 144,
+    "minimumStairHeadroom": 8.97,
+    "upperRouteSamples": 621,
+    "minimumUpperRouteHeadroom": 9.54,
+    "groundRouteSamples": 400,
+    "entryCrossingRays": 42,
+    "impactThresholdSamples": 39,
+    "trailingCameraRaysStuds": {
+      "arrival hall": "clear to 12.5",
+      "mid stair": "clear to 12.5",
+      "crossover": "clear to 12.5",
+      "vault": "clear to 12.5"
+    }
+  },
+  "sourceAndReimportRecoveryBay": {
+    "preservedSpecimens": 1,
+    "instruments": [
+      "DiagnosticTerminal",
+      "ExaminationSlab",
+      "FoldNavigator",
+      "InductionDrive",
+      "InstrumentTray",
+      "MemoryRack",
+      "PhaseManifold",
+      "Scanner",
+      "Telemetry"
+    ],
+    "bedGapStuds": {
+      "cranium": 0.005,
+      "upper back": 0.093,
+      "pelvis": 0.083,
+      "right calf": 0.13
+    },
+    "clearBerthApproachSamples": 70
+  },
+  "reviewSurveyFigures": 0,
+  "sourceAndReimportPanels": {
+    "panelCount": 102,
+    "raycasts": 182070,
+    "minSampledHeavyOpenFraction": 0.467,
+    "maxSampledHeavyOpenFraction": 0.527
+  },
+  "files": {
+    "prism-seedship.glb": {
+      "bytes": 19689328,
+      "sha256": "6f438bd9f5f6393f48ff42168f7bef58332bd107b829c5102283e47ce1ba6a71",
+      "objects": 225,
+      "uniqueMeshes": 225,
+      "assembledTriangles": 227142,
+      "largestMeshTriangles": 13400,
+      "materials": 24,
+      "embeddedImages": 11
+    },
+    "light-and-intact-proxies.glb": {
+      "bytes": 17989140,
+      "sha256": "36e744d601fb18950996c90a2dac15eae7fb2d705b87440075c48d7373e68750",
+      "objects": 204,
+      "uniqueMeshes": 204,
+      "assembledTriangles": 228166,
+      "largestMeshTriangles": 8080,
+      "materials": 9,
+      "embeddedImages": 6
+    },
+    "heavy-and-fragments.glb": {
+      "bytes": 7649636,
+      "sha256": "cbdc454a74199c803099d377355e82e44ce41751a7115c9e39534c7b8f9a1c37",
+      "objects": 208,
+      "uniqueMeshes": 208,
+      "assembledTriangles": 65520,
+      "largestMeshTriangles": 1332,
+      "materials": 9,
+      "embeddedImages": 6
+    }
+  }
+}

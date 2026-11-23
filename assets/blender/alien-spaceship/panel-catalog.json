@@ -1,0 +1,1649 @@
+{
+  "asset": "Prism Seedship",
+  "units": "stud",
+  "sourceUp": "+Z",
+  "sourceFront": "-Y",
+  "origin": "ground-deck center datum",
+  "exportAxes": "glTF +Y up, source (x,y,z) maps to (x,z,-y)",
+  "total": "Remove the full panel and all of its proxies; the stable edge frame remains.",
+  "fragments": [
+    "Nacre spall 01",
+    "Nacre spall 02",
+    "Nacre spall 03",
+    "Nacre spall 04"
+  ],
+  "panels": [
+    {
+      "id": "Prism_Skirt_01",
+      "pivot": [
+        7.155,
+        -58.821,
+        21.709
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_01_Pristine",
+      "light": "Prism_Skirt_01_Light",
+      "heavy": "Prism_Skirt_01_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_01_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_01_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_01",
+      "pivot": [
+        5.7375,
+        -50.2665,
+        26.972
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_01_Pristine",
+      "light": "Prism_Mantle_01_Light",
+      "heavy": "Prism_Mantle_01_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_01_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_01_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_01",
+      "pivot": [
+        3.06,
+        -30.432,
+        33.563
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_01_Pristine",
+      "light": "Prism_Roof_01_Light",
+      "heavy": "Prism_Roof_01_Heavy",
+      "intactAndLightQuery": "Prism_Roof_01_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_01_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_01",
+      "pivot": [
+        0.5475,
+        -5.3525,
+        38.0455
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_01_Pristine",
+      "light": "Prism_Crown_01_Light",
+      "heavy": "Prism_Crown_01_Heavy",
+      "intactAndLightQuery": "Prism_Crown_01_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_01_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_02",
+      "pivot": [
+        18.471,
+        -57.89,
+        13.2
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_02_Pristine",
+      "light": "Prism_Skirt_02_Light",
+      "heavy": "Prism_Skirt_02_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_02_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_02_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_02",
+      "pivot": [
+        15.9525,
+        -49.596,
+        22.934
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_02_Pristine",
+      "light": "Prism_Mantle_02_Light",
+      "heavy": "Prism_Mantle_02_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_02_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_02_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_02",
+      "pivot": [
+        10.4295,
+        -30.2025,
+        29.79
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_02_Pristine",
+      "light": "Prism_Roof_02_Light",
+      "heavy": "Prism_Roof_02_Heavy",
+      "intactAndLightQuery": "Prism_Roof_02_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_02_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_02",
+      "pivot": [
+        3.8995,
+        -5.447,
+        34.943
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_02_Pristine",
+      "light": "Prism_Crown_02_Light",
+      "heavy": "Prism_Crown_02_Heavy",
+      "intactAndLightQuery": "Prism_Crown_02_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_02_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_03",
+      "pivot": [
+        34.396,
+        -54.959,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_03_Pristine",
+      "light": "Prism_Skirt_03_Light",
+      "heavy": "Prism_Skirt_03_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_03_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_03_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_03",
+      "pivot": [
+        29.331,
+        -47.0175,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_03_Pristine",
+      "light": "Prism_Mantle_03_Light",
+      "heavy": "Prism_Mantle_03_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_03_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_03_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_03",
+      "pivot": [
+        18.5895,
+        -28.443,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_03_Pristine",
+      "light": "Prism_Roof_03_Light",
+      "heavy": "Prism_Roof_03_Heavy",
+      "intactAndLightQuery": "Prism_Roof_03_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_03_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_03",
+      "pivot": [
+        6.444,
+        -4.7255,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_03_Pristine",
+      "light": "Prism_Crown_03_Light",
+      "heavy": "Prism_Crown_03_Heavy",
+      "intactAndLightQuery": "Prism_Crown_03_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_03_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_04",
+      "pivot": [
+        60.729,
+        -50.597,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_04_Pristine",
+      "light": "Prism_Skirt_04_Light",
+      "heavy": "Prism_Skirt_04_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_04_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_04_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_04",
+      "pivot": [
+        52.3485,
+        -43.2915,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_04_Pristine",
+      "light": "Prism_Mantle_04_Light",
+      "heavy": "Prism_Mantle_04_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_04_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_04_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_04",
+      "pivot": [
+        34.068,
+        -26.0715,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_04_Pristine",
+      "light": "Prism_Roof_04_Light",
+      "heavy": "Prism_Roof_04_Heavy",
+      "intactAndLightQuery": "Prism_Roof_04_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_04_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_04",
+      "pivot": [
+        12.6025,
+        -3.8945,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_04_Pristine",
+      "light": "Prism_Crown_04_Light",
+      "heavy": "Prism_Crown_04_Heavy",
+      "intactAndLightQuery": "Prism_Crown_04_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_04_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_05",
+      "pivot": [
+        81.43,
+        -40.442,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_05_Pristine",
+      "light": "Prism_Skirt_05_Light",
+      "heavy": "Prism_Skirt_05_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_05_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_05_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_05",
+      "pivot": [
+        71.15399,
+        -34.692,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_05_Pristine",
+      "light": "Prism_Mantle_05_Light",
+      "heavy": "Prism_Mantle_05_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_05_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_05_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_05",
+      "pivot": [
+        47.8125,
+        -20.7165,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_05_Pristine",
+      "light": "Prism_Roof_05_Light",
+      "heavy": "Prism_Roof_05_Heavy",
+      "intactAndLightQuery": "Prism_Roof_05_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_05_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_05",
+      "pivot": [
+        18.993,
+        -2.123,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_05_Pristine",
+      "light": "Prism_Crown_05_Light",
+      "heavy": "Prism_Crown_05_Heavy",
+      "intactAndLightQuery": "Prism_Crown_05_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_05_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_06",
+      "pivot": [
+        93.654,
+        -27.218,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_06_Pristine",
+      "light": "Prism_Skirt_06_Light",
+      "heavy": "Prism_Skirt_06_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_06_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_06_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_06",
+      "pivot": [
+        81.945,
+        -22.947,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_06_Pristine",
+      "light": "Prism_Mantle_06_Light",
+      "heavy": "Prism_Mantle_06_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_06_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_06_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_06",
+      "pivot": [
+        55.233,
+        -12.531,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_06_Pristine",
+      "light": "Prism_Roof_06_Light",
+      "heavy": "Prism_Roof_06_Heavy",
+      "intactAndLightQuery": "Prism_Roof_06_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_06_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_06",
+      "pivot": [
+        22.083,
+        1.375,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_06_Pristine",
+      "light": "Prism_Crown_06_Light",
+      "heavy": "Prism_Crown_06_Heavy",
+      "intactAndLightQuery": "Prism_Crown_06_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_06_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_07",
+      "pivot": [
+        99.654,
+        -16.8296,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_07_Pristine",
+      "light": "Prism_Skirt_07_Light",
+      "heavy": "Prism_Skirt_07_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_07_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_07_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_07",
+      "pivot": [
+        87.669,
+        -13.704,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_07_Pristine",
+      "light": "Prism_Mantle_07_Light",
+      "heavy": "Prism_Mantle_07_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_07_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_07_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_07",
+      "pivot": [
+        59.823,
+        -6.0642,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_07_Pristine",
+      "light": "Prism_Roof_07_Light",
+      "heavy": "Prism_Roof_07_Heavy",
+      "intactAndLightQuery": "Prism_Roof_07_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_07_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_07",
+      "pivot": [
+        24.531,
+        4.1588,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_07_Pristine",
+      "light": "Prism_Crown_07_Light",
+      "heavy": "Prism_Crown_07_Heavy",
+      "intactAndLightQuery": "Prism_Crown_07_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_07_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_08",
+      "pivot": [
+        87.669,
+        0.4764,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_08_Pristine",
+      "light": "Prism_Mantle_08_Light",
+      "heavy": "Prism_Mantle_08_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_08_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_08_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_08",
+      "pivot": [
+        59.823,
+        2.6772,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_08_Pristine",
+      "light": "Prism_Roof_08_Light",
+      "heavy": "Prism_Roof_08_Heavy",
+      "intactAndLightQuery": "Prism_Roof_08_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_08_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_08",
+      "pivot": [
+        24.531,
+        6.97,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_08_Pristine",
+      "light": "Prism_Crown_08_Light",
+      "heavy": "Prism_Crown_08_Heavy",
+      "intactAndLightQuery": "Prism_Crown_08_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_08_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_09",
+      "pivot": [
+        99.654,
+        18.124,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_09_Pristine",
+      "light": "Prism_Skirt_09_Light",
+      "heavy": "Prism_Skirt_09_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_09_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_09_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_09",
+      "pivot": [
+        87.669,
+        16.9716,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_09_Pristine",
+      "light": "Prism_Mantle_09_Light",
+      "heavy": "Prism_Mantle_09_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_09_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_09_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_09",
+      "pivot": [
+        59.823,
+        14.754,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_09_Pristine",
+      "light": "Prism_Roof_09_Light",
+      "heavy": "Prism_Roof_09_Heavy",
+      "intactAndLightQuery": "Prism_Roof_09_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_09_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_09",
+      "pivot": [
+        24.531,
+        12.6012,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_09_Pristine",
+      "light": "Prism_Crown_09_Light",
+      "heavy": "Prism_Crown_09_Heavy",
+      "intactAndLightQuery": "Prism_Crown_09_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_09_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_10",
+      "pivot": [
+        92.976,
+        32.787,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_10_Pristine",
+      "light": "Prism_Skirt_10_Light",
+      "heavy": "Prism_Skirt_10_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_10_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_10_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_10",
+      "pivot": [
+        82.314,
+        29.5815,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_10_Pristine",
+      "light": "Prism_Mantle_10_Light",
+      "heavy": "Prism_Mantle_10_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_10_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_10_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_10",
+      "pivot": [
+        56.967,
+        22.914,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_10_Pristine",
+      "light": "Prism_Roof_10_Light",
+      "heavy": "Prism_Roof_10_Heavy",
+      "intactAndLightQuery": "Prism_Roof_10_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_10_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_10",
+      "pivot": [
+        24.02,
+        15.5795,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_10_Pristine",
+      "light": "Prism_Crown_10_Light",
+      "heavy": "Prism_Crown_10_Heavy",
+      "intactAndLightQuery": "Prism_Crown_10_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_10_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_11",
+      "pivot": [
+        78.821,
+        48.965,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_11_Pristine",
+      "light": "Prism_Skirt_11_Light",
+      "heavy": "Prism_Skirt_11_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_11_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_11_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_11",
+      "pivot": [
+        69.8985,
+        43.9995,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_11_Pristine",
+      "light": "Prism_Mantle_11_Light",
+      "heavy": "Prism_Mantle_11_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_11_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_11_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_11",
+      "pivot": [
+        48.552,
+        33.0375,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_11_Pristine",
+      "light": "Prism_Roof_11_Light",
+      "heavy": "Prism_Roof_11_Heavy",
+      "intactAndLightQuery": "Prism_Roof_11_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_11_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_11",
+      "pivot": [
+        20.6165,
+        19.9665,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_11_Pristine",
+      "light": "Prism_Crown_11_Light",
+      "heavy": "Prism_Crown_11_Heavy",
+      "intactAndLightQuery": "Prism_Crown_11_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_11_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_12",
+      "pivot": [
+        55.103,
+        59.304,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_12_Pristine",
+      "light": "Prism_Skirt_12_Light",
+      "heavy": "Prism_Skirt_12_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_12_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_12_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_12",
+      "pivot": [
+        49.7385,
+        53.355,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_12_Pristine",
+      "light": "Prism_Mantle_12_Light",
+      "heavy": "Prism_Mantle_12_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_12_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_12_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_12",
+      "pivot": [
+        35.8785,
+        39.8205,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_12_Pristine",
+      "light": "Prism_Roof_12_Light",
+      "heavy": "Prism_Roof_12_Heavy",
+      "intactAndLightQuery": "Prism_Roof_12_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_12_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_12",
+      "pivot": [
+        16.3155,
+        23.078,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_12_Pristine",
+      "light": "Prism_Crown_12_Light",
+      "heavy": "Prism_Crown_12_Heavy",
+      "intactAndLightQuery": "Prism_Crown_12_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_12_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_13",
+      "pivot": [
+        19.5,
+        66.34907,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_13_Pristine",
+      "light": "Prism_Skirt_13_Light",
+      "heavy": "Prism_Skirt_13_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_13_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_13_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_13",
+      "pivot": [
+        18.603,
+        59.53674,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_13_Pristine",
+      "light": "Prism_Mantle_13_Light",
+      "heavy": "Prism_Mantle_13_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_13_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_13_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_13",
+      "pivot": [
+        14.9175,
+        44.01413,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_13_Pristine",
+      "light": "Prism_Roof_13_Light",
+      "heavy": "Prism_Roof_13_Heavy",
+      "intactAndLightQuery": "Prism_Roof_13_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_13_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_13",
+      "pivot": [
+        7.956,
+        24.77727,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_13_Pristine",
+      "light": "Prism_Crown_13_Light",
+      "heavy": "Prism_Crown_13_Heavy",
+      "intactAndLightQuery": "Prism_Crown_13_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_13_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_14",
+      "pivot": [
+        -18.603,
+        66.52,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_14_Pristine",
+      "light": "Prism_Skirt_14_Light",
+      "heavy": "Prism_Skirt_14_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_14_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_14_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_14",
+      "pivot": [
+        -14.9175,
+        60.23906,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_14_Pristine",
+      "light": "Prism_Mantle_14_Light",
+      "heavy": "Prism_Mantle_14_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_14_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_14_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_14",
+      "pivot": [
+        -7.956,
+        45.34074,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_14_Pristine",
+      "light": "Prism_Roof_14_Light",
+      "heavy": "Prism_Roof_14_Heavy",
+      "intactAndLightQuery": "Prism_Roof_14_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_14_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_14",
+      "pivot": [
+        -1.4235,
+        26.02213,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_14_Pristine",
+      "light": "Prism_Crown_14_Light",
+      "heavy": "Prism_Crown_14_Heavy",
+      "intactAndLightQuery": "Prism_Crown_14_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_14_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_15",
+      "pivot": [
+        -54.321,
+        59.465,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_15_Pristine",
+      "light": "Prism_Skirt_15_Light",
+      "heavy": "Prism_Skirt_15_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_15_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_15_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_15",
+      "pivot": [
+        -46.5255,
+        54.0165,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_15_Pristine",
+      "light": "Prism_Mantle_15_Light",
+      "heavy": "Prism_Mantle_15_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_15_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_15_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_15",
+      "pivot": [
+        -29.8095,
+        41.07,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_15_Pristine",
+      "light": "Prism_Roof_15_Light",
+      "heavy": "Prism_Roof_15_Heavy",
+      "intactAndLightQuery": "Prism_Roof_15_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_15_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_15",
+      "pivot": [
+        -10.6205,
+        24.2505,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_15_Pristine",
+      "light": "Prism_Crown_15_Light",
+      "heavy": "Prism_Crown_15_Heavy",
+      "intactAndLightQuery": "Prism_Crown_15_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_15_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_16",
+      "pivot": [
+        -78.476,
+        49.287,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_16_Pristine",
+      "light": "Prism_Skirt_16_Light",
+      "heavy": "Prism_Skirt_16_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_16_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_16_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_16",
+      "pivot": [
+        -68.481,
+        45.3225,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_16_Pristine",
+      "light": "Prism_Mantle_16_Light",
+      "heavy": "Prism_Mantle_16_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_16_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_16_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_16",
+      "pivot": [
+        -45.8745,
+        35.5365,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_16_Pristine",
+      "light": "Prism_Roof_16_Light",
+      "heavy": "Prism_Roof_16_Heavy",
+      "intactAndLightQuery": "Prism_Roof_16_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_16_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_16",
+      "pivot": [
+        -18.104,
+        22.3115,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_16_Pristine",
+      "light": "Prism_Crown_16_Light",
+      "heavy": "Prism_Crown_16_Heavy",
+      "intactAndLightQuery": "Prism_Crown_16_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_16_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_17",
+      "pivot": [
+        -92.654,
+        33.224,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_17_Pristine",
+      "light": "Prism_Skirt_17_Light",
+      "heavy": "Prism_Skirt_17_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_17_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_17_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_17",
+      "pivot": [
+        -80.991,
+        31.377,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_17_Pristine",
+      "light": "Prism_Mantle_17_Light",
+      "heavy": "Prism_Mantle_17_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_17_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_17_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_17",
+      "pivot": [
+        -54.468,
+        26.3055,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_17_Pristine",
+      "light": "Prism_Roof_17_Light",
+      "heavy": "Prism_Roof_17_Heavy",
+      "intactAndLightQuery": "Prism_Roof_17_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_17_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_17",
+      "pivot": [
+        -21.675,
+        18.762,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_17_Pristine",
+      "light": "Prism_Crown_17_Light",
+      "heavy": "Prism_Crown_17_Heavy",
+      "intactAndLightQuery": "Prism_Crown_17_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_17_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_18",
+      "pivot": [
+        -99.654,
+        18.3816,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_18_Pristine",
+      "light": "Prism_Skirt_18_Light",
+      "heavy": "Prism_Skirt_18_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_18_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_18_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_18",
+      "pivot": [
+        -87.669,
+        18.03,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_18_Pristine",
+      "light": "Prism_Mantle_18_Light",
+      "heavy": "Prism_Mantle_18_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_18_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_18_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_18",
+      "pivot": [
+        -59.823,
+        16.7532,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_18_Pristine",
+      "light": "Prism_Roof_18_Light",
+      "heavy": "Prism_Roof_18_Heavy",
+      "intactAndLightQuery": "Prism_Roof_18_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_18_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_18",
+      "pivot": [
+        -24.531,
+        14.4772,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_18_Pristine",
+      "light": "Prism_Crown_18_Light",
+      "heavy": "Prism_Crown_18_Heavy",
+      "intactAndLightQuery": "Prism_Crown_18_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_18_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_19",
+      "pivot": [
+        -87.669,
+        2.8956,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_19_Pristine",
+      "light": "Prism_Mantle_19_Light",
+      "heavy": "Prism_Mantle_19_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_19_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_19_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_19",
+      "pivot": [
+        -59.823,
+        7.2468,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_19_Pristine",
+      "light": "Prism_Roof_19_Light",
+      "heavy": "Prism_Roof_19_Heavy",
+      "intactAndLightQuery": "Prism_Roof_19_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_19_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_19",
+      "pivot": [
+        -24.531,
+        11.258,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_19_Pristine",
+      "light": "Prism_Crown_19_Light",
+      "heavy": "Prism_Crown_19_Heavy",
+      "intactAndLightQuery": "Prism_Crown_19_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_19_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_20",
+      "pivot": [
+        -99.654,
+        -16.618,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_20_Pristine",
+      "light": "Prism_Skirt_20_Light",
+      "heavy": "Prism_Skirt_20_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_20_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_20_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_20",
+      "pivot": [
+        -87.669,
+        -12.8346,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_20_Pristine",
+      "light": "Prism_Mantle_20_Light",
+      "heavy": "Prism_Mantle_20_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_20_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_20_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_20",
+      "pivot": [
+        -59.823,
+        -4.422,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_20_Pristine",
+      "light": "Prism_Roof_20_Light",
+      "heavy": "Prism_Roof_20_Heavy",
+      "intactAndLightQuery": "Prism_Roof_20_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_20_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_20",
+      "pivot": [
+        -24.531,
+        5.6998,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_20_Pristine",
+      "light": "Prism_Crown_20_Light",
+      "heavy": "Prism_Crown_20_Heavy",
+      "intactAndLightQuery": "Prism_Crown_20_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_20_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_21",
+      "pivot": [
+        -93.93,
+        -26.942,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_21_Pristine",
+      "light": "Prism_Skirt_21_Light",
+      "heavy": "Prism_Skirt_21_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_21_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_21_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_21",
+      "pivot": [
+        -83.07899,
+        -21.813,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_21_Pristine",
+      "light": "Prism_Mantle_21_Light",
+      "heavy": "Prism_Mantle_21_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_21_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_21_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_21",
+      "pivot": [
+        -57.375,
+        -10.389,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_21_Pristine",
+      "light": "Prism_Roof_21_Light",
+      "heavy": "Prism_Roof_21_Heavy",
+      "intactAndLightQuery": "Prism_Roof_21_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_21_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_21",
+      "pivot": [
+        -24.093,
+        3.385,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_21_Pristine",
+      "light": "Prism_Crown_21_Light",
+      "heavy": "Prism_Crown_21_Heavy",
+      "intactAndLightQuery": "Prism_Crown_21_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_21_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_22",
+      "pivot": [
+        -81.729,
+        -40.097,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_22_Pristine",
+      "light": "Prism_Skirt_22_Light",
+      "heavy": "Prism_Skirt_22_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_22_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_22_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_22",
+      "pivot": [
+        -72.38249,
+        -33.2745,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_22_Pristine",
+      "light": "Prism_Mantle_22_Light",
+      "heavy": "Prism_Mantle_22_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_22_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_22_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_22",
+      "pivot": [
+        -50.133,
+        -18.039,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_22_Pristine",
+      "light": "Prism_Roof_22_Light",
+      "heavy": "Prism_Roof_22_Heavy",
+      "intactAndLightQuery": "Prism_Roof_22_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_22_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_22",
+      "pivot": [
+        -21.1705,
+        0.3895,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_22_Pristine",
+      "light": "Prism_Crown_22_Light",
+      "heavy": "Prism_Crown_22_Heavy",
+      "intactAndLightQuery": "Prism_Crown_22_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_22_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_23",
+      "pivot": [
+        -61.396,
+        -50.459,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_23_Pristine",
+      "light": "Prism_Skirt_23_Light",
+      "heavy": "Prism_Skirt_23_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_23_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_23_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_23",
+      "pivot": [
+        -55.089,
+        -42.7245,
+        17.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_23_Pristine",
+      "light": "Prism_Mantle_23_Light",
+      "heavy": "Prism_Mantle_23_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_23_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_23_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_23",
+      "pivot": [
+        -39.2445,
+        -25.0005,
+        27.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_23_Pristine",
+      "light": "Prism_Roof_23_Light",
+      "heavy": "Prism_Roof_23_Heavy",
+      "intactAndLightQuery": "Prism_Roof_23_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_23_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_23",
+      "pivot": [
+        -17.46,
+        -2.8895,
+        34.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_23_Pristine",
+      "light": "Prism_Crown_23_Light",
+      "heavy": "Prism_Crown_23_Heavy",
+      "intactAndLightQuery": "Prism_Crown_23_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_23_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_24",
+      "pivot": [
+        -34.971,
+        -54.89,
+        5.1
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_24_Pristine",
+      "light": "Prism_Skirt_24_Light",
+      "heavy": "Prism_Skirt_24_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_24_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_24_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_24",
+      "pivot": [
+        -31.6935,
+        -46.734,
+        18.725
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_24_Pristine",
+      "light": "Prism_Mantle_24_Light",
+      "heavy": "Prism_Mantle_24_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_24_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_24_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_24",
+      "pivot": [
+        -23.052,
+        -27.9075,
+        27.375
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_24_Pristine",
+      "light": "Prism_Roof_24_Light",
+      "heavy": "Prism_Roof_24_Heavy",
+      "intactAndLightQuery": "Prism_Roof_24_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_24_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_24",
+      "pivot": [
+        -10.6315,
+        -4.223,
+        33.425
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_24_Pristine",
+      "light": "Prism_Crown_24_Light",
+      "heavy": "Prism_Crown_24_Heavy",
+      "intactAndLightQuery": "Prism_Crown_24_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_24_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_25",
+      "pivot": [
+        -18.655,
+        -57.821,
+        9.309
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_25_Pristine",
+      "light": "Prism_Skirt_25_Light",
+      "heavy": "Prism_Skirt_25_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_25_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_25_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_25",
+      "pivot": [
+        -16.7085,
+        -49.3125,
+        20.14
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_25_Pristine",
+      "light": "Prism_Mantle_25_Light",
+      "heavy": "Prism_Mantle_25_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_25_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_25_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_25",
+      "pivot": [
+        -11.8575,
+        -29.667,
+        28.943
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_25_Pristine",
+      "light": "Prism_Roof_25_Light",
+      "heavy": "Prism_Roof_25_Heavy",
+      "intactAndLightQuery": "Prism_Roof_25_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_25_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_25",
+      "pivot": [
+        -5.2395,
+        -4.9445,
+        34.6165
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_25_Pristine",
+      "light": "Prism_Crown_25_Light",
+      "heavy": "Prism_Crown_25_Heavy",
+      "intactAndLightQuery": "Prism_Crown_25_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_25_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Skirt_26",
+      "pivot": [
+        -7.5,
+        -58.844,
+        20.032
+      ],
+      "placement": "Wall",
+      "story": "01",
+      "pristine": "Prism_Skirt_26_Pristine",
+      "light": "Prism_Skirt_26_Light",
+      "heavy": "Prism_Skirt_26_Heavy",
+      "intactAndLightQuery": "Prism_Skirt_26_Proxy_Pristine",
+      "heavyQuery": "Prism_Skirt_26_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Mantle_26",
+      "pivot": [
+        -7.155,
+        -50.361,
+        27.554
+      ],
+      "placement": "Wall",
+      "story": "02",
+      "pristine": "Prism_Mantle_26_Pristine",
+      "light": "Prism_Mantle_26_Light",
+      "heavy": "Prism_Mantle_26_Heavy",
+      "intactAndLightQuery": "Prism_Mantle_26_Proxy_Pristine",
+      "heavyQuery": "Prism_Mantle_26_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Roof_26",
+      "pivot": [
+        -5.7375,
+        -30.6105,
+        33.219
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Roof_26_Pristine",
+      "light": "Prism_Roof_26_Light",
+      "heavy": "Prism_Roof_26_Heavy",
+      "intactAndLightQuery": "Prism_Roof_26_Proxy_Pristine",
+      "heavyQuery": "Prism_Roof_26_Proxy_Heavy",
+      "total": null
+    },
+    {
+      "id": "Prism_Crown_26",
+      "pivot": [
+        -3.06,
+        -5.52,
+        35.335
+      ],
+      "placement": "Roof",
+      "story": "02",
+      "pristine": "Prism_Crown_26_Pristine",
+      "light": "Prism_Crown_26_Light",
+      "heavy": "Prism_Crown_26_Heavy",
+      "intactAndLightQuery": "Prism_Crown_26_Proxy_Pristine",
+      "heavyQuery": "Prism_Crown_26_Proxy_Heavy",
+      "total": null
+    }
+  ]
+}
