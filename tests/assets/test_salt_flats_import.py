@@ -1,6 +1,7 @@
 """Check exact material-triangle preservation and full-scale Salt Flats site fit."""
 import math
 from pathlib import Path
+import struct
 import sys
 import unittest
 
@@ -18,6 +19,27 @@ def triangle_corners(doc, blob, primitive):
                for row in prepare.vertex_rows(doc, blob, primitive["indices"])]
     corners = [tuple(attribute[index] for attribute in attrs) for index in indices]
     return list(zip(corners[::3], corners[1::3], corners[2::3]))
+
+
+def plane_hits(triangles, axis, sample):
+    """Return the positions of axis-aligned faces that cover a sampled point."""
+    across = [k for k in range(3) if k != axis]
+
+    def side(a, b, p):
+        return (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])
+
+    hits = []
+    for triangle in triangles:
+        plane = triangle[0][axis]
+        if any(abs(v[axis] - plane) > 0.0001 for v in triangle[1:]):
+            continue
+        a, b, c = [tuple(v[k] for k in across) for v in triangle]
+        if abs(side(a, b, c)) < 0.0001:
+            continue
+        sides = [side(a, b, sample), side(b, c, sample), side(c, a, sample)]
+        if min(sides) > 0 or max(sides) < 0:
+            hits.append(plane)
+    return hits
 
 
 class SaltFlatsImportPreflight(unittest.TestCase):
@@ -93,6 +115,44 @@ class SaltFlatsImportPreflight(unittest.TestCase):
                                    - sign * half_run * math.sin(pitch), expected[0])
             self.assertAlmostEqual(z + half_thickness * math.sin(pitch)
                                    + sign * half_run * math.cos(pitch), expected[1])
+
+    def test_upper_gallery_material_seams_keep_one_exposed_face(self):
+        for floor in range(2, 5):
+            name = f"Gallery {floor:02d} • deck, guardrails and paired return stairs"
+            node = next(n for n in self.source["nodes"] if n["name"] == name)
+            materials = {}
+            for primitive in self.source["meshes"][node["mesh"]]["primitives"]:
+                name = self.source["materials"][primitive["material"]]["name"]
+                positions = [struct.unpack("<3f", v) for v in prepare.vertex_rows(
+                    self.source, self.binary, primitive["attributes"]["POSITION"]
+                )]
+                corners = [positions[int.from_bytes(v, "little")] for v in prepare.vertex_rows(
+                    self.source, self.binary, primitive["indices"]
+                )]
+                materials[name] = list(zip(corners[::3], corners[1::3], corners[2::3]))
+            triangles = [triangle for surface in materials.values() for triangle in surface]
+            top = (floor - 1) * 12
+            for x, z, height in [(22.13, -66.12, top), (-87.17, -57.85, top),
+                                 (87.17, -57.85, top), (-96.87, -39.021, top - 6),
+                                 (96.87, -39.021, top - 6)]:
+                with self.subTest(floor=floor, x=x, z=z):
+                    hits = plane_hits(triangles, 1, (x, z))
+                    self.assertEqual(sum(abs(y - height) < 0.0001 for y in hits), 1)
+
+            # Sample the part of the first yellow nose that wraps the steel tread.
+            # Their vertical end faces must sit on separate X planes on both stairs.
+            first_step = top - 12
+            sample = (first_step + 0.592, -57.971)
+            steel = plane_hits(materials["Graphite rolled steel"], 0, sample)
+            nose = [triangle for triangle in materials["Traffic ochre"]
+                    if all(first_step + 0.58 < v[1] < first_step + 0.65 for v in triangle)]
+            yellow = plane_hits(nose, 0, sample)
+            for x in (-101.55, -92.45, 92.45, 101.55):
+                with self.subTest(floor=floor, edge=x):
+                    self.assertTrue(any(abs(edge - x) < 0.0001 for edge in steel))
+                    nearest_yellow = min(abs(edge - x) for edge in yellow)
+                    self.assertGreaterEqual(nearest_yellow, 0.035)
+                    self.assertLessEqual(nearest_yellow, 0.045)
 
 
 if __name__ == "__main__":

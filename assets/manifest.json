@@ -1706,7 +1706,7 @@
       "local_path": "assets/blender/plane-hangar/salt-flats-hangar.blend",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "a6f9bf858ee8d6311451d90e6ac3ccb57c644c845c424d16df4392c1938dddc8"
+      "sha256": "a708a8720e9d6f8517442dcaa92e489b3c8b48c9d46f2fb12345f90730468a57"
     },
     {
       "id": "salt-flats-hangar-assembly",
@@ -1717,7 +1717,7 @@
       "local_path": "assets/exports/plane-hangar/salt-flats-hangar.glb",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "0888ba5309506e26404eca50f7dc5066dc4395ac2885fe1d372c53e11383f948"
+      "sha256": "69e26512cea8065a4760401a13f130d56143e68f40a01bd4f3178d867b6a6428"
     },
     {
       "id": "salt-flats-native-native-receipt",
