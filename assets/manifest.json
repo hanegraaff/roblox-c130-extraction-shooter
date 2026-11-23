@@ -1728,7 +1728,7 @@
       "local_path": "assets/imports/salt-flats/native-receipt.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "488bd7fd191637c0944c1fdb3e9af013daafda483b791806d87d29d42134eba0"
+      "sha256": "30a430da91b58b40f790e7576f6ea31ca871666d45859e0592a6b7647fd82cfd"
     },
     {
       "id": "salt-flats-native-saltflatshangar",
@@ -1739,7 +1739,7 @@
       "local_path": "assets/models/SaltFlatsHangar.rbxm",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "6460626c859f37c61940b2539e30703548ac77aff98791c89280e6ec6b1c38cb"
+      "sha256": "db443eb143b5ff8ce2dbe42aebb56c3cf5849f86e453ac9333dc9671d348a854"
     },
     {
       "id": "salt-flats-native-saltflatspanelvariants",
@@ -1750,7 +1750,7 @@
       "local_path": "assets/models/SaltFlatsPanelVariants.rbxm",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "9af5c86312938ae5a699dc247a10f05c9063facc97b9f0d3183fb00e55ac0250"
+      "sha256": "a61fb9112391d3fc5e0cb33bfd99bb8a054b2fa20cb01607a8fcae514e3de9a0"
     },
     {
       "id": "salt-flats-native-salt-flats-a1",
@@ -1779,7 +1779,7 @@
       "author": "Project contributors",
       "license": "Project-authored asset",
       "local_path": null,
-      "roblox_asset_id": "115022303065990",
+      "roblox_asset_id": "71099794088089",
       "upload_owner": "2227341845"
     },
     {
