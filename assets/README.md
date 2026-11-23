@@ -34,7 +34,7 @@ Generated place builds belong in ignored `build/`. Do not blanket-ignore authore
 
 ## Radar outpost review package
 
-[Vesper Array](blender/radar-outpost/README.md) is a Blender-only candidate for the Warehouse site. Its guide links the editable scene, game-scale exports and five saved-camera renders. The playable map still uses the Warehouse.
+[Vesper Array](blender/radar-outpost/README.md) supplies the two-story radar building for the Warehouse site. The [native import receipt](imports/radar-outpost/native-receipt.json) records the source hashes, managed Studio models, owner and texture IDs. The editable scene and six review views are in the Blender package.
 
 ## Blender outpost review package
 

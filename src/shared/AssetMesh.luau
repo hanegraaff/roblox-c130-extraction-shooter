@@ -16,7 +16,8 @@ end
 
 -- Reject missing/zero/mismatched native constructor data before installation.
 -- Stud intrinsics describe the original asset, independently of target Size.
-function AssetMesh.validate(mesh: MeshPart): (boolean, string?)
+-- Allow Default fidelity only for callers retaining native, non-solid art.
+function AssetMesh.validate(mesh: MeshPart, allowDefault: boolean?): (boolean, string?)
     local expected = mesh:GetAttribute("NativeMeshSize")
     local collision = mesh:GetAttribute("NativeCollisionFidelity")
     if
@@ -27,7 +28,7 @@ function AssetMesh.validate(mesh: MeshPart): (boolean, string?)
         or not positiveFinite(expected.X)
         or not positiveFinite(expected.Y)
         or not positiveFinite(expected.Z)
-        or (collision ~= "Box" and collision ~= "PreciseConvexDecomposition")
+        or (collision ~= "Box" and collision ~= "PreciseConvexDecomposition" and (not allowDefault or collision ~= "Default" or mesh.CanCollide or mesh.CanQuery))
         or mesh:GetAttribute("NativeRenderFidelity") ~= "Automatic"
     then
         return false, "missing/invalid compiled native mesh identity/intrinsics"

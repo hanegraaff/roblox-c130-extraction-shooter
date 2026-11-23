@@ -18,6 +18,52 @@ export type Building = {
     panelLayoutVersion: number?,
 }
 
+-- Vesper's 18 perimeter bays each carry two walls and a roof section around an
+-- open court. Identities bind geometry to its own variant rather than a count
+-- alone, which could accept two panels from one bay and omit another.
+local vesperBays = table.freeze({
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "SE1",
+    "E1",
+    "E2",
+    "E3",
+    "NE1",
+    "N1",
+    "N2",
+    "N3",
+    "N4",
+    "NW1",
+    "W1",
+    "W2",
+    "W3",
+    "SW1",
+})
+
+local function vesperCoverage(building: Building): boolean
+    if building.id ~= "Warehouse" or building.width ~= 64 or building.depth ~= 48 then
+        return false
+    end
+    local expected: { [string]: { story: number, roof: boolean } } = {}
+    for _, bay in vesperBays do
+        expected["Warehouse_S01_Radar_Wall_" .. bay] = { story = 1, roof = false }
+        expected["Warehouse_S02_Radar_Wall_" .. bay] = { story = 2, roof = false }
+        expected["Warehouse_S02_Radar_Roof_" .. bay] = { story = 2, roof = true }
+    end
+    if #building.panels ~= #vesperBays * 3 then
+        return false
+    end
+    for _, panel in building.panels do
+        local slot = expected[panel.id]
+        if not slot or slot.story ~= panel.story or slot.roof ~= panel.roof or panel.interior then
+            return false
+        end
+    end
+    return true
+end
+
 -- Validates exact population, dimensions, stairs and registry without mutation. Expected
 -- rejection returns false/reason. IDs are global and stable across rebuilds; roof panels
 -- belong to the top story. Variants share their Intact pivot instead of moving supports.
@@ -28,6 +74,7 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
     local large, small = 0, 0
     local ids: { [string]: boolean } = {}
     for _, building in buildings do
+        local vesper = building.panelLayoutVersion == 3
         if ids[building.id] or building.id == "" then
             return false, "duplicate/empty building ID"
         end
@@ -43,7 +90,7 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
             building.stories ~= 2
             or building.stairSteps ~= 16
             or building.stepRise ~= 0.625
-            or building.stepRun ~= 2
+            or building.stepRun ~= (if vesper then 1.875 else 2)
         then
             return false, "invalid two-story stair contract"
         end
@@ -76,6 +123,12 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
             else
                 stories[panel.story] += 1
             end
+        end
+        if vesper then
+            if not vesperCoverage(building) then
+                return false, "Vesper requires both wall stories and a roof section in each perimeter bay"
+            end
+            continue
         end
         if building.panelLayoutVersion ~= nil and building.panelLayoutVersion ~= 2 then
             return false, "unknown panel-layout version"

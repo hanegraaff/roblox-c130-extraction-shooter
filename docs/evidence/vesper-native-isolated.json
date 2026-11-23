@@ -1,0 +1,21 @@
+{
+  "scene": "Studio Edit, temporary isolated WorldModel",
+  "placeId": 72732833195348,
+  "universeId": 10776653720,
+  "panelQueries": {
+    "checked": 792,
+    "failures": []
+  },
+  "navigation": {
+    "y": 0.125,
+    "pass": true,
+    "floorHit": "Warehouse_GroundFloor"
+  },
+  "installation": {
+    "nativeNavigation": true,
+    "snapshotClone": true,
+    "rollback": true,
+    "panelCount": 54,
+    "buildings": 3
+  }
+}

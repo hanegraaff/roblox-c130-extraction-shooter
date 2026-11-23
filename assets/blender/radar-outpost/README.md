@@ -41,7 +41,9 @@ Each of the 18 facade bays owns one ground wall, one upper wall and one roof sec
 
 The [assembly GLB](../../exports/radar-outpost/vesper-array.glb) contains the pristine building. The [damage GLB](../../exports/radar-outpost/damage-library.glb) is a library with deliberately coincident state alternatives, two independent mechanism proxies and four fragment candidates for each of the wall and roof families. In Blender, enable collection 05 and isolate the desired object with Local View to examine it. Select individual visual and proxy states by name for comparisons. Each version uses the same pivot. All five observation consoles share one editable mesh.
 
-The geometry uses custom wall and roof families. A later integration must bind their proxies and fragment candidates, accommodate the open-plan layout in the current large-building validator, and check runtime destruction, collision, thermal sight lines, reset and device cost. The playable Warehouse currently uses its existing geometry.
+The Studio integration binds the custom wall and roof proxies and fragment meshes to the shared destruction system. The native assembly and variants live in the managed Roblox model bank.
+
+The [Warehouse import record](../../../docs/evidence/vesper-import-preflight.md) covers native placement, avatar traversal, combat and round reset.
 
 ## Package and reproduction
 
