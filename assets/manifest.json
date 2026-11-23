@@ -1696,6 +1696,28 @@
       "local_path": null,
       "roblox_asset_id": "96316755988747",
       "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-hangar-source",
+      "kind": "source",
+      "source": "Original Salt Flats hangar, twin interceptors and walk-in Hercules wreck, modeled from four supplied hangar concept views. Includes locally generated surface maps.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry, surface art and markings.",
+      "local_path": "assets/blender/plane-hangar/salt-flats-hangar.blend",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "fe20d0ac3b650ab40a7188eebbcf9a5b2a560db462090ee6f2b647466eec84e5"
+    },
+    {
+      "id": "salt-flats-hangar-assembly",
+      "kind": "mesh",
+      "source": "Original Salt Flats hangar, twin interceptors and walk-in Hercules wreck, modeled from four supplied hangar concept views. Includes locally generated surface maps.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry, surface art and markings.",
+      "local_path": "assets/exports/plane-hangar/salt-flats-hangar.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "977d545dbf04a9ff282d824845671b0fab1aefc64e13b09fa4e648642f960803"
     }
   ],
   "runtime_recipes": [
