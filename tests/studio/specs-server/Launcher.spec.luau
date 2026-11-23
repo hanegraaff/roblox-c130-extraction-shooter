@@ -118,6 +118,22 @@ return function()
             task.wait()
             local model = workspace:FindFirstChild("Aircraft")
             assert(model and model:IsA("Model"), "aircraft fixture")
+            local placed: { [string]: Vector3 } = {}
+            for _, item in workspace.LauncherEffects:GetChildren() do
+                if item:IsA("Model") then
+                    placed[item:GetAttribute("LauncherId")] = item:GetPivot().Position
+                end
+            end
+            for _, site in { "Radar", "Hangar", "Depot" } do
+                local stand = launcher.snapshot(site)
+                local marker =
+                    workspace.World.Battlefield.Anchors:FindFirstChild("Launcher" .. site) :: BasePart
+                assert(
+                    stand.state == "Available" and placed[stand.launcherId] == marker.Position,
+                    "missing landmark pickup: " .. site
+                )
+            end
+            assert(launcher.resources().representations == 3, "unexpected landmark weapon count")
             local origin = model:GetPivot().Position + Vector3.new(0, 50, 0)
             local before = ReplicatedStorage.AircraftState:GetAttribute("Health")
             assert(before == 300, "health initialization")

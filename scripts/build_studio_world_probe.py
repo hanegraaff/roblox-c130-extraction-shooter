@@ -83,38 +83,27 @@ local function verifyMap(map)
     report.worldNodes=#source.nodes
     report.maximumCFrameComponentError=math.max(report.maximumCFrameComponentError or 0,maximumError)
 end
-local function terrainSample(recipe)
-    local hills={}
-    for _,hill in recipe:GetChildren() do if hill:IsA("Part") and hill.Name~="TerrainBounds" then table.insert(hills,hill) end end
-    table.sort(hills,function(a,b)return a.Name<b.Name end)
-    local entries, apices={},{}
-    local samples=0
-    local rays=RaycastParams.new()
-    rays.FilterType=Enum.RaycastFilterType.Include
-    rays.FilterDescendantsInstances={terrain}
-    for _,hill in hills do
-        local center=hill.Position+Vector3.new(0,hill.Size.Y/2-8,0)
-        local region=Region3.new(center-Vector3.new(8,16,8),center+Vector3.new(8,16,8)):ExpandToGrid(4)
-        local materials,occupancies=terrain:ReadVoxels(region,4)
-        table.insert(entries,hill.Name)
-        for x=1,#materials do for y=1,#materials[x] do for z=1,#materials[x][y] do
-            table.insert(entries,materials[x][y][z].Name..":"..string.format("%.9g",occupancies[x][y][z]));samples+=1
-        end end end
-        local hit=workspace:Raycast(Vector3.new(hill.Position.X,80,hill.Position.Z),Vector3.new(0,-150,0),rays)
-        assert(hit and hit.Material==hill.Material and math.abs(hit.Position.Y-16)<=3,"fresh terrain elevation/material not ready")
-        table.insert(apices,{name=hill.Name,material=hit.Material.Name,y=hit.Position.Y})
-    end
-    local value=table.concat(entries,"|")
-    local a,b=1,0
-    for index=1,#value do a=(a+string.byte(value,index))%65521;b=(b+a)%65521 end
-    return {sampleCount=samples,hillCount=#hills,bytes=#value,adler32=b*65536+a,apices=apices}
-end
 local function readySample(recipe)
+    assert(recipe:FindFirstChild("SurfaceRaster"),"missing paint raster")
+    local samples={
+    {point=Vector3.new(-258,0,-138),material=Enum.Material.Sand}, {point=Vector3.new(238,0,-162),material=Enum.Material.Grass},
+    {point=Vector3.new(162,0,-146),material=Enum.Material.LeafyGrass}, {point=Vector3.new(178,0,194),material=Enum.Material.Asphalt},
+    {point=Vector3.new(2,0,258),material=Enum.Material.Sand},
+}
+    local function inspect()
+        local rays=RaycastParams.new()
+        rays.FilterType=Enum.RaycastFilterType.Include
+        rays.FilterDescendantsInstances={terrain}
+        for _,s in samples do
+            local hit=workspace:Raycast(s.point+Vector3.yAxis*32,-Vector3.yAxis*40,rays)
+            assert(hit and hit.Material==s.material and math.abs(hit.Position.Y)<1,"district surface mismatch")
+        end
+        return {sampleCount=#samples}
+    end
     local deadline=os.clock()+5
-    local ok, result
-    repeat ok,result=pcall(terrainSample,recipe);if not ok then task.wait(.05) end until ok or os.clock()>=deadline
+    local ok,result
+    repeat ok,result=pcall(inspect);if not ok then task.wait(.05) end until ok or os.clock()>=deadline
     assert(ok,tostring(result))
-    assert(result.sampleCount==1152 and result.bytes==9513 and result.adler32==2054186319,"fresh terrain differs from original live-sync sample")
     table.insert(report.sampleHistory,result)
     return result
 end
@@ -135,7 +124,7 @@ local ok, failure = pcall(function()
         assert(owner,reason)
         local started,startReason=owner.start();assert(started,startReason)
     end)
-    check("Fresh source-built terrain matches original eight-hill sample",function()
+    check("Fresh source-built terrain matches district paint samples",function()
         readySample(container.World.Battlefield.TerrainRecipe)
     end)
     terrain:FillBlock(CFrame.new(700,20,0),Vector3.new(8,8,8),Enum.Material.Sand)

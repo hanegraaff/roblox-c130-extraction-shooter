@@ -1,9 +1,7 @@
 """Preflight the unscaled Foundry replacement against managed battlefield source.
 
 All coordinates are studs. The conservative oriented footprints enclose the
-hangar, apron and wreck (including its wings and ramp). Hill footprints are
-their sphere intersections at the lowest exposed foundation, padded by one
-terrain voxel per side. Studio still owns final voxel and avatar verification.
+hangar, apron and wreck (including its wings and ramp). Studio verifies the final geometry and avatar clearance.
 """
 from __future__ import annotations
 
@@ -19,13 +17,7 @@ FOOTPRINTS = {
 }
 
 
-def footprint_gap(x, z, area):
-    """Return distance between a point and a source-oriented rectangle."""
-    left, right, near, far = area
-    return math.hypot(max(left-x, 0, x-right), max(near-z, 0, z-far))
-
-
-def audit_site(batches, site, yaw_degrees, hill_moves, rotate):
+def audit_site(batches, site, yaw_degrees, rotate):
     """Return measured site anchors and clearances, or reject intersecting assets."""
     theta = math.radians(yaw_degrees)
     c,s = math.cos(theta),math.sin(theta)
@@ -49,6 +41,11 @@ def audit_site(batches, site, yaw_degrees, hill_moves, rotate):
             properties = item["Properties"]
             x,_,z = properties["CFrame"][:3]
             sx,_,sz = properties["Size"]
+            if item["Name"] == "LauncherHangar":
+                u,v = local(x,z)
+                if not (-103 < u < 103 and -70 < v < 70):
+                    raise ValueError("Hangar pickup must be inside the hangar shell")
+                continue
             checked[item["Name"]] = (x-sx/2,x+sx/2,z-sz/2,z+sz/2)
     wreck_points = []
     for batch in batches:
@@ -82,29 +79,12 @@ def audit_site(batches, site, yaw_degrees, hill_moves, rotate):
                for x in (l,r) for z in (n,f))
     if edge > 348:
         raise ValueError("Salt Flats footprint must leave a 12-stud perimeter route")
-    distances = {}
-    for hill in roots["TerrainRecipe"]["Children"]:
-        if hill["Name"] == "TerrainBounds":
-            continue
-        name = hill["Name"]
-        props = hill["Properties"]
-        x,y,z = hill_moves.get(name,props["CFrame"][:3])
-        r = props["Size"][0]/2
-        if math.hypot(x,z)+r >= 358 or y != props["CFrame"][1]:
-            raise ValueError(f"{name} would escape the disk or change in elevation")
-        foot = math.sqrt(r*r - (y + 1.3)**2)
-        x,z = local(x,z)
-        gap = min(footprint_gap(x,z,area)-foot for area in FOOTPRINTS.values())
-        if gap < 4:
-            raise ValueError(f"{name} would reach within one voxel of Salt Flats")
-        distances[name] = round(gap,3)
     wreck_roots = {row["sourceObject"] for batch in batches for row in batch["objects"]
                    if row["role"] == "wreck"}
     if not any(source.startswith("H41") for source in wreck_roots) or len(wreck_roots) != 61:
         raise ValueError("Incomplete wreck assembly or missing cargo ramp")
     return {
         "minimumBoundaryGapStuds": round(360-edge,3),
-        "minimumHillFootprintGapsStuds": distances,
         "mainDoorCentersStuds": [[round(x,3),y0,round(z,3)] for x,z in
                                 (world(u,72.65) for u in [-52,52])],
         "wreckSourceObjects": len(wreck_roots),

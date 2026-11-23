@@ -51,7 +51,8 @@ end
 -- cannot refill or clone the weapon. clear terminally removes that round's weapon.
 -- recover removes an owner before the engine chooses a supported drop or anchor;
 -- place completes that transient Recovering state atomically at the adapter boundary.
-function LauncherService.new(): Controller
+function LauncherService.new(site: string?): Controller
+    local suffix = if site then ":" .. site else ""
     local roundId, launcherId, state = 0, "", "Inactive"
     local ownerId: number? = nil
     local readyAt, revision, shotSerial = 0, 0, 0
@@ -133,7 +134,7 @@ function LauncherService.new(): Controller
                 return
             end
             assert(id > 0 and id % 1 == 0 and positionValid(anchor), "invalid internal launcher round")
-            roundId, launcherId, state, ownerId = id, "launcher:" .. tostring(id), "Available", nil
+            roundId, launcherId, state, ownerId = id, "launcher:" .. tostring(id) .. suffix, "Available", nil
             position, readyAt, shotSerial = table.clone(anchor), 0, 0
             revision += 1
             table.clear(sequences)
@@ -207,7 +208,7 @@ function LauncherService.new(): Controller
             readyAt, sequences[userId] = now + LauncherService.reloadSeconds, intent.sequence
             shotSerial += 1
             revision += 1
-            return intent, "rocket:" .. tostring(roundId) .. ":" .. tostring(shotSerial)
+            return intent, "rocket:" .. tostring(roundId) .. ":" .. tostring(shotSerial) .. suffix
         end,
     }
 end

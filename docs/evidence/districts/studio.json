@@ -1,0 +1,73 @@
+{
+  "routes": {
+    "Depot": {
+      "samples": 61,
+      "blocked": []
+    },
+    "Radar": {
+      "samples": 105,
+      "blocked": []
+    },
+    "NorthExit": {
+      "samples": 17,
+      "blocked": []
+    },
+    "Circuit": {
+      "samples": 242,
+      "blocked": []
+    },
+    "WestExit": {
+      "samples": 22,
+      "blocked": []
+    },
+    "EastExit": {
+      "samples": 22,
+      "blocked": []
+    },
+    "SouthExit": {
+      "samples": 18,
+      "blocked": []
+    },
+    "Hangar": {
+      "samples": 141,
+      "blocked": []
+    }
+  },
+  "server": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 199,
+    "clientCount": 1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 199
+  },
+  "client": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 14,
+    "userId": 2227341845,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-client",
+    "failed": 0,
+    "discovered": 14
+  },
+  "serverStock": {
+    "meshes": 380,
+    "invalid": [],
+    "validMeshes": 380,
+    "sceneryOverlappingSouthReserve": [],
+    "placements": 306
+  },
+  "clientStock": {
+    "meshes": 380,
+    "invalid": [],
+    "validMeshes": 380,
+    "sceneryOverlappingSouthReserve": [],
+    "placements": 306
+  },
+  "collidersInsideSouthReserve": []
+}

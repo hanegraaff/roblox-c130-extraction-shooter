@@ -223,7 +223,8 @@ function GroundCombatController.new(
             local sequence = 0
             local launcherSequence = 0
             local launcher: LauncherView? = nil
-            local launcherEncoded: string? = nil
+            local launcherEncoded: { [string]: string? } = {}
+            local launcherViews: { [string]: LauncherView? } = {}
             local round = -1
             local nextAttempt = 0
             local lastShot: string? = nil
@@ -498,11 +499,33 @@ function GroundCombatController.new(
                     reloadButton.Visible = touch and (selected == nil or selected.Name == "M-7 rifle")
                     reticle.Visible = selected ~= nil
                     local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
-                    local encoded = if launcherState then launcherState:GetAttribute("Snapshot") else nil
-                    local nextEncoded = if type(encoded) == "string" then encoded else nil
-                    if nextEncoded ~= launcherEncoded then
-                        launcherEncoded = nextEncoded
-                        launcher = if nextEncoded then readLauncher(nextEncoded) else nil
+                    local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+                    local closest = math.huge
+                    launcher = nil
+                    for _, attribute in { "Snapshot", "HangarSnapshot", "DepotSnapshot" } do
+                        local value = if launcherState then launcherState:GetAttribute(attribute) else nil
+                        local encoded = if type(value) == "string" then value else nil
+                        if encoded ~= launcherEncoded[attribute] then
+                            launcherEncoded[attribute] = encoded
+                            launcherViews[attribute] = if encoded then readLauncher(encoded) else nil
+                        end
+                        local view = launcherViews[attribute]
+                        if not view or view.roundId ~= round then
+                            continue
+                        end
+                        if view.ownerId == player.UserId then
+                            launcher = view
+                            break
+                        end
+                        if view.state == "Available" and root and root:IsA("BasePart") then
+                            local pos = view.position
+                            local distance = (root.Position - Vector3.new(pos.x, pos.y, pos.z)).Magnitude
+                            if distance < closest then
+                                closest, launcher = distance, view
+                            end
+                        elseif not launcher then
+                            launcher = view
+                        end
                     end
                     local launcherPhase, owns, near = launcherFacts()
                     for name, button in launcherButtons do

@@ -2,6 +2,8 @@
 
 **Milestone:** M5. **Dependencies:** P07. **Requirements:** R08, R10, R13, R15. Status: [roadmap](../roadmap.md).
 
+The November 23 district revision replaces the original central weapon with three site-scoped weapons. Each must support independent acquisition, shot credit, transfer, recovery and reset. A player can hold one. The original P08 completion evidence below describes the earlier single-launcher release.
+
 ## Capability and player experience
 
 One rocket launcher is available at its map anchor. A ground player can reach it, carry it alongside their M-7 and land the three direct hits needed to destroy a full-health C-130. Teammates can recover it when its carrier drops it, dies or disconnects.

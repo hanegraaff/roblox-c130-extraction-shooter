@@ -1,0 +1,67 @@
+{
+  "requestedClients": 3,
+  "peakClientCount": 3,
+  "passed": 11,
+  "droppedTraceRecords": 0,
+  "unsupportedChecks": [
+    "actual same-identity reconnect"
+  ],
+  "suite": "P08-multiplayer",
+  "currentClientCount": 2,
+  "departureMethod": "client-leave",
+  "initialClientCount": 3,
+  "skipped": 0,
+  "requiredUnverified": [],
+  "mode": "sdk",
+  "failed": 0,
+  "discovered": 11,
+  "environment": "Studio",
+  "clientCount": 3,
+  "cases": [
+    {
+      "passed": true,
+      "name": "A1/A5 three clients see three landmark launchers with M-7-only initial loadouts"
+    },
+    {
+      "passed": true,
+      "name": "A2 malformed wrong-role stale flood and impossible-travel claims leave ownership unchanged"
+    },
+    {
+      "passed": true,
+      "name": "A1/A2 raced real-client pickups claim once; carrier keeps M-7"
+    },
+    {
+      "passed": true,
+      "name": "A3 actual miss drop transfer switching and early fire preserve identity and reload"
+    },
+    {
+      "passed": true,
+      "name": "A3/A4 actual carrier death recovers once while its in-flight direct rocket still damages"
+    },
+    {
+      "passed": true,
+      "name": "A3 actual carrier character removal while reloading preserves one recoverable identity"
+    },
+    {
+      "passed": true,
+      "name": "A6 real reset removes old state and rejects delayed prior-round intent"
+    },
+    {
+      "passed": true,
+      "name": "A4 three actual fired rockets leave 200 then 100 then commit one ground win"
+    },
+    {
+      "passed": true,
+      "name": "A4 earlier real rifle damage means two remaining rockets can finish the shared health pool"
+    },
+    {
+      "passed": true,
+      "name": "A3/A5 actual disconnect preserves reload and permits living teammate recovery"
+    },
+    {
+      "passed": true,
+      "name": "A6 teardown invalidates deferred callbacks and removes every owned resource"
+    }
+  ],
+  "actualReconnectVerified": false
+}

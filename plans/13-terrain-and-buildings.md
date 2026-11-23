@@ -2,6 +2,8 @@
 
 **Milestone:** M2 / level revision. **Dependencies:** P04. **Requirements:** R01, R05, R09, R10, R15, R16. Status: [roadmap](../roadmap.md).
 
+The November 23 revision replaces the hill recipe with flat stock-material districts, stock scenery and a connected four-exit trail network. Verify each district surface, all three pickup sites and the empty southern pad. Earlier hill and center-route evidence below applies to the original P13 layout.
+
 ## Capability and player experience
 
 Explore a battlefield twice the current diameter, with terrain, two large buildings and one smaller building, all at least two stories. Walk upper floors and two protected approaches to the launcher anchor. Primitive graphics demonstrate the space and future panel destruction; refined art is separate later work.

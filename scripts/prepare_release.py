@@ -200,6 +200,12 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
         mesh_ids.update(meshes)
         texture_ids.update(textures)
         native_receipts[key] = fingerprint(root, receipt_path)
+    for asset in manifest["assets"]:
+        if asset["id"] == "stock-district-scenery":
+            if fingerprint(root, asset["local_path"])["sha256"] != asset["sha256"]:
+                raise RuntimeError("District scenery differs from stock provenance")
+            mesh_ids.update(asset["mesh_ids"])
+            texture_ids.update(asset["texture_ids"])
     expected = mesh_ids | texture_ids | audio_ids
     actual = set()
     for instance in release.values():

@@ -12,11 +12,6 @@ export type Installation = { commit: () -> (), rollback: () -> () }
 
 local sourceHash = "a708a8720e9d6f8517442dcaa92e489b3c8b48c9d46f2fb12345f90730468a57"
 local site = CFrame.new(-211, 0.125, -116) * CFrame.Angles(0, math.rad(60), 0)
-local hillLocations: { [string]: Vector3 } = {
-    TerrainHill00 = Vector3.new(-99, -36, 180),
-    TerrainHill07 = Vector3.new(-284, -32, 25),
-}
-
 local function unchanged() end
 
 local function validMesh(part: MeshPart): boolean
@@ -203,14 +198,6 @@ function SaltFlatsReconstruction.install(world: Instance, assets: Instance): (In
             return nil, reason
         end
     end
-    local hills: { [BasePart]: Vector3 } = {}
-    for name in hillLocations do
-        local hill = terrain:FindFirstChild(name)
-        if not hill or not hill:IsA("BasePart") then
-            return nil, "missing Salt Flats terrain descriptor " .. name
-        end
-        hills[hill] = hill.Position
-    end
     local replacement = source:Clone()
     replacement.Name = "Foundry"
     replacement:SetAttribute("ThermalBrightness", 0.66)
@@ -232,9 +219,6 @@ function SaltFlatsReconstruction.install(world: Instance, assets: Instance): (In
         panel.WorldPivot = site * template:GetPivot()
     end
     local previousAimHeight = aimHeight.Value
-    for hill in hills do
-        hill.Position = hillLocations[hill.Name]
-    end
     aimHeight.Value = 64
     original.Parent = nil
     replacement.Parent = buildings
@@ -252,9 +236,6 @@ function SaltFlatsReconstruction.install(world: Instance, assets: Instance): (In
                 replacement:Destroy()
                 original.Parent = buildings
                 aimHeight.Value = previousAimHeight
-                for hill, location in hills do
-                    hill.Position = location
-                end
             end
         end,
     },

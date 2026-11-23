@@ -78,21 +78,16 @@ class SaltFlatsImportPreflight(unittest.TestCase):
                                "pose": {"translation": origin, "rotation": rotation},
                                "localMinimum": position["min"], "localMaximum": position["max"]})
         measure = placement.audit_site(
-            [{"objects": staged}], prepare.SITE, prepare.YAW_DEGREES, prepare.HILL_MOVES, prepare.rotate
+            [{"objects": staged}], prepare.SITE, prepare.YAW_DEGREES, prepare.rotate
         )
         doors = measure["mainDoorCentersStuds"]
         self.assertAlmostEqual(math.dist(*doors), 104, places=2)
         self.assertGreater(measure["minimumBoundaryGapStuds"], 25)
-        self.assertGreater(min(measure["minimumHillFootprintGapsStuds"].values()), 4)
         self.assertEqual(measure["wreckSourceObjects"], 61)
-        with self.assertRaisesRegex(ValueError, "TerrainHill00"):
-            placement.audit_site(
-                [{"objects": staged}], prepare.SITE, prepare.YAW_DEGREES, {}, prepare.rotate
-            )
         with self.assertRaisesRegex(ValueError, "Incomplete wreck assembly"):
             placement.audit_site(
                 [{"objects": [row for row in staged if not row["sourceObject"].startswith("H41")]}],
-                prepare.SITE, prepare.YAW_DEGREES, prepare.HILL_MOVES, prepare.rotate,
+                prepare.SITE, prepare.YAW_DEGREES, prepare.rotate,
             )
 
     def test_walking_surfaces_reach_four_levels_and_match_ramp_endpoints(self):

@@ -1,6 +1,6 @@
 # Battlefield and terrain source
 
-Rojo maps this folder to `Workspace.World`. [`Battlefield.model.json`](Battlefield.model.json) reconstructs the expanded primitive map, three multi-story buildings, starting shelter, invisible terrain recipe and anchors without cloud assets or unsaved Studio edits. [`manifest.json`](../manifest.json) records provenance and terrain ownership. Every authored part uses a twelve-component canonical `CFrame`; `Position`/`Orientation` aliases are forbidden. Artifact reconstruction and actual Studio loaded-transform/world checks remain separate gates.
+Rojo maps the battlefield model and the stock district assembly to `Workspace.World.Battlefield`. [`Battlefield.model.json`](Battlefield.model.json) reconstructs the expanded primitive map, three multi-story buildings, starting shelter, invisible terrain recipe and anchors without cloud assets or unsaved Studio edits. [`manifest.json`](../manifest.json) records provenance and terrain ownership. Every authored part uses a twelve-component canonical `CFrame`; `Position`/`Orientation` aliases are forbidden. Artifact reconstruction and actual Studio loaded-transform/world checks remain separate gates.
 
 This folder currently authors one level. The future [level contract](../../architecture.md#level-interchange-boundary-target-architecture) will package each level's footprint, orbit, aim envelope, world/terrain, anchors and panel identities separately while reusing core pan, zoom, combat and demolition rules. No second playable level or level switch is implemented yet.
 
@@ -13,17 +13,18 @@ Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initial
 | `GroundDisk` | Anchored cylinder, top Y=0, radius 360. |
 | `GroundSpawn` | Neutral local-development SpawnLocation at `(0,0.05,120)`. Runtime character ownership disables automatic competitive respawns. |
 | `Anchors/Ground01`–`Ground09` | Invisible, noncolliding/nonqueryable 3×3 grid: X=−20/0/20, Z=108/120/132, Y=3. Ground05 is the safe return pose. |
-| `Anchors/Launcher` | One future launcher anchor `(0,3,0)` above the gold center marker; no weapon exists yet. |
+| `Anchors/LauncherHangar`, `LauncherRadar`, `LauncherDepot` | One weapon inside the eastern hangar door and one outside each of the radar and depot entrances. |
 | `Anchors/Lobby`, `Anchors/Operator` | `(520,3,0)` and `(520,3,−15)` on the separate protected deck. Both anchors and the entire deck must remain outside the combat disk. |
 | `Permanent`, `Breakable` | Unique names become runtime `CoverId` and folder kind becomes `CoverKind`. Both remain solid and do not take damage yet. |
 | `SpawnShelterPanels`, `PanelRegistries/SpawnShelter` | Revised candidate: 42 roof and 34 wall panels replace the seven old Permanent shelter colliders, preserving their union, entrances and anchors. The descriptor points to the direct `SpawnShelterPanels` Folder. Pristine geometry must protect all nine spawn anchors; later damage can open it. |
-| `Routes` | Teal western and ochre eastern launcher approaches through X=−60/+60. Both remain usable without destruction. |
+| `Routes` | Stock-material parking stripes and faded road dashes. |
+| `SouthBuildingReserve` | Selectable 212 × 146-stud survey footprint. Eight short, walk-through strokes mark its four corners. |
 | `Buildings` | Foundry and Warehouse are 64×48 studs each; Outpost is 32×48. All have two usable floors and stairs. |
 | `GroundCameraInteriors` | Optional Folder of local camera metadata. Each Configuration has a room-oriented `Frame` (CFrame), full `Size` (Vector3 in studs) and `MaxDistanceStuds` (number). The Outpost's workshop and upstairs command room each use a five-stud cap. |
-| `TerrainRecipe` | Eight invisible sphere descriptors plus the exact `TerrainBounds` ownership box; `TerrainRecipe.restore` supplies actual smooth terrain at runtime. |
+| `TerrainRecipe` | The material raster and the exact `TerrainBounds` ownership box; `TerrainRecipe.restore` supplies actual smooth terrain at runtime. |
 | `AimEnvelope/MinimumY`, `MaximumY` | NumberValues authoring inclusive aircraft aim-height bounds in world studs, currently −1 and 32. These are configuration, not visible/colliding geometry. AircraftService validates/captures them and retains independent selected-muzzle obstruction checks. |
 
-All descendant names must be unique and authored BaseParts anchored. Ground/launcher anchor centers are ground+3. Anchor validation uses a 4×6×4-stud upright envelope centered 0.2 studs above the anchor to avoid contact with the spawn pad; floor support is checked separately. Launcher approaches use that envelope every 0.5 stud. Actual avatar walking is a separate required check, not implied by fixture clearance.
+All descendant names must be unique and authored BaseParts anchored. Ground/launcher anchor centers are ground+3. Anchor validation uses a 4×6×4-stud upright envelope centered 0.2 studs above the anchor to avoid contact with the spawn pad; floor support is checked separately. The district review samples the integrated route centerlines every two studs with a 4 × 5.8 × 4-stud collision probe. Actual avatar walking is a separate required check, not implied by fixture clearance.
 
 ## Buildings and panel identities
 
@@ -47,7 +48,7 @@ four accessible levels sit beside the apron and walk-in Hercules wreck.
 The 152 wall, gable and roof panels use the shared progressive damage ledger.
 The wreck uses its own one-hit howitzer or three-second continuous 30mm
 threshold. The map snapshot restores the building and wreck between rounds.
-The replacement remaps two terrain mounds and raises the aim ceiling to
+The replacement raises the aim ceiling to
 64 studs for coverage of the roof. The axis correction, world pivot, native
 assets and checks are in the [Salt Flats import receipt](../imports/salt-flats/README.md).
 
@@ -61,11 +62,16 @@ DestructionRuntime captures these Parts into identity Models and publishes struc
 
 ## Terrain authoring and restoration
 
-The manifest's recipe version 1 / seed 0 is deterministic and uses no randomness. Four-stud engine voxels reconstruct eight Grass/Rock hill caps with nominal apex Y=16; engine surface queries allow three studs of voxel tolerance. The exact axis-aligned owned volume is `(-368,-112,-368)`–`(368,32,368)` (736×144×736). Descriptors must remain inside that volume and within the playable disk. Rotated bounds and unsupported materials reject before terrain writes.
+The version 2 recipe uses 180 × 180 four-stud cells. Run `python3 scripts/districts/layout.py` after editing the district boundaries, trail centerlines, road or reserve. It regenerates only the district layout in the existing world JSON. At startup and reset, the server clears the bounded legacy terrain volume and writes native materials at Y=0. The disk continues to support ground movement. To preview the same paint in a newly built Studio document before Play, run this in the Edit Command Bar. The integrated buildings appear during Play.
 
-`MapService.start()` clears only that owned box and fills the spheres. `rebuild()` and `destroy()` restore the same terrain plus pristine geometry/IDs/anchors and remove transient descendants. Terrain outside the box is preserved. Fill operations do not yield, but collision/raycast updates may converge afterward; Studio tests wait up to five seconds. An Edit document can therefore show the authored part map before runtime has reconstructed terrain.
+```luau
+local map = workspace.World.Battlefield
+local ok, reason = require(game.ServerScriptService.Server.TerrainRecipe).restore(workspace.Terrain, map.TerrainRecipe)
+assert(ok, reason)
+map.GroundDisk.LocalTransparencyModifier = 1
+```
 
-Edit the versioned descriptors and manifest together, update semantic/artifact tests, build, sync in Edit, then run `TerrainReconstruction`, `BuildingLayout`, `ExpandedMapNavigation`, `ExpandedMapSightLines` and the [P13 multiplayer harness](../../docs/testing.md#run-the-p13-expanded-map-harness). Compare sampled materials/elevations/voxels through repeated mutations/resets and a fresh source-built artifact load. Preserve unrelated terrain fixtures and actual loaded transforms in that evidence.
+The four bunker exits join an exterior circuit. Its three branches reach the eastern hangar door, the radar south gate and the depot entrance. The south reserve spans X=−106…106 and Z=186…332. Keep its interior clear. [Stock scenery sources and Studio sync](../imports/districts/README.md)
 
 Do not export transient simulation state, projectiles or debris as authoring. Rebuild/teardown replace Battlefield from the private pristine snapshot, so consumers must reacquire its Instances. See [P13](../../plans/13-terrain-and-buildings.md) for actual acceptance results and gaps.
 

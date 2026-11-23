@@ -66,12 +66,17 @@
         }
       }
     },
+    "Lighting": {"$className": "Lighting", "$properties": {"GlobalShadows": true, "Brightness": 2.1, "ClockTime": 15.4, "Ambient": [0.322, 0.314, 0.298], "OutdoorAmbient": [0.569, 0.573, 0.58], "EnvironmentDiffuseScale": 0.5, "EnvironmentSpecularScale": 0.35}},
     "Workspace": {
       "$properties": {
         "StreamingEnabled": false
       },
       "World": {
-        "$path": "assets/world"
+        "$className": "Folder",
+        "Battlefield": {
+          "$path": "assets/world/Battlefield.model.json",
+          "DistrictScenery": {"$path": "assets/imports/districts/DistrictScenery.rbxm"}
+        }
       }
     }
   }

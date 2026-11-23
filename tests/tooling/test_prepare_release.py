@@ -85,7 +85,7 @@ class ReleasePreparationTests(unittest.TestCase):
             release.audit_runtime_sources(self.root, {**artifact, "Extra": script}, artifact, mapping)
 
     def test_cloud_inventory_rejects_unrecorded_and_unused_references(self):
-        self.write(release.MANIFEST, json.dumps({"schema_version": 1, "runtime_recipes": [
+        self.write(release.MANIFEST, json.dumps({"schema_version": 1, "assets": [], "runtime_recipes": [
             {"creator_store_audio": [{"id": "30"}]},
         ]}))
         self.write(release.MESHES, json.dumps({"profiles": [{"mesh_id": "rbxassetid://5"}]}))

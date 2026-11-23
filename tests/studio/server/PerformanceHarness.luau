@@ -118,7 +118,7 @@ local function checkBounds(counts: Counts)
         counts.pendingBarriers <= DestructionService.outcomeWindow + 1,
         "structural barrier window exceeded"
     )
-    assert(counts.launcherRepresentations <= 1, "launcher representation duplicated")
+    assert(counts.launcherRepresentations <= 3, "launcher representation duplicated")
     assert(counts.fragments <= PanelFragments.defaults.maximum, "fragment cap exceeded")
 end
 
@@ -467,7 +467,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             held.ownerId and held.launcherId == initial.launcherId and held.revision == initial.revision + 1,
             "pickup duplicated or altered identity"
         )
-        assert(runtime.launcher.resources().representations == 1, "held representation missing or duplicated")
+        assert(runtime.launcher.resources().representations == 3, "held representation missing or duplicated")
         return held.ownerId
     end
 

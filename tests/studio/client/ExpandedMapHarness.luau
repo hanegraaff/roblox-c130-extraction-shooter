@@ -215,19 +215,21 @@ function Harness.run()
                 local rays = RaycastParams.new()
                 rays.FilterType = Enum.RaycastFilterType.Include
                 rays.FilterDescendantsInstances = { workspace.Terrain }
-                local recipe = map:FindFirstChild("TerrainRecipe") :: Folder
-                for _, hill in recipe:GetChildren() do
-                    if hill:IsA("Part") and hill.Name ~= "TerrainBounds" then
-                        local hit = workspace:Raycast(
-                            Vector3.new(hill.Position.X, 80, hill.Position.Z),
-                            Vector3.new(0, -150, 0),
-                            rays
-                        )
-                        assert(
-                            hit and hit.Material == hill.Material and math.abs(hit.Position.Y - 16) <= 3,
-                            "client terrain elevation/material differs"
-                        )
-                    end
+                for _, sample in
+                    {
+                        { point = Vector3.new(-258, 0, -138), material = Enum.Material.Sand },
+                        { point = Vector3.new(238, 0, -162), material = Enum.Material.Grass },
+                        { point = Vector3.new(162, 0, -146), material = Enum.Material.LeafyGrass },
+                        { point = Vector3.new(178, 0, 194), material = Enum.Material.Asphalt },
+                        { point = Vector3.new(2, 0, 258), material = Enum.Material.Sand },
+                    }
+                do
+                    local hit =
+                        workspace:Raycast(sample.point + Vector3.yAxis * 32, -Vector3.yAxis * 40, rays)
+                    assert(
+                        hit and hit.Material == sample.material and math.abs(hit.Position.Y) < 1,
+                        "client district surface differs"
+                    )
                 end
                 local aircraft = workspace:FindFirstChild("Aircraft")
                 assert(aircraft and aircraft:IsA("Model"), "client canonical aircraft missing")
