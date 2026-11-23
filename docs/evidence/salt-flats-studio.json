@@ -1,0 +1,502 @@
+{
+  "sourceCommit": "f7661b970c1e66bea5bb9347f7984c878fde4994",
+  "nativeBindingSha256": "0272aa02bf76c592e1e2ed6b542a05db459d3e60fe414419cf7cc4a5e7faf46d",
+  "studio": {
+    "version": "0.748.0.7481526",
+    "os": "macOS arm64",
+    "placeId": 0,
+    "project": "test.project.json",
+    "document": "salt-flats-f7661b9-tests.rbxlx"
+  },
+  "isolatedEdit": {
+    "roofStates": 4,
+    "wallStates": 4,
+    "oneHitWreck": true,
+    "wreckReset": true,
+    "panels": 152,
+    "panelReset": true,
+    "stableStructure": true
+  },
+  "soloPlay": {
+    "actualClients": 1,
+    "serverSmokePassed": 198,
+    "clientSmokePassed": 14,
+    "outsideToWestStairs": [
+      {
+        "target": "-85, 0, 68",
+        "reached": true,
+        "pos": "-85.00019836425781, 2.998006820678711, 68.76115417480469"
+      },
+      {
+        "target": "-85, 0, 18",
+        "reached": true,
+        "pos": "-85.00003814697266, 2.9980251789093018, 18.82892608642578"
+      },
+      {
+        "target": "-85, 0, -25",
+        "reached": true,
+        "pos": "-85.0001220703125, 2.9980251789093018, -24.13279151916504"
+      },
+      {
+        "target": "-86, 0, -61",
+        "reached": true,
+        "pos": "-85.97689056396484, 2.9980251789093018, -60.147315979003906"
+      },
+      {
+        "target": "-97, 0, -61",
+        "reached": true,
+        "pos": "-96.12166595458984, 2.9980251789093018, -60.94000244140625"
+      }
+    ],
+    "westStairsAndGalleries": [
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-96.92912292480469, 4.733100891113281, -52.81248474121094",
+        "targetY": 2
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-96.99201965332031, 6.584981918334961, -46.91653060913086",
+        "targetY": 4
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-96.99954223632812, 8.997865676879883, -36.75315856933594",
+        "targetY": 6
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-87.78693389892578, 8.998024940490723, -36.05066680908203",
+        "targetY": 6
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-87.06172180175781, 10.749271392822266, -44.18397903442383",
+        "targetY": 8
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-87.00577545166016, 12.919421195983887, -51.147464752197266",
+        "targetY": 10
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-87.00039672851562, 14.996087074279785, -59.17747497558594",
+        "targetY": 12
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 2,
+        "pos": "-96.10265350341797, 14.998026847839355, -60.84625244140625",
+        "targetY": 12
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-96.91092681884766, 16.664587020874023, -53.00171661376953",
+        "targetY": 14
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-96.99008178710938, 18.62554931640625, -46.86751174926758",
+        "targetY": 16
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-96.99932098388672, 20.997726440429688, -36.970947265625",
+        "targetY": 18
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-87.8010025024414, 20.998023986816406, -36.069000244140625",
+        "targetY": 18
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-87.06201934814453, 22.74799346923828, -44.198326110839844",
+        "targetY": 20
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-87.00568389892578, 24.91942024230957, -51.16175842285156",
+        "targetY": 22
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-87.0003890991211, 26.9960880279541, -59.19171142578125",
+        "targetY": 24
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 3,
+        "pos": "-96.10476684570312, 26.998023986816406, -60.847930908203125",
+        "targetY": 24
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-96.91104125976562, 28.664588928222656, -53.00288009643555",
+        "targetY": 26
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-96.99000549316406, 30.62935447692871, -46.86850357055664",
+        "targetY": 28
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-96.99929809570312, 32.997703552246094, -36.97191619873047",
+        "targetY": 30
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-87.80105590820312, 32.998023986816406, -36.06904220581055",
+        "targetY": 30
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-87.06202697753906, 34.74927520751953, -44.19824981689453",
+        "targetY": 32
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-87.00567626953125, 36.9194221496582, -51.16168975830078",
+        "targetY": 34
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-87.0003890991211, 38.99608612060547, -59.19164276123047",
+        "targetY": 36
+      },
+      {
+        "camera": 12.500000953674316,
+        "reached": true,
+        "level": 4,
+        "pos": "-96.10476684570312, 38.99802017211914, -60.847930908203125",
+        "targetY": 36
+      }
+    ],
+    "rampToCargoDeck": [
+      {
+        "y": 3.6006195545196533,
+        "camera": 12.49999713897705,
+        "reached": true,
+        "target": 51,
+        "localZ": 51.873130798339844
+      },
+      {
+        "y": 5.442472457885742,
+        "camera": 12.500000953674316,
+        "reached": true,
+        "target": 41,
+        "localZ": 41.885894775390625
+      },
+      {
+        "y": 6.228023529052734,
+        "camera": 12.500000953674316,
+        "reached": true,
+        "target": 28,
+        "localZ": 28.849018096923828
+      },
+      {
+        "y": 6.228023529052734,
+        "camera": 12.500000953674316,
+        "reached": true,
+        "target": 12,
+        "localZ": 12.822827339172363
+      },
+      {
+        "y": 6.228023529052734,
+        "camera": 12.500000953674316,
+        "reached": true,
+        "target": 0,
+        "localZ": 0.7965493202209473
+      }
+    ]
+  },
+  "multiplayerHowitzer": {
+    "actualClients": 2,
+    "roundReset": true,
+    "name": "Salt Flats live wreck",
+    "clientFailures": [],
+    "directM102Hits": 1,
+    "smoke": {
+      "clients": {
+        "Player1": {
+          "errors": 0,
+          "skipped": 0,
+          "seed": 1,
+          "environment": "Studio",
+          "discovered": 14,
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 14
+        },
+        "Player2": {
+          "errors": 0,
+          "skipped": 0,
+          "seed": 1,
+          "environment": "Studio",
+          "discovered": 14,
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 14
+        }
+      },
+      "server": {
+        "errors": 0,
+        "clientCount": 2,
+        "passed": 198,
+        "skipped": 0,
+        "environment": "Studio",
+        "suite": "P01-server",
+        "discovered": 198,
+        "failed": 0,
+        "seed": 1
+      }
+    },
+    "passed": true,
+    "confirmed": {
+      "pristine": {
+        "Player1": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "pristine",
+          "parts": 277
+        },
+        "Player2": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "pristine",
+          "parts": 277
+        }
+      },
+      "roundReset": {
+        "Player1": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "roundReset",
+          "parts": 277
+        },
+        "Player2": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "roundReset",
+          "parts": 277
+        }
+      },
+      "directHit": {
+        "Player1": {
+          "solid": false,
+          "stage": "Total",
+          "key": "directHit",
+          "parts": 0
+        },
+        "Player2": {
+          "solid": false,
+          "stage": "Total",
+          "key": "directHit",
+          "parts": 0
+        }
+      }
+    }
+  },
+  "multiplayerChainGun": {
+    "roundReset": true,
+    "clientFailures": [],
+    "gau23ElapsedSeconds": 6.88,
+    "passed": true,
+    "actualClients": 2,
+    "name": "Salt Flats live 30mm wreck",
+    "gau23Requests": 38,
+    "smoke": {
+      "clients": {
+        "Player1": {
+          "errors": 0,
+          "skipped": 0,
+          "seed": 1,
+          "environment": "Studio",
+          "discovered": 14,
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 14
+        },
+        "Player2": {
+          "errors": 0,
+          "skipped": 0,
+          "seed": 1,
+          "environment": "Studio",
+          "discovered": 14,
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 14
+        }
+      },
+      "server": {
+        "errors": 0,
+        "clientCount": 2,
+        "passed": 198,
+        "skipped": 0,
+        "environment": "Studio",
+        "suite": "P01-server",
+        "discovered": 198,
+        "failed": 0,
+        "seed": 1
+      }
+    },
+    "confirmed": {
+      "pristine": {
+        "Player1": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "pristine",
+          "parts": 277
+        },
+        "Player2": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "pristine",
+          "parts": 277
+        }
+      },
+      "roundReset": {
+        "Player1": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "roundReset",
+          "parts": 277
+        },
+        "Player2": {
+          "solid": true,
+          "stage": "Pristine",
+          "key": "roundReset",
+          "parts": 277
+        }
+      },
+      "liveBurst": {
+        "Player1": {
+          "solid": false,
+          "stage": "Total",
+          "key": "liveBurst",
+          "parts": 0
+        },
+        "Player2": {
+          "solid": false,
+          "stage": "Total",
+          "key": "liveBurst",
+          "parts": 0
+        }
+      }
+    }
+  },
+  "multiplayerCameraRoles": {
+    "actualClients": 2,
+    "name": "Salt Flats live camera roles",
+    "clientFailures": [],
+    "thermal": {
+      "Player1": {
+        "visibleShell": 725,
+        "hidden": 95,
+        "key": "thermal",
+        "surfaces": 1039,
+        "wreckSkins": 139,
+        "mode": "Scriptable",
+        "dressing": 95,
+        "occludedHighlight": true
+      },
+      "Player2": {
+        "visibleShell": 725,
+        "hidden": 0,
+        "key": "thermal",
+        "surfaces": 0,
+        "wreckSkins": 139,
+        "mode": "Custom",
+        "dressing": 95,
+        "occludedHighlight": false
+      }
+    },
+    "smoke": {
+      "clients": {
+        "Player1": {
+          "errors": 0,
+          "skipped": 0,
+          "seed": 1,
+          "environment": "Studio",
+          "discovered": 14,
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 14
+        },
+        "Player2": {
+          "errors": 0,
+          "skipped": 0,
+          "seed": 1,
+          "environment": "Studio",
+          "discovered": 14,
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 14
+        }
+      },
+      "server": {
+        "errors": 0,
+        "clientCount": 2,
+        "passed": 198,
+        "skipped": 0,
+        "environment": "Studio",
+        "suite": "P01-server",
+        "discovered": 198,
+        "failed": 0,
+        "seed": 1
+      }
+    },
+    "passed": true
+  },
+  "cleanup": {
+    "temporaryServerScriptRemoved": true,
+    "temporaryClientScriptRemoved": true,
+    "isolatedWorldRemoved": true
+  }
+}

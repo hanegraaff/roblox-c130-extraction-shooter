@@ -1,4 +1,4 @@
-# Salt Flats import preflight
+# Salt Flats hangar import
 
 The [approved Blender source](../../blender/plane-hangar/salt-flats-hangar.blend)
 and [assembled GLB](../../exports/plane-hangar/salt-flats-hangar.glb) came from
@@ -19,7 +19,7 @@ avoids the shelter, other buildings, anchor and route markers, and standalone
 cover. The placement relocates two terrain mounds to clear the foundation and
 apron.
 
-| Authored object | Proposed center in Roblox studs |
+| Authored object | Center in Roblox studs |
 | --- | --- |
 | Foundry replacement floor pivot | `(-211, 0.125, -116)` |
 | TerrainHill00 | `(-99, -36, 180)` |
@@ -71,5 +71,42 @@ all 120 treads, the apron and the wreck's deck and ramp. The Studio Edit probe
 in `scripts/salt_flats/check_walk_surfaces.luau` takes the `walkingSurfaces`
 entry as input. It passed 120 tread rays, 51 ramp rays and the cargo deck
 height check in the isolated `salt-flats-integration-tests.rbxlx` document.
-The probe creates temporary Parts and removes them. Native avatar traversal,
-whole-aircraft cover and the assembled match still require the full import.
+The probe creates temporary Parts and removes them.
+
+## Studio playtest
+
+The source-built local test place ran in Studio `0.748.0.7481526` on macOS
+arm64. Build it with
+`rojo build test.project.json --output build/salt-flats-tests.rbxlx`.
+The solo session passed 198 server and 14 client smoke checks. An
+actual avatar walked from the apron through the west bay entrance, climbed all
+three switchbacks to the fourth level, and walked up the wreck ramp into the
+cargo hold. All 34 waypoints passed. The normal third-person camera stayed
+12.5 studs from its focus at the sampled stair and ramp waypoints. The
+[fourth-floor gallery capture](../../../docs/images/plane-hangar/studio-gallery.jpg)
+shows the loaded materials and player scale.
+
+The [isolated Studio probe](../../../scripts/salt_flats/check_native_world.luau)
+mounted all 152 wall and roof panels. It submitted resolved impacts to the
+production damage ledger. Representative wall and roof panels remained solid
+in Light, opened a real breach while retaining residual collision in Heavy,
+and cleared their geometry in Total. The next round restored the test panels'
+original pivots and solid cover. The portal pier stayed intact.
+
+In a separate two-client match, the operator's production weapon remote
+sent one 105 mm shot. Both clients confirmed overhead cover before impact,
+an empty wreck with no remaining cover after impact, and restored cover
+after the ordinary round reset. A fresh two-client session repeated those
+observations with the 30 mm chain gun. The wreck cleared after 38 fire
+requests over 6.88 seconds of live play, including any initial misses and
+projectile travel. The server rule requires three uninterrupted seconds of
+confirmed hits.
+
+The final two-client session checked the playing roles' cameras. The
+gunship client used the thermal camera with native occluded highlights,
+retained the hangar panels and wreck skins, and hid 95 pieces of independent
+dressing. The ground client kept the dressing visible with the normal
+third-person camera. Each two-client session passed 198 server smoke checks
+and all 14 smoke checks on each client. See the
+[structured Studio results](../../../docs/evidence/salt-flats-studio.json)
+and [host CI run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45204525686).
