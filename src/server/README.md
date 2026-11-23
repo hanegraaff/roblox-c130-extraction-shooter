@@ -241,7 +241,7 @@ One owner controls each Battlefield subtree and its manifest-defined terrain vol
 
 `BuildingGeometry.validate(map, overlap, rays)` is a nonyielding server adapter over real loaded Parts. It returns `false, reason` for malformed floors/stairs/markers/rooms, obstructed entry routes or invalid registries; it does not create Instances or own events. `decorate(map)` applies stable public building IDs, building-scoped `StoryId` (`01`/`02`), globally unique panel IDs, Intact state/pivot and variant metadata after validation. A story identity is the pair `(BuildingId, StoryId)`. Its pure count/dimension/pivot dependency is shared `BuildingLayout`.
 
-`TerrainRecipe.validate(recipe)` checks the fixed ownership bounds, 180 × 180 raster dimensions and the eight supported ground materials. `restore(terrain, recipe)` returns `false, reason` without writes for invalid authoring; otherwise it clears only the owned box and writes eight spheres. It owns no connections or tasks and does not yield. Actual collision/raycast readiness can follow later; callers needing physics evidence must wait for bounded engine convergence. See the [world contract](../../assets/world/README.md).
+`TerrainRecipe.validate(recipe)` checks fixed ownership bounds and both 180 × 180 rasters, including valid surface materials and hexadecimal relief. `restore(terrain, recipe)` returns `false, reason` without writes for invalid authoring. Otherwise it clears the owned box and writes smooth terrain using four-stud voxels. It owns no connections or tasks and does not yield. Physics readiness requires bounded engine convergence. See the [world contract](../../assets/world/README.md).
 
 ## Bootstrap and verification
 
@@ -290,3 +290,15 @@ harness reads these snapshots at load and after cleanup.
 [P11 procedure](../../docs/testing.md#run-the-p11-performance-harness)
 
 `GameRuntime` owns the server-to-client `RoundState.WeaponAudio` transport. The combat runtimes emit shot and impact cues after admission or collision through a nonyielding callback. The event owns no client-request handler and has no role, damage or equipment authority.
+
+## Prism Seedship
+
+`SeedshipReconstruction.install(world, assets)` mounts the two native
+Seedship banks before `MapService` captures its pristine snapshot. The
+ship pivots at `(0, 2.4, 259)` and faces north toward Sandbreak. The direct
+`PrismPanels` registry retains the source panel IDs, stories and poses.
+Each panel uses native query solids and the shared destruction ledger.
+Light clones the intact solid, Heavy uses the fitted residual, and Total
+clears all owned parts. Decks and stair supports are outside the damage
+registry. Cleanup rolls back the mounted roots and descriptor if map
+validation fails. [Import pipeline and site](../../assets/blender/alien-spaceship/IMPORT.md)

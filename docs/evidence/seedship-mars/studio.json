@@ -1,0 +1,69 @@
+{
+  "studio": "0.748.0.7481526",
+  "mode": "Fresh solo Studio Play after managed source refresh",
+  "southSite": {
+    "pivot": [
+      0,
+      2.4,
+      259
+    ],
+    "yawDegrees": 180,
+    "nativeShipImport": "pending private cloud asset access"
+  },
+  "routes": {
+    "Seedship": 8,
+    "EastExit": 22,
+    "SouthExit": 18,
+    "Depot": 61,
+    "Circuit": 242,
+    "WestExit": 22,
+    "Hangar": 141,
+    "NorthExit": 17,
+    "Radar": 105
+  },
+  "meshes": 380,
+  "mars": {
+    "solid": 15,
+    "samples": {
+      "radar": {
+        "height": 0,
+        "material": "Grass"
+      },
+      "basin": {
+        "height": 0,
+        "material": "Mud"
+      },
+      "easternRidge": {
+        "height": 10.999998092651367,
+        "material": "Mud"
+      },
+      "sand": {
+        "height": 0,
+        "material": "Sand"
+      },
+      "westernRim": {
+        "height": 6.978570938110352,
+        "material": "Mud"
+      },
+      "craterFloor": {
+        "height": 0,
+        "material": "Mud"
+      },
+      "depot": {
+        "height": 0,
+        "material": "Asphalt"
+      },
+      "westernMesa": {
+        "height": 13,
+        "material": "Mud"
+      }
+    },
+    "rocks": 80
+  },
+  "placements": 306,
+  "terrainRestore": {
+    "matchedCells": 630,
+    "rejection": "raised terrain outside battlefield",
+    "restores": 2
+  }
+}

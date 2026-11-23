@@ -152,7 +152,6 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
     local shelterCount = if hasSandbreak then 103 else 76
     if
         not panelInputs
-        or #panelInputs:GetChildren() ~= 1
         or not shelterInput
         or not shelterInput:IsA("StringValue")
         or shelterInput.Value ~= "SpawnShelterPanels"
@@ -232,7 +231,7 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
         BuildingGeometry.decorate(map)
         local disk = map:FindFirstChild("GroundDisk") :: BasePart
         disk.Transparency = 1
-        map:SetAttribute("TerrainRecipeVersion", 2)
+        map:SetAttribute("TerrainRecipeVersion", 3)
         map:SetAttribute("TerrainSeed", 0)
         map:SetAttribute("RadiusStuds", settings.radiusStuds)
         map:SetAttribute("AircraftAltitudeStuds", settings.altitudeStuds)

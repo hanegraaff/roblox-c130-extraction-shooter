@@ -18,10 +18,10 @@ Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P14 initial
 | `Permanent`, `Breakable` | Unique names become runtime `CoverId` and folder kind becomes `CoverKind`. Both remain solid and do not take damage yet. |
 | `SpawnShelterPanels`, `PanelRegistries/SpawnShelter` | Revised candidate: 42 roof and 34 wall panels replace the seven old Permanent shelter colliders, preserving their union, entrances and anchors. The descriptor points to the direct `SpawnShelterPanels` Folder. Pristine geometry must protect all nine spawn anchors; later damage can open it. |
 | `Routes` | Stock-material parking stripes and faded road dashes. |
-| `SouthBuildingReserve` | Selectable 212 × 146-stud survey footprint. Eight short, walk-through strokes mark its four corners. |
+| `MarsBoulders` | Native boulders and small scree at the southern crater and ridges. Larger boulders supply cover. |
 | `Buildings` | Foundry and Warehouse are 64×48 studs each; Outpost is 32×48. All have two usable floors and stairs. |
 | `GroundCameraInteriors` | Optional Folder of local camera metadata. Each Configuration has a room-oriented `Frame` (CFrame), full `Size` (Vector3 in studs) and `MaxDistanceStuds` (number). The Outpost's workshop and upstairs command room each use a five-stud cap. |
-| `TerrainRecipe` | The material raster and the exact `TerrainBounds` ownership box; `TerrainRecipe.restore` supplies actual smooth terrain at runtime. |
+| `TerrainRecipe` | Material and relief rasters and the exact `TerrainBounds` ownership box. `TerrainRecipe.restore` writes native smooth terrain at runtime. |
 | `AimEnvelope/MinimumY`, `MaximumY` | NumberValues authoring inclusive aircraft aim-height bounds in world studs, currently −1 and 32. These are configuration, not visible/colliding geometry. AircraftService validates/captures them and retains independent selected-muzzle obstruction checks. |
 
 All descendant names must be unique and authored BaseParts anchored. Ground/launcher anchor centers are ground+3. Anchor validation uses a 4×6×4-stud upright envelope centered 0.2 studs above the anchor to avoid contact with the spawn pad; floor support is checked separately. The district review samples the integrated route centerlines every two studs with a 4 × 5.8 × 4-stud collision probe. Actual avatar walking is a separate required check, not implied by fixture clearance.
@@ -52,6 +52,12 @@ The replacement raises the aim ceiling to
 64 studs for coverage of the roof. The axis correction, world pivot, native
 assets and checks are in the [Salt Flats import receipt](../imports/salt-flats/README.md).
 
+The Prism Seedship lands at the southern site with its main entry turned
+toward Sandbreak. It has two usable decks, four approaches and a dedicated
+`PrismPanels` registry of 102 wall and roof panels. Like the other landmarks
+it uses the shared damage and reset owners. The registry inherits each
+panel’s authored story from its descriptor. [Site and managed import](../blender/alien-spaceship/IMPORT.md)
+
 For a compact interior, center the descriptor on the usable room, put its
 local +Y boundary at the ceiling, and keep exterior balconies and roofs outside
 the bounds. Validate both sides of doors and the height of stair landings in
@@ -62,7 +68,7 @@ DestructionRuntime captures these Parts into identity Models and publishes struc
 
 ## Terrain authoring and restoration
 
-The version 2 recipe uses 180 × 180 four-stud cells. Run `python3 scripts/districts/layout.py` after editing the district boundaries, trail centerlines, road or reserve. It regenerates only the district layout in the existing world JSON. At startup and reset, the server clears the bounded legacy terrain volume and writes native materials at Y=0. The disk continues to support ground movement. To preview the same paint in a newly built Studio document before Play, run this in the Edit Command Bar. The integrated buildings appear during Play.
+The version 3 recipe uses 180 × 180 four-stud cells. Each relief digit is a hexadecimal elevation in studs above grade. Run `python3 scripts/districts/layout.py` after editing district boundaries, trail centerlines, or southern relief. At startup and reset, the server clears the bounded terrain volume and writes native materials and graded elevations together. The disk supports ground movement at grade. To preview the terrain in a newly built Studio document before Play, run this in the Edit Command Bar. The integrated buildings appear during Play.
 
 ```luau
 local map = workspace.World.Battlefield
@@ -71,7 +77,7 @@ assert(ok, reason)
 map.GroundDisk.LocalTransparencyModifier = 1
 ```
 
-The four bunker exits join an exterior circuit. Its three branches reach the eastern hangar door, the radar south gate and the depot entrance. The south reserve spans X=−106…106 and Z=186…332. Keep its interior clear. [Stock scenery sources and Studio sync](../imports/districts/README.md)
+The four bunker exits join an exterior circuit. Branches reach the eastern hangar door, radar south gate, depot entrance and northern approach to the Seedship site. The site spans X=−106…106 and Z=186…332 at grade. The western impact crater uses a raised rim and a floor at grade. The surrounding ridges taper toward the site, the battlefield edge and the adjoining sand and gravel. [Stock scenery sources and Studio sync](../imports/districts/README.md)
 
 Do not export transient simulation state, projectiles or debris as authoring. Rebuild/teardown replace Battlefield from the private pristine snapshot, so consumers must reacquire its Instances. See [P13](../../plans/13-terrain-and-buildings.md) for actual acceptance results and gaps.
 

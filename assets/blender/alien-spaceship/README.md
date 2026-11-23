@@ -33,7 +33,7 @@ Use the Outliner to select another named camera, then press **Ctrl + Numpad 0** 
 | Port and starboard stairs | Both flights are 10 studs wide with 24 one-stud treads, a total rise of 16 studs and 12 studs of clear upper landing depth. |
 | Outside grade | −2.4 studs relative to the ground deck. The lowest ends of the frame sit below grade. |
 
-One Blender unit represents one stud. Local +Z is up, the south entrance faces −Y, and the insertion datum is the ground-deck center. The GLB converts Blender coordinates to glTF as `(x, z, -y)`. The 208 × 144-stud authoring envelope fits the existing 212 × 146-stud southern survey. Map placement and rotation are open integration choices.
+One Blender unit represents one stud. Local +Z is up, the main entrance faces −Y, and the insertion datum is the ground-deck center. The GLB converts Blender coordinates to glTF as `(x, z, -y)`. The 208 × 144-stud envelope fits the 212 × 146-stud southern site. [Roblox import staging and placement](IMPORT.md)
 
 The four supplied illustrations in `src/images/alien-spaceship/` guided the work. The plan sets the dimensions, stairs, galleries, exits and room locations. The exterior and two eye-level interiors guide the pale broken plates, purple structural ribs, green optical elements, vault and historic breach. The ephemeris, botanical specimens, machinery, preserved alien and diagnostic graphics are original designs. The source packs eight 512 × 512 mineral maps, two 448 × 768 skin maps and one 512 × 384 diagnostic atlas.
 

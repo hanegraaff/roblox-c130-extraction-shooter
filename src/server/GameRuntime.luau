@@ -20,6 +20,7 @@ local OutpostReconstruction = require(script.Parent.OutpostReconstruction)
 local VesperReconstruction = require(script.Parent.VesperReconstruction)
 local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
 local SandbreakReconstruction = require(script.Parent.SandbreakReconstruction)
+local SeedshipReconstruction = require(script.Parent.SeedshipReconstruction)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
@@ -60,6 +61,14 @@ function GameRuntime.start(
         installation.rollback()
         return nil, bunkerReason
     end
+    local seedship, seedshipReason = SeedshipReconstruction.install(workspace.World, assets)
+    if not seedship then
+        bunker.rollback()
+        hangar.rollback()
+        radar.rollback()
+        installation.rollback()
+        return nil, seedshipReason
+    end
     local onCorrection: ((Model) -> ())? = nil
     local map, reason = MapService.new(workspace.World, {
         characters = function()
@@ -84,12 +93,14 @@ function GameRuntime.start(
         end,
     })
     if not map then
+        seedship.rollback()
         bunker.rollback()
         hangar.rollback()
         radar.rollback()
         installation.rollback()
         return nil, reason
     end
+    seedship.commit()
     bunker.commit()
     hangar.commit()
     radar.commit()

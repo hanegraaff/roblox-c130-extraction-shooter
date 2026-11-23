@@ -128,12 +128,16 @@ def partition(source: dict, data: bytes) -> tuple[dict, bytes]:
 class NativeBatch(Batch):
     """Reuse the repository's GLB dependency copier with Salt Flats naming."""
 
+    def __init__(self, source, data, prefix, namespace="SF"):
+        super().__init__(source, data, prefix)
+        self.namespace = namespace
+
     def add(self, index, pose, role):
         doc = self.source
         node = doc["nodes"][index]
         origin, rotation, props = pose
         for ordinal, surface in enumerate(doc["meshes"][node["mesh"]]["primitives"], 1):
-            name = f"SF_{self.prefix}_{index:03d}_{ordinal:02d}"
+            name = f"{self.namespace}_{self.prefix}_{index:03d}_{ordinal:02d}"
             material = doc["materials"][surface["material"]]
             position = doc["accessors"][surface["attributes"]["POSITION"]]
             data = surface | {
