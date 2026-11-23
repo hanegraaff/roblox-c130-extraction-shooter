@@ -1,0 +1,69 @@
+{
+  "testedOn": "2026-11-23",
+  "environment": "Local Roblox Studio Edit and one-player Play, tests.rbxlx; genuine native Studio captures reassembled in a disposable fixture",
+  "sourceBuildStatus": "Managed RBXM files verified in the Rojo test artifact. The final Rojo mapping was unavailable in the open test document during the native probe.",
+  "placementAndDamage": {
+    "legacyPanelsRemaining": 0,
+    "panelCount": 103,
+    "clearApproaches": 252,
+    "shelterRegistries": 1,
+    "coveredSpawnColumns": 225,
+    "damage": {
+      "SB.W.S.01": {
+        "retained": 242,
+        "reset": 15,
+        "closed": 333
+      },
+      "SB.R.07.07": {
+        "retained": 122,
+        "reset": 18,
+        "closed": 252
+      }
+    }
+  },
+  "avatarPreview": {
+    "players": 1,
+    "walk": {
+      "west": {
+        "exitErrorStuds": 1.39,
+        "entryErrorStuds": 0.76
+      },
+      "south": {
+        "exitErrorStuds": 0.86,
+        "entryErrorStuds": 0.83
+      },
+      "east": {
+        "exitErrorStuds": 0.96,
+        "entryErrorStuds": 1
+      },
+      "north": {
+        "exitErrorStuds": 0.96,
+        "entryErrorStuds": 1.53
+      }
+    }
+  },
+  "cameraPreview": {
+    "followDistance": 12.49999713897705,
+    "previewPieces": 2349,
+    "subject": "Humanoid",
+    "avatar": "1.401265025138855, 2.9980251789093018, -175.39418029785156",
+    "cameraType": "Custom"
+  },
+  "thermalPreview": {
+    "retainedVisuals": 873,
+    "restoredGroundArt": true,
+    "independentHidden": 1260
+  },
+  "cleanup": {
+    "captureRemoved": true,
+    "previewRemoved": true,
+    "synced": false
+  },
+  "captureFiles": [
+    "docs/images/spawn-bunker/studio-yard.jpg",
+    "docs/images/spawn-bunker/studio-hall.jpg"
+  ],
+  "pending": [
+    "Actual two-client match, including production fire and reset, and normal/thermal camera review on the source-synced map"
+  ]
+}

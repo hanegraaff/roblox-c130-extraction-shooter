@@ -15,6 +15,7 @@ local PanelAssetCatalog = require(script.Parent.PanelAssetCatalog)
 local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
 local VesperPanelGeometry = require(script.Parent.VesperPanelGeometry)
 local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
+local SandbreakReconstruction = require(script.Parent.SandbreakReconstruction)
 local DestructionRuntime = {}
 export type Controller = {
     sync: (number) -> (),
@@ -74,6 +75,18 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                     return nil, reason
                 end
                 vesperVariants[panel.Name] = variants
+            elseif panel:IsA("Model") and panel:GetAttribute("SandbreakPanel") == true then
+                if registry.buildingId ~= "SpawnShelter" or panel:GetAttribute("PanelAssetFamily") ~= nil then
+                    return nil, "Sandbreak panel registered outside the shelter or with a conflicting family"
+                end
+                local variants, reason = SandbreakReconstruction.panelVariants(
+                    if assets then assets:FindFirstChild("SandbreakPanelVariants") else nil,
+                    panel
+                )
+                if not variants then
+                    return nil, reason
+                end
+                vesperVariants[panel.Name] = variants
             else
                 materialPanels = materialPanels or panel:IsA("Model")
             end
@@ -119,6 +132,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
     end
     local rules = DestructionService.new()
     local panels: { [string]: PanelGeometry.Panel } = {}
+    local supportArtOwners: { [string]: boolean } = {}
     local roundId = -1
     local wreck: Model? = nil
     local pristineWreck: Model? = nil
@@ -144,6 +158,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
             end
         end
         table.clear(panels)
+        table.clear(supportArtOwners)
     end
     local function capture()
         local candidate = map:FindFirstChild("HerculesWreck", true)
@@ -183,6 +198,32 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 end
                 assert(panels[panel.id] == nil, "duplicate active panel ID")
                 panels[panel.id] = panel
+                if registry.buildingId == "SpawnShelter" then
+                    for _, art in panel.original:GetChildren() do
+                        if type(art:GetAttribute("SourceSupportPanels")) == "string" then
+                            supportArtOwners[panel.id] = true
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    end
+    -- Roof equipment can span several panels. Once one support opens, remove
+    -- the equipment even if its owning panel is still intact or changes to Light.
+    local function clearUnsupportedArt()
+        for id in supportArtOwners do
+            for _, art in panels[id].model:GetChildren() do
+                local supports = art:GetAttribute("SourceSupportPanels")
+                if type(supports) == "string" then
+                    for support in string.gmatch(supports, "[^,]+") do
+                        local state = rules.snapshot(support)
+                        if state and state.stage > 0 then
+                            art:Destroy()
+                            break
+                        end
+                    end
+                end
             end
         end
     end
@@ -190,7 +231,8 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         if not running then
             return
         end
-        for _, id in rules.changed() do
+        local changed = rules.changed()
+        for _, id in changed do
             local panel = panels[id]
             local state = rules.snapshot(id)
             if id == "HerculesWreck" and wreck and state and state.stage == 2 then
@@ -234,6 +276,9 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 )
                 fragments.static(panel.model)
             end
+        end
+        if #changed > 0 then
+            clearUnsupportedArt()
         end
         fragments.step(now)
     end

@@ -67,6 +67,8 @@ class SandbreakBatch(Batch):
                 "sourceProperties": props,
                 "material": material["name"] if material else "query",
                 "expectsColorMap": "baseColorTexture" in pbr,
+                "baseColor": pbr.get("baseColorFactor", [1, 1, 1, 1]),
+                "emissive": any(material.get("emissiveFactor", ())) if material else False,
                 "triangles": triangles,
                 "localMinimum": self.source["accessors"][position]["min"],
                 "localMaximum": self.source["accessors"][position]["max"],

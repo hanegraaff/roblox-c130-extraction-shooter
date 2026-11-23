@@ -145,6 +145,8 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
     local panelInputs = map:FindFirstChild("PanelRegistries")
     local shelterInput = if panelInputs then panelInputs:FindFirstChild("SpawnShelter") else nil
     local shelter = map:FindFirstChild("SpawnShelterPanels")
+    local hasSandbreak = map:FindFirstChild("SandbreakBunker") ~= nil
+    local shelterCount = if hasSandbreak then 103 else 76
     if
         not panelInputs
         or #panelInputs:GetChildren() ~= 1
@@ -152,9 +154,9 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         or not shelterInput:IsA("StringValue")
         or shelterInput.Value ~= "SpawnShelterPanels"
         or not shelter
-        or #shelter:GetChildren() ~= 76
+        or #shelter:GetChildren() ~= shelterCount
     then
-        return false, "starting shelter requires its explicit76-panel registry"
+        return false, "starting shelter requires its explicit panel registry"
     end
     for _, kind in { "SpawnShelterPanels", "Breakable" } do
         local covers = map:FindFirstChild(kind)
@@ -162,7 +164,11 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             return false, "missing " .. kind .. " cover"
         end
         for _, cover in covers:GetChildren() do
-            if not cover:IsA("BasePart") or not cover.CanCollide or not cover.CanQuery then
+            if kind == "SpawnShelterPanels" and hasSandbreak then
+                if not cover:IsA("Model") or cover:GetAttribute("SandbreakPanel") ~= true then
+                    return false, "Sandbreak cover must use a native panel model"
+                end
+            elseif not cover:IsA("BasePart") or not cover.CanCollide or not cover.CanQuery then
                 return false, "cover must collide and block queries"
             end
         end

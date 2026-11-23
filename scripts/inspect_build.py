@@ -634,6 +634,50 @@ def check_salt_flats_import(path: Path) -> int:
     return mesh_count
 
 
+def check_sandbreak_import(path: Path) -> int:
+    """Check exact managed panels and ownership of native query MeshParts."""
+    receipt_path = ROOT / "assets/imports/sandbreak/native-receipt.json"
+    if not receipt_path.is_file():
+        return 0
+    receipt = json.loads(receipt_path.read_text())
+    nodes = instance_nodes(path)
+    assembly = "ServerStorage/Assets/SandbreakBunker/"
+    variants = "ServerStorage/Assets/SandbreakPanelVariants/"
+    panel_root = assembly + "SpawnShelterPanels/"
+    panels = {name.removeprefix(panel_root) for name in nodes
+              if name.startswith(panel_root) and "/" not in name.removeprefix(panel_root)}
+    if len(panels) != receipt["panelCount"] or any(
+        f"{variants}{panel}/{stage}" not in nodes for panel in panels for stage in ("Light", "Heavy")
+    ):
+        raise RuntimeError("Incomplete Sandbreak panel states")
+    mesh_count = 0
+    proxies = 0
+    for name, part in nodes.items():
+        if not name.startswith((assembly, variants)):
+            continue
+        if part.get("class") in {"Script", "LocalScript", "ModuleScript"}:
+            raise RuntimeError(f"Unexpected executable imported with Sandbreak: {name}")
+        if part.get("class") != "MeshPart":
+            continue
+        mesh_count += 1
+        is_proxy = name.endswith("_Proxy")
+        proxies += int(is_proxy)
+        expected = "true" if is_proxy else "false"
+        flags = {flag: part.findtext(f"Properties/bool[@name='{flag}']") for flag in
+                 ("Anchored", "CanCollide", "CanQuery", "CanTouch")}
+        if flags != {"Anchored": "true", "CanCollide": expected, "CanQuery": expected, "CanTouch": "false"}:
+            raise RuntimeError(f"Wrong Sandbreak collision ownership: {name}")
+        if not part.findtext("Properties/Content[@name='MeshContent']/uri", "").startswith("rbxassetid://"):
+            raise RuntimeError(f"Sandbreak mesh is missing native identity: {name}")
+        if name.rsplit("/", 1)[-1].startswith(("SB_yard_", "SB_hall_dressing_")):
+            if compiled_surface_attributes(part).get("ThermalNonCover") is not True:
+                raise RuntimeError(f"Sandbreak dressing is missing its thermal opacity flag: {name}")
+    if mesh_count != receipt["managedMeshCount"] or proxies != 3 * receipt["panelCount"]:
+        raise RuntimeError(f"Unexpected Sandbreak native counts: {mesh_count} meshes and {proxies} proxies")
+    print(f"Sandbreak native banks passed: {mesh_count} MeshParts, {len(panels)} panel identities.")
+    return mesh_count
+
+
 def main() -> None:
     """Assert bootstraps/spawn exist and all test-only Instances are absent from release."""
     release = paths(ROOT / "build/game.rbxlx")
@@ -653,7 +697,7 @@ def main() -> None:
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction", "SandbreakReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
@@ -744,6 +788,8 @@ def main() -> None:
     test_parts += check_vesper_import(ROOT / "build/tests.rbxlx")
     release_parts += check_salt_flats_import(ROOT / "build/game.rbxlx")
     test_parts += check_salt_flats_import(ROOT / "build/tests.rbxlx")
+    release_parts += check_sandbreak_import(ROOT / "build/game.rbxlx")
+    test_parts += check_sandbreak_import(ROOT / "build/tests.rbxlx")
     geometry_rejection_probes()
     print(f"Authored geometry reconstruction passed: {release_parts} release/{test_parts} test part transforms, dimensions, shape and collision flags.")
     print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; {len(allowed_scripts)} runtime scripts only in release.")
