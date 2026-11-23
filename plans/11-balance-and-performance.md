@@ -1,5 +1,7 @@
 # P11 — Balance, performance and resilience
 
+> Current-rule revision: [P18](18-game-rebalancing.md), requested 2026-11-23, supersedes prior health/three-rocket, panel-durability and circular camera-bound assumptions and adds the Seedship launcher. This plan's recorded tests remain historical evidence for their identified source. Future release checks must use P18's revised rules.
+
 **Milestone:** M6. **Dependencies:** P10. **Requirements:** R03, R05–R14, R15, R16. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience

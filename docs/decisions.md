@@ -87,9 +87,14 @@ Updated 2026-11-23. “Selected” records user choices. “Default” records c
 | D80 | Selected southern landmark, 2026-11-23 | Place the Prism Seedship south of Sandbreak, roughly opposite Vesper. Use Mars-inspired red ground, boulders, low hills and an impact crater with gradual transitions to neighboring districts. | Supersedes the empty southern site in D78 |
 | D80 | Layout and equipment defaults | The empty south pad is 212 × 146 studs. An exterior loop connects four threshold spurs and three destination trails. Each Ground player carries one launcher at a time. | Traversal or balance feedback |
 
-Aircraft health is derived as three times direct rocket damage. Rifle damage is positive and small; previous rifle hits may reduce the further rockets needed. First and second rockets alone do not destroy a pristine plane. These are hard test invariants, not tuning defaults. Each C-130 weapon retains its independent cooldown/reload across switching.
+The 2026-11-23 P18 revision supersedes prior health, destruction and camera-bound invariants. Historical decisions and evidence remain intact above.
 
-The current level's circular orbit uses the same center and horizontal radius as its playable disk. The model points along flight travel. P14 is integrated on main: WASD or touch arrows hold a bounded viewing angle relative to the plane through its orbit and weapon-linked zoom changes, with the approved quarter-screen edge allowance. Mouse aiming is independent of panning. Future levels may have another footprint while a configured circular orbit encloses them. Exact altitude/FOVs are adjustable, with validation that playable sight lines and weapon ranges remain viable.
+| ID | Kind | Decision | Revisit when |
+| --- | --- | --- | --- |
+| D81 | Selected health revision, 2026-11-23 | Maximum aircraft health is 1,000 × deployment Ground-player count, excluding the operator. Lock the roster-derived maximum for the round. User explicitly retains existing fixed rocket damage (100), superseding the three-rocket guarantee. M-7 remains 5. | User revises balance |
+| D82 | Selected demolition revision, 2026-11-23 | One direct 105mm hit destroys a panel. Two earned seconds of valid same-panel 30mm impacts destroy a pristine panel. Keep earned damage across interruptions without counting pauses. Apply shared rules to all battlefield buildings. | User revises durability |
+| D83 | Selected pan-bound revision, 2026-11-23 | Directional operator movement covers the world-aligned square representing the overall level (currently 720 × 720). Only square edges block pan; movement along an edge and reversal remain smooth throughout the orbit. Supersede circular/frustum clipping; keep the canonical aircraft orbit and independent aim. Document camera frame/safety choices as implementation defaults. | Native camera evidence or user changes |
+| D84 | Selected launcher revision, 2026-11-23 | Add a fourth recoverable launcher inside the alien Prism Seedship; retain all three existing landmark pickups and one launcher per carrier. | User revises distribution |
 
 ## Open details that do not block initial implementation
 

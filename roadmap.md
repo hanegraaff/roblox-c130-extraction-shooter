@@ -22,6 +22,7 @@ The integrated source on `main` includes the development shell, verification too
 | M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Blocked | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
+| Gameplay revision | [P18: Game rebalancing](plans/18-game-rebalancing.md) | In progress | P07, P08, P14, P17, Seedship PR #62 | Fight an aircraft with 1,000 health per Ground player, demolish panels quickly, pan across square bounds and recover a launcher inside the Seedship |
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 

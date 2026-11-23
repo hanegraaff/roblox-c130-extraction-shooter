@@ -1,5 +1,7 @@
 # Architecture
 
+> P18 revision: the current implementation work replaces fixed three-rocket health with deployment Ground-roster scaling, old panel durability with one-heavy-hit/two-earned-second destruction, circular/frustum pan clipping with square bounds, and three launcher anchors with four including Seedship. [P18](plans/18-game-rebalancing.md) is the current contract; source-specific older implementation descriptions below will be reconciled with the final candidate.
+
 ## Current state and target
 
 Integrated `main` contains the 720-stud battlefield, three two-story buildings, authoritative rounds, the circling aircraft with thermal panning and zoom, recoverable launcher, persistent destruction and ordered match results and replay. It reconstructs the imported smaller Outpost before map snapshotting and provides indoor Ground camera zoom. Both roles see the shared aircraft health bar and weapon readiness cues. The client owns teammate spectating and session-local audiovisual settings. Additional levels remain future work. [P17 record](plans/17-integrate-military-outpost.md), [P09 record](plans/09-match-outcomes.md), [P10 plan](plans/10-player-experience.md)

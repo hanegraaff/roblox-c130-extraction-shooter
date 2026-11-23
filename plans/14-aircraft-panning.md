@@ -1,5 +1,7 @@
 # P14 — Directional aircraft targeting
 
+> Current-rule revision: [P18](18-game-rebalancing.md), requested 2026-11-23, supersedes prior health/three-rocket, panel-durability and circular camera-bound assumptions and adds the Seedship launcher. This plan's recorded tests remain historical evidence for their identified source. Future release checks must use P18's revised rules.
+
 **Milestone:** M2 / level revision. **Dependencies:** P13. **Requirements:** R05, R06, R12, R13, R15. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience

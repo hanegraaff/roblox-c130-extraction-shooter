@@ -1,5 +1,7 @@
 # P08 — One recoverable map rocket launcher
 
+> Current-rule revision: [P18](18-game-rebalancing.md), requested 2026-11-23, supersedes prior health/three-rocket, panel-durability and circular camera-bound assumptions and adds the Seedship launcher. This plan's recorded tests remain historical evidence for their identified source. Future release checks must use P18's revised rules.
+
 **Milestone:** M5. **Dependencies:** P07. **Requirements:** R08, R10, R13, R15. Status: [roadmap](../roadmap.md).
 
 The November 23 district revision replaces the original central weapon with three site-scoped weapons. Each must support independent acquisition, shot credit, transfer, recovery and reset. A player can hold one. The original P08 completion evidence below describes the earlier single-launcher release.
