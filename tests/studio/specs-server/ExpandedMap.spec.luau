@@ -50,7 +50,8 @@ local surfaceSamples = {
     { point = Vector3.new(238, 0, -162), material = Enum.Material.Grass },
     { point = Vector3.new(162, 0, -146), material = Enum.Material.LeafyGrass },
     { point = Vector3.new(178, 0, 194), material = Enum.Material.Asphalt },
-    { point = Vector3.new(2, 0, 258), material = Enum.Material.Sand },
+    { point = Vector3.new(2, 0, 258), material = Enum.Material.Mud },
+    { point = Vector3.new(-150, 0, 238), material = Enum.Material.Mud },
 }
 
 -- Include the old hill mutation point as well as each district and the survey pad.
@@ -203,6 +204,10 @@ return function()
                         return hit ~= nil and hit.Material == sample.material and math.abs(hit.Position.Y) < 1
                     end, "district material/elevation did not converge")
                 end
+                awaitCondition(function()
+                    local rim = workspace:Raycast(Vector3.new(-174, 32, 238), Vector3.new(0, -40, 0), rays)
+                    return rim ~= nil and rim.Position.Y >= 5
+                end, "western crater rim did not converge")
                 local unrelated = Region3.new(Vector3.new(696, 16, -4), Vector3.new(704, 24, 4))
                     :ExpandToGrid(4)
                 local oldMaterials, oldOccupancies = Terrain:ReadVoxels(unrelated, 4)
@@ -244,6 +249,11 @@ return function()
             raster.Value = string.sub(original, 2)
             assert(not TerrainRecipe.restore(Terrain, recipe), "truncated raster accepted")
             raster.Value = original
+            local relief = recipe:FindFirstChild("ReliefRaster") :: StringValue
+            local originalRelief = relief.Value
+            relief.Value = "f" .. string.sub(originalRelief, 2)
+            assert(not TerrainRecipe.restore(Terrain, recipe), "relief outside map disk accepted")
+            relief.Value = originalRelief
             local bounds = recipe:FindFirstChild("TerrainBounds") :: BasePart
             bounds.CFrame *= CFrame.Angles(0, math.pi / 4, 0)
             assert(not TerrainRecipe.restore(Terrain, recipe), "rotated ownership bounds accepted")

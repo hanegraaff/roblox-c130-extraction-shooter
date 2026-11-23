@@ -1,9 +1,8 @@
 --!strict
 --[=[
-    TerrainRecipe reconstructs the server-owned level surface from four-stud material
-    cells ordered by X then Z. Each non-air cell fills the layer immediately below
-    ground level. Restores and clears are bounded to the historical terrain volume so
-    older hill voxels disappear on upgrade. Validation finishes before any engine write.
+    TerrainRecipe reconstructs the server-owned surface from four-stud material and
+    height cells ordered by X then Z. Heights are hex-encoded studs above base grade.
+    Validation finishes before any engine write. Restores touch only the authored box.
 ]=]
 local TerrainRecipe = {}
 local materials: { [string]: Enum.Material } = {
@@ -15,10 +14,13 @@ local materials: { [string]: Enum.Material } = {
     l = Enum.Material.LeafyGrass,
     a = Enum.Material.Asphalt,
     v = Enum.Material.Pavement,
+    m = Enum.Material.Mud,
     ["."] = Enum.Material.Air,
 }
 local resolution = 4
 local cells = 180
+local firstLayer = -8
+local layerCount = 6
 
 -- Rejects changed ownership bounds, unknown material symbols and truncated rows.
 function TerrainRecipe.validate(recipe: Instance): (boolean, string?)
@@ -32,8 +34,15 @@ function TerrainRecipe.validate(recipe: Instance): (boolean, string?)
         return false, "invalid terrain ownership bounds"
     end
     local raster = recipe:FindFirstChild("SurfaceRaster")
-    if not raster or not raster:IsA("StringValue") or #recipe:GetChildren() ~= 2 then
-        return false, "missing district surface raster"
+    local relief = recipe:FindFirstChild("ReliefRaster")
+    if
+        not raster
+        or not raster:IsA("StringValue")
+        or not relief
+        or not relief:IsA("StringValue")
+        or #recipe:GetChildren() ~= 3
+    then
+        return false, "missing district surface or relief raster"
     end
     for _, material in materials do
         if material ~= Enum.Material.Air and typeof(raster:GetAttribute(material.Name)) ~= "Color3" then
@@ -41,19 +50,29 @@ function TerrainRecipe.validate(recipe: Instance): (boolean, string?)
         end
     end
     local rows = string.split(raster.Value, "\n")
-    if #rows ~= cells then
+    local heights = string.split(relief.Value, "\n")
+    if #rows ~= cells or #heights ~= cells then
         return false, "invalid surface width"
     end
-    for _, row in rows do
-        if #row ~= cells or string.find(row, "[^stdpglav%.]") then
+    for index, row in rows do
+        local height = heights[index]
+        if #row ~= cells or string.find(row, "[^stdpglavm%.]") then
             return false, "invalid district material row"
+        end
+        if #height ~= cells or string.find(height, "[^0-9a-f]") then
+            return false, "invalid district relief row"
+        end
+        for column = 1, cells do
+            if string.sub(row, column, column) == "." and string.sub(height, column, column) ~= "0" then
+                return false, "raised terrain outside battlefield"
+            end
         end
     end
     return true, nil
 end
 
--- Repaints native Sand, Grass and road materials at Y=0. The original disk supports
--- players while the physics mesh updates. The volume outside TerrainBounds is untouched.
+-- Repaints the native surface and fills the southern ridges and crater rim.
+-- The original disk supports players while the terrain physics mesh updates.
 function TerrainRecipe.restore(terrain: Terrain, recipe: Instance): (boolean, string?)
     local ok, reason = TerrainRecipe.validate(recipe)
     if not ok then
@@ -61,18 +80,32 @@ function TerrainRecipe.restore(terrain: Terrain, recipe: Instance): (boolean, st
     end
     local bounds = recipe:FindFirstChild("TerrainBounds") :: BasePart
     local raster = recipe:FindFirstChild("SurfaceRaster") :: StringValue
+    local heights = string.split((recipe:FindFirstChild("ReliefRaster") :: StringValue).Value, "\n")
     local grid, density = {}, {}
     for x, row in string.split(raster.Value, "\n") do
         local stripe: { Enum.Material } = table.create(cells)
-        local solids: { number } = table.create(cells)
-        local surface: { number } = table.create(cells)
+        local columnHeights: { number } = table.create(cells)
+        local height = heights[x]
         for z = 1, cells do
-            local material = materials[string.sub(row, z, z)]
-            stripe[z] = material
-            solids[z] = if material == Enum.Material.Air then 0 else 1
-            surface[z] = solids[z] * 0.5
+            stripe[z] = materials[string.sub(row, z, z)]
+            columnHeights[z] = tonumber(string.sub(height, z, z), 16) :: number
         end
-        grid[x], density[x] = { stripe, stripe }, { solids, surface }
+        local layers: { { Enum.Material } } = table.create(layerCount)
+        local occupancy: { { number } } = table.create(layerCount)
+        for layer = 1, layerCount do
+            local elevation = firstLayer + (layer - 1) * resolution
+            local layerMaterials: { Enum.Material } = table.create(cells)
+            local layerOccupancy: { number } = table.create(cells)
+            for z = 1, cells do
+                local amount = if stripe[z] == Enum.Material.Air
+                    then 0
+                    else math.clamp((columnHeights[z] - 2 - elevation) / resolution, 0, 1)
+                layerOccupancy[z] = amount
+                layerMaterials[z] = if amount > 0 then stripe[z] else Enum.Material.Air
+            end
+            layers[layer], occupancy[layer] = layerMaterials, layerOccupancy
+        end
+        grid[x], density[x] = layers, occupancy
     end
     for _, material in materials do
         if material ~= Enum.Material.Air then
@@ -81,7 +114,10 @@ function TerrainRecipe.restore(terrain: Terrain, recipe: Instance): (boolean, st
     end
     terrain:FillBlock(bounds.CFrame, bounds.Size, Enum.Material.Air)
     terrain:WriteVoxels(
-        Region3.new(Vector3.new(-360, -8, -360), Vector3.new(360, 0, 360)),
+        Region3.new(
+            Vector3.new(-360, firstLayer, -360),
+            Vector3.new(360, firstLayer + layerCount * resolution, 360)
+        ),
         resolution,
         grid,
         density

@@ -20,7 +20,13 @@ box.Anchored = true
 box.CanCollide = false
 box.CanTouch = false
 box.Parent = workspace
-local result = {routes = {}, meshes = 0, placements = 0}
+local result = {routes = {}, meshes = 0, placements = 0, mars = {rocks = 0, solid = 0, samples = {}}}
+local terrainOnly = RaycastParams.new()
+terrainOnly.FilterType = Enum.RaycastFilterType.Include
+terrainOnly.FilterDescendantsInstances = {workspace.Terrain}
+local function surface(x, z)
+    return assert(workspace:Raycast(Vector3.new(x, 32, z), Vector3.new(0, -40, 0), terrainOnly))
+end
 local ok, failure = pcall(function()
     for name, route in tracks do
         local samples = 0
@@ -32,6 +38,8 @@ local ok, failure = pcall(function()
                 box.Position = a:Lerp(b, j/steps)
                 local blocked = workspace:GetPartsInPart(box, overlap)
                 assert(#blocked == 0, name .. " blocked at " .. tostring(box.Position))
+                local support = surface(box.Position.X, box.Position.Z)
+                assert(math.abs(support.Position.Y) < 1, name .. " trail is not at grade")
                 samples += 1
             end
         end
@@ -62,10 +70,37 @@ local ok, failure = pcall(function()
         end
     end
     assert(result.meshes == 380 and result.placements == 306, "Incomplete stock scenery")
+    for _, rock in map.MarsBoulders:GetChildren() do
+        assert(rock:IsA("MeshPart") and rock.MeshId == "rbxassetid://5547037547")
+        assert(rock.MeshSize.Magnitude > 0 and rock.TextureID == "", "Incorrect native boulder payload")
+        assert(rock.Anchored and not rock.CanTouch and rock.CanQuery == rock.CanCollide)
+        result.mars.rocks += 1
+        if rock.CanCollide then
+            result.mars.solid += 1
+        else
+            assert(rock:GetAttribute("ThermalNonCover") == true)
+        end
+    end
+    assert(result.mars.rocks > 0 and result.mars.solid > 0)
+    for name, point in {
+        basin = {2, 258, 0, 1, "Mud"},
+        craterFloor = {-150, 238, 0, 1, "Mud"},
+        westernRim = {-174, 238, 5, 9, "Mud"},
+        westernMesa = {-198, 254, 10, 15, "Mud"},
+        easternRidge = {130, 278, 8, 14, "Mud"},
+        radar = {238, -162, 0, 1, "Grass"},
+        depot = {178, 194, 0, 1, "Asphalt"},
+        sand = {-258, -138, 0, 1, "Sand"},
+    } do
+        local hit = surface(point[1], point[2])
+        local height = hit.Position.Y
+        assert(height >= point[3] - 0.1 and height <= point[4] and hit.Material.Name == point[5], name)
+        result.mars.samples[name] = {height = height, material = hit.Material.Name}
+    end
 end)
 box:Destroy()
 assert(ok, tostring(failure))
-print(game:GetService("HttpService"):JSONEncode(result))
+return game:GetService("HttpService"):JSONEncode(result)
 """
 
 if __name__ == "__main__":

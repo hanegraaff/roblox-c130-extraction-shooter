@@ -403,11 +403,15 @@ def check_expanded_world_contract() -> None:
             assert abs(z-roof["CFrame"][2]) < roof["Size"][2]/2 - 1, "spawn canopy misses full-orbit Z protection"
     manifest = json.loads((ROOT / "assets/manifest.json").read_text())
     recipe_contract = next(asset for asset in manifest["assets"] if asset["id"] == "battlefield-greybox")["terrain_recipe"]
-    assert recipe_contract["version"] == 2 and recipe_contract["voxel_resolution_studs"] == 4
+    assert recipe_contract["version"] == 3 and recipe_contract["voxel_resolution_studs"] == 4
     recipe = {node["Name"]:node["Properties"] for node in children["TerrainRecipe"]["Children"]}
-    assert set(recipe) == {"TerrainBounds","SurfaceRaster"} and recipe["TerrainBounds"]["Size"] == [736,144,736]
+    assert set(recipe) == {"TerrainBounds","SurfaceRaster","ReliefRaster"} and recipe["TerrainBounds"]["Size"] == [736,144,736]
     raster = recipe["SurfaceRaster"]["Value"].splitlines()
-    assert len(raster) == 180 and all(len(row)==180 and not set(row)-set("stdpglav.") for row in raster)
+    assert len(raster) == 180 and all(len(row)==180 and not set(row)-set("stdpglavm.") for row in raster)
+    heights = recipe["ReliefRaster"]["Value"].splitlines()
+    assert len(heights) == 180 and all(len(row)==180 and not set(row)-set("0123456789abcdef") for row in heights)
+    assert all(height == "0" or surface != "." for materials, relief in zip(raster,heights)
+               for surface,height in zip(materials,relief)), "relief must stay within terrain ownership"
     areas = []
     ids = set()
     for building in children["Buildings"]["Children"]:

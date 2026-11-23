@@ -75,7 +75,8 @@
         "$className": "Folder",
         "Battlefield": {
           "$path": "assets/world/Battlefield.model.json",
-          "DistrictScenery": {"$path": "assets/imports/districts/DistrictScenery.rbxm"}
+          "DistrictScenery": {"$path": "assets/imports/districts/DistrictScenery.rbxm"},
+          "MarsBoulders": {"$path": "assets/imports/districts/MarsBoulders.rbxm"}
         }
       }
     }
