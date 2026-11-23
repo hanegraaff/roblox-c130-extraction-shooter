@@ -17,7 +17,8 @@ The command runs `scripts/verify.py`, checks the runtime script sources in both
 Rojo builds against the checkout and matches the release's cloud asset IDs to
 the committed asset records. On success, `build/release-receipt.json` records
 the commit and tree, build SHA-256s, tool and dependency pins, manifest and asset
-inventory. Retain that receipt and the host log with the exact candidate. Keep
+inventory. The Vesper inventory is derived from a separate build of the two
+native banks and their import receipt. Retain that receipt and the host log with the exact candidate. Keep
 the generated place files in local or CI artifact storage.
 
 Open `build/tests.rbxlx` as a separate local Studio test document or sync the
@@ -90,11 +91,12 @@ roster size, with one operator and everyone else on Ground. Repeat each
 of the three outcome paths at each full roster size, keeping the roster connected
 through Results and reset.
 
-Use a separate late-join exercise. Start a round with space for a fresh
-participant, then add that participant after deployment. Record the actual
-counts before and after the join. The late joiner must remain a spectator
-without active equipment or a round life until the next lobby. D59 covers the
-same-identity reconnect exclusion.
+D75 waives the dedicated late-join exercise for the current P12 candidate.
+When a future acceptance run includes this exercise, start a round with space
+for a fresh participant and add that participant after deployment. Record
+the client counts before and after the join. The late joiner must remain a
+spectator without active equipment or a round life until the next lobby. D59
+covers the same-identity reconnect exclusion.
 
 | Exercise | Expected observations |
 | --- | --- |

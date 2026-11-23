@@ -13,9 +13,9 @@ Prepare a clean-checkout release candidate using the release mapping. Record sou
 ## Acceptance criteria
 
 - **A1:** Full gate passes from a clean checkout. Artifact contents match the committed source and manifest. Release builds exclude test dependencies, runners and development fixtures. Build hash and source commit are recorded.
-- **A2:** Final Studio engine/multiplayer suite passes; every R01–R16 requirement links to actual test/evidence, with no required skipped or zero-count suite.
+- **A2:** The required final Studio engine and multiplayer checks pass, and every R01–R16 requirement links to actual test evidence. D75 waives the dedicated late-join exercise for this candidate.
 - **A3:** Exact experience/place/audience and explicit authorization are recorded before publication. Cloud asset permissions are verified for that owner. A published build/version is confirmed by the platform, not inferred from a tool attempt.
-- **A4:** Real Roblox-client sessions at 6 and 10 players complete repeated aircraft-destruction, ground-elimination and timeout paths. Verify both roles, cover/destruction, supported late joins, launcher transfer, the three-rocket threshold, the inward perimeter camera at both zooms with WASD/touch panning and separate aim, enlarged terrain and all three multi-story buildings, 3/6-heavy-hit and nine-second 30mm panel progression, half-destroyed openings/physical fragments, weapon-switch timing and terrain/panel/debris reset. Record actual client counts without personal data. D59 excludes same-identity reconnect from this exercise. Deterministic service tests retain reconnect authority coverage. Run the 6/10-player checks in Roblox clients.
+- **A4:** Real Roblox-client sessions at 6 and 10 players complete repeated aircraft-destruction, ground-elimination and timeout paths. Verify both roles, cover/destruction, launcher transfer, the three-rocket threshold, the inward perimeter camera at both zooms with WASD/touch panning and separate aim, enlarged terrain and all three multi-story buildings, 3/6-heavy-hit and nine-second 30mm panel progression, half-destroyed openings/physical fragments, weapon-switch timing and terrain/panel/debris reset. Record actual client counts without personal data. D59 excludes same-identity reconnect and D75 waives the dedicated late-join exercise for this candidate. Deterministic service tests cover spectator and reconnect authority.
 - **A5:** The 10-player candidate meets the performance/soak budgets in `docs/testing.md`, with logs/metrics and no unresolved material gameplay/replication defects. Studio's smaller simulated-client run is not a substitute.
 - **A6:** Player README links to the actual authorized experience and states tested devices/current limitations. Release record identifies rollback steps and the verified candidate. Source and evidence are pushed and a reviewable PR is available.
 
@@ -86,6 +86,21 @@ The committed mesh capture and all twelve texture records identify owner
 receipt. These are source-side provenance. Destination-specific availability
 and permissions require a fresh cloud check.
 
+### Invited playtest approval for the merged build
+
+On 2026-11-23 the user approved publication of the merged `982d3e7` build to
+the same **C130 P17 Import** place for invited playtesters. The authorized
+release artifact has SHA-256
+`4b13d8b864e248d6ac469c68cf04df9fb8ffe9a813d699a379ba1a06463b123d`.
+The user reported a satisfactory two-player test and accepted that scope for
+the invited playtest. Full P12 acceptance still tracks the final Studio suite,
+six- and ten-player live rounds, and the live performance and soak evidence.
+
+The destination preflight again found the connected Studio document was a
+local place. Studio MCP denied `universe:read`, `universe.place:read`, and
+`asset:read`, and the browser access host was unavailable. The destination
+audience, asset grants and rollback version still need verification in Roblox.
+
 ### Clean-checkout verification
 
 `python3 scripts/setup.py` installed the pinned tools, TestEZ and Roblox types
@@ -143,13 +158,43 @@ reported a running test. P04, P05, P06/P06Team, P08, P10, P11, P13, human test
 controls and operated layout, thermal and mobile checks retain their
 source-specific earlier evidence and await fresh release acceptance.
 
+### Merged invited-playtest candidate Studio checks
+
+Studio `0.748.0.7481526` ran the `982d3e7` test build
+`merged-main-tests.rbxlx`, SHA-256
+`989f559b7954dd34d1df3bfc943dd3bbc69b58487d728614e28def890b4dd3ec`.
+The local document contained the two-player default and all 18 Vesper thermal
+surfaces. The SDK sessions returned these results:
+
+| Studio invocation | Result |
+| --- | --- |
+| `ExecuteMultiplayerTestAsync(2, {kind = "HumanTestMultiplayer"})` | 4/4, two clients. Checked role-choice conflicts, deployment, round settings and restart. |
+| `ExecuteMultiplayerTestAsync(2, {kind = "P09", scenario = "LastGround"})` | 3/3, two clients. Checked last-ground elimination and departure outcomes and teardown. Baseline passed 196/196 on the server and 14/14 on both clients. |
+| `ExecuteMultiplayerTestAsync(3, {kind = "P03"})` | 0/2 with three initial clients. A client timed out waiting for replicated role, phase and deadline. The harness stopped before adding the late client. |
+| `ExecuteMultiplayerTestAsync(2, {kind = "InvitedLateJoinProbe"})` followed by `AddPlayers(1)` | Two initial clients reached Active on round 1. The server accepted the add request and one retry. Both additional windows opened in Edit, and the active server stayed at two clients. The SDK closed the owned session and returned the failed join observation. |
+
+The local document returned to Edit with the temporary SDK report attributes
+cleared. In a separate native **Server & Clients** session started by the user,
+the same build passed 196/196 server checks and 14/14 on each of three clients.
+Starting from the ordinary **Start round now** button produced one C-130
+operator and two Ground players. The server and all three clients agreed on
+round 1, Active phase, roles and the deadline. Each client displayed its
+role and countdown. The operator received the thermal camera. After the round,
+all three showed Lobby, Waiting and their normal cameras. The session stayed
+open. The short Results phase was outside this check. A later `AddPlayers(1)`
+call in the manually started session was rejected by Studio, so the late-join
+probe used the separate SDK session recorded above.
+
+These runs exercised Studio clients on the source-built test place. Destination
+access and published-client evidence remain open.
+
 ### Release gates
 
 | Criterion | Evidence and remaining work |
 | --- | --- |
 | A1 | Passed from clean Git with repeat-build checksum agreement and a release-only artifact. The committed receipt records inputs and hashes. |
-| A2 | The linked Studio reports record fresh results and failures. P03 late join, full P07 traversal and reset, P09 LastGround, and the remaining fresh scenarios above stay open. |
-| A3 | The user granted publication for the exact hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
+| A2 | P09 LastGround, two-client controls and ordinary three-client deployment and lobby return pass on `982d3e7`. The P03 harness timed out before late join, and both added clients in the focused retry opened in Edit. The user waived the late-join exercise under D75. Full P07 traversal and reset and the remaining fresh scenarios above stay open. |
+| A3 | The user granted publication for the merged hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
 | A4 | Six- and ten-player Roblox client rounds require an accessible published candidate and confirmed player rosters. |
 | A5 | The live ten-player five-minute workload and 30-minute soak require the published candidate and a ten-player roster. The P11 Studio baseline remains recorded above. |
 | A6 | The technical writer reviewed the player and contributor guides and added smoke, rollback and live acceptance steps. The player experience link and live limitations await platform verification. [Runbook](../docs/release.md), [draft PR #46](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/46) |

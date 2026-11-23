@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
@@ -102,9 +103,33 @@ class ReleasePreparationTests(unittest.TestCase):
         self.assertEqual(result["creator_store_audio_ids"], ["30"])
         self.assertFalse(result["destination_permissions_verified"])
 
+        # Vesper extends the expected set through its native receipt. Extra
+        # content in the release XML must still pass the exact-reference gate.
+        self.write(release.VESPER_RECEIPT, json.dumps({"native": True}))
+        imported = ET.fromstring('<Item class="MeshPart"><Properties><Content name="MeshContent">'
+                                 '<uri>rbxassetid://7</uri></Content><Content name="TextureContent">'
+                                 '<uri>rbxassetid://25</uri></Content></Properties></Item>')
+        with patch.object(release, "vesper_assets", return_value=({"7"}, {"25"})) as vesper:
+            extended = release.asset_inventory(self.root, {**artifact, "Vesper": imported})
+            vesper.assert_called_once_with(self.root, {"native": True})
+            self.assertEqual(extended["mesh_ids"], ["5", "7"])
+            self.assertEqual(extended["texture_ids"], ["23", "25"])
+            self.assertEqual(extended["vesper_native_receipt"]["path"], release.VESPER_RECEIPT)
+            with self.assertRaisesRegex(RuntimeError, r"unused \['25', '7'\]"):
+                release.asset_inventory(self.root, artifact)
+        (self.root / release.VESPER_RECEIPT).unlink()
+
         script.find("Properties/string").text = 'return "rbxassetid://31"'
         with self.assertRaisesRegex(RuntimeError, r"unexpected \['31'\], unused \['30'\]"):
             release.asset_inventory(self.root, artifact)
+
+    def test_vesper_inventory_rejects_changed_native_bank_before_building(self):
+        for bank in release.VESPER_BANKS:
+            self.write(bank, "authored native data")
+        recorded = {bank: release.fingerprint(self.root, bank)["sha256"] for bank in release.VESPER_BANKS}
+        self.write(release.VESPER_BANKS[0], "changed native data")
+        with self.assertRaisesRegex(RuntimeError, "native banks differ from the import receipt"):
+            release.vesper_assets(self.root, {"nativeModelsByPathAndSha256": recorded})
 
 
 if __name__ == "__main__":
