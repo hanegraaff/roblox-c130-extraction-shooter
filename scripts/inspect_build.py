@@ -206,7 +206,7 @@ def check_authored_geometry(path: Path) -> int:
 
     for asset in manifest["assets"]:
         local = asset["local_path"]
-        if not local or not local.endswith(".model.json"):
+        if not local or not local.endswith(".model.json") or local.startswith("assets/presentation/"):
             continue
         source = json.loads((ROOT / local).read_text())
         base = "Workspace/World" if asset["kind"] == "world" else "ServerStorage/Assets"
@@ -539,6 +539,14 @@ def check_vesper_import(path: Path) -> int:
         for node in root.findall("SharedStrings/SharedString")
     }
     receipt = json.loads((ROOT / "assets/imports/radar-outpost/native-receipt.json").read_text())
+    palette = "ReplicatedStorage/Shared/VesperThermalSurfaces/"
+    texture_maps = {
+        name.removeprefix(palette): item.findtext("Properties/Content[@name='ColorMapContent']/uri")
+        for name, item in nodes.items()
+        if name.startswith(palette) and item.attrib["class"] == "SurfaceAppearance"
+    }
+    if texture_maps != receipt["textureIdsByMaterial"]:
+        raise RuntimeError("Vesper thermal palette must reuse the approved color maps")
     assets = "ServerStorage/Assets/"
     expected = {"VesperArray": (649, 54), "VesperPanelVariants": (814, 108)}
     counts = {name: [0, 0] for name in expected}

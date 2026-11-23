@@ -70,6 +70,8 @@ The launcher holds one ready rocket and automatically replenishes after a config
 
 All fire is intent: the server derives muzzle origin, validates role/equipment/aim/rate and resolves shots against its own world. Use bounded projectile lifetime and swept collision. All remaining solid cover geometry blocks direct fire, blast damage and thermal highlighting; actual holes in damaged panels expose only the sight lines through those holes. MVP blast damage uses a documented line-of-sight sample to a target's damage anchor rather than pressure simulation.
 
+In the C-130 view, exposed ground players stand out as bright silhouettes against muted scenery. Keep building form, key attached detail and damage readable, including the military Outpost's exterior equipment and Vesper Array's radar dish. Keep decorative clutter out of the thermal depth where it would falsely conceal an exposed player. Tune the brightness of individual imported assets as needed and preserve their authored ground-view materials (D73).
+
 An impact resolves damage using pre-impact geometry; a new opening benefits subsequent shots. Building surfaces are divided into large, independently identified panels. An average room spans approximately two panels in width and one panel in height; 16×8-stud panels and a 32-stud room width are initial greybox defaults, subject to avatar/route checks. Each building must contain destructible exterior wall panels on all stories and panelized roofs, so aircraft fire can open overhead cover too. The proposed MVP default keeps stairs, floors and the supporting frame stable. Full structural collapse is separate scope.
 
 | Panel state | Heavy-cannon direct hits from intact | Visible and physical behavior |

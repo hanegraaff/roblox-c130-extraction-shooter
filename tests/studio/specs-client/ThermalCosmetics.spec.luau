@@ -1,5 +1,5 @@
 --!strict
--- P17: real client-only transparency ownership; rendered depth review is separate.
+-- Real client-only thermal color/transparency ownership. Rendered depth review is separate.
 type CosmeticsAPI = typeof(require(game.StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics))
 type MaterialAPI = typeof(require(game.ReplicatedStorage.Shared.AssetMaterial))
 type MeshAPI = typeof(require(game.ReplicatedStorage.Shared.AssetMesh))
@@ -143,6 +143,73 @@ return function()
                 owner.resources() == 0 and math.abs(fragment.LocalTransparencyModifier - 0.2) < 1e-6,
                 "fragment teardown leaked local opacity or listeners"
             )
+            root:Destroy()
+            assert(ok, failure)
+        end
+    )
+    test(
+        "ThermalBrightness dims scoped art and replacement meshes while preserving cover and restoring exact colors",
+        function()
+            local Cosmetics = cosmetics()
+            local root = Instance.new("Folder")
+            local building = Instance.new("Model")
+            building:SetAttribute("ThermalBrightness", 0.65)
+            building:SetAttribute("ThermalSurfacePalette", "VesperThermalSurfaces")
+            building.Parent = root
+            local panel = Instance.new("Model")
+            panel:SetAttribute("ThermalBrightness", -0.5)
+            panel.Parent = building
+            local original = Color3.fromRGB(190, 124, 82)
+            local expected = original:Lerp(Color3.new(0, 0, 0), 0.35)
+            local function near(actual: Color3, wanted: Color3): boolean
+                return math.abs(actual.R - wanted.R) <= 1 / 255
+                    and math.abs(actual.G - wanted.G) <= 1 / 255
+                    and math.abs(actual.B - wanted.B) <= 1 / 255
+            end
+            local function piece(parent: Instance, transparency: number): Part
+                local part = Instance.new("Part")
+                part.Color = original
+                part.Anchored = true
+                part.Transparency = transparency
+                part.Parent = parent
+                return part
+            end
+            local wall = piece(panel, 0)
+            local proxy = piece(panel, 1)
+            local unscoped = piece(root, 0)
+            local textured = Instance.new("MeshPart")
+            textured.TextureID = "rbxassetid://102770137409004"
+            textured:SetAttribute("ImportMaterialKey", "chalk")
+            textured.Parent = panel
+            local owner = Cosmetics.start(root)
+            local replacement: Part? = nil
+            local ok, failure = pcall(function()
+                assert(near(wall.Color, expected), "dimmed art did not use the valid building setting")
+                assert(proxy.Color == original and unscoped.Color == original, "dim leaked outside art")
+                local surface = textured:FindFirstChildWhichIsA("SurfaceAppearance")
+                assert(
+                    surface and near(surface.Color, Color3.new(0.65, 0.65, 0.65)),
+                    "legacy map lacked tint"
+                )
+                assert(wall.CanQuery and wall.CanCollide and wall.Transparency == 0, "dim changed cover")
+                assert(wall.LocalTransparencyModifier == 0, "dim hid solid geometry")
+                wall.Parent = nil
+                local newWall = piece(panel, 0)
+                replacement = newWall
+                task.wait()
+                assert(wall.Color == original, "removed panel kept the local tint")
+                assert(near(newWall.Color, expected), "replacement panel did not inherit thermal brightness")
+            end)
+            owner.stop()
+            owner.stop()
+            local finalWall = replacement
+            assert(
+                owner.resources() == 0 and (not finalWall or finalWall.Color == original),
+                "tint leaked on stop"
+            )
+            assert(not textured:FindFirstChildWhichIsA("SurfaceAppearance"), "local thermal surface leaked")
+            assert(textured.TextureID == "rbxassetid://102770137409004", "source texture changed")
+            wall:Destroy()
             root:Destroy()
             assert(ok, failure)
         end

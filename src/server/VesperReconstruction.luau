@@ -98,6 +98,10 @@ function VesperReconstruction.install(world: Instance, assets: Instance): (Insta
     end
     local replacement = source:Clone()
     replacement.Name = "Warehouse"
+    -- The operator locally dims the depot materials to separate white targets
+    -- from the dish and pale cladding. Cloned damage states inherit this scope.
+    replacement:SetAttribute("ThermalBrightness", 0.68)
+    replacement:SetAttribute("ThermalSurfacePalette", "VesperThermalSurfaces")
     replacement:PivotTo(site)
     local replacementPanels = assert(replacement:FindFirstChild("Warehouse_Panels"))
     for _, panel in replacementPanels:GetChildren() do

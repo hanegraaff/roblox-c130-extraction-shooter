@@ -17,7 +17,7 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 IGNORED = {".git", ".tools", "build", "artifacts", "Packages", "ServerPackages", "__pycache__"}
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
-ASSET_ROOTS = ("world", "models", "blender", "exports", "imports")
+ASSET_ROOTS = ("world", "models", "blender", "exports", "imports", "presentation")
 MAX_AUTHORED_BINARY_BYTES = 20 * 1024 * 1024
 
 

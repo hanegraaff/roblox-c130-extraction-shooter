@@ -191,6 +191,12 @@ STABLE_EXTERIOR = ("Exterior balcony landing", "Balcony post", "Balcony railing"
 WALL_DRESSING = ("Front window", "Wall vent", "Facade lamp", "Downpipe", "Pipe clamp", "Outpost facade stencil", "Personnel portal stencil", "Garage roller drum", "Garage track", "Electrical switchboard", "Switchboard breaker", "Workshop location stencil", "Command wall stencil")
 ROOF_DRESSING = ("Rooftop HVAC", "HVAC fan", "Fan grille", "HVAC duct", "Roof conduit", "Mast leg", "Mast cross brace", "Antenna panel", "Satellite dish", "Dish pedestal", "Dish feed arm", "Dish receiver", "Command pendant", "Command utilities")
 SOLID_PROPS = ("Safety bollard", "Bollard foot", "Concrete traffic barrier")
+THERMAL_PANEL_DETAILS = (
+    "Wall vent", "Facade lamp", "Downpipe", "Pipe clamp", "Outpost facade stencil",
+    "Personnel portal stencil", "Garage roller drum", "Garage track", "Rooftop HVAC",
+    "HVAC fan", "Fan grille", "HVAC duct", "Mast leg", "Mast cross brace", "Antenna panel",
+    "Satellite dish", "Dish pedestal", "Dish feed arm", "Dish receiver",
+)
 
 
 def construction_class(record, panels):
@@ -270,7 +276,12 @@ def outpost_model(assembly, library, maps, receipt_sha, root=ROOT):
         elif re.fullmatch(r"Internal stair tread [0-9]+", source_name):
             name = f'Outpost_Step{int(source_name.rsplit(" ", 1)[1]):02d}'
         solid = classification in ("StableStructure", "SolidPropCover")
-        attrs = attributes(ConstructionClass=classification, ThermalNonCover=classification in ("CosmeticProp", "PanelAttachment"))
+        # Exterior panel detail reads against the wall/roof. Keep freestanding
+        # art and attachments crossing clear apertures out of thermal depth.
+        hidden_in_thermal = classification == "CosmeticProp" or (
+            classification == "PanelAttachment" and not source_name.startswith(THERMAL_PANEL_DETAILS)
+        )
+        attrs = attributes(ConstructionClass=classification, ThermalNonCover=hidden_in_thermal)
         if owner:
             attrs.update(attributes(PanelAttachment=True, AttachmentPanelId=owner))
         child = mesh_node(name, record, maps, solid, attrs)

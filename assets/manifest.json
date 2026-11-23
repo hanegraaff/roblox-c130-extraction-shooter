@@ -1533,7 +1533,7 @@
       "local_path": "assets/models/MilitaryOutpost.model.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "fd1b20cda4ed15b90fe7e1899f8fea7c878f55a219d812e357c38961ab921f2e"
+      "sha256": "fd4b52ca3490edf21ce4e0738a4ac51da34e3a95a70550e0a5dc1ede8e14bd10"
     },
     {
       "id": "p17-construction-v2-json",
@@ -1644,6 +1644,17 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "5562b2bea767e83aa9eca30a9225397dddb2fb01a0d474d7f2a2e7c0e8ceb262"
+    },
+    {
+      "id": "vesper-thermal-surfaces",
+      "kind": "material",
+      "source": "Local operator tint templates reusing the Vesper native import receipt color maps",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/presentation/VesperThermalSurfaces.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "a43af13116a64e97e3e16d25eebc1ea63c285e971fdd97b81c0fb8c227f912b7"
     },
     {
       "id": "vesper-native-receipt",
