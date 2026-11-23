@@ -57,7 +57,7 @@
       "version": "50609286477611"
     },
     {
-      "asset": "115022303065990",
+      "asset": "71099794088089",
       "colorMaps": {
         "rbxassetid://103657416274348": true,
         "rbxassetid://107686265898450": true,
@@ -78,12 +78,12 @@
       },
       "count": 249,
       "file": "salt-flats-a3.glb",
-      "id": "115022303065990",
+      "id": "71099794088089",
       "maxCenterDelta": 2.75081729341764e-05,
       "maxSizeDelta": 2.15791860682657e-05,
       "missing": [],
-      "sourceBatchSha256": "94431a5c99852030a1914f1d865c04db4767f19e70bbd171a254759e5b0878ac",
-      "version": "42255402064647"
+      "sourceBatchSha256": "73f003cd334a29c273f7b4ee902eab48b5b2f0936546a7f7828c60f5b32d5de4",
+      "version": "1785118559260"
     },
     {
       "asset": "118050991097959",
@@ -383,8 +383,8 @@
   ],
   "meshes": 3395,
   "nativeModels": {
-    "assets/models/SaltFlatsHangar.rbxm": "6460626c859f37c61940b2539e30703548ac77aff98791c89280e6ec6b1c38cb",
-    "assets/models/SaltFlatsPanelVariants.rbxm": "9af5c86312938ae5a699dc247a10f05c9063facc97b9f0d3183fb00e55ac0250"
+    "assets/models/SaltFlatsHangar.rbxm": "db443eb143b5ff8ce2dbe42aebb56c3cf5849f86e453ac9333dc9671d348a854",
+    "assets/models/SaltFlatsPanelVariants.rbxm": "a61fb9112391d3fc5e0cb33bfd99bb8a054b2fa20cb01607a8fcae514e3de9a0"
   },
   "ownerUserId": "2227341845",
   "panels": 152,
@@ -434,9 +434,9 @@
     "yawDegrees": 60
   },
   "schema": 1,
-  "sourceBindingSha256": "0272aa02bf76c592e1e2ed6b542a05db459d3e60fe414419cf7cc4a5e7faf46d",
-  "sourceBlendSha256": "a6f9bf858ee8d6311451d90e6ac3ccb57c644c845c424d16df4392c1938dddc8",
-  "sourceGlbSha256": "0888ba5309506e26404eca50f7dc5066dc4395ac2885fe1d372c53e11383f948",
+  "sourceBindingSha256": "4bf809efbd18a7bf09efcb6086ea2fd017c0dccb0d1668fd46bf212e4b43f64c",
+  "sourceBlendSha256": "a708a8720e9d6f8517442dcaa92e489b3c8b48c9d46f2fb12345f90730468a57",
+  "sourceGlbSha256": "69e26512cea8065a4760401a13f130d56143e68f40a01bd4f3178d867b6a6428",
   "testPlaceId": "72732833195348",
   "testUniverseId": "10776653720"
 }

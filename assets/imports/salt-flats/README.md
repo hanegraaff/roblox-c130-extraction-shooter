@@ -110,3 +110,24 @@ third-person camera. Each two-client session passed 198 server smoke checks
 and all 14 smoke checks on each client. See the
 [structured Studio results](../../../docs/evidence/salt-flats-studio.json)
 and [host CI run](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45204525686).
+
+## Upper gallery surface repair
+
+The revised A3 batch removes coincident faces where the steel decks,
+concrete surfaces, stair treads and yellow trim meet. A clean Blender
+reimport passed 120 tread checks, and the export regression passed 27 seam
+samples across the three galleries. The repair changed nine native mesh
+identities. The build comparison matched the size and pose of all 3,163
+collision parts across the assembly and variant bank.
+
+Roblox approved model `71099794088089`, version `1785118559260`, for the
+private import. Studio loaded all 249 pieces in that batch and matched its
+color maps. The open local test document still held the prior Rojo revision,
+so the playtest used a managed refresh of the nine meshes and their exact
+source bindings. The smoke run passed 198 server checks and 14 client
+checks. The client loaded all nine corrected meshes and their color maps
+and walked all 26 waypoints up the west switchbacks and along the fourth
+gallery with the ordinary third-person camera. The isolated damage check
+also passed for the wall, roof and C-130 wreck, including reset.
+Sampled frames from the walk recording showed the corrected stair edges,
+landings and fourth-floor concrete walking surface.

@@ -22,6 +22,11 @@ Open [the editable scene](salt-flats-hangar.blend) in Blender 5.3. The file open
 
 One Blender unit represents one stud. The building floor is centered at the origin, Blender +Z is up and the front doors face −Y. The supplied plan fixes the shell at 208 × 144 studs and each parking stand holds a fighter approximately 50 studs across and 74 long. Four accessible levels occupy the rear of the building at +0, +12, +24 and +36 studs. The eaves rise to +48 and the twin roof peaks to +62. Both ends of the rear galleries have switchback stairs with 0.6-stud rises.
 
+Concrete forms the exposed walking surface on each upper gallery. The steel
+deck sits below it, the top treads meet the gallery and switchback landings at
+their edges, and the yellow stair-nose trim is inset 0.04 studs from the steel
+ends. These seams keep the adjacent materials from drawing over each other.
+
 The exterior reference guided the 100-stud Hercules shell, its severed nose and its forward-facing cargo opening. The ramp spans 14.8 studs and rises just over three studs over a 16.65-stud run. A 5.5-stud standing clearance check passed at 237 positions from the ramp to the back of the cargo floor, in both the saved source and a fresh GLB reimport. In the covered section, the narrowest sampled aisle was 12.44 studs across and the lowest sampled overhead clearance exceeded 16 studs. The 120 stair treads also passed headroom and support checks in both files. A further 123 samples verified standing clearance along the central hangar aisle after the new machinery was installed. The scale figures belong to the Blender presentation collection.
 
 ## Damage handoff

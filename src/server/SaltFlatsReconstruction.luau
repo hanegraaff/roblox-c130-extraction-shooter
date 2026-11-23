@@ -10,7 +10,7 @@ local SaltFlatsReconstruction = {}
 
 export type Installation = { commit: () -> (), rollback: () -> () }
 
-local sourceHash = "a6f9bf858ee8d6311451d90e6ac3ccb57c644c845c424d16df4392c1938dddc8"
+local sourceHash = "a708a8720e9d6f8517442dcaa92e489b3c8b48c9d46f2fb12345f90730468a57"
 local site = CFrame.new(-211, 0.125, -116) * CFrame.Angles(0, math.rad(60), 0)
 local hillLocations: { [string]: Vector3 } = {
     TerrainHill00 = Vector3.new(-99, -36, 180),
