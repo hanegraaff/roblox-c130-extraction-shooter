@@ -32,6 +32,8 @@ VESPER_RECEIPT = "assets/imports/radar-outpost/native-receipt.json"
 VESPER_BANKS = ("assets/models/VesperArray.rbxm", "assets/models/VesperPanelVariants.rbxm")
 SALT_FLATS_RECEIPT = "assets/imports/salt-flats/native-receipt.json"
 SALT_FLATS_BANKS = ("assets/models/SaltFlatsHangar.rbxm", "assets/models/SaltFlatsPanelVariants.rbxm")
+SANDBREAK_RECEIPT = "assets/imports/sandbreak/native-receipt.json"
+SANDBREAK_BANKS = ("assets/models/SandbreakBunker.rbxm", "assets/models/SandbreakPanelVariants.rbxm")
 SCRIPT_CLASSES = {"Script", "LocalScript", "ModuleScript"}
 CLOUD_REFERENCE = re.compile(r"\brbxassetid://([1-9][0-9]*)\b")
 
@@ -134,19 +136,19 @@ def vesper_assets(root: Path, receipt: dict) -> tuple[set[str], set[str]]:
 
 
 
-def salt_flats_assets(root: Path, receipt: dict) -> tuple[set[str], set[str]]:
-    """Independently read native mesh and all surface-channel references."""
-    banks = receipt["nativeModels"]
-    if set(banks) != set(SALT_FLATS_BANKS) or any(
-        fingerprint(root, bank)["sha256"] != banks[bank] for bank in SALT_FLATS_BANKS
+def native_bank_assets(root: Path, label: str, paths: tuple[str, ...], hashes: dict[str, str],
+                       mesh_count: int) -> tuple[set[str], set[str]]:
+    """Read mesh and texture IDs from independently rebuilt, receipt-bound banks."""
+    if set(hashes) != set(paths) or any(
+        fingerprint(root, bank)["sha256"] != hashes[bank] for bank in paths
     ):
-        raise RuntimeError("Salt Flats native banks differ from the import receipt")
-    with tempfile.TemporaryDirectory(prefix="salt-flats-release-inputs-", dir=root / "build") as directory:
+        raise RuntimeError(f"{label} native banks differ from the import receipt")
+    with tempfile.TemporaryDirectory(prefix="native-release-inputs-", dir=root / "build") as directory:
         temporary = Path(directory)
         project = temporary / "native.project.json"
-        project.write_text(json.dumps({"name": "SaltFlatsNativeInputs", "tree": {
+        project.write_text(json.dumps({"name": "NativeReleaseInputs", "tree": {
             "$className": "DataModel", "ServerStorage": {
-                Path(bank).stem: {"$path": str(root / bank)} for bank in SALT_FLATS_BANKS
+                Path(bank).stem: {"$path": str(root / bank)} for bank in paths
             },
         }}), encoding="utf-8")
         artifact = temporary / "native.rbxlx"
@@ -162,10 +164,10 @@ def salt_flats_assets(root: Path, receipt: dict) -> tuple[set[str], set[str]]:
             if reference:
                 match = CLOUD_REFERENCE.fullmatch(reference)
                 if not match:
-                    raise RuntimeError(f"Invalid Salt Flats cloud reference: {reference}")
+                    raise RuntimeError(f"Invalid {label} cloud reference: {reference}")
                 (meshes if node.get("name") == "MeshContent" else textures).add(match[1])
-    if parts != receipt["meshes"] or not meshes or not textures:
-        raise RuntimeError("Salt Flats native source cloud inventory is incomplete")
+    if parts != mesh_count or not meshes or not textures:
+        raise RuntimeError(f"{label} native source cloud inventory is incomplete")
     return meshes, textures
 
 
@@ -184,12 +186,18 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
         mesh_ids.update(meshes)
         texture_ids.update(textures)
         vesper_receipt = fingerprint(root, VESPER_RECEIPT)
-    salt_flats_receipt = None
-    if (root / SALT_FLATS_RECEIPT).exists():
-        meshes, textures = salt_flats_assets(root, read_json(root, SALT_FLATS_RECEIPT))
+    native_receipts = {}
+    for key, label, receipt_path, paths, count_key in (
+        ("salt_flats_native_receipt", "Salt Flats", SALT_FLATS_RECEIPT, SALT_FLATS_BANKS, "meshes"),
+        ("sandbreak_native_receipt", "Sandbreak", SANDBREAK_RECEIPT, SANDBREAK_BANKS, "managedMeshCount"),
+    ):
+        if not (root / receipt_path).exists():
+            continue
+        receipt = read_json(root, receipt_path)
+        meshes, textures = native_bank_assets(root, label, paths, receipt["nativeModels"], receipt[count_key])
         mesh_ids.update(meshes)
         texture_ids.update(textures)
-        salt_flats_receipt = fingerprint(root, SALT_FLATS_RECEIPT)
+        native_receipts[key] = fingerprint(root, receipt_path)
     expected = mesh_ids | texture_ids | audio_ids
     actual = set()
     for instance in release.values():
@@ -204,7 +212,7 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
         "mesh_receipt": fingerprint(root, MESHES),
         "texture_receipt": fingerprint(root, TEXTURES),
         **({"vesper_native_receipt": vesper_receipt} if vesper_receipt else {}),
-        **({"salt_flats_native_receipt": salt_flats_receipt} if salt_flats_receipt else {}),
+        **native_receipts,
         "mesh_ids": sorted(mesh_ids, key=int),
         "texture_ids": sorted(texture_ids, key=int),
         "creator_store_audio_ids": sorted(audio_ids, key=int),

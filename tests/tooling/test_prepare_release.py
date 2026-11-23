@@ -119,6 +119,18 @@ class ReleasePreparationTests(unittest.TestCase):
                 release.asset_inventory(self.root, artifact)
         (self.root / release.VESPER_RECEIPT).unlink()
 
+        sandbreak_receipt = {"nativeModels": {bank: "recorded" for bank in release.SANDBREAK_BANKS},
+                             "managedMeshCount": 2}
+        self.write(release.SANDBREAK_RECEIPT, json.dumps(sandbreak_receipt))
+        with patch.object(release, "native_bank_assets", return_value=({"7"}, {"25"})) as sandbreak:
+            extended = release.asset_inventory(self.root, {**artifact, "Sandbreak": imported})
+            sandbreak.assert_called_once_with(self.root, "Sandbreak", release.SANDBREAK_BANKS,
+                                             sandbreak_receipt["nativeModels"], 2)
+            self.assertEqual(extended["mesh_ids"], ["5", "7"])
+            self.assertEqual(extended["texture_ids"], ["23", "25"])
+            self.assertEqual(extended["sandbreak_native_receipt"]["path"], release.SANDBREAK_RECEIPT)
+        (self.root / release.SANDBREAK_RECEIPT).unlink()
+
         script.find("Properties/string").text = 'return "rbxassetid://31"'
         with self.assertRaisesRegex(RuntimeError, r"unexpected \['31'\], unused \['30'\]"):
             release.asset_inventory(self.root, artifact)
@@ -130,6 +142,16 @@ class ReleasePreparationTests(unittest.TestCase):
         self.write(release.VESPER_BANKS[0], "changed native data")
         with self.assertRaisesRegex(RuntimeError, "native banks differ from the import receipt"):
             release.vesper_assets(self.root, {"nativeModelsByPathAndSha256": recorded})
+
+    def test_sandbreak_inventory_rejects_changed_native_bank_before_building(self):
+        for bank in release.SANDBREAK_BANKS:
+            self.write(bank, "authored native data")
+        recorded = {bank: release.fingerprint(self.root, bank)["sha256"] for bank in release.SANDBREAK_BANKS}
+        self.write(release.SANDBREAK_BANKS[0], "changed native data")
+        with patch.object(release.subprocess, "run") as build:
+            with self.assertRaisesRegex(RuntimeError, "Sandbreak native banks differ from the import receipt"):
+                release.native_bank_assets(self.root, "Sandbreak", release.SANDBREAK_BANKS, recorded, 1)
+            build.assert_not_called()
 
 
 if __name__ == "__main__":
