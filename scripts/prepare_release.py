@@ -30,6 +30,8 @@ MESHES = f"{IMPORTS}/native-mesh-profiles-v1.json"
 TEXTURES = f"{IMPORTS}/material-textures-v2.json"
 VESPER_RECEIPT = "assets/imports/radar-outpost/native-receipt.json"
 VESPER_BANKS = ("assets/models/VesperArray.rbxm", "assets/models/VesperPanelVariants.rbxm")
+SALT_FLATS_RECEIPT = "assets/imports/salt-flats/native-receipt.json"
+SALT_FLATS_BANKS = ("assets/models/SaltFlatsHangar.rbxm", "assets/models/SaltFlatsPanelVariants.rbxm")
 SCRIPT_CLASSES = {"Script", "LocalScript", "ModuleScript"}
 CLOUD_REFERENCE = re.compile(r"\brbxassetid://([1-9][0-9]*)\b")
 
@@ -131,6 +133,42 @@ def vesper_assets(root: Path, receipt: dict) -> tuple[set[str], set[str]]:
             {ref.removeprefix("rbxassetid://") for ref in texture_refs})
 
 
+
+def salt_flats_assets(root: Path, receipt: dict) -> tuple[set[str], set[str]]:
+    """Independently read native mesh and all surface-channel references."""
+    banks = receipt["nativeModels"]
+    if set(banks) != set(SALT_FLATS_BANKS) or any(
+        fingerprint(root, bank)["sha256"] != banks[bank] for bank in SALT_FLATS_BANKS
+    ):
+        raise RuntimeError("Salt Flats native banks differ from the import receipt")
+    with tempfile.TemporaryDirectory(prefix="salt-flats-release-inputs-", dir=root / "build") as directory:
+        temporary = Path(directory)
+        project = temporary / "native.project.json"
+        project.write_text(json.dumps({"name": "SaltFlatsNativeInputs", "tree": {
+            "$className": "DataModel", "ServerStorage": {
+                Path(bank).stem: {"$path": str(root / bank)} for bank in SALT_FLATS_BANKS
+            },
+        }}), encoding="utf-8")
+        artifact = temporary / "native.rbxlx"
+        subprocess.run(["rojo", "build", str(project), "--output", str(artifact)], cwd=root, check=True)
+        nodes = instance_nodes(artifact)
+    meshes, textures = set(), set()
+    parts = 0
+    for item in nodes.values():
+        if item.attrib["class"] == "MeshPart":
+            parts += 1
+        for node in item.findall("Properties/Content"):
+            reference = node.findtext("uri")
+            if reference:
+                match = CLOUD_REFERENCE.fullmatch(reference)
+                if not match:
+                    raise RuntimeError(f"Invalid Salt Flats cloud reference: {reference}")
+                (meshes if node.get("name") == "MeshContent" else textures).add(match[1])
+    if parts != receipt["meshes"] or not meshes or not textures:
+        raise RuntimeError("Salt Flats native source cloud inventory is incomplete")
+    return meshes, textures
+
+
 def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
     """Match cloud IDs in the release XML and embedded scripts to checked-in provenance."""
     manifest = read_json(root, MANIFEST)
@@ -146,6 +184,12 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
         mesh_ids.update(meshes)
         texture_ids.update(textures)
         vesper_receipt = fingerprint(root, VESPER_RECEIPT)
+    salt_flats_receipt = None
+    if (root / SALT_FLATS_RECEIPT).exists():
+        meshes, textures = salt_flats_assets(root, read_json(root, SALT_FLATS_RECEIPT))
+        mesh_ids.update(meshes)
+        texture_ids.update(textures)
+        salt_flats_receipt = fingerprint(root, SALT_FLATS_RECEIPT)
     expected = mesh_ids | texture_ids | audio_ids
     actual = set()
     for instance in release.values():
@@ -160,6 +204,7 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
         "mesh_receipt": fingerprint(root, MESHES),
         "texture_receipt": fingerprint(root, TEXTURES),
         **({"vesper_native_receipt": vesper_receipt} if vesper_receipt else {}),
+        **({"salt_flats_native_receipt": salt_flats_receipt} if salt_flats_receipt else {}),
         "mesh_ids": sorted(mesh_ids, key=int),
         "texture_ids": sorted(texture_ids, key=int),
         "creator_store_audio_ids": sorted(audio_ids, key=int),

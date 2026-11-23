@@ -3,22 +3,21 @@
 The [approved Blender source](../../blender/plane-hangar/salt-flats-hangar.blend)
 and [assembled GLB](../../exports/plane-hangar/salt-flats-hangar.glb) came from
 [artwork PR #54](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/54).
-Native import is pending private Roblox asset access. The staging package is
+The finished private asset batches are recorded in [the native receipt](native-receipt.json). The staging package is
 reproducible from the approved source and stays in the ignored build directory.
 
 ## Foundry fit
 
-The proposed replacement keeps the 208 × 144-stud shell, both fighters, the
+The replacement keeps the 208 × 144-stud shell, both fighters, the
 apron, and all 61 mesh objects belonging to the C-130 wreck. One source unit
 is one stud. Map Blender `(x, y, z)` to `(x, z, -y)` before applying a 60°
 rotation around Roblox +Y and the floor pivot `(-211, 0.125, -116)`. The
 west door and the off-center wreck skin both serve as orientation landmarks.
-Both bays open toward the interior of the map. The proposed placement keeps
+Both bays open toward the interior of the map. The placement keeps
 25.9 studs of clearance at the nearest conservative footprint corner and
 avoids the shelter, other buildings, anchor and route markers, and standalone
-cover. The preflight models two terrain relocations to clear the foundation and
-apron. Check their voxel surfaces and the approaches in Studio before
-adopting the moves.
+cover. The placement relocates two terrain mounds to clear the foundation and
+apron.
 
 | Authored object | Proposed center in Roblox studs |
 | --- | --- |
@@ -26,9 +25,9 @@ adopting the moves.
 | TerrainHill00 | `(-99, -36, 180)` |
 | TerrainHill07 | `(-284, -32, 25)` |
 
-The gables and high roof reach approximately Y=63. A maximum aim height of
-64 studs would include the roof while retaining the current ground minimum.
-The proposed terrain, aim and placement values appear in the generated
+The gables and high roof reach approximately Y=63. The maximum aim height of
+64 studs includes the roof while retaining the current ground minimum.
+The terrain, aim and placement values appear in the generated
 index for review.
 
 ## Stage native inputs
@@ -58,14 +57,12 @@ triangles. It splits material slots for Roblox and divides the oversized
 retain their original positions, normals and UVs. Batch files keep the
 embedded maps and material assignments.
 
-The pilot still needs genuine Roblox mesh and texture IDs, native scale and
-orientation measurements and a visible material check. Follow the
-[import skill](../../../.agents/skills/import-blender-to-roblox/SKILL.md) for
-the managed reconstruction, solid collision, combat and round-reset tests.
-Bind the wreck separately from the 152 building panels so its entire
-hierarchy clears after one direct howitzer hit or a continuous three-second
-30mm burst. The hangar panels use the existing progressive damage rules.
-
+The pilot confirmed one source unit per stud. Its asymmetric west door and
+wreck skin showed that Roblox reverses X and Z. The compiler undoes that
+turn before applying the world placement. All sixteen approved uploads loaded
+3,395 mesh pieces with no missing color maps. The native receipt lists every
+Model ID and version and hashes both Studio-serialized binary roots. The same
+roots are mapped through Rojo in release and local test documents.
 
 ## Local walking-surface probe
 

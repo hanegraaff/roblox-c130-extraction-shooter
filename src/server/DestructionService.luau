@@ -33,7 +33,7 @@ export type Snapshot = {
     appearance: DamageAppearance,
 }
 export type Controller = {
-    reset: (number, { string }) -> (),
+    reset: (number, { string }, string?) -> (),
     cancel: () -> (),
     resolve: (Outcome) -> (boolean, string?),
     interrupt: (number?) -> (),
@@ -59,10 +59,13 @@ function DestructionService.new(gapSeconds: number?): Controller
     local lastFire: number? = nil
     local barriers: { [number]: boolean } = {}
     local lastBarrier = -1
+    local fragileId: string? = nil
+    local fragileSeconds = 0
     local function breakContinuity()
         -- Credit belongs to each panel. Only the last-hit anchor is transient;
         -- a resumed/retargeted first impact cannot charge paused/off-target time.
         target, lastFire = nil, nil
+        fragileSeconds = 0
     end
     -- A boundary after N accepted shots is applied only after all outcomes1..N
     -- resolve, including misses/expiry. All earned credit survives; elapsed time
@@ -106,7 +109,22 @@ function DestructionService.new(gapSeconds: number?): Controller
         if not id or not panel or panel.stage == 2 then
             return
         end
-        if outcome.weapon == "M102" then
+        if id == fragileId then
+            if outcome.weapon == "M102" then
+                panel.stage = 2
+            else
+                local elapsed = if lastFire then outcome.firedAt - lastFire else 0
+                if elapsed < 0 or elapsed > gap + Rules.epsilonSeconds then
+                    fragileSeconds = 0
+                else
+                    fragileSeconds += elapsed
+                end
+                if fragileSeconds + Rules.epsilonSeconds >= 3 then
+                    panel.stage = 2
+                end
+                target, lastFire = id, outcome.firedAt
+            end
+        elseif outcome.weapon == "M102" then
             Rules.apply(panel, true, 0)
         else
             local previous = lastFire
@@ -121,10 +139,11 @@ function DestructionService.new(gapSeconds: number?): Controller
         changes[id] = true
     end
     return {
-        reset = function(id, ids)
+        reset = function(id, ids, wreckId)
             assert(id >= 0 and id % 1 == 0, "invalid round generation")
             roundId, frontier = id, 1
-            target, lastFire = nil, nil
+            breakContinuity()
+            fragileId = wreckId
             lastBarrier = -1
             table.clear(barriers)
             table.clear(panels)

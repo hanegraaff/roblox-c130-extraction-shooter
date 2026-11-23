@@ -10,6 +10,9 @@
         "$path": "src/shared",
         "VesperThermalSurfaces": {
           "$path": "assets/presentation/VesperThermalSurfaces.model.json"
+        },
+        "SaltFlatsThermalSurfaces": {
+          "$path": "assets/presentation/SaltFlatsThermalSurfaces.model.json"
         }
       },
       "TestPackages": {

@@ -40,6 +40,15 @@ eight-stud tread width with a 1.875-stud run. The active runtime registers
 primitive source counts above describe the Edit map. See the
 [Vesper import record](../../docs/evidence/vesper-import-preflight.md).
 
+Salt Flats Hangar replaces Foundry at runtime. Its 208 × 144-stud shell and
+four accessible levels sit beside the apron and walk-in Hercules wreck.
+The 152 wall, gable and roof panels use the shared progressive damage ledger.
+The wreck uses its own one-hit howitzer or three-second continuous 30mm
+threshold. The map snapshot restores the building and wreck between rounds.
+The replacement remaps two terrain mounds and raises the aim ceiling to
+64 studs for coverage of the roof. The axis correction, world pivot, native
+assets and checks are in the [Salt Flats import receipt](../imports/salt-flats/README.md).
+
 For a compact interior, center the descriptor on the usable room, put its
 local +Y boundary at the ceiling, and keep exterior balconies and roofs outside
 the bounds. Validate both sides of doors and the height of stair landings in

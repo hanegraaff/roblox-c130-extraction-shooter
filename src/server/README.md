@@ -112,6 +112,23 @@ state. `VesperNavigation.validate` checks all four entrance paths, the two
 stair flights and the gallery walking surface against loaded collision.
 [Native import record](../../docs/evidence/vesper-import-preflight.md)
 
+## Salt Flats Hangar and Hercules wreck
+
+`SaltFlatsReconstruction.install(world, assets)` validates both Studio-native
+banks before replacing Foundry. It attaches the full-scale assembly and its
+walk-in wreck, updates the bounded terrain and aim descriptors, and returns
+idempotent commit and rollback functions. `BuildingGeometry` checks the live
+four-gallery stair contract and the 152 panel registry. The managed panel
+bank reuses the shared native appearance presenter. Its invisible Parts own
+collision and hit queries. Art passes cannot claim a hit.
+
+The wreck's immediate solid children register under one authoritative identity.
+The combat ledger orders impacts exactly as it does for the building panels.
+A direct M102 hit clears the wreck. GAU-23 fire requires three continuous
+seconds of hits. Misses and target interruptions reset this short burst, while
+earned building-panel damage stays persistent. The next generation restores
+the original wreck and its collision from the map snapshot.
+
 ## Imported material panels and Outpost reconstruction (P17)
 
 The candidate replaces the smaller Outpost from managed imported templates and

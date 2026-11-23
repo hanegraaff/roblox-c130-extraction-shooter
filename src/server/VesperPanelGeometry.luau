@@ -14,7 +14,7 @@ local VesperPanelGeometry = {}
 export type Variants = {
     light: Model,
     heavy: Model,
-    fragments: { MeshPart },
+    fragments: { MeshPart }?,
 }
 
 -- Checks a single state. Report proxy poses in its identity frame so the Light

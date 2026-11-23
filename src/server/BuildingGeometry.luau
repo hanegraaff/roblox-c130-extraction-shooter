@@ -22,6 +22,7 @@ local function panelPose(panel: Instance): (CFrame?, Vector3?)
         and (
             type(panel:GetAttribute("PanelAssetFamily")) == "string"
             or panel:GetAttribute("VesperPanel") == true
+            or panel:GetAttribute("SaltFlatsPanel") == true
         )
     then
         local size = panel:GetAttribute("IntactSize")
@@ -119,6 +120,51 @@ function BuildingGeometry.validate(
                     or string.find(panel.Name, "_Interior_", 1, true) ~= nil,
                 pivot = { pivot:GetComponents() },
             })
+        end
+        if building:GetAttribute("PanelLayoutVersion") == 4 then
+            if floor.Size ~= Vector3.new(209, 1.42, 145) then
+                return false, "Salt Flats ground-floor collision has drifted"
+            end
+            local function supported(point: Vector3, expected: string): boolean
+                local start = floor.CFrame:PointToWorldSpace(point + Vector3.new(0, 0.71 + 0.4, 0))
+                local hit = workspace:Raycast(start, Vector3.new(0, -0.8, 0), rays)
+                return hit ~= nil and hit.Instance.Name == expected
+            end
+            for level = 1, 3 do
+                if
+                    not supported(Vector3.new(0, level * 12, -64), "Foundry_Gallery" .. tostring(level + 1))
+                then
+                    return false, "Salt Flats gallery support is missing"
+                end
+                for _, side in { "W", "E" } do
+                    local sign = if side == "W" then -1 else 1
+                    for flight = 1, 2 do
+                        for step = 1, 10 do
+                            local x = sign * (if flight == 1 then 97 else 87)
+                            local y = 12 * (level - 1) + 6 * (flight - 1) + 0.6 * step
+                            local z = if flight == 1
+                                then -58 + 1.9 * (step - 0.5)
+                                else -39 - 1.9 * (step - 0.5)
+                            local key = string.format("Foundry_%s%d_%d_Tread%02d", side, level, flight, step)
+                            if not supported(Vector3.new(x, y, z), key) then
+                                return false, "Salt Flats tread is missing: " .. key
+                            end
+                        end
+                    end
+                end
+            end
+            table.insert(layouts, {
+                id = building.Name,
+                width = 208,
+                depth = 144,
+                stories = 4,
+                stairSteps = 120,
+                stepRise = 0.6,
+                stepRun = 1.9,
+                panels = registry,
+                panelLayoutVersion = 4,
+            })
+            continue
         end
         if building:GetAttribute("PanelLayoutVersion") == 3 then
             local valid, reason = VesperNavigation.validate(workspace, floor, rays)
@@ -334,7 +380,7 @@ function BuildingGeometry.decorate(map: Model)
     assert(buildings, "validated buildings missing")
     for _, building in buildings:GetChildren() do
         building:SetAttribute("BuildingId", building.Name)
-        building:SetAttribute("Stories", 2)
+        building:SetAttribute("Stories", if building:GetAttribute("PanelLayoutVersion") == 4 then 4 else 2)
         local supports = building:FindFirstChild(building.Name .. "_Static")
         if supports then
             for _, support in supports:GetChildren() do

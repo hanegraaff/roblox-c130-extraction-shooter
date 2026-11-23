@@ -75,18 +75,34 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
     local ids: { [string]: boolean } = {}
     for _, building in buildings do
         local vesper = building.panelLayoutVersion == 3
+        local saltFlats = building.panelLayoutVersion == 4
         if ids[building.id] or building.id == "" then
             return false, "duplicate/empty building ID"
         end
         ids[building.id] = true
-        if building.width == 64 and building.depth == 48 then
+        if
+            (building.width == 64 and building.depth == 48)
+            or (saltFlats and building.id == "Foundry" and building.width == 208 and building.depth == 144)
+        then
             large += 1
         elseif building.width == 32 and building.depth == 48 then
             small += 1
         else
             return false, "unexpected footprint"
         end
-        if
+        if saltFlats then
+            if
+                building.id ~= "Foundry"
+                or building.width ~= 208
+                or building.depth ~= 144
+                or building.stories ~= 4
+                or building.stairSteps ~= 120
+                or building.stepRise ~= 0.6
+                or building.stepRun ~= 1.9
+            then
+                return false, "invalid Salt Flats footprint or switchback stairs"
+            end
+        elseif
             building.stories ~= 2
             or building.stairSteps ~= 16
             or building.stepRise ~= 0.625
@@ -94,15 +110,15 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
         then
             return false, "invalid two-story stair contract"
         end
-        local stories: { [number]: number } = { [1] = 0, [2] = 0 }
+        local stories: { [number]: number } = { 0, 0, 0, 0 }
         local roof = 0
-        local interior: { [number]: number } = { [1] = 0, [2] = 0 }
+        local interior: { [number]: number } = { 0, 0, 0, 0 }
         for _, panel in building.panels do
             if ids[panel.id] or panel.id == "" then
                 return false, "duplicate/empty panel ID"
             end
             ids[panel.id] = true
-            if panel.story ~= 1 and panel.story ~= 2 then
+            if panel.story % 1 ~= 0 or panel.story < 1 or panel.story > building.stories then
                 return false, "invalid panel story"
             end
             if #panel.pivot ~= 12 then
@@ -114,7 +130,7 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
                 end
             end
             if panel.roof then
-                if panel.story ~= 2 or panel.interior then
+                if panel.story ~= building.stories or panel.interior then
                     return false, "roof must belong to top story"
                 end
                 roof += 1
@@ -123,6 +139,19 @@ function BuildingLayout.validate(buildings: { Building }): (boolean, string?)
             else
                 stories[panel.story] += 1
             end
+        end
+        if saltFlats then
+            if
+                roof ~= 24
+                or stories[1] ~= 24
+                or stories[2] ~= 24
+                or stories[3] ~= 24
+                or stories[4] ~= 56
+                or #building.panels ~= 152
+            then
+                return false, "Salt Flats requires four complete exterior stories, gables and roof"
+            end
+            continue
         end
         if vesper then
             if not vesperCoverage(building) then
