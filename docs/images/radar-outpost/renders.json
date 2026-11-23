@@ -1,0 +1,42 @@
+{
+  "source": "vesper-array.blend",
+  "sha256": "f114c37ec45febbc6a2c91e18aecfac28d59bcacc836e6577709bce176b534b7",
+  "engine": "CYCLES",
+  "size": [
+    1440,
+    960
+  ],
+  "samples": 32,
+  "views": [
+    {
+      "camera": "Exterior",
+      "path": "exterior.jpg",
+      "sha256": "e83212a30219526acbaf8e13e4864812f1b7394bccfa3264ca807f2dccf943b8"
+    },
+    {
+      "camera": "Approach",
+      "path": "approach.jpg",
+      "sha256": "a557615dc23c900f58690d3d12c295198044e5129c3f28b5513618c6f9320269"
+    },
+    {
+      "camera": "Atrium",
+      "path": "atrium.jpg",
+      "sha256": "a73bfda05f76accca3c5de7c768cdc94eba6c42d286c949707f35aa3f3fa12ef"
+    },
+    {
+      "camera": "Gallery",
+      "path": "gallery.jpg",
+      "sha256": "c73f33d46ca6a9c79b14ebb4de14150c1d716666413eb4917d3f9b064d97b7a1"
+    },
+    {
+      "camera": "Receiver",
+      "path": "receiver.jpg",
+      "sha256": "fd9e8eba0318960ba91ca661ae1c3772373d0c2ee6288b76e51fdb491e27dccf"
+    },
+    {
+      "camera": "Overhead",
+      "path": "overhead.jpg",
+      "sha256": "8f31bf10753339d847c5aeee71caee02a4a42d8ad1f2888698be204a141b791b"
+    }
+  ]
+}
