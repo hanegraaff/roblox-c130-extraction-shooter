@@ -86,6 +86,21 @@ The committed mesh capture and all twelve texture records identify owner
 receipt. These are source-side provenance. Destination-specific availability
 and permissions require a fresh cloud check.
 
+### Invited playtest approval for the merged build
+
+On 2026-11-23 the user approved publication of the merged `982d3e7` build to
+the same **C130 P17 Import** place for invited playtesters. The authorized
+release artifact has SHA-256
+`4b13d8b864e248d6ac469c68cf04df9fb8ffe9a813d699a379ba1a06463b123d`.
+The user reported a satisfactory two-player test and accepted that scope for
+the invited playtest. Full P12 acceptance still tracks the final Studio suite,
+six- and ten-player live rounds, and the live performance and soak evidence.
+
+The destination preflight again found the connected Studio document was a
+local place. Studio MCP denied `universe:read`, `universe.place:read`, and
+`asset:read`, and the browser access host was unavailable. The destination
+audience, asset grants and rollback version still need verification in Roblox.
+
 ### Clean-checkout verification
 
 `python3 scripts/setup.py` installed the pinned tools, TestEZ and Roblox types
