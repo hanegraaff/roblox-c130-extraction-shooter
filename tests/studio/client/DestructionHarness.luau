@@ -20,6 +20,7 @@ type PanelExpectation = {
     pivot: { number },
     size: Vector3,
     assetFamily: string?,
+    sandbreakCoverage: number?,
 }
 
 -- Own-panel filters isolate its real opening from other legitimate map cover.
@@ -67,6 +68,18 @@ local function panelMatches(entry: PanelExpectation): boolean
     params.FilterType = Enum.RaycastFilterType.Include
     params.FilterDescendantsInstances = { model }
     params.RespectCanCollide = true
+    if entry.sandbreakCoverage ~= nil then
+        local hits = 0
+        for x = -3, 3 do
+            for z = -3, 3 do
+                local point = pivot:PointToWorldSpace(Vector3.new(x * size.X / 8, 3, z * size.Z / 8))
+                if workspace:Raycast(point, -Vector3.yAxis * 6, params) then
+                    hits += 1
+                end
+            end
+        end
+        return model:GetAttribute("SandbreakPanel") == true and hits == entry.sandbreakCoverage
+    end
     local normal = if size.Y <= math.min(size.X, size.Z)
         then pivot.UpVector
         elseif size.X < size.Z then pivot.RightVector
@@ -317,6 +330,36 @@ function Harness.run()
                             local folder = workspace:FindFirstChild("PanelFragments")
                             return folder ~= nil and #folder:GetChildren() == 0
                         end, "expired debris/no historical burst")
+                    elseif kind == "SandbreakView" then
+                        local player = Players.LocalPlayer
+                        local gunship = payload == "Gunship"
+                        waitFor(function()
+                            local view = workspace.CurrentCamera
+                            return player:GetAttribute("Role") == payload
+                                and view ~= nil
+                                and (view:FindFirstChild("OperatorThermal") ~= nil) == gunship
+                        end, "Sandbreak role view")
+                        local bunker = workspace.World.Battlefield.SandbreakBunker
+                        local count = 0
+                        local wrong = 0
+                        local function sample()
+                            count, wrong = 0, 0
+                            for _, item in bunker:GetDescendants() do
+                                if item:IsA("MeshPart") and item:GetAttribute("ThermalNonCover") == true then
+                                    count += 1
+                                    if item.LocalTransparencyModifier ~= (if gunship then 1 else 0) then
+                                        wrong += 1
+                                    end
+                                end
+                            end
+                            return count > 0 and wrong == 0
+                        end
+                        waitFor(sample, "Sandbreak role detail visibility")
+                        detail = HttpService:JSONEncode({
+                            role = payload,
+                            detailPieces = count,
+                            thermal = gunship,
+                        })
                     elseif kind == "Spectator" then
                         local player = Players.LocalPlayer
                         waitFor(function()

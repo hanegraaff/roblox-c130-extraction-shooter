@@ -1,7 +1,7 @@
 {
   "testedOn": "2026-11-23",
   "environment": "Local Roblox Studio Edit and one-player Play, tests.rbxlx; genuine native Studio captures reassembled in a disposable fixture",
-  "sourceBuildStatus": "Managed RBXM files verified in the Rojo test artifact. The final Rojo mapping was unavailable in the open test document during the native probe.",
+  "sourceBuildStatus": "Managed RBXM files verified in the Rojo test artifact and the live Rojo-synced local tests.rbxlx Edit DataModel.",
   "placementAndDamage": {
     "legacyPanelsRemaining": 0,
     "panelCount": 103,
@@ -11,6 +11,27 @@
     "damage": {
       "SB.W.S.01": {
         "retained": 242,
+        "reset": 15,
+        "closed": 333
+      },
+      "SB.R.07.07": {
+        "retained": 122,
+        "reset": 18,
+        "closed": 252
+      }
+    }
+  },
+  "sourceSyncedEdit": {
+    "productionBinding": "48096d136da01bf7b3c0e78d130d86285867184c66dabca34cdc4db3792fcb4d",
+    "script": "scripts/sandbreak/check_native_world.luau",
+    "legacyPanelsRemaining": 0,
+    "panelCount": 103,
+    "clearApproaches": 252,
+    "shelterRegistries": 1,
+    "coveredSpawnColumns": 225,
+    "damage": {
+      "SB.W.S.01": {
+        "retained": 243,
         "reset": 15,
         "closed": 333
       },
@@ -57,7 +78,7 @@
   "cleanup": {
     "captureRemoved": true,
     "previewRemoved": true,
-    "synced": false
+    "previewFixtureUsedLiveRojo": false
   },
   "captureFiles": [
     "docs/images/spawn-bunker/studio-yard.jpg",

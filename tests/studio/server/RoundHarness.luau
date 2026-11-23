@@ -123,21 +123,22 @@ function RoundHarness.run()
         end)
         return
     end
-    if RunService:IsStudio() and args == nil and selector == "P07" then
+    if RunService:IsStudio() and args == nil and (selector == "P07" or selector == "Sandbreak") then
         local invocation = {
             mode = "manual-server-clients",
-            harness = "P07",
+            harness = selector,
             requestedInitialClients = 2,
             actualLateClientRequired = false,
         }
-        workspace:SetAttribute("ManualP07Invocation", HttpService:JSONEncode(invocation))
-        workspace:SetAttribute("ManualP07Report", nil)
+        local reportAttribute = "Manual" .. selector .. "Report"
+        workspace:SetAttribute("Manual" .. selector .. "Invocation", HttpService:JSONEncode(invocation))
+        workspace:SetAttribute(reportAttribute, nil)
         require(script.Parent.DestructionHarness).run(function(report)
             workspace:SetAttribute(
-                "ManualP07Report",
+                reportAttribute,
                 HttpService:JSONEncode({ invocation = invocation, result = report })
             )
-        end)
+        end, selector == "Sandbreak")
         return
     end
     if RunService:IsStudio() and args == nil and selector == "P05" then
@@ -202,6 +203,10 @@ function RoundHarness.run()
     end
     if type(args) == "table" and args.kind == "P11" then
         require(script.Parent.PerformanceHarness).run(args.scenario, args.clients)
+        return
+    end
+    if type(args) == "table" and args.kind == "Sandbreak" then
+        require(script.Parent.DestructionHarness).run(nil, true)
         return
     end
     if type(args) == "table" and args.kind == "P07" then

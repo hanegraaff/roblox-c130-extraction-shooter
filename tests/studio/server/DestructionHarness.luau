@@ -33,6 +33,7 @@ type PanelExpectation = {
     pivot: { number },
     size: Vector3,
     assetFamily: string?,
+    sandbreakCoverage: number?,
 }
 export type Report = {
     suite: string,
@@ -56,7 +57,7 @@ local function waitFor(predicate: () -> boolean, label: string, seconds: number?
 end
 -- Manual finish preserves report in the actual server before the human ends the
 -- native session. SDK EndTest is used only for a truly SDK-owned invocation.
-function Harness.run(finish: ((Report) -> ())?)
+function Harness.run(finish: ((Report) -> ())?, sandbreakOnly: boolean?)
     local cases: { Case } = {}
     local observations: { unknown } = {}
     local initialIds: { number } = {}
@@ -80,7 +81,7 @@ function Harness.run(finish: ((Report) -> ())?)
             end
         end
         local report: Report = {
-            suite = "P07-multiplayer",
+            suite = if sandbreakOnly then "Sandbreak-multiplayer" else "P07-multiplayer",
             environment = "Studio",
             clientCount = #Players:GetPlayers(),
             initialUserIds = initialIds,
@@ -358,6 +359,25 @@ function Harness.run(finish: ((Report) -> ())?)
             else Vector3.new(0, size.Y / 2, -size.Z * 0.375)
         return pose(model.Name):PointToWorldSpace(offset)
     end
+    -- Sample replicated, panel-owned roof cover on the same bounded grid on
+    -- each peer. Buildings may deliberately include a clipped roof opening.
+    local function sandbreakCoverage(model: Model, pivot: CFrame, size: Vector3): number
+        local params = RaycastParams.new()
+        params.FilterType = Enum.RaycastFilterType.Include
+        params.FilterDescendantsInstances = { model }
+        params.RespectCanCollide = true
+        local hits = 0
+        for x = -3, 3 do
+            for z = -3, 3 do
+                local point = pivot:PointToWorldSpace(Vector3.new(x * size.X / 8, 3, z * size.Z / 8))
+                if workspace:Raycast(point, -Vector3.yAxis * 6, params) then
+                    hits += 1
+                end
+            end
+        end
+        return hits
+    end
+
     local function expected(ids: { string }): { PanelExpectation }
         local result: { PanelExpectation } = {}
         for _, id in ids do
@@ -375,6 +395,10 @@ function Harness.run(finish: ((Report) -> ())?)
                 parts = #model:GetChildren(),
                 pivot = { pose(id):GetComponents() },
                 size = size,
+                sandbreakCoverage = if model:GetAttribute("SandbreakPanel")
+                        and model:GetAttribute("PanelSurface") == "Roof"
+                    then sandbreakCoverage(model, pose(id), size)
+                    else nil,
                 assetFamily = if type(model:GetAttribute("PanelAssetFamily")) == "string"
                     then model:GetAttribute("PanelAssetFamily") :: string
                     else nil,
@@ -670,6 +694,153 @@ function Harness.run(finish: ((Report) -> ())?)
         return entries
     end
     local ok, failure = pcall(function()
+        if sandbreakOnly then
+            check("Two clients deploy from the replacement and see their role effects", function()
+                assert(runtime.rounds.match.deploy(), "deployment rejected")
+                waitFor(function()
+                    return runtime.rounds.match.snapshot().phase == "Active"
+                end, "Sandbreak active round", 35)
+                for _, player in initialPlayers do
+                    if player:GetAttribute("Role") == "Gunship" then
+                        op = player
+                    elseif player:GetAttribute("Role") == "Ground" then
+                        ground = player
+                    end
+                end
+                assert(op and ground and op.UserId ~= ground.UserId, "two distinct active roles required")
+                local map = workspace.World.Battlefield
+                assert(#map.SpawnShelterPanels:GetChildren() == 103, "incorrect Sandbreak registry")
+                assert(
+                    not map.SpawnShelterPanels:FindFirstChild("Shelter_Roof_R01_C01"),
+                    "legacy panel survived"
+                )
+                local avatar = assert(ground.Character, "ground avatar missing")
+                local root = avatar:GetPivot().Position
+                assert(
+                    math.abs(root.X) <= 22 and math.abs(root.Z - 120) <= 14,
+                    "ground spawned outside Sandbreak"
+                )
+                for _, player in initialPlayers do
+                    probe(player, "SandbreakView", player:GetAttribute("Role"), function(reply)
+                        table.insert(observations, HttpService:JSONDecode(reply))
+                    end)
+                end
+            end)
+            local operator = assert(op, "operator missing")
+            local targetId: string? = nil
+            local pristineCoverage = 0
+            local pristinePivot: CFrame? = nil
+            local function availableShot(id: string?): (string, { [string]: unknown })
+                local params = RaycastParams.new()
+                params.FilterType = Enum.RaycastFilterType.Include
+                params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+                params.RespectCanCollide = true
+                local deadline = os.clock() + 20
+                repeat
+                    local muzzle = assert(runtime.aircraft.muzzle("M102"), "M102 muzzle unavailable")
+                    local candidates = if id
+                        then { panel(id) }
+                        else workspace.World.Battlefield.SpawnShelterPanels:GetChildren()
+                    for _, candidate in candidates do
+                        if not candidate:IsA("Model") or candidate:GetAttribute("PanelSurface") ~= "Roof" then
+                            continue
+                        end
+                        local size = candidate:GetAttribute("IntactSize")
+                        assert(typeof(size) == "Vector3", "Sandbreak roof size missing")
+                        local frame = pose(candidate.Name)
+                        if not id and sandbreakCoverage(candidate, frame, size) < 42 then
+                            continue
+                        end
+                        for _, x in { 0, -0.3, 0.3 } do
+                            for _, z in { 0, -0.3, 0.3 } do
+                                local point =
+                                    frame:PointToWorldSpace(Vector3.new(size.X * x, size.Y / 2, size.Z * z))
+                                local hit = aimHit("M102", point, muzzle, params)
+                                if hit and runtime.destruction.identify(hit.Instance) == candidate.Name then
+                                    local payload = command("M102", point, fireSequence + 1)
+                                    if payload then
+                                        return candidate.Name, payload
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    task.wait(0.10)
+                until os.clock() >= deadline
+                error("No reachable Sandbreak roof surface for current aircraft pose")
+            end
+            check("Six production M102 hits replicate a real Sandbreak roof opening", function()
+                selectWeapon(operator, "M102")
+                for hit = 1, 6 do
+                    awaitReady("M102")
+                    local id, payload = availableShot(targetId)
+                    if not targetId then
+                        targetId = id
+                        pristinePivot = pose(id)
+                        local first = expected({ id })[1]
+                        pristineCoverage = assert(first.sandbreakCoverage, "missing initial roof coverage")
+                        for _, player in initialPlayers do
+                            probe(player, "Panels", { first })
+                        end
+                    end
+                    local impactCount = #impactFacts
+                    fireSequence += 1
+                    probe(operator, "Fire", payload)
+                    local wanted = if hit < 3 then "Light" elseif hit < 6 then "Heavy" else "Total"
+                    local progress = if hit == 6 then 1 else (hit % 3) / 3
+                    waitFor(function()
+                        return #impactFacts > impactCount
+                            and impactFacts[#impactFacts].panelId == id
+                            and panel(id):GetAttribute("DamageAppearance") == wanted
+                            and panel(id):GetAttribute("PanelProgress") == progress
+                    end, "Sandbreak resolved hit " .. hit, 8)
+                    local result = expected({ id })[1]
+                    local coverage = assert(result.sandbreakCoverage, "missing replicated roof coverage")
+                    if wanted == "Light" then
+                        assert(coverage == pristineCoverage, "Light changed cover")
+                    elseif wanted == "Heavy" then
+                        assert(coverage > 0 and coverage < pristineCoverage, "Heavy lacks a real opening")
+                    else
+                        assert(coverage == 0 and result.parts == 0, "Total retained cover")
+                    end
+                    for _, player in initialPlayers do
+                        probe(player, "Panels", { result })
+                    end
+                    table.insert(
+                        observations,
+                        { hit = hit, panelId = id, state = wanted, covered = coverage }
+                    )
+                end
+            end)
+            check("The next round restores the same shelter roof on both clients", function()
+                local round = runtime.rounds.match.snapshot().roundId
+                runtime.rounds.match.abort(round, "Sandbreak reset fixture")
+                assert(runtime.rounds.match.beginReset(), "Sandbreak reset rejected")
+                local id = assert(targetId, "target was not selected")
+                waitFor(function()
+                    local entry = workspace.World.Battlefield:FindFirstChild(id, true)
+                    return runtime.rounds.match.snapshot().phase == "Lobby"
+                        and entry
+                        and entry:IsA("Model")
+                        and entry:GetAttribute("DamageAppearance") == "Pristine"
+                        and runtime.destruction.snapshot(id) ~= nil
+                end, "Sandbreak reset lobby")
+                local restored = expected({ id })[1]
+                assert(
+                    pose(id) == pristinePivot and restored.sandbreakCoverage == pristineCoverage,
+                    "Pristine roof did not return"
+                )
+                for _, player in initialPlayers do
+                    probe(player, "Panels", { restored })
+                    probe(player, "NoFragments", nil)
+                end
+                table.insert(
+                    observations,
+                    { resetPanel = id, covered = pristineCoverage, clients = #initialPlayers }
+                )
+            end)
+            return true
+        end
         check(
             "A6 two actual clients deploy and reject malformed wrong-role stale flooded fire without cover mutation",
             function()
@@ -1224,6 +1395,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 end
             end
         end)
+        return true
     end)
     if not ok and (#cases == 0 or cases[#cases].passed) then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })
