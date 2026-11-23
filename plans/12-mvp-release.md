@@ -158,13 +158,31 @@ reported a running test. P04, P05, P06/P06Team, P08, P10, P11, P13, human test
 controls and operated layout, thermal and mobile checks retain their
 source-specific earlier evidence and await fresh release acceptance.
 
+### Merged invited-playtest candidate Studio checks
+
+Studio `0.748.0.7481526` ran the `982d3e7` test build
+`merged-main-tests.rbxlx`, SHA-256
+`989f559b7954dd34d1df3bfc943dd3bbc69b58487d728614e28def890b4dd3ec`.
+The local document contained the two-player default and all 18 Vesper thermal
+surfaces. The SDK sessions returned these results:
+
+| Studio invocation | Result |
+| --- | --- |
+| `ExecuteMultiplayerTestAsync(2, {kind = "HumanTestMultiplayer"})` | 4/4, two clients. Checked role-choice conflicts, deployment, round settings and restart. |
+| `ExecuteMultiplayerTestAsync(2, {kind = "P09", scenario = "LastGround"})` | 3/3, two clients. Checked last-ground elimination and departure outcomes and teardown. Baseline passed 196/196 on the server and 14/14 on both clients. |
+| `ExecuteMultiplayerTestAsync(3, {kind = "P03"})` | 0/2 with three initial clients. A client timed out waiting for replicated role, phase and deadline. The harness stopped before adding the late client. |
+
+The local document returned to Edit with the temporary SDK report attributes
+cleared. These runs exercised Studio clients on the current source-built test
+place. Destination access and published-client evidence remain open.
+
 ### Release gates
 
 | Criterion | Evidence and remaining work |
 | --- | --- |
 | A1 | Passed from clean Git with repeat-build checksum agreement and a release-only artifact. The committed receipt records inputs and hashes. |
-| A2 | The linked Studio reports record fresh results and failures. P03 late join, full P07 traversal and reset, P09 LastGround, and the remaining fresh scenarios above stay open. |
-| A3 | The user granted publication for the exact hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
+| A2 | P09 LastGround and the two-client controls pass on `982d3e7`. P03 timed out before late join. Full P07 traversal and reset and the remaining fresh scenarios above stay open. |
+| A3 | The user granted publication for the merged hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
 | A4 | Six- and ten-player Roblox client rounds require an accessible published candidate and confirmed player rosters. |
 | A5 | The live ten-player five-minute workload and 30-minute soak require the published candidate and a ten-player roster. The P11 Studio baseline remains recorded above. |
 | A6 | The technical writer reviewed the player and contributor guides and added smoke, rollback and live acceptance steps. The player experience link and live limitations await platform verification. [Runbook](../docs/release.md), [draft PR #46](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/46) |
