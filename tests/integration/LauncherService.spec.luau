@@ -20,6 +20,37 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         service.reset(1, anchor)
         return service
     end
+    test("Landmark launchers isolate owners, shot credits, transfers and round identities", function()
+        local ids: { [string]: boolean } = {}
+        local credits: { [string]: boolean } = {}
+        for i, site in { "Hangar", "Radar", "Depot" } do
+            local service = rules.new(site)
+            service.reset(1, anchor)
+            local id = service.snapshot(0).launcherId
+            assert(not ids[id], "landmark identities collided")
+            ids[id] = true
+            local intent = shot(1)
+            assert(not service.pickup(i, intent, true, true, 0), "malformed request acquired launcher")
+            local pickup = request(1)
+            pickup.launcherId = id
+            assert(service.pickup(i, pickup, true, true, 0), "valid landmark pickup rejected")
+            intent.launcherId = id
+            intent.sequence = 2
+            local _, credit = service.fire(i, intent, true, 0, anchor)
+            assert(credit and not credits[credit], "landmark shots shared a damage credit")
+            credits[credit] = true
+            assert(
+                service.snapshot(1).ownerId == i and service.snapshot(1).ammo == 0,
+                "owner or readiness lost"
+            )
+            service.clear()
+            service.reset(2, anchor)
+            assert(
+                not service.pickup(i, pickup, true, true, 5) and service.snapshot(5).ammo == 1,
+                "stale request changed new round"
+            )
+        end
+    end)
     test("P08 A1 raced pickup and snapshots retain one stable identity", function()
         local service = owner()
         assert(service.pickup(1, request(1), true, true, 0), "first claim failed")

@@ -84,7 +84,7 @@ return function()
             duplicate.Parent = map.Anchors
             assert(not owner.validate(), "expected not owner.validate()")
             duplicate:Destroy()
-            local launcher = map.Anchors.Launcher
+            local launcher = map.Anchors.LauncherRadar
             launcher.Parent = nil
             assert(not owner.validate(), "expected not owner.validate()")
             launcher.Parent = map.Anchors

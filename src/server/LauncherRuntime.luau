@@ -1,6 +1,6 @@
 --!strict
 --[=[
-    LauncherRuntime: server engine/network owner of the one recoverable launcher.
+    LauncherRuntime: server engine/network owner of the three landmark launchers.
     Depends on MatchService, P06 ground movement/origin/rocket authority, level geometry
     and LauncherService. Intents are bounded/rate-limited, then processed atomically
     after the authoritative frame's outcome commit. Results/deadline beat transfers.
@@ -25,7 +25,7 @@ local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.Wea
 LauncherRuntime.queueCapacity = 32
 export type Controller = {
     stop: () -> (),
-    snapshot: () -> LauncherService.Snapshot,
+    snapshot: (string?) -> LauncherService.Snapshot,
     -- Sweep previously accepted flights at the frame timestamp in server seconds.
     advance: (number) -> (),
     -- Sync generations and process validated launcher intent after round results.
@@ -39,6 +39,19 @@ export type Controller = {
         peakQueued: number,
         effects: number,
     },
+}
+-- Each site owns one recoverable weapon. The shared FIFO arbitrates simultaneous
+-- requests across all sites; a ground player can carry at most one launcher.
+type Slot = {
+    site: string,
+    rules: LauncherService.Controller,
+    held: Tool?,
+    available: Model?,
+    revision: number,
+    publishedRevision: number,
+    publishedAmmo: number,
+    lastSample: number,
+    lastRoot: Vector3?,
 }
 type Request = { player: Player, action: string, payload: unknown }
 type Flight = {
@@ -70,7 +83,20 @@ function LauncherRuntime.start(
     if ReplicatedStorage:FindFirstChild("LauncherState") then
         return nil, "launcher already owned"
     end
-    local rules = LauncherService.new()
+    local slots: { Slot } = {}
+    for _, site in { "Radar", "Hangar", "Depot" } do
+        table.insert(slots, {
+            site = site,
+            rules = LauncherService.new(site),
+            held = nil,
+            available = nil,
+            revision = -1,
+            publishedRevision = -1,
+            publishedAmmo = -1,
+            lastSample = 0,
+            lastRoot = nil,
+        })
+    end
     local state = Instance.new("Folder")
     state.Name = "LauncherState"
     local effects = Instance.new("Folder")
@@ -81,20 +107,14 @@ function LauncherRuntime.start(
     local buckets: { [Player]: RateLimit.Bucket } = {}
     local pending: { Request } = {}
     local flights: { Flight } = {}
-    local lastValid: { [number]: Vector3 } = {}
-    local held: Tool? = nil
-    local available: Model? = nil
-    local observedRevision = -1
-    local published = ""
-    local lastSample = 0
     local function battlefield(): Instance?
         local world = workspace:FindFirstChild("World")
         return if world then world:FindFirstChild("Battlefield") else nil
     end
-    local function anchor(): Vector3?
+    local function anchor(slot: Slot): Vector3?
         local map = battlefield()
         local anchors = if map then map:FindFirstChild("Anchors") else nil
-        local item = if anchors then anchors:FindFirstChild("Launcher") else nil
+        local item = if anchors then anchors:FindFirstChild("Launcher" .. slot.site) else nil
         return if item and item:IsA("BasePart") then item.Position else nil
     end
     local function active(now: number): boolean
@@ -114,14 +134,14 @@ function LauncherRuntime.start(
             and humanoid ~= nil
             and humanoid.Health > 0
     end
-    local function destroyRepresentation()
-        if held then
-            held:Destroy()
-            held = nil
+    local function destroyRepresentation(slot: Slot)
+        if slot.held then
+            slot.held:Destroy()
+            slot.held = nil
         end
-        if available then
-            available:Destroy()
-            available = nil
+        if slot.available then
+            slot.available:Destroy()
+            slot.available = nil
         end
     end
     local function clearFlights()
@@ -130,67 +150,69 @@ function LauncherRuntime.start(
         end
         table.clear(flights)
     end
-    local function publish(now: number)
-        local snapshot = rules.snapshot(now)
-        local encoded = HttpService:JSONEncode(snapshot)
-        if encoded ~= published then
-            published = encoded
-            state:SetAttribute("Snapshot", encoded)
+    local function publish(slot: Slot, now: number)
+        local snapshot = slot.rules.snapshot(now)
+        if snapshot.revision ~= slot.publishedRevision or snapshot.ammo ~= slot.publishedAmmo then
+            slot.publishedRevision, slot.publishedAmmo = snapshot.revision, snapshot.ammo
+            state:SetAttribute(
+                if slot.site == "Radar" then "Snapshot" else slot.site .. "Snapshot",
+                HttpService:JSONEncode(snapshot)
+            )
         end
-        if held then
-            held:SetAttribute("Ammo", snapshot.ammo)
-            held:SetAttribute("ReloadUntil", snapshot.readyAt)
+        if slot.held then
+            slot.held:SetAttribute("Ammo", snapshot.ammo)
+            slot.held:SetAttribute("ReloadUntil", snapshot.readyAt)
         end
     end
-    local function represent(now: number)
-        local snapshot = rules.snapshot(now)
+    local function represent(slot: Slot, now: number)
+        local snapshot = slot.rules.snapshot(now)
         local player = if snapshot.ownerId then Players:GetPlayerByUserId(snapshot.ownerId) else nil
         local backpack = if player then player:FindFirstChildOfClass("Backpack") else nil
-        local validHeld = held ~= nil
+        local validHeld = slot.held ~= nil
             and player ~= nil
-            and (held.Parent == backpack or held.Parent == player.Character)
+            and (slot.held.Parent == backpack or slot.held.Parent == player.Character)
         if
-            snapshot.revision ~= observedRevision
+            snapshot.revision ~= slot.revision
             or (snapshot.state == "Held" and not validHeld)
-            or (snapshot.state == "Available" and (not available or not available.Parent))
+            or (snapshot.state == "Available" and (not slot.available or not slot.available.Parent))
         then
             -- Fire changes readiness only; preserve the equipped Tool and native
             -- selection whenever its identity/owner has not changed.
             local correctHeld = snapshot.state == "Held"
                 and validHeld
-                and held ~= nil
-                and held:GetAttribute("LauncherId") == snapshot.launcherId
+                and slot.held ~= nil
+                and slot.held:GetAttribute("LauncherId") == snapshot.launcherId
             if not correctHeld then
-                destroyRepresentation()
+                destroyRepresentation(slot)
                 if snapshot.state == "Available" then
                     local model = Geometry.pickup(snapshot.launcherId, vector(snapshot.position))
                     model.Parent = effects
-                    available = model
+                    slot.available = model
                 elseif snapshot.state == "Held" and backpack then
                     local tool = Geometry.tool(snapshot.launcherId)
                     tool.Parent = backpack
-                    held = tool
+                    slot.held = tool
                 end
             end
-            observedRevision = snapshot.revision
+            slot.revision = snapshot.revision
         end
-        publish(now)
+        publish(slot, now)
     end
-    local function recover(userId: number)
-        if not rules.recover(userId) then
+    local function recover(slot: Slot, userId: number)
+        if not slot.rules.recover(userId) then
             return
         end
-        local map, initial = battlefield(), anchor()
+        local map, initial = battlefield(), anchor(slot)
         assert(map and initial, "validated launcher anchor disappeared")
-        local last = lastValid[userId]
+        local last = slot.lastRoot
         local spot = if last then Geometry.supported(map, MapRules.defaults, last) else nil
-        assert(rules.place(scalar(spot or initial)), "launcher recovery invariant")
+        assert(slot.rules.place(scalar(spot or initial)), "launcher recovery invariant")
     end
-    local function shoot(player: Player, payload: unknown, now: number)
+    local function shoot(slot: Slot, player: Player, payload: unknown, now: number)
         if
-            not held
-            or held.Parent ~= player.Character
-            or not rules.preflight(player.UserId, payload, "Fire", eligible(player, now), now)
+            not slot.held
+            or slot.held.Parent ~= player.Character
+            or not slot.rules.preflight(player.UserId, payload, "Fire", eligible(player, now), now)
             or not ground.validateGround(player)
         then
             return
@@ -201,7 +223,7 @@ function LauncherRuntime.start(
             return
         end
         local origin = head.Position
-        local intent, shotId = rules.fire(player.UserId, payload, true, now, scalar(origin))
+        local intent, shotId = slot.rules.fire(player.UserId, payload, true, now, scalar(origin))
         if not intent or not shotId or not intent.x or not intent.y or not intent.z then
             return
         end
@@ -245,25 +267,32 @@ function LauncherRuntime.start(
             })
         )
     end
-    local function process(request: Request, now: number)
+    local function process(slot: Slot, request: Request, now: number)
         local player, action, payload = request.player, request.action, request.payload
         if not eligible(player, now) then
             return
         end
+        if action == "Pickup" then
+            for _, other in slots do
+                if other.rules.snapshot(now).ownerId == player.UserId then
+                    return
+                end
+            end
+        end
         if action == "Fire" then
-            shoot(player, payload, now)
+            shoot(slot, player, payload, now)
             return
         end
-        if not rules.preflight(player.UserId, payload, action, true, now) then
+        if not slot.rules.preflight(player.UserId, payload, action, true, now) then
             return
         end
         if action == "Drop" then
-            if rules.drop(player.UserId, payload, true, now) then
-                local map, initial = battlefield(), anchor()
+            if slot.rules.drop(player.UserId, payload, true, now) then
+                local map, initial = battlefield(), anchor(slot)
                 assert(map and initial, "validated launcher anchor disappeared")
-                local last = lastValid[player.UserId]
+                local last = slot.lastRoot
                 local spot = if last then Geometry.supported(map, MapRules.defaults, last) else nil
-                assert(rules.place(scalar(spot or initial)), "drop recovery invariant")
+                assert(slot.rules.place(scalar(spot or initial)), "drop recovery invariant")
             end
         elseif action == "Pickup" and ground.validateGround(player) then
             local map = battlefield()
@@ -271,22 +300,23 @@ function LauncherRuntime.start(
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
             local head = if character then character:FindFirstChild("Head") else nil
             if map and root and root:IsA("BasePart") and head and head:IsA("BasePart") then
-                local target = vector(rules.snapshot(now).position)
+                local target = vector(slot.rules.snapshot(now).position)
                 if
-                    rules.pickup(
+                    slot.rules.pickup(
                         player.UserId,
                         payload,
                         true,
                         Geometry.reachable(map, root, head, target, LauncherService.pickupStuds),
                         now
                     )
-                    and Geometry.supported(map, MapRules.defaults, root.Position)
                 then
-                    lastValid[player.UserId] = root.Position
+                    slot.lastRoot = if Geometry.supported(map, MapRules.defaults, root.Position)
+                        then root.Position
+                        else nil
                 end
             end
         end
-        represent(now)
+        represent(slot, now)
     end
     for _, action in { "Pickup", "Drop", "Fire" } do
         local remote = Instance.new("RemoteEvent")
@@ -380,26 +410,39 @@ function LauncherRuntime.start(
             return
         end
         local current = match.snapshot()
-        if current.phase == "Deploying" or active(tickNow) then
-            local initial = anchor()
-            assert(initial, "validated launcher anchor missing")
-            local before = rules.snapshot(tickNow)
-            if current.roundId ~= before.roundId then
-                destroyRepresentation()
-                clearFlights()
-                table.clear(lastValid)
-                lastSample = 0
-                rules.reset(current.roundId, scalar(initial))
+        if current.phase ~= "Deploying" and not active(tickNow) then
+            for _, slot in slots do
+                slot.rules.clear()
+                destroyRepresentation(slot)
+                slot.lastRoot = nil
+                publish(slot, tickNow)
+            end
+            clearFlights()
+            table.clear(pending)
+            if current.phase == "Lobby" or current.phase == "Resetting" then
                 state:SetAttribute("LastShot", nil)
                 state:SetAttribute("LastImpact", nil)
             end
-            local snapshot = rules.snapshot(tickNow)
+            return
+        end
+        if current.roundId ~= slots[1].rules.snapshot(tickNow).roundId then
+            clearFlights()
+            state:SetAttribute("LastShot", nil)
+            state:SetAttribute("LastImpact", nil)
+            for _, slot in slots do
+                destroyRepresentation(slot)
+                slot.lastRoot, slot.lastSample = nil, 0
+                local initial = assert(anchor(slot), "validated landmark launcher anchor missing")
+                slot.rules.reset(current.roundId, scalar(initial))
+            end
+        end
+        for _, slot in slots do
+            local snapshot = slot.rules.snapshot(tickNow)
             local carrier = if snapshot.ownerId then Players:GetPlayerByUserId(snapshot.ownerId) else nil
             if snapshot.ownerId and (not carrier or not eligible(carrier, tickNow)) then
-                recover(snapshot.ownerId)
-            end
-            if carrier and eligible(carrier, tickNow) and tickNow - lastSample >= 0.1 then
-                lastSample = tickNow
+                recover(slot, snapshot.ownerId)
+            elseif carrier and tickNow - slot.lastSample >= 0.1 then
+                slot.lastSample = tickNow
                 local map, character = battlefield(), carrier.Character
                 local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
                 if
@@ -409,26 +452,27 @@ function LauncherRuntime.start(
                     and ground.validateGround(carrier)
                     and Geometry.supported(map, MapRules.defaults, root.Position)
                 then
-                    lastValid[carrier.UserId] = root.Position
+                    slot.lastRoot = root.Position
                 end
             end
-            local requests = pending
-            pending = {}
-            for _, request in requests do
-                process(request, tickNow)
+        end
+        for _, request in pending do
+            local payload = request.payload
+            if type(payload) == "table" then
+                for _, slot in slots do
+                    if
+                        slot.rules.snapshot(tickNow).launcherId
+                        == (payload :: { [string]: unknown }).launcherId
+                    then
+                        process(slot, request, tickNow)
+                        break
+                    end
+                end
             end
-            represent(tickNow)
-        else
-            rules.clear()
-            destroyRepresentation()
-            clearFlights()
-            table.clear(pending)
-            table.clear(lastValid)
-            if current.phase == "Lobby" or current.phase == "Resetting" then
-                state:SetAttribute("LastShot", nil)
-                state:SetAttribute("LastImpact", nil)
-            end
-            publish(tickNow)
+        end
+        table.clear(pending)
+        for _, slot in slots do
+            represent(slot, tickNow)
         end
     end
     if not externallyStepped then
@@ -442,17 +486,28 @@ function LauncherRuntime.start(
         )
     end
     state.Parent = ReplicatedStorage
-    publish(workspace:GetServerTimeNow())
+    for _, slot in slots do
+        publish(slot, workspace:GetServerTimeNow())
+    end
     return {
         advance = advance,
         interact = interact,
-        snapshot = function()
-            return rules.snapshot(workspace:GetServerTimeNow())
+        snapshot = function(site)
+            for _, slot in slots do
+                if slot.site == (site or "Radar") then
+                    return slot.rules.snapshot(workspace:GetServerTimeNow())
+                end
+            end
+            error("unknown launcher site")
         end,
         resources = function()
+            local representations = 0
+            for _, slot in slots do
+                representations += (if slot.held then 1 else 0) + (if slot.available then 1 else 0)
+            end
             return {
                 connections = #connections,
-                representations = (if held then 1 else 0) + (if available then 1 else 0),
+                representations = representations,
                 flights = #flights,
                 queued = #pending,
                 peakQueued = peakQueued,
@@ -470,9 +525,10 @@ function LauncherRuntime.start(
             table.clear(connections)
             table.clear(pending)
             table.clear(buckets)
-            table.clear(lastValid)
-            rules.clear()
-            destroyRepresentation()
+            for _, slot in slots do
+                slot.rules.clear()
+                destroyRepresentation(slot)
+            end
             clearFlights()
             state:Destroy()
             effects:Destroy()

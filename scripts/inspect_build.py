@@ -403,15 +403,11 @@ def check_expanded_world_contract() -> None:
             assert abs(z-roof["CFrame"][2]) < roof["Size"][2]/2 - 1, "spawn canopy misses full-orbit Z protection"
     manifest = json.loads((ROOT / "assets/manifest.json").read_text())
     recipe_contract = next(asset for asset in manifest["assets"] if asset["id"] == "battlefield-greybox")["terrain_recipe"]
-    assert recipe_contract == {"version": 1, "seed": 0, "descriptor_path": "TerrainRecipe", "owner_module": "src/server/TerrainRecipe.luau", "voxel_resolution_studs": 4, "bounds_min": [-368, -112, -368], "bounds_max": [368, 32, 368], "hill_count": 8, "materials": ["Grass", "Rock"]}, "terrain manifest contract"
-    recipe = {item["Name"]: item["Properties"] for item in children["TerrainRecipe"]["Children"]}
-    assert len(recipe) == 9 and recipe["TerrainBounds"]["Size"] == [736, 144, 736], "terrain bounds/count"
-    expected_hills = [(-260,-140,52),(-230,160,52),(240,-170,56),(240,150,52),(0,-260,60),(-110,-260,44),(120,260,44),(-260,0,48)]
-    for index, (x, z, radius) in enumerate(expected_hills):
-        hill = recipe[f"TerrainHill{index:02}"]
-        assert hill["CFrame"][:3] == [x, 16-radius, z] and hill["Size"] == [radius*2]*3, "terrain deterministic elevation recipe"
-        assert hill["Shape"] == "Ball" and hill["Material"] == ("Grass" if index % 2 == 0 else "Rock"), "terrain material recipe"
-        assert not hill["CanCollide"] and not hill["CanQuery"] and hill["Transparency"] == 1, "terrain descriptors must be inert"
+    assert recipe_contract["version"] == 2 and recipe_contract["voxel_resolution_studs"] == 4
+    recipe = {node["Name"]:node["Properties"] for node in children["TerrainRecipe"]["Children"]}
+    assert set(recipe) == {"TerrainBounds","SurfaceRaster"} and recipe["TerrainBounds"]["Size"] == [736,144,736]
+    raster = recipe["SurfaceRaster"]["Value"].splitlines()
+    assert len(raster) == 180 and all(len(row)==180 and not set(row)-set("stdpglav.") for row in raster)
     areas = []
     ids = set()
     for building in children["Buildings"]["Children"]:
@@ -449,7 +445,7 @@ def check_expanded_world_contract() -> None:
                 assert 8 in panel["Properties"]["Size"] and 16 in panel["Properties"]["Size"], "16x8 wall panels"
         assert stories == {"01", "02"} and roof, "panels on each story and roof"
     assert sorted(areas) == [1536, 3072, 3072], "two large and one smaller footprint"
-    print(f"Expanded world source contract passed: 720-stud diameter, 8 deterministic terrain hills, 3 two-story buildings, {len(ids)} building +76 starting-shelter stable panel pivots (187 total).")
+    print(f"Expanded world source contract passed: 720-stud diameter, flat district terrain, 3 two-story buildings, {len(ids)} building +76 starting-shelter stable panel pivots (187 total).")
 
 
 def geometry_rejection_probes() -> None:

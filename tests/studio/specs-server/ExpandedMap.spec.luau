@@ -45,24 +45,23 @@ local function fixture(callback: (Model, MapService.Controller) -> ())
     assert(ok, tostring(failure))
 end
 
-local function terrainSignature(recipe: Instance): string
+local surfaceSamples = {
+    { point = Vector3.new(-258, 0, -138), material = Enum.Material.Sand },
+    { point = Vector3.new(238, 0, -162), material = Enum.Material.Grass },
+    { point = Vector3.new(162, 0, -146), material = Enum.Material.LeafyGrass },
+    { point = Vector3.new(178, 0, 194), material = Enum.Material.Asphalt },
+    { point = Vector3.new(2, 0, 258), material = Enum.Material.Sand },
+}
+
+-- Include the old hill mutation point as well as each district and the survey pad.
+local function terrainSignature(): string
     local result: { string } = {}
-    for _, hill in recipe:GetChildren() do
-        if hill:IsA("Part") and hill.Name ~= "TerrainBounds" then
-            local center = hill.Position + Vector3.new(0, hill.Size.Y / 2 - 8, 0)
-            local region = Region3.new(center - Vector3.new(8, 16, 8), center + Vector3.new(8, 16, 8))
-                :ExpandToGrid(4)
-            local materials, occupancies = Terrain:ReadVoxels(region, 4)
-            for x = 1, #materials do
-                for y = 1, #materials[x] do
-                    for z = 1, #materials[x][y] do
-                        table.insert(
-                            result,
-                            tostring(materials[x][y][z]) .. ":" .. tostring(occupancies[x][y][z])
-                        )
-                    end
-                end
-            end
+    for _, sample in surfaceSamples do
+        local region = Region3.new(sample.point - Vector3.new(2, 4, 2), sample.point + Vector3.new(2, 32, 2))
+            :ExpandToGrid(4)
+        local mats, occupancies = Terrain:ReadVoxels(region, 4)
+        for y, material in mats[1] do
+            table.insert(result, material[1].Name .. tostring(occupancies[1][y][1]))
         end
     end
     return table.concat(result, "|")
@@ -196,21 +195,13 @@ return function()
                 local rays = RaycastParams.new()
                 rays.FilterType = Enum.RaycastFilterType.Include
                 rays.FilterDescendantsInstances = { Terrain }
-                local initial = terrainSignature(recipe)
-                for _, hill in recipe:GetChildren() do
-                    if hill:IsA("Part") and hill.Name ~= "TerrainBounds" then
-                        awaitCondition(function()
-                            local hit = workspace:Raycast(
-                                Vector3.new(hill.Position.X, 80, hill.Position.Z),
-                                Vector3.new(0, -150, 0),
-                                rays
-                            )
-                            return hit ~= nil
-                                and hit.Instance == Terrain
-                                and hit.Material == hill.Material
-                                and math.abs(hit.Position.Y - 16) <= 3
-                        end, "terrain material/elevation did not converge")
-                    end
+                local initial = terrainSignature()
+                for _, sample in surfaceSamples do
+                    awaitCondition(function()
+                        local hit =
+                            workspace:Raycast(sample.point + Vector3.yAxis * 32, -Vector3.yAxis * 40, rays)
+                        return hit ~= nil and hit.Material == sample.material and math.abs(hit.Position.Y) < 1
+                    end, "district material/elevation did not converge")
                 end
                 local unrelated = Region3.new(Vector3.new(696, 16, -4), Vector3.new(704, 24, 4))
                     :ExpandToGrid(4)
@@ -228,7 +219,7 @@ return function()
                             current and not current:FindFirstChild("P13TransientPanel"),
                             "runtime panel survived reset"
                         )
-                        assert(terrainSignature(recipe) == initial, "terrain voxels differ after rebuild")
+                        assert(terrainSignature() == initial, "terrain voxels differ after rebuild")
                         awaitCondition(function()
                             local hit =
                                 workspace:Raycast(Vector3.new(700, 30, 0), Vector3.new(0, -20, 0), rays)
@@ -245,19 +236,19 @@ return function()
     test("TerrainReconstruction rejects out-of-bounds recipes without terrain writes", function()
         fixture(function(map)
             local recipe = (map:FindFirstChild("TerrainRecipe") :: Folder):Clone()
-            local hill = recipe:FindFirstChild("TerrainHill00") :: BasePart
-            hill.Position = Vector3.new(700, 0, 0)
-            local before = terrainSignature(map:FindFirstChild("TerrainRecipe") :: Folder)
-            assert(not TerrainRecipe.restore(Terrain, recipe), "out-of-bounds recipe accepted")
-            hill.Position = Vector3.new(-260, -36, -140)
+            local raster = recipe:FindFirstChild("SurfaceRaster") :: StringValue
+            local original = raster.Value
+            raster.Value = string.gsub(original, "s", "?", 1)
+            local before = terrainSignature()
+            assert(not TerrainRecipe.restore(Terrain, recipe), "unknown material accepted")
+            raster.Value = string.sub(original, 2)
+            assert(not TerrainRecipe.restore(Terrain, recipe), "truncated raster accepted")
+            raster.Value = original
             local bounds = recipe:FindFirstChild("TerrainBounds") :: BasePart
             bounds.CFrame *= CFrame.Angles(0, math.pi / 4, 0)
             assert(not TerrainRecipe.restore(Terrain, recipe), "rotated ownership bounds accepted")
             recipe:Destroy()
-            assert(
-                terrainSignature(map:FindFirstChild("TerrainRecipe") :: Folder) == before,
-                "invalid recipe mutated terrain"
-            )
+            assert(terrainSignature() == before, "invalid recipe mutated terrain")
         end)
     end)
     test("ExpandedMapCleanup teardown restores mutated panel geometry and remains idempotent", function()

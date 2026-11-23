@@ -28,7 +28,6 @@ TRIANGLE_LIMIT = 20_000
 BATCH_PART_LIMIT = 250
 SITE = (-211, 0.125, -116)
 YAW_DEGREES = 60
-HILL_MOVES = {"TerrainHill00": [-99, -36, 180], "TerrainHill07": [-284, -32, 25]}
 PILOT = {"Hardstand • jointed twin service apron", "Door W.L.1 • Pristine",
          "H01.1 • torn skin cassette"}
 
@@ -232,10 +231,10 @@ def main():
             math.dist(pose, states["Pristine"]) > 0.001 for pose in states.values()
         ):
             raise ValueError(f"Missing or misaligned damage geometry for {key}")
-    site_checks = audit_site(sources, SITE, YAW_DEGREES, HILL_MOVES, rotate)
+    site_checks = audit_site(sources, SITE, YAW_DEGREES, rotate)
     report = {
         "version":1, "blendSha256":digest(blend), "assemblySha256":digest(assembly),
-        "placement":{"locationStuds":SITE,"yawDegrees":YAW_DEGREES,"hillMoves":HILL_MOVES, **site_checks},
+        "placement":{"locationStuds":SITE,"yawDegrees":YAW_DEGREES,**site_checks},
         "units":"one glTF unit per stud, Y up, doors face +Z before placement",
         "walkingSurfaces": walk_surfaces(),
         "batches":sources,

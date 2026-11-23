@@ -94,10 +94,13 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         if ground then
             groundCount += 1
         end
-        if item.Name == "Launcher" then
+        local launcher = item.Name == "LauncherHangar"
+            or item.Name == "LauncherRadar"
+            or item.Name == "LauncherDepot"
+        if launcher then
             launcherCount += 1
         end
-        if ground or item.Name == "Launcher" or item.Name == "Lobby" or item.Name == "Operator" then
+        if ground or launcher or item.Name == "Lobby" or item.Name == "Operator" then
             local position = item.Position
             if
                 (item.Name == "Lobby" or item.Name == "Operator")
@@ -106,10 +109,10 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
                 return false, "protected station inside playable disk: " .. item.Name
             end
             if
-                (ground or item.Name == "Launcher")
+                (ground or launcher)
                 and (
                     not MapRules.inside(settings, position.X, position.Z)
-                    or math.abs(position.Y - settings.groundY - 3) > 0.01
+                    or math.abs(position.Y - settings.groundY - 3) > (if launcher then 0.25 else 0.01)
                 )
             then
                 return false, "anchor outside safe disk: " .. item.Name
@@ -128,8 +131,8 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             end
         end
     end
-    if groundCount ~= 9 or launcherCount ~= 1 then
-        return false, "map requires nine ground anchors and one launcher"
+    if groundCount ~= 9 or launcherCount ~= 3 then
+        return false, "map requires nine ground anchors and three landmark launchers"
     end
     for index = 1, 9 do
         local anchor = anchors:FindFirstChild(string.format("Ground%02d", index))
@@ -227,7 +230,9 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             end
         end
         BuildingGeometry.decorate(map)
-        map:SetAttribute("TerrainRecipeVersion", 1)
+        local disk = map:FindFirstChild("GroundDisk") :: BasePart
+        disk.Transparency = 1
+        map:SetAttribute("TerrainRecipeVersion", 2)
         map:SetAttribute("TerrainSeed", 0)
         map:SetAttribute("RadiusStuds", settings.radiusStuds)
         map:SetAttribute("AircraftAltitudeStuds", settings.altitudeStuds)

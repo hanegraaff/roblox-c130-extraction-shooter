@@ -25,11 +25,13 @@ return function()
         local ok, failure = pcall(function()
             assert(owner.start(), "map fixture failed")
             local terrain = workspace.Terrain
+            -- Reproduce the original slope as an owned fixture on the flat district map.
+            terrain:FillBall(Vector3.new(-260, -36, -140), 52, Enum.Material.Rock)
             local params = RaycastParams.new()
             params.FilterType = Enum.RaycastFilterType.Include
             params.FilterDescendantsInstances = { terrain }
             local origin = Vector3.new(363.7364, 138, 31.1414)
-            local target = Vector3.new(-263.99924, 13.56503, -159.99977)
+            local target = Vector3.new(-256.13995, 15.12296, -157.60667)
             local direction = (target - origin).Unit
             local travel = (target - origin).Magnitude + 0.25
             local deadline = os.clock() + 5

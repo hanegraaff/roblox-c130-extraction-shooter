@@ -389,7 +389,7 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
                 and launcher.readyAt == 0,
             "pristine launcher unavailable"
         )
-        assert(runtime.launcher.resources().representations == 1, "pristine launcher duplicated")
+        assert(runtime.launcher.resources().representations == 3, "pristine launcher duplicated")
         for weapon, profile in CombatService.profiles do
             local fresh = readiness(weapon)
             assert(
@@ -673,7 +673,7 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
                 previousOperator = operator
                 local carrier = ground[1]
                 local stale = launcherRequest(99)
-                stale.roundId, stale.launcherId = activeRound, "launcher:" .. tostring(activeRound)
+                stale.roundId, stale.launcherId = activeRound, runtime.launcher.snapshot().launcherId
                 local p = runtime.launcher.snapshot().position
                 pose(carrier, Vector3.new(p.x, p.y + 2, p.z))
                 probe(carrier, "LauncherState/Pickup", stale)
@@ -769,7 +769,7 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
                     return runtime.launcher.snapshot().state == "Available"
                 end, "departed carrier recovery")
                 assert(
-                    match.snapshot().phase == "Active" and runtime.launcher.resources().representations == 1,
+                    match.snapshot().phase == "Active" and runtime.launcher.resources().representations == 3,
                     "carrier departure ended round or stranded launcher"
                 )
                 assert(

@@ -233,9 +233,9 @@ function Harness.run(finish: ((Report) -> ())?)
     end
     local sequences: { [Player]: number } = {}
     local rifleSequences: { [Player]: number } = {}
-    local function payload(player: Player, target: Vector3?): { [string]: unknown }
+    local function payload(player: Player, target: Vector3?, site: string?): { [string]: unknown }
         sequences[player] = (sequences[player] or 0) + 1
-        local state = runtime.launcher.snapshot()
+        local state = runtime.launcher.snapshot(site)
         local value: { [string]: unknown } = {
             roundId = state.roundId,
             launcherId = state.launcherId,
@@ -302,7 +302,7 @@ function Harness.run(finish: ((Report) -> ())?)
             probe(player, "Observe", expected)
         end
         assert(
-            runtime.launcher.resources().representations == (if snapshot.state == "Inactive" then 0 else 1),
+            runtime.launcher.resources().representations == (if snapshot.state == "Inactive" then 0 else 3),
             "representation count"
         )
     end
@@ -427,7 +427,7 @@ function Harness.run(finish: ((Report) -> ())?)
         assert(ok, tostring(failure))
     end
     local ok, failure = pcall(function()
-        check("A1/A5 three clients see one map launcher with M-7-only initial loadouts", function()
+        check("A1/A5 three clients see three landmark launchers with M-7-only initial loadouts", function()
             deploy()
             local _, ground = roles()
             assert(#ground == 2, "requires one operator and two actual ground clients")
@@ -448,7 +448,11 @@ function Harness.run(finish: ((Report) -> ())?)
                 probe(ground[1], "Pickup", { roundId = -1, sequence = 1, launcherId = "forged" })
                 probe(ground[1], "Flood", {})
                 task.wait(1.5)
-                pose(ground[1], Vector3.new(0, 5, 0), false)
+                pose(
+                    ground[1],
+                    workspace.World.Battlefield.Anchors.LauncherRadar.Position + Vector3.yAxis * 2,
+                    false
+                )
                 probe(ground[1], "Pickup", payload(ground[1]))
                 task.wait(0.15)
                 assert(
@@ -459,8 +463,9 @@ function Harness.run(finish: ((Report) -> ())?)
         )
         check("A1/A2 raced real-client pickups claim once; carrier keeps M-7", function()
             local _, ground = roles()
-            pose(ground[1], Vector3.new(-2, 5, 0))
-            pose(ground[2], Vector3.new(2, 5, 0))
+            local marker = workspace.World.Battlefield.Anchors.LauncherRadar.Position
+            pose(ground[1], marker + Vector3.new(-2, 2, 0))
+            pose(ground[2], marker + Vector3.new(2, 2, 0))
             local first = beginProbe(ground[1], "Pickup", payload(ground[1]))
             local second = beginProbe(ground[2], "Pickup", payload(ground[2]))
             finishProbe(first)
@@ -472,6 +477,24 @@ function Harness.run(finish: ((Report) -> ())?)
                 assert(runtime.launcher.snapshot().ownerId, "launcher owner missing")
             )
             assert(carrier and carrier.Backpack:FindFirstChild("M-7 rifle"), "M-7 removed on pickup")
+            local teammate = if carrier == ground[1] then ground[2] else ground[1]
+            for _, site in { "Hangar", "Depot" } do
+                local stand = runtime.launcher.snapshot(site)
+                local near = Vector3.new(stand.position.x, stand.position.y + 2, stand.position.z)
+                pose(carrier, near)
+                probe(carrier, "Pickup", payload(carrier, nil, site))
+                pose(teammate, near)
+                probe(teammate, "Pickup", payload(teammate, nil, site))
+                waitFor(function()
+                    return runtime.launcher.snapshot(site).ownerId == teammate.UserId
+                end, "second site owner")
+                assert(runtime.launcher.snapshot().ownerId == carrier.UserId, "carrier claimed two weapons")
+                probe(teammate, "Drop", payload(teammate, nil, site))
+                waitFor(function()
+                    return runtime.launcher.snapshot(site).state == "Available"
+                end, "second site drop")
+            end
+            pose(carrier, marker + Vector3.new(-2, 2, 0))
             observe(300)
         end)
         check("A3 actual miss drop transfer switching and early fire preserve identity and reload", function()
@@ -617,7 +640,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 assert(
                     runtime.launcher.snapshot().launcherId == before.launcherId
                         and runtime.launcher.snapshot().readyAt == before.readyAt
-                        and runtime.launcher.resources().representations == 1,
+                        and runtime.launcher.resources().representations == 3,
                     "reset recovery duplicated weapon"
                 )
                 probe(carrier, "Pickup", payload(carrier))
@@ -650,7 +673,7 @@ function Harness.run(finish: ((Report) -> ())?)
                 "stale round mutated launcher"
             )
             assert(
-                state.position.x == 0 and state.position.y == 3 and state.position.z == 0,
+                state.position.x == 174 and state.position.y == 3 and state.position.z == -42,
                 "reset moved anchor"
             )
             observe(300)
