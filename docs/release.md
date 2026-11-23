@@ -91,11 +91,12 @@ roster size, with one operator and everyone else on Ground. Repeat each
 of the three outcome paths at each full roster size, keeping the roster connected
 through Results and reset.
 
-Use a separate late-join exercise. Start a round with space for a fresh
-participant, then add that participant after deployment. Record the actual
-counts before and after the join. The late joiner must remain a spectator
-without active equipment or a round life until the next lobby. D59 covers the
-same-identity reconnect exclusion.
+D75 waives the dedicated late-join exercise for the current P12 candidate.
+When a future acceptance run includes this exercise, start a round with space
+for a fresh participant and add that participant after deployment. Record
+the client counts before and after the join. The late joiner must remain a
+spectator without active equipment or a round life until the next lobby. D59
+covers the same-identity reconnect exclusion.
 
 | Exercise | Expected observations |
 | --- | --- |
