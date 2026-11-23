@@ -1,0 +1,483 @@
+{
+  "runtimeSource": "f67a48343fa9037f09a604c0b64557b6bd806db1",
+  "testPlaceSha256": "3e924180ef97105f23ebf21a89d51760401899afff068f50c3f4e93bd75d1d12",
+  "studioVersion": "0.748.0.7481526",
+  "environment": "Local Roblox Studio test mapping, macOS arm64",
+  "solo": {
+    "initialServer": {
+      "errors": 1,
+      "skipped": 0,
+      "passed": 194,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 1,
+      "discovered": 195
+    },
+    "initialFailure": "PanelDestruction.spec fragment overlap witness did not observe the real avatar crossing",
+    "cleanServer": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 195,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 195
+    },
+    "cleanClient": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 13,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 13
+    },
+    "traversal": {
+      "state": "passed",
+      "camera": "Custom",
+      "standingRootOffset": 2.9980251789093018,
+      "samples": [
+        {
+          "segment": "south portal",
+          "peakY": 3.123023271560669,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 3.123023271560669,
+            "x": 168,
+            "z": -61.23442077636719
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "west stair approach",
+          "peakY": 3.1230251789093018,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 3.1230251789093018,
+            "x": 142.23876953125,
+            "z": -62.95511245727539
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "west stairs up",
+          "peakY": 13.122620582580566,
+          "reached": true,
+          "cameraZoomMin": 8.711967468261719,
+          "root": {
+            "y": 13.122620582580566,
+            "x": 141.52163696289062,
+            "z": -96.97885131835938
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "north gallery",
+          "peakY": 13.123027801513672,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 13.123024940490723,
+            "x": 133.34632873535156,
+            "z": -97.0162124633789
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "west gallery",
+          "peakY": 13.123024940490723,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 13.123024940490723,
+            "x": 132.5216827392578,
+            "z": -62.89557647705078
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "south gallery",
+          "peakY": 13.123024940490723,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 13.123024940490723,
+            "x": 139.32186889648438,
+            "z": -60.53554153442383
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "gallery across atrium",
+          "peakY": 13.123026847839355,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 13.123026847839355,
+            "x": 179.3209686279297,
+            "z": -60.30392837524414
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "east landing",
+          "peakY": 13.123016357421875,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 13.123016357421875,
+            "x": 178.66075134277344,
+            "z": -63.43248748779297
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "east stairs down",
+          "peakY": 13.123024940490723,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 3.1194052696228027,
+            "x": 178.50347900390625,
+            "z": -96.76530456542969
+          },
+          "cameraZoomMax": 12.500000953674316
+        },
+        {
+          "segment": "court floor",
+          "peakY": 3.12302565574646,
+          "reached": true,
+          "cameraZoomMin": 12.500000953674316,
+          "root": {
+            "y": 3.12302565574646,
+            "x": 168.66326904296875,
+            "z": -97.45349884033203
+          },
+          "cameraZoomMax": 12.500000953674316
+        }
+      ],
+      "maxZoom": 400,
+      "rig": "R15"
+    },
+    "exteriorCapture": "../images/radar-outpost/studio-exterior.jpg",
+    "exteriorCaptureCamera": "Controlled client camera at (225, 51, -19) looking at (160, 9, -80), FOV 48. HUD hidden for art review."
+  },
+  "multiplayer": {
+    "initialRequested": 2,
+    "initialActual": 1,
+    "recovery": "StudioTestService:AddPlayers(1) in the existing SDK-owned Server session",
+    "actual": 2,
+    "serverBootstrap": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 195,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 195
+    },
+    "clientReports": {
+      "Player1": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      },
+      "Player2": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 13,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 13
+      }
+    },
+    "combat": {
+      "replay-roof-pristine": {
+        "solid": true,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Waiting",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 9
+          },
+          "Player2": {
+            "gameplayRole": "Waiting",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 9
+          }
+        },
+        "id": "Warehouse_S02_Radar_Roof_S1",
+        "stage": "Pristine",
+        "parts": 9
+      },
+      "reset-Warehouse_S02_Radar_Wall_S1": {
+        "serverStage": "Pristine",
+        "clients": {
+          "Player2": {
+            "gameplayRole": "Waiting",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 5
+          },
+          "Player1": {
+            "gameplayRole": "Waiting",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 5
+          }
+        },
+        "pivotRestored": true,
+        "solid": true
+      },
+      "replaySummary": {
+        "restored": true,
+        "replaced": true,
+        "phase": "Lobby"
+      },
+      "heavyImpacts": [
+        "Warehouse_S02_Radar_Roof_S1",
+        "Warehouse_S02_Radar_Roof_S1",
+        "Warehouse_S02_Radar_Roof_S1",
+        "Warehouse_S02_Radar_Roof_S1",
+        "Warehouse_S02_Radar_Roof_S1",
+        "Warehouse_S02_Radar_Roof_S1"
+      ],
+      "replay-roof-light": {
+        "solid": true,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Gunship",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 3,
+            "stage": "Light",
+            "parts": 10
+          },
+          "Player2": {
+            "gameplayRole": "Ground",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 3,
+            "stage": "Light",
+            "parts": 10
+          }
+        },
+        "id": "Warehouse_S02_Radar_Roof_S1",
+        "stage": "Light",
+        "parts": 10
+      },
+      "reset-Warehouse_S02_Radar_Roof_S1": {
+        "serverStage": "Pristine",
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Waiting",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 9
+          },
+          "Player2": {
+            "gameplayRole": "Waiting",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 9
+          }
+        },
+        "pivotRestored": true,
+        "solid": true
+      },
+      "resetSummary": {
+        "pristineCount": 54,
+        "phase": "Lobby",
+        "previousMapReplaced": true,
+        "generation": 3
+      },
+      "roof-total": {
+        "solid": false,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Gunship",
+            "sustained": 0,
+            "cover": false,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Total",
+            "parts": 0
+          },
+          "Player2": {
+            "gameplayRole": "Ground",
+            "sustained": 0,
+            "cover": false,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Total",
+            "parts": 0
+          }
+        },
+        "id": "Warehouse_S02_Radar_Roof_S1",
+        "stage": "Total",
+        "parts": 0
+      },
+      "roof-heavy": {
+        "solid": false,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Gunship",
+            "sustained": 0,
+            "cover": false,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Heavy",
+            "parts": 7
+          },
+          "Player2": {
+            "gameplayRole": "Ground",
+            "sustained": 0,
+            "cover": false,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Heavy",
+            "parts": 7
+          }
+        },
+        "id": "Warehouse_S02_Radar_Roof_S1",
+        "stage": "Heavy",
+        "parts": 7
+      },
+      "roof-light": {
+        "solid": true,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Gunship",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 3,
+            "stage": "Light",
+            "parts": 10
+          },
+          "Player2": {
+            "gameplayRole": "Ground",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 3,
+            "stage": "Light",
+            "parts": 10
+          }
+        },
+        "id": "Warehouse_S02_Radar_Roof_S1",
+        "stage": "Light",
+        "parts": 10
+      },
+      "wallBurst": {
+        "id": "Warehouse_S02_Radar_Wall_S1",
+        "sustained": 0,
+        "appearance": "Heavy",
+        "sent": 55
+      },
+      "wall-earned": {
+        "solid": false,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Gunship",
+            "sustained": 0,
+            "cover": false,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Heavy",
+            "parts": 6
+          },
+          "Player2": {
+            "gameplayRole": "Ground",
+            "sustained": 0,
+            "cover": false,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Heavy",
+            "parts": 6
+          }
+        },
+        "id": "Warehouse_S02_Radar_Wall_S1",
+        "stage": "Heavy",
+        "parts": 6
+      },
+      "roof-pristine": {
+        "solid": true,
+        "clients": {
+          "Player1": {
+            "gameplayRole": "Gunship",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 9
+          },
+          "Player2": {
+            "gameplayRole": "Ground",
+            "sustained": 0,
+            "cover": true,
+            "nativePanelVersion": 3,
+            "heavy": 0,
+            "stage": "Pristine",
+            "parts": 9
+          }
+        },
+        "id": "Warehouse_S02_Radar_Roof_S1",
+        "stage": "Pristine",
+        "parts": 9
+      }
+    },
+    "replay": {
+      "passed": true
+    },
+    "firstReset": true,
+    "initialReplayProbe": {
+      "passed": false,
+      "reason": "Timed out waiting for the second round to start. The retry attached during the same round and observed the actual timeout reset."
+    }
+  },
+  "cleanup": {
+    "localEdit": true,
+    "testEventRemoved": true,
+    "sdkReturned": true
+  }
+}

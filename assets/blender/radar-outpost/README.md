@@ -43,7 +43,7 @@ The [assembly GLB](../../exports/radar-outpost/vesper-array.glb) contains the pr
 
 The Studio integration binds the custom wall and roof proxies and fragment meshes to the shared destruction system. The native assembly and variants live in the managed Roblox model bank.
 
-The [Warehouse import record](../../../docs/evidence/vesper-import-preflight.md) tracks native placement and acceptance.
+The [Warehouse import record](../../../docs/evidence/vesper-import-preflight.md) covers native placement, avatar traversal, combat and round reset.
 
 ## Package and reproduction
 

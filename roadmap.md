@@ -23,7 +23,7 @@ The integrated source on `main` includes the development shell, verification too
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Blocked | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
-| Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Native acceptance in progress | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
+| Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 
 On 2026-11-22 the user replaced the remaining P15 feature with a radar building for the existing level. This increment delivers the editable asset and local art exports. Placing the building in the playable map is a separate task.
 

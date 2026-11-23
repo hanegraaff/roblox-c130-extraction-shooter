@@ -53,4 +53,33 @@ authored parts and passed the release isolation check.
 
 ## Local Play acceptance
 
-The native Play session must confirm rendered materials, avatar traversal, camera behavior and combat queries. Keep the test mapping in a local Studio document. Exercise the representative wall and roof cases, real heavy and sustained fire, both stair flights and the four approaches, two-client replication and pristine reset. Attach native IDs, actual material slots, load and playtest evidence to this record after testing.
+The source-built local test place ran in Studio `0.748.0.7481526` on macOS arm64.
+The clean solo session passed **195 server and 13 client checks**. An actual R15
+avatar used Humanoid movement to walk ten consecutive waypoints from the south portal, up the west
+flight, across three gallery sides and down the east flight. The stock
+third-person camera stayed active throughout. Its measured distance ranged
+from 8.71 studs while ascending the west stairs to the requested 12.50 studs.
+The [Studio exterior](../images/radar-outpost/studio-exterior.jpg) uses a
+controlled client camera with the test HUD hidden to show the loaded materials.
+
+A two-client SDK session used the ordinary local round controller. The first
+client passed smoke before the second arrived through `AddPlayers(1)` in the
+same session. Both clients passed 13 checks. The operator client sent production
+weapon remotes from a legal view and the server resolved the actual flights.
+
+- Six direct 105mm hits advanced `Warehouse_S02_Radar_Roof_S1` from Pristine
+  through Light and Heavy to Total. Both clients agreed on the appearance and
+  the center ray. Cover remained in Light and cleared in Heavy.
+- Sustained 30mm fire advanced `Warehouse_S02_Radar_Wall_S1` to Heavy. Both
+  clients saw the opening and the server reported the same result.
+- The ordinary test reset restored the damaged roof and wall with the original
+  pivots and intact cover. Both clients read the restored states, and the
+  replacement map held all 54 Vesper panel IDs. A replay earned Light on
+  a fresh roof section and restored it on the natural round timeout. The first
+  replay probe expired before the round started. The retry observed the live
+  shot and timeout reset in the same second round.
+
+The first solo session hit the existing fragment overlap fixture failure.
+The clean retry passed the same source without any fixture or game change.
+The two-client session returned its structured report, and the original local
+Studio document returned to Edit. [Structured Play results](vesper-native-play.json)
