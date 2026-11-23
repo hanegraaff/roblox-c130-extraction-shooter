@@ -16,7 +16,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 from inspect_build import instance_nodes
-from verify import ROOT, tool_pins
+from verify import ENVIRONMENT, ROOT, tool_pins
 
 
 RELEASE = "build/game.rbxlx"
@@ -122,7 +122,8 @@ def vesper_assets(root: Path, receipt: dict) -> tuple[set[str], set[str]]:
             "$className": "DataModel", "ServerStorage": banks,
         }}), encoding="utf-8")
         artifact = temporary / "native.rbxlx"
-        subprocess.run(["rojo", "build", str(project), "--output", str(artifact)], cwd=root, check=True)
+        subprocess.run(["rojo", "build", str(project), "--output", str(artifact)],
+                       cwd=root, env=ENVIRONMENT, check=True)
         native = instance_nodes(artifact)
     native_mesh_refs = [mesh.findtext("Properties/Content[@name='MeshContent']/uri", "")
                         for mesh in native.values() if mesh.attrib["class"] == "MeshPart"]
@@ -152,7 +153,8 @@ def native_bank_assets(root: Path, label: str, paths: tuple[str, ...], hashes: d
             },
         }}), encoding="utf-8")
         artifact = temporary / "native.rbxlx"
-        subprocess.run(["rojo", "build", str(project), "--output", str(artifact)], cwd=root, check=True)
+        subprocess.run(["rojo", "build", str(project), "--output", str(artifact)],
+                       cwd=root, env=ENVIRONMENT, check=True)
         nodes = instance_nodes(artifact)
     meshes, textures = set(), set()
     parts = 0
