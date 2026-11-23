@@ -12,7 +12,8 @@ local manualMode = if manualSettings and manualSettings:IsA("ModuleScript")
 local selectedClientMode = ""
 if game:GetService("RunService"):IsStudio() then
     if
-        manualMode == "P08"
+        manualMode == "P18"
+        or manualMode == "P08"
         or manualMode == "P09"
         or manualMode == "P10"
         or manualMode == "P11"
@@ -26,7 +27,8 @@ if game:GetService("RunService"):IsStudio() then
     else
         local args = game:GetService("StudioTestService"):GetTestArgs()
         if
-            type(args) == "table" and (args.kind == "P10" or args.kind == "P11" or args.kind == "Sandbreak")
+            type(args) == "table"
+            and (args.kind == "P18" or args.kind == "P10" or args.kind == "P11" or args.kind == "Sandbreak")
         then
             selectedClientMode = args.kind
         end

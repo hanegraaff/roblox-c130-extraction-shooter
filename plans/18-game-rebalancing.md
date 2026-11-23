@@ -4,7 +4,7 @@
 
 ## Capability and player experience
 
-Scale aircraft durability to the Ground team, make building panels quick to demolish, remove the circular camera boundary that can trap directional controls, and place a fourth recoverable rocket launcher inside the alien spaceship.
+Scale aircraft durability to the Ground team, make building panels quick to demolish, remove the circular camera boundary that can trap directional controls, place a fourth recoverable rocket launcher inside the alien spaceship, and show Ground players in thermal red against a darker environment.
 
 The 2026-11-23 user revision explicitly selects **1,000 health per Ground player**, counted from the deployment roster, and **existing fixed rocket damage** (100 health units). The operator is excluded. Departures, deaths, spectators and late arrivals cannot resize or refill the current aircraft. The former three-rocket guarantee is superseded. M-7 damage remains 5 units.
 
@@ -14,6 +14,8 @@ Operator WASD and touch arrows move smoothly across the map's world-aligned **72
 
 Retain the three existing launcher sites and add a stable, reachable fourth site inside the Prism Seedship. Each Ground player still carries at most one. Reuse atomic pickup, reload-preserving transfer/recovery, direct rocket damage and reset ownership.
 
+The user added item 5 during implementation: Ground players in the operator view should be **thermal red**, and the overly bright ground must be muted for clear contrast. The user subsequently allowed keeping the whole view desaturated if that is easier; darker terrain and clear target contrast take priority. Preserve building silhouettes, major attached details, actual openings and solid-cover occlusion. Keep the Ground role's normal materials intact. Colors/brightness are presentation tuning defaults; the selected red or grayscale appearance and improved target contrast require rendered review at both weapon zooms.
+
 ## Acceptance criteria
 
 - **A1 — Roster health:** Deterministic rules and service tests prove 1–9 Ground players produce 1,000–9,000 maximum health, operator exclusion, fixed 100-unit rockets/5-unit rifle hits, mixed/lethal/deduplicated damage, no resize/heal on deaths/departures/late arrival, and pristine reset using the next roster. Invalid counts/rounds reject without mutation. Two actual Studio clients observe identical maximum/current health and a fresh-round reset.
@@ -21,6 +23,7 @@ Retain the three existing launcher sites and add a stable, reachable fourth site
 - **A3 — Square camera movement:** Deterministic tests cover all square edges/corners, axis sliding, immediate reversal, normalized diagonal movement, invalid input, frame-time cap, both profiles and sampled full orbit. Real Studio camera/input tests verify smooth WASD and touch-pad directions, independent aim, both zooms/recenter, finite near-overhead frames, no circular-boundary jam, and cleanup without changing the aircraft orbit. Record focused operated review separately from numeric assertions.
 - **A4 — Seedship launcher:** Git reconstruction and native supported/clearance/navigation checks prove four unique reachable anchors and the fourth is inside the ship. Two actual clients exercise raced claims, one carrier limit, independent identities, fixed rocket damage, reload-preserving drop/recovery and reset to all four anchors. Preserve spectator/role/stale-request rejection.
 - **A5 — Delivery:** The final full `python3 scripts/verify.py` gate passes nonempty required suites, source-bound Studio smoke and focused multiplayer/regression gates pass, independent tester findings are resolved, and player/contributor/design documentation describes the revised whole experience. Source/evidence are committed and pushed with a reviewable PR. P12's separate live release/capacity gates are not prerequisites for this explicitly requested local revision and are not waived or completed by it.
+- **A6 — Thermal readability:** Native client tests verify clearly contrasting living-Ground highlights, muted operator-only scenery/ground, opaque cover and exact restoration on role loss/teardown. Rendered review at both FOVs shows exposed Ground targets clearly against darker terrain, covered players hidden and a player visible through a real earned opening. Red is the initial candidate; the user also accepts a fully desaturated view. Record the actual selected presentation, camera/render settings and observations separately from property assertions.
 
 ## Implementation and evidence
 

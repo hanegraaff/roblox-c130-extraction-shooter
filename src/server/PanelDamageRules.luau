@@ -8,8 +8,8 @@
 local PanelDamageRules = {}
 export type DamageAppearance = "Pristine" | "Light" | "Heavy" | "Total"
 export type State = { stage: number, heavySeconds: number, sustainedSeconds: number }
-PanelDamageRules.stageSeconds = 9
-PanelDamageRules.heavySeconds = 3
+PanelDamageRules.stageSeconds = 1
+PanelDamageRules.heavySeconds = 2
 PanelDamageRules.epsilonSeconds = 1e-7
 
 -- Returns independent pristine state. The caller owns the record; no shared state.
@@ -19,7 +19,9 @@ end
 
 -- Fraction through the current stage, bounded to [0,1]. Destroyed returns 1.
 function PanelDamageRules.progress(state: State): number
-    return if state.stage == 2 then 1 else (state.heavySeconds + state.sustainedSeconds) / 9
+    return if state.stage == 2
+        then 1
+        else (state.heavySeconds + state.sustainedSeconds) / PanelDamageRules.stageSeconds
 end
 
 -- Stable player-visible tier. Heavy never returns to the original appearance
@@ -35,24 +37,31 @@ function PanelDamageRules.appearance(state: State): DamageAppearance
     return if state.heavySeconds + state.sustainedSeconds > 0 then "Light" else "Pristine"
 end
 
--- Applies one direct heavy impact or nonnegative finite valid 30mm seconds.
--- Returns true only on a stage transition. Overflow is discarded at the boundary;
--- a single impact cannot advance two stages. Invalid inputs reject without writes.
+-- One direct howitzer hit advances straight to Total. Earned valid 30mm time
+-- advances Heavy at one second and Total at two, retaining fractional overflow
+-- across the intermediate transition so cadence never discards earned time.
+-- Returns true iff structural stage changes. Invalid elapsed time rejects.
 function PanelDamageRules.apply(state: State, heavy: boolean, seconds: number): boolean
     if state.stage == 2 or seconds ~= seconds or seconds < 0 or seconds == math.huge then
         return false
     end
+    local before = state.stage
     if heavy then
-        state.heavySeconds += PanelDamageRules.heavySeconds
-    else
-        state.sustainedSeconds += seconds
-    end
-    if state.heavySeconds + state.sustainedSeconds + PanelDamageRules.epsilonSeconds >= 9 then
-        state.stage += 1
-        state.heavySeconds = 0
-        state.sustainedSeconds = 0
+        state.stage, state.heavySeconds, state.sustainedSeconds = 2, 0, 0
         return true
     end
-    return false
+    state.sustainedSeconds += seconds
+    while
+        state.stage < 2
+        and state.heavySeconds + state.sustainedSeconds + PanelDamageRules.epsilonSeconds
+            >= PanelDamageRules.stageSeconds
+    do
+        local surplus =
+            math.max(0, state.heavySeconds + state.sustainedSeconds - PanelDamageRules.stageSeconds)
+        state.stage += 1
+        state.heavySeconds = 0
+        state.sustainedSeconds = if state.stage == 2 then 0 else surplus
+    end
+    return state.stage ~= before
 end
 return PanelDamageRules

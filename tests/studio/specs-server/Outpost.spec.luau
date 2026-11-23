@@ -382,7 +382,7 @@ return function()
                 local familyCount = 0
                 for _, panel in families do
                     familyCount += 1
-                    for hit = 1, 6 do
+                    for hit = 1, 1 do
                         serial += 1
                         assert(
                             owner.resolve({
@@ -395,7 +395,7 @@ return function()
                             "valid heavy outcome rejected"
                         )
                         owner.flush(workspace:GetServerTimeNow())
-                        local expected = if hit < 3 then "Light" elseif hit < 6 then "Heavy" else "Total"
+                        local expected = "Total"
                         assert(
                             panel:GetAttribute("DamageAppearance") == expected,
                             "material changed shared thresholds"
@@ -405,7 +405,7 @@ return function()
                                 assert(AssetMesh.validate(mesh), "stage clone lost native constructor data")
                             end
                         end
-                        if hit == 3 then
+                        if hit == 1 then
                             local basis = panel:GetAttribute("PanelAssetBasis")
                             assert(typeof(basis) == "CFrame", "asset basis absent")
                             local pivot = panel:GetPivot() * basis
@@ -428,8 +428,8 @@ return function()
                                     pivot:PointToWorldSpace(Vector3.new(7, 0, -4)),
                                     direction,
                                     rays
-                                ) ~= nil,
-                                "remaining material lost solidity"
+                                ) == nil,
+                                "one howitzer retained residual material"
                             )
                         end
                     end

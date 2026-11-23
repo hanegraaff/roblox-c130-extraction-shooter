@@ -152,8 +152,8 @@ return function()
                         "P17 assertion: MaterialGeometry.validate(model, family)"
                     )
                     local damage = Rules.new()
-                    for hit = 1, 6 do
-                        Rules.apply(damage, true, 0)
+                    for hit = 1, 3 do
+                        Rules.apply(damage, false, if hit == 1 then 0.15 elseif hit == 2 then 0.85 else 1)
                         Geometry.setStage(panel, damage.stage)
                         Geometry.publish(
                             panel,
@@ -165,8 +165,8 @@ return function()
                         )
                         assert(
                             model:GetAttribute("DamageAppearance")
-                                == (if hit < 3 then "Light" elseif hit < 6 then "Heavy" else "Total"),
-                            'P17 assertion: model:GetAttribute("DamageAppearance") == (if hit < 3 then "Light" elseif hit < 6 then "Heavy" else "Total")'
+                                == (if hit == 1 then "Light" elseif hit == 2 then "Heavy" else "Total"),
+                            'P17 assertion: model:GetAttribute("DamageAppearance") == (if hit == 1 then "Light" elseif hit == 2 then "Heavy" else "Total")'
                         )
                         local solids = 0
                         for _, item in model:GetChildren() do

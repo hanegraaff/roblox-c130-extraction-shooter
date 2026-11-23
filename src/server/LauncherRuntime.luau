@@ -1,6 +1,6 @@
 --!strict
 --[=[
-    LauncherRuntime: server engine/network owner of the three landmark launchers.
+    LauncherRuntime: server engine/network owner of the four landmark launchers.
     Depends on MatchService, P06 ground movement/origin/rocket authority, level geometry
     and LauncherService. Intents are bounded/rate-limited, then processed atomically
     after the authoritative frame's outcome commit. Results/deadline beat transfers.
@@ -84,7 +84,7 @@ function LauncherRuntime.start(
         return nil, "launcher already owned"
     end
     local slots: { Slot } = {}
-    for _, site in { "Radar", "Hangar", "Depot" } do
+    for _, site in { "Radar", "Hangar", "Depot", "Seedship" } do
         table.insert(slots, {
             site = site,
             rules = LauncherService.new(site),

@@ -85,6 +85,17 @@ function RoundHarness.run()
     local selector = if development and development:IsA("ModuleScript")
         then development:GetAttribute("ManualHarness")
         else nil
+    if
+        RunService:IsStudio()
+        and ((args == nil and selector == "P18") or (type(args) == "table" and args.kind == "P18"))
+    then
+        require(script.Parent.RebalanceHarness).run(if args == nil
+            then function(report)
+                workspace:SetAttribute("ManualP18Report", HttpService:JSONEncode(report))
+            end
+            else nil)
+        return
+    end
     if RunService:IsStudio() and args == nil and selector == "P11" and development then
         require(script.Parent.PerformanceHarness).run(
             development:GetAttribute("ManualP11Scenario"),

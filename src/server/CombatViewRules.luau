@@ -84,7 +84,7 @@ end
 -- Authorizes exactly eleven flat scalar fields. cameraX/Z describe the replicated
 -- canonical aircraft position used by the client, never the muzzle. Its radius and
 -- distance from the current server pose must be within the stated bounded lag.
--- Focus is orbit-local, aspect is width/height; target and all positions use studs.
+-- Focus is a world-aligned offset from map center, aspect is width/height; target and all positions use studs.
 -- Returns a fresh six-field fire command or nil without consuming gameplay state.
 function CombatViewRules.validate(
     value: unknown,

@@ -1,5 +1,5 @@
 --!strict
--- P14 A1/R05/R06/R17: pure orbit-local view bounds and directional input.
+-- P18 A3: world-square movement, edge sliding and stable orbit-aware directions.
 type API = typeof(require(game:GetService("ReplicatedStorage").Shared.AircraftPanRules))
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local rules = candidate :: API
@@ -18,255 +18,187 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         killY = -30,
     }
     local aspect, wide = 16 / 9, 40
-    local function home()
-        local focus = rules.recenter(map, aspect, wide)
-        assert(focus, "safe reset view unavailable")
-        return focus
-    end
     local function near(a: number, b: number, tolerance: number): boolean
         return math.abs(a - b) <= tolerance
     end
-    -- Ground radius for a viewport centerline ray at the phase-zero aircraft.
-    -- u/v are signed screen coordinates from -1 to 1, independent of the
-    -- clipping API; used to verify the actual edge visible to the operator.
-    local function groundRadius(
-        focus: { x: number, z: number },
-        u: number,
-        v: number,
-        fov: number,
-        depth: number?
-    ): number
-        local dx, dz = focus.x - map.radiusStuds, focus.z
-        local length = math.sqrt(dx * dx + dz * dz + map.altitudeStuds ^ 2)
-        local fx, fy, fz = dx / length, -map.altitudeStuds / length, dz / length
-        local rightLength = math.sqrt(1 - fz * fz)
-        local rx, ry, rz = -fx * fz / rightLength, -fy * fz / rightLength, rightLength
-        local ux, uy, uz = fy * rz - fz * ry, fz * rx - fx * rz, fx * ry - fy * rx
-        local vertical = math.tan(math.rad(fov) / 2)
-        -- The camera's projected right vector opposes the local orbit tangent.
-        local x = fx - u * aspect * vertical * rx + v * vertical * ux
-        local y = fy - u * aspect * vertical * ry + v * vertical * uy
-        local z = fz - u * aspect * vertical * rz + v * vertical * uz
-        assert(y < 0, "screen ray points above the horizon")
-        local distance = (map.altitudeStuds + (depth or 0)) / -y
-        return math.sqrt((map.radiusStuds + distance * x) ^ 2 + (distance * z) ^ 2)
-    end
-    test("AircraftPanRules recenter creates an independent safe inward view", function()
-        local a, b = home(), home()
-        assert(a ~= b and near(a.x, b.x, 1e-9) and a.z == 0, "reset focus shared or unstable")
-        assert(rules.viewFits(map, a, aspect, wide), "reset view includes sky or outside level")
-        a.z = 10
-        assert(b.z == 0, "reset leaked mutable state")
-    end)
-    test("AircraftPanRules WASD and touch axes move in the orbit-local view", function()
-        for _, direction in
-            {
-                { 1, 0, 0, -12 },
-                { -1, 0, 0, 12 },
-                { 0, 1, -12, 0 },
-                { 0, -1, 12, 0 },
-            }
-        do
-            local start = home()
-            local result = rules.step(map, start, direction[1], direction[2], 0.1, false, aspect, wide)
-            assert(result, "valid directional step rejected")
-            assert(near(result.x - start.x, direction[3], 1e-8), "vertical pan direction disagrees")
-            assert(near(result.z - start.z, direction[4], 1e-8), "horizontal pan direction disagrees")
-        end
-    end)
-    test("AircraftPanRules horizontal input follows camera right throughout orbit", function()
-        local origin = home()
-        for _, input in { -1, 1 } do
-            local moved = assert(rules.step(map, origin, input, 0, 0.1, false, aspect, wide))
-            for i = 0, 64 do
-                local phase = i / 64 * 2 * math.pi
-                local rx, rz = math.cos(phase), math.sin(phase)
-                local before =
-                    assert(rules.worldFocus(map, origin, map.radiusStuds * rx, map.radiusStuds * rz))
-                local after = assert(rules.worldFocus(map, moved, map.radiusStuds * rx, map.radiusStuds * rz))
-                -- ThermalCameraController's canonical screen-right is (rz, -rx).
-                local screenRightMotion = (after.x - before.x) * rz - (after.z - before.z) * rx
-                assert(near(screenRightMotion, 12 * input, 1e-7), "horizontal input moved opposite screen")
+    test("P18 reset and every square corner fit both lenses without disk/frustum clipping", function()
+        local a = assert(rules.recenter(map, aspect, wide), "first recenter missing")
+        local b = assert(rules.recenter(map, aspect, wide), "second recenter missing")
+        assert(a ~= b and a.x == 0 and a.z == 0, "P18 assertion: a ~= b and a.x == 0 and a.z == 0")
+        for _, x in { -360, 0, 360 } do
+            for _, z in { -360, 0, 360 } do
+                for _, fov in { 30, 40 } do
+                    assert(
+                        rules.viewFits(map, { x = x, z = z }, aspect, fov),
+                        "P18 assertion: rules.viewFits(map, { x = x, z = z }, aspect, fov)"
+                    )
+                end
             end
         end
+        assert(
+            not rules.viewFits(map, { x = 360.01, z = 0 }, aspect, wide),
+            "P18 assertion: not rules.viewFits(map, { x = 360.01, z = 0 }, aspect, wide)"
+        )
     end)
-    test("AircraftPanRules frame-rate independence holds away from view limits", function()
-        local start = home()
-        for _, hz in { 10, 30, 60, 144 } do
-            local focus = home()
-            for _ = 1, hz do
-                local nextFocus = rules.step(map, focus, 0, 1, 0.2 / hz, false, aspect, wide)
-                assert(nextFocus, "valid frame rejected")
-                focus = nextFocus
-            end
-            assert(near(focus.x, start.x - 24, 1e-6), "vertical pan depends on frame rate")
-        end
-    end)
-    test("AircraftPanRules diagonal speed and long-frame delta are bounded", function()
-        local start = home()
-        local focus = rules.step(map, start, 1, 1, 1e300, false, aspect, wide)
-        assert(focus, "bounded diagonal rejected")
-        local distance = math.sqrt((focus.x - start.x) ^ 2 + (focus.z - start.z) ^ 2)
-        assert(near(distance, 12, 1e-6), "diagonal or stalled frame exceeded speed cap")
-    end)
-    test("AircraftPanRules held pan reaches each view limit and stops", function()
-        for _, input in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 } } do
-            local focus = home()
-            for _ = 1, 180 do
-                local nextFocus = rules.step(map, focus, input[1], input[2], 0.1, false, aspect, wide)
-                assert(
-                    nextFocus and rules.viewFits(map, nextFocus, aspect, wide),
-                    "pan escaped its view limit"
-                )
-                focus = nextFocus
-            end
-            local held = rules.step(map, focus, input[1], input[2], 0.1, false, aspect, wide)
-            assert(held and rules.viewFits(map, held, aspect, wide), "continued hold escaped edge")
+    test("P18 phase-zero WASD uses labelled screen directions", function()
+        for _, axes in { { 1, 0, 0, -12 }, { -1, 0, 0, 12 }, { 0, 1, -12, 0 }, { 0, -1, 12, 0 } } do
+            local moved = assert(
+                rules.step(map, { x = 0, z = 0 }, axes[1], axes[2], 0.1, false, aspect, wide),
+                "P18 assertion: rules.step(map, { x = 0, z = 0 }, axes[1], axes[2], 0.1, false, aspect, wide)"
+            )
             assert(
-                math.sqrt((held.x - focus.x) ^ 2 + (held.z - focus.z) ^ 2) < 0.1,
-                "edge hold kept moving through the level boundary"
+                near(moved.x, axes[3], 1e-8) and near(moved.z, axes[4], 1e-8),
+                "P18 assertion: near(moved.x, axes[3], 1e-8) and near(moved.z, axes[4], 1e-8)"
             )
         end
     end)
-    test("AircraftPanRules shows level edge inside each outer quarter at both zooms", function()
-        for _, direction in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } } do
-            local focus = home()
-            for _ = 1, 180 do
-                focus = assert(rules.step(map, focus, direction[1], direction[2], 0.1, false, aspect, wide))
-            end
-            -- Camera-right and up map to the corresponding signed viewport axis.
-            local u, v = direction[1], direction[2]
-            local inner = groundRadius(focus, u * 0.5, v * 0.5, wide)
-            local outside = groundRadius(focus, u, v, wide)
-            assert(inner <= 358.01 and inner >= 357.9, "wide level edge missed the quarter-screen mark")
-            assert(outside > 360, "wide screen edge did not extend past the level")
-            assert(groundRadius(focus, u, v, 30) > 360, "narrow screen edge did not reach the level")
-            assert(rules.viewFits(map, focus, aspect, 30), "narrow zoom lost safe framing")
+    test("P18 square edge slides and reversal recovers without hidden accumulated offset", function()
+        local focus = { x = 360, z = 0 }
+        for _ = 1, 300 do
+            focus = assert(
+                rules.step(map, focus, 1, -1, 0.1, false, aspect, wide),
+                "P18 assertion: rules.step(map, focus, 1, -1, 0.1, false, aspect, wide)"
+            )
         end
+        assert(focus.x == 360 and focus.z == -360, "P18 assertion: focus.x == 360 and focus.z == -360")
+        local reverse = assert(
+            rules.step(map, focus, -1, 1, 0.1, false, aspect, wide),
+            "P18 assertion: rules.step(map, focus, -1, 1, 0.1, false, aspect, wide)"
+        )
+        assert(reverse.x < 360 and reverse.z > -360, "corner jammed after reverse input")
+        local slide = assert(
+            rules.step(map, { x = 360, z = 0 }, 1, -1, 0.1, false, aspect, wide),
+            "P18 assertion: rules.step(map, { x = 360, z = 0 }, 1, -1, 0.1, false, aspect, wide)"
+        )
+        assert(slide.x == 360 and slide.z < 0, "blocked axis trapped free axis")
     end)
-    test("AircraftPanRules keeps edge and diagonal views within the noninteractive backdrop", function()
-        local extent = assert(rules.backdropHalfExtent(map), "backdrop extent missing")
-        assert(extent == 10240, "unexpected backdrop extent")
-        for _, direction in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 }, { -1, -1 } } do
-            local focus = home()
-            for _ = 1, 180 do
-                focus = assert(rules.step(map, focus, direction[1], direction[2], 0.1, false, aspect, wide))
-            end
-            local horizontal = math.sqrt((focus.x - map.radiusStuds) ^ 2 + focus.z ^ 2)
-            assert(math.deg(math.atan2(map.altitudeStuds, horizontal)) <= 80.001, "view is straight down")
-            for _, corner in { { -1, -1 }, { 1, -1 }, { -1, 1 }, { 1, 1 } } do
-                assert(
-                    groundRadius(focus, corner[1], corner[2], wide, 4) <= extent + 0.01,
-                    "corner ray escaped the visual backdrop"
-                )
-            end
-        end
-        local invalid = table.clone(map)
-        invalid.orbitRadiusStuds = 1
-        assert(not rules.backdropHalfExtent(invalid), "invalid map accepted for backdrop")
-    end)
-    test("AircraftPanRules both zoom profiles retain safe framing at common layouts", function()
-        for _, ratio in { 750 / 382, 1280 / 720, 1920 / 1080 } do
-            local focus = rules.recenter(map, ratio, wide)
-            assert(focus and rules.viewFits(map, focus, ratio, wide), "wide reset invalid")
-            assert(rules.viewFits(map, focus, ratio, 30), "narrow profile invalid")
-            for _, input in { { 1, 0 }, { 0, 1 }, { -1, -1 } } do
-                local nextFocus = rules.step(map, focus, input[1], input[2], 0.1, false, ratio, wide)
-                assert(nextFocus and rules.viewFits(map, nextFocus, ratio, wide), "zoom-safe step escaped")
-                focus = nextFocus
-            end
-        end
-    end)
-    test("AircraftPanRules supported lens preserves normal FOV and adapts ultra-wide", function()
-        assert(rules.supportedFov(map, aspect, 40) == 40, "normal wide lens changed")
-        assert(rules.supportedFov(map, 750 / 382, 40) == 40, "phone wide lens changed")
-        local ultra = rules.supportedFov(map, 8, 40)
-        assert(ultra and ultra < 40 and ultra >= 15, "ultra-wide view did not adapt")
-        assert(rules.recenter(map, 8, ultra), "adapted ultra-wide view has no safe reset")
-    end)
-    test("AircraftPanRules held view rotates rigidly with aircraft orbit", function()
-        local focus = rules.step(map, home(), 1, 1, 0.1, false, aspect, wide)
-        assert(focus, "panned local focus unavailable")
-        for i = 0, 360 do
-            local phase = i / 360 * 2 * math.pi
+    test("P18 full-orbit corners edges and near-overhead focus always move or reverse", function()
+        for n = 0, 72 do
+            local phase = n * math.pi / 36
             local cx, cz = 360 * math.cos(phase), 360 * math.sin(phase)
-            local world = rules.worldFocus(map, focus, cx, cz)
-            assert(world, "orbit focus transformation failed")
-            local radialX, radialZ = math.cos(phase), math.sin(phase)
-            local localX = radialX * world.x + radialZ * world.z
-            local localZ = -radialZ * world.x + radialX * world.z
-            assert(near(localX, focus.x, 1e-8) and near(localZ, focus.z, 1e-8), "held view drifted or spun")
-            assert(world.x ^ 2 + world.z ^ 2 < 360 ^ 2, "view center left level")
-        end
-    end)
-    test("AircraftPanRules blocked and neutral input hold relative view", function()
-        local start = home()
-        for _, blocked in { true, false } do
-            local result = rules.step(map, start, if blocked then 1 else 0, 1, 0.1, blocked, aspect, wide)
-            if not blocked then
-                assert(result and result.x < start.x, "unblocked input did not pan")
-            else
-                assert(result and result.x == start.x and result.z == start.z, "blocked input moved")
+            for _, focus in
+                {
+                    { x = -360, z = -360 },
+                    { x = 360, z = 360 },
+                    { x = -360, z = 360 },
+                    { x = 360, z = -360 },
+                    {
+                        x = cx,
+                        z = cz,
+                    },
+                }
+            do
+                local free = 0
+                for _, axis in { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } } do
+                    local result = assert(
+                        rules.step(map, focus, axis[1], axis[2], 0.1, false, aspect, wide, cx, cz),
+                        "P18 assertion: rules.step(map, focus, axis[1], axis[2], 0.1, false, aspect, wide, cx, cz)"
+                    )
+                    assert(
+                        math.abs(result.x) <= 360 and math.abs(result.z) <= 360,
+                        "P18 assertion: math.abs(result.x) <= 360 and math.abs(result.z) <= 360"
+                    )
+                    if math.abs(result.x - focus.x) + math.abs(result.z - focus.z) > 1e-6 then
+                        free += 1
+                    end
+                end
+                assert(free >= 2, "no recovery at orbit phase " .. n)
             end
         end
-        local neutral = rules.step(map, start, 0, 0, 0.1, false, aspect, wide)
-        assert(neutral and neutral.x == start.x and neutral.z == start.z, "neutral input moved")
     end)
-    test("AircraftPanRules rejects nonfinite axes geometry FOV and time", function()
-        local start = home()
-        for _, bad in { 0 / 0, math.huge, -math.huge } do
-            assert(not rules.step(map, start, bad, 0, 0.1, false, aspect, wide), "nonfinite axis accepted")
-            assert(not rules.step(map, start, 0, 0, bad, false, aspect, wide), "nonfinite time accepted")
-            assert(not rules.viewFits(map, { x = bad, z = 0 }, aspect, wide), "nonfinite focus accepted")
-            assert(not rules.worldFocus(map, start, bad, 0), "nonfinite aircraft accepted")
-        end
-        assert(not rules.step(map, start, 1.001, 0, 0.1, false, aspect, wide), "oversized axis accepted")
-        assert(not rules.step(map, start, 0, 0, -1, false, aspect, wide), "negative time accepted")
-        assert(not rules.recenter(map, 0, wide), "zero aspect accepted")
-        assert(not rules.supportedFov(map, aspect, math.huge), "infinite FOV accepted")
-    end)
-    test("AircraftPanRules respects a differently sized level and rejects bad orbit", function()
-        local smaller = table.clone(map)
-        smaller.radiusStuds = 180
-        smaller.orbitRadiusStuds = 180
-        smaller.altitudeStuds = 70
-        local reset = rules.recenter(smaller, aspect, wide)
-        assert(reset and rules.viewFits(smaller, reset, aspect, wide), "alternate level unavailable")
-        local moved = rules.step(smaller, reset, 1, 0, 0.1, false, aspect, wide)
-        assert(moved and rules.viewFits(smaller, moved, aspect, wide), "alternate level pan escaped")
-        smaller.orbitRadiusStuds = 179
-        assert(not rules.recenter(smaller, aspect, wide), "mismatched orbit accepted")
-    end)
-    test("AircraftPanRules raster shares rounded integer ray and draw pixels", function()
-        local result = rules.raster(540.995, 309.995, 1081, 618)
-        assert(result and result.x == 541 and result.y == 310, "fractional XY raster disagrees")
-        local center = rules.raster(540.5, 309, 1081, 618)
-        assert(center and center.x == 541 and center.y == 309, "odd viewport center disagrees")
-    end)
-    test("AircraftPanRules raster preserves exact central bounds", function()
-        for _, viewport in { { 1081, 618 }, { 1279, 719 }, { 1280, 720 }, { 1920, 1080 } } do
-            local width, height = viewport[1], viewport[2]
-            for _, point in { { 0, 0 }, { width, height }, { width * 0.15, height * 0.85 } } do
-                local result = rules.raster(point[1], point[2], width, height)
-                assert(result and result.x % 1 == 0 and result.y % 1 == 0, "noninteger raster")
+    test("P18 held focus remains world-fixed through orbit and zoom", function()
+        local focus = { x = 320, z = -350 }
+        for n = 0, 72 do
+            local point = assert(
+                rules.worldFocus(map, focus, 360 * math.cos(n), 360 * math.sin(n)),
+                "P18 assertion: rules.worldFocus(map, focus, 360 * math.cos(n), 360 * math.sin(n))"
+            )
+            assert(
+                point.x == focus.x and point.z == focus.z,
+                "P18 assertion: point.x == focus.x and point.z == focus.z"
+            )
+            for _, fov in { 30, 40 } do
                 assert(
-                    result.x >= width * 0.15
-                        and result.x <= width * 0.85
-                        and result.y >= height * 0.15
-                        and result.y <= height * 0.85,
-                    "raster escaped central area"
+                    rules.viewFits(map, focus, aspect, fov),
+                    "P18 assertion: rules.viewFits(map, focus, aspect, fov)"
                 )
             end
         end
     end)
-    test("AircraftPanRules raster rejects invalid pointer and viewport", function()
+    test("P18 pan speed is frame-rate independent and diagonal/frame-stall bounded", function()
+        for _, dt in { 1 / 30, 1 / 60, 1 / 120 } do
+            local focus = { x = 0, z = 0 }
+            for _ = 1, math.floor(0.2 / dt + 0.5) do
+                focus = assert(
+                    rules.step(map, focus, 0, 1, dt, false, aspect, wide),
+                    "P18 assertion: rules.step(map, focus, 0, 1, dt, false, aspect, wide)"
+                )
+            end
+            assert(near(focus.x, -24, 1e-6), "P18 assertion: near(focus.x, -24, 1e-6)")
+        end
+        local result = assert(
+            rules.step(map, { x = 0, z = 0 }, 1, 1, 1e300, false, aspect, wide),
+            "P18 assertion: rules.step(map, { x = 0, z = 0 }, 1, 1, 1e300, false, aspect, wide)"
+        )
+        assert(
+            near(math.sqrt(result.x ^ 2 + result.z ^ 2), 12, 1e-6),
+            "P18 assertion: near(math.sqrt(result.x ^ 2 + result.z ^ 2), 12, 1e-6)"
+        )
+    end)
+    test("P18 invalid input rejects without mutation and blocked frames hold focus", function()
+        local origin = { x = 0, z = 0 }
         for _, bad in { 0 / 0, math.huge, -math.huge } do
-            assert(not rules.raster(bad, 1, 1280, 720), "nonfinite pointer accepted")
-            assert(not rules.raster(1, bad, 1280, 720), "nonfinite pointer accepted")
-            assert(not rules.raster(1, 1, bad, 720), "nonfinite viewport accepted")
+            assert(
+                not rules.step(map, origin, bad, 0, 0.1, false, aspect, wide),
+                "P18 assertion: not rules.step(map, origin, bad, 0, 0.1, false, aspect, wide)"
+            )
+            assert(
+                not rules.step(map, origin, 0, 0, bad, false, aspect, wide),
+                "P18 assertion: not rules.step(map, origin, 0, 0, bad, false, aspect, wide)"
+            )
         end
-        for _, size in { -1, 0, 1 } do
-            assert(not rules.raster(1, 1, size, 720), "invalid viewport accepted")
-        end
+        assert(
+            not rules.step(map, origin, 2, 0, 0.1, false, aspect, wide),
+            "P18 assertion: not rules.step(map, origin, 2, 0, 0.1, false, aspect, wide)"
+        )
+        assert(
+            not rules.step(map, origin, 0, 0, -1, false, aspect, wide),
+            "P18 assertion: not rules.step(map, origin, 0, 0, -1, false, aspect, wide)"
+        )
+        local held = assert(
+            rules.step(map, origin, 1, 1, 0.1, true, aspect, wide),
+            "P18 assertion: rules.step(map, origin, 1, 1, 0.1, true, aspect, wide)"
+        )
+        assert(
+            held ~= origin and held.x == 0 and held.z == 0 and origin.x == 0,
+            "P18 assertion: held ~= origin and held.x == 0 and held.z == 0 and origin.x == 0"
+        )
+    end)
+    test("P18 translated level uses square offsets without changing canonical orbit", function()
+        local other = table.clone(map)
+        other.centerX, other.orbitCenterX, other.focusX = 1000, 1000, 1000
+        other.centerZ, other.orbitCenterZ, other.focusZ = -500, -500, -500
+        local point = assert(
+            rules.worldFocus(other, { x = 360, z = -360 }, 1360, -500),
+            "P18 assertion: rules.worldFocus(other, { x = 360, z = -360 }, 1360, -500)"
+        )
+        assert(point.x == 1360 and point.z == -860, "P18 assertion: point.x == 1360 and point.z == -860")
+        assert(
+            rules.supportedFov(other, 10, 40) == 40,
+            "P18 assertion: rules.supportedFov(other, 10, 40) == 40"
+        )
+    end)
+    test("P18 reticle raster remains bounded and consistent at fractional pixels", function()
+        local point = assert(
+            rules.raster(540.6, 309.6, 1081, 619),
+            "P18 assertion: rules.raster(540.6, 309.6, 1081, 619)"
+        )
+        assert(point.x == 541 and point.y == 310, "P18 assertion: point.x == 541 and point.y == 310")
+        local edge = assert(
+            rules.raster(-100, 10000, 1280, 720),
+            "P18 assertion: rules.raster(-100, 10000, 1280, 720)"
+        )
+        assert(edge.x == 192 and edge.y == 612, "P18 assertion: edge.x == 192 and edge.y == 612")
+        assert(not rules.raster(0 / 0, 0, 1280, 720), "P18 assertion: not rules.raster(0 / 0, 0, 1280, 720)")
     end)
 end

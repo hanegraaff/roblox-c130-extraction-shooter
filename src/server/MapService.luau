@@ -97,6 +97,7 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         local launcher = item.Name == "LauncherHangar"
             or item.Name == "LauncherRadar"
             or item.Name == "LauncherDepot"
+            or item.Name == "LauncherSeedship"
         if launcher then
             launcherCount += 1
         end
@@ -112,7 +113,11 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
                 (ground or launcher)
                 and (
                     not MapRules.inside(settings, position.X, position.Z)
-                    or math.abs(position.Y - settings.groundY - 3) > (if launcher then 0.25 else 0.01)
+                    or (
+                        if launcher
+                            then position.Y < settings.groundY + 2.75 or position.Y > settings.groundY + 64
+                            else math.abs(position.Y - settings.groundY - 3) > 0.01
+                    )
                 )
             then
                 return false, "anchor outside safe disk: " .. item.Name
@@ -131,8 +136,8 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             end
         end
     end
-    if groundCount ~= 9 or launcherCount ~= 3 then
-        return false, "map requires nine ground anchors and three landmark launchers"
+    if groundCount ~= 9 or launcherCount ~= 4 then
+        return false, "map requires nine ground anchors and four landmark launchers"
     end
     for index = 1, 9 do
         local anchor = anchors:FindFirstChild(string.format("Ground%02d", index))

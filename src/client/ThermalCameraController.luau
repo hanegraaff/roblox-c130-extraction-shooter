@@ -1,6 +1,6 @@
 --!strict
 --[=[
-    ThermalCameraController: local inward operator view, profile HUD and occluded
+    ThermalCameraController: local square-bound operator view, profile HUD and occluded
     thermal presentation. Depends on replicated AircraftState, canonical Aircraft,
     player role/round attributes and Roblox camera/input. It has no hit authority.
     Selection sends bounded intent and only renders acknowledged production profiles;
@@ -43,7 +43,7 @@ type SavedCamera = {
     icon: boolean,
 }
 
--- Constructs the inward camera basis without a world-up singularity. Canonical
+-- Constructs the square camera basis without a world-up singularity. Canonical
 -- orbit-right is projected onto the look plane, preserving finite orientation even
 -- when focus lies exactly below the aircraft. Invalid geometry returns nil.
 function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFrame?
@@ -53,7 +53,10 @@ function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFram
         end
     end
     local map = MapRules.defaults
-    if Vector2.new(focus.X - map.centerX, focus.Z - map.centerZ).Magnitude > map.radiusStuds + 0.001 then
+    if
+        math.abs(focus.X - map.centerX) > map.radiusStuds + 0.001
+        or math.abs(focus.Z - map.centerZ) > map.radiusStuds + 0.001
+    then
         return nil
     end
     local radial = Vector3.new(position.X - map.centerX, 0, position.Z - map.centerZ)
@@ -63,9 +66,6 @@ function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFram
     end
     local look = direction.Unit
     radial = radial.Unit
-    if look:Dot(-radial) < -1e-6 then
-        return nil
-    end
     local canonicalRight = Vector3.new(radial.Z, 0, -radial.X)
     local right = canonicalRight - look * canonicalRight:Dot(look)
     if right.Magnitude < 1e-6 then
@@ -602,9 +602,9 @@ function ThermalCameraController.new(
         )
         local effect = Instance.new("ColorCorrectionEffect")
         effect.Name = "OperatorThermal"
-        effect.Saturation = -1
-        effect.Contrast = -0.15
-        effect.Brightness = 0.2
+        effect.Saturation = 0
+        effect.Contrast = 0
+        effect.Brightness = -0.04
         effect.Parent = camera
         correction = effect
     end
@@ -674,7 +674,7 @@ function ThermalCameraController.new(
             cachedWidestFov = AircraftPanRules.supportedFov(map, aspect, AircraftRules.defaults.fov105mm)
         end
         local widestFov = cachedWidestFov
-        assert(widestFov, "level and viewport must support an inward ground-only camera")
+        assert(widestFov, "level and viewport must support the configured camera")
         local fov = math.min(selectedFov, widestFov)
         local currentFocus = focus
             or assert(
@@ -724,15 +724,17 @@ function ThermalCameraController.new(
                 deltaSeconds,
                 blocked,
                 aspect,
-                widestFov
+                widestFov,
+                hitbox.Position.X,
+                hitbox.Position.Z
             ) or currentFocus
         end
         focus = currentFocus
         local point = AircraftPanRules.worldFocus(map, currentFocus, hitbox.Position.X, hitbox.Position.Z)
-        assert(point, "canonical aircraft must rotate a finite orbit-local focus")
+        assert(point, "canonical aircraft must rotate a finite square focus")
         local cameraFocus = Vector3.new(point.x, map.groundY, point.z)
         local cameraFrame = ThermalCameraController.frame(hitbox.Position, cameraFocus)
-        assert(cameraFrame, "canonical aircraft and bounded focus must define a finite inward basis")
+        assert(cameraFrame, "canonical aircraft and bounded focus must define a finite square-view basis")
         camera.CameraType = Enum.CameraType.Scriptable
         camera.CFrame = cameraFrame
         camera.FieldOfView = fov
@@ -892,9 +894,9 @@ function ThermalCameraController.new(
                 highlight.Name = "OperatorThermalTarget"
                 highlight.Adornee = target
                 highlight.DepthMode = Enum.HighlightDepthMode.Occluded
-                highlight.FillColor = Color3.new(1, 1, 1)
+                highlight.FillColor = Color3.fromRGB(255, 32, 24)
                 highlight.FillTransparency = 0.08
-                highlight.OutlineColor = Color3.new(1, 1, 1)
+                highlight.OutlineColor = Color3.fromRGB(255, 72, 48)
                 highlight.OutlineTransparency = 0.3
                 highlight.Parent = camera
                 highlights[target] = highlight

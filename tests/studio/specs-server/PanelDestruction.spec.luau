@@ -110,18 +110,21 @@ return function()
                 end)
                 assert(#panels == 187, "missing authored panel coverage")
                 local serial = 0
-                local function heavy(id: string)
-                    serial += 1
-                    assert(
-                        owner.resolve({
-                            roundId = 1,
-                            shotId = serial,
-                            weapon = "M102",
-                            firedAt = serial * 4,
-                            panelId = id,
-                        }),
-                        'Expected owner.resolve({ roundId = 1, shotId = serial, weapon = "M102", firedAt = serial * 4, panelId = id })'
-                    )
+                local function halfBurst(id: string)
+                    local start = serial * 10
+                    for sample = 0, 5 do
+                        serial += 1
+                        assert(
+                            owner.resolve({
+                                roundId = 1,
+                                shotId = serial,
+                                weapon = "GAU23",
+                                firedAt = start + sample * 0.2,
+                                panelId = id,
+                            }),
+                            "valid half burst rejected"
+                        )
+                    end
                 end
                 for _, panel in panels do
                     local pivot = panel:GetAttribute("IntactPivot")
@@ -129,9 +132,7 @@ return function()
                     local solid = panel:FindFirstChild("Solid")
                     assert(solid and solid:IsA("BasePart"), "intact collider missing")
                     local size = solid.Size
-                    for _ = 1, 3 do
-                        heavy(panel.Name)
-                    end
+                    halfBurst(panel.Name)
                     -- The explicit batch boundary retains original solid before flush.
                     assert(
                         solid.Parent == panel and panel:GetAttribute("PanelState") == "Intact",
@@ -179,9 +180,7 @@ return function()
                             "wall passage blocked"
                         )
                     end
-                    for _ = 1, 3 do
-                        heavy(panel.Name)
-                    end
+                    halfBurst(panel.Name)
                     owner.flush(workspace:GetServerTimeNow())
                     assert(
                         panel:GetAttribute("PanelState") == "Destroyed"
@@ -282,13 +281,13 @@ return function()
                     -- BasePart stores quantized color channels, so one valid 0.15-second
                     -- interval need not change stored Color. Earn 1.95 seconds in total:
                     -- this remains Light and crosses the first crack-count bucket at 1.8.
-                    for sample = 2, 12 do
+                    for sample = 2, 3 do
                         impact("GAU23", time + 30 + sample * 0.15)
                     end
                     local progressedState = assert(owner.snapshot(id), "panel missing")
                     local progressedMarkCount = visualMarks(model, size, owner)
                     assert(
-                        math.abs(progressedState.sustainedSeconds - 1.95) < 1e-8
+                        math.abs(progressedState.sustainedSeconds - 0.6) < 1e-8
                             and progressedState.stage == 0
                             and model:GetAttribute("DamageAppearance") == "Light",
                         "additional valid intervals did not retain earned Light damage"
@@ -298,9 +297,8 @@ return function()
                         progressedMarkCount > firstLightMarkCount and progressedMarkCount <= 14,
                         "additional earned credit lacks bounded two-face crack progression"
                     )
-                    for hit = 1, 3 do
-                        impact("M102", time + 40 + hit * 4)
-                    end
+                    impact("GAU23", time + 30.65)
+                    impact("GAU23", time + 30.85)
                     assert(
                         model:GetAttribute("DamageAppearance") == "Heavy"
                             and model:GetAttribute("PanelProgress") == 0
@@ -419,7 +417,7 @@ return function()
                 end
                 owner.flush(workspace:GetServerTimeNow())
                 assert(
-                    assert(owner.snapshot(model.Name), "wall missing").stage == 1
+                    assert(owner.snapshot(model.Name), "wall missing").stage == 2
                         and owner.resources().pending == 0,
                     "unknown-tag obstruction poisoned later scoring"
                 )
@@ -457,16 +455,17 @@ return function()
                         weapon .. " intact splash visibility"
                     )
                 end
-                for id = 1, 3 do
+                -- Six valid .2-second impacts earn the Heavy opening at one second.
+                for id = 1, 6 do
                     assert(
                         owner.resolve({
                             roundId = 1,
                             shotId = id,
-                            weapon = "M102",
-                            firedAt = id * 4,
+                            weapon = "GAU23",
+                            firedAt = (id - 1) * 0.2,
                             panelId = panel.Name,
                         }),
-                        "direct heavy fixture"
+                        "direct burst fixture"
                     )
                 end
                 -- The whole creating batch still sees the original solid and gives

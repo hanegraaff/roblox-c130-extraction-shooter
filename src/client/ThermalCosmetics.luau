@@ -6,6 +6,8 @@
     queries. Explicit PanelFragmentVisual bodies in the PanelFragments collision
     group may collide with static scenery only and are also hidden from thermal
     depth. Real solid cover remains visible; ground keeps all art/fragments.
+    Battlefield Parts and textured surfaces use a muted 0.45 brightness base;
+    authored Terrain palette uses 0.4. Character colors are not changed.
     Imported Models can also author an immutable ThermalBrightness multiplier
     and optional surface palette for operator-only tinting. Restores owned
     opacity, color, surfaces and listeners on role/map/fragment teardown.
@@ -26,12 +28,15 @@ type Owned = {
 -- Models scope the optional brightness to their present and future descendants.
 -- Only finite multipliers between black and the original color are accepted.
 local function artScope(part: BasePart, root: Instance): (number, Instance?)
+    local world = workspace:FindFirstChild("World")
+    local environment = world ~= nil and part:IsDescendantOf(world)
+    local base = if environment then 0.45 else 1
     local ancestor = part.Parent
     while ancestor do
         if ancestor:IsA("Model") then
             local multiplier = ancestor:GetAttribute("ThermalBrightness")
             if type(multiplier) == "number" and multiplier >= 0 and multiplier <= 1 then
-                return multiplier, ancestor
+                return multiplier * base, ancestor
             end
         end
         if ancestor == root then
@@ -39,7 +44,7 @@ local function artScope(part: BasePart, root: Instance): (number, Instance?)
         end
         ancestor = ancestor.Parent
     end
-    return 1, nil
+    return base, if environment then world else nil
 end
 
 -- Use a local SurfaceAppearance for mapped pixels on legacy TextureID meshes.
@@ -75,7 +80,11 @@ local function tint(part: BasePart, root: Instance): (() -> ())?
                 then palette:FindFirstChild(material)
                 else nil
             if not template or not template:IsA("SurfaceAppearance") then
-                return nil
+                local original = part.Color
+                part.Color = original:Lerp(black, fade)
+                return function()
+                    part.Color = original
+                end
             end
             local applied = template:Clone()
             applied.Color = applied.Color:Lerp(black, fade)
@@ -97,6 +106,28 @@ end
 function ThermalCosmetics.start(root: Instance): Controller
     local owned: { [BasePart]: Owned } = {}
     local running = true
+    -- Terrain material colors are local rendering state. Darken the authored
+    -- battlefield palette without changing voxels, collision or Ground clients.
+    local terrainColors: { [Enum.Material]: Color3 } = {}
+    if root == workspace then
+        for _, material in
+            {
+                Enum.Material.Sand,
+                Enum.Material.Sandstone,
+                Enum.Material.Ground,
+                Enum.Material.Cobblestone,
+                Enum.Material.Grass,
+                Enum.Material.LeafyGrass,
+                Enum.Material.Asphalt,
+                Enum.Material.Pavement,
+                Enum.Material.Mud,
+            }
+        do
+            local original = workspace.Terrain:GetMaterialColor(material)
+            terrainColors[material] = original
+            workspace.Terrain:SetMaterialColor(material, original:Lerp(black, 0.6))
+        end
+    end
     local function release(part: BasePart)
         local record = owned[part]
         if not record then
@@ -189,6 +220,10 @@ function ThermalCosmetics.start(root: Instance): Controller
             running = false
             added:Disconnect()
             removed:Disconnect()
+            for material, original in terrainColors do
+                workspace.Terrain:SetMaterialColor(material, original)
+            end
+            table.clear(terrainColors)
             for part in owned do
                 release(part)
             end

@@ -1,32 +1,50 @@
 --!strict
 --[=[
     AircraftHealth: server-only round-scoped aircraft health and shot deduplication.
-    Depends only on finite scalar arguments; no Instances, transport, or yielding.
-    A direct rocket deals one third of maximum health; indirect impacts never damage.
+    Maximum is 1,000 game health units per deployment Ground player, excluding
+    the operator. Counts are locked at reset; later roster changes never resize
+    or heal the current aircraft. Fixed rockets deal 100 units and M-7 hits 5.
+    Pure finite-scalar rules: no Instances, transport, clock or yielding.
 ]=]
 local AircraftHealth = {}
 AircraftHealth.rocketDamage = 100
 AircraftHealth.rifleDamage = 5
-AircraftHealth.maximum = AircraftHealth.rocketDamage * 3
+AircraftHealth.healthPerGroundPlayer = 1000
+-- One-Ground-player preview/Lobby baseline; active rounds use maximumFor(count).
+AircraftHealth.maximum = AircraftHealth.healthPerGroundPlayer
 export type Snapshot = { roundId: number, health: number, maximum: number, destroyed: boolean }
 export type Controller = {
-    reset: (number) -> (),
+    reset: (number, number?) -> boolean,
     impact: (number, string, string, boolean) -> (number?, boolean),
     snapshot: () -> Snapshot,
 }
--- Creates an independent owner. reset changes round and restores pristine health.
--- impact returns applied damage and whether this call destroyed the aircraft.
--- Invalid, duplicate, stale, indirect rocket and terminal impacts do not mutate.
+
+-- Valid deployment teams contain 1–9 Ground players. Reject nonfinite/fractional
+-- or out-of-range counts without creating authority state.
+function AircraftHealth.maximumFor(groundPlayers: number): number?
+    if groundPlayers ~= groundPlayers or groundPlayers % 1 ~= 0 or groundPlayers < 1 or groundPlayers > 9 then
+        return nil
+    end
+    return groundPlayers * AircraftHealth.healthPerGroundPlayer
+end
+
+-- Creates an independent owner. reset accepts a newer positive integral round
+-- and optional deployment Ground count (default one for deterministic fixtures).
+-- Same/stale/invalid resets reject without clearing damage or deduplication.
+-- impact returns applied units and whether this call alone destroyed the plane.
 function AircraftHealth.new(): Controller
-    local roundId, health = 0, AircraftHealth.maximum
+    local roundId, maximum = 0, AircraftHealth.maximum
+    local health = maximum
     local seen: { [string]: boolean } = {}
     return {
-        reset = function(id)
-            if id ~= roundId then
-                roundId = id
-                health = AircraftHealth.maximum
-                table.clear(seen)
+        reset = function(id, groundPlayers)
+            local nextMaximum = AircraftHealth.maximumFor(groundPlayers or 1)
+            if id ~= id or id % 1 ~= 0 or id <= roundId or id > 2147483647 or not nextMaximum then
+                return false
             end
+            roundId, maximum, health = id, nextMaximum, nextMaximum
+            table.clear(seen)
+            return true
         end,
         impact = function(id, shotId, weapon, direct)
             if
@@ -53,12 +71,7 @@ function AircraftHealth.new(): Controller
             return applied, health == 0
         end,
         snapshot = function()
-            return {
-                roundId = roundId,
-                health = health,
-                maximum = AircraftHealth.maximum,
-                destroyed = health <= 0,
-            }
+            return { roundId = roundId, health = health, maximum = maximum, destroyed = health <= 0 }
         end,
     }
 end

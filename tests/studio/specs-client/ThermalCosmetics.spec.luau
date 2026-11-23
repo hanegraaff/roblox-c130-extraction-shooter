@@ -60,6 +60,51 @@ local function importedMesh(materials: MaterialAPI): MeshPart
 end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test("P18 thermal environment dims Parts and terrain locally and restores exact originals", function()
+        local Cosmetics = cosmetics()
+        local world = workspace:FindFirstChild("World")
+        assert(world, "source world missing")
+        local fixture = Instance.new("Folder")
+        fixture.Name = "P18ThermalPaletteFixture"
+        local part = Instance.new("Part")
+        part.Anchored = true
+        part.Color = Color3.new(1, 1, 1)
+        part.CFrame = CFrame.new(2000, 2000, 2000)
+        part.Parent = fixture
+        fixture.Parent = world
+        local originalSand = workspace.Terrain:GetMaterialColor(Enum.Material.Sand)
+        local originalColor = part.Color
+        local owner = Cosmetics.start(workspace)
+        local ok, problem = pcall(function()
+            local sand = workspace.Terrain:GetMaterialColor(Enum.Material.Sand)
+            assert(
+                part.Color.R < 0.46 and part.Color.G < 0.46 and part.Color.B < 0.46,
+                "bright environment part retained"
+            )
+            assert(
+                (Vector3.new(sand.R, sand.G, sand.B) - Vector3.new(
+                    originalSand.R,
+                    originalSand.G,
+                    originalSand.B
+                ) * 0.4).Magnitude < 0.01,
+                "terrain palette did not dim"
+            )
+            assert(
+                part.CanCollide and part.CanQuery and part.LocalTransparencyModifier == 0,
+                "thermal palette changed cover"
+            )
+            return true
+        end)
+        owner.stop()
+        owner.stop()
+        assert(
+            part.Color == originalColor
+                and workspace.Terrain:GetMaterialColor(Enum.Material.Sand) == originalSand,
+            "thermal palette restoration leaked"
+        )
+        fixture:Destroy()
+        assert(ok, problem)
+    end)
     test(
         "P17MaterialMetadata ordinary client reads compiled material contract without Plugin property access",
         function()

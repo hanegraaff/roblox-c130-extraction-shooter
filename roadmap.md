@@ -17,12 +17,12 @@ The integrated source on `main` includes the development shell, verification too
 | M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
 | M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
 | M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Complete | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
-| M5 — Team battle loop | [P08: One recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire/recover one launcher and destroy an undamaged plane with three direct hits |
+| M5 — Team battle loop | [P08: Recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire, fire, drop and recover a launcher; P18 revises distribution and aircraft durability |
 | M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
 | M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable release and multiplayer acceptance](plans/12-mvp-release.md) | Blocked | P11 | Play the verified MVP in an explicitly authorized Roblox test/release experience |
-| Gameplay revision | [P18: Game rebalancing](plans/18-game-rebalancing.md) | In progress | P07, P08, P14, P17, Seedship PR #62 | Fight an aircraft with 1,000 health per Ground player, demolish panels quickly, pan across square bounds and recover a launcher inside the Seedship |
+| Gameplay revision | [P18: Game rebalancing](plans/18-game-rebalancing.md) | In progress | P07, P08, P14, P17, Seedship PR #62 | Fight a roster-scaled aircraft, demolish panels quickly, pan across square bounds, recover the Seedship launcher and see red thermal Ground targets clearly |
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 

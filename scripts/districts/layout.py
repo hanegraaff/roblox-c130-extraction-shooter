@@ -27,7 +27,7 @@ TRACKS = {
 # Preserve level grade under the ship and at its portals.
 RESERVE = (-106, 106, 186, 332)
 SITES = {"LauncherRadar": (174, 3, -42), "LauncherHangar": (-131.31, 3.125, -130.04),
-         "LauncherDepot": (157, 3, 198)}
+         "LauncherDepot": (157, 3, 198), "LauncherSeedship": (0, 5.6, 214)}
 MATERIALS = {"s": "Sand", "t": "Sandstone", "d": "Ground", "p": "Cobblestone",
              "g": "Grass", "l": "LeafyGrass", "a": "Asphalt", "v": "Pavement",
              "m": "Mud", ".": "Air"}
