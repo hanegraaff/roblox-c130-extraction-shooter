@@ -173,15 +173,24 @@ surfaces. The SDK sessions returned these results:
 | `ExecuteMultiplayerTestAsync(3, {kind = "P03"})` | 0/2 with three initial clients. A client timed out waiting for replicated role, phase and deadline. The harness stopped before adding the late client. |
 
 The local document returned to Edit with the temporary SDK report attributes
-cleared. These runs exercised Studio clients on the current source-built test
-place. Destination access and published-client evidence remain open.
+cleared. In a separate native **Server & Clients** session started by the user,
+the same build passed 196/196 server checks and 14/14 on each of three clients.
+Starting from the ordinary **Start round now** button produced one C-130
+operator and two Ground players. The server and all three clients agreed on
+round 1, Active phase, roles and the deadline. Each client displayed its
+role and countdown. The operator received the thermal camera. After the round,
+all three showed Lobby, Waiting and their normal cameras. The session stayed
+open. The short Results phase and a late join were outside this check.
+
+These runs exercised Studio clients on the source-built test place. Destination
+access and published-client evidence remain open.
 
 ### Release gates
 
 | Criterion | Evidence and remaining work |
 | --- | --- |
 | A1 | Passed from clean Git with repeat-build checksum agreement and a release-only artifact. The committed receipt records inputs and hashes. |
-| A2 | P09 LastGround and the two-client controls pass on `982d3e7`. P03 timed out before late join. Full P07 traversal and reset and the remaining fresh scenarios above stay open. |
+| A2 | P09 LastGround, two-client controls and ordinary three-client deployment and lobby return pass on `982d3e7`. The P03 harness timed out before late join. Full P07 traversal and reset and the remaining fresh scenarios above stay open. |
 | A3 | The user granted publication for the merged hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
 | A4 | Six- and ten-player Roblox client rounds require an accessible published candidate and confirmed player rosters. |
 | A5 | The live ten-player five-minute workload and 30-minute soak require the published candidate and a ten-player roster. The P11 Studio baseline remains recorded above. |
