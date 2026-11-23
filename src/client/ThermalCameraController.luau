@@ -893,8 +893,9 @@ function ThermalCameraController.new(
                 highlight.Adornee = target
                 highlight.DepthMode = Enum.HighlightDepthMode.Occluded
                 highlight.FillColor = Color3.new(1, 1, 1)
-                highlight.FillTransparency = 0.15
-                highlight.OutlineTransparency = 1
+                highlight.FillTransparency = 0.08
+                highlight.OutlineColor = Color3.new(1, 1, 1)
+                highlight.OutlineTransparency = 0.3
                 highlight.Parent = camera
                 highlights[target] = highlight
             end

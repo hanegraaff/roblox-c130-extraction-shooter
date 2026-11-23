@@ -64,6 +64,8 @@ class P17OutpostReconstruction(unittest.TestCase):
 
     def test_cosmetic_depth_policy_never_hides_panel_visuals_or_solid_cover(self):
         classes = set()
+        visible_details = set()
+        hidden_details = set()
         for mesh in compiler.iter_class(self.outpost, "MeshPart"):
             props = mesh["Properties"]
             attrs = props["Attributes"]
@@ -73,11 +75,18 @@ class P17OutpostReconstruction(unittest.TestCase):
             self.assertEqual(props["Color"], [1,1,1], "raw gray tint persisted")
             self.assertTrue(mesh["Children"][0]["Properties"]["ColorMap"].startswith("rbxassetid://"))
             if classification in ("CosmeticProp", "PanelAttachment"):
-                self.assertTrue(hidden)
                 self.assertFalse(props["CanCollide"] or props["CanQuery"])
+            if classification == "PanelAttachment":
+                name = attrs["SourceObject"]["String"]
+                (hidden_details if hidden else visible_details).add(name)
+                self.assertTrue(attrs["AttachmentPanelId"]["String"])
+            elif classification == "CosmeticProp":
+                self.assertTrue(hidden)
             else:
                 self.assertFalse(hidden)
         self.assertTrue({"CosmeticProp", "PanelAttachment", "StableStructure", "SolidPropCover"}.issubset(classes))
+        self.assertTrue({"Satellite dish", "Antenna panel", "Downpipe", "Garage track"}.issubset(visible_details))
+        self.assertTrue({"Front window mullion", "Roof conduit", "Electrical switchboard"}.issubset(hidden_details))
 
     def test_readable_metadata_matches_actual_serialized_surface_maps_and_rejects_slot_drift(self):
         surface = next(compiler.iter_class(self.outpost, "SurfaceAppearance"))

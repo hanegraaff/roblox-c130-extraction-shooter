@@ -4,7 +4,7 @@
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
-      "Shared": {"$path": "src/shared"}
+      "Shared": {"$path": "src/shared", "VesperThermalSurfaces": {"$path": "assets/presentation/VesperThermalSurfaces.model.json"}}
     },
     "ServerScriptService": {
       "Server": {"$path": "src/server"}

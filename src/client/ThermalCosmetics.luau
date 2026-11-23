@@ -6,18 +6,91 @@
     queries. Explicit PanelFragmentVisual bodies in the PanelFragments collision
     group may collide with static scenery only and are also hidden from thermal
     depth. Real solid cover remains visible; ground keeps all art/fragments.
-    Owns/restores each
-    LocalTransparencyModifier and all listeners across role/map/fragment teardown.
+    Imported Models can also author an immutable ThermalBrightness multiplier
+    and optional surface palette for operator-only tinting. Restores owned
+    opacity, color, surfaces and listeners on role/map/fragment teardown.
     No remotes, physics writes, authority or yielding.
 ]=]
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local black = Color3.new(0, 0, 0)
 local ThermalCosmetics = {}
 export type Controller = { stop: () -> (), resources: () -> number }
 type Owned = {
     original: number,
+    restoreColor: (() -> ())?,
     hidden: boolean,
     fragmentWatches: boolean,
     connections: { RBXScriptConnection },
 }
+
+-- Models scope the optional brightness to their present and future descendants.
+-- Only finite multipliers between black and the original color are accepted.
+local function artScope(part: BasePart, root: Instance): (number, Instance?)
+    local ancestor = part.Parent
+    while ancestor do
+        if ancestor:IsA("Model") then
+            local multiplier = ancestor:GetAttribute("ThermalBrightness")
+            if type(multiplier) == "number" and multiplier >= 0 and multiplier <= 1 then
+                return multiplier, ancestor
+            end
+        end
+        if ancestor == root then
+            break
+        end
+        ancestor = ancestor.Parent
+    end
+    return 1, nil
+end
+
+-- Use a local SurfaceAppearance for mapped pixels on legacy TextureID meshes.
+-- The template references the source color map so its detail survives tinting.
+local function tint(part: BasePart, root: Instance): (() -> ())?
+    if part.Transparency >= 1 then
+        return nil
+    end
+    local multiplier, scope = artScope(part, root)
+    if multiplier == 1 or not scope then
+        return nil
+    end
+    local fade = 1 - multiplier
+    if part:IsA("MeshPart") then
+        local surface = part:FindFirstChildWhichIsA("SurfaceAppearance")
+        if surface then
+            local original = surface.Color
+            surface.Color = original:Lerp(black, fade)
+            return function()
+                surface.Color = original
+            end
+        end
+        if part.TextureID ~= "" then
+            local paletteName = scope:GetAttribute("ThermalSurfacePalette")
+            local material = part:GetAttribute("ImportMaterialKey")
+            local shared = ReplicatedStorage:FindFirstChild("Shared")
+            local palette = if shared and type(paletteName) == "string"
+                then shared:FindFirstChild(paletteName)
+                else nil
+            local template = if palette
+                    and palette:IsA("Folder")
+                    and type(material) == "string"
+                then palette:FindFirstChild(material)
+                else nil
+            if not template or not template:IsA("SurfaceAppearance") then
+                return nil
+            end
+            local applied = template:Clone()
+            applied.Color = applied.Color:Lerp(black, fade)
+            applied.Parent = part
+            return function()
+                applied:Destroy()
+            end
+        end
+    end
+    local original = part.Color
+    part.Color = original:Lerp(black, fade)
+    return function()
+        part.Color = original
+    end
+end
 
 -- Watches one workspace/fixture subtree. Attribute/property ordering may differ
 -- during replication, so late flags and conversion into real cover are handled.
@@ -35,6 +108,9 @@ function ThermalCosmetics.start(root: Instance): Controller
         if record.hidden then
             part.LocalTransparencyModifier = record.original
         end
+        if record.restoreColor then
+            record.restoreColor()
+        end
         owned[part] = nil
     end
     local function observe(item: Instance)
@@ -44,6 +120,7 @@ function ThermalCosmetics.start(root: Instance): Controller
         local part = item
         local record: Owned = {
             original = part.LocalTransparencyModifier,
+            restoreColor = nil,
             hidden = false,
             fragmentWatches = false,
             connections = {},
@@ -74,6 +151,9 @@ function ThermalCosmetics.start(root: Instance): Controller
             elseif not hide and record.hidden then
                 part.LocalTransparencyModifier = record.original
                 record.hidden = false
+            end
+            if not hide and not record.restoreColor then
+                record.restoreColor = tint(part, root)
             end
         end
         table.insert(record.connections, part:GetAttributeChangedSignal("ThermalNonCover"):Connect(update))

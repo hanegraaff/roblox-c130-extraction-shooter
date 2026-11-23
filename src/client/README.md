@@ -90,6 +90,14 @@ root/property listeners idempotently. The operator camera starts/stops this
 owner with its own role lifecycle. It writes no physics, hit or damage authority.
 Rendered thermal legibility and workload cost require separate native review.
 
+An imported Model may carry a `ThermalBrightness` value in `[0, 1]` before it
+enters the battlefield. The nearest valid ancestor setting dims local part or
+surface colors, including newly inserted damage variants. Legacy textures use
+local clones from the Model's `ThermalSurfacePalette` in `ReplicatedStorage.Shared`.
+The owner restores saved colors and removes temporary surfaces on removal or
+role exit. The Vesper depot uses `0.68`. Target highlighting uses a white fill
+and outline with native depth occlusion. [Asset thermal checklist](../../assets/README.md#thermal-presentation-for-buildings)
+
 
 Client imported-material observations use shared `AssetMaterial.read(mesh)`.
 It reads the compiled v1 attribute contract and requires one actual
