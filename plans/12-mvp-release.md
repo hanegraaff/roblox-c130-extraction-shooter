@@ -171,6 +171,7 @@ surfaces. The SDK sessions returned these results:
 | `ExecuteMultiplayerTestAsync(2, {kind = "HumanTestMultiplayer"})` | 4/4, two clients. Checked role-choice conflicts, deployment, round settings and restart. |
 | `ExecuteMultiplayerTestAsync(2, {kind = "P09", scenario = "LastGround"})` | 3/3, two clients. Checked last-ground elimination and departure outcomes and teardown. Baseline passed 196/196 on the server and 14/14 on both clients. |
 | `ExecuteMultiplayerTestAsync(3, {kind = "P03"})` | 0/2 with three initial clients. A client timed out waiting for replicated role, phase and deadline. The harness stopped before adding the late client. |
+| `ExecuteMultiplayerTestAsync(2, {kind = "InvitedLateJoinProbe"})` followed by `AddPlayers(1)` | Two initial clients reached Active on round 1. The server accepted the add request and one retry. Both additional windows opened in Edit, and the active server stayed at two clients. The SDK closed the owned session and returned the failed join observation. |
 
 The local document returned to Edit with the temporary SDK report attributes
 cleared. In a separate native **Server & Clients** session started by the user,
@@ -180,7 +181,9 @@ operator and two Ground players. The server and all three clients agreed on
 round 1, Active phase, roles and the deadline. Each client displayed its
 role and countdown. The operator received the thermal camera. After the round,
 all three showed Lobby, Waiting and their normal cameras. The session stayed
-open. The short Results phase and a late join were outside this check.
+open. The short Results phase was outside this check. A later `AddPlayers(1)`
+call in the manually started session was rejected by Studio, so the late-join
+probe used the separate SDK session recorded above.
 
 These runs exercised Studio clients on the source-built test place. Destination
 access and published-client evidence remain open.
@@ -190,7 +193,7 @@ access and published-client evidence remain open.
 | Criterion | Evidence and remaining work |
 | --- | --- |
 | A1 | Passed from clean Git with repeat-build checksum agreement and a release-only artifact. The committed receipt records inputs and hashes. |
-| A2 | P09 LastGround, two-client controls and ordinary three-client deployment and lobby return pass on `982d3e7`. The P03 harness timed out before late join. Full P07 traversal and reset and the remaining fresh scenarios above stay open. |
+| A2 | P09 LastGround, two-client controls and ordinary three-client deployment and lobby return pass on `982d3e7`. The P03 harness timed out before late join, and both added clients in the focused retry opened in Edit. Late join, full P07 traversal and reset, and the remaining fresh scenarios above stay open. |
 | A3 | The user granted publication for the merged hash and invited audience. Destination access and verification of a published version are pending. The final Studio listing contained only local test documents. |
 | A4 | Six- and ten-player Roblox client rounds require an accessible published candidate and confirmed player rosters. |
 | A5 | The live ten-player five-minute workload and 30-minute soak require the published candidate and a ten-player roster. The P11 Studio baseline remains recorded above. |
