@@ -100,6 +100,18 @@ The primitive `PanelGeometry.capture(part, nil)` path keeps a pristine clone and
 
 Fragments set `CanQuery = false`, but a collidable Part can still participate in some query modes. Combat, movement-origin and thermal queries therefore also use explicit authoritative-world include filters and collision-group exclusions; keep those filters when adding consumers. Physical fragments never authorize cover or structural support. See [architecture](../../architecture.md#progressive-panel-destruction-p07), [asset provenance](../../assets/models/README.md) and the [P07 acceptance procedure](../../docs/testing.md#run-the-p07-destruction-harness). Required multiplayer/operated evidence is separate from module/API inspection.
 
+## Vesper Array reconstruction
+
+`VesperReconstruction.install(world, assets)` validates the native assembly and
+private state bank, then stages the exact Warehouse replacement at
+`(160, 0.125, -80)`. Its transaction rolls back a failed map validation and
+releases the original model on commit before the map snapshot. The operation
+does not yield. Variant templates are immutable and are cloned by the shared
+panel owner. Each stable panel ID owns direct query proxies for its current
+state. `VesperNavigation.validate` checks all four entrance paths, the two
+stair flights and the gallery walking surface against loaded collision.
+[Native import record](../../docs/evidence/vesper-import-preflight.md)
+
 ## Imported material panels and Outpost reconstruction (P17)
 
 The candidate replaces the smaller Outpost from managed imported templates and

@@ -629,6 +629,9 @@ function Harness.run(finish: ((Report) -> ())?)
         local count = if workspace.World.Battlefield:GetAttribute("OutpostAssetRevision") == "p16-v1"
             then 188
             else 187
+        if workspace.World.Battlefield.Buildings.Warehouse:GetAttribute("PanelLayoutVersion") == 3 then
+            count += 11 -- 54 Vesper sections replace the 43 primitive Warehouse panels.
+        end
         assert(
             #allIds == count and runtime.destruction.resources().panels == count,
             "all-panel registry changed"

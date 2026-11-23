@@ -1,0 +1,61 @@
+{
+  "bindingSha256": "7fb6a7950df7f52fb05407e3a74aa0092bee74e298f0966cb0c34ccf533daa03",
+  "meshCountBeforeBankCompilation": 1417,
+  "models": [
+    {
+      "assetVersionId": "15042398071578",
+      "file": "vesper-pilot.glb",
+      "modelId": 90597570873195,
+      "sha256": "9faf8c2a3f2a54f0ce8679e51fa6c882665072719125396e0d169d0a26816140"
+    },
+    {
+      "assetVersionId": "37103179484587",
+      "file": "vesper-assembly.glb",
+      "modelId": 89340131798475,
+      "sha256": "284a43e529927cbdf01c0860e0fc3508f2ddfdcfe6b865f49a3a20e79094ddac"
+    },
+    {
+      "assetVersionId": "19803332723650",
+      "file": "vesper-damage.glb",
+      "modelId": 96316755988747,
+      "sha256": "337330e6a005dd448505d1481ffc49db2a2a63d976de40406a9c3bf0f5c4591e"
+    }
+  ],
+  "nativeModelsByPathAndSha256": {
+    "assets/models/VesperArray.rbxm": "cd83a45f86917e04ac77024719dd0c1b514fe0bb7b96d8e9bdb51c8417cdb216",
+    "assets/models/VesperPanelVariants.rbxm": "5562b2bea767e83aa9eca30a9225397dddb2fb01a0d474d7f2a2e7c0e8ceb262"
+  },
+  "ownerUserId": "2227341845",
+  "placement": {
+    "fileAxisCorrectionYDegrees": 180,
+    "positionStuds": [
+      160,
+      0.125,
+      -80
+    ]
+  },
+  "schema": 1,
+  "sourceBlenderSha256": "f114c37ec45febbc6a2c91e18aecfac28d59bcacc836e6577709bce176b534b7",
+  "testPlaceId": "72732833195348",
+  "testUniverseId": "10776653720",
+  "textureIdsByMaterial": {
+    "black": "rbxassetid://119230777668775",
+    "bone": "rbxassetid://117163628439377",
+    "brass": "rbxassetid://88141187936081",
+    "chalk": "rbxassetid://102770137409004",
+    "floor": "rbxassetid://94297619444080",
+    "gateE": "rbxassetid://91000989525820",
+    "gateN": "rbxassetid://125954394746854",
+    "gateS": "rbxassetid://94372892559544",
+    "gateW": "rbxassetid://103505063406914",
+    "gold": "rbxassetid://122921796998867",
+    "iron": "rbxassetid://77176412869665",
+    "ivory": "rbxassetid://95260796253390",
+    "red": "rbxassetid://103092685959638",
+    "scope": "rbxassetid://87262361391745",
+    "sector02": "rbxassetid://131572251750720",
+    "sector07": "rbxassetid://135827758532619",
+    "silver": "rbxassetid://79020890167402",
+    "slate": "rbxassetid://84378861000579"
+  }
+}

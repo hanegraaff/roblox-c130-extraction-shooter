@@ -13,6 +13,7 @@ local BuildingGeometry = require(script.Parent.BuildingGeometry)
 local PanelFragments = require(script.Parent.PanelFragments)
 local PanelAssetCatalog = require(script.Parent.PanelAssetCatalog)
 local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
+local VesperPanelGeometry = require(script.Parent.VesperPanelGeometry)
 local DestructionRuntime = {}
 export type Controller = {
     sync: (number) -> (),
@@ -41,7 +42,9 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         return nil, registryReason
     end
     local catalog: PanelAssetCatalog.Catalog? = nil
+    local vesperVariants: { [string]: VesperPanelGeometry.Variants } = {}
     local materialPanels = false
+    local assets = game:GetService("ServerStorage"):FindFirstChild("Assets")
     local panelIds: { [string]: boolean } = {}
     for _, registry in registries do
         for _, panel in registry.panels:GetChildren() do
@@ -49,11 +52,24 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 return nil, "invalid/duplicate registered panel identity"
             end
             panelIds[panel.Name] = true
-            materialPanels = materialPanels or panel:IsA("Model")
+            if panel:IsA("Model") and panel:GetAttribute("VesperPanel") == true then
+                if registry.buildingId ~= "Warehouse" or panel:GetAttribute("PanelAssetFamily") ~= nil then
+                    return nil, "Vesper panel registered outside its building or with a conflicting family"
+                end
+                local variants, reason = VesperPanelGeometry.load(
+                    if assets then assets:FindFirstChild("VesperPanelVariants") else nil,
+                    panel
+                )
+                if not variants then
+                    return nil, reason
+                end
+                vesperVariants[panel.Name] = variants
+            else
+                materialPanels = materialPanels or panel:IsA("Model")
+            end
         end
     end
     if materialPanels then
-        local assets = game:GetService("ServerStorage"):FindFirstChild("Assets")
         local reason: string?
         catalog, reason =
             PanelAssetCatalog.load(if assets then assets:FindFirstChild("MaterialPanels") else nil)
@@ -62,7 +78,7 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         end
         for _, registry in registries do
             for _, panel in registry.panels:GetChildren() do
-                if panel:IsA("Model") then
+                if panel:IsA("Model") and not vesperVariants[panel.Name] then
                     local family = panel:GetAttribute("PanelAssetFamily")
                     if type(family) ~= "string" or not catalog[family] then
                         return nil, "unknown material panel family"
@@ -120,7 +136,8 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 )
                 local familyId = part:GetAttribute("PanelAssetFamily")
                 local family = if catalog and type(familyId) == "string" then catalog[familyId] else nil
-                local panel = PanelGeometry.capture(part :: BasePart | Model, family)
+                local panel =
+                    PanelGeometry.capture(part :: BasePart | Model, family, vesperVariants[part.Name])
                 if panel.original:IsA("BasePart") and part:IsA("BasePart") then
                     panel.original.CollisionGroup = fragments.previousGroup(part)
                 elseif panel.original:IsA("Model") and part:IsA("Model") then
@@ -157,7 +174,10 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                             panel.size,
                             panel.color,
                             now,
-                            if panel.family then panel.family.fragments else nil
+                            if panel.vesper
+                                then panel.vesper.fragments
+                                elseif panel.family then panel.family.fragments
+                                else nil
                         )
                     end
                 end

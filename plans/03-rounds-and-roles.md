@@ -8,7 +8,7 @@ Players wait in a lobby, receive an operator or ground role, deploy and return a
 
 ## Implementation
 
-Implement pure phase/roster rules and MatchService/RoleService adapters. Enforce the 2–10 production range selected in D71. Add fair rotation, deployment readiness/cancellation, monotonic deadlines, basic timeout/elimination/abort outcomes, explicit character spawning and minimal phase/role/timer UI. Provide result proposals for aircraft destruction and operator forfeit as well as ground elimination/timeout; later combat plans connect actual damage. Store round membership by UserId so reconnects cannot restore life. Tag all queued work and updates with round IDs/revisions. Add basic teammate spectating and cleanup now; P10 improves presentation.
+Implement pure phase/roster rules and MatchService/RoleService adapters. Enforce the 2–10 production range selected in D74. Add fair rotation, deployment readiness/cancellation, monotonic deadlines, basic timeout/elimination/abort outcomes, explicit character spawning and minimal phase/role/timer UI. Provide result proposals for aircraft destruction and operator forfeit as well as ground elimination/timeout; later combat plans connect actual damage. Store round membership by UserId so reconnects cannot restore life. Tag all queued work and updates with round IDs/revisions. Add basic teammate spectating and cleanup now; P10 improves presentation.
 
 ## Acceptance criteria
 
@@ -77,7 +77,7 @@ The follow-up was pushed in `bbe2c94` as [PR #7](https://github.com/hanegraaff/r
 
 2026-11-08: merged `main` at `6cf0f1ee29e4c122f2d7d68164a2d93ff2408238` has exactly the same Git tree (`f38d438c1153ee3bc8783f4e13a7914264967607`) as checked PR #7 head `939e890`. A fresh full host gate on that integrated source passes 24 unit/14 integration cases, all static/rejection/build/isolation gates and 112 authored geometry checks per build. Both generated artifact hashes match the previously engine-tested human-control candidate. Existing Studio evidence therefore applies to identical source; no new engine behavior was introduced or claimed. [Integration evidence](../docs/evidence/p03-integration.md) records commands, results and identities. README now directs routine setup to `main`; original Studio document remains in Edit and no new windows were launched. No Roblox publication occurred; P04 remains unimplemented.
 
-### Two-player production minimum (D71)
+### Two-player production minimum (D74)
 
 On 2026-11-22 the user lowered the production match minimum to two.
 `Config.spec.luau` covers the production range and invalid bounds.

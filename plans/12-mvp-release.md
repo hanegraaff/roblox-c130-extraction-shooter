@@ -40,7 +40,7 @@ recorded sources and client counts. P12 has separate final Studio and live
 Roblox gates. The earlier [P17 owner-only approval](../docs/evidence/p17/private-upload-authorization.json)
 covers its recorded import build, experience and asset uploads.
 
-D71 changes the release build's match minimum to two. The authorization and
+D74 changes the release build's match minimum to two. The authorization and
 artifact hashes recorded below apply to the earlier release candidate.
 
 ### Requirement traceability

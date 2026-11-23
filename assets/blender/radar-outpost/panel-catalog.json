@@ -1,0 +1,1542 @@
+{
+  "asset": "Vesper Array",
+  "formatVersion": 1,
+  "units": "stud",
+  "sourceUp": "+Z",
+  "sourceFront": "-Y",
+  "robloxSiteXYZ": [
+    160,
+    0.125,
+    -80
+  ],
+  "pointToSite": "(160 + x, 0.125 + z, -80 - y)",
+  "states": "Pristine in assembly; other visuals and query solids in the library. Total has no geometry.",
+  "fragments": {
+    "Wall": [
+      "Wall_Fragment_1",
+      "Wall_Fragment_2",
+      "Wall_Fragment_3",
+      "Wall_Fragment_4"
+    ],
+    "Roof": [
+      "Roof_Fragment_1",
+      "Roof_Fragment_2",
+      "Roof_Fragment_3",
+      "Roof_Fragment_4"
+    ]
+  },
+  "panels": [
+    {
+      "id": "Warehouse_S01_Radar_Wall_S1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -19.0,
+        -22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_S1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_S1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_S1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_S1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_S1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_S1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_S1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -19.0,
+        -21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_S1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_S1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_S1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_S1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_S1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_S1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_S1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -15.49869,
+        -19.15905,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_S1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_S1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_S1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_S1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_S1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_S1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_S2",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -6.5,
+        -22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_S2_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_S2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_S2_Light",
+          "solid": "Warehouse_S01_Radar_Wall_S2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_S2_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_S2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_S2",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -6.5,
+        -21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_S2_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_S2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_S2_Light",
+          "solid": "Warehouse_S02_Radar_Wall_S2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_S2_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_S2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_S2",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -5.52765,
+        -20.09849,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_S2_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_S2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_S2_Light",
+          "solid": "Warehouse_S02_Radar_Roof_S2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_S2_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_S2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_S3",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        8.0,
+        -22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_S3_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_S3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_S3_Light",
+          "solid": "Warehouse_S01_Radar_Wall_S3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_S3_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_S3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_S3",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        8.0,
+        -21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_S3_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_S3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_S3_Light",
+          "solid": "Warehouse_S02_Radar_Wall_S3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_S3_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_S3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_S3",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        6.7055,
+        -19.95644,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_S3_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_S3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_S3_Light",
+          "solid": "Warehouse_S02_Radar_Roof_S3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_S3_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_S3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_S4",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        20.5,
+        -22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_S4_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_S4_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_S4_Light",
+          "solid": "Warehouse_S01_Radar_Wall_S4_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_S4_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_S4_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_S4",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        20.5,
+        -21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_S4_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_S4_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_S4_Light",
+          "solid": "Warehouse_S02_Radar_Wall_S4_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_S4_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_S4_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_S4",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        16.67654,
+        -19.017,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_S4_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_S4_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_S4_Light",
+          "solid": "Warehouse_S02_Radar_Roof_S4_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_S4_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_S4_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_SE1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        27.49539,
+        -19.49539,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_SE1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_SE1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_SE1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_SE1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_SE1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_SE1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_SE1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        27.16333,
+        -19.16333,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_SE1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_SE1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_SE1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_SE1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_SE1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_SE1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_SE1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        22.61532,
+        -16.15156,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_SE1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_SE1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_SE1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_SE1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_SE1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_SE1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_E1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        30.3596,
+        -11.75,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_E1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_E1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_E1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_E1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_E1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_E1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_E1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        29.89,
+        -11.75,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_E1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_E1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_E1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_E1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_E1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_E1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_E1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        26.25133,
+        -9.70876,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_E1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_E1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_E1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_E1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_E1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_E1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_E2",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        30.3596,
+        0.0,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_E2_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_E2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_E2_Light",
+          "solid": "Warehouse_S01_Radar_Wall_E2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_E2_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_E2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_E2",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        29.89,
+        0.0,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_E2_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_E2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_E2_Light",
+          "solid": "Warehouse_S02_Radar_Wall_E2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_E2_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_E2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_E2",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        27.2141,
+        0.0,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_E2_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_E2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_E2_Light",
+          "solid": "Warehouse_S02_Radar_Roof_E2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_E2_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_E2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_E3",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        30.3596,
+        11.75,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_E3_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_E3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_E3_Light",
+          "solid": "Warehouse_S01_Radar_Wall_E3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_E3_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_E3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_E3",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        29.89,
+        11.75,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_E3_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_E3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_E3_Light",
+          "solid": "Warehouse_S02_Radar_Wall_E3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_E3_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_E3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_E3",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        26.25133,
+        9.70876,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_E3_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_E3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_E3_Light",
+          "solid": "Warehouse_S02_Radar_Roof_E3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_E3_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_E3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_NE1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        27.49539,
+        19.49539,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_NE1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_NE1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_NE1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_NE1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_NE1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_NE1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_NE1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        27.16333,
+        19.16333,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_NE1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_NE1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_NE1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_NE1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_NE1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_NE1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_NE1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        22.61532,
+        16.15156,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_NE1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_NE1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_NE1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_NE1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_NE1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_NE1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_N1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        19.0,
+        22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_N1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_N1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_N1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_N1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_N1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_N1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_N1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        19.0,
+        21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_N1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_N1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_N1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_N1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_N1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_N1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_N1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        15.49869,
+        19.15905,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_N1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_N1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_N1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_N1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_N1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_N1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_N2",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        6.5,
+        22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_N2_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_N2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_N2_Light",
+          "solid": "Warehouse_S01_Radar_Wall_N2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_N2_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_N2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_N2",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        6.5,
+        21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_N2_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_N2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_N2_Light",
+          "solid": "Warehouse_S02_Radar_Wall_N2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_N2_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_N2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_N2",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        5.52765,
+        20.09849,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_N2_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_N2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_N2_Light",
+          "solid": "Warehouse_S02_Radar_Roof_N2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_N2_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_N2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_N3",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -8.0,
+        22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_N3_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_N3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_N3_Light",
+          "solid": "Warehouse_S01_Radar_Wall_N3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_N3_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_N3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_N3",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -8.0,
+        21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_N3_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_N3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_N3_Light",
+          "solid": "Warehouse_S02_Radar_Wall_N3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_N3_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_N3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_N3",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -6.7055,
+        19.95644,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_N3_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_N3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_N3_Light",
+          "solid": "Warehouse_S02_Radar_Roof_N3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_N3_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_N3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_N4",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -20.5,
+        22.3596,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_N4_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_N4_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_N4_Light",
+          "solid": "Warehouse_S01_Radar_Wall_N4_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_N4_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_N4_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_N4",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -20.5,
+        21.89,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_N4_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_N4_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_N4_Light",
+          "solid": "Warehouse_S02_Radar_Wall_N4_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_N4_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_N4_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_N4",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -16.67654,
+        19.017,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_N4_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_N4_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_N4_Light",
+          "solid": "Warehouse_S02_Radar_Roof_N4_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_N4_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_N4_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_NW1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -27.49539,
+        19.49539,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_NW1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_NW1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_NW1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_NW1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_NW1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_NW1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_NW1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -27.16333,
+        19.16333,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_NW1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_NW1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_NW1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_NW1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_NW1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_NW1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_NW1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -22.61532,
+        16.15156,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_NW1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_NW1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_NW1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_NW1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_NW1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_NW1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_W1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -30.3596,
+        11.75,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_W1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_W1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_W1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_W1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_W1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_W1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_W1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -29.89,
+        11.75,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_W1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_W1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_W1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_W1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_W1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_W1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_W1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -26.25133,
+        9.70876,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_W1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_W1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_W1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_W1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_W1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_W1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_W2",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -30.3596,
+        0.0,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_W2_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_W2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_W2_Light",
+          "solid": "Warehouse_S01_Radar_Wall_W2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_W2_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_W2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_W2",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -29.89,
+        0.0,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_W2_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_W2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_W2_Light",
+          "solid": "Warehouse_S02_Radar_Wall_W2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_W2_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_W2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_W2",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -27.2141,
+        0.0,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_W2_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_W2_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_W2_Light",
+          "solid": "Warehouse_S02_Radar_Roof_W2_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_W2_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_W2_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_W3",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -30.3596,
+        -11.75,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_W3_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_W3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_W3_Light",
+          "solid": "Warehouse_S01_Radar_Wall_W3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_W3_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_W3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_W3",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -29.89,
+        -11.75,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_W3_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_W3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_W3_Light",
+          "solid": "Warehouse_S02_Radar_Wall_W3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_W3_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_W3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_W3",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -26.25133,
+        -9.70876,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_W3_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_W3_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_W3_Light",
+          "solid": "Warehouse_S02_Radar_Roof_W3_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_W3_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_W3_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S01_Radar_Wall_SW1",
+      "story": "01",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -27.49539,
+        -19.49539,
+        4.8
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S01_Radar_Wall_SW1_Pristine",
+          "solid": "Warehouse_S01_Radar_Wall_SW1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S01_Radar_Wall_SW1_Light",
+          "solid": "Warehouse_S01_Radar_Wall_SW1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S01_Radar_Wall_SW1_Heavy",
+          "solid": "Warehouse_S01_Radar_Wall_SW1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Wall_SW1",
+      "story": "02",
+      "surface": "Wall",
+      "pivotXYZ": [
+        -27.16333,
+        -19.16333,
+        14.3
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Wall_SW1_Pristine",
+          "solid": "Warehouse_S02_Radar_Wall_SW1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Wall_SW1_Light",
+          "solid": "Warehouse_S02_Radar_Wall_SW1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Wall_SW1_Heavy",
+          "solid": "Warehouse_S02_Radar_Wall_SW1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    },
+    {
+      "id": "Warehouse_S02_Radar_Roof_SW1",
+      "story": "02",
+      "surface": "Roof",
+      "pivotXYZ": [
+        -22.61532,
+        -16.15156,
+        18.65
+      ],
+      "states": {
+        "Pristine": {
+          "visual": "Warehouse_S02_Radar_Roof_SW1_Pristine",
+          "solid": "Warehouse_S02_Radar_Roof_SW1_ProxyIntact"
+        },
+        "Light": {
+          "visual": "Warehouse_S02_Radar_Roof_SW1_Light",
+          "solid": "Warehouse_S02_Radar_Roof_SW1_ProxyIntact"
+        },
+        "Heavy": {
+          "visual": "Warehouse_S02_Radar_Roof_SW1_Heavy",
+          "solid": "Warehouse_S02_Radar_Roof_SW1_ProxyHeavy"
+        },
+        "Total": {
+          "visual": null,
+          "solid": null
+        }
+      }
+    }
+  ]
+}

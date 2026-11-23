@@ -1,6 +1,6 @@
 # Authored assets
 
-The current runtime assets are the original primitive [expanded terrain/building battlefield](world/Battlefield.model.json), [C-130 template](models/C130.model.json) and [cover panel template](models/CoverPanel.model.json) and [normalized panel residual](models/PanelResidual.model.json), recorded in [manifest.json](manifest.json). Those primitive assets require no cloud asset IDs or external scripts. The P17 candidate also uses managed imported [Outpost/material templates](models/README.md#imported-outpost-and-material-templates), with actual mesh/texture references and receipts under [imports](imports/military-outpost/README.md). `world/` maps to `Workspace.World`; `models/` maps to server-only `ServerStorage.Assets`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under `world/`, `models/`, `blender/`, `exports/` and `imports/`, excluding Markdown. The Blender source/export package below remains outside runtime mappings.
+The current runtime assets are the original primitive [expanded terrain/building battlefield](world/Battlefield.model.json), [C-130 template](models/C130.model.json) and [cover panel template](models/CoverPanel.model.json) and [normalized panel residual](models/PanelResidual.model.json), recorded in [manifest.json](manifest.json). Those primitive assets require no cloud asset IDs or external scripts. The P17 candidate also uses managed imported [Outpost/material templates](models/README.md#imported-outpost-and-material-templates), with actual mesh/texture references and receipts under [imports](imports/military-outpost/README.md). `world/` maps to `Workspace.World` and `models/` maps to server-only `ServerStorage.Assets`. The operator's shared material palette lives under `presentation/`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under `world/`, `models/`, `blender/`, `exports/`, `imports/` and `presentation/`, excluding Markdown. The Blender source/export package below remains outside runtime mappings.
 
 Prefer `.model.json` for simple primitives and text `.rbxmx` exports for Studio-authored models. Export only authored objects after stopping play mode. Keep scripts in `src/`; inspect imported models for unintended scripts. For meshes, textures, animations and audio, retain original sources when rights and size permit, and record uploaded asset references and ownership.
 
@@ -32,6 +32,17 @@ The battlefield manifest also records the authored aircraft AimEnvelope values a
 
 Generated place builds belong in ignored `build/`. Do not blanket-ignore authored model/place exports needed for reconstruction. Choose Git LFS or another documented versioned store before adding large binary source assets.
 
+## Thermal presentation for buildings
+
+- Keep the wall and roof surfaces, frame, damage variants and major attached details visible in the C-130 view. A visual mesh may have both `CanCollide` and `CanQuery` off because a separate proxy owns cover. Choose `ThermalNonCover` from the source object's role and placement.
+- Tag independent dressing, fragments and cosmetic surfaces that would hide players through an open door, window or damage hole. Keep attached detail within its panel's readable silhouette and retire it with the relevant damage variant. Preserve the render opening and its authoritative query geometry.
+- Keep environmental materials darker than the white target silhouettes. An imported Model can carry a `ThermalBrightness` multiplier from 0 to 1 before it enters the battlefield. For legacy `TextureID` meshes also set `ThermalSurfacePalette` to the name of an authored folder in `ReplicatedStorage.Shared`. Bind each `ImportMaterialKey` to a `SurfaceAppearance` using the same color map. The operator tints the surfaces locally, including replacement panels. A value of 1 uses the original appearance. Check native rendering with the intended material channels.
+- Review both weapon zooms in a native operator client. Compare an exposed player against the building, a player behind solid cover and a player visible through an opening. Check that ground materials, collision, queries and pristine reset retain their authored behavior.
+
+## Radar outpost review package
+
+[Vesper Array](blender/radar-outpost/README.md) supplies the two-story radar building for the Warehouse site. The [native import receipt](imports/radar-outpost/native-receipt.json) records the source hashes, managed Studio models, owner and texture IDs. The editable scene and six review views are in the Blender package.
+
 ## Blender outpost review package
 
 [P16](../plans/16-blender-military-outpost-assets.md) now provides editable
@@ -59,7 +70,7 @@ package, with each file below 20 MiB and an initial combined art-package target
 of 45 MiB (D64); no LFS dependency is required. Backups, caches and temporary
 files are excluded. Revisit storage deliberately if measured assets grow.
 
-The checker enforces exact five-root manifest coverage, unique canonical paths,
+The checker enforces exact manifest coverage, unique canonical paths,
 SHA-256 for Blender source/export records, binary file budgets and cache/backup
 rejection. After a deliberate re-export, refresh the package lock/tool evidence
 and run `python3 scripts/refresh_outpost_manifest.py`, then the full verifier.

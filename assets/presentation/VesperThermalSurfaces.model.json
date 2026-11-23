@@ -1,0 +1,221 @@
+{
+  "ClassName": "Folder",
+  "Children": [
+    {
+      "Name": "black",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://119230777668775",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "bone",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://117163628439377",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "brass",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://88141187936081",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "chalk",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://102770137409004",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "floor",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://94297619444080",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "gateE",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://91000989525820",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "gateN",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://125954394746854",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "gateS",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://94372892559544",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "gateW",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://103505063406914",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "gold",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://122921796998867",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "iron",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://77176412869665",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "ivory",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://95260796253390",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "red",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://103092685959638",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "scope",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://87262361391745",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "sector02",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://131572251750720",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "sector07",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://135827758532619",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "silver",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://79020890167402",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "Name": "slate",
+      "ClassName": "SurfaceAppearance",
+      "Properties": {
+        "ColorMap": "rbxassetid://84378861000579",
+        "Color": [
+          1,
+          1,
+          1
+        ]
+      }
+    }
+  ]
+}

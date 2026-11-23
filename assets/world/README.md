@@ -31,6 +31,15 @@ Each building owns named `_Static`, `_Panels` and `_Navigation` groups. Static f
 
 Server `BuildingGeometry` validates actual geometry and decorates `BuildingId`, `StoryId`, globally unique `PanelId`, Intact state/pivot and variant metadata. `StoryId` is `01` or `02` within a formal BuildingId. The candidate’s 111 formal-building panels plus 76 starting-shelter pieces give **187 registered panels**. `BuildingGeometry.registries` reads formal `_Panels` folders plus `PanelRegistries` StringValues. A StringValue’s Name is the ancillary building ID; Value is a direct Battlefield child Folder name, not a recursive path. `SpawnShelter` points to `SpawnShelterPanels` with StoryId `01`. No new two-story requirement applies to this ancillary envelope. The outside waiting deck/lobby at X=520 remains protected.
 
+At runtime the managed Vesper Array replaces the primitive Warehouse before the
+map snapshot. It keeps the 64 × 48-stud site and south approach. The 18 roof
+segments surround an open well and both wall stories have 18 panels. There are
+no interior dividers. The twin stairs use the same 16 rises and an
+eight-stud tread width with a 1.875-stud run. The active runtime registers
+199 panels with the detailed Outpost and starting shelter installed. The
+primitive source counts above describe the Edit map. See the
+[Vesper import record](../../docs/evidence/vesper-import-preflight.md).
+
 For a compact interior, center the descriptor on the usable room, put its
 local +Y boundary at the ceiling, and keep exterior balconies and roofs outside
 the bounds. Validate both sides of doors and the height of stair landings in

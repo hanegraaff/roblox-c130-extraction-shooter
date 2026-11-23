@@ -1533,7 +1533,7 @@
       "local_path": "assets/models/MilitaryOutpost.model.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "fd1b20cda4ed15b90fe7e1899f8fea7c878f55a219d812e357c38961ab921f2e"
+      "sha256": "fd4b52ca3490edf21ce4e0738a4ac51da34e3a95a70550e0a5dc1ede8e14bd10"
     },
     {
       "id": "p17-construction-v2-json",
@@ -1578,6 +1578,124 @@
       "roblox_asset_id": null,
       "upload_owner": "User 2227341845",
       "sha256": "d916f5cb5897bb9727c3603a2c8d8eaeac83f1044b3b44a772ca40a6bd8f067c"
+    },
+    {
+      "id": "vesper-array-source",
+      "kind": "source",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/blender/radar-outpost/vesper-array.blend",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "f114c37ec45febbc6a2c91e18aecfac28d59bcacc836e6577709bce176b534b7"
+    },
+    {
+      "id": "vesper-array-panels",
+      "kind": "catalog",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/blender/radar-outpost/panel-catalog.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "10733c2b31ab877c0d41ceecc5c7c00c86e633547de683c9d6e037e9c80e9ce8"
+    },
+    {
+      "id": "vesper-array-assembly",
+      "kind": "mesh",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/exports/radar-outpost/vesper-array.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "646ed135104c93f2c0580905a54deb376a26bd744fd0d6134131d30de8af0b56"
+    },
+    {
+      "id": "vesper-array-variants",
+      "kind": "mesh",
+      "source": "Original modeling and baked surface art from scripts/radar_outpost. Four supplied illustrations guided the design.",
+      "author": "Project contributors",
+      "license": "Project-authored meshes and surface art. No third-party mesh, font or reference pixels bundled.",
+      "local_path": "assets/exports/radar-outpost/damage-library.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "3dffa07167fb221db25bb5529c25a8fb32864c949aab9b257f6642f02daaaae6"
+    },
+    {
+      "id": "vesper-native-assembly",
+      "kind": "model",
+      "source": "Owned native Vesper assembly preserved by Studio SerializationService",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/VesperArray.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "cd83a45f86917e04ac77024719dd0c1b514fe0bb7b96d8e9bdb51c8417cdb216"
+    },
+    {
+      "id": "vesper-native-variants",
+      "kind": "model",
+      "source": "Owned native Vesper state bank preserved by Studio SerializationService",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/VesperPanelVariants.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "5562b2bea767e83aa9eca30a9225397dddb2fb01a0d474d7f2a2e7c0e8ceb262"
+    },
+    {
+      "id": "vesper-thermal-surfaces",
+      "kind": "material",
+      "source": "Local operator tint templates reusing the Vesper native import receipt color maps",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/presentation/VesperThermalSurfaces.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "a43af13116a64e97e3e16d25eebc1ea63c285e971fdd97b81c0fb8c227f912b7"
+    },
+    {
+      "id": "vesper-native-receipt",
+      "kind": "catalog",
+      "source": "Studio reconstruction and imported asset identity receipt",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/imports/radar-outpost/native-receipt.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "02421452cf6da77aee717f5cacc14ccc326520791d7140d5ede5eab1a610b144"
+    },
+    {
+      "id": "vesper-native-upload-vesper-pilot",
+      "kind": "model",
+      "source": "Approved Vesper export uploaded for private Studio import",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "90597570873195",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "vesper-native-upload-vesper-assembly",
+      "kind": "model",
+      "source": "Approved Vesper export uploaded for private Studio import",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "89340131798475",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "vesper-native-upload-vesper-damage",
+      "kind": "model",
+      "source": "Approved Vesper export uploaded for private Studio import",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "96316755988747",
+      "upload_owner": "2227341845"
     }
   ],
   "runtime_recipes": [

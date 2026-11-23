@@ -112,6 +112,61 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         value[3].width = 64
         assert(not Layout.validate(value), "three large buildings accepted")
     end)
+    test("Vesper layout accepts the open gallery and requires all 54 named envelope sections", function()
+        local buildings = fixture()
+        local radar = buildings[1]
+        radar.id = "Warehouse"
+        radar.panelLayoutVersion = 3
+        radar.stepRun = 1.875
+        radar.panels = {}
+        for _, bay in
+            {
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "SE1",
+                "E1",
+                "E2",
+                "E3",
+                "NE1",
+                "N1",
+                "N2",
+                "N3",
+                "N4",
+                "NW1",
+                "W1",
+                "W2",
+                "W3",
+                "SW1",
+            }
+        do
+            for _, kind in
+                {
+                    { story = 1, label = "Wall" },
+                    { story = 2, label = "Wall" },
+                    { story = 2, label = "Roof" },
+                }
+            do
+                table.insert(radar.panels, {
+                    id = string.format("Warehouse_S%02d_Radar_%s_%s", kind.story, kind.label, bay),
+                    story = kind.story,
+                    roof = kind.label == "Roof",
+                    pivot = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 },
+                })
+            end
+        end
+        assert(Layout.validate(buildings))
+        local roof = radar.panels[3]
+        roof.id = "Warehouse_S02_Radar_Roof_X1"
+        assert(not Layout.validate(buildings), "uncovered bay accepted")
+        roof.id = "Warehouse_S02_Radar_Roof_S1"
+        roof.interior = true
+        assert(not Layout.validate(buildings), "divider accepted in the open atrium")
+        roof.interior = nil
+        radar.id = "Foundry"
+        assert(not Layout.validate(buildings), "Warehouse transform applied to Foundry")
+    end)
     test("BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage", function()
         for _, change in { "duplicate", "pivot", "story", "roof" } do
             local value = fixture()

@@ -32,7 +32,7 @@ Pure modules with dependencies choose an explicit Instance require when `script`
 
 The MVP has one level and its current `MapRules.defaults`, `TerrainRecipe` and
 `Workspace.World.Battlefield` are fixed to it. They do **not** yet provide a level
-selector or a second level. P15 will replace these single-level constants with a
+selector or a second level. The archived P15 proposal described replacing these single-level constants with a
 validated, immutable `LevelDefinition` chosen by the server at a lobby/reset
 boundary. One active level owns one generation token. Clients receive only the
 public level ID, bounds and presentation metadata; the server retains authoritative
@@ -55,7 +55,7 @@ level generation, then the shared damage/destruction rules decide state changes.
 Level packages contain geometry and parameters, not duplicate weapon, health,
 pan, zoom or demolition implementations.
 
-P15 must test at least two distinct definitions (including a nonidentical size
+That proposal would require tests for at least two distinct definitions (including a nonidentical size
 or shape), repeated switch/reset, stale event rejection, panel reconstruction,
 aim/cover consistency, two-client replication and late join. Moving from the
 current equal-radius circular `MapRules` validator to a general footprint/orbit
@@ -290,7 +290,7 @@ The current P06 source is integrated on `main`. Its host, two-/three-client, P05
 
 The default continuity gap is 0.225 seconds (1.5 × the 0.15-second cadence). Under the user's D51 revision, accepted misses, obstruction, target/weapon changes, reload or eligibility loss break continuity without clearing any earned per-panel credit. The first impact after a break earns zero elapsed time. An ordered barrier waits for earlier accepted in-flight outcomes, preserves their earned credit and then clears only the timing anchor; later shots cannot earn paused time across it. Malformed, unauthorized, stale, duplicate and cadence-rejected requests cannot mutate progress. D51 supersedes the older partial-credit reset default; numerical/mixing defaults and three/six-hit / nine-second thresholds remain.
 
-CombatRuntime sends every accepted shot's eventual outcome, including misses and expiration, with round ID, shot ID, weapon, firedAt and an optional server-derived panel ID. DestructionRuntime identifies only actual solids belonging to the current registered panel Models; copied/unknown tags, supports and old-map solids are normalized to a no-panel outcome so they cannot stall the ordered frontier. DestructionService buffers out-of-order completion and scores only in accepted shot order; its frontier deduplicates finished shots and bounds unresolved outcomes to 512. Clients provide neither panel identity nor duration/damage authority. Only the level-supplied panel registries enter the ledger, including the starting shelter's exterior; supporting floors/stairs/frames, generic nonbuilding `Breakable` barriers and terrain do not. These modules apply the same thresholds to all registered geometry; P15 must still supply and validate a second level definition.
+CombatRuntime sends every accepted shot's eventual outcome, including misses and expiration, with round ID, shot ID, weapon, firedAt and an optional server-derived panel ID. DestructionRuntime identifies only actual solids belonging to the current registered panel Models; copied/unknown tags, supports and old-map solids are normalized to a no-panel outcome so they cannot stall the ordered frontier. DestructionService buffers out-of-order completion and scores only in accepted shot order; its frontier deduplicates finished shots and bounds unresolved outcomes to 512. Clients provide neither panel identity nor duration/damage authority. Only the level-supplied panel registries enter the ledger, including the starting shelter's exterior; supporting floors/stairs/frames, generic nonbuilding `Breakable` barriers and terrain do not. These modules apply the same thresholds to all registered geometry; any future second level would need its own validated definition.
 
 DestructionRuntime owns the engine boundary. `sync(roundId)` reacquires the current Battlefield by Instance identity and invalidates old generations, including map replacement while the completed round ID remains unchanged. `resolve(outcome)` updates the ledger without changing collision. The shared combat frame completes gunship sweeps, player blast sight-line queries, M-7 rays and rocket sweeps against pre-flush cover before calling `flush(nowSeconds)`. The newly installed opening becomes available to later batches. Initial muzzle overlaps join the same batch. Terminal phase or deadline cancellation closes the ledger and rejects pending outcomes while retaining earned damage until reset. Impact observers must not yield, reenter or change geometry.
 

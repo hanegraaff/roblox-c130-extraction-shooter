@@ -10,6 +10,7 @@
 local ServerStorage = game:GetService("ServerStorage")
 local PanelAssetCatalog = require(script.Parent.PanelAssetCatalog)
 local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
+local VesperPanelGeometry = require(script.Parent.VesperPanelGeometry)
 local PanelGeometry = {}
 export type Panel = {
     id: string,
@@ -20,6 +21,7 @@ export type Panel = {
     stage: number,
     visualBucket: string,
     family: PanelAssetCatalog.Family?,
+    vesper: VesperPanelGeometry.Variants?,
     color: Color3,
     assetBasis: CFrame?,
 }
@@ -27,9 +29,13 @@ export type Panel = {
 -- Captures an authored Part or material Model into a persistent identity. Models
 -- require a validated family, canonical pivot and local IntactSize. Caller owns
 -- the validated subtree; originals remain private until restored/destroyed at stop.
-function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog.Family?): Panel
+function PanelGeometry.capture(
+    part: BasePart | Model,
+    family: PanelAssetCatalog.Family?,
+    vesper: VesperPanelGeometry.Variants?
+): Panel
     if part:IsA("Model") then
-        assert(family, "material panel requires a validated family")
+        assert(family or vesper, "imported panel requires validated geometry")
         local size = part:GetAttribute("IntactSize")
         assert(typeof(size) == "Vector3", "material panel requires authored IntactSize")
         local basis, reason = MaterialPanelGeometry.basis(part)
@@ -43,6 +49,7 @@ function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog
             stage = 0,
             visualBucket = "Pristine",
             family = family,
+            vesper = vesper,
             color = Color3.new(1, 1, 1),
             assetBasis = basis,
         }
@@ -69,9 +76,33 @@ function PanelGeometry.capture(part: BasePart | Model, family: PanelAssetCatalog
         stage = 0,
         visualBucket = "",
         family = nil,
+        vesper = nil,
         color = part.Color,
         assetBasis = nil,
     }
+end
+
+local function installAppearance(panel: Panel, appearance: string)
+    if panel.vesper then
+        assert(panel.original:IsA("Model"), "Vesper original must be a Model")
+        local template = if appearance == "Pristine"
+            then panel.original
+            elseif appearance == "Light" then panel.vesper.light
+            elseif appearance == "Heavy" then panel.vesper.heavy
+            else nil
+        VesperPanelGeometry.install(panel.model, template, panel.pivot)
+    else
+        assert(panel.family, "material appearance requires a validated family")
+        MaterialPanelGeometry.install(
+            panel.model,
+            panel.pivot * (panel.assetBasis or CFrame.identity),
+            panel.family,
+            appearance,
+            panel.pivot,
+            panel.original
+        )
+    end
+    panel.visualBucket = appearance
 end
 
 -- Replaces only owned panel solids. stage 2 leaves the stable identity model with
@@ -81,22 +112,14 @@ function PanelGeometry.setStage(panel: Panel, stage: number)
     if stage == panel.stage then
         return
     end
-    panel.model:ClearAllChildren()
-    panel.visualBucket = ""
-    if panel.family then
+    if panel.family or panel.vesper then
         local appearance = if stage == 0 then "Pristine" elseif stage == 1 then "Heavy" else "Total"
-        MaterialPanelGeometry.install(
-            panel.model,
-            panel.pivot * (panel.assetBasis or CFrame.identity),
-            panel.family,
-            appearance,
-            panel.pivot,
-            panel.original
-        )
-        panel.visualBucket = appearance
+        installAppearance(panel, appearance)
         panel.stage = stage
         return
     end
+    panel.model:ClearAllChildren()
+    panel.visualBucket = ""
     assert(panel.original:IsA("BasePart"), "primitive original is not a BasePart")
     if stage == 0 then
         local intact = panel.original:Clone()
@@ -220,17 +243,9 @@ function PanelGeometry.publish(
     appearance: string
 )
     local state = ({ "Intact", "Damaged", "Destroyed" })[stage + 1]
-    if panel.family then
+    if panel.family or panel.vesper then
         if panel.visualBucket ~= appearance then
-            MaterialPanelGeometry.install(
-                panel.model,
-                panel.pivot * (panel.assetBasis or CFrame.identity),
-                panel.family,
-                appearance,
-                panel.pivot,
-                panel.original
-            )
-            panel.visualBucket = appearance
+            installAppearance(panel, appearance)
         end
         MaterialPanelGeometry.progress(panel.model, progress)
         local descendants = panel.model:GetDescendants()

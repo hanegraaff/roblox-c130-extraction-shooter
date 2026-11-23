@@ -6,6 +6,7 @@
     supports and stairs never become destructible panels. All lengths are studs.
 ]=]
 local BuildingLayout = require(game:GetService("ReplicatedStorage").Shared.BuildingLayout)
+local VesperNavigation = require(script.Parent.VesperNavigation)
 local BuildingGeometry = {}
 -- Imported panels retain one stable Model identity and expose only actual
 -- rectangle proxies as solids. Primitive registries retain their BasePart API.
@@ -16,7 +17,13 @@ local function panelPose(panel: Instance): (CFrame?, Vector3?)
         end
         return panel.CFrame, panel.Size
     end
-    if panel:IsA("Model") and type(panel:GetAttribute("PanelAssetFamily")) == "string" then
+    if
+        panel:IsA("Model")
+        and (
+            type(panel:GetAttribute("PanelAssetFamily")) == "string"
+            or panel:GetAttribute("VesperPanel") == true
+        )
+    then
         local size = panel:GetAttribute("IntactSize")
         if typeof(size) ~= "Vector3" then
             return nil, nil
@@ -112,6 +119,24 @@ function BuildingGeometry.validate(
                     or string.find(panel.Name, "_Interior_", 1, true) ~= nil,
                 pivot = { pivot:GetComponents() },
             })
+        end
+        if building:GetAttribute("PanelLayoutVersion") == 3 then
+            local valid, reason = VesperNavigation.validate(workspace, floor, rays)
+            if not valid then
+                return false, reason
+            end
+            table.insert(layouts, {
+                id = building.Name,
+                width = math.round(floor.Size.X),
+                depth = math.round(floor.Size.Z),
+                stories = 2,
+                stairSteps = 16,
+                stepRise = 0.625,
+                stepRun = 1.875,
+                panels = registry,
+                panelLayoutVersion = 3,
+            })
+            continue
         end
         local upper = supports:FindFirstChild(building.Name .. "_UpperMain")
         local landing = supports:FindFirstChild(building.Name .. "_UpperNorthLanding")
