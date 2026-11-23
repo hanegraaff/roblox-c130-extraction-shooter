@@ -22,7 +22,7 @@
     }
   },
   "sourceSyncedEdit": {
-    "productionBinding": "48096d136da01bf7b3c0e78d130d86285867184c66dabca34cdc4db3792fcb4d",
+    "productionFingerprintSha256": "97137678865a1c28175bbd97fa61bb63f2a93545e87766b23881218c0916a2ab",
     "script": "scripts/sandbreak/check_native_world.luau",
     "legacyPanelsRemaining": 0,
     "panelCount": 103,
@@ -100,7 +100,163 @@
     "docs/images/spawn-bunker/studio-yard.jpg",
     "docs/images/spawn-bunker/studio-hall.jpg"
   ],
-  "pending": [
-    "Actual two-client match, including production fire and reset, and normal/thermal camera review on the source-synced map"
-  ]
+  "nativeTwoClientRound": {
+    "mode": "Studio Server & Clients, two live clients",
+    "productionFingerprintSha256": "97137678865a1c28175bbd97fa61bb63f2a93545e87766b23881218c0916a2ab",
+    "loadedProductionSourceChecksumsAdler32": {
+      "SandbreakReconstruction": 3327705749,
+      "GameRuntime": 2130101309,
+      "CombatRuntime": 1467004283,
+      "ThermalCameraController": 1280754227,
+      "ThermalCosmetics": 3795646785
+    },
+    "driver": "Studio test controls started the match. Operator and Ground commands used the game's FireWeapon and Surrender remotes. The named Sandbreak harness was not selected in this run.",
+    "serverSmoke": {
+      "discovered": 198,
+      "passed": 198,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "clientSmoke": [
+      {
+        "userId": -2,
+        "discovered": 14,
+        "passed": 14,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      },
+      {
+        "userId": -1,
+        "discovered": 14,
+        "passed": 14,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      }
+    ],
+    "panels": 103,
+    "groundSpawn": {
+      "userId": -1,
+      "positionStuds": [
+        -20,
+        2.9980251789093018,
+        108
+      ],
+      "cameraType": "Custom"
+    },
+    "operatorView": {
+      "userId": -2,
+      "cameraType": "Scriptable",
+      "thermal": true,
+      "markedDetailMeshesHidden": 1136,
+      "unmarkedStaticMeshesVisible": 88
+    },
+    "groundView": {
+      "userId": -1,
+      "cameraType": "Custom",
+      "thermal": false,
+      "markedDetailMeshesHidden": 0,
+      "unmarkedStaticMeshesVisible": 88
+    },
+    "weapon": "M102",
+    "panelId": "SB.R.07.07",
+    "coverageGrid": [
+      17,
+      17
+    ],
+    "roundId": 1,
+    "observers": [
+      "server",
+      "operator client -2",
+      "ground client -1"
+    ],
+    "stages": [
+      {
+        "hits": 0,
+        "state": "Pristine",
+        "covered": 203,
+        "progress": 0,
+        "parts": 18
+      },
+      {
+        "hits": 1,
+        "state": "Light",
+        "covered": 203,
+        "progress": 0.3333333333333333,
+        "parts": 19
+      },
+      {
+        "hits": 2,
+        "state": "Light",
+        "covered": 203,
+        "progress": 0.6666666666666666,
+        "parts": 19
+      },
+      {
+        "hits": 3,
+        "state": "Heavy",
+        "covered": 96,
+        "progress": 0,
+        "parts": 4
+      },
+      {
+        "hits": 4,
+        "state": "Heavy",
+        "covered": 96,
+        "progress": 0.3333333333333333,
+        "parts": 4
+      },
+      {
+        "hits": 5,
+        "state": "Heavy",
+        "covered": 96,
+        "progress": 0.6666666666666666,
+        "parts": 4
+      },
+      {
+        "hits": 6,
+        "state": "Total",
+        "covered": 0,
+        "progress": 1,
+        "parts": 0
+      }
+    ],
+    "finalImpact": {
+      "y": 12.449996948242188,
+      "x": 5.999553680419922,
+      "z": 105.64119720458984,
+      "panelId": "SB.R.07.07",
+      "weapon": "M102",
+      "shotId": 12,
+      "roundId": 1
+    },
+    "surrender": {
+      "reason": "GroundEliminated",
+      "winner": "Gunship",
+      "userId": -2,
+      "roundId": 1
+    },
+    "reset": {
+      "phase": "Lobby",
+      "freshPanelInstance": true,
+      "covered": 203,
+      "fragmentsRemaining": 0,
+      "panels": 103,
+      "operatorThermalCleared": true,
+      "observers": 3
+    },
+    "nextDeployment": {
+      "testGeneration": 3,
+      "phase": "Active",
+      "groundSpawn": [
+        -20,
+        2.9980251789093018,
+        108
+      ],
+      "panelState": "Pristine",
+      "panels": 103
+    }
+  }
 }
