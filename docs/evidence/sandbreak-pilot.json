@@ -1,0 +1,422 @@
+{
+  "scope": "Cloud asset calibration and temporary local Studio Edit visual preview",
+  "testedOn": "2026-11-23",
+  "blenderSourceSha256": "27b825df1b09d7b7ea37d2fb302163ae55efa7b9c55c332ec2a9d86cc4160709",
+  "uploadSha256": "ee0f44ca0fa88c9d30e396afe48acadadcce2203886b681926eafd4bf150e28b",
+  "upload": {
+    "path": "assets/136622354216675",
+    "revisionId": "1",
+    "revisionCreateTime": "2026-11-23T18:17:32.458Z",
+    "assetId": "136622354216675",
+    "displayName": "Sandbreak Bunker Pilot",
+    "description": "Private two-panel import calibration for Sandbreak bunker",
+    "assetType": "Model",
+    "creationContext": {
+      "creator": {
+        "userId": "2227341845"
+      }
+    },
+    "moderationResult": {
+      "moderationState": "Approved"
+    },
+    "state": "Active",
+    "isPublished": true
+  },
+  "axisCorrectionDegreesY": 180,
+  "sourceUnitsPerStud": 1,
+  "maxNativeIntrinsicExtentComponentDeltaStuds": 9.536743146298932e-7,
+  "maxCorrectedNativeCenterComponentDeltaStuds": 0.0000022888183579539145,
+  "editPreview": {
+    "meshCount": 5,
+    "captures": [
+      "SandbreakPilotWall",
+      "SandbreakPilotRoof"
+    ],
+    "previewCleanedUp": true
+  },
+  "native": {
+    "missingColor": [],
+    "universeId": "10776653720",
+    "statuses": {
+      "rbxassetid://73157595027579": "Success",
+      "rbxassetid://122641440841561": "Success",
+      "rbxassetid://81422203634773": "Success",
+      "rbxassetid://79886260208642": "Success",
+      "rbxassetid://118021206402264": "Success",
+      "rbxassetid://110120044610800": "Success",
+      "rbxassetid://125535419667514": "Success",
+      "rbxassetid://74006071210515": "Success"
+    },
+    "placeId": "72732833195348",
+    "assetId": "136622354216675",
+    "version": "63520603501315",
+    "creatorId": "2227341845",
+    "parts": {
+      "SB_panel_pristine_013_03": {
+        "colorMap": "",
+        "path": "Model.Sandbreak Bunker Pilot.SB_panel_pristine_013_03_Node.SB_panel_pristine_013_03",
+        "roughnessMap": "",
+        "color": [
+          0.6392157077789307,
+          0.6352941393852234,
+          0.6470588445663452
+        ],
+        "meshId": "rbxassetid://125535419667514",
+        "anchored": false,
+        "textureId": "rbxassetid://79886260208642",
+        "metalnessMap": "",
+        "renderFidelity": "Automatic",
+        "collisionFidelity": "Default",
+        "meshSize": [
+          8.772801399230957,
+          11.449999809265137,
+          3.8654003143310547
+        ],
+        "normalMap": "",
+        "cframe": [
+          18.56879997253418,
+          5.724999904632568,
+          -23.075000762939453,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          18.56879997253418,
+          5.724999904632568,
+          -23.075000762939453,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "size": [
+          8.772801399230957,
+          11.449999809265137,
+          3.8654003143310547
+        ]
+      },
+      "SB_panel_pristine_090_01": {
+        "colorMap": "",
+        "path": "Model.Sandbreak Bunker Pilot.SB_panel_pristine_090_01_Node.SB_panel_pristine_090_01",
+        "roughnessMap": "",
+        "color": [
+          0.6392157077789307,
+          0.6352941393852234,
+          0.6470588445663452
+        ],
+        "meshId": "rbxassetid://118021206402264",
+        "anchored": false,
+        "textureId": "rbxassetid://81422203634773",
+        "metalnessMap": "",
+        "renderFidelity": "Automatic",
+        "collisionFidelity": "Default",
+        "meshSize": [
+          5.115161895751953,
+          1,
+          5.750000953674316
+        ],
+        "normalMap": "",
+        "cframe": [
+          -7.15757942199707,
+          11.949999809265137,
+          14.47500228881836,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -7.15757942199707,
+          11.949999809265137,
+          14.47500228881836,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "size": [
+          5.115161895751953,
+          1,
+          5.750000953674316
+        ]
+      },
+      "SB_panel_pristine_013_02": {
+        "colorMap": "",
+        "path": "Model.Sandbreak Bunker Pilot.SB_panel_pristine_013_02_Node.SB_panel_pristine_013_02",
+        "roughnessMap": "",
+        "color": [
+          0.6392157077789307,
+          0.6352941393852234,
+          0.6470588445663452
+        ],
+        "meshId": "rbxassetid://74006071210515",
+        "anchored": false,
+        "textureId": "rbxassetid://73157595027579",
+        "metalnessMap": "",
+        "renderFidelity": "Automatic",
+        "collisionFidelity": "Default",
+        "meshSize": [
+          7.420893669128418,
+          1.2699995040893555,
+          1.8711795806884766
+        ],
+        "normalMap": "",
+        "cframe": [
+          17.895444869995117,
+          9.184999465942383,
+          -22.085590362548828,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          17.895444869995117,
+          9.184999465942383,
+          -22.085590362548828,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "size": [
+          7.420893669128418,
+          1.2699995040893555,
+          1.8711795806884766
+        ]
+      },
+      "SB_panel_pristine_013_01": {
+        "colorMap": "",
+        "path": "Model.Sandbreak Bunker Pilot.SB_panel_pristine_013_01_Node.SB_panel_pristine_013_01",
+        "roughnessMap": "",
+        "color": [
+          0.6392157077789307,
+          0.6352941393852234,
+          0.6470588445663452
+        ],
+        "meshId": "rbxassetid://110120044610800",
+        "anchored": false,
+        "textureId": "rbxassetid://81422203634773",
+        "metalnessMap": "",
+        "renderFidelity": "Automatic",
+        "collisionFidelity": "Default",
+        "meshSize": [
+          8.765000343322754,
+          11.449999809265137,
+          3.8500003814697266
+        ],
+        "normalMap": "",
+        "cframe": [
+          18.5674991607666,
+          5.724999904632568,
+          -23.075000762939453,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          18.5674991607666,
+          5.724999904632568,
+          -23.075000762939453,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "size": [
+          8.765000343322754,
+          11.449999809265137,
+          3.8500003814697266
+        ]
+      },
+      "SB_panel_pristine_090_02": {
+        "colorMap": "",
+        "path": "Model.Sandbreak Bunker Pilot.SB_panel_pristine_090_02_Node.SB_panel_pristine_090_02",
+        "roughnessMap": "",
+        "color": [
+          0.6392157077789307,
+          0.6352941393852234,
+          0.6470588445663452
+        ],
+        "meshId": "rbxassetid://122641440841561",
+        "anchored": false,
+        "textureId": "rbxassetid://79886260208642",
+        "metalnessMap": "",
+        "renderFidelity": "Automatic",
+        "collisionFidelity": "Default",
+        "meshSize": [
+          5.115161895751953,
+          1.0039997100830078,
+          5.766937255859375
+        ],
+        "normalMap": "",
+        "cframe": [
+          -7.15757942199707,
+          11.949999809265137,
+          14.480918884277344,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -7.15757942199707,
+          11.949999809265137,
+          14.480918884277344,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "size": [
+          5.115161895751953,
+          1.0039997100830078,
+          5.766937255859375
+        ]
+      }
+    }
+  },
+  "temporaryProxyAngleProbe": {
+    "SB.W.S.01": {
+      "0": {
+        "intactHits": 1436,
+        "addedHits": 0,
+        "residualHits": 1056,
+        "retainedFraction": 0.7353760445682451,
+        "openingHits": 380
+      },
+      "15": {
+        "intactHits": 1421,
+        "addedHits": 0,
+        "residualHits": 1040,
+        "retainedFraction": 0.7318789584799437,
+        "openingHits": 381
+      },
+      "30": {
+        "intactHits": 1404,
+        "addedHits": 0,
+        "residualHits": 1019,
+        "retainedFraction": 0.7257834757834758,
+        "openingHits": 385
+      },
+      "45": {
+        "intactHits": 1388,
+        "addedHits": 0,
+        "residualHits": 997,
+        "retainedFraction": 0.718299711815562,
+        "openingHits": 391
+      },
+      "60": {
+        "intactHits": 1365,
+        "addedHits": 0,
+        "residualHits": 972,
+        "retainedFraction": 0.7120879120879121,
+        "openingHits": 393
+      },
+      "75": {
+        "intactHits": 1328,
+        "addedHits": 0,
+        "residualHits": 925,
+        "retainedFraction": 0.6965361445783133,
+        "openingHits": 403
+      }
+    },
+    "SB.R.07.07": {
+      "0": {
+        "intactHits": 1115,
+        "addedHits": 0,
+        "residualHits": 555,
+        "retainedFraction": 0.4977578475336323,
+        "openingHits": 560
+      },
+      "15": {
+        "intactHits": 1162,
+        "addedHits": 0,
+        "residualHits": 589,
+        "retainedFraction": 0.5068846815834768,
+        "openingHits": 573
+      },
+      "30": {
+        "intactHits": 1203,
+        "addedHits": 0,
+        "residualHits": 623,
+        "retainedFraction": 0.5178719866999169,
+        "openingHits": 580
+      },
+      "45": {
+        "intactHits": 1247,
+        "addedHits": 0,
+        "residualHits": 666,
+        "retainedFraction": 0.5340817963111467,
+        "openingHits": 581
+      },
+      "60": {
+        "intactHits": 1297,
+        "addedHits": 0,
+        "residualHits": 715,
+        "retainedFraction": 0.551272166538165,
+        "openingHits": 582
+      },
+      "75": {
+        "intactHits": 1381,
+        "addedHits": 0,
+        "residualHits": 816,
+        "retainedFraction": 0.5908761766835626,
+        "openingHits": 565
+      }
+    }
+  }
+}
