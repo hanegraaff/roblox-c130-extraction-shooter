@@ -70,6 +70,22 @@
     "avatar": "1.401265025138855, 2.9980251789093018, -175.39418029785156",
     "cameraType": "Custom"
   },
+  "nativeTwoClientBaseline": {
+    "mode": "Studio Server & Clients",
+    "source": "Local test build opened in a duplicate Studio document",
+    "clientUserIds": [-2, -1],
+    "clientReplicatedPanelCounts": [103, 103],
+    "serverPanelCount": 103,
+    "serverBaseline": {
+      "suite": "P01-server",
+      "discovered": 198,
+      "passed": 198,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "focusedHarnessStarted": false
+  },
   "thermalPreview": {
     "retainedVisuals": 873,
     "restoredGroundArt": true,
