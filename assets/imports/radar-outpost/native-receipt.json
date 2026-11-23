@@ -22,8 +22,8 @@
     }
   ],
   "nativeModelsByPathAndSha256": {
-    "assets/models/VesperArray.rbxm": "b091ac86d4aaf25d4c9ed20495817fdb4116d0071095571af92d8698a220f1ec",
-    "assets/models/VesperPanelVariants.rbxm": "2948ac9d88e07e25260cb800f111de17e260fec17f30da5f02de9566258fdcf8"
+    "assets/models/VesperArray.rbxm": "cd83a45f86917e04ac77024719dd0c1b514fe0bb7b96d8e9bdb51c8417cdb216",
+    "assets/models/VesperPanelVariants.rbxm": "5562b2bea767e83aa9eca30a9225397dddb2fb01a0d474d7f2a2e7c0e8ceb262"
   },
   "ownerUserId": "2227341845",
   "placement": {

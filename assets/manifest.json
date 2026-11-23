@@ -1632,7 +1632,7 @@
       "local_path": "assets/models/VesperArray.rbxm",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "b091ac86d4aaf25d4c9ed20495817fdb4116d0071095571af92d8698a220f1ec"
+      "sha256": "cd83a45f86917e04ac77024719dd0c1b514fe0bb7b96d8e9bdb51c8417cdb216"
     },
     {
       "id": "vesper-native-variants",
@@ -1643,7 +1643,7 @@
       "local_path": "assets/models/VesperPanelVariants.rbxm",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "2948ac9d88e07e25260cb800f111de17e260fec17f30da5f02de9566258fdcf8"
+      "sha256": "5562b2bea767e83aa9eca30a9225397dddb2fb01a0d474d7f2a2e7c0e8ceb262"
     },
     {
       "id": "vesper-native-receipt",
@@ -1654,7 +1654,7 @@
       "local_path": "assets/imports/radar-outpost/native-receipt.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "598925c680474749907fac2d20528e0b67cedbc7ee57756cba133146629a647b"
+      "sha256": "02421452cf6da77aee717f5cacc14ccc326520791d7140d5ede5eab1a610b144"
     },
     {
       "id": "vesper-native-upload-vesper-pilot",

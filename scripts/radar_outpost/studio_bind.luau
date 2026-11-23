@@ -202,7 +202,10 @@ return function(config: Config, status: { [string]: unknown })
                         part.CastShadow = false
                         part.TextureID = ""
                         part:SetAttribute("PanelProxy", if row.role == "collision-query" then true else nil)
-                    elseif not solid then
+                    elseif row.role == "dressing" or row.role == "debris" then
+                        -- The visible building envelope and radar use separate
+                        -- cover proxies. Exclude only free dressing and debris
+                        -- from the thermal depth buffer.
                         part:SetAttribute("ThermalNonCover", true)
                     end
                     local object = byObject[row.sourceObject] or {}

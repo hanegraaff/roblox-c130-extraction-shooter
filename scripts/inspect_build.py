@@ -8,6 +8,7 @@ import copy
 import base64
 import struct
 from p17_native_meshes import PAYLOAD_FIELDS, decode_payload, float32_vector
+from radar_outpost.prepare_import import thermal_structure_names
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -541,6 +542,8 @@ def check_vesper_import(path: Path) -> int:
     assets = "ServerStorage/Assets/"
     expected = {"VesperArray": (649, 54), "VesperPanelVariants": (814, 108)}
     counts = {name: [0, 0] for name in expected}
+    visible_structure = thermal_structure_names()
+    observed_structure: set[str] = set()
     for full, item in nodes.items():
         if item.attrib["class"] != "MeshPart" or not full.startswith(assets):
             continue
@@ -560,6 +563,13 @@ def check_vesper_import(path: Path) -> int:
             raise RuntimeError(f"Vesper native payload or flags differ: {full}")
         if flags["CanCollide"] and meta.get("NativeCollisionFidelity") != "PreciseConvexDecomposition":
             raise RuntimeError(f"Vesper queryable mesh lost its precise collision: {full}")
+        part_name = full.rsplit("/", 1)[-1]
+        render_structure = part_name in visible_structure
+        if render_structure:
+            observed_structure.add(part_name)
+        should_hide = not flags["CanCollide"] and not render_structure
+        if (meta.get("ThermalNonCover") is True) != should_hide:
+            raise RuntimeError(f"Vesper thermal classification differs from its source role: {full}")
         invisible = item.findtext("Properties/float[@name='Transparency']") == "1"
         if meta.get("PanelProxy"):
             counts[relative][1] += 1
@@ -572,6 +582,8 @@ def check_vesper_import(path: Path) -> int:
             raise RuntimeError(f"Vesper texture binding changed: {full}")
     if {name: tuple(v) for name, v in counts.items()} != expected:
         raise RuntimeError(f"Vesper mapped native model counts changed: {counts}")
+    if visible_structure != observed_structure:
+        raise RuntimeError("Missing Vesper thermal structure meshes in the native bank")
     return sum(count[0] for count in counts.values())
 
 

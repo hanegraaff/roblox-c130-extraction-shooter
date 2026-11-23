@@ -83,3 +83,27 @@ The first solo session hit the existing fragment overlap fixture failure.
 The clean retry passed the same source without any fixture or game change.
 The two-client session returned its structured report, and the original local
 Studio document returned to Edit. [Structured Play results](vesper-native-play.json)
+
+## Thermal visibility follow-up
+
+The bind step reserves `ThermalNonCover` for freestanding dressing and moving
+debris. The dish and the building envelope now render in the aircraft view,
+including the surviving surfaces in each damage state. Opaque dressing can
+hide a player's thermal silhouette even when projectile queries pass through it.
+The existing solid proxies supply collision and cover for the visible surfaces.
+
+The two native banks reused their existing mesh, texture and collision data.
+The metadata update removed the tag from 395 assembly meshes and 698 alternate
+panel meshes. Binary reserialization normalized some rotation components by
+less than `1e-7`. Both Rojo builds validate the thermal flags against the source
+roles. `python3 scripts/verify.py` passed on macOS arm64 with 83 unit, 74
+integration, 18 tooling and 49 asset regression cases.
+
+`rojo build test.project.json --output build/vesper-thermal-tests.rbxlx` produced
+the local place used for Studio `0.748.0.7481526` Play. The solo run passed 195
+server and 13 client checks. With operator thermal active, the client retained
+the dish, base and portal, hid all 158 tagged dressing meshes, and confirmed
+that all 54 pristine panel proxies still supported collision and queries. A
+ray through the sampled wall center hit its proxy, and the adjacent window ray
+passed through the opening. The [operator view capture](../images/radar-outpost/studio-thermal.jpg)
+shows the dish, open gallery and wall panels from the live aircraft orbit.
