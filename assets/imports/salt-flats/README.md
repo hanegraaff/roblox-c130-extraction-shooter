@@ -65,3 +65,14 @@ the managed reconstruction, solid collision, combat and round-reset tests.
 Bind the wreck separately from the 152 building panels so its entire
 hierarchy clears after one direct howitzer hit or a continuous three-second
 30mm burst. The hangar panels use the existing progressive damage rules.
+
+
+## Local walking-surface probe
+
+The staging index includes source-space collision boxes for the four levels,
+all 120 treads, the apron and the wreck's deck and ramp. The Studio Edit probe
+in `scripts/salt_flats/check_walk_surfaces.luau` takes the `walkingSurfaces`
+entry as input. It passed 120 tread rays, 51 ramp rays and the cargo deck
+height check in the isolated `salt-flats-integration-tests.rbxlx` document.
+The probe creates temporary Parts and removes them. Native avatar traversal,
+whole-aircraft cover and the assembled match still require the full import.

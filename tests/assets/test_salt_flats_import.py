@@ -7,6 +7,7 @@ import unittest
 SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 from salt_flats import placement, prepare_import as prepare
+from salt_flats.walk_surfaces import walk_surfaces
 
 
 def triangle_corners(doc, blob, primitive):
@@ -71,6 +72,27 @@ class SaltFlatsImportPreflight(unittest.TestCase):
                 [{"objects": [row for row in staged if not row["sourceObject"].startswith("H41")]}],
                 prepare.SITE, prepare.YAW_DEGREES, prepare.HILL_MOVES, prepare.rotate,
             )
+
+    def test_walking_surfaces_reach_four_levels_and_match_ramp_endpoints(self):
+        recipe = walk_surfaces()
+        hangar = {box["key"]: box for box in recipe["hangar"]}
+        wreck = {box["key"]: box for box in recipe["wreck"]}
+        treads = [row for key, row in hangar.items() if "_Tread" in key]
+        self.assertEqual(len(treads), 120)
+        self.assertEqual(len(hangar), len(recipe["hangar"]))
+        for level in range(2, 5):
+            deck = hangar[f"Gallery{level}"]
+            self.assertAlmostEqual(deck["center"][1] + deck["size"][1] / 2, (level - 1) * 12)
+        ramp = wreck["Ramp"]
+        pitch = math.radians(ramp["pitchDegrees"])
+        _, y, z = ramp["center"]
+        half_run = ramp["size"][2] / 2
+        half_thickness = ramp["size"][1] / 2
+        for sign, expected in [(-1, (3.16, 38.55)), (1, (0.09, 55.20))]:
+            self.assertAlmostEqual(y + half_thickness * math.cos(pitch)
+                                   - sign * half_run * math.sin(pitch), expected[0])
+            self.assertAlmostEqual(z + half_thickness * math.sin(pitch)
+                                   + sign * half_run * math.cos(pitch), expected[1])
 
 
 if __name__ == "__main__":

@@ -19,6 +19,7 @@ from typing import Iterator
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from radar_outpost.prepare_import import Batch, ROOT, decode_glb, digest, source_bytes
 from salt_flats.placement import audit_site
+from salt_flats.walk_surfaces import walk_surfaces
 
 STAGING = ROOT / "build/salt-flats-import"
 BLEND = ROOT / "assets/blender/plane-hangar/salt-flats-hangar.blend"
@@ -236,6 +237,7 @@ def main():
         "version":1, "blendSha256":digest(blend), "assemblySha256":digest(assembly),
         "placement":{"locationStuds":SITE,"yawDegrees":YAW_DEGREES,"hillMoves":HILL_MOVES, **site_checks},
         "units":"one glTF unit per stud, Y up, doors face +Z before placement",
+        "walkingSurfaces": walk_surfaces(),
         "batches":sources,
     }
     (STAGING/"import-index.json").write_text(json.dumps(report,indent=2)+"\n")
