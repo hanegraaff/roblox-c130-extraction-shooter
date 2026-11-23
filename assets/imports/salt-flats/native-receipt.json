@@ -1,0 +1,442 @@
+{
+  "axisCorrectionYDegrees": 180,
+  "batches": [
+    {
+      "asset": "109915921376878",
+      "colorMaps": {
+        "rbxassetid://100847029820471": true,
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://107960815076546": true,
+        "rbxassetid://116734027404761": true,
+        "rbxassetid://118362032365899": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://94974867138553": true,
+        "rbxassetid://95570277066702": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 250,
+      "file": "salt-flats-a1.glb",
+      "id": "109915921376878",
+      "maxCenterDelta": 5.958747715339996e-05,
+      "maxSizeDelta": 1.5728399375802837e-05,
+      "missing": [],
+      "sourceBatchSha256": "56c1c03098b0a9a763d5968766f8e8ebb4a79975631c7be911c2a71529c9bb9a",
+      "version": "31401713683630"
+    },
+    {
+      "asset": "95764896969731",
+      "colorMaps": {
+        "rbxassetid://100847029820471": true,
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://107960815076546": true,
+        "rbxassetid://116734027404761": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 250,
+      "file": "salt-flats-a2.glb",
+      "id": "95764896969731",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 2.15791860682657e-05,
+      "missing": [],
+      "sourceBatchSha256": "4033a3467f1a338e3a417bd1c0a8af1ca835289fbc5a10c95478b4df527f6160",
+      "version": "50609286477611"
+    },
+    {
+      "asset": "115022303065990",
+      "colorMaps": {
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://107686265898450": true,
+        "rbxassetid://107960815076546": true,
+        "rbxassetid://118362032365899": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95570277066702": true,
+        "rbxassetid://95605879969606": true,
+        "rbxassetid://99012174572813": true
+      },
+      "count": 249,
+      "file": "salt-flats-a3.glb",
+      "id": "115022303065990",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 2.15791860682657e-05,
+      "missing": [],
+      "sourceBatchSha256": "94431a5c99852030a1914f1d865c04db4767f19e70bbd171a254759e5b0878ac",
+      "version": "42255402064647"
+    },
+    {
+      "asset": "118050991097959",
+      "colorMaps": {
+        "rbxassetid://100847029820471": true,
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://107960815076546": true,
+        "rbxassetid://116734027404761": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95570277066702": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 245,
+      "file": "salt-flats-a4.glb",
+      "id": "118050991097959",
+      "maxCenterDelta": 3.2368778192903847e-05,
+      "maxSizeDelta": 1.52587890625e-05,
+      "missing": [],
+      "sourceBatchSha256": "c14ff358a8aabd3af00d7962f1c245b38935d6b1e29060b563f6bfeced80d3f1",
+      "version": "1993837312927"
+    },
+    {
+      "asset": "131460282439904",
+      "colorMaps": {
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95570277066702": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 247,
+      "file": "salt-flats-a5.glb",
+      "id": "131460282439904",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 9.5367431640625e-06,
+      "missing": [],
+      "sourceBatchSha256": "4e1e7fff477e97cd2927dcd83d97b7caed28ee2d2221856671ff79e2f1f7d657",
+      "version": "20686183843550"
+    },
+    {
+      "asset": "75090309591508",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 248,
+      "file": "salt-flats-a6.glb",
+      "id": "75090309591508",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 2.15791860682657e-05,
+      "missing": [],
+      "sourceBatchSha256": "14839de55c240c45dc9e5ea49ac25699818373c41f903224ae0106c67befe735",
+      "version": "43844274246542"
+    },
+    {
+      "asset": "112826402141532",
+      "colorMaps": {
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 8,
+      "file": "salt-flats-a7.glb",
+      "id": "112826402141532",
+      "maxCenterDelta": 2.15791860682657e-05,
+      "maxSizeDelta": 7.807070687704254e-06,
+      "missing": [],
+      "sourceBatchSha256": "969be229d2824a8ed918ff7ecf6d84f92698d589d252271c8987fe929bae3aef",
+      "version": "1073476575607"
+    },
+    {
+      "asset": "99151187268463",
+      "colorMaps": {
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 249,
+      "file": "salt-flats-d1.glb",
+      "id": "99151187268463",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 2.994098167619086e-06,
+      "missing": [],
+      "sourceBatchSha256": "69097b1a7ba9a625ab54b5d823e049ac6b3b369c1c6e82000e6da3b258e34fa0",
+      "version": "44900529651887"
+    },
+    {
+      "asset": "113404460721642",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true
+      },
+      "count": 249,
+      "file": "salt-flats-d2.glb",
+      "id": "113404460721642",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 9.5367431640625e-07,
+      "missing": [],
+      "sourceBatchSha256": "68f9e3010e0bd0fbb1b2e6c1f9443ff7322dacbe6d8b47ebb10f7a3feea716f2",
+      "version": "7517869805971"
+    },
+    {
+      "asset": "84078153183309",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 247,
+      "file": "salt-flats-d3.glb",
+      "id": "84078153183309",
+      "maxCenterDelta": 3.2368778192903847e-05,
+      "maxSizeDelta": 1.9073486328125e-06,
+      "missing": [],
+      "sourceBatchSha256": "ed2a5bc0c76ac8151b8d6ce3f8a0b6928b9c415cff169b1e4562c16c623057bf",
+      "version": "60134573814979"
+    },
+    {
+      "asset": "103393607717853",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 248,
+      "file": "salt-flats-d4.glb",
+      "id": "103393607717853",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 9.5367431640625e-06,
+      "missing": [],
+      "sourceBatchSha256": "f84b2e579178da8d6bb05e7663fbaffffecf1f47d10a09ebf3704ca2292eed3d",
+      "version": "68137905986993"
+    },
+    {
+      "asset": "132254039481640",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true
+      },
+      "count": 246,
+      "file": "salt-flats-d5.glb",
+      "id": "132254039481640",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 9.5367431640625e-06,
+      "missing": [],
+      "sourceBatchSha256": "b11094784ac7de706a5be9a77fd024a8ec82abae9dac2f0c171d91468330f1f6",
+      "version": "54573794898838"
+    },
+    {
+      "asset": "136386083078227",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 248,
+      "file": "salt-flats-d6.glb",
+      "id": "136386083078227",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 9.5367431640625e-06,
+      "missing": [],
+      "sourceBatchSha256": "3df05ee15e2ff9dbf8ac8a34da50f850fabd49a6d5100f5062e63ac96400ac84",
+      "version": "10373595896066"
+    },
+    {
+      "asset": "108814708474198",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 250,
+      "file": "salt-flats-d7.glb",
+      "id": "108814708474198",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 0,
+      "missing": [],
+      "sourceBatchSha256": "e66182bef5cf93fa7333c63a5f4ad8f64175b7c668d978c6bb899263c7833415",
+      "version": "126817479409"
+    },
+    {
+      "asset": "94422419530130",
+      "colorMaps": {
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://138151420844725": true,
+        "rbxassetid://72307867250259": true,
+        "rbxassetid://73004396589661": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://81049003491698": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 148,
+      "file": "salt-flats-d8.glb",
+      "id": "94422419530130",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 0,
+      "missing": [],
+      "sourceBatchSha256": "8129882001d1bff3fe33d1a52c2da7951b5cac938065d01d860c18c60bb2ff72",
+      "version": "13803763374334"
+    },
+    {
+      "asset": "86418038732658",
+      "colorMaps": {
+        "rbxassetid://103657416274348": true,
+        "rbxassetid://107686265898450": true,
+        "rbxassetid://114176698713687": true,
+        "rbxassetid://121024819526404": true,
+        "rbxassetid://125938788075510": true,
+        "rbxassetid://129961878272141": true,
+        "rbxassetid://74858824320378": true,
+        "rbxassetid://78115877203180": true,
+        "rbxassetid://89763944158772": true,
+        "rbxassetid://94974867138553": true,
+        "rbxassetid://95605879969606": true
+      },
+      "count": 13,
+      "file": "salt-flats-p.glb",
+      "id": "86418038732658",
+      "maxCenterDelta": 4.31583721365314e-05,
+      "maxSizeDelta": 3.0517578125e-05,
+      "missing": [],
+      "sourceBatchSha256": "c19430ba1d56617047905f3373690fbba940bc7338b056390ee4dca0d0e325ad",
+      "version": "54101057108294"
+    }
+  ],
+  "meshes": 3395,
+  "nativeModels": {
+    "assets/models/SaltFlatsHangar.rbxm": "6460626c859f37c61940b2539e30703548ac77aff98791c89280e6ec6b1c38cb",
+    "assets/models/SaltFlatsPanelVariants.rbxm": "9af5c86312938ae5a699dc247a10f05c9063facc97b9f0d3183fb00e55ac0250"
+  },
+  "ownerUserId": "2227341845",
+  "panels": 152,
+  "placement": {
+    "hillMoves": {
+      "TerrainHill00": [
+        -99,
+        -36,
+        180
+      ],
+      "TerrainHill07": [
+        -284,
+        -32,
+        25
+      ]
+    },
+    "locationStuds": [
+      -211,
+      0.125,
+      -116
+    ],
+    "mainDoorCentersStuds": [
+      [
+        -174.083,
+        0.125,
+        -34.642
+      ],
+      [
+        -122.083,
+        0.125,
+        -124.708
+      ]
+    ],
+    "minimumBoundaryGapStuds": 25.921,
+    "minimumHillFootprintGapsStuds": {
+      "TerrainHill00": 16.445,
+      "TerrainHill01": 20.794,
+      "TerrainHill02": 234.948,
+      "TerrainHill03": 294.874,
+      "TerrainHill04": 82.057,
+      "TerrainHill05": 33.235,
+      "TerrainHill06": 248.681,
+      "TerrainHill07": 12.821
+    },
+    "requiredMaximumAimHeightStuds": 64,
+    "wreckSourceObjects": 61,
+    "yawDegrees": 60
+  },
+  "schema": 1,
+  "sourceBindingSha256": "0272aa02bf76c592e1e2ed6b542a05db459d3e60fe414419cf7cc4a5e7faf46d",
+  "sourceBlendSha256": "a6f9bf858ee8d6311451d90e6ac3ccb57c644c845c424d16df4392c1938dddc8",
+  "sourceGlbSha256": "0888ba5309506e26404eca50f7dc5066dc4395ac2885fe1d372c53e11383f948",
+  "testPlaceId": "72732833195348",
+  "testUniverseId": "10776653720"
+}

@@ -14,6 +14,7 @@ local PanelFragments = require(script.Parent.PanelFragments)
 local PanelAssetCatalog = require(script.Parent.PanelAssetCatalog)
 local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
 local VesperPanelGeometry = require(script.Parent.VesperPanelGeometry)
+local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
 local DestructionRuntime = {}
 export type Controller = {
     sync: (number) -> (),
@@ -58,6 +59,15 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 end
                 local variants, reason = VesperPanelGeometry.load(
                     if assets then assets:FindFirstChild("VesperPanelVariants") else nil,
+                    panel
+                )
+                if not variants then
+                    return nil, reason
+                end
+                vesperVariants[panel.Name] = variants
+            elseif panel:IsA("Model") and panel:GetAttribute("SaltFlatsPanel") == true then
+                local variants, reason = SaltFlatsReconstruction.panelVariants(
+                    if assets then assets:FindFirstChild("SaltFlatsPanelVariants") else nil,
                     panel
                 )
                 if not variants then
@@ -110,8 +120,19 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
     local rules = DestructionService.new()
     local panels: { [string]: PanelGeometry.Panel } = {}
     local roundId = -1
+    local wreck: Model? = nil
+    local pristineWreck: Model? = nil
     local running = true
     local function release(restore: boolean)
+        if pristineWreck then
+            if restore and wreck and wreck.Parent then
+                pristineWreck.Parent = wreck.Parent
+                wreck:Destroy()
+            else
+                pristineWreck:Destroy()
+            end
+        end
+        wreck, pristineWreck = nil, nil
         for _, panel in panels do
             if restore and panel.model.Parent then
                 local parent = panel.model.Parent
@@ -125,6 +146,18 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         table.clear(panels)
     end
     local function capture()
+        local candidate = map:FindFirstChild("HerculesWreck", true)
+        if candidate and candidate:IsA("Model") and candidate:GetAttribute("DestructibleWreck") == true then
+            wreck = candidate
+            local copy = candidate:Clone()
+            for _, item in copy:GetChildren() do
+                local original = candidate:FindFirstChild(item.Name)
+                if item:IsA("BasePart") and original and original:IsA("BasePart") then
+                    item.CollisionGroup = fragments.previousGroup(original)
+                end
+            end
+            pristineWreck = copy
+        end
         local currentRegistries, currentReason = BuildingGeometry.registries(map)
         assert(currentRegistries, currentReason)
         for _, registry in currentRegistries do
@@ -160,7 +193,17 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
         for _, id in rules.changed() do
             local panel = panels[id]
             local state = rules.snapshot(id)
-            if panel and state then
+            if id == "HerculesWreck" and wreck and state and state.stage == 2 then
+                wreck:ClearAllChildren()
+                wreck:SetAttribute("DamageAppearance", "Total")
+                fragments.emit(
+                    wreck:GetPivot(),
+                    Vector3.new(12, 8, 6),
+                    Color3.fromRGB(147, 144, 126),
+                    now,
+                    nil
+                )
+            elseif panel and state then
                 if state.stage ~= panel.stage then
                     -- The entire collision batch has finished before this call.
                     -- Only presentation uses physical fragments; cover is the
@@ -215,7 +258,10 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 for panelId in panels do
                     table.insert(ids, panelId)
                 end
-                rules.reset(ledgerRound, ids)
+                if wreck then
+                    table.insert(ids, "HerculesWreck")
+                end
+                rules.reset(ledgerRound, ids, if wreck then "HerculesWreck" else nil)
                 flush(workspace:GetServerTimeNow())
             end
         end,
@@ -233,6 +279,9 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 or map.Parent ~= world
             then
                 return nil
+            end
+            if wreck and hit.Parent == wreck and wreck:IsDescendantOf(map) then
+                return "HerculesWreck"
             end
             local id = hit:GetAttribute("PanelId")
             if type(id) ~= "string" then

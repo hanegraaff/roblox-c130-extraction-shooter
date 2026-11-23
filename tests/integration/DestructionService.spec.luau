@@ -28,6 +28,45 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             'Expected owner.resolve({ roundId = 1, shotId = id, firedAt = time, panelId = panel, weapon = weapon or "GAU23", })'
         )
     end
+    test("Hercules wreck breaks after one howitzer hit while building damage remains progressive", function()
+        local owner = fixture()
+        owner.reset(1, { "wreck", "wall" }, "wreck")
+        shot(owner, 1, 0, "wall", "M102")
+        shot(owner, 2, 1, "wreck", "M102")
+        assert(
+            assert(owner.snapshot("wall"), "missing wall").appearance == "Light",
+            "unexpected wall appearance"
+        )
+        assert(
+            assert(owner.snapshot("wreck"), "missing wreck").appearance == "Total",
+            "unexpected wreck appearance"
+        )
+        owner.reset(2, { "wreck" }, "wreck")
+        assert(
+            assert(owner.snapshot("wreck"), "missing wreck").appearance == "Pristine",
+            "unexpected wreck appearance"
+        )
+    end)
+    test("Hercules wreck requires three continuous seconds and misses reset the burst", function()
+        local owner = fixture()
+        owner.reset(1, { "wreck" }, "wreck")
+        for id = 1, 12 do
+            shot(owner, id, (id - 1) * 0.15, "wreck")
+        end
+        shot(owner, 13, 1.8, nil)
+        for id = 14, 33 do
+            shot(owner, id, 1.95 + (id - 14) * 0.15, "wreck")
+        end
+        assert(
+            assert(owner.snapshot("wreck"), "missing wreck").appearance == "Pristine",
+            "unexpected wreck appearance"
+        )
+        shot(owner, 34, 4.95, "wreck")
+        assert(
+            assert(owner.snapshot("wreck"), "missing wreck").appearance == "Total",
+            "unexpected wreck appearance"
+        )
+    end)
     test("P11 fills the structural outcome window, rejects overflow/replay and drains in order", function()
         local owner = fixture()
         local cap = Service.outcomeWindow

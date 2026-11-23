@@ -595,6 +595,45 @@ def check_vesper_import(path: Path) -> int:
     return sum(count[0] for count in counts.values())
 
 
+
+def check_salt_flats_import(path: Path) -> int:
+    """Require both native roots, actual panel proxy ownership and the whole wreck."""
+    nodes = instance_nodes(path)
+    asset_root = "ServerStorage/Assets/"
+    hangar = asset_root + "SaltFlatsHangar/"
+    variants = asset_root + "SaltFlatsPanelVariants/"
+    receipt = json.loads((ROOT / "assets/imports/salt-flats/native-receipt.json").read_text())
+    mesh_count = 0
+    wreck_proxies = set()
+    panel_start = hangar + "Foundry_Panels/"
+    panel_ids = {name.removeprefix(panel_start) for name in nodes
+                 if name.startswith(panel_start) and "/" not in name.removeprefix(panel_start)}
+    if len(panel_ids) != receipt["panels"] or any(
+        f"{variants}{panel}/{stage}" not in nodes for panel in panel_ids for stage in ("Light", "Heavy")
+    ):
+        raise RuntimeError("Salt Flats assembly is missing an authored panel or alternate state")
+    for name, part in nodes.items():
+        if not name.startswith((hangar, variants)):
+            continue
+        if part.get("class") == "MeshPart":
+            mesh_count += 1
+            flags = {flag: part.findtext(f"Properties/bool[@name='{flag}']") for flag in
+                     ("Anchored", "CanCollide", "CanQuery", "CanTouch")}
+            if flags != {"Anchored": "true", "CanCollide": "false", "CanQuery": "false", "CanTouch": "false"}:
+                raise RuntimeError(f"Salt Flats visual mesh gains query or physics ownership: {name}")
+            if not part.findtext("Properties/Content[@name='MeshContent']/uri", "").startswith("rbxassetid://"):
+                raise RuntimeError(f"Salt Flats mesh is missing native identity: {name}")
+        elif part.get("class") in {"Script", "LocalScript", "ModuleScript"}:
+            raise RuntimeError(f"Unexpected executable imported with Salt Flats: {name}")
+        elif part.get("class") == "Part" and name.startswith(hangar + "HerculesWreck/"):
+            wreck_proxies.add(name.rsplit("/", 1)[-1])
+    if mesh_count != receipt["meshes"] or not {"CargoDeck", "Ramp", "AftBulkhead"} <= wreck_proxies:
+        raise RuntimeError("Incomplete Salt Flats native assembly or wreck")
+    print(f"Salt Flats native bank passed: {mesh_count} mesh parts, {len(panel_ids)} panel identities, "
+          f"{len(wreck_proxies)} wreck collision proxies.")
+    return mesh_count
+
+
 def main() -> None:
     """Assert bootstraps/spawn exist and all test-only Instances are absent from release."""
     release = paths(ROOT / "build/game.rbxlx")
@@ -614,7 +653,7 @@ def main() -> None:
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
@@ -703,6 +742,8 @@ def main() -> None:
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")
     release_parts += check_vesper_import(ROOT / "build/game.rbxlx")
     test_parts += check_vesper_import(ROOT / "build/tests.rbxlx")
+    release_parts += check_salt_flats_import(ROOT / "build/game.rbxlx")
+    test_parts += check_salt_flats_import(ROOT / "build/tests.rbxlx")
     geometry_rejection_probes()
     print(f"Authored geometry reconstruction passed: {release_parts} release/{test_parts} test part transforms, dimensions, shape and collision flags.")
     print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; {len(allowed_scripts)} runtime scripts only in release.")

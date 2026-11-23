@@ -1718,6 +1718,210 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "0888ba5309506e26404eca50f7dc5066dc4395ac2885fe1d372c53e11383f948"
+    },
+    {
+      "id": "salt-flats-native-native-receipt",
+      "kind": "catalog",
+      "source": "Genuine Studio data for the native Salt Flats hangar, damage states and wreck.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/imports/salt-flats/native-receipt.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "488bd7fd191637c0944c1fdb3e9af013daafda483b791806d87d29d42134eba0"
+    },
+    {
+      "id": "salt-flats-native-saltflatshangar",
+      "kind": "model",
+      "source": "Genuine Studio data for the native Salt Flats hangar, damage states and wreck.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/SaltFlatsHangar.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "6460626c859f37c61940b2539e30703548ac77aff98791c89280e6ec6b1c38cb"
+    },
+    {
+      "id": "salt-flats-native-saltflatspanelvariants",
+      "kind": "model",
+      "source": "Genuine Studio data for the native Salt Flats hangar, damage states and wreck.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/SaltFlatsPanelVariants.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "9af5c86312938ae5a699dc247a10f05c9063facc97b9f0d3183fb00e55ac0250"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a1",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "109915921376878",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a2",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "95764896969731",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a3",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "115022303065990",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a4",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "118050991097959",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a5",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "131460282439904",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a6",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "75090309591508",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-a7",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "112826402141532",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d1",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "99151187268463",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d2",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "113404460721642",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d3",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "84078153183309",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d4",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "103393607717853",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d5",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "132254039481640",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d6",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "136386083078227",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d7",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "108814708474198",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-d8",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "94422419530130",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-native-salt-flats-p",
+      "kind": "model",
+      "source": "Approved Salt Flats source uploaded as a private Studio import batch.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "86418038732658",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "salt-flats-thermal-palette",
+      "kind": "material",
+      "source": "Native Salt Flats color maps reused for local thermal shading.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/presentation/SaltFlatsThermalSurfaces.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "165334b72d9dfef69960aef9be033aef75ab1ab908c2a531d70b943e872c303b"
     }
   ],
   "runtime_recipes": [
