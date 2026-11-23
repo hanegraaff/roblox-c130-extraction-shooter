@@ -48,7 +48,7 @@ elseif manualMode == "P11" then
 elseif manualMode == "P17" then
     require(script.P17MaterialHarness).run()
     return
-elseif manualMode == "P07" then
+elseif manualMode == "P07" or manualMode == "Sandbreak" then
     require(script.DestructionHarness).run()
     return
 elseif manualMode == "P05" then

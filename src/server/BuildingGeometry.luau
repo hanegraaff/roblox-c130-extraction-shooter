@@ -23,6 +23,7 @@ local function panelPose(panel: Instance): (CFrame?, Vector3?)
             type(panel:GetAttribute("PanelAssetFamily")) == "string"
             or panel:GetAttribute("VesperPanel") == true
             or panel:GetAttribute("SaltFlatsPanel") == true
+            or panel:GetAttribute("SandbreakPanel") == true
         )
     then
         local size = panel:GetAttribute("IntactSize")

@@ -1,0 +1,611 @@
+{
+  "sourceSha256": "27b825df1b09d7b7ea37d2fb302163ae55efa7b9c55c332ec2a9d86cc4160709",
+  "stagingSha256": "73a47649693ffb67a20033d3be5249a9f3e0682e5412ad89bd1266329e4097ef",
+  "batches": {
+    "sandbreak-native-attached-art-01.glb": {
+      "versionId": "44039499411934",
+      "assetId": "75705128149364",
+      "count": 128,
+      "colorMaps": [
+        "rbxassetid://101290149345747",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://131984147230114",
+        "rbxassetid://138123921057806",
+        "rbxassetid://138509237421497",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 6.8770432335441e-06,
+      "maxSizeDeltaStuds": 1.922192041092785e-06,
+      "base64Length": 83936,
+      "sha256": "8141d50ed01702ed42d76c4aca431bd6661b089ec8991f96ff4eb0000fd2c36b",
+      "captureSha256": "c6200f8593eed776046671f6d6889dd75c079e3300a2f52ef69d3b4a2c2f6604"
+    },
+    "sandbreak-native-attached-art-02.glb": {
+      "versionId": "30253255002628",
+      "assetId": "101458117424134",
+      "count": 132,
+      "colorMaps": [
+        "rbxassetid://101290149345747",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://131984147230114",
+        "rbxassetid://138123921057806",
+        "rbxassetid://138509237421497",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.3486991292666062e-06,
+      "base64Length": 143440,
+      "sha256": "d6f194c7d7c0f09a9b159a5e6bb797c723aa6a9c19417b52283c910742c5b63a",
+      "captureSha256": "6da503bf7b0c01e936005458c094c0e8421f426f5f4b616b98e65c65f65bb827"
+    },
+    "sandbreak-native-attached-art-05.glb": {
+      "versionId": "12079474907679",
+      "assetId": "97065061153032",
+      "count": 123,
+      "colorMaps": [
+        "rbxassetid://111340361902704",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://131984147230114",
+        "rbxassetid://138123921057806",
+        "rbxassetid://70685142292496",
+        "rbxassetid://83131066415773"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9660499219753547e-06,
+      "base64Length": 162100,
+      "sha256": "392b2f095d0e9727cfc2388a854ea1d4bfc5633c95b33a5115f8463be4f1a6e9",
+      "captureSha256": "5d3e9117d75598869c1c8ad5917b763f88e49caa53217dfe6a6db1e1bd7850b7"
+    },
+    "sandbreak-native-attached-art-03.glb": {
+      "versionId": "16531082735077",
+      "assetId": "78875049403250",
+      "count": 126,
+      "colorMaps": [
+        "rbxassetid://101290149345747",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://131984147230114",
+        "rbxassetid://138123921057806",
+        "rbxassetid://138509237421497",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 2.336015541004599e-06,
+      "base64Length": 143636,
+      "sha256": "57dec8a588e0eb67d829d28f93b48ca4fd104edfa5050015eb581440b0856c67",
+      "captureSha256": "8f100f6afff86233dbc723ccab62167c7125a43f83af09e3f6a1654e1d27027e"
+    },
+    "sandbreak-native-hall-dressing-02.glb": {
+      "versionId": "15967379991215",
+      "assetId": "122255051102840",
+      "count": 19,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://131984147230114",
+        "rbxassetid://78826208424899",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770",
+        "rbxassetid://97341549405748"
+      ],
+      "maxCenterDeltaStuds": 8.092208190646488e-06,
+      "maxSizeDeltaStuds": 1.9405865714361425e-06,
+      "base64Length": 104900,
+      "sha256": "c03a43e0b962f291564922ee41206ca31798ffaa4a927ff52450e7a93a01277e",
+      "captureSha256": "53caaeedc0282704ac8cb3d1621aa481e1fa150489747d9c6be8c29bb4103fa9"
+    },
+    "sandbreak-native-panel-heavy-01.glb": {
+      "versionId": "5476955232606",
+      "assetId": "107431452974012",
+      "count": 126,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 6.8770432335441e-06,
+      "maxSizeDeltaStuds": 1.3486991292666062e-06,
+      "base64Length": 112228,
+      "sha256": "6772dc27aa65eb8adc9981f989128f8706a5e3b0829c5dc812d7c9af797f7a56",
+      "captureSha256": "aaecb965d1f37b050e7e00f651a98b678118dd1c47edd31bb742729e0ca50185"
+    },
+    "sandbreak-native-panel-heavy-02.glb": {
+      "versionId": "59511710842826",
+      "assetId": "127925265725885",
+      "count": 131,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://73157595027579",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 112804,
+      "sha256": "b4caef04624b7e7725d86a4f1f5e9d1177322ad72839e8db8bd83a0326778a62",
+      "captureSha256": "1e1778dc9a138d0aa263ba0c5f83765394531407b927365686e46325169787f0"
+    },
+    "sandbreak-native-panel-light-02.glb": {
+      "versionId": "51395830951654",
+      "assetId": "123125239742018",
+      "count": 131,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://131984147230114",
+        "rbxassetid://73157595027579",
+        "rbxassetid://79886260208642",
+        "rbxassetid://81422203634773"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 124920,
+      "sha256": "9c7ca213e2d1be73640623f901745d15c28a6c3a1e4aa1d9a6a25d6f2e7ffaa0",
+      "captureSha256": "9f3ac8284201a70bd74091d3593e29583b788ad99b6905b3733bf20b1fad402b"
+    },
+    "sandbreak-native-panel-light-01.glb": {
+      "versionId": "57733307756525",
+      "assetId": "101678489022457",
+      "count": 126,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://131984147230114",
+        "rbxassetid://79886260208642",
+        "rbxassetid://81422203634773"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 109136,
+      "sha256": "278046cb83df7d187f319734a69094d1dc8c95d6cc9811efd15c81426da3716c",
+      "captureSha256": "da9dfe78f2569346b14fca4f9267876df3dbfa30e1507b6348c2f985a41895bb"
+    },
+    "sandbreak-native-panel-heavy-03.glb": {
+      "versionId": "6818685880904",
+      "assetId": "79115176673790",
+      "count": 76,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://73157595027579",
+        "rbxassetid://79886260208642",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 88860,
+      "sha256": "55faa2d90b7369093e1a150620c6f972ed17a02ddf824283ff641307a67fef0d",
+      "captureSha256": "b1cb938dfbc0ff0439643f6c79711a9c7be3d179eb04cf70ec2214c328914672"
+    },
+    "sandbreak-native-panel-light-03.glb": {
+      "versionId": "30261029691456",
+      "assetId": "131568576252450",
+      "count": 76,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://131984147230114",
+        "rbxassetid://73157595027579",
+        "rbxassetid://79886260208642",
+        "rbxassetid://81422203634773"
+      ],
+      "maxCenterDeltaStuds": 8.106231689453125e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 99792,
+      "sha256": "511b1595bc98438097c1de205e4d2b75c7e95900e2028461b8b0a349755a8c36",
+      "captureSha256": "f436274b8daf84d8d4771e71f0d9e469a08bf955cdc9703add9d76d0ec4a2287"
+    },
+    "sandbreak-native-panel-pristine-03.glb": {
+      "versionId": "51347206751148",
+      "assetId": "101262007147108",
+      "count": 38,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://131984147230114",
+        "rbxassetid://79886260208642",
+        "rbxassetid://81422203634773"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.0662403155947686e-06,
+      "base64Length": 39996,
+      "sha256": "a25917a07e7476e28e1a1fd27f9adc7771f1f9cb71b1c4beb5858f356b5a578d",
+      "captureSha256": "b8d77a3a1fe2b25884c8b9c7f3508ac6b29dae14f55aaa26241305c85c401021"
+    },
+    "sandbreak-native-query-residual-01.glb": {
+      "versionId": "58094621882161",
+      "assetId": "131941221760356",
+      "count": 42,
+      "colorMaps": [],
+      "maxCenterDeltaStuds": 6.8770432335441e-06,
+      "maxSizeDeltaStuds": 1.3486991292666062e-06,
+      "base64Length": 18420,
+      "sha256": "20f5767ae86e5487cab892a5f0f895e60ec187597ed8a20ed3e2086e310c35d1",
+      "captureSha256": "82d8bc350c3c296827ad3196fbcf6b6e3a52f83929cd741290d53ca904a20483"
+    },
+    "sandbreak-native-panel-pristine-02.glb": {
+      "versionId": "28767358587996",
+      "assetId": "91788050066227",
+      "count": 84,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://131984147230114",
+        "rbxassetid://79886260208642",
+        "rbxassetid://81422203634773"
+      ],
+      "maxCenterDeltaStuds": 6.67572021484375e-06,
+      "maxSizeDeltaStuds": 9.5367431640625e-07,
+      "base64Length": 73708,
+      "sha256": "b69fb2d9538c6701b4c99580dc5a54624c1b3e3d61105b92042ce5887eb63d04",
+      "captureSha256": "f3149eeb26c5fd1c233e4b701e19d2cccaebb68ac87f0c76c01f0b541cf89e0f"
+    },
+    "sandbreak-native-panel-pristine-01.glb": {
+      "versionId": "47449394408942",
+      "assetId": "79054566729220",
+      "count": 108,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://131984147230114",
+        "rbxassetid://73157595027579",
+        "rbxassetid://79886260208642",
+        "rbxassetid://81422203634773"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 98244,
+      "sha256": "c512bf0d13485e27a1be148de896096583b28f6bddc3bf83d62ae92ae38468a7",
+      "captureSha256": "9ff0c0e7dc93d2c46d9444decda6c51623ffd228716d52424310090a0c54f489"
+    },
+    "sandbreak-native-query-residual-03.glb": {
+      "versionId": "12595479531781",
+      "assetId": "129473163390517",
+      "count": 19,
+      "colorMaps": [],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 13184,
+      "sha256": "17e8214652cc9ee3328224b646c462de55f1e0d6d359f44d2db60ce41e567d4e",
+      "captureSha256": "b3638662ae0a3a629a8a2661c17b93a6d6ddf5047ba5ab881134632561526972"
+    },
+    "sandbreak-native-query-solid-01.glb": {
+      "versionId": "52070427390480",
+      "assetId": "128842965178392",
+      "count": 42,
+      "colorMaps": [],
+      "maxCenterDeltaStuds": 6.8770432335441e-06,
+      "maxSizeDeltaStuds": 1.3486991292666062e-06,
+      "base64Length": 15424,
+      "sha256": "27adc551705304e68d262bb144f79e7e73d13eb0492af86b095255228bc19e6f",
+      "captureSha256": "8581ec65fa8a6a3c781a15a2e47a7ad10f317bd58f57874ba901615c756fef20"
+    },
+    "sandbreak-native-query-solid-02.glb": {
+      "versionId": "34447038607138",
+      "assetId": "101641439032251",
+      "count": 42,
+      "colorMaps": [],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 17868,
+      "sha256": "899230e2853fab037aab6fa3683f5134fdc5990ec9f5e132ed379a33c70603fe",
+      "captureSha256": "2472fa7a4b15b1a5aaff5b093e4fd0dda5792bd19a6b4c1693ec1f17886562fc"
+    },
+    "sandbreak-native-query-residual-02.glb": {
+      "versionId": "33715829722931",
+      "assetId": "126447280350401",
+      "count": 42,
+      "colorMaps": [],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 21336,
+      "sha256": "b2a1cd6a621d655a675c7f669b6b53fceaf8617701e02ac3fd89f4e5c130d54b",
+      "captureSha256": "a1841e0540ef3a9804f5ab119e9a8eeb779609deb561860172e359016569d354"
+    },
+    "sandbreak-native-query-solid-03.glb": {
+      "versionId": "38939469534425",
+      "assetId": "128803323581711",
+      "count": 19,
+      "colorMaps": [],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 1.9073486328125e-06,
+      "base64Length": 11724,
+      "sha256": "3848c03159c19bff5b3596f11dd9fa39ed07f4394aeeb5c693d0119e345b4cf7",
+      "captureSha256": "15f0eb2a5bc58234bab030296491118a2a7d1e5578837e1e91f8f32f2e7d8f30"
+    },
+    "sandbreak-native-yard-sw-02.glb": {
+      "versionId": "51943368163993",
+      "assetId": "121952663349311",
+      "count": 168,
+      "colorMaps": [
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://129091268841538"
+      ],
+      "maxCenterDeltaStuds": 1.618850728846155e-05,
+      "maxSizeDeltaStuds": 7.662848474865314e-06,
+      "base64Length": 77896,
+      "sha256": "9f672303561202242637798e34d929ffb8d6f7d5061c8b82fe22e5f8367b3bb9",
+      "captureSha256": "a5bf51e39a436541143018e9c3b886116d4db032e5cb56e22f65f78c94f5e4a6"
+    },
+    "sandbreak-native-yard-sw-03.glb": {
+      "versionId": "42447814837591",
+      "assetId": "97045109431965",
+      "count": 168,
+      "colorMaps": [
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://129091268841538"
+      ],
+      "maxCenterDeltaStuds": 1.6185735148610547e-05,
+      "maxSizeDeltaStuds": 7.869844921515323e-06,
+      "base64Length": 72360,
+      "sha256": "8481b82c21f4593e4dbf108982393b1188ad87fb998b65a2bbd9d9b5d2bb2229",
+      "captureSha256": "1b00e3746f55ede6cc8f426ca467b17dc69fdc82f821d25ccd896010a055c12f"
+    },
+    "sandbreak-native-yard-yard-01.glb": {
+      "versionId": "2812910364153",
+      "assetId": "94616825172736",
+      "count": 16,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://130249872910494",
+        "rbxassetid://78826208424899",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 6.877107807667926e-06,
+      "maxSizeDeltaStuds": 5.394796517066425e-06,
+      "base64Length": 100576,
+      "sha256": "e1a80dff0bd1350dd472117e748535bdec0c6da5b4ab0deef674ce620da72d82",
+      "captureSha256": "95cb8a6897ea68339efee6c9bf2cdfa3a89a17e0dec81fc72d76e5770ff72dee"
+    },
+    "sandbreak-native-yard-sw-05.glb": {
+      "versionId": "35729521652951",
+      "assetId": "87465927664942",
+      "count": 37,
+      "colorMaps": [
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://129091268841538",
+        "rbxassetid://130249872910494",
+        "rbxassetid://70682684234583",
+        "rbxassetid://83131066415773"
+      ],
+      "maxCenterDeltaStuds": 1.3762350135948509e-05,
+      "maxSizeDeltaStuds": 7.64428114052862e-06,
+      "base64Length": 83528,
+      "sha256": "f9df690917a38a8bd247cb5ccacef0d19954800c97a586095baf203076157429",
+      "captureSha256": "abbe9160fbcaa1ab852f2a35e1da95a1c2a637d0040a552908e71c7a0077c758"
+    },
+    "sandbreak-native-yard-sw-04.glb": {
+      "versionId": "44965953741127",
+      "assetId": "75938883265080",
+      "count": 168,
+      "colorMaps": [
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://129091268841538"
+      ],
+      "maxCenterDeltaStuds": 1.618614624021575e-05,
+      "maxSizeDeltaStuds": 3.932099843950709e-06,
+      "base64Length": 63336,
+      "sha256": "afa28509407c438b2e3e3b1ec0f375355376dc2ad93ef74620502a891966c64b",
+      "captureSha256": "835bc225022dec44e12738aadeba2bf55099f68e79334ff9231c6a297c89cb32"
+    },
+    "sandbreak-native-hall-dressing-01.glb": {
+      "versionId": "11712696841612",
+      "assetId": "114712988680665",
+      "count": 101,
+      "colorMaps": [
+        "rbxassetid://111340361902704",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://70685142292496",
+        "rbxassetid://78826208424899",
+        "rbxassetid://79886260208642",
+        "rbxassetid://83131066415773",
+        "rbxassetid://95863555393770",
+        "rbxassetid://97341549405748"
+      ],
+      "maxCenterDeltaStuds": 8.092194548225962e-06,
+      "maxSizeDeltaStuds": 5.741879704146413e-06,
+      "base64Length": 289884,
+      "sha256": "0999f3a2898241692281c0da3179ea6de721968d76c6d7a8c541feaea452ca9f",
+      "captureSha256": "10c55312e600bfd210dd2b17bf644ecb15a005ba197e7121bc11ad66538192e4"
+    },
+    "sandbreak-native-attached-art-04.glb": {
+      "versionId": "7413778410488",
+      "assetId": "114321037373097",
+      "count": 170,
+      "colorMaps": [
+        "rbxassetid://101290149345747",
+        "rbxassetid://111340361902704",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://131984147230114",
+        "rbxassetid://138123921057806",
+        "rbxassetid://138509237421497",
+        "rbxassetid://79886260208642",
+        "rbxassetid://83131066415773"
+      ],
+      "maxCenterDeltaStuds": 8.80536299519008e-06,
+      "maxSizeDeltaStuds": 2.1324806311895372e-06,
+      "base64Length": 226688,
+      "sha256": "b43edb0eeae649eb04d91f2e76f9ebdda52aa23e1f2c11350ac81b6f8c6a0a26",
+      "captureSha256": "d5919c6f7e56710190f7b87575e0b6e8ece48242c24906836d4e11c86a63d64b"
+    },
+    "sandbreak-native-structure-01.glb": {
+      "versionId": "3495812745768",
+      "assetId": "132099083285359",
+      "count": 88,
+      "colorMaps": [
+        "rbxassetid://113652875898001",
+        "rbxassetid://121778721348549",
+        "rbxassetid://122221070242349",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://131984147230114"
+      ],
+      "maxCenterDeltaStuds": 6.8770432335441e-06,
+      "maxSizeDeltaStuds": 5.7220458984375e-06,
+      "base64Length": 207388,
+      "sha256": "9f47fb4671f2a626548295e7327082dedf894eb624682877785bc82f8eb75626",
+      "captureSha256": "513e74408c68fd956daf505ea3677958a7e547fe52e1f09539273ed25905a0e3"
+    },
+    "sandbreak-native-yard-ne-01.glb": {
+      "versionId": "10305000591912",
+      "assetId": "117440649659798",
+      "count": 79,
+      "colorMaps": [
+        "rbxassetid://105064525943954",
+        "rbxassetid://111340361902704",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://131984147230114",
+        "rbxassetid://138123921057806",
+        "rbxassetid://138509237421497",
+        "rbxassetid://70685142292496",
+        "rbxassetid://78826208424899",
+        "rbxassetid://79038606427475",
+        "rbxassetid://79886260208642",
+        "rbxassetid://83131066415773",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 1.4898776498739608e-05,
+      "maxSizeDeltaStuds": 7.864199687901419e-06,
+      "base64Length": 472812,
+      "sha256": "ca1e55384313e8fc1c53c68ce6aecfa87d099ed2c21a571944538fda17e7f891",
+      "captureSha256": "7f1a80e14a8f572a9ba0a4419d6cc5186437efdf4872ec3cebf33e18beed3038"
+    },
+    "sandbreak-native-yard-sw-01.glb": {
+      "versionId": "3244903750993",
+      "assetId": "133114725007089",
+      "count": 182,
+      "colorMaps": [
+        "rbxassetid://100729618362891",
+        "rbxassetid://101290149345747",
+        "rbxassetid://109061811131021",
+        "rbxassetid://110312287678337",
+        "rbxassetid://113652875898001",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://127315322698158",
+        "rbxassetid://129091268841538",
+        "rbxassetid://130249872910494",
+        "rbxassetid://70682684234583",
+        "rbxassetid://70685142292496",
+        "rbxassetid://78826208424899",
+        "rbxassetid://79886260208642",
+        "rbxassetid://83131066415773",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 1.6184389096451923e-05,
+      "maxSizeDeltaStuds": 7.63311891205376e-06,
+      "base64Length": 647684,
+      "sha256": "04db4b9b1b72390ab03bace417dada036446da85e43328589279e8482b2edca2",
+      "captureSha256": "ba0259a835167f489bf423a0e20a366880b91ee72edf1cc14a0fe460f83c496c"
+    },
+    "sandbreak-native-yard-nw-01.glb": {
+      "versionId": "9334178462290",
+      "assetId": "109579285404862",
+      "count": 98,
+      "colorMaps": [
+        "rbxassetid://101290149345747",
+        "rbxassetid://109061811131021",
+        "rbxassetid://110312287678337",
+        "rbxassetid://113652875898001",
+        "rbxassetid://113758393273310",
+        "rbxassetid://116051257072664",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://127315322698158",
+        "rbxassetid://129091268841538",
+        "rbxassetid://130249872910494",
+        "rbxassetid://138123921057806",
+        "rbxassetid://138751825096184",
+        "rbxassetid://70685142292496",
+        "rbxassetid://72908397511924",
+        "rbxassetid://78826208424899",
+        "rbxassetid://79886260208642",
+        "rbxassetid://83131066415773",
+        "rbxassetid://86205833459568",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 1.3762350135948509e-05,
+      "maxSizeDeltaStuds": 4.2653778109524865e-06,
+      "base64Length": 631340,
+      "sha256": "6ca3823c0b25fbb16011751d454f2060d44c94fe9d0acd0add34f04f60bac5aa",
+      "captureSha256": "96522ff252ebd4197d43669fb11d7805724070d79f14ca57956806d71428136c"
+    },
+    "sandbreak-native-yard-se-01.glb": {
+      "versionId": "56359000738401",
+      "assetId": "127752308055134",
+      "count": 100,
+      "colorMaps": [
+        "rbxassetid://101290149345747",
+        "rbxassetid://109061811131021",
+        "rbxassetid://110312287678337",
+        "rbxassetid://113652875898001",
+        "rbxassetid://113758393273310",
+        "rbxassetid://116051257072664",
+        "rbxassetid://120157266188884",
+        "rbxassetid://121778721348549",
+        "rbxassetid://126114951839968",
+        "rbxassetid://127256754883340",
+        "rbxassetid://127315322698158",
+        "rbxassetid://129091268841538",
+        "rbxassetid://130249872910494",
+        "rbxassetid://138751825096184",
+        "rbxassetid://70685142292496",
+        "rbxassetid://72908397511924",
+        "rbxassetid://78826208424899",
+        "rbxassetid://79886260208642",
+        "rbxassetid://83131066415773",
+        "rbxassetid://86205833459568",
+        "rbxassetid://95863555393770"
+      ],
+      "maxCenterDeltaStuds": 1.6191412214539014e-05,
+      "maxSizeDeltaStuds": 7.64428114052862e-06,
+      "base64Length": 653308,
+      "sha256": "fed3e364301ac4874dbe6d59640a98940a2aa6e943f6dee90e4b242e3ab2e800",
+      "captureSha256": "a73dfcfe919f78b4b6df1ce810bf459ba693c8493984e086d76d253a3f33ae85"
+    }
+  },
+  "owner": "2227341845",
+  "importPlace": "72732833195348",
+  "binding": "48096d136da01bf7b3c0e78d130d86285867184c66dabca34cdc4db3792fcb4d",
+  "panelCount": 103,
+  "managedMeshCount": 3787,
+  "nativeModels": {
+    "assets/models/SandbreakBunker.rbxm": "d3587e5baa6419b124c9fb691221a6c69ebac8851b26ad30c7d4412a0b030c9a",
+    "assets/models/SandbreakPanelVariants.rbxm": "6876e818a2ca5270257e59d6b1e7eee873ceb87c85c9844721d4aa46b86cef2e"
+  }
+}

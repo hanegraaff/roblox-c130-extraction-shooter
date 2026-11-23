@@ -40,6 +40,8 @@ eight-stud tread width with a 1.875-stud run. The active runtime registers
 primitive source counts above describe the Edit map. See the
 [Vesper import record](../../docs/evidence/vesper-import-preflight.md).
 
+The active Sandbreak import replaces the original starting shelter at `(0, 0, 120)` before the map snapshot. The same `SpawnShelterPanels` registry now owns 103 native wall and roof panels at runtime. The nine ground spawn anchors retain their authored positions. Pristine and Light share query shapes, Heavy keeps the native residual geometry, and reset restores the pristine assembly. The 76 primitive panels remain the Edit-map fallback. [Sandbreak integration and verification](../blender/spawn-bunker/IMPORT.md)
+
 Salt Flats Hangar replaces Foundry at runtime. Its 208 × 144-stud shell and
 four accessible levels sit beside the apron and walk-in Hercules wreck.
 The 152 wall, gable and roof panels use the shared progressive damage ledger.

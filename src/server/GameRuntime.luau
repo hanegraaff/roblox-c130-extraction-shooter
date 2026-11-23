@@ -19,6 +19,7 @@ local LauncherRuntime = require(script.Parent.LauncherRuntime)
 local OutpostReconstruction = require(script.Parent.OutpostReconstruction)
 local VesperReconstruction = require(script.Parent.VesperReconstruction)
 local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
+local SandbreakReconstruction = require(script.Parent.SandbreakReconstruction)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
@@ -52,6 +53,13 @@ function GameRuntime.start(
         installation.rollback()
         return nil, hangarReason
     end
+    local bunker, bunkerReason = SandbreakReconstruction.install(workspace.World, assets)
+    if not bunker then
+        hangar.rollback()
+        radar.rollback()
+        installation.rollback()
+        return nil, bunkerReason
+    end
     local onCorrection: ((Model) -> ())? = nil
     local map, reason = MapService.new(workspace.World, {
         characters = function()
@@ -76,11 +84,13 @@ function GameRuntime.start(
         end,
     })
     if not map then
+        bunker.rollback()
         hangar.rollback()
         radar.rollback()
         installation.rollback()
         return nil, reason
     end
+    bunker.commit()
     hangar.commit()
     radar.commit()
     installation.commit()

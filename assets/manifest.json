@@ -1933,6 +1933,359 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "165334b72d9dfef69960aef9be033aef75ab1ab908c2a531d70b943e872c303b"
+    },
+    {
+      "id": "sandbreak-native-native-receipt",
+      "kind": "catalog",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/imports/sandbreak/native-receipt.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "ffa8a4ff055c988fd484e4b37960757481956c3c6d8f9ba22c0e67dd3e97af76"
+    },
+    {
+      "id": "sandbreak-native-sandbreakbunker",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/SandbreakBunker.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "d3587e5baa6419b124c9fb691221a6c69ebac8851b26ad30c7d4412a0b030c9a"
+    },
+    {
+      "id": "sandbreak-native-sandbreakpanelvariants",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/SandbreakPanelVariants.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "6876e818a2ca5270257e59d6b1e7eee873ceb87c85c9844721d4aa46b86cef2e"
+    },
+    {
+      "id": "sandbreak-native-attached-art-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "75705128149364",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-attached-art-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "101458117424134",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-attached-art-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "78875049403250",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-attached-art-04",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "114321037373097",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-attached-art-05",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "97065061153032",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-hall-dressing-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "114712988680665",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-hall-dressing-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "122255051102840",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-heavy-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "107431452974012",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-heavy-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "127925265725885",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-heavy-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "79115176673790",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-light-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "101678489022457",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-light-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "123125239742018",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-light-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "131568576252450",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-pristine-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "79054566729220",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-pristine-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "91788050066227",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-panel-pristine-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "101262007147108",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-query-residual-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "131941221760356",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-query-residual-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "126447280350401",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-query-residual-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "129473163390517",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-query-solid-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "128842965178392",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-query-solid-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "101641439032251",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-query-solid-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "128803323581711",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-structure-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "132099083285359",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-ne-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "117440649659798",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-nw-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "109579285404862",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-se-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "127752308055134",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-sw-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "133114725007089",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-sw-02",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "121952663349311",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-sw-03",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "97045109431965",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-sw-04",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "75938883265080",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-sw-05",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "87465927664942",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "sandbreak-native-yard-yard-01",
+      "kind": "model",
+      "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "94616825172736",
+      "upload_owner": "2227341845"
     }
   ],
   "runtime_recipes": [
