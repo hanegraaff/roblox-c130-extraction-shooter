@@ -16,6 +16,7 @@ local MaterialPanelGeometry = require(script.Parent.MaterialPanelGeometry)
 local VesperPanelGeometry = require(script.Parent.VesperPanelGeometry)
 local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
 local SandbreakReconstruction = require(script.Parent.SandbreakReconstruction)
+local SeedshipReconstruction = require(script.Parent.SeedshipReconstruction)
 local DestructionRuntime = {}
 export type Controller = {
     sync: (number) -> (),
@@ -81,6 +82,18 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 end
                 local variants, reason = SandbreakReconstruction.panelVariants(
                     if assets then assets:FindFirstChild("SandbreakPanelVariants") else nil,
+                    panel
+                )
+                if not variants then
+                    return nil, reason
+                end
+                vesperVariants[panel.Name] = variants
+            elseif panel:IsA("Model") and panel:GetAttribute("SeedshipPanel") == true then
+                if registry.buildingId ~= "PrismSeedship" then
+                    return nil, "Seedship panel registered outside its building"
+                end
+                local variants, reason = SeedshipReconstruction.panelVariants(
+                    if assets then assets:FindFirstChild("PrismPanelVariants") else nil,
                     panel
                 )
                 if not variants then

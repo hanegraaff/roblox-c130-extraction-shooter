@@ -1,0 +1,216 @@
+{
+  "clientAssets": {
+    "localThermal": {
+      "body": 1,
+      "bodyRestored": 0,
+      "roof": 0
+    },
+    "textures": {
+      "files": {
+        "Success": 1431
+      },
+      "ok": true
+    }
+  },
+  "gameAvatarRoute": {
+    "ok": true,
+    "report": {
+      "1": {
+        "camera": 13,
+        "height": 2.989536762237549,
+        "label": "upper threshold"
+      },
+      "10": {
+        "camera": 13,
+        "height": 18.99802589416504,
+        "label": "starboard gallery"
+      },
+      "2": {
+        "camera": 13,
+        "height": 2.998023509979248,
+        "label": "arrival hall"
+      },
+      "3": {
+        "camera": 13,
+        "height": 2.998025417327881,
+        "label": "port stair foot"
+      },
+      "4": {
+        "camera": 13,
+        "height": 7.241568088531494,
+        "label": "port stair first third"
+      },
+      "5": {
+        "camera": 13,
+        "height": 11.874311447143555,
+        "label": "port stair second third"
+      },
+      "6": {
+        "camera": 13,
+        "height": 18.68321418762207,
+        "label": "port landing"
+      },
+      "7": {
+        "camera": 13,
+        "height": 18.99802589416504,
+        "label": "port gallery"
+      },
+      "8": {
+        "camera": 13,
+        "height": 18.99802589416504,
+        "label": "crossover approach"
+      },
+      "9": {
+        "camera": 13,
+        "height": 18.99802589416504,
+        "label": "crossover center"
+      }
+    }
+  },
+  "gameRecoveryBay": {
+    "atlas": "rbxassetid://135660905134253",
+    "brightness": 1.649999976158142,
+    "collides": false,
+    "modelPivot": "0, 2.4000000953674316, 259",
+    "query": false,
+    "ready": true,
+    "role": "Waiting"
+  },
+  "localEditGeometryAndDamage": {
+    "damage": {
+      "Prism_Roof_01": {
+        "heavy": 159,
+        "light": 283,
+        "pivot": {
+          "1": -3.060002565383911,
+          "10": 8.742277657347586e-08,
+          "11": 0,
+          "12": -1,
+          "2": 35.9630012512207,
+          "3": 228.5679931640625,
+          "4": -1,
+          "5": 0,
+          "6": -8.742277657347586e-08,
+          "7": 0,
+          "8": 1,
+          "9": 0
+        },
+        "pristine": 283,
+        "total": 0
+      },
+      "Prism_Skirt_01": {
+        "heavy": 87,
+        "light": 176,
+        "pivot": {
+          "1": -7.15500545501709,
+          "10": 8.742277657347586e-08,
+          "11": 0,
+          "12": -1,
+          "2": 24.108999252319336,
+          "3": 200.1790008544922,
+          "4": -1,
+          "5": 0,
+          "6": -8.742277657347586e-08,
+          "7": 0,
+          "8": 1,
+          "9": 0
+        },
+        "pristine": 176,
+        "total": 0
+      }
+    },
+    "deckPoints": 6,
+    "openings": 4,
+    "panels": 102,
+    "treads": 144
+  },
+  "pilot": {
+    "centerDelta": 6.198883056640625e-06,
+    "colorMaps": 6,
+    "complete": true,
+    "count": 12,
+    "extentDelta": 3.814697265625e-06,
+    "landmarks": {
+      "PS_P_013_01": {
+        "1": "Impact \u2022 fallen sill plate",
+        "2": "61.70000457763672, -1.297327995300293, 55.27999496459961",
+        "3": "11.200000762939453, 2.664656162261963, 9.639999389648438"
+      },
+      "PS_P_184_01": {
+        "1": "South threshold \u2022 six fan steps",
+        "2": "0.0000057220458984375, -1.2200000286102295, 66",
+        "3": "37.599998474121094, 2.440000057220459, 12"
+      },
+      "PS_P_184_02": {
+        "1": "South threshold \u2022 six fan steps",
+        "2": "0.0000057220458984375, -0.9784999489784241, 65.97000122070312",
+        "3": "26.26000213623047, 2.0269999504089355, 11.700000762939453"
+      },
+      "PS_P_184_03": {
+        "1": "South threshold \u2022 six fan steps",
+        "2": "0.000006198883056640625, -0.981499969959259, 66.875",
+        "3": "26, 2.0209999084472656, 10.089996337890625"
+      }
+    },
+    "normalMaps": 6,
+    "pilotVersion": "15651294876304"
+  },
+  "replication": {
+    "clients": 2,
+    "hitsSubmitted": 12,
+    "stages": {
+      "Heavy": {
+        "Prism_Roof_01": {
+          "appearance": "Heavy",
+          "hits": 94
+        },
+        "Prism_Skirt_01": {
+          "appearance": "Heavy",
+          "hits": 55
+        }
+      },
+      "Light": {
+        "Prism_Roof_01": {
+          "appearance": "Light",
+          "hits": 177
+        },
+        "Prism_Skirt_01": {
+          "appearance": "Light",
+          "hits": 112
+        }
+      },
+      "Pristine": {
+        "Prism_Roof_01": {
+          "appearance": "Pristine",
+          "hits": 177
+        },
+        "Prism_Skirt_01": {
+          "appearance": "Pristine",
+          "hits": 112
+        }
+      },
+      "Reset": {
+        "Prism_Roof_01": {
+          "appearance": "Pristine",
+          "hits": 177
+        },
+        "Prism_Skirt_01": {
+          "appearance": "Pristine",
+          "hits": 112
+        }
+      },
+      "Total": {
+        "Prism_Roof_01": {
+          "appearance": "Total",
+          "hits": 0
+        },
+        "Prism_Skirt_01": {
+          "appearance": "Total",
+          "hits": 0
+        }
+      }
+    }
+  },
+  "source": "the connected local Rojo test document",
+  "studio": "0.748.0.7481526"
+}

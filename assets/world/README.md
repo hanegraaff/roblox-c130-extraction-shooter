@@ -52,6 +52,12 @@ The replacement raises the aim ceiling to
 64 studs for coverage of the roof. The axis correction, world pivot, native
 assets and checks are in the [Salt Flats import receipt](../imports/salt-flats/README.md).
 
+The Prism Seedship lands at the southern site with its main entry turned
+toward Sandbreak. It has two usable decks, four approaches and a dedicated
+`PrismPanels` registry of 102 wall and roof panels. Like the other landmarks
+it uses the shared damage and reset owners. The registry inherits each
+panel’s authored story from its descriptor. [Site and managed import](../blender/alien-spaceship/IMPORT.md)
+
 For a compact interior, center the descriptor on the usable room, put its
 local +Y boundary at the ceiling, and keep exterior balconies and roofs outside
 the bounds. Validate both sides of doors and the height of stair landings in

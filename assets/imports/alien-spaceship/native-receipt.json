@@ -1,0 +1,477 @@
+{
+  "assetImportUniverseId": "10776653720",
+  "axisCorrectionYDegrees": 180,
+  "batches": [
+    {
+      "colorMaps": {
+        "rbxassetid://120228221930675": true,
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://83300531955018": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 1,
+      "count": 12,
+      "file": "seedship-p.glb",
+      "id": "87726842476409",
+      "maxCenterDelta": 1.2045281437167432e-05,
+      "maxSizeDelta": 3.814697265625e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://126410460793413": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true,
+        "rbxassetid://93341298973810": true
+      },
+      "operation": "1049b39f-578f-46e8-9757-148c9418bd2b",
+      "revision": "1",
+      "sourceBatchSha256": "aa20c0f668824d2c0997a75f4c11767b46e52b10879be53b57db4deac4bb862d",
+      "version": "15651294876304"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://83300531955018": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 1,
+      "count": 198,
+      "file": "seedship-a1.glb",
+      "id": "74346835330579",
+      "maxCenterDelta": 1.811981201171875e-05,
+      "maxSizeDelta": 1.078959303413285e-05,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://134634494775484": true,
+        "rbxassetid://93341298973810": true
+      },
+      "operation": "38d8271b-f0f2-492d-af53-206293ba2785",
+      "revision": "1",
+      "sourceBatchSha256": "205c148c1743090b7f570f59e6f37746e72bc8fc3d357f0bc138f072f913dfaf",
+      "version": "12005666599696"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://83300531955018": true
+      },
+      "cookFailures": [],
+      "cooked": 1,
+      "count": 196,
+      "file": "seedship-a2.glb",
+      "id": "138894641526406",
+      "maxCenterDelta": 1.811981201171875e-05,
+      "maxSizeDelta": 1.078959303413285e-05,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://134634494775484": true,
+        "rbxassetid://93341298973810": true
+      },
+      "operation": "75cc7276-b3d9-4b90-b90a-a18798fb489f",
+      "revision": "1",
+      "sourceBatchSha256": "35c8c8192d41116837bf87ca18930762565582f58c2422103b3eebae391dd799",
+      "version": "17929190151161"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://83300531955018": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 2,
+      "count": 194,
+      "file": "seedship-a3.glb",
+      "id": "107467440526482",
+      "maxCenterDelta": 1.7456481145927683e-05,
+      "maxSizeDelta": 5.394796517066425e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true,
+        "rbxassetid://93341298973810": true
+      },
+      "operation": "1e09de3c-f544-4901-8fe8-b20e8fa5a0a0",
+      "revision": "1",
+      "sourceBatchSha256": "b520f3ad78c75031317f28c85aee2b6ec895d8bef73120a2025db8dc6e3b0a30",
+      "version": "38377290118721"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 0,
+      "count": 197,
+      "file": "seedship-a4.glb",
+      "id": "130627795081190",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 7.62939453125e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "7226b8c3-56eb-4970-9eb5-e80f71e56a79",
+      "revision": "1",
+      "sourceBatchSha256": "2ac446134a30915378b2ea4bb3848b218a2080abf84e6e3dad475f8d33277b64",
+      "version": "30505641224210"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 0,
+      "count": 199,
+      "file": "seedship-a5.glb",
+      "id": "118116636641834",
+      "maxCenterDelta": 1.9073486328125e-05,
+      "maxSizeDelta": 7.864199687901419e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "8d571586-bd81-4c0c-aeaa-21b21b5ff798",
+      "revision": "1",
+      "sourceBatchSha256": "d1a67b2c0b5c7335d70a7262dcc209d5f6ec1cf5c24e63759ff33a2e90d4803b",
+      "version": "67475044008567"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://135660905134253": true,
+        "rbxassetid://139934927014536": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 0,
+      "count": 199,
+      "file": "seedship-a6.glb",
+      "id": "122915629515138",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 5.394796517066425e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "806da9e5-923a-44de-9855-49823e2ebce0",
+      "revision": "1",
+      "sourceBatchSha256": "c35f35d110e3a94c317d9d5a0f052f043df54be9b3e62133b32e49495872790d",
+      "version": "20551886254641"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://83300531955018": true
+      },
+      "cookFailures": [],
+      "cooked": 2,
+      "count": 133,
+      "file": "seedship-a7.glb",
+      "id": "108013601146108",
+      "maxCenterDelta": 1.7456481145927683e-05,
+      "maxSizeDelta": 1.5728399375802837e-05,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://134634494775484": true,
+        "rbxassetid://93341298973810": true
+      },
+      "operation": "e06f4a69-fa1e-480c-bf41-c68efe658b4f",
+      "revision": "1",
+      "sourceBatchSha256": "5149ff15cb869d00f16e58aa17f5b89db9e5a83efff853e75af574f52aa3f4b9",
+      "version": "19681139667493"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 28,
+      "count": 194,
+      "file": "seedship-l1.glb",
+      "id": "101414975867152",
+      "maxCenterDelta": 9.5367431640625e-06,
+      "maxSizeDelta": 5.394796517066425e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "ebd326f5-3295-4bce-a02a-81234919d8eb",
+      "revision": "1",
+      "sourceBatchSha256": "19f7950b69f611679c2cd77947ffc3efa3012a4f752b8e30cf6819c44a2192c6",
+      "version": "44370746566426"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 20,
+      "count": 200,
+      "file": "seedship-l2.glb",
+      "id": "71074448881199",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 7.62939453125e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "c5089ad9-db33-4d1c-b1b1-aadb53bdb5b6",
+      "revision": "1",
+      "sourceBatchSha256": "a9ba19e3e3130210ba41125f9019d68454f9ae57ca9946d13b5025f5ddca628a",
+      "version": "6848137339180"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 23,
+      "count": 195,
+      "file": "seedship-l3.glb",
+      "id": "93080829794353",
+      "maxCenterDelta": 1.7584885426913388e-05,
+      "maxSizeDelta": 7.864199687901419e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "39a0894a-8562-485e-8ff1-735eedc95a67",
+      "revision": "1",
+      "sourceBatchSha256": "6b9cc0168729c91075b59ce29f0d9c3c0d256ff7d1e88e996126b906de6e4a7d",
+      "version": "62586080527930"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 25,
+      "count": 198,
+      "file": "seedship-l4.glb",
+      "id": "111158730121937",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 5.394796517066425e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "a7245c77-3fad-4b86-91bd-8cb659013797",
+      "revision": "1",
+      "sourceBatchSha256": "b8648ae50dbcbff586b1ef36a4e0f30980037a895d64a182e82a583e8c700df3",
+      "version": "26470125000023"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 6,
+      "count": 46,
+      "file": "seedship-l5.glb",
+      "id": "80502898983184",
+      "maxCenterDelta": 1.6184389096451923e-05,
+      "maxSizeDelta": 3.814697265625e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "85720583-17cc-4ab4-83e1-2877f1ccc853",
+      "revision": "1",
+      "sourceBatchSha256": "75a4c5ed112080b3379e69a5ef419f520b70ab33272b026770d7b97e52ce3b85",
+      "version": "56674942875830"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 30,
+      "count": 192,
+      "file": "seedship-h1.glb",
+      "id": "108641719651217",
+      "maxCenterDelta": 1.37540864670882e-05,
+      "maxSizeDelta": 5.394796517066425e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "35bfaa0e-f016-407e-a7f5-df3a99743a5e",
+      "revision": "1",
+      "sourceBatchSha256": "f2c70c052db0ae52a4499954e27246a7845bc46969ccde350d743c91ae8f0892",
+      "version": "43326134751491"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 20,
+      "count": 194,
+      "file": "seedship-h2.glb",
+      "id": "97649413341568",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 7.62939453125e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "f1e6b948-74a1-4a78-9b2a-9219de158c2a",
+      "revision": "1",
+      "sourceBatchSha256": "95cf4c41f1da4bec5d4481dc6e2674b08011d65d1e57eddaa06aa800dc0143e7",
+      "version": "15804562056684"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 23,
+      "count": 200,
+      "file": "seedship-h3.glb",
+      "id": "108844239196661",
+      "maxCenterDelta": 1.7584885426913388e-05,
+      "maxSizeDelta": 7.62939453125e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "28d7e7e1-823d-4dfc-a129-a2fa43d6151f",
+      "revision": "1",
+      "sourceBatchSha256": "c6acb0b2d4fdf19b8fd76cf85558e63b4bd1b8999d943c16928e625af337b74e",
+      "version": "12084314723040"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 25,
+      "count": 196,
+      "file": "seedship-h4.glb",
+      "id": "136276308736398",
+      "maxCenterDelta": 2.75081729341764e-05,
+      "maxSizeDelta": 7.62939453125e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "0b99020c-fce2-4c3a-bd1a-452c94c3d50e",
+      "revision": "1",
+      "sourceBatchSha256": "ff4c26fbbaff086036d3be6a003388cb2c600fc9ce5e73b8fd1086a480d32c10",
+      "version": "63474372596736"
+    },
+    {
+      "colorMaps": {
+        "rbxassetid://128757044483089": true,
+        "rbxassetid://140048420042219": true,
+        "rbxassetid://95838247322592": true
+      },
+      "cookFailures": [],
+      "cooked": 4,
+      "count": 29,
+      "file": "seedship-h5.glb",
+      "id": "135744727401696",
+      "maxCenterDelta": 1.37540864670882e-05,
+      "maxSizeDelta": 3.814697265625e-06,
+      "missing": [],
+      "moderationState": "Approved",
+      "normalMaps": {
+        "rbxassetid://113099015815096": true,
+        "rbxassetid://127892338280830": true,
+        "rbxassetid://134634494775484": true
+      },
+      "operation": "be7e54f6-25c9-4f51-a60b-17768118eed4",
+      "revision": "1",
+      "sourceBatchSha256": "ae8031dd33d2b6f1e0bd4f6942731cbb65adc37b182ba4286bb84d3d8f01ff58",
+      "version": "56854144069572"
+    }
+  ],
+  "catalogSha256": "0bfa58b3d5bf1b9ad35c4575d1f9586eb966fe00cd2972f2cbe3df0c5515ed4d",
+  "meshPartCount": 2972,
+  "nativeModels": {
+    "assets/models/PrismPanelVariants.rbxm": "7cccf01e9f3a64d674293db279ec747fab380b3c8fcc6a1462486033d2ab8b32",
+    "assets/models/PrismSeedship.rbxm": "9654b695391b98a93597c84f35a1a6bca58c37ae8730d0e351d245950b9fc999"
+  },
+  "ownerUserId": "2227341845",
+  "panelCount": 102,
+  "placedDeckPivot": [
+    0,
+    2.4,
+    259
+  ],
+  "placedYawDegrees": 180,
+  "sourceBindingSha256": "a203b7a9737ef25760f8c6484b6de7b554ab5a95df5bceb64fd75274b585f061",
+  "sourceBlendSha256": "460918e405c1f1eae99aaf689a9d58892b533d539db3855bd5808edb0265a7ec",
+  "studio": "0.748.0.7481526"
+}

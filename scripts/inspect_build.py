@@ -697,7 +697,7 @@ def main() -> None:
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
-    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction", "SandbreakReconstruction")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction", "SandbreakReconstruction", "SeedshipReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")

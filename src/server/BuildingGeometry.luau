@@ -24,6 +24,7 @@ local function panelPose(panel: Instance): (CFrame?, Vector3?)
             or panel:GetAttribute("VesperPanel") == true
             or panel:GetAttribute("SaltFlatsPanel") == true
             or panel:GetAttribute("SandbreakPanel") == true
+            or panel:GetAttribute("SeedshipPanel") == true
         )
     then
         local size = panel:GetAttribute("IntactSize")
@@ -60,12 +61,14 @@ function BuildingGeometry.registries(map: Model): ({ Registry }?, string?)
     end
     local result: { Registry } = {}
     local ids: { [string]: boolean } = {}
+    local usedRoots: { [Instance]: boolean } = {}
     for _, building in buildings:GetChildren() do
         local panels = building:FindFirstChild(building.Name .. "_Panels")
         if not panels or not panels:IsA("Folder") then
             return nil, "missing formal panel root"
         end
         ids[building.Name] = true
+        usedRoots[panels] = true
         table.insert(result, { buildingId = building.Name, panels = panels })
     end
     local descriptors = map:FindFirstChild("PanelRegistries")
@@ -77,11 +80,13 @@ function BuildingGeometry.registries(map: Model): ({ Registry }?, string?)
             return nil, "invalid additional panel descriptor"
         end
         local root = map:FindFirstChild(descriptor.Value)
-        if not root or not root:IsA("Folder") or #root:GetChildren() == 0 then
+        if not root or not root:IsA("Folder") or #root:GetChildren() == 0 or usedRoots[root] then
             return nil, "missing additional panel root"
         end
         ids[descriptor.Name] = true
-        table.insert(result, { buildingId = descriptor.Name, panels = root, storyId = "01" })
+        usedRoots[root] = true
+        local story = if descriptor:GetAttribute("UseAuthoredStories") == true then nil else "01"
+        table.insert(result, { buildingId = descriptor.Name, panels = root, storyId = story })
     end
     return result, nil
 end

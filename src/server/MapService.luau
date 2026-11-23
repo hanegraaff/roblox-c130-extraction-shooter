@@ -152,7 +152,6 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
     local shelterCount = if hasSandbreak then 103 else 76
     if
         not panelInputs
-        or #panelInputs:GetChildren() ~= 1
         or not shelterInput
         or not shelterInput:IsA("StringValue")
         or shelterInput.Value ~= "SpawnShelterPanels"

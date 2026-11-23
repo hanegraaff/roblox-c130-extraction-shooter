@@ -290,3 +290,15 @@ harness reads these snapshots at load and after cleanup.
 [P11 procedure](../../docs/testing.md#run-the-p11-performance-harness)
 
 `GameRuntime` owns the server-to-client `RoundState.WeaponAudio` transport. The combat runtimes emit shot and impact cues after admission or collision through a nonyielding callback. The event owns no client-request handler and has no role, damage or equipment authority.
+
+## Prism Seedship
+
+`SeedshipReconstruction.install(world, assets)` mounts the two native
+Seedship banks before `MapService` captures its pristine snapshot. The
+ship pivots at `(0, 2.4, 259)` and faces north toward Sandbreak. The direct
+`PrismPanels` registry retains the source panel IDs, stories and poses.
+Each panel uses native query solids and the shared destruction ledger.
+Light clones the intact solid, Heavy uses the fitted residual, and Total
+clears all owned parts. Decks and stair supports are outside the damage
+registry. Cleanup rolls back the mounted roots and descriptor if map
+validation fails. [Import pipeline and site](../../assets/blender/alien-spaceship/IMPORT.md)
