@@ -22,6 +22,7 @@ EXPORT = ROOT / "assets/exports/radar-outpost"
 SOURCE = ROOT / "assets/blender/radar-outpost"
 MANIFEST = ROOT / "assets/manifest.json"
 PILOT_OBJECTS = {"Foundation • 64 x 48", "Warehouse_S01_Radar_Wall_S3_Pristine"}
+EXPORT_BATCHES = (("vesper-array.glb", "A"), ("damage-library.glb", "D"))
 MAX_TRIANGLES = 20_000
 MAX_BYTES = 20 * 1024 * 1024
 
@@ -57,6 +58,25 @@ def encode_glb(document: dict, binary: bytes) -> bytes:
     binary += b"\0" * (-len(binary) % 4)
     return (struct.pack("<4sIII4s", b"glTF", 2, 28 + len(body) + len(binary), len(body), b"JSON")
             + body + struct.pack("<I4s", len(binary), b"BIN\0") + binary)
+
+
+def import_name(prefix: str, index: int, ordinal: int, material: str) -> str:
+    return f"VA_{prefix}_{index:03d}_{ordinal:02d}_{material}"
+
+
+def thermal_structure_names() -> set[str]:
+    """Identify render meshes paired with Vesper's mechanism or panel proxies."""
+    structural_roles = {"visual", "stationary-mechanism", "mechanism", "reflector-visual"}
+    names: set[str] = set()
+    for filename, prefix in EXPORT_BATCHES:
+        doc, _ = decode_glb((EXPORT / filename).read_bytes())
+        for index, node in enumerate(doc["nodes"]):
+            if node["extras"]["role"] not in structural_roles:
+                continue
+            for ordinal, surface in enumerate(doc["meshes"][node["mesh"]]["primitives"], 1):
+                material = doc["materials"][surface["material"]]["name"]
+                names.add(import_name(prefix, index, ordinal, material))
+    return names
 
 
 class Batch:
@@ -123,7 +143,7 @@ class Batch:
             if remainder or not 0 < triangles <= MAX_TRIANGLES or original.get("mode", 4) != 4:
                 raise ValueError(f"Unsupported Roblox mesh at {node['name']}")
             material = self.source["materials"][original["material"]]["name"]
-            name = f"VA_{self.prefix}_{index:03d}_{ordinal:02d}_{material}"
+            name = import_name(self.prefix, index, ordinal, material)
             if not re.fullmatch(r"[A-Za-z0-9_]+", name):
                 raise ValueError(f"Unsafe import key: {name}")
             key = node["mesh"], ordinal
@@ -180,7 +200,7 @@ def prepare(directory: Path) -> dict:
     catalog = source_bytes(SOURCE / "panel-catalog.json", entries)
     directory.mkdir(parents=True, exist_ok=True)
     batches = []
-    for filename, prefix in (("vesper-array.glb", "A"), ("damage-library.glb", "D")):
+    for filename, prefix in EXPORT_BATCHES:
         data = source_bytes(EXPORT / filename, entries)
         doc, blob = decode_glb(data)
         batches_to_write = {"vesper-damage.glb": Batch(doc, blob, prefix)} if prefix == "D" else {
