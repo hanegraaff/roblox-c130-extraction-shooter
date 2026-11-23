@@ -8,7 +8,7 @@ local Config = {}
 
 -- Population is integral; round duration is seconds. No development override belongs in this record.
 export type Settings = { minPlayers: number, maxPlayers: number, roundDurationSeconds: number }
-Config.defaults = table.freeze({ minPlayers = 6, maxPlayers = 10, roundDurationSeconds = 600 })
+Config.defaults = table.freeze({ minPlayers = 2, maxPlayers = 10, roundDurationSeconds = 600 })
 
 -- Decodes unknown input to a fresh typed record, or a useful rejection reason without mutation.
 function Config.validate(value: unknown): (Settings?, string?)
@@ -17,8 +17,8 @@ function Config.validate(value: unknown): (Settings?, string?)
     end
     local payload = value :: { [string]: unknown }
     local minimum, maximum, duration = payload.minPlayers, payload.maxPlayers, payload.roundDurationSeconds
-    if type(minimum) ~= "number" or not Validation.inRange(minimum, 6, 10) or minimum % 1 ~= 0 then
-        return nil, "minPlayers must be an integer from 6 to 10"
+    if type(minimum) ~= "number" or not Validation.inRange(minimum, 2, 10) or minimum % 1 ~= 0 then
+        return nil, "minPlayers must be an integer from 2 to 10"
     end
     if type(maximum) ~= "number" or not Validation.inRange(maximum, minimum, 10) or maximum % 1 ~= 0 then
         return nil, "maxPlayers must be an integer from minPlayers to 10"

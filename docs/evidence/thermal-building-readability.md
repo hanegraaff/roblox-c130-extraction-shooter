@@ -32,3 +32,11 @@ The preview applied the changes in Play while the existing Edit document awaited
 Rojo sync. A clean Play run of the new place, including the new client regression,
 is pending. [Vesper with exposed avatar](../images/radar-outpost/studio-thermal-muted.jpg) ·
 [Military Outpost details](p17/outpost-thermal-detail.jpg)
+
+## Integration
+
+The Warehouse replacement and both thermal follow-ups merged into `main` in
+dependency order. The relevant merge commits are `e8c57a0`, `218465f`, and
+`2fe2a59`. [Warehouse replacement](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/50) ·
+[Vesper thermal visibility](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/51) ·
+[Building and player contrast](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/52)

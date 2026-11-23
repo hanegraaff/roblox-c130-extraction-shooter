@@ -8,14 +8,14 @@ Players wait in a lobby, receive an operator or ground role, deploy and return a
 
 ## Implementation
 
-Implement pure phase/roster rules and MatchService/RoleService adapters. Enforce 6–10 production players and test-only minimum of two players (also supporting three-client launcher tests). Add fair rotation, deployment readiness/cancellation, monotonic deadlines, basic timeout/elimination/abort outcomes, explicit character spawning and minimal phase/role/timer UI. Provide result proposals for aircraft destruction and operator forfeit as well as ground elimination/timeout; later combat plans connect actual damage. Store round membership by UserId so reconnects cannot restore life. Tag all queued work and updates with round IDs/revisions. Add basic teammate spectating and cleanup now; P10 improves presentation.
+Implement pure phase/roster rules and MatchService/RoleService adapters. Enforce the 2–10 production range selected in D74. Add fair rotation, deployment readiness/cancellation, monotonic deadlines, basic timeout/elimination/abort outcomes, explicit character spawning and minimal phase/role/timer UI. Provide result proposals for aircraft destruction and operator forfeit as well as ground elimination/timeout; later combat plans connect actual damage. Store round membership by UserId so reconnects cannot restore life. Tag all queued work and updates with round IDs/revisions. Add basic teammate spectating and cleanup now; P10 improves presentation.
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes. Boundary tests at 5/6/10/11 players reject invalid rosters and assign exactly one operator and place every other player on one ground team for valid rosters; tie-break/rotation is deterministic with a seed.
+- **A1:** Full gate passes. Boundary tests at 1/2/10/11 players reject invalid rosters and assign one operator and one Ground team for valid rosters. The production defaults let two ready players enter Active and keep a solo player in Lobby. Tie-break and rotation remain deterministic with a seed.
 - **A2:** Transition tests reject illegal phase changes and commit one result only. Fake-time tests reach the deadline exactly; cancelled deployment returns to lobby without partial active players.
 - **A3:** Death/manual reset does not create a fresh active character. Service tests verify rejoin cannot gain an active role or new gear in the same round; supported Studio late joins verify the same restriction (D59); departure cleanup can release a held weapon without duplicating ownership.
-- **A4:** Wrong-role, stale-round, replayed and spectator commands reject without state change. Test-only population override is absent from the release build.
+- **A4:** Wrong-role, stale-round, replayed and spectator commands reject without state change. Release builds exclude test fixtures, development settings and test controls.
 - **A5:** Two real Studio client contexts receive their correct roles, phase and deadline. Operator remains protected; an eliminated ground player spectates and cannot interact.
 - **A6:** Three accelerated rounds restore roster, camera, map, connections and phase state. Tests cover operator/ground departures during deployment and Active, using the design's distinct policies.
 
@@ -76,3 +76,20 @@ The follow-up was pushed in `bbe2c94` as [PR #7](https://github.com/hanegraaff/r
 ### Integrated-source verification
 
 2026-11-08: merged `main` at `6cf0f1ee29e4c122f2d7d68164a2d93ff2408238` has exactly the same Git tree (`f38d438c1153ee3bc8783f4e13a7914264967607`) as checked PR #7 head `939e890`. A fresh full host gate on that integrated source passes 24 unit/14 integration cases, all static/rejection/build/isolation gates and 112 authored geometry checks per build. Both generated artifact hashes match the previously engine-tested human-control candidate. Existing Studio evidence therefore applies to identical source; no new engine behavior was introduced or claimed. [Integration evidence](../docs/evidence/p03-integration.md) records commands, results and identities. README now directs routine setup to `main`; original Studio document remains in Edit and no new windows were launched. No Roblox publication occurred; P04 remains unimplemented.
+
+### Two-player production minimum (D74)
+
+On 2026-11-22 the user lowered the production match minimum to two.
+`Config.spec.luau` covers the production range and invalid bounds.
+`RoleService.spec.luau` checks one- and eleven-player rejection and role
+assignment at two, six and ten. `MatchService.spec.luau` uses the production
+configuration to verify solo Lobby and a two-player start with the normal
+600-second deadline.
+
+`python3 scripts/verify.py` passed on macOS arm64 with 82 unit, 75 integration,
+18 tooling and 48 asset regression cases, the P16 and P17 gates, and both Rojo
+builds. The release artifact contains the production configuration and startup
+source and passed test isolation. Its SHA-256 is
+`850ddeeabacbe9bfd3d7547c56e81e33d11f5c7fe014d56a4481ae8a4b4f190c`.
+Studio's only open place was the cloud document, so a fresh native run on the
+local release build is pending. [Studio smoke procedure](../docs/testing.md#run-the-studio-smoke-suites)

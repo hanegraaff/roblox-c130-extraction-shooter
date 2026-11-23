@@ -10,19 +10,19 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         end
         return values
     end
-    test("production rosters reject five and eleven players without mutation", function()
-        for _, count in { 5, 11 } do
+    test("production rosters reject one and eleven players without mutation", function()
+        for _, count in { 1, 11 } do
             local values = roster(count)
-            assert(not Roles.assign(values, 6, nil, 1), "expected not Roles.assign(values, 6, nil, 1)")
+            assert(not Roles.assign(values, 2, nil, 1), "out-of-range roster was assigned")
             assert(
                 #values == count and values[1].waitedRounds == 0,
                 "expected #values == count and values[1].waitedRounds == 0"
             )
         end
     end)
-    test("six and ten players receive exactly one operator and one united ground roster", function()
-        for _, count in { 6, 10 } do
-            local assignment = Roles.assign(roster(count), 6, nil, 1)
+    test("two, six and ten players receive one operator and one united ground roster", function()
+        for _, count in { 2, 6, 10 } do
+            local assignment = Roles.assign(roster(count), 2, nil, 1)
             assert(
                 assignment and #assignment.groundIds == count - 1,
                 "expected assignment and #assignment.groundIds == count - 1"

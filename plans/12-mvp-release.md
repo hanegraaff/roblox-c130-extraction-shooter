@@ -12,7 +12,7 @@ Prepare a clean-checkout release candidate using the release mapping. Record sou
 
 ## Acceptance criteria
 
-- **A1:** Full gate passes from a clean checkout. Artifact contents match the committed source and manifest; test dependencies, runners and two-player override are absent. Build hash and source commit are recorded.
+- **A1:** Full gate passes from a clean checkout. Artifact contents match the committed source and manifest. Release builds exclude test dependencies, runners and development fixtures. Build hash and source commit are recorded.
 - **A2:** Final Studio engine/multiplayer suite passes; every R01–R16 requirement links to actual test/evidence, with no required skipped or zero-count suite.
 - **A3:** Exact experience/place/audience and explicit authorization are recorded before publication. Cloud asset permissions are verified for that owner. A published build/version is confirmed by the platform, not inferred from a tool attempt.
 - **A4:** Real Roblox-client sessions at 6 and 10 players complete repeated aircraft-destruction, ground-elimination and timeout paths. Verify both roles, cover/destruction, supported late joins, launcher transfer, the three-rocket threshold, the inward perimeter camera at both zooms with WASD/touch panning and separate aim, enlarged terrain and all three multi-story buildings, 3/6-heavy-hit and nine-second 30mm panel progression, half-destroyed openings/physical fragments, weapon-switch timing and terrain/panel/debris reset. Record actual client counts without personal data. D59 excludes same-identity reconnect from this exercise. Deterministic service tests retain reconnect authority coverage. Run the 6/10-player checks in Roblox clients.
@@ -39,6 +39,9 @@ contains the native performance, cleanup, latency and balance results for its
 recorded sources and client counts. P12 has separate final Studio and live
 Roblox gates. The earlier [P17 owner-only approval](../docs/evidence/p17/private-upload-authorization.json)
 covers its recorded import build, experience and asset uploads.
+
+D74 changes the release build's match minimum to two. The authorization and
+artifact hashes recorded below apply to the earlier release candidate.
 
 ### Requirement traceability
 

@@ -10,7 +10,7 @@ These requirements describe the MVP target and future level boundary. Integrated
 | ID | Requirement | Plans | Required automated evidence |
 | --- | --- | --- | --- |
 | R01 | Git reconstructs source, configuration, world, terrain and asset references | P01, P02, P13, P12, P16, P17 | Clean-checkout build; map/manifest validation; self-contained Blender sources/exports when added; no test content in release artifact |
-| R02 | Match starts with 6–10 players, one operator and one united ground team | P03 | Roster boundary/role-selection tests; Studio role replication |
+| R02 | Match starts with 2–10 players, one operator and one united ground team. A solo player waits in the lobby | P03 | Roster boundary and role assignment tests, production-default deployment test, Studio role replication |
 | R03 | Round lifecycle, deadline and team result are authoritative and reset safely | P03, P06, P09 | Transition, conflict, disconnect and repeated-reset integration tests. Studio replay exercises cover, aircraft, equipment and camera restoration. |
 | R04 | No respawns. Late join and reconnect cannot recover an active life | P03, P08, P09, P10 | Lifecycle/rejoin service tests plus supported Studio character, death, reset and late-join cases (D59) |
 | R05 | A 720-stud-diameter circular battlefield and matching perimeter orbit keep the aircraft visible and its panned view inward | P02, P04, P13, P14 | Doubled-diameter and equal-radius invariants; tangent model versus bounded panned camera; full-orbit visibility/position and terrain-range checks |

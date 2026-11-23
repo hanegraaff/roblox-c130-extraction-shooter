@@ -4,11 +4,11 @@
 
 *User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
-One player operates a circling C-130 while 5–9 ground teammates try to bring it down. The ground team starts with M-7 rifles and can share one recoverable rocket launcher found on the map. Three direct rockets destroy an undamaged aircraft. Rifle hits reduce the same health pool.
+One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. The ground team starts with M-7 rifles and can share one recoverable rocket launcher found on the map. Three direct rockets destroy an undamaged aircraft. Rifle hits reduce the same health pool.
 
 ## Play a round
 
-Rounds start in the protected, walkable lobby. With 6–10 players, the server assigns one operator and deploys everyone else as one ground team. The C-130 automatically circles the edge of the 720-stud battlefield. The default round lasts ten minutes, and friendly fire is off.
+Rounds start in the protected, walkable lobby. With 2–10 players, the server assigns one operator and deploys everyone else as one ground team. The C-130 automatically circles the edge of the 720-stud battlefield. The default round lasts ten minutes, and friendly fire is off.
 
 - **Ground team.** Use the hills and buildings as cover while teammates fire on the aircraft. Follow the teal west route or ochre east route to the center launcher. Lead the moving plane when firing a rocket. The carrier keeps their M-7, and the launcher's four-second reload continues through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect while the round is active. If the drop position is invalid, the launcher returns to its original anchor.
 - **C-130 operator.** Scan the ground through the inward-facing thermal camera. The 30mm GAU-23/A Chain Gun gives a tighter view, and the 105mm M102 Howitzer gives a wider view and blast. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. Releasing the directional controls holds the camera angle relative to the plane through its orbit.
@@ -70,7 +70,7 @@ Setup installs the pinned tools and dependencies. Install the matching Rojo Stud
 1. In Creator Dashboard, select the approved test experience. Open **Publish settings → Manage Audience → Manage access → Playtest**, set the audience to **Playtesters**, and save. Set the start place’s player limit to **10**. [Roblox audience settings](https://create.roblox.com/docs/production/publishing/publish-games-and-places#target-audience)
 2. Note the place’s current published version for rollback. Open `build/game.rbxlx` in Studio, choose **File → Publish As**, and select the approved experience and its existing start place. [Roblox Version History](https://create.roblox.com/docs/projects/version-history)
 3. Open the published place in Studio and use **Collaborate** to grant each invited tester **Play** access. In Creator Dashboard, use **⋯ → Copy URL** on the experience tile and share it with those testers. [Roblox collaborator permissions](https://create.roblox.com/docs/projects/collaboration#manage-collaborators), [Copy the Roblox link](https://create.roblox.com/docs/projects/configure-games#copy-landing-page-link)
-4. Have everyone open the link in the **Roblox app** and join the same server. The game starts with **six players**, including you. For a ten-player match, keep everyone connected and begin counting rounds once all ten deploy together.
+4. Have everyone open the link in the **Roblox app** and join the same server. You can start with **two players total**, including you. For a larger match, keep everyone connected until the next round starts with the full group.
 
 The [P12 release plan](plans/12-mvp-release.md#authorization-and-destination-access) records the team’s approved destination. The [release runbook](docs/release.md) covers asset permissions and the full live test checklist.
 
@@ -84,7 +84,7 @@ rojo serve default.project.json --address 127.0.0.1 --port 34873
 
 1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local document. Reuse the document if it is already open.
 2. In Edit mode, open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the **PlayersVsC130** mapping before applying it. If a newly installed plugin's toolbar button is absent, save work and restart Studio once.
-3. Click **Play**. Expect a walkable lobby and a round panel waiting for six players. The **Development** bootstrap panel yields to the round HUD once it loads. Use the separate test mapping for solo exploration or a smaller active match.
+3. Click **Play** to check the walkable lobby and the HUD waiting for two players. Use **Server & Clients** with two clients to start a match. The separate test mapping offers solo exploration and explicit role and round controls.
 4. After repository edits, stop Play, confirm the same Edit document received the expected change through Rojo, and start fresh Play. If the server restarted or the plugin disconnected, reconnect the existing document in Edit mode. [MCP, sync and troubleshooting](docs/development.md#sync-this-repository-with-studio)
 
 ## Run local automated tests

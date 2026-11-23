@@ -1,10 +1,10 @@
 # Decisions, defaults, and open release details
 
-Updated 2026-11-20. “Selected” records user choices. “Default” records concrete implementation or tuning choices that can be revised. Stable IDs carry forward through revisions.
+Updated 2026-11-23. “Selected” records user choices. “Default” records concrete implementation or tuning choices that can be revised. Stable IDs carry forward through revisions.
 
 | ID | State | Decision and reason | Revisit when |
 | --- | --- | --- | --- |
-| D01 | Selected | 6–10 players: one operator versus one united team of 5–9 ground players | User changes match scope |
+| D01 | Superseded by D74 | Original range of 6–10 players, with one operator and one Ground team | See D74 |
 | D02 | Selected | Thermal targeting, circular map, scripted perimeter orbit, view always toward the main map | User changes view/flight scope |
 | D03 | Selected | MVP building panels have visible progressive destruction and real fragment physics, using prefabricated residual geometry; full structural collapse remains excluded | User changes structural scope |
 | D04 | Selected | No respawns during a round; eliminated players spectate | User changes survival rules |
@@ -78,6 +78,7 @@ Updated 2026-11-20. “Selected” records user choices. “Default” records c
 | D71 | Selected large-building art scope, 2026-11-22 | Replace the final interchangeable-level feature with a radar outpost for one large building. Author it in Blender from the four radar-outpost illustrations, with open circulation and limited overhead cover. In-game placement requires a separate task. | New direction on level or import scope |
 | D72 | Radar outpost authoring choices | Use the Warehouse site, retain its 64 × 48 footprint and south approach, and fit a through courtyard and two exposed flights around the central pedestal. The Vesper Array name, station number, colors and interior machinery are art choices for review. | Art review or future native fit measurements |
 | D73 | Selected thermal art and target readability, 2026-11-23 | Restore more visible detail to the military Outpost and mute the Vesper Array in the aircraft view. Exposed players should stand out. Retain the buildings' structural and landmark detail and make the thermal treatment consistent in future imports. The Vesper tint and player highlight opacity are tuning defaults. | Operated thermal readability review or new building materials |
+| D74 | Selected match minimum, 2026-11-22 | Start standard matches with 2–10 eligible players. At the minimum, one player operates the C-130 and one plays Ground. A solo player waits in the lobby. Keep the live 6- and 10-player capacity checks. | User changes match scope |
 
 Aircraft health is derived as three times direct rocket damage. Rifle damage is positive and small; previous rifle hits may reduce the further rockets needed. First and second rockets alone do not destroy a pristine plane. These are hard test invariants, not tuning defaults. Each C-130 weapon retains its independent cooldown/reload across switching.
 
