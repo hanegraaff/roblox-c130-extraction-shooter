@@ -1622,6 +1622,69 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "3dffa07167fb221db25bb5529c25a8fb32864c949aab9b257f6642f02daaaae6"
+    },
+    {
+      "id": "vesper-native-assembly",
+      "kind": "model",
+      "source": "Owned native Vesper assembly preserved by Studio SerializationService",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/VesperArray.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "b091ac86d4aaf25d4c9ed20495817fdb4116d0071095571af92d8698a220f1ec"
+    },
+    {
+      "id": "vesper-native-variants",
+      "kind": "model",
+      "source": "Owned native Vesper state bank preserved by Studio SerializationService",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/models/VesperPanelVariants.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "2948ac9d88e07e25260cb800f111de17e260fec17f30da5f02de9566258fdcf8"
+    },
+    {
+      "id": "vesper-native-receipt",
+      "kind": "catalog",
+      "source": "Studio reconstruction and imported asset identity receipt",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/imports/radar-outpost/native-receipt.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "598925c680474749907fac2d20528e0b67cedbc7ee57756cba133146629a647b"
+    },
+    {
+      "id": "vesper-native-upload-vesper-pilot",
+      "kind": "model",
+      "source": "Approved Vesper export uploaded for private Studio import",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "90597570873195",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "vesper-native-upload-vesper-assembly",
+      "kind": "model",
+      "source": "Approved Vesper export uploaded for private Studio import",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "89340131798475",
+      "upload_owner": "2227341845"
+    },
+    {
+      "id": "vesper-native-upload-vesper-damage",
+      "kind": "model",
+      "source": "Approved Vesper export uploaded for private Studio import",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "96316755988747",
+      "upload_owner": "2227341845"
     }
   ],
   "runtime_recipes": [

@@ -241,7 +241,7 @@ function Harness.run()
                     elseif kind == "Panels" then
                         assert(type(payload) == "table", "expected panel observations")
                         local expected = payload :: { PanelExpectation }
-                        assert(#expected >= 1 and #expected <= 188, "unbounded panel observation batch")
+                        assert(#expected >= 1 and #expected <= 199, "unbounded panel observation batch")
                         local mismatch = "unknown panel"
                         local function matches(): boolean
                             for index, entry in expected do

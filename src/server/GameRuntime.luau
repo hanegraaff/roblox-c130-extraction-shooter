@@ -17,6 +17,7 @@ local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
 local DestructionRuntime = require(script.Parent.DestructionRuntime)
 local LauncherRuntime = require(script.Parent.LauncherRuntime)
 local OutpostReconstruction = require(script.Parent.OutpostReconstruction)
+local VesperReconstruction = require(script.Parent.VesperReconstruction)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
@@ -34,10 +35,15 @@ function GameRuntime.start(
     settings: MatchRuntime.Settings,
     groundDependencies: GroundCombatRuntime.Dependencies?
 ): (Controller?, string?)
-    local installation, installReason =
-        OutpostReconstruction.install(workspace.World, game:GetService("ServerStorage").Assets)
+    local assets = game:GetService("ServerStorage").Assets
+    local installation, installReason = OutpostReconstruction.install(workspace.World, assets)
     if not installation then
         return nil, installReason
+    end
+    local radar, radarReason = VesperReconstruction.install(workspace.World, assets)
+    if not radar then
+        installation.rollback()
+        return nil, radarReason
     end
     local onCorrection: ((Model) -> ())? = nil
     local map, reason = MapService.new(workspace.World, {
@@ -63,9 +69,11 @@ function GameRuntime.start(
         end,
     })
     if not map then
+        radar.rollback()
         installation.rollback()
         return nil, reason
     end
+    radar.commit()
     installation.commit()
     local ok, startReason = map.start()
     if not ok then

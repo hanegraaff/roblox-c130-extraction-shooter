@@ -529,6 +529,52 @@ def check_manual_p17_isolation(release: dict[str, str], tests: dict[str, str]) -
             raise RuntimeError(f"P17 fixture missing from tests or leaked to release: {name}")
 
 
+def check_vesper_import(path: Path) -> int:
+    """Check the compiled native bank independently of the live Workspace."""
+    root = ET.parse(path).getroot()
+    nodes = instance_nodes(path)
+    shared = {
+        node.attrib["md5"]: decode_payload(node.text)
+        for node in root.findall("SharedStrings/SharedString")
+    }
+    receipt = json.loads((ROOT / "assets/imports/radar-outpost/native-receipt.json").read_text())
+    assets = "ServerStorage/Assets/"
+    expected = {"VesperArray": (649, 54), "VesperPanelVariants": (814, 108)}
+    counts = {name: [0, 0] for name in expected}
+    for full, item in nodes.items():
+        if item.attrib["class"] != "MeshPart" or not full.startswith(assets):
+            continue
+        relative = full.removeprefix(assets).partition("/")[0]
+        if relative not in expected:
+            continue
+        counts[relative][0] += 1
+        meta = compiled_surface_attributes(item)
+        size = numeric_property(item, "Vector3", "InitialSize", ("X", "Y", "Z"), full)
+        mesh = item.findtext("Properties/Content[@name='MeshContent']/uri")
+        physics = item.findtext("Properties/SharedString[@name='PhysicalConfigData']")
+        flags = {flag: item.findtext(f"Properties/bool[@name='{flag}']") == "true"
+                 for flag in ("Anchored", "CanCollide", "CanQuery", "CanTouch")}
+        if (not mesh or meta.get("NativeMeshId") != mesh or any(v <= 0 for v in size)
+                or float32_vector(size) != meta.get("NativeMeshSize") or not shared.get(physics)
+                or not flags["Anchored"] or flags["CanTouch"] or flags["CanCollide"] != flags["CanQuery"]):
+            raise RuntimeError(f"Vesper native payload or flags differ: {full}")
+        if flags["CanCollide"] and meta.get("NativeCollisionFidelity") != "PreciseConvexDecomposition":
+            raise RuntimeError(f"Vesper queryable mesh lost its precise collision: {full}")
+        invisible = item.findtext("Properties/float[@name='Transparency']") == "1"
+        if meta.get("PanelProxy"):
+            counts[relative][1] += 1
+            if not flags["CanCollide"] or not invisible:
+                raise RuntimeError(f"Vesper cover proxy flags differ: {full}")
+        key = meta.get("ImportMaterialKey")
+        texture = item.findtext("Properties/Content[@name='TextureContent']/uri")
+        expected_texture = None if invisible else receipt["textureIdsByMaterial"].get(key)
+        if texture != expected_texture:
+            raise RuntimeError(f"Vesper texture binding changed: {full}")
+    if {name: tuple(v) for name, v in counts.items()} != expected:
+        raise RuntimeError(f"Vesper mapped native model counts changed: {counts}")
+    return sum(count[0] for count in counts.values())
+
+
 def main() -> None:
     """Assert bootstraps/spawn exist and all test-only Instances are absent from release."""
     release = paths(ROOT / "build/game.rbxlx")
@@ -548,6 +594,7 @@ def main() -> None:
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
@@ -577,6 +624,7 @@ def main() -> None:
         "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",
         "ServerStorage/Tests/Studio/PanelDestruction.spec",
         "ServerStorage/Tests/Studio/MaterialPanels.spec",
+        "ServerStorage/Tests/Studio/VesperPanels.spec",
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P07 destruction fixture missing from tests or leaked to release: {name}")
@@ -633,6 +681,8 @@ def main() -> None:
     check_expanded_world_contract()
     release_parts = check_authored_geometry(ROOT / "build/game.rbxlx")
     test_parts = check_authored_geometry(ROOT / "build/tests.rbxlx")
+    release_parts += check_vesper_import(ROOT / "build/game.rbxlx")
+    test_parts += check_vesper_import(ROOT / "build/tests.rbxlx")
     geometry_rejection_probes()
     print(f"Authored geometry reconstruction passed: {release_parts} release/{test_parts} test part transforms, dimensions, shape and collision flags.")
     print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; {len(allowed_scripts)} runtime scripts only in release.")
