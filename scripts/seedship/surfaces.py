@@ -81,6 +81,13 @@ def prepare(folder: Path):
         ('olive','12 • Prismatic shadow',(.08,.21,.16),.57,.25,None),
         ('amber','13 • Amber pollen',(.95,.47,.09),.30,.25,None),
         ('glass','15 • Peridot ampoule',(.27,.55,.40),.16,.18,None),
+        ('dermis','16 • Specimen dermis',(.29,.37,.32),.0,.49,None),
+        ('lid','17 • Orbital fold',(.192,.245,.209),.0,.49,None),
+        ('clay','18 • Sensory cleft',(.088,.099,.092),.0,.51,None),
+        ('membrane','23 • Smoky tympanic membrane',(.135,.216,.210),.02,.51,None),
+        ('sulcus','24 • Recessed auricular groove',(.086,.123,.123),.02,.52,None),
+        ('cornea','19 • Obsidian cornea',(.008,.014,.019),.18,.135,None),
+        ('pad','22 • Conductive graphite rubber',(.033,.063,.069),.07,.68,None),
         ('silver','14 • Brushed platinum',(.49,.46,.53),.78,.36,None),
     ]
     for key, title, color, metal, rough, tile in specs:
@@ -96,6 +103,12 @@ def prepare(folder: Path):
         if key in ('mint','white','amber','green'):
             shader.inputs['Emission Color'].default_value = (*color,1)
             shader.inputs['Emission Strength'].default_value = {'mint':1.5,'white':3.0,'amber':.42,'green':.20}[key]
+        if key=='dermis':
+            shader.inputs['Subsurface Weight'].default_value=.065
+            shader.inputs['Subsurface Scale'].default_value=.09
+        if key=='cornea':
+            shader.inputs['Coat Weight'].default_value=.48
+            shader.inputs['Coat Roughness'].default_value=.11
         if key=='glass':
             shader.inputs['Alpha'].default_value=.16
             mat.diffuse_color=(*color,.16)

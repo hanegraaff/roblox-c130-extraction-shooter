@@ -6,7 +6,7 @@ import bpy
 ROOT=Path(__file__).resolve().parents[2]
 args=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 draft='draft' in args
-cameras=[s for s in args if s!='draft'] or ['Exterior','Flank','Arrival hall','Seed vault','Observation deck','Starboard breach','Open decks']
+cameras=[s for s in args if s!='draft'] or ['Recovery bay','Specimen 07','Field machinery','Resonator bank','Exterior','Flank','Arrival hall','Seed vault','Observation deck','Starboard breach','Open decks']
 scene=bpy.context.scene
 dest=ROOT/('build/seedship-draft' if draft else 'docs/images/alien-spaceship')
 dest.mkdir(parents=True,exist_ok=True)

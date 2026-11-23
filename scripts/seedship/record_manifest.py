@@ -25,10 +25,13 @@ def main():
             assert digest == inspection["sourceSha256"], "Inspect the saved source before recording it."
         if kind == "mesh":
             assert digest == inspection["files"][item.name]["sha256"], item
+        provenance = "Original Prism Seedship model, baked mineral maps and panel geometry from scripts/seedship. Four user-supplied illustrations guided the design."
+        if key in ("source", "assembly"):
+            provenance += " The preserved alien, dermal maps, machinery and recovery-bay instrumentation were modeled and drawn for this package."
         records.append({
             "id": "prism-seedship-" + key,
             "kind": kind,
-            "source": "Original Prism Seedship model, baked mineral maps and panel geometry from scripts/seedship. Four user-supplied illustrations guided the design.",
+            "source": provenance,
             "author": "Project contributors",
             "license": "Project-authored meshes and surface art. The visual reference images are separate from this package.",
             "local_path": local_path,

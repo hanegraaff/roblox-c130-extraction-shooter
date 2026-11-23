@@ -1,11 +1,17 @@
 # Prism Seedship
 
-[Open the editable Blender scene](prism-seedship.blend) or [view the exterior render](../../../docs/images/alien-spaceship/exterior.jpg). The dark meridians wrap around a low, split shell of veined nacre. Follow the green inlays through the south portal to the luminous spine. The west concourse houses a working-scale model of four orbital rings. On the right as you enter, three glass reliquaries hold seeds suspended inside braided cages.
+[Open the editable Blender scene](prism-seedship.blend). It opens in the S-4 recovery bay, where Specimen 07 lies on a cushioned examination slab under a three-lens scanner. The dark eyes, folded sensory fans behind the jaw and long four-fingered hands are visible in the [specimen portrait](../../../docs/images/alien-spaceship/specimen-07.jpg). A numbered Groom Lake case plate and a terminal displaying the cranial scan give the bay its Area 51 character.
+
+Through the south portal, an exposed turbine and three illuminated resonator chambers flank the central aisle. Follow the green deck inlays to the luminous spine, then take either stair to the upper galleries to find the memory-rod rack and suspended helical navigation instrument. The preserved alien is the only figure aboard.
 
 ## Tour the model
 
 | View | What to look for |
 | --- | --- |
+| [S-4 recovery bay](../../../docs/images/alien-spaceship/recovery-bay.jpg) | The specimen, surgical scanner, wheeled instrument tray and case plate together |
+| [Specimen 07](../../../docs/images/alien-spaceship/specimen-07.jpg) | Mottled skin, swept corneas, eyelid folds and paired sensory fans |
+| [Field machinery](../../../docs/images/alien-spaceship/field-machinery.jpg) | Petal blades, concentric rings and the exposed turbine housing |
+| [Resonator bank](../../../docs/images/alien-spaceship/resonator-bank.jpg) | Three phase chambers and the connections between them |
 | [Exterior](../../../docs/images/alien-spaceship/exterior.jpg) | The crystalline dorsal ridge, folded shoulder vents, paired threshold sentinels and broad entrance steps |
 | [Starboard flank](../../../docs/images/alien-spaceship/flank.jpg) | The profile of the landed ship, layered armor shoes and clerestory openings |
 | [Arrival hall](../../../docs/images/alien-spaceship/arrival-hall.jpg) | Four ranks of bifurcating arches over the polished deck, a six-petal central spine and the upper crossover |
@@ -14,7 +20,7 @@
 | [Forward breach](../../../docs/images/alien-spaceship/starboard-breach.jpg) | The torn hull and fallen sill leading directly to the starboard stair |
 | [Both decks exposed](../../../docs/images/alien-spaceship/open-decks.jpg) | Routes around the double-height hall, the twin stairs and the north crossover |
 
-The scene opens at the exterior camera. Use the Outliner to select another named camera, then press **Ctrl + Numpad 0** to make it active. To orbit the open interior, hide collections **02 • Meridian shell frame** and **03 • Nacre hull panels**. Collection **06 • Review only** contains the desert, survey figures, cameras and lighting.
+Use the Outliner to select another named camera, then press **Ctrl + Numpad 0** to make it active. To orbit the open interior, hide collections **02 • Meridian shell frame** and **03 • Nacre hull panels**. Collection **06 • Review only** holds the desert set, cameras and lighting.
 
 ## Dimensions and access
 
@@ -29,11 +35,11 @@ The scene opens at the exterior camera. Use the Outliner to select another named
 
 One Blender unit represents one stud. Local +Z is up, the south entrance faces −Y, and the insertion datum is the ground-deck center. The GLB converts Blender coordinates to glTF as `(x, z, -y)`. The 208 × 144-stud authoring envelope fits the existing 212 × 146-stud southern survey. Map placement and rotation are open integration choices.
 
-The four supplied illustrations in `src/images/alien-spaceship/` guided the work. The plan sets the dimensions, stairs, galleries, exits and room locations. The exterior and two eye-level interiors guide the pale broken plates, purple structural ribs, green optical elements, vault and historic breach. The ephemeris, botanical specimens, navigation instruments, glyphs and baked surface maps are original designs. The source packs all eight 512 × 512 maps.
+The four supplied illustrations in `src/images/alien-spaceship/` guided the work. The plan sets the dimensions, stairs, galleries, exits and room locations. The exterior and two eye-level interiors guide the pale broken plates, purple structural ribs, green optical elements, vault and historic breach. The ephemeris, botanical specimens, machinery, preserved alien and diagnostic graphics are original designs. The source packs eight 512 × 512 mineral maps, two 448 × 768 skin maps and one 512 × 384 diagnostic atlas.
 
 ## Export and damage geometry
 
-The [assembled GLB](../../exports/alien-spaceship/prism-seedship.glb) contains 213 mesh objects, 191,414 triangles and 14 materials. The two supplemental files are for authoring damage states. All three exports omit review figures, lights, cameras and desert scenery.
+The [assembled GLB](../../exports/alien-spaceship/prism-seedship.glb) contains 225 mesh objects, 227,142 triangles and 24 materials. It includes the specimen, lab equipment and both furnished decks. The two supplemental files provide alternate hull damage states. Cameras, lights and desert scenery stay in the Blender review collection.
 
 | File | Contents |
 | --- | --- |
@@ -56,4 +62,4 @@ python3 scripts/p17_harness.py --write
 python3 scripts/verify.py
 ```
 
-The [Blender inspection](../../../docs/images/alien-spaceship/inspection.json) records the exact source and export hashes, dimensions, material and geometry counts, stair and doorway measurements and panel ray checks. It compares the reopened scene with all three exports imported into a new scene. The two upper routes and central hall were checked against the assembled meshes with dressing installed. Humanoid traversal, camera response, collision, thermal presentation and damage replication require a future Studio integration.
+The [Blender inspection](../../../docs/images/alien-spaceship/inspection.json) compares the reopened scene with the three exports imported into a fresh scene. It records their hashes and dimensions, checks all 102 damage panels, measures stair and doorway clearance, and samples routes through the furnished ship. Recovery-bay checks count the sole specimen and nine equipment objects, measure four points where the body rests on the slab and test a four-stud-wide approach along its west side. Native avatar traversal, collision, camera response, thermal presentation and damage replication belong to the subsequent Studio integration.

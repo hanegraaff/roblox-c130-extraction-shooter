@@ -41,7 +41,7 @@ Generated place builds belong in ignored `build/`. Do not blanket-ignore authore
 
 ## Prism Seedship
 
-The [Blender review package](blender/alien-spaceship/README.md) contains the low-profile alien ship sized for the hangar reservation, both furnished decks, portable GLBs, damage variants and seven rendered views.
+The [Blender review package](blender/alien-spaceship/README.md) contains the low-profile alien ship sized for the hangar reservation, both furnished decks, portable GLBs, damage variants and eleven rendered views. The [S-4 recovery bay](../docs/images/alien-spaceship/recovery-bay.jpg) shows the preserved alien on its examination slab. The arrival hall houses the ship's turbine and resonator bank.
 
 ## Sandbreak bunker
 

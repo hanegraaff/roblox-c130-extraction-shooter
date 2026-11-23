@@ -2396,13 +2396,13 @@
     {
       "id": "prism-seedship-source",
       "kind": "source",
-      "source": "Original Prism Seedship model, baked mineral maps and panel geometry from scripts/seedship. Four user-supplied illustrations guided the design.",
+      "source": "Original Prism Seedship model, baked mineral maps and panel geometry from scripts/seedship. Four user-supplied illustrations guided the design. The preserved alien, dermal maps, machinery and recovery-bay instrumentation were modeled and drawn for this package.",
       "author": "Project contributors",
       "license": "Project-authored meshes and surface art. The visual reference images are separate from this package.",
       "local_path": "assets/blender/alien-spaceship/prism-seedship.blend",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "f44976ea3e53205a91472c06bddede0a78120026444020746415493e0d072104"
+      "sha256": "460918e405c1f1eae99aaf689a9d58892b533d539db3855bd5808edb0265a7ec"
     },
     {
       "id": "prism-seedship-catalog",
@@ -2418,13 +2418,13 @@
     {
       "id": "prism-seedship-assembly",
       "kind": "mesh",
-      "source": "Original Prism Seedship model, baked mineral maps and panel geometry from scripts/seedship. Four user-supplied illustrations guided the design.",
+      "source": "Original Prism Seedship model, baked mineral maps and panel geometry from scripts/seedship. Four user-supplied illustrations guided the design. The preserved alien, dermal maps, machinery and recovery-bay instrumentation were modeled and drawn for this package.",
       "author": "Project contributors",
       "license": "Project-authored meshes and surface art. The visual reference images are separate from this package.",
       "local_path": "assets/exports/alien-spaceship/prism-seedship.glb",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "078a6abab972363170f487fd9ea29ca276617ce6988d551ba9d415fe9ded5064"
+      "sha256": "6f438bd9f5f6393f48ff42168f7bef58332bd107b829c5102283e47ce1ba6a71"
     },
     {
       "id": "prism-seedship-light",

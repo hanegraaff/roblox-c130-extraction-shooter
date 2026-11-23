@@ -142,6 +142,50 @@ def navigation(objects):
                 impactThresholdSamples=39,trailingCameraRaysStuds=cams)
 
 
+def recovery_checks(objects):
+    """Verify the sole specimen, its actual bedding, and the furnished access route."""
+    names = {o.name for o in objects}
+    assert not any(n.startswith('Scale •') for n in names), 'Survey figure in assembly'
+    bodies = [o for o in objects if o.get('Role') == 'PreservedSpecimen']
+    details = [o for o in objects if o.get('Role') == 'SpecimenDetail']
+    assert len(bodies) == 1 and len(details) == 2
+    equipment = [o for o in objects if o.get('Equipment')]
+    gear = {o['Equipment']: o for o in equipment}
+    expected = {'ExaminationSlab','Telemetry','Scanner','DiagnosticTerminal','InductionDrive',
+                'PhaseManifold','MemoryRack','InstrumentTray','FoldNavigator'}
+    assert set(gear) == expected, expected ^ set(gear)
+    assert len(equipment) == len(expected), 'Duplicated recovery equipment'
+    # Blender can read boolean glTF extras as integer ID properties.
+    assert all(o.get('ThermalNonCover') == 1 for o in [*bodies,*details,*equipment])
+    cx,cy,_ = gear['ExaminationSlab'].matrix_world.translation
+    bed,skin = bvh([gear['ExaminationSlab']]),bvh(bodies)
+    clearances = {}
+    for label,dx,dy in [('cranium',0,3.15),('upper back',0,.42),('pelvis',0,-1.02),('right calf',.54,-2.83)]:
+        x,y = cx+dx,cy+dy
+        pad = bed.ray_cast((x,y,6),DOWN,6)[0]
+        underside = skin.ray_cast((x,y,1),UP,6)[0]
+        assert pad is not None and underside is not None,label
+        gap = underside.z-pad.z
+        assert -.045 <= gap <= .17,(label,gap)
+        clearances[label] = round(gap,3)
+
+    # Follow a four-stud-wide route from the central side aisle to the near
+    # edge of the slab. Five height probes include its center and four corners.
+    furnishings = bvh(objects)
+    floor = bvh(o for o in objects if o.get('Role') == 'WalkableFloor')
+    probes = 0
+    for station in range(14):
+        y = 1.25+station
+        for dx,dy in [(0,0),(-2,-.75),(2,-.75),(-2,.75),(2,.75)]:
+            x = cx-4.45+dx
+            support = floor.ray_cast((x,y+dy,.4),DOWN,.6)[0]
+            assert support is not None,(x,y+dy)
+            assert distance(furnishings,(x,y+dy,.16),UP,5.5) is None,('obstructed berth approach',x,y+dy)
+            probes += 1
+    return dict(preservedSpecimens=1,instruments=sorted(gear),bedGapStuds=clearances,
+                clearBerthApproachSamples=probes)
+
+
 def panel_checks(objects):
     by_name={o.name:o for o in objects}
     count=0
@@ -192,9 +236,14 @@ def main():
     assert groups[4].hide_render and groups[4].hide_viewport
     groups[4].hide_viewport=False
     bpy.context.view_layer.update()
+    review_sets={o.name for o in groups[5].objects if o.type=='MESH'}
+    assert review_sets=={'Set • dry lake bed','Set • eroded mesas and talus'},review_sets
+    assert not any(o.name.startswith('Scale •') or o.type=='ARMATURE' for o in bpy.data.objects)
+    assert bpy.context.scene.camera.name=='Recovery bay'
     assembly=[o for g in groups[:4] for o in g.objects]
     lib=list(groups[4].objects)
     src,alt=snapshot(assembly),snapshot(lib)
+    recovery=recovery_checks(assembly)
     source_nav=navigation(assembly)
     source_panels=panel_checks(assembly+lib)
     images=[i for i in bpy.data.images if i.source=='FILE']
@@ -204,6 +253,7 @@ def main():
     bpy.ops.import_scene.gltf(filepath=str(EXPORT/'prism-seedship.glb'))
     imported=list(bpy.context.scene.objects)
     compare(src,snapshot(imported))
+    assert recovery_checks(imported)==recovery
     nav=navigation(imported)
     assert nav==source_nav,(nav,source_nav)
     for name in LIBRARIES:
@@ -217,7 +267,7 @@ def main():
     assert len(CATALOG['fragments'])==4
     report=dict(blender=bpy.app.version_string,sourceSha256=hashlib.sha256(p.read_bytes()).hexdigest(),
                 sourceAndReimportWorldBounds=limits,textureDecodedBytes=texture_bytes,sourceAndReimportRoutes=nav,
-                sourceAndReimportPanels=checked,files={n:gltf_stats(EXPORT/n) for n in ['prism-seedship.glb',*LIBRARIES]})
+                sourceAndReimportRecoveryBay=recovery,reviewSurveyFigures=0,sourceAndReimportPanels=checked,files={n:gltf_stats(EXPORT/n) for n in ['prism-seedship.glb',*LIBRARIES]})
     (ROOT/'docs/images/alien-spaceship/inspection.json').write_text(json.dumps(report,indent=2)+'\n')
     print('SEEDSHIP ROUND TRIP OK',json.dumps(report))
 

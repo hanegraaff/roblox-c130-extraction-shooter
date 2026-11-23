@@ -13,6 +13,9 @@ sys.path[:0]=[str(HERE),str(HERE.parent/'radar_outpost')]
 from meshwork import collection
 from form import Mesh
 import decks
+import diagnostics
+import equipment
+import specimen
 import hull
 import relics
 import review
@@ -59,8 +62,12 @@ def main():
     stage=collection('06 • Review only')
     with tempfile.TemporaryDirectory() as tmp:
         surfaces.prepare(Path(tmp))
+        diagnostics.prepare(Path(tmp))
+        specimen.prepare_skin(Path(tmp))
     decks.decks(stable,detail)
     relics.furnish(stable,detail)
+    equipment.build(detail)
+    specimen.build(detail)
     records=hull.assemble(panels,frame,variants)
     decks.vaulting(frame,panels,frame)
     spalls=fragments(variants)

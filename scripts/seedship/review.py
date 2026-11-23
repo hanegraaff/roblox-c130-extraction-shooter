@@ -1,12 +1,16 @@
-"""Daylight badlands and interior bounce lighting, cameras and scale figures. Review only."""
+"""Daylight badlands, interior bounce lighting and review cameras. Review only."""
 import math
 import random
 import bpy
 from mathutils import Vector
-from form import Mesh, UP
+from form import Mesh
 from meshwork import MATERIALS
 
 VIEWS = {
+    'Recovery bay': ((44.0,4.5,10.8),(55.4,11.1,3.60),33),
+    'Specimen 07': ((52.9,8.0,8.48),(55,13.51,4.05),55),
+    'Resonator bank': ((16,-31,6.75),(24,-15.8,3.75),41),
+    'Field machinery': ((-39,-42,7.6),(-26,-15,4.85),43),
     'Exterior': ((17,-205,68),(0,-5,11),30.4),
     'Flank': ((150,-181,37),(7,-7,13),33),
     'Arrival hall': ((1,-58.5,5.4),(0,13,11.0),15),
@@ -111,27 +115,6 @@ def badlands(g):
     m.finish('Set • eroded mesas and talus',g)
 
 
-def scale_figure(g,name,pos,yaw):
-    # Simple five-and-a-half-stud survey suits give distance cues in the hall.
-    m=Mesh()
-    for sign in (-1,1):
-        a=sign*.35
-        m.block(a-.244,a+.244,-.41,.31,0,.43,'night',.08)
-        m.rod((a,0,.37),(a*.87,.02,2.52),.235,'suit',8,.28)
-        m.rod((sign*.54,0,3.98),(sign*.78,-.07,3.25),.235,'surveyor',8,.18)
-        m.rod((sign*.78,-.07,3.25),(sign*.87,-.18,2.69),.17,'suit',8,.135)
-    m.loft([(-.46,-.26,2.4),(.46,-.26,2.4),(.46,.26,2.4),(-.46,.26,2.4)],
-           [(-.59,-.31,4.12),(.59,-.31,4.12),(.59,.31,4.12),(-.59,.31,4.12)],'surveyor')
-    m.block(-.36,.36,.25,.66,2.85,3.94,'suit',.16)
-    m.rod((0,0,4.13),(0,0,4.48),.235,'night')
-    m.rod((0,0,4.42),(0,0,4.70),.34,'surveyor',12,.44)
-    m.rod((0,0,4.70),(0,0,5.10),.44,'suit',12)
-    m.rod((0,0,5.10),(0,0,5.42),.44,'surveyor',12,.29)
-    obj=m.finish('Scale • '+name,g)
-    obj.location=pos
-    obj.rotation_euler.z=yaw
-
-
 def setup(g):
     scene=bpy.context.scene
     scene.render.engine='CYCLES'
@@ -180,12 +163,10 @@ def setup(g):
               (x*.77,y+4,1),6800 if abs(x)<50 else 3700,(.82,1,.84) if j%3 else (1,.82,.70),13)
     for j,(x,y) in enumerate([(68,23),(71,-5),(-65,18),(-59,-12),(-23,32),(22,33)]):
         light(f'Gallery bounce {j:02d}','AREA',(x,y,13.6),(x-3,y-2,2),1800,(.91,.95,.73),7)
+    light('Recovery • vaulted lamp','AREA',(56.6,14.7,8.4),(55,12.4,3.8),445,(.72,.93,1),3.1)
+    light('Recovery • amber service bounce','AREA',(58.9,10.9,5.6),(55,12.2,3.9),180,(1,.58,.32),2)
+    light('Recovery • corneal reflection','AREA',(52.2,11.8,7.4),(55,13.6,4.1),115,(.82,.97,1),1.5)
     badlands(g)
-    material('surveyor',(.77,.276,.072),.52)
-    material('suit',(.042,.083,.101),.34)
-    for name,pos,yaw in [('threshold',(6,-67,-1.20),1.4),('arrival',(-15,-17,0),.64),
-                         ('observer',(39,29,16),2.6),('spire',(-14,2,0),1.1),('curator',(60,24,0),3.4)]:
-        scale_figure(g,name,pos,yaw)
     for name,(pos,target,lens) in VIEWS.items():
         d=bpy.data.cameras.new(name)
         o=bpy.data.objects.new(name,d)
@@ -194,14 +175,14 @@ def setup(g):
         o.rotation_euler=(Vector(target)-o.location).to_track_quat('-Z','Y').to_euler()
         d.lens=lens
         d.clip_end=2200
-        if name=='Exterior':
+        if name=='Recovery bay':
             scene.camera=o
     for area in bpy.context.screen.areas:
         if area.type=='VIEW_3D':
             s=area.spaces.active
             s.region_3d.view_rotation=scene.camera.rotation_euler.to_quaternion()
-            s.region_3d.view_location=(0,0,13)
-            s.region_3d.view_distance=231
+            s.region_3d.view_location=(55.4,11.1,3.6)
+            s.region_3d.view_distance=15
             s.region_3d.view_perspective='CAMERA'
             s.overlay.show_overlays=False
             s.shading.type='MATERIAL'

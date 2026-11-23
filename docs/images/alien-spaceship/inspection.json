@@ -1,6 +1,6 @@
 {
   "blender": "5.3.0",
-  "sourceSha256": "f44976ea3e53205a91472c06bddede0a78120026444020746415493e0d072104",
+  "sourceSha256": "460918e405c1f1eae99aaf689a9d58892b533d539db3855bd5808edb0265a7ec",
   "sourceAndReimportWorldBounds": [
     [
       -104.0,
@@ -13,7 +13,7 @@
       40.0
     ]
   ],
-  "textureDecodedBytes": 8388608,
+  "textureDecodedBytes": 11927552,
   "sourceAndReimportRoutes": {
     "treadSamples": 144,
     "minimumStairHeadroom": 8.97,
@@ -29,6 +29,28 @@
       "vault": "clear to 12.5"
     }
   },
+  "sourceAndReimportRecoveryBay": {
+    "preservedSpecimens": 1,
+    "instruments": [
+      "DiagnosticTerminal",
+      "ExaminationSlab",
+      "FoldNavigator",
+      "InductionDrive",
+      "InstrumentTray",
+      "MemoryRack",
+      "PhaseManifold",
+      "Scanner",
+      "Telemetry"
+    ],
+    "bedGapStuds": {
+      "cranium": 0.005,
+      "upper back": 0.093,
+      "pelvis": 0.083,
+      "right calf": 0.13
+    },
+    "clearBerthApproachSamples": 70
+  },
+  "reviewSurveyFigures": 0,
   "sourceAndReimportPanels": {
     "panelCount": 102,
     "raycasts": 182070,
@@ -37,14 +59,14 @@
   },
   "files": {
     "prism-seedship.glb": {
-      "bytes": 17086940,
-      "sha256": "078a6abab972363170f487fd9ea29ca276617ce6988d551ba9d415fe9ded5064",
-      "objects": 213,
-      "uniqueMeshes": 213,
-      "assembledTriangles": 191414,
-      "largestMeshTriangles": 10936,
-      "materials": 14,
-      "embeddedImages": 8
+      "bytes": 19689328,
+      "sha256": "6f438bd9f5f6393f48ff42168f7bef58332bd107b829c5102283e47ce1ba6a71",
+      "objects": 225,
+      "uniqueMeshes": 225,
+      "assembledTriangles": 227142,
+      "largestMeshTriangles": 13400,
+      "materials": 24,
+      "embeddedImages": 11
     },
     "light-and-intact-proxies.glb": {
       "bytes": 17989140,
