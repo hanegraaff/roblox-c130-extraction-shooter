@@ -20,6 +20,69 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     local function state(owner: Owner, id: string): Snapshot
         return assert(owner.snapshot(id), "missing panel " .. id)
     end
+    test("P19 ground contact advances one ordered blast across unique registered panels", function()
+        local owner = Service.new()
+        owner.reset(1, { "near", "other", "covered", "wreck" }, "wreck")
+        owner.changed()
+        local nearby = { "near", "near", "other" }
+        assert(
+            owner.resolve({ roundId = 1, shotId = 2, firedAt = 4, weapon = "M102", blastPanelIds = nearby })
+        )
+        assert(#owner.changed() == 0, "out-of-order blast jumped the frontier")
+        nearby[1], nearby[2], nearby[3] = "covered", "covered", "covered"
+        assert(owner.resolve({ roundId = 1, shotId = 1, firedAt = 0, weapon = "M102" }))
+        assert(
+            table.concat(owner.changed(), ",") == "near,other",
+            "duplicate or mutable blast changed the wrong panels"
+        )
+        assert(state(owner, "near").stage == 2 and state(owner, "other").stage == 2)
+        assert(state(owner, "covered").stage == 0)
+        assert(not owner.resolve({
+            roundId = 1,
+            shotId = 2,
+            firedAt = 4,
+            weapon = "M102",
+            blastPanelIds = nearby,
+        }))
+        assert(not owner.resolve({
+            roundId = 0,
+            shotId = 3,
+            firedAt = 8,
+            weapon = "M102",
+            blastPanelIds = nearby,
+        }))
+        assert(not owner.resolve({
+            roundId = 1,
+            shotId = 3,
+            firedAt = 8,
+            weapon = "GAU23",
+            blastPanelIds = nearby,
+        }))
+        assert(not owner.resolve({
+            roundId = 1,
+            shotId = 3,
+            firedAt = 8,
+            weapon = "M102",
+            blastPanelIds = { "missing" },
+        }))
+        assert(not owner.resolve({
+            roundId = 1,
+            shotId = 3,
+            firedAt = 8,
+            weapon = "M102",
+            blastPanelIds = { "wreck" },
+        }))
+        assert(#owner.changed() == 0 and state(owner, "covered").stage == 0)
+        assert(owner.resolve({
+            roundId = 1,
+            shotId = 3,
+            firedAt = 8,
+            weapon = "M102",
+            panelId = "covered",
+            blastPanelIds = { "covered", "near" },
+        }))
+        assert(table.concat(owner.changed(), ",") == "covered", "direct and splash were not idempotent")
+    end)
     local function shot(owner: Owner, id: number, time: number, panel: string?, weapon: string?)
         assert(
             owner.resolve({

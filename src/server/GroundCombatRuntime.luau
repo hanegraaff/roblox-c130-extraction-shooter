@@ -51,7 +51,14 @@ export type Controller = {
     rocketSweep: (number, string, Vector3, Vector3) -> boolean,
     -- Sweeps the first authoritative solid. Returns collision and aircraft award;
     -- nil collision means clear travel, never permission to skip solid cover.
-    rocketCast: (number, string, Vector3, Vector3, number?) -> (Vector3?, boolean),
+    -- Contact in world studs, direct aircraft award, optional surface normal/material.
+    rocketCast: (
+        number,
+        string,
+        Vector3,
+        Vector3,
+        number?
+    ) -> (Vector3?, boolean, Vector3?, Enum.Material?, boolean?),
     -- Applies accepted rifle rays against pre-impact geometry during the frame.
     resolveRifles: () -> (),
     -- Synchronizes equipment, cosmetics and health with the committed phase.
@@ -290,7 +297,7 @@ function GroundCombatRuntime.start(
         origin: Vector3,
         displacement: Vector3,
         userId: number?
-    ): (Vector3?, boolean)
+    ): (Vector3?, boolean, Vector3?, Enum.Material?, boolean?)
         if
             not running
             or displacement.Magnitude <= 0
@@ -299,13 +306,13 @@ function GroundCombatRuntime.start(
             or origin.Magnitude == math.huge
             or displacement.Magnitude ~= displacement.Magnitude
         then
-            return nil, false
+            return nil, false, nil, nil, nil
         end
         local aircraft = workspace:FindFirstChild("Aircraft")
         local world = workspace:FindFirstChild("World")
         local battlefield = if world then world:FindFirstChild("Battlefield") else nil
         if not aircraft or not battlefield then
-            return nil, false
+            return nil, false, nil, nil, nil
         end
         local parameters = RaycastParams.new()
         parameters.FilterType = Enum.RaycastFilterType.Include
@@ -315,15 +322,15 @@ function GroundCombatRuntime.start(
         overlap.FilterDescendantsInstances = { battlefield }
         overlap.MaxParts = 1
         if #workspace:GetPartBoundsInRadius(origin, 0.2, overlap) > 0 then
-            return origin, false
+            return origin, false, -displacement.Unit, nil, false
         end
         local hit = workspace:Spherecast(origin, 0.2, displacement, parameters)
         if not hit then
-            return nil, false
+            return nil, false, nil, nil, nil
         end
         local applied = hit.Instance:IsDescendantOf(aircraft)
             and award(roundId, shotId, "RocketLauncher", true, userId)
-        return hit.Position, applied
+        return hit.Position, applied, hit.Normal, hit.Material, hit.Instance == workspace.Terrain
     end
     local function resolveRifles()
         if not running then

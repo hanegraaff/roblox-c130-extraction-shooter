@@ -4,6 +4,16 @@ type API = typeof(require(game:GetService("ReplicatedStorage").Shared.WeaponSoun
 
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local rules = candidate :: API
+    test("P19 impact color changes the audible surface without changing arrival timing", function()
+        local ground = assert(rules.profile("HeavyImpact", "Ground"))
+        local metal = assert(rules.profile("HeavyImpact", "Metal"))
+        local short = assert(rules.profile("LightImpact", "Metal"))
+        local rocket = assert(rules.profile("RocketImpact", "Metal"))
+        assert(ground.highGain < metal.highGain and ground.speed < metal.speed)
+        assert(short.duration < rocket.duration and rocket.duration < metal.duration)
+        assert(rules.due(ground, 400, 10, 10, false) == rules.due(metal, 400, 10, 10, false))
+        assert(table.find(rules.assets(), rules.fallbackAsset))
+    end)
     test("Distant cannon fire and impacts arrive later than a local rifle or rocket launch", function()
         local light = assert(rules.profile("GAU23"), "30mm profile missing")
         local heavy = assert(rules.profile("M102"), "105mm profile missing")

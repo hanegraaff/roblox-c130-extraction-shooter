@@ -10,7 +10,6 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local HttpService = game:GetService("HttpService")
-local Debris = game:GetService("Debris")
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
 local AircraftService = require(script.Parent.AircraftService)
 local MatchService = require(script.Parent.MatchService)
@@ -19,8 +18,10 @@ local CombatViewRules = require(script.Parent.CombatViewRules)
 local DamageRules = require(script.Parent.DamageRules)
 local DestructionRuntime = require(script.Parent.DestructionRuntime)
 local DestructionService = require(script.Parent.DestructionService)
+local BlastGeometry = require(script.Parent.BlastGeometry)
 local CombatRuntime = {}
 local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
+local WeaponImpactRules = require(ReplicatedStorage.Shared.WeaponImpactRules)
 
 -- Impact is a server-resolved direct collision observation, never client authority.
 -- panelId is nil for terrain/players or unregistered solids. Observers must not
@@ -114,7 +115,8 @@ function CombatRuntime.start(
     heartbeat: RBXScriptSignal?,
     structure: DestructionRuntime.Controller?,
     externallyStepped: boolean?,
-    emitSound: WeaponSoundRules.Emit?
+    emitSound: WeaponSoundRules.Emit?,
+    emitImpact: WeaponImpactRules.Emit?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("FireWeapon") then
@@ -199,7 +201,7 @@ function CombatRuntime.start(
         params.RespectCanCollide = not includeCharacters
         return params
     end
-    local function outcome(projectile: Projectile, panelId: string?)
+    local function outcome(projectile: Projectile, panelId: string?, blastPanelIds: { string }?)
         if structure then
             structure.resolve({
                 roundId = projectile.shot.roundId,
@@ -207,6 +209,7 @@ function CombatRuntime.start(
                 weapon = projectile.shot.weapon,
                 firedAt = projectile.shot.firedAt,
                 panelId = panelId,
+                blastPanelIds = blastPanelIds,
             })
         end
     end
@@ -217,7 +220,9 @@ function CombatRuntime.start(
         position: Vector3,
         hit: Instance?,
         time: number,
-        embeddedInCover: boolean?
+        embeddedInCover: boolean?,
+        contactNormal: Vector3?,
+        surface: Enum.Material?
     ): boolean
         local state = match.snapshot()
         if
@@ -233,8 +238,7 @@ function CombatRuntime.start(
         end
         local panelId: string? = nil
         if structure then
-            -- Registry identity, not a copied/string-only tag, owns structural
-            -- credit. Every other accepted collision still resolves as a miss.
+            -- Actual live registry identity owns structural credit.
             panelId = structure.identify(hit)
         elseif hit then
             local id = hit:GetAttribute("PanelId")
@@ -242,7 +246,22 @@ function CombatRuntime.start(
                 panelId = id
             end
         end
-        local visibilityOrigin = position - projectile.direction * 0.1
+        local normal = contactNormal or -projectile.direction
+        local visibilityOrigin = position + normal * 0.1
+        local cover = rayParameters(false)
+        local blastPanelIds: { string }? = nil
+        local battlefield = workspace.World:FindFirstChild("Battlefield")
+        if structure and battlefield and projectile.shot.weapon == "M102" and not embeddedInCover then
+            blastPanelIds = BlastGeometry.exposedPanels(
+                position,
+                visibilityOrigin,
+                profile.radius,
+                battlefield,
+                cover,
+                structure.identify,
+                panelId
+            )
+        end
         for _, player in Players:GetPlayers() do
             local member = state.members[player.UserId]
             local character = player.Character
@@ -260,10 +279,9 @@ function CombatRuntime.start(
                 and root:IsA("BasePart")
             then
                 local direct = hit ~= nil and character ~= nil and hit:IsDescendantOf(character)
-                local delta = root.Position - visibilityOrigin
-                if direct or delta.Magnitude <= profile.radius then
-                    local visible =
-                        CombatRuntime.coverAllows(visibilityOrigin, root.Position, rayParameters(false))
+                local distance = (root.Position - position).Magnitude
+                if direct or CombatService.withinBlast(distance, profile.radius) then
+                    local visible = CombatRuntime.coverAllows(visibilityOrigin, root.Position, cover)
                     if direct or visible then
                         local damage = projectile.awards.award(
                             player.UserId,
@@ -291,23 +309,31 @@ function CombatRuntime.start(
                 y = position.Y,
                 z = position.Z,
                 panelId = panelId,
+                blastPanelIds = blastPanelIds,
             })
         )
-        projectile.marker.Name = "Impact"
-        projectile.marker:SetAttribute("Stage", "Impact")
-        projectile.marker.Shape = Enum.PartType.Ball
-        projectile.marker.Position = position
-        projectile.marker.Size = Vector3.one * (if projectile.shot.weapon == "M102" then 18 else 4)
-        projectile.marker.Transparency = 0.2
-        Debris:AddItem(projectile.marker, 0.35)
-        outcome(projectile, panelId)
+        projectile.marker:Destroy()
+        outcome(projectile, panelId, blastPanelIds)
+        local surfaceKind = WeaponImpactRules.surface(surface, hit == workspace.Terrain, false)
+        if emitImpact then
+            emitImpact(
+                if projectile.shot.weapon == "M102" then "M102" else "GAU23",
+                state.roundId,
+                tostring(projectile.shot.shotId),
+                position,
+                normal,
+                surfaceKind,
+                time
+            )
+        end
         if emitSound then
             emitSound(
                 if projectile.shot.weapon == "M102" then "HeavyImpact" else "LightImpact",
                 state.roundId,
                 position,
                 time,
-                nil
+                nil,
+                surfaceKind
             )
         end
         emit({
@@ -402,10 +428,16 @@ function CombatRuntime.start(
             marker:SetAttribute("Weapon", weapon)
             marker:SetAttribute("Stage", "Warning")
             marker.Shape = Enum.PartType.Cylinder
-            marker.Size = if weapon == "M102" then Vector3.new(0.3, 22, 22) else Vector3.new(0.2, 5, 5)
+            local blastRadius = CombatService.profiles[weapon].radius
+            marker.Size = if weapon == "M102"
+                then Vector3.new(0.2, blastRadius * 2, blastRadius * 2)
+                else Vector3.new(0.2, 5, 5)
+            if weapon == "M102" then
+                marker:SetAttribute("RadiusStuds", blastRadius)
+            end
             marker.Material = Enum.Material.Neon
             marker.Color = visual.Color
-            marker.Transparency = 0.65
+            marker.Transparency = 0.88
             marker.Anchored = true
             marker.CanCollide = false
             marker.CanTouch = false
@@ -560,7 +592,18 @@ function CombatRuntime.start(
                 if not hit then
                     outcome(projectile, nil)
                 end
-                if not hit or not impact(projectile, projectile.position, hit.Instance, time) then
+                if
+                    not hit
+                    or not impact(
+                        projectile,
+                        projectile.position,
+                        hit.Instance,
+                        time,
+                        nil,
+                        hit.Normal,
+                        hit.Material
+                    )
+                then
                     projectile.marker:Destroy()
                 end
                 projectile.visual:Destroy()

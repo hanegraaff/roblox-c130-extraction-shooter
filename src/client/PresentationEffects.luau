@@ -44,12 +44,14 @@ local function warningNearby(player: Player): boolean
         return false
     end
     for _, marker in effects:GetChildren() do
-        if
-            marker:IsA("BasePart")
-            and marker:GetAttribute("Stage") == "Warning"
-            and (marker.Position - root.Position).Magnitude <= warningRadiusStuds
-        then
-            return true
+        if marker:IsA("BasePart") and marker:GetAttribute("Stage") == "Warning" then
+            local radius = marker:GetAttribute("RadiusStuds")
+            if
+                (marker.Position - root.Position).Magnitude
+                <= (if type(radius) == "number" then radius else warningRadiusStuds)
+            then
+                return true
+            end
         end
     end
     return false

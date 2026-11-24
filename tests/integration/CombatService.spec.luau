@@ -3,6 +3,13 @@
 type API = typeof(require(game:GetService("ServerScriptService").Server.CombatService))
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local combat = candidate :: API
+    test("P19 howitzer radius includes 36 studs and preserves the light impact radius", function()
+        local radius = combat.profiles.M102.radius
+        assert(radius == 36 and combat.profiles.GAU23.radius == 4)
+        assert(combat.withinBlast(18.01, radius) and combat.withinBlast(35.999, radius))
+        assert(combat.withinBlast(36, radius) and not combat.withinBlast(36.001, radius))
+        assert(not combat.withinBlast(0 / 0, radius) and not combat.withinBlast(-1, radius))
+    end)
     local defaults = {
         centerX = 0,
         centerZ = 0,

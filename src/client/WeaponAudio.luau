@@ -29,6 +29,7 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
     local listener: RBXScriptConnection? = nil
     local round, active, scale = -1, false, 0
     local stopped = false
+    local ready: { [string]: boolean } = {}
 
     local function retire(index: number)
         local voice = assert(table.remove(voices, index), "weapon audio voice index missing")
@@ -48,9 +49,10 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
         eventRound: unknown,
         origin: unknown,
         seconds: unknown,
-        shooter: unknown
+        shooter: unknown,
+        surface: unknown
     )
-        local profile = Rules.profile(cue)
+        local profile = Rules.profile(cue, surface)
         if
             not active
             or scale == 0
@@ -85,13 +87,25 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
     if current then
         attach(current)
     end
+    local preloadSounds: { Instance } = {}
+    for _, asset in Rules.assets() do
+        local sound = Instance.new("Sound")
+        sound.SoundId = asset
+        table.insert(preloadSounds, sound)
+    end
+    local function destroyPreloadSounds()
+        for _, sound in preloadSounds do
+            sound:Destroy()
+        end
+        table.clear(preloadSounds)
+    end
     local preload = task.defer(function()
-        ContentProvider:PreloadAsync({
-            assert(Rules.profile("GAU23"), "missing gunship effect").asset,
-            assert(Rules.profile("M102"), "missing howitzer effect").asset,
-            assert(Rules.profile("M7"), "missing rifle effect").asset,
-            assert(Rules.profile("RocketLaunch"), "missing launcher effect").asset,
-        })
+        -- Sound instances give the fetcher the correct content type for each
+        -- ID. Bare string IDs can resolve as generic assets and miss audio.
+        ContentProvider:PreloadAsync(preloadSounds, function(asset, status)
+            ready[asset] = status == Enum.AssetFetchStatus.Success
+        end)
+        destroyPreloadSounds()
     end)
 
     local function play(item: Pending, seconds: number)
@@ -109,7 +123,7 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
         source:SetAttribute("PlayedSeconds", seconds)
 
         local sound = Instance.new("Sound")
-        sound.SoundId = profile.asset
+        sound.SoundId = if ready[profile.asset] then profile.asset else Rules.fallbackAsset
         sound.Volume = profile.volume * scale
         sound.PlaybackSpeed = profile.speed
         sound.RollOffMode = Enum.RollOffMode.InverseTapered
@@ -172,6 +186,7 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
             if coroutine.status(preload) ~= "dead" then
                 task.cancel(preload)
             end
+            destroyPreloadSounds()
             clear()
             holder:Destroy()
         end,

@@ -8,6 +8,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local WeaponSoundRules = require(ReplicatedStorage.Shared.WeaponSoundRules)
+local WeaponImpactRules = require(ReplicatedStorage.Shared.WeaponImpactRules)
 local RunService = game:GetService("RunService")
 local MapService = require(script.Parent.MapService)
 local MatchRuntime = require(script.Parent.MatchRuntime)
@@ -117,9 +118,23 @@ function GameRuntime.start(
         return nil, roundReason
     end
     local soundEvent: UnreliableRemoteEvent? = nil
-    local emitSound: WeaponSoundRules.Emit = function(cue, roundId, origin, seconds, shooter)
+    local impactEvent: RemoteEvent? = nil
+    local emitSound: WeaponSoundRules.Emit = function(cue, roundId, origin, seconds, shooter, surface)
         if soundEvent then
-            soundEvent:FireAllClients(cue, roundId, origin, seconds, shooter)
+            soundEvent:FireAllClients(cue, roundId, origin, seconds, shooter, surface)
+        end
+    end
+    local emitImpact: WeaponImpactRules.Emit = function(
+        weapon,
+        roundId,
+        shotId,
+        contact,
+        normal,
+        surface,
+        seconds
+    )
+        if impactEvent then
+            impactEvent:FireAllClients(weapon, roundId, shotId, contact, normal, surface, seconds)
         end
     end
     local aircraft, aircraftReason = AircraftService.start(rounds.match, nil, true)
@@ -137,7 +152,7 @@ function GameRuntime.start(
     end
     destruction.sync(rounds.match.snapshot().roundId)
     local combat, combatReason =
-        CombatRuntime.start(rounds.match, aircraft, nil, nil, nil, destruction, true, emitSound)
+        CombatRuntime.start(rounds.match, aircraft, nil, nil, nil, destruction, true, emitSound, emitImpact)
     if not combat then
         destruction.stop()
         aircraft.stop()
@@ -155,7 +170,8 @@ function GameRuntime.start(
         map.destroy()
         return nil, groundReason
     end
-    local launcher, launcherReason = LauncherRuntime.start(rounds.match, groundCombat, true, emitSound)
+    local launcher, launcherReason =
+        LauncherRuntime.start(rounds.match, groundCombat, true, emitSound, emitImpact)
     if not launcher then
         groundCombat.stop()
         combat.stop()
@@ -170,6 +186,10 @@ function GameRuntime.start(
     transport.Name = "WeaponAudio"
     transport.Parent = roundState
     soundEvent = transport
+    local contactTransport = Instance.new("RemoteEvent")
+    contactTransport.Name = "WeaponImpact"
+    contactTransport.Parent = roundState
+    impactEvent = contactTransport
     onCorrection = function(character)
         local player = Players:GetPlayerFromCharacter(character)
         if player then
@@ -209,6 +229,8 @@ function GameRuntime.start(
             frame:Disconnect()
             soundEvent = nil
             transport:Destroy()
+            impactEvent = nil
+            contactTransport:Destroy()
             onCorrection = nil
             launcher.stop()
             groundCombat.stop()
