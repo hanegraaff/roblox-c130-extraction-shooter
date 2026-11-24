@@ -70,9 +70,9 @@ function CombatHarness.run(finish: ((Report) -> ())?)
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
             minimumPlayers = 2,
-            -- The tuned P19 matrix exercises ten separate M102 reload/contact
-            -- cycles and allows bounded searches as the live aircraft orbits.
-            durationSeconds = 210,
+            -- The P19 matrix exercises separate M102 reload/contact cycles
+            -- and allows bounded searches as the live aircraft orbits.
+            durationSeconds = 240,
             lobbySeconds = 0,
             deploymentSeconds = 25,
             resultsSeconds = 10,
@@ -936,6 +936,8 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     authoredMaterial: string?,
                     registry: BuildingGeometry.Registry?,
                     directPanelId: string?,
+                    splash: string?,
+                    shield: BasePart?,
                 }
                 local rejections: { [string]: number } = {}
                 local function reject(reason: string)
@@ -1039,7 +1041,33 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     local shotId = tostring(data.shotId)
                     probe(op, "P19Impact", { id = shotId, point = point })
                     probe(ground, "P19Impact", { id = shotId, point = point })
-                    assert(previousHealth == human.Health, "unexposed ground player took damage")
+                    local targetDistance = (root.Position - point).Magnitude
+                    local hitCover: string? = nil
+                    if witness.splash then
+                        local from = point + Vector3.yAxis * 0.1
+                        local obstruction = workspace:Raycast(from, root.Position - from, cover)
+                        hitCover = if obstruction then obstruction.Instance:GetFullName() else nil
+                        if witness.splash == "Outside" then
+                            assert(targetDistance > profile.radius, "outside control was in range")
+                        else
+                            assert(
+                                targetDistance > 18 and targetDistance <= profile.radius,
+                                "in-range control not between old and new blast bounds"
+                            )
+                        end
+                        if witness.splash == "Shielded" then
+                            assert(
+                                obstruction and obstruction.Instance == witness.shield,
+                                "fixture shield did not block the actual impact-to-root path"
+                            )
+                        else
+                            assert(not obstruction, "open control had unplanned solid cover")
+                        end
+                    end
+                    local expectedHealth = if witness.splash == "Exposed"
+                        then previousHealth - profile.damage
+                        else previousHealth
+                    assert(human.Health == expectedHealth, "wrong ground-player award")
                     local encodedIds = data.blastPanelIds
                     assert(type(encodedIds) == "table", "registered query omitted the blast result")
                     local ids = encodedIds :: { unknown }
@@ -1065,7 +1093,10 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     end
                     assert(runtime.destruction.resources().fragments <= 48, "fragment cap exceeded")
                     table.insert(observations, {
-                        kind = if directPanelId then "P19-roof-contact" else "P19-ground-contact",
+                        kind = if directPanelId
+                            then "P19-roof-contact"
+                            elseif witness.splash then "P19-ground-award"
+                            else "P19-ground-contact",
                         building = if registry then registry.buildingId else nil,
                         path = target.Instance:GetFullName(),
                         material = target.Material.Name,
@@ -1074,6 +1105,11 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                         shotId = data.shotId,
                         point = { point.X, point.Y, point.Z },
                         blastPanelIds = ids,
+                        splashCase = witness.splash,
+                        targetDistanceStuds = if witness.splash then targetDistance else nil,
+                        targetCover = hitCover,
+                        targetHealthBefore = if witness.splash then previousHealth else nil,
+                        targetHealthAfter = if witness.splash then human.Health else nil,
                     })
                 end
                 local function awaitReload()
@@ -1106,7 +1142,8 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     table.insert(observations, { kind = "P19-contact-selection-failed", detail = detail })
                     error("no stable P19 contact: " .. HttpService:JSONEncode(detail))
                 end
-                local emptySurfaces = {
+                type EmptySite = { centers: { Vector2 }, materials: { Enum.Material } }
+                local emptySurfaces: { EmptySite } = {
                     {
                         centers = { Vector2.new(-210, -80), Vector2.new(-100, -34), Vector2.new(-265, 25) },
                         materials = { Enum.Material.Sand, Enum.Material.Sandstone },
@@ -1152,20 +1189,108 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                     end
                     return { contact = hit, authoredMaterial = native.Material.Name }
                 end
-                for _, site in emptySurfaces do
-                    fire(awaitWitness("empty " .. site.materials[1].Name .. " ground", function()
-                        for _, center in site.centers do
-                            for _, dx in offsets do
-                                for _, dz in offsets do
-                                    local witness = bareTerrain(center.X + dx, center.Y + dz, site.materials)
-                                    if witness then
-                                        return witness
-                                    end
+                local function findEmpty(site: EmptySite, accept: ((Witness) -> boolean)?): Witness?
+                    for _, center in site.centers do
+                        for _, dx in offsets do
+                            for _, dz in offsets do
+                                local witness = bareTerrain(center.X + dx, center.Y + dz, site.materials)
+                                if witness and (not accept or accept(witness)) then
+                                    return witness
                                 end
                             end
                         end
-                        return nil
-                    end))
+                    end
+                    return nil
+                end
+                local function verifyGroundAwards(initial: Witness, site: EmptySite)
+                    local parked = root.CFrame
+                    local maxHealth, health = human.MaxHealth, human.Health
+                    -- A direct 100-unit award cannot end the two-client suite.
+                    local regeneration = character:FindFirstChild("Health")
+                    local wasDisabled: boolean? = nil
+                    if regeneration and regeneration:IsA("BaseScript") then
+                        wasDisabled = regeneration.Disabled
+                        regeneration.Disabled = true
+                    end
+                    human.MaxHealth = profile.damage * 3
+                    human.Health = human.MaxHealth
+                    local shield = Instance.new("Part")
+                    shield.Name = "P19GroundAwardShield"
+                    shield.Size = Vector3.new(9, 8, 0.6)
+                    shield.Anchored = true
+                    shield.CanTouch = false
+                    local checked, awardFailure = pcall(function()
+                        for _, splash in { "Exposed", "Shielded", "Outside" } do
+                            local function arrange(witness: Witness): boolean
+                                local contact = witness.contact
+                                if contact.Normal.Y < 0.985 then
+                                    reject("nonflat-award-site")
+                                    return false
+                                end
+                                local muzzle = assert(runtime.aircraft.muzzle("M102"), "missing 105mm muzzle")
+                                local approach = muzzle - contact.Position
+                                local side = Vector3.new(-approach.Z, 0, approach.X).Unit
+                                local distance = if splash == "Outside" then profile.radius + 4 else 21.5
+                                local from = contact.Position + Vector3.yAxis * 0.1
+                                for _, sign in { 1, -1 } do
+                                    shield.Parent = nil
+                                    local shift = side * distance * sign
+                                    root.CFrame = CFrame.new(contact.Position + shift + Vector3.yAxis * 3)
+                                    local delta = root.Position - from
+                                    if not workspace:Raycast(from, delta, cover) then
+                                        if splash == "Shielded" then
+                                            local center = contact.Position
+                                                + shift * 0.5
+                                                + Vector3.yAxis * 3.5
+                                            shield.CFrame = CFrame.lookAt(center, center + shift)
+                                            shield.Parent = map
+                                        end
+                                        local blocked = workspace:Raycast(from, delta, cover)
+                                        local correctCover = if splash == "Shielded"
+                                            then blocked ~= nil and blocked.Instance == shield
+                                            else blocked == nil
+                                        if correctCover and stableShot(contact) then
+                                            return true
+                                        end
+                                    end
+                                end
+                                shield.Parent = nil
+                                root.CFrame = parked
+                                reject("award-position-or-shield")
+                                return false
+                            end
+                            local witness = awaitWitness("open-ground award " .. splash, function()
+                                if arrange(initial) then
+                                    return initial
+                                end
+                                return findEmpty(site, arrange)
+                            end)
+                            fire({
+                                contact = witness.contact,
+                                authoredMaterial = witness.authoredMaterial,
+                                splash = splash,
+                                shield = if splash == "Shielded" then shield else nil,
+                            })
+                            shield.Parent = nil
+                            root.CFrame = parked
+                        end
+                    end)
+                    shield:Destroy()
+                    root.CFrame = parked
+                    human.MaxHealth, human.Health = maxHealth, health
+                    if regeneration and regeneration:IsA("BaseScript") and wasDisabled ~= nil then
+                        regeneration.Disabled = wasDisabled
+                    end
+                    assert(checked, tostring(awardFailure))
+                end
+                for index, site in emptySurfaces do
+                    local witness = awaitWitness("empty " .. site.materials[1].Name .. " ground", function()
+                        return findEmpty(site)
+                    end)
+                    fire(witness)
+                    if index == 1 then
+                        verifyGroundAwards(witness, site)
+                    end
                 end
                 for _, registry in registries do
                     fire(awaitWitness("ground beside " .. registry.buildingId, function()
