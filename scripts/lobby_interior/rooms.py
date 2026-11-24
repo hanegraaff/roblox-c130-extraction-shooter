@@ -327,8 +327,9 @@ def theater():
 
 def painting(wall,u,index,height):
     from hashlib import sha256
-    reference=a.REF/("portrait-%d.jpeg"%index)
     oil=index in (2,3,4,6)
+    reference_dir=a.REF/"reference-photos" if oil else a.REF
+    reference=reference_dir/("portrait-%d.jpeg"%index)
     path=a.SOURCE/"oil-portraits"/f"portrait-{index}-oil.png" if oil else reference
     material="Canvas %02d | supplied portrait"%index
     m=image_mat(material,path,.83)

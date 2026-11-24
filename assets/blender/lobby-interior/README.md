@@ -19,7 +19,7 @@ Use **A1 | Entrance-height composition** or **A1 | Exact waiting anchor eye** fo
 
 ## Six paintings
 
-Each canvas shows the complete approved image. Portraits 1 and 5 use the supplied JPEGs. Portraits 2, 3, 4, and 6 use the approved oil renditions at 1,086 × 1,448 pixels. These four PNGs are upright and use the full canvas UV rectangle. The stretcher and molding project from the wall. In Blender each two-digit number identifies its `Portrait NN | canvas`, the pieces named `Portrait NN | frame …`, its `Canvas NN | supplied portrait` material and its `A2 | Framed portrait NN` camera. [Image hashes and frame assignments](assembly.json)
+Each canvas shows the complete approved image. Portraits 1 and 5 use the supplied JPEGs. Portraits 2, 3, 4, and 6 use the approved oil renditions at 1,086 × 1,448 pixels. These four PNGs are upright and use the full canvas UV rectangle. Exact copies are in `src/images/redesigned-lobby`, with the four original photographs under `reference-photos`. The stretcher and molding project from the wall. In Blender each two-digit number identifies its `Portrait NN | canvas`, the pieces named `Portrait NN | frame …`, its `Canvas NN | supplied portrait` material and its `A2 | Framed portrait NN` camera. [Image hashes and frame assignments](assembly.json)
 
 | Canvas image | Gallery wall | Canvas width × height in studs | Framed view |
 | --- | --- | --- | --- |

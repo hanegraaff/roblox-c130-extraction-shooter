@@ -45,8 +45,21 @@ class WaitingLobbyImport(unittest.TestCase):
         fourth = catalog["paintings"][3]
         self.assertEqual(fourth["clockwise_degrees"], 0)
         self.assertTrue(fourth["source"].endswith("portrait-4-oil.png"))
-        self.assertTrue(fourth["reference"].endswith("portrait-4.jpeg"))
+        self.assertTrue(fourth["reference"].endswith("reference-photos/portrait-4.jpeg"))
         self.assertEqual(canvas["colorSha256"], fourth["source_sha256"])
+
+    def test_gallery_copies_match_approved_oils_and_preserve_reference_photos(self):
+        catalog = json.loads((stage_import.SOURCE / "assembly.json").read_text())
+        images = stage_import.ROOT / "src/images/redesigned-lobby"
+        for painting in catalog["paintings"]:
+            number = painting["portrait"]
+            with self.subTest(portrait=number):
+                reference = stage_import.ROOT / painting["reference"]
+                self.assertEqual(stage_import.digest(reference.read_bytes()), painting["reference_sha256"])
+                if number in (2, 3, 4, 6):
+                    self.assertEqual(reference.parent, images / "reference-photos")
+                    oil_copy = images / f"portrait-{number}.png"
+                    self.assertEqual(stage_import.digest(oil_copy.read_bytes()), painting["source_sha256"])
 
     def test_rejects_changed_staging_before_native_capture(self):
         with tempfile.TemporaryDirectory(prefix="waiting-lobby-import-changed-") as tmp:

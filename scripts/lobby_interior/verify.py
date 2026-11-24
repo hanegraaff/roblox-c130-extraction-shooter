@@ -110,13 +110,16 @@ def site_and_inputs(catalog):
     portraits=catalog["paintings"]
     assert len(portraits)==6 and {p["portrait"] for p in portraits}==set(range(1,7))
     assert len({p["source_sha256"] for p in portraits})==6
+    lobby_images=Path("src/images/redesigned-lobby")
     for p in portraits:
         index=p["portrait"]
-        assert p["reference"]==f"src/images/redesigned-lobby/portrait-{index}.jpeg"
+        references=lobby_images/"reference-photos" if index in OIL_DIGESTS else lobby_images
+        assert p["reference"]==str(references/f"portrait-{index}.jpeg")
         assert digest(ROOT/p["reference"])==p["reference_sha256"]
         if index in OIL_DIGESTS:
             assert p["source"]==f"assets/blender/lobby-interior/oil-portraits/portrait-{index}-oil.png"
             assert digest(ROOT/p["source"])==p["source_sha256"]==OIL_DIGESTS[index]
+            assert digest(ROOT/lobby_images/f"portrait-{index}.png")==p["source_sha256"]
             assert p["raster_px"]==[1086,1448]
         else:
             assert p["source"]==p["reference"] and p["source_sha256"]==p["reference_sha256"]

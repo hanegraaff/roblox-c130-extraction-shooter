@@ -2,7 +2,7 @@
   "blender": "5.3.0",
   "source_sha256": "f2769d2323296bd4ae175d4e273a6b04d7afeb529125a76b475952bbd4688452",
   "export_sha256": "c4be55228c48be218e54b4a305197750ae14c40560d61a0dc114d5ae1312ffcf",
-  "catalog_sha256": "00a149bc3bb769f65a14eeacba23e582f430d36273afc31a9f296251ad35397c",
+  "catalog_sha256": "c54b2367c4ec1a7e419cdc382f861e0285c4de9d5f685d1a360ec0602a08bf34",
   "paintings": [
     {
       "portrait": 1,
@@ -37,7 +37,7 @@
       "portrait": 2,
       "source": "assets/blender/lobby-interior/oil-portraits/portrait-2-oil.png",
       "source_sha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
-      "reference": "src/images/redesigned-lobby/portrait-2.jpeg",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-2.jpeg",
       "reference_sha256": "32278cc6f685170a6271976b3e546d13830b2a745728d98ea52df3af7b404e19",
       "raster_px": [
         1086,
@@ -66,7 +66,7 @@
       "portrait": 3,
       "source": "assets/blender/lobby-interior/oil-portraits/portrait-3-oil.png",
       "source_sha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
-      "reference": "src/images/redesigned-lobby/portrait-3.jpeg",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-3.jpeg",
       "reference_sha256": "27f70552c02939e1436715d2a08a1c74936e51e0fffb3f2efa800a3e2577cc65",
       "raster_px": [
         1086,
@@ -95,7 +95,7 @@
       "portrait": 4,
       "source": "assets/blender/lobby-interior/oil-portraits/portrait-4-oil.png",
       "source_sha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
-      "reference": "src/images/redesigned-lobby/portrait-4.jpeg",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-4.jpeg",
       "reference_sha256": "0b3d66287f1f337162cb747f40435e4a837ae65150e89ad2006ddc3405642ef3",
       "raster_px": [
         1086,
@@ -153,7 +153,7 @@
       "portrait": 6,
       "source": "assets/blender/lobby-interior/oil-portraits/portrait-6-oil.png",
       "source_sha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
-      "reference": "src/images/redesigned-lobby/portrait-6.jpeg",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-6.jpeg",
       "reference_sha256": "797520953af6a6d75fa436c3981bd31bb3f58b8ecb170a8937f9e9b16ca0ba0c",
       "raster_px": [
         1086,

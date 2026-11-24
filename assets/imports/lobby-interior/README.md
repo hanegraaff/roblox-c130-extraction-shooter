@@ -8,7 +8,7 @@ The P22 release and test mappings put the furnished entrance hall, movie theater
 | --- | --- |
 | [Lobby Blender scene](../../blender/lobby-interior/waiting-lobby.blend) | `f2769d2323296bd4ae175d4e273a6b04d7afeb529125a76b475952bbd4688452` |
 | [Lobby GLB](../../exports/lobby-interior/waiting-lobby.glb) | `c4be55228c48be218e54b4a305197750ae14c40560d61a0dc114d5ae1312ffcf` |
-| [Lobby placement catalog](../../blender/lobby-interior/assembly.json) | `00a149bc3bb769f65a14eeacba23e582f430d36273afc31a9f296251ad35397c` |
+| [Lobby placement catalog](../../blender/lobby-interior/assembly.json) | `c54b2367c4ec1a7e419cdc382f861e0285c4de9d5f685d1a360ec0602a08bf34` |
 | [Bust GLB at `62cd82c`](../../exports/lobby-bust/lobby-bust.glb) | `842661e46702b8730fc334026941069bb1c34341a74fb3fcb280aaff1ee7ad90` |
 | [Native lobby model](LobbyArt.rbxm) | `9b4e2fbf9a3c84b3c4ea6459b6f20b655f371f6b4cd6537d63556a5ecdb8932c` |
 
