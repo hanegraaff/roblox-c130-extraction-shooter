@@ -975,6 +975,9 @@ def main() -> None:
     if LOBBY_ART_SOURCE.exists() or LOBBY_ART in release or LOBBY_ART in tests:
         if LOBBY_ART not in release or LOBBY_ART not in tests:
             raise RuntimeError("Furnished lobby art must be mapped in both constructs")
+        visual_spec = "ReplicatedStorage/ClientSpecs/LobbyArt.spec"
+        if tests.get(visual_spec) != "ModuleScript" or visual_spec in release:
+            raise RuntimeError("P22 native art check must be isolated to the test mapping")
         lobby_catalog = json.loads(LOBBY_CATALOG.read_text())
         release_lobby = check_native_lobby_art(instance_nodes(ROOT / "build/game.rbxlx"), lobby_catalog)
         test_lobby = check_native_lobby_art(instance_nodes(ROOT / "build/tests.rbxlx"), lobby_catalog)
@@ -983,6 +986,8 @@ def main() -> None:
         release_parts += len(release_lobby)
         test_parts += len(test_lobby)
         print(f"Lobby reconstruction passed: {len(release_lobby)} native meshes, one bust, six mapped portraits.")
+    elif any(path.rsplit("/", 1)[-1].startswith("P22_") for place in (release, tests) for path in place):
+        raise RuntimeError("Archived P22 lobby art leaked into a playable mapping")
     geometry_rejection_probes()
     print(f"Authored geometry reconstruction passed: {release_parts} release/{test_parts} test part transforms, dimensions, shape and collision flags.")
     print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; {len(allowed_scripts)} runtime scripts only in release.")

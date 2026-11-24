@@ -2752,6 +2752,182 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "2de5a072638cc2c9dc688e03e818c22098fe3329aa11d6ad4632ce659f553fad"
+    },
+    {
+      "id": "waiting-lobby-studio-archive",
+      "kind": "model",
+      "source": "Genuine Studio-native capture of the approved P21 lobby, pending child-image moderation and activation.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": "assets/imports/lobby-interior/LobbyArt.import.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "c9803d80dbebfbe8408ebb8ff71fad5d244c63d507199df1b674cb1b71a2ac6d"
+    },
+    {
+      "id": "waiting-lobby-native-pilot",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "91661592065500",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room01",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "136646423260795",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room02",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "89941254994361",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room03",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "77429892450266",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room04",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "110927070980793",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room05",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "135714281119780",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room06",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "130807081151860",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room07",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "118533127408790",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room08",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "130193096006388",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room09",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "87817036030975",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room10",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "80031722801886",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room11",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "135647319945649",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room12",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "97980814038264",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-room13",
+      "kind": "model",
+      "source": "Private Roblox model import of the approved P21 lobby. See the P22 upload operation ledger.",
+      "author": "Project contributors and supplied portrait photographs as directed by the project owner",
+      "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
+      "local_path": null,
+      "roblox_asset_id": "104642540366636",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-native-television-image",
+      "kind": "texture",
+      "source": "Approved standalone Roblox upload of the original P21 aerial phosphor still, validated on the native television screen in the private Studio preview.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": null,
+      "roblox_asset_id": "97488158099796",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1"
     }
   ],
   "runtime_recipes": [

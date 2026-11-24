@@ -1,6 +1,6 @@
 # Waiting lobby import
 
-P22 prepares the approved entrance hall, movie theater, and portrait gallery for Roblox. This package currently contains the staged-import tools and the collision fixture. The playable place still uses the original lobby deck, canopy, and back wall. [P22 plan and completion record](../../../plans/22-integrate-lobby.md)
+P22 prepares the approved entrance hall, movie theater, and portrait gallery for Roblox. This package contains the import tools, collision fixture and [native Studio archive](LobbyArt.import.rbxm). The playable place still uses the original lobby deck, canopy and back wall while portrait image moderation is resolved. [P22 plan and completion record](../../../plans/22-integrate-lobby.md)
 
 ## Approved source and placement
 
@@ -33,6 +33,8 @@ The staging command writes 14 GLBs and `import-index.json` under ignored `build/
 4. Keep the actual engine-exported model and receipts together when wiring the lobby into both Rojo projects. Record actual owner and access, model versions, the importer correction, and the native model and receipt hashes in the manifest. Remove the full legacy `LobbyStation` node from `Battlefield.model.json` before each project defines its own `LobbyStation` folder with `LobbyCollision` and `LobbyArt` inside. Rojo 7.7.1 creates duplicate station folders if both inputs define the station. Update the P21 Blender verifier's historic deck lookup as part of that change. [Native reconstruction guide](../../../.agents/skills/import-blender-to-roblox/references/native-reconstruction.md)
 
 ## Check collision and play
+
+Roblox approved all 14 model batches and rejected the Image assets for portraits 2, 3 and 6. The native archive contains all 2,432 mesh placements and preserves the captured textures for traceability. During actual activation, use the verified television image `rbxassetid://97488158099796` on `P22_Room04_757_01.TextureID` after removing its imported SurfaceAppearance. Keep the native color metadata consistent with the slot. Use actual in-scene renders for SurfaceAppearance textures. Roblox streams their processed texture data separately from ordinary preload callbacks. [Upload and texture receipt](../../../docs/evidence/p22/upload-operations.json)
 
 Run `python3 scripts/lobby_interior/prepare_collision.py --check` to compare the generated [collision model](LobbyCollision.model.json) with its source recipe. It defines the three floor sections and independent wall, portal, and furnishing proxies. The test mapping exposes the fixture at `ServerStorage.Tests.Fixtures.LobbyCollision`. The server specs mount it in a disposable battlefield clone to exercise support beneath both anchors, clear doorways, furniture collision, protection from the combat disk, and the active Ground containment path. [Lobby geometry specs](../../../tests/studio/specs-server/LobbyGeometry.spec.luau)
 
