@@ -32,6 +32,10 @@ The battlefield manifest also records the authored aircraft AimEnvelope values a
 
 Generated place builds belong in ignored `build/`. Do not blanket-ignore authored model/place exports needed for reconstruction. Choose Git LFS or another documented versioned store before adding large binary source assets.
 
+## Weapon presentation assets
+
+P19 pairs original emitter settings with the Roblox-bundled smoke, fire and spark textures. The positional mix reuses the existing Creator Store reports and bundled explosion with different timing, speed and equalization by weapon and surface. It falls back to that bundled sample when a source is unavailable. The [runtime recipe entries](manifest.json) record source paths, references and attribution. Preload uses temporary Sound and ParticleEmitter instances. Test actual loading, sound and visible rendering in Studio and check asset access in the intended experience before citing release evidence. [P19 acceptance procedure](../docs/testing.md#run-p19-weapon-impact-checks)
+
 ## Thermal presentation for buildings
 
 - Keep the wall and roof surfaces, frame, damage variants and major attached details visible in the C-130 view. A visual mesh may have both `CanCollide` and `CanQuery` off because a separate proxy owns cover. Choose `ThermalNonCover` from the source object's role and placement.

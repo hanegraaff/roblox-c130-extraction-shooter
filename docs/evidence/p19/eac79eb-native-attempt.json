@@ -1,0 +1,373 @@
+{
+  "candidate": "eac79eb5d112ce0b3898fb7a68fbed58a3187013",
+  "tree": "72b11a49d68f03c4723af85125e90dc22560ed85",
+  "document": "local tests.rbxlx",
+  "studioVersion": "0.748.0.7481526",
+  "studioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+  "scenario": "ExecuteMultiplayerTestAsync(2, {kind = 'P05'})",
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 176,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 176,
+      "buildSha256": "b892131a955e50ae85ab600219e022634a76b6c55f47aed8f673db7903daaa02",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "eac79eb5d112ce0b3898fb7a68fbed58a3187013"
+    }
+  },
+  "roles": {
+    "engineClients": [
+      {
+        "viewport": "1274, 618",
+        "voices": [],
+        "userId": -1,
+        "report": "{\"errors\":2,\"skipped\":0,\"passed\":17,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":2,\"discovered\":19}"
+      },
+      {
+        "viewport": "1346, 618",
+        "voices": [],
+        "userId": -2,
+        "report": "{\"errors\":2,\"skipped\":0,\"passed\":17,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":2,\"discovered\":19}"
+      }
+    ],
+    "server": {
+      "report": "{\"errors\":1,\"skipped\":0,\"passed\":195,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":1,\"discovered\":196}",
+      "players": {
+        "1": {
+          "id": -1
+        },
+        "2": {
+          "id": -2
+        }
+      }
+    }
+  },
+  "failedSmoke": "ServerStorage.Tests.Studio.BlastGeometry.spec:48 wrong panel set screen (expected edge,inner,screen). Server init asserts successful baseline before entering P05, so no P05 staged case ran. Both client failures depend on failed server smoke.",
+  "nativeGeometryProbe": {
+    "result": {
+      "normal": "0, 1, 0",
+      "broadphase": {
+        "1": "road",
+        "2": "hidden",
+        "3": "screen",
+        "4": "static",
+        "5": "secondInner",
+        "6": "inner",
+        "7": "edge"
+      },
+      "panels": {
+        "hidden": {
+          "distance": 23,
+          "touches": {
+            "1": {
+              "height": 0.1,
+              "at": "1989, 2000.0521240234375, 2000",
+              "hit": "screen"
+            },
+            "2": {
+              "height": 0.2,
+              "at": "1989, 2000.1043701171875, 2000",
+              "hit": "screen"
+            },
+            "3": {
+              "height": 0.5,
+              "at": "1989, 2000.2608642578125, 2000",
+              "hit": "screen"
+            },
+            "4": {
+              "height": 1,
+              "at": "1989, 2000.521728515625, 2000",
+              "hit": "screen"
+            },
+            "5": {
+              "height": 2,
+              "at": "1989, 2001.04345703125, 2000",
+              "hit": "screen"
+            },
+            "6": {
+              "height": 3,
+              "at": "1989, 2001.565185546875, 2000",
+              "hit": "screen"
+            }
+          },
+          "closest": "1977, 2000, 2000"
+        },
+        "screen": {
+          "distance": 11,
+          "touches": {
+            "1": {
+              "height": 0.1,
+              "at": "1989, 2000, 2000",
+              "hit": "screen"
+            },
+            "2": {
+              "height": 0.2,
+              "at": "1989, 2000, 2000",
+              "hit": "screen"
+            },
+            "3": {
+              "height": 0.5,
+              "at": "1989, 2000, 2000",
+              "hit": "screen"
+            },
+            "4": {
+              "height": 1,
+              "at": "1989, 2000, 2000",
+              "hit": "screen"
+            },
+            "5": {
+              "height": 2,
+              "at": "1989, 2000, 2000",
+              "hit": "screen"
+            },
+            "6": {
+              "height": 3,
+              "at": "1989, 2000, 2000",
+              "hit": "road"
+            }
+          },
+          "closest": "1989, 2000, 2000"
+        },
+        "inner": {
+          "distance": 21,
+          "touches": {
+            "1": {
+              "height": 0.1,
+              "at": "2021, 2000, 2000",
+              "hit": "road"
+            },
+            "2": {
+              "height": 0.2,
+              "at": "2021, 2000, 2000",
+              "hit": "road"
+            },
+            "3": {
+              "height": 0.5,
+              "at": "2021, 2000, 2000",
+              "hit": "road"
+            },
+            "4": {
+              "height": 1,
+              "at": "2021, 2000, 2000",
+              "hit": "road"
+            },
+            "5": {
+              "height": 2,
+              "at": "2021, 2000, 2000",
+              "hit": "inner"
+            },
+            "6": {
+              "height": 3,
+              "at": "2021, 2000, 2000",
+              "hit": "road"
+            }
+          },
+          "closest": "2021, 2000, 2000"
+        },
+        "outside": {
+          "distance": 36.125,
+          "touches": {
+            "1": {
+              "height": 0.1,
+              "at": "2000, 2000, 1963.875",
+              "hit": "road"
+            },
+            "2": {
+              "height": 0.2,
+              "at": "2000, 2000, 1963.875",
+              "hit": "road"
+            },
+            "3": {
+              "height": 0.5,
+              "at": "2000, 2000, 1963.875",
+              "hit": "road"
+            },
+            "4": {
+              "height": 1,
+              "at": "2000, 2000, 1963.875",
+              "hit": "road"
+            },
+            "5": {
+              "height": 2,
+              "at": "2000, 2000, 1963.875",
+              "hit": "road"
+            },
+            "6": {
+              "height": 3,
+              "at": "2000, 2000, 1963.875",
+              "hit": "outside"
+            }
+          },
+          "closest": "2000, 2000, 1963.875"
+        },
+        "edge": {
+          "distance": 36,
+          "touches": {
+            "1": {
+              "height": 0.1,
+              "at": "2000, 2000, 2036",
+              "hit": "road"
+            },
+            "2": {
+              "height": 0.2,
+              "at": "2000, 2000, 2036",
+              "hit": "edge"
+            },
+            "3": {
+              "height": 0.5,
+              "at": "2000, 2000, 2036",
+              "hit": "road"
+            },
+            "4": {
+              "height": 1,
+              "at": "2000, 2000, 2036",
+              "hit": "road"
+            },
+            "5": {
+              "height": 2,
+              "at": "2000, 2000, 2036",
+              "hit": "road"
+            },
+            "6": {
+              "height": 3,
+              "at": "2000, 2000, 2036",
+              "hit": "edge"
+            }
+          },
+          "closest": "2000, 2000, 2036"
+        },
+        "secondInner": {
+          "distance": 21.540658950805664,
+          "touches": {
+            "1": {
+              "height": 0.1,
+              "at": "2020, 2000, 1992",
+              "hit": "road"
+            },
+            "2": {
+              "height": 0.2,
+              "at": "2020, 2000, 1992",
+              "hit": "road"
+            },
+            "3": {
+              "height": 0.5,
+              "at": "2020, 2000, 1992",
+              "hit": "road"
+            },
+            "4": {
+              "height": 1,
+              "at": "2020, 2000, 1992",
+              "hit": "road"
+            },
+            "5": {
+              "height": 2,
+              "at": "2020, 2000, 1992",
+              "hit": "road"
+            },
+            "6": {
+              "height": 3,
+              "at": "2020, 2000, 1992",
+              "hit": "secondInner"
+            }
+          },
+          "closest": "2020, 2000, 1992"
+        }
+      },
+      "contact": "2000, 2000, 2000"
+    },
+    "ok": true
+  },
+  "audioEditPreload": {
+    "rawIds": {
+      "ok": true,
+      "original": {
+        "1": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "id": "rbxasset://sounds/impact_explosion_03.mp3"
+        },
+        "2": {
+          "status": "Enum.AssetFetchStatus.Loading",
+          "id": "rbxassetid://9113189096"
+        },
+        "3": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "id": "rbxassetid://9120729973"
+        },
+        "4": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "id": "rbxassetid://9120018088"
+        }
+      },
+      "callback": {
+        "1": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "matches": true,
+          "id": "rbxassetid://9120018088"
+        },
+        "2": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "matches": true,
+          "id": "rbxasset://sounds/impact_explosion_03.mp3"
+        },
+        "3": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "matches": true,
+          "id": "rbxassetid://9113189096"
+        },
+        "4": {
+          "status": "Enum.AssetFetchStatus.Failure",
+          "matches": true,
+          "id": "rbxassetid://9120729973"
+        }
+      }
+    },
+    "typedSoundInstances": {
+      "ok": true,
+      "loaded": {
+        "1": {
+          "loaded": false,
+          "id": "rbxasset://sounds/impact_explosion_03.mp3"
+        },
+        "2": {
+          "loaded": false,
+          "id": "rbxassetid://9113189096"
+        },
+        "3": {
+          "loaded": false,
+          "id": "rbxassetid://9120729973"
+        },
+        "4": {
+          "loaded": false,
+          "id": "rbxassetid://9120018088"
+        }
+      },
+      "callbacks": {
+        "1": {
+          "status": "Success",
+          "id": "rbxasset://sounds/impact_explosion_03.mp3"
+        },
+        "2": {
+          "status": "Success",
+          "id": "rbxassetid://9120729973"
+        },
+        "3": {
+          "status": "Success",
+          "id": "rbxassetid://9113189096"
+        },
+        "4": {
+          "status": "Success",
+          "id": "rbxassetid://9120018088"
+        }
+      }
+    }
+  },
+  "cleanup": {
+    "report": "{\"ok\":true,\"result\":{\"suite\":\"P05\",\"baseline\":\"{\\\"errors\\\":1,\\\"skipped\\\":0,\\\"passed\\\":195,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":1,\\\"discovered\\\":196}\",\"termination\":\"initialize gate failed; tester ended owned session\"}}",
+    "attributeCleared": true,
+    "selectorsAbsent": true,
+    "edit": true
+  }
+}

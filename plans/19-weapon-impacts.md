@@ -63,4 +63,10 @@ On implementation, update the player guide, weapon profiles and cover rules, the
 
 ## Completion record
 
-Reserved for implementation after plan approval. Gameplay checks, Studio captures, audio auditions and performance measurements are unrun.
+### First implementation candidate
+
+Candidate `eac79eb5d112ce0b3898fb7a68fbed58a3187013` (tree `72b11a49d68f03c4723af85125e90dc22560ed85`) passed 82 unit and 78 integration cases locally. The full host gate stopped at Selene on unlabeled assertions in new tests.
+
+The independent tester ran the P05 SDK two-client scenario in Roblox Studio `0.748.0.7481526` on the local Rojo test document. Edit parity matched 176 scripts and five poses. Two actual clients joined. Server baseline passed 195/196 and both client baselines passed 17/19. The P19 client emitter case passed on both clients. The server geometry case omitted two ground-level panels, so the staged P05 combat cases did not start. Native rays reported the road at the same endpoint as the candidate panels, while an actual intervening screen stopped the ray before the hidden panel. The tester ended the session and confirmed Edit was restored. [Native report and diagnosis](../docs/evidence/p19/eac79eb-native-attempt.json)
+
+The tester also confirmed in Studio Edit that preloading transient typed Sound instances succeeded for all four referenced samples. Preloading the raw ID strings failed in the same probe. The candidate uses typed preload instances. This verifies the preload mechanism. Operated sound quality remains a separate check.
