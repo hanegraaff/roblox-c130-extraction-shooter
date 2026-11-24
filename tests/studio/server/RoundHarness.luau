@@ -39,6 +39,33 @@ end
 -- Uses actual mapped production owners. Returns only after automated test completion,
 -- or immediately after starting an ordinary manually operated local test runtime.
 function RoundHarness.run()
+    -- Reject archived selectors before any old coordinator can acquire owners.
+    local compatibility = require(ReplicatedStorage.HarnessCompatibility)
+    local requestedArgs = StudioTestService:GetTestArgs()
+    local settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")
+    local kind = if type(requestedArgs) == "table"
+        then requestedArgs.kind
+        elseif settings then settings:GetAttribute("ManualHarness")
+        else nil
+    if type(kind) == "string" then
+        local reason = compatibility.reason(kind)
+        if reason then
+            workspace:SetAttribute(
+                "HarnessCompatibilityReport",
+                HttpService:JSONEncode({
+                    kind = kind,
+                    rejected = true,
+                    reason = reason,
+                    replacement = "P18",
+                    discovered = 0,
+                    passed = 0,
+                    failed = 1,
+                    skipped = 0,
+                })
+            )
+            compatibility.assertCurrent(kind)
+        end
+    end
     -- P17's native UI route is selected before consulting any SDK arguments.
     -- The marker exists only in the local test mapping and has no client remote.
     local p17Settings = game:GetService("ServerStorage"):FindFirstChild("DevelopmentSettings")

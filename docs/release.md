@@ -100,12 +100,12 @@ covers the same-identity reconnect exclusion.
 
 | Exercise | Expected observations |
 | --- | --- |
-| Aircraft destroyed | On a fresh aircraft, two direct rocket hits leave health and the third commits one Ground win. Use a separate sequence for M-7 chip damage. Recover the single launcher with a teammate after a drop or carrier loss, preserving its reload timing. |
+| Aircraft destroyed | Confirm maximum health is 1,000 × deployment Ground players, excluding the operator, and remains fixed through deaths/departures. Each direct rocket removes 100 and each M-7 hit removes 5, capped at remaining health. Continue until exactly one Ground win commits. Recover a launcher with a teammate after a drop or carrier loss, preserving reload timing. |
 | Ground eliminated | The C-130 wins once when the last life is lost. Check that eliminated players follow living teammates or see the overview and cannot act. Reinforce both weapons' readiness checks by switching between them during reload. |
 | Timeout | Let the normal round deadline expire with a living Ground player and an intact aircraft. Confirm the C-130 win and timeout reason on all clients. |
-| Terrain, controls and cover | Walk both floors of Foundry, Warehouse and Outpost, try both launcher approaches and check the Outpost's interior camera entry and exit. Use both weapon zooms with directional panning and independent aim. Check thermal and shot occlusion around an intact panel and through a real opening. |
-| Progressive destruction | Observe Light damage after the first direct 105mm hit, a Heavy opening after the third and removal after the sixth. Use a fresh panel to show nine earned seconds of valid 30mm progression, including persistent credit across an interruption. Check that paused time earns no credit and actual fragments fall. Exercise the starting shelter as well as multi-story cover. |
-| Reset and replay | Confirm the same winner and reason on all clients. After Results, check lobby control, intact terrain and panels, cleared debris, restored aircraft and equipment readiness, and one fresh launcher at the next deployment. |
+| Terrain, controls and cover | Walk the usable floors/routes in Salt Flats, Vesper, the Outpost and Seedship, reach all four launchers and check the Outpost’s interior camera entry and exit. Use both weapon zooms with directional panning across square edges/corners, immediate reversal and independent aim. Check thermal and shot occlusion around an intact panel and through a real opening. |
+| Progressive destruction | One direct 105mm hit must remove a registered panel completely. Use a fresh panel to show Light damage, a Heavy opening at one earned 30mm second and Total at two, including persistent credit across an interruption. Check that paused time earns no credit and actual fragments fall. Exercise the starting shelter as well as multi-story cover. |
+| Reset and replay | Confirm the same winner and reason on all clients. After Results, check lobby control, intact terrain and panels, cleared debris, restored aircraft and equipment readiness, and one fresh launcher at each of the four anchors at the next deployment. |
 
 Record source/build and place version, actual counts, anonymous role labels,
 device and input types, observed results and deviations. Keep participant names,

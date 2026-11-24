@@ -22,6 +22,7 @@ type Owned = {
     restoreColor: (() -> ())?,
     hidden: boolean,
     fragmentWatches: boolean,
+    tinting: boolean,
     connections: { RBXScriptConnection },
 }
 
@@ -154,9 +155,27 @@ function ThermalCosmetics.start(root: Instance): Controller
             restoreColor = nil,
             hidden = false,
             fragmentWatches = false,
+            tinting = false,
             connections = {},
         }
         owned[part] = record
+        -- Mesh replication can deliver a SurfaceAppearance after its parent.
+        -- Restore the previous fallback before acquiring the new surface; local
+        -- palette clones also emit child events, so retinting cannot reenter.
+        local function refreshTint()
+            if not running or owned[part] ~= record or record.tinting then
+                return
+            end
+            record.tinting = true
+            if record.restoreColor then
+                record.restoreColor()
+                record.restoreColor = nil
+            end
+            if not record.hidden then
+                record.restoreColor = tint(part, root)
+            end
+            record.tinting = false
+        end
         local function update()
             if not running or owned[part] ~= record then
                 return
@@ -184,7 +203,7 @@ function ThermalCosmetics.start(root: Instance): Controller
                 record.hidden = false
             end
             if not hide and not record.restoreColor then
-                record.restoreColor = tint(part, root)
+                refreshTint()
             end
         end
         table.insert(record.connections, part:GetAttributeChangedSignal("ThermalNonCover"):Connect(update))
@@ -194,6 +213,15 @@ function ThermalCosmetics.start(root: Instance): Controller
         )
         table.insert(record.connections, part:GetPropertyChangedSignal("CanCollide"):Connect(update))
         table.insert(record.connections, part:GetPropertyChangedSignal("CanQuery"):Connect(update))
+        if part:IsA("MeshPart") then
+            local function surfaceChanged(child: Instance)
+                if child:IsA("SurfaceAppearance") then
+                    refreshTint()
+                end
+            end
+            table.insert(record.connections, part.ChildAdded:Connect(surfaceChanged))
+            table.insert(record.connections, part.ChildRemoved:Connect(surfaceChanged))
+        end
         update()
     end
     local added = root.DescendantAdded:Connect(observe)

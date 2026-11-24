@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P08 test-only real-client transport. Production remotes perform every action;
 -- observations wait for actual replicated ownership, readiness, tools and health.
 local Players = game:GetService("Players")
@@ -7,6 +8,7 @@ local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
 local Harness = {}
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P08")
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P08Harness", 90)
         if not transport or not transport:IsA("RemoteEvent") then

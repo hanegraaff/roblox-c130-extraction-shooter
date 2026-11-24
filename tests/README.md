@@ -1,5 +1,7 @@
 # Test suites
 
+For the P18 candidate, use the current ordinary smoke suites and [three-client rebalancing procedure](../docs/testing.md#run-the-p18-rebalancing-harness), plus native input, Seedship traversal and rendered contrast review. Adapted P05 supplies actual gunship input/flight/one-hit-opening evidence. Pre-P18 balance/camera selectors are archived and reject before runtime/listener allocation; reproduce their reports from the recorded revision.
+
 The [testing guide](../docs/testing.md) owns exact commands and report interpretation. Run `python3 scripts/verify.py` for static, deterministic, rejection-probe and artifact gates. Real Studio server/client smoke suites are a separate required run.
 
 | Package | Runtime and responsibility |
@@ -10,6 +12,7 @@ The [testing guide](../docs/testing.md) owns exact commands and report interpret
 | [studio/specs-server](studio/specs-server/README.md) | Studio: Instance-based imports, bootstrap lifecycle, spawn/building/terrain queries, containment/rebuild, aircraft/solid aim, residual panels and fragment rigid-body checks |
 | [studio/client](studio/client/README.md) | Studio: automatic client TestEZ runner and actual-client round/aircraft/camera/profile observations |
 | [studio/specs-client](studio/specs-client/README.md) | Studio: replication, avatar and status-panel lifecycle |
+| [studio/support](studio/support/README.md) | Test-only shared fixture version guard and bounded frame/memory reducers |
 | [fixtures](fixtures/README.md) | Server-only deterministic test settings |
 
 Cases state their requirement/criterion and exercise production modules. Unit/integration case modules accept a registration callback and the actual implementation module; the Lune runner and TestEZ server wrapper supply the respective runtime imports. Required empty or failed suites fail rather than disappearing from the report.

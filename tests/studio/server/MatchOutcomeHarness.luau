@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P09 native local multiplayer acceptance using production GameRuntime and real clients.
 -- Trusted fixture poses set up engine collisions. Client commands use production remotes.
 -- Departure scenarios use separate runs because departed Studio identities cannot rejoin.
@@ -69,6 +70,7 @@ end
 -- Outcomes and Departures start with three real clients. LastGround and Empty
 -- start with two. Manual mode retains the report until the coordinator stops it.
 function Harness.run(scenario: string, finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P09")
     local expected = if scenario == "Outcomes" or scenario == "Departures" then 3 else 2
     assert(
         scenario == "Outcomes" or scenario == "Departures" or scenario == "LastGround" or scenario == "Empty",

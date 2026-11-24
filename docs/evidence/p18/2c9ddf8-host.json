@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "2c9ddf8efc91e0e3171ddedbe138ab647b068b5e",
+  "sourceTree": "a492fb6b6b5f69f970a202fb45f948b33b4241d7",
+  "environment": "macOS26.6.2 Darwin arm64, Python3.10",
+  "command": "python3 scripts/verify.py > build/p18-independent-verify.log 2>&1",
+  "allNonStudioGatesPassed": true,
+  "ruleSuites": [
+    {
+      "discovered": 74,
+      "failed": 0,
+      "passed": 74,
+      "skipped": 0,
+      "suite": "unit"
+    },
+    {
+      "discovered": 76,
+      "failed": 0,
+      "passed": 76,
+      "skipped": 0,
+      "suite": "integration"
+    }
+  ],
+  "pythonSuiteCounts": [
+    [
+      "23",
+      "0.478"
+    ],
+    [
+      "58",
+      "35.513"
+    ]
+  ],
+  "artifactLines": [
+    "Authored geometry reconstruction passed: 11459 release/11459 test part transforms, dimensions, shape and collision flags.",
+    "Artifact isolation passed: 24751 release Instances, 24866 test Instances; 64 runtime scripts only in release."
+  ],
+  "builds": {
+    "game": "a043ed56941c6a2de1b7030ba3b7171b3566d24de2df9c3a83dc811767f3f56d",
+    "tests": "3fd491335e1eed3a43e22ed02740758162d6798dd098512a8fafd8d5f040262e"
+  }
+}

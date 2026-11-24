@@ -61,14 +61,11 @@ elseif manualMode == "P14" then
     require(script.AircraftPanHarness).run()
     return
 end
+-- Current ordinary exploration keeps compatible lifecycle/map observers only.
+-- Historical balance/camera waiters are no longer started on current source.
 require(script.CombatHarness).run()
-require(script.DestructionHarness).run()
-require(script.GroundCombatHarness).run()
-require(script.LauncherHarness).run()
-require(script.MatchOutcomeHarness).run()
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
-require(script.AircraftPanHarness).run()
 require(script.ExpandedMapHarness).run()
 local stopTestPanel = require(script.HumanTestPanel).start()
 script.Destroying:Connect(stopTestPanel)

@@ -530,6 +530,20 @@ def check_manual_p17_isolation(release: dict[str, str], tests: dict[str, str]) -
             raise RuntimeError(f"P17 fixture missing from tests or leaked to release: {name}")
 
 
+P18_TEST_ONLY = (
+    "ServerScriptService/ServerTests/RebalanceHarness",
+    "StarterPlayer/StarterPlayerScripts/ClientTests/RebalanceHarness",
+    "ReplicatedStorage/HarnessCompatibility",
+)
+
+
+def check_p18_isolation(release: dict[str, str], tests: dict[str, str]) -> None:
+    """Require current fixtures and historical-version guard only in local tests."""
+    for name in P18_TEST_ONLY:
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P18 fixture missing from tests or leaked to release: {name}")
+
+
 def check_vesper_import(path: Path) -> int:
     """Check the compiled native bank independently of the live Workspace."""
     root = ET.parse(path).getroot()
@@ -763,6 +777,7 @@ def main() -> None:
                 raise RuntimeError(f"P05 manual isolation failed to reject {fault}: {name}")
     print("P05 manual fixture isolation passed, including eight deliberate corruption probes.")
     check_manual_p17_isolation(release, tests)
+    check_p18_isolation(release, tests)
     print("P17 native fixture isolation passed: four test-only modules, no release additions.")
     for name in (
         "ServerScriptService/ServerTests/PlayerExperienceHarness",

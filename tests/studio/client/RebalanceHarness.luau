@@ -168,6 +168,11 @@ function Harness.run()
                                 Vector3.new(-360, 0, 360),
                                 Vector3.new(360, 0, -360),
                                 Vector3.new(x, 0, z),
+                                Vector3.new(0, 0, 360),
+                                Vector3.new(-360, 0, 300),
+                                Vector3.new(-359, 0, 360),
+                                Vector3.new(360, 0, 0),
+                                Vector3.new(0, 0, -360),
                             }
                         do
                             local frame =
@@ -185,6 +190,35 @@ function Harness.run()
                                 "P18 assertion: Pan.worldFocus(Map.defaults, { x = point.X, z = point.Z }, x, z)"
                             )
                             assert(world.x == point.X and world.z == point.Z, "held focus rotated")
+                            for _, axis in
+                                {
+                                    Vector2.new(-1, 0),
+                                    Vector2.new(1, 0),
+                                    Vector2.new(0, -1),
+                                    Vector2.new(0, 1),
+                                }
+                            do
+                                local nextFocus = assert(
+                                    Pan.step(
+                                        Map.defaults,
+                                        { x = point.X, z = point.Z },
+                                        axis.X,
+                                        axis.Y,
+                                        0.1,
+                                        false,
+                                        16 / 9,
+                                        40,
+                                        x,
+                                        z
+                                    ),
+                                    "native edge step rejected"
+                                )
+                                local movement = Vector3.new(nextFocus.x - point.X, 0, nextFocus.z - point.Z)
+                                local signed = movement:Dot(frame.RightVector) * axis.X
+                                    + movement:Dot(frame.UpVector) * axis.Y
+                                assert(signed >= -1e-5, "native projected key direction reversed")
+                                assert(movement.Magnitude <= 12.0001, "native edge step exceeded speed cap")
+                            end
                             lowestUp = math.min(lowestUp, frame.UpVector.Y)
                             samples += 1
                         end

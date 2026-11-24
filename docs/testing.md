@@ -1,5 +1,19 @@
 # Testing and acceptance
 
+Current P18 acceptance uses the ordinary smoke suites, deterministic/asset gates, the [three-client rebalancing harness](#run-the-p18-rebalancing-harness) and adapted [two-client P05 gunship harness](#run-the-p05-gunship-combat-harness), plus native input, traversal and rendered review. P03/P04 retain their compatible lifecycle/orbit paths. Pre-P18 staged balance/camera fixtures are explicitly archived; `HarnessCompatibility` rejects them before runtime/listener allocation. Reproduce their evidence only from the recorded Git revision. A compatibility rejection is failed/unavailable validation, never a pass or skipped required test; it does not waive P12’s pending live capacity/performance/release gates.
+
+## Staged fixture compatibility
+
+| Current source path | Actual clients | Scope |
+| --- | --- | --- |
+| Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P18` | 3 | Roster health, current panel/thermal/camera state, four-site ownership/recovery and replay |
+| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup |
+| `P03`, `P04` | Their documented rosters | Compatible lifecycle and canonical aircraft/orbit regression paths |
+| `P06`, `P06Team`, `P07`, `Sandbreak`, `P08`, `P09`, `P10`, `P11`, `P14`, `P14ArrivalRegression`, `P17` | Historical only | Explicit pre-P18 version rejection; run the recorded source to reproduce prior evidence |
+
+`Workspace.HarnessCompatibilityReport` identifies a rejected selector, reason and replacement before the archived server coordinator starts. The shared test-only compatibility guard also protects direct fixture entry. No archived gameplay assertion is relabelled as passing current behavior. P17 asset reconstruction/provenance checks remain active; its frozen old staged body is preserved separately.
+
 ## Current host checks
 
 Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scripts/verify.py`. The full non-Studio gate exercises the match and its underlying map, view, weapons, launcher, panel destruction and Outpost reconstruction. It fails on missing tools, type/lint/format errors, failed or empty required suites and test content in release builds.
@@ -25,15 +39,47 @@ Run `python3 scripts/setup.py` once for pinned dependencies, then `python3 scrip
 
 Direct tool commands require `$HOME/.rokit/bin` on PATH; setup and verify arrange that internally. The [development guide](development.md) lists versions and installation requirements.
 
-The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The current mapping contains **82 unit and 75 integration cases**, including frame distributions, retained-memory samples, and structural outcome and barrier bounds. The verifier also runs **18 tooling checks and 48 asset regression checks**. The release preparation checks cover clean source, runtime script parity and cloud asset inventory. Client frame measurements, physical fragments, collision and multiplayer replication require engine evidence. [P11 record](../plans/11-balance-and-performance.md), [release runbook](release.md#prepare-the-candidate-from-git)
+The standalone runner discovers `*.spec.luau` modules and reports `suite`, `discovered`, `passed`, `failed` and `skipped`. The unit, integration, tooling and asset runners each report their own discovered counts. Record the exact final gate counts in the [P18 plan](../plans/18-game-rebalancing.md), including rejection probes and artifact checks. Client frame measurements, physical fragments, collision, rendered readability and multiplayer replication require separate engine evidence. [Release runbook](release.md#prepare-the-candidate-from-git)
 
 The verifier also copies source into disposable fixtures to inject a deliberately failing case and an empty unit suite. Both must exit nonzero with the intended diagnostic. A temporary strict-type fixture assigns strings to `Part.Anchored` and a number variable; analysis must reject it using real Roblox definitions. These are expected rejection probes, not shipped failing tests. The temporary fixtures are removed after the probes.
 
-Artifact inspection parses the generated XML, checks the runtime-script allowlist and verifies the absence of test runners, TestEZ, fixtures and development overrides from the release DataModel. It also compares all authored `.model.json` Part/SpawnLocation entries with both generated builds, checking twelve finite canonical `CFrame` components, positive matching dimensions, shape, and Anchored/CanCollide/CanQuery/CanTouch flags. The artifact contract includes the manifest terrain recipe, three formal footprints and stairs, and all registered panels including the starting shelter. The current builds have **2,804 authored Parts** across source world and templates, **58 runtime scripts**, **5,306 release Instances** and **5,418 test Instances**. Artifact inspection requires the four P11, four P17 and three P10 fixture modules in the test build and rejects them in the release build. The base world retains 403 Battlefield Parts and 187 primitive panels, and runtime Outpost installation produces 188 active panels.
+Artifact inspection parses the generated XML, checks the runtime-script allowlist and excludes test runners, TestEZ, fixtures and development overrides from the release DataModel. It compares every authored `.model.json` Part/SpawnLocation in both builds: twelve finite canonical CFrame components, matching positive dimensions, shape and collision/query/touch flags. It also checks the terrain recipe, primitive building/panel contract, imported templates and test-only harness mappings. Take current Part/Instance/script counts from the actual inspector output; older Outpost-only counts do not describe all installed landmarks. Runtime imports and native-loaded fidelity remain separate checks.
 
 Five deliberate corruptions check rejection of a pose alias, wrong pose, wrong size, nonfinite pose component and missing CFrame. A separate building-surface guard checks visible-part pairs for exposed coplanar faces. It allows ordinary edge/contact joins and intersections hidden inside opaque supports. Its three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel. These are artifact probes outside Luau suite totals.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
+
+## Run the P18 rebalancing harness
+
+Use the same confirmed local test document in Edit mode with `test.project.json` synced through **PlayersVsC130Tests** on port **34872**. Require `PlaceId = 0` and `GameId = 0`; keep the cloud/release document separate. Run the full host gate and identify the exact source commit/build before Play.
+
+After a fresh test build, generate the read-only source/anchor comparison:
+
+```sh
+python3 scripts/p18_studio_probe.py
+```
+
+Execute `build/p18-studio-probe.luau` through Studio MCP in the selected **Edit** DataModel. Save its result with `build/p18-studio-probe.json`. The probe compares loaded script UTF-8 lengths/djb2 checksums and the four pickup/platform poses; the receipt binds the complete artifact with SHA-256. It does not synchronize source, cryptographically prove loaded Sources or establish gameplay. Fix any mismatch through Rojo before starting a fresh session.
+
+P18 needs **three actual clients**: one operator and two Ground players. Start asynchronously from MCP Edit context so inspection remains available:
+
+```luau
+assert(game.PlaceId == 0 and game.GameId == 0)
+assert(not game:GetService("RunService"):IsRunning())
+assert(workspace:GetAttribute("P18LastReport") == nil)
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(3, { kind = "P18" })
+    workspace:SetAttribute("P18LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P18 started"
+```
+
+The excluded `RebalanceHarness` starts production runtime after the ordinary server suite. `Workspace.P18Stage` names the active check. The coordinator waits for three distinct players and fresh client smoke reports, then checks shared 2,000 health, fixed damage/no resize after Ground death, panel openings and interrupted timing, camera frames, thermal state, contested pickup/one-carrier ownership, recovery/reload and replay. Structural fixtures enter at the trusted accepted-outcome boundary; they do not exercise the gunship input/projectile path. Run the adapted two-client P05 harness as the required supplement: actual client fire/remotes and physical flights must show both weapon profiles, including a one-howitzer Total opening on a pristine registered upper-story panel observed by both clients. Preserve this distinction alongside actual launcher intent/native collision observations.
+
+For **Server & Clients**, set local Edit `ServerStorage.DevelopmentSettings.ManualHarness = "P18"`, start **3 clients**, and collect `Workspace.P18Report` / `ManualP18Report` in the actual Server context before ending the session. Restore the original selector, normally nil, after returning to Edit. For SDK mode, retain `P18LastReport` after owned teardown. Require the `P18-rebalancing` report to identify three actual clients, nonzero discovered cases with all passed and zero failures/skips, plus passing ordinary server and every-client reports. A report missing after startup, an early failure or unavailable client is incomplete evidence.
+
+A separate operated check must use the normal input path for WASD/touch arrows, edge/corner reversal, independent aim, both zooms/recenter and role cleanup. Walk an actual Ground avatar into the Seedship and onto its launcher platform without breaking cover. Review exposed/covered/earned-opening targets against the darker terrain at both FOVs and record viewport/graphics/input settings. Numeric finite-frame and Highlight-property assertions cannot establish comfortable movement or rendered contrast. Use [P18 A1–A6](../plans/18-game-rebalancing.md#acceptance-criteria) to map each required check and retain failures as well as passing results.
 
 ## Verify the integrated P17 Outpost
 
@@ -112,6 +158,8 @@ not establish the missing scalar roughness/metalness/emission appearance.
 That compromise requires explicit A6 review.
 
 ### Run the managed P17 multiplayer harness
+
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
 
 1. Build from the selected source and use the separate local `tests.rbxlx`
    document (`PlaceId` and `GameId` both zero). Confirm its identity through
@@ -273,7 +321,7 @@ actual imported candidate and its separate Studio/player evidence.
 
 ## Run the Studio smoke suites
 
-1. Build with the full verifier. Open `build/tests.rbxlx` as a separate local Studio document, or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
+1. Build with the full verifier. Reuse the existing local test document; for initial setup, open `build/tests.rbxlx` separately from the game/cloud document or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.
 2. Through Studio MCP, list connected instances, select the intended test document and inspect its state. Consult the connected server’s relevant skill guidance. Confirm that `ServerScriptService.ServerTests`, `StarterPlayer.StarterPlayerScripts.ClientTests`, `ReplicatedStorage.TestPackages` and `ServerStorage.DevelopmentSettings` belong to the test mapping.
 3. Start **Play** with one actual client. The mapped server/client runners execute automatically. The server waits up to ten seconds for bootstrap status and separately up to 60 seconds for its first actual client. `ServerTestStartup` JSON records status, elapsed/budget seconds and actual client count roughly every second and on arrival/timeout. No client produces a failed zero-discovery report and an error, never a pass. The client waits up to 60 seconds for a successful server fixture report, then up to 35 seconds for RoundState/role rendezvous and 25 seconds for an actual ready avatar or explicit characterless late-spectator state. These are distinct stages with bounded diagnostic failures. The actual round runtime starts after server suites pass, preventing fixture/map rebuild races. Ordinary solo Play then enters labelled map preview; a real test round requires at least two actual players and an explicit start.
 4. Read both structured JSON reports and the Studio Output log. In the **server** context:
@@ -291,7 +339,7 @@ actual imported candidate and its separate Studio/player evidence.
    return game:GetService("Players").LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")
    ```
 
-5. Expect **196 server cases** and **14 per actual client** with the current mapping. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
+5. Compare discovery with the selected source’s expected mapping and plan record. Require `discovered > 0`, `passed == discovered` and zero `failed`, `skipped` and `errors` in every fresh report. Reports identify `suite`, `environment = "Studio"`, fixture `seed = 1` and actual server `clientCount` or client `userId`. Aggregate labels remain `P01-server` and `P01-client`. Keep each report tied to the source, build and actual session.
 6. Stop Play and start it again. Collect fresh reports and verify one `ReplicatedStorage.BootstrapStatus`, one local `PlayerGui.FoundationStatus` and one visible round HUD after startup. The round HUD hides the locally owned bootstrap panel after startup. Check for leftover `EntrypointStatus` or `EntrypointPanel` Instances. The baseline suites also exercise two explicit stop/start cycles of the bootstrap owner and status controller.
 7. In the separate development document, use **Play** to confirm one client stays in the protected lobby with a HUD waiting for two players. Then use **Server & Clients** with two actual clients. Confirm automatic deployment, one C-130 operator, one Ground player and a shared Active phase. Stop when finished. The release bootstrap shows **Development**. The test build shows **Test** and opens solo preview or offers an explicit match start.
 
@@ -340,6 +388,8 @@ For focused player review, use an ordinary three-client **Server & Clients** ses
 
 ## Run the P09 match outcome harness
 
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
+
 Use the Rojo-synced local `tests.rbxlx` in Edit mode. Run one scenario per fresh session. The runner starts production `GameRuntime` after server TestEZ and waits in the lobby for every initial client to pass its smoke tests before beginning the scenario. It uses shortened rounds, actual clients and production remotes. Trusted fixture positions make impact and cover cases reproducible.
 
 | Scenario | Initial clients | Expected cases | Coverage |
@@ -375,6 +425,8 @@ Check each report's scenario, actual distinct client IDs, final client count, ca
 Review the experience in an ordinary multiplayer test session or observe the active harness clients through Results and into the lobby. Check winning-team and reason text, equipment restoration, and return from the operator or spectator camera. Record the actual viewport and any controlled fixture positions. Keep operated observations distinct from automated case totals.
 
 ## Run the player experience harness
+
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
 
 Use the confirmed local `tests.rbxlx` document in Edit mode, synced through
 Rojo to **PlayersVsC130Tests** on port **34872**. Confirm the source commit and
@@ -433,6 +485,8 @@ effects off, and cleanup after Results and replay. Keep audio telemetry and
 listening observations separate. [Revision evidence](evidence/p10/combat-presentation-revision.json)
 
 ## Run the P11 performance harness
+
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
 
 From the selected candidate commit, build with the full verifier and sync
 `test.project.json` to the local **PlayersVsC130Tests** document on port
@@ -553,6 +607,8 @@ players. [P11 plan](../plans/11-balance-and-performance.md),
 
 ## Run the P05 gunship combat harness
 
+P05 is adapted for the current P18 source and remains a required supplement to the three-client rebalancing suite. Its actual client input/remotes and swept projectile paths include one real M102 impact opening a pristine registered upper-story panel to Total on the server and both clients. Earlier execution reports below remain tied to their recorded source; collect a fresh current report.
+
 Use the same confirmed `tests.rbxlx` Edit document synced to `PlayersVsC130Tests`, and check the candidate source identity before starting. In Edit/plugin context, run the two-client harness without blocking Studio:
 
 ```luau
@@ -595,6 +651,8 @@ The SDK route above remains the default. When it cannot launch the requested cli
 The harness does not substitute for operating native desktop and touch controls. In an ordinary real two-client round, fire each weapon while aiming and panning, switch away and back during reload, and inspect warnings, impacts, exposed/covered targets, both thermal views and mobile layout. Record actual device, view and observed behavior, then stop the owned session. Do not infer successful replication or playability from a screenshot.
 
 ## Run the P06 ground-combat harness
+
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
 
 Use updated `main` in the confirmed `tests.rbxlx` Edit document, synced to `PlayersVsC130Tests` on port 34872. In Studio MCP Edit context, start two real clients using the same bounded asynchronous pattern as P05:
 
@@ -642,6 +700,8 @@ The [P06 plan](../plans/06-ground-combat.md) and linked source-specific evidence
 
 ## Run the P08 launcher harness
 
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
+
 Use the existing confirmed local `tests.rbxlx` Edit document, fully synced from updated `main` through `test.project.json` on port 34872. Verify mapped source signatures and the current smoke counts before attributing results to the candidate. P08 needs **three actual clients**: one operator and two ground players. Solo smoke, fake roster records and an SDK request for three do not establish that population.
 
 Start the SDK route from MCP Edit/plugin context without blocking the call:
@@ -687,9 +747,11 @@ return "P08 native three-client selector ready"
 
 Choose Studio **Server & Clients**, set **3 clients**, and start the session. Capture actual Server workspace `ManualP08Invocation`, `ManualP08Report` and `P08MultiplayerReport`, plus each client's fresh smoke report. Native departure uses a server kick; SDK departure uses the client's LeaveTest. Preserve the mode and method. After report collection, end only the owned simulation from its actual Server context with `StudioTestService:EndTest({reason = "P08 manual cleanup after report collection"})`. Confirm the original document is back in Edit, then clear `ServerStorage.DevelopmentSettings.ManualHarness` and verify nil. This temporary server-only selector is absent from Git defaults and release artifacts. Do not restart the runner on top of an existing runtime or launch extra Studio processes to refresh source.
 
-Separately walk the circuit from each bunker exit and operate all three landmark approaches, E/PICK UP, native tool selection, M-7/rocket firing and reload, G/DROP and teammate recovery in an ordinary real round. Check ground movement and mouse aim; use a simulator/device for touch pickup, M-7/ROCKET/DROP and FIRE while aiming. Review desktop/phone status readability, real rocket travel/cover, ownership agreement and shared aircraft-health feedback without a fixed remaining-hit promise. Keep captured gameplay in the linked evidence and disclose any controlled fixture poses or cameras. Rerun affected P05/P06/P14 and character/lifecycle scenarios after shared authority or cleanup changes; preserve each result separately. The [P08 plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) own actual results and remaining limitations.
+Separately walk the circuit from each bunker exit and operate all four landmark approaches, including the Seedship interior, E/PICK UP, native tool selection, M-7/rocket firing and reload, G/DROP and teammate recovery in an ordinary real round. Check ground movement and mouse aim; use a simulator/device for touch pickup, M-7/ROCKET/DROP and FIRE while aiming. Review desktop/phone status readability, real rocket travel/cover, ownership agreement and shared aircraft-health feedback without a fixed remaining-hit promise. Keep captured gameplay in the linked evidence and disclose any controlled fixture poses or cameras. Rerun affected P05/P06/P14 and character/lifecycle scenarios after shared authority or cleanup changes; preserve each result separately. The [P08 plan](../plans/08-rocket-launcher.md) and [evidence](evidence/p08-launcher.md) own actual results and remaining limitations.
 
 ## Run the P07 destruction harness
+
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
 
 Use updated `main` in the confirmed local **Edit** test document, synced from `test.project.json` on port 34872. This revision has passed its P07 acceptance checks on the recorded source. Candidate `8053c8f` passes the full 55/55 host gate. Its production core is unchanged from the [142-server/six-client solo baseline on `4db4595`](evidence/p07-revision-solo-4db-pass.json); retain that baseline separately from the [passing seven-case two-client/reset run](evidence/p07-revision-native-8053-pass.json) on `8053c8f`. Earlier 54/53 host and 137/6 Studio reports, including earlier P05/P14/reset/blast probes, remain source-specific historical evidence. D50 waives a real late-joining-player scenario for this P07 gate. Keep runtime spectator/rejoin/security behavior, but start only **two actual clients**; there is no four-minute late-join checkpoint or mid-session Start-control requirement.
 
@@ -741,6 +803,8 @@ Use the [P04 record](../plans/04-aircraft-and-thermal.md) for original aircraft 
 
 ## Run the P14 panned-targeting harness
 
+> Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
+
 The verified horizontal-direction source is integrated on `main`; [P14 acceptance evidence](evidence/p14-horizontal-acceptance.md) records the actual multiplayer and operated results. Earlier orbit and edge candidates have source-specific [correction](evidence/p14-orbit-relative-view.md) and [edge](evidence/p14-edge-overscan.md) evidence. Use the same confirmed test document in Edit with the selected source synced, including Battlefield/AimEnvelope NumberValues. Match mapped source signatures and loaded geometry/configuration before starting. The historical P14 ordinary server/client baselines were 86 / 3; integrated P06 expects 118 / 6; use the current candidate counts above for the candidate. Retain actual counts and client identities.
 
 From MCP Edit/plugin context, start two actual clients and preserve the self-ending result without blocking the MCP call:
@@ -788,7 +852,7 @@ A test-only invocation route is available when SDK child launch fails. It runs t
 
 The default SDK route above still uses its normal self-ending EndTest/return behavior. Manual and SDK invocation metadata must remain distinct; neither a delivery callback nor a marker changes client-count or acceptance requirements.
 
-Separately operate both zooms over a full orbit and inspect exposed/covered thermal targets on slopes and upper floors. Verify layout at actual 1280×720 and 1920×1080 viewports, recording simulator/graphics settings and restoring prior state. Record directional responsiveness, off-axis movement, motion comfort, zoom-preserved orbit-local angle and recenter. At the upper/lower/side pan limits, verify that the level edge is visible near the outer quarter of each centerline at wide zoom, and inspect for sky and near-vertical motion. Confirm that the visual backdrop cannot collide or be hit by rays and is removed on role loss. Capture a representative actual panned gameplay image for the root README. The earlier integrated P14 source’s P14/P04 and HumanTestMultiplayer suites pass; rendered cover, desktop/mobile full orbits at both zooms, both desktop viewport layouts, and simultaneous mobile arrows were reviewed. Numerical fixture or property checks alone do not establish the rendered/operated review.
+Separately operate both zooms over a full orbit and inspect exposed/covered thermal targets on slopes and upper floors. Verify layout at actual 1280×720 and 1920×1080 viewports, recording simulator/graphics settings and restoring prior state. Record directional responsiveness, off-axis movement, motion comfort, zoom-preserved orbit-local angle and recenter. At the upper/lower/side pan limits, verify that the level edge is visible near the outer quarter of each centerline at wide zoom, and inspect for sky and near-vertical motion. Confirm that the visual backdrop cannot collide or be hit by rays and is removed on role loss. Keep any current gameplay captures in linked evidence; preserve the root README’s selected P16 Blender image. The earlier integrated P14 source’s P14/P04 and HumanTestMultiplayer suites pass; rendered cover, desktop/mobile full orbits at both zooms, both desktop viewport layouts, and simultaneous mobile arrows were reviewed. Numerical fixture or property checks alone do not establish the rendered/operated review.
 
 ## Run the P13 expanded-map harness
 
@@ -862,12 +926,12 @@ Unit tests use observable invariants and boundary examples, not implementation-s
 
 ## Core gameplay invariants
 
-- With an undamaged plane and no rifle fire, direct rocket hits one and two leave it alive; hit three commits destruction and one ground win. A duplicated impact never counts twice. Misses/near misses do not count as direct hits.
-- M-7 damage is positive and accumulates on that same health pool. Cover blocks shots, health never goes negative, and mixed rifle/rocket damage can require fewer remaining rockets.
-- Each of the three site launchers has exactly one available or held identity per active round. Simultaneous claims, death/disconnect/drop, invalid-position recovery and reset cannot duplicate it or refresh reload early.
-- The orbit follows the map perimeter at all sampled phases while model heading follows the tangent. The P14 camera holds a bounded WASD/touch-panned angle relative to that aircraft; the earlier integrated baseline tracks map center. Both aircraft weapon FOVs keep targeting coherent, distinct and inward-facing, including elevated surfaces and the current quarter-screen level-edge allowance.
-- Rapid 30mm/105mm switching cannot reset weapon timers, refill ammunition or bypass reload. Rejected/stale selection restores the correct weapon/FOV/reticle combination.
-- Deadline first, then aircraft destruction before ground elimination within the same pre-deadline step: test boundary/mutual-kill cases and late in-flight rockets explicitly.
+- Deployment sets aircraft maximum/current health to 1,000 × the Ground roster, excluding the operator. Direct rockets deal 100 and M-7 hits 5, capped at remaining health. Deaths/departures/late arrival do not resize or heal it; duplicate, indirect and stale impacts cannot award damage.
+- Four site launchers each own one available or held identity per active round, including the Seedship pickup. A player carries at most one. Simultaneous claims, loss/recovery and reset cannot duplicate a weapon or refresh reload early.
+- The aircraft follows the unchanged circular perimeter orbit with tangent heading. Operator focus covers the world-aligned square, clamps each axis independently and reverses without trapped input at edges/corners. Both lenses preserve the held map target and independent aim; server shots remain limited by the combat disk/envelope and solid cover.
+- One direct 105mm impact destroys one registered panel. Two earned valid same-panel 30mm seconds destroy it, with the intermediate Heavy opening at one second. Interruptions retain credit without counting paused time; real openings, pre-impact batch ordering and bounded safe fragments remain authoritative.
+- Operator scenery/terrain is darker and living Ground targets contrast clearly. Native occlusion hides covered players; a genuine opening exposes only its sight lines. Color/transparency changes restore on role loss and do not alter normal Ground presentation or collision.
+- Rapid weapon switching cannot reset readiness or ammunition. Deadline takes precedence, then aircraft destruction precedes ground elimination within the same admitted pre-deadline step. Replays clear stale damage, effects and equipment.
 
 ## Negative network tests
 
@@ -921,8 +985,8 @@ For human-control regression, run `ExecutePlayModeAsync({kind = "HumanTestContro
 Historical P02/P04 evidence establishes the prior 180-stud-radius, fixed-focus prototype. [P13](../plans/13-terrain-and-buildings.md) supplies the current 360-stud-radius terrain/building source and its named suites; consult its record for actual results and validation scope. The [P14](../plans/14-aircraft-panning.md) panning implementation completed real-engine and operated acceptance and is integrated on `main`; the revised [P07](../plans/07-destruction.md) destruction implementation is integrated on `main`, with source-specific acceptance and [integration evidence](evidence/p07-integration.md) recorded separately. R16 extends release traceability to authored terrain and three accessible multi-story buildings.
 
 - P13: source-built 720-stud disk/equal perimeter orbit, versioned terrain elevation/material reconstruction, building/story/panel registry, actual stairs/upper-floor navigation, supported anchors, separate lobby and connected launcher routes.
-- P14: signed-direction/delta-time pan rules; full-orbit relative-angle and quarter-screen edge bounds at both zooms; elevated terrain/upper-floor projection, preserved local focus under weapon selection, recenter and role cleanup with two actual clients.
-- P07: exact heavy-hit 3/6 boundaries, nine earned valid 30mm seconds with persistent per-panel credit across timing breaks; distinct Pristine/Light/Heavy/Total appearance, shelter coverage, measured real openings, pre-impact cover/thermal rays, actual fragment physics/query exclusions and repeated two-client resets. D50 waives real late joining for this gate only.
+- P14 historical scope: orbit-relative/quarter-screen pan acceptance remains tied to its recorded source. P18 replaces those bounds with square edges and world-fixed focus, requiring fresh direction, reversal, projection, recenter and cleanup evidence.
+- P07 historical scope: its 3/6-hit and nine-second results remain source-specific. P18 requires one-hit/two-earned-second boundaries with retained interrupted credit, all-building coverage, real openings, safe physics and fresh multiplayer/reset evidence. D50’s P07 late-join waiver does not waive replication/reset checks.
 - P11/P12: expanded-map travel/visibility and simultaneous fragment workloads in frame/memory/latency/soak measurements; repeat the revised level/panning/destruction demonstrations in real 6- and 10-player acceptance.
 
 Record numeric tolerances and chosen defaults before running each suite. Test doubles cannot prove terrain loading, residual collision, camera coverage, rigid-body contact or replication. Earlier engine reports must not be relabeled as evidence for this expanded scope.

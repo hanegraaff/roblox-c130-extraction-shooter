@@ -12,6 +12,9 @@
     real panel remains the target when an earned opening appears in flight.
     This test mapping grants fixture orchestration only; never ship it in release.
 ]=]
+-- Historical executable body below remains byte-bound to the P17 evidence.
+-- Reject module loading before that body can allocate listeners/runtime owners.
+require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P17")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")

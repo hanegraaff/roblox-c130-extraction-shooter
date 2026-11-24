@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 --[=[
     P14 actual-client fixtures. Replaces the ordinary local entrypoint only inside
     this test session, after invoking its owned teardown, then starts the same
@@ -60,6 +61,7 @@ local function isUpperPanelHit(hit: Instance, buildingName: string): boolean
 end
 
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P14")
     task.spawn(function()
         local remote = ReplicatedStorage:WaitForChild("P14Harness", 120)
         if not remote or not remote:IsA("RemoteEvent") then

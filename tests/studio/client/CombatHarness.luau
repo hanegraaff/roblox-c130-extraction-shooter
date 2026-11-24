@@ -33,6 +33,25 @@ function CombatHarness.run()
                     else
                         target:FireServer(payload)
                     end
+                elseif kind == "PanelDestroyed" then
+                    assert(type(payload) == "table", "destroyed-panel expectation missing")
+                    local fields = payload :: { [string]: unknown }
+                    local id = fields.id
+                    assert(type(id) == "string", "destroyed-panel id missing")
+                    waitFor(function()
+                        local panel = workspace.World.Battlefield:FindFirstChild(id, true)
+                        return panel ~= nil and panel:GetAttribute("DamageAppearance") == "Total"
+                    end, "one-hit opening replication")
+                    local panel = assert(
+                        workspace.World.Battlefield:FindFirstChild(id, true),
+                        "panel missing after impact"
+                    )
+                    for _, part in panel:GetDescendants() do
+                        assert(
+                            not (part:IsA("BasePart") and part.CanCollide),
+                            "replicated one-hit opening retains solid"
+                        )
+                    end
                 elseif kind == "OperatorPresentation" then
                     local player = Players.LocalPlayer
                     local gui = player.PlayerGui
@@ -55,10 +74,10 @@ function CombatHarness.run()
                     assert(
                         effect
                             and effect:IsA("ColorCorrectionEffect")
-                            and effect.Saturation == -1
-                            and effect.Brightness >= 0.18
+                            and effect.Saturation == 0
+                            and effect.Brightness <= 0
                             and effect.Contrast <= 0,
-                        "thermal settings too dark or not grayscale"
+                        "thermal target color was desaturated or environment brightened"
                     )
                     game:GetService("RunService").RenderStepped:Wait()
                     local origin, size = round.AbsolutePosition, round.AbsoluteSize

@@ -23,6 +23,9 @@
       },
       "P11Metrics": {
         "$path": "tests/studio/support/P11Metrics.luau"
+      },
+      "HarnessCompatibility": {
+        "$path": "tests/studio/support/HarnessCompatibility.luau"
       }
     },
     "ServerScriptService": {
@@ -66,7 +69,26 @@
         }
       }
     },
-    "Lighting": {"$className": "Lighting", "$properties": {"GlobalShadows": true, "Brightness": 2.1, "ClockTime": 15.4, "Ambient": [0.322, 0.314, 0.298], "OutdoorAmbient": [0.569, 0.573, 0.58], "EnvironmentDiffuseScale": 0.5, "EnvironmentSpecularScale": 0.35}},
+    "Lighting": {
+      "$className": "Lighting",
+      "$properties": {
+        "GlobalShadows": true,
+        "Brightness": 2.1,
+        "ClockTime": 15.4,
+        "Ambient": [
+          0.322,
+          0.314,
+          0.298
+        ],
+        "OutdoorAmbient": [
+          0.569,
+          0.573,
+          0.58
+        ],
+        "EnvironmentDiffuseScale": 0.5,
+        "EnvironmentSpecularScale": 0.35
+      }
+    },
     "Workspace": {
       "$properties": {
         "StreamingEnabled": false
@@ -75,8 +97,12 @@
         "$className": "Folder",
         "Battlefield": {
           "$path": "assets/world/Battlefield.model.json",
-          "DistrictScenery": {"$path": "assets/imports/districts/DistrictScenery.rbxm"},
-          "MarsBoulders": {"$path": "assets/imports/districts/MarsBoulders.rbxm"}
+          "DistrictScenery": {
+            "$path": "assets/imports/districts/DistrictScenery.rbxm"
+          },
+          "MarsBoulders": {
+            "$path": "assets/imports/districts/MarsBoulders.rbxm"
+          }
         }
       }
     }

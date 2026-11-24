@@ -1,0 +1,20 @@
+{
+  "sourceParity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"mismatches\":[],\"comparedScripts\":168,\"comparedGeometry\":5,\"passed\":true,\"receipt\":{\"scriptCount\":168,\"buildSha256\":\"3fd491335e1eed3a43e22ed02740758162d6798dd098512a8fafd8d5f040262e\",\"sourceComparison\":\"UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof\",\"geometryCount\":5,\"sourceCommit\":\"2c9ddf8efc91e0e3171ddedbe138ab647b068b5e\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "directionProbe": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"oppositeDirectionExamples\":{\"1\":{\"nextX\":-360,\"x\":-360,\"projectedMotion\":-0.06957470625638962,\"nextZ\":304.02843014986976,\"phase\":1,\"right\":0,\"z\":300,\"up\":1},\"3\":{\"nextX\":-360,\"x\":-359,\"projectedMotion\":-0.3986363410949707,\"nextZ\":360,\"phase\":1,\"right\":-1,\"z\":360,\"up\":0},\"2\":{\"nextX\":-360,\"x\":-360,\"projectedMotion\":-0.017395012080669404,\"nextZ\":360,\"phase\":1,\"right\":0,\"z\":359,\"up\":1},\"5\":{\"nextX\":-1.0458689129718968,\"x\":0,\"projectedMotion\":-0.6148073077201843,\"nextZ\":360,\"phase\":1,\"right\":-1,\"z\":360,\"up\":0},\"4\":{\"nextX\":-301.0458689129719,\"x\":-300,\"projectedMotion\":-0.4440002143383026,\"nextZ\":360,\"phase\":1,\"right\":-1,\"z\":360,\"up\":0},\"7\":{\"nextX\":-360,\"x\":-360,\"projectedMotion\":-0.12849383056163789,\"nextZ\":303.57862953009876,\"phase\":2,\"right\":0,\"z\":300,\"up\":1},\"6\":{\"nextX\":298.9541310870281,\"x\":300,\"projectedMotion\":-0.16297414898872376,\"nextZ\":360,\"phase\":1,\"right\":-1,\"z\":360,\"up\":0},\"9\":{\"nextX\":-360,\"x\":-359,\"projectedMotion\":-0.363688588142395,\"nextZ\":360,\"phase\":2,\"right\":-1,\"z\":360,\"up\":0},\"8\":{\"nextX\":-360,\"x\":-360,\"projectedMotion\":-0.0364452600479126,\"nextZ\":360,\"phase\":2,\"right\":0,\"z\":359,\"up\":1},\"10\":{\"nextX\":-302.08377813200317,\"x\":-300,\"projectedMotion\":-0.8077703714370728,\"nextZ\":360,\"phase\":2,\"right\":-1,\"z\":360,\"up\":0}},\"checked\":14308}"
+      }
+    ],
+    "isError": false
+  }
+}

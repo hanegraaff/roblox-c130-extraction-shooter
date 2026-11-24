@@ -4,14 +4,14 @@
 
 *User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
-One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. The ground team starts with M-7 rifles and can recover three rocket launchers from the map, carrying one per player. Three direct rockets destroy an undamaged aircraft. Rifle hits reduce the same health pool.
+One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. The ground team starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. Aircraft health starts at **1,000 per Ground player** in the deployment roster. Rockets deal 100 damage and rifles deal 5 to the same health pool; deaths and departures do not shrink or refill it.
 
 ## Play a round
 
 Rounds start in the protected, walkable lobby. With 2–10 players, the server assigns one operator and deploys everyone else as one ground team. The C-130 automatically circles the edge of the 720-stud battlefield. The default round lasts ten minutes, and friendly fire is off.
 
-- **Ground team.** Follow the trails from any Sandbreak exit. Pick up a launcher inside the Salt Flats hangar, outside Vesper Radar’s south gate, or outside the military depot by the parking lot. Buildings and large rock formations provide cover. Lead the moving plane when firing a rocket. The carrier keeps their M-7, and the launcher's four-second reload continues through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect while the round is active. If the drop position is invalid, the launcher returns to its original anchor.
-- **C-130 operator.** Scan the ground through the inward-facing thermal camera. The 30mm GAU-23/A Chain Gun gives a tighter view, and the 105mm M102 Howitzer gives a wider view and blast. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. Releasing the directional controls holds the camera angle relative to the plane through its orbit.
+- **Ground team.** Follow the trails from any Sandbreak exit. Pick up a launcher inside the Salt Flats hangar, outside Vesper Radar’s south gate, outside the military depot by the parking lot, or inside the Prism Seedship on its lower deck. Buildings and large rock formations provide cover. Lead the moving plane when firing a rocket. The carrier keeps their M-7, and the launcher's four-second reload continues through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect while the round is active. If the drop position is invalid, the launcher returns to its original anchor.
+- **C-130 operator.** Scan for red Ground silhouettes against the darker terrain and scenery in the thermal view. The 30mm GAU-23/A Chain Gun gives a tighter view, and the 105mm M102 Howitzer gives a wider view and blast. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. WASD or touch arrows pan across the level’s 720 × 720-stud square. The square edges stop movement on that axis while allowing movement along the edge and immediate reversal. Releasing the controls holds the target point on the map as the plane continues its orbit.
 - **Spectating.** Ground death, character reset or surrender consumes your round life. The camera follows a living Ground player and switches to the battlefield overview if no target is available. Late arrivals and reconnecting players can watch until the next round. Operator reset replaces the protected station body and preserves aircraft health.
 
 The ground team wins when it destroys the plane. The C-130 wins by eliminating every ground player or surviving until time runs out. A lethal impact must land before the deadline. The ground team wins if the plane is destroyed and the last ground player is eliminated in the same pre-deadline step. A rocket already in flight can still hit after its shooter dies while the round remains active.
@@ -44,20 +44,20 @@ Salt Flats Hangar occupies the former Foundry site. The full-size hangar has twi
 
 Ground players deploy inside the Sandbreak bunker at the original spawn site. Four entrances lead out past the roof breach, nearby vehicle wrecks, and radio relay. [Sandbreak import and review](assets/blender/spawn-bunker/IMPORT.md)
 
-Solid walls hide ground thermal highlights and block shots and blasts. Walls and roofs, including the battlefield starting shelter, show persistent Light damage, open at Heavy damage after three direct 105mm hits, and disappear after three more. Nine earned seconds of valid same-panel 30mm hits advance a stage. Interruptions preserve earned damage and pause its timing. A new opening benefits later impacts. Debris falls against scenery, and floors, stairs, supports and the outside lobby stay intact. [Destruction rules](architecture.md#progressive-panel-destruction-p07)
+Solid walls hide Ground thermal highlights and block shots and blasts. One direct 105mm hit destroys a wall or roof panel. Two earned seconds of valid same-panel 30mm hits destroy it too: earlier hits show Light damage, and one earned second opens the Heavy damage variant. Interruptions preserve earned damage and pause its timing. The same rules apply to Sandbreak, the hangar, radar, depot and Seedship. A new opening benefits later impacts. Debris falls against scenery, and floors, stairs, supports and the outside lobby stay intact. [Destruction rules](architecture.md#progressive-panel-destruction-p07)
 
 ## Availability
 
-Play locally in Roblox Studio from `main`. One battlefield is playable, including the detailed Outpost, indoor ground camera, both roles and the full match and replay loop. To host a session in the Roblox app, follow [Publish and play privately](#publish-and-play-privately). The MVP release and real 6- and 10-player acceptance are pending. [Roadmap](roadmap.md)
+This guide describes the rebalancing candidate on `plan/18-game-rebalancing`. `main` contains the integrated game before that candidate is merged. One battlefield is playable locally in Roblox Studio, including the landmarks, indoor Ground camera, both roles and the full match and replay loop. The [P18 record](plans/18-game-rebalancing.md) identifies its current verification evidence. To host a session in the Roblox app, follow [Publish and play privately](#publish-and-play-privately). The MVP release and real 6- and 10-player acceptance are pending. [Roadmap](roadmap.md)
 
 ## Set up locally
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-For the district revision before merge, select `feat/battlefield-districts` in the clone or switch commands below. For the integrated game, clone `main`.
+For the rebalancing candidate, select `plan/18-game-rebalancing` as below. Select `main` instead when you want only the integrated source.
 
 ```sh
-git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch plan/18-game-rebalancing https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 python3 scripts/setup.py
 python3 scripts/verify.py
@@ -65,7 +65,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch plan/18-game-rebalancing`. Run `git pull --ff-only origin plan/18-game-rebalancing` to update it, then run the same setup and verification commands from the repository root.
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 
@@ -102,13 +102,13 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo serve test.project.json --address 127.0.0.1 --port 34872
 ```
 
-1. Open `build/tests.rbxlx` as a separate **local** test document. With Play stopped, connect **Plugins → Rojo** to `localhost:34872` and confirm **PlayersVsC130Tests**. Use this mapping only in the local test document.
-2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. The current mapping discovers **199 server cases** and **14 per actual client**. All should pass with zero failures, skips or errors. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
+1. Reuse the existing **local** test document; for its first setup, open `build/tests.rbxlx` separately from the game/cloud document. With Play stopped, connect **Plugins → Rojo** to `localhost:34872` and confirm **PlayersVsC130Tests**. Use this mapping only in the local test document.
+2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. Require nonzero discovery in the server report and every actual client report, with all cases passing and zero failures, skips or errors. Take the expected counts from the current source and its [P18 verification record](plans/18-game-rebalancing.md), rather than older reports. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
 3. With one client, Play opens the labelled Ground preview. Use the **STUDIO TESTING** panel to cycle **Role** through Auto, Ground and Operator, or move between **Explore map (solo)** and **Return to lobby**. Preview lets you walk the map or use the thermal camera and both zooms while waiting for a match.
 4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** to exercise launcher transfer and teammate spectating, or **4** to give an eliminated player two targets to cycle through. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
 5. Play through Results and wait for the lobby to return. Start the next round to inspect restored equipment and cover. **Reset test / apply settings** returns to the lobby or solo preview. Test-panel role and duration choices apply to the next explicit start. Use **End Session** when finished.
 
-The four-client player experience harness checks role HUDs, keyboard controls, spectator targeting and camera cleanup. The match harness covers competitive endings, departures and replay. The performance harness exercises combat load, cleanup, frame time, memory and latency. Stop Play and confirm the updated source reached the same test document before collecting fresh evidence. [Player experience harness](docs/testing.md#run-the-player-experience-harness), [match harness](docs/testing.md#run-the-p09-match-outcome-harness), [P11 workloads](docs/testing.md#run-the-p11-performance-harness)
+For rebalancing, run the [P18 three-client harness](docs/testing.md#run-the-p18-rebalancing-harness) and the adapted [P05 two-client gunship harness](docs/testing.md#run-the-p05-gunship-combat-harness). P18 checks shared roster health, panel openings, camera frames, thermal state, contested Seedship pickup, recovery and replay. P05 exercises actual client fire, physical flights and a one-howitzer opening replicated to both clients. Native keyboard/touch, avatar navigation and rendered contrast need their separate focused review. P03/P04 retain lifecycle/orbit checks; pre-P18 balance/camera harnesses are archived and reject on this candidate. Their reports remain historical. P12’s live capacity, performance and release gates remain separate. Stop Play and confirm source reached the same document before collecting fresh evidence. [Compatibility and procedures](docs/testing.md)
 
 ## Inspect the Blender outpost
 

@@ -9,6 +9,9 @@
     Opening traversal observes the placed Ground avatar before issuing MoveTo.
     No client response authorizes gameplay damage or ownership.
 ]=]
+-- Historical executable body below remains byte-bound to the P17 evidence.
+-- Reject module loading before that body can allocate listeners/runtime owners.
+require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P17")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)

@@ -60,6 +60,55 @@ local function importedMesh(materials: MaterialAPI): MeshPart
 end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test("P18 thermal tint follows late SurfaceAppearance arrival removal and owner cleanup", function()
+        local Cosmetics = cosmetics()
+        local root = Instance.new("Model")
+        root:SetAttribute("ThermalBrightness", 0.5)
+        local part = Instance.new("MeshPart")
+        part.Color = Color3.fromRGB(200, 180, 160)
+        part.Parent = root
+        local original = part.Color
+        local owner = Cosmetics.start(root)
+        local surface = Instance.new("SurfaceAppearance")
+        surface.Color = Color3.fromRGB(180, 220, 200)
+        local surfaceOriginal = surface.Color
+        local function close(actual: Color3, wanted: Color3): boolean
+            return (Vector3.new(actual.R, actual.G, actual.B) - Vector3.new(wanted.R, wanted.G, wanted.B)).Magnitude
+                < 0.01
+        end
+        local ok, problem = pcall(function()
+            assert(close(part.Color, original:Lerp(Color3.new(0, 0, 0), 0.5)), "fallback tint missing")
+            surface.Parent = part
+            task.wait()
+            assert(close(part.Color, original), "old fallback was not restored before surface ownership")
+            assert(
+                close(surface.Color, surfaceOriginal:Lerp(Color3.new(0, 0, 0), 0.5)),
+                "late surface stayed bright"
+            )
+            surface.Parent = nil
+            task.wait()
+            assert(close(surface.Color, surfaceOriginal), "removed surface retained tint")
+            assert(
+                close(part.Color, original:Lerp(Color3.new(0, 0, 0), 0.5)),
+                "surface removal lost fallback tint"
+            )
+            surface.Parent = part
+            task.wait()
+            assert(
+                close(surface.Color, surfaceOriginal:Lerp(Color3.new(0, 0, 0), 0.5)),
+                "replacement surface stayed bright"
+            )
+            return true
+        end)
+        owner.stop()
+        owner.stop()
+        assert(
+            owner.resources() == 0 and part.Color == original and surface.Color == surfaceOriginal,
+            "late-surface cleanup leaked color or observers"
+        )
+        root:Destroy()
+        assert(ok, problem)
+    end)
     test("P18 thermal environment dims Parts and terrain locally and restores exact originals", function()
         local Cosmetics = cosmetics()
         local world = workspace:FindFirstChild("World")

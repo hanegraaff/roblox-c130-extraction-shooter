@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 --[=[
     P08 test-only three-actual-client acceptance harness. Uses production GameRuntime,
     real client intents and real moving-aircraft swept flights. Trusted fixture poses
@@ -46,6 +47,7 @@ end
 -- SDK self-ends; native Server & Clients supplies finish to retain the report
 -- until the coordinator collects it and ends the owned manual session.
 function Harness.run(finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P08")
     local cases: { Case } = {}
     local traces: { unknown } = {}
     local droppedTraceRecords = 0

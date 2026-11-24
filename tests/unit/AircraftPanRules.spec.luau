@@ -106,6 +106,63 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             end
         end
     end)
+    test("P18 regression A and W cannot reverse when an inverse pan axis hits a square edge", function()
+        local phase = math.pi / 36
+        local cx, cz = 360 * math.cos(phase), 360 * math.sin(phase)
+        local left = assert(
+            rules.step(map, { x = 0, z = 360 }, -1, 0, 0.1, false, aspect, wide, cx, cz),
+            "left witness rejected"
+        )
+        assert(left.x > 0 and left.z == 360, "A reversed toward displayed right at north edge")
+        local up = assert(
+            rules.step(map, { x = -360, z = 300 }, 0, 1, 0.1, false, aspect, wide, cx, cz),
+            "up witness rejected"
+        )
+        assert(up.x == -360 and up.z < 300, "W reversed toward displayed down at west edge")
+    end)
+    test("P18 all pure key projections preserve direction at every edge and orbit phase", function()
+        -- Independent perspective-frame geometry measures the result; this does
+        -- not duplicate integration, normalization or clipping decisions.
+        for phase = 0, 71 do
+            local angle = phase * math.pi / 36
+            local cx, cz = 360 * math.cos(angle), 360 * math.sin(angle)
+            local radialX, radialZ = math.cos(angle), math.sin(angle)
+            for _, point in
+                {
+                    { x = -360, z = -360 },
+                    { x = -360, z = 0 },
+                    { x = -360, z = 300 },
+                    { x = -360, z = 360 },
+                    { x = 0, z = -360 },
+                    { x = 0, z = 360 },
+                    { x = 360, z = -360 },
+                    { x = 360, z = 0 },
+                    { x = 360, z = 360 },
+                    { x = -359, z = 360 },
+                    { x = 359, z = -360 },
+                }
+            do
+                local dx, dz = point.x - cx, point.z - cz
+                local distance = math.sqrt(dx * dx + 140 * 140 + dz * dz)
+                local fx, fy, fz = dx / distance, -140 / distance, dz / distance
+                local along = radialZ * fx - radialX * fz
+                local rx, ry, rz = radialZ - fx * along, -fy * along, -radialX - fz * along
+                local rsize = math.sqrt(rx * rx + ry * ry + rz * rz)
+                rx, ry, rz = rx / rsize, ry / rsize, rz / rsize
+                local ux, uz = ry * fz - rz * fy, rx * fy - ry * fx
+                for _, axis in { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } } do
+                    local moved = assert(
+                        rules.step(map, point, axis[1], axis[2], 0.1, false, aspect, wide, cx, cz),
+                        "edge key rejected"
+                    )
+                    local mx, mz = moved.x - point.x, moved.z - point.z
+                    local signed = (mx * rx + mz * rz) * axis[1] + (mx * ux + mz * uz) * axis[2]
+                    assert(signed >= -1e-7, "displayed direction reversed at phase " .. phase)
+                    assert(math.sqrt(mx * mx + mz * mz) <= 12 + 1e-7, "edge movement exceeded frame cap")
+                end
+            end
+        end
+    end)
     test("P18 held focus remains world-fixed through orbit and zoom", function()
         local focus = { x = 320, z = -350 }
         for n = 0, 72 do

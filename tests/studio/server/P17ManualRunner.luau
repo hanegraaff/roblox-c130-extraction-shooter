@@ -4,6 +4,9 @@
 -- Never calls GetTestArgs/EndTest, never starts Studio, never changes core rules.
 -- The source-bound harness disconnects observers and stops runtime before delivery.
 -- Report chunks are server-only and remain until coordinator collection/Stop.
+-- Historical executable body below remains byte-bound to the P17 evidence.
+-- Reject module loading before that body can allocate listeners/runtime owners.
+require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P17")
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local ServerStorage = game:GetService("ServerStorage")

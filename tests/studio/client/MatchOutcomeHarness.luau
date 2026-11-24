@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P09 client fixture. Sends production intents and acknowledges actual replicated
 -- result text, weapon views, team assignments and camera lifecycle. Test mapping only.
 local HttpService = game:GetService("HttpService")
@@ -85,6 +86,7 @@ end
 
 -- One native client listener scoped to the owned fixture remote.
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P09")
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P09Harness", 120)
         if not transport or not transport:IsA("RemoteEvent") then

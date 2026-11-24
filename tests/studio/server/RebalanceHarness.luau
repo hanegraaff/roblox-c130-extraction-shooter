@@ -29,6 +29,10 @@ end
 -- expected case failure is recorded, then owned runtime/transport are cleaned.
 -- Startup and assertion failures never count as skipped or passing checks.
 function Harness.run(finish: ((unknown) -> ())?)
+    assert(
+        game:GetService("RunService"):IsStudio() and game.PlaceId == 0 and game.GameId == 0,
+        "P18 requires the separate local Studio test document"
+    )
     local cases: { Case } = {}
     local observations: { Record } = {}
     local smoke: { [string]: unknown } = {}
@@ -64,6 +68,7 @@ function Harness.run(finish: ((unknown) -> ())?)
             environment = "Studio",
             clientIds = ids,
             actualClients = #ids,
+            finalClients = #Players:GetPlayers(),
             discovered = #cases,
             passed = passed,
             failed = #cases - passed,
@@ -473,6 +478,36 @@ function Harness.run(finish: ((unknown) -> ())?)
                 assert(not duplicateApplied, "duplicate awarded")
             end)
         end
+        check(
+            "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup",
+            function()
+                local held = owned.launcher.snapshot("Seedship")
+                local holder = assert(
+                    held.ownerId and Players:GetPlayerByUserId(held.ownerId),
+                    "recovered carrier missing"
+                )
+                local body = holder.Character and holder.Character:FindFirstChildOfClass("Humanoid")
+                assert(body, "carrier body missing")
+                body.Health = 0
+                waitFor(function()
+                    return match.snapshot().members[holder.UserId].life == "Eliminated"
+                        and owned.launcher.snapshot("Seedship").state == "Available"
+                end, "carrier death recovery")
+                assert(owned.launcher.snapshot("Seedship").readyAt == held.readyAt, "death reset reload")
+                observe(1900, 2000)
+                local before = owned.launcher.snapshot("Seedship")
+                probe(holder, "Launcher", {
+                    action = "Pickup",
+                    payload = { roundId = round, sequence = 99, launcherId = before.launcherId },
+                })
+                task.wait(0.2)
+                local after = owned.launcher.snapshot("Seedship")
+                assert(
+                    after.state == "Available" and after.ownerId == nil and after.revision == before.revision,
+                    "spectator pickup mutated ownership"
+                )
+            end
+        )
         check("A1 A4 reset restores four pristine sites and next deployment health", function()
             assert(match.abort(round, "P18Reset"), 'P18 assertion: match.abort(round, "P18Reset")')
             waitFor(function()
@@ -484,22 +519,6 @@ function Harness.run(finish: ((unknown) -> ())?)
             end, "next round", 40)
             assert(match.snapshot().roundId > round, "P18 assertion: match.snapshot().roundId > round")
             observe(2000, 2000)
-            local eliminated: Player? = nil
-            for _, player in Players:GetPlayers() do
-                local member = match.snapshot().members[player.UserId]
-                if member and member.role == "Ground" then
-                    eliminated = player
-                    break
-                end
-            end
-            local gone = assert(eliminated, "fresh Ground player missing")
-            local body = gone.Character and gone.Character:FindFirstChildOfClass("Humanoid")
-            assert(body, "fresh body missing")
-            body.Health = 0
-            waitFor(function()
-                return match.snapshot().members[gone.UserId].life == "Eliminated"
-            end, "Ground life removal")
-            observe(2000, 2000)
             for _, site in { "Radar", "Hangar", "Depot", "Seedship" } do
                 local state = owned.launcher.snapshot(site)
                 assert(
@@ -507,6 +526,52 @@ function Harness.run(finish: ((unknown) -> ())?)
                     "launcher reset failed"
                 )
             end
+        end)
+        check("A1 A4 actual carrier departure recovers equipment without health resize", function()
+            local state = match.snapshot()
+            local departing: Player? = nil
+            for _, player in Players:GetPlayers() do
+                if state.members[player.UserId].role == "Ground" then
+                    departing = player
+                    break
+                end
+            end
+            local player = assert(departing, "departure Ground player missing")
+            local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+            assert(root and root:IsA("BasePart"), "departure root missing")
+            local anchor = workspace.World.Battlefield.Anchors.LauncherSeedship
+            root.CFrame = CFrame.new(anchor.Position)
+            root.AssemblyLinearVelocity = Vector3.zero
+            assert(owned.groundCombat.trustCorrection(player), "departure placement failed")
+            local site = owned.launcher.snapshot("Seedship")
+            probe(player, "Launcher", {
+                action = "Pickup",
+                payload = { roundId = state.roundId, sequence = 1, launcherId = site.launcherId },
+            })
+            waitFor(function()
+                return owned.launcher.snapshot("Seedship").ownerId == player.UserId
+            end, "departure pickup")
+            local readyAt = owned.launcher.snapshot("Seedship").readyAt
+            local userId = player.UserId
+            player:Kick("P18 local Studio departure fixture")
+            waitFor(function()
+                local current = match.snapshot().members[userId]
+                return current ~= nil
+                    and not current.connected
+                    and owned.launcher.snapshot("Seedship").state == "Available"
+            end, "actual departure recovery", 30)
+            assert(owned.launcher.snapshot("Seedship").readyAt == readyAt, "departure reset readiness")
+            assert(match.snapshot().phase == "Active", "single Ground departure ended populated round")
+            observe(2000, 2000)
+            local observation: Record = {
+                kind = "actual-carrier-departure",
+                method = "server-Kick",
+                userId = userId,
+                remainingClients = #Players:GetPlayers(),
+            }
+            table.insert(observations, observation)
+        end)
+        check("A3 A6 client owners clean up after replay and departure", function()
             for _, player in Players:GetPlayers() do
                 probe(player, "Cleanup", {})
             end

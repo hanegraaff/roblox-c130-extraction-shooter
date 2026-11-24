@@ -115,9 +115,11 @@ end
 -- Integrates signed screen axes in the ground plane, then clamps X and Z
 -- independently to world square edges. Optional canonical aircraft coordinates
 -- default to phase zero for pure callers. Projected camera-right defines a stable
--- screen basis even when focus is directly under the aircraft. Ground vectors
--- invert that projection, preventing W/S reversal when viewing a square corner
--- outside the circular orbit. Holding an edge never accumulates hidden offset.
+-- screen basis even when focus is directly under the aircraft. Each ground
+-- direction is the horizontal projection of that displayed axis. Componentwise
+-- square clipping cannot reverse its signed screen projection: every surviving
+-- component retains its sign. Combined input follows the weighted screen-axis
+-- gradient, normalized to bound speed. No hidden offset accumulates at an edge.
 function AircraftPanRules.step(
     map: typeof(MapRules.defaults),
     focus: Focus,
@@ -171,8 +173,8 @@ function AircraftPanRules.step(
     if rground < 1e-9 or uground < 1e-9 then
         return nil
     end
-    local moveX = right * -uz / rground + up * rz / uground
-    local moveZ = right * ux / rground - up * rx / uground
+    local moveX = right * rx / uground + up * ux / rground
+    local moveZ = right * rz / uground + up * uz / rground
     local normalization = math.max(1, math.sqrt(moveX ^ 2 + moveZ ^ 2))
     local distance = math.min(deltaSeconds, AircraftPanRules.defaults.maximumDeltaSeconds)
         * AircraftPanRules.defaults.speedStudsPerSecond

@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 --[=[
     P14 actual two-client orchestration. Owns GameRuntime, excluded transport and
     thermal fixtures; asks the production operator controller to pan through injected
@@ -55,6 +56,7 @@ end
 -- finish preserves StudioTestService.EndTest for SDK-owned tests. The short arrival
 -- regression remains an explicitly separate two-case suite, never full acceptance.
 function Harness.run(arrivalRegression: boolean?, finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P14")
     waitFor(function()
         return #Players:GetPlayers() == 2
     end, "two actual clients", 30)

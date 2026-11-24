@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- Test-only P06 real-client harness: owned match, M-7, cover, damage and reset.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -48,6 +49,7 @@ end
 -- Manual mode invokes finish after complete cleanup; SDK mode uses EndTest.
 -- Both paths require the same real-client cases and preserve failures.
 function Harness.run(expectedClients: number?, finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P06")
     local expected = expectedClients or 2
     local mode = if finish then "manual-server-clients" else "sdk"
     local departureMethod = if expected >= 3

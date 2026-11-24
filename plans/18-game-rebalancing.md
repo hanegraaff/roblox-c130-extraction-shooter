@@ -1,6 +1,6 @@
 # P18 — Game rebalancing
 
-**Milestone:** Gameplay revision. **Dependencies:** P07, P08, P14, P17 and the integrated Prism Seedship (PR #62). **Requirements:** R03, R05–R10, R12, R13, R15–R18. Status: [roadmap](../roadmap.md).
+**Milestone:** Gameplay revision. **Dependencies:** P07, P08, P14, P17 and the integrated Prism Seedship (PR #62). **Requirements:** R03, R05–R10, R12, R13, R15–R18, R22. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience
 
@@ -22,7 +22,7 @@ The user added item 5 during implementation: Ground players in the operator view
 - **A2 — Fast panel destruction:** Rules and integration tests prove one direct M102 impact gives Total with no residual collider, two valid 30mm seconds give Total, below-threshold and interrupted/mixed-fire credit persists, paused time is excluded, stale/duplicate/unauthorized outcomes do not earn damage, and pre-impact batching/fragment caps/reset hold. Native Studio rays and two-client observations prove actual openings on representative wall/roof geometry, including Seedship and Sandbreak coverage.
 - **A3 — Square camera movement:** Deterministic tests cover all square edges/corners, axis sliding, immediate reversal, normalized diagonal movement, invalid input, frame-time cap, both profiles and sampled full orbit. Real Studio camera/input tests verify smooth WASD and touch-pad directions, independent aim, both zooms/recenter, finite near-overhead frames, no circular-boundary jam, and cleanup without changing the aircraft orbit. Record focused operated review separately from numeric assertions.
 - **A4 — Seedship launcher:** Git reconstruction and native supported/clearance/navigation checks prove four unique reachable anchors and the fourth is inside the ship. Two actual clients exercise raced claims, one carrier limit, independent identities, fixed rocket damage, reload-preserving drop/recovery and reset to all four anchors. Preserve spectator/role/stale-request rejection.
-- **A5 — Delivery:** The final full `python3 scripts/verify.py` gate passes nonempty required suites, source-bound Studio smoke and focused multiplayer/regression gates pass, independent tester findings are resolved, and player/contributor/design documentation describes the revised whole experience. Source/evidence are committed and pushed with a reviewable PR. P12's separate live release/capacity gates are not prerequisites for this explicitly requested local revision and are not waived or completed by it.
+- **A5 — Delivery:** The final full `python3 scripts/verify.py` gate passes nonempty required suites, source-bound Studio smoke, the current **three-client P18** scenario and adapted **two-client P05** actual fire/flight/opening regression pass, independent tester findings are resolved, and player/contributor/design documentation describes the revised whole experience. Keep operated input/navigation/rendered checks separate from numeric fixtures. Historical incompatible selectors reject explicitly and supply no passing/skipped gameplay evidence. Source/evidence are committed and pushed with a reviewable PR. P12's separate live release/capacity gates are not prerequisites for this explicitly requested local revision and are not waived or completed by it.
 - **A6 — Thermal readability:** Native client tests verify clearly contrasting living-Ground highlights, muted operator-only scenery/ground, opaque cover and exact restoration on role loss/teardown. Rendered review at both FOVs shows exposed Ground targets clearly against darker terrain, covered players hidden and a player visible through a real earned opening. Red is the initial candidate; the user also accepts a fully desaturated view. Record the actual selected presentation, camera/render settings and observations separately from property assertions.
 
 ## Implementation and evidence
@@ -31,4 +31,22 @@ Use the existing deterministic health, destruction ledger, camera and launcher o
 
 ## Completion record
 
-Implementation and verification have not yet been recorded. Dependencies are integrated in `origin/main` at `dc55a91`; P12 remains separately blocked on release evidence.
+Dependencies are integrated in `origin/main` at `dc55a91`; P12 remains separately blocked on release evidence.
+
+### Initial implementation and review candidate
+
+Source `2c9ddf8efc91e0e3171ddedbe138ab647b068b5e` (tree `a492fb6b6b5f69f970a202fb45f948b33b4241d7`) implements the five requested changes. Developer focused checks pass 74 unit and 76 integration cases, formatting, lint and strict analysis. The initial full gate stopped at formatting; that failure was corrected before this candidate was frozen. Independent full verification and native acceptance are recorded separately below when finished.
+
+The user connected the separate local test document through Rojo. Independent Edit inspection on Studio `0.748.0.7481526`, macOS `26.6.2` arm64, confirms PlaceId/GameId zero and test-only mappings. The generated read-only probe matches 168 script byte-length/djb2 checksums and five launcher/platform poses, with zero mismatches, against test build SHA-256 `3fd491335e1eed3a43e22ed02740758162d6798dd098512a8fafd8d5f040262e`. This is loaded checksum parity, not cryptographic loaded-source proof or gameplay acceptance.
+
+The independent reviewer also identified staged legacy harnesses that still assert superseded health, panel and camera rules. Their disposition and the current native results must be resolved/documented before completion. Historical reports retain their original source-specific meaning.
+
+### Initial independent findings
+
+- **A3/R17, material:** Actual loaded camera-frame/pan sampling found opposite-direction edge motion. At phase π/36, focus `(0,360)`, A input `(-1,0)`, `dt=0.1`, FOV 40° and aspect 16:9, the candidate returns `(-1.04586891297,360)`. Its displacement projects `+0.6148073` onto camera right, so A moves right. W also reverses at the sampled west edge. Independent world-axis clipping after inverse projection causes this. The candidate is not accepted; the fix must add signed projected-direction regressions.
+- **A5/R15, material:** Callable P06/P07/P08/P09/P10/P11/P14/P17 staged harnesses retain old health, panel or camera assumptions. Adaptation or explicit historical rules-versioning with current replacement coverage is required. The initial P18 trusted-outcome fixtures alone do not test gunship input/flight.
+- **Native startup gap:** The first three-client SDK attempt remains pending with the original local document in Edit and one SDK-created unavailable child. EndTest from Edit is rejected because no running Server DataModel exists; MCP Stop does not settle the pending SDK result. This is a supported operation with a temporary startup failure, not a waiver. No smoke, multiplayer, operated input/navigation or rendered-contrast pass is claimed from that attempt.
+
+Independent `python3 scripts/verify.py` completes successfully on the initial candidate: **74 unit / 76 integration / 23 tooling / 58 asset regressions**, with no failed/skipped required suites; format, lint, strict types, deliberate rejection probes, both builds and artifact isolation pass. Inspection checks 11,459 authored part transforms in each artifact, 24,751 release / 24,866 test Instances and 64 runtime scripts. [Host summary](../docs/evidence/p18/2c9ddf8-host.json), [full bounded log](../docs/evidence/p18/2c9ddf8-verify.log), [parity and direction failure](../docs/evidence/p18/2c9ddf8-source-parity-direction.json).
+
+The owned SDK startup was later cleaned up by terminating only its positively identified `StartServer` child. The SDK returned no suite report, so it remains **unverified**, not passing. Both user documents returned to Edit and the test selector is absent. [Startup and cleanup evidence](../docs/evidence/p18/2c9ddf8-sdk-startup.json). Subsequent source fixes require fresh Play to avoid the Edit require cache.
