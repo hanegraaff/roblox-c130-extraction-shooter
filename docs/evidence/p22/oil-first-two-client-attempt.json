@@ -1,0 +1,154 @@
+{
+  "result": {
+    "initial": {
+      "bytes": 346470,
+      "meshes": 2432,
+      "signature": 863695906,
+      "rows": 2519,
+      "television": 1,
+      "minimumWorldX": 449.4999923649231,
+      "paintings": [
+        {
+          "source": "Portrait 01 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://98916068098499",
+          "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+          "y": 9.100000381469727,
+          "x": 584.218017578125,
+          "z": -39.00000762939453,
+          "nativeWidth": 6.800003051845235,
+          "textureId": "rbxassetid://105314252767417",
+          "ordinal": 1
+        },
+        {
+          "source": "Portrait 02 | canvas",
+          "nativeHeight": 10.200000143744747,
+          "meshId": "rbxassetid://95811138210370",
+          "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+          "y": 9.100000381469727,
+          "x": 574.2000122070312,
+          "z": -9.78200912475586,
+          "nativeWidth": 7.650001971735058,
+          "textureId": "rbxassetid://80363010663600",
+          "ordinal": 2
+        },
+        {
+          "source": "Portrait 03 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://126740859161539",
+          "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+          "y": 9.100000381469727,
+          "x": 555.3999633789062,
+          "z": -48.2180061340332,
+          "nativeWidth": 7.649997711269063,
+          "textureId": "rbxassetid://136855674354422",
+          "ordinal": 3
+        },
+        {
+          "source": "Portrait 04 | canvas",
+          "nativeHeight": 10.200000143744663,
+          "meshId": "rbxassetid://129269854495485",
+          "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+          "y": 9.100000381469727,
+          "x": 584.218017578125,
+          "z": -20.600011825561523,
+          "nativeWidth": 7.650000064386425,
+          "textureId": "rbxassetid://111747031021921",
+          "ordinal": 4
+        },
+        {
+          "source": "Portrait 05 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://94417987701256",
+          "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+          "y": 9.100000381469727,
+          "x": 574.5,
+          "z": -48.2180061340332,
+          "nativeWidth": 5.627586364833516,
+          "textureId": "rbxassetid://87378239580163",
+          "ordinal": 5
+        },
+        {
+          "source": "Portrait 06 | canvas",
+          "nativeHeight": 10.20000014374458,
+          "meshId": "rbxassetid://99881846767979",
+          "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+          "y": 9.100000381469727,
+          "x": 555.9000244140625,
+          "z": -9.78200626373291,
+          "nativeWidth": 7.649998157037793,
+          "textureId": "rbxassetid://104678368112021",
+          "ordinal": 6
+        }
+      ],
+      "signs": 2,
+      "bustMeshCount": 34,
+      "floors": 3
+    },
+    "studioVersion": "0.748.0.7481526",
+    "usedSdkAddPlayers": true,
+    "errors": [
+      "ServerScriptService.P22FurnishedAcceptanceServer:212: Players.Player2.PlayerScripts.P22FurnishedAcceptanceClient:140: local TestEZ failed: {\"errors\":1,\"skipped\":0,\"passed\":21,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"discovered\":22}\nServerScriptService.P22FurnishedAcceptanceServer:212\nServerScriptService.P22FurnishedAcceptanceServer:130 function check\nServerScriptService.P22FurnishedAcceptanceServer:207 function exchange\nServerScriptService.P22FurnishedAcceptanceServer:262\nServerScriptService.P22FurnishedAcceptanceServer:230\n"
+    ],
+    "anchors": {
+      "GalleryWing": {
+        "clearanceObstructions": 0,
+        "support": "LobbyFloorGallery",
+        "position": [
+          580,
+          3,
+          -44
+        ]
+      },
+      "TheaterWing": {
+        "clearanceObstructions": 0,
+        "support": "LobbyFloorTheater",
+        "position": [
+          453,
+          3,
+          -46
+        ]
+      },
+      "Lobby": {
+        "clearanceObstructions": 0,
+        "support": "LobbyFloorMain",
+        "position": [
+          520,
+          3,
+          0
+        ]
+      },
+      "Operator": {
+        "clearanceObstructions": 0,
+        "support": "LobbyFloorMain",
+        "position": [
+          520,
+          3,
+          -15
+        ]
+      }
+    },
+    "passed": false,
+    "rounds": [],
+    "candidate": "2c753b626b4e6e1b31d560e46c6fce137165fe12",
+    "actualClientIds": [
+      -2,
+      -1
+    ],
+    "serverSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 199,
+      "clientCount": 1,
+      "seed": 1,
+      "discovered": 199,
+      "suite": "P01-server",
+      "failed": 0,
+      "environment": "Studio"
+    },
+    "kind": "P22FurnishedAcceptance",
+    "scope": "Actual clients in furnished candidate, managed art and collision, stock server round lifecycle.",
+    "usedNormalReturnFromSoloPreview": true
+  },
+  "sdkReturned": true
+}

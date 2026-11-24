@@ -52,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-Play the integrated game locally in Roblox Studio from `main`. Use the P22 branch to try the furnished lobby while its Roblox acceptance is in review. The same rooms and the current paintings are available in Blender. [P22 verification record](plans/22-integrate-lobby.md#completion-record) · [Blender lobby](assets/blender/lobby-interior/README.md)
+Play the integrated game locally in Roblox Studio from `main`. Use the P22 branch for the furnished lobby verified in Studio while its pull request is in review. The same rooms and the current paintings are available in Blender. [P22 verification record](plans/22-integrate-lobby.md#completion-record) · [Blender lobby](assets/blender/lobby-interior/README.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 

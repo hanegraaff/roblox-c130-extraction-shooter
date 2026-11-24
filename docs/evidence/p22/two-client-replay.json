@@ -1,0 +1,1304 @@
+{
+  "candidate": "c526ab982c7e52984a02cf29fa7122596b6db9dc",
+  "tree": "aea353ff88293dc4e62caaaa23220c1f1bc1caa2",
+  "testBuildSha256": "5806036bd24779d8a07eee17283b4210874a6bf12be2cb8414e00a45c79096d5",
+  "releaseBuildSha256": "1f6abe84f8831216701309293d415d714be6d547bff27cd26ea91734653148c8",
+  "setup": "Local tests.rbxlx in Studio with exact natively deserialized LobbyArt.rbxm (SHA-256 9b4e2fbf9a3c84b3c4ea6459b6f20b655f371f6b4cd6537d63556a5ecdb8932c). Both builds carry the same art. Wrapped supported ExecuteMultiplayerTestAsync(1) and AddPlayers(1); each normal match starts via the mapped Studio Start control and ends by the production Ground surrender remote. Real bodies move using Humanoid.Move.",
+  "exactTestEditBinding": {
+    "artifact": "5806036bd24779d8a07eee17283b4210874a6bf12be2cb8414e00a45c79096d5",
+    "source": "c526ab982c7e52984a02cf29fa7122596b6db9dc",
+    "meshCount": 2432,
+    "pass": true,
+    "comparedScriptCount": 11,
+    "mismatches": [],
+    "actualChecksum": 3091365473,
+    "mode": "test",
+    "actualBytes": 240348
+  },
+  "editCleanup": {
+    "eightTestRoots": true,
+    "artMeshCount": 2432,
+    "genuinePortrait3Mesh": "rbxassetid://126740859161539",
+    "backupRetained": true,
+    "originalEditMode": true,
+    "temporaryProbeRemoved": true
+  },
+  "studioSdkReport": {
+    "result": {
+      "initial": {
+        "bytes": 346470,
+        "meshes": 2432,
+        "signature": 863695906,
+        "rows": 2519,
+        "television": 1,
+        "minimumWorldX": 449.4999923649231,
+        "paintings": [
+          {
+            "source": "Portrait 01 | canvas",
+            "nativeHeight": 10.199999809265137,
+            "meshId": "rbxassetid://98916068098499",
+            "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+            "y": 9.100000381469727,
+            "x": 584.218017578125,
+            "z": -39.00000762939453,
+            "nativeWidth": 6.800003051845235,
+            "textureId": "rbxassetid://105314252767417",
+            "ordinal": 1
+          },
+          {
+            "source": "Portrait 02 | canvas",
+            "nativeHeight": 10.200000143744747,
+            "meshId": "rbxassetid://95811138210370",
+            "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+            "y": 9.100000381469727,
+            "x": 574.2000122070312,
+            "z": -9.78200912475586,
+            "nativeWidth": 7.650001971735058,
+            "textureId": "rbxassetid://80363010663600",
+            "ordinal": 2
+          },
+          {
+            "source": "Portrait 03 | canvas",
+            "nativeHeight": 10.199999809265137,
+            "meshId": "rbxassetid://126740859161539",
+            "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+            "y": 9.100000381469727,
+            "x": 555.3999633789062,
+            "z": -48.2180061340332,
+            "nativeWidth": 7.649997711269063,
+            "textureId": "rbxassetid://136855674354422",
+            "ordinal": 3
+          },
+          {
+            "source": "Portrait 04 | canvas",
+            "nativeHeight": 10.200000143744663,
+            "meshId": "rbxassetid://129269854495485",
+            "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+            "y": 9.100000381469727,
+            "x": 584.218017578125,
+            "z": -20.600011825561523,
+            "nativeWidth": 7.650000064386425,
+            "textureId": "rbxassetid://111747031021921",
+            "ordinal": 4
+          },
+          {
+            "source": "Portrait 05 | canvas",
+            "nativeHeight": 10.199999809265137,
+            "meshId": "rbxassetid://94417987701256",
+            "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+            "y": 9.100000381469727,
+            "x": 574.5,
+            "z": -48.2180061340332,
+            "nativeWidth": 5.627586364833516,
+            "textureId": "rbxassetid://87378239580163",
+            "ordinal": 5
+          },
+          {
+            "source": "Portrait 06 | canvas",
+            "nativeHeight": 10.20000014374458,
+            "meshId": "rbxassetid://99881846767979",
+            "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+            "y": 9.100000381469727,
+            "x": 555.9000244140625,
+            "z": -9.78200626373291,
+            "nativeWidth": 7.649998157037793,
+            "textureId": "rbxassetid://104678368112021",
+            "ordinal": 6
+          }
+        ],
+        "signs": 2,
+        "bustMeshCount": 34,
+        "floors": 3
+      },
+      "studioVersion": "0.748.0.7481526",
+      "usedSdkAddPlayers": true,
+      "errors": [],
+      "clientsBefore": [
+        {
+          "cameraType": "Custom",
+          "role": "Waiting",
+          "smokeErrors": "[]",
+          "lobby": {
+            "bytes": 346470,
+            "meshes": 2432,
+            "signature": 863695906,
+            "rows": 2519,
+            "television": 1,
+            "minimumWorldX": 449.49999237060547,
+            "paintings": [
+              {
+                "source": "Portrait 01 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://98916068098499",
+                "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -39.00000762939453,
+                "nativeWidth": 6.8000030517578125,
+                "textureId": "rbxassetid://105314252767417",
+                "ordinal": 1
+              },
+              {
+                "source": "Portrait 02 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://95811138210370",
+                "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                "y": 9.100000381469727,
+                "x": 574.2000122070312,
+                "z": -9.78200912475586,
+                "nativeWidth": 7.650001525878906,
+                "textureId": "rbxassetid://80363010663600",
+                "ordinal": 2
+              },
+              {
+                "source": "Portrait 03 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://126740859161539",
+                "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                "y": 9.100000381469727,
+                "x": 555.3999633789062,
+                "z": -48.2180061340332,
+                "nativeWidth": 7.649997711181641,
+                "textureId": "rbxassetid://136855674354422",
+                "ordinal": 3
+              },
+              {
+                "source": "Portrait 04 | canvas",
+                "nativeHeight": 10.200001937150887,
+                "meshId": "rbxassetid://129269854495485",
+                "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -20.600011825561523,
+                "nativeWidth": 7.650001746416024,
+                "textureId": "rbxassetid://111747031021921",
+                "ordinal": 4
+              },
+              {
+                "source": "Portrait 05 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://94417987701256",
+                "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                "y": 9.100000381469727,
+                "x": 574.5,
+                "z": -48.2180061340332,
+                "nativeWidth": 5.627586364746094,
+                "textureId": "rbxassetid://87378239580163",
+                "ordinal": 5
+              },
+              {
+                "source": "Portrait 06 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://99881846767979",
+                "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                "y": 9.100000381469727,
+                "x": 555.9000244140625,
+                "z": -9.78200626373291,
+                "nativeWidth": 7.649997711181641,
+                "textureId": "rbxassetid://104678368112021",
+                "ordinal": 6
+              }
+            ],
+            "signs": 2,
+            "bustMeshCount": 34,
+            "floors": 3
+          },
+          "phase": "Lobby",
+          "smoke": {
+            "errors": 0,
+            "skipped": 0,
+            "userId": -2,
+            "discovered": 22,
+            "seed": 1,
+            "environment": "Studio",
+            "suite": "P01-client",
+            "failed": 0,
+            "passed": 22
+          },
+          "userId": -2,
+          "preloadCheck": {
+            "ok": true,
+            "after": {
+              "rbxassetid://136855674354422": "Success",
+              "rbxassetid://99881846767979": "Success",
+              "rbxassetid://126740859161539": "Success",
+              "rbxassetid://87378239580163": "Success",
+              "rbxassetid://129269854495485": "Success",
+              "rbxassetid://86818240154118": "Success",
+              "rbxassetid://91085525722880": "Success",
+              "rbxassetid://80363010663600": "Success",
+              "rbxassetid://131940688313537": "Success",
+              "rbxassetid://97488158099796": "Success",
+              "rbxassetid://94417987701256": "Success",
+              "rbxassetid://95811138210370": "Success",
+              "rbxassetid://98916068098499": "Success",
+              "rbxassetid://104678368112021": "Success",
+              "rbxassetid://111711820863192": "Success",
+              "rbxassetid://111747031021921": "Success",
+              "rbxassetid://105314252767417": "Success",
+              "rbxassetid://136579906120023": "Success"
+            },
+            "statuses": {
+              "rbxassetid://136855674354422": "Success",
+              "rbxassetid://99881846767979": "Success",
+              "rbxassetid://126740859161539": "Success",
+              "rbxassetid://87378239580163": "Success",
+              "rbxassetid://129269854495485": "Success",
+              "rbxassetid://86818240154118": "Success",
+              "rbxassetid://91085525722880": "Success",
+              "rbxassetid://80363010663600": "Success",
+              "rbxassetid://131940688313537": "Success",
+              "rbxassetid://97488158099796": "Success",
+              "rbxassetid://94417987701256": "Success",
+              "rbxassetid://95811138210370": "Success",
+              "rbxassetid://98916068098499": "Success",
+              "rbxassetid://104678368112021": "Success",
+              "rbxassetid://111711820863192": "Success",
+              "rbxassetid://111747031021921": "Success",
+              "rbxassetid://105314252767417": "Success",
+              "rbxassetid://136579906120023": "Success"
+            },
+            "before": {
+              "rbxassetid://136855674354422": "Success",
+              "rbxassetid://99881846767979": "Success",
+              "rbxassetid://126740859161539": "Success",
+              "rbxassetid://87378239580163": "Success",
+              "rbxassetid://129269854495485": "Success",
+              "rbxassetid://86818240154118": "Success",
+              "rbxassetid://91085525722880": "Success",
+              "rbxassetid://80363010663600": "Success",
+              "rbxassetid://131940688313537": "Success",
+              "rbxassetid://97488158099796": "Success",
+              "rbxassetid://94417987701256": "Success",
+              "rbxassetid://95811138210370": "Success",
+              "rbxassetid://98916068098499": "Success",
+              "rbxassetid://104678368112021": "Success",
+              "rbxassetid://111711820863192": "Success",
+              "rbxassetid://111747031021921": "Success",
+              "rbxassetid://105314252767417": "Success",
+              "rbxassetid://136579906120023": "Success"
+            },
+            "missingOrFailed": []
+          }
+        },
+        {
+          "cameraType": "Custom",
+          "role": "Waiting",
+          "smokeErrors": "[]",
+          "lobby": {
+            "bytes": 346470,
+            "meshes": 2432,
+            "signature": 863695906,
+            "rows": 2519,
+            "television": 1,
+            "minimumWorldX": 449.49999237060547,
+            "paintings": [
+              {
+                "source": "Portrait 01 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://98916068098499",
+                "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -39.00000762939453,
+                "nativeWidth": 6.8000030517578125,
+                "textureId": "rbxassetid://105314252767417",
+                "ordinal": 1
+              },
+              {
+                "source": "Portrait 02 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://95811138210370",
+                "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                "y": 9.100000381469727,
+                "x": 574.2000122070312,
+                "z": -9.78200912475586,
+                "nativeWidth": 7.650001525878906,
+                "textureId": "rbxassetid://80363010663600",
+                "ordinal": 2
+              },
+              {
+                "source": "Portrait 03 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://126740859161539",
+                "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                "y": 9.100000381469727,
+                "x": 555.3999633789062,
+                "z": -48.2180061340332,
+                "nativeWidth": 7.649997711181641,
+                "textureId": "rbxassetid://136855674354422",
+                "ordinal": 3
+              },
+              {
+                "source": "Portrait 04 | canvas",
+                "nativeHeight": 10.200001937150887,
+                "meshId": "rbxassetid://129269854495485",
+                "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -20.600011825561523,
+                "nativeWidth": 7.650001746416024,
+                "textureId": "rbxassetid://111747031021921",
+                "ordinal": 4
+              },
+              {
+                "source": "Portrait 05 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://94417987701256",
+                "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                "y": 9.100000381469727,
+                "x": 574.5,
+                "z": -48.2180061340332,
+                "nativeWidth": 5.627586364746094,
+                "textureId": "rbxassetid://87378239580163",
+                "ordinal": 5
+              },
+              {
+                "source": "Portrait 06 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://99881846767979",
+                "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                "y": 9.100000381469727,
+                "x": 555.9000244140625,
+                "z": -9.78200626373291,
+                "nativeWidth": 7.649997711181641,
+                "textureId": "rbxassetid://104678368112021",
+                "ordinal": 6
+              }
+            ],
+            "signs": 2,
+            "bustMeshCount": 34,
+            "floors": 3
+          },
+          "phase": "Lobby",
+          "smoke": {
+            "errors": 0,
+            "skipped": 0,
+            "userId": -1,
+            "discovered": 22,
+            "seed": 1,
+            "environment": "Studio",
+            "suite": "P01-client",
+            "failed": 0,
+            "passed": 22
+          },
+          "userId": -1,
+          "preloadCheck": {
+            "ok": true,
+            "after": {
+              "rbxassetid://136855674354422": "Success",
+              "rbxassetid://99881846767979": "Success",
+              "rbxassetid://126740859161539": "Success",
+              "rbxassetid://87378239580163": "Success",
+              "rbxassetid://129269854495485": "Success",
+              "rbxassetid://86818240154118": "Success",
+              "rbxassetid://91085525722880": "Success",
+              "rbxassetid://80363010663600": "Success",
+              "rbxassetid://131940688313537": "Success",
+              "rbxassetid://97488158099796": "Success",
+              "rbxassetid://94417987701256": "Success",
+              "rbxassetid://95811138210370": "Success",
+              "rbxassetid://98916068098499": "Success",
+              "rbxassetid://104678368112021": "Success",
+              "rbxassetid://111711820863192": "Success",
+              "rbxassetid://111747031021921": "Success",
+              "rbxassetid://105314252767417": "Success",
+              "rbxassetid://136579906120023": "Success"
+            },
+            "statuses": {
+              "rbxassetid://136855674354422": "Success",
+              "rbxassetid://99881846767979": "Success",
+              "rbxassetid://126740859161539": "Success",
+              "rbxassetid://87378239580163": "Success",
+              "rbxassetid://129269854495485": "Success",
+              "rbxassetid://86818240154118": "Success",
+              "rbxassetid://91085525722880": "Success",
+              "rbxassetid://80363010663600": "Success",
+              "rbxassetid://131940688313537": "Success",
+              "rbxassetid://97488158099796": "Success",
+              "rbxassetid://94417987701256": "Success",
+              "rbxassetid://95811138210370": "Success",
+              "rbxassetid://98916068098499": "Success",
+              "rbxassetid://104678368112021": "Success",
+              "rbxassetid://111711820863192": "Success",
+              "rbxassetid://111747031021921": "Success",
+              "rbxassetid://105314252767417": "Success",
+              "rbxassetid://136579906120023": "Success"
+            },
+            "before": {
+              "rbxassetid://136855674354422": "Success",
+              "rbxassetid://99881846767979": "Success",
+              "rbxassetid://126740859161539": "Success",
+              "rbxassetid://87378239580163": "Success",
+              "rbxassetid://129269854495485": "Success",
+              "rbxassetid://86818240154118": "Success",
+              "rbxassetid://91085525722880": "Success",
+              "rbxassetid://80363010663600": "Success",
+              "rbxassetid://131940688313537": "Success",
+              "rbxassetid://97488158099796": "Success",
+              "rbxassetid://94417987701256": "Success",
+              "rbxassetid://95811138210370": "Success",
+              "rbxassetid://98916068098499": "Success",
+              "rbxassetid://104678368112021": "Success",
+              "rbxassetid://111711820863192": "Success",
+              "rbxassetid://111747031021921": "Success",
+              "rbxassetid://105314252767417": "Success",
+              "rbxassetid://136579906120023": "Success"
+            },
+            "missingOrFailed": []
+          }
+        }
+      ],
+      "passed": true,
+      "actualClientIds": [
+        -2,
+        -1
+      ],
+      "rounds": [
+        {
+          "after": {
+            "bytes": 346470,
+            "meshes": 2432,
+            "signature": 863695906,
+            "rows": 2519,
+            "television": 1,
+            "minimumWorldX": 449.4999923649231,
+            "paintings": [
+              {
+                "source": "Portrait 01 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://98916068098499",
+                "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -39.00000762939453,
+                "nativeWidth": 6.800003051845235,
+                "textureId": "rbxassetid://105314252767417",
+                "ordinal": 1
+              },
+              {
+                "source": "Portrait 02 | canvas",
+                "nativeHeight": 10.200000143744747,
+                "meshId": "rbxassetid://95811138210370",
+                "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                "y": 9.100000381469727,
+                "x": 574.2000122070312,
+                "z": -9.78200912475586,
+                "nativeWidth": 7.650001971735058,
+                "textureId": "rbxassetid://80363010663600",
+                "ordinal": 2
+              },
+              {
+                "source": "Portrait 03 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://126740859161539",
+                "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                "y": 9.100000381469727,
+                "x": 555.3999633789062,
+                "z": -48.2180061340332,
+                "nativeWidth": 7.649997711269063,
+                "textureId": "rbxassetid://136855674354422",
+                "ordinal": 3
+              },
+              {
+                "source": "Portrait 04 | canvas",
+                "nativeHeight": 10.200000143744663,
+                "meshId": "rbxassetid://129269854495485",
+                "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -20.600011825561523,
+                "nativeWidth": 7.650000064386425,
+                "textureId": "rbxassetid://111747031021921",
+                "ordinal": 4
+              },
+              {
+                "source": "Portrait 05 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://94417987701256",
+                "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                "y": 9.100000381469727,
+                "x": 574.5,
+                "z": -48.2180061340332,
+                "nativeWidth": 5.627586364833516,
+                "textureId": "rbxassetid://87378239580163",
+                "ordinal": 5
+              },
+              {
+                "source": "Portrait 06 | canvas",
+                "nativeHeight": 10.20000014374458,
+                "meshId": "rbxassetid://99881846767979",
+                "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                "y": 9.100000381469727,
+                "x": 555.9000244140625,
+                "z": -9.78200626373291,
+                "nativeWidth": 7.649998157037793,
+                "textureId": "rbxassetid://104678368112021",
+                "ordinal": 6
+              }
+            ],
+            "signs": 2,
+            "bustMeshCount": 34,
+            "floors": 3
+          },
+          "groundReturnedFromLobby": true,
+          "operator": {
+            "role": "Gunship",
+            "position": [
+              520,
+              3,
+              -15
+            ],
+            "life": "Alive",
+            "anchored": true,
+            "userId": -2,
+            "protected": true
+          },
+          "controlsGeneration": 2,
+          "rebuiltLobby": true,
+          "clientsAfter": [
+            {
+              "cameraType": "Custom",
+              "role": "Waiting",
+              "smokeErrors": "[]",
+              "walkedStuds": 3.367647409439087,
+              "phase": "Lobby",
+              "smoke": {
+                "errors": 0,
+                "skipped": 0,
+                "userId": -2,
+                "discovered": 22,
+                "seed": 1,
+                "environment": "Studio",
+                "suite": "P01-client",
+                "failed": 0,
+                "passed": 22
+              },
+              "userId": -2,
+              "lobby": {
+                "bytes": 346470,
+                "meshes": 2432,
+                "signature": 863695906,
+                "rows": 2519,
+                "television": 1,
+                "minimumWorldX": 449.49999237060547,
+                "paintings": [
+                  {
+                    "source": "Portrait 01 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://98916068098499",
+                    "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -39.00000762939453,
+                    "nativeWidth": 6.8000030517578125,
+                    "textureId": "rbxassetid://105314252767417",
+                    "ordinal": 1
+                  },
+                  {
+                    "source": "Portrait 02 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://95811138210370",
+                    "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                    "y": 9.100000381469727,
+                    "x": 574.2000122070312,
+                    "z": -9.78200912475586,
+                    "nativeWidth": 7.650001525878906,
+                    "textureId": "rbxassetid://80363010663600",
+                    "ordinal": 2
+                  },
+                  {
+                    "source": "Portrait 03 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://126740859161539",
+                    "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                    "y": 9.100000381469727,
+                    "x": 555.3999633789062,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://136855674354422",
+                    "ordinal": 3
+                  },
+                  {
+                    "source": "Portrait 04 | canvas",
+                    "nativeHeight": 10.200001937150887,
+                    "meshId": "rbxassetid://129269854495485",
+                    "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -20.600011825561523,
+                    "nativeWidth": 7.650001746416024,
+                    "textureId": "rbxassetid://111747031021921",
+                    "ordinal": 4
+                  },
+                  {
+                    "source": "Portrait 05 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://94417987701256",
+                    "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                    "y": 9.100000381469727,
+                    "x": 574.5,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 5.627586364746094,
+                    "textureId": "rbxassetid://87378239580163",
+                    "ordinal": 5
+                  },
+                  {
+                    "source": "Portrait 06 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://99881846767979",
+                    "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                    "y": 9.100000381469727,
+                    "x": 555.9000244140625,
+                    "z": -9.78200626373291,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://104678368112021",
+                    "ordinal": 6
+                  }
+                ],
+                "signs": 2,
+                "bustMeshCount": 34,
+                "floors": 3
+              }
+            },
+            {
+              "cameraType": "Custom",
+              "role": "Waiting",
+              "smokeErrors": "[]",
+              "walkedStuds": 3.367647409439087,
+              "phase": "Lobby",
+              "smoke": {
+                "errors": 0,
+                "skipped": 0,
+                "userId": -1,
+                "discovered": 22,
+                "seed": 1,
+                "environment": "Studio",
+                "suite": "P01-client",
+                "failed": 0,
+                "passed": 22
+              },
+              "userId": -1,
+              "lobby": {
+                "bytes": 346470,
+                "meshes": 2432,
+                "signature": 863695906,
+                "rows": 2519,
+                "television": 1,
+                "minimumWorldX": 449.49999237060547,
+                "paintings": [
+                  {
+                    "source": "Portrait 01 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://98916068098499",
+                    "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -39.00000762939453,
+                    "nativeWidth": 6.8000030517578125,
+                    "textureId": "rbxassetid://105314252767417",
+                    "ordinal": 1
+                  },
+                  {
+                    "source": "Portrait 02 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://95811138210370",
+                    "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                    "y": 9.100000381469727,
+                    "x": 574.2000122070312,
+                    "z": -9.78200912475586,
+                    "nativeWidth": 7.650001525878906,
+                    "textureId": "rbxassetid://80363010663600",
+                    "ordinal": 2
+                  },
+                  {
+                    "source": "Portrait 03 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://126740859161539",
+                    "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                    "y": 9.100000381469727,
+                    "x": 555.3999633789062,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://136855674354422",
+                    "ordinal": 3
+                  },
+                  {
+                    "source": "Portrait 04 | canvas",
+                    "nativeHeight": 10.200001937150887,
+                    "meshId": "rbxassetid://129269854495485",
+                    "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -20.600011825561523,
+                    "nativeWidth": 7.650001746416024,
+                    "textureId": "rbxassetid://111747031021921",
+                    "ordinal": 4
+                  },
+                  {
+                    "source": "Portrait 05 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://94417987701256",
+                    "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                    "y": 9.100000381469727,
+                    "x": 574.5,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 5.627586364746094,
+                    "textureId": "rbxassetid://87378239580163",
+                    "ordinal": 5
+                  },
+                  {
+                    "source": "Portrait 06 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://99881846767979",
+                    "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                    "y": 9.100000381469727,
+                    "x": 555.9000244140625,
+                    "z": -9.78200626373291,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://104678368112021",
+                    "ordinal": 6
+                  }
+                ],
+                "signs": 2,
+                "bustMeshCount": 34,
+                "floors": 3
+              }
+            }
+          ],
+          "anchorsAfter": {
+            "GalleryWing": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorGallery",
+              "position": [
+                580,
+                3,
+                -44
+              ]
+            },
+            "TheaterWing": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorTheater",
+              "position": [
+                453,
+                3,
+                -46
+              ]
+            },
+            "Lobby": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorMain",
+              "position": [
+                520,
+                3,
+                0
+              ]
+            },
+            "Operator": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorMain",
+              "position": [
+                520,
+                3,
+                -15
+              ]
+            }
+          },
+          "playersAfter": [
+            {
+              "role": "Waiting",
+              "position": [
+                520,
+                3,
+                0
+              ],
+              "life": "Waiting",
+              "anchored": false,
+              "userId": -2,
+              "protected": true
+            },
+            {
+              "role": "Waiting",
+              "position": [
+                520,
+                3,
+                0
+              ],
+              "life": "Waiting",
+              "anchored": false,
+              "userId": -1,
+              "protected": true
+            }
+          ],
+          "ground": {
+            "role": "Ground",
+            "position": [
+              -20,
+              3,
+              108
+            ],
+            "life": "Alive",
+            "anchored": false,
+            "userId": -1,
+            "protected": false
+          },
+          "result": {
+            "reason": "GroundEliminated",
+            "winner": "Gunship",
+            "userId": -2,
+            "roundId": 1
+          },
+          "roundId": 1
+        },
+        {
+          "after": {
+            "bytes": 346470,
+            "meshes": 2432,
+            "signature": 863695906,
+            "rows": 2519,
+            "television": 1,
+            "minimumWorldX": 449.4999923649231,
+            "paintings": [
+              {
+                "source": "Portrait 01 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://98916068098499",
+                "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -39.00000762939453,
+                "nativeWidth": 6.800003051845235,
+                "textureId": "rbxassetid://105314252767417",
+                "ordinal": 1
+              },
+              {
+                "source": "Portrait 02 | canvas",
+                "nativeHeight": 10.200000143744747,
+                "meshId": "rbxassetid://95811138210370",
+                "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                "y": 9.100000381469727,
+                "x": 574.2000122070312,
+                "z": -9.78200912475586,
+                "nativeWidth": 7.650001971735058,
+                "textureId": "rbxassetid://80363010663600",
+                "ordinal": 2
+              },
+              {
+                "source": "Portrait 03 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://126740859161539",
+                "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                "y": 9.100000381469727,
+                "x": 555.3999633789062,
+                "z": -48.2180061340332,
+                "nativeWidth": 7.649997711269063,
+                "textureId": "rbxassetid://136855674354422",
+                "ordinal": 3
+              },
+              {
+                "source": "Portrait 04 | canvas",
+                "nativeHeight": 10.200000143744663,
+                "meshId": "rbxassetid://129269854495485",
+                "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                "y": 9.100000381469727,
+                "x": 584.218017578125,
+                "z": -20.600011825561523,
+                "nativeWidth": 7.650000064386425,
+                "textureId": "rbxassetid://111747031021921",
+                "ordinal": 4
+              },
+              {
+                "source": "Portrait 05 | canvas",
+                "nativeHeight": 10.199999809265137,
+                "meshId": "rbxassetid://94417987701256",
+                "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                "y": 9.100000381469727,
+                "x": 574.5,
+                "z": -48.2180061340332,
+                "nativeWidth": 5.627586364833516,
+                "textureId": "rbxassetid://87378239580163",
+                "ordinal": 5
+              },
+              {
+                "source": "Portrait 06 | canvas",
+                "nativeHeight": 10.20000014374458,
+                "meshId": "rbxassetid://99881846767979",
+                "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                "y": 9.100000381469727,
+                "x": 555.9000244140625,
+                "z": -9.78200626373291,
+                "nativeWidth": 7.649998157037793,
+                "textureId": "rbxassetid://104678368112021",
+                "ordinal": 6
+              }
+            ],
+            "signs": 2,
+            "bustMeshCount": 34,
+            "floors": 3
+          },
+          "operator": {
+            "role": "Gunship",
+            "position": [
+              520,
+              3,
+              -15
+            ],
+            "life": "Alive",
+            "anchored": true,
+            "userId": -2,
+            "protected": true
+          },
+          "controlsGeneration": 3,
+          "rebuiltLobby": true,
+          "clientsAfter": [
+            {
+              "cameraType": "Custom",
+              "role": "Waiting",
+              "smokeErrors": "[]",
+              "walkedStuds": 3.6343142986297607,
+              "phase": "Lobby",
+              "smoke": {
+                "errors": 0,
+                "skipped": 0,
+                "userId": -2,
+                "discovered": 22,
+                "seed": 1,
+                "environment": "Studio",
+                "suite": "P01-client",
+                "failed": 0,
+                "passed": 22
+              },
+              "userId": -2,
+              "lobby": {
+                "bytes": 346470,
+                "meshes": 2432,
+                "signature": 863695906,
+                "rows": 2519,
+                "television": 1,
+                "minimumWorldX": 449.49999237060547,
+                "paintings": [
+                  {
+                    "source": "Portrait 01 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://98916068098499",
+                    "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -39.00000762939453,
+                    "nativeWidth": 6.8000030517578125,
+                    "textureId": "rbxassetid://105314252767417",
+                    "ordinal": 1
+                  },
+                  {
+                    "source": "Portrait 02 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://95811138210370",
+                    "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                    "y": 9.100000381469727,
+                    "x": 574.2000122070312,
+                    "z": -9.78200912475586,
+                    "nativeWidth": 7.650001525878906,
+                    "textureId": "rbxassetid://80363010663600",
+                    "ordinal": 2
+                  },
+                  {
+                    "source": "Portrait 03 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://126740859161539",
+                    "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                    "y": 9.100000381469727,
+                    "x": 555.3999633789062,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://136855674354422",
+                    "ordinal": 3
+                  },
+                  {
+                    "source": "Portrait 04 | canvas",
+                    "nativeHeight": 10.200001937150887,
+                    "meshId": "rbxassetid://129269854495485",
+                    "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -20.600011825561523,
+                    "nativeWidth": 7.650001746416024,
+                    "textureId": "rbxassetid://111747031021921",
+                    "ordinal": 4
+                  },
+                  {
+                    "source": "Portrait 05 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://94417987701256",
+                    "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                    "y": 9.100000381469727,
+                    "x": 574.5,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 5.627586364746094,
+                    "textureId": "rbxassetid://87378239580163",
+                    "ordinal": 5
+                  },
+                  {
+                    "source": "Portrait 06 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://99881846767979",
+                    "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                    "y": 9.100000381469727,
+                    "x": 555.9000244140625,
+                    "z": -9.78200626373291,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://104678368112021",
+                    "ordinal": 6
+                  }
+                ],
+                "signs": 2,
+                "bustMeshCount": 34,
+                "floors": 3
+              }
+            },
+            {
+              "cameraType": "Custom",
+              "role": "Waiting",
+              "smokeErrors": "[]",
+              "walkedStuds": 3.367647409439087,
+              "phase": "Lobby",
+              "smoke": {
+                "errors": 0,
+                "skipped": 0,
+                "userId": -1,
+                "discovered": 22,
+                "seed": 1,
+                "environment": "Studio",
+                "suite": "P01-client",
+                "failed": 0,
+                "passed": 22
+              },
+              "userId": -1,
+              "lobby": {
+                "bytes": 346470,
+                "meshes": 2432,
+                "signature": 863695906,
+                "rows": 2519,
+                "television": 1,
+                "minimumWorldX": 449.49999237060547,
+                "paintings": [
+                  {
+                    "source": "Portrait 01 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://98916068098499",
+                    "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -39.00000762939453,
+                    "nativeWidth": 6.8000030517578125,
+                    "textureId": "rbxassetid://105314252767417",
+                    "ordinal": 1
+                  },
+                  {
+                    "source": "Portrait 02 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://95811138210370",
+                    "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+                    "y": 9.100000381469727,
+                    "x": 574.2000122070312,
+                    "z": -9.78200912475586,
+                    "nativeWidth": 7.650001525878906,
+                    "textureId": "rbxassetid://80363010663600",
+                    "ordinal": 2
+                  },
+                  {
+                    "source": "Portrait 03 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://126740859161539",
+                    "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+                    "y": 9.100000381469727,
+                    "x": 555.3999633789062,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://136855674354422",
+                    "ordinal": 3
+                  },
+                  {
+                    "source": "Portrait 04 | canvas",
+                    "nativeHeight": 10.200001937150887,
+                    "meshId": "rbxassetid://129269854495485",
+                    "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+                    "y": 9.100000381469727,
+                    "x": 584.218017578125,
+                    "z": -20.600011825561523,
+                    "nativeWidth": 7.650001746416024,
+                    "textureId": "rbxassetid://111747031021921",
+                    "ordinal": 4
+                  },
+                  {
+                    "source": "Portrait 05 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://94417987701256",
+                    "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+                    "y": 9.100000381469727,
+                    "x": 574.5,
+                    "z": -48.2180061340332,
+                    "nativeWidth": 5.627586364746094,
+                    "textureId": "rbxassetid://87378239580163",
+                    "ordinal": 5
+                  },
+                  {
+                    "source": "Portrait 06 | canvas",
+                    "nativeHeight": 10.199999809265137,
+                    "meshId": "rbxassetid://99881846767979",
+                    "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+                    "y": 9.100000381469727,
+                    "x": 555.9000244140625,
+                    "z": -9.78200626373291,
+                    "nativeWidth": 7.649997711181641,
+                    "textureId": "rbxassetid://104678368112021",
+                    "ordinal": 6
+                  }
+                ],
+                "signs": 2,
+                "bustMeshCount": 34,
+                "floors": 3
+              }
+            }
+          ],
+          "anchorsAfter": {
+            "GalleryWing": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorGallery",
+              "position": [
+                580,
+                3,
+                -44
+              ]
+            },
+            "TheaterWing": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorTheater",
+              "position": [
+                453,
+                3,
+                -46
+              ]
+            },
+            "Lobby": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorMain",
+              "position": [
+                520,
+                3,
+                0
+              ]
+            },
+            "Operator": {
+              "clearanceObstructions": 0,
+              "support": "LobbyFloorMain",
+              "position": [
+                520,
+                3,
+                -15
+              ]
+            }
+          },
+          "playersAfter": [
+            {
+              "role": "Waiting",
+              "position": [
+                520,
+                3,
+                0
+              ],
+              "life": "Waiting",
+              "anchored": false,
+              "userId": -2,
+              "protected": true
+            },
+            {
+              "role": "Waiting",
+              "position": [
+                520,
+                3,
+                0
+              ],
+              "life": "Waiting",
+              "anchored": false,
+              "userId": -1,
+              "protected": true
+            }
+          ],
+          "ground": {
+            "role": "Ground",
+            "position": [
+              -20,
+              3,
+              108
+            ],
+            "life": "Alive",
+            "anchored": false,
+            "userId": -1,
+            "protected": false
+          },
+          "result": {
+            "reason": "GroundEliminated",
+            "winner": "Gunship",
+            "userId": -2,
+            "roundId": 1
+          },
+          "roundId": 1
+        }
+      ],
+      "candidate": "c526ab982c7e52984a02cf29fa7122596b6db9dc",
+      "anchors": {
+        "GalleryWing": {
+          "clearanceObstructions": 0,
+          "support": "LobbyFloorGallery",
+          "position": [
+            580,
+            3,
+            -44
+          ]
+        },
+        "TheaterWing": {
+          "clearanceObstructions": 0,
+          "support": "LobbyFloorTheater",
+          "position": [
+            453,
+            3,
+            -46
+          ]
+        },
+        "Lobby": {
+          "clearanceObstructions": 0,
+          "support": "LobbyFloorMain",
+          "position": [
+            520,
+            3,
+            0
+          ]
+        },
+        "Operator": {
+          "clearanceObstructions": 0,
+          "support": "LobbyFloorMain",
+          "position": [
+            520,
+            3,
+            -15
+          ]
+        }
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 199,
+        "clientCount": 1,
+        "seed": 1,
+        "discovered": 199,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "kind": "P22FurnishedAcceptance",
+      "scope": "Actual clients in furnished candidate, managed art and collision, stock server round lifecycle.",
+      "usedNormalReturnFromSoloPreview": true
+    },
+    "sdkReturned": true
+  }
+}
