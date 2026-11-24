@@ -1,0 +1,325 @@
+{
+  "candidate": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+  "tree": "d109efebcaaf20c2a3025024ec8fb18edfbbbc8c",
+  "testSha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6",
+  "environment": {
+    "device": "default",
+    "name": "tests.rbxlx",
+    "version": "0.748.0.7481526",
+    "graphics": {
+      "savedQuality": "Enum.SavedQualitySetting.Automatic",
+      "renderQuality": "Enum.QualityLevel.Automatic"
+    },
+    "lighting": {
+      "clockTime": 15.399999618530273,
+      "brightness": 2.0999999046325684,
+      "globalShadows": true
+    },
+    "placeId": 0,
+    "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+    "gameId": 0
+  },
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 170,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 170,
+      "buildSha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "42ae28bffb393e07885b5c785d96ebf62a4f84dd"
+    }
+  },
+  "ordinary": {
+    "server": {
+      "players": 1,
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}"
+    },
+    "client": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":18,\"userId\":2227341845,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":18}",
+      "touch": false,
+      "viewport": "1153, 579",
+      "userId": 2227341845,
+      "renders": 6
+    }
+  },
+  "A6": {
+    "renderedPassed": true,
+    "presentation": "White highlights on dark fully monochrome world; source Saturation -1, Brightness -.02, Contrast -.15.",
+    "nativeVisual": {
+      "role": "Waiting",
+      "fov": 30,
+      "viewport": "1153, 579",
+      "preview": "Gunship",
+      "grade": {
+        "contrast": -0.15000000596046448,
+        "brightness": -0.019999999552965164,
+        "saturation": -1,
+        "tint": "1, 1, 1"
+      },
+      "targets": {
+        "1": {
+          "outline": "1, 1, 1",
+          "depth": "Occluded",
+          "adornee": "Workspace.KingKunkank",
+          "fill": "1, 1, 1"
+        }
+      }
+    },
+    "scenes": {
+      "exposed30": "White target clearly distinct from readable gray terrain and textured buildings.",
+      "exposed40": "White target remains distinct at wider zoom; world detail and silhouettes retained.",
+      "cover30": "Opaque solid roof fully hides target; native fixture ray blocked.",
+      "cover40": "Opaque solid roof fully hides target; native fixture ray blocked.",
+      "opening30": "Six valid 30mm outcomes over one earned second produce genuine Heavy opening; white target visible through clear native ray.",
+      "opening40": "Earned Heavy opening shows target at wide zoom; native ray clear."
+    },
+    "rootReview": "Root independently viewed both exposed source images and agreed grading is acceptable.",
+    "scope": "Actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry. This is rendered/native-occlusion review, not competitive Ground or actual gunship projectile/replication proof.",
+    "noTemporaryGradeOrCameraOverrides": true
+  },
+  "captureManifest": {
+    "candidate": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+    "tree": "d109efebcaaf20c2a3025024ec8fb18edfbbbc8c",
+    "nativeViewport": [
+      1153,
+      579
+    ],
+    "scope": "Six original unedited MCP JPEGs on actual source grade. Moving canonical orbit, no assumed matched poses or temporary grade/camera overrides. Actual Waiting avatar tagged ThermalTarget with isolated ledger/PanelGeometry; not competitive/multiplayer proof.",
+    "captures": [
+      {
+        "path": "build/p18-42ae28b-white-cover-30.jpg",
+        "bytes": 164008,
+        "sha256": "42fab27bc18057c1b4759d57fb90685bf21cec4040cd8092937146c269145828",
+        "mimeType": "image/jpeg",
+        "pixels": [
+          1920,
+          964
+        ]
+      },
+      {
+        "path": "build/p18-42ae28b-white-cover-40.jpg",
+        "bytes": 186594,
+        "sha256": "7379ca7c9bca5e51d9fa904847a008238b3686bea104124c75fbbd7c4dff5d8c",
+        "mimeType": "image/jpeg",
+        "pixels": [
+          1920,
+          964
+        ]
+      },
+      {
+        "path": "build/p18-42ae28b-white-exposed-30.jpg",
+        "bytes": 222185,
+        "sha256": "315eff298c28e614ee96c70567aa423fb9ed984a672a8fcc893279610177269c",
+        "mimeType": "image/jpeg",
+        "pixels": [
+          1920,
+          964
+        ]
+      },
+      {
+        "path": "build/p18-42ae28b-white-exposed-40.jpg",
+        "bytes": 235807,
+        "sha256": "b5f88d224e813004d3f33daef047329ecbeb56e669560db16f0de7894d553568",
+        "mimeType": "image/jpeg",
+        "pixels": [
+          1920,
+          964
+        ]
+      },
+      {
+        "path": "build/p18-42ae28b-white-opening-30.jpg",
+        "bytes": 206244,
+        "sha256": "6dba27ec9a991bd2944d54e47438c2cd9648952eae1e7c6ca7a80acba73caeca",
+        "mimeType": "image/jpeg",
+        "pixels": [
+          1920,
+          964
+        ]
+      },
+      {
+        "path": "build/p18-42ae28b-white-opening-40.jpg",
+        "bytes": 220629,
+        "sha256": "544b84c5e933d73676a9dffbcb92ff96abb767771f022a98a5651eae030e9a6a",
+        "mimeType": "image/jpeg",
+        "pixels": [
+          1920,
+          964
+        ]
+      }
+    ]
+  },
+  "raw": {
+    "setup": {
+      "sustained": 2,
+      "appearance": "Total",
+      "scope": "disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof",
+      "role": "Waiting",
+      "preview": "Gunship",
+      "coverBlocked": false,
+      "target": {
+        "1": 2227341845,
+        "2": "Workspace.KingKunkank"
+      },
+      "floorY": 0,
+      "stage": 2,
+      "action": "Expose"
+    },
+    "coverOpening": [
+      {
+        "action": "Cover",
+        "fov": 30,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"action\":\"Cover\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"coverBlocked\":true,\"role\":\"Waiting\",\"floorY\":0,\"hit\":\"Workspace.P18IndependentVisualFixture.P18ContrastRoof.Solid\",\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"preview\":\"Gunship\",\"stage\":0,\"appearance\":\"Pristine\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"camera\":{\"1\":250.7032928466797,\"3\":258.3560791015625,\"2\":140,\"5\":-0.25240689516067507,\"4\":0.7176557779312134,\"7\":0,\"6\":0.6490462422370911,\"9\":0.36244627833366396,\"8\":0.9320047497749329,\"12\":0.668858528137207,\"11\":-0.26011165976524355,\"10\":-0.6963980793952942},\"focus\":\"0, 0, 0\",\"viewport\":\"1153, 579\",\"grade\":{\"brightness\":-0.019999999552965165,\"saturation\":-1,\"contrast\":-0.15000000596046449},\"fov\":30}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-42ae28b-white-cover-30.jpg",
+          "mimeType": "image/jpeg"
+        }
+      },
+      {
+        "action": "Cover",
+        "fov": 40,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"action\":\"Cover\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"coverBlocked\":true,\"role\":\"Waiting\",\"floorY\":0,\"hit\":\"Workspace.P18IndependentVisualFixture.P18ContrastRoof.Solid\",\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"preview\":\"Gunship\",\"stage\":0,\"appearance\":\"Pristine\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"camera\":{\"1\":92.00408935546875,\"3\":348.0448913574219,\"2\":140,\"5\":-0.09262928366661072,\"4\":0.9667913913726807,\"7\":0,\"6\":0.23818956315517426,\"9\":0.36244627833366396,\"8\":0.9320047497749329,\"12\":0.9010540843009949,\"11\":-0.35040995478630068,\"10\":-0.25556692481040957},\"focus\":\"0, 0, 0\",\"viewport\":\"1153, 579\",\"grade\":{\"brightness\":-0.019999999552965165,\"saturation\":-1,\"contrast\":-0.15000000596046449},\"fov\":40}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-42ae28b-white-cover-40.jpg",
+          "mimeType": "image/jpeg"
+        }
+      },
+      {
+        "action": "Opening",
+        "fov": 30,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"appearance\":\"Heavy\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"role\":\"Waiting\",\"preview\":\"Gunship\",\"coverBlocked\":false,\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"floorY\":0,\"stage\":1,\"action\":\"Opening\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"camera\":{\"1\":-225.216796875,\"3\":280.8511962890625,\"2\":140,\"5\":0.22674719989299775,\"4\":0.7801422476768494,\"7\":0,\"6\":-0.5830641984939575,\"9\":0.36244627833366396,\"8\":0.9320046901702881,\"12\":0.7270961999893189,\"11\":-0.2827596664428711,\"10\":0.6256022453308106},\"focus\":\"0, 0, 0\",\"viewport\":\"1153, 579\",\"grade\":{\"brightness\":-0.019999999552965165,\"saturation\":-1,\"contrast\":-0.15000000596046449},\"fov\":30}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-42ae28b-white-opening-30.jpg",
+          "mimeType": "image/jpeg"
+        }
+      },
+      {
+        "action": "Opening",
+        "fov": 40,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"appearance\":\"Heavy\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"role\":\"Waiting\",\"preview\":\"Gunship\",\"coverBlocked\":false,\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"floorY\":0,\"stage\":1,\"action\":\"Opening\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"camera\":{\"1\":-338.843017578125,\"3\":121.59523010253906,\"2\":140,\"5\":0.3411455452442169,\"4\":0.33776453137397768,\"7\":0,\"6\":-0.8772313594818115,\"9\":0.36244627833366396,\"8\":0.9320046901702881,\"12\":0.31479811668395998,\"11\":-0.122421495616436,\"10\":0.9412306547164917},\"focus\":\"0, 0, 0\",\"viewport\":\"1153, 579\",\"grade\":{\"brightness\":-0.019999999552965165,\"saturation\":-1,\"contrast\":-0.15000000596046449},\"fov\":40}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-42ae28b-white-opening-40.jpg",
+          "mimeType": "image/jpeg"
+        }
+      }
+    ],
+    "cleanupClientInspection": {
+      "choice": "Gunship",
+      "grade": true,
+      "hud": true,
+      "panelEnabled": true,
+      "fixture": false,
+      "viewport": "1153, 579",
+      "preview": "Gunship",
+      "heartbeats": 18,
+      "renders": 0
+    },
+    "cleanupConsole": {
+      "text": "[TRUNCATED DUE TO LENGTH LIMIT]\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9113189096 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9113189096 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9113189096 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9113189096 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9113189096 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nTest results:\n[+] ClientSpecs\n   [+] Foundation\n      [+] client receives server status and an explicit character or late-spectator state\n      [+] panel renders bootstrap and available equipment and restarts twice with one GUI\n   [+] GroundAimGui\n      [+] P06 existing ground HUD follows input capability changes and cleans up\n      [+] P06 ground mouse and touch reticles agree with viewport rays\n      [+] P08 phone readiness text fits beside health and clears centered aim\n      [+] P10 aircraft health and combat HUD fit desktop and touch safe areas without the old hit overlays\n   [+] GroundIndoorCamera\n      [+] P17 authored Outpost camera rooms are metadata below each ceiling\n      [+] P17 native camera frame preserves aim direction and keeps its eye below the ceiling\n   [+] OperatorControlLayout\n      [+] P18 Recenter remains reachable inside negative-origin safe canvas and resized native viewport\n   [+] PointerGui\n      [+] P14 mouse and touch input classify normal, full-bleed and safe-area GUI buttons with current inset\n   [+] SpectatorCamera\n      [+] P10 spectator with no living round teammates owns and releases an inert overview\n   [+] ThermalCosmetics\n      [+] P17MaterialMetadata ordinary client reads compiled material contract without Plugin property access\n      [+] P17ThermalFragments hides owned physical debris while rejecting marker-only impostors and real cover\n      [+] P17ThermalNonCover hides marked art restores exact values and retains native solid cover\n      [+] P18 operator aircraft mask owns exact local opacity across parts replacement and role cleanup\n      [+] P18 thermal environment dims Parts and terrain locally and restores exact originals\n      [+] P18 thermal tint follows late SurfaceAppearance arrival removal and owner cleanup\n      [+] ThermalBrightness dims scoped art and replacement meshes while preserving cover and restoring exact colors\n18 passed, 0 failed, 0 skipped",
+      "isError": false
+    }
+  },
+  "cleanup": {
+    "serverFixture": {
+      "cleaned": true,
+      "tagRestored": true,
+      "rootRestored": true,
+      "evidence": "Recovered from completed Server tool output before the later waiting cleanup wrapper was bounded; its store write was discarded with that wrapper."
+    },
+    "manualRoleExit": {
+      "observed": false,
+      "reason": "After captures, RenderStepped=0 while Heartbeat advances18 in.3s. GUI role-exit action did not settle; no manual palette-restoration pass claimed."
+    },
+    "nativeLifecycleSpecs": "18/18 client suite includes exact thermal palette/opacity/late-surface cleanup tests.",
+    "ownedSoloStoppedThroughHost": true,
+    "edit": {
+      "sand": "0.560784, 0.494118, 0.372549",
+      "device": "default",
+      "placeId": 0,
+      "running": false,
+      "canonicalAircraft": false,
+      "gameId": 0,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "fixture": false,
+      "name": "tests.rbxlx"
+    },
+    "next": "Final current-source P18 multiplayer cleanup case is required to close role-exit observation gap."
+  },
+  "findings": {
+    "reproducibleProductDefects": [],
+    "subjectiveFeel": "Current preset has readable textured detail with a clear white target; earlier crushed prototype and red/colored presentation remain historical failures.",
+    "validationGaps": [
+      "Fresh final-source P18 three-client and P05 two-client suites, including actual client cleanup."
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+  "sourceTree": "d109efebcaaf20c2a3025024ec8fb18edfbbbc8c",
+  "command": "python3 scripts/verify.py > build/p18-whitehot-final-verify.log 2>&1",
+  "startedUtc": "2026-11-24T02:24:18.418835+00:00",
+  "pid": 5030,
+  "status": "passed",
+  "exitCode": 0,
+  "elapsedSeconds": 252.0710423339624,
+  "finishedUtc": "2026-11-24T02:28:30.473830+00:00",
+  "finalHead": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+  "trackedChanges": [],
+  "stagedChanges": [],
+  "environment": "macOS26.6.2 Darwin arm64, Python3.10",
+  "allNonStudioGatesPassed": true,
+  "ruleSuites": [
+    {
+      "discovered": 79,
+      "failed": 0,
+      "passed": 79,
+      "skipped": 0,
+      "suite": "unit"
+    },
+    {
+      "discovered": 76,
+      "failed": 0,
+      "passed": 76,
+      "skipped": 0,
+      "suite": "integration"
+    }
+  ],
+  "pythonSuiteCounts": [
+    [
+      "26",
+      "0.615"
+    ],
+    [
+      "58",
+      "33.668"
+    ]
+  ],
+  "artifactLines": [
+    "Authored geometry reconstruction passed: 11459 release/11459 test part transforms, dimensions, shape and collision flags.",
+    "Artifact isolation passed: 24751 release Instances, 24868 test Instances; 64 runtime scripts only in release."
+  ],
+  "builds": {
+    "game": "e8eafb844acbe00f7326dbc0ac3b9c3edb334d796dab5669329669c4b10ea5ca",
+    "tests": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6"
+  },
+  "githubVerify": {
+    "run": 559,
+    "conclusion": "success",
+    "url": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45311767803"
+  }
+}

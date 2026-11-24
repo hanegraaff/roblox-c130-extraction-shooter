@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+  "buildSha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6",
+  "scriptCount": 170,
+  "geometryCount": 5,
+  "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+  "probeSha256": "4449c4896fe72ff5ba17d52733effcf1fb9428dc712ac62aa55ed830d8636a20",
+  "sourceTree": "d109efebcaaf20c2a3025024ec8fb18edfbbbc8c",
+  "studioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+  "placeId": 0,
+  "gameId": 0,
+  "result": {
+    "mismatches": [],
+    "comparedScripts": 170,
+    "comparedGeometry": 5,
+    "passed": true
+  },
+  "scope": "Fresh passing Edit preflight before final source-grade B Play. Source checksum comparison is not gameplay or replication evidence."
+}

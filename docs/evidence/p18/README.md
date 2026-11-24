@@ -1,8 +1,24 @@
 # P18 native review captures
 
-The [plan completion record](../../../plans/18-game-rebalancing.md#completion-record) owns commands, source identities, results and remaining acceptance gates. These are actual local Studio captures, with the controlled fixture scope described below. They do not establish multiplayer replication or release capacity.
+The [plan completion record](../../../plans/18-game-rebalancing.md#completion-record) owns commands, source identities, results and delivery facts. These are actual local Studio captures with the controlled fixture scope described below. Captures alone do not establish multiplayer replication or release capacity.
 
-## Current fixture candidate 01ed736
+## Current white-hot source 42ae28b
+
+The [final host gate](42ae28b-host.json), [GitHub Verify #559](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45311767803) and [170-script / five-pose preflight](42ae28b-source-preflight.json) pass. The [current native P18 report](42ae28b-native-p18.json) passes 11/11 with three initial actual clients, two after its intentional carrier departure, 193 server / 18 per-client smoke passes and authoritative cleanup. The [current native P05 report](42ae28b-native-p05.json) passes 8/8 with two actual clients and the same passing smoke baselines, including actual fire/flight and a one-howitzer Total opening observed by both clients.
+
+The [native visual report](42ae28b-native-visual.json) verifies white targets and fully desaturated, darker scenery with readable terrain/building detail. The grade is saturation −1, brightness −0.02 and contrast −0.15. A tagged Waiting-avatar clone and a separate roof fixture exercise visibility; they are separate from actual multiplayer. Native rays agree with opaque-cover hiding and the earned Heavy opening. Native viewport is 1153×579; the [original capture manifest](42ae28b-capture-manifest.json) records 1920×964 rerenders, hashes and scope. Distinct orbit poses are not matched-scene comparisons.
+
+| View | Original captures |
+| --- | --- |
+| Exposed white target against dark grayscale world | [30mm / 30°](42ae28b-captures/p18-42ae28b-white-exposed-30.jpg), [105mm / 40°](42ae28b-captures/p18-42ae28b-white-exposed-40.jpg) |
+| Target hidden by opaque cover | [30mm / 30°](42ae28b-captures/p18-42ae28b-white-cover-30.jpg), [105mm / 40°](42ae28b-captures/p18-42ae28b-white-cover-40.jpg) |
+| Target visible through an earned Heavy opening | [30mm / 30°](42ae28b-captures/p18-42ae28b-white-opening-30.jpg), [105mm / 40°](42ae28b-captures/p18-42ae28b-white-opening-40.jpg) |
+
+## Rejected white-hot prototype 4be21e0
+
+The first strict monochrome grade crushed terrain/building detail. Its [rejected review](4be21e0-grading-prototype.json) and [original capture receipts](4be21e0-grading-captures.json) remain historical. [Initial 30° view](4be21e0-grading-captures/p18-4be21e0-white-exposed-30.jpg) and [40° view](4be21e0-grading-captures/p18-4be21e0-white-exposed-40.jpg) show the defect. Temporary [A](4be21e0-grading-captures/p18-4be21e0-grade-A-experiment.jpg) / [B](4be21e0-grading-captures/p18-4be21e0-grade-B-experiment.jpg) experiments were not matched-camera comparisons or candidate acceptance. Final source-bound captures above establish the chosen grading.
+
+## Earlier fixture source 01ed736
 
 The [exact final host gate](01ed736-host.json) and [GitHub Verify #555](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45308365596) pass. [Fresh preflight](01ed736-source-preflight.json) matches 170 scripts / five poses. The [native three-client P18 report](01ed736-native-p18.json) passes 11/11, with 193 server / 18 per-client smoke passes and the intentional carrier departure leaving two clients. It includes native wall/roof openings and replication using trusted accepted structural outcomes; actual gunship input/flight is a separate P05 gate. The [earlier failed selector report](feec2b1-p18-selector-failure.json) remains failed historical evidence. Production runtime is unchanged from the phone correction below.
 
