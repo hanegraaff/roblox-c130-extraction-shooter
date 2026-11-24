@@ -52,4 +52,4 @@ material-aware destruction.
 
 ## Release boundaries
 
-MVP release requires a 10-player session in the Roblox client in addition to Studio tests. Local test capacity is not assumed to equal production capacity. Publishing and cloud playtests use only an explicitly authorized experience, place, and audience. Until that authorization and access exist, P12 remains incomplete; earlier local work can proceed.
+A future MVP release requires a 10-player session in the Roblox client in addition to Studio tests. Local test capacity is not assumed to equal production capacity. Publishing and cloud playtests use only an explicitly authorized experience, place, and audience. D94 closes P12's legacy implementation/handoff scope by user direction; it does not verify these future release checks or authorize publication of a new candidate.

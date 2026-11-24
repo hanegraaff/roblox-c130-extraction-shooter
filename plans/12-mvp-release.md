@@ -1,14 +1,25 @@
-# P12 — Reconstructable release and multiplayer acceptance
+# P12 — Reconstructable implementation handoff
+
+> User-directed legacy closeout, 2026-11-23 (D94): the user asks to complete this old feature and close the delivery loop. The current scope is the implemented, reconstructable developer handoff and its documented local/Studio evidence. The original publication, real 6-/10-player and live performance criteria below are retained as historical **unverified release checks**, not reported as passed. This closeout does not publish a build or authorize a new build/audience.
 
 > Current-rule revision: [P18](18-game-rebalancing.md), requested 2026-11-23, supersedes prior health/three-rocket, panel-durability and circular camera-bound assumptions and adds the Seedship launcher. This plan's recorded tests remain historical evidence for their identified source. Future release checks must use P18's revised rules.
 
 **Milestone:** M6 / MVP. **Dependencies:** P11. **Requirements:** R01–R16. Status: [roadmap](../roadmap.md).
 
-## Capability and player experience
+## Current closeout criteria
+
+- **C1 — Integrated reconstruction:** P18 is merged into `main`; its merge tree matches the reviewed source, and a clean Git checkout reproduces the recorded release/test artifacts.
+- **C2 — Current implementation evidence:** The P18 record identifies current-rule host, native multiplayer, camera, panel/launcher and rendered thermal evidence with exact source/client counts. Historical failures remain historical.
+- **C3 — Honest release boundary:** Release preparation, asset inventory, publication/rollback and live-test procedures are implemented/documented. Unverified destination access, published-version, live capacity/performance and soak checks remain explicit in the release runbook; none is converted to a pass by legacy closure.
+- **C4 — Closed handoff:** Player/contributor setup selects integrated `main`, integration and scope decisions are recorded, and the closeout records are checked, committed, pushed and delivered through a reviewed PR.
+
+## Original release capability (historical)
 
 The verified game runs in a named, explicitly authorized Roblox experience. Players can complete repeated 6- and 10-player matches with both roles, both aircraft weapons and zoom levels, M-7 fire, the single launcher, cover and aircraft destruction, spectating and results. The 720-stud battlefield includes terrain and three accessible multi-story buildings, including the approved detailed Outpost. Panning and progressive physical panel destruction are part of the release. The README supplies the verified play link and availability.
 
 ## Implementation
+
+This and the original acceptance criteria below describe the former full-release scope. D94 closes the implementation handoff separately; future publication still uses [the release runbook](../docs/release.md).
 
 Prepare a clean-checkout release candidate using the release mapping. Record source commit, build hash, tool/dependency pins, asset manifest, actual universe/place IDs and intended audience. Inspect the artifact for test content/development overrides and check asset permissions. Prepare a rollback to a known-good build and a smoke checklist. Only then publish if authorization already exists, or request the remaining destination/access/publication decision with this concrete candidate.
 
@@ -29,7 +40,7 @@ source, complete exports/manifest, actual owner asset access and P17 acceptance
 alongside the release checks above. Blender approval alone cannot establish
 release readiness.
 
-Missing Roblox destination, access, explicit publishing authorization or ten-client validation leaves this plan incomplete. Finish all local preparation and state precisely what remains; do not publish to an invented place, change audience silently or waive a capacity check. Merge authorization is separate from publication authorization.
+Missing Roblox destination, access, explicit publishing authorization or ten-client validation leaves a future Roblox release **unverified**. D94's legacy implementation closeout supplies none of that missing evidence. Do not publish to an invented place, change audience silently or represent an unrun capacity check as passed. Merge authorization is separate from publication authorization.
 
 ## Completion record
 
@@ -190,7 +201,7 @@ probe used the separate SDK session recorded above.
 These runs exercised Studio clients on the source-built test place. Destination
 access and published-client evidence remain open.
 
-### Release gates
+### Original release gates (historical, not asserted passed)
 
 | Criterion | Evidence and remaining work |
 | --- | --- |
@@ -200,3 +211,22 @@ access and published-client evidence remain open.
 | A4 | Six- and ten-player Roblox client rounds require an accessible published candidate and confirmed player rosters. |
 | A5 | The live ten-player five-minute workload and 30-minute soak require the published candidate and a ten-player roster. The P11 Studio baseline remains recorded above. |
 | A6 | The technical writer reviewed the player and contributor guides and added smoke, rollback and live acceptance steps. The player experience link and live limitations await platform verification. [Runbook](../docs/release.md), [draft PR #46](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/46) |
+
+### User-directed implementation closeout
+
+The user requests: “complete P12, that's an old feaure. also merge the PR and comple the loop.” D94 records this as closure of the legacy implementation/handoff scope, preserving the original live-release checks as unverified. It is not evidence of publication or real 6-/10-player acceptance.
+
+[P18 PR #63](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/63) merges at `7e1c1d26093aea6c6155a68fa2ae5cdd104ac078`. Its tree `e2b894cb6267ed702f67ef53cd3436fc2df16514` is identical to reviewed head `bb904dd`, whose [Verify #563](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45314961247) passes. The [P18 final trace](18-game-rebalancing.md#final-criterion-trace) records 79 unit / 76 integration / 26 tooling / 58 asset cases, current native P18 11/11 with three initial actual clients, P05 8/8 with two actual clients, 193 server / 18 per-client smoke, six final white-hot rendered scenes and no material tester findings.
+
+The unchanged runtime release artifact is SHA-256 `e8eafb844acbe00f7326dbc0ac3b9c3edb334d796dab5669329669c4b10ea5ca`; the test artifact is `4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6`. Clean merged-source reconstruction and the closeout audit are recorded with this closeout. No new native or live tests are claimed by the documentation change. Existing publication authorizations remain bound to their recorded historical candidates/place/audience.
+
+On 2026-11-24, a clean detached Git worktree at merged `7e1c1d2` runs both `rojo build` mappings with exit 0 using pinned Rojo 7.7.1 and the matching Wally lock. Both artifact SHA-256 values match the accepted P18 artifacts byte for byte. The `prepare_release.clean_revision` helper and authored-input cleanliness query pass before/after; the full `prepare_release.py` CLI and unchanged gameplay suites are not rerun or claimed. [Exact reconstruction receipt](../docs/evidence/p12/legacy-closeout-reconstruction.json).
+
+| Closeout criterion | Actual evidence |
+| --- | --- |
+| C1 | PR #63 merged; reviewed/merged tree identity; clean-source release/test reconstruction and exact accepted-byte agreement |
+| C2 | Current-rule P18 host/native/rendered acceptance and independent technical verdict, carried with exact source and environment in its plan |
+| C3 | Existing release tool/runbook; original failed/unrun release results and hash-bound historical authorizations preserved; no new publication or 6-/10-player claim |
+| C4 | Main-based player/contributor setup, D94 and integration records checked and delivered through the closeout PR |
+
+The technical writer reviews the updated setup/release narrative. A separate independent administrative audit is attempted but cannot finish because the subagent reports a usage limit; it is **not recorded as an independent review pass**. The primary performs the closeout scope/link/diff audit. The earlier independent P18 gameplay acceptance remains valid for the identical merged runtime. [Primary closeout audit](../docs/evidence/p12/legacy-closeout-review.json) distinguishes these scopes.

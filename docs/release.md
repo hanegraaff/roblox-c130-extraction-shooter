@@ -1,7 +1,16 @@
 # Prepare and verify a Roblox release
 
-Use this runbook for the [P12 release criteria](../plans/12-mvp-release.md#acceptance-criteria).
-Routine local play and development use the [root guide](../README.md#set-up-locally).
+This is the reusable checklist for a future Roblox release. The [P12 legacy implementation handoff](../plans/12-mvp-release.md) is closed by user direction; its recorded unavailable/unrun checks remain historical facts. The current local game is integrated on `main`. Routine setup uses the [root guide](../README.md#set-up-locally).
+
+The checks below are unverified for a future named release and apply when that release is requested. Closeout and source integration grant no new publication authorization; use only authorization that covers the actual candidate, place and audience.
+
+| Future release check | Evidence at legacy closeout |
+| --- | --- |
+| Exact publication/version and destination audience | Unverified for a future candidate |
+| Platform access, asset permissions and live asset loading | Unverified for a future candidate; recheck its actual destination |
+| Real 6- and 10-player capacity/outcome sessions | Unverified |
+| Live frame-time, latency and convergence workload | Unverified |
+| Live 30-minute retained-memory/replay soak | Unverified |
 
 ## Prepare the candidate from Git
 
@@ -33,7 +42,7 @@ checks below.
 ## Verify the destination and prepare rollback
 
 1. Record the candidate commit, release SHA-256, manifest fingerprint, owner
-   and exact experience, universe ID and place ID in the P12 record. Confirm
+   and exact experience, universe ID and place ID in that release’s evidence. Confirm
    the place in the experience's **Places** list in Creator Dashboard and
    check that its maximum player count is ten. Verify the desired access mode
    and the permitted tester group. [Configure games and places](https://create.roblox.com/docs/projects/configure-experiences), [place capacity](https://create.roblox.com/docs/reference/engine/classes/Players#MaxPlayers)
@@ -91,7 +100,7 @@ roster size, with one operator and everyone else on Ground. Repeat each
 of the three outcome paths at each full roster size, keeping the roster connected
 through Results and reset.
 
-D75 waives the dedicated late-join exercise for the current P12 candidate.
+D75 waived the dedicated late-join exercise for the historical P12 candidate.
 When a future acceptance run includes this exercise, start a round with space
 for a fresh participant and add that participant after deployment. Record
 the client counts before and after the join. The late joiner must remain a
@@ -140,6 +149,4 @@ aircraft, launcher and debris state returns to baseline. [Developer Console](htt
 
 Record live latency and convergence around shared events at the release latency
 target. Capture the ping source and readings, round and action, agreement across
-clients, and any duplicate damage or result. Use the separate local P11 fixtures
-to verify deterministic accelerated cleanup and controlled latency. Keep those
-results tied to their Studio environment. [P11 workloads](testing.md#run-the-p11-performance-harness)
+clients, and any duplicate damage or result. The historical local P11 fixtures remain reproducible from their recorded source revision; their selector rejects on current source. Any future current-source cleanup/latency automation needs its own validated fixture. Keep local results tied to their Studio environment and live results tied to the named release. [P11 workloads](testing.md#run-the-p11-performance-harness)

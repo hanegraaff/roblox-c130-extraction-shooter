@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `plan/18-game-rebalancing` for the P18 candidate described by the root guide; `main` remains the integrated source until that increment merges. Select the exact candidate commit when collecting evidence. Startup reconstructs the managed landmarks before map snapshotting. The test mapping includes the focused three-client P18 rebalancing harness and the earlier source-specific lifecycle/performance fixtures. [Local setup](../README.md#set-up-locally), [P18 procedure](testing.md#run-the-p18-rebalancing-harness), [P18 record](../plans/18-game-rebalancing.md)
+Use `main` for routine play and development; P18 rebalancing is integrated, including white targets on a dark monochrome world, four launchers and health scaled to deployment Ground membership. Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before map snapshotting. The test mapping includes the current three-client P18 and two-client P05 paths plus source-specific historical fixtures. [Local setup](../README.md#set-up-locally), [P18 procedure](testing.md#run-the-p18-rebalancing-harness), [P18 record](../plans/18-game-rebalancing.md)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -283,6 +283,8 @@ The GitHub workflow installs the pinned dependencies and runs the full non-Studi
 After verifying the final candidate, commit and push the source and evidence. Mark a plan Complete only under `AGENTS.md`'s definition of done; record whether its PR is still open. Before starting a dependent plan, use a branch containing the completed dependency; do not accidentally branch from an older main that lacks it.
 
 ## Release preparation and publication
+
+P12’s legacy implementation handoff is closed by user direction. Its original live platform/access, capacity, performance and soak observations remain unverified and are retained in the future release checklist, separately from completed local implementation. Closing that handoff grants no new publication authorization.
 
 Run `python3 scripts/prepare_release.py` after setup in a clean checkout of the candidate commit. It runs the full verifier, checks the runtime script sources in both builds and writes `build/release-receipt.json` with the source identity, artifact hashes, tool pins and cloud asset inventory. Use the release artifact `build/game.rbxlx` for an explicitly authorized Roblox destination and `build/tests.rbxlx` for local Studio acceptance. Record the exact place, audience, rollback version and actual live test evidence separately. [Release runbook](release.md)
 

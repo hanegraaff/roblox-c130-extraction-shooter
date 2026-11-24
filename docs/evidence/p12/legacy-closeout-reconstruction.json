@@ -1,0 +1,157 @@
+{
+  "accepted_source": {
+    "commit": "bb904ddbc36f19deebb9937bea6ad6696c43993e",
+    "merge_tree_identical": true,
+    "tree": "e2b894cb6267ed702f67ef53cd3436fc2df16514"
+  },
+  "after": {
+    "clean_revision": {
+      "commit": "7e1c1d26093aea6c6155a68fa2ae5cdd104ac078",
+      "tree": "e2b894cb6267ed702f67ef53cd3436fc2df16514"
+    },
+    "ignored_authored_mapped_inputs": "",
+    "tracked_and_untracked_status": ""
+  },
+  "artifacts": {
+    "release": {
+      "byte_identical_to_accepted_artifact": true,
+      "bytes": 137682696,
+      "expected_sha256": "e8eafb844acbe00f7326dbc0ac3b9c3edb334d796dab5669329669c4b10ea5ca",
+      "mapping": "default.project.json",
+      "path": "/private/tmp/p12-closeout-7e1c1d2/build/game.rbxlx",
+      "sha256": "e8eafb844acbe00f7326dbc0ac3b9c3edb334d796dab5669329669c4b10ea5ca"
+    },
+    "studio_test": {
+      "byte_identical_to_accepted_artifact": true,
+      "bytes": 139064978,
+      "expected_sha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6",
+      "mapping": "test.project.json",
+      "path": "/private/tmp/p12-closeout-7e1c1d2/build/tests.rbxlx",
+      "sha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6"
+    }
+  },
+  "before": {
+    "clean_revision": {
+      "commit": "7e1c1d26093aea6c6155a68fa2ae5cdd104ac078",
+      "tree": "e2b894cb6267ed702f67ef53cd3436fc2df16514"
+    },
+    "tracked_and_untracked_status": ""
+  },
+  "build_commands": [
+    {
+      "argv": [
+        ".tools/rojo",
+        "build",
+        "default.project.json",
+        "--output",
+        "build/game.rbxlx"
+      ],
+      "cwd": "/private/tmp/p12-closeout-7e1c1d2",
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        ".tools/rojo",
+        "build",
+        "test.project.json",
+        "--output",
+        "build/tests.rbxlx"
+      ],
+      "cwd": "/private/tmp/p12-closeout-7e1c1d2",
+      "exit_code": 0
+    }
+  ],
+  "cleanliness_checks": {
+    "all_authored_mapped_inputs_clean": true,
+    "helper": "prepare_release.clean_revision(root) called before and after; prepare_release.prepare/root CLI not called",
+    "ignored_authored_argv": [
+      "git",
+      "ls-files",
+      "--others",
+      "--ignored",
+      "--exclude-standard",
+      "--",
+      "assets/imports/districts/DistrictScenery.rbxm",
+      "assets/imports/districts/MarsBoulders.rbxm",
+      "assets/models",
+      "assets/presentation/SaltFlatsThermalSurfaces.model.json",
+      "assets/presentation/VesperThermalSurfaces.model.json",
+      "assets/world/Battlefield.model.json",
+      "src/client",
+      "src/server",
+      "src/shared",
+      "tests/fixtures",
+      "tests/fixtures/DevelopmentSettings.luau",
+      "tests/integration",
+      "tests/studio/client",
+      "tests/studio/server",
+      "tests/studio/specs-client",
+      "tests/studio/specs-server",
+      "tests/studio/support/HarnessCompatibility.luau",
+      "tests/studio/support/P11Metrics.luau",
+      "tests/unit"
+    ],
+    "source_identity_unchanged": true,
+    "status_argv": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all"
+    ]
+  },
+  "dependency_reuse": {
+    "description": "Ignored real .tools/ and Packages/ directories contain per-entry symlinks to the pinned parent install; root-directory symlinks were rejected by clean_revision and replaced before builds.",
+    "links": {
+      ".tools": {
+        "globalTypes.d.luau": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.tools/globalTypes.d.luau",
+        "rojo": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.tools/rojo",
+        "rokit": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.tools/rokit",
+        "rokit.zip": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.tools/rokit.zip"
+      },
+      "Packages": {
+        "TestEZ.lua": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/Packages/TestEZ.lua",
+        "_Index": "/Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/Packages/_Index"
+      }
+    }
+  },
+  "environment": {
+    "machine": "arm64",
+    "python": "3.10.4",
+    "system": "Darwin"
+  },
+  "limitations": [
+    "Uses the existing pinned parent tool and generated Wally dependency install rather than a fresh dependency download.",
+    "This check proves clean-source build reconstruction and exact artifact byte identity; it does not run Studio or a Roblox client.",
+    "No Roblox publication, live six-player/ten-player session, live performance/soak, cloud asset permissions or release audience verification was performed.",
+    "P12 legacy administrative closeout is user-directed and is not a new claim that its previously unverified live acceptance gates passed."
+  ],
+  "parent_wally_lock_matches": true,
+  "result": "passed",
+  "reused_evidence": {
+    "basis": "Both fresh build SHA-256 values match the accepted artifacts exactly, and merged tree matches the accepted source tree.",
+    "ci_independently_queried_in_this_check": false,
+    "ci_run_reported_passed_by_primary": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45314961247",
+    "full_host_gate_rerun": false,
+    "full_inspection_rerun": false,
+    "prepare_release_cli_run": false,
+    "prior_inspection_reported_by_primary": {
+      "authored_transforms_per_artifact": 11459,
+      "runtime_scripts": 64
+    }
+  },
+  "rojo_version": "Rojo 7.7.1",
+  "schema_version": 1,
+  "source": {
+    "commit": "7e1c1d26093aea6c6155a68fa2ae5cdd104ac078",
+    "tree": "e2b894cb6267ed702f67ef53cd3436fc2df16514"
+  },
+  "wally_lock_sha256": "1febdf80e7d0d7d3de844aee418e3bb31f21b64bd6da44bd44a8332716c18618",
+  "worktree": "/private/tmp/p12-closeout-7e1c1d2",
+  "primary_ci_verification": {
+    "source_commit": "bb904ddbc36f19deebb9937bea6ad6696c43993e",
+    "run_number": 563,
+    "run_id": 45314961247,
+    "conclusion": "success",
+    "method": "GitHub fetch_commit_workflow_runs before expected-head guarded merge; verified by primary"
+  }
+}

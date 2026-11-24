@@ -1,6 +1,8 @@
 # Testing and acceptance
 
-Current P18 acceptance uses the ordinary smoke suites, deterministic/asset gates, the [three-client rebalancing harness](#run-the-p18-rebalancing-harness) and adapted [two-client P05 gunship harness](#run-the-p05-gunship-combat-harness), plus native input, traversal and rendered review. P03/P04 retain their compatible lifecycle/orbit paths. Pre-P18 staged balance/camera fixtures are explicitly archived; `HarnessCompatibility` rejects them before runtime/listener allocation. Reproduce their evidence only from the recorded Git revision. A compatibility rejection is failed/unavailable validation, never a pass or skipped required test; it does not waive P12’s pending live capacity/performance/release gates.
+Current P18 regression checks use the ordinary smoke suites, deterministic/asset gates, the [three-client rebalancing harness](#run-the-p18-rebalancing-harness) and adapted [two-client P05 gunship harness](#run-the-p05-gunship-combat-harness), plus native input, traversal and rendered review. P03/P04 retain their compatible lifecycle/orbit paths. Pre-P18 staged balance/camera fixtures are explicitly archived; `HarnessCompatibility` rejects them before runtime/listener allocation. Reproduce their evidence only from the recorded Git revision. A compatibility rejection is failed/unavailable validation, never a pass or skipped required test.
+
+P12’s legacy implementation handoff is closed by user direction. Live platform/access, capacity, performance and soak checks remain unverified in the [future release checklist](release.md).
 
 ## Staged fixture compatibility
 
@@ -603,9 +605,9 @@ compare pan reach at both zooms. Observe counterfire from covered and upper
 floor positions, mixed-weapon damage, actual Outpost openings and fragment
 load. Record how the roles stay engaged through each round. Local balance
 observations and the instrumented workloads supplement the prior engine
-regression suites. P12 tracks actual Roblox client sessions at 6 and 10
+regression suites. The future release checklist retains actual Roblox client sessions at 6 and 10
 players. [P11 plan](../plans/11-balance-and-performance.md),
-[P12 release plan](../plans/12-mvp-release.md)
+[Legacy P12 handoff record](../plans/12-mvp-release.md)
 
 ## Run the P05 gunship combat harness
 
@@ -735,7 +737,7 @@ The earlier phone correction `0cd6545` passed host and smoke checks but failed a
 
 The server/client `LauncherHarness` uses production GameRuntime and real remote intent. It covers M-7-only initial loadouts and three available landmark launchers; invalid/wrong-role/stale/flood/implausible-movement rejection; raced acquisition of one launcher, independent pickups by two carriers and rejection of a second weapon for the same carrier; miss/drop/selection/transfer with unchanged reload; carrier death with an already-flying direct rocket; explicit character removal while reloading and teammate recovery without restored life/equipment; pristine reset and stale intent; three real rockets yielding 200, 100 and zero aircraft health; earlier real rifle damage followed by two lethal remaining rockets; actual carrier disconnect; and drained idempotent teardown. Trusted fixture poses isolate these rules and collision checks; they are not operated route traversal or native input evidence.
 
-**D59 limits Studio acceptance to supported operations.** Same-identity reconnect is excluded: current helpers add a different test identity. Runtime MatchService tombstone/rejoin rules remain covered by deterministic service tests. The historical report's `actualReconnectVerified=false` and `requiredUnverified` remain unchanged; subsequent reports list it in informational `unsupportedChecks` with no required reconnect gap. Supported late joins and three-client sessions stay required. Supported checks temporarily blocked by access or startup failures remain incomplete. P12's explicit 6/10-player Roblox-client release sessions retain their separate environment. Do not relabel service tests as network reconnect evidence.
+**D59 limits Studio acceptance to supported operations.** Same-identity reconnect is excluded: current helpers add a different test identity. Runtime MatchService tombstone/rejoin rules remain covered by deterministic service tests. The historical report's `actualReconnectVerified=false` and `requiredUnverified` remain unchanged; subsequent reports list it in informational `unsupportedChecks` with no required reconnect gap. Supported late joins and three-client sessions stay required. Supported checks temporarily blocked by access or startup failures remain incomplete. Future 6/10-player Roblox-client release sessions retain their separate environment and remain unverified at legacy P12 closeout. Do not relabel service tests as network reconnect evidence.
 
 If the SDK cannot connect three clients, prepare the native fallback once, with Play stopped in the same test document:
 
@@ -913,7 +915,7 @@ The [historical P13 native-load report](evidence/p13-acceptance/fresh-world-repo
 | Unit | Rules: transitions, timers, damage, ammo, circular orbit math, weapon-linked zoom, per-site launcher ownership and one weapon per player | Standalone Luau under Lune; deterministic clock/random inputs |
 | Service integration | Real services connected through fakes for transport, clock and world queries | Lune where engine-independent; TestEZ in Studio for Instance-dependent adapters |
 | Engine integration | Raycast/cover, Humanoid death, collision swaps, Instances, camera state | TestEZ in the test place, with assertions and a structured pass/fail summary |
-| Multiplayer | Replication, roles, input rejection, late joins, visibility, cleanup | Two distinct client contexts for gameplay claims; P01 only requires its one-client smoke; actual 6/10 capacity sessions arrive later |
+| Multiplayer | Replication, roles, input rejection, late joins, visibility, cleanup | Two distinct client contexts for gameplay claims; P01 only requires its one-client smoke; future actual 6/10 capacity sessions remain unverified |
 | Experience | Readability, camera feel, sound, balance, fairness | Focused operated playtest and captured observations; supplements automated evidence |
 
 Unit tests use observable invariants and boundary examples, not implementation-specific call order unless order is the contract. Integration tests use real services and fake boundaries, not fake services calling each other. Engine checks assert real world state. A client screenshot cannot establish server authority.
@@ -957,7 +959,7 @@ Keep concise text evidence under `docs/evidence/`; keep large logs/captures as l
 
 ## Objective release budgets
 
-These are initial engineering targets; P11 records a named reference desktop before measuring. Changing a budget needs a reason in the plan, not a quieter test.
+These targets apply to future Roblox release validation. P11’s recorded local measurements remain source-specific. P12’s user-directed legacy implementation closeout does not claim the live capacity, performance or soak checks passed. Use the [future release checklist](release.md) and record the actual source, destination, clients and measurement environment. Changing a budget needs a documented reason, not a quieter test.
 
 - Test at 1920×1080 with a recorded graphics quality. Target client frame time p95 ≤33.3 ms for both roles during a scripted five-minute combat workload.
 - Target server frame time p95 ≤16.7 ms for the same workload. Record the sampling method, active clients, projectile/cover/effect counts and Studio/cloud environment.
@@ -989,6 +991,6 @@ Historical P02/P04 evidence establishes the prior 180-stud-radius, fixed-focus p
 - P13: source-built 720-stud disk/equal perimeter orbit, versioned terrain elevation/material reconstruction, building/story/panel registry, actual stairs/upper-floor navigation, supported anchors, separate lobby and connected launcher routes.
 - P14 historical scope: orbit-relative/quarter-screen pan acceptance remains tied to its recorded source. P18 replaces those bounds with square edges and world-fixed focus, requiring fresh direction, reversal, projection, recenter and cleanup evidence.
 - P07 historical scope: its 3/6-hit and nine-second results remain source-specific. P18 requires one-hit/two-earned-second boundaries with retained interrupted credit, all-building coverage, real openings, safe physics and fresh multiplayer/reset evidence. D50’s P07 late-join waiver does not waive replication/reset checks.
-- P11/P12: expanded-map travel/visibility and simultaneous fragment workloads in frame/memory/latency/soak measurements; repeat the revised level/panning/destruction demonstrations in real 6- and 10-player acceptance.
+- Future release validation: exercise expanded-map travel/visibility and simultaneous fragment workloads in live frame/memory/latency/soak measurements, including the revised level/panning/destruction demonstrations at real 6- and 10-player capacity. These checks remain unverified; the legacy P11/P12 records preserve their original source and environment.
 
 Record numeric tolerances and chosen defaults before running each suite. Test doubles cannot prove terrain loading, residual collision, camera coverage, rigid-body contact or replication. Earlier engine reports must not be relabeled as evidence for this expanded scope.
