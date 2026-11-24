@@ -1,0 +1,263 @@
+{
+  "blender": "5.3.0",
+  "source_sha256": "f2769d2323296bd4ae175d4e273a6b04d7afeb529125a76b475952bbd4688452",
+  "export_sha256": "c4be55228c48be218e54b4a305197750ae14c40560d61a0dc114d5ae1312ffcf",
+  "catalog_sha256": "c54b2367c4ec1a7e419cdc382f861e0285c4de9d5f685d1a360ec0602a08bf34",
+  "paintings": [
+    {
+      "portrait": 1,
+      "source": "src/images/redesigned-lobby/portrait-1.jpeg",
+      "source_sha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+      "reference": "src/images/redesigned-lobby/portrait-1.jpeg",
+      "reference_sha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+      "raster_px": [
+        724,
+        1086
+      ],
+      "display_raster_px": [
+        724,
+        1086
+      ],
+      "clockwise_degrees": 0,
+      "canvas": "Portrait 01 | canvas",
+      "material": "Canvas 01 | supplied portrait",
+      "frame_prefix": "Portrait 01 | frame",
+      "size_studs": [
+        6.8,
+        10.2
+      ],
+      "center_blender": [
+        64.218,
+        39.0,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 01"
+    },
+    {
+      "portrait": 2,
+      "source": "assets/blender/lobby-interior/oil-portraits/portrait-2-oil.png",
+      "source_sha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-2.jpeg",
+      "reference_sha256": "32278cc6f685170a6271976b3e546d13830b2a745728d98ea52df3af7b404e19",
+      "raster_px": [
+        1086,
+        1448
+      ],
+      "display_raster_px": [
+        1086,
+        1448
+      ],
+      "clockwise_degrees": 0,
+      "canvas": "Portrait 02 | canvas",
+      "material": "Canvas 02 | supplied portrait",
+      "frame_prefix": "Portrait 02 | frame",
+      "size_studs": [
+        7.65,
+        10.2
+      ],
+      "center_blender": [
+        54.2,
+        9.781999999999998,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 02"
+    },
+    {
+      "portrait": 3,
+      "source": "assets/blender/lobby-interior/oil-portraits/portrait-3-oil.png",
+      "source_sha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-3.jpeg",
+      "reference_sha256": "27f70552c02939e1436715d2a08a1c74936e51e0fffb3f2efa800a3e2577cc65",
+      "raster_px": [
+        1086,
+        1448
+      ],
+      "display_raster_px": [
+        1086,
+        1448
+      ],
+      "clockwise_degrees": 0,
+      "canvas": "Portrait 03 | canvas",
+      "material": "Canvas 03 | supplied portrait",
+      "frame_prefix": "Portrait 03 | frame",
+      "size_studs": [
+        7.65,
+        10.2
+      ],
+      "center_blender": [
+        35.4,
+        48.218,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 03"
+    },
+    {
+      "portrait": 4,
+      "source": "assets/blender/lobby-interior/oil-portraits/portrait-4-oil.png",
+      "source_sha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-4.jpeg",
+      "reference_sha256": "0b3d66287f1f337162cb747f40435e4a837ae65150e89ad2006ddc3405642ef3",
+      "raster_px": [
+        1086,
+        1448
+      ],
+      "display_raster_px": [
+        1086,
+        1448
+      ],
+      "clockwise_degrees": 0,
+      "canvas": "Portrait 04 | canvas",
+      "material": "Canvas 04 | supplied portrait",
+      "frame_prefix": "Portrait 04 | frame",
+      "size_studs": [
+        7.65,
+        10.2
+      ],
+      "center_blender": [
+        64.218,
+        20.6,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 04"
+    },
+    {
+      "portrait": 5,
+      "source": "src/images/redesigned-lobby/portrait-5.jpeg",
+      "source_sha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+      "reference": "src/images/redesigned-lobby/portrait-5.jpeg",
+      "reference_sha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+      "raster_px": [
+        736,
+        1334
+      ],
+      "display_raster_px": [
+        736,
+        1334
+      ],
+      "clockwise_degrees": 0,
+      "canvas": "Portrait 05 | canvas",
+      "material": "Canvas 05 | supplied portrait",
+      "frame_prefix": "Portrait 05 | frame",
+      "size_studs": [
+        5.62759,
+        10.2
+      ],
+      "center_blender": [
+        54.5,
+        48.218,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 05"
+    },
+    {
+      "portrait": 6,
+      "source": "assets/blender/lobby-interior/oil-portraits/portrait-6-oil.png",
+      "source_sha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+      "reference": "src/images/redesigned-lobby/reference-photos/portrait-6.jpeg",
+      "reference_sha256": "797520953af6a6d75fa436c3981bd31bb3f58b8ecb170a8937f9e9b16ca0ba0c",
+      "raster_px": [
+        1086,
+        1448
+      ],
+      "display_raster_px": [
+        1086,
+        1448
+      ],
+      "clockwise_degrees": 0,
+      "canvas": "Portrait 06 | canvas",
+      "material": "Canvas 06 | supplied portrait",
+      "frame_prefix": "Portrait 06 | frame",
+      "size_studs": [
+        7.65,
+        10.2
+      ],
+      "center_blender": [
+        35.9,
+        9.782000000000002,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 06"
+    }
+  ],
+  "approved_bust_sha256": "842661e46702b8730fc334026941069bb1c34341a74fb3fcb280aaff1ee7ad90",
+  "bust_max_vertex_delta_studs": {
+    "source": 0.0,
+    "glb": 0.0
+  },
+  "proscenium_facing_source_and_glb": {
+    "Proscenium arch": {
+      "signed_volume": 15.1052,
+      "outward_first_hits": 28
+    },
+    "Proscenium brass ribbon": {
+      "signed_volume": 0.3303,
+      "outward_first_hits": 28
+    }
+  },
+  "gallery_canvas_area_sq_studs": {
+    "1": 69.36,
+    "2": 78.03,
+    "3": 78.03,
+    "4": 78.03,
+    "5": 57.401,
+    "6": 78.03
+  },
+  "source_and_glb_routes": {
+    "body_stations": {
+      "waiting_to_operator": 26,
+      "operator_to_cinema_front": 163,
+      "operator_to_gallery_north": 129,
+      "gallery_to_south_paintings": 119
+    },
+    "body_envelope_studs": [
+      4,
+      4,
+      6
+    ],
+    "camera_stations": 11,
+    "camera_distance_studs": 6,
+    "camera_radius_studs": 0.45,
+    "doorways": {
+      "-25": {
+        "sampled_body_width_studs": 15.74,
+        "center_headroom_studs": 14.375
+      },
+      "25": {
+        "sampled_body_width_studs": 15.74,
+        "center_headroom_studs": 14.375
+      }
+    },
+    "theater_aisle_studs": 8.98,
+    "waiting_eye_first_hits": [
+      "06 | Pupil +1",
+      "06 | Pupil -1"
+    ],
+    "gallery_player_viewing_distance_studs": {
+      "1": 11.018,
+      "2": 11.018,
+      "3": 11.018,
+      "4": 11.018,
+      "5": 11.018,
+      "6": 11.018
+    }
+  },
+  "inventory": {
+    "nodes": 2434,
+    "mesh_objects": 2432,
+    "unique_meshes": 974,
+    "materials": 37,
+    "embedded_images": 15,
+    "managed_relative_images": 4,
+    "total_images": 19,
+    "assembled_triangles": 411534,
+    "unique_triangles": 176758,
+    "largest_mesh_triangles": 18800,
+    "source_bytes": 18651154,
+    "export_bytes": 11241012,
+    "p21_baseline": {
+      "p21_layout_geometry_sha256": "1bc57ce180f4c8116aa12e78cb0ece939a43fd476e20837f3a7edc25f68e21e0",
+      "p21_material_settings_sha256": "ceede4c1dc164a7fc8d6bbc5a95eaabe1d1aea70724b7d199492474aa49d6ea5",
+      "p21_unchanged_15_images_sha256": "dd18287abc0af746792ee0418a7cef17414942086138b4222692bb8a522a494f"
+    }
+  }
+}

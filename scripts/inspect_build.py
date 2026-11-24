@@ -3,21 +3,40 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 import json
 import math
+import re
 import tempfile
 import copy
 import base64
 import struct
+import subprocess
+from functools import lru_cache
 from p17_native_meshes import PAYLOAD_FIELDS, decode_payload, float32_vector
 from radar_outpost.prepare_import import thermal_structure_names
+from lobby_interior.prepare_collision import CATALOG as LOBBY_CATALOG, OUTPUT as LOBBY_COLLISION, collision_model
+from lobby_interior.stage_import import approved_inputs, decode_glb, digest, embedded_color, rehydrate_oil_images
 
 ROOT = Path(__file__).resolve().parent.parent
+LOBBY_STATION = "Workspace/World/Battlefield/LobbyStation"
+LOBBY_ART = f"{LOBBY_STATION}/LobbyArt"
+LOBBY_ART_SOURCE = LOBBY_COLLISION.with_name("LobbyArt.rbxm")
+LOBBY_ART_ARCHIVE = LOBBY_COLLISION.with_name("LobbyArt.import.rbxm")
+LOBBY_ART_RECEIPT = ROOT / "docs/evidence/p22/upload-operations.json"
+LOBBY_NATIVE_COLOR_ASSETS = {
+    "Portrait 01 | canvas": "105314252767417",
+    "Portrait 02 | canvas": "80363010663600",
+    "Portrait 03 | canvas": "136855674354422",
+    "Portrait 04 | canvas": "111747031021921",
+    "Portrait 05 | canvas": "87378239580163",
+    "Portrait 06 | canvas": "104678368112021",
+    "CRT | phosphor glass and aerial image": "97488158099796",
+}
 
 
 def compiled_surface_attributes(item: ET.Element) -> dict:
     """Decode compiled String/Bool/Float64/Vector3 attributes from Rojo XML.
 
-    P17 surfaces intentionally have only those attribute types. Unknown/truncated
-    serialized metadata rejects rather than trusting the source JSON counterpart.
+    Managed native assets use only those attribute types. Unknown or truncated
+    serialized metadata rejects before the artifact is accepted.
     """
     encoded = item.findtext("Properties/BinaryString[@name='AttributesSerialize']") or item.findtext("Properties/BinaryString[@name='AttributesSerialized']")
     if not encoded:
@@ -121,6 +140,180 @@ def numeric_property(item: ET.Element, tag: str, name: str, components: tuple[st
     return numbers
 
 
+@lru_cache(maxsize=1)
+def approved_lobby_art() -> dict[str, tuple[str, str | None]]:
+    """Derive expected mesh roles and texture hashes from the approved GLB."""
+    approval, raw, catalog = approved_inputs()
+    doc, binary = decode_glb(raw)
+    binary = rehydrate_oil_images(doc, binary, catalog)
+    nodes = doc["nodes"]
+    (bust_root,) = [node for node in nodes if node["name"] == "Lobby Bust · base center"]
+    bust_parts = set(bust_root["children"])
+    portrait_names = {painting["canvas"] for painting in catalog["paintings"]}
+    expected = {}
+    for index, node in enumerate(nodes):
+        if "mesh" not in node:
+            continue
+        name = node["name"]
+        (primitive,) = doc["meshes"][node["mesh"]]["primitives"]
+        slot = primitive["material"]
+        color = doc["materials"][slot]["pbrMetallicRoughness"].get("baseColorTexture")
+        role = "Bust" if index in bust_parts else "Portrait" if name in portrait_names else "Room"
+        if name in expected:
+            raise RuntimeError(f"Ambiguous lobby source identity: {name}")
+        expected[name] = (role, digest(embedded_color(doc, binary, slot)) if color else None)
+    if len(expected) != approval["inventory"]["mesh_objects"] or len(bust_parts) != catalog["p20_meshes"]:
+        raise RuntimeError("P22 lobby source inventory does not match its approval")
+    return expected
+
+
+def content_uri(item: ET.Element, name: str) -> str:
+    """Read the content URI from the current or legacy Roblox XML property."""
+    return next((value for prop in (name + "Content", name, name + "Id", name + "ID") for slot in ("uri", "url")
+                 if (value := item.findtext(f"Properties/Content[@name='{prop}']/{slot}"))), "")
+
+
+def check_native_lobby_art(nodes: dict[str, ET.Element], catalog: dict) -> dict[str, tuple]:
+    """Check the actual compiled assembly and return its release/test parity signature."""
+    if nodes[LOBBY_ART].attrib["class"] != "Folder":
+        raise RuntimeError("P22 lobby art requires one managed Folder")
+    if sum(path.rsplit("/", 1)[-1] == "LobbyArt" for path in nodes) != 1:
+        raise RuntimeError("Duplicate managed lobby art")
+    expected = approved_lobby_art()
+    portraits = {painting["canvas"]: painting for painting in catalog["paintings"]}
+    seen = {}
+    portrait_textures = set()
+    prefix = LOBBY_ART + "/"
+    for full, item in nodes.items():
+        if not full.startswith(prefix):
+            continue
+        relative = full.removeprefix(prefix)
+        if "/" in relative:
+            parent, child = relative.split("/", 1)
+            if (
+                item.attrib["class"] != "SurfaceAppearance"
+                or child != f"{parent}_Surface"
+                or nodes.get(prefix + parent) is None
+                or nodes[prefix + parent].attrib["class"] != "MeshPart"
+            ):
+                raise RuntimeError(f"Unexpected lobby art descendant: {full}")
+            continue
+        if item.attrib["class"] != "MeshPart" or not relative.startswith("P22_"):
+            raise RuntimeError(f"Unexpected lobby art object: {full}")
+        settings = {"Anchored": True, "CanCollide": False, "CanQuery": False, "CanTouch": False}
+        if any(item.findtext(f"Properties/bool[@name='{key}']", "true") != str(value).lower()
+               for key, value in settings.items()):
+            raise RuntimeError(f"Invalid lobby visual part collision settings: {full}")
+        attrs = compiled_surface_attributes(item)
+        source = attrs.get("LobbyArtSource")
+        role = attrs.get("LobbyArtRole")
+        color_sha = attrs.get("LobbyColorSourceSha256")
+        if source in seen or expected.get(source) != (role, color_sha):
+            raise RuntimeError(f"Wrong or duplicate lobby source identity: {full}")
+        pose = numeric_property(item, "CoordinateFrame", "CFrame", CFRAME_COMPONENTS, full)
+        size = numeric_property(item, "Vector3", "size", ("X", "Y", "Z"), full)
+        intrinsic = numeric_property(item, "Vector3", "InitialSize", ("X", "Y", "Z"), full)
+        mesh_id = content_uri(item, "Mesh")
+        if (
+            not re.fullmatch(r"rbxassetid://\d+", mesh_id)
+            or mesh_id != attrs.get("NativeMeshId")
+            or list(struct.unpack("<3f", struct.pack("<3f", *intrinsic))) != attrs.get("NativeMeshSize")
+            or any(value <= 0 for value in size)
+            or any(value < 0 for value in intrinsic)
+            or sum(value > 0 for value in intrinsic) < 2
+        ):
+            raise RuntimeError(f"Missing genuine lobby mesh identity or intrinsic dimensions: {full}")
+        if not attrs.get("NativeCollisionFidelity") or not attrs.get("NativeRenderFidelity"):
+            raise RuntimeError(f"Missing native lobby mesh fidelity: {full}")
+        surface = nodes.get(f"{full}/{relative}_Surface")
+        color = (content_uri(surface, "ColorMap") if surface is not None else "") or content_uri(item, "Texture")
+        if color_sha and (
+            not re.fullmatch(r"rbxassetid://\d+", color) or attrs.get("LobbyNativeColor") != color
+        ):
+            raise RuntimeError(f"Missing native lobby color texture: {full}")
+        approved_color = LOBBY_NATIVE_COLOR_ASSETS.get(source)
+        if approved_color and color != f"rbxassetid://{approved_color}":
+            raise RuntimeError(f"Unapproved native lobby color asset: {full}")
+        if role == "Portrait":
+            painting = portraits[source]
+            number = painting["portrait"]
+            x, y, z = painting["center_blender"]
+            world_extent = [sum(abs(pose[3 + i * 3 + a]) * size[a] for a in range(3)) for i in range(3)]
+            if (
+                relative != f"P22_Portrait_{number:02}"
+                or attrs.get("LobbyPortrait") != number
+                or color_sha != painting["source_sha256"]
+                or color in portrait_textures
+                or math.dist(pose[:3], (520 + x, z, -y)) > 0.06
+                or math.dist([max(world_extent[0], world_extent[2]), world_extent[1]], painting["size_studs"]) > 0.06
+            ):
+                raise RuntimeError(f"Portrait {number} native frame, texture or placement mismatch")
+            portrait_textures.add(color)
+        elif "LobbyPortrait" in attrs:
+            raise RuntimeError(f"Unexpected portrait identity: {full}")
+        seen[source] = (relative, tuple(pose), tuple(size), tuple(intrinsic), mesh_id, color)
+    if seen.keys() != expected.keys() or len(portrait_textures) != len(portraits):
+        raise RuntimeError("Compiled lobby is missing approved native meshes or portraits")
+    return seen
+
+
+def check_archived_lobby_geometry(compiled: dict[str, tuple]) -> None:
+    """Keep actual native mesh IDs, intrinsic dimensions and room placement from the original capture."""
+    receipt = json.loads(LOBBY_ART_RECEIPT.read_text())["nativeArchive"]
+    if digest(LOBBY_ART_ARCHIVE.read_bytes()) != receipt["sha256"]:
+        raise RuntimeError("Original P22 native capture differs from its Studio receipt")
+    with tempfile.TemporaryDirectory(prefix="p22-native-art-") as tmp:
+        xml = Path(tmp) / "native.rbxmx"
+        subprocess.run(
+            ["lune", "run", str(ROOT / "scripts/p17_native_mesh_xml.luau"), str(LOBBY_ART_ARCHIVE), str(xml)],
+            check=True,
+            cwd=ROOT,
+        )
+        archived = instance_nodes(xml)
+
+    # These three parts retain the same native MeshId and intrinsic dimensions.
+    # Their placed size axes and in-plane rotation change to mount the upright PNGs.
+    remounted = {
+        "Portrait 02 | canvas": ((1, 1), (0, -1), (2, 1)),
+        "Portrait 04 | canvas": ((0, 1), (2, 1), (1, -1)),
+        "Portrait 06 | canvas": ((1, 1), (0, -1), (2, 1)),
+    }
+    sources = set()
+    for path, item in archived.items():
+        if item.attrib["class"] != "MeshPart":
+            continue
+        source = compiled_surface_attributes(item)["LobbyArtSource"]
+        if source in sources or source not in compiled:
+            raise RuntimeError(f"Unexpected archived native lobby mesh: {path}")
+        sources.add(source)
+        _, pose, size, intrinsic, mesh_id, _ = compiled[source]
+        original = numeric_property(item, "Vector3", "InitialSize", ("X", "Y", "Z"), path)
+        if mesh_id != content_uri(item, "Mesh") or math.dist(intrinsic, original) > 1e-5:
+            raise RuntimeError(f"P22 changed the original native mesh: {source}")
+        original_pose = numeric_property(item, "CoordinateFrame", "CFrame", CFRAME_COMPONENTS, path)
+        original_size = numeric_property(item, "Vector3", "size", ("X", "Y", "Z"), path)
+        if source in remounted:
+            thin = min(range(3), key=original_size.__getitem__)
+            width, height = (axis for axis in range(3) if axis != thin)
+            size_swap = original_size.copy()
+            size_swap[width], size_swap[height] = size_swap[height], size_swap[width]
+            rotation = [
+                sign * component
+                for row, sign in remounted[source]
+                for component in original_pose[3 + row * 3 : 6 + row * 3]
+            ]
+            if (
+                math.dist(pose[:3], original_pose[:3]) > 1e-4
+                or math.dist(size, size_swap) > 1e-4
+                or math.dist(pose[3:], rotation) > 1e-4
+            ):
+                raise RuntimeError(f"P22 upright remount changed the frame plane, center or extents: {source}")
+        elif math.dist(pose, original_pose) > 1e-4 or math.dist(size, original_size) > 1e-4:
+            raise RuntimeError(f"P22 changed the original placed geometry: {source}")
+    if sources != compiled.keys():
+        raise RuntimeError("P22 compiled lobby differs from the original genuine native mesh inventory")
+
+
 def check_native_mesh(item: ET.Element, source: dict, shared: dict[str, bytes], full: str) -> None:
     """Require native intrinsic/payload preservation, independently of part Size.
 
@@ -206,12 +399,42 @@ def check_authored_geometry(path: Path) -> int:
 
     for asset in manifest["assets"]:
         local = asset["local_path"]
-        if not local or not local.endswith(".model.json") or local.startswith("assets/presentation/"):
+        if (
+            not local
+            or not local.endswith(".model.json")
+            or local.startswith("assets/presentation/")
+            or ROOT / local == LOBBY_COLLISION
+        ):
             continue
         source = json.loads((ROOT / local).read_text())
         base = "Workspace/World" if asset["kind"] == "world" else "ServerStorage/Assets"
         name = Path(local).name.removesuffix(".model.json")
         walk(source, base + "/" + name)
+
+    fixture = "ServerStorage/Tests/Fixtures/LobbyCollision"
+    collision = json.loads(LOBBY_COLLISION.read_text())
+    lobby_catalog = json.loads(LOBBY_CATALOG.read_text())
+    if collision != collision_model(lobby_catalog):
+        raise RuntimeError("P22 lobby collision differs from the approved footprint recipe")
+    for name, position in lobby_catalog["existing_anchors_roblox"].items():
+        full = "Workspace/World/Battlefield/Anchors/" + name
+        pose = numeric_property(nodes[full], "CoordinateFrame", "CFrame", CFRAME_COMPONENTS, full)
+        if pose != [*position, 1, 0, 0, 0, 1, 0, 0, 0, 1]:
+            raise RuntimeError(f"Lobby anchor placement no longer matches the approved site: {name}")
+    if path.name == "game.rbxlx" and fixture in nodes:
+        raise RuntimeError("P22 collision fixture leaked into the release mapping")
+    if path.name == "tests.rbxlx":
+        walk(collision, fixture)
+    physical = f"{LOBBY_STATION}/LobbyCollision"
+    if physical in nodes:
+        if LOBBY_ART not in nodes:
+            raise RuntimeError("Furnished lobby collision requires its managed visual assembly")
+        for name in ("LobbyDeck", "OperatorCanopy", "OperatorBack"):
+            if f"{LOBBY_STATION}/{name}" in nodes:
+                raise RuntimeError(f"Furnished lobby retained legacy geometry: {name}")
+        walk(collision, physical)
+    elif LOBBY_ART in nodes:
+        raise RuntimeError("Furnished lobby visuals require the managed collision")
     if count == 0:
         raise RuntimeError("No authored parts discovered for reconstruction checks")
     return count
@@ -713,6 +936,7 @@ def main() -> None:
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
+    expected_scripts.add("ServerScriptService/Server/LobbyGeometry")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction", "SandbreakReconstruction", "SeedshipReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
@@ -745,6 +969,9 @@ def main() -> None:
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P19 impact fixture missing from tests or leaked to release: {name}")
+    for name in ("ServerStorage/Tests/Studio/LobbyGeometry.spec", "ReplicatedStorage/ClientSpecs/GroundIndoorCamera.spec"):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P22 camera or lobby fixture missing from tests or leaked to release: {name}")
     for name in (
         "ServerScriptService/ServerTests/DestructionHarness",
         "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",
@@ -814,6 +1041,23 @@ def main() -> None:
     test_parts += check_salt_flats_import(ROOT / "build/tests.rbxlx")
     release_parts += check_sandbreak_import(ROOT / "build/game.rbxlx")
     test_parts += check_sandbreak_import(ROOT / "build/tests.rbxlx")
+    if LOBBY_ART_SOURCE.exists() or LOBBY_ART in release or LOBBY_ART in tests:
+        if LOBBY_ART not in release or LOBBY_ART not in tests:
+            raise RuntimeError("Furnished lobby art must be mapped in both constructs")
+        visual_spec = "ReplicatedStorage/ClientSpecs/LobbyArt.spec"
+        if tests.get(visual_spec) != "ModuleScript" or visual_spec in release:
+            raise RuntimeError("P22 native art check must be isolated to the test mapping")
+        lobby_catalog = json.loads(LOBBY_CATALOG.read_text())
+        release_lobby = check_native_lobby_art(instance_nodes(ROOT / "build/game.rbxlx"), lobby_catalog)
+        test_lobby = check_native_lobby_art(instance_nodes(ROOT / "build/tests.rbxlx"), lobby_catalog)
+        if release_lobby != test_lobby:
+            raise RuntimeError("P22 native lobby differs between release and test builds")
+        check_archived_lobby_geometry(release_lobby)
+        release_parts += len(release_lobby)
+        test_parts += len(test_lobby)
+        print(f"Lobby reconstruction passed: {len(release_lobby)} native meshes, one bust, six mapped portraits.")
+    elif any(path.rsplit("/", 1)[-1].startswith("P22_") for place in (release, tests) for path in place):
+        raise RuntimeError("Archived P22 lobby art leaked into a playable mapping")
     geometry_rejection_probes()
     print(f"Authored geometry reconstruction passed: {release_parts} release/{test_parts} test part transforms, dimensions, shape and collision flags.")
     print(f"Artifact isolation passed: {len(release)} release Instances, {len(tests)} test Instances; {len(allowed_scripts)} runtime scripts only in release.")

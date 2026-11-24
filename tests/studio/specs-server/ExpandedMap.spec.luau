@@ -160,17 +160,20 @@ return function()
             assert(owner.validate(), "valid room/marker contract did not recover")
         end)
     end)
-    test("ExpandedMapNavigation rejects lobby deck overlap and combat-zone station anchors", function()
+    test("ExpandedMapNavigation rejects lobby floor overlap and combat-zone station anchors", function()
         fixture(function(map, owner)
             local stations = map:FindFirstChild("LobbyStation") :: Folder
-            local deck = stations:FindFirstChild("LobbyDeck") :: BasePart
+            local furnished = stations:FindFirstChild("LobbyCollision") ~= nil
+            local deck = (
+                stations:FindFirstChild("LobbyFloorTheater", true) or stations:FindFirstChild("LobbyDeck")
+            ) :: BasePart
             local original = deck.CFrame
-            deck.CFrame = CFrame.new(370, -1, 0)
+            deck.CFrame = CFrame.new(370, original.Position.Y, 0)
             local valid, reason = owner.validate()
-            assert(
-                not valid and reason == "protected lobby deck overlaps playable disk",
-                "partly overlapping lobby accepted"
-            )
+            local expected = if furnished
+                then "protected lobby overlaps playable disk: LobbyFloorTheater"
+                else "protected lobby deck overlaps playable disk"
+            assert(not valid and reason == expected, "partly overlapping lobby accepted")
             deck.CFrame = original
             local anchors = map:FindFirstChild("Anchors") :: Folder
             for _, name in { "Lobby", "Operator" } do

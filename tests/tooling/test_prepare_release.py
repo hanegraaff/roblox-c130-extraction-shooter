@@ -119,17 +119,38 @@ class ReleasePreparationTests(unittest.TestCase):
                 release.asset_inventory(self.root, artifact)
         (self.root / release.VESPER_RECEIPT).unlink()
 
-        sandbreak_receipt = {"nativeModels": {bank: "recorded" for bank in release.SANDBREAK_BANKS},
-                             "managedMeshCount": 2}
-        self.write(release.SANDBREAK_RECEIPT, json.dumps(sandbreak_receipt))
-        with patch.object(release, "native_bank_assets", return_value=({"7"}, {"25"})) as sandbreak:
-            extended = release.asset_inventory(self.root, {**artifact, "Sandbreak": imported})
-            sandbreak.assert_called_once_with(self.root, "Sandbreak", release.SANDBREAK_BANKS,
-                                             sandbreak_receipt["nativeModels"], 2)
+        for label, paths, receipt_path, key, counts, part_count in (
+            ("Sandbreak", release.SANDBREAK_BANKS, release.SANDBREAK_RECEIPT,
+             "sandbreak_native_receipt", {"managedMeshCount": 2}, 2),
+            ("Prism Seedship", release.PRISM_BANKS, release.PRISM_RECEIPT,
+             "prism_native_receipt", {"meshPartCount": 2972, "panelCount": 102}, 3074),
+        ):
+            with self.subTest(bank=label):
+                fingerprints = {bank: "recorded" for bank in paths}
+                self.write(receipt_path, json.dumps({"nativeModels": fingerprints, **counts}))
+                with patch.object(release, "native_bank_assets", return_value=({"7"}, {"25"})) as bank_assets:
+                    extended = release.asset_inventory(self.root, {**artifact, label: imported})
+                    bank_assets.assert_called_once_with(self.root, label, paths, fingerprints, part_count)
+                    self.assertEqual(extended["mesh_ids"], ["5", "7"])
+                    self.assertEqual(extended["texture_ids"], ["23", "25"])
+                    self.assertEqual(extended[key]["path"], receipt_path)
+                (self.root / receipt_path).unlink()
+
+        lobby_model, = release.LOBBY_BANKS
+        lobby_receipt = {"archive": {"path": lobby_model, "sha256": "recorded"},
+                         "roles": {"Room": 2392, "Bust": 34, "Portrait": 6}}
+        self.write(lobby_model, "native model")
+        self.write(release.LOBBY_RECEIPT, json.dumps(lobby_receipt))
+        with patch.object(release, "native_bank_assets", return_value=({"7"}, {"25"})) as lobby:
+            extended = release.asset_inventory(self.root, {**artifact, "Lobby": imported})
+            lobby.assert_called_once_with(self.root, "Waiting lobby", release.LOBBY_BANKS,
+                                          {lobby_model: "recorded"}, 2432)
             self.assertEqual(extended["mesh_ids"], ["5", "7"])
             self.assertEqual(extended["texture_ids"], ["23", "25"])
-            self.assertEqual(extended["sandbreak_native_receipt"]["path"], release.SANDBREAK_RECEIPT)
-        (self.root / release.SANDBREAK_RECEIPT).unlink()
+            self.assertEqual(extended["waiting_lobby_native_receipt"]["path"], release.LOBBY_RECEIPT)
+            with self.assertRaisesRegex(RuntimeError, r"unused \['25', '7'\]"):
+                release.asset_inventory(self.root, artifact)
+        (self.root / lobby_model).unlink()
 
         script.find("Properties/string").text = 'return "rbxassetid://31"'
         with self.assertRaisesRegex(RuntimeError, r"unexpected \['31'\], unused \['30'\]"):

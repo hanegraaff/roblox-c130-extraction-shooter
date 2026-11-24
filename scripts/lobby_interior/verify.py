@@ -1,9 +1,9 @@
-"""Reopen the P21 source and reimport its clean GLB using Blender 5.3.
+"""Reopen the furnished lobby source and reimport its clean GLB using Blender 5.3.
 
 Run with blender -b --python-exit-code 1 --python scripts/lobby_interior/verify.py
 and optionally add -- --report /path/to/report.json after the script name.
-This is a read-only check against the approved P20 geometry and the supplied
-portrait bytes. Clearance uses the actual meshes in both Blender scenes.
+This read-only check binds the approved P20 geometry, four oil paintings, two
+unchanged works and original portrait references. Clearance uses actual meshes.
 """
 from hashlib import sha256
 import json
@@ -26,6 +26,12 @@ P20_DIGEST = "842661e46702b8730fc334026941069bb1c34341a74fb3fcb280aaff1ee7ad90"
 PIVOT = "Waiting Lobby | deck surface pivot"
 BUST_PIVOT = "Lobby Bust · base center"
 EPS = .001
+OIL_DIGESTS = {
+    2:"1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+    3:"f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+    4:"364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+    6:"5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea"
+}
 # Shared ceiling camera probes face the indicated heading. At each the camera
 # sits six studs behind the target and 15 degrees above its 4.8-stud eye.
 CAMERA_STATIONS = (
@@ -51,28 +57,78 @@ def digest(path):
     return sha256(path.read_bytes()).hexdigest()
 
 
+def check_p21_appearance(doc,binary,unchanged_images):
+    """Compare the named furnishings and shell against the approved ec43139 GLB.
+
+    Only three canvas UVs changed when the new upright PNGs replaced rotated
+    JPEGs. All remaining geometry semantics are compared byte for byte, along
+    with the transform tree, material bindings and 15 unchanged texture files.
+    """
+    def signature(records):
+        return sha256(json.dumps(records,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+    records={}
+    reoriented={f"Portrait {n:02d} | canvas" for n in (2,4,6)}
+    for node in doc["nodes"]:
+        row={k:v for k,v in node.items() if k not in ("children","mesh")}
+        row["children"]=sorted(doc["nodes"][i]["name"] for i in node.get("children",[]))
+        if "mesh" in node:
+            primitive,=doc["meshes"][node["mesh"]]["primitives"]
+            row["material"]=doc["materials"][primitive["material"]]["name"]
+            for key,index in dict(primitive["attributes"],indices=primitive["indices"]).items():
+                if key=="TEXCOORD_0" and node["name"] in reoriented: continue
+                accessor=doc["accessors"][index]
+                view=doc["bufferViews"][accessor["bufferView"]]; start=view.get("byteOffset",0)
+                payload=binary[start:start+view["byteLength"]]
+                row[key]=[accessor["count"],accessor["componentType"],accessor["type"],sha256(payload).hexdigest()]
+        records[node["name"]]=row
+    geometry=signature(records)
+    materials=signature(sorted(doc["materials"],key=lambda m:m["name"]))
+    images=signature(unchanged_images)
+    assert geometry=="1bc57ce180f4c8116aa12e78cb0ece939a43fd476e20837f3a7edc25f68e21e0"
+    assert materials=="ceede4c1dc164a7fc8d6bbc5a95eaabe1d1aea70724b7d199492474aa49d6ea5"
+    assert images=="dd18287abc0af746792ee0418a7cef17414942086138b4222692bb8a522a494f"
+    return {"p21_layout_geometry_sha256":geometry,"p21_material_settings_sha256":materials,
+            "p21_unchanged_15_images_sha256":images}
+
+
 def site_and_inputs(catalog):
-    """Bind clearance to the actual protected deck and the six distinct original JPEG files."""
+    """Bind clearance to the approved arrival pivot, anchors and six original JPEGs."""
     world=json.loads((ROOT/"assets/world/Battlefield.model.json").read_text())
     by_name={child["Name"]:child for child in world["Children"]}
     anchors={c["Name"]:c["Properties"]["CFrame"][:3] for c in by_name["Anchors"]["Children"]}
-    deck=next(o["Properties"] for o in by_name["LobbyStation"]["Children"] if o["Name"]=="LobbyDeck")
     assert anchors["Lobby"]==catalog["existing_anchors_roblox"]["Lobby"] and anchors["Operator"]==catalog["existing_anchors_roblox"]["Operator"]
-    assert deck["Size"]==catalog["existing_deck_studs"]
-    x,y,z=deck["CFrame"][:3]
-    assert catalog["pivot_roblox"]==[x,y+deck["Size"][1]/2,z]
+    assert catalog["existing_deck_studs"]==[60,2,60]
+    x,y,z=anchors["Lobby"]
+    assert catalog["pivot_roblox"]==[x,y-3,z]
+    station=by_name.get("LobbyStation")
+    if station:
+        deck=next(o["Properties"] for o in station["Children"] if o["Name"]=="LobbyDeck")
+        assert deck["Size"]==catalog["existing_deck_studs"]
+        x,y,z=deck["CFrame"][:3]
+        assert catalog["pivot_roblox"]==[x,y+deck["Size"][1]/2,z]
     assert catalog["p20_instances"]==1 and catalog["p20_sculpt_commit"].startswith("62cd82c")
     portraits=catalog["paintings"]
     assert len(portraits)==6 and {p["portrait"] for p in portraits}==set(range(1,7))
     assert len({p["source_sha256"] for p in portraits})==6
+    lobby_images=Path("src/images/redesigned-lobby")
     for p in portraits:
-        assert p["source"]==f'src/images/redesigned-lobby/portrait-{p["portrait"]}.jpeg'
+        index=p["portrait"]
+        references=lobby_images/"reference-photos" if index in OIL_DIGESTS else lobby_images
+        assert p["reference"]==str(references/f"portrait-{index}.jpeg")
+        assert digest(ROOT/p["reference"])==p["reference_sha256"]
+        if index in OIL_DIGESTS:
+            assert p["source"]==f"assets/blender/lobby-interior/oil-portraits/portrait-{index}-oil.png"
+            assert digest(ROOT/p["source"])==p["source_sha256"]==OIL_DIGESTS[index]
+            assert digest(ROOT/lobby_images/f"portrait-{index}.png")==p["source_sha256"]
+            assert p["raster_px"]==[1086,1448]
+        else:
+            assert p["source"]==p["reference"] and p["source_sha256"]==p["reference_sha256"]
         assert p["material"]==f'Canvas {p["portrait"]:02d} | supplied portrait'
         assert p["canvas"]==f'Portrait {p["portrait"]:02d} | canvas'
 
 
 def raw_glb(catalog):
-    """Verify clean static nodes, self-contained texture payloads and render budgets."""
+    """Verify static nodes, four exact managed relative image URIs and embedded art."""
     data=EXPORT.read_bytes()
     magic,version,size,jlen,kind=struct.unpack_from("<4sIIII",data)
     assert magic==b"glTF" and version==2 and size==len(data) and kind==0x4e4f534a
@@ -82,24 +138,35 @@ def raw_glb(catalog):
     assert "KHR_lights_punctual" not in g.get("extensionsUsed",[])
     assert len(g["scenes"])==1 and len(g["scenes"][0]["nodes"])==1
     assert g["nodes"][g["scenes"][0]["nodes"][0]]["name"]==PIVOT
-    hashes={}
+    hashes={};linked=set()
+    oils={Path(p["source"]).stem:p for p in catalog["paintings"] if p["portrait"] in OIL_DIGESTS}
     for im in g["images"]:
-        assert "uri" not in im
-        view=g["bufferViews"][im["bufferView"]];start=view.get("byteOffset",0)
-        hashes[im["name"]]=sha256(buf[start:start+view["byteLength"]]).hexdigest()
+        name=im["name"]
+        if "uri" in im:
+            assert name in oils and name not in linked and "bufferView" not in im
+            assert im["uri"]==f"../../blender/lobby-interior/oil-portraits/{name}.png"
+            assert (EXPORT.parent/im["uri"]).resolve()==(ROOT/oils[name]["source"]).resolve()
+            hashes[name]=digest(EXPORT.parent/im["uri"])
+            linked.add(name)
+        else:
+            view=g["bufferViews"][im["bufferView"]];start=view.get("byteOffset",0)
+            hashes[name]=sha256(buf[start:start+view["byteLength"]]).hexdigest()
+    assert linked==set(oils) and len(hashes)==19
     assert hashes["aerial-screen"]==catalog["screen"]["source_sha256"]
     for p in catalog["paintings"]:
-        assert hashes["portrait-%d"%p["portrait"]]==p["source_sha256"]==digest(ROOT/p["source"])
+        assert hashes[Path(p["source"]).stem]==p["source_sha256"]==digest(ROOT/p["source"])
     # Every index exported is a triangle index. Count reused kit meshes once
     # for storage and once per node for a realistic assembled triangle total.
     tri=[sum(g["accessors"][p["indices"]]["count"]//3 for p in m["primitives"]) for m in g["meshes"]]
     assert all(0<n<20000 for n in tri)
     assert SOURCE.stat().st_size<20*1024**2 and EXPORT.stat().st_size<20*1024**2
+    baseline=check_p21_appearance(g,buf,{name:h for name,h in hashes.items() if name not in linked})
     return {"nodes":len(g["nodes"]),"mesh_objects":sum("mesh" in n for n in g["nodes"]),
-            "unique_meshes":len(tri),"materials":len(g["materials"]),"embedded_images":len(hashes),
+            "unique_meshes":len(tri),"materials":len(g["materials"]),"embedded_images":len(hashes)-len(linked),
+            "managed_relative_images":len(linked),"total_images":len(hashes),
             "assembled_triangles":sum(tri[n["mesh"]] for n in g["nodes"] if "mesh" in n),
             "unique_triangles":sum(tri),"largest_mesh_triangles":max(tri),
-            "source_bytes":SOURCE.stat().st_size,"export_bytes":len(data)}
+            "source_bytes":SOURCE.stat().st_size,"export_bytes":len(data),"p21_baseline":baseline}
 
 
 def import_glb(path):
@@ -205,18 +272,17 @@ def auth_scene(root,catalog,reference):
                 key=tuple(round(v,3) for v in uv[i].uv)
                 points[key]=world@obj.data.vertices[obj.data.loops[i].vertex_index].co
         assert set(points)=={(0,0),(1,0),(1,1),(0,1)}
-        # Map three labelled display corners back into the source raster. For the
-        # three EXIF-6 sources the left edge becomes the physical top.
-        is_turned=p["portrait"] in (2,4,6)
-        assert p["clockwise_degrees"]==(90 if is_turned else 0)
-        orientation=list(image.size)[::-1] if is_turned else list(image.size)
+        # All final display rasters have upright pixels. Their U axis must point
+        # to the viewer's right and their V axis vertically up the gallery wall.
+        assert p["clockwise_degrees"]==0
+        orientation=list(image.size)
         assert p["display_raster_px"]==orientation
-        bl,br,tl=((1,0),(1,1),(0,0)) if is_turned else ((0,0),(1,0),(0,1))
+        bl,br,tl=((0,0),(1,0),(0,1))
         right=points[br]-points[bl];up=points[tl]-points[bl]
         assert up.normalized().z>.9999 and abs(right.z)<EPS
         assert right.cross(up).normalized().dot(normal)>.9999
         w,h=p["size_studs"]; assert abs(w-right.length)<EPS and abs(h-up.length)<EPS
-        if is_turned:
+        if p["portrait"] in OIL_DIGESTS:
             assert abs(w-7.65)<EPS and abs(h-10.20)<EPS
         assert abs(right.length/up.length-orientation[0]/orientation[1])<EPS
         center=sum(points.values(),Vector((0,0,0)))*.25
@@ -341,11 +407,12 @@ def main():
     for name,coords in b1.items():
         assert max(abs(a-b) for a,b in zip(coords,b2[name]))<EPS,(name,coords,b2[name])
     report={"blender":bpy.app.version_string,"source_sha256":digest(SOURCE),"export_sha256":digest(EXPORT),
+            "catalog_sha256":digest(CATALOG),"paintings":catalog["paintings"],
             "approved_bust_sha256":P20_DIGEST,"bust_max_vertex_delta_studs":{"source":d1,"glb":d2},
             "proscenium_facing_source_and_glb":arches,"gallery_canvas_area_sq_studs":areas,"source_and_glb_routes":walk,"inventory":stats}
     if "--report" in sys.argv:
         Path(sys.argv[sys.argv.index("--report")+1]).write_text(json.dumps(report,indent=2)+"\n")
-    print("P21_REOPEN_REIMPORT_AND_CLEARANCE_PASS",flush=True)
+    print("P22_OIL_REOPEN_REIMPORT_AND_CLEARANCE_PASS",flush=True)
     print(json.dumps(report,indent=2))
 
 

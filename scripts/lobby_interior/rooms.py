@@ -327,22 +327,20 @@ def theater():
 
 def painting(wall,u,index,height):
     from hashlib import sha256
-    path=a.REF/("portrait-%d.jpeg"%index)
+    oil=index in (2,3,4,6)
+    reference_dir=a.REF/"reference-photos" if oil else a.REF
+    reference=reference_dir/("portrait-%d.jpeg"%index)
+    path=a.SOURCE/"oil-portraits"/f"portrait-{index}-oil.png" if oil else reference
     material="Canvas %02d | supplied portrait"%index
     m=image_mat(material,path,.83)
     img=next(n.image for n in m.node_tree.nodes if n.type=="TEX_IMAGE")
-    # The three sideways rasters have EXIF Orientation 6. Apply their approved
-    # hanging direction in the UVs so every original JPEG pixel stays available.
-    turn_clockwise=index in (2,4,6)
     raster=list(img.size)
-    display_raster=raster[::-1] if turn_clockwise else raster
-    width=height*display_raster[0]/display_raster[1]
+    width=height*raster[0]/raster[1]
     z=9.1; group="Portrait %02d"%index
     wall_box(wall,group+" | stretcher",u,.54,z,(width+.42,.39,height+.42),"Fumed oak",.045)
     # Geometry UVs use the complete raster extent; each point is inset from the surrounding molding.
     coords=[local(wall,u+i*width/2,.782,z+j*height/2) for i,j in ((-1,-1),(1,-1),(1,1),(-1,1))]
-    corners=[(1,0),(1,1),(0,1),(0,0)] if turn_clockwise else [(0,0),(1,0),(1,1),(0,1)]
-    panel(group+" | canvas",coords,material,uv=corners)
+    panel(group+" | canvas",coords,material,uv=[(0,0),(1,0),(1,1),(0,1)])
     for off,depth,thickness,mat in ((.09,.81,.075,"Gilt edge"),(.27,.86,.16,"Patinated bronze"),
                                     (.54,.89,.23,"Champagne brass"),(.73,.87,.10,"Fumed oak"),(.86,.92,.12,"Gilt edge")):
         cp=local(wall,u,depth,z)
@@ -360,7 +358,8 @@ def painting(wall,u,index,height):
     eye=local(wall,u,11.8,z)
     cam=camera("A2 | Framed portrait %02d"%index,eye,local(wall,u,.78,z),45,(720,720),max(width+2.25,height+2.0))
     PAINTINGS.append({"portrait":index,"source":str(path.relative_to(a.ROOT)),"source_sha256":sha256(path.read_bytes()).hexdigest(),
-                      "raster_px":raster,"display_raster_px":display_raster,"clockwise_degrees":90 if turn_clockwise else 0,"canvas":group+" | canvas","material":material,
+                      "reference":str(reference.relative_to(a.ROOT)),"reference_sha256":sha256(reference.read_bytes()).hexdigest(),
+                      "raster_px":raster,"display_raster_px":raster,"clockwise_degrees":0,"canvas":group+" | canvas","material":material,
                       "frame_prefix":group+" | frame","size_studs":[round(width,5),height],
                       "center_blender":list(local(wall,u,.782,z)),"camera":cam.name})
 

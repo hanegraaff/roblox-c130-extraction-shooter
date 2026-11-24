@@ -1,0 +1,101 @@
+{
+  "environment": {
+    "studioVersion": "0.748.0.7481526",
+    "mode": "Local Studio Play",
+    "file": "tests.rbxlx",
+    "placeId": 0,
+    "universeId": 0,
+    "clientCount": 1
+  },
+  "server": {
+    "suite": "P01-server",
+    "discovered": 199,
+    "passed": 199,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "client": {
+    "suite": "P01-client",
+    "discovered": 21,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "camera": {
+    "scope": "Disposable synced collision only, actual Waiting avatar and live stock Custom camera, no native art",
+    "wall": {
+      "centerX": 585,
+      "innerEdgeX": 584.7,
+      "transparency": 1
+    },
+    "focus": [
+      582,
+      4.5,
+      -27
+    ],
+    "historicalUnmodified": {
+      "position": [
+        587.9137573242188,
+        5.513782501220703,
+        -27
+      ],
+      "wallBetweenFocusAndEye": true
+    },
+    "historicalOpaqueControl": {
+      "position": [
+        584.7867431640625,
+        4.977727890014648,
+        -27
+      ]
+    },
+    "corrected": {
+      "clearance": 0.42882078886032104,
+      "role": "Waiting",
+      "camera": "584.2711791992188, 4.889338493347168, -27",
+      "preferences": {
+        "1": 6,
+        "2": 6,
+        "3": 70,
+        "4": "Enum.CameraType.Custom"
+      },
+      "focus": "582, 4.5, -27",
+      "wall": "585, 9.600000381469727, -29",
+      "stockDistance": 2.3043088912963867,
+      "wallBetweenRenderAndFocus": false
+    },
+    "clearGallery": {
+      "fieldOfView": 70,
+      "max": 6,
+      "distance": 6.000023365020752,
+      "min": 6,
+      "role": "Waiting",
+      "focus": "574, 4.5, -21",
+      "mode": "Enum.CameraType.Custom",
+      "camera": "579.9137573242188, 5.513782501220703, -21"
+    },
+    "scopeRemoved": {
+      "x": 587.9137573242188,
+      "focus": 582,
+      "mode": "Enum.CameraType.Custom",
+      "distance": 6.000023365020752,
+      "scopeRemoved": true,
+      "role": "Waiting"
+    }
+  },
+  "route": {
+    "rejectedInitialRobloxBodyCenter": [
+      488.4285583496094,
+      3.0999999046325684,
+      -36
+    ],
+    "correctedBlenderWaypoint": [
+      -31.2,
+      37
+    ],
+    "collider": "LobbyTheaterSeat4Right3Base",
+    "correctedServerCasePassed": true
+  },
+  "cleanup": "Stopped Play, reverting all temporary fixture edits and handing Edit session to independent tester"
+}

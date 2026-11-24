@@ -374,7 +374,8 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
             if match.snapshot().phase ~= "Lobby" or runtime.rounds.resources().spawnTasks ~= 0 then
                 return false
             end
-            local deck = workspace.World.Battlefield.LobbyStation:FindFirstChild("LobbyDeck")
+            local station = workspace.World.Battlefield.LobbyStation
+            local deck = station:FindFirstChild("LobbyFloorMain", true) or station:FindFirstChild("LobbyDeck")
             if not deck or not deck:IsA("BasePart") then
                 return false
             end

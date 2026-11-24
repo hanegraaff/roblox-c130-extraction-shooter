@@ -54,7 +54,11 @@ def source_inputs(root: Path) -> tuple[dict[str, str], dict[str, str]]:
                 if path.is_file() and path.suffix in {".luau", ".json", ".py"}
                 and path.relative_to(root).as_posix() != OUTPUT}
     for name in ("test.project.json", "rokit.toml", "wally.toml", "wally.lock",
-                 "scripts/p17_harness.py", "scripts/inspect_build.py", "scripts/verify.py"):
+                 "scripts/p17_harness.py", "scripts/inspect_build.py", "scripts/verify.py",
+                 "scripts/lobby_interior/prepare_collision.py", "scripts/lobby_interior/stage_import.py",
+                 "scripts/lobby_interior/native_config.py", "scripts/lobby_interior/capture_native.luau",
+                 "scripts/lobby_interior/finish_native.luau",
+                 "docs/evidence/p22/blender-oil-reimport.json", "docs/evidence/p22/upload-operations.json"):
         fixtures[name] = digest((root / name).read_bytes())
     return dict(sorted(production.items())), dict(sorted(fixtures.items()))
 

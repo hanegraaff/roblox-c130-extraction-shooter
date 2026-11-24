@@ -1,0 +1,314 @@
+{
+  "scope": "Private Roblox upload for the approved P22 lobby",
+  "studioVersion": "0.748.0.7481526",
+  "universeId": "10776653720",
+  "placeId": "72732833195348",
+  "ownerUserId": "2227341845",
+  "batches": {
+    "lobby-pilot.glb": {
+      "sha256": "eb719ce5753842b9adee4871fef1d8b8dfde666e27ae8fd4458ef95636f22b5d",
+      "parts": 22,
+      "operationId": "928d2f1c-8be6-4a53-b468-eabb5cf7e7e5",
+      "assetId": "91661592065500",
+      "moderationState": "Approved",
+      "recordedStatus": "operation completed",
+      "nativeVersionId": "5798203584868",
+      "capturedParts": 22,
+      "maxCenterDeltaStuds": 0.0000133514404296875,
+      "maxMeshExtentDeltaStuds": 0.000002877168753911974
+    },
+    "lobby-room01.glb": {
+      "sha256": "20b081c4fef66cb2fbed5b04cc561a953fb2241451dd6fa1634d469ee9d28103",
+      "parts": 200,
+      "operationId": "e7f787a6-2585-457e-b47f-776654d723a0",
+      "assetId": "136646423260795",
+      "moderationState": "Approved",
+      "recordedStatus": "operation completed",
+      "nativeVersionId": "7171420795493",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.000017059845049516298,
+      "maxMeshExtentDeltaStuds": 0.00001385497125738766
+    },
+    "lobby-room02.glb": {
+      "sha256": "dc90ef6a6c508d032209424ef4b9979da3137da3199f52832c94caab8ba6c2cf",
+      "parts": 200,
+      "operationId": "ae52a0c9-735e-44c3-9f45-5856cb3857f6",
+      "recordedStatus": "operation completed",
+      "assetId": "89941254994361",
+      "moderationState": "Approved",
+      "nativeVersionId": "42035314306493",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.0000137540864670882,
+      "maxMeshExtentDeltaStuds": 0.000003655009095382411
+    },
+    "lobby-room03.glb": {
+      "sha256": "f5b5b04306234194cc05a9d2541d27d69855d982b553aa7dde7d4924f515d93a",
+      "parts": 200,
+      "operationId": "20b1f51b-fb1d-40ea-b825-3bccaad061d1",
+      "recordedStatus": "operation completed",
+      "assetId": "77429892450266",
+      "moderationState": "Approved",
+      "nativeVersionId": "27175781343355",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.0000215791860682657,
+      "maxMeshExtentDeltaStuds": 0.000004317944330978207
+    },
+    "lobby-room04.glb": {
+      "sha256": "eaca39635f00c4825bf821b4e47e98c73201ddb2001753099d2a1e99c6f69f88",
+      "parts": 200,
+      "operationId": "77bf4c07-f93b-4116-9531-41f7451a280e",
+      "recordedStatus": "operation completed",
+      "assetId": "110927070980793",
+      "moderationState": "Approved",
+      "nativeVersionId": "15032737485983",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.000012212990441184957,
+      "maxMeshExtentDeltaStuds": 0.000016184389096451923
+    },
+    "lobby-room05.glb": {
+      "sha256": "d4c1aeb6ad3f67c278fbddf5b48a872b3843fec855db539fe92a41923f89c116",
+      "parts": 200,
+      "operationId": "f0760449-84b7-4c5f-bebe-dd9c22ba6ebb",
+      "recordedStatus": "operation completed",
+      "assetId": "135714281119780",
+      "moderationState": "Approved",
+      "nativeVersionId": "55221579232455",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.0000152587890625,
+      "maxMeshExtentDeltaStuds": 0.000016184389096451923
+    },
+    "lobby-room06.glb": {
+      "sha256": "f353e24a092a849657a767e49047dc3077528e2f86dda96667f8fed405429592",
+      "parts": 200,
+      "operationId": "5e36440c-4e48-4e87-a355-39c55c8ac41b",
+      "recordedStatus": "operation completed",
+      "assetId": "130807081151860",
+      "moderationState": "Approved",
+      "nativeVersionId": "19449155356910",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.0000137540864670882,
+      "maxMeshExtentDeltaStuds": 0.0000036966368952562334
+    },
+    "lobby-room07.glb": {
+      "sha256": "e4c6c9dd5ffab50be5c85670dde92ee94bbc44d226e567d8892709cf2e1b4da7",
+      "parts": 200,
+      "operationId": "ce3d105c-2602-41ef-ac9d-8f18869fe25f",
+      "recordedStatus": "operation completed",
+      "assetId": "118533127408790",
+      "moderationState": "Approved",
+      "nativeVersionId": "65288205395761",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.00002412626417935826,
+      "maxMeshExtentDeltaStuds": 0.000005541308837564429
+    },
+    "lobby-room08.glb": {
+      "sha256": "3b4bbe8b81689f1c252c101728d36b404301b6783509c8215d3a61045f1ed52c",
+      "parts": 200,
+      "operationId": "f083699d-652e-4cc6-a5bf-4c4809f85a30",
+      "recordedStatus": "operation completed",
+      "assetId": "130193096006388",
+      "moderationState": "Approved",
+      "nativeVersionId": "5933870290026",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.000025589766664779745,
+      "maxMeshExtentDeltaStuds": 0.00001200556471303571
+    },
+    "lobby-room09.glb": {
+      "sha256": "4b8700b120a3067aa1684902bf42b3c4a454164683091d57e58689b569c3c605",
+      "parts": 200,
+      "operationId": "c53ea8dd-399a-4fdc-a861-4166d89b7069",
+      "recordedStatus": "operation completed",
+      "assetId": "87817036030975",
+      "moderationState": "Approved",
+      "nativeVersionId": "51286078332139",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.0000152587890625,
+      "maxMeshExtentDeltaStuds": 0.000013968994608148932
+    },
+    "lobby-room10.glb": {
+      "sha256": "9d05a0c3ecc94f372ec97dca6aed20b54a0f251bc17687a604b8dc457117f1fd",
+      "parts": 200,
+      "operationId": "ff3d6d49-4ebe-4cd0-8394-f2b9fa95fd7a",
+      "recordedStatus": "operation completed",
+      "assetId": "80031722801886",
+      "moderationState": "Approved",
+      "nativeVersionId": "36750263863755",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.000017059845049516298,
+      "maxMeshExtentDeltaStuds": 0.00000521813035447849
+    },
+    "lobby-room11.glb": {
+      "sha256": "c34a7c3d963a3284dbfc9d469f27d0ab805a26f25fb47de8c6c58c7f6a73055d",
+      "parts": 200,
+      "operationId": "c8868dc4-1454-4a59-a956-ad1715fbc675",
+      "recordedStatus": "operation completed",
+      "assetId": "135647319945649",
+      "moderationState": "Approved",
+      "nativeVersionId": "40966152927956",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.000017059845049516298,
+      "maxMeshExtentDeltaStuds": 0.000008529922524758149
+    },
+    "lobby-room12.glb": {
+      "sha256": "5f2b0d2d0fa3f409dcca8605396f4250dd22b956d356b5a4db280f8fb51d6b6c",
+      "parts": 200,
+      "operationId": "99e7ef0d-a2a5-4e20-9a8b-de0f977db7fd",
+      "recordedStatus": "operation completed",
+      "assetId": "97980814038264",
+      "moderationState": "Approved",
+      "nativeVersionId": "66765964053534",
+      "capturedParts": 200,
+      "maxCenterDeltaStuds": 0.0000275081729341764,
+      "maxMeshExtentDeltaStuds": 0.000012293457984924316
+    },
+    "lobby-room13.glb": {
+      "sha256": "58460a1655363955c4e78a3be15c4efe871cb2493a53e58aa55d20df7da1ab70",
+      "parts": 10,
+      "operationId": "8c20a2e8-a087-4431-842a-7153645bb91a",
+      "recordedStatus": "operation completed",
+      "assetId": "104642540366636",
+      "moderationState": "Approved",
+      "nativeVersionId": "56128900544539",
+      "capturedParts": 10,
+      "maxCenterDeltaStuds": 0.00001078959303413285,
+      "maxMeshExtentDeltaStuds": 0.000005119064098835224
+    }
+  },
+  "nativeArchive": {
+    "path": "assets/imports/lobby-interior/LobbyArt.import.rbxm",
+    "sha256": "c9803d80dbebfbe8408ebb8ff71fad5d244c63d507199df1b674cb1b71a2ac6d",
+    "bytes": 2325004,
+    "correctionYawDegrees": 180,
+    "roles": {
+      "Room": 2392,
+      "Bust": 34,
+      "Portrait": 6
+    },
+    "bounds": {
+      "lower": [
+        449.5,
+        -0.6599999666213989,
+        -50.474998474121094
+      ],
+      "upper": [
+        585.4749755859375,
+        29.259998321533203,
+        13.475004196166992
+      ]
+    },
+    "uniqueColorTextureUris": 18
+  },
+  "portraits": {
+    "P22_Portrait_01": {
+      "center": [
+        584.218017578125,
+        9.100000381469727,
+        -39.00000762939453
+      ],
+      "texture": "rbxassetid://105314252767417",
+      "mesh": "rbxassetid://98916068098499",
+      "sha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+      "size": [
+        0,
+        10.199999809265137,
+        6.8000030517578125
+      ],
+      "moderationState": "Loaded in private Studio Edit"
+    },
+    "P22_Portrait_02": {
+      "center": [
+        574.2000122070312,
+        9.100000381469727,
+        -9.78200912475586
+      ],
+      "texture": "rbxassetid://126665419505437",
+      "mesh": "rbxassetid://95811138210370",
+      "sha256": "32278cc6f685170a6271976b3e546d13830b2a745728d98ea52df3af7b404e19",
+      "size": [
+        7.650001525878906,
+        10.199999809265137,
+        0
+      ],
+      "moderationState": "Rejected"
+    },
+    "P22_Portrait_03": {
+      "center": [
+        555.3999633789062,
+        9.100000381469727,
+        -48.2180061340332
+      ],
+      "texture": "rbxassetid://136017625469767",
+      "mesh": "rbxassetid://126740859161539",
+      "sha256": "27f70552c02939e1436715d2a08a1c74936e51e0fffb3f2efa800a3e2577cc65",
+      "size": [
+        7.649997711181641,
+        10.199999809265137,
+        0
+      ],
+      "moderationState": "Rejected"
+    },
+    "P22_Portrait_04": {
+      "center": [
+        584.218017578125,
+        9.100000381469727,
+        -20.600011825561523
+      ],
+      "texture": "rbxassetid://133957223549920",
+      "mesh": "rbxassetid://129269854495485",
+      "sha256": "0b3d66287f1f337162cb747f40435e4a837ae65150e89ad2006ddc3405642ef3",
+      "size": [
+        0,
+        10.199999809265137,
+        7.649999618530273
+      ],
+      "moderationState": "Loaded in private Studio Edit"
+    },
+    "P22_Portrait_05": {
+      "center": [
+        574.5,
+        9.100000381469727,
+        -48.2180061340332
+      ],
+      "texture": "rbxassetid://87378239580163",
+      "mesh": "rbxassetid://94417987701256",
+      "sha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+      "size": [
+        5.627586364746094,
+        10.199999809265137,
+        0
+      ],
+      "moderationState": "Loaded in private Studio Edit"
+    },
+    "P22_Portrait_06": {
+      "center": [
+        555.9000244140625,
+        9.100000381469727,
+        -9.78200626373291
+      ],
+      "texture": "rbxassetid://87953793750651",
+      "mesh": "rbxassetid://99881846767979",
+      "sha256": "797520953af6a6d75fa436c3981bd31bb3f58b8ecb170a8937f9e9b16ca0ba0c",
+      "size": [
+        7.649997711181641,
+        10.199999809265137,
+        9.5367431640625e-7
+      ],
+      "moderationState": "Rejected"
+    }
+  },
+  "aerialScreen": {
+    "imageId": "115341121842095",
+    "moderationState": "Approved",
+    "privateStudioFetch": "Failure",
+    "replacement": {
+      "assetId": "97488158099796",
+      "operationId": "ed133026-7e6d-4297-966a-659a7e0da42b",
+      "moderationState": "Approved",
+      "sha256": "1884bbb3a8fd4d3f3d6c64f22b0174f21d23a88e050bf1f744f00df20dc62652",
+      "verifiedProperty": "MeshPart.TextureID with imported SurfaceAppearance removed",
+      "nativeMeshId": "111711820863192",
+      "privateStudioFetch": "Success",
+      "scope": "Temporary Edit preview. The archive retains the source import."
+    }
+  }
+}

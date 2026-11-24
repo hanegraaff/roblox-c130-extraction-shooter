@@ -1,0 +1,444 @@
+{
+  "bindingSignatures": {
+    "releaseEquivalent": {
+      "artifact": "1f6abe84f8831216701309293d415d714be6d547bff27cd26ea91734653148c8",
+      "source": "71afba65fd24beb98d2411eb24244a11b1b970a8",
+      "meshCount": 2432,
+      "pass": true,
+      "comparedScriptCount": 5,
+      "mismatches": [],
+      "actualChecksum": 3091365473,
+      "mode": "release",
+      "actualBytes": 240348
+    },
+    "testBefore": {
+      "artifact": "705188f60bca44743c244a5dfdb0770c20cade2ace1d44f2c7a171519f3428cc",
+      "source": "71afba65fd24beb98d2411eb24244a11b1b970a8",
+      "meshCount": 2432,
+      "pass": true,
+      "comparedScriptCount": 9,
+      "mismatches": [],
+      "actualChecksum": 3091365473,
+      "mode": "test",
+      "actualBytes": 240348
+    }
+  },
+  "pin": "2c753b626b4e6e1b31d560e46c6fce137165fe12",
+  "testContext": "Release-equivalent local tests.rbxlx after reversible detachment of eight test-only Rojo roots and mounting the exact native RC art whose poses/ids match the built place. The release artifact was not directly opened.",
+  "oneClient": {
+    "bodyForward": "-0, -0, -1",
+    "unsetTestPackages": true,
+    "phase": "Lobby",
+    "bodyPosition": "520, 2.9980251789093018, 0",
+    "role": "Waiting",
+    "count": 1,
+    "cameraPos": "520, 7.73326301574707, 12.07407283782959",
+    "camera": "Custom",
+    "look": "-0, -0.258819043636322, -0.9659258127212524",
+    "bootstrap": "Development",
+    "world": "tests.rbxlx"
+  },
+  "actualWalk": {
+    "studioVersion": "0.748.0.7481526",
+    "errors": [],
+    "testsMapped": false,
+    "passed": true,
+    "cameraOcclusionRaySamples": 0,
+    "photoPosingDuringWalk": false,
+    "cameraFrames": 509,
+    "arrival": {
+      "cameraLook": [
+        0,
+        -0.2588190734386444,
+        -0.965925931930542
+      ],
+      "heading": [
+        0,
+        0,
+        -1
+      ],
+      "root": [
+        520,
+        2.9980251789093018,
+        0
+      ],
+      "fieldOfView": 70,
+      "camera": [
+        520,
+        7.73326301574707,
+        12.074073791503906
+      ]
+    },
+    "candidate": "2c753b626b4e6e1b31d560e46c6fce137165fe12",
+    "mode": "Development",
+    "soloPreview": false,
+    "directHumanoidMovement": true,
+    "lobby": {
+      "bytes": 346470,
+      "meshes": 2432,
+      "signature": 863695906,
+      "rows": 2519,
+      "television": 1,
+      "minimumWorldX": 449.49999237060547,
+      "paintings": [
+        {
+          "source": "Portrait 01 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://98916068098499",
+          "textureId": "rbxassetid://105314252767417",
+          "y": 9.100000381469727,
+          "x": 584.218017578125,
+          "z": -39.00000762939453,
+          "nativeWidth": 6.8000030517578125,
+          "sourceSha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+          "ordinal": 1
+        },
+        {
+          "source": "Portrait 02 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://95811138210370",
+          "textureId": "rbxassetid://80363010663600",
+          "y": 9.100000381469727,
+          "x": 574.2000122070312,
+          "z": -9.78200912475586,
+          "nativeWidth": 7.650001525878906,
+          "sourceSha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+          "ordinal": 2
+        },
+        {
+          "source": "Portrait 03 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://126740859161539",
+          "textureId": "rbxassetid://136855674354422",
+          "y": 9.100000381469727,
+          "x": 555.3999633789062,
+          "z": -48.2180061340332,
+          "nativeWidth": 7.649997711181641,
+          "sourceSha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+          "ordinal": 3
+        },
+        {
+          "source": "Portrait 04 | canvas",
+          "nativeHeight": 10.200001937150887,
+          "meshId": "rbxassetid://129269854495485",
+          "textureId": "rbxassetid://111747031021921",
+          "y": 9.100000381469727,
+          "x": 584.218017578125,
+          "z": -20.600011825561523,
+          "nativeWidth": 7.650001746416024,
+          "sourceSha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+          "ordinal": 4
+        },
+        {
+          "source": "Portrait 05 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://94417987701256",
+          "textureId": "rbxassetid://87378239580163",
+          "y": 9.100000381469727,
+          "x": 574.5,
+          "z": -48.2180061340332,
+          "nativeWidth": 5.627586364746094,
+          "sourceSha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+          "ordinal": 5
+        },
+        {
+          "source": "Portrait 06 | canvas",
+          "nativeHeight": 10.199999809265137,
+          "meshId": "rbxassetid://99881846767979",
+          "textureId": "rbxassetid://104678368112021",
+          "y": 9.100000381469727,
+          "x": 555.9000244140625,
+          "z": -9.78200626373291,
+          "nativeWidth": 7.649997711181641,
+          "sourceSha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+          "ordinal": 6
+        }
+      ],
+      "signs": 2,
+      "floors": 3,
+      "bustMeshCount": 34
+    },
+    "checkpoints": [
+      {
+        "camera": [
+          495.9317321777344,
+          7.73326301574707,
+          -13.05838394165039
+        ],
+        "floor": "LobbyFloorMain",
+        "label": "Theater threshold",
+        "root": [
+          495.3461608886719,
+          2.9980251789093018,
+          -25.67761993408203
+        ],
+        "cameraFocus": [
+          495.9317321777344,
+          4.498024940490723,
+          -25.132457733154297
+        ],
+        "cameraDistance": 12.500000953674316
+      },
+      {
+        "camera": [
+          473.39697265625,
+          7.733263969421387,
+          -25.89379119873047
+        ],
+        "floor": "LobbyFloorTheater",
+        "label": "Television",
+        "root": [
+          473.2640686035156,
+          2.99802565574646,
+          -37.97862243652344
+        ],
+        "lookAt": [
+          472.5,
+          7.12,
+          -45
+        ],
+        "cameraFocus": [
+          473.39697265625,
+          4.498025894165039,
+          -37.967864990234375
+        ],
+        "cameraDistance": 12.500000953674316
+      },
+      {
+        "camera": [
+          494.8400573730469,
+          6.562390327453613,
+          -18.557273864746094
+        ],
+        "floor": "LobbyFloorTheater",
+        "label": "Return through theater threshold",
+        "root": [
+          494.8900451660156,
+          2.99802565574646,
+          -26.17983055114746
+        ],
+        "cameraFocus": [
+          494.8400573730469,
+          4.498025894165039,
+          -26.26158905029297
+        ],
+        "cameraDistance": 7.976093769073486
+      },
+      {
+        "camera": [
+          543.7661743164062,
+          7.733263969421387,
+          -13.629660606384277
+        ],
+        "floor": "LobbyFloorMain",
+        "label": "Gallery threshold",
+        "root": [
+          544.5440063476562,
+          2.998025894165039,
+          -25.89052391052246
+        ],
+        "cameraFocus": [
+          543.7661743164062,
+          4.498025894165039,
+          -25.703733444213867
+        ],
+        "cameraDistance": 12.5
+      },
+      {
+        "camera": [
+          555.337890625,
+          7.595418453216553,
+          -9.727273941040039
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Portrait 6",
+        "root": [
+          555.58251953125,
+          2.9980251789093018,
+          -21.180879592895508
+        ],
+        "lookAt": [
+          555.9,
+          9.1,
+          -9.782000000000002
+        ],
+        "cameraFocus": [
+          555.337890625,
+          4.498024940490723,
+          -21.286903381347656
+        ],
+        "cameraDistance": 11.967409133911133
+      },
+      {
+        "camera": [
+          572.6380615234375,
+          7.521358013153076,
+          -9.727273941040039
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Portrait 2",
+        "root": [
+          573.7044677734375,
+          2.9980251789093018,
+          -21.002283096313477
+        ],
+        "lookAt": [
+          574.2,
+          9.1,
+          -9.781999999999998
+        ],
+        "cameraFocus": [
+          572.6380615234375,
+          4.498024940490723,
+          -21.010507583618164
+        ],
+        "cameraDistance": 11.681262969970703
+      },
+      {
+        "camera": [
+          573.7044677734375,
+          7.5191545486450195,
+          -9.727273941040039
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Portrait 4",
+        "root": [
+          573.2100219726562,
+          2.9940028190612793,
+          -21.005083084106445
+        ],
+        "lookAt": [
+          584.218,
+          9.1,
+          -20.6
+        ],
+        "cameraFocus": [
+          573.7044677734375,
+          4.498024940490723,
+          -21.002283096313477
+        ],
+        "cameraDistance": 11.672748565673828
+      },
+      {
+        "camera": [
+          572.9993286132812,
+          7.73326301574707,
+          -25.795948028564453
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Portrait 1",
+        "root": [
+          572.9998168945312,
+          2.9980251789093018,
+          -38.936702728271484
+        ],
+        "lookAt": [
+          584.218,
+          9.1,
+          -39
+        ],
+        "cameraFocus": [
+          572.9993286132812,
+          4.498024940490723,
+          -37.87002182006836
+        ],
+        "cameraDistance": 12.500000953674316
+      },
+      {
+        "camera": [
+          573.7774658203125,
+          7.732881546020508,
+          -25.458263397216797
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Portrait 5",
+        "root": [
+          573.9837036132812,
+          2.9979135990142822,
+          -37.039764404296875
+        ],
+        "lookAt": [
+          574.5,
+          9.1,
+          -48.218
+        ],
+        "cameraFocus": [
+          573.7774658203125,
+          4.49764347076416,
+          -37.5323371887207
+        ],
+        "cameraDistance": 12.500000953674316
+      },
+      {
+        "camera": [
+          556.0291748046875,
+          7.733263969421387,
+          -24.92157745361328
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Portrait 3",
+        "root": [
+          555.22900390625,
+          2.99802565574646,
+          -36.99903869628906
+        ],
+        "lookAt": [
+          555.4,
+          9.1,
+          -48.218
+        ],
+        "cameraFocus": [
+          556.0291748046875,
+          4.498025894165039,
+          -36.99565124511719
+        ],
+        "cameraDistance": 12.500000953674316
+      },
+      {
+        "camera": [
+          545.7909545898438,
+          7.73326301574707,
+          -14.785672187805176
+        ],
+        "floor": "LobbyFloorGallery",
+        "label": "Return through gallery threshold",
+        "root": [
+          545.2493286132812,
+          2.9980251789093018,
+          -26.27099609375
+        ],
+        "cameraFocus": [
+          545.7909545898438,
+          4.498024940490723,
+          -26.859745025634766
+        ],
+        "cameraDistance": 12.5
+      },
+      {
+        "camera": [
+          520.4764404296875,
+          7.73326301574707,
+          11.501736640930176
+        ],
+        "floor": "LobbyFloorMain",
+        "label": "Arrival",
+        "root": [
+          520.0498046875,
+          2.9980251789093018,
+          -0.05996791273355484
+        ],
+        "lookAt": [
+          520,
+          10,
+          -31.5
+        ],
+        "cameraFocus": [
+          520.4764404296875,
+          4.498024940490723,
+          -0.57233726978302
+        ],
+        "cameraDistance": 12.500000953674316
+      }
+    ]
+  }
+}
