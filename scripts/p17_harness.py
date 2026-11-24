@@ -110,7 +110,7 @@ def metadata(root: Path = ROOT) -> dict:
         "manualFixtureVersion": FIXTURE_VERSION,
         "serverProbeSha256": fixtures[SERVER_PROBE],
         "clientProbeSha256": fixtures[CLIENT_PROBE],
-        "status": "source-bound fixture; native acceptance must be recorded separately",
+        "status": "historical pre-P18 fixture; current entry rejects, use P18",
     }
 
 

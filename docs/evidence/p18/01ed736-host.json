@@ -1,0 +1,48 @@
+{
+  "sourceCommit": "01ed736e696aac6906bcd474165c798798050726",
+  "sourceTree": "21b1c75fbe368c28d9e43f7c86adda0cd9c84805",
+  "runtimeCorrection": "0fe790975b968f2b90b1149c22a5aeac5f30550a",
+  "command": "python3 scripts/verify.py > build/p18-selector-final-verify.log 2>&1",
+  "environment": "macOS26.6.2 Darwin arm64, Python3.10",
+  "allNonStudioGatesPassed": true,
+  "completion": "Complete final success marker observed. Numeric PTY exit receipt unavailable after user turn interruption; exact-source GitHub Verify555 also completed successfully.",
+  "ruleSuites": [
+    {
+      "discovered": 79,
+      "failed": 0,
+      "passed": 79,
+      "skipped": 0,
+      "suite": "unit"
+    },
+    {
+      "discovered": 76,
+      "failed": 0,
+      "passed": 76,
+      "skipped": 0,
+      "suite": "integration"
+    }
+  ],
+  "pythonSuiteCounts": [
+    [
+      "26",
+      "0.572"
+    ],
+    [
+      "58",
+      "36.768"
+    ]
+  ],
+  "artifactLines": [
+    "Authored geometry reconstruction passed: 11459 release/11459 test part transforms, dimensions, shape and collision flags.",
+    "Artifact isolation passed: 24751 release Instances, 24868 test Instances; 64 runtime scripts only in release."
+  ],
+  "builds": {
+    "game": "561c7b43a8963e2c9c5678b9f4ac0fd217401c62270c860e11ee24c69437d019",
+    "tests": "a67eb95fc7b064a3de0edb016ce937581b4c920d7035eff9747d7aa425124aeb"
+  },
+  "githubVerify": {
+    "run": 555,
+    "conclusion": "success",
+    "url": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45308365596"
+  }
+}

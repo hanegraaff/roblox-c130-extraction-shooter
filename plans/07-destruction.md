@@ -1,5 +1,7 @@
 # P07 — Progressive building-panel destruction and physics
 
+> Current-rule revision: [P18](18-game-rebalancing.md), requested 2026-11-23, supersedes prior health/three-rocket, panel-durability and circular camera-bound assumptions and adds the Seedship launcher. This plan's recorded tests remain historical evidence for their identified source. Future release checks must use P18's revised rules.
+
 **Milestone:** M4. **Dependencies:** P06, P13, P14. **Requirements:** R06, R07, R09, R13, R15, R16. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience

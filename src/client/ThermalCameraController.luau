@@ -1,7 +1,11 @@
 --!strict
 --[=[
-    ThermalCameraController: local inward operator view, profile HUD and occluded
-    thermal presentation. Depends on replicated AircraftState, canonical Aircraft,
+    ThermalCameraController: local square-bound operator view, profile HUD and occluded
+    white-hot thermal presentation. A camera-owned global desaturation grades
+    all world pixels, including imported textures, to darker black and white;
+    white Ground highlights retain native Occluded cover depth. The grade and
+    local scenery/masking owners are removed on role exit, restoring Ground's
+    normal materials and camera. Depends on replicated AircraftState, canonical Aircraft,
     player role/round attributes and Roblox camera/input. It has no hit authority.
     Selection sends bounded intent and only renders acknowledged production profiles;
     labelled Studio solo preview can choose cosmetic profiles without a real role.
@@ -43,7 +47,7 @@ type SavedCamera = {
     icon: boolean,
 }
 
--- Constructs the inward camera basis without a world-up singularity. Canonical
+-- Constructs the square camera basis without a world-up singularity. Canonical
 -- orbit-right is projected onto the look plane, preserving finite orientation even
 -- when focus lies exactly below the aircraft. Invalid geometry returns nil.
 function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFrame?
@@ -53,7 +57,10 @@ function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFram
         end
     end
     local map = MapRules.defaults
-    if Vector2.new(focus.X - map.centerX, focus.Z - map.centerZ).Magnitude > map.radiusStuds + 0.001 then
+    if
+        math.abs(focus.X - map.centerX) > map.radiusStuds + 0.001
+        or math.abs(focus.Z - map.centerZ) > map.radiusStuds + 0.001
+    then
         return nil
     end
     local radial = Vector3.new(position.X - map.centerX, 0, position.Z - map.centerZ)
@@ -63,9 +70,6 @@ function ThermalCameraController.frame(position: Vector3, focus: Vector3): CFram
     end
     local look = direction.Unit
     radial = radial.Unit
-    if look:Dot(-radial) < -1e-6 then
-        return nil
-    end
     local canonicalRight = Vector3.new(radial.Z, 0, -radial.X)
     local right = canonicalRight - look * canonicalRight:Dot(look)
     if right.Magnitude < 1e-6 then
@@ -153,6 +157,42 @@ function ThermalCameraController.guiOffset(pixels: Vector2, guiOrigin: Vector2):
     )
 end
 
+-- Places a touch Recenter button in the intersection of the actual camera
+-- viewport and its measured device-safe canvas. control's parent must share the
+-- canvas origin (the production canvas starts at local zero). AbsolutePosition
+-- and native GUI hit queries use GUI-content pixels; exclude the top-left inset
+-- from the camera's available content dimensions as well as negative hit space.
+-- Reevaluate after rendering/resizing. This function never yields or owns events;
+-- it changes only the button's presentation and returns false when it cannot fit.
+function ThermalCameraController.placeRecenter(
+    control: TextButton,
+    canvas: GuiObject,
+    viewport: Vector2
+): boolean
+    local inset = GuiService:GetGuiInset()
+    local origin, size = canvas.AbsolutePosition, canvas.AbsoluteSize
+    local bounds = {
+        x = 0,
+        y = 0,
+        width = math.max(0, viewport.X - math.max(0, inset.X)),
+        height = math.max(0, viewport.Y - math.max(0, inset.Y)),
+    }
+    local position = AircraftPanRules.controlTopRight(
+        bounds,
+        { x = origin.X, y = origin.Y, width = size.X, height = size.Y },
+        control.AbsoluteSize.X,
+        control.AbsoluteSize.Y,
+        16
+    )
+    control.Visible = position ~= nil
+    if not position then
+        return false
+    end
+    control.AnchorPoint = Vector2.zero
+    control.Position = UDim2.fromOffset(position.x, position.y)
+    return true
+end
+
 -- Role gate is presentation only. The production server independently authorizes
 -- selection. RoundPanel calls ownsCamera before writing any spectator/character view.
 function ThermalCameraController.new(
@@ -166,6 +206,8 @@ function ThermalCameraController.new(
     local saved: SavedCamera? = nil
     local gui: ScreenGui? = nil
     local touchControlsGui: ScreenGui? = nil
+    local touchControlCanvas: Frame? = nil
+    local touchRecenter: TextButton? = nil
     local hiddenTouchGui: ScreenGui? = nil
     local previousTouchGuiEnabled: boolean? = nil
     local label: TextLabel? = nil
@@ -280,6 +322,8 @@ function ThermalCameraController.new(
         end
         hiddenTouchGui = nil
         previousTouchGuiEnabled = nil
+        touchControlCanvas = nil
+        touchRecenter = nil
         label = nil
         reticle = nil
         projectionOrigin = nil
@@ -355,12 +399,10 @@ function ThermalCameraController.new(
             map.groundY - AircraftPanRules.defaults.backdropDepthStuds - 0.5,
             map.centerZ
         )
-        local world = workspace:FindFirstChild("World")
-        local battlefield = if world then world:FindFirstChild("Battlefield") else nil
-        local ground = if battlefield then battlefield:FindFirstChild("GroundDisk") else nil
-        background.Color = if ground and ground:IsA("BasePart")
-            then ground.Color
-            else Color3.fromRGB(55, 60, 55)
+        -- The invisible combat-disk proxy keeps its authored Ground palette.
+        -- Outside-level presentation needs its own dark neutral value so that
+        -- panning beyond terrain cannot introduce a bright gold foreground.
+        background.Color = Color3.fromRGB(38, 42, 45)
         local mesh = Instance.new("SpecialMesh")
         mesh.MeshType = Enum.MeshType.Brick
         mesh.Scale = Vector3.new(extent / 1024, 1, extent / 1024)
@@ -386,6 +428,14 @@ function ThermalCameraController.new(
             safeControls.Parent = playerGui
             touchControlsGui = safeControls
             buttonParent = safeControls
+            local canvas = Instance.new("Frame")
+            canvas.Name = "ControlViewport"
+            canvas.Position = UDim2.fromOffset(0, 0)
+            canvas.Size = UDim2.fromScale(1, 1)
+            canvas.BackgroundTransparency = 1
+            canvas.Active = false
+            canvas.Parent = safeControls
+            touchControlCanvas = canvas
             local fire = Instance.new("TextButton")
             fire.Name = "Fire"
             fire.AnchorPoint = Vector2.new(1, 1)
@@ -466,6 +516,9 @@ function ThermalCameraController.new(
         recenter.BackgroundColor3 = Color3.fromRGB(30, 38, 42)
         recenter.TextColor3 = Color3.new(1, 1, 1)
         recenter.Parent = buttonParent
+        if touchControls then
+            touchRecenter = recenter
+        end
         table.insert(
             buttons,
             recenter.Activated:Connect(function()
@@ -602,9 +655,12 @@ function ThermalCameraController.new(
         )
         local effect = Instance.new("ColorCorrectionEffect")
         effect.Name = "OperatorThermal"
+        -- Saturation is the selected strict monochrome contract. Brightness and
+        -- contrast are initial grading defaults, subject to native readability
+        -- review; they do not alter source colors, cover or target authority.
         effect.Saturation = -1
         effect.Contrast = -0.15
-        effect.Brightness = 0.2
+        effect.Brightness = -0.02
         effect.Parent = camera
         correction = effect
     end
@@ -668,13 +724,17 @@ function ThermalCameraController.new(
         if viewport.X <= 1 or viewport.Y <= 1 then
             return -- Wait for an actual render viewport before committing projection.
         end
+        local recenterControl, controlCanvas = touchRecenter, touchControlCanvas
+        if recenterControl and controlCanvas then
+            ThermalCameraController.placeRecenter(recenterControl, controlCanvas, viewport)
+        end
         local aspect = viewport.X / viewport.Y
         if lastAspect ~= aspect then
             lastAspect = aspect
             cachedWidestFov = AircraftPanRules.supportedFov(map, aspect, AircraftRules.defaults.fov105mm)
         end
         local widestFov = cachedWidestFov
-        assert(widestFov, "level and viewport must support an inward ground-only camera")
+        assert(widestFov, "level and viewport must support the configured camera")
         local fov = math.min(selectedFov, widestFov)
         local currentFocus = focus
             or assert(
@@ -724,15 +784,17 @@ function ThermalCameraController.new(
                 deltaSeconds,
                 blocked,
                 aspect,
-                widestFov
+                widestFov,
+                hitbox.Position.X,
+                hitbox.Position.Z
             ) or currentFocus
         end
         focus = currentFocus
         local point = AircraftPanRules.worldFocus(map, currentFocus, hitbox.Position.X, hitbox.Position.Z)
-        assert(point, "canonical aircraft must rotate a finite orbit-local focus")
+        assert(point, "canonical aircraft must rotate a finite square focus")
         local cameraFocus = Vector3.new(point.x, map.groundY, point.z)
         local cameraFrame = ThermalCameraController.frame(hitbox.Position, cameraFocus)
-        assert(cameraFrame, "canonical aircraft and bounded focus must define a finite inward basis")
+        assert(cameraFrame, "canonical aircraft and bounded focus must define a finite square-view basis")
         camera.CameraType = Enum.CameraType.Scriptable
         camera.CFrame = cameraFrame
         camera.FieldOfView = fov

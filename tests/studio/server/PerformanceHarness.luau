@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P11 test-only coordinator for actual players and production combat owners.
 -- The same seeded workload drives profiling and soak. A scoped RemoteEvent asks
 -- clients to send production intents and report observations; it never grants
@@ -150,6 +151,7 @@ end
 -- Studio SDK and native Server & Clients use the same coordinator. Only a
 -- trusted server-side invocation picks a scenario/actual client count.
 function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
     local mode: Mode = if rawMode == "Latency"
             or rawMode == "Profile"
             or rawMode == "Soak"

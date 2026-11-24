@@ -1,5 +1,7 @@
 # Server engine specs
 
+The P18 ordinary smoke mapping exercises the current source. Dated discovery counts and reports below remain historical; they do not establish acceptance of revised health, destruction, square camera bounds or thermal contrast. See the [P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness) for fresh evidence requirements.
+
 The test project maps these specs to `ServerStorage.Tests.Studio`; the automatic server runner discovers them through TestEZ. They are absent from the release mapping.
 
 `Foundation.spec.luau` registers shared rule cases plus server-only RoleService/RoundRules/MatchService cases through actual Instance-loaded modules. It adds repeated bootstrap start/stop ownership and the anchored/collidable GroundSpawn raycast. It temporarily renames the entrypoint status while exercising an independent runtime, then restores it.

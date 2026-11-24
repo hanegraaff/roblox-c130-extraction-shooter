@@ -33,7 +33,10 @@ while ReplicatedStorage:GetAttribute("ManualClientHarness") == nil and os.clock(
 end
 local manualMode = ReplicatedStorage:GetAttribute("ManualClientHarness")
 assert(type(manualMode) == "string", "server manual-client dispatch readiness timeout")
-if manualMode == "P08" then
+if manualMode == "P18" then
+    require(script.RebalanceHarness).run()
+    return
+elseif manualMode == "P08" then
     require(script.LauncherHarness).run()
     return
 elseif manualMode == "P09" then
@@ -58,14 +61,11 @@ elseif manualMode == "P14" then
     require(script.AircraftPanHarness).run()
     return
 end
+-- Current ordinary exploration keeps compatible lifecycle/map observers only.
+-- Historical balance/camera waiters are no longer started on current source.
 require(script.CombatHarness).run()
-require(script.DestructionHarness).run()
-require(script.GroundCombatHarness).run()
-require(script.LauncherHarness).run()
-require(script.MatchOutcomeHarness).run()
 require(script.RoundHarness).run()
 require(script.AircraftHarness).run()
-require(script.AircraftPanHarness).run()
 require(script.ExpandedMapHarness).run()
 local stopTestPanel = require(script.HumanTestPanel).start()
 script.Destroying:Connect(stopTestPanel)

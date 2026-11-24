@@ -1,0 +1,84 @@
+{
+  "sourceCommit": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+  "sourceTree": "d109efebcaaf20c2a3025024ec8fb18edfbbbc8c",
+  "testBuildSha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6",
+  "nativeViewport": [
+    1153,
+    579
+  ],
+  "scope": "Original native Studio captures of a controlled Waiting-avatar/roof fixture in Operator preview. Distinct orbit poses, not matched-frame comparisons or multiplayer proof. No grading or camera override on the final candidate. Numeric/native-event/geometry assertions are separate.",
+  "grade": {
+    "saturation": -1,
+    "brightness": -0.02,
+    "contrast": -0.15,
+    "targets": "white"
+  },
+  "captures": [
+    {
+      "state": "exposed",
+      "fov": 30,
+      "path": "docs/evidence/p18/42ae28b-captures/p18-42ae28b-white-exposed-30.jpg",
+      "bytes": 222185,
+      "sha256": "315eff298c28e614ee96c70567aa423fb9ed984a672a8fcc893279610177269c",
+      "capturePixels": [
+        1920,
+        964
+      ]
+    },
+    {
+      "state": "exposed",
+      "fov": 40,
+      "path": "docs/evidence/p18/42ae28b-captures/p18-42ae28b-white-exposed-40.jpg",
+      "bytes": 235807,
+      "sha256": "b5f88d224e813004d3f33daef047329ecbeb56e669560db16f0de7894d553568",
+      "capturePixels": [
+        1920,
+        964
+      ]
+    },
+    {
+      "state": "cover",
+      "fov": 30,
+      "path": "docs/evidence/p18/42ae28b-captures/p18-42ae28b-white-cover-30.jpg",
+      "bytes": 164008,
+      "sha256": "42fab27bc18057c1b4759d57fb90685bf21cec4040cd8092937146c269145828",
+      "capturePixels": [
+        1920,
+        964
+      ]
+    },
+    {
+      "state": "cover",
+      "fov": 40,
+      "path": "docs/evidence/p18/42ae28b-captures/p18-42ae28b-white-cover-40.jpg",
+      "bytes": 186594,
+      "sha256": "7379ca7c9bca5e51d9fa904847a008238b3686bea104124c75fbbd7c4dff5d8c",
+      "capturePixels": [
+        1920,
+        964
+      ]
+    },
+    {
+      "state": "opening",
+      "fov": 30,
+      "path": "docs/evidence/p18/42ae28b-captures/p18-42ae28b-white-opening-30.jpg",
+      "bytes": 206244,
+      "sha256": "6dba27ec9a991bd2944d54e47438c2cd9648952eae1e7c6ca7a80acba73caeca",
+      "capturePixels": [
+        1920,
+        964
+      ]
+    },
+    {
+      "state": "opening",
+      "fov": 40,
+      "path": "docs/evidence/p18/42ae28b-captures/p18-42ae28b-white-opening-40.jpg",
+      "bytes": 220629,
+      "sha256": "544b84c5e933d73676a9dffbcb92ff96abb767771f022a98a5651eae030e9a6a",
+      "capturePixels": [
+        1920,
+        964
+      ]
+    }
+  ]
+}

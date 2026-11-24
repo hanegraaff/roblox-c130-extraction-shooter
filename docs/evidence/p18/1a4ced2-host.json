@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "1a4ced250d62ea8cacecfa576eb1e280a0c21d09",
+  "sourceTree": "f64698ec8debc51131efcd975f28656883cbb8ac",
+  "command": "python3 scripts/verify.py > /private/tmp/p18-verify-final-corrected.log 2>&1",
+  "environment": "macOS26.6.2 Darwin arm64, Python3.10",
+  "allNonStudioGatesPassed": true,
+  "ruleSuites": [
+    {
+      "discovered": 76,
+      "failed": 0,
+      "passed": 76,
+      "skipped": 0,
+      "suite": "unit"
+    },
+    {
+      "discovered": 76,
+      "failed": 0,
+      "passed": 76,
+      "skipped": 0,
+      "suite": "integration"
+    }
+  ],
+  "pythonSuiteCounts": [
+    [
+      "26",
+      "0.514"
+    ],
+    [
+      "58",
+      "36.422"
+    ]
+  ],
+  "artifactLines": [
+    "Authored geometry reconstruction passed: 11459 release/11459 test part transforms, dimensions, shape and collision flags.",
+    "Artifact isolation passed: 24751 release Instances, 24867 test Instances; 64 runtime scripts only in release."
+  ],
+  "builds": {
+    "game": "d928f184154b8a691c91ed171f65063e504d01cada893cd04d9b77e182750dac",
+    "tests": "44a799004505b2875c1c0723b09335432004958e5ead4d7e04f51aa4df317eae"
+  },
+  "limitation": "Historical host result; subsequent ordinary MatchOutcome fixture correction requires the final candidate gate. Native smoke on this source failed as recorded separately."
+}

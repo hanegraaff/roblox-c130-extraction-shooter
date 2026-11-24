@@ -143,12 +143,10 @@ function CombatHarness.run(finish: ((Report) -> ())?)
     local function payload(id: number, weapon: string, target: Vector3): { [string]: unknown }
         local map = MapRules.defaults
         local camera = runtime.aircraft.position()
-        local radial = Vector2.new(camera.X - map.centerX, camera.Z - map.centerZ).Unit
         local fraction = map.altitudeStuds / (camera.Y - target.Y)
         local ground = camera + (target - camera) * fraction
         local offset = Vector2.new(ground.X - map.centerX, ground.Z - map.centerZ)
-        local targetFocus =
-            { x = offset.X * radial.X + offset.Y * radial.Y, z = -offset.X * radial.Y + offset.Y * radial.X }
+        local targetFocus = { x = offset.X, z = offset.Y }
         local home = assert(Pan.recenter(map, 16 / 9, 40), "fixture camera home missing")
         local command: { [string]: unknown } = {
             roundId = runtime.rounds.match.snapshot().roundId,
@@ -503,7 +501,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                 local minimumIncidence = 0.25
                 local guardDistanceStuds = 1.5
                 local originMarginSeconds = 0.25
-                for _, location in { Vector2.new(-240, -140), Vector2.new(135, 260) } do
+                for _, location in { Vector2.new(-149, 240), Vector2.new(-185, 245), Vector2.new(135, 260) } do
                     for dx = -24, 24, 4 do
                         for dz = -24, 24, 4 do
                             local surface = workspace:Raycast(
@@ -644,6 +642,16 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             local function fireAndObserve(weapon: string, target: Vector3, panelId: string?)
                 shotSequence += 1
                 local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                local pristinePanel: Model? = nil
+                if weapon == "M102" and panelId then
+                    local found = workspace.World.Battlefield:FindFirstChild(panelId, true)
+                    assert(found and found:IsA("Model"), "registered panel missing before actual fire")
+                    assert(
+                        found:GetAttribute("DamageAppearance") == "Pristine",
+                        "one-hit witness must start pristine"
+                    )
+                    pristinePanel = found
+                end
                 local samples: { unknown } = {}
                 local diagnostic: { [string]: unknown } = {
                     kind = "geometry-flight-diagnostic",
@@ -736,6 +744,28 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                 )
                 if panelId then
                     assert(hit.panelId == panelId, "upper-floor shot hit a different panel")
+                end
+                if pristinePanel then
+                    local opened = pristinePanel
+                    waitFor(function()
+                        return opened:GetAttribute("DamageAppearance") == "Total"
+                    end, "one actual howitzer creates Total opening")
+                    local rays = RaycastParams.new()
+                    rays.FilterType = Enum.RaycastFilterType.Include
+                    rays.FilterDescendantsInstances = { opened }
+                    rays.RespectCanCollide = true
+                    assert(
+                        workspace:Raycast(target + Vector3.yAxis * 12, -Vector3.yAxis * 24, rays) == nil,
+                        "actual one-hit panel kept native collider"
+                    )
+                    probe(op, "PanelDestroyed", { id = panelId })
+                    probe(ground, "PanelDestroyed", { id = panelId })
+                    table.insert(observations, {
+                        kind = "P18-one-actual-howitzer-opening",
+                        panelId = panelId,
+                        shotId = hit.shotId,
+                        weapon = weapon,
+                    })
                 end
                 local actual = Vector3.new(hit.x :: number, hit.y :: number, hit.z :: number)
                 assert((actual - target).Magnitude < 5, "impact missed sampled terrain/panel")

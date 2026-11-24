@@ -1,0 +1,313 @@
+{
+  "candidate": "4be21e02ca5a68ac19528680b845d92c40062b4a",
+  "tree": "abcc9271218237d79480543c27701ba67c94c929",
+  "testSha256": "ba611a63f59a48b533ed08c4f9c4fd977ba5495fe968e781d4ca0973d4b1bb50",
+  "environment": {
+    "studioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+    "file": "tests.rbxlx",
+    "placeId": 0,
+    "gameId": 0,
+    "studioVersion": "0.748.0.7481526",
+    "nativeViewport": [
+      1153,
+      579
+    ],
+    "device": "default desktop",
+    "touch": false,
+    "fovs": [
+      30,
+      40
+    ],
+    "renderQuality": "Not queried during rejected prototype; record actual settings during final accepted review."
+  },
+  "verdict": {
+    "A6Accepted": false,
+    "ordinaryServer": 193,
+    "ordinaryClient": 18,
+    "failedSmoke": 0,
+    "errorsSmoke": 0,
+    "skippedSmoke": 0,
+    "nativeWhiteOccludedHighlight": true,
+    "texturedWorldMonochrome": true,
+    "materialFinding": "Brightness -0.08 / Contrast +0.15 crushes much of the world to near black at both FOVs. Building detail, terrain texture and silhouette legibility are inadequate. Root review agrees.",
+    "reproduction": "Fresh passing source parity, ordinary Play, Operator preview, actual Waiting avatar tagged ThermalTarget and controlled roof Expose; inspect original 30/40 JPEGs.",
+    "expected": "White targets on a readable dark monochrome world, retaining buildings and attached detail.",
+    "severity": "Material A6 readability defect"
+  },
+  "fixtureScope": "Actual Waiting avatar tagged ThermalTarget; isolated production ledger and PanelGeometry. This is not competitive role, projectile or multiplayer proof. Only exposed candidate captures completed before rejection; cover/opening must be tested on the next selected source.",
+  "experiments": {
+    "authorizedByRoot": true,
+    "fixed": "Saturation -1 and white Fill/Outline",
+    "A": {
+      "brightness": -0.02,
+      "contrast": 0
+    },
+    "B": {
+      "brightness": -0.02,
+      "contrast": -0.15
+    },
+    "candidate": {
+      "brightness": -0.08,
+      "contrast": 0.15
+    },
+    "matchingPoseEstablished": false,
+    "methodIssue": "Initial BindToRenderStep hold was overwritten by production RenderStepped. The later owned RenderStepped hold also showed pose errors of 206.62 and 414.84 studs. These are moving-scene qualitative experiments, NOT matched A/B captures. No candidate/source bug is inferred from this fixture failure.",
+    "rootPreference": "B is qualitatively preferred for the next Git preset; experiments are not acceptance passes.",
+    "restoredBaseBeforeRoleExit": true
+  },
+  "captureManifest": "build/p18-4be21e0-grading-captures.json",
+  "raw": {
+    "parity": {
+      "mismatches": [],
+      "comparedScripts": 170,
+      "comparedGeometry": 5,
+      "passed": true,
+      "receipt": {
+        "scriptCount": 170,
+        "buildSha256": "ba611a63f59a48b533ed08c4f9c4fd977ba5495fe968e781d4ca0973d4b1bb50",
+        "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+        "geometryCount": 5,
+        "sourceCommit": "4be21e02ca5a68ac19528680b845d92c40062b4a"
+      }
+    },
+    "serverSmoke": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}",
+      "runtime": true,
+      "players": 1
+    },
+    "clientSmoke": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":18,\"userId\":2227341845,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":18}",
+      "touch": false,
+      "userId": 2227341845,
+      "viewport": "1153, 579",
+      "preview": "Ground",
+      "frames": 6,
+      "button": {
+        "position": "863, 281",
+        "size": "270, 28"
+      }
+    },
+    "setup": {
+      "sustained": 2,
+      "appearance": "Total",
+      "scope": "disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof",
+      "role": "Waiting",
+      "preview": "Gunship",
+      "coverBlocked": false,
+      "target": {
+        "1": 2227341845,
+        "2": "Workspace.KingKunkank"
+      },
+      "floorY": 0,
+      "stage": 2,
+      "action": "Expose"
+    },
+    "exposed40Frame": {
+      "preview": "Gunship",
+      "role": "Waiting",
+      "fov": 40,
+      "focus": "0, 0, 0",
+      "viewport": "1153, 579",
+      "grades": {
+        "1": {
+          "saturation": -1,
+          "tint": "1, 1, 1",
+          "brightness": -0.07999999821186066,
+          "contrast": 0.15000000596046448,
+          "name": "OperatorThermal"
+        }
+      },
+      "targets": {
+        "1": {
+          "outline": "1, 1, 1",
+          "depth": "Occluded",
+          "adornee": "Workspace.KingKunkank",
+          "fill": "1, 1, 1"
+        }
+      },
+      "camera": {
+        "1": 44.909732818603516,
+        "2": 140,
+        "3": 357.1877746582031,
+        "4": 0.9921883940696716,
+        "5": -0.04521491006016731,
+        "6": 0.1162668913602829,
+        "7": 0,
+        "8": 0.9320046901702881,
+        "9": 0.36244627833366394,
+        "10": -0.12474927306175232,
+        "11": -0.3596149981021881,
+        "12": 0.9247241020202637
+      }
+    },
+    "AFrame": {
+      "contrast": 0,
+      "camera": {
+        "1": -37.736270904541016,
+        "2": 140,
+        "3": 358.0167236328125,
+        "4": 0.994490921497345,
+        "5": 0.0379926972091198,
+        "6": -0.09769550710916519,
+        "7": 0,
+        "8": 0.9320046901702881,
+        "9": 0.36244627833366394,
+        "10": 0.10482297837734222,
+        "11": -0.36044952273368835,
+        "12": 0.9268701672554016
+      },
+      "saturation": -1,
+      "fov": 30,
+      "notCandidatePass": true,
+      "brightness": -0.019999999552965164,
+      "base": {
+        "brightness": -0.07999999821186066,
+        "saturation": -1,
+        "contrast": 0.15000000596046448
+      },
+      "experiment": "A"
+    },
+    "BFrame": {
+      "contrast": -0.15000000596046448,
+      "camera": {
+        "1": -37.736270904541016,
+        "2": 140,
+        "3": 358.0167236328125,
+        "4": 0.994490921497345,
+        "5": 0.0379926972091198,
+        "6": -0.09769550710916519,
+        "7": 0,
+        "8": 0.9320046901702881,
+        "9": 0.36244627833366394,
+        "10": 0.10482297837734222,
+        "11": -0.36044952273368835,
+        "12": 0.9268701672554016
+      },
+      "saturation": -1,
+      "fov": 30,
+      "notCandidatePass": true,
+      "brightness": -0.019999999552965164,
+      "base": {
+        "brightness": -0.07999999821186066,
+        "saturation": -1,
+        "contrast": 0.15000000596046448
+      },
+      "experiment": "B"
+    },
+    "alignedFreeze": {
+      "positionError": 206.6195526123047,
+      "fov": 30,
+      "lookDot": 0.8569315075874329,
+      "expected": {
+        "1": -37.736270904541016,
+        "2": 140,
+        "3": 358.0167236328125,
+        "4": 0.994490921497345,
+        "5": 0.0379926972091198,
+        "6": -0.09769550710916519,
+        "7": 0,
+        "8": 0.9320046901702881,
+        "9": 0.36244627833366394,
+        "10": 0.10482297837734222,
+        "11": -0.36044952273368835,
+        "12": 0.9268701672554016
+      },
+      "upDot": 0.9783631563186646,
+      "actual": {
+        "1": 165.317626953125,
+        "2": 140,
+        "3": 319.79693603515625,
+        "4": 0.8883248567581177,
+        "5": -0.16644099354743958,
+        "6": 0.42799112200737,
+        "7": 0,
+        "8": 0.9320046901702881,
+        "9": 0.36244627833366394,
+        "10": -0.4592156410217285,
+        "11": -0.32197004556655884,
+        "12": 0.8279228806495667
+      }
+    },
+    "experimentCleanup": {
+      "renderHoldCleanup": {
+        "positionError": 414.8426818847656,
+        "actual": {
+          "1": 324.5137939453125,
+          "2": 140,
+          "3": 155.85504150390625,
+          "4": 0.43293073773384094,
+          "5": -0.3267189860343933,
+          "6": 0.8401343822479248,
+          "7": 0,
+          "8": 0.9320048093795776,
+          "9": 0.36244627833366394,
+          "10": -0.9014273285865784,
+          "11": -0.1569141298532486,
+          "12": 0.40349340438842773
+        },
+        "fov": 30,
+        "lookDot": 0.4232759475708008,
+        "expected": {
+          "1": -37.736270904541016,
+          "2": 140,
+          "3": 358.0167236328125,
+          "4": 0.994490921497345,
+          "5": 0.0379926972091198,
+          "6": -0.09769550710916519,
+          "7": 0,
+          "8": 0.9320046901702881,
+          "9": 0.36244627833366394,
+          "10": 0.10482297837734222,
+          "11": -0.36044952273368835,
+          "12": 0.9268701672554016
+        },
+        "upDot": 0.9127795100212097,
+        "disconnected": true
+      },
+      "baseGradeRestored": {
+        "restored": true,
+        "base": {
+          "brightness": -0.07999999821186066,
+          "saturation": -1,
+          "contrast": 0.15000000596046448
+        }
+      },
+      "remainingExperiment": false,
+      "remainingFreeze": false
+    },
+    "fixtureCleanup": {
+      "cleaned": true,
+      "tagRestored": true,
+      "rootRestored": true
+    },
+    "roleCleanup": {
+      "nonzeroLTM": 0,
+      "sand": "0.870588, 0.74902, 0.517647",
+      "grades": 0,
+      "backdrop": false,
+      "hud": false,
+      "fixture": false,
+      "preview": "Ground",
+      "aircraftParts": 16,
+      "choice": "Auto"
+    },
+    "editCleanup": {
+      "running": false,
+      "name": "tests.rbxlx",
+      "gameId": 0,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "placeId": 0,
+      "device": "default"
+    }
+  },
+  "handoff": {
+    "safe": true,
+    "mode": "Edit",
+    "device": "default",
+    "manualSelector": null,
+    "ownedFixturesAndGradeOverridesRemoved": true,
+    "normalGroundPaletteRestored": true,
+    "all16AircraftLTMRestored0": true,
+    "noSourceEditsByTester": true
+  }
+}

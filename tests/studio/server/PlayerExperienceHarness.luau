@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P10 test-only orchestration. Four actual Studio clients exercise production
 -- HUD, input, cameras and remote authority with two simultaneous spectator targets.
 local HttpService = game:GetService("HttpService")
@@ -55,6 +56,7 @@ end
 -- Runs to completion with SDK or manual local Server & Clients. Manual mode
 -- keeps the report in the server DataModel for retrieval before End Session.
 function Harness.run(finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P10")
     local cases: { Case } = {}
     local smoke: { [string]: Record } = {}
     local observations: { Record } = {}

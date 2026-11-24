@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "2c9ddf8efc91e0e3171ddedbe138ab647b068b5e",
+  "studioId": "ff02c443-b130-4920-a8ea-018ff0f23eed",
+  "sdkArgs": {
+    "clients": 3,
+    "kind": "P18"
+  },
+  "sourceParityBuildSha256": "3fd491335e1eed3a43e22ed02740758162d6798dd098512a8fafd8d5f040262e",
+  "status": "Incomplete startup; no native suite result",
+  "observedActualClients": 0,
+  "observedServerReports": 0,
+  "observedClientReports": 0,
+  "childStudioId": "1503a570-e811-49db-8b74-213e22702bff",
+  "childState": "Unavailable / Place is not open",
+  "cleanup": {
+    "editEndTest": "Rejected: can only be called from server DataModel of running Studio play session",
+    "editStop": "Returned Game Stopped; SDK still pending",
+    "childStop": "Place is not open",
+    "ownedChildProcess": {
+      "pid": 64455,
+      "parentEditorPid": 57198,
+      "task": "StartServer",
+      "requestedPlayers": 3,
+      "startLocalTime": "2026-11-23 18:59:36",
+      "action": "Graceful SIGTERM after identifying SDK-owned child only"
+    },
+    "finalSdk": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"report\":\"{\\\"ok\\\":true,\\\"sourceCommit\\\":\\\"2c9ddf8efc91e0e3171ddedbe138ab647b068b5e\\\"}\",\"running\":false}"
+        }
+      ],
+      "isError": false
+    },
+    "finalStudios": "Both original user documents remain Edit; SDK child gone"
+  }
+}

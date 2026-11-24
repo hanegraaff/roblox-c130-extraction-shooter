@@ -1,0 +1,44 @@
+{
+  "expectedSourceCommit": "5522e88be1617eaabfd4bdb0e7439ce076045e9d",
+  "expectedTree": "f7f28a0f6ea451bf4c6941e78a5f8b043074cbac",
+  "expectedTestBuildSha256": "55a3cd755578c51f3ecf851af4fd0a9900a76ae24fee9181e66a1f9aac59aee7",
+  "preflight": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"mismatches\":{\"1\":{\"bytes\":17649,\"path\":\"ReplicatedStorage/ClientSpecs/ThermalCosmetics.spec\",\"djb2\":2415047749,\"reason\":\"source differs\"},\"3\":{\"bytes\":49591,\"path\":\"ServerScriptService/ServerTests/P17Metadata\",\"djb2\":2819605832,\"reason\":\"source differs\"},\"2\":{\"bytes\":1669,\"path\":\"ReplicatedStorage/HarnessCompatibility\",\"djb2\":3952977133,\"reason\":\"source differs\"},\"5\":{\"bytes\":40691,\"path\":\"StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController\",\"djb2\":719065577,\"reason\":\"source differs\"},\"4\":{\"bytes\":26918,\"path\":\"ServerScriptService/ServerTests/RebalanceHarness\",\"djb2\":2182694205,\"reason\":\"source differs\"},\"7\":{\"bytes\":15690,\"path\":\"StarterPlayer/StarterPlayerScripts/ClientTests/RebalanceHarness\",\"djb2\":3566327875,\"reason\":\"source differs\"},\"6\":{\"bytes\":10297,\"path\":\"StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics\",\"djb2\":2455323293,\"reason\":\"source differs\"}},\"comparedScripts\":169,\"comparedGeometry\":5,\"passed\":false,\"receipt\":{\"scriptCount\":169,\"buildSha256\":\"55a3cd755578c51f3ecf851af4fd0a9900a76ae24fee9181e66a1f9aac59aee7\",\"sourceComparison\":\"UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof\",\"geometryCount\":5,\"sourceCommit\":\"5522e88be1617eaabfd4bdb0e7439ce076045e9d\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "result": "FAILED source parity; no native5522 acceptance",
+  "orchestrationCorrection": "Play was accidentally started after failed parity without gating on its boolean. It was discarded, simulator reset and Play stopped. No result is claimed against5522.",
+  "phoneObservation": {
+    "device": "iphone_17_pro configured in Edit before Play",
+    "renderFrames": 0,
+    "viewport": "1,1",
+    "touchEnabled": true,
+    "notAcceptance": true
+  },
+  "cleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ok\":true,\"viewport\":\"1, 1\",\"device\":\"default\"}"
+      }
+    ],
+    "isError": false
+  },
+  "finalState": {
+    "localStudio": "ff02c443-b130-4920-a8ea-018ff0f23eed",
+    "mode": "Edit",
+    "device": "default",
+    "manualHarness": null
+  },
+  "blocker": {
+    "component": "Rojo7.7.1 plugin WebSocket",
+    "message": "WebSocket error: 400 - Failed ws recv - err: 0 \"No error\", curlErrBuf: \"\"",
+    "ui": "Okay button; existing local plugin must reconnect localhost34872 PlayersVsC130Tests",
+    "requiredAction": "Dismiss plugin error and reconnect existing document. No new Studio/server/cloud/test publication."
+  }
+}

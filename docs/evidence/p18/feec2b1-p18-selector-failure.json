@@ -1,0 +1,2034 @@
+{
+  "candidate": "feec2b1532ce7286a6f375f501081cb9ae536bf4",
+  "tree": "2eeeb160dd9572428d02470913c9e2f335688e26",
+  "checkedDocsHead": "7d5aad388e29bcc5483496bbf43b782f84eac7b8",
+  "testBuildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+  "environment": {
+    "StudioVersion": "0.748.0.7481526",
+    "mode": "nativeServer&Clients",
+    "originalEditId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+    "actualServerId": "360a2ebc-ec0d-47e7-a265-1a151219dbd9",
+    "actualClientStudios": [
+      {
+        "id": "36287c90-c3ff-4fc8-b6cb-36f308529533",
+        "userId": -1
+      },
+      {
+        "id": "5e73ba19-acdc-417a-92b1-d38a8c2dd957",
+        "userId": -3
+      },
+      {
+        "id": "e5df73d1-f094-4459-b499-7b5aeaece550",
+        "userId": -2
+      }
+    ],
+    "placeId": 0,
+    "gameId": 0,
+    "manualSelector": "P18",
+    "requestedClients": 3,
+    "initialActualClients": 3,
+    "initialIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "operatorId": -2,
+    "groundIds": [
+      -1,
+      -3
+    ],
+    "departure": {
+      "id": -1,
+      "method": "actualserverKick"
+    },
+    "finalActualClients": 2,
+    "finalIds": [
+      -2,
+      -3
+    ]
+  },
+  "verdict": {
+    "passed": false,
+    "discovered": 11,
+    "passedCases": 10,
+    "failedCases": 1,
+    "skipped": 0,
+    "ordinaryServer": {
+      "passed": 193,
+      "discovered": 193,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "actualClients": 3
+    },
+    "ordinaryClients": {
+      "ids": [
+        -1,
+        -2,
+        -3
+      ],
+      "eachPassed": 18,
+      "eachDiscovered": 18,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "scope": "A2failedbeforeitsstructuralimpactloop; do notacceptanyofA2fromthisrun. Other10casesareboundedpassingobservations, notanoverallP18pass."
+  },
+  "finding": {
+    "priority": 1,
+    "severity": "materialvalidationblocker",
+    "kind": "reproduciblefixturedefect",
+    "criterion": "P18A2 nativewall/roof/Sandbreak/Seedshipdestructionandreplication",
+    "reproduction": "SetManualHarnessP18inverifiedlocalEdit; nativeServer&Clientsexactly3. AtserverRebalanceHarnessline220, coverageassertfails.",
+    "expected": "Selectonewallandonerooffromeachregisteredbuildingfamily usingauthoredmetadata/validatedidentity; thenexecutecurrentonehowitzer/earned30mmandreplicationchecks.",
+    "observed": "SelectorclassifiesroofonlyiflowercaseModel.Namecontains'roof'. NativeSandbreak103Modelsclassify103wall/0roof, despiteSB.R.06.03PanelSurface='Roof'. FullA2casefailswith'wall/roofcoveragemissing' beforeimpactloop.",
+    "evidence": "nativeSelectorWitnessandfullP18reportbelow",
+    "subjectiveFeel": "nonewsubjectivefinding",
+    "validationGaps": [
+      "A2nativepanelthreshold/opening/interruptreplicationcase",
+      "adaptedP05actualtwoclientfire/flightpath"
+    ]
+  },
+  "parkedPlane": {
+    "conclusion": "DetailedtexturedaircraftinthephoneJPEGisparkedHerculesWreckdressing, notcanonical16primitivePartC130. Nativegeometryidentity/sourceblueprintsupportsthis; nocapturepixelraywasrecorded.",
+    "nativePath": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+    "nativeCounts": {
+      "meshParts": 165,
+      "otherBaseParts": 112
+    },
+    "center": [
+      -151.6025390625,
+      21.03499984741211,
+      44.536346435546875
+    ],
+    "size": [
+      117.33081817626953,
+      42,
+      114.48953247070312
+    ],
+    "canonical": "assets/models/C130.model.json:16primitiveSmoothPlasticParts; P18observes15visiblecanonicalParts(excludestransparentHitbox),hiddenonlyOperator,restoredaftercleanup"
+  },
+  "raw": {
+    "report": {
+      "skipped": 0,
+      "smoke": {
+        "clients": {
+          "-3": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 18,
+            "discovered": 18,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "userId": -3
+          },
+          "-2": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 18,
+            "discovered": 18,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "userId": -2
+          },
+          "-1": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 18,
+            "discovered": 18,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "userId": -1
+          }
+        },
+        "server": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}"
+      },
+      "passed": 10,
+      "cases": [
+        {
+          "passed": true,
+          "name": "Three actual clients connect"
+        },
+        {
+          "passed": true,
+          "name": "A1 roster excludes operator and all clients share 2000 health"
+        },
+        {
+          "passed": false,
+          "name": "A2 native wall roof Sandbreak Seedship openings replicate",
+          "detail": "ServerScriptService.ServerTests.RebalanceHarness:220: wall/roof coverage missing"
+        },
+        {
+          "passed": true,
+          "name": "A3 square camera and two weapon profiles remain finite across orbit"
+        },
+        {
+          "passed": true,
+          "name": "A6 thermal targets are red and ground palette is muted with native occlusion"
+        },
+        {
+          "passed": true,
+          "name": "A4 four sites and raced Seedship pickup retain one owner"
+        },
+        {
+          "passed": true,
+          "name": "A4 fired drop recovery preserves reload and fixed damage"
+        },
+        {
+          "passed": true,
+          "name": "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup"
+        },
+        {
+          "passed": true,
+          "name": "A1 A4 reset restores four pristine sites and next deployment health"
+        },
+        {
+          "passed": true,
+          "name": "A1 A4 actual carrier departure recovers equipment without health resize"
+        },
+        {
+          "passed": true,
+          "name": "A3 A6 client owners clean up after replay and departure"
+        }
+      ],
+      "actualClients": 3,
+      "observations": [
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "SquareFrames",
+          "userId": -2,
+          "detail": "{\"minimumUpY\":-0.7290420532226563,\"samples\":730}"
+        },
+        {
+          "action": "Camera",
+          "userId": -2,
+          "detail": "{\"fov\":30,\"start\":[0,0],\"finish\":[25.755401611328126,-67.157958984375]}"
+        },
+        {
+          "action": "Select",
+          "userId": -2,
+          "detail": "[]"
+        },
+        {
+          "action": "Camera",
+          "userId": -2,
+          "detail": "{\"fov\":40,\"start\":[0,0],\"finish\":[-70.60256958007813,-27.997533798217775]}"
+        },
+        {
+          "action": "Select",
+          "userId": -2,
+          "detail": "[]"
+        },
+        {
+          "action": "Thermal",
+          "userId": -2,
+          "detail": "{\"sand\":[0.3490196168422699,0.2980392277240753,0.2078431397676468],\"targets\":2,\"hiddenAircraftParts\":15,\"backdrop\":[0.14901961386203767,0.16470588743686677,0.1764705926179886]}"
+        },
+        {
+          "action": "AircraftMask",
+          "userId": -1,
+          "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+        },
+        {
+          "action": "AircraftMask",
+          "userId": -2,
+          "detail": "{\"aircraftParts\":15,\"hidden\":true}"
+        },
+        {
+          "action": "AircraftMask",
+          "userId": -3,
+          "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -3,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "ownerId": -1,
+          "launcherId": "launcher:1:Seedship",
+          "position": [
+            0,
+            5.599999904632568,
+            214
+          ]
+        },
+        {
+          "action": "EquipLauncher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -3,
+          "detail": "[]"
+        },
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Launcher",
+          "userId": -3,
+          "detail": "[]"
+        },
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "userId": -1,
+          "kind": "actual-carrier-departure",
+          "method": "server-Kick",
+          "remainingClients": 2
+        },
+        {
+          "action": "Cleanup",
+          "userId": -2,
+          "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+        },
+        {
+          "action": "Cleanup",
+          "userId": -3,
+          "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+        }
+      ],
+      "finalClients": 2,
+      "environment": "Studio",
+      "failed": 1,
+      "suite": "P18-rebalancing",
+      "clientIds": [
+        -1,
+        -2,
+        -3
+      ],
+      "discovered": 11
+    },
+    "manualReportString": "{\"skipped\":0,\"smoke\":{\"clients\":{\"-3\":{\"errors\":0,\"skipped\":0,\"passed\":18,\"discovered\":18,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"userId\":-3},\"-2\":{\"errors\":0,\"skipped\":0,\"passed\":18,\"discovered\":18,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"userId\":-2},\"-1\":{\"errors\":0,\"skipped\":0,\"passed\":18,\"discovered\":18,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"userId\":-1}},\"server\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":193,\\\"clientCount\\\":3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":193}\"},\"passed\":10,\"cases\":[{\"passed\":true,\"name\":\"Three actual clients connect\"},{\"passed\":true,\"name\":\"A1 roster excludes operator and all clients share 2000 health\"},{\"passed\":false,\"name\":\"A2 native wall roof Sandbreak Seedship openings replicate\",\"detail\":\"ServerScriptService.ServerTests.RebalanceHarness:220: wall/roof coverage missing\"},{\"passed\":true,\"name\":\"A3 square camera and two weapon profiles remain finite across orbit\"},{\"passed\":true,\"name\":\"A6 thermal targets are red and ground palette is muted with native occlusion\"},{\"passed\":true,\"name\":\"A4 four sites and raced Seedship pickup retain one owner\"},{\"passed\":true,\"name\":\"A4 fired drop recovery preserves reload and fixed damage\"},{\"passed\":true,\"name\":\"A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup\"},{\"passed\":true,\"name\":\"A1 A4 reset restores four pristine sites and next deployment health\"},{\"passed\":true,\"name\":\"A1 A4 actual carrier departure recovers equipment without health resize\"},{\"passed\":true,\"name\":\"A3 A6 client owners clean up after replay and departure\"}],\"actualClients\":3,\"observations\":[{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"SquareFrames\",\"userId\":-2,\"detail\":\"{\\\"minimumUpY\\\":-0.7290420532226563,\\\"samples\\\":730}\"},{\"action\":\"Camera\",\"userId\":-2,\"detail\":\"{\\\"fov\\\":30,\\\"start\\\":[0,0],\\\"finish\\\":[25.755401611328126,-67.157958984375]}\"},{\"action\":\"Select\",\"userId\":-2,\"detail\":\"[]\"},{\"action\":\"Camera\",\"userId\":-2,\"detail\":\"{\\\"fov\\\":40,\\\"start\\\":[0,0],\\\"finish\\\":[-70.60256958007813,-27.997533798217775]}\"},{\"action\":\"Select\",\"userId\":-2,\"detail\":\"[]\"},{\"action\":\"Thermal\",\"userId\":-2,\"detail\":\"{\\\"sand\\\":[0.3490196168422699,0.2980392277240753,0.2078431397676468],\\\"targets\\\":2,\\\"hiddenAircraftParts\\\":15,\\\"backdrop\\\":[0.14901961386203767,0.16470588743686677,0.1764705926179886]}\"},{\"action\":\"AircraftMask\",\"userId\":-1,\"detail\":\"{\\\"aircraftParts\\\":15,\\\"hidden\\\":false}\"},{\"action\":\"AircraftMask\",\"userId\":-2,\"detail\":\"{\\\"aircraftParts\\\":15,\\\"hidden\\\":true}\"},{\"action\":\"AircraftMask\",\"userId\":-3,\"detail\":\"{\\\"aircraftParts\\\":15,\\\"hidden\\\":false}\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-3,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"ownerId\":-1,\"launcherId\":\"launcher:1:Seedship\",\"position\":[0,5.599999904632568,214]},{\"action\":\"EquipLauncher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-3,\"detail\":\"[]\"},{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Launcher\",\"userId\":-3,\"detail\":\"[]\"},{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"userId\":-1,\"kind\":\"actual-carrier-departure\",\"method\":\"server-Kick\",\"remainingClients\":2},{\"action\":\"Cleanup\",\"userId\":-2,\"detail\":\"{\\\"restoredAircraftParts\\\":15,\\\"cleanup\\\":true}\"},{\"action\":\"Cleanup\",\"userId\":-3,\"detail\":\"{\\\"restoredAircraftParts\\\":15,\\\"cleanup\\\":true}\"}],\"finalClients\":2,\"environment\":\"Studio\",\"failed\":1,\"suite\":\"P18-rebalancing\",\"clientIds\":[-1,-2,-3],\"discovered\":11}",
+    "manualAndPrimaryEqual": true,
+    "serverEnvelope": {
+      "name": "Server",
+      "placeId": 0,
+      "gameId": 0,
+      "players": {
+        "1": {
+          "id": -2,
+          "name": "Player2"
+        },
+        "2": {
+          "id": -3,
+          "name": "Player3"
+        }
+      },
+      "stage": "A3 A6 client owners clean up after replay and departure",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}"
+    },
+    "initialServer": {
+      "manual": "P18",
+      "version": "0.748.0.7481526",
+      "name": "Server",
+      "gameId": 0,
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}",
+      "placeId": 0,
+      "stage": "A1 roster excludes operator and all clients share 2000 health",
+      "players": {
+        "1": {
+          "role": "Waiting",
+          "name": "Player1",
+          "id": -1,
+          "life": "Waiting",
+          "roundId": 0
+        },
+        "2": {
+          "role": "Waiting",
+          "name": "Player2",
+          "id": -2,
+          "life": "Waiting",
+          "roundId": 0
+        },
+        "3": {
+          "role": "Waiting",
+          "name": "Player3",
+          "id": -3,
+          "life": "Waiting",
+          "roundId": 0
+        }
+      }
+    },
+    "initialClientQueries": [
+      {
+        "studioId": "36287c90-c3ff-4fc8-b6cb-36f308529533",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: PlayerScripts is not a valid member of Player \"Players.Player1\""
+              }
+            ],
+            "isError": true
+          }
+        }
+      },
+      {
+        "studioId": "5e73ba19-acdc-417a-92b1-d38a8c2dd957",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":18,\\\"userId\\\":-3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":18}\",\"name\":\"Place1\",\"p18Harness\":false,\"viewport\":\"1274, 618\",\"placeId\":0,\"userId\":-3,\"gameId\":0}"
+              }
+            ],
+            "isError": false
+          }
+        }
+      },
+      {
+        "studioId": "e5df73d1-f094-4459-b499-7b5aeaece550",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":18,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":18}\",\"placeId\":0,\"userId\":-2,\"role\":\"Ground\",\"name\":\"Place1\",\"p18Harness\":true,\"viewport\":\"1346, 649\",\"gameId\":0,\"life\":\"Alive\"}"
+              }
+            ],
+            "isError": false
+          }
+        }
+      }
+    ],
+    "finalClientQueries": [
+      {
+        "studioId": "5e73ba19-acdc-417a-92b1-d38a8c2dd957",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":18,\\\"userId\\\":-3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":18}\",\"name\":\"Place1\",\"gameId\":0,\"viewport\":\"1274, 618\",\"placeId\":0,\"userId\":-3}"
+              }
+            ],
+            "isError": false
+          }
+        }
+      },
+      {
+        "studioId": "e5df73d1-f094-4459-b499-7b5aeaece550",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":18,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":18}\",\"name\":\"Place1\",\"gameId\":0,\"viewport\":\"1346, 649\",\"placeId\":0,\"userId\":-2}"
+              }
+            ],
+            "isError": false
+          }
+        }
+      }
+    ],
+    "nativeRegistry": {
+      "wrecks": {
+        "1": {
+          "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+          "meshParts": 165,
+          "primitiveParts": 112,
+          "position": "-151.6025390625, 21.03499984741211, 44.536346435546875",
+          "size": "117.33081817626953, 42, 114.48953247070312"
+        }
+      },
+      "roots": {
+        "1": {
+          "children": {
+            "1": {
+              "panel": "Prism_Skirt_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_01"
+            },
+            "2": {
+              "panel": "Prism_Mantle_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_01"
+            },
+            "3": {
+              "panel": "Prism_Roof_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_01"
+            },
+            "4": {
+              "panel": "Prism_Crown_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_01"
+            },
+            "5": {
+              "panel": "Prism_Skirt_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_02"
+            },
+            "6": {
+              "panel": "Prism_Mantle_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_02"
+            },
+            "7": {
+              "panel": "Prism_Roof_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_02"
+            },
+            "8": {
+              "panel": "Prism_Crown_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_02"
+            },
+            "9": {
+              "panel": "Prism_Skirt_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_03"
+            },
+            "10": {
+              "panel": "Prism_Mantle_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_03"
+            },
+            "11": {
+              "panel": "Prism_Roof_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_03"
+            },
+            "12": {
+              "panel": "Prism_Crown_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_03"
+            },
+            "13": {
+              "panel": "Prism_Skirt_04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_04"
+            },
+            "14": {
+              "panel": "Prism_Mantle_04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_04"
+            },
+            "15": {
+              "panel": "Prism_Roof_04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_04"
+            },
+            "16": {
+              "panel": "Prism_Crown_04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_04"
+            },
+            "17": {
+              "panel": "Prism_Skirt_05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_05"
+            },
+            "18": {
+              "panel": "Prism_Mantle_05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_05"
+            },
+            "19": {
+              "panel": "Prism_Roof_05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_05"
+            },
+            "20": {
+              "panel": "Prism_Crown_05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_05"
+            },
+            "21": {
+              "panel": "Prism_Skirt_06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_06"
+            },
+            "22": {
+              "panel": "Prism_Mantle_06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_06"
+            },
+            "23": {
+              "panel": "Prism_Roof_06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_06"
+            },
+            "24": {
+              "panel": "Prism_Crown_06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_06"
+            },
+            "25": {
+              "panel": "Prism_Skirt_07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_07"
+            },
+            "26": {
+              "panel": "Prism_Mantle_07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_07"
+            },
+            "27": {
+              "panel": "Prism_Roof_07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_07"
+            },
+            "28": {
+              "panel": "Prism_Crown_07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_07"
+            },
+            "29": {
+              "panel": "Prism_Mantle_08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_08"
+            },
+            "30": {
+              "panel": "Prism_Roof_08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_08"
+            },
+            "31": {
+              "panel": "Prism_Crown_08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_08"
+            },
+            "32": {
+              "panel": "Prism_Skirt_09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_09"
+            },
+            "33": {
+              "panel": "Prism_Mantle_09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_09"
+            },
+            "34": {
+              "panel": "Prism_Roof_09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_09"
+            },
+            "35": {
+              "panel": "Prism_Crown_09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_09"
+            },
+            "36": {
+              "panel": "Prism_Skirt_10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_10"
+            },
+            "37": {
+              "panel": "Prism_Mantle_10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_10"
+            },
+            "38": {
+              "panel": "Prism_Roof_10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_10"
+            },
+            "39": {
+              "panel": "Prism_Crown_10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_10"
+            },
+            "40": {
+              "panel": "Prism_Skirt_11",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_11"
+            },
+            "41": {
+              "panel": "Prism_Mantle_11",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_11"
+            },
+            "42": {
+              "panel": "Prism_Roof_11",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_11"
+            },
+            "43": {
+              "panel": "Prism_Crown_11",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_11"
+            },
+            "44": {
+              "panel": "Prism_Skirt_12",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_12"
+            },
+            "45": {
+              "panel": "Prism_Mantle_12",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_12"
+            },
+            "46": {
+              "panel": "Prism_Roof_12",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_12"
+            },
+            "47": {
+              "panel": "Prism_Crown_12",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_12"
+            },
+            "48": {
+              "panel": "Prism_Skirt_13",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_13"
+            },
+            "49": {
+              "panel": "Prism_Mantle_13",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_13"
+            },
+            "50": {
+              "panel": "Prism_Roof_13",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_13"
+            },
+            "51": {
+              "panel": "Prism_Crown_13",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_13"
+            },
+            "52": {
+              "panel": "Prism_Skirt_14",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_14"
+            },
+            "53": {
+              "panel": "Prism_Mantle_14",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_14"
+            },
+            "54": {
+              "panel": "Prism_Roof_14",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_14"
+            },
+            "55": {
+              "panel": "Prism_Crown_14",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_14"
+            },
+            "56": {
+              "panel": "Prism_Skirt_15",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_15"
+            },
+            "57": {
+              "panel": "Prism_Mantle_15",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_15"
+            },
+            "58": {
+              "panel": "Prism_Roof_15",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_15"
+            },
+            "59": {
+              "panel": "Prism_Crown_15",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_15"
+            },
+            "60": {
+              "panel": "Prism_Skirt_16",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_16"
+            },
+            "61": {
+              "panel": "Prism_Mantle_16",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_16"
+            },
+            "62": {
+              "panel": "Prism_Roof_16",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_16"
+            },
+            "63": {
+              "panel": "Prism_Crown_16",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_16"
+            },
+            "64": {
+              "panel": "Prism_Skirt_17",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_17"
+            },
+            "65": {
+              "panel": "Prism_Mantle_17",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_17"
+            },
+            "66": {
+              "panel": "Prism_Roof_17",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_17"
+            },
+            "67": {
+              "panel": "Prism_Crown_17",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_17"
+            },
+            "68": {
+              "panel": "Prism_Skirt_18",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_18"
+            },
+            "69": {
+              "panel": "Prism_Mantle_18",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_18"
+            },
+            "70": {
+              "panel": "Prism_Roof_18",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_18"
+            },
+            "71": {
+              "panel": "Prism_Crown_18",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_18"
+            },
+            "72": {
+              "panel": "Prism_Mantle_19",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_19"
+            },
+            "73": {
+              "panel": "Prism_Roof_19",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_19"
+            },
+            "74": {
+              "panel": "Prism_Crown_19",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_19"
+            },
+            "75": {
+              "panel": "Prism_Skirt_20",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_20"
+            },
+            "76": {
+              "panel": "Prism_Mantle_20",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_20"
+            },
+            "77": {
+              "panel": "Prism_Roof_20",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_20"
+            },
+            "78": {
+              "panel": "Prism_Crown_20",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_20"
+            },
+            "79": {
+              "panel": "Prism_Skirt_21",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_21"
+            },
+            "80": {
+              "panel": "Prism_Mantle_21",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_21"
+            },
+            "81": {
+              "panel": "Prism_Roof_21",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_21"
+            },
+            "82": {
+              "panel": "Prism_Crown_21",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_21"
+            },
+            "83": {
+              "panel": "Prism_Skirt_22",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_22"
+            },
+            "84": {
+              "panel": "Prism_Mantle_22",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_22"
+            },
+            "85": {
+              "panel": "Prism_Roof_22",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_22"
+            },
+            "86": {
+              "panel": "Prism_Crown_22",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_22"
+            },
+            "87": {
+              "panel": "Prism_Skirt_23",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_23"
+            },
+            "88": {
+              "panel": "Prism_Mantle_23",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_23"
+            },
+            "89": {
+              "panel": "Prism_Roof_23",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_23"
+            },
+            "90": {
+              "panel": "Prism_Crown_23",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_23"
+            },
+            "91": {
+              "panel": "Prism_Skirt_24",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_24"
+            },
+            "92": {
+              "panel": "Prism_Mantle_24",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_24"
+            },
+            "93": {
+              "panel": "Prism_Roof_24",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_24"
+            },
+            "94": {
+              "panel": "Prism_Crown_24",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_24"
+            },
+            "95": {
+              "panel": "Prism_Skirt_25",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_25"
+            },
+            "96": {
+              "panel": "Prism_Mantle_25",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_25"
+            },
+            "97": {
+              "panel": "Prism_Roof_25",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_25"
+            },
+            "98": {
+              "panel": "Prism_Crown_25",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_25"
+            },
+            "99": {
+              "panel": "Prism_Skirt_26",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Skirt_26"
+            },
+            "100": {
+              "panel": "Prism_Mantle_26",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Mantle_26"
+            },
+            "101": {
+              "panel": "Prism_Roof_26",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Roof_26"
+            },
+            "102": {
+              "panel": "Prism_Crown_26",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Prism_Crown_26"
+            }
+          },
+          "root": "Workspace.World.Battlefield.PrismPanels"
+        },
+        "2": {
+          "children": {
+            "1": {
+              "panel": "SB.R.06.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.03"
+            },
+            "2": {
+              "panel": "SB.W.SE.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.SE.02"
+            },
+            "3": {
+              "panel": "SB.R.06.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.04"
+            },
+            "4": {
+              "panel": "SB.R.08.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.02"
+            },
+            "5": {
+              "panel": "SB.R.07.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.05"
+            },
+            "6": {
+              "panel": "SB.R.05.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.06"
+            },
+            "7": {
+              "panel": "SB.R.01.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.04"
+            },
+            "8": {
+              "panel": "SB.R.05.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.03"
+            },
+            "9": {
+              "panel": "SB.W.SW.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.SW.02"
+            },
+            "10": {
+              "panel": "SB.R.04.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.09"
+            },
+            "11": {
+              "panel": "SB.R.05.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.10"
+            },
+            "12": {
+              "panel": "SB.W.N.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.N.04"
+            },
+            "13": {
+              "panel": "SB.R.06.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.06"
+            },
+            "14": {
+              "panel": "SB.R.07.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.03"
+            },
+            "15": {
+              "panel": "SB.W.N.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.N.01"
+            },
+            "16": {
+              "panel": "SB.R.07.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.06"
+            },
+            "17": {
+              "panel": "SB.R.03.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.07"
+            },
+            "18": {
+              "panel": "SB.R.02.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.07"
+            },
+            "19": {
+              "panel": "SB.R.07.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.02"
+            },
+            "20": {
+              "panel": "SB.R.01.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.07"
+            },
+            "21": {
+              "panel": "SB.R.02.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.01"
+            },
+            "22": {
+              "panel": "SB.R.03.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.10"
+            },
+            "23": {
+              "panel": "SB.R.01.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.10"
+            },
+            "24": {
+              "panel": "SB.R.04.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.03"
+            },
+            "25": {
+              "panel": "SB.R.07.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.01"
+            },
+            "26": {
+              "panel": "SB.R.06.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.10"
+            },
+            "27": {
+              "panel": "SB.R.02.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.02"
+            },
+            "28": {
+              "panel": "SB.R.05.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.05"
+            },
+            "29": {
+              "panel": "SB.R.06.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.08"
+            },
+            "30": {
+              "panel": "SB.R.04.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.06"
+            },
+            "31": {
+              "panel": "SB.W.SW.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.SW.01"
+            },
+            "32": {
+              "panel": "SB.R.05.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.04"
+            },
+            "33": {
+              "panel": "SB.W.NE.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.NE.02"
+            },
+            "34": {
+              "panel": "SB.R.01.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.03"
+            },
+            "35": {
+              "panel": "SB.R.05.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.07"
+            },
+            "36": {
+              "panel": "SB.R.04.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.08"
+            },
+            "37": {
+              "panel": "SB.R.01.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.02"
+            },
+            "38": {
+              "panel": "SB.R.06.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.01"
+            },
+            "39": {
+              "panel": "SB.W.E.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.E.01"
+            },
+            "40": {
+              "panel": "SB.R.02.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.03"
+            },
+            "41": {
+              "panel": "SB.W.W.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.W.03"
+            },
+            "42": {
+              "panel": "SB.R.08.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.05"
+            },
+            "43": {
+              "panel": "SB.R.03.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.05"
+            },
+            "44": {
+              "panel": "SB.R.08.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.06"
+            },
+            "45": {
+              "panel": "SB.W.E.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.E.02"
+            },
+            "46": {
+              "panel": "SB.W.S.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.S.05"
+            },
+            "47": {
+              "panel": "SB.R.03.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.04"
+            },
+            "48": {
+              "panel": "SB.W.W.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.W.01"
+            },
+            "49": {
+              "panel": "SB.R.02.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.04"
+            },
+            "50": {
+              "panel": "SB.W.NE.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.NE.01"
+            },
+            "51": {
+              "panel": "SB.W.SE.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.SE.01"
+            },
+            "52": {
+              "panel": "SB.W.S.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.S.04"
+            },
+            "53": {
+              "panel": "SB.R.08.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.01"
+            },
+            "54": {
+              "panel": "SB.W.S.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.S.03"
+            },
+            "55": {
+              "panel": "SB.W.S.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.S.02"
+            },
+            "56": {
+              "panel": "SB.R.06.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.05"
+            },
+            "57": {
+              "panel": "SB.R.08.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.10"
+            },
+            "58": {
+              "panel": "SB.R.04.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.07"
+            },
+            "59": {
+              "panel": "SB.R.03.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.03"
+            },
+            "60": {
+              "panel": "SB.W.NW.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.NW.02"
+            },
+            "61": {
+              "panel": "SB.R.03.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.09"
+            },
+            "62": {
+              "panel": "SB.R.03.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.08"
+            },
+            "63": {
+              "panel": "SB.R.07.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.04"
+            },
+            "64": {
+              "panel": "SB.W.N.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.N.03"
+            },
+            "65": {
+              "panel": "SB.R.08.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.04"
+            },
+            "66": {
+              "panel": "SB.W.E.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.E.03"
+            },
+            "67": {
+              "panel": "SB.R.06.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.02"
+            },
+            "68": {
+              "panel": "SB.R.08.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.09"
+            },
+            "69": {
+              "panel": "SB.R.04.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.05"
+            },
+            "70": {
+              "panel": "SB.R.01.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.09"
+            },
+            "71": {
+              "panel": "SB.R.08.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.08"
+            },
+            "72": {
+              "panel": "SB.R.01.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.06"
+            },
+            "73": {
+              "panel": "SB.R.08.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.07"
+            },
+            "74": {
+              "panel": "SB.R.06.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.09"
+            },
+            "75": {
+              "panel": "SB.R.04.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.01"
+            },
+            "76": {
+              "panel": "SB.R.02.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.09"
+            },
+            "77": {
+              "panel": "SB.R.07.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.07"
+            },
+            "78": {
+              "panel": "SB.W.N.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.N.02"
+            },
+            "79": {
+              "panel": "SB.R.08.03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.08.03"
+            },
+            "80": {
+              "panel": "SB.R.07.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.10"
+            },
+            "81": {
+              "panel": "SB.R.02.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.06"
+            },
+            "82": {
+              "panel": "SB.R.07.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.08"
+            },
+            "83": {
+              "panel": "SB.R.01.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.08"
+            },
+            "84": {
+              "panel": "SB.W.N.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.N.05"
+            },
+            "85": {
+              "panel": "SB.R.01.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.01.05"
+            },
+            "86": {
+              "panel": "SB.R.06.07",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.06.07"
+            },
+            "87": {
+              "panel": "SB.R.02.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.08"
+            },
+            "88": {
+              "panel": "SB.R.03.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.02"
+            },
+            "89": {
+              "panel": "SB.R.02.05",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.05"
+            },
+            "90": {
+              "panel": "SB.R.05.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.09"
+            },
+            "91": {
+              "panel": "SB.R.03.06",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.06"
+            },
+            "92": {
+              "panel": "SB.R.05.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.01"
+            },
+            "93": {
+              "panel": "SB.R.02.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.02.10"
+            },
+            "94": {
+              "panel": "SB.R.05.08",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.08"
+            },
+            "95": {
+              "panel": "SB.R.03.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.03.01"
+            },
+            "96": {
+              "panel": "SB.R.05.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.05.02"
+            },
+            "97": {
+              "panel": "SB.R.04.10",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.10"
+            },
+            "98": {
+              "panel": "SB.W.S.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.S.01"
+            },
+            "99": {
+              "panel": "SB.R.04.04",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.04"
+            },
+            "100": {
+              "panel": "SB.R.04.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.04.02"
+            },
+            "101": {
+              "panel": "SB.W.NW.01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.NW.01"
+            },
+            "102": {
+              "panel": "SB.W.W.02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.W.W.02"
+            },
+            "103": {
+              "panel": "SB.R.07.09",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "SB.R.07.09"
+            }
+          },
+          "root": "Workspace.World.Battlefield.SpawnShelterPanels"
+        },
+        "3": {
+          "children": {
+            "1": {
+              "panel": "Outpost_S01_North_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_North_01"
+            },
+            "2": {
+              "panel": "Outpost_S01_North_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_North_02"
+            },
+            "3": {
+              "panel": "Outpost_S01_South_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_South_01"
+            },
+            "4": {
+              "panel": "Outpost_S01_West_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_West_01"
+            },
+            "5": {
+              "panel": "Outpost_S01_West_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_West_02"
+            },
+            "6": {
+              "panel": "Outpost_S01_West_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_West_03"
+            },
+            "7": {
+              "panel": "Outpost_S01_East_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_East_01"
+            },
+            "8": {
+              "panel": "Outpost_S01_East_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_East_02"
+            },
+            "9": {
+              "panel": "Outpost_S01_East_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S01_East_03"
+            },
+            "10": {
+              "panel": "Outpost_S02_North_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_North_01"
+            },
+            "11": {
+              "panel": "Outpost_S02_North_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_North_02"
+            },
+            "12": {
+              "panel": "Outpost_S02_South_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_South_01"
+            },
+            "13": {
+              "panel": "Outpost_S02_South_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_South_02"
+            },
+            "14": {
+              "panel": "Outpost_S02_West_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_West_01"
+            },
+            "15": {
+              "panel": "Outpost_S02_West_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_West_02"
+            },
+            "16": {
+              "panel": "Outpost_S02_West_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_West_03"
+            },
+            "17": {
+              "panel": "Outpost_S02_East_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_East_01"
+            },
+            "18": {
+              "panel": "Outpost_S02_East_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_East_02"
+            },
+            "19": {
+              "panel": "Outpost_S02_East_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_East_03"
+            },
+            "20": {
+              "panel": "Outpost_S02_Roof_01_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_Roof_01_01"
+            },
+            "21": {
+              "panel": "Outpost_S02_Roof_01_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_Roof_01_02"
+            },
+            "22": {
+              "panel": "Outpost_S02_Roof_01_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_Roof_01_03"
+            },
+            "23": {
+              "panel": "Outpost_S02_Roof_02_01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_Roof_02_01"
+            },
+            "24": {
+              "panel": "Outpost_S02_Roof_02_02",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_Roof_02_02"
+            },
+            "25": {
+              "panel": "Outpost_S02_Roof_02_03",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_S02_Roof_02_03"
+            },
+            "26": {
+              "panel": "Outpost_v2_Interior01",
+              "class": "Model",
+              "appearance": "Pristine",
+              "name": "Outpost_v2_Interior01"
+            }
+          },
+          "root": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels"
+        }
+      },
+      "canonicalAircraft": false,
+      "fixtureAfterCleanup": false
+    },
+    "nativeSelectorWitness": {
+      "classification": {
+        "1": {
+          "root": "Workspace.World.Battlefield.PrismPanels",
+          "models": 102,
+          "selectorRoof": 26,
+          "selectorWall": 76
+        },
+        "2": {
+          "root": "Workspace.World.Battlefield.SpawnShelterPanels",
+          "models": 103,
+          "selectorRoof": 0,
+          "selectorWall": 103
+        },
+        "3": {
+          "root": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels",
+          "models": 26,
+          "selectorRoof": 6,
+          "selectorWall": 20
+        }
+      },
+      "sandbreakSamples": {
+        "SB.R.": {
+          "attributes": {
+            "StoryId": "01",
+            "PanelId": "SB.R.06.03",
+            "PanelSurface": "Roof",
+            "VariantContract": "Intact/Damaged/Destroyed:v1",
+            "BuildingId": "SpawnShelter",
+            "PanelState": "Intact",
+            "CoverId": "SB.R.06.03",
+            "IntactPivot": {
+              "Rotation": "1, 0, 0, 0, 1, 0, 0, 0, 1",
+              "Position": "-13.975006103515625, 11.949996948242188, 111.32499694824219"
+            },
+            "SandbreakPanel": true,
+            "CoverKind": "BuildingPanel",
+            "IntactSize": "6.25, 1, 5.850006103515625",
+            "DamageAppearance": "Pristine"
+          },
+          "name": "SB.R.06.03"
+        },
+        "SB.W.": {
+          "attributes": {
+            "StoryId": "01",
+            "PanelId": "SB.W.SE.02",
+            "PanelSurface": "Wall",
+            "VariantContract": "Intact/Damaged/Destroyed:v1",
+            "BuildingId": "SpawnShelter",
+            "PanelState": "Intact",
+            "CoverId": "SB.W.SE.02",
+            "IntactPivot": {
+              "Rotation": "1, 0, 0, 0, 1, 0, 0, 0, 1",
+              "Position": "26.796875, 5.725006103515625, 136.8156280517578"
+            },
+            "SandbreakPanel": true,
+            "CoverKind": "BuildingPanel",
+            "IntactSize": "7.375, 11.449996948242188, 6.75",
+            "DamageAppearance": "Pristine"
+          },
+          "name": "SB.W.SE.02"
+        }
+      }
+    }
+  },
+  "queryRaceNote": "Player1directClientqueryreportedPlayerScriptsmissingafterintentionalKick; thisispost-departurequerytiming, notasmokefailure. Allthreeauthenticated18/18initialsmokesarepreservedinserverP18report.",
+  "cleanup": {
+  "request": {
+    "server": "Server",
+    "cleanupRequested": true,
+    "remainingClients": 2
+  },
+  "originalEdit": {
+    "removed": "P18",
+    "running": false,
+    "name": "tests.rbxlx",
+    "gameId": 0,
+    "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+    "placeId": 0,
+    "device": "default"
+  },
+  "nativeSessionClosed": true,
+  "remainingStudioIds": [
+    "f205a8a1-46a0-4e7d-b315-337ce638f284"
+  ],
+  "sourceHandoffSafe": true,
+  "manualSelectorRestoredNil": true
+}
+}

@@ -1,5 +1,7 @@
 # Client TestEZ runner
 
+For the P18 candidate, the active focused scenario is `RebalanceHarness` with `{ kind = "P18" }` and three actual clients. Adapted P05 remains current for actual gunship fire/flight evidence, alongside compatible P03/P04 paths. Pre-P18 balance/camera selectors below are archived and reject before runtime/listener allocation; reproduce their evidence from the recorded revision. Historical passes are not reused as current passes. [P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness)
+
 This package’s `init.client.luau` maps to the test-only `StarterPlayerScripts.ClientTests` LocalScript and runs the [client specs](../specs-client/README.md) automatically during Play.
 
 Read `Players.LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestReport")` in the **client** context. JSON includes suite/environment/seed, discovered/passed/failed/skipped/errors and the actual client `userId`. A missing report, zero discovery or any failed/skipped/error case is incomplete or failed evidence. TestEZ also writes useful details to Studio Output.
@@ -57,3 +59,7 @@ transport and frame listeners when the transport is destroyed.
 The managed mapping expects ten TestEZ cases per actual client. After publishing `ClientTestReport` and the raw `P17ManualTestErrors` list, the entrypoint waits for the server's `ReplicatedStorage.ManualClientHarness` attribute. In named P08, P17, P07, P05 and P14 sessions it starts only that selected listener and returns. An empty string selects the ordinary startup path. A retained multiplayer session requires explicit starts for later stages after prior owners drain.
 
 The P17 `P17MaterialHarness.run()` listener responds to the server-only coordinator's probes over the test-only transport. On each actual client it records native mesh properties and preload observations, replicated material/panel states, ray and solid-geometry agreement, and fragment/reset observations. It sends bounded actual fire and selection intents when directed. The two distinct client baselines and the server-owned report are collected through the [P17 procedure](../../../docs/testing.md#run-the-managed-p17-multiplayer-harness). Operated input, rendered SurfaceAppearance and thermal readability have separate checks.
+
+## P18 client observations
+
+`RebalanceHarness.run()` discovers only the selected P18 transport after ordinary TestEZ. Its bounded probes use the actual LocalPlayer and production remotes to observe replicated aircraft health, panel state/solids, camera frames and lenses, thermal colors/cover configuration, launcher ownership/readiness and cleanup. Removing the transport releases its listener. Injected camera/frame checks do not replace native keyboard/touch or rendered contrast review. [Launch and evidence](../../../docs/testing.md#run-the-p18-rebalancing-harness)

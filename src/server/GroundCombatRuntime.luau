@@ -553,7 +553,15 @@ function GroundCombatRuntime.start(
         lastPhase = state.phase
         if state.roundId ~= lastRound then
             lastRound = state.roundId
-            health.reset(lastRound)
+            local groundCount = 0
+            -- Deployment membership includes dead/disconnected tombstones for the
+            -- rest of this round. Spectators and the operator never add durability.
+            for _, member in state.members do
+                if member.role == "Ground" then
+                    groundCount += 1
+                end
+            end
+            health.reset(lastRound, if groundCount > 0 then groundCount else 1)
             rifles.reset(lastRound)
             table.clear(movement)
             aircraftState:SetAttribute("GroundShot", nil)

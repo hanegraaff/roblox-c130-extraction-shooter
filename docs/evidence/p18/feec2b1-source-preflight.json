@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "feec2b1532ce7286a6f375f501081cb9ae536bf4",
+  "buildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+  "scriptCount": 170,
+  "geometryCount": 5,
+  "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+  "probeSha256": "90726154bdfc7a3cf95a15b0884be3f1d77085923b40cd9b0f54c74ea1730ebb",
+  "sourceTree": "2eeeb160dd9572428d02470913c9e2f335688e26",
+  "studioId": "ff02c443-b130-4920-a8ea-018ff0f23eed",
+  "studioDocument": "Place1 (Version 32)",
+  "placeId": 0,
+  "universeId": 0,
+  "result": {
+    "mismatches": [],
+    "comparedScripts": 170,
+    "comparedGeometry": 5,
+    "passed": true
+  },
+  "scope": "Read-only Edit source parity before fresh Play; checksum comparison is not gameplay or replication evidence."
+}

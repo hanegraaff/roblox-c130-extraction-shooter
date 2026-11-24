@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- Test-only P06 client transport. Sends real remotes and checks replicated state.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -6,6 +7,7 @@ local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
 local Harness = {}
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P06")
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P06Harness", 90)
         if not transport or not transport:IsA("RemoteEvent") then

@@ -1,0 +1,1049 @@
+{
+  "candidate": "feec2b1532ce7286a6f375f501081cb9ae536bf4",
+  "candidateTree": "2eeeb160dd9572428d02470913c9e2f335688e26",
+  "checkedHead": "7d5aad388e29bcc5483496bbf43b782f84eac7b8",
+  "checkedTree": "8e4471547e2403a6361516381e9bc10fddbcb626",
+  "note": "HEAD changes only documentation/evidence; runtime/test inputs unchanged fromfeec2b1/runtimecorrection0fe7909.",
+  "studioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+  "studioVersion": "0.748.0.7481526",
+  "placeFile": "tests.rbxlx",
+  "placeId": 0,
+  "gameId": 0,
+  "buildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+  "sequence": "User quit oldStudio and reopenedlocaltests.rbxlx; tester confirmednewidentity and170scripts/5poses passingparity BEFORE a singlefreshordinaryPlay. StartreturnedGameStartedin3.6seconds.",
+  "checks": {
+    "ordinary": {
+      "server": 193,
+      "client": 18,
+      "failed": 0,
+      "skipped": 0,
+      "errors": 0,
+      "actualClients": 1,
+      "userId": 2227341845
+    },
+    "liveRender": {
+      "frames": 11,
+      "heartbeats": 44,
+      "seconds": 0.75,
+      "viewport": [
+        749,
+        381
+      ],
+      "TouchEnabled": true
+    },
+    "nativeRecenter": {
+      "passed": true,
+      "originalDefectResolved": true,
+      "normal": {
+        "viewport": [
+          749,
+          381
+        ],
+        "button": [
+          637,
+          16,
+          96,
+          42
+        ],
+        "center": [
+          685,
+          37
+        ],
+        "nativeTouch": true,
+        "Activated": true,
+        "nonzeroFocusReset": true
+      },
+      "resized": {
+        "device": [
+          568,
+          320
+        ],
+        "viewport": [
+          443,
+          299
+        ],
+        "button": [
+          331,
+          16,
+          96,
+          42
+        ],
+        "center": [
+          379,
+          37
+        ],
+        "nativeTouch": true,
+        "Activated": true,
+        "nonzeroFocusReset": true,
+        "fov": 40
+      }
+    },
+    "affectedTouch": {
+      "passed": true,
+      "panRightActualTouch": true,
+      "zoom40and30Acknowledged": true,
+      "twoDistinctTouchesPanAndAim": true,
+      "panDirection": [
+        1,
+        0
+      ],
+      "changedReticle": [
+        203,
+        133
+      ],
+      "releaseDirection": [
+        0,
+        0
+      ]
+    }
+  },
+  "method": "Purpose-builtStudioMCP user_mouse_input/user_keyboard_input; actualUIS Touchpositions andbuttonActivated recorded bydisposableownedlisteners. No injectedpan/aimprovider. DeviceSetResolutionAsync inClient testedre-layout live andrestored874×402beforecleanup. Nativeinputcoordinates calibratedthroughactualTouch:toolx-62,y-20. CameraViewport749×381isindependentofcapturetoolrerenderedsize.",
+  "scope": "One actualclient, Waitingrole/Operatorpreview. Thisprovesnativeinput/layoutandordinarysmoke, notcompetitiveroles ormultiplayer. Earlier source5522 contrast/navigationproofremainssource-boundwithunchangedrelevantpaths; finalP18initial3/final2andP05actual2required.",
+  "capture": {
+    "path": "build/p18-feec2b1-restarted-phone.jpg",
+    "mimeType": "image/jpeg",
+    "bytes": 260294,
+    "sha256": "42f38022287584a99673d7d514ba44565b6d788c18c268e0ad52570506143cce",
+    "capturePixels": [
+      1920,
+      881
+    ],
+    "nativeViewport": [
+      749,
+      381
+    ],
+    "scope": "Original MCPcapture rerendersatlargersize; actualnativehitgeometry andTouchproofareprimary."
+  },
+  "cleanup": {
+    "probe": {
+      "raw": "202.570862, 132.775055",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "0, 0, 0",
+      "reticle": "203, 133",
+      "events": {
+        "1": {
+          "pos": "365, 351, 0",
+          "type": "Keyboard",
+          "event": "Began",
+          "processed": false
+        },
+        "2": {
+          "pos": "365, 351, 0",
+          "type": "Keyboard",
+          "event": "Began",
+          "processed": false
+        },
+        "3": {
+          "pos": "172, 231, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "4": {
+          "pos": "202.57086181640625, 74.77505493164062, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": false
+        },
+        "5": {
+          "type": "Touch",
+          "event": "RecenterBegan",
+          "pos": "685, 37, 0"
+        },
+        "6": {
+          "pos": "685, 37, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "7": {
+          "event": "RecenterActivated"
+        }
+      },
+      "fov": 30,
+      "viewport": "749, 381",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "637, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "234.5, 251",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "378.5, 251",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "649, 151",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 143",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 203",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 203",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 203",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "cleanup"
+    },
+    "roleExit": {
+      "sand": "0.870588, 0.74902, 0.517647",
+      "nonzeroLTM": 0,
+      "choice": "Auto",
+      "touchControls": false,
+      "preview": "Ground",
+      "probe": false,
+      "aircraftParts": 16,
+      "hud": false
+    },
+    "manualReady": {
+      "manual": "P18",
+      "device": "default",
+      "version": "0.748.0.7481526",
+      "gameId": 0,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "placeId": 0,
+      "originalScalingRestored": true,
+      "name": "tests.rbxlx"
+    },
+    "status": "currentP18manualselectorreadyinEdit; nativeServer&Clientsexactly3userUIstartpending; ordinaryownedsessionstopped; defaultdevice/originalscalingorientationrestored"
+  },
+  "raw": {
+    "parity": {
+      "mismatches": [],
+      "comparedScripts": 170,
+      "comparedGeometry": 5,
+      "passed": true,
+      "receipt": {
+        "scriptCount": 170,
+        "buildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+        "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+        "geometryCount": 5,
+        "sourceCommit": "feec2b1532ce7286a6f375f501081cb9ae536bf4"
+      }
+    },
+    "editIdentity": {
+      "version": "0.748.0.7481526",
+      "gameId": 0,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "placeId": 0,
+      "device": "default"
+    },
+    "deviceSetup": {
+      "originalDevice": "default",
+      "resolution": "874, 402",
+      "gameOrientation": "Enum.ScreenOrientation.LandscapeSensor",
+      "originalOrientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "scaling": "Enum.DeviceSimulatorScalingMode.FitToWindow",
+      "device": "iphone_17_pro",
+      "originalScaling": "Enum.DeviceSimulatorScalingMode.ScaleToPhysicalSize"
+    },
+    "clientReadiness": {
+      "workspaceAttributes": {
+        "ServerTestReport": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}",
+        "ServerTestStartup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":0.06313395826146007}"
+      },
+      "touch": true,
+      "guiAttributes": [],
+      "heartbeats": 44,
+      "viewport": "749, 381",
+      "playerAttributes": [],
+      "userId": 2227341845,
+      "renders": 11
+    },
+    "serverSmoke": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}",
+      "runtime": true,
+      "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":0.06313395826146007}",
+      "players": 1
+    },
+    "clientSmoke": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":18,\"userId\":2227341845,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":18}",
+      "attributes": {
+        "LocalTestRoleChoice": "Auto",
+        "Life": "Waiting",
+        "LocalTestFeedback": "Solo Play previews the map. Real rounds need two clients.",
+        "RoundRevision": 1,
+        "RoundId": 0,
+        "Role": "Waiting",
+        "LocalMapPreview": true,
+        "LocalPreviewRole": "Ground"
+      },
+      "roleButton": {
+        "pos": "459, 83",
+        "size": "270, 28"
+      },
+      "viewport": "749, 381",
+      "fixture": [],
+      "userId": 2227341845,
+      "panel": true
+    },
+    "phoneReady": {
+      "role": "Gunship",
+      "center": "685, 37",
+      "nativeFixture": [],
+      "snapshot": {
+        "raw": "374.5, 190.5",
+        "direction": "0, 0",
+        "guiOrigin": "0, -58",
+        "focus": "0, 0, 0",
+        "reticle": "375, 191",
+        "events": [],
+        "fov": 30,
+        "viewport": "749, 381",
+        "controls": {
+          "Recenter": {
+            "visible": true,
+            "pos": "637, 16",
+            "size": "96, 42"
+          },
+          "GAU23": {
+            "visible": true,
+            "pos": "234.5, 251",
+            "size": "136, 44"
+          },
+          "M102": {
+            "visible": true,
+            "pos": "378.5, 251",
+            "size": "136, 44"
+          },
+          "Fire": {
+            "visible": true,
+            "pos": "649, 151",
+            "size": "76, 76"
+          },
+          "PanUp": {
+            "visible": true,
+            "pos": "84, 143",
+            "size": "56, 56"
+          },
+          "PanDown": {
+            "visible": true,
+            "pos": "84, 203",
+            "size": "56, 56"
+          },
+          "PanLeft": {
+            "visible": true,
+            "pos": "24, 203",
+            "size": "56, 56"
+          },
+          "PanRight": {
+            "visible": true,
+            "pos": "144, 203",
+            "size": "56, 56"
+          }
+        },
+        "inset": "0, 58",
+        "command": "ready"
+      },
+      "choice": "Gunship",
+      "hits": {
+        "1": "Players.KingKunkank.PlayerGui.OperatorTouchControls.Recenter",
+        "2": "Players.KingKunkank.PlayerGui.OperatorTouchControls.ControlViewport"
+      }
+    },
+    "panned": {
+      "raw": "374.5, 190.5",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "-66.33683776855469, 0, -89.64350128173828",
+      "reticle": "375, 191",
+      "events": {
+        "1": {
+          "pos": "172, 231, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        }
+      },
+      "fov": 30,
+      "viewport": "749, 381",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "637, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "234.5, 251",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "378.5, 251",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "649, 151",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 143",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 203",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 203",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 203",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "panned-before-recenter"
+    },
+    "recenterTap": {
+      "raw": "374.5, 190.5",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "0, 0, 0",
+      "reticle": "375, 191",
+      "events": {
+        "1": {
+          "pos": "172, 231, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "2": {
+          "type": "Touch",
+          "event": "RecenterBegan",
+          "pos": "685, 37, 0"
+        },
+        "3": {
+          "pos": "685, 37, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "4": {
+          "event": "RecenterActivated"
+        }
+      },
+      "fov": 30,
+      "viewport": "749, 381",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "637, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "234.5, 251",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "378.5, 251",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "649, 151",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 143",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 203",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 203",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 203",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "native-center-recenter"
+    },
+    "zoom": {
+      "raw": "374.5, 190.5",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "0, 0, 0",
+      "reticle": "375, 191",
+      "events": {
+        "1": {
+          "pos": "172, 231, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "2": {
+          "type": "Touch",
+          "event": "RecenterBegan",
+          "pos": "685, 37, 0"
+        },
+        "3": {
+          "pos": "685, 37, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "4": {
+          "event": "RecenterActivated"
+        },
+        "5": {
+          "pos": "447, 273, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        }
+      },
+      "fov": 40,
+      "viewport": "749, 381",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "637, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "234.5, 251",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "378.5, 251",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "649, 151",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 143",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 203",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 203",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 203",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "touch105-after-recenter"
+    },
+    "resized": {
+      "center": "379, 37",
+      "projectionOrigin": "-62, -20",
+      "deviceResolution": "568, 320",
+      "originalResolution": "874, 402",
+      "probe": {
+        "raw": "221.5, 149.5",
+        "direction": "0, 0",
+        "guiOrigin": "0, -58",
+        "focus": "0, 0, 0",
+        "reticle": "222, 150",
+        "events": {
+          "1": {
+            "pos": "172, 231, 0",
+            "type": "Touch",
+            "event": "Began",
+            "processed": true
+          },
+          "2": {
+            "type": "Touch",
+            "event": "RecenterBegan",
+            "pos": "685, 37, 0"
+          },
+          "3": {
+            "pos": "685, 37, 0",
+            "type": "Touch",
+            "event": "Began",
+            "processed": true
+          },
+          "4": {
+            "event": "RecenterActivated"
+          },
+          "5": {
+            "pos": "447, 273, 0",
+            "type": "Touch",
+            "event": "Began",
+            "processed": true
+          }
+        },
+        "fov": 40,
+        "viewport": "443, 299",
+        "controls": {
+          "Recenter": {
+            "visible": true,
+            "pos": "331, 16",
+            "size": "96, 42"
+          },
+          "GAU23": {
+            "visible": true,
+            "pos": "81.5, 169",
+            "size": "136, 44"
+          },
+          "M102": {
+            "visible": true,
+            "pos": "225.5, 169",
+            "size": "136, 44"
+          },
+          "Fire": {
+            "visible": true,
+            "pos": "343, 69",
+            "size": "76, 76"
+          },
+          "PanUp": {
+            "visible": true,
+            "pos": "84, 61",
+            "size": "56, 56"
+          },
+          "PanDown": {
+            "visible": true,
+            "pos": "84, 121",
+            "size": "56, 56"
+          },
+          "PanLeft": {
+            "visible": true,
+            "pos": "24, 121",
+            "size": "56, 56"
+          },
+          "PanRight": {
+            "visible": true,
+            "pos": "144, 121",
+            "size": "56, 56"
+          }
+        },
+        "inset": "0, 58",
+        "command": "resized"
+      },
+      "frames": 7,
+      "hits": {
+        "1": "Players.KingKunkank.PlayerGui.OperatorTouchControls.Recenter",
+        "2": "Players.KingKunkank.PlayerGui.OperatorTouchControls.ControlViewport"
+      }
+    },
+    "resizedPanned": {
+      "raw": "221.5, 149.5",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "24.703941345214844, 0, 92.46611022949219",
+      "reticle": "222, 150",
+      "events": {
+        "1": {
+          "pos": "172, 149, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        }
+      },
+      "fov": 40,
+      "viewport": "443, 299",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "331, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "81.5, 169",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "225.5, 169",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "343, 69",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 61",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 121",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 121",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 121",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "resized-panned"
+    },
+    "resizedRecenterTap": {
+      "raw": "221.5, 149.5",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "0, 0, 0",
+      "reticle": "222, 150",
+      "events": {
+        "1": {
+          "pos": "172, 149, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "2": {
+          "type": "Touch",
+          "event": "RecenterBegan",
+          "pos": "379, 37, 0"
+        },
+        "3": {
+          "pos": "379, 37, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "4": {
+          "event": "RecenterActivated"
+        }
+      },
+      "fov": 40,
+      "viewport": "443, 299",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "331, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "81.5, 169",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "225.5, 169",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "343, 69",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 61",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 121",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 121",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 121",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "resized-center-tap"
+    },
+    "resolutionRestored": {
+      "resolution": "874, 402",
+      "probe": {
+        "raw": "374.5, 190.5",
+        "direction": "0, 0",
+        "guiOrigin": "0, -58",
+        "focus": "0, 0, 0",
+        "reticle": "375, 191",
+        "events": {
+          "1": {
+            "pos": "172, 149, 0",
+            "type": "Touch",
+            "event": "Began",
+            "processed": true
+          },
+          "2": {
+            "type": "Touch",
+            "event": "RecenterBegan",
+            "pos": "379, 37, 0"
+          },
+          "3": {
+            "pos": "379, 37, 0",
+            "type": "Touch",
+            "event": "Began",
+            "processed": true
+          },
+          "4": {
+            "event": "RecenterActivated"
+          }
+        },
+        "fov": 40,
+        "viewport": "749, 381",
+        "controls": {
+          "Recenter": {
+            "visible": true,
+            "pos": "637, 16",
+            "size": "96, 42"
+          },
+          "GAU23": {
+            "visible": true,
+            "pos": "234.5, 251",
+            "size": "136, 44"
+          },
+          "M102": {
+            "visible": true,
+            "pos": "378.5, 251",
+            "size": "136, 44"
+          },
+          "Fire": {
+            "visible": true,
+            "pos": "649, 151",
+            "size": "76, 76"
+          },
+          "PanUp": {
+            "visible": true,
+            "pos": "84, 143",
+            "size": "56, 56"
+          },
+          "PanDown": {
+            "visible": true,
+            "pos": "84, 203",
+            "size": "56, 56"
+          },
+          "PanLeft": {
+            "visible": true,
+            "pos": "24, 203",
+            "size": "56, 56"
+          },
+          "PanRight": {
+            "visible": true,
+            "pos": "144, 203",
+            "size": "56, 56"
+          }
+        },
+        "inset": "0, 58",
+        "command": "resolution-restored"
+      }
+    },
+    "twoTouchHeld": {
+      "raw": "202.570862, 132.775055",
+      "direction": "1, 0",
+      "guiOrigin": "0, -58",
+      "focus": "-220.9539031982422, 0, -236.635498046875",
+      "reticle": "203, 133",
+      "events": {
+        "1": {
+          "pos": "365, 351, 0",
+          "type": "Keyboard",
+          "event": "Began",
+          "processed": false
+        },
+        "2": {
+          "pos": "365, 351, 0",
+          "type": "Keyboard",
+          "event": "Began",
+          "processed": false
+        },
+        "3": {
+          "pos": "172, 231, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "4": {
+          "pos": "202.57086181640625, 74.77505493164062, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": false
+        }
+      },
+      "fov": 30,
+      "viewport": "749, 381",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "637, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "234.5, 251",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "378.5, 251",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "649, 151",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 143",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 203",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 203",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 203",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "two-touch-held"
+    },
+    "twoTouchReleased": {
+      "raw": "202.570862, 132.775055",
+      "direction": "0, 0",
+      "guiOrigin": "0, -58",
+      "focus": "-225.3944549560547, 0, -251.9536590576172",
+      "reticle": "203, 133",
+      "events": {
+        "1": {
+          "pos": "365, 351, 0",
+          "type": "Keyboard",
+          "event": "Began",
+          "processed": false
+        },
+        "2": {
+          "pos": "365, 351, 0",
+          "type": "Keyboard",
+          "event": "Began",
+          "processed": false
+        },
+        "3": {
+          "pos": "172, 231, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": true
+        },
+        "4": {
+          "pos": "202.57086181640625, 74.77505493164062, 0",
+          "type": "Touch",
+          "event": "Began",
+          "processed": false
+        }
+      },
+      "fov": 30,
+      "viewport": "749, 381",
+      "controls": {
+        "Recenter": {
+          "visible": true,
+          "pos": "637, 16",
+          "size": "96, 42"
+        },
+        "GAU23": {
+          "visible": true,
+          "pos": "234.5, 251",
+          "size": "136, 44"
+        },
+        "M102": {
+          "visible": true,
+          "pos": "378.5, 251",
+          "size": "136, 44"
+        },
+        "Fire": {
+          "visible": true,
+          "pos": "649, 151",
+          "size": "76, 76"
+        },
+        "PanUp": {
+          "visible": true,
+          "pos": "84, 143",
+          "size": "56, 56"
+        },
+        "PanDown": {
+          "visible": true,
+          "pos": "84, 203",
+          "size": "56, 56"
+        },
+        "PanLeft": {
+          "visible": true,
+          "pos": "24, 203",
+          "size": "56, 56"
+        },
+        "PanRight": {
+          "visible": true,
+          "pos": "144, 203",
+          "size": "56, 56"
+        }
+      },
+      "inset": "0, 58",
+      "command": "two-touch-released"
+    }
+  }
+}

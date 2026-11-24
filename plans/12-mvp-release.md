@@ -1,5 +1,7 @@
 # P12 — Reconstructable release and multiplayer acceptance
 
+> Current-rule revision: [P18](18-game-rebalancing.md), requested 2026-11-23, supersedes prior health/three-rocket, panel-durability and circular camera-bound assumptions and adds the Seedship launcher. This plan's recorded tests remain historical evidence for their identified source. Future release checks must use P18's revised rules.
+
 **Milestone:** M6 / MVP. **Dependencies:** P11. **Requirements:** R01–R16. Status: [roadmap](../roadmap.md).
 
 ## Capability and player experience

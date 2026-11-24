@@ -5,7 +5,12 @@
     server-authored ThermalNonCover art is hidden when it neither collides nor
     queries. Explicit PanelFragmentVisual bodies in the PanelFragments collision
     group may collide with static scenery only and are also hidden from thermal
-    depth. Real solid cover remains visible; ground keeps all art/fragments.
+    depth. The canonical direct-child Aircraft Model is also locally hidden
+    while this operator owner is active, preventing its engines from masking the
+    targeting view. This never changes query/collision/physics or Ground clients.
+    Real solid cover remains visible; ground keeps all art/fragments.
+    Battlefield Parts and textured surfaces use a muted 0.45 brightness base;
+    authored Terrain palette uses 0.4. Character colors are not changed.
     Imported Models can also author an immutable ThermalBrightness multiplier
     and optional surface palette for operator-only tinting. Restores owned
     opacity, color, surfaces and listeners on role/map/fragment teardown.
@@ -20,18 +25,22 @@ type Owned = {
     restoreColor: (() -> ())?,
     hidden: boolean,
     fragmentWatches: boolean,
+    tinting: boolean,
     connections: { RBXScriptConnection },
 }
 
 -- Models scope the optional brightness to their present and future descendants.
 -- Only finite multipliers between black and the original color are accepted.
 local function artScope(part: BasePart, root: Instance): (number, Instance?)
+    local world = workspace:FindFirstChild("World")
+    local environment = world ~= nil and part:IsDescendantOf(world)
+    local base = if environment then 0.45 else 1
     local ancestor = part.Parent
     while ancestor do
         if ancestor:IsA("Model") then
             local multiplier = ancestor:GetAttribute("ThermalBrightness")
             if type(multiplier) == "number" and multiplier >= 0 and multiplier <= 1 then
-                return multiplier, ancestor
+                return multiplier * base, ancestor
             end
         end
         if ancestor == root then
@@ -39,7 +48,7 @@ local function artScope(part: BasePart, root: Instance): (number, Instance?)
         end
         ancestor = ancestor.Parent
     end
-    return 1, nil
+    return base, if environment then world else nil
 end
 
 -- Use a local SurfaceAppearance for mapped pixels on legacy TextureID meshes.
@@ -75,7 +84,11 @@ local function tint(part: BasePart, root: Instance): (() -> ())?
                 then palette:FindFirstChild(material)
                 else nil
             if not template or not template:IsA("SurfaceAppearance") then
-                return nil
+                local original = part.Color
+                part.Color = original:Lerp(black, fade)
+                return function()
+                    part.Color = original
+                end
             end
             local applied = template:Clone()
             applied.Color = applied.Color:Lerp(black, fade)
@@ -97,6 +110,28 @@ end
 function ThermalCosmetics.start(root: Instance): Controller
     local owned: { [BasePart]: Owned } = {}
     local running = true
+    -- Terrain material colors are local rendering state. Darken the authored
+    -- battlefield palette without changing voxels, collision or Ground clients.
+    local terrainColors: { [Enum.Material]: Color3 } = {}
+    if root == workspace then
+        for _, material in
+            {
+                Enum.Material.Sand,
+                Enum.Material.Sandstone,
+                Enum.Material.Ground,
+                Enum.Material.Cobblestone,
+                Enum.Material.Grass,
+                Enum.Material.LeafyGrass,
+                Enum.Material.Asphalt,
+                Enum.Material.Pavement,
+                Enum.Material.Mud,
+            }
+        do
+            local original = workspace.Terrain:GetMaterialColor(material)
+            terrainColors[material] = original
+            workspace.Terrain:SetMaterialColor(material, original:Lerp(black, 0.6))
+        end
+    end
     local function release(part: BasePart)
         local record = owned[part]
         if not record then
@@ -123,9 +158,27 @@ function ThermalCosmetics.start(root: Instance): Controller
             restoreColor = nil,
             hidden = false,
             fragmentWatches = false,
+            tinting = false,
             connections = {},
         }
         owned[part] = record
+        -- Mesh replication can deliver a SurfaceAppearance after its parent.
+        -- Restore the previous fallback before acquiring the new surface; local
+        -- palette clones also emit child events, so retinting cannot reenter.
+        local function refreshTint()
+            if not running or owned[part] ~= record or record.tinting then
+                return
+            end
+            record.tinting = true
+            if record.restoreColor then
+                record.restoreColor()
+                record.restoreColor = nil
+            end
+            if not record.hidden then
+                record.restoreColor = tint(part, root)
+            end
+            record.tinting = false
+        end
         local function update()
             if not running or owned[part] ~= record then
                 return
@@ -141,9 +194,14 @@ function ThermalCosmetics.start(root: Instance): Controller
                 and part.CollisionGroup == "PanelFragments"
                 and not part.Anchored
                 and not part.CanTouch
-            local hide = part:GetAttribute("ThermalNonCover") == true
-                and not part.CanQuery
-                and (not part.CanCollide or fragment)
+            local aircraft = root:FindFirstChild("Aircraft")
+            local ownAircraft = aircraft ~= nil and aircraft:IsA("Model") and part:IsDescendantOf(aircraft)
+            local hide = ownAircraft
+                or (
+                    part:GetAttribute("ThermalNonCover") == true
+                    and not part.CanQuery
+                    and (not part.CanCollide or fragment)
+                )
             if hide and not record.hidden then
                 record.original = part.LocalTransparencyModifier
                 record.hidden = true
@@ -153,7 +211,7 @@ function ThermalCosmetics.start(root: Instance): Controller
                 record.hidden = false
             end
             if not hide and not record.restoreColor then
-                record.restoreColor = tint(part, root)
+                refreshTint()
             end
         end
         table.insert(record.connections, part:GetAttributeChangedSignal("ThermalNonCover"):Connect(update))
@@ -163,6 +221,15 @@ function ThermalCosmetics.start(root: Instance): Controller
         )
         table.insert(record.connections, part:GetPropertyChangedSignal("CanCollide"):Connect(update))
         table.insert(record.connections, part:GetPropertyChangedSignal("CanQuery"):Connect(update))
+        if part:IsA("MeshPart") then
+            local function surfaceChanged(child: Instance)
+                if child:IsA("SurfaceAppearance") then
+                    refreshTint()
+                end
+            end
+            table.insert(record.connections, part.ChildAdded:Connect(surfaceChanged))
+            table.insert(record.connections, part.ChildRemoved:Connect(surfaceChanged))
+        end
         update()
     end
     local added = root.DescendantAdded:Connect(observe)
@@ -189,6 +256,10 @@ function ThermalCosmetics.start(root: Instance): Controller
             running = false
             added:Disconnect()
             removed:Disconnect()
+            for material, original in terrainColors do
+                workspace.Terrain:SetMaterialColor(material, original)
+            end
+            table.clear(terrainColors)
             for part in owned do
                 release(part)
             end

@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "feec2b1532ce7286a6f375f501081cb9ae536bf4",
+  "buildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+  "rojo": {
+    "address": "http://localhost:34872",
+    "projectName": "PlayersVsC130Tests",
+    "serverVersion": "7.7.1",
+    "reachableFromHost": true,
+    "note": "Default sandbox curl cannot reach this host-local listener; escalated read-only checks to localhost and127.0.0.1 both succeeded."
+  },
+  "oldStudio": {
+    "studioId": "ff02c443-b130-4920-a8ea-018ff0f23eed",
+    "runtimeMcp": "No OnInvoke handler responded",
+    "stopTool": "Start play hasn't finished yet",
+    "userReportedStopButton": "disabled",
+    "userQuit": "All previous Studio processes exited; no agent closure or force quit"
+  },
+  "launch": {
+    "method": "python3 scripts/launch_studio.py build/tests.rbxlx",
+    "exitCode": 2,
+    "result": "Studio is already running (PIDs [92350]); no launch attempted. Reuse its MCP studio_id and Rojo sync.",
+    "note": "User had restarted Studio. The guard prevented an additional process."
+  },
+  "currentStudio": {
+    "studioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+    "file": "tests.rbxlx",
+    "userOpenedFromFile": true,
+    "mode": "Edit",
+    "placeId": 0,
+    "gameId": 0,
+    "manualHarness": null,
+    "device": "default",
+    "orientation": "LandscapeLeft",
+    "preflight": {
+      "scripts": 170,
+      "geometry": 5,
+      "mismatches": [],
+      "passed": true
+    }
+  },
+  "currentScope": "Edit connection recovered and current artifact verified; fresh runtime/smoke/input/multiplayer acceptance belongs to independent tester reports, not this receipt."
+}

@@ -1,0 +1,1222 @@
+{
+  "source": {
+    "checkedHead": "8f906e49d084dd3c62cd32f7aac7e721152ec5d1",
+    "checkedTree": "e221def941a59cbd56f13c7cb87573b35ca88354",
+    "runtimeAndTestCommit": "5522e88be1617eaabfd4bdb0e7439ce076045e9d",
+    "runtimeAndTestTree": "f7f28a0f6ea451bf4c6941e78a5f8b043074cbac",
+    "preparedBuild": "build/p18-5522e88-tests.rbxlx",
+    "buildSha256": "55a3cd755578c51f3ecf851af4fd0a9900a76ae24fee9181e66a1f9aac59aee7",
+    "note": "8f906e4 changes only documentation/evidence after5522; no product/test writes by tester."
+  },
+  "environment": {
+    "studioId": "ff02c443-b130-4920-a8ea-018ff0f23eed",
+    "place": "Place1 (Version32)",
+    "placeId": 0,
+    "gameId": 0,
+    "studioVersion": "0.748.0.7481526",
+    "host": "macOS; repository zsh/python3",
+    "device": "iPhone17Pro landscapeLeft FitToWindow",
+    "nativeViewport": [
+      749,
+      381
+    ],
+    "capturePixels": [
+      1920,
+      881
+    ],
+    "inputToolCoordinateCalibration": {
+      "nativeX": "toolX-62",
+      "nativeY": "toolY-20",
+      "method": "measured actual UserInputService Touch events; no guessed image coordinates"
+    }
+  },
+  "hostGate": {
+    "command": "python3 scripts/verify.py",
+    "log": "build/p18-final-verify.log",
+    "ownership": "primary ran unchanged5522 candidate and reported success; independent tester adopts current exact gate; CI#545 matches",
+    "counts": {
+      "unit": 76,
+      "integration": 76,
+      "tooling": 26,
+      "assets": 58
+    }
+  },
+  "methods": {
+    "smoke": "fresh ordinary MCP Play, report attributes from actual Server/Client DataModels; no injected input provider",
+    "approaches": "build/p18-approach-clearance.luau executed Server, native rays/overlaps/blockcasts; no scene mutation",
+    "phone": "native user_mouse_input/user_keyboard_input; UserInputService/button listeners record actual Touch InputObjects; all owned listeners removed",
+    "rendered": "screen_capture captures seven original JPEGs; live GUI viewport749x381 differs from1920x881 capture so screenshots do not establish exact phone layout",
+    "visualFixture": "disposable actual Waiting avatar tagged ThermalTarget at(0,3,0); production Occluded Highlight and isolated accepted-outcome ledger/PanelGeometry; NOT competitive role, actual gunship fire or multiplayer proof"
+  },
+  "status": {
+    "ordinarySmoke": "190/190server and17/17client; zero errors/fails/skips",
+    "approaches": "two native4x6x4 lanes passed86 samples each; not two actual walks",
+    "thermal": "exposed red; solid roof hides target; six valid30mm outcomes over1second yieldHeavy opening visible bothFOVs; fixed backdrop/ownplane render accepted",
+    "touch": "four realTouch arrows + two simultaneous TouchInputObjects for pan/aim + acknowledged40/30 zoom passed; Recenter only clipped line reachable",
+    "multiplayer": "P18 initial3/final2 and adaptedP05 actual2 remain REQUIRED and NOT RUN in this final source review",
+    "endState": "Edit/default device/originalPhysicalSize scaling/LandscapeLeft/manualnil; no fixture/probe/HUD/backdrop/controls; normalpalette and16planeLTM0 restored"
+  },
+  "findings": [
+    {
+      "priority": 1,
+      "type": "reproducible usability defect",
+      "criterion": "A3 phone directional controls and usable Recenter; docs/testing focused native touch review",
+      "severity": "medium/material",
+      "reproduction": "Final source5522; iPhone17Pro LandscapeLeft FitToWindow; fresh normalPlay→test panel Operator preview. OperatorTouchControls DeviceSafeInsets root origin(0,-58), Recenter pos(637,-42),size96x42. Native GUI hit query685,y fory10/20/37/50/70 returnsnone; y0findsRecenter. Actual nativeTouch685,0resetsfocus; normal42px interior lies outsideviewport.",
+      "expected": "Recenter has a normal reachable touch target inside device-safe viewport.",
+      "observed": "only top boundary y0is hit-reachable under this nativephone state; screen_capture temporarily renders another size and shows wholebutton, so captureisnotcounterevidence.",
+      "recheck": "single fresh phonePlay after fix; actual current viewport+GUIhit query+native center tap, then preserve source parity."
+    }
+  ],
+  "raw": {
+    "parity": {
+      "mismatches": [],
+      "comparedScripts": 169,
+      "comparedGeometry": 5,
+      "passed": true,
+      "receipt": {
+        "scriptCount": 169,
+        "buildSha256": "55a3cd755578c51f3ecf851af4fd0a9900a76ae24fee9181e66a1f9aac59aee7",
+        "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+        "geometryCount": 5,
+        "sourceCommit": "5522e88be1617eaabfd4bdb0e7439ce076045e9d"
+      }
+    },
+    "deviceSetup": {
+      "originalDevice": "default",
+      "resolution": "874, 402",
+      "gameOrientation": "Enum.ScreenOrientation.LandscapeSensor",
+      "originalOrientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "scaling": "Enum.DeviceSimulatorScalingMode.FitToWindow",
+      "device": "iphone_17_pro",
+      "originalScaling": "Enum.DeviceSimulatorScalingMode.ScaleToPhysicalSize"
+    },
+    "render": {
+      "heartbeats": 27,
+      "viewport": "749, 381",
+      "touch": true,
+      "device": "iphone_17_pro",
+      "renders": 7
+    },
+    "serverSmoke": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":190,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":190}",
+      "players": 1,
+      "runtime": true
+    },
+    "clientSmoke": {
+      "roleButton": "594, 97",
+      "errors": "[]",
+      "viewport": "749, 381",
+      "preview": "Ground",
+      "userId": 2227341845,
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":17,\"userId\":2227341845,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":17}"
+    },
+    "approachFinal": {
+      "sampleSpacingStuds": 0.5,
+      "supportMethod": "native4x0.02x4 footprint blockcast plus9point support rays; body above highest support",
+      "lanes": {
+        "1": {
+          "supportFootprintCasts": 86,
+          "side": -1,
+          "ascendingFloorContacts": 0,
+          "samples": 86,
+          "passed": true,
+          "maxFloor": 2.5999999046325684,
+          "supportRays": 774,
+          "failures": [],
+          "points": {
+            "1": {
+              "1": -6,
+              "2": 0,
+              "3": 175.5
+            },
+            "2": {
+              "1": -6,
+              "2": 0,
+              "3": 188
+            },
+            "3": {
+              "1": -6,
+              "2": 0,
+              "3": 202
+            },
+            "4": {
+              "1": -4,
+              "2": 0,
+              "3": 210
+            },
+            "5": {
+              "1": 0,
+              "2": 0,
+              "3": 214
+            }
+          }
+        },
+        "2": {
+          "supportFootprintCasts": 86,
+          "side": 1,
+          "ascendingFloorContacts": 0,
+          "samples": 86,
+          "passed": true,
+          "maxFloor": 2.5999999046325684,
+          "supportRays": 774,
+          "failures": [],
+          "points": {
+            "1": {
+              "1": 6,
+              "2": 0,
+              "3": 175.5
+            },
+            "2": {
+              "1": 6,
+              "2": 0,
+              "3": 188
+            },
+            "3": {
+              "1": 6,
+              "2": 0,
+              "3": 202
+            },
+            "4": {
+              "1": 4,
+              "2": 0,
+              "3": 210
+            },
+            "5": {
+              "1": 0,
+              "2": 0,
+              "3": 214
+            }
+          }
+        }
+      },
+      "scope": "two native clearance lanes; one prior actual avatar walk remains separate",
+      "passed": true,
+      "footClearanceStuds": 0.2,
+      "bodySizeStuds": {
+        "1": 4,
+        "2": 6,
+        "3": 4
+      }
+    },
+    "approachSweeps": {
+      "sampleSpacingStuds": 0.5,
+      "supportMethod": "highest of9native downward support rays; floor-only ascending sweep contacts allowed below that support",
+      "lanes": {
+        "1": {
+          "supportRays": 801,
+          "side": -1,
+          "ascendingFloorContacts": 0,
+          "samples": 89,
+          "failures": {
+            "1": {
+              "kind": "body-overlap",
+              "position": "-6, 3.200000047683716, 185",
+              "parts": {
+                "1": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold01"
+              }
+            },
+            "2": {
+              "part": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold01",
+              "kind": "body-sweep",
+              "hit": "-5.368420600891113, 0.38633546233177185, 187",
+              "position": "-6, 3.200000047683716, 185"
+            },
+            "3": {
+              "kind": "body-overlap",
+              "position": "-6, 3.6000003814697266, 187",
+              "parts": {
+                "1": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold02"
+              }
+            },
+            "4": {
+              "part": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold02",
+              "kind": "body-sweep",
+              "hit": "-5.3801655769348145, 0.7754387259483337, 189",
+              "position": "-6, 3.6000003814697266, 187"
+            },
+            "5": {
+              "kind": "body-overlap",
+              "position": "-6, 4, 189",
+              "parts": {
+                "1": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold03"
+              }
+            },
+            "6": {
+              "part": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold03",
+              "kind": "body-sweep",
+              "hit": "-5.391479969024658, 1.1657459735870361, 191",
+              "position": "-6, 4, 189"
+            },
+            "7": {
+              "kind": "body-overlap",
+              "position": "-6, 4.400000095367432, 191",
+              "parts": {
+                "1": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold04"
+              }
+            },
+            "8": {
+              "part": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold04",
+              "kind": "body-sweep",
+              "hit": "-5.40239143371582, 1.557068109512329, 193",
+              "position": "-6, 4.400000095367432, 191"
+            },
+            "9": {
+              "kind": "body-overlap",
+              "position": "-6, 4.799999713897705, 193",
+              "parts": {
+                "1": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold05"
+              }
+            },
+            "10": {
+              "part": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold05",
+              "kind": "body-sweep",
+              "hit": "-5.412914752960205, 1.949253797531128, 195",
+              "position": "-6, 4.799999713897705, 193"
+            },
+            "11": {
+              "kind": "body-overlap",
+              "position": "-6, 5.199999809265137, 195",
+              "parts": {
+                "1": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold06"
+              }
+            },
+            "12": {
+              "part": "Workspace.World.Battlefield.PrismSeedshipHull.PrismStable.PrismThreshold06",
+              "kind": "body-sweep",
+              "hit": "-5.423076152801514, 2.342180013656616, 197",
+              "position": "-6, 5.199999809265137, 195"
+            }
+          },
+          "passed": false,
+          "maxFloor": 2.5999999046325684
+        },
+        "2": {
+          "supportRays": 801,
+          "side": 1,
+          "ascendingFloorContacts": 0,
+          "samples": 89,
+          "failures": [],
+          "passed": true,
+          "maxFloor": 2.5999999046325684
+        }
+      },
+      "scope": "two distinct native clearance/sweep lanes merging at interior pickup; no inference of a second actual avatar walk",
+      "passed": false,
+      "footClearanceStuds": 0.2,
+      "bodySizeStuds": "4, 6, 4"
+    },
+    "approachFootprintSweeps": {
+      "sampleSpacingStuds": 0.5,
+      "supportMethod": "native4x0.02x4 downward footprint blockcast plus9support rays; body6studs above highest support; floor-only ascending contacts below support allowed",
+      "lanes": {
+        "1": {
+          "supportRays": 801,
+          "supportFootprintCasts": 89,
+          "side": -1,
+          "ascendingFloorContacts": 0,
+          "samples": 89,
+          "failures": [],
+          "passed": true,
+          "maxFloor": 2.5999999046325684
+        },
+        "2": {
+          "supportRays": 801,
+          "supportFootprintCasts": 89,
+          "side": 1,
+          "ascendingFloorContacts": 0,
+          "samples": 89,
+          "failures": {
+            "1": {
+              "part": "Workspace.Terrain",
+              "kind": "footprint-support",
+              "position": "6, 0, 174"
+            }
+          },
+          "passed": false,
+          "maxFloor": 2.5999999046325684
+        }
+      },
+      "scope": "two distinct native clearance/sweep lanes merging at pickup; no inference of second actual avatar walk",
+      "passed": false,
+      "footClearanceStuds": 0.2,
+      "bodySizeStuds": "4, 6, 4"
+    },
+    "touchCalibration": {
+      "choice": "Gunship",
+      "role": "Gunship",
+      "events": {
+        "1": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": false,
+          "event": "began",
+          "pos": "532, 77, 0"
+        },
+        "2": {
+          "state": "End",
+          "type": "Touch",
+          "processed": false,
+          "event": "ended",
+          "pos": "532, 77, 0"
+        },
+        "3": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": false,
+          "event": "began",
+          "pos": "38, 80, 0"
+        },
+        "4": {
+          "state": "End",
+          "type": "Touch",
+          "processed": false,
+          "event": "ended",
+          "pos": "38, 80, 0"
+        },
+        "5": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": false,
+          "event": "began",
+          "pos": "638, 280, 0"
+        },
+        "6": {
+          "state": "End",
+          "type": "Touch",
+          "processed": false,
+          "event": "ended",
+          "pos": "638, 280, 0"
+        },
+        "7": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": false,
+          "event": "role",
+          "pos": "594, 97, 0"
+        },
+        "8": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": true,
+          "event": "began",
+          "pos": "594, 97, 0"
+        },
+        "9": {
+          "state": "End",
+          "type": "Touch",
+          "processed": true,
+          "event": "ended",
+          "pos": "594, 97, 0"
+        },
+        "10": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": false,
+          "event": "role",
+          "pos": "594, 97, 0"
+        },
+        "11": {
+          "state": "Begin",
+          "type": "Touch",
+          "processed": true,
+          "event": "began",
+          "pos": "594, 97, 0"
+        },
+        "12": {
+          "state": "End",
+          "type": "Touch",
+          "processed": true,
+          "event": "ended",
+          "pos": "594, 97, 0"
+        }
+      },
+      "buttons": {
+        "1": {
+          "pos": "234.5, 251",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.GAU23",
+          "name": "GAU23",
+          "size": "136, 44"
+        },
+        "2": {
+          "pos": "378.5, 251",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.M102",
+          "name": "M102",
+          "size": "136, 44"
+        },
+        "3": {
+          "pos": "637, -42",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.Recenter",
+          "name": "Recenter",
+          "size": "96, 42"
+        },
+        "4": {
+          "pos": "84, 143",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.PanUp",
+          "name": "PanUp",
+          "size": "56, 56"
+        },
+        "5": {
+          "pos": "24, 203",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.PanLeft",
+          "name": "PanLeft",
+          "size": "56, 56"
+        },
+        "6": {
+          "pos": "84, 203",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.PanDown",
+          "name": "PanDown",
+          "size": "56, 56"
+        },
+        "7": {
+          "pos": "144, 203",
+          "path": "Players.KingKunkank.PlayerGui.OperatorTouchControls.PanRight",
+          "name": "PanRight",
+          "size": "56, 56"
+        }
+      }
+    },
+    "touchRightHeld": {
+      "events": {
+        "1": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "PanRight",
+          "pos": "172, 231, 0"
+        },
+        "2": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "172, 231, 0",
+          "processed": true
+        }
+      },
+      "snapshot": {
+        "raw": "374.5, 190.5",
+        "direction": "1, 0",
+        "up": "-0.369113028049469, 0.8504547476768494, 0.374809592962265",
+        "right": "0.07698740810155869, 0.42988136410713196, -0.8995970487594604",
+        "aim": "-99.52001953125, 19.621826171875, -344.442626953125",
+        "tag": "right-held",
+        "time": 15.695121875032783,
+        "focus": "-175.0623016357422, 0, -360",
+        "fov": 30,
+        "guiOrigin": "0, -58",
+        "reticle": "375, 191",
+        "weapon": "GAU23"
+      }
+    },
+    "touchArrows": [
+      {
+        "name": "PanLeft",
+        "before": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.30699363350868225, 0.9320046901702881, -0.1926712989807129\",\"right\":\"0.5315858721733093, -1.08017408351202e-08, 0.8470044732093811\",\"aim\":\"-12.0928955078125, 0, 7.883697509765625\",\"tag\":\"before\",\"time\":64.04279087495525,\"focus\":\"0, 0, 0\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}"
+            }
+          ],
+          "isError": false
+        },
+        "input": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Success"
+            }
+          ],
+          "isError": false
+        },
+        "after": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"events\":{\"1\":{\"tag\":\"button\",\"type\":\"Touch\",\"name\":\"PanLeft\",\"pos\":\"52, 231, 0\"},\"3\":{\"tag\":\"ended\",\"type\":\"Touch\",\"pos\":\"52, 231, 0\",\"processed\":true},\"2\":{\"tag\":\"began\",\"type\":\"Touch\",\"pos\":\"52, 231, 0\",\"processed\":true}},\"snapshot\":{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.3863638639450073, 0.9166402816772461, -0.1024385392665863\",\"right\":\"0.49962952733039856, -0.11463934183120728, 0.8586199283599854\",\"aim\":\"-75.76752471923828, 0.09500002861022949, -84.54185485839844\",\"tag\":\"PanLeft\",\"time\":68.34092749992851,\"focus\":\"-64.51823425292969, 0, -91.37552642822266\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "name": "PanRight",
+        "before": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.3612532615661621, 0.9320046305656433, -0.0293832179158926\",\"right\":\"0.08106917887926102, -2.700434986735445e-09, 0.9967085123062134\",\"aim\":\"-14.36590576171875, 0.0000152587890625, 1.4184112548828125\",\"tag\":\"before\",\"time\":70.8755764166126,\"focus\":\"0, 0, 0\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}"
+            }
+          ],
+          "isError": false
+        },
+        "input": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Success"
+            }
+          ],
+          "isError": false
+        },
+        "after": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"events\":{\"1\":{\"tag\":\"button\",\"type\":\"Touch\",\"name\":\"PanRight\",\"pos\":\"172, 231, 0\"},\"3\":{\"tag\":\"ended\",\"type\":\"Touch\",\"pos\":\"172, 231, 0\",\"processed\":true},\"2\":{\"tag\":\"began\",\"type\":\"Touch\",\"pos\":\"172, 231, 0\",\"processed\":true}},\"snapshot\":{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.3106050193309784, 0.9412146806716919, 0.13281327486038208\",\"right\":\"-0.5721368789672852, 0.07354272902011871, 0.8168542385101318\",\"aim\":\"-22.99896240234375, 0, 87.13533020019531\",\"tag\":\"PanRight\",\"time\":77.8110283332644,\"focus\":\"-8.6935396194458, 0, 96.8210678100586\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "name": "PanUp",
+        "before": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.30088308453559875, 0.9320048093795776, 0.2020808905363083\",\"right\":\"-0.5575472116470337, 1.08017408351202e-08, 0.8301452994346619\",\"aim\":\"-12.120880126953125, 0, -7.8405914306640625\",\"tag\":\"before\",\"time\":80.50799795833882,\"focus\":\"0, 0, 0\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}"
+            }
+          ],
+          "isError": false
+        },
+        "input": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Success"
+            }
+          ],
+          "isError": false
+        },
+        "after": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"events\":{\"1\":{\"tag\":\"button\",\"type\":\"Touch\",\"name\":\"PanUp\",\"pos\":\"112, 171, 0\"},\"3\":{\"tag\":\"ended\",\"type\":\"Touch\",\"pos\":\"112, 171, 0\",\"processed\":true},\"2\":{\"tag\":\"began\",\"type\":\"Touch\",\"pos\":\"112, 171, 0\",\"processed\":true}},\"snapshot\":{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.14473722875118256, 0.9573173522949219, 0.25018903613090515\",\"right\":\"-0.8205568194389343, -0.025169737637043, 0.5710104703903198\",\"aim\":\"75.37626647949219, 0, 50.13232421875\",\"tag\":\"PanUp\",\"time\":87.0585337083321,\"focus\":\"88.5719985961914, 0, 68.55135345458984\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}}"
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "name": "PanDown",
+        "before": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"0.07566189765930176, 0.9320047497749329, 0.3544609844684601\",\"right\":\"-0.9779683947563171, 0, 0.20875343680381775\",\"aim\":\"-3.256683349609375, 0, -14.063568115234375\",\"tag\":\"before\",\"time\":91.49268333334476,\"focus\":\"0, 0, 0\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}"
+            }
+          ],
+          "isError": false
+        },
+        "input": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Success"
+            }
+          ],
+          "isError": false
+        },
+        "after": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"events\":{\"1\":{\"tag\":\"button\",\"type\":\"Touch\",\"name\":\"PanDown\",\"pos\":\"112, 231, 0\"},\"3\":{\"tag\":\"ended\",\"type\":\"Touch\",\"pos\":\"112, 231, 0\",\"processed\":true},\"2\":{\"tag\":\"began\",\"type\":\"Touch\",\"pos\":\"112, 231, 0\",\"processed\":true}},\"snapshot\":{\"raw\":\"374.5, 190.5\",\"direction\":\"0, 0\",\"up\":\"-0.02455993741750717, 0.8726412653923035, 0.48774367570877075\",\"right\":\"-0.9926126003265381, 0.036699749529361725, -0.11564315855503082\",\"aim\":\"-15.30624008178711, 0, -118.81578063964844\",\"tag\":\"PanDown\",\"time\":95.25806879170705,\"focus\":\"-16.053071975708008, 0, -110.78496551513672\",\"fov\":30,\"guiOrigin\":\"0, -58\",\"reticle\":\"375, 191\",\"weapon\":\"GAU23\"}}"
+            }
+          ],
+          "isError": false
+        }
+      }
+    ],
+    "touch105": {
+      "events": {
+        "1": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "PanDown",
+          "pos": "112, 231, 0"
+        },
+        "2": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "112, 231, 0",
+          "processed": true
+        },
+        "3": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "112, 231, 0",
+          "processed": true
+        },
+        "4": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "M102",
+          "pos": "447, 273, 0"
+        },
+        "5": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "6": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        }
+      },
+      "snapshot": {
+        "raw": "374.5, 190.5",
+        "direction": "0, 0",
+        "up": "-0.36156466603279114, 0.9270225167274475, 0.09950096160173416",
+        "right": "0.0005683563649654388, 0.10694007575511932, -0.9942653775215149",
+        "aim": "3.43310546875, 0.0000152587890625, -111.11282348632812",
+        "tag": "touch105",
+        "time": 113.15710645832587,
+        "focus": "-16.053071975708008, 0, -110.78496551513672",
+        "fov": 40,
+        "guiOrigin": "0, -58",
+        "reticle": "375, 191",
+        "weapon": "M102"
+      }
+    },
+    "touch30": {
+      "events": {
+        "1": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "PanDown",
+          "pos": "112, 231, 0"
+        },
+        "2": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "112, 231, 0",
+          "processed": true
+        },
+        "3": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "112, 231, 0",
+          "processed": true
+        },
+        "4": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "M102",
+          "pos": "447, 273, 0"
+        },
+        "5": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "6": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "7": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "GAU23",
+          "pos": "303, 273, 0"
+        },
+        "8": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "303, 273, 0",
+          "processed": true
+        },
+        "9": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "303, 273, 0",
+          "processed": true
+        }
+      },
+      "snapshot": {
+        "raw": "374.5, 190.5",
+        "direction": "0, 0",
+        "up": "-0.3533475995063782, 0.935295820236206, 0.01916283369064331",
+        "right": "0.201198548078537, 0.09598422795534134, -0.9748364686965942",
+        "aim": "-0.16943359375, 0.000030517578125, -107.77804565429688",
+        "tag": "touch30",
+        "time": 116.23975412501022,
+        "focus": "-16.053071975708008, 0, -110.78496551513672",
+        "fov": 30,
+        "guiOrigin": "0, -58",
+        "reticle": "375, 191",
+        "weapon": "GAU23"
+      }
+    },
+    "twoTouchHeld": {
+      "events": {
+        "1": {
+          "tag": "button",
+          "type": "Keyboard",
+          "name": "GAU23",
+          "pos": "365, 351, 0"
+        },
+        "2": {
+          "tag": "began",
+          "type": "Keyboard",
+          "pos": "365, 351, 0",
+          "processed": false
+        },
+        "3": {
+          "tag": "button",
+          "type": "Keyboard",
+          "name": "GAU23",
+          "pos": "365, 351, 0"
+        },
+        "4": {
+          "tag": "began",
+          "type": "Keyboard",
+          "pos": "365, 351, 0",
+          "processed": false
+        },
+        "5": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "PanRight",
+          "pos": "172, 231, 0"
+        },
+        "6": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "172, 231, 0",
+          "processed": true
+        },
+        "7": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "211.15509033203125, 73.485107421875, 0",
+          "processed": false
+        }
+      },
+      "snapshot": {
+        "raw": "211.15509, 131.485107",
+        "direction": "1, 0",
+        "up": "-0.06763537228107452, 0.8756858110427856, -0.4781211316585541",
+        "right": "0.7397110462188721, 0.3655937612056732, 0.5649502277374268",
+        "aim": "259.2998352050781, 0, 13.08392333984375",
+        "tag": "two-touch-held",
+        "time": 137.52285162499174,
+        "focus": "347.5522155761719, 0, 58.00715637207031",
+        "fov": 30,
+        "guiOrigin": "0, -58",
+        "reticle": "211, 131",
+        "weapon": "GAU23"
+      }
+    },
+    "touchRecenterEdge": {
+      "snapshot": {
+        "raw": "211.15509, 131.485107",
+        "direction": "0, 0",
+        "up": "0.36162620782852173, 0.9320046305656433, -0.024367600679397583",
+        "right": "0.06723093241453171, 2.700434986735445e-09, 0.997737467288971",
+        "aim": "77.91998291015625, 0, -107.18025207519531",
+        "tag": "recenter-visible-edge",
+        "time": 161.04566962493118,
+        "focus": "0, 0, 0",
+        "fov": 30,
+        "guiOrigin": "0, -58",
+        "reticle": "211, 131",
+        "weapon": "GAU23"
+      },
+      "bounds": {
+        "position": "637, -42",
+        "size": "96, 42"
+      },
+      "events": {
+        "1": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "Recenter",
+          "pos": "685, 0, 0"
+        },
+        "2": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "685, 0, 0",
+          "processed": true
+        },
+        "3": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "685, 0, 0",
+          "processed": true
+        }
+      },
+      "insets": "0, 58"
+    },
+    "touchCleanup": {
+      "events": {
+        "1": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "Recenter",
+          "pos": "685, 0, 0"
+        },
+        "2": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "685, 0, 0",
+          "processed": true
+        },
+        "3": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "685, 0, 0",
+          "processed": true
+        },
+        "4": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "375, 190, 0",
+          "processed": false
+        },
+        "5": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "375, 190, 0",
+          "processed": false
+        },
+        "6": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "M102",
+          "pos": "447, 273, 0"
+        },
+        "7": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "8": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "9": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "GAU23",
+          "pos": "303, 273, 0"
+        },
+        "10": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "303, 273, 0",
+          "processed": true
+        },
+        "11": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "303, 273, 0",
+          "processed": true
+        },
+        "12": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "M102",
+          "pos": "447, 273, 0"
+        },
+        "13": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "14": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "15": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "GAU23",
+          "pos": "303, 273, 0"
+        },
+        "16": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "303, 273, 0",
+          "processed": true
+        },
+        "17": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "303, 273, 0",
+          "processed": true
+        },
+        "18": {
+          "tag": "button",
+          "type": "Touch",
+          "name": "M102",
+          "pos": "447, 273, 0"
+        },
+        "19": {
+          "tag": "began",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        },
+        "20": {
+          "tag": "ended",
+          "type": "Touch",
+          "pos": "447, 273, 0",
+          "processed": true
+        }
+      },
+      "snapshot": {
+        "raw": "375, 248",
+        "direction": "0, 0",
+        "up": "-0.1698102355003357, 0.9320047497749329, -0.3202058672904968",
+        "right": "0.8834574818611145, 0, -0.4685114622116089",
+        "aim": "46.75791931152344, 0, 87.60092163085938",
+        "tag": "cleanup",
+        "time": 312.54973016667645,
+        "focus": "0, 0, 0",
+        "fov": 40,
+        "guiOrigin": "0, -58",
+        "reticle": "375, 248",
+        "weapon": "M102"
+      }
+    },
+    "roleRestoration": {
+      "controls": false,
+      "choice": "Auto",
+      "sand": "0.870588, 0.74902, 0.517647",
+      "backdrop": false,
+      "fixtures": false,
+      "hud": false,
+      "role": "Ground",
+      "probe": false,
+      "plane": {
+        "nonzeroLocalTransparency": 0,
+        "count": 16
+      },
+      "visualControl": false
+    },
+    "deviceReset": {
+      "before": {
+        "device": "iphone_17_pro"
+      },
+      "success": true,
+      "gameId": 0,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "placeId": 0,
+      "device": "default"
+    },
+    "captureRecords": [
+      {
+        "path": "build/p18-5522-phone-controls.jpg",
+        "mimeType": "image/jpeg",
+        "dataLength": 370116,
+        "result": "saved 277587\r\n"
+      },
+      {
+        "path": "build/p18-5522-exposed-30.jpg",
+        "mimeType": "image/jpeg",
+        "dataLength": 372996,
+        "result": "saved 279746\r\n"
+      },
+      {
+        "action": "Expose",
+        "fov": 40,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":2,\"appearance\":\"Total\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"role\":\"Waiting\",\"preview\":\"Gunship\",\"coverBlocked\":false,\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"floorY\":0,\"stage\":2,\"action\":\"Expose\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"role\":\"Waiting\",\"focus\":\"0, 0, 0\",\"viewport\":\"749, 381\",\"preview\":\"Gunship\",\"fov\":40}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-5522-expose-40.jpg",
+          "mimeType": "image/jpeg",
+          "dataLength": 352460,
+          "result": "saved 264344\r\n"
+        }
+      },
+      {
+        "action": "Cover",
+        "fov": 30,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"action\":\"Cover\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"coverBlocked\":true,\"role\":\"Waiting\",\"floorY\":0,\"hit\":\"Workspace.P18IndependentVisualFixture.P18ContrastRoof.Solid\",\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"preview\":\"Gunship\",\"stage\":0,\"appearance\":\"Pristine\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"role\":\"Waiting\",\"focus\":\"0, 0, 0\",\"viewport\":\"749, 381\",\"preview\":\"Gunship\",\"fov\":30}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-5522-cover-30.jpg",
+          "mimeType": "image/jpeg",
+          "dataLength": 310300,
+          "result": "saved 232725\r\n"
+        }
+      },
+      {
+        "action": "Cover",
+        "fov": 40,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"action\":\"Cover\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"coverBlocked\":true,\"role\":\"Waiting\",\"floorY\":0,\"hit\":\"Workspace.P18IndependentVisualFixture.P18ContrastRoof.Solid\",\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"preview\":\"Gunship\",\"stage\":0,\"appearance\":\"Pristine\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"role\":\"Waiting\",\"focus\":\"0, 0, 0\",\"viewport\":\"749, 381\",\"preview\":\"Gunship\",\"fov\":40}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-5522-cover-40.jpg",
+          "mimeType": "image/jpeg",
+          "dataLength": 274656,
+          "result": "saved 205991\r\n"
+        }
+      },
+      {
+        "action": "Opening",
+        "fov": 30,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"appearance\":\"Heavy\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"role\":\"Waiting\",\"preview\":\"Gunship\",\"coverBlocked\":false,\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"floorY\":0,\"stage\":1,\"action\":\"Opening\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"role\":\"Waiting\",\"focus\":\"0, 0, 0\",\"viewport\":\"749, 381\",\"preview\":\"Gunship\",\"fov\":30}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-5522-opening-30.jpg",
+          "mimeType": "image/jpeg",
+          "dataLength": 339824,
+          "result": "saved 254866\r\n"
+        }
+      },
+      {
+        "action": "Opening",
+        "fov": 40,
+        "native": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"sustained\":0,\"appearance\":\"Heavy\",\"scope\":\"disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof\",\"role\":\"Waiting\",\"preview\":\"Gunship\",\"coverBlocked\":false,\"target\":{\"1\":2227341845,\"2\":\"Workspace.KingKunkank\"},\"floorY\":0,\"stage\":1,\"action\":\"Opening\"}"
+            }
+          ],
+          "isError": false
+        },
+        "frame": {
+          "content": [
+            {
+              "type": "text",
+              "text": "{\"role\":\"Waiting\",\"focus\":\"0, 0, 0\",\"viewport\":\"749, 381\",\"preview\":\"Gunship\",\"fov\":40}"
+            }
+          ],
+          "isError": false
+        },
+        "saved": {
+          "path": "build/p18-5522-opening-40.jpg",
+          "mimeType": "image/jpeg",
+          "dataLength": 368168,
+          "result": "saved 276124\r\n"
+        }
+      }
+    ],
+    "visualSetup": {
+      "sustained": 2,
+      "appearance": "Total",
+      "scope": "disposable actual Waiting avatar tagged ThermalTarget; isolated production accepted-outcome ledger and PanelGeometry; not competitive role/fire/replication proof",
+      "role": "Waiting",
+      "preview": "Gunship",
+      "coverBlocked": false,
+      "target": {
+        "1": 2227341845,
+        "2": "Workspace.KingKunkank"
+      },
+      "floorY": 0,
+      "stage": 2,
+      "action": "Expose"
+    },
+    "visualClient": {
+      "viewport": "749, 381",
+      "hud": {
+        "ProjectionGuiOrigin": "-62, -20",
+        "PanLocalFocus": "0, 0",
+        "ReticlePixels": "375, 248",
+        "RawPointer": "375, 248",
+        "ProjectionCamera": {
+          "Rotation": "0.9053544402122498, -0.15391530096530914, 0.3957821726799011, -1.08017408351202e-08, 0.9320047497749329, 0.36244627833366394, -0.4246568977832794, -0.32814234495162964, 0.8437945246696472",
+          "Position": "152.87646484375, 140, 325.9275817871094"
+        },
+        "InputBlocked": false,
+        "AimAllowed": true,
+        "AimEndpoint": "33.32743835449219, 0, 70.5596923828125",
+        "ProjectionTime": 5538.952995833359,
+        "ProjectionViewport": "749, 381",
+        "PanDirection": "0, 0",
+        "ProjectionHit": "Workspace.World.Battlefield.GroundDisk",
+        "FOV": 30,
+        "PanFocus": "0, 0, 0",
+        "ProjectionFrame": 4098,
+        "Weapon": "GAU23"
+      },
+      "highlights": {
+        "1": {
+          "adornee": "Workspace.KingKunkank",
+          "depth": "Occluded",
+          "fill": "1, 0.12549, 0.0941176"
+        }
+      }
+    }
+  }
+}

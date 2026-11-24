@@ -1,0 +1,672 @@
+{
+  "commit": "01ed736e696aac6906bcd474165c798798050726",
+  "tree": "21b1c75fbe368c28d9e43f7c86adda0cd9c84805",
+  "testSha256": "a67eb95fc7b064a3de0edb016ce937581b4c920d7035eff9747d7aa425124aeb",
+  "runtime": "0fe790975b968f2b90b1149c22a5aeac5f30550a",
+  "originalEdit": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+  "environment": {
+    "studioVersion": "0.748.0.7481526",
+    "mode": "nativeServer&Clients",
+    "originalEditId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+    "actualServerId": "c054fbb5-5b15-4895-a68d-c4e3b2fae013",
+    "listedClientStudioIds": [
+      "dd84166b-44a4-4962-ae31-c1659130ef33",
+      "deba08c3-44c4-4a83-a7c8-331b9fc27752"
+    ],
+    "placeId": 0,
+    "gameId": 0,
+    "manualSelector": "P18",
+    "requestedClients": 3,
+    "initialActualClients": 3,
+    "initialIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "operatorCameraProbeId": -2,
+    "departure": {
+      "id": -1,
+      "method": "actualserverKick"
+    },
+    "finalActualClients": 2,
+    "finalIds": [
+      -2,
+      -3
+    ]
+  },
+  "precondition": "Rootverified170scripts/5poseszeroMismatchesinoriginalEditagainsttestbuilda67eb95…24aebandsetP18. Testercheckedgitcommit/tree, thenuserstartednewnativeServer&Clients. Thesearefreshchildprocesses/requirecaches. NoStudio/sourceconcurrentmutation.",
+  "verdict": {
+    "passed": true,
+    "discovered": 11,
+    "passedCases": 11,
+    "failed": 0,
+    "skipped": 0,
+    "serverSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 193,
+      "clientCount": 3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 193
+    },
+    "clientSmoke": {
+      "-3": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "discovered": 18,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "userId": -3
+      },
+      "-2": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "discovered": 18,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "userId": -2
+      },
+      "-1": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 18,
+        "discovered": 18,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "userId": -1
+      }
+    },
+    "structuralScope": "Trustedaccepted-outcomeledgerboundary+nativegeometry/replication, notgunshipinput/projectileflight. P05actual2requiredsupplementremainspending.",
+    "phoneAndRenderedScope": "Runtimeunchanged0fe7909, so feec2b1nativephoneRecenter/resize/touchproofand5522unchangedcontrast/navigationpathsapplywiththeirstatedscope. Noarchivedstagedharnessclaimedpass."
+  },
+  "resolvedFinding": {
+    "criterion": "A2wall/roof/Sandbreak/Seedshipcoverage",
+    "previous": "feec2b1P18selectorfailedbeforeimpacts",
+    "observed": "all6TotalpanelsandHeavy→Totalinterruptedburstreplicatedtoall3actualclients; roofSB.R.06.03selectedfromauthoredPanelSurfaceRoof",
+    "panels": [
+      "Prism_Skirt_01",
+      "Prism_Roof_01",
+      "SB.W.SE.02",
+      "SB.R.06.03",
+      "Outpost_S01_North_01",
+      "Outpost_S02_Roof_01_01",
+      "Outpost_S01_North_02"
+    ]
+  },
+  "reproducibleDefects": [],
+  "subjectiveFeel": "Noadditionaloperatedfeelreviewneededfortest-onlyselectorcorrection.",
+  "validationGaps": [
+    "adaptedP05actualtwoclientremote/physicalflightcase"
+  ],
+  "raw": {
+    "report": {
+      "skipped": 0,
+      "smoke": {
+        "clients": {
+          "-3": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 18,
+            "discovered": 18,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "userId": -3
+          },
+          "-2": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 18,
+            "discovered": 18,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "userId": -2
+          },
+          "-1": {
+            "errors": 0,
+            "skipped": 0,
+            "passed": 18,
+            "discovered": 18,
+            "environment": "Studio",
+            "seed": 1,
+            "suite": "P01-client",
+            "failed": 0,
+            "userId": -1
+          }
+        },
+        "server": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}"
+      },
+      "passed": 11,
+      "cases": [
+        {
+          "passed": true,
+          "name": "Three actual clients connect"
+        },
+        {
+          "passed": true,
+          "name": "A1 roster excludes operator and all clients share 2000 health"
+        },
+        {
+          "passed": true,
+          "name": "A2 native wall roof Sandbreak Seedship openings replicate"
+        },
+        {
+          "passed": true,
+          "name": "A3 square camera and two weapon profiles remain finite across orbit"
+        },
+        {
+          "passed": true,
+          "name": "A6 thermal targets are red and ground palette is muted with native occlusion"
+        },
+        {
+          "passed": true,
+          "name": "A4 four sites and raced Seedship pickup retain one owner"
+        },
+        {
+          "passed": true,
+          "name": "A4 fired drop recovery preserves reload and fixed damage"
+        },
+        {
+          "passed": true,
+          "name": "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup"
+        },
+        {
+          "passed": true,
+          "name": "A1 A4 reset restores four pristine sites and next deployment health"
+        },
+        {
+          "passed": true,
+          "name": "A1 A4 actual carrier departure recovers equipment without health resize"
+        },
+        {
+          "passed": true,
+          "name": "A3 A6 client owners clean up after replay and departure"
+        }
+      ],
+      "actualClients": 3,
+      "observations": [
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -1,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -2,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+        },
+        {
+          "action": "Panel",
+          "userId": -3,
+          "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+        },
+        {
+          "action": "SquareFrames",
+          "userId": -2,
+          "detail": "{\"minimumUpY\":-0.7290420532226563,\"samples\":730}"
+        },
+        {
+          "action": "Camera",
+          "userId": -2,
+          "detail": "{\"fov\":30,\"start\":[0,0],\"finish\":[43.48165512084961,-66.7435531616211]}"
+        },
+        {
+          "action": "Select",
+          "userId": -2,
+          "detail": "[]"
+        },
+        {
+          "action": "Camera",
+          "userId": -2,
+          "detail": "{\"fov\":40,\"start\":[0,0],\"finish\":[-61.37617111206055,-37.58333969116211]}"
+        },
+        {
+          "action": "Select",
+          "userId": -2,
+          "detail": "[]"
+        },
+        {
+          "action": "Thermal",
+          "userId": -2,
+          "detail": "{\"sand\":[0.3490196168422699,0.2980392277240753,0.2078431397676468],\"targets\":2,\"hiddenAircraftParts\":15,\"backdrop\":[0.14901961386203767,0.16470588743686677,0.1764705926179886]}"
+        },
+        {
+          "action": "AircraftMask",
+          "userId": -1,
+          "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+        },
+        {
+          "action": "AircraftMask",
+          "userId": -2,
+          "detail": "{\"aircraftParts\":15,\"hidden\":true}"
+        },
+        {
+          "action": "AircraftMask",
+          "userId": -3,
+          "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -3,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "ownerId": -1,
+          "launcherId": "launcher:1:Seedship",
+          "position": [
+            0,
+            5.599999904632568,
+            214
+          ]
+        },
+        {
+          "action": "EquipLauncher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Launcher",
+          "userId": -3,
+          "detail": "[]"
+        },
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":1900}"
+        },
+        {
+          "action": "Launcher",
+          "userId": -3,
+          "detail": "[]"
+        },
+        {
+          "action": "Observe",
+          "userId": -1,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Launcher",
+          "userId": -1,
+          "detail": "[]"
+        },
+        {
+          "action": "Observe",
+          "userId": -2,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "action": "Observe",
+          "userId": -3,
+          "detail": "{\"maximum\":2000,\"health\":2000}"
+        },
+        {
+          "userId": -1,
+          "kind": "actual-carrier-departure",
+          "method": "server-Kick",
+          "remainingClients": 2
+        },
+        {
+          "action": "Cleanup",
+          "userId": -2,
+          "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+        },
+        {
+          "action": "Cleanup",
+          "userId": -3,
+          "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+        }
+      ],
+      "finalClients": 2,
+      "environment": "Studio",
+      "failed": 0,
+      "suite": "P18-rebalancing",
+      "clientIds": [
+        -1,
+        -2,
+        -3
+      ],
+      "discovered": 11
+    },
+    "manualReportString": "{\"skipped\":0,\"smoke\":{\"clients\":{\"-3\":{\"errors\":0,\"skipped\":0,\"passed\":18,\"discovered\":18,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"userId\":-3},\"-2\":{\"errors\":0,\"skipped\":0,\"passed\":18,\"discovered\":18,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"userId\":-2},\"-1\":{\"errors\":0,\"skipped\":0,\"passed\":18,\"discovered\":18,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"userId\":-1}},\"server\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":193,\\\"clientCount\\\":3,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":193}\"},\"passed\":11,\"cases\":[{\"passed\":true,\"name\":\"Three actual clients connect\"},{\"passed\":true,\"name\":\"A1 roster excludes operator and all clients share 2000 health\"},{\"passed\":true,\"name\":\"A2 native wall roof Sandbreak Seedship openings replicate\"},{\"passed\":true,\"name\":\"A3 square camera and two weapon profiles remain finite across orbit\"},{\"passed\":true,\"name\":\"A6 thermal targets are red and ground palette is muted with native occlusion\"},{\"passed\":true,\"name\":\"A4 four sites and raced Seedship pickup retain one owner\"},{\"passed\":true,\"name\":\"A4 fired drop recovery preserves reload and fixed damage\"},{\"passed\":true,\"name\":\"A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup\"},{\"passed\":true,\"name\":\"A1 A4 reset restores four pristine sites and next deployment health\"},{\"passed\":true,\"name\":\"A1 A4 actual carrier departure recovers equipment without health resize\"},{\"passed\":true,\"name\":\"A3 A6 client owners clean up after replay and departure\"}],\"actualClients\":3,\"observations\":[{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Prism_Skirt_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Prism_Skirt_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Prism_Skirt_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Prism_Roof_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Prism_Roof_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Prism_Roof_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"SB.W.SE.02\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"SB.W.SE.02\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"SB.W.SE.02\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"SB.R.06.03\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"SB.R.06.03\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"SB.R.06.03\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S01_North_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S01_North_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S01_North_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S02_Roof_01_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S02_Roof_01_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S02_Roof_01_01\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Heavy\\\",\\\"id\\\":\\\"Outpost_S01_North_02\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Heavy\\\",\\\"id\\\":\\\"Outpost_S01_North_02\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Heavy\\\",\\\"id\\\":\\\"Outpost_S01_North_02\\\"}\"},{\"action\":\"Panel\",\"userId\":-1,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S01_North_02\\\"}\"},{\"action\":\"Panel\",\"userId\":-2,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S01_North_02\\\"}\"},{\"action\":\"Panel\",\"userId\":-3,\"detail\":\"{\\\"appearance\\\":\\\"Total\\\",\\\"id\\\":\\\"Outpost_S01_North_02\\\"}\"},{\"action\":\"SquareFrames\",\"userId\":-2,\"detail\":\"{\\\"minimumUpY\\\":-0.7290420532226563,\\\"samples\\\":730}\"},{\"action\":\"Camera\",\"userId\":-2,\"detail\":\"{\\\"fov\\\":30,\\\"start\\\":[0,0],\\\"finish\\\":[43.48165512084961,-66.7435531616211]}\"},{\"action\":\"Select\",\"userId\":-2,\"detail\":\"[]\"},{\"action\":\"Camera\",\"userId\":-2,\"detail\":\"{\\\"fov\\\":40,\\\"start\\\":[0,0],\\\"finish\\\":[-61.37617111206055,-37.58333969116211]}\"},{\"action\":\"Select\",\"userId\":-2,\"detail\":\"[]\"},{\"action\":\"Thermal\",\"userId\":-2,\"detail\":\"{\\\"sand\\\":[0.3490196168422699,0.2980392277240753,0.2078431397676468],\\\"targets\\\":2,\\\"hiddenAircraftParts\\\":15,\\\"backdrop\\\":[0.14901961386203767,0.16470588743686677,0.1764705926179886]}\"},{\"action\":\"AircraftMask\",\"userId\":-1,\"detail\":\"{\\\"aircraftParts\\\":15,\\\"hidden\\\":false}\"},{\"action\":\"AircraftMask\",\"userId\":-2,\"detail\":\"{\\\"aircraftParts\\\":15,\\\"hidden\\\":true}\"},{\"action\":\"AircraftMask\",\"userId\":-3,\"detail\":\"{\\\"aircraftParts\\\":15,\\\"hidden\\\":false}\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-3,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"ownerId\":-1,\"launcherId\":\"launcher:1:Seedship\",\"position\":[0,5.599999904632568,214]},{\"action\":\"EquipLauncher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Launcher\",\"userId\":-3,\"detail\":\"[]\"},{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":1900}\"},{\"action\":\"Launcher\",\"userId\":-3,\"detail\":\"[]\"},{\"action\":\"Observe\",\"userId\":-1,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Launcher\",\"userId\":-1,\"detail\":\"[]\"},{\"action\":\"Observe\",\"userId\":-2,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"action\":\"Observe\",\"userId\":-3,\"detail\":\"{\\\"maximum\\\":2000,\\\"health\\\":2000}\"},{\"userId\":-1,\"kind\":\"actual-carrier-departure\",\"method\":\"server-Kick\",\"remainingClients\":2},{\"action\":\"Cleanup\",\"userId\":-2,\"detail\":\"{\\\"restoredAircraftParts\\\":15,\\\"cleanup\\\":true}\"},{\"action\":\"Cleanup\",\"userId\":-3,\"detail\":\"{\\\"restoredAircraftParts\\\":15,\\\"cleanup\\\":true}\"}],\"finalClients\":2,\"environment\":\"Studio\",\"failed\":0,\"suite\":\"P18-rebalancing\",\"clientIds\":[-1,-2,-3],\"discovered\":11}",
+    "manualAndPrimaryEqual": true,
+    "serverEnvelope": {
+      "players": {
+        "1": {
+          "name": "Player2",
+          "id": -2
+        },
+        "2": {
+          "name": "Player3",
+          "id": -3
+        }
+      },
+      "stage": "A3 A6 client owners clean up after replay and departure",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}"
+    },
+    "initialServer": {
+      "players": {
+        "1": {
+          "role": "Waiting",
+          "name": "Player1",
+          "life": "Waiting",
+          "userId": -1,
+          "roundId": 0
+        },
+        "2": {
+          "role": "Waiting",
+          "name": "Player2",
+          "life": "Waiting",
+          "userId": -2,
+          "roundId": 0
+        },
+        "3": {
+          "role": "Waiting",
+          "name": "Player3",
+          "life": "Waiting",
+          "userId": -3,
+          "roundId": 0
+        }
+      },
+      "version": "0.748.0.7481526",
+      "name": "Server",
+      "gameId": 0,
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":193,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":193}",
+      "placeId": 0,
+      "stage": "A1 roster excludes operator and all clients share 2000 health",
+      "manual": "P18"
+    },
+    "nativeStudioStates": [
+      {
+        "studioId": "c054fbb5-5b15-4895-a68d-c4e3b2fae013",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Server"
+              }
+            ],
+            "isError": false
+          }
+        }
+      },
+      {
+        "studioId": "dd84166b-44a4-4962-ae31-c1659130ef33",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client"
+              }
+            ],
+            "isError": false
+          }
+        }
+      },
+      {
+        "studioId": "deba08c3-44c4-4a83-a7c8-331b9fc27752",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client"
+              }
+            ],
+            "isError": false
+          }
+        }
+      }
+    ],
+    "initialClientQueries": [
+      {
+        "studioId": "dd84166b-44a4-4962-ae31-c1659130ef33",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"gameId\":0,\"role\":\"Ground\",\"name\":\"Place1\",\"p18Harness\":true,\"viewport\":\"1274, 618\",\"placeId\":0,\"userId\":-1,\"life\":\"Alive\"}"
+              }
+            ],
+            "isError": false
+          }
+        }
+      },
+      {
+        "studioId": "deba08c3-44c4-4a83-a7c8-331b9fc27752",
+        "result": {
+          "status": "fulfilled",
+          "value": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"gameId\":0,\"role\":\"Ground\",\"name\":\"Place1\",\"p18Harness\":true,\"viewport\":\"1346, 649\",\"placeId\":0,\"userId\":-2,\"life\":\"Alive\"}"
+              }
+            ],
+            "isError": false
+          }
+        }
+      }
+    ]
+  },
+  "cleanup": {
+  "request": {
+    "remainingClients": 2,
+    "cleanupRequested": true,
+    "server": "Server"
+  },
+  "nativeSessionClosed": true,
+  "remainingStudioIds": [
+    "f205a8a1-46a0-4e7d-b315-337ce638f284"
+  ],
+  "editAndP05Ready": {
+    "requestedClients": 2,
+    "device": "default",
+    "placeId": 0,
+    "previousRestoredNil": true,
+    "running": false,
+    "name": "tests.rbxlx",
+    "gameId": 0,
+    "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+    "manual": "P05",
+    "previous": "P18"
+  },
+  "manualP18RestoredNilBeforeP05": true,
+  "next": "UsernativeServer&Clientsexact2startpending; nocandidate/sourcechanges"
+}
+}

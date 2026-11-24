@@ -61,7 +61,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         command.focusX = 1000
         assert(not view.validate(command, map, "GAU23", 360, 0), "impossible pan accepted")
         command = request("GAU23", 0, home)
-        command.x = -300
+        command.x = 360
         command.z = 0
         assert(not view.validate(command, map, "GAU23", 360, 0), "out-of-view target accepted")
         command = request("GAU23", 0, home)

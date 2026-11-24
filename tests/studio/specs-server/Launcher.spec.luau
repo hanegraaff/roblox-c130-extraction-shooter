@@ -124,7 +124,7 @@ return function()
                     placed[item:GetAttribute("LauncherId")] = item:GetPivot().Position
                 end
             end
-            for _, site in { "Radar", "Hangar", "Depot" } do
+            for _, site in { "Radar", "Hangar", "Depot", "Seedship" } do
                 local stand = launcher.snapshot(site)
                 local marker =
                     workspace.World.Battlefield.Anchors:FindFirstChild("Launcher" .. site) :: BasePart
@@ -133,28 +133,28 @@ return function()
                     "missing landmark pickup: " .. site
                 )
             end
-            assert(launcher.resources().representations == 3, "unexpected landmark weapon count")
+            assert(launcher.resources().representations == 4, "unexpected landmark weapon count")
             local origin = model:GetPivot().Position + Vector3.new(0, 50, 0)
             local before = ReplicatedStorage.AircraftState:GetAttribute("Health")
-            assert(before == 300, "health initialization")
+            assert(before == 1000, "health initialization")
             wall.Position, wall.Parent = origin - Vector3.yAxis * 20, workspace.World.Battlefield
             local collision, applied = ground.rocketCast(id, "P08blocked", origin, -Vector3.yAxis * 60)
             assert(
                 collision and not applied and collision.Y > model:GetPivot().Position.Y + 20,
                 "first cover ignored"
             )
-            assert(ReplicatedStorage.AircraftState:GetAttribute("Health") == 300, "cover damaged aircraft")
+            assert(ReplicatedStorage.AircraftState:GetAttribute("Health") == 1000, "cover damaged aircraft")
             wall:Destroy()
             assert(
                 not ground.rocketSweep(id, "P08nearMiss", origin + Vector3.xAxis * 100, -Vector3.yAxis * 60),
                 "near miss counted"
             )
-            for index = 1, 3 do
+            for index = 1, 10 do
                 local shot = "P08direct" .. tostring(index)
                 assert(ground.rocketSweep(id, shot, origin, -Vector3.yAxis * 60), "direct rocket missed")
                 assert(
-                    ReplicatedStorage.AircraftState:GetAttribute("Health") == 300 - index * 100,
-                    "three-hit health"
+                    ReplicatedStorage.AircraftState:GetAttribute("Health") == 1000 - index * 100,
+                    "fixed rocket damage against roster health"
                 )
                 assert(
                     not ground.rocketSweep(id, shot, origin, -Vector3.yAxis * 60),
@@ -163,7 +163,7 @@ return function()
             end
             match.step()
             local result = match.snapshot().result
-            assert(result and result.winner == "Ground", "third impact result")
+            assert(result and result.winner == "Ground", "tenth impact result")
             RunService.Heartbeat:Wait()
             task.wait()
             assert(

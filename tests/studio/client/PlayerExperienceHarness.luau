@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P10 test-only native client. Drives public Studio virtual input, inspects
 -- live production HUD/camera state and sends ordinary intents for authority checks.
 local HttpService = game:GetService("HttpService")
@@ -279,6 +280,7 @@ end
 -- Starts one listener for this native test only. Reports the actual local smoke
 -- results and releases the fixture when its owned server transport is destroyed.
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P10")
     task.spawn(function()
         local remote = ReplicatedStorage:WaitForChild("P10Harness", 120)
         if not remote or not remote:IsA("RemoteEvent") then

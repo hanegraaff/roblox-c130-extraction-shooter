@@ -1,0 +1,186 @@
+{
+  "candidate": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+  "tree": "d109efebcaaf20c2a3025024ec8fb18edfbbbc8c",
+  "testArtifactSha256": "4d661d1db420b253d5904c52bc0ede9cad9d8ea01e80353a2a5c6d9117df67d6",
+  "verdict": "Technical acceptance passes. No unresolved material product or fixture findings remain. Primary delivery must still commit/push the final evidence/documentation and update PR/roadmap completion.",
+  "environment": {
+    "host": "macOS26.6.2 arm64, Python3.10",
+    "studioVersion": "0.748.0.7481526",
+    "originalStudioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+    "file": "tests.rbxlx",
+    "placeId": 0,
+    "gameId": 0,
+    "nativeVisualViewport": [
+      1153,
+      579
+    ],
+    "graphics": "Automatic render and saved quality",
+    "lighting": {
+      "clockTime": 15.4,
+      "brightness": 2.1,
+      "globalShadows": true
+    }
+  },
+  "sourceProof": "170 scripts/five poses match UTF-8 lengths/djb2 checksums before fresh Play and again before SDK P05; zero mismatches. Receipt binds test artifact SHA256. This is checksum parity, not cryptographic loaded-source proof.",
+  "commands": {
+    "host": "python3 scripts/verify.py > build/p18-whitehot-final-verify.log 2>&1",
+    "p18": "StudioTestService:ExecuteMultiplayerTestAsync(3,{kind='P18'})",
+    "p05": "StudioTestService:ExecuteMultiplayerTestAsync(2,{kind='P05'})",
+    "visual": "Fresh ordinary MCP Play; actual source grade, controlled Waiting-avatar/roof fixture; native1/2 selection and six original MCP captures."
+  },
+  "counts": {
+    "host": {
+      "unit": 79,
+      "integration": 76,
+      "tooling": 26,
+      "assets": 58,
+      "exitCode": 0,
+      "elapsedSeconds": 252.071,
+      "ownership": "Primary ran exact unchanged42ae source; tester independently read atomic exit receipt and final log summaries."
+    },
+    "ordinarySolo": {
+      "server": 193,
+      "client": 18,
+      "actualClients": 1,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "p18": {
+      "discovered": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "initialClients": 3,
+      "initialIds": [
+        -1,
+        -2,
+        -3
+      ],
+      "finalClients": 2,
+      "departureId": -1,
+      "serverSmoke": 193,
+      "everyClientSmoke": 18
+    },
+    "p05": {
+      "discovered": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "actualClients": 2,
+      "ids": [
+        -1,
+        -2
+      ],
+      "serverSmoke": 193,
+      "everyClientSmoke": 18
+    }
+  },
+  "criterionTrace": [
+    {
+      "criterion": "A1/R08",
+      "evidence": "79/76 rules/integration boundaries and current P18 roster/shared2000, fixed100 damage, death/departure invariance and next-roster reset; all three client observations agree.",
+      "result": "pass"
+    },
+    {
+      "criterion": "A2/R09",
+      "evidence": "Current P18 six wall/roof Total openings across Prism/Sandbreak/Outpost plus interruptedHeavy→Total observations on all3; current P05 actual M102 shot4 opens pristineOutpost_S02_South_01 with native and both-client observations. Rule/batching/fragment/reset cases remain in host/native smoke.",
+      "result": "pass"
+    },
+    {
+      "criterion": "A3/R06/R12/R17",
+      "evidence": "Current unit edge/corner/reversal/orbit bounds and P18 730 actual-frame samples/bothFOVs/cleanup; earlier actual desktop+phone Recenter/resize/multitouch proof applies to unchanged input/layout algorithms. Diff0fe7909→42ae changes only grade/highlight styling in controller.",
+      "result": "pass"
+    },
+    {
+      "criterion": "A4/R10/R16",
+      "evidence": "Current P18 four sites, raced claim, one carrier, reload transfer/death/departure/reset; prior86-sample native4x6x4 lanes and actual six-waypoint avatar walk apply to unchanged assets/models, MapRules and MapService (diff894dc71→42ae is empty for these paths).",
+      "result": "pass"
+    },
+    {
+      "criterion": "A5/R15",
+      "evidence": "Exact final host gate/current smoke/P18/P05 pass; historical incompatible staged selectors reject explicitly and are not gameplay passes. Source and PR exist; primary final evidence commit/push and roadmap record remain delivery steps.",
+      "result": "technical pass; primary delivery pending"
+    },
+    {
+      "criterion": "A6/R22",
+      "evidence": "Six final-source30/40 scenes show clear white target, hidden solid-covered target and visibility through earnedHeavy opening; full textured world is monochrome and retains detail. Native18 specs prove palette/late-surface/opacity restoration; current P18 confirms white grade, Ground/operator isolation and idempotent HUD/grade/backdrop/aircraft cleanup.",
+      "result": "pass"
+    }
+  ],
+  "findings": {
+    "reproducibleDefects": [],
+    "subjectiveFeel": "Final white-on-dark monochrome preset retains readable detail; root independently reviewed and agreed. Earlier red/colored presentation and crushed4be prototype remain rejected historical evidence.",
+    "validationGaps": []
+  },
+  "limitations": [
+    "Controlled visual avatar is Waiting/tagged, not competitive multiplayer; P18 structural fixtures enter at trusted outcomes. P05 independently supplies actual client remote/projectile/opening proof.",
+    "Manual preview GUI role-exit observation was unavailable after rendering paused. No pass is claimed for that click; separate current native lifecycle specs and P18 teardown provide required cleanup evidence.",
+    "Earlier operated keyboard/touch/traversal evidence is carried only for unchanged input/geometry. No claim of a newly operated physical phone or second actual route walk.",
+    "P12 capacity/performance/Roblox-client release gates remain separate and uncompleted; no publication or merge was performed."
+  ],
+  "cleanup": {
+    "allSdkChildrenClosed": true,
+    "manualSelector": null,
+    "device": "default",
+    "orientation": "LandscapeLeft",
+    "scaling": "Final review used no simulator setters; prior original PhysicalSize scaling was restored and left unchanged.",
+    "ownedMarkersAndReturnsCleared": true,
+    "noOwnedFixtureCameraHoldGradeOverride": true,
+    "rojoConnection": "Left untouched/connected.",
+    "receipt": {
+      "removed": {
+        "1": "P18LastReport",
+        "2": "P18SdkAttemptStatus",
+        "3": "P18SdkAttemptMeta",
+        "4": "P05LastReport",
+        "5": "P05SdkAttemptStatus",
+        "6": "P05SdkAttemptMeta"
+      },
+      "device": "default",
+      "fixtureControl": false,
+      "grade": false,
+      "before": {
+        "P18": {
+          "reportPresent": true,
+          "status": "completed"
+        },
+        "P05": {
+          "reportPresent": true,
+          "status": "completed"
+        }
+      },
+      "running": false,
+      "name": "tests.rbxlx",
+      "gameId": 0,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "fixture": false,
+      "placeId": 0,
+      "backdrop": false
+    },
+    "remainingStudios": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    }
+  },
+  "evidence": {
+    "visual": "build/p18-42ae28b-native-visual.json",
+    "captures": "build/p18-42ae28b-white-capture-manifest.json",
+    "p18": "build/p18-42ae28b-sdk-p18.json",
+    "p05": "build/p18-42ae28b-sdk-p05.json",
+    "hostExit": "build/p18-whitehot-final-verify-exit.json",
+    "hostLog": "build/p18-whitehot-final-verify.log",
+    "history": [
+      "build/p18-feec2b1-restarted-p18.json",
+      "build/p18-4be21e0-grading-prototype.json"
+    ]
+  }
+}

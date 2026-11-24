@@ -1,0 +1,451 @@
+{
+  "sourceCommit": "894dc71c5246469623c2707454c8d7b9d98d1c41",
+  "sourceTree": "027b939c23708fbbc16633d8ff43fd4f9fd3740c",
+  "sourceParity": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"mismatches\":[],\"comparedScripts\":169,\"comparedGeometry\":5,\"passed\":true,\"receipt\":{\"scriptCount\":169,\"buildSha256\":\"fb88f3356dcb0d0f79da8562401645398d8f8310b3cf18b2fc814fb341e32abb\",\"sourceComparison\":\"UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof\",\"geometryCount\":5,\"sourceCommit\":\"894dc71c5246469623c2707454c8d7b9d98d1c41\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "serverSmoke": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"runtime\":true,\"playerCount\":1,\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":190,\\\"clientCount\\\":1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":190}\"}"
+      }
+    ],
+    "isError": false
+  },
+  "clientSmoke": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":16,\\\"userId\\\":2227341845,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":0,\\\"discovered\\\":16}\",\"role\":\"Waiting\",\"errors\":\"[]\",\"viewport\":\"1153, 579\",\"preview\":\"Ground\",\"userId\":2227341845}"
+      }
+    ],
+    "isError": false
+  },
+  "nativeKeys": [
+    {
+      "key": "A",
+      "before": {
+        "right": {
+          "1": -0.1436833143234253,
+          "2": 0,
+          "3": 0.9896237254142761
+        },
+        "up": {
+          "1": 0.3586854636669159,
+          "2": 0.9320047497749329,
+          "3": 0.052077487111091614
+        },
+        "blocked": false,
+        "focus": {
+          "1": 0,
+          "2": 0
+        },
+        "frame": 1334,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "after": {
+        "right": {
+          "1": -0.17524957656860352,
+          "2": -0.07877106219530106,
+          "3": 0.9813677072525024
+        },
+        "up": {
+          "1": 0.35715195536613464,
+          "2": 0.9238060712814331,
+          "3": 0.13792987167835236
+        },
+        "blocked": false,
+        "focus": {
+          "1": 6.99335241317749,
+          "2": -79.71173095703125
+        },
+        "frame": 1382,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "signedProjection": 79.88944820187481,
+      "passed": true
+    },
+    {
+      "key": "D",
+      "before": {
+        "right": {
+          "1": -0.5027987360954285,
+          "2": 0,
+          "3": 0.8644035458564758
+        },
+        "up": {
+          "1": 0.31329983472824097,
+          "2": 0.9320046901702881,
+          "3": 0.18223753571510315
+        },
+        "blocked": false,
+        "focus": {
+          "1": 0,
+          "2": 0
+        },
+        "frame": 1416,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "after": {
+        "right": {
+          "1": -0.7784226536750793,
+          "2": 0.07154270261526108,
+          "3": 0.623650312423706
+        },
+        "up": {
+          "1": 0.272165447473526,
+          "2": 0.9337153434753418,
+          "3": 0.23259705305099487
+        },
+        "blocked": false,
+        "focus": {
+          "1": -47.9179573059082,
+          "2": 63.95619583129883
+        },
+        "frame": 1455,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "signedProjection": 79.37705082575121,
+      "passed": true
+    },
+    {
+      "key": "W",
+      "before": {
+        "right": {
+          "1": -0.7591068744659424,
+          "2": 0,
+          "3": 0.6509660482406616
+        },
+        "up": {
+          "1": 0.23594021797180176,
+          "2": 0.9320046901702881,
+          "3": 0.27513545751571655
+        },
+        "blocked": false,
+        "focus": {
+          "1": 0,
+          "2": 0
+        },
+        "frame": 1488,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "after": {
+        "right": {
+          "1": -0.8552438020706177,
+          "2": -0.008498460054397583,
+          "3": 0.518156111240387
+        },
+        "up": {
+          "1": 0.1504267305135727,
+          "2": 0.9527441263198853,
+          "3": 0.26391351222991943
+        },
+        "blocked": false,
+        "focus": {
+          "1": 50.37098693847656,
+          "2": 62.32516098022461
+        },
+        "frame": 1529,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "signedProjection": 29.032403318753722,
+      "passed": true
+    },
+    {
+      "key": "S",
+      "before": {
+        "right": {
+          "1": -0.9376025199890137,
+          "2": 1.08017408351202e-8,
+          "3": 0.3477090001106262
+        },
+        "up": {
+          "1": 0.12602584064006805,
+          "2": 0.9320046901702881,
+          "3": 0.33983054757118225
+        },
+        "blocked": false,
+        "focus": {
+          "1": 0,
+          "2": 0
+        },
+        "frame": 1564,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "after": {
+        "right": {
+          "1": -0.9948588609695435,
+          "2": 0.020748648792505264,
+          "3": 0.09912245720624924
+        },
+        "up": {
+          "1": 0.06260152906179428,
+          "2": 0.8953766822814941,
+          "3": 0.4408872425556183
+        },
+        "blocked": false,
+        "focus": {
+          "1": -25.5549373626709,
+          "2": -75.66309356689453
+        },
+        "frame": 1610,
+        "reticle": {
+          "1": 570,
+          "2": 278
+        },
+        "fov": 40
+      },
+      "signedProjection": 28.93321298140225,
+      "passed": true
+    }
+  ],
+  "nativeMouseZoomEdge": {
+    "mouseBefore": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 40,
+      "frame": 2111,
+      "reticle": "300, 308",
+      "cameraUpY": 0.9320046901702881
+    },
+    "mouseAfter": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 40,
+      "frame": 2147,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9320046901702881
+    },
+    "beforeTwo": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 40,
+      "frame": 2180,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9320046901702881
+    },
+    "sendTwo": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Success"
+        }
+      ],
+      "isError": false
+    },
+    "afterTwo": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 40,
+      "frame": 2214,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9320047497749329
+    },
+    "beforeOne": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 40,
+      "frame": 2246,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9320046901702881
+    },
+    "sendOne": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Success"
+        }
+      ],
+      "isError": false
+    },
+    "afterOne": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 30,
+      "frame": 2283,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9320048093795776
+    },
+    "edge": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "360, 360",
+      "fov": 30,
+      "frame": 2425,
+      "reticle": "700, 308",
+      "cameraUpY": 0.8510072827339172
+    },
+    "reverse": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "353.894318, 280.236481",
+      "fov": 30,
+      "frame": 2465,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9373947381973267
+    },
+    "recenter": {
+      "direction": "0, 0",
+      "blocked": false,
+      "focus": "0, 0",
+      "fov": 30,
+      "frame": 2497,
+      "reticle": "700, 308",
+      "cameraUpY": 0.9320047497749329
+    }
+  },
+  "roleCleanup": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"sand\":\"0.870588, 0.74902, 0.517647\",\"choice\":\"Auto\",\"cameraType\":\"Enum.CameraType.Custom\",\"thermalEffect\":false,\"root\":\"0, 3.09802508354187, 120\",\"preview\":\"Ground\",\"thermalHUD\":false,\"tag\":false}"
+      }
+    ],
+    "isError": false
+  },
+  "route": [
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"role\":\"Waiting\",\"preview\":\"Ground\",\"health\":100,\"waypoints\":{\"1\":{\"target\":\"0, 3, 134\",\"seconds\":0.7954265000298619,\"reached\":true,\"position\":\"-0.00027684849919751287, 2.9980251789093018, 132.60305786132812\"},\"3\":{\"target\":\"0, 3, 174\",\"seconds\":1.3991176666459069,\"reached\":true,\"position\":\"-0.000001583686753292568, 2.9980251789093018, 172.06912231445312\"},\"2\":{\"target\":\"0, 3, 151\",\"seconds\":1.067536708433181,\"reached\":true,\"position\":\"-0.00002027137452387251, 2.9980251789093018, 149.66946411132812\"}}}"
+        }
+      ],
+      "isError": false
+    },
+    {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"health\":100,\"distanceToLauncher\":1.5000029802322388,\"source\":\"ordinary actual avatar Humanoid.MoveTo, no teleport/jump/demolition\",\"waypoints\":{\"1\":{\"target\":\"0, 3, 188\",\"seconds\":0.9477212500059977,\"reached\":true,\"position\":\"-8.692768460605294e-08, 3.143794059753418, 187.0980682373047\"},\"3\":{\"target\":\"0, 5.599999904632568, 214\",\"seconds\":0.7144881666172296,\"reached\":true,\"position\":\"-6.184563972055912e-10, 5.575425148010254, 212.5001983642578\"},\"2\":{\"target\":\"0, 5.400000095367432, 202\",\"seconds\":0.9854626250453293,\"reached\":true,\"position\":\"-5.0258677219972014e-09, 5.397975921630859, 201.12705993652344\"}}}"
+        }
+      ],
+      "isError": false
+    }
+  ],
+  "visualFixture": {
+    "scope": "Actual local avatar in Waiting/solo Operator preview, tagged ThermalTarget. Primitive100x1x100roof and isolated production DestructionService/PanelGeometry fixture. Opening earned by trusted valid GAU outcome replay, not actual client fire. This is one-client rendered/occlusion review, not multiplayer or competitive Ground-player evidence.",
+    "setup": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"action\":\"Expose\",\"blocked\":false,\"target\":\"0, 3.0000038146972656, 0\",\"scope\":\"actual local avatar tagged thermal fixture; roof geometry and earned outcome ledger are controlled; no client fire or multiplayer claim\",\"appearance\":\"Total\"}"
+        }
+      ],
+      "isError": false
+    },
+    "cover": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"action\":\"Cover\",\"blocked\":true,\"target\":\"0, 3.0000038146972656, 0\",\"scope\":\"actual local avatar tagged thermal fixture; roof geometry and earned outcome ledger are controlled; no client fire or multiplayer claim\",\"appearance\":\"Pristine\"}"
+        }
+      ],
+      "isError": false
+    },
+    "opening": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"action\":\"Opening\",\"blocked\":false,\"target\":\"0, 3.0000038146972656, 0\",\"scope\":\"actual local avatar tagged thermal fixture; roof geometry and earned outcome ledger are controlled; no client fire or multiplayer claim\",\"appearance\":\"Heavy\"}"
+        }
+      ],
+      "isError": false
+    },
+    "observations": [
+      "Red avatar clearly visible exposed",
+      "Avatar absent behind opaque full roof at30and40FOV",
+      "Red avatar visible through real Heavy opening at30and40FOV",
+      "Bright unmuted outside-level backdrop observed",
+      "Own Aircraft.Engine12/Engine22 intrudes across upper-left camera; rays atUV(.05,.05),(.2,.1),(.4,.1) confirmed source"
+    ],
+    "captures": [
+      "build/p18-exposed-30.jpg",
+      "build/p18-covered-30.jpg",
+      "build/p18-covered-40.jpg",
+      "build/p18-opening-30.jpg",
+      "build/p18-opening-40.jpg"
+    ],
+    "viewport": "1153x579",
+    "quality": "Automatic"
+  },
+  "mobileAttempt": {
+    "deviceSetup": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"ok\":false,\"touch\":false,\"device\":\"default\",\"problem\":\"StudioDeviceSimulatorService: orientation can only be set on mobile (phone or tablet) devices\",\"rolePosition\":\"998, 295\",\"viewport\":\"1153, 579\",\"original\":\"default\",\"originalOrientation\":\"Enum.ScreenOrientation.LandscapeLeft\",\"gameOrientation\":\"Enum.ScreenOrientation.LandscapeSensor\"}"
+        }
+      ],
+      "isError": false
+    },
+    "renderSample": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"device\":\"iphone_17_pro\",\"heartbeats\":36,\"renderFrames\":0,\"viewport\":\"1153, 579\"}"
+        }
+      ],
+      "isError": false
+    },
+    "cleanup": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"viewport\":\"1153, 579\",\"touch\":false,\"device\":\"default\",\"ok\":true}"
+        }
+      ],
+      "isError": false
+    },
+    "status": "Incomplete: changed device duringPlay;0RenderStepped/36Heartbeat,staleviewport, blockedcapture/pointercalls. Orchestrations canceled; device restoreddefaultandPlaystopped. Final phone setup will occur in Edit before fresh Play."
+  },
+  "remaining": [
+    "New visual backdrop/aircraft mask recheck atbothFOV",
+    "Native touch wiring/independent aim",
+    "Two native4x6x4approach lane sweeps",
+    "P18actual3-client initial2-client final",
+    "P05actual2-client remote/projectile/one-hit opening"
+  ],
+  "cleanup": "Current local place Edit; ManualHarnessnil; simulator default; temporary visual control/fixture/tag removed; no publication."
+}

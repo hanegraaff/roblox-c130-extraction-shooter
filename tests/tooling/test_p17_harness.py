@@ -28,7 +28,9 @@ BUILD = module("inspect_build")
 
 
 class P17HarnessBoundaryTests(unittest.TestCase):
-    def test_actual_manual_dispatch_starts_one_listener_and_ordinary_path_stays_intact(self):
+    def test_actual_dispatch_selects_one_entry_and_ordinary_exploration_omits_archived_waiters(self):
+        # Historical staged routing still selects one entry, whose separate version
+        # guard now rejects current balance before listeners/runtime ownership.
         # Execute the actual narrow entrypoint blocks under Luau, replacing only
         # services/module start callbacks. This proves dispatch, not engine IO.
         client = (ROOT / "tests/studio/client/init.client.luau").read_text()
@@ -73,7 +75,7 @@ assert(published(nil,true)=="" and published("unknown",true)=="","ordinary selec
 assert(published(nil,true,{kind="P10"})=="P10","SDK P10 did not select its single listener")
 assert(published(nil,false,{kind="P10"})=="","non-Studio selected SDK P10")
 local ordinary=started("")
-local ordinaryListeners={"CombatHarness","DestructionHarness","GroundCombatHarness","LauncherHarness","MatchOutcomeHarness","RoundHarness","AircraftHarness","AircraftPanHarness","ExpandedMapHarness"}
+local ordinaryListeners={"CombatHarness","RoundHarness","AircraftHarness","ExpandedMapHarness"}
 assert(#ordinary==#ordinaryListeners,"ordinary listener population changed")
 for _,name in ordinaryListeners do
     local occurrences=0

@@ -1,0 +1,31 @@
+{
+  "candidate": "4be21e02ca5a68ac19528680b845d92c40062b4a",
+  "tree": "abcc9271218237d79480543c27701ba67c94c929",
+  "captures": [
+    {
+      "path": "build/p18-4be21e0-white-exposed-30.jpg",
+      "bytes": 120564,
+      "mimeType": "image/jpeg",
+      "sha256": "67fc4208cf544d2d5177ab7ddf59c65b470760730505d9ab2f80899dc234028e"
+    },
+    {
+      "path": "build/p18-4be21e0-white-exposed-40.jpg",
+      "bytes": 183322,
+      "mimeType": "image/jpeg",
+      "sha256": "0c0defca9a5a49a5580f8f9c212e4a91afdd5905a3e799748232db69a751a3ca"
+    },
+    {
+      "path": "build/p18-4be21e0-grade-A-experiment.jpg",
+      "bytes": 237442,
+      "mimeType": "image/jpeg",
+      "sha256": "8885e117c2c1299ff43ba4f1e08d44f027047209fa4c72b9e61e8a54ee229182"
+    },
+    {
+      "path": "build/p18-4be21e0-grade-B-experiment.jpg",
+      "bytes": 214604,
+      "mimeType": "image/jpeg",
+      "sha256": "f7f3e85f38fb4816c0cc532804ea0be2186c400656f51d090900a3cc3991127f"
+    }
+  ],
+  "scope": "Firsttwoareunmodifiedcandidateexposedframes; lasttwoaretemporarygradingexperimentswithcameradrift, NOTmatchedA/BandNOTcandidatepasses. AlloriginalMCPJPEGs."
+}

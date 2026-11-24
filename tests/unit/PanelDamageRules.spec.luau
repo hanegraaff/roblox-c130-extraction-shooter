@@ -1,87 +1,78 @@
 --!strict
--- P07 A1/A2: pure heavy 0..6 boundaries, monotonicity and mixed stage budgets.
+-- P18 A2: one howitzer / two earned 30mm seconds, retained intermediate visuals.
 type API = typeof(require(game:GetService("ServerScriptService").Server.PanelDamageRules))
 return function(test: (string, () -> ()) -> (), candidate: unknown)
-    local Rules = candidate :: API
-    test("PanelDamageRules heavy hits zero through six preserve exact stage boundaries", function()
-        local state = Rules.new()
-        for hit = 0, 6 do
-            assert(state.stage == math.min(2, math.floor(hit / 3)), "wrong stage at heavy hit " .. hit)
+    local rules = candidate :: API
+    test("P18 one direct howitzer destroys pristine or partially damaged panels", function()
+        for _, credit in { 0, 0.15, 1, 1.8 } do
+            local state = rules.new()
+            rules.apply(state, false, credit)
             assert(
-                math.abs(Rules.progress(state) - (if hit == 6 then 1 else (hit % 3) / 3)) < 1e-8,
-                "missing per-hit progress"
+                rules.apply(state, true, 0) and state.stage == 2 and rules.appearance(state) == "Total",
+                'P18 assertion: rules.apply(state, true, 0) and state.stage == 2 and rules.appearance(state) == "Total"'
             )
-            if hit < 6 then
-                Rules.apply(state, true, 0)
-            end
+            assert(rules.progress(state) == 1 and not rules.apply(state, true, 0), "terminal mutation")
         end
-        assert(not Rules.apply(state, true, 0) and state.stage == 2, "destroyed was not idempotent")
     end)
-    test(
-        "PanelDamageRules nine seconds never advance early and apply epsilon only at rounding boundary",
-        function()
-            local state = Rules.new()
-            assert(not Rules.apply(state, false, 9 - 1e-5) and state.stage == 0, "early transition")
-            assert(Rules.apply(state, false, 1e-5) and state.stage == 1, "exact nine seconds")
-            assert(Rules.apply(state, false, 9 + 1e-5) and state.stage == 2, "above nine seconds")
-            local rounded = Rules.new()
-            for _ = 1, 60 do
-                Rules.apply(rounded, false, 0.15)
-            end
-            assert(rounded.stage == 1, "cadence rounding did not reach nine")
-        end
-    )
-    test("PanelDamageRules mixed earned credit advances both stages without surplus carry", function()
-        local state = Rules.new()
-        Rules.apply(state, true, 0)
-        Rules.apply(state, false, 5.9)
+    test("P18 30mm exact one/two-second boundaries retain cadence surplus", function()
+        local state = rules.new()
         assert(
-            state.heavySeconds == 3 and state.sustainedSeconds == 5.9 and state.stage == 0,
-            "earned mixed damage changed"
+            not rules.apply(state, false, 1 - 1e-5) and state.stage == 0,
+            "P18 assertion: not rules.apply(state, false, 1 - 1e-5) and state.stage == 0"
         )
-        assert(Rules.apply(state, false, 0.1) and state.stage == 1, "one heavy did not equal three seconds")
-        assert(state.heavySeconds == 0 and state.sustainedSeconds == 0, "stage boundary carried surplus")
-        Rules.apply(state, true, 0)
-        Rules.apply(state, true, 0)
-        assert(Rules.apply(state, false, 3) and state.stage == 2, "second-stage mixed threshold")
-    end)
-    test("PanelDamageRules appearance distinguishes first-zero Light Heavy-zero and Total", function()
-        local state = Rules.new()
-        assert(Rules.appearance(state) == "Pristine", "new panel is damaged")
-        Rules.apply(state, false, 0)
-        assert(Rules.appearance(state) == "Pristine", "first zero-credit impact appeared Light")
-        Rules.apply(state, false, 0.15)
-        assert(Rules.appearance(state) == "Light", "positive credit did not appear Light")
-        for _ = 1, 3 do
-            Rules.apply(state, true, 0)
+        assert(
+            rules.apply(state, false, 1e-5) and state.stage == 1,
+            "P18 assertion: rules.apply(state, false, 1e-5) and state.stage == 1"
+        )
+        assert(
+            not rules.apply(state, false, 1 - 1e-5) and state.stage == 1,
+            "P18 assertion: not rules.apply(state, false, 1 - 1e-5) and state.stage == 1"
+        )
+        assert(
+            rules.apply(state, false, 1e-5) and state.stage == 2,
+            "P18 assertion: rules.apply(state, false, 1e-5) and state.stage == 2"
+        )
+        local cadence = rules.new()
+        for _ = 1, 13 do
+            rules.apply(cadence, false, 0.15)
         end
         assert(
-            state.stage == 1 and Rules.progress(state) == 0 and Rules.appearance(state) == "Heavy",
-            "Heavy appearance reset with stage-local progress"
+            cadence.stage == 1 and math.abs(cadence.sustainedSeconds - 0.95) < 1e-8,
+            "P18 assertion: cadence.stage == 1 and math.abs(cadence.sustainedSeconds - 0.95) < 1e-8"
         )
-        for _ = 1, 3 do
-            Rules.apply(state, true, 0)
-        end
-        assert(Rules.appearance(state) == "Total", "destroyed appearance incorrect")
+        rules.apply(cadence, false, 0.05)
+        assert(cadence.stage == 2, "intermediate transition discarded earned time")
     end)
-    test(
-        "PanelDamageRules invalid seconds reject without mutation and overflow never skips stages",
-        function()
-            local state = Rules.new()
-            for _, seconds in { -1, math.huge, 0 / 0 } do
-                assert(
-                    not Rules.apply(state, false, seconds),
-                    "Expected not Rules.apply(state, false, seconds)"
-                )
-            end
+    test("P18 earned light and heavy visuals persist at zero local stage credit", function()
+        local state = rules.new()
+        assert(rules.appearance(state) == "Pristine", 'P18 assertion: rules.appearance(state) == "Pristine"')
+        rules.apply(state, false, 0)
+        assert(rules.appearance(state) == "Pristine", 'P18 assertion: rules.appearance(state) == "Pristine"')
+        rules.apply(state, false, 0.15)
+        assert(rules.appearance(state) == "Light", 'P18 assertion: rules.appearance(state) == "Light"')
+        rules.apply(state, false, 0.85)
+        assert(
+            state.stage == 1 and rules.progress(state) == 0 and rules.appearance(state) == "Heavy",
+            'P18 assertion: state.stage == 1 and rules.progress(state) == 0 and rules.appearance(state) == "Heavy"'
+        )
+        rules.apply(state, false, 1)
+        assert(rules.appearance(state) == "Total", 'P18 assertion: rules.appearance(state) == "Total"')
+    end)
+    test("P18 invalid elapsed credit rejects and finite oversized credit saturates Total", function()
+        local state = rules.new()
+        for _, elapsed in { -1, math.huge, -math.huge, 0 / 0 } do
             assert(
-                state.stage == 0 and Rules.progress(state) == 0,
-                "Expected state.stage == 0 and Rules.progress(state) == 0"
-            )
-            assert(
-                Rules.apply(state, false, 100) and state.stage == 1 and state.sustainedSeconds == 0,
-                "Expected Rules.apply(state, false, 100) and state.stage == 1 and state.sustainedSeconds == 0"
+                not rules.apply(state, false, elapsed),
+                "P18 assertion: not rules.apply(state, false, elapsed)"
             )
         end
-    )
+        assert(
+            state.stage == 0 and rules.progress(state) == 0,
+            "P18 assertion: state.stage == 0 and rules.progress(state) == 0"
+        )
+        assert(
+            rules.apply(state, false, 100) and state.stage == 2 and state.sustainedSeconds == 0,
+            "P18 assertion: rules.apply(state, false, 100) and state.stage == 2 and state.sustainedSeconds == 0"
+        )
+    end)
 end

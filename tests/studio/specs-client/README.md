@@ -1,5 +1,7 @@
 # Client engine specs
 
+The P18 ordinary smoke mapping exercises the current source. Dated discovery counts and reports below remain historical; they do not establish acceptance of revised health, destruction, square camera bounds or thermal contrast. See the [P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness) for fresh evidence requirements.
+
 This package is mapped to `ReplicatedStorage.ClientSpecs` only in the test place, so the automatic client runner can load its specs through TestEZ.
 
 It checks real replicated **Test** status, character/HumanoidRootPart availability and environment text in the status GUI. It exercises two explicit start/stop cycles of an independent StatusPanel while preserving the entrypoint panel, then restores the original name. Readiness is staged: successful server fixture completion within 60 seconds, RoundState/role rendezvous within 35 seconds, then a real ready avatar or explicit characterless late-spectator state within 25 seconds. This avoids racing character creation against server-owned fixtures. Timeout diagnostics preserve phase/role/life/load-lease and character/root presence; `ClientTests.StartupReadiness` records actual elapsed and avatar-stage time. These are test-only budgets, not production timing changes.
@@ -11,3 +13,7 @@ production camera owner in a real client with a fixture round ID that excludes
 the current roster. It checks the neutral camera's inert subject and
 idempotent cleanup. The P10 multiplayer harness separately exercises cycle
 input and living teammate following. [Player experience harness](../../../docs/testing.md#run-the-player-experience-harness)
+
+## Operator control placement
+
+`OperatorControlLayout.spec.luau` calls the production Recenter adapter with actual GUI Instances. It verifies complete bounds and native center-hit registration for negative/positive safe-canvas origins, viewport changes and the genuine device-safe root, then destroys its fixture. The matching pure pixel-intersection tests run in `AircraftPanRules.spec.luau`. An actual visible-center tap in phone emulation is a separate operated requirement; record its source and result rather than inferring it from geometry. [Current P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness)

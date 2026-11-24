@@ -467,8 +467,14 @@ function AircraftHarness.run()
                     assert(drawnError <= 1, "actual drawn reticle centre disagrees with projection pixels")
                     local effect = camera:FindFirstChild("OperatorThermal")
                     assert(
-                        effect and effect:IsA("ColorCorrectionEffect") and effect.Saturation == -1,
-                        "thermal grayscale missing"
+                        effect
+                            and effect:IsA("ColorCorrectionEffect")
+                            and effect.Saturation == -1
+                            and effect.Brightness >= -1
+                            and effect.Brightness <= 1
+                            and effect.Contrast >= -1
+                            and effect.Contrast <= 1,
+                        "white-hot monochrome grading missing or invalid"
                     )
                     local backdrop = camera:FindFirstChild("OperatorGroundBackdrop")
                     assert(

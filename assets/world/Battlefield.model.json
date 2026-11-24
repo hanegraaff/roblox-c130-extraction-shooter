@@ -5644,6 +5644,43 @@
               1.0
             ]
           }
+        },
+        {
+          "Name": "LauncherSeedship",
+          "ClassName": "Part",
+          "Properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              1,
+              0.2,
+              1
+            ],
+            "Color": [
+              0.3,
+              0.32,
+              0.34
+            ],
+            "TopSurface": "Smooth",
+            "BottomSurface": "Smooth",
+            "Transparency": 1,
+            "CanQuery": false,
+            "CanTouch": false,
+            "CFrame": [
+              0,
+              5.6,
+              214,
+              1.0,
+              0,
+              0.0,
+              0,
+              1,
+              0,
+              -0.0,
+              0,
+              1.0
+            ]
+          }
         }
       ]
     },
@@ -15358,6 +15395,43 @@
           }
         }
       ]
+    },
+    {
+      "Name": "SeedshipLauncherPlatform",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": true,
+        "CanQuery": true,
+        "CanTouch": false,
+        "Size": [
+          6,
+          0.2,
+          6
+        ],
+        "CFrame": [
+          0,
+          2.5,
+          214,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        "Color": [
+          0.18,
+          0.21,
+          0.22
+        ],
+        "Material": "Metal",
+        "TopSurface": "Smooth",
+        "BottomSurface": "Smooth"
+      }
     }
   ]
 }

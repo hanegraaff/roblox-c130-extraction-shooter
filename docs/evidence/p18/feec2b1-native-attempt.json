@@ -1,0 +1,69 @@
+{
+  "candidate": "feec2b1532ce7286a6f375f501081cb9ae536bf4",
+  "tree": "2eeeb160dd9572428d02470913c9e2f335688e26",
+  "runtimeCorrection": "0fe790975b968f2b90b1149c22a5aeac5f30550a",
+  "buildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+  "studio": {
+    "id": "ff02c443-b130-4920-a8ea-018ff0f23eed",
+    "name": "Place1 (Version32)",
+    "placeId": 0,
+    "gameId": 0,
+    "cloudUntouched": "527b9e08-7e1e-4afa-afab-1b0ae885b306"
+  },
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 170,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 170,
+      "buildSha256": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "feec2b1532ce7286a6f375f501081cb9ae536bf4"
+    }
+  },
+  "deviceSetup": {
+  "originalDevice": "default",
+  "resolution": "874, 402",
+  "gameOrientation": "Enum.ScreenOrientation.LandscapeSensor",
+  "originalOrientation": "Enum.ScreenOrientation.LandscapeLeft",
+  "scaling": "Enum.DeviceSimulatorScalingMode.FitToWindow",
+  "device": "iphone_17_pro",
+  "originalScaling": "Enum.DeviceSimulatorScalingMode.ScaleToPhysicalSize",
+  "evidenceRecovery": "Verbatim fields from completed device-setup MCP tool output printed before the subsequently pending Play exec wrapper was terminated; terminating wrapper discarded its store write. Not a new Studio query."
+},
+  "attempt": {
+    "method": "one fresh mcp start_stop_play(is_start=true) following parsed passing parity; waited roughly2½minutes then terminated only waiting exec wrapper, not Studio; no retry",
+    "state": {
+      "text": "- Current Studio Mode: Play\n- Available DataModels: Client, Server\n- Focused DataModel in the viewport: Client",
+      "isError": false
+    },
+    "clientReadiness": {
+      "text": "Network action ExecuteLuau.loadCode sent to DMN_ID_PLAYCLIENT failed - Target is not reachable (ExecuteLuau.loadCode, DMN_ID_PLAYCLIENT). No OnInvoke handler responded for this action. Sender: DMN_ID_STANDALONE.",
+      "isError": true
+    },
+    "serverReadiness": {
+      "text": "Network action ExecuteLuau.loadCode sent to DMN_ID_PLAYSERVER failed - Target is not reachable (ExecuteLuau.loadCode, DMN_ID_PLAYSERVER). No OnInvoke handler responded for this action. Sender: DMN_ID_STANDALONE.",
+      "isError": true
+    },
+    "console": {
+      "text": "Failed to load plugin {type=BuiltInStandalone filepath=Assistant_25203.rbxm OTA pluginVersionId=25203} in datamodel PlayServer\nFailed to upload TexturePack (Reason: PublishService AssetUpload failed. Info: Referenced Asset 53 is NOT found. ErrorCode: InvalidArgument). PBR textures may not be visible in game. Change a TextureId property to retry.\nFailed to load plugin {type=BuiltInStandalone filepath=Assistant_25203.rbxm OTA pluginVersionId=25203} in datamodel PlayClient\nContentId: rbxassetid://203785492 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120729973 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9113189096 failed due to: Asset type does not match requested type\nContentId: rbxassetid://9120018088 failed due to: Asset type does not match requested type",
+      "isError": false
+    }
+  },
+  "conclusion": {
+    "passed": false,
+    "checksUnavailable": [
+      "fresh ordinary server/client smoke",
+      "live rendering",
+      "phone Recenter native center tap/focusreset",
+      "affected touch/resize",
+      "manualP18threeclients andP05twoclients"
+    ],
+    "cause": "built-in Assistant_25203.rbxm failed to load in both PlayServer andPlayClient; host MCP responds but runtime targets have no OnInvoke handler",
+    "action": "User foreground existing LOCAL Place1 Version32, inspect/dismiss modal or resume ifpaused, focus Gameviewport; preserve existing session before next read-only readiness check",
+    "currentState": "Play, focusedClient, deviceiPhone17Pro landscapeLeftFitToWindow; manualselectorremainednil; no capture/input/fixture attempted; originaldefault/PhysicalSize/LandscapeLeft recorded for laterrestoration",
+    "retry": "none; no additional Studio processes"
+  }
+}

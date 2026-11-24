@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P11 client fixture for real Studio players. Observes replicated game state,
 -- forwards only named gameplay intents, and measures bounded render/memory data.
 -- A single test-only transport owns the listener and render connection.
@@ -87,6 +88,7 @@ end
 -- Starts the fixture after real Client TestEZ smoke. No listeners are active in
 -- ordinary local Play. Profile sampling never sends per-frame network traffic.
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P11Harness", 120)
         if not transport or not transport:IsA("RemoteEvent") then

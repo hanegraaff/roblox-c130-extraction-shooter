@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 --[=[
     P07 manual/SDK harness: two actual clients fire production gunship remotes,
     inspect persistent Light/Heavy/Total state and repeat actual round resets.
@@ -58,6 +59,7 @@ end
 -- Manual finish preserves report in the actual server before the human ends the
 -- native session. SDK EndTest is used only for a truly SDK-owned invocation.
 function Harness.run(finish: ((Report) -> ())?, sandbreakOnly: boolean?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P07")
     local cases: { Case } = {}
     local observations: { unknown } = {}
     local initialIds: { number } = {}

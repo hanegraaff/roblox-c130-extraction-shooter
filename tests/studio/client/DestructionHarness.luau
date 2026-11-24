@@ -1,4 +1,5 @@
 --!strict
+-- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
 -- P07 test-only real-client probes. Sends only production aim/selection intent.
 -- Panel assertions inspect replicated current state/rays; they do not award damage.
 local HttpService = game:GetService("HttpService")
@@ -189,6 +190,7 @@ local function waitFor(predicate: () -> boolean, label: string)
     assert(predicate(), "P07 client timeout: " .. label)
 end
 function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P07")
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P07Harness", 600)
         if not transport or not transport:IsA("RemoteEvent") then

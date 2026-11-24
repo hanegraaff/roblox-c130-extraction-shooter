@@ -1,27 +1,23 @@
 --!strict
 --[=[
-    AircraftPanRules: deterministic orbit-local camera pan and reticle rasterization.
-    Depends on MapRules/Validation; no Instances, transport, clock or yielding.
-    Focus is a ground point in the aircraft's rotating local map frame, in studs:
-    +X is radial toward the aircraft; +Z follows the orbit tangent at phase zero.
-    Camera-right points toward negative local Z.
-    Releasing input holds this relative view through the aircraft's full orbit.
-    The level edge may enter the outer quarter of each viewport centerline.
-    All corner rays still point downward; invalid inputs return nil and no
-    function mutates its arguments.
+    AircraftPanRules: deterministic square-bound camera pan, reticle raster and
+    bounded control placement.
+    Depends on MapRules/Validation, with no Instances, clocks, transport or yield.
+    Focus is a world-aligned offset from level center in studs. Aircraft pose
+    defines screen movement direction but never rotates a held focus. Only the
+    square edges block pan; invalid input rejects without mutating arguments.
 ]=]
 local MapRules = if script then require(script.Parent.MapRules) else require("./MapRules")
 local Validation = if script then require(script.Parent.Validation) else require("./Validation")
 local AircraftPanRules = {}
 export type Focus = { x: number, z: number }
 export type Pixels = { x: number, y: number }
+-- Pixel rectangle in one shared GUI-content coordinate space. Width/height are
+-- positive extents, not right/bottom coordinates; origins may be negative.
+export type PixelRect = { x: number, y: number, width: number, height: number }
 AircraftPanRules.defaults = table.freeze({
     speedStudsPerSecond = 120,
     maximumDeltaSeconds = 0.1,
-    edgeInsetStuds = 2,
-    homePitchRadians = math.rad(45),
-    maximumPitchRadians = math.rad(80),
-    edgeOverscanFraction = 0.25,
     backdropDepthStuds = 4,
 })
 
@@ -34,6 +30,71 @@ end
 -- inscribed disk covers the view at any aircraft phase; invalid maps reject.
 function AircraftPanRules.backdropHalfExtent(map: typeof(MapRules.defaults)): number?
     return if MapRules.validate(map) then backdropExtent(map) else nil
+end
+
+-- Returns a GUI-local top-left pixel position for a control in the top-right
+-- of the viewport/canvas intersection. Native GUI input excludes negative content
+-- coordinates even when a device-safe canvas starts above the viewport. Callers
+-- supply that actual input/render rectangle, and the measured canvas rectangle,
+-- in the same coordinate space. A shrinking intersection reduces padding first;
+-- if the whole control cannot fit, nil tells presentation to hide it. Rectangle
+-- arguments are never mutated. Dimensions/padding are finite nonnegative pixels.
+function AircraftPanRules.controlTopRight(
+    viewport: PixelRect,
+    canvas: PixelRect,
+    width: number,
+    height: number,
+    padding: number
+): Pixels?
+    for _, value in
+        {
+            viewport.x,
+            viewport.y,
+            viewport.width,
+            viewport.height,
+            canvas.x,
+            canvas.y,
+            canvas.width,
+            canvas.height,
+            width,
+            height,
+            padding,
+        }
+    do
+        if not Validation.isFinite(value) then
+            return nil
+        end
+    end
+    if
+        viewport.width <= 0
+        or viewport.height <= 0
+        or canvas.width <= 0
+        or canvas.height <= 0
+        or width <= 0
+        or height <= 0
+        or padding < 0
+    then
+        return nil
+    end
+    local right, bottom =
+        math.min(viewport.x + viewport.width, canvas.x + canvas.width),
+        math.min(viewport.y + viewport.height, canvas.y + canvas.height)
+    if not Validation.isFinite(right) or not Validation.isFinite(bottom) then
+        return nil
+    end
+    -- Reserve complete integer pixels inside both measured rectangles; this also
+    -- prevents final rasterization from crossing a fractional safe-area edge.
+    local leftLocal = math.ceil(math.max(viewport.x, canvas.x) - canvas.x)
+    local topLocal = math.ceil(math.max(viewport.y, canvas.y) - canvas.y)
+    local rightLocal = math.floor(right - canvas.x)
+    local bottomLocal = math.floor(bottom - canvas.y)
+    local boxWidth, boxHeight = math.ceil(width), math.ceil(height)
+    if rightLocal - leftLocal < boxWidth or bottomLocal - topLocal < boxHeight then
+        return nil
+    end
+    local horizontal = math.min(math.floor(padding), math.floor((rightLocal - leftLocal - boxWidth) / 2))
+    local vertical = math.min(math.floor(padding), math.floor((bottomLocal - topLocal - boxHeight) / 2))
+    return { x = rightLocal - horizontal - boxWidth, y = topLocal + vertical }
 end
 
 -- One integer viewport pixel pair drives both the GUI reticle and camera ray.
@@ -54,80 +115,15 @@ function AircraftPanRules.raster(pointerX: number, pointerY: number, width: numb
     return { x = coordinate(pointerX, width), y = coordinate(pointerY, height) }
 end
 
--- The four centerline samples sit one quarter of the screen inward from each
--- edge. Keeping them inside the disk lets the edge enter the outer quarter of
--- each centerline; curved level boundaries can expose more at the corners.
--- Corner rays must still point down and pitch stays short of vertical. A small
--- disk inset prevents perimeter-ring grazing under replication roundoff.
-local function fits(map: typeof(MapRules.defaults), focus: Focus, aspect: number, fovDegrees: number): boolean
-    local radius, altitude = map.radiusStuds, map.altitudeStuds
-    local dx, dz = focus.x - radius, focus.z
-    local length = math.sqrt(dx * dx + dz * dz + altitude * altitude)
-    local horizontalDistance = math.sqrt(dx * dx + dz * dz)
-    if
-        not Validation.isFinite(length)
-        or length <= 0
-        or dx >= 0
-        or horizontalDistance < altitude / math.tan(AircraftPanRules.defaults.maximumPitchRadians)
-    then
-        return false
-    end
-    local fx, fy, fz = dx / length, -altitude / length, dz / length
-    -- Project the orbit tangent into the look plane. Both signs are sampled,
-    -- so this basis has the same footprint as the camera's opposite right axis.
-    local rightLength = math.sqrt(1 - fz * fz)
-    if rightLength < 1e-6 then
-        return false
-    end
-    local rx, ry, rz = -fx * fz / rightLength, -fy * fz / rightLength, rightLength
-    local ux, uy, uz = fy * rz - fz * ry, fz * rx - fx * rz, fx * ry - fy * rx
-    local vertical = math.tan(math.rad(fovDegrees) * 0.5)
-    local horizontal = aspect * vertical
-    local limit = radius - AircraftPanRules.defaults.edgeInsetStuds
-    if limit <= 0 then
-        return false
-    end
-    local extent = backdropExtent(map)
-    if not extent then
-        return false
-    end
-    for _, side in { -1, 1 } do
-        for _, top in { -1, 1 } do
-            local x = fx + side * horizontal * rx + top * vertical * ux
-            local y = fy + side * horizontal * ry + top * vertical * uy
-            local z = fz + side * horizontal * rz + top * vertical * uz
-            if y >= -1e-9 then
-                return false
-            end
-            local distance = (altitude + AircraftPanRules.defaults.backdropDepthStuds) / -y
-            local backdropX, backdropZ = radius + x * distance, z * distance
-            if
-                not Validation.isFinite(backdropX)
-                or not Validation.isFinite(backdropZ)
-                or (backdropX / extent) ^ 2 + (backdropZ / extent) ^ 2 > 1
-            then
-                return false
-            end
-        end
-    end
-    local inner = 1 - 2 * AircraftPanRules.defaults.edgeOverscanFraction
-    for _, sample in { { -inner, 0 }, { inner, 0 }, { 0, -inner }, { 0, inner } } do
-        local rayX = fx + sample[1] * horizontal * rx + sample[2] * vertical * ux
-        local rayY = fy + sample[1] * horizontal * ry + sample[2] * vertical * uy
-        local rayZ = fz + sample[1] * horizontal * rz + sample[2] * vertical * uz
-        if rayY >= -1e-9 then
-            return false
-        end
-        local distance = altitude / -rayY
-        local hitX, hitZ = radius + rayX * distance, rayZ * distance
-        if not Validation.isFinite(hitX) or not Validation.isFinite(hitZ) then
-            return false
-        end
-        if hitX * hitX + hitZ * hitZ > limit * limit then
-            return false
-        end
-    end
-    return true
+-- Focus uses world-aligned offsets from the map center. P18 deliberately has
+-- no frustum, disk or pitch restriction: only the square edges limit movement.
+local function fits(
+    map: typeof(MapRules.defaults),
+    focus: Focus,
+    _aspect: number,
+    _fovDegrees: number
+): boolean
+    return math.abs(focus.x) <= map.radiusStuds and math.abs(focus.z) <= map.radiusStuds
 end
 
 -- FOV is vertical degrees; aspect is viewport width divided by height.
@@ -149,8 +145,8 @@ function AircraftPanRules.viewFits(
         and fits(map, focus, aspect, fovDegrees)
 end
 
--- Selects the safe default view nearest a 45-degree downward pitch.
--- Nil means no bounded view fits the selected level, viewport and lens.
+-- Recenter returns an independent map-center focus. Invalid level/lens/viewport
+-- input rejects; no viewing-angle restriction reduces square access.
 function AircraftPanRules.recenter(map: typeof(MapRules.defaults), aspect: number, fovDegrees: number): Focus?
     if
         not MapRules.validate(map)
@@ -162,22 +158,11 @@ function AircraftPanRules.recenter(map: typeof(MapRules.defaults), aspect: numbe
     if aspect <= 0 or aspect > 10 or fovDegrees <= 0 or fovDegrees >= 120 then
         return nil
     end
-    for offset = 0, 70 do
-        for _, direction in { 1, -1 } do
-            local pitch = AircraftPanRules.defaults.homePitchRadians + math.rad(offset * 0.5 * direction)
-            if pitch > 0 and pitch < math.pi * 0.5 then
-                local candidate = { x = map.radiusStuds - map.altitudeStuds / math.tan(pitch), z = 0 }
-                if fits(map, candidate, aspect, fovDegrees) then
-                    return candidate
-                end
-            end
-        end
-    end
-    return nil
+    return { x = 0, z = 0 }
 end
 
--- Adapts only unusually wide viewports; normal desktop and phone ratios retain
--- the configured lens. This presentation value never changes server selection.
+-- Keeps the configured vertical lens at every supported aspect. Lens selection
+-- changes zoom alone and cannot reduce the square pan envelope.
 function AircraftPanRules.supportedFov(
     map: typeof(MapRules.defaults),
     aspect: number,
@@ -196,37 +181,14 @@ function AircraftPanRules.supportedFov(
     return nil
 end
 
--- Clips toward a requested local point from an already-safe origin. Separate
--- axis clips let diagonal input slide along the curved valid-view boundary.
-local function clip(
-    map: typeof(MapRules.defaults),
-    from: Focus,
-    desired: Focus,
-    aspect: number,
-    fovDegrees: number
-): Focus
-    if fits(map, desired, aspect, fovDegrees) then
-        return desired
-    end
-    local lower, upper = 0, 1
-    for _ = 1, 18 do
-        local middle = (lower + upper) * 0.5
-        local candidate = {
-            x = from.x + (desired.x - from.x) * middle,
-            z = from.z + (desired.z - from.z) * middle,
-        }
-        if fits(map, candidate, aspect, fovDegrees) then
-            lower = middle
-        else
-            upper = middle
-        end
-    end
-    return { x = from.x + (desired.x - from.x) * lower, z = from.z + (desired.z - from.z) * lower }
-end
-
--- Integrates WASD/touch in the rotating camera plane. Right decreases local Z;
--- up looks farther across the level (decreases local X). The widest enabled
--- lens bounds both profiles so switching zoom preserves the relative pan state.
+-- Integrates signed screen axes in the ground plane, then clamps X and Z
+-- independently to world square edges. Optional canonical aircraft coordinates
+-- default to phase zero for pure callers. Projected camera-right defines a stable
+-- screen basis even when focus is directly under the aircraft. Each ground
+-- direction is the horizontal projection of that displayed axis. Componentwise
+-- square clipping cannot reverse its signed screen projection: every surviving
+-- component retains its sign. Combined input follows the weighted screen-axis
+-- gradient, normalized to bound speed. No hidden offset accumulates at an edge.
 function AircraftPanRules.step(
     map: typeof(MapRules.defaults),
     focus: Focus,
@@ -235,12 +197,16 @@ function AircraftPanRules.step(
     deltaSeconds: number,
     blocked: boolean,
     aspect: number,
-    fovDegrees: number
+    fovDegrees: number,
+    aircraftX: number?,
+    aircraftZ: number?
 ): Focus?
     if not AircraftPanRules.viewFits(map, focus, aspect, fovDegrees) then
         return nil
     end
-    for _, value in { right, up, deltaSeconds } do
+    local cameraX = aircraftX or (map.centerX + map.radiusStuds)
+    local cameraZ = aircraftZ or map.centerZ
+    for _, value in { right, up, deltaSeconds, cameraX, cameraZ } do
         if not Validation.isFinite(value) then
             return nil
         end
@@ -251,16 +217,45 @@ function AircraftPanRules.step(
     if blocked or deltaSeconds == 0 or (right == 0 and up == 0) then
         return { x = focus.x, z = focus.z }
     end
-    local normalized = math.max(1, math.sqrt(right * right + up * up))
+    local radialX, radialZ = cameraX - map.centerX, cameraZ - map.centerZ
+    local radius = math.sqrt(radialX ^ 2 + radialZ ^ 2)
+    if not Validation.isFinite(radius) or radius < 1e-6 then
+        return nil
+    end
+    radialX, radialZ = radialX / radius, radialZ / radius
+    local dx, dz = map.centerX + focus.x - cameraX, map.centerZ + focus.z - cameraZ
+    local length = math.sqrt(dx ^ 2 + dz ^ 2 + map.altitudeStuds ^ 2)
+    if not Validation.isFinite(length) or length <= 0 then
+        return nil
+    end
+    local fx, fy, fz = dx / length, -map.altitudeStuds / length, dz / length
+    local projection = radialZ * fx - radialX * fz
+    local rx, ry, rz = radialZ - fx * projection, -fy * projection, -radialX - fz * projection
+    local rlength = math.sqrt(rx ^ 2 + ry ^ 2 + rz ^ 2)
+    if rlength < 1e-6 then
+        return nil
+    end
+    rx, ry, rz = rx / rlength, ry / rlength, rz / rlength
+    local ux, uz = ry * fz - rz * fy, rx * fy - ry * fx
+    local rground = math.sqrt(ux ^ 2 + uz ^ 2)
+    local uground = math.sqrt(rx ^ 2 + rz ^ 2)
+    if rground < 1e-9 or uground < 1e-9 then
+        return nil
+    end
+    local moveX = right * rx / uground + up * ux / rground
+    local moveZ = right * rz / uground + up * uz / rground
+    local normalization = math.max(1, math.sqrt(moveX ^ 2 + moveZ ^ 2))
     local distance = math.min(deltaSeconds, AircraftPanRules.defaults.maximumDeltaSeconds)
         * AircraftPanRules.defaults.speedStudsPerSecond
-    local nextZ =
-        clip(map, focus, { x = focus.x, z = focus.z - right / normalized * distance }, aspect, fovDegrees)
-    return clip(map, nextZ, { x = nextZ.x - up / normalized * distance, z = nextZ.z }, aspect, fovDegrees)
+        / normalization
+    return {
+        x = math.clamp(focus.x + moveX * distance, -map.radiusStuds, map.radiusStuds),
+        z = math.clamp(focus.z + moveZ * distance, -map.radiusStuds, map.radiusStuds),
+    }
 end
 
--- Rotates a held local focus with the canonical aircraft orbit. This never
--- writes the aircraft pose. Returns a world-space ground point in studs.
+-- Converts a world-aligned map-local focus to world studs. Held focus stays
+-- fixed while the canonical plane orbits; source pose is validated, never changed.
 function AircraftPanRules.worldFocus(
     map: typeof(MapRules.defaults),
     focus: Focus,
@@ -275,16 +270,9 @@ function AircraftPanRules.worldFocus(
             return nil
         end
     end
-    local radialX, radialZ = aircraftX - map.centerX, aircraftZ - map.centerZ
-    local length = math.sqrt(radialX * radialX + radialZ * radialZ)
-    if not Validation.isFinite(length) or length < 1e-6 then
+    if not fits(map, focus, 1, 40) then
         return nil
     end
-    radialX /= length
-    radialZ /= length
-    return {
-        x = map.centerX + radialX * focus.x - radialZ * focus.z,
-        z = map.centerZ + radialZ * focus.x + radialX * focus.z,
-    }
+    return { x = map.centerX + focus.x, z = map.centerZ + focus.z }
 end
 return AircraftPanRules

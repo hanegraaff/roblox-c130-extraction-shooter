@@ -47,9 +47,10 @@ return function()
                         local ray = frame.LookVector
                             + frame.RightVector * raster.X * tangent * aspect
                             + frame.UpVector * raster.Y * tangent
-                        assert(ray.Y < 0, "P14 centerline unexpectedly points into sky")
-                        local target = position + ray * (-position.Y / ray.Y)
-                        assert(Map.inside(map, target.X, target.Z), "P14 bounded centerline escaped level")
+                        -- Square presentation may include ground outside the disk or
+                        -- sky at its widest edges. Projection authorization is distinct
+                        -- from the authoritative playable aim envelope.
+                        local target = position + ray * 500
                         local request = {
                             roundId = 1,
                             sequence = 1,

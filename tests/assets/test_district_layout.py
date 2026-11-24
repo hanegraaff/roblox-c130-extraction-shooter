@@ -44,11 +44,15 @@ class DistrictLayoutTests(unittest.TestCase):
                     self.assertIn(layout.paint(x, z), "dpav", name)
                 self.assertEqual(layout.relief(x, z), 0, name)
 
-    def test_south_site_stays_flat_with_only_three_launcher_pickups(self):
+    def test_south_site_stays_flat_with_four_landmark_launcher_pickups(self):
         self.assertNotIn("SouthBuildingReserve", self.nodes)
         anchors = {node["Name"]: node["Properties"]["CFrame"][:3]
                    for node in self.nodes["Anchors"]["Children"] if node["Name"].startswith("Launcher")}
         self.assertEqual(anchors, {key: list(pos) for key, pos in layout.SITES.items()})
+        platform = self.nodes["SeedshipLauncherPlatform"]["Properties"]
+        self.assertEqual(platform["CFrame"][:3], [0, 2.5, 214])
+        self.assertEqual(platform["Size"], [6, 0.2, 6])
+        self.assertTrue(platform["CanCollide"] and platform["CanQuery"])
         for x in range(-106, 107, 4):
             for z in range(186, 333, 4):
                 self.assertEqual(layout.relief(x, z), 0)

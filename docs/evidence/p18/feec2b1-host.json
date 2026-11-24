@@ -1,0 +1,47 @@
+{
+  "sourceCommit": "feec2b1532ce7286a6f375f501081cb9ae536bf4",
+  "sourceTree": "2eeeb160dd9572428d02470913c9e2f335688e26",
+  "command": "python3 scripts/verify.py > build/p18-recenter-final-verify.log 2>&1",
+  "environment": "macOS26.6.2 Darwin arm64, Python3.10",
+  "exitCode": 0,
+  "allNonStudioGatesPassed": true,
+  "ruleSuites": [
+    {
+      "discovered": 79,
+      "failed": 0,
+      "passed": 79,
+      "skipped": 0,
+      "suite": "unit"
+    },
+    {
+      "discovered": 76,
+      "failed": 0,
+      "passed": 76,
+      "skipped": 0,
+      "suite": "integration"
+    }
+  ],
+  "pythonSuiteCounts": [
+    [
+      "26",
+      "0.525"
+    ],
+    [
+      "58",
+      "35.082"
+    ]
+  ],
+  "artifactLines": [
+    "Authored geometry reconstruction passed: 11459 release/11459 test part transforms, dimensions, shape and collision flags.",
+    "Artifact isolation passed: 24751 release Instances, 24868 test Instances; 64 runtime scripts only in release."
+  ],
+  "builds": {
+    "game": "561c7b43a8963e2c9c5678b9f4ac0fd217401c62270c860e11ee24c69437d019",
+    "tests": "26a32e0c9f87329536bc2744821cc1e70ab90386d8529d1a3b6f94bbdac3bbf7"
+  },
+  "githubVerify": {
+    "run": 549,
+    "conclusion": "success",
+    "url": "https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45304653208"
+  }
+}

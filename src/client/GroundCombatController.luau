@@ -502,7 +502,7 @@ function GroundCombatController.new(
                     local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
                     local closest = math.huge
                     launcher = nil
-                    for _, attribute in { "Snapshot", "HangarSnapshot", "DepotSnapshot" } do
+                    for _, attribute in { "Snapshot", "HangarSnapshot", "DepotSnapshot", "SeedshipSnapshot" } do
                         local value = if launcherState then launcherState:GetAttribute(attribute) else nil
                         local encoded = if type(value) == "string" then value else nil
                         if encoded ~= launcherEncoded[attribute] then
