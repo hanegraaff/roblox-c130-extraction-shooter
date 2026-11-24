@@ -123,6 +123,12 @@ function RoundHarness.run()
             else nil)
         return
     end
+    if RunService:IsStudio() and args == nil and selector == "P19Profile" then
+        require(script.Parent.PerformanceHarness).profile(function(report)
+            workspace:SetAttribute("ManualP19ProfileReport", HttpService:JSONEncode(report))
+        end)
+        return
+    end
     if RunService:IsStudio() and args == nil and selector == "P11" and development then
         require(script.Parent.PerformanceHarness).run(
             development:GetAttribute("ManualP11Scenario"),
@@ -237,6 +243,10 @@ function RoundHarness.run()
     end
     if type(args) == "table" and args.kind == "P10" then
         require(script.Parent.PlayerExperienceHarness).run()
+        return
+    end
+    if type(args) == "table" and args.kind == "P19Profile" then
+        require(script.Parent.PerformanceHarness).profile()
         return
     end
     if type(args) == "table" and args.kind == "P11" then

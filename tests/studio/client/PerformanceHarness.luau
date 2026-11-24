@@ -87,8 +87,7 @@ end
 
 -- Starts the fixture after real Client TestEZ smoke. No listeners are active in
 -- ordinary local Play. Profile sampling never sends per-frame network traffic.
-function Harness.run()
-    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
+local function listen()
     task.spawn(function()
         local transport = ReplicatedStorage:WaitForChild("P11Harness", 120)
         if not transport or not transport:IsA("RemoteEvent") then
@@ -179,5 +178,14 @@ function Harness.run()
         transport:FireServer(-1, true, script.Parent:GetAttribute("ClientTestReport"))
     end)
 end
+
+-- Reject historical clients before subscribing to fixture transport.
+function Harness.run()
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
+    listen()
+end
+
+-- Subscribes to the current profile after real client smoke.
+Harness.profile = listen
 
 return Harness

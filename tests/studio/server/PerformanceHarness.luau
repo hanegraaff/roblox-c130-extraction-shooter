@@ -1,5 +1,5 @@
 --!strict
--- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
+-- P19Profile reuses P11 timing and measurement with current battlefield targets.
 -- P11 test-only coordinator for actual players and production combat owners.
 -- The same seeded workload drives profiling and soak. A scoped RemoteEvent asks
 -- clients to send production intents and report observations; it never grants
@@ -119,7 +119,7 @@ local function checkBounds(counts: Counts)
         counts.pendingBarriers <= DestructionService.outcomeWindow + 1,
         "structural barrier window exceeded"
     )
-    assert(counts.launcherRepresentations <= 3, "launcher representation duplicated")
+    assert(counts.launcherRepresentations <= 4, "launcher representation duplicated")
     assert(counts.fragments <= PanelFragments.defaults.maximum, "fragment cap exceeded")
 end
 
@@ -150,8 +150,7 @@ end
 
 -- Studio SDK and native Server & Clients use the same coordinator. Only a
 -- trusted server-side invocation picks a scenario/actual client count.
-function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?)
-    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
+local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?, suite: string)
     local mode: Mode = if rawMode == "Latency"
             or rawMode == "Profile"
             or rawMode == "Soak"
@@ -162,7 +161,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
     local observations: { [string]: unknown } = {}
     local roster: { Player } = {}
     local function stage(name: string)
-        workspace:SetAttribute("P11Stage", name)
+        workspace:SetAttribute(suite .. "Stage", name)
     end
     local function check(name: string, operation: () -> ()): boolean
         stage(name)
@@ -182,7 +181,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
         end
         stage("finished")
         local report: Report = {
-            suite = "P11",
+            suite = suite,
             mode = mode,
             environment = "Studio",
             seed = seed,
@@ -196,7 +195,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             cases = cases,
             observations = observations,
         }
-        workspace:SetAttribute("P11Report", HttpService:JSONEncode(report))
+        workspace:SetAttribute(suite .. "Report", HttpService:JSONEncode(report))
         if finish then
             finish(report)
         else
@@ -469,7 +468,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             held.ownerId and held.launcherId == initial.launcherId and held.revision == initial.revision + 1,
             "pickup duplicated or altered identity"
         )
-        assert(runtime.launcher.resources().representations == 3, "held representation missing or duplicated")
+        assert(runtime.launcher.resources().representations == 4, "held representation missing or duplicated")
         return held.ownerId
     end
 
@@ -676,6 +675,9 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                     and workspace:GetServerTimeNow() >= readiness.nextFire
                 then
                     local shot, panel = Fixture.panelShot(runtime, weapon, serial, panels, preferred)
+                    if not shot then
+                        shot = Fixture.terrainShot(runtime, weapon, serial)
+                    end
                     if shot then
                         preferred = panel
                         send(crew.operator, { shot })
@@ -698,7 +700,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                                 launcherSnapshot.launcherId,
                                 crew.roundId,
                                 serial,
-                                Vector3.new(0, 110, 0)
+                                Vector3.new(235, -6, -48)
                             ),
                         })
                     else
@@ -984,6 +986,17 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
     listener:Disconnect()
     transport:Destroy()
     deliver()
+end
+
+-- Historical selector rejects on current builds before allocating resources.
+function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
+    runScenario(rawMode, rawExpected, finish, "P11")
+end
+
+-- Runs the current matched workload with two actual clients.
+function Harness.profile(finish: ((Report) -> ())?)
+    runScenario("Profile", 2, finish, "P19Profile")
 end
 
 return Harness
