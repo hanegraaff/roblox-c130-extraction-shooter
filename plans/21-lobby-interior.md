@@ -36,7 +36,7 @@ The P21 branch starts at the P20 merge on `main`, `bc8feb6`. The assembly uses o
 | A1 · Arrival | [Entrance beside the main-room reference](../docs/evidence/p21/arrival-comparison.jpg) and [view from the exact waiting anchor](../docs/evidence/p21/spawn-view.jpg). Both show the bust, theater on the left and gallery on the right. |
 | A2 · Furnished wings and six paintings | [Theater beside its reference](../docs/evidence/p21/theater-comparison.jpg), [gallery beside its reference](../docs/evidence/p21/gallery-comparison.jpg), [remaining gallery wall](../docs/evidence/p21/gallery-south.jpg) and [six original-to-frame comparisons](../docs/evidence/p21/six-paintings.jpg). The [painting catalog](../assets/blender/lobby-interior/assembly.json) identifies each original JPEG, display dimensions, frame, canvas and material. |
 | A3 · Connected rooms | The [furnished overhead and walking-height section](../docs/evidence/p21/room-layout.jpg) show the three rooms and both portals. The [editable scene](../assets/blender/lobby-interior/waiting-lobby.blend) contains cameras and guides. The [game GLB](../assets/exports/lobby-interior/waiting-lobby.glb) contains the static assembly. |
-| A4 · User decision | During review the user directed that portrait 4 hang vertically and chose the same upright photo orientation for portraits 2 and 6. Approval of the complete, revised lobby is pending. |
+| A4 · User decision | On 2026-11-24 the user chose “Approve the complete P21 lobby” for art revision `ec43139`, including the entrance, theater, gallery and all six paintings. The approved hanging shows portraits 2, 4 and 6 upright in vertical frames. [Approved Blender and GLB hashes](../docs/evidence/p21/blender-reimport.json) |
 
 ### Verification and handoff
 
