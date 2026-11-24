@@ -106,7 +106,11 @@ def register_assets():
 
 def render(views,out,preview):
     scene=bpy.context.scene
-    for key,cam in views.items():
+    # Render the altered display art first so its latest proof is immediately available for review.
+    first=("portrait-4","gallery-east")
+    ordered=[k for k in first if k in views]+[k for k in views if k not in first]
+    for key in ordered:
+        cam=views[key]
         scene.camera=cam
         scene.render.resolution_x,scene.render.resolution_y=cam["image_size"]
         scene.render.resolution_percentage=48 if preview else 100

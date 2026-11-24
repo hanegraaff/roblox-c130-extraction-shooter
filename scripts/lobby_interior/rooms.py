@@ -331,12 +331,18 @@ def painting(wall,u,index,height):
     material="Canvas %02d | supplied portrait"%index
     m=image_mat(material,path,.83)
     img=next(n.image for n in m.node_tree.nodes if n.type=="TEX_IMAGE")
-    width=height*img.size[0]/img.size[1]
+    # Painting four was photographed sideways. The approved hanging direction turns the
+    # raw JPEG clockwise on the wall. Keep its original bytes and entire field of view.
+    turn_clockwise=(index==4)
+    raster=list(img.size)
+    display_raster=raster[::-1] if turn_clockwise else raster
+    width=height*display_raster[0]/display_raster[1]
     z=9.1; group="Portrait %02d"%index
     wall_box(wall,group+" | stretcher",u,.54,z,(width+.42,.39,height+.42),"Fumed oak",.045)
     # Geometry UVs use the complete raster extent; each point is inset from the surrounding molding.
     coords=[local(wall,u+i*width/2,.782,z+j*height/2) for i,j in ((-1,-1),(1,-1),(1,1),(-1,1))]
-    panel(group+" | canvas",coords,material,uv=[(0,0),(1,0),(1,1),(0,1)])
+    corners=[(1,0),(1,1),(0,1),(0,0)] if turn_clockwise else [(0,0),(1,0),(1,1),(0,1)]
+    panel(group+" | canvas",coords,material,uv=corners)
     for off,depth,thickness,mat in ((.09,.81,.075,"Gilt edge"),(.27,.86,.16,"Patinated bronze"),
                                     (.54,.89,.23,"Champagne brass"),(.73,.87,.10,"Fumed oak"),(.86,.92,.12,"Gilt edge")):
         cp=local(wall,u,depth,z)
@@ -354,7 +360,7 @@ def painting(wall,u,index,height):
     eye=local(wall,u,11.8,z)
     cam=camera("A2 | Framed portrait %02d"%index,eye,local(wall,u,.78,z),45,(720,720),max(width+2.25,height+2.0))
     PAINTINGS.append({"portrait":index,"source":str(path.relative_to(a.ROOT)),"source_sha256":sha256(path.read_bytes()).hexdigest(),
-                      "raster_px":list(img.size),"canvas":group+" | canvas","material":material,
+                      "raster_px":raster,"display_raster_px":display_raster,"clockwise_degrees":90 if turn_clockwise else 0,"canvas":group+" | canvas","material":material,
                       "frame_prefix":group+" | frame","size_studs":[round(width,5),height],
                       "center_blender":list(local(wall,u,.782,z)),"camera":cam.name})
 
@@ -372,7 +378,7 @@ def gallery():
     painting(GALLERY_REAR,-9.6,3,10.2)
     painting(GALLERY_REAR,9.5,5,10.2)
     painting(GALLERY_EAST,-10,1,10.2)
-    painting(GALLERY_EAST,8.4,4,8.6)
+    painting(GALLERY_EAST,8.4,4,10.2)
     painting(GALLERY_FRONT,-9.2,2,8.6)
     painting(GALLERY_FRONT,9.1,6,8.6)
     box("Gallery Axminster rug",(45,29,.037),(17.7,10.3,.09),"Petrol moquette",.055,-.23*PI)

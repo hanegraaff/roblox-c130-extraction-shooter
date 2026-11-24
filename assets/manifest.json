@@ -2707,7 +2707,7 @@
       "local_path": "assets/blender/lobby-interior/waiting-lobby.blend",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "3ee7401f388db0f202027a6041bf7641cdedffd955c25e22a3fc7e779dcb8945"
+      "sha256": "59d36e0d2a70dc0529e3dc288ebf9afe21e97ecd230881a6a728ed2d922e6f25"
     },
     {
       "id": "waiting-lobby-assembly",
@@ -2718,7 +2718,7 @@
       "local_path": "assets/exports/lobby-interior/waiting-lobby.glb",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "4fe75e3a28b0145054da33fae2c21c5c2c839781363f6c4022a85063b2e6fd38"
+      "sha256": "c23562ba19a2c73fb9e3e513653a3a7072a920b2caa274228075b3976fbda917"
     },
     {
       "id": "waiting-lobby-placement",
@@ -2729,7 +2729,7 @@
       "local_path": "assets/blender/lobby-interior/assembly.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "b7d78cb48864adee8752b5093cc9273e9d6cfa5f9ddcfb4a5537322d27314490"
+      "sha256": "d2d8aefe0c63599884fc6414432286918d3c99d2277d23206c532ba97543bf0b"
     },
     {
       "id": "waiting-lobby-screen",
