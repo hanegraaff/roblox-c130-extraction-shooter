@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-11-24",
+  "timezone": "America/New_York",
+  "scope": "User-directed legacy P12 implementation/handoff closeout under D94, not full Roblox release acceptance.",
+  "request_verbatim": "complete P12, that's an old feaure. also merge the PR and comple the loop",
+  "merge": {
+    "pr": 63,
+    "accepted_head": "bb904ddbc36f19deebb9937bea6ad6696c43993e",
+    "main_merge": "7e1c1d26093aea6c6155a68fa2ae5cdd104ac078",
+    "identical_tree": "e2b894cb6267ed702f67ef53cd3436fc2df16514",
+    "github_expected_head_guard": true,
+    "ci_run": 45314961247,
+    "ci_conclusion": "success"
+  },
+  "primary_audit": {
+    "reviewer": "Primary agent",
+    "runtime_source_diff": "No changes under src, tests, scripts, managed models/world or Rojo mappings relative to merged main; documentation-only closeout.",
+    "original_failed_unrun_reports_preserved": true,
+    "original_release_criteria_preserved_as_historical_unverified": true,
+    "new_closeout_criteria": "C1-C4",
+    "main_setup_updated": true,
+    "authorization_scope_preserved": true,
+    "publication_or_audience_change_performed": false,
+    "new_studio_or_live_tests_claimed": false
+  },
+  "independent_administrative_audit": {
+    "status": "unavailable",
+    "reason": "Subagent usage limit after baseline inspection; no frozen-candidate independent audit pass is claimed."
+  },
+  "existing_independent_technical_acceptance": {
+    "source": "42ae28bffb393e07885b5c785d96ebf62a4f84dd",
+    "record": "docs/evidence/p18/42ae28b-independent-verdict.json",
+    "applicability": "Unchanged runtime/accepted artifacts; does not establish new release or live-client validation."
+  },
+  "reconstruction_receipt": "docs/evidence/p12/legacy-closeout-reconstruction.json",
+  "future_release_checks": {
+    "published_version_and_destination_audience": "unverified",
+    "destination_asset_permissions_and_live_loading": "unverified",
+    "actual_six_and_ten_player_rounds": "unverified",
+    "live_performance_latency_and_soak": "unverified"
+  },
+  "validation": "Primary reviewed scope, existing evidence, source diff and relative links; repository checker and whitespace check recorded in the closeout plan/PR.",
+  "effects_question": "Hypothetical design advice only; no VFX roadmap item, implementation or assets added by this closeout."
+}

@@ -77,4 +77,6 @@ future buildings enough room for ordinary third-person play where feasible.
 
 A plan is complete when its acceptance criteria pass, required Studio evidence exists, the tester's material findings are resolved, documentation matches the implementation, and the source/evidence are committed and pushed. Record PR/commit and verification facts, not promises. A complete plan can still have an unmerged PR; record integration separately.
 
+D94 records the user's explicit closure of legacy P12's implementation/handoff scope. Its original publication and live 6-/10-player/performance checks remain unverified future-release requirements, not passing evidence. Use the release runbook for a newly requested release; do not automatically reopen the closed legacy feature.
+
 Open a reviewable PR for a feature increment when possible. Do not merge without the user's authorization. Publishing to Roblox is a separate release action and requires explicit authorization for the named experience/place and audience. Preparing a build or creating a PR does not authorize publication. Reuse authorization already given in the conversation; do not introduce repeated approval checkpoints.

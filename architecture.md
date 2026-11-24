@@ -1,6 +1,6 @@
 # Architecture
 
-The P18 candidate on `plan/18-game-rebalancing` uses deployment Ground-roster health, one-howitzer/two-earned-second panel destruction, square camera bounds, four landmark launchers and white Ground targets against a darker fully desaturated world. Its [plan record](plans/18-game-rebalancing.md) identifies verification and delivery separately from integration on `main`.
+`main` includes integrated P18 rebalancing: deployment Ground-roster health, one-howitzer/two-earned-second panel destruction, square camera bounds, four landmark launchers and white Ground targets against a darker fully desaturated world. The [P18 record](plans/18-game-rebalancing.md) identifies verification and integration source separately; local implementation does not establish future Roblox publication or live capacity/performance acceptance.
 
 ## Current state and target
 

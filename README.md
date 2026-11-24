@@ -48,16 +48,16 @@ Solid walls hide Ground thermal highlights and block shots and blasts. One direc
 
 ## Availability
 
-This guide describes the rebalancing candidate on `plan/18-game-rebalancing`. `main` contains the integrated game before that candidate is merged. One battlefield is playable locally in Roblox Studio, including the landmarks, indoor Ground camera, both roles and the full match and replay loop. The [P18 record](plans/18-game-rebalancing.md) identifies its current verification evidence. To host a session in the Roblox app, follow [Publish and play privately](#publish-and-play-privately). The MVP release and real 6- and 10-player acceptance are pending. [Roadmap](roadmap.md)
+Play locally in Roblox Studio from `main`. The integrated game includes the landmarks, indoor Ground camera, roster-scaled aircraft health, quick panel demolition, square panning, four launchers, white thermal targets and the full match/replay loop. [P18 verification and integration](plans/18-game-rebalancing.md) identifies the tested source. The [legacy P12 implementation handoff](plans/12-mvp-release.md) is closed by user direction. Publication, destination/access checks, real 6- and 10-player capacity and live performance/soak checks for a future Roblox release remain unverified; use the [future release checklist](docs/release.md) when preparing that release. [Roadmap](roadmap.md)
 
 ## Set up locally
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-For the rebalancing candidate, select `plan/18-game-rebalancing` as below. Select `main` instead when you want only the integrated source.
+Use `main` for the integrated game and routine local setup.
 
 ```sh
-git clone --branch plan/18-game-rebalancing https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 python3 scripts/setup.py
 python3 scripts/verify.py
@@ -65,7 +65,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch plan/18-game-rebalancing`. Run `git pull --ff-only origin plan/18-game-rebalancing` to update it, then run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 
@@ -76,7 +76,7 @@ Setup installs the pinned tools and dependencies. Install the matching Rojo Stud
 3. Open the published place in Studio and use **Collaborate** to grant each invited tester **Play** access. In Creator Dashboard, use **⋯ → Copy URL** on the experience tile and share it with those testers. [Roblox collaborator permissions](https://create.roblox.com/docs/projects/collaboration#manage-collaborators), [Copy the Roblox link](https://create.roblox.com/docs/projects/configure-games#copy-landing-page-link)
 4. Have everyone open the link in the **Roblox app** and join the same server. You can start with **two players total**, including you. For a larger match, keep everyone connected until the next round starts with the full group.
 
-The [P12 release plan](plans/12-mvp-release.md#authorization-and-destination-access) records the team’s approved destination. The [release runbook](docs/release.md) covers asset permissions and the full live test checklist.
+The [P12 handoff record](plans/12-mvp-release.md#authorization-and-destination-access) preserves the earlier destination and authorization scope. Any future publication must have authorization covering its actual candidate, place and audience; closing the handoff or merging source does not publish it. The [release runbook](docs/release.md) covers future destination/access checks and live validation.
 
 ## Play and develop locally with Rojo
 
@@ -108,7 +108,7 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** to exercise launcher transfer and teammate spectating, or **4** to give an eliminated player two targets to cycle through. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
 5. Play through Results and wait for the lobby to return. Start the next round to inspect restored equipment and cover. **Reset test / apply settings** returns to the lobby or solo preview. Test-panel role and duration choices apply to the next explicit start. Use **End Session** when finished.
 
-For rebalancing, run the [P18 three-client harness](docs/testing.md#run-the-p18-rebalancing-harness) and the adapted [P05 two-client gunship harness](docs/testing.md#run-the-p05-gunship-combat-harness). P18 checks shared roster health, panel openings, camera frames, thermal state, contested Seedship pickup, recovery and replay. P05 exercises actual client fire, physical flights and a one-howitzer opening replicated to both clients. Native keyboard/touch, avatar navigation and rendered contrast need their separate focused review. P03/P04 retain lifecycle/orbit checks; pre-P18 balance/camera harnesses are archived and reject on this candidate. Their reports remain historical. P12’s live capacity, performance and release gates remain separate. Stop Play and confirm source reached the same document before collecting fresh evidence. [Compatibility and procedures](docs/testing.md)
+For rebalancing, run the [P18 three-client harness](docs/testing.md#run-the-p18-rebalancing-harness) and the adapted [P05 two-client gunship harness](docs/testing.md#run-the-p05-gunship-combat-harness). P18 checks shared roster health, panel openings, camera frames, thermal state, contested Seedship pickup, recovery and replay. P05 exercises actual client fire, physical flights and a one-howitzer opening replicated to both clients. Native keyboard/touch, avatar navigation and rendered contrast need their separate focused review. P03/P04 retain lifecycle/orbit checks; pre-P18 balance/camera harnesses are archived and reject on current source. Their reports remain historical. Live capacity, performance and soak validation remains unverified in the future release checklist. Stop Play and confirm source reached the same document before collecting fresh evidence. [Compatibility and procedures](docs/testing.md)
 
 ## Inspect the Blender outpost
 
