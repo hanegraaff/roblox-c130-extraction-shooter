@@ -63,9 +63,9 @@ From Ground, watch a howitzer land just short of a building, then follow a rocke
 
 ### Remaining acceptance checks
 
-- **Audio review in Studio.** Listen for distinct, locatable M-7, launcher, 30mm and howitzer cues. Verify that Effects Off mutes the weapon cues.
-- **Automated audio fallback.** Verify missing-asset fallback with a controlled local Studio probe.
 - **Automated Studio performance.** Both clients still need to meet the 33.3 ms render p95 target in the five-minute workload. Server scheduler p95, first-frame burst readiness and five-round cleanup passed on the tuned source.
+
+The user accepted the Studio audio and directed the follow-up toward performance. The separate audio mute and missing-asset fallback checks are deferred without a new test result.
 
 ## Documentation changes
 
@@ -181,3 +181,7 @@ The follow-up ordinary Sandbreak attempt started one actual client. A second Stu
 ### User Studio visual review
 
 On 2026-11-24, the user reported that all visual checks passed after receiving the Studio checklist. This closes the normal-controls Sandbreak visual check and the Ground and thermal effects and readability review. The listening and mute review, automated audio fallback and client frame-time budget remain open.
+
+### User Studio listening review
+
+On 2026-11-24, the user accepted how the audio sounds in Studio and requested performance work. The separate mute and fallback checks keep their prior evidence and are outside this follow-up.

@@ -3,16 +3,19 @@
 -- and generation cleanup. Contacts are injected here, transport is separate.
 type API = typeof(require(game.StarterPlayer.StarterPlayerScripts.Client.WeaponImpactEffects))
 
+local function getEffects(): API
+    local scripts = game.Players.LocalPlayer:WaitForChild("PlayerScripts", 10)
+    local client = if scripts then scripts:WaitForChild("Client", 15) else nil
+    local module = if client then client:WaitForChild("WeaponImpactEffects", 10) else nil
+    assert(module and module:IsA("ModuleScript"), "impact effect client module unavailable")
+    return require(module) :: API
+end
+
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
     test("P19 local impact admission preserves distinct contacts and reset clears bounded effects", function()
-        local scripts = game.Players.LocalPlayer:WaitForChild("PlayerScripts", 10)
-        local client = if scripts then scripts:WaitForChild("Client", 15) else nil
-        local module = if client then client:WaitForChild("WeaponImpactEffects", 10) else nil
-        assert(module and module:IsA("ModuleScript"), "impact effect client module unavailable")
-        local Effects = require(module) :: API
         local state = Instance.new("Folder")
-        local owner = Effects.new(state)
+        local owner = getEffects().new(state)
         local ok, failure = pcall(function()
             local camera = assert(workspace.CurrentCamera, "current camera missing")
             local point = camera.CFrame.Position + camera.CFrame.LookVector * 30
@@ -110,6 +113,62 @@ return function()
         end)
         owner.stop()
         owner.stop()
+        state:Destroy()
+        assert(ok, tostring(failure))
+    end)
+
+    test("P19 rocket trail follows replicated children and expires after removal", function()
+        local state = Instance.new("Folder")
+        local owner = getEffects().new(state)
+        local existing = workspace:FindFirstChild("LauncherEffects")
+        local folder = existing or Instance.new("Folder")
+        if not existing then
+            folder.Name, folder.Parent = "LauncherEffects", workspace
+        end
+        local rocket = Instance.new("Part")
+        rocket.Name = "Rocket"
+        rocket.Anchored, rocket.CanCollide, rocket.CanQuery, rocket.CanTouch = true, false, false, false
+        rocket.Transparency = 1
+        local ok, failure = pcall(function()
+            local camera = assert(workspace.CurrentCamera, "current camera missing")
+            local near = camera.CFrame * CFrame.new(0, 0, -20)
+            local far = camera.CFrame * CFrame.new(0, 0, -600)
+            rocket.CFrame, rocket.Parent = near, folder
+            task.wait()
+            owner.update(3, "Active", 1, false, 4)
+            assert(not workspace:FindFirstChild("LocalWeaponImpacts"), "unknown round started a trail")
+            rocket.CFrame = far
+            rocket:SetAttribute("FlightRoundId", 3)
+            owner.update(3, "Active", 1, false, 4.02)
+            assert(not workspace:FindFirstChild("LocalWeaponImpacts"), "far rocket started a trail")
+
+            rocket.CFrame = near
+            owner.update(3, "Active", 1, false, 4.04)
+            local holder = assert(workspace:FindFirstChild("LocalWeaponImpacts"), "near rocket was missed")
+            local anchor = holder:FindFirstChild("RocketSmoke")
+            assert(anchor and anchor:IsA("BasePart"), "missing smoke anchor")
+            local smoke = assert(anchor:FindFirstChildWhichIsA("ParticleEmitter", true), "missing emitter")
+            owner.update(3, "Active", 1, false, 4.06)
+            assert(smoke.Enabled and smoke.Rate == 28, "Full smoke did not follow the local rocket")
+            assert((anchor.Position - (near * CFrame.new(0, 0, 0.9)).Position).Magnitude < 0.01)
+            owner.update(3, "Active", 0.45, false, 4.08)
+            assert(smoke.Enabled and smoke.Rate == 12, "Reduced smoke did not change emission")
+            rocket.CFrame = far
+            owner.update(3, "Active", 0.45, false, 4.1)
+            assert(not smoke.Enabled and anchor.Parent == holder, "far trail failed to pause emission")
+
+            rocket:Destroy()
+            task.wait()
+            owner.update(3, "Active", 1, false, 4.12)
+            assert(not smoke.Enabled and anchor.Parent == holder, "removed rocket failed to start trail fade")
+            owner.update(3, "Active", 1, false, 4.8)
+            assert(anchor.Parent == nil, "finished trail retained its anchor")
+        end)
+        owner.stop()
+        rocket:Destroy()
+        if not existing then
+            folder:Destroy()
+        end
         state:Destroy()
         assert(ok, tostring(failure))
     end)

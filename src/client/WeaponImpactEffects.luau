@@ -14,9 +14,7 @@ local sparkTexture = textureRoot .. "fire_sparks_main.dds"
 local impactLimit = 12
 local trailLimit = 8
 local trailLifetime = 0.65
-local metalTint = Color3.fromRGB(154, 149, 141)
-local groundTint = Color3.fromRGB(125, 93, 67)
-local solidTint = Color3.fromRGB(123, 122, 119)
+local exhaustOffset = CFrame.new(0, 0, 0.9) * CFrame.Angles(0, math.pi, 0)
 local fireTint = Color3.fromRGB(255, 165, 77)
 type Burst = {
     part: Part,
@@ -145,28 +143,56 @@ local function risingSmoke(opacity: number): NumberSequence
     })
 end
 
+-- Roblox keypoint sequences are immutable. Share these across pooled bursts
+-- instead of constructing them again for each confirmed contact.
+local sparkSize = {
+    M102 = NumberSequence.new(0.38, 0),
+    GAU23 = NumberSequence.new(0.13, 0),
+    Rocket = NumberSequence.new(0.26, 0),
+}
+local howitzerFireSize = { reduced = NumberSequence.new(3.5, 9), full = NumberSequence.new(7, 21) }
+local howitzerSmokeSize = { reduced = NumberSequence.new(2.5, 10), full = NumberSequence.new(6, 22) }
+local lightSmokeSize = NumberSequence.new(0.7, 2.8)
+local rocketSmokeSize = NumberSequence.new(2.5, 9)
+local rocketFireSize = NumberSequence.new(2, 8)
+local thermalSmokeAlpha = { light = fading(0.2), rocket = fading(0.29) }
+local groundSmokeAlpha = { reduced = fading(0.24), full = fading(0.46) }
+local howitzerSmokeAlpha =
+    { reduced = risingSmoke(0.2), thermal = risingSmoke(0.44), full = risingSmoke(0.52) }
+local thermalHowitzerSmoke = ColorSequence.new(Color3.fromRGB(175, 175, 175), Color3.fromRGB(101, 101, 101))
+local smokeColor: { [string]: ColorSequence } = {}
+local howitzerSmokeColor: { [string]: ColorSequence } = {}
+local surfaceTints: { [string]: Color3 } = {
+    Ground = Color3.fromRGB(125, 93, 67),
+    Metal = Color3.fromRGB(154, 149, 141),
+    Solid = Color3.fromRGB(123, 122, 119),
+}
+for surface, tint in surfaceTints do
+    smokeColor[surface] = ColorSequence.new(tint, Color3.fromRGB(78, 78, 77))
+    howitzerSmokeColor[surface] =
+        ColorSequence.new(tint:Lerp(Color3.fromRGB(180, 174, 164), 0.45), Color3.fromRGB(85, 83, 78))
+end
+
 -- Full howitzer effects have a brief expanding flash and readable smoke at
 -- orbit distances. Keep orbital Full below the near Ground emission budget,
 -- and preserve a shorter, smaller silhouette for Reduced.
-local function emitHeavy(burst: Burst, tint: Color3, full: boolean, thermal: boolean, distant: boolean)
+local function emitHeavy(burst: Burst, surface: string, full: boolean, thermal: boolean, distant: boolean)
     local fire = burst.fire
     fire.Lifetime = if full then NumberRange.new(0.24, 0.56) else NumberRange.new(0.12, 0.31)
     fire.Speed = if full then NumberRange.new(10, 30) else NumberRange.new(4, 13)
-    fire.Size = if full then NumberSequence.new(7, 21) else NumberSequence.new(3.5, 9)
+    fire.Size = if full then howitzerFireSize.full else howitzerFireSize.reduced
     fire:Emit(if not full then 2 elseif distant then 5 elseif thermal then 6 else 8)
 
     local smoke = burst.smoke
-    smoke.Color = if thermal
-        then ColorSequence.new(Color3.fromRGB(175, 175, 175), Color3.fromRGB(101, 101, 101))
-        else ColorSequence.new(
-            tint:Lerp(Color3.fromRGB(180, 174, 164), 0.45),
-            Color3.fromRGB(85, 83, 78)
-        )
+    smoke.Color = if thermal then thermalHowitzerSmoke else howitzerSmokeColor[surface]
     smoke.LightInfluence = if thermal then 0.18 else 0.6
-    smoke.Transparency = risingSmoke(if not full then 0.2 elseif thermal then 0.44 else 0.52)
+    smoke.Transparency = if not full
+        then howitzerSmokeAlpha.reduced
+        elseif thermal then howitzerSmokeAlpha.thermal
+        else howitzerSmokeAlpha.full
     smoke.Lifetime = if full then NumberRange.new(1.15, 1.75) else NumberRange.new(0.5, 0.95)
     smoke.Speed = if full then NumberRange.new(9, 21) else NumberRange.new(4, 11)
-    smoke.Size = if full then NumberSequence.new(6, 22) else NumberSequence.new(2.5, 10)
+    smoke.Size = if full then howitzerSmokeSize.full else howitzerSmokeSize.reduced
     smoke:Emit(if not full then 3 elseif distant then 5 elseif thermal then 8 else 12)
 end
 
@@ -187,6 +213,7 @@ function WeaponImpactEffects.new(state: Instance): Controller
     local trails: { Trail } = {}
     local history = Rules.history()
     local activeTrails: { [BasePart]: Trail? } = {}
+    local rockets: { [BasePart]: boolean } = {}
     local round, phase, effects, thermal, clock = -1, "", 0, false, 0
     local stopped = false
     local listener: RBXScriptConnection? = nil
@@ -194,10 +221,14 @@ function WeaponImpactEffects.new(state: Instance): Controller
     local resultsAt = -math.huge
     local function clear()
         for _, burst in bursts do
-            clearBurst(burst)
+            if burst.untilTime > 0 then
+                clearBurst(burst)
+            end
         end
         for _, trail in trails do
-            clearTrail(trail)
+            if trail.rocket or trail.untilTime > 0 then
+                clearTrail(trail)
+            end
         end
         table.clear(activeTrails)
         holder.Parent = nil
@@ -289,11 +320,13 @@ function WeaponImpactEffects.new(state: Instance): Controller
         burst.flashOpacity = opacity
         burst.untilTime = clock + (if heavy then (if full then 1.8 else 1) elseif light then 0.58 else 1.1)
         burst.priority = if light then 1 else 2
-        holder.Parent = workspace
+        if not holder.Parent then
+            holder.Parent = workspace
+        end
         burst.part.Parent = holder
 
         local spark = burst.sparks
-        spark.Size = NumberSequence.new(if heavy then 0.38 elseif light then 0.13 else 0.26, 0)
+        spark.Size = sparkSize[weapon]
         spark.Speed = if heavy
             then NumberRange.new(21, 48)
             elseif light then NumberRange.new(8, 22)
@@ -305,21 +338,18 @@ function WeaponImpactEffects.new(state: Instance): Controller
                 elseif light then 6
                 else 13
         )
-        local tint = if surface == "Ground"
-            then groundTint
-            elseif surface == "Metal" then metalTint
-            else solidTint
         if heavy then
-            emitHeavy(burst, tint, full, thermal, distant)
+            emitHeavy(burst, surface, full, thermal, distant)
             return true
         end
 
         local smoke = burst.smoke
         smoke.LightInfluence = 0.6
-        smoke.Color = ColorSequence.new(tint, Color3.fromRGB(78, 78, 77))
-        smoke.Transparency =
-            fading(if thermal then (if light then 0.2 else 0.29) elseif reduced then 0.24 else 0.46)
-        smoke.Size = if light then NumberSequence.new(0.7, 2.8) else NumberSequence.new(2.5, 9)
+        smoke.Color = smokeColor[surface]
+        smoke.Transparency = if thermal
+            then (if light then thermalSmokeAlpha.light else thermalSmokeAlpha.rocket)
+            else (if reduced then groundSmokeAlpha.reduced else groundSmokeAlpha.full)
+        smoke.Size = if light then lightSmokeSize else rocketSmokeSize
         smoke.Lifetime = if light then NumberRange.new(0.3, 0.53) else NumberRange.new(0.65, 1.05)
         smoke.Speed = if light then NumberRange.new(2, 5) else NumberRange.new(5, 11)
         if distance < 620 then
@@ -329,7 +359,7 @@ function WeaponImpactEffects.new(state: Instance): Controller
             local fire = burst.fire
             fire.Lifetime = NumberRange.new(0.15, 0.32)
             fire.Speed = NumberRange.new(5, 14)
-            fire.Size = NumberSequence.new(2, 8)
+            fire.Size = rocketFireSize
             fire:Emit(if reduced then 2 else 4)
         end
         return true
@@ -369,37 +399,88 @@ function WeaponImpactEffects.new(state: Instance): Controller
         destroyPreloadTextures()
     end)
 
+    local flightFolder: Instance? = nil
+    local rocketAdded: RBXScriptConnection? = nil
+    local rocketRemoved: RBXScriptConnection? = nil
+    local function watchRocket(child: Instance)
+        if child:IsA("BasePart") and child.Name == "Rocket" then
+            rockets[child] = true
+        end
+    end
+    -- Track membership at replication boundaries. Only actual rocket candidates
+    -- need a per-frame distance check. Read the round attribute in update so a
+    -- rocket still works if its attributes arrive after the child event.
+    local function watchFolder(folder: Instance?)
+        if rocketAdded then
+            rocketAdded:Disconnect()
+        end
+        if rocketRemoved then
+            rocketRemoved:Disconnect()
+        end
+        rocketAdded, rocketRemoved, flightFolder = nil, nil, folder
+        table.clear(rockets)
+        if folder then
+            rocketAdded = folder.ChildAdded:Connect(watchRocket)
+            rocketRemoved = folder.ChildRemoved:Connect(function(child)
+                if child:IsA("BasePart") then
+                    rockets[child] = nil
+                end
+            end)
+            for _, child in folder:GetChildren() do
+                watchRocket(child)
+            end
+        end
+    end
+    local folderAdded = workspace.ChildAdded:Connect(function(child)
+        if not stopped and not flightFolder and child.Name == "LauncherEffects" then
+            watchFolder(child)
+        end
+    end)
+    local folderRemoved = workspace.ChildRemoved:Connect(function(child)
+        if child == flightFolder then
+            watchFolder(workspace:FindFirstChild("LauncherEffects"))
+        end
+    end)
+    watchFolder(workspace:FindFirstChild("LauncherEffects"))
+
     local function updateTrails()
-        local folder = workspace:FindFirstChild("LauncherEffects")
+        if #trails == 0 and next(rockets) == nil then
+            return
+        end
         local camera = workspace.CurrentCamera
+        local cameraPosition = if camera then camera.CFrame.Position else nil
+        local rate = if thermal or effects < 0.9 then 12 else 28
         for _, trail in trails do
             local rocket = trail.rocket
             if rocket then
-                if not folder or rocket.Parent ~= folder or phase ~= "Active" then
+                if not flightFolder or rocket.Parent ~= flightFolder or phase ~= "Active" then
                     activeTrails[rocket] = nil
                     trail.rocket = nil
                     trail.smoke.Enabled = false
                     trail.untilTime = clock + trailLifetime
                 else
-                    trail.part.CFrame = rocket.CFrame * CFrame.new(0, 0, 0.9) * CFrame.Angles(0, math.pi, 0)
-                    local near = camera ~= nil and (rocket.Position - camera.CFrame.Position).Magnitude < 410
-                    trail.smoke.Enabled = near
-                    trail.smoke.Rate = if thermal or effects < 0.9 then 12 else 28
+                    trail.part.CFrame = rocket.CFrame * exhaustOffset
+                    local near = cameraPosition ~= nil and (rocket.Position - cameraPosition).Magnitude < 410
+                    if trail.smoke.Rate ~= rate then
+                        trail.smoke.Rate = rate
+                    end
+                    if trail.smoke.Enabled ~= near then
+                        trail.smoke.Enabled = near
+                    end
                 end
             elseif trail.untilTime > 0 and clock >= trail.untilTime then
                 clearTrail(trail)
             end
         end
-        if phase ~= "Active" or not folder or not camera then
+        if phase ~= "Active" or not cameraPosition then
             return
         end
-        for _, rocket in folder:GetChildren() do
+        for rocket in rockets do
             if
-                rocket:IsA("BasePart")
-                and rocket.Name == "Rocket"
+                rocket.Parent == flightFolder
                 and rocket:GetAttribute("FlightRoundId") == round
                 and not activeTrails[rocket]
-                and (rocket.Position - camera.CFrame.Position).Magnitude < 410
+                and (rocket.Position - cameraPosition).Magnitude < 410
             then
                 local slot: Trail? = nil
                 for _, trail in trails do
@@ -417,7 +498,9 @@ function WeaponImpactEffects.new(state: Instance): Controller
                     slot.rocket = rocket
                     activeTrails[rocket] = slot
                     slot.part.CFrame = rocket.CFrame
-                    holder.Parent = workspace
+                    if not holder.Parent then
+                        holder.Parent = workspace
+                    end
                     slot.part.Parent = holder
                 end
             end
@@ -434,7 +517,7 @@ function WeaponImpactEffects.new(state: Instance): Controller
             end
             if
                 nextRound ~= round
-                or (nextPhase ~= "Active" and nextPhase ~= "Results")
+                or (nextPhase ~= phase and nextPhase ~= "Active" and nextPhase ~= "Results")
                 or (effects > 0 and intensity <= 0)
             then
                 clear()
@@ -472,6 +555,9 @@ function WeaponImpactEffects.new(state: Instance): Controller
             stopped = true
             added:Disconnect()
             removed:Disconnect()
+            folderAdded:Disconnect()
+            folderRemoved:Disconnect()
+            watchFolder(nil)
             if listener then
                 listener:Disconnect()
             end
