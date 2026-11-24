@@ -1,0 +1,44 @@
+{
+  "candidate": "5efab171cd484ab003d04a7b71417c98a390149a",
+  "report": {
+    "result": {
+      "approvals": [],
+      "errors": [
+        "ServerScriptService.P22CollisionOnlyIndependentServer:91: Players.Player2.PlayerScripts.P22CollisionOnlyIndependentClient:76: assertion failed!\nServerScriptService.P22CollisionOnlyIndependentServer:91\nServerScriptService.P22CollisionOnlyIndependentServer:14 function check\nServerScriptService.P22CollisionOnlyIndependentServer:84\nServerScriptService.P22CollisionOnlyIndependentServer:98\n"
+      ],
+      "scope": "Managed collision replay without native art.",
+      "initialCounts": {
+        "artCount": 0,
+        "floorCount": 3,
+        "descendantCount": 91
+      },
+      "passed": false,
+      "rounds": [],
+      "actualClientIds": [
+        -2,
+        -1
+      ],
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 199,
+        "clientCount": 1,
+        "seed": 1,
+        "discovered": 199,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "preRosterReturnedFromSoloPreview": {
+        "reason": "no solo lobby preview is active",
+        "returned": false
+      },
+      "kind": "P22CollisionOnlyIndependent",
+      "usedAddPlayers": true
+    },
+    "sdkReturned": true
+  },
+  "fixtureInstalled": false,
+  "legacy": true,
+  "clean": true
+}

@@ -1,0 +1,24 @@
+{
+  "candidate": "5efab171cd484ab003d04a7b71417c98a390149a",
+  "report": {
+    "result": {
+      "rounds": [],
+      "approvals": [],
+      "errors": [
+        "ServerScriptService.P22CollisionOnlyIndependentServer:18: Time limit: two actual Studio clients\nServerScriptService.P22CollisionOnlyIndependentServer:18 function check\nServerScriptService.P22CollisionOnlyIndependentServer:110\nServerScriptService.P22CollisionOnlyIndependentServer:98\n"
+      ],
+      "scope": "Managed collision replay without native art.",
+      "kind": "P22CollisionOnlyIndependent",
+      "passed": false,
+      "initialCounts": {
+        "artCount": 0,
+        "floorCount": 3,
+        "descendantCount": 91
+      }
+    },
+    "sdkReturned": true
+  },
+  "fixtureInstalled": false,
+  "legacy": true,
+  "clean": true
+}

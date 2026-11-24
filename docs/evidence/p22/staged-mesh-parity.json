@@ -1,0 +1,29 @@
+{
+  "repeatableFiles": 15,
+  "glbBatches": 14,
+  "largestBatchBytes": 4317504,
+  "roles": {
+    "Portrait": 6,
+    "Room": 2392,
+    "Bust": 34
+  },
+  "totalTriangles": 411534,
+  "perPartExactAccessorComparisons": {
+    "POSITION": 2432,
+    "NORMAL": 2432,
+    "TEXCOORD_0": 2432,
+    "TEXCOORD_1": 1
+  },
+  "exactTriangleIndexViews": 2432,
+  "exactPerPartMaterials": 2432,
+  "flattenedMatrixMaxDelta": 0,
+  "fullyBoundPaintings": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "pilotIncludesCanvasStretcherFrameParts": 22
+}
