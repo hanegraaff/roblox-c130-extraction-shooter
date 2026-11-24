@@ -32,9 +32,9 @@ The battlefield manifest also records the authored aircraft AimEnvelope values a
 
 Generated place builds belong in ignored `build/`. Do not blanket-ignore authored model/place exports needed for reconstruction. Choose Git LFS or another documented versioned store before adding large binary source assets.
 
-## Waiting-lobby bust
+## Furnished waiting lobby
 
-The P20 package contains the editable sculpture, its round stone foot, a static GLB and four Blender review views. P21 will place the approved bust on the main room’s stepped dais. P22 covers the Roblox lobby replacement. [Review views, measurements and rebuild instructions](blender/lobby-bust/README.md)
+The editable P21 assembly places the approved P20 bust on a stepped dais between the theater and gallery. All six supplied portraits hang in individual frames. The package includes a self-contained GLB, placement catalog, measured camera views and an original aerial still for the television. The P22 import plan covers replacement of the protected Roblox lobby. [Lobby review, placement and rebuild](blender/lobby-interior/README.md) · [Standalone bust](blender/lobby-bust/README.md)
 
 ## Weapon presentation assets
 

@@ -50,7 +50,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-Play the integrated game locally in Roblox Studio from `main`, including the howitzer blast, rocket trails and positional audio. The oversized bust for the planned waiting lobby is available as an approved Blender sculpture. [Bust review views](assets/blender/lobby-bust/README.md) · [Weapon impact verification](plans/19-weapon-impacts.md)
+Play the integrated game locally in Roblox Studio from `main`. Rounds begin in the current protected lobby. The furnished replacement is available for inspection in Blender, with the approved bust between a movie theater and a gallery of six framed portraits. P22 covers its introduction to the game. [Explore the Blender lobby](assets/blender/lobby-interior/README.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
@@ -71,7 +71,7 @@ rojo plugin install
 
 On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
-To inspect the lobby bust, run `git fetch origin` and `git switch plan/20-lobby-bust` in your clone. Open the scene in Blender 5.3.0. Compare the sculpt with both references, inspect the swept hair and downward gaze up close, or see it from waiting-player eye height. [Sculpture and viewing guide](assets/blender/lobby-bust/README.md)
+To inspect the furnished lobby, run `git fetch origin` and `git switch plan/21-lobby-interior` in your clone. Open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0. The saved camera looks across the dais toward the bust. Choose **Render → Render Image** to see the room lighting. [Room views and camera guide](assets/blender/lobby-interior/README.md) · [Approved bust](assets/blender/lobby-bust/README.md)
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 

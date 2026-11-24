@@ -1,0 +1,79 @@
+{
+  "blender": "5.3.0",
+  "source_sha256": "377880e774377566ff3a83b763712376ca922ad235bcb3a544feb417c965f56c",
+  "export_sha256": "bf8387630baeec1a6677fb0394573c1900b3a635763bec6da3afc70cd120ed9e",
+  "approved_bust_sha256": "842661e46702b8730fc334026941069bb1c34341a74fb3fcb280aaff1ee7ad90",
+  "bust_max_vertex_delta_studs": {
+    "source": 0.0,
+    "glb": 0.0
+  },
+  "proscenium_facing_source_and_glb": {
+    "Proscenium arch": {
+      "signed_volume": 15.1052,
+      "outward_first_hits": 28
+    },
+    "Proscenium brass ribbon": {
+      "signed_volume": 0.3303,
+      "outward_first_hits": 28
+    }
+  },
+  "gallery_canvas_area_sq_studs": {
+    "1": 69.36,
+    "2": 78.03,
+    "3": 78.03,
+    "4": 78.03,
+    "5": 57.401,
+    "6": 78.03
+  },
+  "source_and_glb_routes": {
+    "body_stations": {
+      "waiting_to_operator": 26,
+      "operator_to_cinema_front": 163,
+      "operator_to_gallery_north": 129,
+      "gallery_to_south_paintings": 119
+    },
+    "body_envelope_studs": [
+      4,
+      4,
+      6
+    ],
+    "camera_stations": 11,
+    "camera_distance_studs": 6,
+    "camera_radius_studs": 0.45,
+    "doorways": {
+      "-25": {
+        "sampled_body_width_studs": 15.74,
+        "center_headroom_studs": 14.375
+      },
+      "25": {
+        "sampled_body_width_studs": 15.74,
+        "center_headroom_studs": 14.375
+      }
+    },
+    "theater_aisle_studs": 8.98,
+    "waiting_eye_first_hits": [
+      "06 | Pupil +1",
+      "06 | Pupil -1"
+    ],
+    "gallery_player_viewing_distance_studs": {
+      "1": 11.018,
+      "2": 11.018,
+      "3": 11.018,
+      "4": 11.018,
+      "5": 11.018,
+      "6": 11.018
+    }
+  },
+  "inventory": {
+    "nodes": 2434,
+    "mesh_objects": 2432,
+    "unique_meshes": 974,
+    "materials": 37,
+    "embedded_images": 19,
+    "assembled_triangles": 411534,
+    "unique_triangles": 176758,
+    "largest_mesh_triangles": 18800,
+    "source_bytes": 7767060,
+    "export_bytes": 12059520
+  }
+}
