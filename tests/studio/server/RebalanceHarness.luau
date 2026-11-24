@@ -317,6 +317,9 @@ function Harness.run(finish: ((unknown) -> ())?)
         end)
         check("A6 thermal targets are red and ground palette is muted with native occlusion", function()
             probe(op, "Thermal", {})
+            for _, player in Players:GetPlayers() do
+                probe(player, "AircraftMask", { hidden = player == op })
+            end
         end)
         local carrier: Player? = nil
         check("A4 four sites and raced Seedship pickup retain one owner", function()

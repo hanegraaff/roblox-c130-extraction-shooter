@@ -60,6 +60,96 @@ local function importedMesh(materials: MaterialAPI): MeshPart
 end
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
+    test(
+        "P18 operator aircraft mask owns exact local opacity across parts replacement and role cleanup",
+        function()
+            local Cosmetics = cosmetics()
+            local root = Instance.new("Folder")
+            local aircraft = Instance.new("Model")
+            aircraft.Name = "Aircraft"
+            local shell = Instance.new("Part")
+            shell.Name = "EngineMaskWitness"
+            shell.LocalTransparencyModifier = 0.27
+            shell.Anchored = true
+            shell.CanCollide = false
+            shell.CanQuery = true
+            shell.Parent = aircraft
+            aircraft.Parent = root
+            local unrelated = Instance.new("Part")
+            unrelated.LocalTransparencyModifier = 0.13
+            unrelated.Parent = root
+            local original = shell.LocalTransparencyModifier
+            local outside = unrelated.LocalTransparencyModifier
+            assert(original < 1, "Ground view starts masked")
+            local owner = Cosmetics.start(root)
+            local late: Part? = nil
+            local replacement: Model? = nil
+            local replacedPart: Part? = nil
+            local ok, problem = pcall(function()
+                assert(shell.LocalTransparencyModifier == 1, "operator still sees its engine")
+                assert(
+                    unrelated.LocalTransparencyModifier == outside,
+                    "operator masking changed another model"
+                )
+                assert(
+                    shell.CanQuery and not shell.CanCollide and shell.Anchored,
+                    "local mask changed physics or hit authority"
+                )
+                local added = Instance.new("Part")
+                added.LocalTransparencyModifier = 0.61
+                added.Parent = aircraft
+                late = added
+                task.wait()
+                assert(added.LocalTransparencyModifier == 1, "late aircraft part stayed visible")
+                aircraft.Parent = nil
+                task.wait()
+                assert(
+                    shell.LocalTransparencyModifier == original
+                        and math.abs(added.LocalTransparencyModifier - 0.61) < 1e-6,
+                    "removed aircraft opacity was not restored"
+                )
+                local nextModel = Instance.new("Model")
+                nextModel.Name = "Aircraft"
+                local nextPart = Instance.new("Part")
+                nextPart.LocalTransparencyModifier = 0.43
+                nextPart.Parent = nextModel
+                nextModel.Parent = root
+                replacement, replacedPart = nextModel, nextPart
+                task.wait()
+                assert(nextPart.LocalTransparencyModifier == 1, "replacement aircraft stayed visible")
+                return true
+            end)
+            owner.stop()
+            owner.stop()
+            local nextPart = replacedPart
+            assert(
+                owner.resources() == 0
+                    and shell.LocalTransparencyModifier == original
+                    and unrelated.LocalTransparencyModifier == outside,
+                "role-loss mask cleanup leaked"
+            )
+            assert(
+                not nextPart or math.abs(nextPart.LocalTransparencyModifier - 0.43) < 1e-6,
+                "replacement opacity restoration leaked"
+            )
+            local afterStop = Instance.new("Part")
+            afterStop.LocalTransparencyModifier = 0.36
+            local nextModel = replacement
+            afterStop.Parent = nextModel or root
+            task.wait()
+            assert(
+                math.abs(afterStop.LocalTransparencyModifier - 0.36) < 1e-6,
+                "stopped owner still masks Ground view"
+            )
+            root:Destroy()
+            aircraft:Destroy()
+            local added = late
+            if added then
+                added:Destroy()
+            end
+            assert(ok, problem)
+        end
+    )
     test("P18 thermal tint follows late SurfaceAppearance arrival removal and owner cleanup", function()
         local Cosmetics = cosmetics()
         local root = Instance.new("Model")

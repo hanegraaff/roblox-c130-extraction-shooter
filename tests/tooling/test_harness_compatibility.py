@@ -3,10 +3,12 @@ import importlib.util
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
 
 
 def module(name):
@@ -22,7 +24,8 @@ class HarnessCompatibilityTests(unittest.TestCase):
         program = '''local compatibility = assert(loadstring([====[SOURCE]====]))()
 for _,kind in {"P06","P06Team","P07","Sandbreak","P08","P09","P10","P11","P14","P14ArrivalRegression","P17"} do
     local why=compatibility.reason(kind)
-    assert(type(why)=="string" and why:find("historical pre%-P18") and why:find("P18 three%-client"),"missing replacement guidance")
+    assert(type(why)=="string" and why:find("historical pre%-P18") and why:find("P18 three%-client") and why:find("P05 two%-client actual%-fire")
+        and why:find("ordinary Studio smoke"),"missing replacement guidance")
     local mutated=false
     local ok,problem=pcall(function()compatibility.assertCurrent(kind);mutated=true end)
     assert(not ok and not mutated and tostring(problem):find("historical pre%-P18"),"archived fixture acquired resources")

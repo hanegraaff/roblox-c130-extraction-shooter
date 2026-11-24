@@ -1,8 +1,9 @@
 --!strict
 -- Test-only staged-fixture version contract. Pre-P18 balance/camera fixtures are
 -- retained for historical evidence and reject before acquiring runtime resources.
--- P18 is the current focused gameplay replacement; ordinary native smoke and the
--- independent P03/P04/map fixtures remain available. Pure scalar API, no yielding.
+-- Current coverage requires P18 with three clients, adapted P05 actual fire
+-- with two clients, and ordinary native smoke. Independent P03/P04/map fixtures
+-- remain available. Pure scalar API, no yielding.
 local Compatibility = {}
 local historical: { [string]: boolean } = table.freeze({
     P06 = true,
@@ -27,7 +28,7 @@ function Compatibility.reason(kind: string): string?
     end
     return kind
         .. " is a historical pre-P18 staged fixture and cannot validate current balance. "
-        .. "Use the P18 three-client scenario plus ordinary Studio smoke; reproduce old evidence from its recorded Git revision. "
+        .. "Use the P18 three-client scenario, adapted P05 two-client actual-fire scenario, and ordinary Studio smoke; reproduce old evidence from its recorded Git revision. "
         .. "P18 does not replace the separately pending live capacity/performance/release gates."
 end
 

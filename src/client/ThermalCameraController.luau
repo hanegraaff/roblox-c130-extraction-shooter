@@ -355,12 +355,10 @@ function ThermalCameraController.new(
             map.groundY - AircraftPanRules.defaults.backdropDepthStuds - 0.5,
             map.centerZ
         )
-        local world = workspace:FindFirstChild("World")
-        local battlefield = if world then world:FindFirstChild("Battlefield") else nil
-        local ground = if battlefield then battlefield:FindFirstChild("GroundDisk") else nil
-        background.Color = if ground and ground:IsA("BasePart")
-            then ground.Color
-            else Color3.fromRGB(55, 60, 55)
+        -- The invisible combat-disk proxy keeps its authored Ground palette.
+        -- Outside-level presentation needs its own dark neutral value so that
+        -- panning beyond terrain cannot introduce a bright gold foreground.
+        background.Color = Color3.fromRGB(38, 42, 45)
         local mesh = Instance.new("SpecialMesh")
         mesh.MeshType = Enum.MeshType.Brick
         mesh.Scale = Vector3.new(extent / 1024, 1, extent / 1024)

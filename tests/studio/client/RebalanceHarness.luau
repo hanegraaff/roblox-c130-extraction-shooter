@@ -9,6 +9,13 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local Harness = {}
 type Record = { [string]: unknown }
+type AircraftFacts = {
+    opacity: number,
+    canQuery: boolean,
+    canCollide: boolean,
+    canTouch: boolean,
+    anchored: boolean,
+}
 local function waitFor(predicate: () -> boolean, label: string, seconds: number?)
     local untilTime = os.clock() + (seconds or 15)
     repeat
@@ -38,6 +45,52 @@ function Harness.run()
         entry:Destroy()
         local round = ReplicatedStorage:WaitForChild("RoundState", 30)
         assert(round, "round state missing")
+        local initialAircraft = workspace:WaitForChild("Aircraft", 15)
+        assert(
+            initialAircraft and initialAircraft:IsA("Model"),
+            "canonical aircraft missing before deployment"
+        )
+        local aircraftBaseline: { [BasePart]: AircraftFacts } = {}
+        for _, part in initialAircraft:GetDescendants() do
+            if part:IsA("BasePart") then
+                aircraftBaseline[part] = {
+                    opacity = part.LocalTransparencyModifier,
+                    canQuery = part.CanQuery,
+                    canCollide = part.CanCollide,
+                    canTouch = part.CanTouch,
+                    anchored = part.Anchored,
+                }
+            end
+        end
+        local function aircraftMask(hidden: boolean): number
+            local current = workspace:FindFirstChild("Aircraft")
+            assert(current and current:IsA("Model"), "canonical aircraft missing during opacity probe")
+            local visibleParts = 0
+            for _, part in current:GetDescendants() do
+                if part:IsA("BasePart") then
+                    local baseline = aircraftBaseline[part]
+                    local original = if baseline then baseline.opacity else 0
+                    assert(
+                        part.LocalTransparencyModifier == (if hidden then 1 else original),
+                        "operator/Ground aircraft opacity mismatch"
+                    )
+                    if baseline then
+                        assert(
+                            part.CanQuery == baseline.canQuery
+                                and part.CanCollide == baseline.canCollide
+                                and part.CanTouch == baseline.canTouch
+                                and part.Anchored == baseline.anchored,
+                            "local aircraft mask changed collision/query/physics authority"
+                        )
+                    end
+                    if part.Transparency < 1 then
+                        visibleParts += 1
+                    end
+                end
+            end
+            assert(visibleParts > 0, "aircraft opacity probe found no rendered parts")
+            return visibleParts
+        end
         local axes = Vector2.zero
         local recenter = false
         local function provider(viewport: Vector2): Camera.InputFrame
@@ -227,6 +280,14 @@ function Harness.run()
                         end
                     end
                     detail.samples, detail.minimumUpY = samples, lowestUp
+                elseif action == "AircraftMask" then
+                    assert(type(fields.hidden) == "boolean", "aircraft opacity expectation missing")
+                    local hidden = fields.hidden
+                    waitFor(function()
+                        return (hud() ~= nil) == hidden
+                    end, "role camera opacity readiness")
+                    detail.aircraftParts = aircraftMask(hidden)
+                    detail.hidden = hidden
                 elseif action == "Thermal" then
                     waitFor(function()
                         return hud() ~= nil
@@ -255,16 +316,22 @@ function Harness.run()
                         end
                     end
                     assert(count == 2, "expected two live Ground highlights")
-                    local ground = workspace.World.Battlefield.GroundDisk
+                    local background = camera:FindFirstChild("OperatorGroundBackdrop")
+                    assert(background and background:IsA("BasePart"), "operator ground backdrop missing")
                     assert(
-                        ground.Color.R < 0.5 and ground.Color.G < 0.5 and ground.Color.B < 0.5,
-                        "bright ground not muted"
+                        math.max(background.Color.R, background.Color.G, background.Color.B) < 0.25,
+                        "outside-level ground backdrop remained bright"
+                    )
+                    assert(
+                        not background.CanCollide and not background.CanQuery and not background.CanTouch,
+                        "operator ground backdrop changed combat geometry"
                     )
                     local sand = workspace.Terrain:GetMaterialColor(Enum.Material.Sand)
                     assert(math.max(sand.R, sand.G, sand.B) < 0.45, "terrain remained bright")
                     detail.targets = count
-                    detail.ground = { ground.Color.R, ground.Color.G, ground.Color.B }
+                    detail.backdrop = { background.Color.R, background.Color.G, background.Color.B }
                     detail.sand = { sand.R, sand.G, sand.B }
+                    detail.hiddenAircraftParts = aircraftMask(true)
                 elseif action == "Cleanup" then
                     axes = Vector2.zero
                     panel.stop()
@@ -275,6 +342,11 @@ function Harness.run()
                         not camera or not camera:FindFirstChild("OperatorThermal"),
                         "thermal effect leaked"
                     )
+                    assert(
+                        not camera or not camera:FindFirstChild("OperatorGroundBackdrop"),
+                        "operator backdrop leaked"
+                    )
+                    detail.restoredAircraftParts = aircraftMask(false)
                     if listener then
                         listener:Disconnect()
                     end

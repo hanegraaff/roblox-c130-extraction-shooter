@@ -5,7 +5,10 @@
     server-authored ThermalNonCover art is hidden when it neither collides nor
     queries. Explicit PanelFragmentVisual bodies in the PanelFragments collision
     group may collide with static scenery only and are also hidden from thermal
-    depth. Real solid cover remains visible; ground keeps all art/fragments.
+    depth. The canonical direct-child Aircraft Model is also locally hidden
+    while this operator owner is active, preventing its engines from masking the
+    targeting view. This never changes query/collision/physics or Ground clients.
+    Real solid cover remains visible; ground keeps all art/fragments.
     Battlefield Parts and textured surfaces use a muted 0.45 brightness base;
     authored Terrain palette uses 0.4. Character colors are not changed.
     Imported Models can also author an immutable ThermalBrightness multiplier
@@ -191,9 +194,14 @@ function ThermalCosmetics.start(root: Instance): Controller
                 and part.CollisionGroup == "PanelFragments"
                 and not part.Anchored
                 and not part.CanTouch
-            local hide = part:GetAttribute("ThermalNonCover") == true
-                and not part.CanQuery
-                and (not part.CanCollide or fragment)
+            local aircraft = root:FindFirstChild("Aircraft")
+            local ownAircraft = aircraft ~= nil and aircraft:IsA("Model") and part:IsDescendantOf(aircraft)
+            local hide = ownAircraft
+                or (
+                    part:GetAttribute("ThermalNonCover") == true
+                    and not part.CanQuery
+                    and (not part.CanCollide or fragment)
+                )
             if hide and not record.hidden then
                 record.original = part.LocalTransparencyModifier
                 record.hidden = true

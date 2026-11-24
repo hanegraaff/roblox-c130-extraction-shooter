@@ -1,0 +1,52 @@
+[
+  {
+    "path": "build/p18-covered-30.jpg",
+    "mimeType": "image/jpeg",
+    "bytes": 300816,
+    "sha256": "137e30932324e8ab2c0d944cc73d7b0c9672b19680c786ef4e282994a3cda2e0",
+    "imageDimensions": [
+      1920,
+      964
+    ]
+  },
+  {
+    "path": "build/p18-covered-40.jpg",
+    "mimeType": "image/jpeg",
+    "bytes": 285679,
+    "sha256": "ab679a1fde84365a966f78d8081d3007b1c9476c78d35db734dfa81f3cb7ca39",
+    "imageDimensions": [
+      1920,
+      964
+    ]
+  },
+  {
+    "path": "build/p18-exposed-30.jpg",
+    "mimeType": "image/jpeg",
+    "bytes": 309999,
+    "sha256": "07eb2b23a8201ab4bd101eeb86793bcc448e9b6351d88468584eeb4ebe75a93f",
+    "imageDimensions": [
+      1920,
+      964
+    ]
+  },
+  {
+    "path": "build/p18-opening-30.jpg",
+    "mimeType": "image/jpeg",
+    "bytes": 301536,
+    "sha256": "2f27a5719ff58e2e068400207d0c80ed9e2be9b3fe19c102e4b0b2182d618afd",
+    "imageDimensions": [
+      1920,
+      964
+    ]
+  },
+  {
+    "path": "build/p18-opening-40.jpg",
+    "mimeType": "image/jpeg",
+    "bytes": 303973,
+    "sha256": "e458fd555d3743b9ab4f5d008b02cf84a721c48b1154fe2e3da55305dc31ef07",
+    "imageDimensions": [
+      1920,
+      964
+    ]
+  }
+]
