@@ -332,6 +332,41 @@ function Harness.run()
                     detail.backdrop = { background.Color.R, background.Color.G, background.Color.B }
                     detail.sand = { sand.R, sand.G, sand.B }
                     detail.hiddenAircraftParts = aircraftMask(true)
+                    local controls = player.PlayerGui:FindFirstChild("OperatorTouchControls")
+                    if controls then
+                        local recenterButton = controls:FindFirstChild("Recenter")
+                        assert(recenterButton and recenterButton:IsA("TextButton"), "touch Recenter missing")
+                        local point = recenterButton.AbsolutePosition + recenterButton.AbsoluteSize * 0.5
+                        local top: GuiObject? = nil
+                        for _, object in
+                            player.PlayerGui:GetGuiObjectsAtPosition(math.floor(point.X), math.floor(point.Y))
+                        do
+                            if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
+                                top = object
+                                break
+                            end
+                        end
+                        assert(
+                            point.X >= 0 and point.Y >= 0 and top == recenterButton,
+                            "actual operator Recenter center is unreachable or covered by another GUI"
+                        )
+                        local inset = game:GetService("GuiService"):GetGuiInset()
+                        local position, size = recenterButton.AbsolutePosition, recenterButton.AbsoluteSize
+                        assert(
+                            position.X >= 0
+                                and position.Y >= 0
+                                and position.X + size.X + math.max(0, inset.X) <= camera.ViewportSize.X
+                                and position.Y + size.Y + math.max(0, inset.Y) <= camera.ViewportSize.Y,
+                            "actual operator Recenter is clipped"
+                        )
+                        detail.recenter = {
+                            x = position.X,
+                            y = position.Y,
+                            width = size.X,
+                            height = size.Y,
+                            centerReachable = true,
+                        }
+                    end
                 elseif action == "Cleanup" then
                     axes = Vector2.zero
                     panel.stop()

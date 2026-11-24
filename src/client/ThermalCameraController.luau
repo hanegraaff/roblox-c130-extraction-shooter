@@ -153,6 +153,42 @@ function ThermalCameraController.guiOffset(pixels: Vector2, guiOrigin: Vector2):
     )
 end
 
+-- Places a touch Recenter button in the intersection of the actual camera
+-- viewport and its measured device-safe canvas. control's parent must share the
+-- canvas origin (the production canvas starts at local zero). AbsolutePosition
+-- and native GUI hit queries use GUI-content pixels; exclude the top-left inset
+-- from the camera's available content dimensions as well as negative hit space.
+-- Reevaluate after rendering/resizing. This function never yields or owns events;
+-- it changes only the button's presentation and returns false when it cannot fit.
+function ThermalCameraController.placeRecenter(
+    control: TextButton,
+    canvas: GuiObject,
+    viewport: Vector2
+): boolean
+    local inset = GuiService:GetGuiInset()
+    local origin, size = canvas.AbsolutePosition, canvas.AbsoluteSize
+    local bounds = {
+        x = 0,
+        y = 0,
+        width = math.max(0, viewport.X - math.max(0, inset.X)),
+        height = math.max(0, viewport.Y - math.max(0, inset.Y)),
+    }
+    local position = AircraftPanRules.controlTopRight(
+        bounds,
+        { x = origin.X, y = origin.Y, width = size.X, height = size.Y },
+        control.AbsoluteSize.X,
+        control.AbsoluteSize.Y,
+        16
+    )
+    control.Visible = position ~= nil
+    if not position then
+        return false
+    end
+    control.AnchorPoint = Vector2.zero
+    control.Position = UDim2.fromOffset(position.x, position.y)
+    return true
+end
+
 -- Role gate is presentation only. The production server independently authorizes
 -- selection. RoundPanel calls ownsCamera before writing any spectator/character view.
 function ThermalCameraController.new(
@@ -166,6 +202,8 @@ function ThermalCameraController.new(
     local saved: SavedCamera? = nil
     local gui: ScreenGui? = nil
     local touchControlsGui: ScreenGui? = nil
+    local touchControlCanvas: Frame? = nil
+    local touchRecenter: TextButton? = nil
     local hiddenTouchGui: ScreenGui? = nil
     local previousTouchGuiEnabled: boolean? = nil
     local label: TextLabel? = nil
@@ -280,6 +318,8 @@ function ThermalCameraController.new(
         end
         hiddenTouchGui = nil
         previousTouchGuiEnabled = nil
+        touchControlCanvas = nil
+        touchRecenter = nil
         label = nil
         reticle = nil
         projectionOrigin = nil
@@ -384,6 +424,14 @@ function ThermalCameraController.new(
             safeControls.Parent = playerGui
             touchControlsGui = safeControls
             buttonParent = safeControls
+            local canvas = Instance.new("Frame")
+            canvas.Name = "ControlViewport"
+            canvas.Position = UDim2.fromOffset(0, 0)
+            canvas.Size = UDim2.fromScale(1, 1)
+            canvas.BackgroundTransparency = 1
+            canvas.Active = false
+            canvas.Parent = safeControls
+            touchControlCanvas = canvas
             local fire = Instance.new("TextButton")
             fire.Name = "Fire"
             fire.AnchorPoint = Vector2.new(1, 1)
@@ -464,6 +512,9 @@ function ThermalCameraController.new(
         recenter.BackgroundColor3 = Color3.fromRGB(30, 38, 42)
         recenter.TextColor3 = Color3.new(1, 1, 1)
         recenter.Parent = buttonParent
+        if touchControls then
+            touchRecenter = recenter
+        end
         table.insert(
             buttons,
             recenter.Activated:Connect(function()
@@ -665,6 +716,10 @@ function ThermalCameraController.new(
         local viewport = camera.ViewportSize
         if viewport.X <= 1 or viewport.Y <= 1 then
             return -- Wait for an actual render viewport before committing projection.
+        end
+        local recenterControl, controlCanvas = touchRecenter, touchControlCanvas
+        if recenterControl and controlCanvas then
+            ThermalCameraController.placeRecenter(recenterControl, controlCanvas, viewport)
         end
         local aspect = viewport.X / viewport.Y
         if lastAspect ~= aspect then

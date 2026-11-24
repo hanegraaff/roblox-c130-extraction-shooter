@@ -1,6 +1,7 @@
 --!strict
 --[=[
-    AircraftPanRules: deterministic square-bound camera pan and reticle raster.
+    AircraftPanRules: deterministic square-bound camera pan, reticle raster and
+    bounded control placement.
     Depends on MapRules/Validation, with no Instances, clocks, transport or yield.
     Focus is a world-aligned offset from level center in studs. Aircraft pose
     defines screen movement direction but never rotates a held focus. Only the
@@ -11,6 +12,9 @@ local Validation = if script then require(script.Parent.Validation) else require
 local AircraftPanRules = {}
 export type Focus = { x: number, z: number }
 export type Pixels = { x: number, y: number }
+-- Pixel rectangle in one shared GUI-content coordinate space. Width/height are
+-- positive extents, not right/bottom coordinates; origins may be negative.
+export type PixelRect = { x: number, y: number, width: number, height: number }
 AircraftPanRules.defaults = table.freeze({
     speedStudsPerSecond = 120,
     maximumDeltaSeconds = 0.1,
@@ -26,6 +30,71 @@ end
 -- inscribed disk covers the view at any aircraft phase; invalid maps reject.
 function AircraftPanRules.backdropHalfExtent(map: typeof(MapRules.defaults)): number?
     return if MapRules.validate(map) then backdropExtent(map) else nil
+end
+
+-- Returns a GUI-local top-left pixel position for a control in the top-right
+-- of the viewport/canvas intersection. Native GUI input excludes negative content
+-- coordinates even when a device-safe canvas starts above the viewport. Callers
+-- supply that actual input/render rectangle, and the measured canvas rectangle,
+-- in the same coordinate space. A shrinking intersection reduces padding first;
+-- if the whole control cannot fit, nil tells presentation to hide it. Rectangle
+-- arguments are never mutated. Dimensions/padding are finite nonnegative pixels.
+function AircraftPanRules.controlTopRight(
+    viewport: PixelRect,
+    canvas: PixelRect,
+    width: number,
+    height: number,
+    padding: number
+): Pixels?
+    for _, value in
+        {
+            viewport.x,
+            viewport.y,
+            viewport.width,
+            viewport.height,
+            canvas.x,
+            canvas.y,
+            canvas.width,
+            canvas.height,
+            width,
+            height,
+            padding,
+        }
+    do
+        if not Validation.isFinite(value) then
+            return nil
+        end
+    end
+    if
+        viewport.width <= 0
+        or viewport.height <= 0
+        or canvas.width <= 0
+        or canvas.height <= 0
+        or width <= 0
+        or height <= 0
+        or padding < 0
+    then
+        return nil
+    end
+    local right, bottom =
+        math.min(viewport.x + viewport.width, canvas.x + canvas.width),
+        math.min(viewport.y + viewport.height, canvas.y + canvas.height)
+    if not Validation.isFinite(right) or not Validation.isFinite(bottom) then
+        return nil
+    end
+    -- Reserve complete integer pixels inside both measured rectangles; this also
+    -- prevents final rasterization from crossing a fractional safe-area edge.
+    local leftLocal = math.ceil(math.max(viewport.x, canvas.x) - canvas.x)
+    local topLocal = math.ceil(math.max(viewport.y, canvas.y) - canvas.y)
+    local rightLocal = math.floor(right - canvas.x)
+    local bottomLocal = math.floor(bottom - canvas.y)
+    local boxWidth, boxHeight = math.ceil(width), math.ceil(height)
+    if rightLocal - leftLocal < boxWidth or bottomLocal - topLocal < boxHeight then
+        return nil
+    end
+    local horizontal = math.min(math.floor(padding), math.floor((rightLocal - leftLocal - boxWidth) / 2))
+    local vertical = math.min(math.floor(padding), math.floor((bottomLocal - topLocal - boxHeight) / 2))
+    return { x = rightLocal - horizontal - boxWidth, y = topLocal + vertical }
 end
 
 -- One integer viewport pixel pair drives both the GUI reticle and camera ray.

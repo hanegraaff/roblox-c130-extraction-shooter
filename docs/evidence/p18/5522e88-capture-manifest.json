@@ -1,0 +1,57 @@
+{
+  "sourceCommit": "5522e88be1617eaabfd4bdb0e7439ce076045e9d",
+  "sourceTree": "f7f28a0f6ea451bf4c6941e78a5f8b043074cbac",
+  "nativeViewport": [
+    749,
+    381
+  ],
+  "capturePixels": [
+    1920,
+    881
+  ],
+  "scope": "Original MCP JPEG captures. Capture viewport is larger than actual phone viewport; does not establish native phone hit geometry. Actual Waiting avatar tagged ThermalTarget, isolated production ledger/PanelGeometry, not competitive Ground/fire/multiplayer evidence.",
+  "captures": [
+    {
+      "path": "build/p18-5522-cover-30.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 232725,
+      "sha256": "ff37d12c39bd5c7e6e21c9b974fe48d233beaeeddca2404d5d6a41519b4ad81c"
+    },
+    {
+      "path": "build/p18-5522-cover-40.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 205991,
+      "sha256": "bf1f61a5f3352989a8ddcbc14a24c4c72a7e827e532b205bd7ea913fae81901c"
+    },
+    {
+      "path": "build/p18-5522-expose-40.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 264344,
+      "sha256": "c7b536bf3eedb8aa1553c11980aa0ee80394983b383c062b1aea10288ec87068"
+    },
+    {
+      "path": "build/p18-5522-exposed-30.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 279746,
+      "sha256": "a832a4caa783cb8fcc938a8549c64645b73d0baf268df7b68564ce77f7b5b6b3"
+    },
+    {
+      "path": "build/p18-5522-opening-30.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 254866,
+      "sha256": "539084393dc0b60edc27fa868510b31177558f2cbcb79379f222a8d207503bd6"
+    },
+    {
+      "path": "build/p18-5522-opening-40.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 276124,
+      "sha256": "b7bc4ed2fad95c6bc4b6ce4c65e27a685d2ae215f67248cef9e5fd10ccb4bd93"
+    },
+    {
+      "path": "build/p18-5522-phone-controls.jpg",
+      "mimeType": "image/jpeg",
+      "bytes": 277587,
+      "sha256": "1f5bbcf6dac9703a6ac0b01d8d98b9cbae227324c158397d336a38e91820f596"
+    }
+  ]
+}

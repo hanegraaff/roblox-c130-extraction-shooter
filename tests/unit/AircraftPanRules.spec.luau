@@ -245,6 +245,94 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             "P18 assertion: rules.supportedFov(other, 10, 40) == 40"
         )
     end)
+    test("P18 Recenter placement intersects the camera and measured negative device-safe origin", function()
+        local normal = assert(
+            rules.controlTopRight(
+                { x = 0, y = 0, width = 1280, height = 720 },
+                { x = 0, y = 0, width = 1280, height = 720 },
+                96,
+                42,
+                16
+            ),
+            "normal control layout rejected"
+        )
+        assert(normal.x == 1168 and normal.y == 16, "normal top-right margin changed")
+        local phone = assert(
+            rules.controlTopRight(
+                { x = 0, y = 0, width = 749, height = 323 },
+                { x = 0, y = -58, width = 749, height = 381 },
+                96,
+                42,
+                16
+            ),
+            "negative safe origin rejected"
+        )
+        assert(phone.x == 637 and phone.y == 74, "negative-origin witness was not compensated")
+        assert(phone.y - 58 == 16, "native button interior remains above the input viewport")
+    end)
+    test(
+        "P18 Recenter placement stays inside safe areas after resize and shrinks padding before hiding",
+        function()
+            for _, viewport in
+                {
+                    { x = 0, y = 0, width = 749, height = 323 },
+                    { x = 0, y = 0, width = 568, height = 262 },
+                    { x = 0, y = 0, width = 110, height = 50 },
+                }
+            do
+                for _, canvas in
+                    {
+                        { x = 0, y = -58, width = viewport.width, height = viewport.height + 58 },
+                        { x = 3, y = 2, width = viewport.width - 3, height = viewport.height - 2 },
+                    }
+                do
+                    local position = assert(
+                        rules.controlTopRight(viewport, canvas, 96, 42, 16),
+                        "fitting resized control was hidden"
+                    )
+                    local x, y = canvas.x + position.x, canvas.y + position.y
+                    assert(
+                        x >= math.max(viewport.x, canvas.x) and y >= math.max(viewport.y, canvas.y),
+                        "control left safe/input start"
+                    )
+                    assert(
+                        x + 96 <= math.min(viewport.x + viewport.width, canvas.x + canvas.width)
+                            and y + 42 <= math.min(viewport.y + viewport.height, canvas.y + canvas.height),
+                        "control crossed safe/input end"
+                    )
+                end
+            end
+            local tooSmall = rules.controlTopRight(
+                { x = 0, y = 0, width = 80, height = 50 },
+                { x = 0, y = -58, width = 80, height = 108 },
+                96,
+                42,
+                16
+            )
+            assert(tooSmall == nil, "unreachable control claimed to fit a narrower viewport")
+        end
+    )
+    test(
+        "P18 Recenter placement rejects invalid pixel rectangles without mutating measured inputs",
+        function()
+            local viewport = { x = 0, y = 0, width = 749, height = 323 }
+            local canvas = { x = 0, y = -58, width = 749, height = 381 }
+            for _, value in { 0 / 0, math.huge, -math.huge } do
+                local malformed = table.clone(canvas)
+                malformed.y = value
+                assert(
+                    not rules.controlTopRight(viewport, malformed, 96, 42, 16),
+                    "nonfinite origin accepted"
+                )
+            end
+            assert(not rules.controlTopRight(viewport, canvas, 96, 42, -1), "negative margin accepted")
+            assert(not rules.controlTopRight(viewport, canvas, 0, 42, 16), "zero-width control accepted")
+            assert(
+                canvas.y == -58 and canvas.height == 381 and viewport.height == 323,
+                "layout mutated its inputs"
+            )
+        end
+    )
     test("P18 reticle raster remains bounded and consistent at fractional pixels", function()
         local point = assert(
             rules.raster(540.6, 309.6, 1081, 619),
