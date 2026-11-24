@@ -1,0 +1,463 @@
+{
+  "source": "5e385aafdd51ef63d182f8b0eddadcee11e24685",
+  "tree": "19825879355ac66ff101097f865d99389cc85e0a",
+  "studio": "0.748.0.7481526",
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 176,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 176,
+      "buildSha256": "094d550980a2ea6c9eb3e8b4dc0e38e6cd080acb36dbc2ea2af6c83d7e165eaf",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "5e385aafdd51ef63d182f8b0eddadcee11e24685"
+    }
+  },
+  "serverSmoke": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 196,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 196
+  },
+  "clientSmoke": [
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19,
+      "discovered": 19,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "userId": -1
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19,
+      "discovered": 19,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "userId": -2
+    }
+  ],
+  "method": "Started the committed PerformanceHarness.impactReplay with its completion callback after P05 released its runtime in the same private Server & Clients session. Both actual clients attached the committed profile listener before Replay started.",
+  "report": {
+    "requestedClients": 2,
+    "clientCount": 2,
+    "seed": 11021,
+    "passed": 8,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 1"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 2"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 3"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 4"
+      },
+      {
+        "passed": true,
+        "name": "Accelerated flood and pristine replay 5"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "skipped": 0,
+    "observations": {
+      "impactReset2": {
+        "panel": "Outpost_S01_East_01",
+        "activeClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          }
+        },
+        "rocketExpired": false,
+        "resetClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          }
+        },
+        "resources": {
+          "rifleQueue": 0,
+          "launcherQueue": 0,
+          "panels": 438,
+          "pendingOutcomes": 0,
+          "rifleQueuePeak": 0,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "connections": 23,
+          "pendingBarriers": 0,
+          "gunshipEffects": 0,
+          "rifleTools": 0,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "launcherRepresentations": 0,
+          "launcherQueuePeak": 1,
+          "fragments": 0
+        },
+        "rocket": {
+          "y": 0,
+          "aircraftHit": false,
+          "z": -34.37965774536133,
+          "roundId": 2,
+          "x": 240.73829650878906,
+          "userId": -1,
+          "shotId": "rocket:2:1:Radar"
+        },
+        "roundId": 2
+      },
+      "impactReset5": {
+        "panel": "Outpost_S01_East_01",
+        "activeClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          }
+        },
+        "rocketExpired": true,
+        "resetClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          }
+        },
+        "resources": {
+          "rifleQueue": 0,
+          "launcherQueue": 0,
+          "panels": 438,
+          "pendingOutcomes": 0,
+          "rifleQueuePeak": 0,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "connections": 23,
+          "pendingBarriers": 0,
+          "gunshipEffects": 0,
+          "rifleTools": 0,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "launcherRepresentations": 0,
+          "launcherQueuePeak": 1,
+          "fragments": 0
+        },
+        "roundId": 5
+      },
+      "impactReset3": {
+        "panel": "Outpost_S01_East_01",
+        "activeClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          }
+        },
+        "rocketExpired": false,
+        "resetClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          }
+        },
+        "resources": {
+          "rifleQueue": 0,
+          "launcherQueue": 0,
+          "panels": 438,
+          "pendingOutcomes": 0,
+          "rifleQueuePeak": 0,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "connections": 23,
+          "pendingBarriers": 0,
+          "gunshipEffects": 0,
+          "rifleTools": 0,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "launcherRepresentations": 0,
+          "launcherQueuePeak": 1,
+          "fragments": 0
+        },
+        "rocket": {
+          "y": 0,
+          "aircraftHit": false,
+          "z": -34.379119873046875,
+          "roundId": 3,
+          "x": 240.73779296875,
+          "userId": -2,
+          "shotId": "rocket:3:1:Radar"
+        },
+        "roundId": 3
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherQueue": 0,
+        "panels": 438,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "connections": 23,
+        "pendingBarriers": 0,
+        "gunshipEffects": 0,
+        "rifleTools": 0,
+        "launcherFlights": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "launcherRepresentations": 0,
+        "launcherQueuePeak": 1,
+        "fragments": 0
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherQueue": 0,
+        "panels": 438,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "connections": 23,
+        "pendingBarriers": 0,
+        "gunshipEffects": 0,
+        "rifleTools": 0,
+        "launcherFlights": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "launcherRepresentations": 0,
+        "launcherQueuePeak": 0,
+        "fragments": 0
+      },
+      "clientRequests": {
+        "AircraftState/FireWeapon": 5,
+        "LauncherState/Fire": 5,
+        "AircraftState/SelectWeapon": 5,
+        "LauncherState/Pickup": 5
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 19,
+          "discovered": 19,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -1
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 19,
+          "discovered": 19,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -2
+        }
+      },
+      "impactReset1": {
+        "panel": "Outpost_S01_East_01",
+        "activeClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          }
+        },
+        "rocketExpired": false,
+        "resetClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          }
+        },
+        "resources": {
+          "rifleQueue": 0,
+          "launcherQueue": 0,
+          "panels": 438,
+          "pendingOutcomes": 0,
+          "rifleQueuePeak": 0,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "connections": 23,
+          "pendingBarriers": 0,
+          "gunshipEffects": 0,
+          "rifleTools": 0,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "launcherRepresentations": 0,
+          "launcherQueuePeak": 1,
+          "fragments": 0
+        },
+        "rocket": {
+          "y": 0,
+          "aircraftHit": false,
+          "z": -34.37300109863281,
+          "roundId": 1,
+          "x": 240.73289489746094,
+          "userId": -2,
+          "shotId": "rocket:1:1:Radar"
+        },
+        "roundId": 1
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 196,
+        "discovered": 196,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "clientCount": 2
+      },
+      "groundFireDecisions": [],
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "impactReset4": {
+        "panel": "Outpost_S01_East_01",
+        "activeClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Total",
+            "cleared": false
+          }
+        },
+        "rocketExpired": false,
+        "resetClients": {
+          "-1": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          },
+          "-2": {
+            "id": "Outpost_S01_East_01",
+            "appearance": "Pristine",
+            "cleared": true
+          }
+        },
+        "resources": {
+          "rifleQueue": 0,
+          "launcherQueue": 0,
+          "panels": 438,
+          "pendingOutcomes": 0,
+          "rifleQueuePeak": 0,
+          "launcherEffects": 0,
+          "projectiles": 0,
+          "connections": 23,
+          "pendingBarriers": 0,
+          "gunshipEffects": 0,
+          "rifleTools": 0,
+          "launcherFlights": 0,
+          "spawnTasks": 0,
+          "rifleTracers": 0,
+          "launcherRepresentations": 0,
+          "launcherQueuePeak": 1,
+          "fragments": 0
+        },
+        "rocket": {
+          "y": 0,
+          "aircraftHit": false,
+          "z": -34.38551330566406,
+          "roundId": 4,
+          "x": 240.74407958984375,
+          "userId": -1,
+          "shotId": "rocket:4:1:Radar"
+        },
+        "roundId": 4
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 8,
+    "suite": "P19Replay",
+    "failed": 0,
+    "mode": "Replay"
+  }
+}

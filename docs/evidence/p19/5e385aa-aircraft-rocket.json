@@ -1,0 +1,226 @@
+{
+  "source": "5e385aafdd51ef63d182f8b0eddadcee11e24685",
+  "tree": "19825879355ac66ff101097f865d99389cc85e0a",
+  "studio": "0.748.0.7481526",
+  "method": "Private native two-client Server & Clients. After P05 and Replay shut down, a temporary server command started the unmodified production GameRuntime. It placed and equipped the Ground character using the fixture's trusted pose and equip controls. The actual Ground client sent the production pickup and fire requests, calculating moving-aircraft lead from replicated orbit state. Both actual clients observed flight, impact, health and cleanup.",
+  "probeLocation": {
+    "server": "build/p19-aircraft-rocket-server.luau",
+    "client": "build/p19-aircraft-rocket-client.luau"
+  },
+  "probeSha256": {
+    "server": "cfbf9cc80da145c248af3d73baa78722960465f0e73901aed5355afbc9eb1bac",
+    "client": "e6f6f120e2d523de03c56314863ae0dcdfad7b22f32d801f05eead58b5ace612"
+  },
+  "report": {
+    "actualClients": 2,
+    "cleanup": true,
+    "clients": {
+      "-1": {
+        "audio": [
+          {
+            "point": [
+              323.2252197265625,
+              46.537513732910156,
+              34.00371551513672
+            ],
+            "cue": "RocketLaunch",
+            "round": 1,
+            "emitted": 1795527644.574505,
+            "shooter": -2
+          },
+          {
+            "surface": "Metal",
+            "point": [
+              354.5472717285156,
+              135,
+              49.89957046508789
+            ],
+            "cue": "RocketImpact",
+            "round": 1,
+            "emitted": 1795527644.973385
+          }
+        ],
+        "flightInitial": [
+          323.2252197265625,
+          46.537513732910156,
+          34.00371551513672
+        ],
+        "visibleBurst": true,
+        "activeSmoke": true,
+        "contacts": [
+          {
+            "normal": [
+              0,
+              -1,
+              0
+            ],
+            "surface": "Metal",
+            "shot": "rocket:1:1:Radar",
+            "received": 1795527645.005548,
+            "round": 1,
+            "point": [
+              354.5472717285156,
+              135,
+              49.89957046508789
+            ],
+            "emitted": 1795527644.973385
+          }
+        ],
+        "userId": -1,
+        "aircraftHit": true,
+        "flights": 1,
+        "role": "Gunship",
+        "health": 900,
+        "round": 1,
+        "liveFlights": 0,
+        "localShot": "rocket:1:1:Radar",
+        "localImpactAlive": false,
+        "flightCountAtLastProbe": 3
+      },
+      "-2": {
+        "flightInitial": [
+          323.2252197265625,
+          46.537513732910156,
+          34.00371551513672
+        ],
+        "round": 1,
+        "audio": [
+          {
+            "point": [
+              323.2252197265625,
+              46.537513732910156,
+              34.00371551513672
+            ],
+            "cue": "RocketLaunch",
+            "round": 1,
+            "emitted": 1795527644.574505,
+            "shooter": -2
+          },
+          {
+            "surface": "Metal",
+            "point": [
+              354.5472717285156,
+              135,
+              49.89957046508789
+            ],
+            "cue": "RocketImpact",
+            "round": 1,
+            "emitted": 1795527644.973385
+          }
+        ],
+        "visibleBurst": true,
+        "activeSmoke": true,
+        "contacts": [
+          {
+            "normal": [
+              0,
+              -1,
+              0
+            ],
+            "surface": "Metal",
+            "shot": "rocket:1:1:Radar",
+            "received": 1795527644.988119,
+            "round": 1,
+            "point": [
+              354.5472717285156,
+              135,
+              49.89957046508789
+            ],
+            "emitted": 1795527644.973385
+          }
+        ],
+        "liveFlights": 0,
+        "aim": {
+          "target": [
+            356.3926086425781,
+            140,
+            50.836082458496094
+          ],
+          "estimatedTravel": 0.4191420555114746,
+          "head": [
+            323.2257995605469,
+            46.53447723388672,
+            34.003662109375
+          ]
+        },
+        "flights": 1,
+        "aircraftHit": true,
+        "health": 900,
+        "localShot": "rocket:1:1:Radar",
+        "role": "Ground",
+        "localImpactAlive": false,
+        "flightCountAtLastProbe": 3,
+        "userId": -2
+      }
+    },
+    "server": {
+      "healthAfter": 900,
+      "healthBefore": 1000,
+      "fired": {
+        "roundId": 1,
+        "userId": -2,
+        "shotId": "rocket:1:1:Radar"
+      },
+      "peakServerRockets": 1,
+      "steps": [
+        {
+          "seconds": 1795527644.40442,
+          "name": "fresh-active",
+          "data": {
+            "clientCount": 2,
+            "round": 1,
+            "health": 1000
+          }
+        },
+        {
+          "seconds": 1795527644.541138,
+          "name": "aircraft-lead-setup",
+          "data": {
+            "launchPose": [
+              323.215576171875,
+              45,
+              34.010223388671875
+            ],
+            "aircraft": [
+              358.0234069824219,
+              140,
+              37.6728630065918
+            ],
+            "head": [
+              323.22039794921875,
+              46.561744689941406,
+              34.00408935546875
+            ]
+          }
+        },
+        {
+          "seconds": 1795527644.574835,
+          "name": "physical-flight-start",
+          "data": {
+            "round": 1,
+            "position": [
+              323.2252197265625,
+              46.537513732910156,
+              34.00371551513672
+            ]
+          }
+        }
+      ],
+      "roleIds": {
+        "ground": -2,
+        "gunship": -1
+      },
+      "observedNewRockets": 1,
+      "impact": {
+        "y": 135,
+        "aircraftHit": true,
+        "z": 49.89957046508789,
+        "roundId": 1,
+        "x": 354.5472717285156,
+        "userId": -2,
+        "shotId": "rocket:1:1:Radar"
+      }
+    },
+    "passed": true
+  }
+}

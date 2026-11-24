@@ -1009,5 +1009,19 @@
   "cleanup": {
     "method": "StudioTestService:EndTest on the verified private Server DataModel after evidence collection and user authorization",
     "verified": "Only the original tests.rbxlx document remained, in Edit"
+  },
+  "renderedReview": {
+    "howitzer": {
+      "sample": "build/p19-tuned-live-howitzer-09.jpg",
+      "observation": "Live 40-degree Full thermal view shows a white flash and pale expanding region in the center approach, amid the darker thermal background. Short capture has no Studio game-clock alignment."
+    },
+    "rocketFlight": {
+      "sample": "build/p19-tuned-live-rocket-03.jpg",
+      "observation": "A forward bright vertical exhaust streak is visible from the Ground avatar during the live launch. The roof-contact stills show a small bright mark near the reticle with no sustained, clearly distinguishable plume in this framing. The matching authoritative contact and smoke-emitter admission are captured separately."
+    },
+    "chainGun": {
+      "sample": "build/p19-tuned-live-gau23-07.jpg",
+      "observation": "Small light points show briefly near the reticle during native 30-degree Reduced fire. No stronger comparative claim about Full."
+    }
   }
 }
