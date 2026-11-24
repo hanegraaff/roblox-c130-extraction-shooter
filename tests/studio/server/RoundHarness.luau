@@ -123,10 +123,17 @@ function RoundHarness.run()
             else nil)
         return
     end
-    if RunService:IsStudio() and args == nil and selector == "P19Profile" then
-        require(script.Parent.PerformanceHarness).profile(function(report)
-            workspace:SetAttribute("ManualP19ProfileReport", HttpService:JSONEncode(report))
-        end)
+    if RunService:IsStudio() and args == nil and selector == "P19Profile" and development then
+        local harness = require(script.Parent.PerformanceHarness)
+        if development:GetAttribute("ManualP19Scenario") == "Replay" then
+            harness.impactReplay(function(report)
+                workspace:SetAttribute("ManualP19ReplayReport", HttpService:JSONEncode(report))
+            end)
+        else
+            harness.profile(function(report)
+                workspace:SetAttribute("ManualP19ProfileReport", HttpService:JSONEncode(report))
+            end)
+        end
         return
     end
     if RunService:IsStudio() and args == nil and selector == "P11" and development then

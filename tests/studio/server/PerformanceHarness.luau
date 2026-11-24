@@ -1071,8 +1071,10 @@ function Harness.profile(finish: ((Report) -> ())?)
 end
 
 -- Five consecutive resets in a real two-client session on current combat.
-function Harness.impactReplay()
-    runScenario("Replay", 2, nil, "P19Replay")
+-- Native Server & Clients receives the same report through finish. With no
+-- callback, the SDK owns ending the test and returning its result.
+function Harness.impactReplay(finish: ((Report) -> ())?)
+    runScenario("Replay", 2, finish, "P19Replay")
 end
 
 return Harness

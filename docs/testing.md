@@ -563,6 +563,12 @@ drained local and server resources after each reset. Retain both actual
 client smoke reports and the replay report. Use the separate Profile scenario
 for frame timing and the operated review for Reduced and Off coverage.
 
+For native **Server & Clients**, set `ManualHarness = "P19Profile"` and
+`ManualP19Scenario = "Replay"` on `ServerStorage.DevelopmentSettings` in the
+local Edit document. Start two clients and collect
+`Workspace.ManualP19ReplayReport` in the Server context. End the session and
+restore the original selector attributes in Edit.
+
 ## Run the P11 performance harness
 
 > Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
