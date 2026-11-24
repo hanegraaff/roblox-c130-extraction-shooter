@@ -210,14 +210,24 @@ function Harness.run(finish: ((unknown) -> ())?)
                 local roof: Model? = nil
                 for _, item in root:GetChildren() do
                     if item:IsA("Model") then
-                        if string.find(string.lower(item.Name), "roof") then
+                        -- Imported IDs may encode surface roles (SB.R...) rather
+                        -- than spell them out. Prefer the authored contract; only
+                        -- older models without it use their legacy display names.
+                        local surface = item:GetAttribute("PanelSurface")
+                        if surface == "Roof" then
                             roof = roof or item
-                        else
+                        elseif surface == "Wall" then
                             wall = wall or item
+                        elseif surface == nil then
+                            if string.find(string.lower(item.Name), "roof") then
+                                roof = roof or item
+                            else
+                                wall = wall or item
+                            end
                         end
                     end
                 end
-                assert(wall and roof, "wall/roof coverage missing")
+                assert(wall and roof, "wall/roof coverage missing in " .. root:GetFullName())
                 table.insert(selected, wall)
                 table.insert(selected, roof)
             end

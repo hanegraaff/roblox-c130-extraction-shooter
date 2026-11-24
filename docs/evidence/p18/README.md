@@ -4,7 +4,7 @@ The [plan completion record](../../../plans/18-game-rebalancing.md#completion-re
 
 ## Current candidate feec2b1
 
-The [final host gate](feec2b1-host.json) passes 79 unit / 76 integration / 26 tooling / 58 asset cases. [Edit preflight](feec2b1-source-preflight.json) matches 170 scripts and five poses. The [fresh native attempt](feec2b1-native-attempt.json) remains unavailable because Studio's Assistant plugin failed to load in both runtime DataModels. It supplies no fresh smoke, corrected Recenter tap or multiplayer pass. See the completion record for the pending recovery and acceptance gates.
+The [final host gate](feec2b1-host.json) passes 79 unit / 76 integration / 26 tooling / 58 asset cases. [Edit preflight](feec2b1-source-preflight.json) matches 170 scripts and five poses. The [failed native attempt](feec2b1-native-attempt.json) preserves the Assistant plugin-load failure; it supplies no passing evidence. After [user-controlled restart](feec2b1-restart-recovery.json), the [fresh phone/smoke proof](feec2b1-restarted-phone.json) passes 193 server / 18 client cases and actual Recenter center taps before/after resize, plus affected touch/zoom and cleanup. The [original phone capture](feec2b1-phone.jpg) supports presentation review; actual native event and hit geometry prove layout. Multiplayer acceptance remains separate in the completion record.
 
 ## Source 5522e88: thermal visibility and operator masking
 
