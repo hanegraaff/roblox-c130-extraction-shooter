@@ -2675,6 +2675,28 @@
       "local_path": null,
       "roblox_asset_id": "135744727401696",
       "upload_owner": "2227341845"
+    },
+    {
+      "id": "lobby-bust-source",
+      "kind": "source",
+      "source": "Editable P20 limestone bust, small turned base and isolated Blender review staging authored in scripts/lobby_bust/build.py from the supplied bust and lobby references.",
+      "author": "Project contributors",
+      "license": "Original project sculpture and generated stone maps. The supplied photographic and room references are separate review inputs.",
+      "local_path": "assets/blender/lobby-bust/lobby-bust.blend",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "f14dc944b8a86af46dfa869e550d3f498121bc2095565845c85360098f7f7bf8"
+    },
+    {
+      "id": "lobby-bust-game-export",
+      "kind": "mesh",
+      "source": "Selected sculpture meshes and four embedded original stone maps exported from lobby-bust-source. Base-center pivot, Blender -Y forward / +Z up, one Blender unit per stud.",
+      "author": "Project contributors",
+      "license": "Original project sculpture and generated stone maps. The supplied photographic and room references are separate review inputs.",
+      "local_path": "assets/exports/lobby-bust/lobby-bust.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "f1127a0863e28efeeb9185eee273bf99302b60b7bf1b5ceb5fd73614a3af8038"
     }
   ],
   "runtime_recipes": [
