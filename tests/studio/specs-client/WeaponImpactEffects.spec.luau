@@ -150,7 +150,10 @@ return function()
             local smoke = assert(anchor:FindFirstChildWhichIsA("ParticleEmitter", true), "missing emitter")
             owner.update(3, "Active", 1, false, 4.06)
             assert(smoke.Enabled and smoke.Rate == 28, "Full smoke did not follow the local rocket")
-            assert((anchor.Position - (near * CFrame.new(0, 0, 0.9)).Position).Magnitude < 0.01)
+            assert(
+                (anchor.Position - (near * CFrame.new(0, 0, 0.9)).Position).Magnitude < 0.01,
+                "smoke anchor did not follow the exhaust offset"
+            )
             owner.update(3, "Active", 0.45, false, 4.08)
             assert(smoke.Enabled and smoke.Rate == 12, "Reduced smoke did not change emission")
             rocket.CFrame = far
