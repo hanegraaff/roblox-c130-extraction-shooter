@@ -2,6 +2,10 @@
 
 The [plan completion record](../../../plans/18-game-rebalancing.md#completion-record) owns commands, source identities, results and remaining acceptance gates. These are actual local Studio captures, with the controlled fixture scope described below. They do not establish multiplayer replication or release capacity.
 
+## Current candidate feec2b1
+
+The [final host gate](feec2b1-host.json) passes 79 unit / 76 integration / 26 tooling / 58 asset cases. [Edit preflight](feec2b1-source-preflight.json) matches 170 scripts and five poses. The [fresh native attempt](feec2b1-native-attempt.json) remains unavailable because Studio's Assistant plugin failed to load in both runtime DataModels. It supplies no fresh smoke, corrected Recenter tap or multiplayer pass. See the completion record for the pending recovery and acceptance gates.
+
 ## Source 5522e88: thermal visibility and operator masking
 
 The controlled target is a tagged clone of the local avatar while the player is in Waiting/solo Operator preview. A separate roof fixture supplies intact cover and an earned Heavy opening. Native ray checks accompany the rendered observations. The final phone Recenter layout was **not accepted** on this source; its actual button interior was outside the native viewport and is recorded as a defect.
