@@ -201,8 +201,8 @@ def arch(wall,u,z_center,r,outer,depth,material,tag):
     for i in range(64):
         for j in range(4):
             k=i*4+j; nex=i*4+(j+1)%4
-            faces.append((k,nex,nex+4,k+4))
-    faces.extend([(3,2,1,0),tuple(range(256,260))])
+            faces.append((k,k+4,nex+4,nex))
+    faces.extend([(0,1,2,3),tuple(range(259,255,-1))])
     panel(tag,verts,material,faces)
     for sign in(-1,1):
         wall_box(wall,tag+" return",u+sign*(r+outer)/2,depth/2,z_center/2,(outer-r,depth,z_center),material,.04)
