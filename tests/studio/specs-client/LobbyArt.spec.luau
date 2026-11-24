@@ -3,6 +3,8 @@
 -- Processed SurfaceAppearance textures are reviewed in the viewport. The host
 -- gate verifies their actual serialized bindings.
 local ContentProvider = game:GetService("ContentProvider")
+local PRELOAD_ATTEMPTS = 3
+local RETRY_PAUSE_SECONDS = 0.25
 
 local function mountedArt(): Folder
     local world = assert(workspace:WaitForChild("World", 10), "missing game world")
@@ -11,6 +13,69 @@ local function mountedArt(): Folder
     local art = station:WaitForChild("LobbyArt", 10)
     assert(art and art:IsA("Folder"), "missing native lobby")
     return art
+end
+
+local function preloadMountedParts(parts: { MeshPart })
+    local expected: { [MeshPart]: { [string]: string } } = {}
+    for _, part in parts do
+        local mesh = part.MeshId
+        assert(mesh:match("^rbxassetid://%d+$"), "missing native lobby mesh " .. part.Name)
+        local required = { [mesh] = "mesh" }
+        if not part:FindFirstChildWhichIsA("SurfaceAppearance") then
+            local color = part.TextureID
+            assert(
+                color ~= "" and color == part:GetAttribute("LobbyNativeColor"),
+                "missing direct lobby texture " .. part.Name
+            )
+            required[color] = "texture"
+        end
+        expected[part] = required
+    end
+
+    -- A cold client's raw cache status can briefly disagree with a successful
+    -- callback. Keep callback Success for each required asset across attempts
+    -- and retry only mounted parts that still have an unconfirmed dependency.
+    local observed: { [string]: Enum.AssetFetchStatus } = {}
+    local pending = parts
+    local missing: { string } = {}
+    for attempt = 1, PRELOAD_ATTEMPTS do
+        ContentProvider:PreloadAsync(pending, function(id: string, status: Enum.AssetFetchStatus)
+            if observed[id] ~= Enum.AssetFetchStatus.Success then
+                observed[id] = status
+            end
+        end)
+        table.clear(missing)
+        local retry: { MeshPart } = {}
+        for _, part in pending do
+            local needed = false
+            for id, assetType in expected[part] do
+                local status = observed[id]
+                if status ~= Enum.AssetFetchStatus.Success then
+                    local reason = if status then status.Name else "no callback"
+                    table.insert(missing, string.format("%s %s %s (%s)", part.Name, assetType, id, reason))
+                    needed = true
+                end
+            end
+            if needed then
+                table.insert(retry, part)
+            end
+        end
+        if #retry == 0 then
+            return
+        end
+        pending = retry
+        if attempt < PRELOAD_ATTEMPTS then
+            task.wait(RETRY_PAUSE_SECONDS)
+        end
+    end
+    table.sort(missing)
+    error(
+        string.format(
+            "Lobby preload failed after %d attempts: %s",
+            PRELOAD_ATTEMPTS,
+            table.concat(missing, ", ")
+        )
+    )
 end
 
 return function()
@@ -57,20 +122,7 @@ return function()
                 distinctArt[id] = true
                 table.insert(content, part)
             end
-            ContentProvider:PreloadAsync(content)
-            for _, part in content do
-                assert(
-                    ContentProvider:GetAssetFetchStatus(part.MeshId) == Enum.AssetFetchStatus.Success,
-                    "failed to load lobby mesh " .. part.Name
-                )
-                local directColor = part.TextureID
-                if directColor ~= "" and directColor == part:GetAttribute("LobbyNativeColor") then
-                    assert(
-                        ContentProvider:GetAssetFetchStatus(directColor) == Enum.AssetFetchStatus.Success,
-                        "failed to load direct lobby texture " .. part.Name
-                    )
-                end
-            end
+            preloadMountedParts(content)
         end
     )
 end
