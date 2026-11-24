@@ -10,8 +10,8 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
 | `P18` | 3 | Roster health, current panel/thermal/camera state, four-site ownership/recovery and replay |
-| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds empty ground and ground contacts beside each of five buildings |
-| `P19Profile` | 2 | Candidate-branch five-minute mixed weapon workload, render and scheduler frame timing, local impact readiness and resource peaks |
+| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds four empty-ground surface witnesses, ground contacts beside each of five buildings and a direct roof hit |
+| `P19Profile` | 2 | Candidate-branch five-minute mixed weapon workload, render and scheduler frame timing, local impact readiness and resource peaks. SDK scenario `Replay` runs five resets and observes empty-air rocket expiry |
 | `P03`, `P04` | Their documented rosters | Compatible lifecycle and canonical aircraft/orbit regression paths |
 | `P06`, `P06Team`, `P07`, `Sandbreak`, `P08`, `P09`, `P10`, `P11`, `P14`, `P14ArrivalRegression`, `P17` | Historical only | Explicit pre-P18 version rejection; run the recorded source to reproduce prior evidence |
 
@@ -501,13 +501,15 @@ The native smoke includes the server's registered-solid distance and cover
 fixture and the client's impact admission and cleanup fixture. The server
 fixture supplies a contact and the client fixture injects cues. The active
 round checks below exercise projectile flight and actual delivery. On P19,
-the ninth P05 case fires one empty-ground shot and one ground strike beside
-each registered building through the production remote, then checks both
-clients' impact location and a representative opened panel at each building.
-The case supplies aim and avatar placement through the test harness. Keep
-ordinary control, terrain material, protected-player and roof review separate.
+the ninth P05 case fires at four empty-ground surfaces (desert sand, forest
+floor, depot pavement and the red basin's Mud terrain), once beside each
+registered building, and once directly at an elevated roof panel. It sends
+production fire requests and checks both clients' impact location and a
+representative opened panel at each building. The harness supplies aim and
+avatar placement. Review ordinary controls and the exposed versus shielded
+Ground player in a separate operated session.
 
-- **A2 battlefield coverage.** Start an ordinary **Server & Clients** session with one operator and one Ground player. Use normal targeting and fire controls. Capture the confirmed ground contacts in all four terrain settings and ground strikes beside Sandbreak, Salt Flats, Vesper, the depot and the Seedship. Include an exposed Ground player beyond 18 studs, the solid-cover control and direct wall/roof hits. Record the contact, affected panel IDs, each client's observed openings and the protected and out-of-range controls. Inspect real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
+- **A2 battlefield coverage.** Start an ordinary **Server & Clients** session with one operator and one Ground player. Use normal targeting and fire controls to repeat an empty-ground strike and a ground strike beside a building. Include an exposed Ground player more than 18 studs and at most 25 studs from the contact, a solid-cover control and direct wall/roof checks. Record the contact, affected panel IDs, each client's observed openings and the protected and out-of-range controls. Inspect real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
 - **A3 flight and cues.** Observe 105mm and repeated 30mm contact effects on terrain and walls and rockets striking terrain, buildings and the aircraft. Exercise a rocket that expires without a collision. Check one burst per valid contact, smoke onset and fade, 100 damage for a direct aircraft rocket hit, unchanged 30mm earned credit, and rejection of duplicate, delayed and previous-round cues. Check the fixture's cleanup result and observe the live effects clear on replay.
 - **A4 visual and listening review.** Record Ground and both thermal zooms with Full, Reduced and Off Effects. Check reticle, white targets, real openings and intuitive impact placement while smoke clears. Compare the baseline and candidate sounds at matched volume. Listen without video for the M-7, launcher, 30mm and howitzer, then check world placement, distance delay, fallback, mute and readable text. Record clip audio separately if the video capture has no audio track. Loaded and playing sound telemetry can verify engine playback. Keep listening judgments and rendered observations as separate evidence.
 - **A5 workload and reset.** Use the profile below on baseline and candidate. Observe normal and reduced effects and five resets, recording active transients at each fresh lobby and whether the pools remain bounded.
@@ -521,7 +523,8 @@ session for each build. Use the same profiling fixtures on the pre-P19
 gameplay baseline and the candidate, and record both source identities and
 test artifacts. Keep the Studio version, both actual clients, hardware and
 workload settings matched. Use an actual **1920×1080** viewport with graphics
-quality **8** in each playing client. Log the reported viewport/quality and
+quality **8** in each playing client. The harness allows 75 seconds for both
+clients to reach these settings before measuring. Log the reported viewport/quality and
 restore temporary simulator, graphics and harness settings afterward.
 
 From the confirmed local Edit context, launch the SDK session with
@@ -546,6 +549,19 @@ measures readiness. Verify first visible impact and timing in rendered clips
 as well. A passing profile covers its own load and cleanup.
 Keep the five-reset and low-effects checks with the separate A5 evidence.
 [Server profile harness](../tests/studio/server/PerformanceHarness.luau) · [Client profile harness](../tests/studio/client/PerformanceHarness.luau)
+
+### Run P19 impact replay
+
+In the same local Edit document, start a fresh SDK session with
+`StudioTestService:ExecuteMultiplayerTestAsync(2, { kind = "P19Profile", scenario = "Replay" })`.
+This test-only scenario reports as `P19Replay`. It fires a howitzer and a
+rocket in each of five active rounds. The first four rockets hit the ground.
+The fifth expires in empty air, with no server-reported world impact.
+Each round is ended by the fixture after the panel opens. The report tracks
+both clients' opened and restored panel and verifies a fresh battlefield and
+drained local and server resources after each reset. Retain both actual
+client smoke reports and the replay report. Use the separate Profile scenario
+for frame timing and the operated review for Reduced and Off coverage.
 
 ## Run the P11 performance harness
 
