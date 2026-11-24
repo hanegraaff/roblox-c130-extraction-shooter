@@ -33,6 +33,35 @@ function CombatHarness.run()
                     else
                         target:FireServer(payload)
                     end
+                elseif kind == "P19Impact" then
+                    assert(type(payload) == "table", "missing impact expectation")
+                    local fields = payload :: { [string]: unknown }
+                    local point, id = fields.point, fields.id
+                    assert(
+                        typeof(point) == "Vector3" and type(id) == "string",
+                        "malformed contact expectation"
+                    )
+                    waitFor(function()
+                        local holder = workspace:FindFirstChild("LocalWeaponImpacts")
+                        if not holder then
+                            return false
+                        end
+                        for _, burst in holder:GetChildren() do
+                            if
+                                burst.Name == "ImpactBurst"
+                                and burst:GetAttribute("Weapon") == "M102"
+                                and burst:GetAttribute("ShotId") == id
+                            then
+                                local contact = burst:GetAttribute("ImpactPoint")
+                                assert(
+                                    typeof(contact) == "Vector3" and (contact - point).Magnitude < 0.01,
+                                    "local burst disagreed with server contact"
+                                )
+                                return true
+                            end
+                        end
+                        return false
+                    end, "P19 actual local howitzer confirmation")
                 elseif kind == "PanelDestroyed" then
                     assert(type(payload) == "table", "destroyed-panel expectation missing")
                     local fields = payload :: { [string]: unknown }

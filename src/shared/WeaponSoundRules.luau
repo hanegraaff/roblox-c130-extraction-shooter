@@ -141,6 +141,18 @@ function WeaponSoundRules.assets(): { string }
     return { blast, rifle, rocket, profiles.M102.asset }
 end
 
+-- A confirmed terminal-round contact can arrive alongside Results replication.
+-- Give its audio time to play while rejecting new muzzle cues in Results.
+function WeaponSoundRules.audibleInPhase(cue: string, phase: string, resultsAgeSeconds: number): boolean
+    return phase == "Active"
+        or (
+            phase == "Results"
+            and resultsAgeSeconds >= 0
+            and resultsAgeSeconds <= 0.75
+            and (cue == "LightImpact" or cue == "HeavyImpact" or cue == "RocketImpact")
+        )
+end
+
 -- Returns the due server-clock time. Nearby ground muzzle cues are immediate
 -- for the shooter. Distant sounds add a bounded game-distance propagation delay.
 function WeaponSoundRules.due(

@@ -23,6 +23,8 @@ return function()
         registered[add("Screen", Vector3.new(-12, 0, 0), Vector3.new(2, 8, 8))] = "screen"
         registered[add("Hidden", Vector3.new(-24, 0, 0), Vector3.new(2, 4, 4))] = "hidden"
         registered[add("SecondInnerPiece", Vector3.new(21, 0, -10), Vector3.new(2, 4, 4))] = "inner"
+        registered[add("VeryNearCover", Vector3.new(21, 0, 21), Vector3.new(2, 4, 2))] = "blocked"
+        add("ThinShieldBesideTarget", Vector3.new(19.9, 0, 19.9), Vector3.new(0.1, 5, 0.45))
         add("StaticSupport", Vector3.new(5, 9, 0), Vector3.new(2, 2, 2))
         local floor = add("Road", Vector3.new(0, -1, 0), Vector3.new(100, 2, 100))
         root.Parent = workspace

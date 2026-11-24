@@ -20,10 +20,19 @@ return function()
             assert(owner.show("M102", 1, "a", point, Vector3.yAxis, "Ground", 10))
             assert(owner.show("GAU23", 1, "b", point + Vector3.xAxis, Vector3.yAxis, "Solid", 10))
             assert(owner.show("Rocket", 1, "a", point, Vector3.yAxis, "Metal", 10))
-            assert(not owner.show("M102", 1, "a", point, Vector3.yAxis, "Ground", 10))
-            assert(not owner.show("M102", 0, "c", point, Vector3.yAxis, "Ground", 10))
-            assert(not owner.show("M102", 1, "c", point, Vector3.zero, "Ground", 10))
-            assert(not owner.show("M102", 1, "c", point, Vector3.yAxis, "Ground", 9.24))
+            assert(
+                not owner.show("M102", 1, "a", point, Vector3.yAxis, "Ground", 10),
+                "duplicate contact rendered twice"
+            )
+            assert(not owner.show("M102", 0, "c", point, Vector3.yAxis, "Ground", 10), "stale round rendered")
+            assert(
+                not owner.show("M102", 1, "c", point, Vector3.zero, "Ground", 10),
+                "invalid surface normal rendered"
+            )
+            assert(
+                not owner.show("M102", 1, "c", point, Vector3.yAxis, "Ground", 9.24),
+                "stale impact rendered"
+            )
             local holder =
                 assert(workspace:FindFirstChild("LocalWeaponImpacts"), "client did not create impact visuals")
             assert(#holder:GetChildren() == 3, "impact multiplicity wrong")
@@ -48,7 +57,10 @@ return function()
             assert(hasHeavy, "sustained light fire displaced the heavy visual")
             owner.update(1, "Active", 0, false, 10.1)
             assert(#holder:GetChildren() == 0, "zero effects retained active particles")
-            assert(not owner.show("M102", 1, "muted", point, Vector3.yAxis, "Ground", 10.1))
+            assert(
+                not owner.show("M102", 1, "muted", point, Vector3.yAxis, "Ground", 10.1),
+                "muted controller created a burst"
+            )
             owner.update(2, "Active", 1, true, 10.2)
             assert(owner.show("M102", 2, "a", point, Vector3.yAxis, "Ground", 10.2))
             owner.update(2, "Lobby", 1, false, 10.3)

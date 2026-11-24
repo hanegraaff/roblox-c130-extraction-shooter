@@ -4,6 +4,7 @@
 local CombatService = require(script.Parent.CombatService)
 local BlastGeometry = {}
 local endpointPadding = 0.03
+local endpointTolerance = 0.005
 
 -- Tests the closest point of each actual live collider, including rotated
 -- geometry and residual pieces. A broadphase only limits the work; the exact
@@ -33,7 +34,15 @@ function BlastGeometry.exposedPanels(
                 local blocking = if distance > 0
                     then workspace:Raycast(origin, delta.Unit * (distance + endpointPadding), cover)
                     else nil
-                if not blocking or blocking.Instance == part then
+                -- The native sweep may return the ground/floor at a touching
+                -- panel's exact sample (or just past it along the padded ray).
+                -- A different solid blocks only before the sample, with a
+                -- small allowance for engine Vector3/ray distance precision.
+                if
+                    not blocking
+                    or blocking.Instance == part
+                    or blocking.Distance >= distance - endpointTolerance
+                then
                     seen[id] = true
                     table.insert(ids, id)
                 end

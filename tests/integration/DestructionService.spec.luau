@@ -35,44 +35,50 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             table.concat(owner.changed(), ",") == "near,other",
             "duplicate or mutable blast changed the wrong panels"
         )
-        assert(state(owner, "near").stage == 2 and state(owner, "other").stage == 2)
-        assert(state(owner, "covered").stage == 0)
+        assert(
+            state(owner, "near").stage == 2 and state(owner, "other").stage == 2,
+            "exposed panels did not reach Total"
+        )
+        assert(state(owner, "covered").stage == 0, "excluded cover changed")
         assert(not owner.resolve({
             roundId = 1,
             shotId = 2,
             firedAt = 4,
             weapon = "M102",
             blastPanelIds = nearby,
-        }))
+        }), "duplicate accepted shot reached the ledger")
         assert(not owner.resolve({
             roundId = 0,
             shotId = 3,
             firedAt = 8,
             weapon = "M102",
             blastPanelIds = nearby,
-        }))
+        }), "stale round reached the blast ledger")
         assert(not owner.resolve({
             roundId = 1,
             shotId = 3,
             firedAt = 8,
             weapon = "GAU23",
             blastPanelIds = nearby,
-        }))
+        }), "light impact was allowed to demolish by splash")
         assert(not owner.resolve({
             roundId = 1,
             shotId = 3,
             firedAt = 8,
             weapon = "M102",
             blastPanelIds = { "missing" },
-        }))
+        }), "unregistered blast target was accepted")
         assert(not owner.resolve({
             roundId = 1,
             shotId = 3,
             firedAt = 8,
             weapon = "M102",
             blastPanelIds = { "wreck" },
-        }))
-        assert(#owner.changed() == 0 and state(owner, "covered").stage == 0)
+        }), "nonbuilding fragile wreck accepted splash")
+        assert(
+            #owner.changed() == 0 and state(owner, "covered").stage == 0,
+            "rejected outcomes advanced destruction"
+        )
         assert(owner.resolve({
             roundId = 1,
             shotId = 3,

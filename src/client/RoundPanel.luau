@@ -315,14 +315,9 @@ function RoundPanel.new(
                 local active = phase == "Active"
                 local serverSeconds = workspace:GetServerTimeNow()
                 local effectScale = PlayerPresentation.intensity(options.effects)
-                weaponAudio.update(roundId, active, effectScale, serverSeconds)
-                weaponImpacts.update(
-                    roundId,
-                    if type(phase) == "string" then phase else "",
-                    effectScale,
-                    view == "Operator",
-                    serverSeconds
-                )
+                local audioPhase = if type(phase) == "string" then phase else ""
+                weaponAudio.update(roundId, audioPhase, effectScale, serverSeconds)
+                weaponImpacts.update(roundId, audioPhase, effectScale, view == "Operator", serverSeconds)
                 local compact = touch and view == "Ground"
                 local activeDetail = ""
                 if active then

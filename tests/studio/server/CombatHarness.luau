@@ -9,6 +9,8 @@ local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRu
 local CombatRuntime = require(game:GetService("ServerScriptService").Server.CombatRuntime)
 local CombatService = require(game:GetService("ServerScriptService").Server.CombatService)
 local CombatViewRules = require(game:GetService("ServerScriptService").Server.CombatViewRules)
+local BuildingGeometry = require(game:GetService("ServerScriptService").Server.BuildingGeometry)
+local BlastGeometry = require(game:GetService("ServerScriptService").Server.BlastGeometry)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local CombatHarness = {}
@@ -892,6 +894,169 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                 root.CFrame = originalFrame
             end
             assert(overlapOk, tostring(overlapReason))
+        end)
+        check("P19 A2 actual howitzer contacts on empty ground and beside each building", function()
+            local op, ground = roles()
+            local character = assert(ground.Character, "ground character missing")
+            local root = character:FindFirstChild("HumanoidRootPart")
+            local human = assert(character:FindFirstChildOfClass("Humanoid"), "missing ground health")
+            assert(root and root:IsA("BasePart"), "ground root missing")
+            root.Anchored = true
+            root.CFrame = CFrame.new(0, 100, 0)
+            local map = workspace.World.Battlefield
+            local registries, registryReason = BuildingGeometry.registries(map)
+            assert(registries and #registries == 5, registryReason or "expected five actual panel registries")
+            local cover = RaycastParams.new()
+            cover.FilterType = Enum.RaycastFilterType.Include
+            cover.FilterDescendantsInstances = { map, workspace.Terrain }
+            cover.RespectCanCollide = true
+            local profile = CombatService.profiles.M102
+            local requestSequence = 30
+            local function blast(hit: RaycastResult): { string }
+                return BlastGeometry.exposedPanels(
+                    hit.Position,
+                    hit.Position + hit.Normal * 0.1,
+                    profile.radius,
+                    map,
+                    cover,
+                    runtime.destruction.identify,
+                    nil
+                )
+            end
+            local function shot(x: number, z: number): RaycastResult?
+                local highest = workspace:Raycast(Vector3.new(x, 70, z), -Vector3.yAxis * 100, cover)
+                if
+                    not highest
+                    or highest.Position.Y > 14
+                    or highest.Normal.Y <= 0.4
+                    or runtime.destruction.identify(highest.Instance)
+                    or not runtime.aircraft.aimAllowed(highest.Position)
+                then
+                    return nil
+                end
+                local muzzle = assert(runtime.aircraft.muzzle("M102"), "missing 105mm muzzle")
+                local delta = highest.Position - muzzle
+                local hit = workspace:Spherecast(
+                    muzzle,
+                    profile.collisionRadius,
+                    delta.Unit * (delta.Magnitude + 0.25),
+                    cover
+                )
+                if
+                    not hit
+                    or hit.Instance ~= highest.Instance
+                    or (hit.Position - highest.Position).Magnitude > 0.6
+                    or -hit.Normal:Dot(delta.Unit) < 0.25
+                then
+                    return nil
+                end
+                return highest
+            end
+            local function fire(target: RaycastResult, registry: BuildingGeometry.Registry?)
+                local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                local previousHealth = human.Health
+                requestSequence += 1
+                probe(op, "Fire", payload(requestSequence, "M102", target.Position))
+                waitFor(function()
+                    local encoded = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                    return type(encoded) == "string" and encoded ~= previous
+                end, "P19 actual contact")
+                local data = snapshot("Impact")
+                assert(data.weapon == "M102" and data.panelId == nil, "ground shot contacted building panel")
+                local point = Vector3.new(data.x :: number, data.y :: number, data.z :: number)
+                assert(
+                    (point - target.Position).Magnitude < 1.5,
+                    "ground shot landed away from requested surface"
+                )
+                local shotId = tostring(data.shotId)
+                probe(op, "P19Impact", { id = shotId, point = point })
+                probe(ground, "P19Impact", { id = shotId, point = point })
+                assert(previousHealth == human.Health, "unexposed ground player took damage")
+                local encodedIds = data.blastPanelIds
+                assert(type(encodedIds) == "table", "registered query omitted the blast result")
+                local ids = encodedIds :: { unknown }
+                if not registry then
+                    assert(next(ids) == nil, "empty ground damaged registered structures")
+                else
+                    local opened: string? = nil
+                    for _, id in ids do
+                        if type(id) == "string" and registry.panels:FindFirstChild(id) then
+                            local state = runtime.destruction.snapshot(id)
+                            assert(state and state.stage == 2, "blast award did not reach Total")
+                            opened = opened or id
+                        end
+                    end
+                    assert(opened, "ground strike failed to open " .. registry.buildingId)
+                    probe(op, "PanelDestroyed", { id = opened })
+                    probe(ground, "PanelDestroyed", { id = opened })
+                end
+                assert(runtime.destruction.resources().fragments <= 48, "fragment cap exceeded")
+                table.insert(observations, {
+                    kind = "P19-ground-contact",
+                    building = if registry then registry.buildingId else nil,
+                    path = target.Instance:GetFullName(),
+                    shotId = data.shotId,
+                    point = { point.X, point.Y, point.Z },
+                    blastPanelIds = ids,
+                })
+            end
+            local function awaitReload()
+                waitFor(function()
+                    return ammo("M102") == 1
+                end, "P19 heavy readiness", 8)
+            end
+            awaitReload()
+            local open: RaycastResult? = nil
+            for _, point in
+                {
+                    Vector2.new(-200, -80),
+                    Vector2.new(115, 165),
+                    Vector2.new(-175, 120),
+                    Vector2.new(130, -180),
+                    Vector2.new(230, -20),
+                    Vector2.new(-230, 0),
+                }
+            do
+                local hit = shot(point.X, point.Y)
+                if hit and #blast(hit) == 0 and pcall(payload, requestSequence, "M102", hit.Position) then
+                    open = hit
+                    break
+                end
+            end
+            fire(assert(open, "no visible empty ground strike"), nil)
+            for _, registry in registries do
+                awaitReload()
+                local chosen: RaycastResult? = nil
+                for _, panel in registry.panels:GetChildren() do
+                    if panel:IsA("Model") and panel:GetAttribute("DamageAppearance") ~= "Total" then
+                        local center = panel:GetPivot().Position
+                        for _, distance in { 10, 19, 28 } do
+                            for step = 0, 7 do
+                                local angle = step * math.pi * 0.25
+                                local hit = shot(
+                                    center.X + distance * math.cos(angle),
+                                    center.Z + distance * math.sin(angle)
+                                )
+                                if
+                                    hit
+                                    and table.find(blast(hit), panel.Name)
+                                    and pcall(payload, requestSequence, "M102", hit.Position)
+                                then
+                                    chosen = hit
+                                    break
+                                end
+                            end
+                            if chosen then
+                                break
+                            end
+                        end
+                    end
+                    if chosen then
+                        break
+                    end
+                end
+                fire(assert(chosen, "no exposed aim point beside " .. registry.buildingId), registry)
+            end
         end)
         check("A1 actual projectile survives exact lifetime and expires cleanly afterward", function()
             local op = roles()
