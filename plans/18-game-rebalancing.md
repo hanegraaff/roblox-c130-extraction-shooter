@@ -68,3 +68,29 @@ Source `894dc71c5246469623c2707454c8d7b9d98d1c41` (tree `027b939c23708fbbc16633d
 Native UserInputService keyboard review verifies A/D/W/S directions, immediate reversal at a square corner, independent mouse reticle motion, 30°/40° selection and R recenter. The actual Ground avatar walks six waypoints from bunker through the ship entrance to the launcher platform, without teleport, jump or demolition; health stays 100 and final distance is 1.5 studs. Role exit restores the original Terrain Sand color exactly and releases the thermal HUD/effect. Controlled tagged-avatar/roof fixtures show exposed red, opaque-cover hiding and visibility through earned Heavy openings at both FOVs, with matching native rays. These visual fixtures are not competitive multiplayer evidence. [Operated report](../docs/evidence/p18/894dc71-operated-review.json), [capture manifest](../docs/evidence/p18/894dc71-captures.json).
 
 Review finds two remaining visual defects: the outside-level backdrop copies the bright color of the intentionally invisible GroundDisk, and the operator's own Engine12/Engine22 geometry obscures a large upper-left area at wide zoom. The current P18 Thermal probe also incorrectly asserts the invisible disk is dimmed. Correct backdrop/masking/assertion ownership and repeat final rendered checks. A mid-Play phone switch pauses rendering; **touch remains unverified**, not failed gameplay or unsupported acceptance. The simulator is reset and Play stopped before source handoff.
+
+### Final source candidate and host gate
+
+Source `5522e88be1617eaabfd4bdb0e7439ce076045e9d` (tree `f7f28a0f6ea451bf4c6941e78a5f8b043074cbac`) supplies the dark RGB(38,42,45) operator backdrop, exact local airframe-opacity ownership/restoration, current visible-surface thermal assertions, native mask lifecycle tests and explicit P18/P05 compatibility guidance. Ground aircraft visibility and server physics/query/hit rules are unchanged.
+
+The primary's exact final `python3 scripts/verify.py > build/p18-final-verify.log 2>&1` exits **0** on macOS arm64 / Python 3.10. It passes **76/76 unit, 76/76 integration, 26 tooling and 58 asset cases**, format/lint/strict types, deliberate failure/empty-suite/type rejection probes, both builds and artifact isolation. There are no skipped required host suites. Artifact checks compare **11,459 transforms per build**, **24,751 release / 24,867 test Instances** and **64 runtime scripts**. [Summary](../docs/evidence/p18/5522e88-host.json), [bounded log](../docs/evidence/p18/5522e88-verify.log).
+
+- Release SHA-256: `180fb2100c2af29aff1e8b54e102fc1932b752dbbe8e8588da2e7869d6da6083`.
+- Test SHA-256: `55a3cd755578c51f3ecf851af4fd0a9900a76ae24fee9181e66a1f9aac59aee7`.
+- Source and prior evidence are pushed on `plan/18-game-rebalancing`; [draft PR #63](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/63) targets `main`. [GitHub Verify #545](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45299614324) also passes on the same source. No merge or Roblox publication occurred.
+- The technical writer reviewed the whole player guide, local setup, design/architecture/requirements, package contracts and testing/release procedures. The selected single Blender README image is preserved. Repository/link/whitespace checks pass; final execution counts and historical findings remain in this record.
+
+### Required native checks still open
+
+Final preflight finds **seven stale scripts** because Rojo disconnected with a WebSocket 400 error. The subsequent mismatched phone Play was started in error and immediately discarded; it supplies **no final-candidate evidence**. Phone rendering also reports a 1×1 viewport and zero rendered frames. No new product defect is inferred from that environment state. The local document is stopped in Edit, the simulator is restored to default and the selector is absent. The user has been asked to dismiss the existing plugin error and reconnect this same local document to `PlayersVsC130Tests` on `localhost:34872`. [Rejected preflight and cleanup](../docs/evidence/p18/5522e88-rejected-preflight.json).
+
+| Criterion | Verified evidence | Remaining final-candidate gate |
+| --- | --- | --- |
+| A1 | Roster/fixed-damage/invalid-reset host cases; current native MatchOutcome deadline fixtures on `894dc71` | Three-client P18 shared health, death/departure invariance and fresh reset |
+| A2 | One-hit/two-second/interrupt/ledger host cases; native geometry/physics smoke on `894dc71` | Current P18 replication plus adapted two-client P05 actual fire/flight/opening |
+| A3 | 14,308 loaded camera-frame/pan samples on `1a4ced2`; actual keyboard/aim/zoom/recenter on unchanged input math in `894dc71` | Final mask/view review, native touch, current P18 camera/lifecycle observations |
+| A4 | Four-site source/build/support checks and actual six-waypoint Seedship walk on unchanged geometry in `894dc71` | Two native approach sweeps and three-client contested ownership/recovery/reset |
+| A5 | Exact final host gate, independent findings/corrections, writer review, source push and draft PR | Required native reports and final source/evidence delivery records |
+| A6 | Late-surface lifecycle probe; controlled red/covered/earned-opening rendered review on earlier identified sources | Final backdrop/airframe mask/restoration and both-FOV rendered contrast |
+
+Resume by requiring a passing read-only source preflight **before** any further Play, then collect fresh smoke/operated evidence and native P18 (three initial actual clients) plus P05 (two actual clients). Compatibility rejection, source checksums, screenshots and earlier-source passes do not replace these gates. P12's separate live release checks remain unchanged.

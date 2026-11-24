@@ -26,6 +26,8 @@ The integrated source on `main` includes the development shell, verification too
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 
+2026-11-23 P18 delivery checkpoint. [Draft PR #63](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/63) contains all five requested rebalancing changes. Final source `5522e88` passes the full host gate (76 unit / 76 integration / 26 tooling / 58 asset cases) and [GitHub Verify #545](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45299614324). Independent native review found and drove camera-direction, thermal lifecycle, backdrop and own-airframe corrections. Earlier source-bound smoke, keyboard and Seedship walking evidence is preserved. Rojo disconnected before the final visual/touch and multiplayer rechecks; the seven-stale-script preflight was rejected. P18 remains In progress until current P18 (three clients), P05 (two clients) and final operated evidence pass. [P18 completion record](plans/18-game-rebalancing.md#completion-record). P12's live release gates are unchanged.
+
 On 2026-11-22 the user replaced the remaining P15 feature with a radar building for the existing level. This increment delivers the editable asset and local art exports. Placing the building in the playable map is a separate task.
 
 **Implementation order selected in D63: P17 → P09.** P16 and P17 retain
