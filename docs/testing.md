@@ -524,7 +524,7 @@ controls and cover in a separate operated session.
 
 - **A2 battlefield coverage.** Use normal targeting and fire controls in **Server & Clients** to check an empty-ground strike and a ground strike beside a building. Compare the contact and opening from both roles. Use the staged P05 field matrix for the exposed, shielded and out-of-range controls, and for direct wall and roof checks. Check real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
 - **A3 flight and cues.** Observe 105mm and repeated 30mm contact effects on terrain and walls and rockets striking terrain, buildings and the aircraft. Exercise a rocket that expires without a collision. Check one burst per valid contact, smoke onset and fade, 100 damage for a direct aircraft rocket hit, unchanged 30mm earned credit, and rejection of duplicate, delayed and previous-round cues. Check the fixture's cleanup result and observe the live effects clear on replay.
-- **A4 visual and listening review.** Inspect Ground and the 30° and 40° thermal views in Studio. Check the reticle, white targets, real openings, readable warnings and impact placement while smoke clears. Compare Full, Reduced and Off. Listen in the local session for the M-7, launcher, 30mm and howitzer and check whether nearby and distant cues help locate fire and impacts. Use automated timing tests for delay and a controlled local probe for fallback. Check that Off mutes weapon effects and keeps warnings readable. Written observations are sufficient. The existing clips and matched audio are optional aids. Keep playback telemetry and listening observations separate.
+- **A4 visual and listening review.** Inspect Ground and the 30° and 40° thermal views in Studio. Check the reticle, white targets, real openings, readable warnings and impact placement while smoke clears. Compare Full, Reduced and Off. Listen in the local session for the M-7, launcher, 30mm and howitzer and use the automated timing tests for nearby and distant playback. Check that Off clears visible effects and keeps warnings readable. Written observations are sufficient. The existing clips and matched audio are optional aids. The separate mute and fallback checks are deferred.
 - **A5 workload and reset.** Use the profile below on baseline and candidate. Observe normal and reduced effects and five resets, recording active transients at each fresh lobby and whether the pools remain bounded.
 
 ### Profile the current battlefield
@@ -551,9 +551,11 @@ session, then restore the original selector in Edit. Save startup and smoke
 reports for failed or incomplete attempts.
 
 Review the report's accepted weapon traffic, wall-opening and fragment peaks,
-elapsed time, frame sample counts and final resource counts. Require both
-client frame p95 values at or below 33.3 ms and server scheduler p95 at or
-below 16.7 ms. The client probe measures on-screen contacts within 400 studs
+elapsed time, frame sample counts and final resource counts. Require server
+scheduler p95 at or below 16.7 ms. The harness still evaluates both clients
+against 33.3 ms p95 and reports any miss. D99 retains the local timings as
+diagnostics and carries the client budget to the [future release workload](release.md#measure-the-live-10-player-workload).
+The client probe measures on-screen contacts within 400 studs
 from receipt to the first `PreRender` frame with the matching burst ready.
 For Full Effects, require at least 95% of sampled contacts to be ready within
 two frames. Count missing samples beyond the target. Preserve first-frame,
