@@ -63,8 +63,8 @@ From Ground, watch a howitzer land just short of a building, then follow a rocke
 
 ### Remaining acceptance checks
 
-- **Normal controls in Studio.** Fire the howitzer into the ground beside Sandbreak and confirm the two views agree on the contact and resulting opening. The ordinary empty-ground shot and the staged two-client Sandbreak test already passed.
-- **Visual and audio review in Studio.** Inspect Ground, 30° and 40° thermal readability during fire, including a newly opened sight line. Use Full, Reduced and Off and listen for distinct, locatable weapon sounds. The effects modes and cue delivery have partial evidence. Verify missing-asset fallback with a controlled local Studio probe.
+- **Audio review in Studio.** Listen for distinct, locatable M-7, launcher, 30mm and howitzer cues. Verify that Effects Off mutes the weapon cues.
+- **Automated audio fallback.** Verify missing-asset fallback with a controlled local Studio probe.
 - **Automated Studio performance.** Both clients still need to meet the 33.3 ms render p95 target in the five-minute workload. Server scheduler p95, first-frame burst readiness and five-round cleanup passed on the tuned source.
 
 ## Documentation changes
@@ -177,3 +177,7 @@ Nearby impacts opened 1 Outpost panel from terrain, 8 Vesper Radar panels from t
 The follow-up ordinary Sandbreak attempt started one actual client. A second Studio test window stayed in Edit beyond 90 seconds, so there was no playable round and no ordinary shot or reset. The tester ended the owned session and confirmed the original local test document returned to Edit. The staged two-client Sandbreak result above passed. The exact tuned ordinary Sandbreak check, remaining rendered and listening review, and client frame-time budget remain open. P19 stays in progress. [Ordinary startup and cleanup receipt](../docs/evidence/p19/528a851-operated-startup.json)
 
 [GitHub Verify #602](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45407702026) passed on the same source and test inputs after a retry. The first attempt received HTTP 403 while Rokit fetched the pinned Rojo release, before the verifier started.
+
+### User Studio visual review
+
+On 2026-11-24, the user reported that all visual checks passed after receiving the Studio checklist. This closes the normal-controls Sandbreak visual check and the Ground and thermal effects and readability review. The listening and mute review, automated audio fallback and client frame-time budget remain open.
