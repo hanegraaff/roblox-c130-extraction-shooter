@@ -10,7 +10,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
 | `P18` | 3 | Roster health, current panel/thermal/camera state, four-site ownership/recovery and replay |
-| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds four empty-ground surface witnesses, ground contacts beside each of five buildings and a direct roof hit |
+| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds four empty-ground surface witnesses, exposed, shielded and out-of-range player checks, ground contacts beside all five buildings and a direct roof hit |
 | `P19Profile` | 2 | Candidate-branch five-minute mixed weapon workload, render and scheduler frame timing, local impact readiness and resource peaks. SDK scenario `Replay` runs five resets and observes empty-air rocket expiry |
 | `P03`, `P04` | Their documented rosters | Compatible lifecycle and canonical aircraft/orbit regression paths |
 | `P06`, `P06Team`, `P07`, `Sandbreak`, `P08`, `P09`, `P10`, `P11`, `P14`, `P14ArrivalRegression`, `P17` | Historical only | Explicit pre-P18 version rejection; run the recorded source to reproduce prior evidence |
@@ -506,8 +506,21 @@ floor, depot pavement and the red basin's Mud terrain), once beside each
 registered building, and once directly at an elevated roof panel. It sends
 production fire requests and checks both clients' impact location and a
 representative opened panel at each building. The harness supplies aim and
-avatar placement. Review ordinary controls and the exposed versus shielded
-Ground player in a separate operated session.
+avatar placement. A Terrain-only ray classifies the authored ground material
+independently of the shot's collision surface. Where the backup `GroundDisk`
+and Terrain coincide, either can register the real ground contact. Keep the
+recorded surface and authored Terrain material separate when reading the
+report.
+
+The same case places the actual Ground avatar in the open more than 18 studs
+and at most 25 studs from the confirmed contact. It repeats the shot with
+the avatar behind a temporary solid shield within that band, then in the open
+beyond 25 studs. The fixture temporarily raises the avatar's health and
+disables its stock regeneration script if present so a 100-point hit can be
+measured without ending the round. It records the confirmed
+contact-to-avatar distance, cover ray and health before and after each shot.
+Expect a 100-point loss only for the exposed, in-range avatar. Review normal
+controls and cover in a separate operated session.
 
 - **A2 battlefield coverage.** Start an ordinary **Server & Clients** session with one operator and one Ground player. Use normal targeting and fire controls to repeat an empty-ground strike and a ground strike beside a building. Include an exposed Ground player more than 18 studs and at most 25 studs from the contact, a solid-cover control and direct wall/roof checks. Record the contact, affected panel IDs, each client's observed openings and the protected and out-of-range controls. Inspect real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
 - **A3 flight and cues.** Observe 105mm and repeated 30mm contact effects on terrain and walls and rockets striking terrain, buildings and the aircraft. Exercise a rocket that expires without a collision. Check one burst per valid contact, smoke onset and fade, 100 damage for a direct aircraft rocket hit, unchanged 30mm earned credit, and rejection of duplicate, delayed and previous-round cues. Check the fixture's cleanup result and observe the live effects clear on replay.
@@ -568,6 +581,23 @@ For native **Server & Clients**, set `ManualHarness = "P19Profile"` and
 local Edit document. Start two clients and collect
 `Workspace.ManualP19ReplayReport` in the Server context. End the session and
 restore the original selector attributes in Edit.
+
+For a same-session follow-up after manual P05, preserve `ManualP05Report` and
+confirm that the P05 runtime has shut down. Keep both clients connected and
+the private native test session open. In each actual Client context, start
+the committed `PerformanceHarness.profile()` listener from
+`Players.LocalPlayer.PlayerScripts.ClientTests`. Start the committed Replay
+fixture in the Server context.
+
+```luau
+local harness = require(game:GetService("ServerScriptService").ServerTests.PerformanceHarness)
+task.spawn(harness.impactReplay, function(report)
+    workspace:SetAttribute("ManualP19ReplayReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+```
+
+Collect the Replay report separately before ending the session. Label it as
+same-session evidence and retain both actual client IDs.
 
 ## Run the P11 performance harness
 

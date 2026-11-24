@@ -1,0 +1,358 @@
+{
+  "source": "5e385aafdd51ef63d182f8b0eddadcee11e24685",
+  "tree": "19825879355ac66ff101097f865d99389cc85e0a",
+  "studio": "0.748.0.7481526",
+  "hardware": "Apple M1 Pro, 16 GB, macOS 26.6.2 arm64",
+  "idleFollowup": {
+    "scope": "A separate 12-second observation after profile teardown at the same viewport and graphics level. No live game runtime or impact holder in either client. Idle observations do not fulfill the loaded performance gate.",
+    "clients": [
+      {
+        "id": -1,
+        "impactHolder": false,
+        "frames": 180,
+        "fps": 14.985685860155055,
+        "p95Ms": 69.36521083116531,
+        "CPU95ms": 3.124916460365057,
+        "time": 12.011462250025943,
+        "graphics": "QualityLevel8",
+        "GPU95ms": 0.0008749775588512421,
+        "height": 1080,
+        "width": 1920,
+        "gameRuntime": false
+      },
+      {
+        "id": -2,
+        "impactHolder": false,
+        "frames": 180,
+        "fps": 14.981686344977831,
+        "p95Ms": 67.46004521846771,
+        "CPU95ms": 2.363624982535839,
+        "time": 12.014668833347969,
+        "graphics": "QualityLevel8",
+        "GPU95ms": 0.0005833571776747704,
+        "height": 1080,
+        "width": 1920,
+        "gameRuntime": false
+      }
+    ]
+  },
+  "restoration": {
+    "clients": [
+      {
+        "diagnosis": "std::exception",
+        "setter": false,
+        "id": -1,
+        "expected": "Automatic",
+        "device": "default",
+        "quality": "Automatic"
+      },
+      {
+        "diagnosis": "std::exception",
+        "setter": false,
+        "id": -2,
+        "expected": "Automatic",
+        "device": "default",
+        "quality": "Automatic"
+      }
+    ],
+    "verifiedEdit": {
+      "device": "default",
+      "quality": "Automatic"
+    }
+  },
+  "method": "Two actual native Studio Server & Clients. Started the committed PerformanceHarness.profile in a fresh runtime after teardown of P05, Replay and aircraft in the same native session. No active viewport captures or client probes ran during frame sampling. The pre-P19 baseline used SDK startup in a separate session.",
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 176,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 176,
+      "buildSha256": "094d550980a2ea6c9eb3e8b4dc0e38e6cd080acb36dbc2ea2af6c83d7e165eaf",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "5e385aafdd51ef63d182f8b0eddadcee11e24685"
+    }
+  },
+  "serverSmoke": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 196,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 196
+  },
+  "clientSmoke": [
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19,
+      "discovered": 19,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "userId": -1
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19,
+      "discovered": 19,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "userId": -2
+    }
+  ],
+  "preflight": [
+    {
+      "menu": false,
+      "quality": "QualityLevel8",
+      "id": -1,
+      "listener": "P11Harness",
+      "height": 1080,
+      "width": 1920
+    },
+    {
+      "menu": false,
+      "quality": "QualityLevel8",
+      "id": -2,
+      "listener": "P11Harness",
+      "height": 1080,
+      "width": 1920
+    }
+  ],
+  "report": {
+    "requestedClients": 2,
+    "clientCount": 2,
+    "seed": 11021,
+    "passed": 3,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "passed": false,
+        "name": "Five-minute loaded Studio p95 budgets for both roles and server",
+        "detail": "ServerScriptService.ServerTests.PerformanceHarness:968: client render p95 exceeded 33.3 ms or sampling was incomplete"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "skipped": 0,
+    "observations": {
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherQueue": 0,
+        "panels": 438,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "connections": 23,
+        "pendingBarriers": 0,
+        "gunshipEffects": 0,
+        "rifleTools": 0,
+        "launcherFlights": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "launcherRepresentations": 0,
+        "launcherQueuePeak": 1,
+        "fragments": 0
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherQueue": 0,
+        "panels": 438,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "connections": 23,
+        "pendingBarriers": 0,
+        "gunshipEffects": 0,
+        "rifleTools": 0,
+        "launcherFlights": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "launcherRepresentations": 0,
+        "launcherQueuePeak": 0,
+        "fragments": 0
+      },
+      "clientRequests": {
+        "LauncherState/Fire": 71,
+        "AircraftState/SelectWeapon": 33,
+        "AircraftState/GroundReload": 4,
+        "AircraftState/GroundFire": 150,
+        "AircraftState/FireWeapon": 817,
+        "LauncherState/Pickup": 1
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 19,
+          "discovered": 19,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -1
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 19,
+          "discovered": 19,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -2
+        }
+      },
+      "groundFireDecisions": {
+        "accepted": 150
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 196,
+        "discovered": 196,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-server",
+        "failed": 0,
+        "clientCount": 2
+      },
+      "profile": {
+        "clients": {
+          "-1": {
+            "seconds": 300.05678433331195,
+            "viewportChanged": false,
+            "frames": {
+              "p95Ms": 68,
+              "samples": 4467,
+              "invalid": 0,
+              "overflow": 4
+            },
+            "impacts": {
+              "missingWithinEightFrames": 0,
+              "available": true,
+              "peakTrails": 1,
+              "peakBursts": 4,
+              "readyFrameCounts": [
+                94,
+                0,
+                0
+              ]
+            },
+            "role": "Gunship",
+            "graphics": "QualityLevel8",
+            "height": 1080,
+            "width": 1920,
+            "graphicsChanged": false
+          },
+          "-2": {
+            "seconds": 300.47497895825654,
+            "viewportChanged": false,
+            "frames": {
+              "p95Ms": 67.8,
+              "samples": 4464,
+              "invalid": 0,
+              "overflow": 3
+            },
+            "impacts": {
+              "missingWithinEightFrames": 0,
+              "available": true,
+              "peakTrails": 1,
+              "peakBursts": 4,
+              "readyFrameCounts": [
+                71,
+                0,
+                0
+              ]
+            },
+            "role": "Ground",
+            "graphics": "QualityLevel8",
+            "height": 1080,
+            "width": 1920,
+            "graphicsChanged": false
+          }
+        },
+        "serverFrameInterval": {
+          "p95Ms": 17.6,
+          "samples": 17859,
+          "overflow": 3,
+          "invalid": 0
+        },
+        "load": {
+          "panelOpenings": 26,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 4,
+          "chainAccepted": 800,
+          "rifleAccepted": 150,
+          "rockets": 71,
+          "peak_pendingOutcomes": 0,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 1,
+          "peak_panels": 438,
+          "peak_launcherEffects": 4,
+          "peak_gunshipEffects": 8,
+          "peak_rifleTools": 1,
+          "peak_launcherQueuePeak": 1,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 48,
+          "seconds": 300.00092329166364,
+          "peak_pendingBarriers": 3,
+          "peak_rifleQueuePeak": 1,
+          "importedFragments": 48,
+          "peak_projectiles": 4,
+          "heavyAccepted": 16,
+          "peak_launcherFlights": 1
+        },
+        "server": {
+          "p95Ms": 1,
+          "samples": 17859,
+          "overflow": 0,
+          "invalid": 0
+        }
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "profilePreflight": {
+        "-1": {
+          "height": 1080,
+          "width": 1920,
+          "graphics": "QualityLevel8"
+        },
+        "-2": {
+          "height": 1080,
+          "width": 1920,
+          "graphics": "QualityLevel8"
+        }
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 4,
+    "suite": "P19Profile",
+    "failed": 1,
+    "mode": "Profile"
+  }
+}
