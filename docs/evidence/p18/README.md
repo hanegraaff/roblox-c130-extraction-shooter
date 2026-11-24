@@ -2,7 +2,11 @@
 
 The [plan completion record](../../../plans/18-game-rebalancing.md#completion-record) owns commands, source identities, results and remaining acceptance gates. These are actual local Studio captures, with the controlled fixture scope described below. They do not establish multiplayer replication or release capacity.
 
-## Current candidate feec2b1
+## Current fixture candidate 01ed736
+
+The [exact final host gate](01ed736-host.json) and [GitHub Verify #555](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45308365596) pass. [Fresh preflight](01ed736-source-preflight.json) matches 170 scripts / five poses. The [native three-client P18 report](01ed736-native-p18.json) passes 11/11, with 193 server / 18 per-client smoke passes and the intentional carrier departure leaving two clients. It includes native wall/roof openings and replication using trusted accepted structural outcomes; actual gunship input/flight is a separate P05 gate. The [earlier failed selector report](feec2b1-p18-selector-failure.json) remains failed historical evidence. Production runtime is unchanged from the phone correction below.
+
+## Phone correction source feec2b1
 
 The [final host gate](feec2b1-host.json) passes 79 unit / 76 integration / 26 tooling / 58 asset cases. [Edit preflight](feec2b1-source-preflight.json) matches 170 scripts and five poses. The [failed native attempt](feec2b1-native-attempt.json) preserves the Assistant plugin-load failure; it supplies no passing evidence. After [user-controlled restart](feec2b1-restart-recovery.json), the [fresh phone/smoke proof](feec2b1-restarted-phone.json) passes 193 server / 18 client cases and actual Recenter center taps before/after resize, plus affected touch/zoom and cleanup. The [original phone capture](feec2b1-phone.jpg) supports presentation review; actual native event and hit geometry prove layout. Multiplayer acceptance remains separate in the completion record.
 

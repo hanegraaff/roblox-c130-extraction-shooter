@@ -1,0 +1,415 @@
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/check_repository.py
+Repository checks passed: 127 Markdown files, 489 JSON files.
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/tooling -v
+test_backup_rejects_even_when_recorded (test_asset_manifest.AssetManifestTests) ... ok
+test_changed_source_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_complete_source_and_export_coverage (test_asset_manifest.AssetManifestTests) ... ok
+test_duplicate_path_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_large_binary_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_manifest_path_cannot_escape_checkout (test_asset_manifest.AssetManifestTests) ... ok
+test_missing_dependency_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_noncanonical_path_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_package_requires_hash (test_asset_manifest.AssetManifestTests) ... ok
+test_unrecorded_texture_rejects (test_asset_manifest.AssetManifestTests) ... ok
+test_actual_version_api_rejects_every_archived_kind_before_mutation (test_harness_compatibility.HarnessCompatibilityTests) ... ok
+test_current_p18_transport_and_compatibility_module_cannot_be_missing_or_leaked (test_harness_compatibility.HarnessCompatibilityTests) ... ok
+test_direct_legacy_entries_guard_before_allocating_and_frozen_p17_bodies_are_identical (test_harness_compatibility.HarnessCompatibilityTests) ... ok
+test_actual_dispatch_selects_one_entry_and_ordinary_exploration_omits_archived_waiters (test_p17_harness.P17HarnessBoundaryTests) ... ok
+test_bound_runtime_native_bank_and_fixture_drift_reject (test_p17_harness.P17HarnessBoundaryTests) ... ok
+test_current_metadata_keeps_historical_tree_and_fingerprints_separate (test_p17_harness.P17HarnessBoundaryTests) ... ok
+test_frozen_v7_bodies_accept_then_reject_changed_gameplay (test_p17_harness.P17HarnessBoundaryTests) ... ok
+test_p17_artifact_isolation_positive_and_each_missing_leaked_module (test_p17_harness.P17HarnessBoundaryTests) ... ok
+test_missing_seedship_pickup_rejects_a_stale_build (test_p18_studio_probe.P18StudioProbeTests) ... ok
+test_release_mapping_cannot_be_mistaken_for_the_test_document (test_p18_studio_probe.P18StudioProbeTests) ... ok
+test_rojo_source_and_size_spellings_preserve_utf8_and_full_pose (test_p18_studio_probe.P18StudioProbeTests) ... ok
+test_clean_revision_allows_generated_dependencies_but_rejects_dirty_rojo_inputs (test_prepare_release.ReleasePreparationTests) ... ok
+test_cloud_inventory_rejects_unrecorded_and_unused_references (test_prepare_release.ReleasePreparationTests) ... ok
+test_runtime_audit_excludes_test_fixtures_and_compares_both_builds (test_prepare_release.ReleasePreparationTests) ... ok
+test_sandbreak_inventory_rejects_changed_native_bank_before_building (test_prepare_release.ReleasePreparationTests) ... ok
+test_vesper_inventory_rejects_changed_native_bank_before_building (test_prepare_release.ReleasePreparationTests) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.572s
+
+OK
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p16_audit.py
+{"suite": "P16-assets", "discovered": 7, "passed": 7, "failed": 0, "skipped": 0, "results": [{"name": "P16AssetInventory", "passed": true, "detail": {"categories": 36, "mesh_objects": 3093, "furnished_floors": 2}}, {"name": "P16DamageCatalog", "passed": true, "detail": {"families": 6, "states": 24, "fragments": 24, "legacy_pivots": 25, "new_panels": 1}}, {"name": "P16PanelGeometry", "passed": true, "detail": [{"family": "corrugated_wall", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 1.7280055058714066}]}, "actual_removed_fraction": 0.494140625, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.005859375, "raster_width": 128}, {"family": "corrugated_window", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}, {"side": 1, "scar_triangles": 24, "projected_scar_area_studs2": 0.38400002987380033}]}, "actual_removed_fraction": 0.4921875, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0078125, "raster_width": 128}, {"family": "corrugated_door", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}, {"side": 1, "scar_triangles": 48, "projected_scar_area_studs2": 0.7680016282218001}]}, "actual_removed_fraction": 0.4883720930232558, "proxy_removed_fraction": 0.49709302325581395, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.00872093023255814, "raster_width": 128}, {"family": "corrugated_garage", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}, {"side": 1, "scar_triangles": 72, "projected_scar_area_studs2": 1.1520028307935986}]}, "actual_removed_fraction": 0.4829545454545454, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.017045454545454544, "raster_width": 128}, {"family": "concrete_partition", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 405, "projected_scar_area_studs2": 0.9212782372151346}, {"side": 1, "scar_triangles": 405, "projected_scar_area_studs2": 0.921278159933692}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}, {"family": "layered_roof", "light_scars": {"distinct_material_geometry": true, "two_sided_scars": [{"side": -1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}, {"side": 1, "scar_triangles": 108, "projected_scar_area_studs2": 4.320000048}]}, "actual_removed_fraction": 0.5, "proxy_removed_fraction": 0.5, "proxy_extra_cells": 0, "cosmetic_silhouette_difference": 0.0, "raster_width": 128}]}, {"name": "P16Navigation", "passed": true, "detail": {"name": "P16Navigation", "passed": true, "body_dimensions_studs": [4, 6, 4], "foot_clearance_studs": 0.065, "support_height_tolerance_studs": 0.11, "profile_method": "6stud body above center support; floor-only ascending faces allowed below highest of9 footprint support rays", "body_samples": 185, "support_rays": 1850, "internal_samples": 98, "external_samples": 87, "scope": "Actual evaluated saved/exported mesh geometry; native avatar/engine traversal remains P17"}}, {"name": "P16ExportAudit", "passed": true, "detail": {"assembly_triangles": 89024, "materials": 12, "textures": 12, "reusable_kit_assets": 8, "package_bytes": 31876595}}, {"name": "P16BlenderReopen", "passed": true, "detail": {"source_sha256": "4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c", "blender_version": "5.3.0", "missing_dependencies": 0, "fbx_meshes": 2225, "panel_library_meshes": 260, "kit_imports": 8, "required_renders": 29}}, {"name": "P16Dependencies", "passed": true, "detail": {"files": 109, "sha256_verified": true}}]}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p17_assets.py
+{"appearances": 24, "cloud_import_verified": false, "discovered": 1, "failed": 0, "families": 6, "fragment_sources": 24, "passed": 1, "suite": "P17AssetDefinition"}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p17_library_glb.py
+{"discovered": 1, "embedded_textures": 12, "empty_total_sources": 6, "failed": 0, "glb_bytes": 6520872, "glb_sha256": "a1a69c05867ebb02c776614bf44db2eef72893e3a777df1df556af640d452a1e", "passed": 1, "positions_uvs_materials_textures_equivalent": true, "primitives": 76, "roblox_import_verified": false, "skipped": 0, "suite": "P17MaterialDerivative", "triangles": 34144, "used_materials": ["concrete", "dark", "ivory", "orange", "roof", "steel", "teal"]}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p17_compile_outpost.py
+{"discovered": 1, "failed": 0, "native_acceptance_verified": false, "panels": 26, "passed": 1, "suite": "P17OutpostReconstruction", "total_runtime_panels": 188}
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/p17_harness.py
+P17 harness binding passed: 219 current production inputs, 111 fixture inputs; v9-verified-avatar-handoff bodies exact, no native execution.
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests/assets -v
+test_checked_in_terrain_matches_every_authored_cell (test_district_layout.DistrictLayoutTests) ... ok
+test_crater_rim_and_ridges_fade_to_adjacent_districts (test_district_layout.DistrictLayoutTests) ... ok
+test_each_exit_and_destination_joins_the_circuit_outside_the_reserve (test_district_layout.DistrictLayoutTests) ... ok
+test_south_site_stays_flat_with_four_landmark_launcher_pickups (test_district_layout.DistrictLayoutTests) ... ok
+test_all_current_tool_and_render_proofs (test_p16_assets.P16RejectionTests) ... ok
+test_body_width_obstruction_missed_by_center_ray_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_empty_fbx_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_garage_pristine_substituted_for_light_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_internal_stair_beam_corruption_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_invalid_uv_index_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_invisible_heavy_collider_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_light_opening_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_baked_texture_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_missing_required_render_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_oversized_fragment_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_real_saved_package (test_p16_assets.P16RejectionTests) ... ok
+test_renaming_or_vertex_permutation_does_not_create_light_scars (test_p16_assets.P16RejectionTests) ... ok
+test_restored_external_full_deck_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_shifted_legacy_identity_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_kit_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_panel_library_proof_rejected_after_lock_refresh (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_bytes_are_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_script_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_stale_render_source_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_total_hidden_solid_is_rejected (test_p16_assets.P16RejectionTests) ... ok
+test_unused_dark_material_declaration_does_not_create_scars (test_p16_assets.P16RejectionTests) ... ok
+test_changed_approval_input_rejects_before_generation (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_export_rejects_without_writing_runtime_definition (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_generated_values_fail_while_formatter_whitespace_is_allowed (test_p17_assets.P17AssetDefinition) ... ok
+test_coordinated_export_lock_descriptor_and_manifest_refresh_cannot_replace_approval (test_p17_assets.P17AssetDefinition)
+A valid UV edit remains unapproved even when every mutable hash agrees. ... ok
+test_exact_approved_definition_is_reproducible_and_does_not_assert_cloud_access (test_p17_assets.P17AssetDefinition) ... ok
+test_changed_embedded_png_rejects_even_if_container_is_valid (test_p17_library_glb.P17MaterialDerivative) ... ok
+test_changed_triangle_position_or_uv_rejects_actual_glb_bytes (test_p17_library_glb.P17MaterialDerivative) ... ok
+test_complete_managed_derivative_is_deterministic_and_equivalent (test_p17_library_glb.P17MaterialDerivative) ... ok
+test_duplicate_or_missing_source_material_node_rejects (test_p17_library_glb.P17MaterialDerivative) ... ok
+test_wrong_material_or_accessor_bounds_rejects (test_p17_library_glb.P17MaterialDerivative) ... ok
+test_actual_artifact_gate_rejects_missing_intrinsics_payload_bytes_and_readable_metadata_drift (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_all_real_profiles_and_2332_uses_keep_intrinsics_independent_of_normalized_target_size (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_capture_hash_public_intrinsics_requested_policy_and_roundtrip_cannot_drift (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_compiler_rejects_missing_native_profile_wrong_fidelity_or_unused_capture (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_missing_zero_or_unintended_native_bank_fields_reject (test_p17_native_meshes.P17NativeMeshReconstruction) ... ok
+test_actual_receipt_matches_all_approved_objects_without_assuming_import_scale (test_p17_normalize.P17ImportNormalization) ... ok
+test_geometry_mesh_id_and_owner_rejections_do_not_mutate_receipt (test_p17_normalize.P17ImportNormalization) ... ok
+test_missing_duplicate_or_misplaced_imported_objects_reject (test_p17_normalize.P17ImportNormalization) ... ok
+test_similarity_fits_different_rotation_translation_and_scale (test_p17_normalize.P17ImportNormalization) ... ok
+test_all_legacy_identity_pivots_remain_exact_with_explicit_material_bases (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_complete_actual_import_models_reconstruct_without_claiming_native_acceptance (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_cosmetic_depth_policy_never_hides_panel_visuals_or_solid_cover (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_exact_generation_survives_builtin_float_summation_algorithm_changes (test_p17_reconstruction.P17OutpostReconstruction)
+Exercise the real receipts under pre/post-3.12 float-sum semantics. ... ok
+test_managed_unintended_script_or_geometry_edits_fail_reconstruction_gate (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_missing_or_wrong_source_texture_cannot_fall_back_to_gray (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_readable_metadata_matches_actual_serialized_surface_maps_and_rejects_slot_drift (test_p17_reconstruction.P17OutpostReconstruction) ... ok
+test_full_size_site_keeps_authored_doors_and_all_wreck_meshes (test_salt_flats_import.SaltFlatsImportPreflight) ... ok
+test_oversized_wreck_material_keeps_each_triangle_and_all_corner_attributes (test_salt_flats_import.SaltFlatsImportPreflight) ... ok
+test_upper_gallery_material_seams_keep_one_exposed_face (test_salt_flats_import.SaltFlatsImportPreflight) ... ok
+test_walking_surfaces_reach_four_levels_and_match_ramp_endpoints (test_salt_flats_import.SaltFlatsImportPreflight) ... ok
+test_staged_batches_preserve_export_counts_and_panel_bindings (test_seedship_import.SeedshipImportTests) ... ok
+test_batch_bindings_preserve_geometry_transforms_and_materials (test_vesper_import.VesperImportTests) ... ok
+
+----------------------------------------------------------------------
+Ran 58 tests in 36.768s
+
+OK
+Rojo 7.7.1
+stylua 2.6.0
+selene 0.32.0
+lune 0.11.1
+wally 0.3.2
+1.70.1
++ stylua --check src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau
++ selene src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau
+ERROR: There was an error generating a new Roblox standard library: error when getting API dump
+Using the cached one instead.
+Results:
+0 errors
+0 warnings
+0 parse errors
++ rojo sourcemap test.project.json --output build/sourcemap.json
+Created sourcemap at build/sourcemap.json
++ luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau src tests scripts/run_tests.luau scripts/p17_native_mesh_xml.luau
+[INFO] Loading definitions file: @roblox - .tools/globalTypes.d.luau
+[WARN] client does not allow didChangeWatchedFiles registration - automatic updating on sourcemap changes disabled
+[INFO] Loading Luau configuration from /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.luaurc
++ lune run scripts/run_tests.luau unit
+PASS P18 reset and every square corner fit both lenses without disk/frustum clipping
+PASS P18 phase-zero WASD uses labelled screen directions
+PASS P18 square edge slides and reversal recovers without hidden accumulated offset
+PASS P18 full-orbit corners edges and near-overhead focus always move or reverse
+PASS P18 regression A and W cannot reverse when an inverse pan axis hits a square edge
+PASS P18 all pure key projections preserve direction at every edge and orbit phase
+PASS P18 held focus remains world-fixed through orbit and zoom
+PASS P18 pan speed is frame-rate independent and diagonal/frame-stall bounded
+PASS P18 invalid input rejects without mutation and blocked frames hold focus
+PASS P18 translated level uses square offsets without changing canonical orbit
+PASS P18 Recenter placement intersects the camera and measured negative device-safe origin
+PASS P18 Recenter placement stays inside safe areas after resize and shrinks padding before hiding
+PASS P18 Recenter placement rejects invalid pixel rectangles without mutating measured inputs
+PASS P18 reticle raster remains bounded and consistent at fractional pixels
+PASS orbit is periodic with negative/positive phase wrap and exact altitude
+PASS all sampled poses have map perimeter radius and unit perpendicular tangent
+PASS orbit rejects nonfinite time, invalid map and derived overflow
+PASS zoom config decodes finite distinct ordered profiles without mutating input
+PASS zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+PASS aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+PASS BuildingLayout accepts two larger and one smaller two-story panel registry
+PASS P17OutpostReconstruction layout migration requires exactly the additional ground partition
+PASS BuildingLayout rejects missing buildings stories stairs and size distinctions
+PASS Vesper layout accepts the open gallery and requires all 54 named envelope sections
+PASS BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+PASS default and valid endpoints decode without aliasing
+PASS malformed and nonfinite config reject without mutation
+PASS Ground camera uses the avatar root and applies doorway hysteresis
+PASS Ground camera keeps the upper and lower story bounds separate
+PASS Ground camera eases in and fully returns to stock on exit
+PASS Ground camera transition uses elapsed time and bounds stalled frames
+PASS Ground camera preserves a closer chosen or stock-occluded distance
+PASS Ground camera stays below a ceiling on an upward stock ray
+PASS ExpandedMapRules defaults decode to independent matching circle and ground focus
+PASS ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+PASS ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+PASS ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+PASS P11 reports no p95 for empty or invalid frame samples
+PASS P11 nearest-rank frame percentile rounds upward without storing raw frames
+PASS P11 memory growth uses equivalent endpoints and flags strictly increasing samples
+PASS P17AssetCatalog metadata accepts bounded rigid canonical geometry and exact hex receipts
+PASS P17AssetCatalog metadata rejects invalid bounds dimensions and transforms without mutation
+PASS P17AssetCatalog receipt rejects nonhex wrong-length and nonscalar identities
+PASS P18 one direct howitzer destroys pristine or partially damaged panels
+PASS P18 30mm exact one/two-second boundaries retain cadence surplus
+PASS P18 earned light and heavy visuals persist at zero local stage credit
+PASS P18 invalid elapsed credit rejects and finite oversized credit saturates Total
+PASS Round presentation distinguishes every phase, living role and local preview
+PASS Elimination and late arrival keep distinct headings without active controls
+PASS All competitive results have plain-language winning team and reason
+PASS Round result ignores stale commits and gives unknown or canceled reasons a readable label
+PASS Aircraft health and time represent depletion, destroyed state and unavailable facts
+PASS Spectator cycles a stable unsorted roster in either direction and wraps
+PASS A lost spectator target advances to a survivor or the no-target overview
+PASS Launcher view announces availability, possession and recovery as readable text
+PASS Rejected Ground actions have corrective text without changing any state
+PASS Per-weapon cooldown and reload are visible at the server-clock boundary
+PASS Presentation intensity changes are bounded and cyclic in both directions
+PASS burst exhausts and exact refill boundary accepts
+PASS bad time rejects without mutation and valid requests still succeed
+PASS invalid bucket configuration rejects
+PASS production rosters reject one and eleven players without mutation
+PASS two, six and ten players receive one operator and one united ground roster
+PASS seeded ties are repeatable independent of incoming join order
+PASS longest waiting alternative gets operator without repeating previous operator
+PASS two and three player server fixtures are supported and duplicate ids reject
+PASS unsafe seeds reject and accepted seed boundaries always assign one operator
+PASS only documented phase edges and deployment cancellation are legal
+PASS deadline equality beats destruction and last ground elimination
+PASS pre-deadline aircraft destruction beats mutual ground elimination
+PASS empty server and no participants never award a competitive winner
+PASS last ground departure and physical ground elimination have distinct reasons
+PASS finite values include zero and numeric boundaries
+PASS NaN infinities and nonnumbers reject
+PASS payload bound configuration rejects nonfinite negative and fractional values
+PASS flat payload accepts exact field and byte boundaries
+PASS payload rejects oversized nested cyclic metatable and malformed data
+PASS Distant cannon fire and impacts arrive later than a local rifle or rocket launch
+PASS Weapon audio drops unsupported, stale, future, nonfinite and out-of-range signals
+{"discovered":79,"failed":0,"passed":79,"skipped":0,"suite":"unit"}
++ lune run scripts/run_tests.luau integration
+PASS P18 aircraft scales 1000 health across all 1–9 Ground roster sizes
+PASS P18 invalid round/count resets reject without health or identity mutation
+PASS P18 fixed rockets require ten hits per pristine Ground-player health share
+PASS P18 misses mixed damage terminal clamps and next roster reset are authoritative
+PASS accepted aircraft profile switches atomically and reset restores initial profile
+PASS wrong role, life, phase and deadline eligibility reject without mutation
+PASS malformed, oversized, stale and unknown profile payloads reject without sequence consumption
+PASS duplicate, fractional and nonfinite selection sequences reject without mutation
+PASS P05 chain gun sustains nine seconds without forced reload
+PASS P05 heavy reload survives selection changes and exact boundary
+PASS P05 forged, stale, nonfinite and unauthorized fire reject without spending
+PASS P05 chain gun cadence and magazine reload exact boundaries
+PASS P05 bounded range and weapon-specific readiness reject without sequence mutation
+PASS P05 each profile bounds swept distance and expires only after its exact lifetime
+PASS P05 alternate level bounds replace industrial coordinates
+PASS P05 valid panned views remain legal at both zooms through an entire orbit
+PASS P05 forged pose, invalid focus and unreachable reticle reject
+PASS P05 finite bounded orbit replication age accepts normal delay and rejects excess
+PASS P05 vertical reticle at the legal P14 40-degree limit remains valid
+PASS P05 adaptive ultra-wide FOV cache is exact, reusable and bounded
+PASS P05 damage clamps to remaining and maximum health
+PASS P05 one shot awards each target once and a new shot has a fresh ledger
+PASS P05 invalid damage inputs reject without poisoning a later valid award
+PASS P18 one direct howitzer destroys each panel independently and snapshots cannot mutate it
+PASS P18 short 30mm burst reaches Heavy at one second and Total at two
+PASS P18 separated bursts retain earned Light Heavy and exclude pauses
+PASS P18 continuity gap boundary preserves credit while excluding excess elapsed gap
+PASS P18 misses retarget reload switch and loss retain prior credit
+PASS P18 malformed stale replay unauthorized and unknown panels reject without mutation
+PASS P18 reordered completions wait for missing outcomes and deduplicate after drain
+PASS P18 accepted in-flight prefix survives idle barrier without counting time across it
+PASS P18 full structural window rejects overflow and drains one damage outcome
+PASS P18 terminal cancellation keeps credit while fresh generation clears history
+PASS Hercules wreck retains its separate three-second continuous light-cover rule
+PASS rifle cadence magazine reserve and reload boundaries
+PASS forged invalid stale or unowned requests do not spend ammunition
+PASS finite reserve exhausts without affecting another ground player
+PASS preflight rejects bad or cooldown requests without spending readiness or sequence
+PASS ordinary motion and delayed replication fit bounded movement credit
+PASS teleport remains quarantined until return or explicit server correction
+PASS invalid and reversed clock samples reject without corrupting valid state
+PASS Landmark launchers isolate owners, shot credits, transfers and round identities
+PASS P08 A1 raced pickup and snapshots retain one stable identity
+PASS P08 A2 malformed forged oversized nonfinite and stale intents leave readiness unchanged
+PASS P08 A2 authority and reach rejection preserve valid retry and replay state
+PASS P08 A3 drop transfers preserve exact reload deadline and no reserve items
+PASS P08 A3 death reset and disconnect recovery is idempotent and preserves per-user replay
+PASS P08 A3 re-picking and same-round reset cannot refill or replay a prior holder's command
+PASS P08 A4 fire preflight and exact range are nonmutating until accepted
+PASS P08 A4 replenishment permits three shots well within the normal round
+PASS P08 A6 terminal cleanup beats recovery and next round rejects old callbacks
+PASS P08 A3/A5 composed match tombstones prevent reconnect life or launcher restoration
+PASS two start stop cycles own one listener and task and clean both
+PASS partial initialization rolls back in reverse order and can retry
+PASS constructor rejects overflowing seed instead of deploying a roster without operator
+PASS production defaults keep one player waiting and activate a two-player match
+PASS deployment waits for every roster member and cancellation clears partial readiness
+PASS ground departure during deployment also cancels without partial members
+PASS model removal during deployment follows roster cancellation or a setup abort
+PASS exact injected deadline commits timeout once and late proposals cannot change it
+PASS mutual destruction batch gives ground win and terminal cleanup suppresses recovery
+PASS one pre-deadline damage batch preserves lethal rocket credit across clock rollover
+PASS deadline equality and later steps skip queued damage and commit timeout
+PASS earlier total ground elimination closes the round to later rocket damage
+PASS aircraft destruction before last ground elimination also resolves ground win once
+PASS death releases one owned life once after nonterminal batch and cannot revive on rejoin
+PASS operator departure followed by immediate reconnect still forfeits assigned round
+PASS last ground departure wins for remaining operator with no weapon recovery
+PASS native model removal and roster departure can arrive in either order in one step
+PASS confirmed death is retained across native model removal and later player departure
+PASS raw model removal alone eliminates; a later departure cannot rewrite the result
+PASS empty server has no winner; a physical kill takes precedence over operator departure
+PASS both participant departures with a late spectator produce no competitive winner
+PASS wrong role stale replay malformed and spectator commands reject without revision mutation
+PASS three accelerated rounds clear roster result and deadline while rotating operator
+PASS snapshots cannot mutate authoritative members or committed results
+{"discovered":76,"failed":0,"passed":76,"skipped":0,"suite":"integration"}
++ lune run scripts/run_tests.luau unit
+PASS P18 reset and every square corner fit both lenses without disk/frustum clipping
+PASS P18 phase-zero WASD uses labelled screen directions
+PASS P18 square edge slides and reversal recovers without hidden accumulated offset
+PASS P18 full-orbit corners edges and near-overhead focus always move or reverse
+PASS P18 regression A and W cannot reverse when an inverse pan axis hits a square edge
+PASS P18 all pure key projections preserve direction at every edge and orbit phase
+PASS P18 held focus remains world-fixed through orbit and zoom
+PASS P18 pan speed is frame-rate independent and diagonal/frame-stall bounded
+PASS P18 invalid input rejects without mutation and blocked frames hold focus
+PASS P18 translated level uses square offsets without changing canonical orbit
+PASS P18 Recenter placement intersects the camera and measured negative device-safe origin
+PASS P18 Recenter placement stays inside safe areas after resize and shrinks padding before hiding
+PASS P18 Recenter placement rejects invalid pixel rectangles without mutating measured inputs
+PASS P18 reticle raster remains bounded and consistent at fractional pixels
+PASS orbit is periodic with negative/positive phase wrap and exact altitude
+PASS all sampled poses have map perimeter radius and unit perpendicular tangent
+PASS orbit rejects nonfinite time, invalid map and derived overflow
+PASS zoom config decodes finite distinct ordered profiles without mutating input
+PASS zoom and orbit config reject nonfinite, equal, inverted and unbounded tuning
+PASS aim accepts disk center and edge but rejects exterior, height and nonfinite endpoints
+PASS BuildingLayout accepts two larger and one smaller two-story panel registry
+PASS P17OutpostReconstruction layout migration requires exactly the additional ground partition
+PASS BuildingLayout rejects missing buildings stories stairs and size distinctions
+PASS Vesper layout accepts the open gallery and requires all 54 named envelope sections
+PASS BuildingLayout rejects duplicated IDs invalid pivots and missing story roof coverage
+PASS default and valid endpoints decode without aliasing
+PASS malformed and nonfinite config reject without mutation
+PASS Ground camera uses the avatar root and applies doorway hysteresis
+PASS Ground camera keeps the upper and lower story bounds separate
+PASS Ground camera eases in and fully returns to stock on exit
+PASS Ground camera transition uses elapsed time and bounds stalled frames
+PASS Ground camera preserves a closer chosen or stock-occluded distance
+PASS Ground camera stays below a ceiling on an upward stock ray
+PASS ExpandedMapRules defaults decode to independent matching circle and ground focus
+PASS ExpandedMapRules config rejects invalid finite values and circle focus mismatches without mutation
+PASS ExpandedMapRules disk includes exact edge but rejects exterior and nonfinite positions
+PASS ExpandedMapRules sampled perimeter orbit follows matching perimeter and altitude
+PASS P11 reports no p95 for empty or invalid frame samples
+PASS P11 nearest-rank frame percentile rounds upward without storing raw frames
+PASS P11 memory growth uses equivalent endpoints and flags strictly increasing samples
+PASS P17AssetCatalog metadata accepts bounded rigid canonical geometry and exact hex receipts
+PASS P17AssetCatalog metadata rejects invalid bounds dimensions and transforms without mutation
+PASS P17AssetCatalog receipt rejects nonhex wrong-length and nonscalar identities
+PASS P18 one direct howitzer destroys pristine or partially damaged panels
+PASS P18 30mm exact one/two-second boundaries retain cadence surplus
+PASS P18 earned light and heavy visuals persist at zero local stage credit
+PASS P18 invalid elapsed credit rejects and finite oversized credit saturates Total
+PASS Round presentation distinguishes every phase, living role and local preview
+PASS Elimination and late arrival keep distinct headings without active controls
+PASS All competitive results have plain-language winning team and reason
+PASS Round result ignores stale commits and gives unknown or canceled reasons a readable label
+PASS Aircraft health and time represent depletion, destroyed state and unavailable facts
+PASS Spectator cycles a stable unsorted roster in either direction and wraps
+PASS A lost spectator target advances to a survivor or the no-target overview
+PASS Launcher view announces availability, possession and recovery as readable text
+PASS Rejected Ground actions have corrective text without changing any state
+PASS Per-weapon cooldown and reload are visible at the server-clock boundary
+PASS Presentation intensity changes are bounded and cyclic in both directions
+PASS burst exhausts and exact refill boundary accepts
+PASS bad time rejects without mutation and valid requests still succeed
+PASS invalid bucket configuration rejects
+PASS production rosters reject one and eleven players without mutation
+PASS two, six and ten players receive one operator and one united ground roster
+PASS seeded ties are repeatable independent of incoming join order
+PASS longest waiting alternative gets operator without repeating previous operator
+PASS two and three player server fixtures are supported and duplicate ids reject
+PASS unsafe seeds reject and accepted seed boundaries always assign one operator
+PASS only documented phase edges and deployment cancellation are legal
+PASS deadline equality beats destruction and last ground elimination
+PASS pre-deadline aircraft destruction beats mutual ground elimination
+PASS empty server and no participants never award a competitive winner
+PASS last ground departure and physical ground elimination have distinct reasons
+FAIL injected failing fixture: /private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-k_h6af3e/tests/unit/Validation.spec:2: deliberate failure
+PASS Distant cannon fire and impacts arrive later than a local rifle or rocket launch
+PASS Weapon audio drops unsupported, stale, future, nonfinite and out-of-range signals
+{"discovered":75,"failed":1,"passed":74,"skipped":0,"suite":"unit"}
+Expected rejection observed: exit 1
++ lune run scripts/run_tests.luau unit
+/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-k_h6af3e/scripts/run_tests:63: empty required suite: unit
+[Stack Begin]
+    Script '[C]' - function 'error'
+    Script '/private/var/folders/9f/8_pj_z1j57l5dbn4w71mg3p00000gn/T/c130-gate-k_h6af3e/scripts/run_tests', Line 63
+[Stack End]
+
+Expected rejection observed: exit 1
++ luau-lsp analyze --platform=roblox --sourcemap=build/sourcemap.json --definitions=@roblox=.tools/globalTypes.d.luau /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/build/StrictTypeProbe.luau
+[INFO] Loading definitions file: @roblox - .tools/globalTypes.d.luau
+[WARN] client does not allow didChangeWatchedFiles registration - automatic updating on sourcemap changes disabled
+[INFO] Loading Luau configuration from /Users/markhanegraaff/Documents/projects/AgenticDevelopment/roblox-c130-extraxtion-shooter/.luaurc
+build/StrictTypeProbe.luau(3,17): TypeError: Expected this to be 'boolean', but got 'string'
+build/StrictTypeProbe.luau(4,1): TypeError: Expected this to be 'number', but got 'string'
+Expected rejection observed: exit 1
++ rojo build default.project.json --output build/game.rbxlx
+Building project 'PlayersVsC130'
+Built project to game.rbxlx
++ rojo build test.project.json --output build/tests.rbxlx
+Building project 'PlayersVsC130Tests'
+Built project to tests.rbxlx
++ /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/inspect_build.py
+P06 manual fixture isolation passed, including eight deliberate corruption probes.
+P05 manual fixture isolation passed, including eight deliberate corruption probes.
+P17 native fixture isolation passed: four test-only modules, no release additions.
+P10 presentation fixture isolation passed: three test-only modules, no release additions.
+P11 performance fixture isolation passed: four test-only modules, no release additions.
+Expected building surface rejection (ground): building floor overlaps the Y=0 battlefield surface
+Expected building surface rejection (frame): coplanar building faces: Foundry_UpperMain / Foundry_BeamEast9, axis 1
+Expected building surface rejection (duplicate): coplanar building faces: Foundry_S01_North_02 / Foundry_S01_North_02_Duplicate, axis 1
+Building surface separation passed: 7146 part pairs, no exposed coplanar overlaps.
+Expected shelter rejection (missing): starting shelter panel count
+Expected shelter rejection (overlap): shelter tiles overlap
+Expected shelter rejection (old-collider): starting shelter panel count
+Expected shelter rejection (registry): shelter registry descriptor
+Expanded world source contract passed: 720-stud diameter, flat district terrain, 3 two-story buildings, 111 building +76 starting-shelter stable panel pivots (187 total).
+Salt Flats native bank passed: 3395 mesh parts, 152 panel identities, 112 wreck collision proxies.
+Salt Flats native bank passed: 3395 mesh parts, 152 panel identities, 112 wreck collision proxies.
+Sandbreak native banks passed: 3787 MeshParts, 103 panel identities.
+Sandbreak native banks passed: 3787 MeshParts, 103 panel identities.
+Expected geometry rejection (alias): Noncanonical serialized pose alias: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (pose): Authored CFrame reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (size): Authored size reconstruction mismatch: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (nonfinite): Nonfinite CFrame: Workspace/World/Battlefield/GroundDisk
+Expected geometry rejection (missing): Missing canonical CFrame: Workspace/World/Battlefield/GroundDisk
+Authored geometry reconstruction passed: 11459 release/11459 test part transforms, dimensions, shape and collision flags.
+Artifact isolation passed: 24751 release Instances, 24868 test Instances; 64 runtime scripts only in release.
+All non-Studio gates passed. Studio server/client smoke and visual review require separate evidence.

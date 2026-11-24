@@ -325,7 +325,7 @@ function Harness.run(finish: ((unknown) -> ())?)
             probe(op, "Camera", { right = 0, up = 1, seconds = 0.6 })
             probe(op, "Select", { roundId = round, sequence = 2, weapon = "GAU23" })
         end)
-        check("A6 thermal targets are red and ground palette is muted with native occlusion", function()
+        check("A6 white-hot targets contrast with dark monochrome terrain and native occlusion", function()
             probe(op, "Thermal", {})
             for _, player in Players:GetPlayers() do
                 probe(player, "AircraftMask", { hidden = player == op })

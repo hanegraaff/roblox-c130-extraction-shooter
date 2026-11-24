@@ -297,16 +297,18 @@ function Harness.run()
                     assert(
                         effect
                             and effect:IsA("ColorCorrectionEffect")
-                            and effect.Saturation == 0
-                            and effect.Brightness <= 0,
-                        "red target desaturated or view brightened"
+                            and effect.Saturation == -1
+                            and effect.Brightness < 0,
+                        "white-hot view lacks dark monochrome grading"
                     )
                     local count = 0
                     for _, item in camera:GetChildren() do
                         if item:IsA("Highlight") and item.Name == "OperatorThermalTarget" then
                             assert(
-                                item.FillColor.R > 0.95 and item.FillColor.G < 0.2 and item.FillColor.B < 0.2,
-                                "target is not thermal red"
+                                item.FillColor == Color3.new(1, 1, 1)
+                                    and item.OutlineColor == Color3.new(1, 1, 1)
+                                    and item.FillTransparency <= 0.1,
+                                "target is not white-hot against the dark monochrome view"
                             )
                             assert(
                                 item.DepthMode == Enum.HighlightDepthMode.Occluded,
@@ -329,6 +331,12 @@ function Harness.run()
                     local sand = workspace.Terrain:GetMaterialColor(Enum.Material.Sand)
                     assert(math.max(sand.R, sand.G, sand.B) < 0.45, "terrain remained bright")
                     detail.targets = count
+                    detail.palette = "white-hot"
+                    detail.grading = {
+                        saturation = effect.Saturation,
+                        brightness = effect.Brightness,
+                        contrast = effect.Contrast,
+                    }
                     detail.backdrop = { background.Color.R, background.Color.G, background.Color.B }
                     detail.sand = { sand.R, sand.G, sand.B }
                     detail.hiddenAircraftParts = aircraftMask(true)

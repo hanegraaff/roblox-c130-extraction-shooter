@@ -74,10 +74,9 @@ function CombatHarness.run()
                     assert(
                         effect
                             and effect:IsA("ColorCorrectionEffect")
-                            and effect.Saturation == 0
-                            and effect.Brightness <= 0
-                            and effect.Contrast <= 0,
-                        "thermal target color was desaturated or environment brightened"
+                            and effect.Saturation == -1
+                            and effect.Brightness < 0,
+                        "white-hot thermal view lacks dark monochrome grading"
                     )
                     game:GetService("RunService").RenderStepped:Wait()
                     local origin, size = round.AbsolutePosition, round.AbsoluteSize

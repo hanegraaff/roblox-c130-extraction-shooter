@@ -1,7 +1,11 @@
 --!strict
 --[=[
     ThermalCameraController: local square-bound operator view, profile HUD and occluded
-    thermal presentation. Depends on replicated AircraftState, canonical Aircraft,
+    white-hot thermal presentation. A camera-owned global desaturation grades
+    all world pixels, including imported textures, to darker black and white;
+    white Ground highlights retain native Occluded cover depth. The grade and
+    local scenery/masking owners are removed on role exit, restoring Ground's
+    normal materials and camera. Depends on replicated AircraftState, canonical Aircraft,
     player role/round attributes and Roblox camera/input. It has no hit authority.
     Selection sends bounded intent and only renders acknowledged production profiles;
     labelled Studio solo preview can choose cosmetic profiles without a real role.
@@ -651,9 +655,12 @@ function ThermalCameraController.new(
         )
         local effect = Instance.new("ColorCorrectionEffect")
         effect.Name = "OperatorThermal"
-        effect.Saturation = 0
-        effect.Contrast = 0
-        effect.Brightness = -0.04
+        -- Saturation is the selected strict monochrome contract. Brightness and
+        -- contrast are initial grading defaults, subject to native readability
+        -- review; they do not alter source colors, cover or target authority.
+        effect.Saturation = -1
+        effect.Contrast = 0.15
+        effect.Brightness = -0.08
         effect.Parent = camera
         correction = effect
     end
@@ -947,9 +954,9 @@ function ThermalCameraController.new(
                 highlight.Name = "OperatorThermalTarget"
                 highlight.Adornee = target
                 highlight.DepthMode = Enum.HighlightDepthMode.Occluded
-                highlight.FillColor = Color3.fromRGB(255, 32, 24)
+                highlight.FillColor = Color3.new(1, 1, 1)
                 highlight.FillTransparency = 0.08
-                highlight.OutlineColor = Color3.fromRGB(255, 72, 48)
+                highlight.OutlineColor = Color3.new(1, 1, 1)
                 highlight.OutlineTransparency = 0.3
                 highlight.Parent = camera
                 highlights[target] = highlight
