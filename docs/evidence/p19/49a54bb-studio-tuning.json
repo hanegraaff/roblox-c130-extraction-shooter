@@ -1,0 +1,243 @@
+{
+  "source": "49a54bbe68268aa668bbb78c281df51e1a3004d8",
+  "tree": "70c97ce0f27629ca901df880fb61d27b3b99cabf",
+  "version": "0.748.0.7481526",
+  "platform": "macOS 26.6.2 arm64",
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 176,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 176,
+      "buildSha256": "cd335e8b5387dc00ba037c97c77a41bd6396156ad1270059c18d1185cc18ede1",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "49a54bbe68268aa668bbb78c281df51e1a3004d8"
+    }
+  },
+  "failedSdkRetry": {
+    "serverSpawnedUtc": "2026-11-24T13:16:58Z",
+    "parameters": "ExecuteMultiplayerTestAsync(2,{kind='P05'})",
+    "serverId": "f7f28e58-230d-4c84-82d4-17a4b8d6b1a5",
+    "clientCount": 0,
+    "parent": "Starting",
+    "child": {
+      "players": 0,
+      "isRunning": false
+    },
+    "modes": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        },
+        {
+          "file": "tests.rbxlx",
+          "id": "f7f28e58-230d-4c84-82d4-17a4b8d6b1a5",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    },
+    "after90Seconds": true,
+    "cleanup": {
+      "nativeStop": "Game Stopped",
+      "exactPid": 47624,
+      "exactSdkSession": "c40b743e-657f-4996-b8e9-8b4abd2669c0",
+      "typedStop": "TERM then KILL if still running after verifying exact SDK-scripted -task StartServer command and GUID",
+      "tool": {
+        "chunk_id": "a2b733",
+        "wall_time_seconds": 1.916338417,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "result": {
+        "selectorAbsent": true,
+        "prior": "{\"ok\":true}",
+        "cleared": true
+      }
+    }
+  },
+  "ordinaryPlay": {
+    "startup": "Game Started",
+    "server": {
+      "players": 1,
+      "phase": "Lobby",
+      "version": "0.748.0.7481526",
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}"
+    },
+    "client": {
+      "gui": {
+        "1": "Chat",
+        "2": "BubbleChat",
+        "3": "FoundationStatus",
+        "4": "Freecam",
+        "5": "GroundCombatHUD",
+        "6": "RoundHUD",
+        "7": "StudioTestPanel"
+      },
+      "choice": "Auto",
+      "localMap": true,
+      "scripts": {
+        "1": {
+          "name": "PlayerScriptsLoader"
+        },
+        "2": {
+          "name": "ChatScript"
+        },
+        "3": {
+          "name": "BubbleChat"
+        },
+        "4": {
+          "name": "Client"
+        },
+        "5": {
+          "report": "{\"errors\":0,\"skipped\":0,\"passed\":19,\"userId\":2227341845,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":19}",
+          "name": "ClientTests"
+        },
+        "6": {
+          "name": "RbxCharacterSounds"
+        },
+        "7": {
+          "name": "PlayerModule"
+        }
+      }
+    },
+    "summary": "196 server, 19 one actual client, zero errors/failures/skips"
+  },
+  "localFixtures": [
+    {
+      "profile": "M102 40-degree",
+      "measurements": {
+        "transient": false,
+        "pending": false,
+        "receipt": "{\"finished\":true,\"distance\":379.21661376953127,\"Full\":{\"flashOpacity\":0.8700000047683716,\"smokeSizeEnd\":22,\"distance\":379.41558837890627,\"flashSize\":7.5,\"emitted\":1795526446.004377},\"injection\":\"sole Studio client effect API, no shot or damage\",\"Reduced\":{\"flashOpacity\":0.44999998807907107,\"smokeSizeEnd\":10,\"distance\":380.4801940917969,\"flashSize\":4,\"emitted\":1795526448.520677},\"fov\":40,\"viewport\":[1153,579],\"material\":\"Grass\",\"position\":[-1.91619873046875,0,-9.19403076171875],\"weapon\":\"M102\"}"
+      },
+      "preview": {
+        "focus": "0, 0, 0",
+        "blocked": true,
+        "phase": "Lobby",
+        "endP": "-124.27816772460938, 0.0000152587890625, 126.36650085449219",
+        "fov": 40,
+        "weapon": "M102"
+      },
+      "capture": "5b94b4439c47e564af1bfa81e35e72a6ecd002a58de2955dd9b423ffd5c1bc43  build/p19-tuned-preview-40.mp4\n{\"schema_version\":\"1.0\",\"recording_id\":\"3b1a8867-af7f-4987-9c86-5d2350adf7e0\",\"creation_timestamp_ms\":1795526441801,\"status\":\"completed\",\"video\":{\"file\":\"wob-92350000071.mp4\",\"duration_seconds\":11.819,\"width\":1152,\"height\":576,\"codec\":\"h264\",\"audio\":true,\"encoded_frame_count\":178},\"timing\":{\"file\":\"pts.json\",\"time_base\":\"1/90000\",\"origin\":\"first_encoded_frame\",\"game_clock_alignment\":\"not_configured\"},\"capture_health\":{\"observed_capture_drops\":0,\"warnings\":[]}}"
+    },
+    {
+      "profile": "GAU23 30-degree",
+      "measurements": {
+        "transient": false,
+        "pending": false,
+        "receipt": "{\"finished\":true,\"distance\":382.0807189941406,\"Full\":{\"flashOpacity\":0.44999998807907107,\"smokeSizeEnd\":2.799999952316284,\"distance\":380.9590759277344,\"flashSize\":0.800000011920929,\"emitted\":1795526464.503065},\"injection\":\"sole Studio client effect API, no shot or damage\",\"Reduced\":{\"flashOpacity\":0.44999998807907107,\"smokeSizeEnd\":2.799999952316284,\"distance\":376.4906921386719,\"flashSize\":0.800000011920929,\"emitted\":1795526467.003822},\"fov\":30,\"viewport\":[1153,579],\"material\":\"Ground\",\"position\":[1.730194091796875,0,28.962949752807618],\"weapon\":\"GAU23\"}"
+      },
+      "capture": "69cfd8f10b0d2d42b4c4a6f1c2b14536303902316e837fe684ea8420880cfddd  build/p19-tuned-preview-30.mp4\n{\"schema_version\":\"1.0\",\"recording_id\":\"f329fe67-bfd0-46ac-bdf1-f90f9ca111eb\",\"creation_timestamp_ms\":1795526459909,\"status\":\"completed\",\"video\":{\"file\":\"wob-92350000072.mp4\",\"duration_seconds\":17.237,\"width\":1152,\"height\":576,\"codec\":\"h264\",\"audio\":true,\"encoded_frame_count\":403},\"timing\":{\"file\":\"pts.json\",\"time_base\":\"1/90000\",\"origin\":\"first_encoded_frame\",\"game_clock_alignment\":\"not_configured\"},\"capture_health\":{\"observed_capture_drops\":81,\"warnings\":[]}}"
+    }
+  ],
+  "cleanup": {
+    "soloStop": "Game Stopped",
+    "original": {
+      "selectorAbsent": true,
+      "quality": "Automatic",
+      "receiptAbsent": true,
+      "edit": true
+    },
+    "studios": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    }
+  },
+  "scope": "Actual solo Studio engine and preview, directly injected cosmetic events on a separately scoped client controller. Init precedes production firearms use. This does not establish fresh competitive P05, four-district native contacts, native Replay, real rocket hits, or A4 full native covers/targets and listening.",
+  "firstSdkLaunch": {
+    "serverSpawnedUtc": "2026-11-24T13:14:15Z",
+    "serverStudioId": "fffe102c-60eb-4ded-8a6c-1c00717355d6",
+    "actualClients": 0,
+    "parent": {
+      "status": "Starting",
+      "running": false
+    },
+    "child": {
+      "clients": 0,
+      "running": false
+    },
+    "available": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        },
+        {
+          "file": "tests.rbxlx",
+          "id": "fffe102c-60eb-4ded-8a6c-1c00717355d6",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    },
+    "after90Seconds": true
+  },
+  "firstSdkCleanup": {
+    "childStudioStop": "Game Stopped",
+    "originalStudioStop": "Game Stopped",
+    "afterTerm": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        },
+        {
+          "file": "tests.rbxlx",
+          "id": "fffe102c-60eb-4ded-8a6c-1c00717355d6",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    },
+    "exactPid": 46681,
+    "exactSdkSession": "1abb9c54-8f9d-487d-945f-261b050d2024",
+    "typedStop": "TERM then KILL after matching disposable -task StartServer command and GUID",
+    "result": {
+      "selectorAbsent": true,
+      "prior": "{\"ok\":true}",
+      "cleared": true
+    }
+  },
+  "localCaptureHashes": {
+    "build/p19-tuned-preview-40.mp4": "5b94b4439c47e564af1bfa81e35e72a6ecd002a58de2955dd9b423ffd5c1bc43",
+    "build/p19-tuned-preview-30.mp4": "69cfd8f10b0d2d42b4c4a6f1c2b14536303902316e837fe684ea8420880cfddd",
+    "build/p19-tuned-visual-40-41.jpg": "5dd6e63e6de9b502406b1a04cf38cc2d3890c2a283bbf0ddec4f1d8d70b84605",
+    "build/p19-tuned-visual-40-47.jpg": "2eed2c35b069dba95b0ac6b52a41af4901ffe5dc523e78b7d518171d225aefd9",
+    "build/p19-tuned-visual-40-51.jpg": "afcae3c522e15217e9f7bdf366715c34c76551ceef374319c2999ab81298ef33"
+  },
+  "frameReview": {
+    "M102": "The 40-degree Full sample shows a distinct white flash followed by a pale rising plume at about 380 studs.",
+    "GAU23": "The 30-degree single impact sample is small and brief. Sustained real fire was outside the solo fixture."
+  }
+}
