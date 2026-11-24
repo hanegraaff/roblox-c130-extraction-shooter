@@ -26,7 +26,7 @@ The integrated source on `main` includes the development shell, verification too
 | Combat presentation | [P19: Weapon impacts, blast radius and audio](plans/19-weapon-impacts.md) | Complete | P05, P07, P08, P10, P11, P18 | See a howitzer explode anywhere on the battlefield and open nearby panels even on a ground strike, distinguish 30mm bursts and follow a smoking rocket to impact by sight and sound. Client frame-time verification carries to the future release under D99. |
 | Lobby redesign | [P20 · Sculpt the oversized bust](plans/20-lobby-bust.md) | Complete | Supplied bust and room references | Inspect the sculpture in Blender and approve its likeness, scale and expression |
 | Lobby redesign | [P21 · Build the complete lobby in Blender](plans/21-lobby-interior.md) | Complete | P20 visual approval | Inspect and approve the connected main room, theater and gallery with all six portraits hung as paintings |
-| Lobby redesign | [P22 · Replace the protected Roblox lobby](plans/22-integrate-lobby.md) | Ready | P20 and P21 visual approvals, P02, P03 | Spawn facing the bust, walk through both wings and return to the lobby after a round |
+| Lobby redesign | [P22 · Replace the protected Roblox lobby](plans/22-integrate-lobby.md) | In progress | P20 and P21 visual approvals, P02, P03 | Spawn facing the bust, walk through both wings and return to the lobby after a round |
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 

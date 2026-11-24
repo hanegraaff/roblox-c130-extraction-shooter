@@ -9,6 +9,7 @@ import base64
 import struct
 from p17_native_meshes import PAYLOAD_FIELDS, decode_payload, float32_vector
 from radar_outpost.prepare_import import thermal_structure_names
+from lobby_interior.prepare_collision import CATALOG as LOBBY_CATALOG, OUTPUT as LOBBY_COLLISION, collision_model
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -206,12 +207,43 @@ def check_authored_geometry(path: Path) -> int:
 
     for asset in manifest["assets"]:
         local = asset["local_path"]
-        if not local or not local.endswith(".model.json") or local.startswith("assets/presentation/"):
+        if (
+            not local
+            or not local.endswith(".model.json")
+            or local.startswith("assets/presentation/")
+            or ROOT / local == LOBBY_COLLISION
+        ):
             continue
         source = json.loads((ROOT / local).read_text())
         base = "Workspace/World" if asset["kind"] == "world" else "ServerStorage/Assets"
         name = Path(local).name.removesuffix(".model.json")
         walk(source, base + "/" + name)
+
+    lobby = "Workspace/World/Battlefield/LobbyStation"
+    fixture = "ServerStorage/Tests/Fixtures/LobbyCollision"
+    collision = json.loads(LOBBY_COLLISION.read_text())
+    lobby_catalog = json.loads(LOBBY_CATALOG.read_text())
+    if collision != collision_model(lobby_catalog):
+        raise RuntimeError("P22 lobby collision differs from the approved footprint recipe")
+    for name, position in lobby_catalog["existing_anchors_roblox"].items():
+        full = "Workspace/World/Battlefield/Anchors/" + name
+        pose = numeric_property(nodes[full], "CoordinateFrame", "CFrame", CFRAME_COMPONENTS, full)
+        if pose != [*position, 1, 0, 0, 0, 1, 0, 0, 0, 1]:
+            raise RuntimeError(f"Lobby anchor placement no longer matches the approved site: {name}")
+    if path.name == "game.rbxlx" and fixture in nodes:
+        raise RuntimeError("P22 collision fixture leaked into the release mapping")
+    if path.name == "tests.rbxlx":
+        walk(collision, fixture)
+    physical = f"{lobby}/LobbyCollision"
+    if physical in nodes:
+        if f"{lobby}/LobbyArt" not in nodes:
+            raise RuntimeError("Furnished lobby collision requires its managed visual assembly")
+        for name in ("LobbyDeck", "OperatorCanopy", "OperatorBack"):
+            if f"{lobby}/{name}" in nodes:
+                raise RuntimeError(f"Furnished lobby retained legacy geometry: {name}")
+        walk(collision, physical)
+    elif f"{lobby}/LobbyArt" in nodes:
+        raise RuntimeError("Furnished lobby visuals require the managed collision")
     if count == 0:
         raise RuntimeError("No authored parts discovered for reconstruction checks")
     return count
@@ -713,6 +745,7 @@ def main() -> None:
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
     expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
     expected_scripts.add("ServerScriptService/Server/MapService")
+    expected_scripts.add("ServerScriptService/Server/LobbyGeometry")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction", "SandbreakReconstruction", "SeedshipReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
@@ -742,6 +775,7 @@ def main() -> None:
     for name in (
         "ServerStorage/Tests/Studio/BlastGeometry.spec",
         "ReplicatedStorage/ClientSpecs/WeaponImpactEffects.spec",
+        "ServerStorage/Tests/Studio/LobbyGeometry.spec",
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P19 impact fixture missing from tests or leaked to release: {name}")

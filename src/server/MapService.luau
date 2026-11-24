@@ -8,6 +8,7 @@
 local MapRules = require(game:GetService("ReplicatedStorage").Shared.MapRules)
 local TerrainRecipe = require(script.Parent.TerrainRecipe)
 local BuildingGeometry = require(script.Parent.BuildingGeometry)
+local LobbyGeometry = require(script.Parent.LobbyGeometry)
 local MapService = {}
 
 -- Query/step adapters let tests exercise actual Instance behavior without fake services.
@@ -49,24 +50,9 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
     then
         return false, "ground geometry does not match circle configuration"
     end
-    local stations = map:FindFirstChild("LobbyStation")
-    local deck = if stations then stations:FindFirstChild("LobbyDeck") else nil
-    if not deck or not deck:IsA("BasePart") or deck.CFrame.UpVector:Dot(Vector3.yAxis) < 0.999 then
-        return false, "missing upright protected lobby deck"
-    end
-    -- Closest point of the oriented deck rectangle to the map center. Checking
-    -- corners alone would miss an edge crossing the disk while all corners lie out.
-    local relative =
-        deck.CFrame:PointToObjectSpace(Vector3.new(settings.centerX, deck.Position.Y, settings.centerZ))
-    local nearest = deck.CFrame:PointToWorldSpace(
-        Vector3.new(
-            math.clamp(relative.X, -deck.Size.X / 2, deck.Size.X / 2),
-            0,
-            math.clamp(relative.Z, -deck.Size.Z / 2, deck.Size.Z / 2)
-        )
-    )
-    if MapRules.inside(settings, nearest.X, nearest.Z) then
-        return false, "protected lobby deck overlaps playable disk"
+    local lobbyFloors, lobbyReason = LobbyGeometry.read(map, settings)
+    if not lobbyFloors then
+        return false, lobbyReason
     end
     local groundCount, launcherCount = 0, 0
     local overlap = OverlapParams.new()
@@ -101,13 +87,14 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
         if launcher then
             launcherCount += 1
         end
-        if ground or launcher or item.Name == "Lobby" or item.Name == "Operator" then
+        local station = item.Name == "Lobby" or item.Name == "Operator"
+        if ground or launcher or station then
             local position = item.Position
-            if
-                (item.Name == "Lobby" or item.Name == "Operator")
-                and MapRules.inside(settings, position.X, position.Z)
-            then
+            if station and MapRules.inside(settings, position.X, position.Z) then
                 return false, "protected station inside playable disk: " .. item.Name
+            end
+            if station and not LobbyGeometry.contains(lobbyFloors, position) then
+                return false, "anchor outside protected lobby floor: " .. item.Name
             end
             if
                 (ground or launcher)
@@ -131,8 +118,21 @@ function MapService.validateMap(map: Model, settings: MapRules.Settings): (boole
             then
                 return false, "blocked avatar clearance: " .. item.Name
             end
-            if not workspace:Raycast(position, Vector3.new(0, -4, 0), rays) then
+            local floorHit = workspace:Raycast(position, Vector3.new(0, -4, 0), rays)
+            if not floorHit then
                 return false, "unsupported anchor: " .. item.Name
+            end
+            if station then
+                local hitsLobbyFloor = false
+                for _, floor in lobbyFloors do
+                    if floorHit.Instance == floor.part then
+                        hitsLobbyFloor = true
+                        break
+                    end
+                end
+                if not hitsLobbyFloor then
+                    return false, "anchor lacks protected lobby support: " .. item.Name
+                end
             end
         end
     end
@@ -206,6 +206,10 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
     if not recipeValid then
         return nil, recipeReason
     end
+    local lobbyFloors, lobbyReason = LobbyGeometry.read(authored, settings)
+    if not lobbyFloors then
+        return nil, lobbyReason
+    end
     local snapshot = authored:Clone()
     local map = authored
     local anchorFolder = authored:FindFirstChild("Anchors")
@@ -213,13 +217,6 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
     local safeAnchor = anchorFolder:FindFirstChild("Ground05")
     assert(safeAnchor and safeAnchor:IsA("BasePart"), "validated safe anchor disappeared")
     local returnPose = safeAnchor.CFrame
-    local stations = authored:FindFirstChild("LobbyStation")
-    local lobbyDeck = if stations then stations:FindFirstChild("LobbyDeck") else nil
-    if not lobbyDeck or not lobbyDeck:IsA("BasePart") then
-        snapshot:Destroy()
-        return nil, "missing lobby deck"
-    end
-    local lobbyPose, lobbySize = lobbyDeck.CFrame, lobbyDeck.Size
     local heartbeat: RBXScriptConnection? = nil
     local destroyed = false
     local controller: Controller
@@ -250,13 +247,9 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             local humanoid = character:FindFirstChildOfClass("Humanoid")
             if root and root:IsA("BasePart") and humanoid and humanoid.Health > 0 then
                 local position = root.Position
-                -- Explicit noncombat station exemption only within the authored lobby deck.
-                local stationPosition = lobbyPose:PointToObjectSpace(position)
+                -- The optional noncombat exemption follows the authored station floors.
                 local inLobby = adapters.allowStations ~= false
-                    and math.abs(stationPosition.X) <= lobbySize.X / 2 - 2
-                    and math.abs(stationPosition.Z) <= lobbySize.Z / 2 - 2
-                    and stationPosition.Y >= lobbySize.Y / 2
-                    and stationPosition.Y <= lobbySize.Y / 2 + 20
+                    and LobbyGeometry.contains(lobbyFloors, position)
                 if
                     not inLobby
                     and (not MapRules.inside(settings, position.X, position.Z) or position.Y < settings.killY)

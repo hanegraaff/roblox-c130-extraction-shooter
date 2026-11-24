@@ -21,3 +21,10 @@
 ## Completion record
 
 Record the two source approvals, native import receipts, asset IDs or local reconstruction inputs, tested commit and build hashes. For A1–A4, record commands or Studio session, client count, observed results and representative room views. Record fixes and retests against the same candidate. The [testing guide](../docs/testing.md) covers release-default solo waiting and test-only multiplayer controls.
+
+### Import preparation
+
+- The approved P21 art at `ec43139` is integrated on `main` through PR #69, merge `156e383`. Its GLB already contains the 34-part P20 bust approved at `62cd82c`. The [import guide](../assets/imports/lobby-interior/README.md#approved-source-and-placement) records all four asset hashes and the Blender-to-Roblox transform.
+- `python3 scripts/lobby_interior/stage_import.py` generated 14 GLBs, beginning with a 22-piece pilot of portrait 4. Independent verification staged twice and compared all 15 generated files byte-for-byte. It also compared positions, normals, UVs, indices, materials and transforms for all 2,432 placements against the approved GLB. The batches retain 411,534 triangles. Both source and staged canvases use the same six JPEGs. Four host asset cases pass, including rejection of a changed portrait-orientation catalog and a tampered staged batch.
+- The confirmed local `tests.rbxlx` document runs Studio `0.748.0.7481526` and has `PlaceId = GameId = 0`. Its Open Cloud scope probes rejected both `asset:read` and `asset:write`. Persistent upload consent and Studio access for the private import workspace are pending. The pilot's actual scale, texture decoding and orientation will be measured after native import.
+- The three joined floor parts and the wall and furnishing proxies are available as a test fixture. The release mapping continues to use the existing waiting deck. Final A1 model reconstruction, A2 furnished solo walkthrough, A3 live protection and A4 two-client return remain open. [P22 verification procedures](../docs/testing.md#verify-the-p22-waiting-lobby)

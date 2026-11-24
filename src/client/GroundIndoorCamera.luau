@@ -1,8 +1,8 @@
 --!strict
 --[=[
-    GroundIndoorCamera: local Ground presentation on top of Roblox's Custom
-    camera. Reads authored Battlefield room descriptors and local role/character
-    state. Never changes the player's zoom settings, FOV, aim authority, or cover.
+    GroundIndoorCamera: local Ground and Waiting presentation on top of Roblox's
+    Custom camera. Reads authored room descriptors, protected-lobby collision and
+    local role/character state. Never changes zoom settings, FOV, aim authority, or cover.
     One owner binds immediately before and after the stock camera; stop unbinds
     both callbacks and releases the last frame without taking over another camera.
 ]=]
@@ -15,6 +15,8 @@ local GroundIndoorCamera = {}
 local BEFORE_CAMERA = "GroundIndoorCameraRestore"
 local AFTER_CAMERA = "GroundIndoorCameraApply"
 local CAMERA_PRIORITY = Enum.RenderPriority.Camera.Value
+local LOBBY_CAMERA_RADIUS_STUDS = 0.35
+local LOBBY_CAMERA_CLEARANCE_STUDS = 0.08
 local ownerActive = false
 
 -- A camera-only room descriptor; the frame's positive Y points at its ceiling.
@@ -25,6 +27,7 @@ export type Interior = {
 }
 
 type ModifiedFrame = { camera: Camera, subject: Humanoid, stock: CFrame, applied: CFrame }
+type Mode = "Ground" | "Waiting"
 
 -- Reads the optional room configurations. Malformed or unreplicated entries
 -- contribute no distance cap. Results are sorted by name for stable overlap order.
@@ -91,17 +94,45 @@ function GroundIndoorCamera.frame(
     return if desired < distance then stock + offset * (desired / distance - 1) else stock
 end
 
--- Only a living ground player or the labelled, local Studio Ground preview
--- can shorten the player's own camera. Lobby/spectator/operator stay separate.
-local function eligible(player: Player, state: Instance): boolean
-    local phase = state:GetAttribute("Phase")
-    if phase == "Active" then
-        return player:GetAttribute("Role") == "Ground" and player:GetAttribute("Life") == "Alive"
+-- Stock treats fully transparent proxies as see-through. Sweep from stock focus
+-- to the stock camera against the supplied lobby-only collider filter, then
+-- preserve its orientation and zoom exactly where the path is clear.
+function GroundIndoorCamera.lobbyFrame(stock: CFrame, focus: Vector3, rays: RaycastParams): CFrame
+    local offset = stock.Position - focus
+    local distance = offset.Magnitude
+    if distance <= 0.001 then
+        return stock
     end
-    return phase == "Lobby"
-        and RunService:IsStudio()
-        and player:GetAttribute("LocalMapPreview") == true
-        and player:GetAttribute("LocalPreviewRole") == "Ground"
+    local sweep = workspace:Spherecast(focus, LOBBY_CAMERA_RADIUS_STUDS, offset, rays)
+    local contact = if sweep then sweep.Distance else nil
+    if not contact then
+        -- Spherecast skips initial overlap. A clear center ray preserves the
+        -- original frame. A blocked center ray keeps the eye on this side.
+        local centerHit = workspace:Raycast(focus, offset, rays)
+        contact = if centerHit then centerHit.Distance - LOBBY_CAMERA_RADIUS_STUDS else nil
+    end
+    if not contact then
+        return stock
+    end
+    local safeDistance = math.max(0, contact - LOBBY_CAMERA_CLEARANCE_STUDS)
+    return stock + offset * (safeDistance / distance - 1)
+end
+
+-- A local Ground life, Studio Ground preview or Waiting player can use
+-- their own Custom camera modifier. Spectator and operator stay separate.
+local function eligibleMode(player: Player, state: Instance): Mode?
+    local phase = state:GetAttribute("Phase")
+    local role = player:GetAttribute("Role")
+    if phase == "Active" then
+        return if role == "Ground" and player:GetAttribute("Life") == "Alive" then "Ground" else nil
+    end
+    if phase ~= "Lobby" then
+        return nil
+    end
+    if RunService:IsStudio() and player:GetAttribute("LocalMapPreview") == true then
+        return if player:GetAttribute("LocalPreviewRole") == "Ground" then "Ground" else nil
+    end
+    return if role == "Waiting" then "Waiting" else nil
 end
 
 -- Starts the camera modifier for an existing round-state owner. Returns an
@@ -113,6 +144,10 @@ function GroundIndoorCamera.start(player: Player, state: Instance): () -> ()
     local running = true
     local modified: ModifiedFrame? = nil
     local roomFolder: Instance? = nil
+    local lobbyCollision: Instance? = nil
+    local lobbyRays = RaycastParams.new()
+    lobbyRays.FilterType = Enum.RaycastFilterType.Include
+    lobbyRays.RespectCanCollide = true
     local folderAdded: RBXScriptConnection? = nil
     local folderRemoved: RBXScriptConnection? = nil
     local roomsDirty = false
@@ -167,13 +202,28 @@ function GroundIndoorCamera.start(player: Player, state: Instance): () -> ()
         end
     end
 
+    local function changeLobbyCollision(collision: Instance?)
+        if collision ~= lobbyCollision then
+            lobbyCollision = collision
+            lobbyRays.FilterDescendantsInstances = if collision then { collision } else {}
+        end
+    end
+
+    local function applyFrame(camera: Camera, humanoid: Humanoid, stock: CFrame, adjusted: CFrame)
+        if adjusted ~= stock then
+            camera.CFrame = adjusted
+            modified = { camera = camera, subject = humanoid, stock = stock, applied = camera.CFrame }
+        end
+    end
+
     local function render(deltaSeconds: number)
+        local mode = eligibleMode(player, state)
         local camera = workspace.CurrentCamera
         local character = player.Character
         local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
         local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
         if
-            not eligible(player, state)
+            not mode
             or state.Parent == nil
             or not camera
             or not humanoid
@@ -184,11 +234,31 @@ function GroundIndoorCamera.start(player: Player, state: Instance): () -> ()
             or camera.CameraSubject ~= humanoid
         then
             clearTransition()
+            changeLobbyCollision(nil)
             return
         end
 
         local world = workspace:FindFirstChild("World")
         local battlefield = if world then world:FindFirstChild("Battlefield") else nil
+        local station = if mode == "Waiting" and battlefield
+            then battlefield:FindFirstChild("LobbyStation")
+            else nil
+        local colliderFolder = if station then station:FindFirstChild("LobbyCollision") else nil
+        local collision = if colliderFolder and colliderFolder:IsA("Folder") then colliderFolder else nil
+        changeLobbyCollision(collision)
+        if mode == "Waiting" then
+            if roomFolder then
+                changeRoomFolder(nil)
+            end
+            clearTransition()
+            if collision then
+                local stock = camera.CFrame
+                local adjusted = GroundIndoorCamera.lobbyFrame(stock, camera.Focus.Position, lobbyRays)
+                applyFrame(camera, humanoid, stock, adjusted)
+            end
+            return
+        end
+
         local folder = if battlefield then battlefield:FindFirstChild("GroundCameraInteriors") else nil
         if folder ~= roomFolder then
             changeRoomFolder(folder)
@@ -235,10 +305,7 @@ function GroundIndoorCamera.start(player: Player, state: Instance): () -> ()
 
         local stock = camera.CFrame
         local adjusted = GroundIndoorCamera.frame(stock, camera.Focus.Position, room, distanceCap, weight)
-        if adjusted ~= stock then
-            camera.CFrame = adjusted
-            modified = { camera = camera, subject = humanoid, stock = stock, applied = camera.CFrame }
-        end
+        applyFrame(camera, humanoid, stock, adjusted)
     end
 
     -- Never feed the shortened render frame back into the next Roblox update.
@@ -253,6 +320,7 @@ function GroundIndoorCamera.start(player: Player, state: Instance): () -> ()
             RunService:UnbindFromRenderStep(AFTER_CAMERA)
             restoreFrame()
             changeRoomFolder(nil)
+            changeLobbyCollision(nil)
         end
     end
 end

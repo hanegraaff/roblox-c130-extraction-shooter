@@ -324,6 +324,26 @@ Roblox Humanoid navigation, collision/query behavior, thermal occlusion,
 fragment physics, replication/reset or runtime budgets. Those require P17's
 actual imported candidate and its separate Studio/player evidence.
 
+## Verify the P22 waiting lobby
+
+The staged GLBs and the native collision fixture can be checked before art import. Run the focused asset tests and the collision recipe check from the repository root. [Import package guide](../assets/imports/lobby-interior/README.md)
+
+```sh
+python3 -m unittest discover -s tests/assets -p 'test_waiting_lobby_import.py' -v
+python3 scripts/lobby_interior/prepare_collision.py --check
+```
+
+Run the ordinary Studio smoke suites in the separate local test document. The [lobby geometry specs](../tests/studio/specs-server/LobbyGeometry.spec.luau) mount the collision fixture in a disposable battlefield clone. Real engine raycasts and bounds queries cover anchor support, connected floors, threshold clearance, furnishing contact, and combat-disk separation. The spec also exercises the optional station exemption and the active Ground containment path. The fixture contains collision only. Capture the server and client reports, then test the following against both managed builds once they contain the furnished lobby.
+
+| Check | Procedure |
+| --- | --- |
+| A1 · Source reconstruction | Run `python3 scripts/verify.py` from a clean checkout. Record the source revision and the release and test artifact hashes. Inspect both built lobbies for one assembly, one bust and six source-bound canvases. Verify removal of `LobbyDeck`, `OperatorCanopy` and `OperatorBack`, absence of imported characters, and release exclusion of the test fixture. |
+| A2 · Solo waiting | Start one client in a fresh **Play** session from the release-mapped local build. Confirm the player remains Waiting and spawns facing the bust. Walk through both doorways to the television and each painting, then return to the hall. Exercise the stock camera on a tight turn around the theater entrance and around the aisle, bench and dais. Capture eye-height views of all three rooms and the six loaded canvases. Compare the whole images, upright orientation and readable details against the approved Blender views. |
+| A3 · Protection | Check support and clearance at both authored anchors and the outer floor extent of both wings. Confirm every lobby part lies outside the 360-stud combat disk and the lobby has no registered damage panels. Verify free movement when Waiting, the assigned operator's anchored body after deployment and the Ground character's normal battlefield containment. |
+| A4 · Replication and return | Use the current local test build with no named manual harness. Start **Server & Clients** with two actual clients. Collect the native server smoke report and both clients' fresh reports. Confirm both clients see the same bust, furnished rooms and six loaded paintings. Use **Start round now** on the test panel, observe one operator and one Ground player, and finish the round through the normal result and reset flow. Let both avatars return and walk, then repeat another round and reset. Compare assembly, art and floor counts and placement on both clients before deployment and after each reset. |
+
+The one-client test mapping automatically enters map preview after smoke tests. The release-mapped solo session is the evidence for the default waiting behavior. An asset ID or reported preload status can help diagnose a missing surface. The passing observation for the paintings is the rendered image on each client. [P22 acceptance](../plans/22-integrate-lobby.md#acceptance-in-roblox-studio) · [Approved Blender views](../assets/blender/lobby-interior/README.md#tour-the-rooms)
+
 ## Run the Studio smoke suites
 
 1. Build with the full verifier. Reuse the existing local test document; for initial setup, open `build/tests.rbxlx` separately from the game/cloud document or sync `test.project.json` into a separate test place. Preserve any unrelated open place and unsaved work.

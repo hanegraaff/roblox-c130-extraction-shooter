@@ -57,4 +57,57 @@ return function()
         camera:Destroy()
         assert(ok, reason)
     end)
+
+    test("P22 stock frame sweeps transparent lobby walls and releases through a real opening", function()
+        local module = indoor()
+        local scene = Instance.new("Folder")
+        scene.Name = "P22LobbyCameraFixture"
+        local lobby = Instance.new("Folder")
+        lobby.Parent = scene
+
+        local wall = Instance.new("Part")
+        wall.Size = Vector3.new(0.6, 12, 5)
+        wall.Position = Vector3.new(900, 6, 0)
+        wall.Anchored = true
+        wall.Transparency = 1
+        wall.Parent = lobby
+
+        local unrelated = wall:Clone()
+        unrelated.Transparency = 0
+        unrelated.Position += Vector3.new(0, 0, 9)
+        unrelated.Parent = scene
+        scene.Parent = workspace
+
+        local rays = RaycastParams.new()
+        rays.FilterType = Enum.RaycastFilterType.Include
+        rays.FilterDescendantsInstances = { lobby }
+        rays.RespectCanCollide = true
+        local ok, failure = pcall(function()
+            local focus = Vector3.new(897, 4.5, 0)
+            local stock = CFrame.lookAt(Vector3.new(903, 5.6, 0), focus)
+            local adjusted = module.lobbyFrame(stock, focus, rays)
+            assert(adjusted.Position.X < 899.35, "frame crossed the transparent collider")
+            assert((adjusted.LookVector - stock.LookVector).Magnitude < 1e-5, "stock rotation changed")
+            local closeFocus = Vector3.new(899.5, 4.5, 0)
+            assert(
+                module.lobbyFrame(stock, closeFocus, rays).Position.X <= closeFocus.X,
+                "start overlap skipped"
+            )
+
+            local clear = stock + 9 * Vector3.zAxis
+            local clearFocus = focus + 9 * Vector3.zAxis
+            assert(
+                module.lobbyFrame(clear, clearFocus, rays) == clear,
+                "opening or unrelated obstacle clipped zoom"
+            )
+            wall:Destroy()
+            assert(
+                module.lobbyFrame(stock, focus, rays) == stock,
+                "removed collider still shortened the frame"
+            )
+            return true
+        end)
+        scene:Destroy()
+        assert(ok, failure)
+    end)
 end

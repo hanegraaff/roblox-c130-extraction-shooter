@@ -2741,6 +2741,17 @@
       "roblox_asset_id": null,
       "upload_owner": null,
       "sha256": "1884bbb3a8fd4d3f3d6c64f22b0174f21d23a88e050bf1f744f00df20dc62652"
+    },
+    {
+      "id": "waiting-lobby-collision",
+      "kind": "collision",
+      "source": "P22 protected lobby floor, wall and furnishing collision derived from the approved P21 placement and scene dimensions.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/imports/lobby-interior/LobbyCollision.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "2de5a072638cc2c9dc688e03e818c22098fe3329aa11d6ad4632ce659f553fad"
     }
   ],
   "runtime_recipes": [
