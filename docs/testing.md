@@ -501,7 +501,7 @@ The native smoke includes the server's registered-solid distance and cover
 fixture and the client's impact admission and cleanup fixture. The server
 fixture supplies a contact and the client fixture injects cues. The active
 round checks below exercise projectile flight and actual delivery. On P19,
-the ninth P05 case fires at four empty-ground surfaces (desert sand, forest
+the P05 battlefield matrix fires at four empty-ground surfaces (desert sand, forest
 floor, depot pavement and the red basin's Mud terrain), once beside each
 registered building, and once directly at an elevated roof panel. It sends
 production fire requests and checks both clients' impact location and a
@@ -522,9 +522,9 @@ contact-to-avatar distance, cover ray and health before and after each shot.
 Expect a 100-point loss only for the exposed, in-range avatar. Review normal
 controls and cover in a separate operated session.
 
-- **A2 battlefield coverage.** Start an ordinary **Server & Clients** session with one operator and one Ground player. Use normal targeting and fire controls to repeat an empty-ground strike and a ground strike beside a building. Include an exposed Ground player more than 18 studs and at most 25 studs from the contact, a solid-cover control and direct wall/roof checks. Record the contact, affected panel IDs, each client's observed openings and the protected and out-of-range controls. Inspect real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
+- **A2 battlefield coverage.** Use normal targeting and fire controls in **Server & Clients** to check an empty-ground strike and a ground strike beside a building. Compare the contact and opening from both roles. Use the staged P05 field matrix for the exposed, shielded and out-of-range controls, and for direct wall and roof checks. Check real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
 - **A3 flight and cues.** Observe 105mm and repeated 30mm contact effects on terrain and walls and rockets striking terrain, buildings and the aircraft. Exercise a rocket that expires without a collision. Check one burst per valid contact, smoke onset and fade, 100 damage for a direct aircraft rocket hit, unchanged 30mm earned credit, and rejection of duplicate, delayed and previous-round cues. Check the fixture's cleanup result and observe the live effects clear on replay.
-- **A4 visual and listening review.** Record Ground and both thermal zooms with Full, Reduced and Off Effects. Check reticle, white targets, real openings and intuitive impact placement while smoke clears. Compare the baseline and candidate sounds at matched volume. Listen without video for the M-7, launcher, 30mm and howitzer, then check world placement, distance delay, fallback, mute and readable text. Record clip audio separately if the video capture has no audio track. Loaded and playing sound telemetry can verify engine playback. Keep listening judgments and rendered observations as separate evidence.
+- **A4 visual and listening review.** Inspect Ground and the 30° and 40° thermal views in Studio. Check the reticle, white targets, real openings, readable warnings and impact placement while smoke clears. Compare Full, Reduced and Off. Listen in the local session for the M-7, launcher, 30mm and howitzer and check whether nearby and distant cues help locate fire and impacts. Use automated timing tests for delay and a controlled local probe for fallback. Check that Off mutes weapon effects and keeps warnings readable. Written observations are sufficient. The existing clips and matched audio are optional aids. Keep playback telemetry and listening observations separate.
 - **A5 workload and reset.** Use the profile below on baseline and candidate. Observe normal and reduced effects and five resets, recording active transients at each fresh lobby and whether the pools remain bounded.
 
 ### Profile the current battlefield
@@ -555,11 +555,12 @@ elapsed time, frame sample counts and final resource counts. Require both
 client frame p95 values at or below 33.3 ms and server scheduler p95 at or
 below 16.7 ms. The client probe measures on-screen contacts within 400 studs
 from receipt to the first `PreRender` frame with the matching burst ready.
-Preserve first-frame, second-frame, later and missing samples along with peak
-burst and trail counts. The pre-P19 gameplay baseline has no contact stream, so
-report client impact readiness as unavailable on that build. The frame probe
-measures readiness. Verify first visible impact and timing in rendered clips
-as well. A passing profile covers its own load and cleanup.
+For Full Effects, require at least 95% of sampled contacts to be ready within
+two frames. Count missing samples beyond the target. Preserve first-frame,
+second-frame, later and missing samples along with peak burst and trail
+counts. The pre-P19 gameplay baseline has no contact stream, so report client
+impact readiness as unavailable on that build. Review visible impacts in
+Studio under A4. A passing profile covers its own load and cleanup.
 Keep the five-reset and low-effects checks with the separate A5 evidence.
 [Server profile harness](../tests/studio/server/PerformanceHarness.luau) · [Client profile harness](../tests/studio/client/PerformanceHarness.luau)
 
