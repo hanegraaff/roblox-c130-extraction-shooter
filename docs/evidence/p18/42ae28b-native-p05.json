@@ -898,7 +898,7 @@
     "allOwnedChildrenClosed": true,
     "onlyOriginalEditRemains": true,
     "manualSelector": null,
-    "markerRemoval": "Next after preserving both SDK receipts."
+    "markerRemoval": "Completed after preserving both SDK receipts; exact Edit state and removed attributes are in the independent verdict."
   },
   "findings": []
 }
