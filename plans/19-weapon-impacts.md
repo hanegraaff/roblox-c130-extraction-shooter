@@ -70,3 +70,15 @@ Candidate `eac79eb5d112ce0b3898fb7a68fbed58a3187013` (tree `72b11a49d68f03c4723a
 The independent tester ran the P05 SDK two-client scenario in Roblox Studio `0.748.0.7481526` on the local Rojo test document. Edit parity matched 176 scripts and five poses. Two actual clients joined. Server baseline passed 195/196 and both client baselines passed 17/19. The P19 client emitter case passed on both clients. The server geometry case omitted two ground-level panels, so the staged P05 combat cases did not start. Native rays reported the road at the same endpoint as the candidate panels, while an actual intervening screen stopped the ray before the hidden panel. The tester ended the session and confirmed Edit was restored. [Native report and diagnosis](../docs/evidence/p19/eac79eb-native-attempt.json)
 
 The tester also confirmed in Studio Edit that preloading transient typed Sound instances succeeded for all four referenced samples. Preloading the raw ID strings failed in the same probe. The candidate uses typed preload instances. This verifies the preload mechanism. Operated sound quality remains a separate check.
+
+### Corrected candidate and native combat
+
+Candidate `15ba23561bfce4b6efb1edc0dfe7fc35f1cf2845` (tree `57743f32b04426d0f8e5d39125a16f7c87539167`) accepts a coincident endpoint within 0.005 studs while preserving earlier blockers. It retains accepted impact sounds briefly into Results and prunes pre-Results muzzle sounds. Native regression probes retain the exact 36-stud boundary and an earlier thin obstruction.
+
+The independent tester built the Rojo test artifact with SHA-256 `7690bf9b88e6fda236dade63fdde96c3ad2b8b3b2ec439ad0edcf964a581dc41` and confirmed matching Edit parity for 176 scripts and five poses. In the same Studio version, `ExecuteMultiplayerTestAsync(2, {kind = "P05"})` passed **9/9** with two actual clients. The server smoke passed **196/196** and each client passed **19/19**, with no failures, errors or skips.
+
+- **A1:** Portable combat radius and ordered panel award tests passed. The native `BlastGeometry` case passed, including an exposed panel at exactly 36 studs and separate shielding before the endpoint.
+- **A2:** The staged P05 case confirmed an empty terrain hit with no panel or health awards. It also confirmed ground-centered impacts opening 1 Outpost panel, 4 Vesper panels, 3 hangar panels, 10 Sandbreak panels and 4 Seedship panels. Both clients observed the burst point and the resulting openings. These shots used the production transports with controlled poses and aim.
+- **A3 and A4:** Native client admission and cleanup tests passed. The staged session recorded both roles with audio tracks and observed loaded, playing gunship reports and a ground-observed heavy impact. It did not supply a matched-volume comparison or validate each rocket collision mode.
+
+[Two-client report and capture manifest](../docs/evidence/p19/15ba235-native-p05.json) identifies the actual observations, capture drops and cleanup. The source of the runtime and combat tests stayed identical through the subsequent documentation and release-allowlist changes.
