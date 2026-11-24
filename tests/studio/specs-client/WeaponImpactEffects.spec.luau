@@ -62,8 +62,50 @@ return function()
                 "muted controller created a burst"
             )
             owner.update(2, "Active", 1, true, 10.2)
-            assert(owner.show("M102", 2, "a", point, Vector3.yAxis, "Ground", 10.2))
-            owner.update(2, "Lobby", 1, false, 10.3)
+            local orbitalContact = camera.CFrame.Position + camera.CFrame.LookVector * 580
+            local normal = Vector3.xAxis
+            assert(owner.show("M102", 2, "a", orbitalContact, normal, "Ground", 10.2))
+            local function layers(id: string): (BasePart, Attachment, ParticleEmitter, ParticleEmitter)
+                for _, item in holder:GetChildren() do
+                    if item:IsA("BasePart") and item:GetAttribute("ShotId") == id then
+                        local socket = item:FindFirstChildWhichIsA("Attachment")
+                        assert(socket, "missing contact socket")
+                        local fire, smoke = socket:FindFirstChild("Fireball"), socket:FindFirstChild("Smoke")
+                        assert(fire and fire:IsA("ParticleEmitter"), "missing fireball")
+                        assert(smoke and smoke:IsA("ParticleEmitter"), "missing smoke")
+                        return item, socket, fire, smoke
+                    end
+                end
+                error("missing live impact " .. id)
+            end
+            local flash, socket, fire, smoke = layers("a")
+            local initialSize, initialAlpha = flash.Size.X, flash.Transparency
+            assert(initialSize >= 7.5 and initialAlpha < 0.2, "Full orbital flash remained subdued")
+            assert((flash.Position - orbitalContact):Dot(normal) > 5, "flash did not expand outward")
+            assert(
+                (socket.WorldPosition - (orbitalContact + normal * 0.1)).Magnitude < 0.01,
+                "outward flash moved particles away from the real contact"
+            )
+            assert(fire.Size.Keypoints[2].Value >= 20, "orbital fireball lost visible extent")
+            assert(smoke.Size.Keypoints[2].Value >= 20, "orbital smoke lost visible extent")
+            assert(smoke.Transparency.Keypoints[2].Value < 0.6, "orbital plume lacks visible peak opacity")
+            owner.update(2, "Active", 1, true, 10.28)
+            assert(
+                flash.Size.X > initialSize and flash.Transparency > initialAlpha,
+                "flash did not expand and fade"
+            )
+            owner.update(2, "Active", 0.45, true, 10.3)
+            assert(owner.show("M102", 2, "reduced", orbitalContact, normal, "Ground", 10.3))
+            local small, _, shortFire, shortSmoke = layers("reduced")
+            assert(
+                small.Size.X < initialSize and small.Transparency > initialAlpha,
+                "Reduced used Full flash"
+            )
+            assert(shortFire.Lifetime.Max < fire.Lifetime.Max, "Reduced kept Full fireball lifetime")
+            assert(shortSmoke.Lifetime.Max < smoke.Lifetime.Max, "Reduced kept Full plume lifetime")
+            owner.update(2, "Active", 0, true, 10.4)
+            assert(#holder:GetChildren() == 0, "Off retained the more pronounced heavy burst")
+            owner.update(2, "Lobby", 1, false, 10.5)
             assert(#holder:GetChildren() == 0 and holder.Parent == nil, "lobby left active effects")
         end)
         owner.stop()

@@ -409,20 +409,22 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
             return true
         end, "fresh mobile lobby characters on the protected deck with zero load tasks", 15)
     end
-    local function finishRound(crew: Crew)
+    local function finishRound(crew: Crew, abortReason: string?)
         local roundId = crew.roundId
         waitFor(function()
             return match.snapshot().phase == "Results"
         end, "competitive result", duration + 3)
         local result = assert(match.snapshot().result, "missing authoritative result")
-        assert(result.reason == "Timeout" and result.winner == "Gunship", "expected normal timeout")
+        local expectedReason = abortReason or "Timeout"
+        local winner = if abortReason then "None" else "Gunship"
+        assert(result.reason == expectedReason and result.winner == winner, "unexpected replay result")
         allClients("Check", {
             roundId = roundId,
             phase = "Results",
             health = health(),
             launcherState = "Inactive",
-            resultReason = "Timeout",
-            winner = "Gunship",
+            resultReason = expectedReason,
+            winner = winner,
         })
         waitFor(function()
             return match.snapshot().phase == "Lobby"
@@ -500,6 +502,70 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
     end)
     local baseline = resources(runtime)
     observations.lobbyBaseline = baseline
+
+    -- Each reset follows real shell and launcher traffic in one live session.
+    -- Abort once the panel has opened so the replay checks start promptly.
+    local function impactReset(index: number)
+        local crew = deploy()
+        local previousMap = workspace.World.Battlefield
+        local carrier = assert(Players:GetPlayerByUserId(pickup(crew, 1)), "missing real launcher owner")
+        local launcher = runtime.launcher.snapshot()
+        Fixture.pose(runtime, carrier, Vector3.new(255, 14, 0))
+        Fixture.equip(carrier, "Rocket launcher")
+        selectWeapon(crew, "M102", 1)
+        local panels = Fixture.outpost()
+        local shot, panelIndex = Fixture.panelShot(runtime, "M102", 1, panels, 1)
+        assert(shot, "no visible Outpost panel in replay")
+        send(crew.operator, { shot })
+        local expires = index == 5
+        local rocketTarget = if expires then Vector3.new(255, 750, 0) else Vector3.new(235, -6, -48)
+        send(carrier, { launcherIntent("Fire", launcher.launcherId, crew.roundId, 2, rocketTarget) })
+        local panel = panels[panelIndex]
+        local launcherFolder = ReplicatedStorage[launcherState]
+        local impact: Payload? = nil
+        if expires then
+            waitFor(function()
+                return runtime.launcher.resources().flights == 1
+            end, "actual empty-air rocket flight", 3)
+            waitFor(function()
+                return runtime.launcher.resources().flights == 0
+            end, "empty-air rocket expiry", 7)
+            assert(launcherFolder:GetAttribute("LastImpact") == nil, "expired rocket reported a world impact")
+        else
+            waitFor(function()
+                return type(launcherFolder:GetAttribute("LastImpact")) == "string"
+            end, "actual rocket ground contact", 7)
+            local current = attributes(launcherFolder, "LastImpact")
+            assert(
+                current.roundId == crew.roundId and current.aircraftHit == false,
+                "stale or non-world impact"
+            )
+            impact = current
+        end
+        waitFor(function()
+            return panel:GetAttribute("DamageAppearance") == "Total"
+        end, "panel opening from real howitzer impact", 7)
+        assert(health() == AircraftHealth.maximum, "world rocket changed aircraft health")
+        checkBounds(resources(runtime))
+        local replicated = allClients("PanelStage", { id = panel.Name, appearance = "Total" })
+        assert(match.abort(crew.roundId, "P19ReplayReset"), "replay abort failed")
+        finishRound(crew, "P19ReplayReset")
+        assertDrained(resources(runtime), baseline)
+        assert(workspace.World.Battlefield ~= previousMap, "battlefield structure was not rebuilt")
+        for _, restored in Fixture.outpost() do
+            assert(restored:GetAttribute("DamageAppearance") == "Pristine", "panel survived replay")
+        end
+        local cleared = allClients("PanelStage", { id = panel.Name, appearance = "Pristine", clear = true })
+        observations["impactReset" .. index] = {
+            roundId = crew.roundId,
+            panel = panel.Name,
+            rocket = impact,
+            rocketExpired = expires,
+            activeClients = replicated,
+            resetClients = cleared,
+            resources = resources(runtime),
+        }
+    end
 
     local function rifleReceived(): number
         local total = 0
@@ -773,7 +839,7 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
     -- for operators to set the recorded graphics controls before any sampling.
     local function awaitProfileEnvironment()
         stage("Waiting for pinned viewport and graphics on actual clients")
-        local deadline = os.clock() + 40
+        local deadline = os.clock() + 75
         local sampled: { [string]: unknown }
         repeat
             assertRoster()
@@ -798,7 +864,8 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
             task.wait(0.75)
         until os.clock() >= deadline
         error(
-            "P11 requires stable "
+            suite
+                .. " requires stable "
                 .. profileSettings
                 .. " for each client; observed "
                 .. HttpService:JSONEncode(sampled)
@@ -811,7 +878,11 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
             for index = 1, 5 do
                 if
                     not check("Accelerated flood and pristine replay " .. index, function()
-                        replayRound(index, 0.04)
+                        if suite == "P19Replay" then
+                            impactReset(index)
+                        else
+                            replayRound(index, 0.04)
+                        end
                     end)
                 then
                     break
@@ -997,6 +1068,11 @@ end
 -- Runs the current matched workload with two actual clients.
 function Harness.profile(finish: ((Report) -> ())?)
     runScenario("Profile", 2, finish, "P19Profile")
+end
+
+-- Five consecutive resets in a real two-client session on current combat.
+function Harness.impactReplay()
+    runScenario("Replay", 2, nil, "P19Replay")
 end
 
 return Harness

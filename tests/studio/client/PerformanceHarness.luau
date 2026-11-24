@@ -105,6 +105,25 @@ local function json(state: Instance, attribute: string): { [string]: unknown }?
     return if type(encoded) == "string" then HttpService:JSONDecode(encoded) else nil
 end
 
+-- Observe the managed model and local holders after replication settles.
+local function panelStage(id: string, appearance: string, clear: boolean): { [string]: unknown }
+    local deadline = os.clock() + 4
+    repeat
+        local model = workspace.World.Battlefield:FindFirstChild(id, true)
+        local effects = workspace:FindFirstChild("LocalWeaponImpacts")
+        local audio = workspace:FindFirstChild("LocalWeaponAudio")
+        if
+            model
+            and model:GetAttribute("DamageAppearance") == appearance
+            and (not clear or (not effects and not audio))
+        then
+            return { id = id, appearance = appearance, cleared = not effects and not audio }
+        end
+        task.wait()
+    until os.clock() >= deadline
+    error("panel stage or local effects failed to converge: " .. id .. " " .. appearance)
+end
+
 -- Bounded convergence covers replicated data from the production server owners.
 local function converge(expected: Check)
     local deadline = os.clock() + 4
@@ -181,6 +200,9 @@ local function listen()
                         send(payload :: { Intent })
                     elseif action == "Check" then
                         converge(payload :: Check)
+                    elseif action == "PanelStage" then
+                        local request = payload :: { id: string, appearance: string, clear: boolean? }
+                        return panelStage(request.id, request.appearance, request.clear == true)
                     elseif action == "Memory" then
                         assert(Stats.MemoryTrackingEnabled, "client engine memory tracking disabled")
                         return Stats:GetTotalMemoryUsageMb()

@@ -3,15 +3,15 @@
 type API = typeof(require(game:GetService("ServerScriptService").Server.CombatService))
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local combat = candidate :: API
-    test("P19 howitzer radius includes 36 studs and preserves the light impact radius", function()
+    test("P19 howitzer radius includes 25 studs and preserves the light impact radius", function()
         local radius = combat.profiles.M102.radius
-        assert(radius == 36 and combat.profiles.GAU23.radius == 4, "unexpected heavy or light radius")
+        assert(radius == 25 and combat.profiles.GAU23.radius == 4, "unexpected heavy or light radius")
         assert(
-            combat.withinBlast(18.01, radius) and combat.withinBlast(35.999, radius),
-            "blast rejected an exposed target inside 36 studs"
+            combat.withinBlast(18.01, radius) and combat.withinBlast(24.999, radius),
+            "blast rejected an exposed target inside 25 studs"
         )
         assert(
-            combat.withinBlast(36, radius) and not combat.withinBlast(36.001, radius),
+            combat.withinBlast(25, radius) and not combat.withinBlast(25.001, radius),
             "blast missed the inclusive radius boundary or reached past it"
         )
         assert(
@@ -48,12 +48,22 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         end
         assert(assert(owner.readiness("GAU23", 9.1), "readiness").ammo == 39, "combat invariant")
     end)
-    test("P05 heavy reload survives selection changes and exact boundary", function()
+    test("P19 six-second heavy reload survives selection changes and opens at the exact boundary", function()
         local owner = fixture()
         assert(owner.fire(1, request(1, "M102"), "M102", true, 0, 360, 140, 0))
         assert(owner.fire(1, request(2, "GAU23"), "GAU23", true, 1, 360, 140, 0))
-        assert(not owner.fire(1, request(3, "M102"), "M102", true, 3.999, 360, 140, 0), "combat invariant")
-        assert(owner.fire(1, request(3, "M102"), "M102", true, 4, 360, 140, 0))
+        local spent = assert(owner.readiness("M102", 5.999), "spent howitzer readiness missing")
+        assert(spent.ammo == 0 and spent.reloadUntil == 6, "spent shell did not start a six-second reload")
+        assert(
+            not owner.fire(1, request(3, "M102"), "M102", true, 5.999, 360, 140, 0),
+            "howitzer reloaded early"
+        )
+        assert(
+            owner.fire(1, request(3, "M102"), "M102", true, 6, 360, 140, 0),
+            "howitzer missed reload boundary"
+        )
+        local spentAgain = assert(owner.readiness("M102", 11.999), "second spent howitzer readiness missing")
+        assert(spentAgain.ammo == 0 and spentAgain.reloadUntil == 12, "second shot lost independent reload")
     end)
     test("P05 forged, stale, nonfinite and unauthorized fire reject without spending", function()
         local owner = fixture()

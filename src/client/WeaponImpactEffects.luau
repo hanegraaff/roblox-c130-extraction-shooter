@@ -20,11 +20,16 @@ local solidTint = Color3.fromRGB(123, 122, 119)
 local fireTint = Color3.fromRGB(255, 165, 77)
 type Burst = {
     part: Part,
+    socket: Attachment,
     fire: ParticleEmitter,
     smoke: ParticleEmitter,
     sparks: ParticleEmitter,
     untilTime: number,
+    flashStarted: number,
     flashUntil: number,
+    flashDiameter: number,
+    flashGrowth: number,
+    flashOpacity: number,
     priority: number,
 }
 type Trail = { part: Part, smoke: ParticleEmitter, untilTime: number, rocket: BasePart? }
@@ -50,10 +55,9 @@ local function anchor(name: string): Part
     return part
 end
 
-local function emitter(part: Part, texture: string): ParticleEmitter
-    local socket = Instance.new("Attachment")
-    socket.Parent = part
+local function emitter(socket: Attachment, name: string, texture: string): ParticleEmitter
     local effect = Instance.new("ParticleEmitter")
+    effect.Name = name
     effect.Texture = texture
     effect.Enabled = false
     effect.EmissionDirection = Enum.NormalId.Front
@@ -73,17 +77,19 @@ end
 
 local function newBurst(): Burst
     local part = anchor("ImpactBurst")
-    local fire = emitter(part, fireTexture)
+    local socket = Instance.new("Attachment")
+    socket.Parent = part
+    local fire = emitter(socket, "Fireball", fireTexture)
     fire.Color = ColorSequence.new(Color3.fromRGB(255, 216, 117), Color3.fromRGB(203, 67, 20))
     fire.LightEmission = 0.7
     fire.Transparency = fading(0.86)
     fire.Drag = 5
     fire.SpreadAngle = Vector2.new(70, 70)
-    local smoke = emitter(part, smokeTexture)
+    local smoke = emitter(socket, "Smoke", smokeTexture)
     smoke.Drag = 3
     smoke.Acceleration = Vector3.new(0, 4, 0)
     smoke.SpreadAngle = Vector2.new(78, 78)
-    local sparks = emitter(part, sparkTexture)
+    local sparks = emitter(socket, "Sparks", sparkTexture)
     sparks.Color = ColorSequence.new(Color3.fromRGB(255, 218, 148), Color3.fromRGB(155, 92, 40))
     sparks.LightEmission = 0.55
     sparks.Lifetime = NumberRange.new(0.18, 0.42)
@@ -92,11 +98,16 @@ local function newBurst(): Burst
     sparks.SpreadAngle = Vector2.new(58, 58)
     return {
         part = part,
+        socket = socket,
         fire = fire,
         smoke = smoke,
         sparks = sparks,
         untilTime = 0,
+        flashStarted = 0,
         flashUntil = 0,
+        flashDiameter = 0,
+        flashGrowth = 0,
+        flashOpacity = 0,
         priority = 0,
     }
 end
@@ -111,7 +122,9 @@ end
 
 local function newTrail(): Trail
     local part = anchor("RocketSmoke")
-    local smoke = emitter(part, smokeTexture)
+    local socket = Instance.new("Attachment")
+    socket.Parent = part
+    local smoke = emitter(socket, "Smoke", smokeTexture)
     smoke.Color = ColorSequence.new(Color3.fromRGB(187, 185, 173), Color3.fromRGB(113, 112, 105))
     smoke.Size = NumberSequence.new(0.55, 2.7)
     smoke.Transparency = fading(0.44)
@@ -119,6 +132,42 @@ local function newTrail(): Trail
     smoke.Speed = NumberRange.new(1, 3)
     smoke.SpreadAngle = Vector2.new(25, 25)
     return { part = part, smoke = smoke, untilTime = 0, rocket = nil }
+end
+
+-- Keep the heavier plume visible after the fireball recedes. Starting
+-- translucent limits the initial white overlap at the impact point.
+local function risingSmoke(opacity: number): NumberSequence
+    return NumberSequence.new({
+        NumberSequenceKeypoint.new(0, 1 - opacity * 0.45),
+        NumberSequenceKeypoint.new(0.21, 1 - opacity),
+        NumberSequenceKeypoint.new(0.64, 1 - opacity * 0.78),
+        NumberSequenceKeypoint.new(1, 1),
+    })
+end
+
+-- Full howitzer effects have a brief expanding flash and readable smoke at
+-- orbit distances. Keep orbital Full below the near Ground emission budget,
+-- and preserve a shorter, smaller silhouette for Reduced.
+local function emitHeavy(burst: Burst, tint: Color3, full: boolean, thermal: boolean, distant: boolean)
+    local fire = burst.fire
+    fire.Lifetime = if full then NumberRange.new(0.24, 0.56) else NumberRange.new(0.12, 0.31)
+    fire.Speed = if full then NumberRange.new(10, 30) else NumberRange.new(4, 13)
+    fire.Size = if full then NumberSequence.new(7, 21) else NumberSequence.new(3.5, 9)
+    fire:Emit(if not full then 2 elseif distant then 5 elseif thermal then 6 else 8)
+
+    local smoke = burst.smoke
+    smoke.Color = if thermal
+        then ColorSequence.new(Color3.fromRGB(175, 175, 175), Color3.fromRGB(101, 101, 101))
+        else ColorSequence.new(
+            tint:Lerp(Color3.fromRGB(180, 174, 164), 0.45),
+            Color3.fromRGB(85, 83, 78)
+        )
+    smoke.LightInfluence = if thermal then 0.18 else 0.6
+    smoke.Transparency = risingSmoke(if not full then 0.2 elseif thermal then 0.44 else 0.52)
+    smoke.Lifetime = if full then NumberRange.new(1.15, 1.75) else NumberRange.new(0.5, 0.95)
+    smoke.Speed = if full then NumberRange.new(9, 21) else NumberRange.new(4, 11)
+    smoke.Size = if full then NumberSequence.new(6, 22) else NumberSequence.new(2.5, 10)
+    smoke:Emit(if not full then 3 elseif distant then 5 elseif thermal then 8 else 12)
 end
 
 local function clearTrail(trail: Trail)
@@ -213,20 +262,32 @@ function WeaponImpactEffects.new(state: Instance): Controller
         if not burst then
             return false
         end
-        local reduced = effects < 0.9 or thermal or distance > 400
-        local flashSize = if heavy then 6 elseif light then 0.65 else 2.7
-        local point = position + normal * 0.1
+        local full = effects >= 0.9
+        local reduced = not full or thermal or distance > 400
+        local distant = distance > 550
+        local flashSize = if heavy then (if full then 7.5 else 4) elseif light then 0.8 else 3.2
+        -- Keep the growing fireball on the incoming side of the actual surface.
+        -- Particles start at contact through the offset socket.
+        local flashOffset = if heavy then (if full then 5.8 else 2.8) elseif light then 0.5 else 1.8
+        local point = position + normal * flashOffset
         burst.part.CFrame = CFrame.lookAt(point, point + normal)
+        burst.socket.Position = Vector3.new(0, 0, flashOffset - 0.1)
         burst.part.Size = Vector3.one * flashSize
         burst.part.Color = fireTint
-        burst.part.Transparency = if reduced then 0.55 else 0.25
+        local opacity = if heavy and full then 0.87 elseif reduced then 0.45 else 0.75
+        burst.part.Transparency = 1 - opacity
         burst.part:SetAttribute("Weapon", weapon)
         burst.part:SetAttribute("ShotId", id)
         burst.part:SetAttribute("ImpactPoint", position)
         burst.part:SetAttribute("Surface", surface)
         burst.part:SetAttribute("ReceivedSeconds", clock)
-        burst.flashUntil = clock + (if light then 0.04 else 0.07)
-        burst.untilTime = clock + (if heavy then 1.65 elseif light then 0.58 else 1.1)
+        burst.flashStarted = clock
+        burst.flashUntil = clock
+            + (if heavy then (if full then 0.17 else 0.09) elseif light then 0.05 else 0.11)
+        burst.flashDiameter = flashSize
+        burst.flashGrowth = if heavy then (if full then 5.5 else 2) elseif light then 0.4 else 1.8
+        burst.flashOpacity = opacity
+        burst.untilTime = clock + (if heavy then (if full then 1.8 else 1) elseif light then 0.58 else 1.1)
         burst.priority = if light then 1 else 2
         holder.Parent = workspace
         burst.part.Parent = holder
@@ -237,37 +298,39 @@ function WeaponImpactEffects.new(state: Instance): Controller
             then NumberRange.new(21, 48)
             elseif light then NumberRange.new(8, 22)
             else NumberRange.new(16, 32)
-        spark:Emit(if reduced then (if light then 3 else 7) elseif heavy then 20 elseif light then 6 else 13)
-        local smoke = burst.smoke
+        spark:Emit(
+            if heavy and full
+                then (if distant then 10 elseif thermal then 14 else 20)
+                elseif reduced then (if light then 3 else 7)
+                elseif light then 6
+                else 13
+        )
         local tint = if surface == "Ground"
             then groundTint
             elseif surface == "Metal" then metalTint
             else solidTint
+        if heavy then
+            emitHeavy(burst, tint, full, thermal, distant)
+            return true
+        end
+
+        local smoke = burst.smoke
+        smoke.LightInfluence = 0.6
         smoke.Color = ColorSequence.new(tint, Color3.fromRGB(78, 78, 77))
-        smoke.Transparency = fading(if thermal then 0.17 elseif reduced then 0.24 else 0.43)
-        smoke.Size = if heavy
-            then NumberSequence.new(4, 18)
-            elseif light then NumberSequence.new(0.6, 2.4)
-            else NumberSequence.new(2, 8)
-        smoke.Lifetime = if heavy
-            then NumberRange.new(0.9, 1.6)
-            elseif light then NumberRange.new(0.3, 0.53)
-            else NumberRange.new(0.65, 1.05)
-        smoke.Speed = if heavy
-            then NumberRange.new(9, 20)
-            elseif light then NumberRange.new(2, 5)
-            else NumberRange.new(5, 11)
+        smoke.Transparency =
+            fading(if thermal then (if light then 0.2 else 0.29) elseif reduced then 0.24 else 0.46)
+        smoke.Size = if light then NumberSequence.new(0.7, 2.8) else NumberSequence.new(2.5, 9)
+        smoke.Lifetime = if light then NumberRange.new(0.3, 0.53) else NumberRange.new(0.65, 1.05)
+        smoke.Speed = if light then NumberRange.new(2, 5) else NumberRange.new(5, 11)
         if distance < 620 then
-            smoke:Emit(
-                if reduced then (if heavy then 3 else 1) elseif heavy then 12 elseif light then 2 else 6
-            )
+            smoke:Emit(if reduced then 1 elseif light then 2 else 6)
         end
         if not light then
             local fire = burst.fire
-            fire.Lifetime = if heavy then NumberRange.new(0.20, 0.43) else NumberRange.new(0.12, 0.25)
-            fire.Speed = if heavy then NumberRange.new(9, 29) else NumberRange.new(4, 12)
-            fire.Size = if heavy then NumberSequence.new(5, 14) else NumberSequence.new(1.6, 6)
-            fire:Emit(if reduced then 2 elseif heavy then 7 else 4)
+            fire.Lifetime = NumberRange.new(0.15, 0.32)
+            fire.Speed = NumberRange.new(5, 14)
+            fire.Size = NumberSequence.new(2, 8)
+            fire:Emit(if reduced then 2 else 4)
         end
         return true
     end
@@ -387,7 +450,15 @@ function WeaponImpactEffects.new(state: Instance): Controller
                 if burst.untilTime > 0 then
                     if clock >= burst.untilTime then
                         clearBurst(burst)
-                    elseif clock >= burst.flashUntil then
+                    elseif clock < burst.flashUntil then
+                        local progress = math.clamp(
+                            (clock - burst.flashStarted) / (burst.flashUntil - burst.flashStarted),
+                            0,
+                            1
+                        )
+                        burst.part.Size = Vector3.one * (burst.flashDiameter + burst.flashGrowth * progress)
+                        burst.part.Transparency = 1 - burst.flashOpacity * (1 - progress)
+                    elseif burst.part.Transparency < 1 then
                         burst.part.Transparency = 1
                     end
                 end

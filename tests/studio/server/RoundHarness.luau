@@ -246,7 +246,12 @@ function RoundHarness.run()
         return
     end
     if type(args) == "table" and args.kind == "P19Profile" then
-        require(script.Parent.PerformanceHarness).profile()
+        local harness = require(script.Parent.PerformanceHarness)
+        if args.scenario == "Replay" then
+            harness.impactReplay()
+        else
+            harness.profile()
+        end
         return
     end
     if type(args) == "table" and args.kind == "P11" then

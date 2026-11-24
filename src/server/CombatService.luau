@@ -55,12 +55,12 @@ CombatService.profiles = table.freeze({
     M102 = table.freeze({
         capacity = 1,
         cadence = 1,
-        reload = 4,
+        reload = 6,
         speed = 300,
         lifetime = 4,
         range = 900,
         damage = 100,
-        radius = 36,
+        radius = 25,
         collisionRadius = 0.05,
     }),
 }) :: { [string]: Profile }
