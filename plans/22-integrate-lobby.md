@@ -1,6 +1,6 @@
 # P22 — Replace the protected Roblox waiting lobby
 
-**Lobby redesign · Plan 3 of 3.** Use the [Blender-to-Roblox import skill](../.agents/skills/import-blender-to-roblox/SKILL.md). Inputs are the exact [P20 bust](20-lobby-bust.md) and [P21 lobby](21-lobby-interior.md) revisions the user approved. See R01–R03 and R24 in [requirements](../requirements.md) and the [roadmap](../roadmap.md).
+**Lobby redesign · Plan 3 of 3.** Use the [Blender-to-Roblox import skill](../.agents/skills/import-blender-to-roblox/SKILL.md). Use the approved lobby at `ec43139`. Its GLB already contains one instance of the bust approved at `62cd82c`. [P21 approval and import hashes](21-lobby-interior.md#completion-record) · [P20 sculpture approval](20-lobby-bust.md#completion-record). See R01–R03 and R24 in [requirements](../requirements.md) and the [roadmap](../roadmap.md).
 
 ## Replacement and source ownership
 
