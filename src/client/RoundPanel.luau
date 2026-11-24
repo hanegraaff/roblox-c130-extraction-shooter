@@ -15,6 +15,7 @@ local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local ThermalCameraController = require(script.Parent.ThermalCameraController)
 local PresentationEffects = require(script.Parent.PresentationEffects)
 local WeaponAudio = require(script.Parent.WeaponAudio)
+local WeaponImpactEffects = require(script.Parent.WeaponImpactEffects)
 local SpectatorCamera = require(script.Parent.SpectatorCamera)
 
 local RoundPanel = {}
@@ -227,6 +228,7 @@ function RoundPanel.new(
             local spectator = SpectatorCamera.new(player)
             local effects = PresentationEffects.new(player)
             local weaponAudio = WeaponAudio.new(state, player)
+            local weaponImpacts = WeaponImpactEffects.new(state)
             local connections: { RBXScriptConnection } = {}
             local sequence, oldRoundId = 0, -1
             local seenResult: string? = nil
@@ -313,7 +315,9 @@ function RoundPanel.new(
                 local active = phase == "Active"
                 local serverSeconds = workspace:GetServerTimeNow()
                 local effectScale = PlayerPresentation.intensity(options.effects)
-                weaponAudio.update(roundId, active, effectScale, serverSeconds)
+                local audioPhase = if type(phase) == "string" then phase else ""
+                weaponAudio.update(roundId, audioPhase, effectScale, serverSeconds)
+                weaponImpacts.update(roundId, audioPhase, effectScale, view == "Operator", serverSeconds)
                 local compact = touch and view == "Ground"
                 local activeDetail = ""
                 if active then
@@ -508,6 +512,7 @@ function RoundPanel.new(
                 end
                 effects.stop()
                 weaponAudio.stop()
+                weaponImpacts.stop()
                 thermal.stop()
                 spectator.stop()
                 gui:Destroy()

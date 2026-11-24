@@ -62,10 +62,9 @@ local function gunship(
     sequence: number
 ): Intent?
     local camera = runtime.aircraft.position()
-    local radial = Vector2.new(camera.X, camera.Z).Unit
-    local projected = camera + (point - camera) * (map.altitudeStuds / (camera.Y - point.Y))
-    local x = projected.X * radial.X + projected.Z * radial.Y
-    local z = -projected.X * radial.Y + projected.Z * radial.X
+    local projected = camera + (point - camera) * (camera.Y / (camera.Y - point.Y))
+    local x = math.clamp(projected.X, -map.radiusStuds, map.radiusStuds)
+    local z = math.clamp(projected.Z, -map.radiusStuds, map.radiusStuds)
     local preferred = assert(Pan.recenter(map, aspect, AircraftRules.defaults.fov105mm), "home focus missing")
     local body: { [string]: unknown } = {
         roundId = runtime.rounds.match.snapshot().roundId,
@@ -132,6 +131,20 @@ function CombatFixture.panelShot(
         end
     end
     return nil, start
+end
+
+-- Keep exercising real impact work after the finite set of panels opens.
+-- Authoritative flight still determines the first terrain or solid contact.
+function CombatFixture.terrainShot(runtime: GameRuntime.Controller, weapon: string, sequence: number): Intent?
+    local horizontal = if sequence % 2 == 0 then 70 else -70
+    local query = RaycastParams.new()
+    query.FilterType = Enum.RaycastFilterType.Include
+    query.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+    local hit = workspace:Raycast(Vector3.new(horizontal, 90, 60), Vector3.new(0, -110, 0), query)
+    if hit then
+        return gunship(runtime, weapon, hit.Position, sequence)
+    end
+    return nil
 end
 
 return CombatFixture

@@ -10,7 +10,8 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
 | `P18` | 3 | Roster health, current panel/thermal/camera state, four-site ownership/recovery and replay |
-| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup |
+| `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds four empty-ground surface witnesses, exposed, shielded and out-of-range player checks, ground contacts beside all five buildings and a direct roof hit |
+| `P19Profile` | 2 | Candidate-branch five-minute mixed weapon workload, render and scheduler frame timing, local impact readiness and resource peaks. SDK scenario `Replay` runs five resets and observes empty-air rocket expiry |
 | `P03`, `P04` | Their documented rosters | Compatible lifecycle and canonical aircraft/orbit regression paths |
 | `P06`, `P06Team`, `P07`, `Sandbreak`, `P08`, `P09`, `P10`, `P11`, `P14`, `P14ArrivalRegression`, `P17` | Historical only | Explicit pre-P18 version rejection; run the recorded source to reproduce prior evidence |
 
@@ -488,6 +489,119 @@ emission and client playback time. Check the exhaust trail, warning text with
 effects off, and cleanup after Results and replay. Keep audio telemetry and
 listening observations separate. [Revision evidence](evidence/p10/combat-presentation-revision.json)
 
+## Run P19 weapon impact checks
+
+Build and sync the selected P19 source into the confirmed local
+`PlayersVsC130Tests` document on port 34872. Stop Play before syncing. Use
+the [source parity procedure](#run-the-p18-rebalancing-harness) and collect
+fresh server and client smoke in each session. Run the full host gate, the
+[two-client P05 regression](#run-the-p05-gunship-combat-harness) and the
+[P19 acceptance criteria](../plans/19-weapon-impacts.md#acceptance-criteria).
+The native smoke includes the server's registered-solid distance and cover
+fixture and the client's impact admission and cleanup fixture. The server
+fixture supplies a contact and the client fixture injects cues. The active
+round checks below exercise projectile flight and actual delivery. On P19,
+the P05 battlefield matrix fires at four empty-ground surfaces (desert sand, forest
+floor, depot pavement and the red basin's Mud terrain), once beside each
+registered building, and once directly at an elevated roof panel. It sends
+production fire requests and checks both clients' impact location and a
+representative opened panel at each building. The harness supplies aim and
+avatar placement. A Terrain-only ray classifies the authored ground material
+independently of the shot's collision surface. Where the backup `GroundDisk`
+and Terrain coincide, either can register the real ground contact. Keep the
+recorded surface and authored Terrain material separate when reading the
+report.
+
+The same case places the actual Ground avatar in the open more than 18 studs
+and at most 25 studs from the confirmed contact. It repeats the shot with
+the avatar behind a temporary solid shield within that band, then in the open
+beyond 25 studs. The fixture temporarily raises the avatar's health and
+disables its stock regeneration script if present so a 100-point hit can be
+measured without ending the round. It records the confirmed
+contact-to-avatar distance, cover ray and health before and after each shot.
+Expect a 100-point loss only for the exposed, in-range avatar. Review normal
+controls and cover in a separate operated session.
+
+- **A2 battlefield coverage.** Use normal targeting and fire controls in **Server & Clients** to check an empty-ground strike and a ground strike beside a building. Compare the contact and opening from both roles. Use the staged P05 field matrix for the exposed, shielded and out-of-range controls, and for direct wall and roof checks. Check real ray clearance after the flush, protected supports and lobby, the fragment cap and pristine reset.
+- **A3 flight and cues.** Observe 105mm and repeated 30mm contact effects on terrain and walls and rockets striking terrain, buildings and the aircraft. Exercise a rocket that expires without a collision. Check one burst per valid contact, smoke onset and fade, 100 damage for a direct aircraft rocket hit, unchanged 30mm earned credit, and rejection of duplicate, delayed and previous-round cues. Check the fixture's cleanup result and observe the live effects clear on replay.
+- **A4 visual and listening review.** Inspect Ground and the 30° and 40° thermal views in Studio. Check the reticle, white targets, real openings, readable warnings and impact placement while smoke clears. Compare Full, Reduced and Off. Listen in the local session for the M-7, launcher, 30mm and howitzer and use the automated timing tests for nearby and distant playback. Check that Off clears visible effects and keeps warnings readable. Written observations are sufficient. The existing clips and matched audio are optional aids. The separate mute and fallback checks are deferred.
+- **A5 workload and reset.** Use the profile below on baseline and candidate. Observe normal and reduced effects and five resets, recording active transients at each fresh lobby and whether the pools remain bounded.
+
+### Profile the current battlefield
+
+`P19Profile` adapts the P11 workload for the P18 map and four launcher sites.
+It fires against real panels where available and falls back to terrain to
+keep impact load after openings exhaust the preferred targets. Start a fresh
+session for each build. Use the same profiling fixtures on the pre-P19
+gameplay baseline and the candidate, and record both source identities and
+test artifacts. Keep the Studio version, both actual clients, hardware and
+workload settings matched. Use an actual **1920×1080** viewport with graphics
+quality **8** in each playing client. The harness allows 75 seconds for both
+clients to reach these settings before measuring. Log the reported viewport/quality and
+restore temporary simulator, graphics and harness settings afterward.
+
+From the confirmed local Edit context, launch the SDK session with
+`StudioTestService:ExecuteMultiplayerTestAsync(2, { kind = "P19Profile" })`
+inside a detached task and preserve the returned report. For native
+**Server & Clients**, set the temporary
+`ServerStorage.DevelopmentSettings.ManualHarness = "P19Profile"` attribute
+in Edit and choose two clients. Check `Workspace.P19ProfileStage` on the
+server. Preserve `Workspace.ManualP19ProfileReport` before ending a native
+session, then restore the original selector in Edit. Save startup and smoke
+reports for failed or incomplete attempts.
+
+Review the report's accepted weapon traffic, wall-opening and fragment peaks,
+elapsed time, frame sample counts and final resource counts. Require server
+scheduler p95 at or below 16.7 ms. The harness still evaluates both clients
+against 33.3 ms p95 and reports any miss. D99 retains the local timings as
+diagnostics and carries the client budget to the [future release workload](release.md#measure-the-live-10-player-workload).
+The client probe measures on-screen contacts within 400 studs
+from receipt to the first `PreRender` frame with the matching burst ready.
+For Full Effects, require at least 95% of sampled contacts to be ready within
+two frames. Count missing samples beyond the target. Preserve first-frame,
+second-frame, later and missing samples along with peak burst and trail
+counts. The pre-P19 gameplay baseline has no contact stream, so report client
+impact readiness as unavailable on that build. Review visible impacts in
+Studio under A4. A passing profile covers its own load and cleanup.
+Keep the five-reset and low-effects checks with the separate A5 evidence.
+[Server profile harness](../tests/studio/server/PerformanceHarness.luau) · [Client profile harness](../tests/studio/client/PerformanceHarness.luau)
+
+### Run P19 impact replay
+
+In the same local Edit document, start a fresh SDK session with
+`StudioTestService:ExecuteMultiplayerTestAsync(2, { kind = "P19Profile", scenario = "Replay" })`.
+This test-only scenario reports as `P19Replay`. It fires a howitzer and a
+rocket in each of five active rounds. The first four rockets hit the ground.
+The fifth expires in empty air, with no server-reported world impact.
+Each round is ended by the fixture after the panel opens. The report tracks
+both clients' opened and restored panel and verifies a fresh battlefield and
+drained local and server resources after each reset. Retain both actual
+client smoke reports and the replay report. Use the separate Profile scenario
+for frame timing and the operated review for Reduced and Off coverage.
+
+For native **Server & Clients**, set `ManualHarness = "P19Profile"` and
+`ManualP19Scenario = "Replay"` on `ServerStorage.DevelopmentSettings` in the
+local Edit document. Start two clients and collect
+`Workspace.ManualP19ReplayReport` in the Server context. End the session and
+restore the original selector attributes in Edit.
+
+For a same-session follow-up after manual P05, preserve `ManualP05Report` and
+confirm that the P05 runtime has shut down. Keep both clients connected and
+the private native test session open. In each actual Client context, start
+the committed `PerformanceHarness.profile()` listener from
+`Players.LocalPlayer.PlayerScripts.ClientTests`. Start the committed Replay
+fixture in the Server context.
+
+```luau
+local harness = require(game:GetService("ServerScriptService").ServerTests.PerformanceHarness)
+task.spawn(harness.impactReplay, function(report)
+    workspace:SetAttribute("ManualP19ReplayReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+```
+
+Collect the Replay report separately before ending the session. Label it as
+same-session evidence and retain both actual client IDs.
+
 ## Run the P11 performance harness
 
 > Historical pre-P18 procedure: this selector is archived and rejects before allocating runtime/listeners on the current candidate. Reproduce old evidence from its recorded Git revision. Use current P18 plus adapted P05 for rebalancing acceptance; preserve the report below as historical evidence.
@@ -624,7 +738,7 @@ end)
 return "P05 gunship test started"
 ```
 
-After the self-ending session returns to Edit, inspect `workspace:GetAttribute("P05LastReport")`. Confirm two actual clients connected, all eight named P05 cases ran and passed, and no case or harness completion failed or skipped. A launch timeout, missing result, early exit or zero discovered cases is not a pass. Preserve the actual report, source commit/tree, Studio environment and separate server/client baseline reports; the server baseline may complete while clients are still joining. The harness uses a test-only transport and disposable fixtures. It targets forged/stale/nonfinite/flood requests, actual swept cover, collisionless flight, weapon-switch reload, replicated combat observations, terminal/next-round cleanup and terrain/upper-floor geometry; consult the current test source and [P05 plan](../plans/05-gunship-combat.md) for exact coverage and observed results.
+After the self-ending session returns to Edit, inspect `workspace:GetAttribute("P05LastReport")`. Require two actual clients and all discovered cases passing with zero failures or skips. Expect nine cases on the P19 candidate and eight on integrated P18. A launch timeout, missing result, early exit or zero discovered cases is not a pass. Preserve the actual report, source commit/tree, Studio environment and separate server/client baseline reports; the server baseline may complete while clients are still joining. The harness uses a test-only transport and disposable fixtures. It targets forged/stale/nonfinite/flood requests, actual swept cover, collisionless flight, weapon-switch reload, replicated combat observations, terminal/next-round cleanup and terrain/upper-floor geometry; consult the current test source and [P05 plan](../plans/05-gunship-combat.md) for exact coverage and observed results.
 
 The embedded-cover case uses a disposable wall outside the registered building-panel ledger. Its replicated structural `panelId` must therefore be nil, even if the fixture has a copied tag. Establish the actual containing wall independently through overlap/initial-collision positive controls, bounded impact position, no remaining projectile flight and unchanged protected-player health. A nil panel ID by itself does not prove collision. Model-aware panel helpers in the P05/P14 regressions inspect the live identity Model and its current solids; fixture edits need fresh source-specific reports. The prior candidate’s [P07 P05 regression report](evidence/p07-p05-873f0f6-report.json) preserves its actual source, two-client context and eight-case result; P14 has its separate [passing two-client regression report](evidence/p07-p14-regression-report.json), and full P07 acceptance remains incomplete.
 
@@ -643,7 +757,7 @@ The SDK route above remains the default. When it cannot launch the requested cli
    ```
 
 2. Start Studio's native **Server & Clients** mode with **2 clients**. Confirm both actual clients connect and collect fresh server/client smoke reports. Once at least one client has joined, a missing second client yields a structured harness-startup failure. With no clients, the outer smoke can exhaust its separate 60-second first-client budget before the harness runs and publish an explicit failed, zero-discovery server report; the separate bootstrap-status wait remains ten seconds. Neither outcome is a pass. A separate zero-client Studio `Run` verified the negative 60-second timeout on `0ab3607`; a delayed first client remains unverified; P06Team later passed 7/7 after a controlled same-session runner restart with three already-connected actual players; that does not establish a clean cold start.
-3. Before ending the session, read and preserve `workspace:GetAttribute("ManualP05Invocation")` and `workspace:GetAttribute("ManualP05Report")` from the actual **Server** DataModel, together with the candidate commit/tree, mode, actual client count and smoke reports. The manual report is not the Edit document's SDK `P05LastReport`. Require two actual clients, all eight P05 cases and zero failures/skips; a missing report or early error remains incomplete.
+3. Before ending the session, read and preserve `workspace:GetAttribute("ManualP05Invocation")` and `workspace:GetAttribute("ManualP05Report")` from the actual **Server** DataModel, together with the candidate commit/tree, mode, actual client count and smoke reports. The manual report is not the Edit document's SDK `P05LastReport`. Require two actual clients, all P05 cases and zero failures or skips. Expect nine cases on P19 and eight on integrated P18. A missing report or early error remains incomplete.
 4. After preserving the report, end the owned manual session from the actual **Server** context:
 
    ```luau

@@ -1,0 +1,25 @@
+{
+  "source": "15ba23561bfce4b6efb1edc0dfe7fc35f1cf2845",
+  "method": "Frame excerpts from original local AAC/H.264 files using AVFoundation. Requested approximate video offsets only; capture manifests do not bind encoded timestamps to game clock.",
+  "observations": [
+    {
+      "frame": "build/p19-land-open-14.jpg",
+      "sha256": "ed496742dcaef5acb0df069b1a60bcb770a216005f90c6930bf3dab0ff9056f2",
+      "view": "operator 40-degree thermal",
+      "observed": "Small bright landing flash next to reticle while 105MM IMPACT HUD and distant white target remain readable."
+    },
+    {
+      "frame": "build/p19-land-near-44.jpg",
+      "sha256": "3e18564a7457de37948cf4245297146e2085f3d4b18c88787e87433527e0893b",
+      "view": "operator 40-degree thermal",
+      "observed": "Brief pale near-Sandbreak landing flash below the distant white target; impact text and reticle remain readable."
+    },
+    {
+      "frame": "build/p19-land-rocket-08.jpg",
+      "sha256": "192464fc4d06a7238966d80f4d44aa4a8f066537279fbd865e61e85cf65e9582",
+      "view": "Ground",
+      "observed": "Small orange rocket contact near the left reticle, local reload cue, aircraft HP 1000 and Ground HP 100."
+    }
+  ],
+  "limitations": "This samples actual frames. Thermal smoke and fireball contrast are subtle from the reviewed distance, and sampled Ground frames do not strongly establish smoke contrast. Native emitter/trail and contact receipts are separate. Full cinematic review, 30° operational effect legibility, covered/earned-opening readability and matched-volume audio are unrun."
+}

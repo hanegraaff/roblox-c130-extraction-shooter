@@ -9,6 +9,8 @@ local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRu
 local CombatRuntime = require(game:GetService("ServerScriptService").Server.CombatRuntime)
 local CombatService = require(game:GetService("ServerScriptService").Server.CombatService)
 local CombatViewRules = require(game:GetService("ServerScriptService").Server.CombatViewRules)
+local BuildingGeometry = require(game:GetService("ServerScriptService").Server.BuildingGeometry)
+local BlastGeometry = require(game:GetService("ServerScriptService").Server.BlastGeometry)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local CombatHarness = {}
@@ -68,7 +70,9 @@ function CombatHarness.run(finish: ((Report) -> ())?)
         local owner, reason = GameRuntime.start({
             automaticDeployment = false,
             minimumPlayers = 2,
-            durationSeconds = 120,
+            -- The P19 matrix exercises separate M102 reload/contact cycles
+            -- and allows bounded searches as the live aircraft orbits.
+            durationSeconds = 240,
             lobbySeconds = 0,
             deploymentSeconds = 25,
             resultsSeconds = 10,
@@ -893,6 +897,454 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             end
             assert(overlapOk, tostring(overlapReason))
         end)
+        check(
+            "P19 A2 actual howitzer contacts across districts, beside each building and on a roof",
+            function()
+                local op, ground = roles()
+                local character = assert(ground.Character, "ground character missing")
+                local root = character:FindFirstChild("HumanoidRootPart")
+                local human = assert(character:FindFirstChildOfClass("Humanoid"), "missing ground health")
+                assert(root and root:IsA("BasePart"), "ground root missing")
+                root.Anchored = true
+                root.CFrame = CFrame.new(0, 100, 0)
+                local map = workspace.World.Battlefield
+                local registries, registryReason = BuildingGeometry.registries(map)
+                assert(
+                    registries and #registries == 5,
+                    registryReason or "expected five actual panel registries"
+                )
+                local cover = RaycastParams.new()
+                cover.FilterType = Enum.RaycastFilterType.Include
+                cover.FilterDescendantsInstances = { map, workspace.Terrain }
+                cover.RespectCanCollide = true
+                local flight = RaycastParams.new()
+                flight.FilterType = Enum.RaycastFilterType.Include
+                flight.FilterDescendantsInstances = { map, workspace.Terrain, character }
+                flight.RespectCanCollide = false
+                local terrain = RaycastParams.new()
+                terrain.FilterType = Enum.RaycastFilterType.Include
+                terrain.FilterDescendantsInstances = { workspace.Terrain }
+                local disk = assert(map:FindFirstChild("GroundDisk"), "missing authored backup ground")
+                local orbitPeriod = ReplicatedStorage.AircraftState:GetAttribute("PeriodSeconds")
+                assert(type(orbitPeriod) == "number" and orbitPeriod > 0, "missing native orbit period")
+                local orbitCenter =
+                    Vector3.new(MapRules.defaults.orbitCenterX, 0, MapRules.defaults.orbitCenterZ)
+                local profile = CombatService.profiles.M102
+                local requestSequence = 30
+                type Witness = {
+                    contact: RaycastResult,
+                    authoredMaterial: string?,
+                    registry: BuildingGeometry.Registry?,
+                    directPanelId: string?,
+                    splash: string?,
+                    shield: BasePart?,
+                }
+                local rejections: { [string]: number } = {}
+                local function reject(reason: string)
+                    rejections[reason] = (rejections[reason] or 0) + 1
+                end
+                local function blast(hit: RaycastResult): { string }
+                    return BlastGeometry.exposedPanels(
+                        hit.Position,
+                        hit.Position + hit.Normal * 0.1,
+                        profile.radius,
+                        map,
+                        cover,
+                        runtime.destruction.identify,
+                        nil
+                    )
+                end
+                local function sameSurface(a: Instance, b: Instance): boolean
+                    -- On flat grades the authoring disk and native Terrain
+                    -- coincide. The real sweep may return either surface.
+                    return a == b
+                        or (a == disk and b == workspace.Terrain)
+                        or (a == workspace.Terrain and b == disk)
+                end
+                local function stableShot(contact: RaycastResult): boolean
+                    if not runtime.aircraft.aimAllowed(contact.Position) then
+                        reject("aim-envelope")
+                        return false
+                    end
+                    local muzzle = assert(runtime.aircraft.muzzle("M102"), "missing 105mm muzzle")
+                    -- Horizontal flight spans up to 720 studs. A 0.25
+                    -- incidence artificially excludes clear flat sites across
+                    -- the disk. Keep a positive guard against true tangency
+                    -- and check the actual swept radius to reject blockers.
+                    for _, offset in { 0, -0.3, 0.3 } do
+                        local origin = orbitCenter
+                            + CFrame.Angles(0, -2 * math.pi * offset / orbitPeriod, 0)
+                                :VectorToWorldSpace(muzzle - orbitCenter)
+                        local delta = contact.Position - origin
+                        local hit = CombatRuntime.sweep(
+                            origin,
+                            profile.collisionRadius,
+                            delta.Unit * math.min(delta.Magnitude + 0.25, profile.range),
+                            flight
+                        )
+                        if not hit then
+                            reject("sweep-miss")
+                            return false
+                        end
+                        if not sameSurface(hit.Instance, contact.Instance) then
+                            reject("sweep-cover")
+                            return false
+                        end
+                        if
+                            (hit.Position - contact.Position).Magnitude > 0.65
+                            or -hit.Normal:Dot(delta.Unit) < 0.16
+                        then
+                            reject("sweep-graze-or-offset")
+                            return false
+                        end
+                    end
+                    local reachable = pcall(payload, requestSequence + 1, "M102", contact.Position)
+                    if not reachable then
+                        reject("camera-view")
+                    end
+                    return reachable
+                end
+                local function shot(x: number, z: number): RaycastResult?
+                    local highest = workspace:Raycast(Vector3.new(x, 70, z), -Vector3.yAxis * 100, cover)
+                    if
+                        not highest
+                        or highest.Position.Y > 14
+                        or highest.Normal.Y <= 0.4
+                        or runtime.destruction.identify(highest.Instance)
+                    then
+                        reject("not-ground")
+                        return nil
+                    end
+                    return highest
+                end
+                local function fire(witness: Witness)
+                    local target, registry, directPanelId =
+                        witness.contact, witness.registry, witness.directPanelId
+                    local previous = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                    local previousHealth = human.Health
+                    requestSequence += 1
+                    probe(op, "Fire", payload(requestSequence, "M102", target.Position))
+                    waitFor(function()
+                        local encoded = ReplicatedStorage.AircraftState:GetAttribute("Impact")
+                        return type(encoded) == "string" and encoded ~= previous
+                    end, "P19 actual contact")
+                    local data = snapshot("Impact")
+                    assert(
+                        data.weapon == "M102" and data.panelId == directPanelId,
+                        "wrong impact panel identity"
+                    )
+                    local point = Vector3.new(data.x :: number, data.y :: number, data.z :: number)
+                    assert(
+                        (point - target.Position).Magnitude < 1.5,
+                        "shot landed away from requested surface"
+                    )
+                    local shotId = tostring(data.shotId)
+                    probe(op, "P19Impact", { id = shotId, point = point })
+                    probe(ground, "P19Impact", { id = shotId, point = point })
+                    local targetDistance = (root.Position - point).Magnitude
+                    local hitCover: string? = nil
+                    if witness.splash then
+                        local from = point + Vector3.yAxis * 0.1
+                        local obstruction = workspace:Raycast(from, root.Position - from, cover)
+                        hitCover = if obstruction then obstruction.Instance:GetFullName() else nil
+                        if witness.splash == "Outside" then
+                            assert(targetDistance > profile.radius, "outside control was in range")
+                        else
+                            assert(
+                                targetDistance > 18 and targetDistance <= profile.radius,
+                                "in-range control not between old and new blast bounds"
+                            )
+                        end
+                        if witness.splash == "Shielded" then
+                            assert(
+                                obstruction and obstruction.Instance == witness.shield,
+                                "fixture shield did not block the actual impact-to-root path"
+                            )
+                        else
+                            assert(not obstruction, "open control had unplanned solid cover")
+                        end
+                    end
+                    local expectedHealth = if witness.splash == "Exposed"
+                        then previousHealth - profile.damage
+                        else previousHealth
+                    assert(human.Health == expectedHealth, "wrong ground-player award")
+                    local encodedIds = data.blastPanelIds
+                    assert(type(encodedIds) == "table", "registered query omitted the blast result")
+                    local ids = encodedIds :: { unknown }
+                    if not registry then
+                        assert(next(ids) == nil, "empty ground damaged registered structures")
+                    elseif directPanelId then
+                        local state = runtime.destruction.snapshot(directPanelId)
+                        assert(state and state.stage == 2, "direct roof hit did not open the panel")
+                        probe(op, "PanelDestroyed", { id = directPanelId })
+                        probe(ground, "PanelDestroyed", { id = directPanelId })
+                    else
+                        local opened: string? = nil
+                        for _, id in ids do
+                            if type(id) == "string" and registry.panels:FindFirstChild(id) then
+                                local state = runtime.destruction.snapshot(id)
+                                assert(state and state.stage == 2, "blast award did not reach Total")
+                                opened = opened or id
+                            end
+                        end
+                        assert(opened, "ground strike failed to open " .. registry.buildingId)
+                        probe(op, "PanelDestroyed", { id = opened })
+                        probe(ground, "PanelDestroyed", { id = opened })
+                    end
+                    assert(runtime.destruction.resources().fragments <= 48, "fragment cap exceeded")
+                    table.insert(observations, {
+                        kind = if directPanelId
+                            then "P19-roof-contact"
+                            elseif witness.splash then "P19-ground-award"
+                            else "P19-ground-contact",
+                        building = if registry then registry.buildingId else nil,
+                        path = target.Instance:GetFullName(),
+                        material = target.Material.Name,
+                        authoredTerrainMaterial = witness.authoredMaterial,
+                        directPanelId = directPanelId,
+                        shotId = data.shotId,
+                        point = { point.X, point.Y, point.Z },
+                        blastPanelIds = ids,
+                        splashCase = witness.splash,
+                        targetDistanceStuds = if witness.splash then targetDistance else nil,
+                        targetCover = hitCover,
+                        targetHealthBefore = if witness.splash then previousHealth else nil,
+                        targetHealthAfter = if witness.splash then human.Health else nil,
+                    })
+                end
+                local function awaitReload()
+                    waitFor(function()
+                        return ammo("M102") == 1
+                    end, "P19 heavy readiness", 8)
+                end
+                local function awaitWitness(label: string, choose: () -> Witness?): Witness
+                    awaitReload()
+                    table.clear(rejections)
+                    local searchStarted = os.clock()
+                    local attempts = 0
+                    repeat
+                        attempts += 1
+                        local witness = choose()
+                        if witness then
+                            return witness
+                        end
+                        task.wait(0.35)
+                    until os.clock() - searchStarted >= 9 or runtime.rounds.match.snapshot().phase ~= "Active"
+                    local muzzle = runtime.aircraft.muzzle("M102")
+                    local detail = {
+                        label = label,
+                        passes = attempts,
+                        seconds = os.clock() - searchStarted,
+                        rejections = rejections,
+                        muzzle = if muzzle then { muzzle.X, muzzle.Y, muzzle.Z } else nil,
+                        phase = runtime.rounds.match.snapshot().phase,
+                    }
+                    table.insert(observations, { kind = "P19-contact-selection-failed", detail = detail })
+                    error("no stable P19 contact: " .. HttpService:JSONEncode(detail))
+                end
+                type EmptySite = { centers: { Vector2 }, materials: { Enum.Material } }
+                local emptySurfaces: { EmptySite } = {
+                    {
+                        centers = { Vector2.new(-210, -80), Vector2.new(-100, -34), Vector2.new(-265, 25) },
+                        materials = { Enum.Material.Sand, Enum.Material.Sandstone },
+                    },
+                    {
+                        centers = { Vector2.new(130, -180), Vector2.new(235, -118), Vector2.new(200, 40) },
+                        materials = { Enum.Material.LeafyGrass, Enum.Material.Grass },
+                    },
+                    {
+                        centers = { Vector2.new(184, 127), Vector2.new(80, 106), Vector2.new(211, 148) },
+                        materials = { Enum.Material.Asphalt, Enum.Material.Pavement },
+                    },
+                    {
+                        centers = { Vector2.new(-145, 241), Vector2.new(-100, 280), Vector2.new(60, 297) },
+                        materials = { Enum.Material.Mud },
+                    },
+                }
+                local offsets = { 0, -8, 8, -16, 16, -24, 24 }
+                local function bareTerrain(x: number, z: number, materials: { Enum.Material }): Witness?
+                    -- Classify the authored district using a native Terrain-only
+                    -- probe. Then independently require the real superior
+                    -- collision surface to be coincident bare ground.
+                    local native = workspace:Raycast(Vector3.new(x, 70, z), -Vector3.yAxis * 100, terrain)
+                    if not native or not table.find(materials, native.Material) then
+                        reject("terrain-material")
+                        return nil
+                    end
+                    local hit = shot(x, z)
+                    if
+                        not hit
+                        or not sameSurface(hit.Instance, native.Instance)
+                        or (hit.Position - native.Position).Magnitude > 0.3
+                    then
+                        reject("not-bare-terrain")
+                        return nil
+                    end
+                    if not stableShot(hit) then
+                        return nil
+                    end
+                    if #blast(hit) ~= 0 then
+                        reject("nonempty-blast")
+                        return nil
+                    end
+                    return { contact = hit, authoredMaterial = native.Material.Name }
+                end
+                local function findEmpty(site: EmptySite, accept: ((Witness) -> boolean)?): Witness?
+                    for _, center in site.centers do
+                        for _, dx in offsets do
+                            for _, dz in offsets do
+                                local witness = bareTerrain(center.X + dx, center.Y + dz, site.materials)
+                                if witness and (not accept or accept(witness)) then
+                                    return witness
+                                end
+                            end
+                        end
+                    end
+                    return nil
+                end
+                local function verifyGroundAwards(initial: Witness, site: EmptySite)
+                    local parked = root.CFrame
+                    local maxHealth, health = human.MaxHealth, human.Health
+                    -- A direct 100-unit award cannot end the two-client suite.
+                    local regeneration = character:FindFirstChild("Health")
+                    local wasDisabled: boolean? = nil
+                    if regeneration and regeneration:IsA("BaseScript") then
+                        wasDisabled = regeneration.Disabled
+                        regeneration.Disabled = true
+                    end
+                    human.MaxHealth = profile.damage * 3
+                    human.Health = human.MaxHealth
+                    local shield = Instance.new("Part")
+                    shield.Name = "P19GroundAwardShield"
+                    shield.Size = Vector3.new(9, 8, 0.6)
+                    shield.Anchored = true
+                    shield.CanTouch = false
+                    local checked, awardFailure = pcall(function()
+                        for _, splash in { "Exposed", "Shielded", "Outside" } do
+                            local function arrange(witness: Witness): boolean
+                                local contact = witness.contact
+                                if contact.Normal.Y < 0.985 then
+                                    reject("nonflat-award-site")
+                                    return false
+                                end
+                                local muzzle = assert(runtime.aircraft.muzzle("M102"), "missing 105mm muzzle")
+                                local approach = muzzle - contact.Position
+                                local side = Vector3.new(-approach.Z, 0, approach.X).Unit
+                                local distance = if splash == "Outside" then profile.radius + 4 else 21.5
+                                local from = contact.Position + Vector3.yAxis * 0.1
+                                for _, sign in { 1, -1 } do
+                                    shield.Parent = nil
+                                    local shift = side * distance * sign
+                                    root.CFrame = CFrame.new(contact.Position + shift + Vector3.yAxis * 3)
+                                    local delta = root.Position - from
+                                    if not workspace:Raycast(from, delta, cover) then
+                                        if splash == "Shielded" then
+                                            local center = contact.Position
+                                                + shift * 0.5
+                                                + Vector3.yAxis * 3.5
+                                            shield.CFrame = CFrame.lookAt(center, center + shift)
+                                            shield.Parent = map
+                                        end
+                                        local blocked = workspace:Raycast(from, delta, cover)
+                                        local correctCover = if splash == "Shielded"
+                                            then blocked ~= nil and blocked.Instance == shield
+                                            else blocked == nil
+                                        if correctCover and stableShot(contact) then
+                                            return true
+                                        end
+                                    end
+                                end
+                                shield.Parent = nil
+                                root.CFrame = parked
+                                reject("award-position-or-shield")
+                                return false
+                            end
+                            local witness = awaitWitness("open-ground award " .. splash, function()
+                                if arrange(initial) then
+                                    return initial
+                                end
+                                return findEmpty(site, arrange)
+                            end)
+                            fire({
+                                contact = witness.contact,
+                                authoredMaterial = witness.authoredMaterial,
+                                splash = splash,
+                                shield = if splash == "Shielded" then shield else nil,
+                            })
+                            shield.Parent = nil
+                            root.CFrame = parked
+                        end
+                    end)
+                    shield:Destroy()
+                    root.CFrame = parked
+                    human.MaxHealth, human.Health = maxHealth, health
+                    if regeneration and regeneration:IsA("BaseScript") and wasDisabled ~= nil then
+                        regeneration.Disabled = wasDisabled
+                    end
+                    assert(checked, tostring(awardFailure))
+                end
+                for index, site in emptySurfaces do
+                    local witness = awaitWitness("empty " .. site.materials[1].Name .. " ground", function()
+                        return findEmpty(site)
+                    end)
+                    fire(witness)
+                    if index == 1 then
+                        verifyGroundAwards(witness, site)
+                    end
+                end
+                for _, registry in registries do
+                    fire(awaitWitness("ground beside " .. registry.buildingId, function()
+                        for _, panel in registry.panels:GetChildren() do
+                            if panel:IsA("Model") and panel:GetAttribute("DamageAppearance") ~= "Total" then
+                                local center = panel:GetPivot().Position
+                                for _, distance in { 7, 12, 18, 23, 28 } do
+                                    for step = 0, 7 do
+                                        local angle = step * math.pi * 0.25
+                                        local hit = shot(
+                                            center.X + distance * math.cos(angle),
+                                            center.Z + distance * math.sin(angle)
+                                        )
+                                        if hit and stableShot(hit) then
+                                            if table.find(blast(hit), panel.Name) then
+                                                return { contact = hit, registry = registry }
+                                            end
+                                            reject("panel-not-exposed")
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                        return nil
+                    end))
+                end
+                local function elevatedRoof(): Witness?
+                    for _, registry in registries do
+                        for _, panel in registry.panels:GetChildren() do
+                            if
+                                panel:IsA("Model")
+                                and panel:GetAttribute("DamageAppearance") ~= "Total"
+                                and string.find(string.lower(panel.Name), "roof", 1, true)
+                                and panel:GetPivot().Position.Y >= 10
+                            then
+                                local start = panel:GetPivot().Position + Vector3.yAxis * 35
+                                local hit = workspace:Raycast(start, -Vector3.yAxis * 45, cover)
+                                if
+                                    hit
+                                    and hit.Normal.Y > 0.6
+                                    and runtime.destruction.identify(hit.Instance) == panel.Name
+                                    and stableShot(hit)
+                                then
+                                    return { contact = hit, registry = registry, directPanelId = panel.Name }
+                                end
+                                reject("roof-not-visible")
+                            end
+                        end
+                    end
+                    return nil
+                end
+                fire(awaitWitness("direct elevated roof", elevatedRoof))
+            end
+        )
         check("A1 actual projectile survives exact lifetime and expires cleanly afterward", function()
             local op = roles()
             runtime.combat.stop()

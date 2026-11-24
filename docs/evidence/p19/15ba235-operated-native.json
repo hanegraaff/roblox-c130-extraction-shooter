@@ -1,0 +1,584 @@
+{
+  "scenario": "ExecuteMultiplayerTestAsync(2, {kind = 'P19OperatedRetry'})",
+  "runtimeSource": "15ba23561bfce4b6efb1edc0dfe7fc35f1cf2845",
+  "runtimeSourceHeadAtReview": "384742ec64d31c42c6e52835bcca799b4b5c50c2",
+  "studioVersion": "0.748.0.7481526",
+  "environment": "local macOS 26.6.2 arm64 Studio",
+  "roles": [
+    {
+      "id": -2,
+      "role": "Gunship",
+      "viewport": [
+        1346,
+        618
+      ]
+    },
+    {
+      "id": -1,
+      "role": "Ground",
+      "viewport": [
+        1274,
+        618
+      ]
+    }
+  ],
+  "guards": {
+    "quality": "Automatic",
+    "windows": "actual SDK child clients",
+    "baseline": [
+      {
+        "players": 2,
+        "args": {
+          "kind": "P19OperatedRetry"
+        },
+        "phase": "Lobby",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}",
+        "controls": true
+      },
+      {
+        "panel": true,
+        "report": "{\"errors\":0,\"skipped\":0,\"passed\":19,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":19}",
+        "viewport": "1346, 618"
+      },
+      {
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":19,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":19}",
+        "health": 100,
+        "position": "-20, 2.9980251789093018, 108"
+      }
+    ]
+  },
+  "method": "Native Studio testing panel Role, Duration and Start. Native Operator Two and mouse held for each howitzer. Ground navigated using actual avatar Humanoid:MoveTo waypoints, no teleport or contact injection, then native E, tool slot Two and mouse hold. Measurement chunks were passive during actual firing.",
+  "open": {
+    "aim": {
+      "endpoint": {
+        "1": 7.5106048583984375,
+        "2": 0,
+        "3": -20.067840576171875
+      },
+      "pixels": "673, 327",
+      "blocked": false,
+      "weapon": "M102",
+      "raw": "673, 327",
+      "allowed": true,
+      "near": 0
+    },
+    "server": {
+      "airHealth": 1000,
+      "health": {
+        "1": {
+          "id": -1,
+          "role": "Ground",
+          "health": 100
+        },
+        "2": {
+          "id": -2,
+          "role": "Gunship",
+          "health": 100
+        }
+      },
+      "impact": "{\"y\":0,\"x\":8.25171184539795,\"blastPanelIds\":[],\"z\":-19.909507751464845,\"weapon\":\"M102\",\"shotId\":1,\"roundId\":1}"
+    },
+    "clientGunship": {
+      "liveFlights": 0,
+      "role": "Gunship",
+      "liveSmoke": 0,
+      "id": -2,
+      "contacts": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            8.25171184539795,
+            0,
+            -19.909507751464844
+          ],
+          "id": "1",
+          "localPoint": [
+            8.25171184539795,
+            0,
+            -19.909507751464844
+          ],
+          "emitted": 1795523470.280023,
+          "localBurst": true,
+          "round": 1,
+          "received": 1795523470.308394,
+          "weapon": "M102"
+        }
+      ],
+      "peakSmoke": 0,
+      "peakFlight": 0
+    },
+    "clientGround": {
+      "camera": "-4.69198567e-05, 8.32503891, 201.135986, 1, 0, 0, 0, 0.965925932, 0.258819073, 0, -0.258819073, 0.965925932",
+      "health": 100,
+      "audit": "{\"liveFlights\":0,\"role\":\"Ground\",\"liveSmoke\":0,\"id\":-1,\"contacts\":[{\"normal\":[0,1,0],\"surface\":\"Ground\",\"point\":[8.25171184539795,0,-19.909507751464845],\"id\":\"1\",\"localPoint\":[8.25171184539795,0,-19.909507751464845],\"emitted\":1795523470.280023,\"localBurst\":true,\"round\":1,\"received\":1795523470.31307,\"weapon\":\"M102\"}],\"peakSmoke\":0,\"peakFlight\":0}",
+      "positions": {
+        "1": "-0.00035365362418815494, 5.39802360534668, 203.7283477783203",
+        "2": "-0.0000408524319936987, 3.5858287811279297, 188.79525756835938"
+      },
+      "equipped": "Rocket launcher",
+      "viewport": "1274, 618"
+    }
+  },
+  "rocket": {
+    "route": {
+      "route": "{\"position\":\"-8.37411789689213e-07, 5.549485206604004, 212.13658142089844\",\"health\":100,\"waypoints\":[{\"target\":\"0, 3, 108\",\"distance\":1.6523669958114625,\"seconds\":1.1463631667429582,\"position\":\"-1.652365803718567, 2.9980251789093018, 108.00004577636719\"},{\"target\":\"0, 3, 134\",\"distance\":1.8655040264129639,\"seconds\":1.5165620000334457,\"position\":\"-0.11226986348628998, 2.9980251789093018, 132.13787841796875\"},{\"target\":\"0, 3, 151\",\"distance\":1.7958238124847413,\"seconds\":1.0677262499229983,\"position\":\"-0.010575822554528713, 2.9980251789093018, 149.20420837402344\"},{\"target\":\"0, 3, 174\",\"distance\":1.862809419631958,\"seconds\":1.4332190416753293,\"position\":\"-0.0007855103467591107, 2.9980251789093018, 172.13719177246094\"},{\"target\":\"0, 3, 188\",\"distance\":1.4632488489151,\"seconds\":0.8993590417085216,\"position\":\"-0.0000716946815373376, 3.025425910949707, 186.53697204589844\"},{\"target\":\"0, 5.400000095367432, 202\",\"distance\":1.3299123048782349,\"seconds\":0.8838691666023806,\"position\":\"-0.00000608272421231959, 5.397709846496582, 200.6700897216797\"},{\"target\":\"0, 5.599999904632568, 214\",\"distance\":1.8641031980514527,\"seconds\":0.7157600834034383,\"position\":\"-8.37411789689213e-07, 5.549485206604004, 212.13658142089844\"}]}",
+      "pos": "-8.219467417802662e-08, 5.598023414611816, 213.81813049316406"
+    },
+    "pickup": {
+      "snapshot": "{\"state\":\"Held\",\"readyAt\":0,\"launcherId\":\"launcher:1:Seedship\",\"position\":{\"y\":5.599999904632568,\"x\":0,\"z\":214},\"revision\":2,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+      "camera": "-8.23177899e-08, 10.3332615, 225.892197, 1, 0, 0, 0, 0.965925813, 0.258819044, 0, -0.258819044, 0.965925813",
+      "health": 100,
+      "backpack": {
+        "1": "M-7 rifle",
+        "2": "Rocket launcher"
+      }
+    },
+    "aim": {
+      "path": "Workspace.Terrain",
+      "role": "Ground",
+      "point": "-81.65150451660156, -9.5367431640625e-07, 79.95401000976562",
+      "mouse": "331, 222"
+    },
+    "clientGround": {
+      "liveFlights": 0,
+      "role": "Ground",
+      "liveSmoke": 0,
+      "trailFollowDistance": 0.8999963402748108,
+      "id": -1,
+      "contacts": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            8.25171184539795,
+            0,
+            -19.909507751464844
+          ],
+          "id": "1",
+          "localPoint": [
+            8.25171184539795,
+            0,
+            -19.909507751464844
+          ],
+          "emitted": 1795523470.280023,
+          "localBurst": true,
+          "round": 1,
+          "received": 1795523470.31307,
+          "weapon": "M102"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -78.26517486572266,
+            0,
+            84.41852569580078
+          ],
+          "id": "rocket:1:1:Seedship",
+          "localPoint": [
+            -78.26517486572266,
+            0,
+            84.41852569580078
+          ],
+          "emitted": 1795523543.410583,
+          "localBurst": true,
+          "round": 1,
+          "received": 1795523543.424653,
+          "weapon": "Rocket"
+        }
+      ],
+      "peakSmoke": 1,
+      "peakFlight": 1
+    },
+    "clientGunship": {
+      "liveFlights": 0,
+      "role": "Gunship",
+      "liveSmoke": 0,
+      "id": -2,
+      "contacts": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            8.25171184539795,
+            0,
+            -19.909507751464844
+          ],
+          "id": "1",
+          "localPoint": [
+            8.25171184539795,
+            0,
+            -19.909507751464844
+          ],
+          "emitted": 1795523470.280023,
+          "localBurst": true,
+          "round": 1,
+          "received": 1795523470.308394,
+          "weapon": "M102"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -78.26517486572266,
+            0,
+            84.41852569580078
+          ],
+          "id": "rocket:1:1:Seedship",
+          "localPoint": [
+            -78.26517486572266,
+            0,
+            84.41852569580078
+          ],
+          "emitted": 1795523543.410583,
+          "localBurst": true,
+          "round": 1,
+          "received": 1795523543.438977,
+          "weapon": "Rocket"
+        }
+      ],
+      "peakSmoke": 0,
+      "peakFlight": 1
+    },
+    "server": {
+      "rocket": "{\"y\":0,\"aircraftHit\":false,\"z\":84.41852569580078,\"x\":-78.26517486572266,\"shotId\":\"rocket:1:1:Seedship\",\"userId\":-1,\"roundId\":1}",
+      "round": "Active",
+      "aircraftHP": 1000,
+      "held": "{\"state\":\"Held\",\"readyAt\":1795523546.862408,\"launcherId\":\"launcher:1:Seedship\",\"position\":{\"y\":5.599999904632568,\"x\":0,\"z\":214},\"revision\":3,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}"
+    }
+  },
+  "nearSandbreak": {
+    "aim": {
+      "y": 271,
+      "path": "Workspace.Terrain",
+      "position": "-54.64268493652344, 0.0000152587890625, 138.01898193359375",
+      "viewport": "1346, 618",
+      "surface": "Sand",
+      "x": 942
+    },
+    "clientGunship": {
+      "audit": "{\"liveFlights\":0,\"role\":\"Gunship\",\"liveSmoke\":0,\"id\":-2,\"contacts\":[{\"normal\":[0,1,-0],\"surface\":\"Ground\",\"point\":[-58.39190673828125,0,136.36630249023438],\"id\":\"2\",\"localPoint\":[-58.39190673828125,0,136.36630249023438],\"emitted\":1795523633.556989,\"localBurst\":true,\"round\":1,\"received\":1795523633.652064,\"weapon\":\"M102\"}],\"peakSmoke\":0,\"peakFlight\":0}",
+      "panels": {
+        "SB.R.02.01": "Total",
+        "SB.W.SW.01": "Total",
+        "SB.R.04.01": "Total",
+        "SB.W.SW.02": "Total",
+        "SB.R.01.02": "Total",
+        "SB.R.05.01": "Total",
+        "SB.W.W.02": "Total",
+        "SB.R.03.01": "Total"
+      },
+      "impact": "{\"y\":0,\"x\":-58.39190673828125,\"blastPanelIds\":[\"SB.R.01.02\",\"SB.R.02.01\",\"SB.R.03.01\",\"SB.R.04.01\",\"SB.R.05.01\",\"SB.W.SW.01\",\"SB.W.SW.02\",\"SB.W.W.02\"],\"z\":136.36630249023438,\"weapon\":\"M102\",\"shotId\":2,\"roundId\":1}"
+    },
+    "clientGround": {
+      "audit": "{\"liveFlights\":0,\"role\":\"Ground\",\"liveSmoke\":0,\"id\":-1,\"contacts\":[{\"normal\":[0,1,-0],\"surface\":\"Ground\",\"point\":[-58.39190673828125,0,136.36630249023438],\"id\":\"2\",\"localPoint\":[-58.39190673828125,0,136.36630249023438],\"emitted\":1795523633.556989,\"localBurst\":true,\"round\":1,\"received\":1795523633.656138,\"weapon\":\"M102\"}],\"peakSmoke\":0,\"peakFlight\":0}",
+      "panels": {
+        "SB.R.02.01": "Total",
+        "SB.W.SW.01": "Total",
+        "SB.R.04.01": "Total",
+        "SB.W.SW.02": "Total",
+        "SB.R.01.02": "Total",
+        "SB.R.05.01": "Total",
+        "SB.W.W.02": "Total",
+        "SB.R.03.01": "Total"
+      },
+      "impact": "{\"y\":0,\"x\":-58.39190673828125,\"blastPanelIds\":[\"SB.R.01.02\",\"SB.R.02.01\",\"SB.R.03.01\",\"SB.R.04.01\",\"SB.R.05.01\",\"SB.W.SW.01\",\"SB.W.SW.02\",\"SB.W.W.02\"],\"z\":136.36630249023438,\"weapon\":\"M102\",\"shotId\":2,\"roundId\":1}"
+    },
+    "server": {
+      "airHealth": 1000,
+      "health": {
+        "1": {
+          "id": -1,
+          "role": "Ground",
+          "health": 100
+        },
+        "2": {
+          "id": -2,
+          "role": "Gunship",
+          "health": 100
+        }
+      },
+      "impact": "{\"y\":0,\"x\":-58.39190673828125,\"blastPanelIds\":[\"SB.R.01.02\",\"SB.R.02.01\",\"SB.R.03.01\",\"SB.R.04.01\",\"SB.R.05.01\",\"SB.W.SW.01\",\"SB.W.SW.02\",\"SB.W.W.02\"],\"z\":136.36630249023438,\"weapon\":\"M102\",\"shotId\":2,\"roundId\":1}"
+    }
+  },
+  "reset": {
+    "controls": "Success",
+    "clientGunship": {
+      "flights": 0,
+      "role": "Waiting",
+      "elements": {
+        "SB.R.02.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.SW.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.04.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.SW.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.01.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.05.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.W.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.03.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        }
+      },
+      "generation": 3,
+      "phase": "Lobby",
+      "localAudioParented": false,
+      "localId": -2,
+      "localImpactParented": false
+    },
+    "clientGround": {
+      "flights": 0,
+      "role": "Waiting",
+      "elements": {
+        "SB.R.02.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.SW.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.04.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.SW.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.01.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.05.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.W.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.03.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        }
+      },
+      "generation": 3,
+      "phase": "Lobby",
+      "localAudioParented": false,
+      "localId": -1,
+      "localImpactParented": false
+    },
+    "server": {
+      "flights": 0,
+      "elements": {
+        "SB.R.02.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.SW.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.04.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.SW.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.01.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.05.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.W.W.02": {
+          "appearance": "Pristine",
+          "colliders": 1
+        },
+        "SB.R.03.01": {
+          "appearance": "Pristine",
+          "colliders": 1
+        }
+      },
+      "generation": 3,
+      "phase": "Lobby",
+      "localAudioParented": false,
+      "localImpactParented": false
+    }
+  },
+  "capture": [
+    {
+      "scope": "operator open howitzer",
+      "sha256": "0b328f55b485fae702ab52ebe18fbac899588f270b71876e0f7a755101053d28",
+      "localClip": "build/p19-operated-open-howitzer.mp4",
+      "manifest": {
+        "schema_version": "1.0",
+        "recording_id": "457e4080-02dc-40dd-8e46-65274e2aaa53",
+        "creation_timestamp_ms": 1795523468721,
+        "status": "completed",
+        "video": {
+          "file": "wob-40587000000.mp4",
+          "duration_seconds": 10.548,
+          "width": 1344,
+          "height": 608,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 319
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 2,
+          "warnings": []
+        }
+      },
+      "audioTrack": {
+        "channels": 2,
+        "sampleRateHz": 48000,
+        "codec": "AAC"
+      }
+    },
+    {
+      "scope": "ground rocket flight and terrain impact",
+      "sha256": "6493c3c150a2554d6dba02e93c5a84eb05efb0d14e056a20f57271b98fbd134a",
+      "localClip": "build/p19-operated-rocket-ground.mp4",
+      "manifest": {
+        "schema_version": "1.0",
+        "recording_id": "4416da36-fcb3-49ce-98a4-2a678c1d405b",
+        "creation_timestamp_ms": 1795523542525,
+        "status": "completed",
+        "video": {
+          "file": "wob-40578000000.mp4",
+          "duration_seconds": 26.015,
+          "width": 1264,
+          "height": 608,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 783
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 3,
+          "warnings": []
+        }
+      },
+      "audioTrack": {
+        "channels": 2,
+        "sampleRateHz": 48000,
+        "codec": "AAC"
+      }
+    },
+    {
+      "scope": "operator near Sandbreak",
+      "sha256": "7594a65f4b8e303b7dde0d0ffaa4761c0b6489909abe1d24d2ed0c894cde5202",
+      "localClip": "build/p19-operated-near-sandbreak.mp4",
+      "manifest": {
+        "schema_version": "1.0",
+        "recording_id": "bc488b9d-e508-4aba-9d9d-4f7b91499a23",
+        "creation_timestamp_ms": 1795523629257,
+        "status": "completed",
+        "video": {
+          "file": "wob-40587000001.mp4",
+          "duration_seconds": 29.998,
+          "width": 1344,
+          "height": 608,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 901
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 0,
+          "warnings": []
+        }
+      },
+      "audioTrack": {
+        "channels": 2,
+        "sampleRateHz": 48000,
+        "codec": "AAC"
+      }
+    }
+  ],
+  "cleanup": {
+    "original": {
+      "edit": true,
+      "selectorAbsent": true,
+      "receipt": "{\"ok\":true,\"result\":{\"clients\":2,\"status\":\"operated checks recorded and reset\",\"phase\":\"Lobby\",\"serverSmoke\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":196,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":196}\",\"case\":\"P19OperatedRetry\"}}",
+      "receiptAbsent": true,
+      "quality": "Automatic"
+    },
+    "studios": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    }
+  },
+  "unrun": "Rocket against building/aircraft or flown to expiry, normal combat visuals at both zooms, calibrated subjective matched-volume listening. One native Lobby cleanup here; other gates retain separately recorded scope."
+}

@@ -23,6 +23,7 @@ The integrated source on `main` includes the development shell, verification too
 | M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
 | M6 | [P12: Reconstructable implementation handoff](plans/12-mvp-release.md) | Complete | P11 | Reconstruct the integrated local game; legacy handoff closed by user direction, with live-release checks separately unverified |
 | Gameplay revision | [P18: Game rebalancing](plans/18-game-rebalancing.md) | Complete | P07, P08, P14, P17, Seedship PR #62 | Fight a roster-scaled aircraft, demolish panels quickly, pan across square bounds, recover the Seedship launcher and see white Ground targets clearly against dark black-and-white scenery |
+| Combat presentation | [P19: Weapon impacts, blast radius and audio](plans/19-weapon-impacts.md) | Complete | P05, P07, P08, P10, P11, P18 | See a howitzer explode anywhere on the battlefield and open nearby panels even on a ground strike, distinguish 30mm bursts and follow a smoking rocket to impact by sight and sound. Client frame-time verification carries to the future release under D99. |
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 

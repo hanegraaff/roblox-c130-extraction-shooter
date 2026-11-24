@@ -21,6 +21,7 @@ local LauncherService = require(script.Parent.LauncherService)
 local Geometry = require(script.Parent.LauncherGeometry)
 local LauncherRuntime = {}
 local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
+local WeaponImpactRules = require(ReplicatedStorage.Shared.WeaponImpactRules)
 -- Shared bound for waiting pickup, drop and fire intents across the roster.
 LauncherRuntime.queueCapacity = 32
 export type Controller = {
@@ -78,7 +79,8 @@ function LauncherRuntime.start(
     match: MatchService.Controller,
     ground: GroundCombatRuntime.Controller,
     externallyStepped: boolean?,
-    emitSound: WeaponSoundRules.Emit?
+    emitSound: WeaponSoundRules.Emit?,
+    emitImpact: WeaponImpactRules.Emit?
 ): (Controller?, string?)
     if ReplicatedStorage:FindFirstChild("LauncherState") then
         return nil, "launcher already owned"
@@ -230,6 +232,7 @@ function LauncherRuntime.start(
         local direction = (Vector3.new(intent.x, intent.y, intent.z) - origin).Unit
         local part = Instance.new("Part")
         part.Name = "Rocket"
+        part:SetAttribute("FlightRoundId", match.snapshot().roundId)
         part.Size = Vector3.new(0.4, 0.4, 2)
         part.Anchored, part.CanCollide, part.CanQuery, part.CanTouch = true, false, false, false
         part.Material, part.Color = Enum.Material.Neon, Color3.fromRGB(255, 168, 50)
@@ -367,8 +370,11 @@ function LauncherRuntime.start(
                 local displacement = flight.direction * distance
                 local collision: Vector3? = nil
                 local awarded = false
+                local normal: Vector3? = nil
+                local material: Enum.Material? = nil
+                local terrain: boolean? = nil
                 if distance > 0 then
-                    collision, awarded = ground.rocketCast(
+                    collision, awarded, normal, material, terrain = ground.rocketCast(
                         flight.roundId,
                         flight.shotId,
                         flight.position,
@@ -377,8 +383,20 @@ function LauncherRuntime.start(
                     )
                 end
                 if collision then
+                    local surface = WeaponImpactRules.surface(material, terrain == true, awarded)
+                    if emitImpact then
+                        emitImpact(
+                            "Rocket",
+                            flight.roundId,
+                            flight.shotId,
+                            collision,
+                            normal or -flight.direction,
+                            surface,
+                            endTime
+                        )
+                    end
                     if emitSound then
-                        emitSound("RocketImpact", flight.roundId, collision, endTime, nil)
+                        emitSound("RocketImpact", flight.roundId, collision, endTime, nil, surface)
                     end
                     state:SetAttribute(
                         "LastImpact",

@@ -45,6 +45,9 @@ elseif manualMode == "P09" then
 elseif manualMode == "P10" then
     require(script.PlayerExperienceHarness).run()
     return
+elseif manualMode == "P19Profile" then
+    require(script.PerformanceHarness).profile()
+    return
 elseif manualMode == "P11" then
     require(script.PerformanceHarness).run()
     return

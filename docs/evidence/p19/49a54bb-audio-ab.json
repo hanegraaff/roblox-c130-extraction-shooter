@@ -1,0 +1,121 @@
+{
+  "baseline": {
+    "commit": "717608d2864ff79497ea40b363217d3adeb6f4a8",
+    "tree": "36b8998874ed0aa85dedb0f2721a38809a3bf6fb"
+  },
+  "candidate": {
+    "commit": "49a54bbe68268aa668bbb78c281df51e1a3004d8",
+    "tree": "70c97ce0f27629ca901df880fb61d27b3b99cabf"
+  },
+  "engine": "Roblox Studio 0.748.0.7481526 on macOS 26.6.2 arm64 in a private local test client",
+  "method": "Isolated Studio Sound audition. Source-derived volume, speed, low/high EQ and 70ms tail with shared headroom. The three candidate impact variants use Ground. Both versions played the exact source asset. Seven paired cues and one alignment marker. The comparison concerns isolated cue timbre.",
+  "preload": {
+    "rbxasset://sounds/impact_explosion_03.mp3": {
+      "loaded": true,
+      "sourceSeconds": 2.5861224489795918
+    },
+    "rbxassetid://9120018088": {
+      "loaded": true,
+      "sourceSeconds": 4.12275
+    },
+    "rbxassetid://9113189096": {
+      "loaded": true,
+      "sourceSeconds": 2.56125
+    },
+    "rbxassetid://9120729973": {
+      "loaded": true,
+      "sourceSeconds": 2.2186666666666666
+    }
+  },
+  "capture": {
+    "schema_version": "1.0",
+    "recording_id": "53428a0c-9e1f-4fd9-bbb6-f09bb41bb4e6",
+    "creation_timestamp_ms": 1795528088949,
+    "status": "completed",
+    "video": {
+      "file": "wob-52813000005.mp4",
+      "duration_seconds": 30.019,
+      "width": 1920,
+      "height": 1072,
+      "codec": "h264",
+      "audio": true,
+      "encoded_frame_count": 451
+    },
+    "timing": {
+      "file": "pts.json",
+      "time_base": "1/90000",
+      "origin": "first_encoded_frame",
+      "game_clock_alignment": "not_configured"
+    },
+    "capture_health": {
+      "observed_capture_drops": 0,
+      "warnings": []
+    }
+  },
+  "sampleRateHz": 48000,
+  "channels": 2,
+  "rawSeconds": 29.972,
+  "matchedSeconds": 25.7261,
+  "pilotAtSeconds": 7.78,
+  "matchedGatedRmsTargetDbfs": -20.0,
+  "verifiedPostMatchGatedRmsDbfsRange": [
+    -20.000007,
+    -19.999989
+  ],
+  "rawPeakDbfs": -5.4009,
+  "matchedPeakDbfs": -3.1264,
+  "matchedOutputClippedSamples": 0,
+  "all15SlotsLoadedAndNonzeroStudioPlaybackLoudness": true,
+  "artifacts": [
+    {
+      "file": "build/p19-native-audio-ab.mp4",
+      "bytes": 1922387,
+      "sha256": "636071bae0332e9928f85fec4ae7b7aacf553a190721c4101a8709a59fbad6ce"
+    },
+    {
+      "file": "build/p19-native-audio-ab-manifest.json",
+      "bytes": 465,
+      "sha256": "aeaff95ccd386e38098294636b4fb05b4de956d48e756f5d98cd4be6299a009e"
+    },
+    {
+      "file": "build/p19-native-audio-ab-pts.json",
+      "bytes": 15036,
+      "sha256": "b24107889149bf745553a26b0affe00ea55083616280b658a0c7ac87259d9524"
+    },
+    {
+      "file": "build/p19-native-audio-ab-timeline.json",
+      "bytes": 8723,
+      "sha256": "8c0fc954aac545e1a27ce90586f44f036f2b874a7c71bc39c423ea1c7ea32c6b"
+    },
+    {
+      "file": "build/p19-native-audio-ab-raw.wav",
+      "bytes": 5758720,
+      "sha256": "acfb00fdb1b5d2e51e4b97e1be41238d3c664a9073382f91dc30e70da5082e38"
+    },
+    {
+      "file": "build/p19-native-audio-ab-matched.wav",
+      "bytes": 4939456,
+      "sha256": "86f1eff0ecab492f8aec38a7717448e1791ac411bb9645adbb4586269a546159"
+    },
+    {
+      "file": "build/p19-native-audio-ab-matched.key.json",
+      "bytes": 3745,
+      "sha256": "36227891f77c852eaca2f407a1af877c78fc19408ea4761109b8c1f024dea655"
+    }
+  ],
+  "fixture": {
+    "file": "build/p19-audio-ab-client.luau",
+    "bytes": 8442,
+    "sha256": "ebd6036dbe3790b3e4cbac9438d26c3c646a7bd256f0b0539f65814e9bf218a8"
+  },
+  "matcher": {
+    "file": "build/p19-audio-ab-match.py",
+    "bytes": 6282,
+    "sha256": "695302dc1ea731fd7a4a04109610ff7f07bd5c0d563c6dcf3cc65f2ecaae0f37"
+  },
+  "commands": [
+    "afconvert -f WAVE -d LEI16 build/p19-native-audio-ab.mp4 build/p19-native-audio-ab-raw.wav",
+    "python3 build/p19-audio-ab-match.py build/p19-native-audio-ab-raw.wav build/p19-native-audio-ab-timeline.json build/p19-native-audio-ab-matched.wav"
+  ],
+  "subjectiveAudioReview": "Pending human blind listening. The diagnostic audio tool returned audio content omitted because you do not support audio input. RMS is a reproducible energy normalization. Perceived equal loudness, weapon recognition, positional playback, fallback and overlap remain separate checks."
+}

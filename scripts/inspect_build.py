@@ -702,6 +702,9 @@ def main() -> None:
         "StarterPlayer/StarterPlayerScripts/Client": "LocalScript",
         "StarterPlayer/StarterPlayerScripts/Client/StatusPanel": "ModuleScript",
         "Workspace/World/Battlefield/GroundSpawn": "SpawnLocation",
+        "ServerScriptService/Server/BlastGeometry": "ModuleScript",
+        "ReplicatedStorage/Shared/WeaponImpactRules": "ModuleScript",
+        "StarterPlayer/StarterPlayerScripts/Client/WeaponImpactEffects": "ModuleScript",
     }
     for name, class_name in expected.items():
         if release.get(name) != class_name or tests.get(name) != class_name:
@@ -736,6 +739,12 @@ def main() -> None:
     for name in ("ServerScriptService/ServerTests", "StarterPlayer/StarterPlayerScripts/ClientTests", "ReplicatedStorage/TestPackages/TestEZ", "ServerStorage/DevelopmentSettings"):
         if name not in tests:
             raise RuntimeError(f"Test mapping missing {name}")
+    for name in (
+        "ServerStorage/Tests/Studio/BlastGeometry.spec",
+        "ReplicatedStorage/ClientSpecs/WeaponImpactEffects.spec",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P19 impact fixture missing from tests or leaked to release: {name}")
     for name in (
         "ServerScriptService/ServerTests/DestructionHarness",
         "StarterPlayer/StarterPlayerScripts/ClientTests/DestructionHarness",

@@ -1,0 +1,172 @@
+{
+  "method": "Roblox Studio Edit -> StudioTestService:ExecuteMultiplayerTestAsync(2, {kind=\"P19OperatedRetry\"}) exactly once. Verified actual private Server + one Client; bounded at 90 s actual Server uptime, then StudioTestService:EndTest(observed) on the owned Server only.",
+  "source": {
+    "candidate": "528a851bfe8623ce965c855dfdb7c300367a3e7f",
+    "tree": "2b32bcfe687c3c2bd695130d9e6866233d626412",
+    "runtime": "49a54bbe68268aa668bbb78c281df51e1a3004d8",
+    "checkoutEvidence": "0da5f52",
+    "binding": "Existing source parity preserved by coordinator; live server CombatService reported M102 radius 25, reload 6 and collision radius 0.05."
+  },
+  "environment": {
+    "studio": "0.748.0.7481526",
+    "system": "macOS 26.6.2 arm64",
+    "place": 0,
+    "mode": "Private Studio SDK multiplayer",
+    "edit": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+    "server": "33860b45-d04e-4622-9cff-4bf8bd1fe96c",
+    "clientConsidered": "8e99182e-86c3-4ff2-aafa-8556911de635",
+    "secondEditSeen": "0abfb9a0-6a27-440e-8ba9-a4f871638804"
+  },
+  "firstServer": {
+    "players": {
+      "Player1": {
+        "LocalTestRoleChoice": "Auto",
+        "Role": "Waiting",
+        "LocalTestFeedback": "Solo Play previews the map. Real rounds need two clients.",
+        "LocalPreviewRole": "Ground",
+        "LocalMapPreview": true,
+        "RoundRevision": 1,
+        "Life": "Waiting",
+        "RoundId": 0
+      }
+    },
+    "isServer": true,
+    "fixture": {
+      "kind": "P19OperatedRetry"
+    },
+    "round": {
+      "GroundAlive": 0,
+      "Revision": 1,
+      "MinimumPlayers": 2,
+      "Reason": "",
+      "Phase": "Lobby",
+      "DeadlineSeconds": 0,
+      "Winner": "",
+      "RoundId": 0
+    },
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}"
+  },
+  "firstClient": {
+    "players": {
+      "Player1": {
+        "LocalTestRoleChoice": "Auto",
+        "Role": "Ground",
+        "LocalTestFeedback": "Solo Play previews the map. Real rounds need two clients.",
+        "LocalPreviewRole": "Ground",
+        "LocalMapPreview": true,
+        "RoundRevision": 1,
+        "Life": "Alive",
+        "RoundId": 0
+      }
+    },
+    "viewport": "1346, 649",
+    "panel": false,
+    "isServer": false,
+    "fixture": {
+      "kind": "P19OperatedRetry"
+    },
+    "round": {
+      "Winner": "",
+      "Revision": 1,
+      "MinimumPlayers": 2,
+      "RoundId": 0,
+      "Phase": "Lobby",
+      "DeadlineSeconds": 0,
+      "Reason": "",
+      "GroundAlive": 0
+    },
+    "id": -1,
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}"
+  },
+  "intermediate": {
+    "controls": true,
+    "round": {
+      "RoundId": 0,
+      "Revision": 1,
+      "MinimumPlayers": 2,
+      "Reason": "",
+      "Phase": "Lobby",
+      "DeadlineSeconds": 0,
+      "Winner": "",
+      "GroundAlive": 0
+    },
+    "mode": {
+      "kind": "P19OperatedRetry"
+    },
+    "age": 56.28854520840105,
+    "players": {
+      "1": {
+        "1": "Player1",
+        "2": -1,
+        "3": {
+          "LocalTestRoleChoice": "Auto",
+          "Life": "Waiting",
+          "LocalTestFeedback": "Solo Play previews the map. Real rounds need two clients.",
+          "RoundRevision": 1,
+          "RoundId": 0,
+          "Role": "Waiting",
+          "LocalMapPreview": true,
+          "LocalPreviewRole": "Ground"
+        }
+      }
+    }
+  },
+  "cutoff": {
+    "players": [
+      {
+        "id": -1,
+        "role": "Waiting",
+        "name": "Player1"
+      }
+    ],
+    "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":7.048330916673876}",
+    "phase": "Lobby",
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}",
+    "actualClients": 1,
+    "endQueued": true,
+    "time": 92.0714485833887,
+    "fired": false,
+    "status": "join-cutoff"
+  },
+  "cleanup": {
+    "sdk": {
+      "ok": true,
+      "result": {
+        "players": [
+          {
+            "id": -1,
+            "role": "Waiting",
+            "name": "Player1"
+          }
+        ],
+        "startup": "{\"status\":\"first-client-arrived\",\"clientCount\":1,\"budgetSeconds\":60,\"elapsedSeconds\":7.048330916673876}",
+        "phase": "Lobby",
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}",
+        "actualClients": 1,
+        "endQueued": true,
+        "time": 92.0714485833887,
+        "fired": false,
+        "status": "join-cutoff"
+      }
+    },
+    "studioList": {
+      "studios": [
+        {
+          "file": "tests.rbxlx",
+          "id": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+          "mode": "Edit",
+          "name": "tests.rbxlx",
+          "persistedToCloud": false,
+          "state": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit"
+        }
+      ]
+    },
+    "finalEdit": {
+      "selectorAbsent": true,
+      "quality": "Automatic",
+      "receiptAbsent": true,
+      "edit": true
+    }
+  },
+  "verdict": "Unrun. Only one actual client reached the test Lobby. No gameplay, shot, two-client observations or reset occurred. No retry performed. No provisional window was independently mutated."
+}

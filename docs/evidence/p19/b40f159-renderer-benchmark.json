@@ -1,0 +1,348 @@
+{
+  "scope": "Solo private Roblox Studio CPU timing for the direct effect controller. A fresh Play session per source, same 1153×579 viewport and Automatic graphics. Seven trials use simulated 60 Hz timestamps in 60-step batches. Each trial performs 1,200 Lobby updates after warming the pool, 1,200 active idle updates with four non-rocket launcher entries, and 600 active-fire updates admitting 100 contacts. The timer measures synchronous controller and engine property work, without claiming whole-frame or GPU savings.",
+  "fixture": {
+    "localFile": "build/p19-fx-benchmark.luau",
+    "sha256": "874986a166a252a19c06be30de0f970bdd2c6e5ffc06828c84a4acd98fce21dd"
+  },
+  "engine": "Roblox Studio 0.748.0.7481526",
+  "baseline": {
+    "source": "4f4308fa27488a251efb644ec07ebf7809999827",
+    "tree": "88e8152e96e450e270967b5db6ec9f92344975d8",
+    "graphics": "Automatic",
+    "viewport": [
+      1153,
+      579
+    ],
+    "clientSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 19,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 19
+    },
+    "trials": [
+      {
+        "sustained": {
+          "showUsPerImpact": 48.8516699988395,
+          "updateUsPerFrame": 10.172430387077233,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 22.86072839827587,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 3.403610123010973,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 69.37375874258578,
+          "updateUsPerFrame": 12.03854102641344,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 24.27736190535749,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 2.9035063926130533,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 64.83750650659204,
+          "updateUsPerFrame": 11.171254057747623,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 25.586458020067465,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 2.6345129784507058,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 63.835009932518005,
+          "updateUsPerFrame": 17.75180280674249,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 22.20656305629139,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 3.125870425719768,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 64.33707778342068,
+          "updateUsPerFrame": 12.111113755963743,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 22.102534227694075,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 3.162778642339011,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 68.8891694881022,
+          "updateUsPerFrame": 11.563750061516961,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 29.194167291279882,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 3.074096942630907,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 52.2266689222306,
+          "updateUsPerFrame": 15.820902772247791,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 21.752950463754434,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 2.748470869846642,
+          "frames": 1200,
+          "accepted": 0
+        }
+      }
+    ]
+  },
+  "candidate": {
+    "source": "b40f159511afced1a36ea81dcdbd722ca164e09c",
+    "tree": "bfee77783627281c2c41b737c7b1aca8106d7222",
+    "graphics": "Automatic",
+    "viewport": [
+      1153,
+      579
+    ],
+    "parity": {
+      "mismatches": [],
+      "comparedScripts": 176,
+      "comparedGeometry": 5,
+      "passed": true,
+      "receipt": {
+        "scriptCount": 176,
+        "buildSha256": "ec88ffa162e6b5d6954e24706840f019ab78b4494d8f8f129d9b95c31d9e6267",
+        "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+        "geometryCount": 5,
+        "sourceCommit": "b40f159511afced1a36ea81dcdbd722ca164e09c"
+      }
+    },
+    "serverSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 196,
+      "clientCount": 1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 196
+    },
+    "clientSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 20,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 20
+    },
+    "trials": [
+      {
+        "sustained": {
+          "showUsPerImpact": 31.424592016264796,
+          "updateUsPerFrame": 4.934095971596737,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.1751032929557065,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.651249720249325,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 32.38875768147409,
+          "updateUsPerFrame": 4.582289839163423,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.2604505668083827,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.486422892815123,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 25.794586399570107,
+          "updateUsPerFrame": 4.287362874795993,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.2871525551502903,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.4744093166664243,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 26.194987585768104,
+          "updateUsPerFrame": 4.306039190851152,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.24805611853177348,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.48777864625056583,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 29.357911553233862,
+          "updateUsPerFrame": 5.054097661438088,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.24048611521720886,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.4751714489733179,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 40.26291775517166,
+          "updateUsPerFrame": 6.184653223802646,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.2918404061347246,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.5546871883173784,
+          "frames": 1200,
+          "accepted": 0
+        }
+      },
+      {
+        "sustained": {
+          "showUsPerImpact": 55.20373582839966,
+          "updateUsPerFrame": 8.613958489149809,
+          "frames": 600,
+          "accepted": 100
+        },
+        "lobby": {
+          "updateUsPerFrame": 0.48291607527062297,
+          "frames": 1200,
+          "accepted": 0
+        },
+        "idle": {
+          "updateUsPerFrame": 0.7095837887997428,
+          "frames": 1200,
+          "accepted": 0
+        }
+      }
+    ]
+  },
+  "mediansMicroseconds": {
+    "lobby": {
+      "before": 22.86072839827587,
+      "after": 0.2604505668083827,
+      "reductionPercent": 98.8607074880955
+    },
+    "idle": {
+      "before": 3.074096942630907,
+      "after": 0.48777864625056583,
+      "reductionPercent": 84.132619909081
+    },
+    "sustained": {
+      "before": 12.03854102641344,
+      "after": 4.934095971596737,
+      "reductionPercent": 59.01416990006538
+    },
+    "contact": {
+      "before": 64.33707778342068,
+      "after": 31.424592016264796,
+      "reductionPercent": 51.1563268041951
+    }
+  }
+}

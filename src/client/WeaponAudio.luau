@@ -1,7 +1,8 @@
 --!strict
 -- WeaponAudio: positional client playback of server-admitted combat cues.
 -- Uses the existing round update clock. The bounded queue and voices are
--- destroyed at mute, phase/round change or teardown. Contains no gameplay IO.
+-- cleared at mute, new round, lobby or teardown. The shot ending a round may
+-- finish its queued impact cue during Results. Contains no gameplay IO.
 local ContentProvider = game:GetService("ContentProvider")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Rules = require(ReplicatedStorage.Shared.WeaponSoundRules)
@@ -12,7 +13,7 @@ type Pending = { cue: string, profile: Rules.Profile, origin: Vector3, due: numb
 type Voice = { part: Part, sound: Sound, expires: number, volume: number }
 
 export type Controller = {
-    update: (number, boolean, number, number) -> (),
+    update: (number, string, number, number) -> (),
     stop: () -> (),
 }
 
@@ -20,15 +21,17 @@ local pendingLimit = 48
 local voiceLimit = 24
 
 -- Attaches to the provided round state. All playback and positioning are local.
--- update takes round ID, Active, intensity in [0,1] and synchronized seconds.
+-- update takes round ID, phase, intensity in [0,1] and synchronized seconds.
 function WeaponAudio.new(state: Instance, player: Player): Controller
     local pending: { Pending } = {}
     local voices: { Voice } = {}
     local holder = Instance.new("Folder")
     holder.Name = "LocalWeaponAudio"
     local listener: RBXScriptConnection? = nil
-    local round, active, scale = -1, false, 0
+    local round, phase, scale = -1, "", 0
+    local resultsAt = -math.huge
     local stopped = false
+    local ready: { [string]: boolean } = {}
 
     local function retire(index: number)
         local voice = assert(table.remove(voices, index), "weapon audio voice index missing")
@@ -48,12 +51,12 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
         eventRound: unknown,
         origin: unknown,
         seconds: unknown,
-        shooter: unknown
+        shooter: unknown,
+        surface: unknown
     )
-        local profile = Rules.profile(cue)
+        local profile = Rules.profile(cue, surface)
         if
-            not active
-            or scale == 0
+            scale == 0
             or eventRound ~= round
             or type(cue) ~= "string"
             or not profile
@@ -62,13 +65,16 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
         then
             return
         end
+        local secondsNow = workspace:GetServerTimeNow()
+        if not Rules.audibleInPhase(cue, phase, secondsNow - resultsAt) then
+            return
+        end
         local camera = workspace.CurrentCamera
         if not camera then
             return
         end
         local distance = (origin - camera.CFrame.Position).Magnitude
-        local due =
-            Rules.due(profile, distance, seconds, workspace:GetServerTimeNow(), shooter == player.UserId)
+        local due = Rules.due(profile, distance, seconds, secondsNow, shooter == player.UserId)
         if due and #pending < pendingLimit then
             table.insert(pending, { cue = cue, profile = profile, origin = origin, due = due })
         end
@@ -85,13 +91,25 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
     if current then
         attach(current)
     end
+    local preloadSounds: { Instance } = {}
+    for _, asset in Rules.assets() do
+        local sound = Instance.new("Sound")
+        sound.SoundId = asset
+        table.insert(preloadSounds, sound)
+    end
+    local function destroyPreloadSounds()
+        for _, sound in preloadSounds do
+            sound:Destroy()
+        end
+        table.clear(preloadSounds)
+    end
     local preload = task.defer(function()
-        ContentProvider:PreloadAsync({
-            assert(Rules.profile("GAU23"), "missing gunship effect").asset,
-            assert(Rules.profile("M102"), "missing howitzer effect").asset,
-            assert(Rules.profile("M7"), "missing rifle effect").asset,
-            assert(Rules.profile("RocketLaunch"), "missing launcher effect").asset,
-        })
+        -- Sound instances give the fetcher the correct content type for each
+        -- ID. Bare string IDs can resolve as generic assets and miss audio.
+        ContentProvider:PreloadAsync(preloadSounds, function(asset, status)
+            ready[asset] = status == Enum.AssetFetchStatus.Success
+        end)
+        destroyPreloadSounds()
     end)
 
     local function play(item: Pending, seconds: number)
@@ -109,7 +127,7 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
         source:SetAttribute("PlayedSeconds", seconds)
 
         local sound = Instance.new("Sound")
-        sound.SoundId = profile.asset
+        sound.SoundId = if ready[profile.asset] then profile.asset else Rules.fallbackAsset
         sound.Volume = profile.volume * scale
         sound.PlaybackSpeed = profile.speed
         sound.RollOffMode = Enum.RollOffMode.InverseTapered
@@ -129,15 +147,32 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
     end
 
     return {
-        update = function(roundId, roundActive, intensity, seconds)
+        update = function(roundId, nextPhase, intensity, seconds)
             if stopped then
                 return
             end
-            if roundId ~= round or (active and not roundActive) or (scale > 0 and intensity == 0) then
+            if
+                roundId ~= round
+                or (nextPhase ~= "Active" and nextPhase ~= "Results")
+                or (scale > 0 and intensity == 0)
+            then
                 clear()
             end
-            round, active, scale = roundId, roundActive, intensity
-            if not active or scale == 0 then
+            if nextPhase == "Results" and phase ~= "Results" then
+                resultsAt = seconds
+                for index = #pending, 1, -1 do
+                    if not Rules.audibleInPhase(pending[index].cue, nextPhase, 0) then
+                        table.remove(pending, index)
+                    end
+                end
+                for index = #voices, 1, -1 do
+                    if not Rules.audibleInPhase(voices[index].part.Name, nextPhase, 0) then
+                        retire(index)
+                    end
+                end
+            end
+            round, phase, scale = roundId, nextPhase, intensity
+            if (phase ~= "Active" and phase ~= "Results") or scale == 0 then
                 return
             end
             for index = #voices, 1, -1 do
@@ -172,6 +207,7 @@ function WeaponAudio.new(state: Instance, player: Player): Controller
             if coroutine.status(preload) ~= "dead" then
                 task.cancel(preload)
             end
+            destroyPreloadSounds()
             clear()
             holder:Destroy()
         end,

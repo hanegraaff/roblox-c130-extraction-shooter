@@ -1,0 +1,250 @@
+{
+  "source": "468242df9d23078a76e5238026d3af4192435596",
+  "artifact": "7eb159581b643711df51d27f3bed8c97c96cd7684349cb72eb89f498383fb3a1",
+  "studio": "0.748.0.7481526",
+  "hardware": "Apple M1 Pro, 16 GB, macOS 26.6.2 arm64",
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 176,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 176,
+      "buildSha256": "7eb159581b643711df51d27f3bed8c97c96cd7684349cb72eb89f498383fb3a1",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "468242df9d23078a76e5238026d3af4192435596"
+    }
+  },
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = 'P19Profile'})",
+  "profileAttempt": 2,
+  "report": {
+    "requestedClients": 2,
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Actual roster and server smoke"
+      },
+      {
+        "passed": true,
+        "name": "Actual client smoke and convergence probes ready"
+      },
+      {
+        "name": "Five-minute loaded Studio p95 budgets for both roles and server",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.PerformanceHarness:897: client render p95 exceeded 33.3 ms or sampling was incomplete"
+      },
+      {
+        "passed": true,
+        "name": "Owned combat, connections and transport drain on shutdown"
+      }
+    ],
+    "passed": 3,
+    "seed": 11021,
+    "clientCount": 2,
+    "observations": {
+      "profile": {
+        "clients": {
+          "-1": {
+            "seconds": 300.0386012083618,
+            "viewportChanged": false,
+            "frames": {
+              "p95Ms": 67.9,
+              "samples": 4500,
+              "invalid": 0,
+              "overflow": 1
+            },
+            "width": 1920,
+            "role": "Gunship",
+            "graphics": "QualityLevel8",
+            "height": 1080,
+            "impacts": {
+              "missingWithinEightFrames": 0,
+              "available": true,
+              "readyFrameCounts": [
+                281,
+                0,
+                0
+              ],
+              "peakBursts": 5,
+              "peakTrails": 1
+            },
+            "graphicsChanged": false
+          },
+          "-2": {
+            "seconds": 300.28004574996885,
+            "viewportChanged": false,
+            "frames": {
+              "p95Ms": 18,
+              "samples": 18018,
+              "invalid": 0,
+              "overflow": 0
+            },
+            "width": 1920,
+            "role": "Ground",
+            "graphics": "QualityLevel8",
+            "height": 1080,
+            "impacts": {
+              "missingWithinEightFrames": 0,
+              "available": true,
+              "readyFrameCounts": [
+                71,
+                0,
+                0
+              ],
+              "peakBursts": 5,
+              "peakTrails": 1
+            },
+            "graphicsChanged": false
+          }
+        },
+        "server": {
+          "p95Ms": 0.7,
+          "samples": 17999,
+          "invalid": 0,
+          "overflow": 0
+        },
+        "load": {
+          "panelOpenings": 26,
+          "peak_connections": 23,
+          "peak_rifleTracers": 5,
+          "peak_launcherRepresentations": 4,
+          "chainAccepted": 848,
+          "rifleAccepted": 150,
+          "rockets": 71,
+          "peak_pendingOutcomes": 1,
+          "peak_rifleQueue": 0,
+          "peak_launcherQueue": 0,
+          "peak_panels": 438,
+          "peak_launcherEffects": 4,
+          "seconds": 300.0226041667629,
+          "peak_launcherFlights": 1,
+          "importedFragments": 48,
+          "peak_spawnTasks": 0,
+          "peak_fragments": 48,
+          "peak_rifleTools": 1,
+          "peak_gunshipEffects": 10,
+          "peak_rifleQueuePeak": 1,
+          "peak_pendingBarriers": 3,
+          "peak_projectiles": 5,
+          "heavyAccepted": 32,
+          "peak_launcherQueuePeak": 1
+        },
+        "serverFrameInterval": {
+          "p95Ms": 17.8,
+          "samples": 17999,
+          "invalid": 0,
+          "overflow": 0
+        }
+      },
+      "lobbyBaseline": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 438,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 0,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 0,
+        "launcherQueue": 0
+      },
+      "clientRequests": {
+        "LauncherState/Fire": 71,
+        "AircraftState/SelectWeapon": 33,
+        "AircraftState/FireWeapon": 880,
+        "AircraftState/GroundFire": 150,
+        "AircraftState/GroundReload": 4,
+        "LauncherState/Pickup": 1
+      },
+      "clientSmoke": {
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 19,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 19
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 19,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 19
+        }
+      },
+      "profilePreflight": {
+        "-1": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        },
+        "-2": {
+          "height": 1080,
+          "graphics": "QualityLevel8",
+          "width": 1920
+        }
+      },
+      "serverSmoke": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 196,
+        "clientCount": 2,
+        "seed": 1,
+        "discovered": 196,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      },
+      "finalResources": {
+        "rifleQueue": 0,
+        "launcherRepresentations": 0,
+        "panels": 438,
+        "pendingOutcomes": 0,
+        "rifleQueuePeak": 1,
+        "launcherEffects": 0,
+        "projectiles": 0,
+        "launcherFlights": 0,
+        "pendingBarriers": 0,
+        "connections": 23,
+        "rifleTools": 0,
+        "fragments": 0,
+        "spawnTasks": 0,
+        "rifleTracers": 0,
+        "gunshipEffects": 0,
+        "launcherQueuePeak": 1,
+        "launcherQueue": 0
+      },
+      "initialUserIds": [
+        -2,
+        -1
+      ],
+      "groundFireDecisions": {
+        "accepted": 150
+      }
+    },
+    "finalClients": 2,
+    "environment": "Studio",
+    "discovered": 4,
+    "suite": "P19Profile",
+    "failed": 1,
+    "mode": "Profile"
+  },
+  "interpretation": "Both workloads ran at 1920x1080 / QualityLevel8. Gunship p95 misses 33.3 ms; Ground and server p95 pass. Frame counts measure first ready PreRender, not first visible pixel."
+}

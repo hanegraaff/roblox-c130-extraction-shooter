@@ -1,0 +1,218 @@
+# P19 — Weapon impacts, blast radius and audio
+
+**Milestone:** Combat presentation. **Dependencies:** P05, P07, P08, P10, P11, P18. **Requirements:** R07–R09, R12, R14, R22 and proposed R23. [Roadmap](../roadmap.md) · [Design](../game-design.md#combat-cover-and-destruction) · [Decisions](../docs/decisions.md)
+
+## Capability and player experience
+
+A 105mm shell explodes at its first confirmed impact anywhere on the playable battlefield. On open ground, the operator sees a fireball, dust and fading smoke at the point of contact and hears the blast even when the area is empty. If the shell lands on a road beside a building, that ground contact is the center of the same 25-stud blast. It can damage exposed Ground players and open several nearby wall panels in one shot. A shell hitting a wall, roof, rock or other solid scenery uses the same rule. Cover is evaluated as it stood when the shell landed.
+
+| Weapon | Current game | Proposed experience |
+| --- | --- | --- |
+| 105mm M102 | Brief impact marker, 100 damage to an exposed Ground player within 18 studs, direct panel destruction | At every confirmed battlefield impact, a fast fireball gives way to outward dust or chips and a fading smoke plume. Apply a **25-stud gameplay radius** and a **six-second reload** between shells. Destroy exposed registered panels within reach. |
+| 30mm GAU-23/A | Small impact marker, 4-stud player blast radius, persistent direct panel damage | Each impact reads as a small, directional burst of particles with a wisp of smoke. A burst of fire should trace its way across the surface without hiding the aim point. Keep the existing damage profile and two earned seconds of direct building-panel hits. |
+| Ground rocket launcher | A short ribbon trail follows the projectile. Collisions already produce an impact sound. | Follow the rocket with a tapering smoke trail. On first contact with terrain, a building or the aircraft, end emission and show one flash, particles and short smoke tail at the contact point. Fade the existing trail on impact or expiry. |
+
+**Rocket scope for review.** Apply the same quality, readability, performance and cleanup rules to rocket effects. The enlarged damage radius and panel demolition belong to the howitzer. A direct rocket still deals 100 aircraft health once. World hits and near misses deal zero aircraft damage. The M-7 is included in the sound pass.
+
+## Implementation
+
+1. **Resolve the blast against existing cover.** The earlier P19 candidate used a 36-stud blast and a four-second reload. The user requests about 30% less reach and two more seconds between shots. Use 25 studs, a 30.6% reduction, and a six-second reload. Resolve each confirmed hit from its contact point, including Terrain and solid map parts used for ground, roads and buildings. Play the explosion even if the blast finds zero targets. Use one 25-stud setting for exposed-player splash and structural reach across the active level. Align the M102 warning footprint and nearby Ground warning with that setting. Preserve 100 base damage, the existing exposure check and the minimum input cadence. [CombatService](../src/server/CombatService.luau) · [CombatRuntime](../src/server/CombatRuntime.luau) · [PresentationEffects](../src/client/PresentationEffects.luau)
+2. **Choose the panels once per impact.** Query the active level’s panel registry on every confirmed impact, including hits with no direct panel ID. Include the directly struck panel when present. For nearby live panel colliders, test the nearest point on each remaining solid surface. Include the panel if that point lies within 25 studs inclusive and is visible from just outside the impact surface on the incoming side. Use the actual registered pieces so a large panel can qualify by its edge and a hole is not treated as a solid face. Gather unique panel IDs and player awards against the geometry at the start of the damage batch. Carry the panel set as one accepted shot through the ordered destruction service and apply Total once per panel. A newly opened wall first benefits a later batch. Stable supports, floors, stairs and the outside lobby remain protected. Keep the existing physical fragment budget across the whole burst. [DestructionService](../src/server/DestructionService.luau)
+3. **Render from confirmed contacts.** Send compact server-to-client impact cues carrying round and shot identity, weapon, contact point, surface normal and a coarse surface type. Handle distinct same-frame shots and deduplicate repeats. An aim endpoint or expired flight in empty space produces no explosion. Attach cosmetic smoke to the existing replicated rocket flight and streamline the current impact marker to avoid a second flash. Render one howitzer burst per shell even when it opens several panels. The server owns all damage, openings and collision. [LauncherRuntime](../src/server/LauncherRuntime.luau)
+4. **Keep the first frame cheap.** Preload a small shared set of textures and sounds, reuse local emitters, and cap live bursts, particle counts, trail lifetimes, transparent overlap and sound voices. At low settings or under load, drop distant smoke and secondary particles first. Keep essential hit and warning text readable at zero intensity. Provide a lightweight first-contact cue if an optional asset is still loading. Use inert effects and clear active instances, connections and delayed playback on round reset or controller teardown.
+
+## Recommended audio direction
+
+Give each weapon a sound players can recognize during overlapping fire. The current mix already places shots in the world and delays distant reports, but the 30mm report and all three impact cues reuse the same bundled explosion at different pitches. Start by auditioning these replacements at matched listening volume. [WeaponSoundRules](../src/shared/WeaponSoundRules.luau) · [WeaponAudio](../src/client/WeaponAudio.luau)
+
+| Cue | Recommended mix |
+| --- | --- |
+| 105mm | Give the aircraft report a deep initial thump. At the point of impact, play a short crack with a low boom and a decaying tail. A dusty thud on soil or a brief rattle on a building should locate the landing even with the screen turned away. |
+| 30mm | Use a compact per-shot report and two or three short impact variations. Keep tails short enough to hear the rhythm of a burst. |
+| Rocket | Pair a launch whoosh near the shooter with a distinct impact punch at the hit point. A short metallic tail on an aircraft hit helps distinguish it from a ground strike. |
+| M-7 | Use a dry, sharp local report and a quieter distant crack. Leave room in the mix for incoming-fire warnings. |
+
+Pre-mix the attack, body and tail into one short asset per variant where practical. Keep muzzle and impact positional, retain the existing distance delay, preload off the firing path, and keep the existing limits of 24 active voices and 48 pending cues. Audition under sustained fire on headphones and small speakers. Select original or permitted Creator Store sounds, confirm playback access in the intended experience, record provenance in the asset manifest and keep a bundled fallback. [Roblox audio assets](https://create.roblox.com/docs/audio/assets) · [Positional playback](https://create.roblox.com/docs/sound/objects#positional-audio)
+
+## Acceptance criteria
+
+Use automated tests and direct observations from a local Roblox Studio playtest. Record the result of each check in this plan.
+
+| ID | Test and pass condition |
+| --- | --- |
+| A1 · M102 reach and cover | Extend `CombatService` and `DestructionService` tests. For exposed players and panel surfaces, check just inside, exactly at and just beyond 25 studs, including a target beyond the old 18-stud limit. Check an empty ground strike (one impact cue, zero awards), a ground strike beside a wall (no direct panel ID, exposed panels destroyed), a direct strike spanning neighboring panels, an intervening wall, overlapping panel pieces, and two shots resolved in one batch. Each eligible target is affected once. Prove a second howitzer shot is rejected before six seconds and accepted at the reload boundary, including after a weapon switch. Duplicate, stale, rejected and post-deadline shots produce no damage. |
+| A2 · Battlefield coverage | In Studio with two actual clients, exercise the impact scenarios below. Use ordinary firing controls for the open-ground shot and a ground strike beside a building. Both clients must agree on contact location and resulting openings. Verify fragment caps, protected supports and lobby, and pristine reset. |
+| A3 · Distinct impacts and rocket flight | Add a Studio impact-cue suite covering 105mm and repeated 30mm on terrain and building surfaces, and rockets against the aircraft, terrain, a building and empty-space expiry. Check one cue per contact, trail start/stop, no impact on expiry, fixed direct rocket damage, no rocket demolition and unchanged 30mm progression. Simulate duplicate or delayed cues and replay into a new round. Verify teardown and stale-cue rejection. |
+| A4 · Readability and audio | In Studio, preview Ground and the 30° and 40° thermal views. At Full, impacts are easy to place, M102 is prominent, 30mm is brief, rocket smoke follows the flight, and the reticle, white targets, cover, openings and warnings remain readable. Reduced tones down effects. Off clears visible weapon effects while warnings stay readable. Listen in Studio for distinct M-7, launcher, 30mm and howitzer cues and use the timing checks for nearby and distant playback. Written observations are sufficient. The separate audio mute and missing-asset fallback checks are deferred under the user’s listening review. |
+| A5 · Responsiveness and cost | Record baseline and candidate timings under the same automated five-minute workload with matching hardware, two actual Studio clients, 1080p and quality 8. Include sustained 30mm, multi-panel howitzer blasts and concurrent rocket trails. Require server scheduler p95 ≤16.7 ms. For Full on-screen impacts within 400 studs, require burst readiness within two `PreRender` frames of receipt at p95. Check bounded pools, Reduced/Off and five resets with transient counts returning to baseline. Run `python3 scripts/verify.py` and the affected native combat, destruction, launcher and presentation regressions. The measured Studio client p95 is retained as diagnostic evidence. The 33.3 ms client p95 threshold is deferred to the [future release workload](../docs/release.md#measure-the-live-10-player-workload) under D99. [Testing procedure](../docs/testing.md) |
+
+The stronger explosions should show a distinct initial flash and a visible fireball and smoke plume for the howitzer at normal operator distances. Keep the 30mm burst shorter and smaller, and make rocket contact readable against both terrain and buildings. Evaluate normal effects at both thermal zooms and verify that the revised bursts still leave room to track players and aim.
+
+### A2 impact scenarios
+
+| Shot | What to verify |
+| --- | --- |
+| Empty ground, well clear of targets and buildings | Across desert sand, forest floor, a paved depot road and the Seedship’s red terrain, each shell produces one visible and audible explosion at the actual ground contact. The panel registry and player health record zero changes. |
+| Open ground with an exposed Ground player | Place the player between 18 and 25 studs from contact. The ground strike deals the configured damage once, even with no building nearby. Repeat with solid cover between contact and player to verify protection. |
+| Ground immediately beside each destructible landmark | Cover the Sandbreak bunker, Salt Flats hangar, Vesper Radar, military depot and Prism Seedship. Confirm the hit was on the ground. Record nearby panel IDs and distances. Exposed in-range panels reach Total, shielded and out-of-range panels keep their prior state, and a ray passes through the new opening. |
+| Direct wall or roof contact | Include a small-panel cluster and an elevated roof. The burst originates on the struck surface. The direct panel and exposed neighboring panels within 25 studs reach Total once each. |
+
+## Focused human check
+
+From Ground, watch a howitzer land just short of a building, then follow a rocket from launch to contact while the operator fires 30mm nearby. The dust should mark the ground contact even when panels break several studs away. In the operator seat, press **2** for the 40° howitzer view and **1** for the 30° chain-gun view. Watch for the white Ground target when exposed and aim through the breach as smoke clears. Press **P** to switch Effects to Reduced and Off and check that warnings stay readable. Listen for the four weapons and note any that are hard to distinguish or locate. A short written observation from Studio is enough. The level-matched audio capture is available for optional comparison.
+
+### Deferred checks
+
+- **Release client frame time.** The local five-minute workload missed the 33.3 ms target for both roles. Verify the budget on the [future named release](../docs/release.md#measure-the-live-10-player-workload). Server scheduler p95, first-frame burst readiness and five-round cleanup passed locally.
+- **Audio follow-up.** The user accepted Studio audio. The separate mute and missing-asset fallback checks remain unverified and deferred.
+
+## Documentation changes
+
+On implementation, update the player guide, weapon profiles and cover rules, the client/server package contracts, asset provenance, and the testing guide with measured budgets and evidence.
+
+## Completion record
+
+### First implementation candidate
+
+Candidate `eac79eb5d112ce0b3898fb7a68fbed58a3187013` (tree `72b11a49d68f03c4723af85125e90dc22560ed85`) passed 82 unit and 78 integration cases locally. The full host gate stopped at Selene on unlabeled assertions in new tests.
+
+The independent tester ran the P05 SDK two-client scenario in Roblox Studio `0.748.0.7481526` on the local Rojo test document. Edit parity matched 176 scripts and five poses. Two actual clients joined. Server baseline passed 195/196 and both client baselines passed 17/19. The P19 client emitter case passed on both clients. The server geometry case omitted two ground-level panels, so the staged P05 combat cases did not start. Native rays reported the road at the same endpoint as the candidate panels, while an actual intervening screen stopped the ray before the hidden panel. The tester ended the session and confirmed Edit was restored. [Native report and diagnosis](../docs/evidence/p19/eac79eb-native-attempt.json)
+
+The tester also confirmed in Studio Edit that preloading transient typed Sound instances succeeded for all four referenced samples. Preloading the raw ID strings failed in the same probe. The candidate uses typed preload instances. This verifies the preload mechanism. Operated sound quality remains a separate check.
+
+### Corrected candidate and native combat
+
+Candidate `15ba23561bfce4b6efb1edc0dfe7fc35f1cf2845` (tree `57743f32b04426d0f8e5d39125a16f7c87539167`) accepts a coincident endpoint within 0.005 studs while preserving earlier blockers. It retains accepted impact sounds briefly into Results and prunes pre-Results muzzle sounds. Native regression probes retain the exact 36-stud boundary and an earlier thin obstruction.
+
+The independent tester built the Rojo test artifact with SHA-256 `7690bf9b88e6fda236dade63fdde96c3ad2b8b3b2ec439ad0edcf964a581dc41` and confirmed matching Edit parity for 176 scripts and five poses. In the same Studio version, `ExecuteMultiplayerTestAsync(2, {kind = "P05"})` passed **9/9** with two actual clients. The server smoke passed **196/196** and each client passed **19/19**, with no failures, errors or skips.
+
+- **A1:** Portable combat radius and ordered panel award tests passed. The native `BlastGeometry` case passed, including an exposed panel at exactly 36 studs and separate shielding before the endpoint.
+- **A2:** The staged P05 case confirmed an empty terrain hit with no panel or health awards. It also confirmed ground-centered impacts opening 1 Outpost panel, 4 Vesper panels, 3 hangar panels, 10 Sandbreak panels and 4 Seedship panels. Both clients observed the burst point and the resulting openings. These shots used the production transports with controlled poses and aim.
+- **A3 and A4:** Native client admission and cleanup tests passed. The staged session recorded both roles with audio tracks and observed loaded, playing gunship reports and a ground-observed heavy impact. It did not supply a matched-volume comparison or validate each rocket collision mode.
+
+[Two-client report and capture manifest](../docs/evidence/p19/15ba235-native-p05.json) identifies the actual observations, capture drops and cleanup. The source of the runtime and combat tests stayed identical through the subsequent documentation and release-allowlist changes.
+
+### Host gate and delivery
+
+`python3 scripts/verify.py` passed on macOS 26.6.2 arm64 with Python 3.10. It ran 83 unit, 78 integration, 26 tooling and 58 asset tests with zero unexpected failures. Static and rejection checks passed. Both Rojo builds reconstructed 11,459 authored transforms. The release contained 67 runtime scripts and excluded native tests. Source and verification inputs match `a4babb37770f0b5654fc78d942265a4edd7fe98e` (tree `41421b19d10c769f02aa4d18bbf6046a604d3e70`). [Passing GitHub Verify #580](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45389802948)
+
+- Release build SHA-256 `01cefcd9797fb10a1ec7604c44167f56e01a7226551faa3b2b1aff88fd0c5879`
+- Test build SHA-256 `7eb159581b643711df51d27f3bed8c97c96cd7684349cb72eb89f498383fb3a1`
+
+The technical writer checked the player guide, source and asset contracts, and contributor setup and testing procedures against the implementation. The root README retains the selected Blender image and caption. P19 is on `plan/19-weapon-impacts` in [draft PR #67](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/67).
+
+The separate normal-controls SDK attempt stalled before either client connected. The disposable child remained in Edit and was closed after Studio Stop and normal termination failed. The original local editor remained open and the SDK returned without a test result. Ordinary firing input, rocket-specific collision and expiry, and full rendered and listening review are still open. [Operated startup and cleanup receipt](../docs/evidence/p19/15ba235-operated-attempt.json)
+
+### Candidate profile
+
+The first profile attempt returned 3/4 cases. Both clients passed smoke and cleanup passed. One client's viewport missed the preflight deadline, so the workload did not run. [Preflight report](../docs/evidence/p19/468242d-profile-preflight.json)
+
+The retry ran the full 300-second workload on the source-bound `468242d` test build with two actual Studio clients at a stable 1920×1080 and quality 8 on an Apple M1 Pro with 16 GB. It admitted 848 chain shots, 32 howitzer shots, 150 rifle shots and 71 rockets. Gunship p95 was **67.9 ms**, above the 33.3 ms budget, while Ground p95 was **18.0 ms** and server scheduler p95 was **0.7 ms**. Cleanup passed. The five-minute profile returned 3/4 cases. Of 352 sampled on-screen impacts, all were ready on the first `PreRender` after receipt. Each client peaked at five bursts and one active smoke trail. The frame probe measures readiness rather than first visible pixels. [Candidate profile report](../docs/evidence/p19/468242d-profile-candidate.json)
+
+The paired baseline used the same profiling code with pre-P19 production source and the same device, quality and two-client Studio configuration. Reproduce its fixture from `40c97a9` with regenerated historical test metadata. The local comparison tree matched 170 scripts and five poses in Edit. It admitted 825 chain shots, 32 howitzer shots, 150 rifle shots and 71 rockets. All four checks passed. [Baseline profile report](../docs/evidence/p19/717608d-profile-baseline.json)
+
+| Five-minute run | Gunship p95 | Ground p95 | Server scheduler p95 |
+| --- | ---: | ---: | ---: |
+| Baseline | 18.5 ms | 18.7 ms | 0.7 ms |
+| P19 | 67.9 ms | 18.0 ms | 0.7 ms |
+| P19 recheck | 25.7 ms | 67.5 ms | 0.7 ms |
+
+The unchanged-source P19 recheck again passed 3/4 cases, with 800 chain shots, 31 howitzer shots, 150 rifle shots and 71 rockets. All 415 sampled on-screen impacts were ready on the first frame, with the same peaks of five bursts and one trail on each client. Two spot checks during this run showed the roughly 67 ms frame interval moving between clients, with near-zero reported GPU frame time during the slower intervals. The cause of the frame pacing remains unconfirmed. A5's client frame budget remains unmet, and the low-effects and five-reset acceptance remain open. The paired runs passed shutdown cleanup. The original device and graphics settings were restored in Edit. [Recheck report](../docs/evidence/p19/468242d-profile-recheck.json)
+
+### Ordinary two-client retry
+
+The independent tester ran `ExecuteMultiplayerTestAsync(2, {kind = "P19OperatedRetry"})` in the local document with unchanged gameplay source. The actual Gunship and Ground clients passed 19/19 smoke cases each, and the server passed 196/196. The tester selected M102 and fired with the published keyboard and mouse controls. A strike on empty terrain produced a contact burst on both clients with zero panel or health awards. A ground strike beside Sandbreak opened eight registered panels on the server and both clients, with Ground health still full.
+
+The Ground avatar followed the walkable Seedship route, picked up the launcher at its authored location and fired through normal controls. Both clients observed the same rocket contact and burst. The Ground client measured a following smoke anchor about 0.9 studs behind the rocket, and the flight, trail and burst expired. Aircraft health remained 1,000. The native reset restored all eight Sandbreak panels to Pristine with one collider each on the server and both clients. Transient combat, audio and effect holders cleared. The original document returned to Edit with its simulator and selector restored. [Operated report and three local clip manifests](../docs/evidence/p19/15ba235-operated-native.json)
+
+Required open evidence includes additional empty-ground surfaces and direct roof coverage in the focused battlefield matrix, rocket building and aircraft impacts and empty-air expiry, full rendered review at both thermal zooms and matched-volume listening, and the A5 client frame, low-effects and five-reset checks. The staged and operated captures document the tested scenes and audio playback.
+
+The independent frame review found a visible flash at both sampled 40° thermal landings while the reticle, impact text and distant white target remained clear. The Ground clip shows the orange rocket contact. Smoke and fireball contrast were subtle at the reviewed distances. [Frame observations and local capture hashes](../docs/evidence/p19/15ba235-frame-review.json)
+
+### Stronger impacts and revised howitzer tuning
+
+At the user's request the next candidate reduces the howitzer radius from 36 to 25 studs, increases its single-shell reload from four to six seconds, and makes the impact effects easier to see. Full howitzer effects now use a bright expanding flash, larger fireball and a thicker smoke plume at operator distances. The 30mm and rocket flashes are modestly larger, with the heavy shell still distinct. The expanding flash and particle emitters remain client cosmetics with bounded pools. Reduced stays smaller and Off clears active visuals.
+
+Source `49a54bbe68268aa668bbb78c281df51e1a3004d8` (tree `70c97ce0f27629ca901df880fb61d27b3b99cabf`) passed `python3 scripts/verify.py` on macOS arm64. The gate passed 83 unit, 78 integration, 26 tooling and 58 asset cases, including the 25-stud inclusive boundary and a six-second reload retained through weapon switching. Both builds and test isolation passed. The test artifact SHA-256 is `cd335e8b5387dc00ba037c97c77a41bd6396156ad1270059c18d1185cc18ede1`. [GitHub Verify #590](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45401444576) passed on `8deaeec`, whose build and test inputs match the candidate.
+
+The independent tester matched 176 scripts and five poses in the local Studio Edit document. The revised P05 case now targets four terrain surfaces, five landmark ground strikes and an elevated roof. The new Replay scenario sends live shell and rocket intents through five consecutive two-client resets and checks empty-air rocket expiry. The previous 36-stud combat and profile reports above retain their original source scope.
+
+Both `ExecuteMultiplayerTestAsync(2, {kind = "P05"})` attempts stalled in Studio startup. Each child remained in Edit with zero clients after 90 seconds, so no gameplay assertions ran. The tester closed the two disposable children and then ran ordinary solo Play on the confirmed local source. Roblox Studio `0.748.0.7481526` passed **196/196 server** and **19/19 client** smoke cases, including the native 25-stud blast boundary and the revised Full, Reduced and Off effects checks. The one actual client used both operator zooms in a local cosmetic fixture. At about 380 studs the 40° Full howitzer flash and rising plume were distinct in the captured frames, while Reduced had a smaller flash and plume. The sampled 30° chain-gun contact was brief. These fixtures verify native presentation without authoritative fire or replication. The original test document returned to Edit with its ordinary selector and graphics settings restored. [Tuned Studio receipts and local capture hashes](../docs/evidence/p19/49a54bb-studio-tuning.json)
+
+Fresh two-client combat and rocket flight coverage, five-round Replay, a measured performance profile, normal-input visual review and matched-volume listening remain open on the tuned source. No older test was reclassified as a tuned-candidate pass.
+
+### Tuned normal-controls session
+
+The independent tester used the tuned gameplay source in an ordinary local Studio **Server & Clients** session. The server passed **196/196** smoke cases and two players deployed. The operator fired the M102 at open terrain through the normal targeting and firing controls at 40°. The server recorded zero damaged panels, and both clients received the same contact and showed a Full flash.
+
+The Ground player walked to the Seedship, picked up the launcher, and fired at terrain and the Sandbreak roof. Both clients observed rocket flight with smoke and the same Ground and Solid contacts. A third rocket fired into clear sky expired after about five seconds on both clients. It produced no contact, and no active rocket objects remained on the server or either client. Aircraft health stayed at 1,000 throughout these three shots.
+
+The operator fired the 30mm at 30° and the howitzer at 40° with Reduced Effects while the Ground client used Effects Off. Both clients received the matching contacts. Reduced showed a smaller flash for both calibres. Off showed no matching visible impact parts. The tester captured local audio-bearing clips. Matched-volume listening, an aircraft rocket hit and an ordinary reset were outside this session's verified coverage. The coordinator ended the session after collecting evidence and confirmed the original document returned to Edit. [Two-client combat receipts and clip manifests](../docs/evidence/p19/49a54bb-operated-two-client.json)
+
+### Native test fixture update
+
+`python3 scripts/verify.py` passed on `5e385aafdd51ef63d182f8b0eddadcee11e24685` (tree `19825879355ac66ff101097f865d99389cc85e0a`) with 83 unit, 78 integration, 26 tooling and 58 asset cases. This source adds a native replay report callback in test code. Both Rojo builds reconstructed 11,459 authored transforms and the release contained 67 runtime scripts and no test code. The release SHA-256 is `b306633c262b4bc7dc11f13fc1a163fcb7aa85b25cfbaf1a310265d3fc724c09`. The test SHA-256 is `094d550980a2ea6c9eb3e8b4dc0e38e6cd080acb36dbc2ea2af6c83d7e165eaf`. The local Studio Edit comparison matched 176 mapped scripts and five authored poses against this test build.
+
+Native **Server & Clients** launched the `ManualHarness = "P05"` selector with two actual clients. The server passed **196/196** smoke cases and each client passed **19/19**. The staged suite passed **7/9**. The battlefield matrix stopped while selecting a stable empty sand contact, before firing that shot. Its failure also terminated the harness and prevented the later projectile lifetime case from running. Earlier staged cases passed for thin cover, forged airborne endpoints, reload retention across a weapon switch, lifecycle cleanup, terrain slopes, authored second-story panels and solid muzzle overlap. [Native P05 report](../docs/evidence/p19/5e385aa-native-p05.json)
+
+After P05 released the runtime, both actual clients ran the committed Replay listener and the server ran the committed `PerformanceHarness.impactReplay` fixture. Replay passed **8/8**. All five rounds opened an Outpost panel, restored it to Pristine on both clients, and cleared local effects and server transients in the lobby. Four rockets contacted terrain. The final one expired in empty air with zero aircraft damage and no impact report. The fixture passed shutdown cleanup. [Native Replay report](../docs/evidence/p19/5e385aa-native-replay.json)
+
+A disposable native aircraft probe then started the same production runtime with controlled Ground placement and equip. The actual Ground client used the production pickup and fire requests and led the moving aircraft using replicated orbit state. Exactly one rocket flew and made contact. Aircraft health dropped from 1,000 to 900 on the server and both clients. Both clients observed enabled smoke, the matching Metal impact and burst, and eventual removal of the flight and local effects. Each client received the launch and impact audio cues. The probe shut down its runtime. [Moving-aircraft rocket report](../docs/evidence/p19/5e385aa-aircraft-rocket.json)
+
+The tuned five-minute workload ran on the same hardware as the prior comparison, with both actual Studio clients stable at 1920×1080 and graphics level 8. It started a fresh game runtime in the same native testing session after prior fixtures shut down. It accepted 800 chain shots, 16 howitzer shots, 150 rifle shots and 71 rockets. Both clients peaked at four bursts and one trail. All 165 sampled on-screen impacts were ready on the first `PreRender` after receipt. The server scheduler was **1.0 ms** p95. The Gunship and Ground render p95 values were **68.0 ms** and **67.8 ms**, exceeding the 33.3 ms budget. Each client recorded about 4,465 frames in 300 seconds. The profile passed **3/4** cases including shutdown cleanup. [Tuned native profile report](../docs/evidence/p19/5e385aa-native-profile.json)
+
+After the runtime stopped, a 12-second sample in the same native clients kept the same resolution and graphics level. Each client rendered 180 frames with no game runtime or impact holder. Idle render p95 was 69.4 and 67.5 ms. Reported render CPU p95 was 3.1 and 2.4 ms and reported GPU times were below 0.001 ms. This points to frame pacing in this Studio session, with the precise cause still unverified. The loaded client frame budget remains unmet. The coordinator restored the original device and graphics settings. [Idle measurements and restoration](../docs/evidence/p19/5e385aa-native-profile.json)
+
+Studio recorded seven isolated baseline and candidate audio pairs with the source-derived assets, pitch, equalization and tail. All four referenced assets loaded. The 26-second local blind WAV contains all fourteen cues matched to −20 dBFS gated RMS with zero clipped samples. Sound-only identification and the subjective comparison remain open. This capture uses an isolated listener. The ordinary and aircraft reports cover gameplay cue delivery separately. [Audio capture and matching evidence](../docs/evidence/p19/49a54bb-audio-ab.json)
+
+### Revised staged battlefield checks
+
+Source `528a851bfe8623ce965c855dfdb7c300367a3e7f` (tree `2b32bcfe687c3c2bd695130d9e6866233d626412`) passed the complete `python3 scripts/verify.py` gate on macOS arm64 and [GitHub Verify #600](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45406719618). The local gate passed 83 unit, 78 integration, 26 tooling and 58 asset cases, both Rojo builds, geometry reconstruction and release isolation. The changes since the tuned gameplay candidate are test fixture and evidence updates. The release artifact retained SHA-256 `b306633c262b4bc7dc11f13fc1a163fcb7aa85b25cfbaf1a310265d3fc724c09`. The refreshed test SHA-256 is `c4587f37abb961d803daae646320baf47771dbf6b1167b16a88894c45aeb3a39`. The Studio Edit comparison matched 176 scripts and five authored poses.
+
+The Studio SDK `ExecuteMultiplayerTestAsync(2, { kind = "P05" })` run passed **9/9** with two actual clients, **196/196** server smoke and **19/19** smoke on each client. All contacts used production fire intents with fixture aim and poses. Empty Sand, Grass, Asphalt and Mud terrain each produced a matching contact and zero health and panel awards. An exposed Ground avatar at 21.7 studs took one 100-point award. A solid shield at the same target distance and a clear target at 29.2 studs took zero damage.
+
+Nearby impacts opened 1 Outpost panel from terrain, 8 Vesper Radar panels from the ground floor, 3 hangar panels from the apron, 25 Sandbreak panels from terrain and 4 Seedship panels from a threshold. A direct elevated Outpost roof hit opened the struck panel and recorded four neighbors in the blast award. Both clients observed the representative openings and matching impact points. The final lifetime check and the fragment cap passed. The SDK ended the two owned clients and server. The coordinator cleared the Edit selector and confirmed the original device and graphics settings. [Expanded staged report](../docs/evidence/p19/528a851-staged-p05.json)
+
+The follow-up ordinary Sandbreak attempt started one actual client. A second Studio test window stayed in Edit beyond 90 seconds, so there was no playable round and no ordinary shot or reset. The tester ended the owned session and confirmed the original local test document returned to Edit. The staged two-client Sandbreak result above passed. The exact tuned ordinary Sandbreak check, remaining rendered and listening review, and client frame-time budget remain open. P19 stays in progress. [Ordinary startup and cleanup receipt](../docs/evidence/p19/528a851-operated-startup.json)
+
+[GitHub Verify #602](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45407702026) passed on the same source and test inputs after a retry. The first attempt received HTTP 403 while Rokit fetched the pinned Rojo release, before the verifier started.
+
+### User Studio visual review
+
+On 2026-11-24, the user reported that all visual checks passed after receiving the Studio checklist. This closes the normal-controls Sandbreak visual check and the Ground and thermal effects and readability review. The listening and mute review, automated audio fallback and client frame-time budget remain open.
+
+### User Studio listening review
+
+On 2026-11-24, the user accepted how the audio sounds in Studio and requested performance work. The separate mute and fallback checks keep their prior evidence and are outside this follow-up.
+
+### Weapon effects performance follow-up
+
+The client now tracks replicated rocket membership through folder events, caches emitter curves and color sequences, and clears active particle pools on round, phase, or effects transitions. It only updates smoke emission properties when they change. The particle counts, lifetimes, flash dimensions and opacity remain the values from the visual review.
+
+In two fresh solo Play sessions at the same 1153×579 viewport and Automatic graphics, the focused controller benchmark admitted all 700 synthetic contacts per source. Seven trials measured the following median synchronous call costs. The measurements cover the controller and its immediate engine calls.
+
+| Controller work | Before | After |
+| --- | ---: | ---: |
+| Lobby update after the pools have been used | 22.86 µs | 0.26 µs |
+| Active update with no rocket or impact | 3.07 µs | 0.49 µs |
+| Sustained-fire update | 12.04 µs | 4.93 µs |
+| Per confirmed impact | 64.34 µs | 31.42 µs |
+
+The optimized source passed **196/196** server smoke and **20/20** client smoke in solo Studio. The new test checks late rocket attributes, distance gating, Full and Reduced emission at the moving exhaust, and trail fade after removal. [Source parity and benchmark trials](../docs/evidence/p19/b40f159-renderer-benchmark.json)
+
+The optimized source also ran the full five-minute `P19Profile` workload with two actual Studio SDK clients at stable 1920×1080 and graphics quality 8. It accepted 778 chain shots, 16 howitzer shots, 150 rifle shots and 71 rockets. All 323 sampled impacts were ready on the first `PreRender`. Each client peaked at four bursts and one trail. Smoke and shutdown cleanup passed. Server scheduler p95 was **1.1 ms**. Gunship and Ground frame p95 were **67.3 ms** and **67.5 ms**, so the 33.3 ms frame-time budget remains open. The SDK closed the owned session and the original Studio document returned to Edit at its prior graphics and simulator settings. [Optimized loaded profile](../docs/evidence/p19/b40f159-loaded-profile.json)
+
+The loaded profile used `b40f159`. The following test-only revision added an assertion message without changing its condition or the runtime. The full host gate passed on that revision. [GitHub Verify #612](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45412768324)
+
+### Client frame pacing and release deferral
+
+On 2026-11-24, the final investigation used two actual Studio clients with 1920×1080 viewports and graphics quality 8. The local test place matched `9db10df` across 176 scripts and five authored poses. Each client's fixed scene alternated between Effects Off and Full with the same synthetic contact and rocket workload. Both also sampled an empty sky view. The cameras were then swapped across the same two client processes. Both clients passed 20/20 smoke checks and the server passed 196/196. [Studio controls and source parity](../docs/evidence/p19/9db10df-studio-pacing-controls.json) · [GitHub Verify #614](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45413755249)
+
+| Client process | Empty sky p95 | Effects Off p95 | Effects Full p95 |
+| --- | ---: | ---: | ---: |
+| First client | 67.4–68.2 ms | 67.4–68.3 ms | 67.4–68.3 ms |
+| Second client | 17.3–18.3 ms | 17.3–18.2 ms | 17.4–18.1 ms |
+
+The first client stayed near 15 FPS across both camera setups and all effects settings. The second stayed near 60 FPS. The pace followed the Studio client process, and turning off the effects changed p95 by less than a millisecond in all paired scenes. The precise source of the Studio pacing remains unconfirmed. The investigation found no further P19 change supported by a whole-frame improvement. The original Studio editor returned to Edit with its graphics and simulator settings restored.
+
+Under the user's conditional direction, D99 carries the 33.3 ms client p95 target to the future release. The five-minute local gameplay profile retains its **67.3 ms Gunship** and **67.5 ms Ground** results, and the release target remains unverified. Local implementation acceptance uses the existing gameplay, presentation, scheduler, readiness and cleanup evidence. [Future release workload](../docs/release.md#measure-the-live-10-player-workload)

@@ -1,0 +1,1027 @@
+{
+  "source": {
+    "handoffCommit": "a1f9a463859773b87d07b9ba06b25ed031ef107b",
+    "handoffTree": "f10e8da67e01575350a3d5cb8fc8569fe420afba",
+    "gameplayCommit": "49a54bbe68268aa668bbb78c281df51e1a3004d8",
+    "gameplayTree": "70c97ce0f27629ca901df880fb61d27b3b99cabf",
+    "relation": "git diff --stat 49a54bb a1f9a46 showed documentation and evidence only. Prior candidate was source-compared in Edit before this already-running ordinary session."
+  },
+  "environment": {
+    "engine": "Roblox Studio 0.748.0.7481526",
+    "platform": "macOS 26.6.2 arm64",
+    "mode": "existing local two-client Server & Clients in private unsaved test DataModel, normal settings",
+    "studioIds": {
+      "s": "baed5ea5-20bb-4392-bedd-d2b3f5dda1b6",
+      "a": "aa88256e-85c2-40d3-9d1e-6f00bb801a81",
+      "b": "b56d5d46-bd61-43ae-9406-81911ce56749",
+      "e": "f205a8a1-46a0-4e7d-b315-337ce638f284"
+    }
+  },
+  "method": "Studio MCP user_mouse_input on Studio Test panel, native keyboard and mouse through production client controllers, Roblox Humanoid:MoveTo waypoints for ordinary avatar walking to Seedship, and execute_luau for passive observation only. No contact, pose, health, equipment, round state or weapon data was injected.",
+  "smoke": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 196,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 196
+  },
+  "baseline": {
+    "test": {
+      "Busy": false,
+      "RoundSeconds": 60,
+      "Generation": 3
+    },
+    "phase": {
+      "GroundAlive": 1,
+      "Revision": 6,
+      "MinimumPlayers": 2,
+      "Reason": "",
+      "Phase": "Active",
+      "DeadlineSeconds": 1795527074.933451,
+      "Winner": "",
+      "RoundId": 1
+    },
+    "roster": {
+      "Player1": [
+        -1,
+        {
+          "LocalTestRoleChoice": "Auto",
+          "Role": "Ground",
+          "LocalTestFeedback": "Solo Play previews the map. Real rounds need two clients.",
+          "RoundRevision": 6,
+          "Life": "Alive",
+          "RoundId": 1
+        },
+        "-20.00030517578125, 2.9980926513671875, 107.99969482421875"
+      ],
+      "Player2": [
+        -2,
+        {
+          "LocalTestRoleChoice": "Gunship",
+          "Role": "Gunship",
+          "LocalTestFeedback": "Starting the chosen roles.",
+          "RoundRevision": 6,
+          "Life": "Alive",
+          "RoundId": 1
+        },
+        "520, 3, -15"
+      ]
+    }
+  },
+  "howitzer": {
+    "input": "Gunship Player2 pressed Two and aimed center to terrain. Held left input for 600 ms at tool coordinates 637,322. Full 40-degree thermal view.",
+    "server": {
+      "air": {
+        "Readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":1795527110.182885,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "Impact": "{\"y\":0,\"x\":-64.4186019897461,\"blastPanelIds\":[],\"z\":35.30283737182617,\"weapon\":\"M102\",\"shotId\":1,\"roundId\":1}",
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":3,\"weapon\":\"M102\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795527071.313535,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      },
+      "attrs": {
+        "RoundId": 1,
+        "Revision": 6,
+        "MinimumPlayers": 2,
+        "Reason": "",
+        "Phase": "Active",
+        "DeadlineSeconds": 1795527672.816043,
+        "Winner": "",
+        "GroundAlive": 1
+      }
+    },
+    "ground": {
+      "view": "1346, 649",
+      "arr": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -64.4186019897461,
+            0,
+            35.30283737182617
+          ],
+          "phase": "Active",
+          "emitted": 1795527110.249593,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "1",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527110.277877,
+          "weapon": "M102"
+        }
+      ],
+      "route": [
+        "-1.3856991529464722, 2.9980251789093018, 108.00004577636719",
+        "-0.039214782416820526, 2.9980251789093018, 133.2158660888672",
+        "-0.0038297974970191717, 2.9980251789093018, 149.215576171875",
+        "-0.0001198834361275658, 2.9980251789093018, 173.2152099609375",
+        "-0.000011460439054644667, 3.025425910949707, 186.54833984375",
+        "-5.743950168834999e-07, 5.3979339599609375, 201.21478271484375",
+        "-3.43952706316486e-08, 5.593825340270996, 213.214599609375"
+      ],
+      "id": -1,
+      "flights": [],
+      "role": "Ground",
+      "peakBurst": 1,
+      "peakTrail": 0,
+      "ui": [],
+      "round": {
+        "Winner": "",
+        "Revision": 6,
+        "MinimumPlayers": 2,
+        "RoundId": 1,
+        "Phase": "Active",
+        "DeadlineSeconds": 1795527672.816043,
+        "Reason": "",
+        "GroundAlive": 1
+      },
+      "camera": "-6.55262777e-09, 10.3332615, 225.903564, 1, 0, 0, 0, 0.965925813, 0.258819044, 0, -0.258819044, 0.965925813",
+      "pos": "-7.335984264500439e-09, 5.598023414611816, 213.82949829101562"
+    },
+    "operator": {
+      "view": "1274, 618",
+      "arr": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -64.4186019897461,
+            0,
+            35.30283737182617
+          ],
+          "phase": "Active",
+          "emitted": 1795527110.249593,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "1",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527110.253644,
+          "weapon": "M102"
+        }
+      ],
+      "id": -2,
+      "flights": [],
+      "role": "Gunship",
+      "peakBurst": 1,
+      "peakTrail": 0,
+      "ui": [],
+      "round": {
+        "Winner": "",
+        "Revision": 6,
+        "MinimumPlayers": 2,
+        "RoundId": 1,
+        "Phase": "Active",
+        "DeadlineSeconds": 1795527672.816043,
+        "Reason": "",
+        "GroundAlive": 1
+      },
+      "camera": "-323.718811, 140, -157.499634, -0.437499017, 0.325918555, -0.838076234, 1.08017408e-08, 0.93200469, 0.362446278, 0.899218917, 0.158569872, -0.407751113",
+      "pos": "520, 3, -15"
+    }
+  },
+  "rockets": {
+    "input": "Ground Player1 used E at the Seedship pedestal, pressed Two, and held native mouse. Terrain at tool X/Y 670,192, building at 670,134, expiry at 670,22.",
+    "buildingRay": {
+      "state": "{\"state\":\"Held\",\"readyAt\":1795527169.781513,\"launcherId\":\"launcher:1:Seedship\",\"position\":{\"y\":5.599999904632568,\"x\":0,\"z\":214},\"revision\":3,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+      "point": "-0.5182440280914307, 11.722092628479004, 142.65000915527344",
+      "head": "Workspace.World.Battlefield.SpawnShelterPanels.SB.R.01.06.SB_query_solid_005_01_Proxy",
+      "eye": "Workspace.World.Battlefield.SpawnShelterPanels.SB.R.01.06.SB_query_solid_005_01_Proxy",
+      "xy": "670, 192"
+    },
+    "skyRay": {
+      "direction": "-0.005770595278590918, 0.2278520166873932, -0.973678708076477",
+      "head": "clear 1200",
+      "eye": "sky",
+      "xy": "670, 80",
+      "gui": 1
+    },
+    "serverAfterContacts": {
+      "air": {
+        "Readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":1795527110.182885,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "Impact": "{\"y\":0,\"x\":-64.4186019897461,\"blastPanelIds\":[],\"z\":35.30283737182617,\"weapon\":\"M102\",\"shotId\":1,\"roundId\":1}",
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":3,\"weapon\":\"M102\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795527071.313535,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      },
+      "rocket": {
+        "DepotSnapshot": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+        "SeedshipSnapshot": "{\"state\":\"Held\",\"readyAt\":1795527185.231462,\"launcherId\":\"launcher:1:Seedship\",\"position\":{\"y\":5.599999904632568,\"x\":0,\"z\":214},\"revision\":4,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+        "LastShot": "{\"shotId\":\"rocket:1:2:Seedship\",\"userId\":-1,\"roundId\":1}",
+        "Snapshot": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Radar\",\"position\":{\"y\":3,\"x\":174,\"z\":-42},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+        "HangarSnapshot": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Hangar\",\"position\":{\"y\":3.125,\"x\":-131.30999755859376,\"z\":-130.0399932861328},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+        "LastImpact": "{\"y\":11.709101676940918,\"aircraftHit\":false,\"z\":142.65000915527345,\"x\":-0.5168495178222656,\"shotId\":\"rocket:1:2:Seedship\",\"userId\":-1,\"roundId\":1}"
+      },
+      "flightCount": 3
+    },
+    "groundAfterContacts": {
+      "peakBurst": 1,
+      "arr": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -64.4186019897461,
+            0,
+            35.30283737182617
+          ],
+          "phase": "Active",
+          "emitted": 1795527110.249593,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "1",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527110.277877,
+          "weapon": "M102"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -0.628656268119812,
+            0,
+            127.84539794921875
+          ],
+          "phase": "Active",
+          "emitted": 1795527166.14828,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:1:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527166.175156,
+          "weapon": "Rocket"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "surface": "Solid",
+          "point": [
+            -0.5168495178222656,
+            11.709101676940918,
+            142.65000915527344
+          ],
+          "phase": "Active",
+          "emitted": 1795527181.53142,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:2:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527181.558209,
+          "weapon": "Rocket"
+        }
+      ],
+      "peakTrail": 1,
+      "id": -1,
+      "live": 3,
+      "fl": [
+        {
+          "last": "-0.612847089767456, 0.38184964656829834, 130.11219787597656",
+          "born": 1795527165.808774,
+          "origin": "-0.02907980978488922, 7.096803665161133, 213.81582641601562",
+          "look": "-0.006976081524044275, -0.07995685935020447, -0.996773898601532",
+          "name": "Rocket",
+          "ended": 1795527166.175588
+        },
+        {
+          "last": "-0.4949696958065033, 11.505280494689941, 145.98779296875",
+          "born": 1795527181.262134,
+          "origin": "-0.02187928929924965, 7.098210334777832, 213.8336944580078",
+          "look": "-0.006979973521083593, 0.06479428708553314, -0.9978742599487305",
+          "name": "Rocket",
+          "ended": 1795527181.558525
+        }
+      ]
+    },
+    "operatorAfterContacts": {
+      "peakBurst": 1,
+      "arr": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -64.4186019897461,
+            0,
+            35.30283737182617
+          ],
+          "phase": "Active",
+          "emitted": 1795527110.249593,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "1",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527110.253644,
+          "weapon": "M102"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -0.628656268119812,
+            0,
+            127.84539794921875
+          ],
+          "phase": "Active",
+          "emitted": 1795527166.14828,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:1:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527166.167682,
+          "weapon": "Rocket"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "surface": "Solid",
+          "point": [
+            -0.5168495178222656,
+            11.709101676940918,
+            142.65000915527344
+          ],
+          "phase": "Active",
+          "emitted": 1795527181.53142,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:2:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527181.551805,
+          "weapon": "Rocket"
+        }
+      ],
+      "peakTrail": 1,
+      "id": -2,
+      "live": 3,
+      "fl": [
+        {
+          "last": "-0.612847089767456, 0.38184964656829834, 130.11219787597656",
+          "born": 1795527165.802363,
+          "origin": "-0.02907980978488922, 7.096803665161133, 213.81582641601562",
+          "look": "-0.006976081524044275, -0.07995685935020447, -0.996773898601532",
+          "name": "Rocket",
+          "ended": 1795527166.16817
+        },
+        {
+          "last": "-0.4949696958065033, 11.505280494689941, 145.98779296875",
+          "born": 1795527181.270163,
+          "origin": "-0.02187928929924965, 7.098210334777832, 213.8336944580078",
+          "look": "-0.006979973521083593, 0.06479428708553314, -0.9978742599487305",
+          "name": "Rocket",
+          "ended": 1795527181.566612
+        }
+      ]
+    },
+    "serverAfterExpiry": {
+      "rocket": {
+        "DepotSnapshot": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+        "SeedshipSnapshot": "{\"state\":\"Held\",\"readyAt\":1795527214.580001,\"launcherId\":\"launcher:1:Seedship\",\"position\":{\"y\":5.599999904632568,\"x\":0,\"z\":214},\"revision\":5,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+        "LastShot": "{\"shotId\":\"rocket:1:3:Seedship\",\"userId\":-1,\"roundId\":1}",
+        "Snapshot": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Radar\",\"position\":{\"y\":3,\"x\":174,\"z\":-42},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+        "HangarSnapshot": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Hangar\",\"position\":{\"y\":3.125,\"x\":-131.30999755859376,\"z\":-130.0399932861328},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+        "LastImpact": "{\"y\":11.709101676940918,\"aircraftHit\":false,\"z\":142.65000915527345,\"x\":-0.5168495178222656,\"shotId\":\"rocket:1:2:Seedship\",\"userId\":-1,\"roundId\":1}"
+      },
+      "round": {
+        "RoundId": 1,
+        "Revision": 6,
+        "MinimumPlayers": 2,
+        "Reason": "",
+        "Phase": "Active",
+        "DeadlineSeconds": 1795527672.816043,
+        "Winner": "",
+        "GroundAlive": 1
+      },
+      "liveRockets": 0,
+      "air": {
+        "Readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":1795527110.182885,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "Impact": "{\"y\":0,\"x\":-64.4186019897461,\"blastPanelIds\":[],\"z\":35.30283737182617,\"weapon\":\"M102\",\"shotId\":1,\"roundId\":1}",
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":3,\"weapon\":\"M102\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795527071.313535,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      }
+    },
+    "groundAfterExpiry": {
+      "peakBurst": 1,
+      "arr": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -64.4186019897461,
+            0,
+            35.30283737182617
+          ],
+          "phase": "Active",
+          "emitted": 1795527110.249593,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "1",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527110.277877,
+          "weapon": "M102"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -0.628656268119812,
+            0,
+            127.84539794921875
+          ],
+          "phase": "Active",
+          "emitted": 1795527166.14828,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:1:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527166.175156,
+          "weapon": "Rocket"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "surface": "Solid",
+          "point": [
+            -0.5168495178222656,
+            11.709101676940918,
+            142.65000915527344
+          ],
+          "phase": "Active",
+          "emitted": 1795527181.53142,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:2:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527181.558209,
+          "weapon": "Rocket"
+        }
+      ],
+      "localHolder": true,
+      "peakTrail": 1,
+      "id": -1,
+      "round": {
+        "Winner": "",
+        "Revision": 6,
+        "MinimumPlayers": 2,
+        "RoundId": 1,
+        "Phase": "Active",
+        "DeadlineSeconds": 1795527672.816043,
+        "Reason": "",
+        "GroundAlive": 1
+      },
+      "liveRockets": 0,
+      "fl": [
+        {
+          "last": "-0.612847089767456, 0.38184964656829834, 130.11219787597656",
+          "born": 1795527165.808774,
+          "origin": "-0.02907980978488922, 7.096803665161133, 213.81582641601562",
+          "look": "-0.006976081524044275, -0.07995685935020447, -0.996773898601532",
+          "name": "Rocket",
+          "ended": 1795527166.175588
+        },
+        {
+          "last": "-0.4949696958065033, 11.505280494689941, 145.98779296875",
+          "born": 1795527181.262134,
+          "origin": "-0.02187928929924965, 7.098210334777832, 213.8336944580078",
+          "look": "-0.006979973521083593, 0.06479428708553314, -0.9978742599487305",
+          "name": "Rocket",
+          "ended": 1795527181.558525
+        },
+        {
+          "last": "-6.897151947021484, 278.6980285644531, -946.758544921875",
+          "born": 1795527210.607568,
+          "origin": "-0.02783578261733055, 7.098379611968994, 213.8169403076172",
+          "look": "-0.00575195113196969, 0.2278454452753067, -0.973680317401886",
+          "name": "Rocket",
+          "ended": 1795527215.590242
+        }
+      ]
+    },
+    "operatorAfterExpiry": {
+      "peakBurst": 1,
+      "arr": [
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -64.4186019897461,
+            0,
+            35.30283737182617
+          ],
+          "phase": "Active",
+          "emitted": 1795527110.249593,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "1",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527110.253644,
+          "weapon": "M102"
+        },
+        {
+          "normal": [
+            0,
+            1,
+            0
+          ],
+          "surface": "Ground",
+          "point": [
+            -0.628656268119812,
+            0,
+            127.84539794921875
+          ],
+          "phase": "Active",
+          "emitted": 1795527166.14828,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:1:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527166.167682,
+          "weapon": "Rocket"
+        },
+        {
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "surface": "Solid",
+          "point": [
+            -0.5168495178222656,
+            11.709101676940918,
+            142.65000915527344
+          ],
+          "phase": "Active",
+          "emitted": 1795527181.53142,
+          "folder": "Workspace.LocalWeaponImpacts",
+          "shot": "rocket:1:2:Seedship",
+          "atPoint": [],
+          "round": 1,
+          "received": 1795527181.551805,
+          "weapon": "Rocket"
+        }
+      ],
+      "localHolder": true,
+      "peakTrail": 1,
+      "id": -2,
+      "round": {
+        "Winner": "",
+        "Revision": 6,
+        "MinimumPlayers": 2,
+        "RoundId": 1,
+        "Phase": "Active",
+        "DeadlineSeconds": 1795527672.816043,
+        "Reason": "",
+        "GroundAlive": 1
+      },
+      "liveRockets": 0,
+      "fl": [
+        {
+          "last": "-0.612847089767456, 0.38184964656829834, 130.11219787597656",
+          "born": 1795527165.802363,
+          "origin": "-0.02907980978488922, 7.096803665161133, 213.81582641601562",
+          "look": "-0.006976081524044275, -0.07995685935020447, -0.996773898601532",
+          "name": "Rocket",
+          "ended": 1795527166.16817
+        },
+        {
+          "last": "-0.4949696958065033, 11.505280494689941, 145.98779296875",
+          "born": 1795527181.270163,
+          "origin": "-0.02187928929924965, 7.098210334777832, 213.8336944580078",
+          "look": "-0.006979973521083593, 0.06479428708553314, -0.9978742599487305",
+          "name": "Rocket",
+          "ended": 1795527181.566612
+        },
+        {
+          "last": "-6.920535564422607, 279.62255859375, -950.7091674804688",
+          "born": 1795527210.599949,
+          "origin": "-0.02783578261733055, 7.098379611968994, 213.8169403076172",
+          "look": "-0.00575195113196969, 0.2278454452753067, -0.973680317401886",
+          "name": "Rocket",
+          "ended": 1795527215.599341
+        }
+      ]
+    }
+  },
+  "settings": {
+    "method": "Ground opened P and selected Right/Off. Gunship opened P and selected Left/Reduced. Closed both menus and used 1 for GAU23 at 30 degrees and 2 for M102 at 40 degrees with actual mouse fire. Final M102 sampler matched exact ShotId and ImpactPoint attributes on effect Parts. Earlier 1.5-stud proximity sampler was appropriate for the GAU23 0.5-stud contact offset only.",
+    "gau23": [
+      {
+        "id": -1,
+        "samples": [
+          {
+            "peakLocal": 0,
+            "surface": "Ground",
+            "point": [
+              -45.24463653564453,
+              0,
+              34.26810073852539
+            ],
+            "id": "2",
+            "maxFlash": 0,
+            "maxSmokeEndpoint": 0,
+            "fov": 70,
+            "setting": "Off",
+            "weapon": "GAU23"
+          },
+          {
+            "peakLocal": 0,
+            "surface": "Ground",
+            "point": [
+              -45.75893020629883,
+              0,
+              33.57830047607422
+            ],
+            "id": "3",
+            "maxFlash": 0,
+            "maxSmokeEndpoint": 0,
+            "fov": 70,
+            "setting": "Off",
+            "weapon": "GAU23"
+          },
+          {
+            "peakLocal": 0,
+            "surface": "Ground",
+            "point": [
+              -46.221473693847656,
+              0,
+              32.938720703125
+            ],
+            "id": "4",
+            "maxFlash": 0,
+            "maxSmokeEndpoint": 0,
+            "fov": 70,
+            "setting": "Off",
+            "weapon": "GAU23"
+          },
+          {
+            "peakLocal": 0,
+            "surface": "Ground",
+            "point": [
+              -46.676849365234375,
+              0,
+              32.29018020629883
+            ],
+            "id": "5",
+            "maxFlash": 0,
+            "maxSmokeEndpoint": 0,
+            "fov": 70,
+            "setting": "Off",
+            "weapon": "GAU23"
+          }
+        ]
+      },
+      {
+        "id": -2,
+        "samples": [
+          {
+            "peakLocal": 32,
+            "surface": "Ground",
+            "point": [
+              -45.24463653564453,
+              0,
+              34.26810073852539
+            ],
+            "id": "2",
+            "maxFlash": 1.0705348253250122,
+            "maxSmokeEndpoint": 0,
+            "fov": 30,
+            "setting": "Reduced",
+            "weapon": "GAU23"
+          },
+          {
+            "peakLocal": 55,
+            "surface": "Ground",
+            "point": [
+              -45.75893020629883,
+              0,
+              33.57830047607422
+            ],
+            "id": "3",
+            "maxFlash": 1.0668879747390747,
+            "maxSmokeEndpoint": 0,
+            "fov": 30,
+            "setting": "Reduced",
+            "weapon": "GAU23"
+          },
+          {
+            "peakLocal": 51,
+            "surface": "Ground",
+            "point": [
+              -46.221473693847656,
+              0,
+              32.938720703125
+            ],
+            "id": "4",
+            "maxFlash": 1.0668879747390747,
+            "maxSmokeEndpoint": 0,
+            "fov": 30,
+            "setting": "Reduced",
+            "weapon": "GAU23"
+          },
+          {
+            "peakLocal": 45,
+            "surface": "Ground",
+            "point": [
+              -46.676849365234375,
+              0,
+              32.29018020629883
+            ],
+            "id": "5",
+            "maxFlash": 1.064383625984192,
+            "maxSmokeEndpoint": 0,
+            "fov": 30,
+            "setting": "Reduced",
+            "weapon": "GAU23"
+          }
+        ]
+      }
+    ],
+    "howitzer": [
+      [
+        {
+          "offset": 0,
+          "settings": "Off",
+          "id": "7",
+          "peak": 0,
+          "w": "M102",
+          "flash": 0
+        }
+      ],
+      [
+        {
+          "offset": 2.799999952316284,
+          "settings": "Reduced",
+          "id": "7",
+          "peak": 28,
+          "w": "M102",
+          "flash": 5.857822895050049
+        }
+      ]
+    ]
+  },
+  "media": [
+    {
+      "scope": "howitzer-ground",
+      "clip": "build/p19-tuned-operated-howitzer-ground.mp4",
+      "manifest": "build/p19-tuned-operated-howitzer-ground-manifest.json",
+      "pts": "build/p19-tuned-operated-howitzer-ground-pts.json",
+      "sha256": "7ebcbbdc8fe801bb2104f4190156c0a1bb56f2fedd7c91d3ff7fa0f6a6e1e2f2",
+      "capture": {
+        "schema_version": "1.0",
+        "recording_id": "121c65ab-b233-4110-bfe6-6143925b4193",
+        "creation_timestamp_ms": 1795527108856,
+        "status": "completed",
+        "video": {
+          "file": "wob-49198000001.mp4",
+          "duration_seconds": 1,
+          "width": 1264,
+          "height": 608,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 16
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 0,
+          "warnings": []
+        }
+      }
+    },
+    {
+      "scope": "rocket-ground",
+      "clip": "build/p19-tuned-operated-rocket-ground.mp4",
+      "manifest": "build/p19-tuned-operated-rocket-ground-manifest.json",
+      "pts": "build/p19-tuned-operated-rocket-ground-pts.json",
+      "sha256": "9742177f157cb23f9954bb1d33c4baf64b7e09628c9dfa02c67c3e37eabee8c2",
+      "capture": {
+        "schema_version": "1.0",
+        "recording_id": "fe1dc39a-599c-437e-b0a4-a8952de42353",
+        "creation_timestamp_ms": 1795527165456,
+        "status": "completed",
+        "video": {
+          "file": "wob-49203000004.mp4",
+          "duration_seconds": 2.466,
+          "width": 1344,
+          "height": 640,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 38
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 0,
+          "warnings": []
+        }
+      }
+    },
+    {
+      "scope": "rocket-building",
+      "clip": "build/p19-tuned-operated-rocket-building.mp4",
+      "manifest": "build/p19-tuned-operated-rocket-building-manifest.json",
+      "pts": "build/p19-tuned-operated-rocket-building-pts.json",
+      "sha256": "917ff5cc62b4b183b208aff54e733c15eee08e8f0a43ea4e429ff7cc9f894f4a",
+      "capture": {
+        "schema_version": "1.0",
+        "recording_id": "e2f9ff7e-97d1-473f-94a4-5328703aeb4b",
+        "creation_timestamp_ms": 1795527181050,
+        "status": "completed",
+        "video": {
+          "file": "wob-49203000005.mp4",
+          "duration_seconds": 2.536,
+          "width": 1344,
+          "height": 640,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 39
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 0,
+          "warnings": []
+        }
+      }
+    },
+    {
+      "scope": "rocket-expiry",
+      "clip": "build/p19-tuned-operated-rocket-expiry.mp4",
+      "manifest": "build/p19-tuned-operated-rocket-expiry-manifest.json",
+      "pts": "build/p19-tuned-operated-rocket-expiry-pts.json",
+      "sha256": "e7f189023407a4a982b7c3d9c95d849884de403382083016769b0b1dd0afa156",
+      "capture": {
+        "schema_version": "1.0",
+        "recording_id": "f71a21e1-f7f7-4129-833e-3ab5002b4df2",
+        "creation_timestamp_ms": 1795527210455,
+        "status": "completed",
+        "video": {
+          "file": "wob-49203000006.mp4",
+          "duration_seconds": 7.084,
+          "width": 1344,
+          "height": 640,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 107
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 0,
+          "warnings": []
+        }
+      }
+    },
+    {
+      "scope": "reduced-gau23",
+      "clip": "build/p19-tuned-operated-reduced-gau23.mp4",
+      "manifest": "build/p19-tuned-operated-reduced-gau23-manifest.json",
+      "pts": "build/p19-tuned-operated-reduced-gau23-pts.json",
+      "sha256": "d04ed0b4471c4f199905eea7ebfdc3f28fce8c0ef4c29a0b8b3729582d29b5f0",
+      "capture": {
+        "schema_version": "1.0",
+        "recording_id": "d2637853-8397-4c02-aa7d-214a2956ed68",
+        "creation_timestamp_ms": 1795527286681,
+        "status": "completed",
+        "video": {
+          "file": "wob-49198000002.mp4",
+          "duration_seconds": 1.707,
+          "width": 1264,
+          "height": 608,
+          "codec": "h264",
+          "audio": true,
+          "encoded_frame_count": 26
+        },
+        "timing": {
+          "file": "pts.json",
+          "time_base": "1/90000",
+          "origin": "first_encoded_frame",
+          "game_clock_alignment": "not_configured"
+        },
+        "capture_health": {
+          "observed_capture_drops": 0,
+          "warnings": []
+        }
+      }
+    }
+  ],
+  "verdict": {
+    "confirmed": [
+      "Full 40-degree M102 empty Terrain contact, zero blast panel IDs, same shot and location on both actual clients, both clients reported a local flash.",
+      "Actual Ground rockets against Terrain and Sandbreak shelter roof. Same Ground/Solid contacts on both actual clients, both observed the flight and smoke enablement, and aircraft remained 1000.",
+      "A native clear upward shot had no impact confirmation, ended after 4.983/4.999 client seconds, and left zero active flight objects on server and both clients.",
+      "Both real clients received GAU23 and M102 contacts through ordinary fire after the local settings split. Ground Off produced no matching impact part. Gunship Reduced rendered a GAU23 flash and matched Reduced M102 shot 7 at its 2.8-stud offset."
+    ],
+    "unrun": [
+      "Aircraft rocket hit in this ordinary session",
+      "Ordinary lobby reset and formal repeated profile/replay in this ordinary session",
+      "Subjective matched-volume audio listening",
+      "Full normal-combat GAU23 visual comparison"
+    ],
+    "handoff": "Preserved the same session in Active, with Ground Off and Gunship Reduced, for parent coordinator to end under user authorization."
+  },
+  "cleanup": {
+    "method": "StudioTestService:EndTest on the verified private Server DataModel after evidence collection and user authorization",
+    "verified": "Only the original tests.rbxlx document remained, in Edit"
+  },
+  "renderedReview": {
+    "howitzer": {
+      "sample": "build/p19-tuned-live-howitzer-09.jpg",
+      "observation": "Live 40-degree Full thermal view shows a white flash and pale expanding region in the center approach, amid the darker thermal background. Short capture has no Studio game-clock alignment."
+    },
+    "rocketFlight": {
+      "sample": "build/p19-tuned-live-rocket-03.jpg",
+      "observation": "A forward bright vertical exhaust streak is visible from the Ground avatar during the live launch. The roof-contact stills show a small bright mark near the reticle with no sustained, clearly distinguishable plume in this framing. The matching authoritative contact and smoke-emitter admission are captured separately."
+    },
+    "chainGun": {
+      "sample": "build/p19-tuned-live-gau23-07.jpg",
+      "observation": "Small light points show briefly near the reticle during native 30-degree Reduced fire. No stronger comparative claim about Full."
+    }
+  }
+}

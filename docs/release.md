@@ -132,6 +132,14 @@ fragments. Record the load and actual client count. Measure p95 client frame tim
 against 33.3 ms in each role and server frame time against 16.7 ms. Record exactly
 which timing the tool reports, the sample count, capture coverage and gaps.
 
+This run includes P19's deferred client frame-time check under D99. Both roles
+must meet 33.3 ms p95 on the named release candidate. The last local two-client
+gameplay profile measured 67.3 and 67.5 ms p95. Studio's controls reproduced the
+slow cadence with effects off and while looking at empty sky. If a live test
+misses the budget, compare the frame interval with render CPU and GPU samples
+from the affected role and record client visibility and the effects setting.
+[P19 local pacing evidence](../plans/19-weapon-impacts.md#client-frame-pacing-and-release-deferral)
+
 The desktop client MicroProfiler can write frame dumps. An editor can capture
 short server dumps from the live Developer Console. Plan capture windows across
 the full workload or arrange full-duration frame collection before the session.

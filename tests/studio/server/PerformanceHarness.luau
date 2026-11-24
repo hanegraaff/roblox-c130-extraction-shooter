@@ -1,5 +1,5 @@
 --!strict
--- Historical pre-P18 staged fixture. Current entry rejects; use RebalanceHarness.
+-- P19Profile reuses P11 timing and measurement with current battlefield targets.
 -- P11 test-only coordinator for actual players and production combat owners.
 -- The same seeded workload drives profiling and soak. A scoped RemoteEvent asks
 -- clients to send production intents and report observations; it never grants
@@ -119,7 +119,7 @@ local function checkBounds(counts: Counts)
         counts.pendingBarriers <= DestructionService.outcomeWindow + 1,
         "structural barrier window exceeded"
     )
-    assert(counts.launcherRepresentations <= 3, "launcher representation duplicated")
+    assert(counts.launcherRepresentations <= 4, "launcher representation duplicated")
     assert(counts.fragments <= PanelFragments.defaults.maximum, "fragment cap exceeded")
 end
 
@@ -150,8 +150,7 @@ end
 
 -- Studio SDK and native Server & Clients use the same coordinator. Only a
 -- trusted server-side invocation picks a scenario/actual client count.
-function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?)
-    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
+local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?, suite: string)
     local mode: Mode = if rawMode == "Latency"
             or rawMode == "Profile"
             or rawMode == "Soak"
@@ -162,7 +161,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
     local observations: { [string]: unknown } = {}
     local roster: { Player } = {}
     local function stage(name: string)
-        workspace:SetAttribute("P11Stage", name)
+        workspace:SetAttribute(suite .. "Stage", name)
     end
     local function check(name: string, operation: () -> ()): boolean
         stage(name)
@@ -182,7 +181,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
         end
         stage("finished")
         local report: Report = {
-            suite = "P11",
+            suite = suite,
             mode = mode,
             environment = "Studio",
             seed = seed,
@@ -196,7 +195,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             cases = cases,
             observations = observations,
         }
-        workspace:SetAttribute("P11Report", HttpService:JSONEncode(report))
+        workspace:SetAttribute(suite .. "Report", HttpService:JSONEncode(report))
         if finish then
             finish(report)
         else
@@ -410,20 +409,22 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             return true
         end, "fresh mobile lobby characters on the protected deck with zero load tasks", 15)
     end
-    local function finishRound(crew: Crew)
+    local function finishRound(crew: Crew, abortReason: string?)
         local roundId = crew.roundId
         waitFor(function()
             return match.snapshot().phase == "Results"
         end, "competitive result", duration + 3)
         local result = assert(match.snapshot().result, "missing authoritative result")
-        assert(result.reason == "Timeout" and result.winner == "Gunship", "expected normal timeout")
+        local expectedReason = abortReason or "Timeout"
+        local winner = if abortReason then "None" else "Gunship"
+        assert(result.reason == expectedReason and result.winner == winner, "unexpected replay result")
         allClients("Check", {
             roundId = roundId,
             phase = "Results",
             health = health(),
             launcherState = "Inactive",
-            resultReason = "Timeout",
-            winner = "Gunship",
+            resultReason = expectedReason,
+            winner = winner,
         })
         waitFor(function()
             return match.snapshot().phase == "Lobby"
@@ -469,7 +470,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             held.ownerId and held.launcherId == initial.launcherId and held.revision == initial.revision + 1,
             "pickup duplicated or altered identity"
         )
-        assert(runtime.launcher.resources().representations == 3, "held representation missing or duplicated")
+        assert(runtime.launcher.resources().representations == 4, "held representation missing or duplicated")
         return held.ownerId
     end
 
@@ -501,6 +502,70 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
     end)
     local baseline = resources(runtime)
     observations.lobbyBaseline = baseline
+
+    -- Each reset follows real shell and launcher traffic in one live session.
+    -- Abort once the panel has opened so the replay checks start promptly.
+    local function impactReset(index: number)
+        local crew = deploy()
+        local previousMap = workspace.World.Battlefield
+        local carrier = assert(Players:GetPlayerByUserId(pickup(crew, 1)), "missing real launcher owner")
+        local launcher = runtime.launcher.snapshot()
+        Fixture.pose(runtime, carrier, Vector3.new(255, 14, 0))
+        Fixture.equip(carrier, "Rocket launcher")
+        selectWeapon(crew, "M102", 1)
+        local panels = Fixture.outpost()
+        local shot, panelIndex = Fixture.panelShot(runtime, "M102", 1, panels, 1)
+        assert(shot, "no visible Outpost panel in replay")
+        send(crew.operator, { shot })
+        local expires = index == 5
+        local rocketTarget = if expires then Vector3.new(255, 750, 0) else Vector3.new(235, -6, -48)
+        send(carrier, { launcherIntent("Fire", launcher.launcherId, crew.roundId, 2, rocketTarget) })
+        local panel = panels[panelIndex]
+        local launcherFolder = ReplicatedStorage[launcherState]
+        local impact: Payload? = nil
+        if expires then
+            waitFor(function()
+                return runtime.launcher.resources().flights == 1
+            end, "actual empty-air rocket flight", 3)
+            waitFor(function()
+                return runtime.launcher.resources().flights == 0
+            end, "empty-air rocket expiry", 7)
+            assert(launcherFolder:GetAttribute("LastImpact") == nil, "expired rocket reported a world impact")
+        else
+            waitFor(function()
+                return type(launcherFolder:GetAttribute("LastImpact")) == "string"
+            end, "actual rocket ground contact", 7)
+            local current = attributes(launcherFolder, "LastImpact")
+            assert(
+                current.roundId == crew.roundId and current.aircraftHit == false,
+                "stale or non-world impact"
+            )
+            impact = current
+        end
+        waitFor(function()
+            return panel:GetAttribute("DamageAppearance") == "Total"
+        end, "panel opening from real howitzer impact", 7)
+        assert(health() == AircraftHealth.maximum, "world rocket changed aircraft health")
+        checkBounds(resources(runtime))
+        local replicated = allClients("PanelStage", { id = panel.Name, appearance = "Total" })
+        assert(match.abort(crew.roundId, "P19ReplayReset"), "replay abort failed")
+        finishRound(crew, "P19ReplayReset")
+        assertDrained(resources(runtime), baseline)
+        assert(workspace.World.Battlefield ~= previousMap, "battlefield structure was not rebuilt")
+        for _, restored in Fixture.outpost() do
+            assert(restored:GetAttribute("DamageAppearance") == "Pristine", "panel survived replay")
+        end
+        local cleared = allClients("PanelStage", { id = panel.Name, appearance = "Pristine", clear = true })
+        observations["impactReset" .. index] = {
+            roundId = crew.roundId,
+            panel = panel.Name,
+            rocket = impact,
+            rocketExpired = expires,
+            activeClients = replicated,
+            resetClients = cleared,
+            resources = resources(runtime),
+        }
+    end
 
     local function rifleReceived(): number
         local total = 0
@@ -676,6 +741,9 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                     and workspace:GetServerTimeNow() >= readiness.nextFire
                 then
                     local shot, panel = Fixture.panelShot(runtime, weapon, serial, panels, preferred)
+                    if not shot then
+                        shot = Fixture.terrainShot(runtime, weapon, serial)
+                    end
                     if shot then
                         preferred = panel
                         send(crew.operator, { shot })
@@ -698,7 +766,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
                                 launcherSnapshot.launcherId,
                                 crew.roundId,
                                 serial,
-                                Vector3.new(0, 110, 0)
+                                Vector3.new(235, -6, -48)
                             ),
                         })
                     else
@@ -771,7 +839,7 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
     -- for operators to set the recorded graphics controls before any sampling.
     local function awaitProfileEnvironment()
         stage("Waiting for pinned viewport and graphics on actual clients")
-        local deadline = os.clock() + 40
+        local deadline = os.clock() + 75
         local sampled: { [string]: unknown }
         repeat
             assertRoster()
@@ -796,7 +864,8 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             task.wait(0.75)
         until os.clock() >= deadline
         error(
-            "P11 requires stable "
+            suite
+                .. " requires stable "
                 .. profileSettings
                 .. " for each client; observed "
                 .. HttpService:JSONEncode(sampled)
@@ -809,7 +878,11 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
             for index = 1, 5 do
                 if
                     not check("Accelerated flood and pristine replay " .. index, function()
-                        replayRound(index, 0.04)
+                        if suite == "P19Replay" then
+                            impactReset(index)
+                        else
+                            replayRound(index, 0.04)
+                        end
                     end)
                 then
                     break
@@ -984,6 +1057,24 @@ function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -
     listener:Disconnect()
     transport:Destroy()
     deliver()
+end
+
+-- Historical selector rejects on current builds before allocating resources.
+function Harness.run(rawMode: unknown, rawExpected: unknown, finish: ((Report) -> ())?)
+    require(game:GetService("ReplicatedStorage").HarnessCompatibility).assertCurrent("P11")
+    runScenario(rawMode, rawExpected, finish, "P11")
+end
+
+-- Runs the current matched workload with two actual clients.
+function Harness.profile(finish: ((Report) -> ())?)
+    runScenario("Profile", 2, finish, "P19Profile")
+end
+
+-- Five consecutive resets in a real two-client session on current combat.
+-- Native Server & Clients receives the same report through finish. With no
+-- callback, the SDK owns ending the test and returning its result.
+function Harness.impactReplay(finish: ((Report) -> ())?)
+    runScenario("Replay", 2, finish, "P19Replay")
 end
 
 return Harness

@@ -4,7 +4,8 @@
 local WeaponSoundRules = {}
 
 export type Cue = "GAU23" | "M102" | "LightImpact" | "HeavyImpact" | "M7" | "RocketLaunch" | "RocketImpact"
-export type Emit = (Cue, number, Vector3, number, number?) -> ()
+-- Server presentation relay. Optional coarse surface selects a local mix.
+export type Emit = (Cue, number, Vector3, number, number?, string?) -> ()
 export type Profile = {
     asset: string,
     volume: number,
@@ -18,65 +19,70 @@ export type Profile = {
 }
 
 local blast = "rbxasset://sounds/impact_explosion_03.mp3"
+local rifle = "rbxassetid://9113189096"
+local rocket = "rbxassetid://9120729973"
+-- Approved platform sounds only. Pending or unavailable imports use this
+-- bundled cue with the requested timing, envelope and equalizer.
+WeaponSoundRules.fallbackAsset = blast
 local profiles: { [string]: Profile } = {
     GAU23 = {
-        asset = blast,
-        volume = 0.76,
-        speed = 1.38,
-        duration = 0.31,
+        asset = rifle,
+        volume = 0.69,
+        speed = 1.44,
+        duration = 0.19,
         near = 105,
         far = 850,
-        highGain = -21,
-        lowGain = 1,
+        highGain = -9,
+        lowGain = 1.5,
         delay = 0.13,
     },
     M102 = {
         asset = "rbxassetid://9120018088",
-        volume = 1.15,
-        speed = 0.87,
+        volume = 0.98,
+        speed = 0.83,
         duration = 1.48,
         near = 135,
         far = 960,
-        highGain = -22,
-        lowGain = 3,
+        highGain = -14,
+        lowGain = 4,
         delay = 0.19,
     },
     LightImpact = {
         asset = blast,
         volume = 0.22,
-        speed = 1.6,
-        duration = 0.21,
+        speed = 1.8,
+        duration = 0.17,
         near = 24,
         far = 360,
-        highGain = -12,
-        lowGain = -2,
+        highGain = -6,
+        lowGain = -6,
         delay = 0.06,
     },
     HeavyImpact = {
         asset = blast,
-        volume = 0.68,
-        speed = 0.77,
-        duration = 1.05,
+        volume = 0.82,
+        speed = 0.73,
+        duration = 1.22,
         near = 43,
         far = 620,
-        highGain = -17,
-        lowGain = 3,
+        highGain = -8,
+        lowGain = 5,
         delay = 0.09,
     },
     M7 = {
-        asset = "rbxassetid://9113189096",
+        asset = rifle,
         volume = 0.66,
         speed = 1,
         duration = 0.42,
         near = 20,
         far = 470,
-        highGain = 0,
-        lowGain = 0,
+        highGain = 1,
+        lowGain = -2,
         delay = 0,
     },
     RocketLaunch = {
-        asset = "rbxassetid://9120729973",
-        volume = 0.94,
+        asset = rocket,
+        volume = 0.83,
         speed = 1.13,
         duration = 0.87,
         near = 30,
@@ -87,24 +93,64 @@ local profiles: { [string]: Profile } = {
     },
     RocketImpact = {
         asset = blast,
-        volume = 0.92,
-        speed = 0.91,
-        duration = 1.12,
+        volume = 0.76,
+        speed = 1.04,
+        duration = 0.74,
         near = 42,
         far = 620,
-        highGain = -8,
-        lowGain = 3,
+        highGain = -3,
+        lowGain = 1.5,
         delay = 0.03,
     },
 }
 
--- Returns a frozen mix profile or nil for an unsupported presentation cue.
-function WeaponSoundRules.profile(cue: unknown): Profile?
-    return if type(cue) == "string" then profiles[cue] else nil
-end
-
 for _, profile in profiles do
     table.freeze(profile)
+end
+
+local function colored(profile: Profile, highGain: number, lowGain: number, speed: number): Profile
+    local result = table.clone(profile)
+    result.highGain, result.lowGain, result.speed = highGain, lowGain, speed
+    return table.freeze(result)
+end
+
+local surfaceProfiles: { [string]: { [string]: Profile } } = {
+    Ground = {
+        LightImpact = colored(profiles.LightImpact, -11, -3, 1.66),
+        HeavyImpact = colored(profiles.HeavyImpact, -13, 5, 0.71),
+        RocketImpact = colored(profiles.RocketImpact, -8, 3, 0.97),
+    },
+    Metal = {
+        LightImpact = colored(profiles.LightImpact, -2, -6, 1.94),
+        HeavyImpact = colored(profiles.HeavyImpact, -5, 4, 0.77),
+        RocketImpact = colored(profiles.RocketImpact, 1, 0, 1.13),
+    },
+}
+
+-- Returns a frozen mix profile or nil for an unsupported presentation cue.
+function WeaponSoundRules.profile(cue: unknown, surface: unknown?): Profile?
+    if type(cue) ~= "string" then
+        return nil
+    end
+    local variants = if type(surface) == "string" then surfaceProfiles[surface] else nil
+    return (if variants then variants[cue] else nil) or profiles[cue]
+end
+
+-- Preload the distinct referenced samples off the firing path.
+function WeaponSoundRules.assets(): { string }
+    return { blast, rifle, rocket, profiles.M102.asset }
+end
+
+-- A confirmed terminal-round contact can arrive alongside Results replication.
+-- Give its audio time to play while rejecting new muzzle cues in Results.
+function WeaponSoundRules.audibleInPhase(cue: string, phase: string, resultsAgeSeconds: number): boolean
+    return phase == "Active"
+        or (
+            phase == "Results"
+            and resultsAgeSeconds >= 0
+            and resultsAgeSeconds <= 0.75
+            and (cue == "LightImpact" or cue == "HeavyImpact" or cue == "RocketImpact")
+        )
 end
 
 -- Returns the due server-clock time. Nearby ground muzzle cues are immediate

@@ -4,6 +4,33 @@ type API = typeof(require(game:GetService("ReplicatedStorage").Shared.WeaponSoun
 
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local rules = candidate :: API
+    test("P19 terminal rounds still admit short-lived impact cues without queued muzzle blasts", function()
+        assert(rules.audibleInPhase("M102", "Active", 0), "active muzzle cue rejected")
+        assert(rules.audibleInPhase("HeavyImpact", "Results", 0.75), "terminal heavy blast was truncated")
+        assert(rules.audibleInPhase("RocketImpact", "Results", 0.2), "terminal rocket blast was truncated")
+        assert(not rules.audibleInPhase("HeavyImpact", "Results", 0.751), "expired Results cue admitted")
+        assert(not rules.audibleInPhase("M102", "Results", 0.2), "muzzle cue survived Results")
+        assert(not rules.audibleInPhase("HeavyImpact", "Lobby", 0), "stale impact survived lobby reset")
+    end)
+    test("P19 impact color changes the audible surface without changing arrival timing", function()
+        local ground = assert(rules.profile("HeavyImpact", "Ground"))
+        local metal = assert(rules.profile("HeavyImpact", "Metal"))
+        local short = assert(rules.profile("LightImpact", "Metal"))
+        local rocket = assert(rules.profile("RocketImpact", "Metal"))
+        assert(
+            ground.highGain < metal.highGain and ground.speed < metal.speed,
+            "soil and metal contacts share filter and pitch"
+        )
+        assert(
+            short.duration < rocket.duration and rocket.duration < metal.duration,
+            "contact tails lose light to heavy hierarchy"
+        )
+        assert(
+            rules.due(ground, 400, 10, 10, false) == rules.due(metal, 400, 10, 10, false),
+            "terrain pitch changed spatial arrival time"
+        )
+        assert(table.find(rules.assets(), rules.fallbackAsset))
+    end)
     test("Distant cannon fire and impacts arrive later than a local rifle or rocket launch", function()
         local light = assert(rules.profile("GAU23"), "30mm profile missing")
         local heavy = assert(rules.profile("M102"), "105mm profile missing")

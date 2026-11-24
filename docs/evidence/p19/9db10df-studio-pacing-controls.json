@@ -1,0 +1,770 @@
+{
+  "source": "9db10df73b154196fa31396d3576d22313f1540f",
+  "tree": "466faa8a8991fa519db50e906e4fa3bb29907f4d",
+  "parity": {
+    "mismatches": [],
+    "comparedScripts": 176,
+    "comparedGeometry": 5,
+    "passed": true,
+    "receipt": {
+      "scriptCount": 176,
+      "buildSha256": "e8e4f86c4d25f089901201d87845070f7708e3e28bcc4cb0d8c46658126911e0",
+      "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+      "geometryCount": 5,
+      "sourceCommit": "9db10df73b154196fa31396d3576d22313f1540f"
+    }
+  },
+  "hardware": "Apple M1 Pro, 16 GB, macOS 26.6.2 arm64",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P19PacingDiagnostic\"})",
+  "scope": "Diagnostic in a private SDK Studio session with two actual clients, 1920×1080 and graphics quality 8. The authoritative runtime stayed in Lobby. Each client used a fixed local camera and the unmodified production effects controller with identical synthetic contacts and rocket motion during its Off and Full segments. Sky controls aimed away from the map and had no contacts. Stage results report PreRender intervals and Roblox Stats render CPU and GPU samples in milliseconds after a two-second settle. This diagnostic isolates local effects and camera setup. The full gameplay workload and its failed budget are reported separately.",
+  "fixture": {
+    "localFile": "build/p19-frame-pacing-probe.luau",
+    "sha256": "a56062fc5f0ab47e5a21e5651bea2e128c3224ed4297ea4a46de69c0fd1632d9",
+    "swap": "Same local fixture with camera roles reversed and a shorter 9-second Sky, 11-second Off, 11-second Full sequence."
+  },
+  "controls": {
+    "preflight": [
+      {
+        "priorDevice": "default",
+        "graphics": "QualityLevel8",
+        "id": -1,
+        "height": 1080,
+        "priorGraphics": "Automatic",
+        "width": 1920
+      },
+      {
+        "clientCount": 2,
+        "expected": true,
+        "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":196,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":196}",
+        "phase": "Lobby"
+      },
+      {
+        "priorDevice": "default",
+        "graphics": "QualityLevel8",
+        "id": -2,
+        "height": 1080,
+        "priorGraphics": "Automatic",
+        "width": 1920
+      }
+    ],
+    "initialAttempt": [
+      {
+        "mode": "thermal-camera-fixture",
+        "clientSmoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 20,
+          "discovered": 20,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -1
+        },
+        "error": "AssistantCommand:115: profile environment changed or frame samples incomplete",
+        "passed": false,
+        "studio": "0.748.0.7481526",
+        "frames": [],
+        "clean": true
+      },
+      {
+        "mode": "ground-camera-fixture",
+        "clientSmoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 20,
+          "discovered": 20,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -2
+        },
+        "error": "AssistantCommand:115: profile environment changed or frame samples incomplete",
+        "passed": false,
+        "studio": "0.748.0.7481526",
+        "frames": [],
+        "clean": true
+      }
+    ],
+    "repeat": [
+      {
+        "mode": "thermal-camera-fixture",
+        "clientSmoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 20,
+          "discovered": 20,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -1
+        },
+        "passed": true,
+        "studio": "0.748.0.7481526",
+        "frames": [
+          {
+            "gpuMs": {
+              "p50": 0.00020826701074838638,
+              "p99": 0.0022083986550569534,
+              "p95": 0.00037509016692638397,
+              "n": 150
+            },
+            "attempted": 0,
+            "intervalAtLeast60ms": 150,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 66.65000319480896,
+              "p99": 67.6608756184578,
+              "p95": 67.4227923154831,
+              "n": 150
+            },
+            "cpuMs": {
+              "p50": 1.309583312831819,
+              "p99": 4.324083216488361,
+              "p95": 1.7467917641624808,
+              "n": 150
+            },
+            "stage": "Sky",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 0.000250060111284256,
+              "p99": 0.004333327524363995,
+              "p95": 0.002500019036233425,
+              "n": 180
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 180,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 66.67453795671463,
+              "p99": 68.11816990375519,
+              "p95": 67.46099889278412,
+              "n": 180
+            },
+            "cpuMs": {
+              "p50": 5.407250020653009,
+              "p99": 10.118916630744934,
+              "p95": 6.576375104486942,
+              "n": 180
+            },
+            "stage": "Off",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 0.00029173679649829865,
+              "p99": 0.0008749775588512421,
+              "p95": 0.000500003807246685,
+              "n": 180
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 180,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 1,
+            "admitted": 116,
+            "intervalMs": {
+              "p50": 66.60391390323639,
+              "p99": 67.97108054161072,
+              "p95": 67.58199632167816,
+              "n": 180
+            },
+            "cpuMs": {
+              "p50": 5.902291741222143,
+              "p99": 8.620708249509335,
+              "p95": 6.81787496432662,
+              "n": 180
+            },
+            "stage": "Full",
+            "peakBursts": 7
+          },
+          {
+            "gpuMs": {
+              "p50": 0.00024994369596242905,
+              "p99": 0.000500003807246685,
+              "p95": 0.00037509016692638397,
+              "n": 180
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 180,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 66.6782483458519,
+              "p99": 67.650705575943,
+              "p95": 67.43208318948746,
+              "n": 180
+            },
+            "cpuMs": {
+              "p50": 5.136083345860243,
+              "p99": 7.5568752363324165,
+              "p95": 5.9309168718755245,
+              "n": 180
+            },
+            "stage": "Off",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 0.000250060111284256,
+              "p99": 0.0006667105481028557,
+              "p95": 0.00041676685214042664,
+              "n": 181
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 181,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 1,
+            "admitted": 116,
+            "intervalMs": {
+              "p50": 66.69425219297409,
+              "p99": 67.64329224824905,
+              "p95": 67.43241846561432,
+              "n": 181
+            },
+            "cpuMs": {
+              "p50": 5.641208030283451,
+              "p99": 7.353041786700487,
+              "p95": 6.444667000323534,
+              "n": 181
+            },
+            "stage": "Full",
+            "peakBursts": 7
+          },
+          {
+            "gpuMs": {
+              "p50": 0.000250060111284256,
+              "p99": 0.000750063918530941,
+              "p95": 0.0004166504368185997,
+              "n": 150
+            },
+            "attempted": 0,
+            "intervalAtLeast60ms": 150,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 66.62558019161224,
+              "p99": 68.56141984462738,
+              "p95": 68.04908066987991,
+              "n": 150
+            },
+            "cpuMs": {
+              "p50": 1.366708311252296,
+              "p99": 1.888666651211679,
+              "p95": 1.584624988026917,
+              "n": 150
+            },
+            "stage": "Sky",
+            "peakBursts": 0
+          }
+        ],
+        "clean": true
+      },
+      {
+        "mode": "ground-camera-fixture",
+        "clientSmoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 20,
+          "discovered": 20,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -2
+        },
+        "passed": true,
+        "studio": "0.748.0.7481526",
+        "frames": [
+          {
+            "gpuMs": {
+              "p50": 1.8389583565294743,
+              "p99": 3.7351250648498535,
+              "p95": 3.6118749994784594,
+              "n": 600
+            },
+            "attempted": 0,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 16.71420782804489,
+              "p99": 17.51062460243702,
+              "p95": 17.284417524933815,
+              "n": 600
+            },
+            "cpuMs": {
+              "p50": 1.2208332773298025,
+              "p99": 1.5501249581575394,
+              "p95": 1.3437082525342703,
+              "n": 600
+            },
+            "stage": "Sky",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 4.3768747709691525,
+              "p99": 13.284792192280293,
+              "p95": 9.461499750614166,
+              "n": 720
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 16.6940838098526,
+              "p99": 18.129542469978333,
+              "p95": 17.3333752900362,
+              "n": 720
+            },
+            "cpuMs": {
+              "p50": 2.9647918418049812,
+              "p99": 5.159666761755943,
+              "p95": 4.115333780646324,
+              "n": 720
+            },
+            "stage": "Off",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 5.861625075340271,
+              "p99": 14.56849928945303,
+              "p95": 12.777166441082954,
+              "n": 720
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 1,
+            "admitted": 116,
+            "intervalMs": {
+              "p50": 16.711708158254623,
+              "p99": 17.696958035230637,
+              "p95": 17.386166378855705,
+              "n": 720
+            },
+            "cpuMs": {
+              "p50": 3.8118334487080574,
+              "p99": 5.203417036682367,
+              "p95": 4.8207915388047695,
+              "n": 720
+            },
+            "stage": "Full",
+            "peakBursts": 7
+          },
+          {
+            "gpuMs": {
+              "p50": 4.599125124514103,
+              "p99": 11.83695811778307,
+              "p95": 9.10549983382225,
+              "n": 721
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 16.699708998203278,
+              "p99": 17.528750002384186,
+              "p95": 17.313500866293907,
+              "n": 721
+            },
+            "cpuMs": {
+              "p50": 2.900875173509121,
+              "p99": 4.481124691665173,
+              "p95": 3.91604145988822,
+              "n": 721
+            },
+            "stage": "Off",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 6.244041491299868,
+              "p99": 13.31112440675497,
+              "p95": 11.387250386178493,
+              "n": 720
+            },
+            "attempted": 116,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 1,
+            "admitted": 116,
+            "intervalMs": {
+              "p50": 16.697250306606293,
+              "p99": 18.382124602794647,
+              "p95": 17.852291464805603,
+              "n": 720
+            },
+            "cpuMs": {
+              "p50": 3.8254582323133945,
+              "p99": 5.118708126246929,
+              "p95": 4.604625049978495,
+              "n": 720
+            },
+            "stage": "Full",
+            "peakBursts": 7
+          },
+          {
+            "gpuMs": {
+              "p50": 1.8212083959951997,
+              "p99": 5.179000087082386,
+              "p95": 3.9398749358952045,
+              "n": 600
+            },
+            "attempted": 0,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 16.63433387875557,
+              "p99": 18.506167456507683,
+              "p95": 17.925875261425972,
+              "n": 600
+            },
+            "cpuMs": {
+              "p50": 1.2931666569784284,
+              "p99": 1.6293750377371907,
+              "p95": 1.4372916193678975,
+              "n": 600
+            },
+            "stage": "Sky",
+            "peakBursts": 0
+          }
+        ],
+        "clean": true
+      }
+    ],
+    "cameraSwap": [
+      {
+        "mode": "ground-camera-fixture",
+        "clientSmoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 20,
+          "discovered": 20,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -1
+        },
+        "passed": true,
+        "studio": "0.748.0.7481526",
+        "frames": [
+          {
+            "gpuMs": {
+              "p50": 0.000250060111284256,
+              "p99": 0.002625049091875553,
+              "p95": 0.0004166504368185997,
+              "n": 105
+            },
+            "attempted": 0,
+            "intervalAtLeast60ms": 105,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 66.67979061603546,
+              "p99": 68.48345696926117,
+              "p95": 68.1881234049797,
+              "n": 105
+            },
+            "cpuMs": {
+              "p50": 1.3951666187494993,
+              "p99": 1.9592500757426023,
+              "p95": 1.5794583596289158,
+              "n": 105
+            },
+            "stage": "Sky",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 0.00016670674085617065,
+              "p99": 0.0030833762139081955,
+              "p95": 0.00037509016692638397,
+              "n": 135
+            },
+            "attempted": 91,
+            "intervalAtLeast60ms": 135,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 66.69104099273682,
+              "p99": 68.48254054784775,
+              "p95": 68.2932510972023,
+              "n": 135
+            },
+            "cpuMs": {
+              "p50": 3.227291628718376,
+              "p99": 5.446499679237604,
+              "p95": 4.311166703701019,
+              "n": 135
+            },
+            "stage": "Off",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 0.00024994369596242905,
+              "p99": 0.002249958924949169,
+              "p95": 0.000500003807246685,
+              "n": 135
+            },
+            "attempted": 91,
+            "intervalAtLeast60ms": 135,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 1,
+            "admitted": 91,
+            "intervalMs": {
+              "p50": 66.66254252195358,
+              "p99": 68.7166228890419,
+              "p95": 68.31341981887817,
+              "n": 135
+            },
+            "cpuMs": {
+              "p50": 4.1352915577590466,
+              "p99": 5.558708216995001,
+              "p95": 4.889208357781172,
+              "n": 135
+            },
+            "stage": "Full",
+            "peakBursts": 6
+          }
+        ],
+        "clean": true
+      },
+      {
+        "mode": "thermal-camera-fixture",
+        "clientSmoke": {
+          "errors": 0,
+          "skipped": 0,
+          "passed": 20,
+          "discovered": 20,
+          "environment": "Studio",
+          "seed": 1,
+          "suite": "P01-client",
+          "failed": 0,
+          "userId": -2
+        },
+        "passed": true,
+        "studio": "0.748.0.7481526",
+        "frames": [
+          {
+            "gpuMs": {
+              "p50": 1.8427500035613775,
+              "p99": 3.828749991953373,
+              "p95": 3.629958489909768,
+              "n": 420
+            },
+            "attempted": 0,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 16.648249700665474,
+              "p99": 18.54529231786728,
+              "p95": 18.272042274475098,
+              "n": 420
+            },
+            "cpuMs": {
+              "p50": 1.281999982893467,
+              "p99": 1.7326666275039315,
+              "p95": 1.450750045478344,
+              "n": 420
+            },
+            "stage": "Sky",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 8.082875050604343,
+              "p99": 14.667708426713943,
+              "p95": 13.267625123262405,
+              "n": 541
+            },
+            "attempted": 91,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 0,
+            "admitted": 0,
+            "intervalMs": {
+              "p50": 16.637500375509262,
+              "p99": 18.434708938002586,
+              "p95": 18.235625699162483,
+              "n": 541
+            },
+            "cpuMs": {
+              "p50": 4.80262516066432,
+              "p99": 6.190000101923943,
+              "p95": 5.5950419045984745,
+              "n": 541
+            },
+            "stage": "Off",
+            "peakBursts": 0
+          },
+          {
+            "gpuMs": {
+              "p50": 7.33024999499321,
+              "p99": 14.72724974155426,
+              "p95": 12.91237585246563,
+              "n": 541
+            },
+            "attempted": 91,
+            "intervalAtLeast60ms": 0,
+            "mismatches": {
+              "viewport": 0,
+              "camera": 0,
+              "lobby": 0,
+              "graphics": 0
+            },
+            "peakTrails": 1,
+            "admitted": 91,
+            "intervalMs": {
+              "p50": 16.66025072336197,
+              "p99": 18.47945898771286,
+              "p95": 18.12533289194107,
+              "n": 541
+            },
+            "cpuMs": {
+              "p50": 5.20200002938509,
+              "p99": 7.80550017952919,
+              "p95": 6.473375018686056,
+              "n": 541
+            },
+            "stage": "Full",
+            "peakBursts": 6
+          }
+        ],
+        "clean": true
+      }
+    ]
+  },
+  "restoration": {
+    "clients": [
+      {
+        "id": -1,
+        "device": "default",
+        "graphics": "Automatic"
+      },
+      {
+        "id": -2,
+        "device": "default",
+        "graphics": "Automatic"
+      }
+    ],
+    "edit": {
+      "receiptCleared": true,
+      "graphics": "Automatic",
+      "endResult": {
+        "reason": "P19 same-client Off/Full/Sky and camera-swap comparisons collected"
+      },
+      "device": "default",
+      "selector": true
+    }
+  }
+}

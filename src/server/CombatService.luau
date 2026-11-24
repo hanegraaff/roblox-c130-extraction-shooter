@@ -55,15 +55,21 @@ CombatService.profiles = table.freeze({
     M102 = table.freeze({
         capacity = 1,
         cadence = 1,
-        reload = 4,
+        reload = 6,
         speed = 300,
         lifetime = 4,
         range = 900,
         damage = 100,
-        radius = 18,
+        radius = 25,
         collisionRadius = 0.05,
     }),
 }) :: { [string]: Profile }
+
+-- Inclusive world-space radius in studs measured from the actual collision.
+-- Invalid distances fail closed. Can be used for either player or panel reach.
+function CombatService.withinBlast(distanceStuds: number, radiusStuds: number): boolean
+    return distanceStuds >= 0 and distanceStuds <= radiusStuds and radiusStuds < math.huge
+end
 export type Readiness = { ammo: number, nextFire: number, reloadUntil: number }
 export type Shot = {
     roundId: number,

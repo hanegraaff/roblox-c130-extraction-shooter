@@ -2694,7 +2694,7 @@
     {
       "id": "positional-weapon-audio",
       "kind": "runtime-effect",
-      "source": "Original positional mix and delayed cue sequencing. The rifle uses Assault Rifle 5 (SFX), the rocket launch uses Whoosh Impact 1 (SFX), the 105mm report uses Thunder Distant Boom Thud Rapid Hits 18 (SFX), and impacts reuse the bundled Roblox explosion.",
+      "source": "Original positional mix and delayed cue sequencing. The M-7 and accelerated 30mm report use separate mixes of Assault Rifle 5 (SFX). The rocket launch uses Whoosh Impact 1 (SFX) and the 105mm report uses Thunder Distant Boom Thud Rapid Hits 18 (SFX). Contact sounds use separate weapon and surface mixes of the bundled explosion, which also provides an unavailable-sample fallback.",
       "author": "Project contributors for the mix, Pro Sound Effects for Creator Store recordings, and Roblox Corporation for bundled audio",
       "license": "Original mix code, Roblox Creator Store in-experience use for referenced recordings, and Roblox bundled platform content",
       "local_path": "src/shared/WeaponSoundRules.luau",
@@ -2717,6 +2717,20 @@
       ],
       "bundled_sound_references": [
         "rbxasset://sounds/impact_explosion_03.mp3"
+      ],
+      "upload_owner": null
+    },
+    {
+      "id": "weapon-impact-particles",
+      "kind": "runtime-effect",
+      "source": "Original weapon contact bursts and local rocket smoke assembled from authored emitters and bundled Roblox particle textures.",
+      "author": "Project contributors for effects and Roblox Corporation for bundled textures",
+      "license": "Project license for effect code and Roblox bundled platform content",
+      "local_path": "src/client/WeaponImpactEffects.luau",
+      "bundled_texture_references": [
+        "rbxasset://textures/particles/smoke_main.dds",
+        "rbxasset://textures/particles/explosion01_core_main.dds",
+        "rbxasset://textures/particles/fire_sparks_main.dds"
       ],
       "upload_owner": null
     },

@@ -1,0 +1,44 @@
+{
+  "candidate": "15ba23561bfce4b6efb1edc0dfe7fc35f1cf2845",
+  "studioVersion": "0.748.0.7481526",
+  "scenario": "ExecuteMultiplayerTestAsync(2, {kind = 'P19Operated'})",
+  "startedServer": "2026-11-24T12:02:54Z",
+  "parentStudioId": "f205a8a1-46a0-4e7d-b315-337ce638f284",
+  "spawnedDisposableSdkChild": "ef45993e-3615-4f75-85a3-2b2f2efbf13e",
+  "startup": {
+    "parent": {
+      "running": false,
+      "receipt": "Starting",
+      "type": "nil",
+      "spawnedPlayers": 0,
+      "isLocal": true
+    },
+    "child": {
+      "spawnedPlayers": 0,
+      "running": false,
+      "type": "nil",
+      "isLocal": true
+    },
+    "childInvocation": "StartServer, expected two players, StudioTestService mode, local project",
+    "availableDataModels": [
+      "Edit"
+    ],
+    "attemptDurationSecondsLowerBound": 90
+  },
+  "cleanup": {
+    "childStop": "Game Stopped",
+    "originalStop": "Game Stopped",
+    "after": {
+      "selectorAbsent": true,
+      "receipt": "Starting",
+      "edit": true
+    },
+    "final": {
+      "ownedDisposableServerClosed": true,
+      "originalDocumentInEdit": true,
+      "originalTestSelectorAbsent": true,
+      "sdkReturnedWithoutTestReport": true
+    }
+  },
+  "acceptance": "No server/clients started. Ordinary input, A3 operated rocket flight and A4 operated render/audio not exercised in this run. Staged P05 result remains separate."
+}

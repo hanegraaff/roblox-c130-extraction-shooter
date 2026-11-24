@@ -80,4 +80,6 @@ attributes to those bytes. Runtime validity, rendered bounds/UVs, contact
 behavior and replication are separate checks. Public metadata is not an authority
 or secrecy boundary.
 
-`WeaponSoundRules` maps supported sound cues to frozen mix profiles and converts server emission time and camera distance to a bounded playback time. It performs no engine I/O.
+`WeaponSoundRules.profile(cue, surface?)` maps supported sound cues to frozen mix profiles and selects contact mixes by surface. `due(profile, distance, emittedAt, heardAt, ownShot)` returns the next bounded playback time in synchronized seconds or nil for an expired/out-of-range cue. `assets()` lists referenced samples for client preload and `fallbackAsset` identifies the bundled substitute. `audibleInPhase(cue, phase, resultsAgeSeconds)` admits gameplay audio in Active and admits contact cues only during the first 0.75 seconds of Results. The rules perform no engine I/O.
+
+`WeaponImpactRules.surface(material, terrain, aircraft)` classifies a server-confirmed contact as Ground, Solid or Metal for presentation. `history()` returns a caller-owned bounded history with `admit(weapon, shotId, emittedAt, receivedAt)` and `clear()`; times are synchronized seconds. Admission rejects stale, implausibly future or duplicate identities. The helper performs no collision query or damage award.
