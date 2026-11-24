@@ -99,3 +99,13 @@ The separate normal-controls SDK attempt stalled before either client connected.
 The first profile attempt returned 3/4 cases. Both clients passed smoke and cleanup passed. One client's viewport missed the preflight deadline, so the workload did not run. [Preflight report](../docs/evidence/p19/468242d-profile-preflight.json)
 
 The retry ran the full 300-second workload on the source-bound `468242d` test build with two actual Studio clients at a stable 1920×1080 and quality 8 on an Apple M1 Pro with 16 GB. It admitted 848 chain shots, 32 howitzer shots, 150 rifle shots and 71 rockets. Gunship p95 was **67.9 ms**, above the 33.3 ms budget, while Ground p95 was **18.0 ms** and server scheduler p95 was **0.7 ms**. Cleanup passed. The five-minute profile returned 3/4 cases. Of 352 sampled on-screen impacts, all were ready on the first `PreRender` after receipt. Each client peaked at five bursts and one active smoke trail. The frame probe measures readiness rather than first visible pixels. [Candidate profile report](../docs/evidence/p19/468242d-profile-candidate.json)
+
+The paired baseline used the same profiling code with pre-P19 production source and the same device, quality and two-client Studio configuration. Reproduce its fixture from `40c97a9` with regenerated historical test metadata. The local comparison tree matched 170 scripts and five poses in Edit. It admitted 825 chain shots, 32 howitzer shots, 150 rifle shots and 71 rockets. All four checks passed. [Baseline profile report](../docs/evidence/p19/717608d-profile-baseline.json)
+
+| Five-minute run | Gunship p95 | Ground p95 | Server scheduler p95 |
+| --- | ---: | ---: | ---: |
+| Baseline | 18.5 ms | 18.7 ms | 0.7 ms |
+| P19 | 67.9 ms | 18.0 ms | 0.7 ms |
+| P19 recheck | 25.7 ms | 67.5 ms | 0.7 ms |
+
+The unchanged-source P19 recheck again passed 3/4 cases, with 800 chain shots, 31 howitzer shots, 150 rifle shots and 71 rockets. All 415 sampled on-screen impacts were ready on the first frame, with the same peaks of five bursts and one trail on each client. Two spot checks during this run showed the roughly 67 ms frame interval moving between clients, with near-zero reported GPU frame time during the slower intervals. The cause of the frame pacing remains unconfirmed. A5's client frame budget remains unmet, and the low-effects and five-reset acceptance remain open. The paired runs passed shutdown cleanup. The original device and graphics settings were restored in Edit. [Recheck report](../docs/evidence/p19/468242d-profile-recheck.json)
