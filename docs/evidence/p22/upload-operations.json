@@ -1,0 +1,97 @@
+{
+  "scope": "Private Roblox upload for the approved P22 lobby",
+  "studioVersion": "0.748.0.7481526",
+  "universeId": "10776653720",
+  "placeId": "72732833195348",
+  "ownerUserId": "2227341845",
+  "batches": {
+    "lobby-pilot.glb": {
+      "sha256": "eb719ce5753842b9adee4871fef1d8b8dfde666e27ae8fd4458ef95636f22b5d",
+      "parts": 22,
+      "operationId": "928d2f1c-8be6-4a53-b468-eabb5cf7e7e5",
+      "assetId": "91661592065500",
+      "moderationState": "Approved",
+      "recordedStatus": "operation completed"
+    },
+    "lobby-room01.glb": {
+      "sha256": "20b081c4fef66cb2fbed5b04cc561a953fb2241451dd6fa1634d469ee9d28103",
+      "parts": 200,
+      "operationId": "e7f787a6-2585-457e-b47f-776654d723a0",
+      "assetId": "136646423260795",
+      "moderationState": "Approved",
+      "recordedStatus": "operation completed"
+    },
+    "lobby-room02.glb": {
+      "sha256": "dc90ef6a6c508d032209424ef4b9979da3137da3199f52832c94caab8ba6c2cf",
+      "parts": 200,
+      "operationId": "ae52a0c9-735e-44c3-9f45-5856cb3857f6",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room03.glb": {
+      "sha256": "f5b5b04306234194cc05a9d2541d27d69855d982b553aa7dde7d4924f515d93a",
+      "parts": 200,
+      "operationId": "20b1f51b-fb1d-40ea-b825-3bccaad061d1",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room04.glb": {
+      "sha256": "eaca39635f00c4825bf821b4e47e98c73201ddb2001753099d2a1e99c6f69f88",
+      "parts": 200,
+      "operationId": "77bf4c07-f93b-4116-9531-41f7451a280e",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room05.glb": {
+      "sha256": "d4c1aeb6ad3f67c278fbddf5b48a872b3843fec855db539fe92a41923f89c116",
+      "parts": 200,
+      "operationId": "f0760449-84b7-4c5f-bebe-dd9c22ba6ebb",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room06.glb": {
+      "sha256": "f353e24a092a849657a767e49047dc3077528e2f86dda96667f8fed405429592",
+      "parts": 200,
+      "operationId": "5e36440c-4e48-4e87-a355-39c55c8ac41b",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room07.glb": {
+      "sha256": "e4c6c9dd5ffab50be5c85670dde92ee94bbc44d226e567d8892709cf2e1b4da7",
+      "parts": 200,
+      "operationId": "ce3d105c-2602-41ef-ac9d-8f18869fe25f",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room08.glb": {
+      "sha256": "3b4bbe8b81689f1c252c101728d36b404301b6783509c8215d3a61045f1ed52c",
+      "parts": 200,
+      "operationId": "f083699d-652e-4cc6-a5bf-4c4809f85a30",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room09.glb": {
+      "sha256": "4b8700b120a3067aa1684902bf42b3c4a454164683091d57e58689b569c3c605",
+      "parts": 200,
+      "operationId": "c53ea8dd-399a-4fdc-a861-4166d89b7069",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room10.glb": {
+      "sha256": "9d05a0c3ecc94f372ec97dca6aed20b54a0f251bc17687a604b8dc457117f1fd",
+      "parts": 200,
+      "operationId": "ff3d6d49-4ebe-4cd0-8394-f2b9fa95fd7a",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room11.glb": {
+      "sha256": "c34a7c3d963a3284dbfc9d469f27d0ab805a26f25fb47de8c6c58c7f6a73055d",
+      "parts": 200,
+      "operationId": "c8868dc4-1454-4a59-a956-ad1715fbc675",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room12.glb": {
+      "sha256": "5f2b0d2d0fa3f409dcca8605396f4250dd22b956d356b5a4db280f8fb51d6b6c",
+      "parts": 200,
+      "operationId": "99e7ef0d-a2a5-4e20-9a8b-de0f977db7fd",
+      "recordedStatus": "upload accepted; operation result pending"
+    },
+    "lobby-room13.glb": {
+      "sha256": "58460a1655363955c4e78a3be15c4efe871cb2493a53e58aa55d20df7da1ab70",
+      "parts": 10,
+      "operationId": "8c20a2e8-a087-4431-842a-7153645bb91a",
+      "recordedStatus": "upload accepted; operation result pending"
+    }
+  }
+}

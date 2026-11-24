@@ -52,15 +52,20 @@ def digest(path):
 
 
 def site_and_inputs(catalog):
-    """Bind clearance to the actual protected deck and the six distinct original JPEG files."""
+    """Bind clearance to the approved arrival pivot, anchors and six original JPEGs."""
     world=json.loads((ROOT/"assets/world/Battlefield.model.json").read_text())
     by_name={child["Name"]:child for child in world["Children"]}
     anchors={c["Name"]:c["Properties"]["CFrame"][:3] for c in by_name["Anchors"]["Children"]}
-    deck=next(o["Properties"] for o in by_name["LobbyStation"]["Children"] if o["Name"]=="LobbyDeck")
     assert anchors["Lobby"]==catalog["existing_anchors_roblox"]["Lobby"] and anchors["Operator"]==catalog["existing_anchors_roblox"]["Operator"]
-    assert deck["Size"]==catalog["existing_deck_studs"]
-    x,y,z=deck["CFrame"][:3]
-    assert catalog["pivot_roblox"]==[x,y+deck["Size"][1]/2,z]
+    assert catalog["existing_deck_studs"]==[60,2,60]
+    x,y,z=anchors["Lobby"]
+    assert catalog["pivot_roblox"]==[x,y-3,z]
+    station=by_name.get("LobbyStation")
+    if station:
+        deck=next(o["Properties"] for o in station["Children"] if o["Name"]=="LobbyDeck")
+        assert deck["Size"]==catalog["existing_deck_studs"]
+        x,y,z=deck["CFrame"][:3]
+        assert catalog["pivot_roblox"]==[x,y+deck["Size"][1]/2,z]
     assert catalog["p20_instances"]==1 and catalog["p20_sculpt_commit"].startswith("62cd82c")
     portraits=catalog["paintings"]
     assert len(portraits)==6 and {p["portrait"] for p in portraits}==set(range(1,7))

@@ -1,0 +1,47 @@
+{
+  "scope": "Native framed portrait calibration in private Studio Edit",
+  "assetId": "91661592065500",
+  "uploadSha256": "eb719ce5753842b9adee4871fef1d8b8dfde666e27ae8fd4458ef95636f22b5d",
+  "approvedExportSha256": "bf8387630baeec1a6677fb0394573c1900b3a635763bec6da3afc70cd120ed9e",
+  "ownerUserId": "2227341845",
+  "assetVersionId": "5798203584868",
+  "partCount": 22,
+  "correctionYawDegrees": 180,
+  "maxMeshExtentDeltaStuds": 0.000002877168753911974,
+  "maxCenterDeltaStuds": 0.0000133514404296875,
+  "canvas": {
+    "colorMap": "rbxassetid://133957223549920",
+    "source": "Portrait 04 | canvas",
+    "meshId": "rbxassetid://129269854495485",
+    "role": "Portrait",
+    "meshSize": {
+      "1": 0,
+      "2": 10.199999809265137,
+      "3": 7.649999618530273
+    },
+    "portrait": 4,
+    "material": "Canvas 04 | supplied portrait",
+    "pose": {
+      "1": 584.218017578125,
+      "2": 9.100000381469727,
+      "3": -20.600011825561523,
+      "4": -1,
+      "5": 0,
+      "6": -8.742277657347586e-8,
+      "7": 0,
+      "8": 1,
+      "9": 0,
+      "10": 8.742277657347586e-8,
+      "11": 0,
+      "12": -1
+    },
+    "colorSourceSha256": "0b3d66287f1f337162cb747f40435e4a837ae65150e89ad2006ddc3405642ef3",
+    "displayWidthStuds": 7.65,
+    "displayHeightStuds": 10.2
+  },
+  "visualReview": "Studio rendered the entire upright photo inside the complete gold frame when viewed from the gallery side.",
+  "preload": {
+    "rbxassetid://129269854495485": "Success",
+    "rbxassetid://133957223549920": "Success"
+  }
+}
