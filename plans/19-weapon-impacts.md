@@ -82,3 +82,20 @@ The independent tester built the Rojo test artifact with SHA-256 `7690bf9b88e6fd
 - **A3 and A4:** Native client admission and cleanup tests passed. The staged session recorded both roles with audio tracks and observed loaded, playing gunship reports and a ground-observed heavy impact. It did not supply a matched-volume comparison or validate each rocket collision mode.
 
 [Two-client report and capture manifest](../docs/evidence/p19/15ba235-native-p05.json) identifies the actual observations, capture drops and cleanup. The source of the runtime and combat tests stayed identical through the subsequent documentation and release-allowlist changes.
+
+### Host gate and delivery
+
+`python3 scripts/verify.py` passed on macOS 26.6.2 arm64 with Python 3.10. It ran 83 unit, 78 integration, 26 tooling and 58 asset tests with zero unexpected failures. Static and rejection checks passed. Both Rojo builds reconstructed 11,459 authored transforms. The release contained 67 runtime scripts and excluded native tests. Source and verification inputs match `a4babb37770f0b5654fc78d942265a4edd7fe98e` (tree `41421b19d10c769f02aa4d18bbf6046a604d3e70`). [Passing GitHub Verify #580](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45389802948)
+
+- Release build SHA-256 `01cefcd9797fb10a1ec7604c44167f56e01a7226551faa3b2b1aff88fd0c5879`
+- Test build SHA-256 `7eb159581b643711df51d27f3bed8c97c96cd7684349cb72eb89f498383fb3a1`
+
+The technical writer checked the player guide, source and asset contracts, and contributor setup and testing procedures against the implementation. The root README retains the selected Blender image and caption. P19 is on `plan/19-weapon-impacts` in [draft PR #67](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/67).
+
+The separate normal-controls SDK attempt stalled before either client connected. The disposable child remained in Edit and was closed after Studio Stop and normal termination failed. The original local editor remained open and the SDK returned without a test result. Ordinary firing input, rocket-specific collision and expiry, and full rendered and listening review are still open. [Operated startup and cleanup receipt](../docs/evidence/p19/15ba235-operated-attempt.json)
+
+### Candidate profile
+
+The first profile attempt returned 3/4 cases. Both clients passed smoke and cleanup passed. One client's viewport missed the preflight deadline, so the workload did not run. [Preflight report](../docs/evidence/p19/468242d-profile-preflight.json)
+
+The retry ran the full 300-second workload on the source-bound `468242d` test build with two actual Studio clients at a stable 1920×1080 and quality 8 on an Apple M1 Pro with 16 GB. It admitted 848 chain shots, 32 howitzer shots, 150 rifle shots and 71 rockets. Gunship p95 was **67.9 ms**, above the 33.3 ms budget, while Ground p95 was **18.0 ms** and server scheduler p95 was **0.7 ms**. Cleanup passed. The five-minute profile returned 3/4 cases. Of 352 sampled on-screen impacts, all were ready on the first `PreRender` after receipt. Each client peaked at five bursts and one active smoke trail. The frame probe measures readiness rather than first visible pixels. [Candidate profile report](../docs/evidence/p19/468242d-profile-candidate.json)
