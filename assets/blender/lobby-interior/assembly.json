@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "assembly": "Waiting Lobby",
+  "p20_sculpt_commit": "62cd82c27584da9c70b24d975e49cb1df646e3d6",
+  "p20_glb_sha256": "842661e46702b8730fc334026941069bb1c34341a74fb3fcb280aaff1ee7ad90",
+  "p20_meshes": 34,
+  "p20_instances": 1,
+  "bust_transform_blender": {
+    "translation": [
+      0.0,
+      31.5,
+      2.6500000953674316
+    ],
+    "rotation_xyz_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "units": "one Blender unit per Roblox stud",
+  "blender_to_site": "Roblox (520 + X, Z, -Y). Pivot at existing deck top under Lobby.",
+  "pivot_blender": [
+    0,
+    0,
+    0
+  ],
+  "pivot_roblox": [
+    520,
+    0,
+    0
+  ],
+  "arrival_forward_blender": [
+    0,
+    1,
+    0
+  ],
+  "existing_deck_studs": [
+    60,
+    2,
+    60
+  ],
+  "existing_anchors_roblox": {
+    "Lobby": [
+      520,
+      3,
+      0
+    ],
+    "Operator": [
+      520,
+      3,
+      -15
+    ]
+  },
+  "floor_limits_blender_xy": {
+    "Main": [
+      -25,
+      -13,
+      25,
+      49
+    ],
+    "Movie Theater": [
+      -70,
+      9,
+      -25,
+      50
+    ],
+    "Art Gallery": [
+      25,
+      9,
+      65,
+      49
+    ]
+  },
+  "door_centers_blender": [
+    [
+      -25,
+      26,
+      0
+    ],
+    [
+      25,
+      26,
+      0
+    ]
+  ],
+  "nominal_opening_width_studs": 16,
+  "nominal_opening_height_studs": 14.4,
+  "aisle_edges_blender_x": [
+    -51.95,
+    -43.05
+  ],
+  "gallery_bench_center_blender": [
+    45,
+    29,
+    0
+  ],
+  "collision_guidance": "Use continuous finished floor slabs and three room shells. Keep both modeled openings through all layers; reserve the central aisle and passages. Build obstacle proxies for dais, benches, seats and television console at P22 import.",
+  "review_guides": {
+    "avatar_body_studs": [
+      4,
+      4,
+      6
+    ],
+    "player_eye_height_studs": 4.8,
+    "camera_clearance_fixture": {
+      "trailing_distance_studs": 6,
+      "pitch_up_degrees": 15,
+      "radius_studs": 0.45
+    }
+  },
+  "export_selection": "All mesh geometry underneath Waiting Lobby | deck surface pivot, including the 34-part approved bust. Omit cameras, lights and placement guides.",
+  "screen": {
+    "mesh": "CRT | phosphor glass and aerial image",
+    "image": "aerial-screen.png",
+    "source_sha256": "1884bbb3a8fd4d3f3d6c64f22b0174f21d23a88e050bf1f744f00df20dc62652"
+  },
+  "paintings": [
+    {
+      "portrait": 1,
+      "source": "src/images/redesigned-lobby/portrait-1.jpeg",
+      "source_sha256": "97ab5b44bd8bea7dde67b132ddafdde468dcf65a8cf04f0ccba0d8c1b982da5d",
+      "raster_px": [
+        724,
+        1086
+      ],
+      "canvas": "Portrait 01 | canvas",
+      "material": "Canvas 01 | supplied portrait",
+      "frame_prefix": "Portrait 01 | frame",
+      "size_studs": [
+        6.8,
+        10.2
+      ],
+      "center_blender": [
+        64.218,
+        39.0,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 01"
+    },
+    {
+      "portrait": 2,
+      "source": "src/images/redesigned-lobby/portrait-2.jpeg",
+      "source_sha256": "32278cc6f685170a6271976b3e546d13830b2a745728d98ea52df3af7b404e19",
+      "raster_px": [
+        640,
+        480
+      ],
+      "canvas": "Portrait 02 | canvas",
+      "material": "Canvas 02 | supplied portrait",
+      "frame_prefix": "Portrait 02 | frame",
+      "size_studs": [
+        11.46667,
+        8.6
+      ],
+      "center_blender": [
+        54.2,
+        9.781999999999998,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 02"
+    },
+    {
+      "portrait": 3,
+      "source": "src/images/redesigned-lobby/portrait-3.jpeg",
+      "source_sha256": "27f70552c02939e1436715d2a08a1c74936e51e0fffb3f2efa800a3e2577cc65",
+      "raster_px": [
+        768,
+        1024
+      ],
+      "canvas": "Portrait 03 | canvas",
+      "material": "Canvas 03 | supplied portrait",
+      "frame_prefix": "Portrait 03 | frame",
+      "size_studs": [
+        7.65,
+        10.2
+      ],
+      "center_blender": [
+        35.4,
+        48.218,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 03"
+    },
+    {
+      "portrait": 4,
+      "source": "src/images/redesigned-lobby/portrait-4.jpeg",
+      "source_sha256": "0b3d66287f1f337162cb747f40435e4a837ae65150e89ad2006ddc3405642ef3",
+      "raster_px": [
+        640,
+        480
+      ],
+      "canvas": "Portrait 04 | canvas",
+      "material": "Canvas 04 | supplied portrait",
+      "frame_prefix": "Portrait 04 | frame",
+      "size_studs": [
+        11.46667,
+        8.6
+      ],
+      "center_blender": [
+        64.218,
+        20.6,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 04"
+    },
+    {
+      "portrait": 5,
+      "source": "src/images/redesigned-lobby/portrait-5.jpeg",
+      "source_sha256": "84533375aa2333aa4dd6c26c19706a5542cbf685d6a6a760ba72f11579ac56da",
+      "raster_px": [
+        736,
+        1334
+      ],
+      "canvas": "Portrait 05 | canvas",
+      "material": "Canvas 05 | supplied portrait",
+      "frame_prefix": "Portrait 05 | frame",
+      "size_studs": [
+        5.62759,
+        10.2
+      ],
+      "center_blender": [
+        54.5,
+        48.218,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 05"
+    },
+    {
+      "portrait": 6,
+      "source": "src/images/redesigned-lobby/portrait-6.jpeg",
+      "source_sha256": "797520953af6a6d75fa436c3981bd31bb3f58b8ecb170a8937f9e9b16ca0ba0c",
+      "raster_px": [
+        640,
+        480
+      ],
+      "canvas": "Portrait 06 | canvas",
+      "material": "Canvas 06 | supplied portrait",
+      "frame_prefix": "Portrait 06 | frame",
+      "size_studs": [
+        11.46667,
+        8.6
+      ],
+      "center_blender": [
+        35.9,
+        9.782000000000002,
+        9.1
+      ],
+      "camera": "A2 | Framed portrait 06"
+    }
+  ],
+  "review_cameras": {
+    "arrival": "A1 | Entrance-height composition",
+    "spawn-view": "A1 | Exact waiting anchor eye",
+    "theater": "A2 | Movie theater aisle",
+    "gallery-east": "A2 | Portraits at north and east walls",
+    "gallery-south": "A2 | Portraits across the bench",
+    "circulation": "A3 | Horizontal section at six studs",
+    "plan": "A3 | Connected halls",
+    "portrait-3": "A2 | Framed portrait 03",
+    "portrait-5": "A2 | Framed portrait 05",
+    "portrait-1": "A2 | Framed portrait 01",
+    "portrait-4": "A2 | Framed portrait 04",
+    "portrait-2": "A2 | Framed portrait 02",
+    "portrait-6": "A2 | Framed portrait 06"
+  }
+}
