@@ -52,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-Play the integrated game locally in Roblox Studio from `main`. Use the P22 branch for the furnished lobby verified in Studio while its pull request is in review. The same rooms and the current paintings are available in Blender. [P22 verification record](plans/22-integrate-lobby.md#completion-record) · [Blender lobby](assets/blender/lobby-interior/README.md)
+Play the integrated game locally in Roblox Studio from `main`, including the furnished waiting lobby verified in Studio. The same rooms and paintings are available in Blender. [P22 verification record](plans/22-integrate-lobby.md#completion-record) · [Blender lobby](assets/blender/lobby-interior/README.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
@@ -73,7 +73,7 @@ rojo plugin install
 
 On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
-To try the furnished lobby in Studio, run `git fetch origin` and `git switch plan/22-integrate-lobby` in your clone. Run the same setup and verification commands, then open the local development build below. For the editable assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
+For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 

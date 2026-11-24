@@ -34,6 +34,10 @@ SALT_FLATS_RECEIPT = "assets/imports/salt-flats/native-receipt.json"
 SALT_FLATS_BANKS = ("assets/models/SaltFlatsHangar.rbxm", "assets/models/SaltFlatsPanelVariants.rbxm")
 SANDBREAK_RECEIPT = "assets/imports/sandbreak/native-receipt.json"
 SANDBREAK_BANKS = ("assets/models/SandbreakBunker.rbxm", "assets/models/SandbreakPanelVariants.rbxm")
+PRISM_RECEIPT = "assets/imports/alien-spaceship/native-receipt.json"
+PRISM_BANKS = ("assets/models/PrismSeedship.rbxm", "assets/models/PrismPanelVariants.rbxm")
+LOBBY_RECEIPT = "docs/evidence/p22/native-oil-assembly.json"
+LOBBY_BANKS = ("assets/imports/lobby-interior/LobbyArt.rbxm",)
 SCRIPT_CLASSES = {"Script", "LocalScript", "ModuleScript"}
 CLOUD_REFERENCE = re.compile(r"\brbxassetid://([1-9][0-9]*)\b")
 
@@ -192,14 +196,29 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
     for key, label, receipt_path, paths, count_key in (
         ("salt_flats_native_receipt", "Salt Flats", SALT_FLATS_RECEIPT, SALT_FLATS_BANKS, "meshes"),
         ("sandbreak_native_receipt", "Sandbreak", SANDBREAK_RECEIPT, SANDBREAK_BANKS, "managedMeshCount"),
+        ("prism_native_receipt", "Prism Seedship", PRISM_RECEIPT, PRISM_BANKS, "meshPartCount"),
     ):
         if not (root / receipt_path).exists():
             continue
         receipt = read_json(root, receipt_path)
-        meshes, textures = native_bank_assets(root, label, paths, receipt["nativeModels"], receipt[count_key])
+        mesh_count = receipt[count_key]
+        if receipt_path == PRISM_RECEIPT:
+            # The Seedship finalizer clones each pristine query proxy into its Light variant.
+            mesh_count += receipt["panelCount"]
+        meshes, textures = native_bank_assets(root, label, paths, receipt["nativeModels"], mesh_count)
         mesh_ids.update(meshes)
         texture_ids.update(textures)
         native_receipts[key] = fingerprint(root, receipt_path)
+    if (root / LOBBY_BANKS[0]).exists():
+        receipt = read_json(root, LOBBY_RECEIPT)
+        archive = receipt["archive"]
+        meshes, textures = native_bank_assets(
+            root, "Waiting lobby", LOBBY_BANKS, {archive["path"]: archive["sha256"]},
+            sum(receipt["roles"].values()),
+        )
+        mesh_ids.update(meshes)
+        texture_ids.update(textures)
+        native_receipts["waiting_lobby_native_receipt"] = fingerprint(root, LOBBY_RECEIPT)
     for asset in manifest["assets"]:
         if asset["id"] == "stock-district-scenery":
             if fingerprint(root, asset["local_path"])["sha256"] != asset["sha256"]:

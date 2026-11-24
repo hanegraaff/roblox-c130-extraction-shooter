@@ -26,9 +26,10 @@ The command runs `scripts/verify.py`, checks the runtime script sources in both
 Rojo builds against the checkout and matches the release's cloud asset IDs to
 the committed asset records. On success, `build/release-receipt.json` records
 the commit and tree, build SHA-256s, tool and dependency pins, manifest and asset
-inventory. The Vesper inventory is derived from a separate build of the two
-native banks and their import receipt. Retain that receipt and the host log with the exact candidate. Keep
-the generated place files in local or CI artifact storage.
+inventory. The Vesper, Salt Flats, Sandbreak, Prism Seedship and furnished lobby
+inventories use separate builds of their native models and the Git-managed
+import receipts. Retain the release receipt and host log with the exact
+candidate. Keep the generated place files in local or CI artifact storage.
 
 Open `build/tests.rbxlx` as a separate local Studio test document or sync the
 candidate to the existing test document with `test.project.json`. Collect fresh
