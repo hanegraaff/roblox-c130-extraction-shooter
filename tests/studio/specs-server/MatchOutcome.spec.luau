@@ -6,6 +6,7 @@ local Server = game:GetService("ServerScriptService").Server
 local AircraftService = require(Server.AircraftService)
 local GroundCombatRuntime = require(Server.GroundCombatRuntime)
 local MatchService = require(Server.MatchService)
+local AircraftHealth = require(Server.AircraftHealth)
 
 -- Production aircraft/ground adapters run against actual world and a pure match clock.
 local function checkImpact(atSeconds: number, expectedReason: string)
@@ -33,22 +34,37 @@ local function checkImpact(atSeconds: number, expectedReason: string)
         ground.maintain(workspace:GetServerTimeNow())
         local origin = aircraft.position() + Vector3.yAxis * 50
         local down = -Vector3.yAxis * 60
-        for _, id in { "first", "second" } do
+        local groundCount = 0
+        for _, member in state.members do
+            if member.role == "Ground" then
+                groundCount += 1
+            end
+        end
+        local maximum = assert(AircraftHealth.maximumFor(groundCount), "fixture Ground roster invalid")
+        assert(
+            ReplicatedStorage.AircraftState:GetAttribute("MaxHealth") == maximum,
+            "roster health not initialized"
+        )
+        local remaining = AircraftHealth.rocketDamage
+        local preDamageHits = (maximum - remaining) / AircraftHealth.rocketDamage
+        assert(preDamageHits >= 0 and preDamageHits % 1 == 0, "fixture needs an integral fixed-rocket prefix")
+        for index = 1, preDamageHits do
+            local id = "pre-damage:" .. tostring(index)
             local hit, applied = ground.rocketCast(state.roundId, id, origin, down, player)
             assert(hit and applied, "real rocket collision unavailable")
         end
         assert(
-            ReplicatedStorage.AircraftState:GetAttribute("Health") == 100,
-            "two direct hits did not leave exactly 100 health"
+            ReplicatedStorage.AircraftState:GetAttribute("Health") == remaining and remaining == 100,
+            "roster-derived direct hits did not leave exactly one fixed 100-unit rocket"
         )
         seconds = atSeconds
         local damageBatchRan = false
         match.step(function()
             damageBatchRan = true
             assert(match.eliminate(player, state.roundId), "same-frame ground death was rejected")
-            local hit, applied = ground.rocketCast(state.roundId, "third", origin, down, player)
+            local hit, applied = ground.rocketCast(state.roundId, "lethal", origin, down, player)
             assert(hit and applied, "pre-deadline lethal rocket failed")
-            local _, duplicate = ground.rocketCast(state.roundId, "third", origin, down, player)
+            local _, duplicate = ground.rocketCast(state.roundId, "lethal", origin, down, player)
             assert(not duplicate, "duplicate rocket counted")
         end)
         local ended = match.snapshot()
@@ -56,7 +72,7 @@ local function checkImpact(atSeconds: number, expectedReason: string)
         assert(result.reason == expectedReason, "wrong result reason")
         if atSeconds < 110 then
             assert(
-                damageBatchRan and result.winner == "Ground" and result.shotId == "third",
+                damageBatchRan and result.winner == "Ground" and result.shotId == "lethal",
                 "same-step lethal rocket did not win"
             )
             assert(
