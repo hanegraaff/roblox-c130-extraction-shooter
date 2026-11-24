@@ -185,3 +185,22 @@ On 2026-11-24, the user reported that all visual checks passed after receiving t
 ### User Studio listening review
 
 On 2026-11-24, the user accepted how the audio sounds in Studio and requested performance work. The separate mute and fallback checks keep their prior evidence and are outside this follow-up.
+
+### Weapon effects performance follow-up
+
+The client now tracks replicated rocket membership through folder events, caches emitter curves and color sequences, and clears active particle pools on round, phase, or effects transitions. It only updates smoke emission properties when they change. The particle counts, lifetimes, flash dimensions and opacity remain the values from the visual review.
+
+In two fresh solo Play sessions at the same 1153×579 viewport and Automatic graphics, the focused controller benchmark admitted all 700 synthetic contacts per source. Seven trials measured the following median synchronous call costs. The measurements cover the controller and its immediate engine calls.
+
+| Controller work | Before | After |
+| --- | ---: | ---: |
+| Lobby update after the pools have been used | 22.86 µs | 0.26 µs |
+| Active update with no rocket or impact | 3.07 µs | 0.49 µs |
+| Sustained-fire update | 12.04 µs | 4.93 µs |
+| Per confirmed impact | 64.34 µs | 31.42 µs |
+
+The optimized source passed **196/196** server smoke and **20/20** client smoke in solo Studio. The new test checks late rocket attributes, distance gating, Full and Reduced emission at the moving exhaust, and trail fade after removal. [Source parity and benchmark trials](../docs/evidence/p19/b40f159-renderer-benchmark.json)
+
+The optimized source also ran the full five-minute `P19Profile` workload with two actual Studio SDK clients at stable 1920×1080 and graphics quality 8. It accepted 778 chain shots, 16 howitzer shots, 150 rifle shots and 71 rockets. All 323 sampled impacts were ready on the first `PreRender`. Each client peaked at four bursts and one trail. Smoke and shutdown cleanup passed. Server scheduler p95 was **1.1 ms**. Gunship and Ground frame p95 were **67.3 ms** and **67.5 ms**, so the 33.3 ms frame-time budget remains open. The SDK closed the owned session and the original Studio document returned to Edit at its prior graphics and simulator settings. [Optimized loaded profile](../docs/evidence/p19/b40f159-loaded-profile.json)
+
+The loaded profile used `b40f159`. The following test-only revision added an assertion message without changing its condition or the runtime. The full host gate passed on that revision. [GitHub Verify #612](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45412768324)
