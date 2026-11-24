@@ -1,0 +1,109 @@
+{
+  "blender": "5.3.0",
+  "source_sha256": "02690030fdbfcb487480a3f0f965c08ebd26c6b2b001720cb6d3974075ac2624",
+  "export_sha256": "842661e46702b8730fc334026941069bb1c34341a74fb3fcb280aaff1ee7ad90",
+  "size_xyz_studs": [
+    13.4,
+    9.68,
+    19.824
+  ],
+  "base_diameter_studs": 9.68,
+  "mesh_count": 34,
+  "triangles": 78524,
+  "largest_mesh_triangles": 18800,
+  "materials": [
+    "01  Honed limestone",
+    "02  Combed limestone",
+    "03  Polished spec rims",
+    "04  Chiseled iris",
+    "05  Pupil recess",
+    "06  Dressed limestone"
+  ],
+  "packed_maps": [
+    "01  Honed limestone · original grain",
+    "02  Combed limestone · original grain",
+    "06  Dressed limestone · original grain",
+    "Combed locks · chisel normal"
+  ],
+  "expression": {
+    "source": {
+      "pupil_pitch_and_upper_lower_clearance": {
+        "06 | Pupil -1": [
+          -16.49,
+          0.48,
+          0.135
+        ],
+        "06 | Pupil +1": [
+          -16.45,
+          0.44,
+          0.18
+        ]
+      },
+      "root_crest_crown_depth_studs": {
+        "-0.65": [
+          2.346,
+          3.059,
+          2.141
+        ],
+        "0": [
+          2.491,
+          3.076,
+          2.267
+        ],
+        "0.65": [
+          2.549,
+          3.011,
+          2.091
+        ]
+      }
+    },
+    "export": {
+      "pupil_pitch_and_upper_lower_clearance": {
+        "06 | Pupil -1": [
+          -16.49,
+          0.48,
+          0.135
+        ],
+        "06 | Pupil +1": [
+          -16.45,
+          0.44,
+          0.18
+        ]
+      },
+      "root_crest_crown_depth_studs": {
+        "-0.65": [
+          2.346,
+          3.059,
+          2.141
+        ],
+        "0": [
+          2.491,
+          3.076,
+          2.267
+        ],
+        "0.65": [
+          2.549,
+          3.011,
+          2.091
+        ]
+      }
+    }
+  },
+  "outward_shell_hits": {
+    "source": {
+      "07 | Modeled ear L": 3767,
+      "07 | Modeled ear R": 3737,
+      "10 | Point collar L": 1179,
+      "10 | Point collar R": 1229,
+      "10 | Collar leaf at the nape": 1725
+    },
+    "export": {
+      "07 | Modeled ear L": 3767,
+      "07 | Modeled ear R": 3737,
+      "10 | Collar leaf at the nape": 1725,
+      "10 | Point collar L": 1179,
+      "10 | Point collar R": 1229
+    }
+  },
+  "stage_cameras": 4
+}
