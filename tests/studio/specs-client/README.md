@@ -13,3 +13,7 @@ production camera owner in a real client with a fixture round ID that excludes
 the current roster. It checks the neutral camera's inert subject and
 idempotent cleanup. The P10 multiplayer harness separately exercises cycle
 input and living teammate following. [Player experience harness](../../../docs/testing.md#run-the-player-experience-harness)
+
+## Operator control placement
+
+`OperatorControlLayout.spec.luau` calls the production Recenter adapter with actual GUI Instances. It verifies complete bounds and native center-hit registration for negative/positive safe-canvas origins, viewport changes and the genuine device-safe root, then destroys its fixture. The matching pure pixel-intersection tests run in `AircraftPanRules.spec.luau`. An actual visible-center tap in phone emulation is a separate operated requirement; record its source and result rather than inferring it from geometry. [Current P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness)
