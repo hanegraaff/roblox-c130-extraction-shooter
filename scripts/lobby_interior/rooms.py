@@ -331,9 +331,9 @@ def painting(wall,u,index,height):
     material="Canvas %02d | supplied portrait"%index
     m=image_mat(material,path,.83)
     img=next(n.image for n in m.node_tree.nodes if n.type=="TEX_IMAGE")
-    # Painting four was photographed sideways. The approved hanging direction turns the
-    # raw JPEG clockwise on the wall. Keep its original bytes and entire field of view.
-    turn_clockwise=(index==4)
+    # The three sideways rasters have EXIF Orientation 6. Apply their approved
+    # hanging direction in the UVs so every original JPEG pixel stays available.
+    turn_clockwise=index in (2,4,6)
     raster=list(img.size)
     display_raster=raster[::-1] if turn_clockwise else raster
     width=height*display_raster[0]/display_raster[1]
@@ -379,8 +379,8 @@ def gallery():
     painting(GALLERY_REAR,9.5,5,10.2)
     painting(GALLERY_EAST,-10,1,10.2)
     painting(GALLERY_EAST,8.4,4,10.2)
-    painting(GALLERY_FRONT,-9.2,2,8.6)
-    painting(GALLERY_FRONT,9.1,6,8.6)
+    painting(GALLERY_FRONT,-9.2,2,10.2)
+    painting(GALLERY_FRONT,9.1,6,10.2)
     box("Gallery Axminster rug",(45,29,.037),(17.7,10.3,.09),"Petrol moquette",.055,-.23*PI)
     for zoff,mat in ((.13,"Gilt silk"),(.25,"Midnight enamel")):
         # Border strips transform with the rug so their full return remains visible.

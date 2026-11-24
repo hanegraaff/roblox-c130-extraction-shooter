@@ -206,8 +206,8 @@ def auth_scene(root,catalog,reference):
                 points[key]=world@obj.data.vertices[obj.data.loops[i].vertex_index].co
         assert set(points)=={(0,0),(1,0),(1,1),(0,1)}
         # Map three labelled display corners back into the source raster. For the
-        # upright fourth hanging the source's left edge becomes the physical top.
-        is_turned=(p["portrait"]==4)
+        # three EXIF-6 sources the left edge becomes the physical top.
+        is_turned=p["portrait"] in (2,4,6)
         assert p["clockwise_degrees"]==(90 if is_turned else 0)
         orientation=list(image.size)[::-1] if is_turned else list(image.size)
         assert p["display_raster_px"]==orientation
@@ -216,6 +216,8 @@ def auth_scene(root,catalog,reference):
         assert up.normalized().z>.9999 and abs(right.z)<EPS
         assert right.cross(up).normalized().dot(normal)>.9999
         w,h=p["size_studs"]; assert abs(w-right.length)<EPS and abs(h-up.length)<EPS
+        if is_turned:
+            assert abs(w-7.65)<EPS and abs(h-10.20)<EPS
         assert abs(right.length/up.length-orientation[0]/orientation[1])<EPS
         center=sum(points.values(),Vector((0,0,0)))*.25
         assert (center-Vector(p["center_blender"])).length<EPS

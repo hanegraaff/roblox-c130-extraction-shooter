@@ -156,16 +156,16 @@
         480
       ],
       "display_raster_px": [
-        640,
-        480
+        480,
+        640
       ],
-      "clockwise_degrees": 0,
+      "clockwise_degrees": 90,
       "canvas": "Portrait 02 | canvas",
       "material": "Canvas 02 | supplied portrait",
       "frame_prefix": "Portrait 02 | frame",
       "size_studs": [
-        11.46667,
-        8.6
+        7.65,
+        10.2
       ],
       "center_blender": [
         54.2,
@@ -264,16 +264,16 @@
         480
       ],
       "display_raster_px": [
-        640,
-        480
+        480,
+        640
       ],
-      "clockwise_degrees": 0,
+      "clockwise_degrees": 90,
       "canvas": "Portrait 06 | canvas",
       "material": "Canvas 06 | supplied portrait",
       "frame_prefix": "Portrait 06 | frame",
       "size_studs": [
-        11.46667,
-        8.6
+        7.65,
+        10.2
       ],
       "center_blender": [
         35.9,
