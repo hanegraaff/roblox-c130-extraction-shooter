@@ -659,8 +659,8 @@ function ThermalCameraController.new(
         -- contrast are initial grading defaults, subject to native readability
         -- review; they do not alter source colors, cover or target authority.
         effect.Saturation = -1
-        effect.Contrast = 0.15
-        effect.Brightness = -0.08
+        effect.Contrast = -0.15
+        effect.Brightness = -0.02
         effect.Parent = camera
         correction = effect
     end

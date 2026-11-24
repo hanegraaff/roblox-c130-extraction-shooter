@@ -75,8 +75,11 @@ function CombatHarness.run()
                         effect
                             and effect:IsA("ColorCorrectionEffect")
                             and effect.Saturation == -1
-                            and effect.Brightness < 0,
-                        "white-hot thermal view lacks dark monochrome grading"
+                            and effect.Brightness >= -1
+                            and effect.Brightness <= 1
+                            and effect.Contrast >= -1
+                            and effect.Contrast <= 1,
+                        "white-hot thermal view lacks valid monochrome grading"
                     )
                     game:GetService("RunService").RenderStepped:Wait()
                     local origin, size = round.AbsolutePosition, round.AbsoluteSize

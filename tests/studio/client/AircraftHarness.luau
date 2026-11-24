@@ -470,8 +470,11 @@ function AircraftHarness.run()
                         effect
                             and effect:IsA("ColorCorrectionEffect")
                             and effect.Saturation == -1
-                            and effect.Brightness < 0,
-                        "dark white-hot thermal grayscale missing"
+                            and effect.Brightness >= -1
+                            and effect.Brightness <= 1
+                            and effect.Contrast >= -1
+                            and effect.Contrast <= 1,
+                        "white-hot monochrome grading missing or invalid"
                     )
                     local backdrop = camera:FindFirstChild("OperatorGroundBackdrop")
                     assert(

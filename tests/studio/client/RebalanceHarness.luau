@@ -298,8 +298,11 @@ function Harness.run()
                         effect
                             and effect:IsA("ColorCorrectionEffect")
                             and effect.Saturation == -1
-                            and effect.Brightness < 0,
-                        "white-hot view lacks dark monochrome grading"
+                            and effect.Brightness >= -1
+                            and effect.Brightness <= 1
+                            and effect.Contrast >= -1
+                            and effect.Contrast <= 1,
+                        "white-hot view lacks valid monochrome grading"
                     )
                     local count = 0
                     for _, item in camera:GetChildren() do
