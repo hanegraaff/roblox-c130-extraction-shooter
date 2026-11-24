@@ -1,0 +1,157 @@
+{
+  "draftHead": "71afba65fd24beb98d2411eb24244a11b1b970a8",
+  "scope": "Private workspace test before Blender updates",
+  "ownerUserId": "2227341845",
+  "images": {
+    "2": {
+      "file": "portrait-2-oil.png",
+      "sha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+      "operationId": "eb27d3e6-f651-4cc0-afcc-ec9c153b3998",
+      "assetId": "80363010663600",
+      "revisionId": "1",
+      "moderation": "Approved"
+    },
+    "3": {
+      "file": "portrait-3-oil.png",
+      "sha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+      "operationId": "2da10a8e-889a-48bf-b1d2-9807391adbf6",
+      "assetId": "136855674354422",
+      "revisionId": "1",
+      "moderation": "Approved"
+    },
+    "4": {
+      "file": "portrait-4-oil.png",
+      "sha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+      "operationId": "aad6ca81-3749-4ece-8a22-d6a62ba2292b",
+      "assetId": "111747031021921",
+      "revisionId": "1",
+      "moderation": "Approved"
+    },
+    "6": {
+      "file": "portrait-6-oil.png",
+      "sha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+      "operationId": "1764122c-2a83-4958-9067-3bb71be3f574",
+      "assetId": "104678368112021",
+      "revisionId": "1",
+      "moderation": "Approved"
+    }
+  },
+  "editPreview": {
+    "assets": {
+      "2": {
+        "image": "rbxassetid://80363010663600",
+        "pixels": {
+          "1": 1086,
+          "2": 1448
+        },
+        "mesh": "rbxassetid://95811138210370",
+        "sha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1",
+        "size": {
+          "1": 7.6500020027160645,
+          "2": 10.199999809265137
+        }
+      },
+      "3": {
+        "image": "rbxassetid://136855674354422",
+        "pixels": {
+          "1": 1086,
+          "2": 1448
+        },
+        "mesh": "rbxassetid://126740859161539",
+        "sha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d",
+        "size": {
+          "1": 7.649997711181641,
+          "2": 10.199999809265137
+        }
+      },
+      "4": {
+        "image": "rbxassetid://111747031021921",
+        "pixels": {
+          "1": 1086,
+          "2": 1448
+        },
+        "mesh": "rbxassetid://129269854495485",
+        "sha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d",
+        "size": {
+          "1": 7.650000095367432,
+          "2": 10.199999809265137
+        }
+      },
+      "6": {
+        "image": "rbxassetid://104678368112021",
+        "pixels": {
+          "1": 1086,
+          "2": 1448
+        },
+        "mesh": "rbxassetid://99881846767979",
+        "sha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea",
+        "size": {
+          "1": 7.649998188018799,
+          "2": 10.199999809265137
+        }
+      }
+    },
+    "loads": {
+      "rbxassetid://104678368112021": "Success",
+      "rbxassetid://80363010663600": "Success",
+      "rbxassetid://129269854495485": "Success",
+      "rbxassetid://136855674354422": "Success",
+      "rbxassetid://95811138210370": "Success",
+      "rbxassetid://99881846767979": "Success",
+      "rbxassetid://111747031021921": "Success",
+      "rbxassetid://126740859161539": "Success"
+    },
+    "placeId": 72732833195348,
+    "scope": "Private Studio Edit test with temporary frames and MeshPart TextureID bindings",
+    "studio": "0.748.0.7481526",
+    "counts": {
+      "canvas": 4,
+      "nativeParts": 88
+    },
+    "universeId": 10776653720
+  },
+  "playClient": {
+    "meshes": {
+      "P22_Portrait_03": "rbxassetid://126740859161539",
+      "P22_Portrait_04": "rbxassetid://129269854495485",
+      "P22_Portrait_06": "rbxassetid://99881846767979",
+      "P22_Portrait_02": "rbxassetid://95811138210370"
+    },
+    "universeId": 10776653720,
+    "playerCount": 1,
+    "images": {
+      "P22_Portrait_03": "rbxassetid://136855674354422",
+      "P22_Portrait_04": "rbxassetid://111747031021921",
+      "P22_Portrait_06": "rbxassetid://104678368112021",
+      "P22_Portrait_02": "rbxassetid://80363010663600"
+    },
+    "scope": "Single actual Studio local Play client",
+    "loads": {
+      "rbxassetid://111747031021921": "Success",
+      "rbxassetid://80363010663600": "Success",
+      "rbxassetid://129269854495485": "Success",
+      "rbxassetid://136855674354422": "Success",
+      "rbxassetid://95811138210370": "Success",
+      "rbxassetid://99881846767979": "Success",
+      "rbxassetid://104678368112021": "Success",
+      "rbxassetid://126740859161539": "Success"
+    },
+    "role": "Ground",
+    "placeId": 72732833195348
+  },
+  "visual": {
+    "image": "roblox-play.jpg",
+    "order": [
+      2,
+      3,
+      4,
+      6
+    ],
+    "result": "Each approved image appeared upright and entirely visible on its existing native framed canvas."
+  },
+  "cleanup": {
+    "removed": true,
+    "mode": "Edit"
+  },
+  "adjustment": "Only in the preview, corrected the three legacy native canvas rotations for the already upright artwork."
+}

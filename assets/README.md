@@ -34,7 +34,7 @@ Generated place builds belong in ignored `build/`. Do not blanket-ignore authore
 
 ## Furnished waiting lobby
 
-The editable P21 assembly places the approved P20 bust on a stepped dais between the theater and gallery. All six supplied portraits hang in individual frames. The package includes a self-contained GLB, placement catalog, measured camera views and an original aerial still for the television. The P22 import plan covers replacement of the protected Roblox lobby. [Lobby review, placement and rebuild](blender/lobby-interior/README.md) · [Standalone bust](blender/lobby-bust/README.md)
+The furnished P22 lobby places the approved P20 bust on a stepped dais between the theater and gallery. The gallery displays two supplied photographs and four approved oil renditions. The editable Blender scene packs all images. The GLB includes 15 embedded textures and links the four oil PNGs by relative path. P22's Rojo mappings use an engine-exported visual model alongside the lobby's authored collision. [Blender review and rebuild](blender/lobby-interior/README.md) · [Native import and placement](imports/lobby-interior/README.md)
 
 ## Weapon presentation assets
 
@@ -96,7 +96,7 @@ gives the required order; hashes alone do not establish new visual approval.
 Runtime navigation, openings, collision/query behavior, thermal readability,
 fragment physics, multiplayer/reset and engine cost remain P17 checks.
 
-The current P07 revision also versions the starting battlefield shelter’s panelization in the world source/manifest. It replaces the old seven collider envelopes with 76 wall/roof panels while preserving the pristine union/entrances/anchors; the revised source passes its reconstruction and acceptance checks. Runtime Light/Heavy scars and fragments are original code-generated primitives and must not be exported as pristine world assets. Keep registry descriptors, manifest coverage and reconstruction checks aligned; the separate outside lobby is unchanged.
+The P07 revision also versions the starting battlefield shelter’s panelization in the world source and manifest. It replaces seven collider envelopes with 76 wall and roof panels while preserving the pristine union, entrances, and anchors. Runtime Light and Heavy scars and fragments are code-generated primitives. Keep registry descriptors, manifest coverage, and reconstruction checks aligned. The separate lobby stays protected outside the battlefield.
 
 ## P17 imported Outpost reconstruction
 

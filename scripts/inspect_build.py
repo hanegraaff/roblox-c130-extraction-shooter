@@ -8,16 +8,28 @@ import tempfile
 import copy
 import base64
 import struct
+import subprocess
 from functools import lru_cache
 from p17_native_meshes import PAYLOAD_FIELDS, decode_payload, float32_vector
 from radar_outpost.prepare_import import thermal_structure_names
 from lobby_interior.prepare_collision import CATALOG as LOBBY_CATALOG, OUTPUT as LOBBY_COLLISION, collision_model
-from lobby_interior.stage_import import APPROVAL as LOBBY_APPROVAL, EXPORT as LOBBY_EXPORT, decode_glb, digest, embedded_color
+from lobby_interior.stage_import import approved_inputs, decode_glb, digest, embedded_color, rehydrate_oil_images
 
 ROOT = Path(__file__).resolve().parent.parent
 LOBBY_STATION = "Workspace/World/Battlefield/LobbyStation"
 LOBBY_ART = f"{LOBBY_STATION}/LobbyArt"
 LOBBY_ART_SOURCE = LOBBY_COLLISION.with_name("LobbyArt.rbxm")
+LOBBY_ART_ARCHIVE = LOBBY_COLLISION.with_name("LobbyArt.import.rbxm")
+LOBBY_ART_RECEIPT = ROOT / "docs/evidence/p22/upload-operations.json"
+LOBBY_NATIVE_COLOR_ASSETS = {
+    "Portrait 01 | canvas": "105314252767417",
+    "Portrait 02 | canvas": "80363010663600",
+    "Portrait 03 | canvas": "136855674354422",
+    "Portrait 04 | canvas": "111747031021921",
+    "Portrait 05 | canvas": "87378239580163",
+    "Portrait 06 | canvas": "104678368112021",
+    "CRT | phosphor glass and aerial image": "97488158099796",
+}
 
 
 def compiled_surface_attributes(item: ET.Element) -> dict:
@@ -131,12 +143,9 @@ def numeric_property(item: ET.Element, tag: str, name: str, components: tuple[st
 @lru_cache(maxsize=1)
 def approved_lobby_art() -> dict[str, tuple[str, str | None]]:
     """Derive expected mesh roles and texture hashes from the approved GLB."""
-    raw = LOBBY_EXPORT.read_bytes()
-    approval = json.loads(LOBBY_APPROVAL.read_text())
-    catalog = json.loads(LOBBY_CATALOG.read_text())
-    if digest(raw) != approval["export_sha256"]:
-        raise RuntimeError("P22 reconstruction must use the approved lobby GLB")
+    approval, raw, catalog = approved_inputs()
     doc, binary = decode_glb(raw)
+    binary = rehydrate_oil_images(doc, binary, catalog)
     nodes = doc["nodes"]
     (bust_root,) = [node for node in nodes if node["name"] == "Lobby Bust · base center"]
     bust_parts = set(bust_root["children"])
@@ -222,6 +231,9 @@ def check_native_lobby_art(nodes: dict[str, ET.Element], catalog: dict) -> dict[
             not re.fullmatch(r"rbxassetid://\d+", color) or attrs.get("LobbyNativeColor") != color
         ):
             raise RuntimeError(f"Missing native lobby color texture: {full}")
+        approved_color = LOBBY_NATIVE_COLOR_ASSETS.get(source)
+        if approved_color and color != f"rbxassetid://{approved_color}":
+            raise RuntimeError(f"Unapproved native lobby color asset: {full}")
         if role == "Portrait":
             painting = portraits[source]
             number = painting["portrait"]
@@ -243,6 +255,63 @@ def check_native_lobby_art(nodes: dict[str, ET.Element], catalog: dict) -> dict[
     if seen.keys() != expected.keys() or len(portrait_textures) != len(portraits):
         raise RuntimeError("Compiled lobby is missing approved native meshes or portraits")
     return seen
+
+
+def check_archived_lobby_geometry(compiled: dict[str, tuple]) -> None:
+    """Keep actual native mesh IDs, intrinsic dimensions and room placement from the original capture."""
+    receipt = json.loads(LOBBY_ART_RECEIPT.read_text())["nativeArchive"]
+    if digest(LOBBY_ART_ARCHIVE.read_bytes()) != receipt["sha256"]:
+        raise RuntimeError("Original P22 native capture differs from its Studio receipt")
+    with tempfile.TemporaryDirectory(prefix="p22-native-art-") as tmp:
+        xml = Path(tmp) / "native.rbxmx"
+        subprocess.run(
+            ["lune", "run", str(ROOT / "scripts/p17_native_mesh_xml.luau"), str(LOBBY_ART_ARCHIVE), str(xml)],
+            check=True,
+            cwd=ROOT,
+        )
+        archived = instance_nodes(xml)
+
+    # These three parts retain the same native MeshId and intrinsic dimensions.
+    # Their placed size axes and in-plane rotation change to mount the upright PNGs.
+    remounted = {
+        "Portrait 02 | canvas": ((1, 1), (0, -1), (2, 1)),
+        "Portrait 04 | canvas": ((0, 1), (2, 1), (1, -1)),
+        "Portrait 06 | canvas": ((1, 1), (0, -1), (2, 1)),
+    }
+    sources = set()
+    for path, item in archived.items():
+        if item.attrib["class"] != "MeshPart":
+            continue
+        source = compiled_surface_attributes(item)["LobbyArtSource"]
+        if source in sources or source not in compiled:
+            raise RuntimeError(f"Unexpected archived native lobby mesh: {path}")
+        sources.add(source)
+        _, pose, size, intrinsic, mesh_id, _ = compiled[source]
+        original = numeric_property(item, "Vector3", "InitialSize", ("X", "Y", "Z"), path)
+        if mesh_id != content_uri(item, "Mesh") or math.dist(intrinsic, original) > 1e-5:
+            raise RuntimeError(f"P22 changed the original native mesh: {source}")
+        original_pose = numeric_property(item, "CoordinateFrame", "CFrame", CFRAME_COMPONENTS, path)
+        original_size = numeric_property(item, "Vector3", "size", ("X", "Y", "Z"), path)
+        if source in remounted:
+            thin = min(range(3), key=original_size.__getitem__)
+            width, height = (axis for axis in range(3) if axis != thin)
+            size_swap = original_size.copy()
+            size_swap[width], size_swap[height] = size_swap[height], size_swap[width]
+            rotation = [
+                sign * component
+                for row, sign in remounted[source]
+                for component in original_pose[3 + row * 3 : 6 + row * 3]
+            ]
+            if (
+                math.dist(pose[:3], original_pose[:3]) > 1e-4
+                or math.dist(size, size_swap) > 1e-4
+                or math.dist(pose[3:], rotation) > 1e-4
+            ):
+                raise RuntimeError(f"P22 upright remount changed the frame plane, center or extents: {source}")
+        elif math.dist(pose, original_pose) > 1e-4 or math.dist(size, original_size) > 1e-4:
+            raise RuntimeError(f"P22 changed the original placed geometry: {source}")
+    if sources != compiled.keys():
+        raise RuntimeError("P22 compiled lobby differs from the original genuine native mesh inventory")
 
 
 def check_native_mesh(item: ET.Element, source: dict, shared: dict[str, bytes], full: str) -> None:
@@ -983,6 +1052,7 @@ def main() -> None:
         test_lobby = check_native_lobby_art(instance_nodes(ROOT / "build/tests.rbxlx"), lobby_catalog)
         if release_lobby != test_lobby:
             raise RuntimeError("P22 native lobby differs between release and test builds")
+        check_archived_lobby_geometry(release_lobby)
         release_parts += len(release_lobby)
         test_parts += len(test_lobby)
         print(f"Lobby reconstruction passed: {len(release_lobby)} native meshes, one bust, six mapped portraits.")

@@ -15,6 +15,7 @@ from inspect_build import CFRAME_COMPONENTS, LOBBY_ART, check_native_lobby_art
 NAME = "P22_Portrait_04"
 SOURCE = "Portrait 04 | canvas"
 HASH = "e" * 64
+APPROVED_COLOR = "rbxassetid://111747031021921"
 CANVAS = f"{LOBBY_ART}/{NAME}"
 APPEARANCE = f"{CANVAS}/{NAME}_Surface"
 
@@ -39,7 +40,7 @@ def property_node(properties, tag, name, value):
     return entry
 
 
-def visual_fixture():
+def visual_fixture(color_id=APPROVED_COLOR):
     root = ET.Element("Item", {"class": "Folder"})
     mesh = ET.SubElement(root, "Item", {"class": "MeshPart"})
     properties = ET.SubElement(mesh, "Properties")
@@ -59,7 +60,7 @@ def visual_fixture():
         "LobbyArtRole": "Portrait",
         "LobbyPortrait": 4,
         "LobbyColorSourceSha256": HASH,
-        "LobbyNativeColor": "rbxassetid://20",
+        "LobbyNativeColor": color_id,
         "NativeMeshId": "rbxassetid://10",
         "NativeMeshSize": [0, 10.2, 7.65],
         "NativeCollisionFidelity": "Default",
@@ -68,7 +69,7 @@ def visual_fixture():
     appearance = ET.SubElement(mesh, "Item", {"class": "SurfaceAppearance"})
     appearance_properties = ET.SubElement(appearance, "Properties")
     color = ET.SubElement(appearance_properties, "Content", name="ColorMapContent")
-    ET.SubElement(color, "uri").text = "rbxassetid://20"
+    ET.SubElement(color, "uri").text = color_id
     return {LOBBY_ART: root, CANVAS: mesh, APPEARANCE: appearance}
 
 
@@ -88,12 +89,16 @@ class WaitingLobbyCompiled(unittest.TestCase):
 
     def test_compiled_canvas_preserves_native_mesh_and_color_slots(self):
         signature = check_native_lobby_art(self.nodes, self.catalog)
-        self.assertEqual(signature[SOURCE][-2:], ("rbxassetid://10", "rbxassetid://20"))
+        self.assertEqual(signature[SOURCE][-2:], ("rbxassetid://10", APPROVED_COLOR))
 
     def test_rejects_compiled_canvas_with_metadata_but_wrong_color_slot(self):
         self.nodes[APPEARANCE].find("Properties/Content/uri").text = "rbxassetid://99"
         with self.assertRaisesRegex(RuntimeError, "Missing native lobby color texture"):
             check_native_lobby_art(self.nodes, self.catalog)
+
+    def test_rejects_unapproved_image_even_if_serialized_metadata_matches(self):
+        with self.assertRaisesRegex(RuntimeError, "Unapproved native lobby color asset"):
+            check_native_lobby_art(visual_fixture("rbxassetid://99"), self.catalog)
 
     def test_rejects_moved_or_unanchored_canvas(self):
         with self.subTest("unexpected placement"):

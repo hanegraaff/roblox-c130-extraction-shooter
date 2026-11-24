@@ -4,7 +4,7 @@ import argparse
 import json
 import struct
 
-from stage_import import OUTPUT, decode_glb, digest, embedded_color
+from stage_import import APPROVAL, OUTPUT, decode_glb, digest, embedded_color
 from salt_flats.prepare_import import rotate, vertex_rows
 
 
@@ -42,6 +42,9 @@ def configure(filename):
     """Return the documented source identity and all expected native rows for one GLB."""
     index_bytes = (OUTPUT / "import-index.json").read_bytes()
     index = json.loads(index_bytes)
+    approved = json.loads(APPROVAL.read_text())
+    if index["assemblySha256"] != approved["export_sha256"] or index["catalogSha256"] != approved["catalog_sha256"]:
+        raise ValueError("Staged lobby is out of date. Regenerate batches from the current approved art.")
     (batch,) = [entry for entry in index["batches"] if entry["file"] == filename]
     raw = (OUTPUT / filename).read_bytes()
     if digest(raw) != batch["sha256"]:

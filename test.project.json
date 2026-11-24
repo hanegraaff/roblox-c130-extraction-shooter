@@ -105,6 +105,15 @@
           },
           "MarsBoulders": {
             "$path": "assets/imports/districts/MarsBoulders.rbxm"
+          },
+          "LobbyStation": {
+            "$className": "Folder",
+            "LobbyCollision": {
+              "$path": "assets/imports/lobby-interior/LobbyCollision.model.json"
+            },
+            "LobbyArt": {
+              "$path": "assets/imports/lobby-interior/LobbyArt.rbxm"
+            }
           }
         }
       }

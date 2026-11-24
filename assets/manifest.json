@@ -2701,35 +2701,35 @@
     {
       "id": "waiting-lobby-editable",
       "kind": "source",
-      "source": "Editable P21 three-room assembly with one approved P20 bust and six supplied paintings.",
+      "source": "Editable approved waiting lobby with the P20 bust and the four P22 oil paintings packed.",
       "author": "Project contributors; supplied gallery portraits as directed by the project owner",
       "license": "Original project authoring. Six supplied portrait images used on the gallery canvases by direction of the project owner; underlying portrait rights are not reassigned.",
       "local_path": "assets/blender/lobby-interior/waiting-lobby.blend",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "377880e774377566ff3a83b763712376ca922ad235bcb3a544feb417c965f56c"
+      "sha256": "f2769d2323296bd4ae175d4e273a6b04d7afeb529125a76b475952bbd4688452"
     },
     {
       "id": "waiting-lobby-assembly",
       "kind": "mesh",
-      "source": "Clean GLB of the furnished lobby, original fittings, P20 bust and six framed portraits.",
+      "source": "Approved waiting lobby GLB with four exact oil painting PNGs referenced by relative URI.",
       "author": "Project contributors; supplied gallery portraits as directed by the project owner",
       "license": "Original project authoring. Six supplied portrait images used on the gallery canvases by direction of the project owner; underlying portrait rights are not reassigned.",
       "local_path": "assets/exports/lobby-interior/waiting-lobby.glb",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "bf8387630baeec1a6677fb0394573c1900b3a635763bec6da3afc70cd120ed9e"
+      "sha256": "c4be55228c48be218e54b4a305197750ae14c40560d61a0dc114d5ae1312ffcf"
     },
     {
       "id": "waiting-lobby-placement",
       "kind": "catalog",
-      "source": "Placement, openings, approved P20 transform, material and frame mapping for six supplied portraits.",
+      "source": "Site placement, frame mapping and source traceability for all six gallery canvases.",
       "author": "Project contributors",
       "license": "Project-authored asset",
       "local_path": "assets/blender/lobby-interior/assembly.json",
       "roblox_asset_id": null,
       "upload_owner": null,
-      "sha256": "0a77911fb3204b5a7f0f0daec506a0f390733ee1c5f072596d952ad9f9c512a4"
+      "sha256": "00a149bc3bb769f65a14eeacba23e582f430d36273afc31a9f296251ad35397c"
     },
     {
       "id": "waiting-lobby-screen",
@@ -2756,7 +2756,7 @@
     {
       "id": "waiting-lobby-studio-archive",
       "kind": "model",
-      "source": "Genuine Studio-native capture of the approved P21 lobby, pending child-image moderation and activation.",
+      "source": "Original Studio-native P21 capture retained to verify the mesh identities and sizes of the furnished P22 lobby.",
       "author": "Project contributors and supplied portrait photographs as directed by the project owner",
       "license": "Original project authoring. Supplied portrait images used by direction of the project owner.",
       "local_path": "assets/imports/lobby-interior/LobbyArt.import.rbxm",
@@ -2928,6 +2928,65 @@
       "roblox_asset_id": "97488158099796",
       "upload_owner": "2227341845",
       "uploaded_revision": "1"
+    },
+    {
+      "id": "waiting-lobby-oil-portrait-2",
+      "kind": "texture",
+      "source": "Owner-approved oil painting rendition of gallery portrait 2; original PNG tested on the native Roblox canvas.",
+      "author": "Project contributors with OpenAI image generation, based on the project owner-provided reference",
+      "license": "Project-authored rendition of an owner-supplied reference.",
+      "local_path": "assets/blender/lobby-interior/oil-portraits/portrait-2-oil.png",
+      "roblox_asset_id": "80363010663600",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1",
+      "sha256": "1918f0f21a595a74b78d502f22687c69c0d396faffba41dd84cdbbba0e9290b1"
+    },
+    {
+      "id": "waiting-lobby-oil-portrait-3",
+      "kind": "texture",
+      "source": "Owner-approved oil painting rendition of gallery portrait 3; original PNG tested on the native Roblox canvas.",
+      "author": "Project contributors with OpenAI image generation, based on the project owner-provided reference",
+      "license": "Project-authored rendition of an owner-supplied reference.",
+      "local_path": "assets/blender/lobby-interior/oil-portraits/portrait-3-oil.png",
+      "roblox_asset_id": "136855674354422",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1",
+      "sha256": "f54dfbf1a1032bea759c871f3c3d727977e4b806b55720068fa27ddede3ccf3d"
+    },
+    {
+      "id": "waiting-lobby-oil-portrait-4",
+      "kind": "texture",
+      "source": "Owner-approved oil painting rendition of gallery portrait 4; original PNG tested on the native Roblox canvas.",
+      "author": "Project contributors with OpenAI image generation, based on the project owner-provided reference",
+      "license": "Project-authored rendition of an owner-supplied reference.",
+      "local_path": "assets/blender/lobby-interior/oil-portraits/portrait-4-oil.png",
+      "roblox_asset_id": "111747031021921",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1",
+      "sha256": "364b9cd661019a378522e1f57fde290e04c510cc130938d3fe23e6338ddcf71d"
+    },
+    {
+      "id": "waiting-lobby-oil-portrait-6",
+      "kind": "texture",
+      "source": "Owner-approved oil painting rendition of gallery portrait 6; original PNG tested on the native Roblox canvas.",
+      "author": "Project contributors with OpenAI image generation, based on the project owner-provided reference",
+      "license": "Project-authored rendition of an owner-supplied reference.",
+      "local_path": "assets/blender/lobby-interior/oil-portraits/portrait-6-oil.png",
+      "roblox_asset_id": "104678368112021",
+      "upload_owner": "2227341845",
+      "uploaded_revision": "1",
+      "sha256": "5c7db557025ff40834e72cd326cffaedff3b6ab488b150bf3f4f4589625e08ea"
+    },
+    {
+      "id": "waiting-lobby-studio-model",
+      "kind": "model",
+      "source": "Managed Roblox Studio native lobby from 14 approved model batches, with four owner-approved oil portraits and the verified television texture.",
+      "author": "Project contributors and owner-supplied portrait references",
+      "license": "Project-authored asset. Owner-supplied portraits used by direction of the project owner.",
+      "local_path": "assets/imports/lobby-interior/LobbyArt.rbxm",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "9b4e2fbf9a3c84b3c4ea6459b6f20b655f371f6b4cd6537d63556a5ecdb8932c"
     }
   ],
   "runtime_recipes": [

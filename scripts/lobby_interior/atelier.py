@@ -18,7 +18,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "assets/blender/lobby-interior"
 EXPORT = ROOT / "assets/exports/lobby-interior"
-VIEWS = ROOT / "docs/evidence/p21"
+VIEWS = ROOT / "docs/evidence/p22"
 REF = ROOT / "src/images/redesigned-lobby"
 P20 = ROOT / "assets/exports/lobby-bust/lobby-bust.glb"
 PI = math.pi

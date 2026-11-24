@@ -4,6 +4,7 @@ import argparse
 import json
 import math
 from pathlib import Path
+import posixpath
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -14,12 +15,11 @@ from salt_flats.prepare_import import NativeBatch, pose_tree
 SOURCE = ROOT / "assets/blender/lobby-interior"
 EXPORT = ROOT / "assets/exports/lobby-interior/waiting-lobby.glb"
 BUST_EXPORT = ROOT / "assets/exports/lobby-bust/lobby-bust.glb"
-APPROVAL = ROOT / "docs/evidence/p21/blender-reimport.json"
+APPROVAL = ROOT / "docs/evidence/p22/blender-oil-reimport.json"
 OUTPUT = ROOT / "build/lobby-import"
 PART_LIMIT = 200
 TRIANGLE_LIMIT = 20_000
 SITE_ORIGIN = [520, 0, 0]
-APPROVED_CATALOG_SHA256 = "0a77911fb3204b5a7f0f0daec506a0f390733ee1c5f072596d952ad9f9c512a4"
 
 
 def new_batch(doc, binary, prefix):
@@ -36,6 +36,44 @@ def embedded_color(doc, binary, material_index):
     view = doc["bufferViews"][image["bufferView"]]
     start = view.get("byteOffset", 0)
     return binary[start : start + view["byteLength"]]
+
+
+def rehydrate_oil_images(doc, binary, catalog):
+    """Embed the four exact, locally referenced oil images for native staging."""
+    expected = {}
+    for painting in catalog["paintings"]:
+        number = painting["portrait"]
+        if number not in {2, 3, 4, 6}:
+            continue
+        local = f"assets/blender/lobby-interior/oil-portraits/portrait-{number}-oil.png"
+        if painting["source"] != local:
+            raise ValueError(f"Unexpected approved oil path for portrait {number}")
+        uri = posixpath.relpath(local, EXPORT.parent.relative_to(ROOT).as_posix())
+        expected[uri] = (ROOT / local, painting["source_sha256"])
+    external = [image for image in doc["images"] if "uri" in image]
+    if len(expected) != 4 or len(external) != 4 or {image["uri"] for image in external} != expected.keys():
+        raise ValueError("Lobby GLB must use the four exact approved oil image URIs")
+
+    data = bytearray(binary)
+    for image in external:
+        source, approved_hash = expected[image["uri"]]
+        if source.resolve() != source:
+            raise ValueError(f"Oil portrait must be stored at its approved source path: {source.name}")
+        payload = source.read_bytes()
+        if not payload.startswith(b"\x89PNG\r\n\x1a\n") or digest(payload) != approved_hash:
+            raise ValueError(f"Oil portrait bytes differ from approved PNG: {source.name}")
+        data.extend(b"\x00" * (-len(data) % 4))
+        image["bufferView"] = len(doc["bufferViews"])
+        doc["bufferViews"].append({
+            "buffer": 0,
+            "byteOffset": len(data),
+            "byteLength": len(payload),
+        })
+        data.extend(payload)
+        del image["uri"]
+        image["mimeType"] = "image/png"
+    doc["buffers"][0]["byteLength"] = len(data)
+    return bytes(data)
 
 
 def check_paintings(doc, binary, poses, catalog):
@@ -80,21 +118,28 @@ def check_paintings(doc, binary, poses, catalog):
     return paintings, pilot
 
 
-def stage(destination):
-    """Stage a complete framed portrait, then bounded batches of the remaining assembly."""
+def approved_inputs():
+    """Read the owner-approved current art bytes without changing the historical P21 lock."""
     report = json.loads(APPROVAL.read_text())
     blend = (SOURCE / "waiting-lobby.blend").read_bytes()
     raw = EXPORT.read_bytes()
-    if digest(blend) != report["source_sha256"] or digest(raw) != report["export_sha256"]:
-        raise ValueError("Source and export must match the approved P21 hashes")
     catalog_bytes = (SOURCE / "assembly.json").read_bytes()
-    if digest(catalog_bytes) != APPROVED_CATALOG_SHA256:
-        raise ValueError("Placement catalog must match the approved P21 hash")
+    if digest(blend) != report["source_sha256"] or digest(raw) != report["export_sha256"]:
+        raise ValueError("Source and export must match the approved P22 hashes")
+    if digest(catalog_bytes) != report["catalog_sha256"]:
+        raise ValueError("Placement catalog must match the approved P22 hash")
     catalog = json.loads(catalog_bytes)
     bust_sha = digest(BUST_EXPORT.read_bytes())
     if bust_sha != report["approved_bust_sha256"] or bust_sha != catalog["p20_glb_sha256"]:
         raise ValueError("Standalone bust export must match the approved P20 identity")
+    return report, raw, catalog
+
+
+def stage(destination):
+    """Stage a complete framed portrait, then bounded batches of the remaining assembly."""
+    report, raw, catalog = approved_inputs()
     doc, binary = decode_glb(raw)
+    binary = rehydrate_oil_images(doc, binary, catalog)
     poses = pose_tree(doc)
     source_nodes = doc["nodes"]
     if len(poses) != len(source_nodes) or len(doc["scenes"]) != 1:
@@ -147,11 +192,12 @@ def stage(destination):
     ]
     index = {
         "schema": 1,
-        "approvedArtCommit": "ec431397c6047882dd85e2b46566645da8100ef0",
-        "blendSha256": digest(blend),
-        "assemblySha256": digest(raw),
-        "bustSha256": bust_sha,
-        "catalogSha256": digest(catalog_bytes),
+        "approvedLayoutCommit": "ec431397c6047882dd85e2b46566645da8100ef0",
+        "artApproval": str(APPROVAL.relative_to(ROOT)),
+        "blendSha256": report["source_sha256"],
+        "assemblySha256": report["export_sha256"],
+        "bustSha256": report["approved_bust_sha256"],
+        "catalogSha256": report["catalog_sha256"],
         "siteOrigin": SITE_ORIGIN,
         "axes": "Roblox (520 + Blender X, Blender Z, -Blender Y), one source unit per stud.",
         "meshParts": len(records),

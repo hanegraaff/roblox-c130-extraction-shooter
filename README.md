@@ -10,6 +10,8 @@ One player operates a circling C-130 while a team of 1–9 Ground players tries 
 
 Rounds start in the protected, walkable lobby. With 2–10 players, the server assigns one operator and deploys everyone else as one ground team. The C-130 automatically circles the edge of the 720-stud battlefield. The default round lasts ten minutes, and friendly fire is off.
 
+In the furnished P22 lobby, the stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits. Both roles return to the lobby after a round. [P22 local build and acceptance record](plans/22-integrate-lobby.md)
+
 - **Ground team.** Follow the trails from any Sandbreak exit. Pick up a launcher inside the Salt Flats hangar, outside Vesper Radar’s south gate, outside the military depot by the parking lot, or inside the Prism Seedship on its lower deck. Buildings and large rock formations provide cover. Lead the moving plane when firing a rocket. The carrier keeps their M-7, and the launcher's four-second reload continues through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect while the round is active. If the drop position is invalid, the launcher returns to its original anchor.
 - **C-130 operator.** Scan for bright white Ground silhouettes against dark grayscale terrain and scenery in the thermal view. The aircraft body is hidden from its operator’s targeting view while remaining visible to Ground players. The 30mm GAU-23/A Chain Gun gives a tighter view, and the 105mm M102 Howitzer gives a wider view and blast. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. WASD or touch arrows pan across the level’s 720 × 720-stud square. The square edges stop movement on that axis while allowing movement along the edge and immediate reversal. Releasing the controls holds the target point on the map as the plane continues its orbit.
 - **Spectating.** Ground death, character reset or surrender consumes your round life. The camera follows a living Ground player and switches to the battlefield overview if no target is available. Late arrivals and reconnecting players can watch until the next round. Operator reset replaces the protected station body and preserves aircraft health.
@@ -50,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-Play the integrated game locally in Roblox Studio from `main`. Rounds begin in the current protected lobby. The furnished replacement is available for inspection in Blender, with the approved bust between a movie theater and a gallery of six framed portraits. P22 covers its introduction to the game. [Explore the Blender lobby](assets/blender/lobby-interior/README.md)
+Play the integrated game locally in Roblox Studio from `main`. Use the P22 branch to try the furnished lobby while its Roblox acceptance is in review. The same rooms and the current paintings are available in Blender. [P22 verification record](plans/22-integrate-lobby.md#completion-record) · [Blender lobby](assets/blender/lobby-interior/README.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
@@ -71,7 +73,7 @@ rojo plugin install
 
 On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
 
-To inspect the furnished lobby, run `git fetch origin` and `git switch plan/21-lobby-interior` in your clone. Open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0. The saved camera looks across the dais toward the bust. Choose **Render → Render Image** to see the room lighting. [Room views and camera guide](assets/blender/lobby-interior/README.md) · [Approved bust](assets/blender/lobby-bust/README.md)
+To try the furnished lobby in Studio, run `git fetch origin` and `git switch plan/22-integrate-lobby` in your clone. Run the same setup and verification commands, then open the local development build below. For the editable assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
 
@@ -94,7 +96,7 @@ rojo serve default.project.json --address 127.0.0.1 --port 34873
 
 1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local document. Reuse the document if it is already open.
 2. In Edit mode, open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the **PlayersVsC130** mapping before applying it. If a newly installed plugin's toolbar button is absent, save work and restart Studio once.
-3. Click **Play** to check the walkable lobby and the HUD waiting for two players. Use **Server & Clients** with two clients to start a match. The separate test mapping offers solo exploration and explicit role and round controls.
+3. Click **Play** to check the walkable lobby and the HUD waiting for two players. On P22, take either doorway to the theater or gallery and walk back to the entrance. Use **Server & Clients** with two clients to start a match. The separate test mapping offers solo exploration and explicit role and round controls. Check the native mesh identities before exercising the P22 lobby after live sync. [P22 Studio procedure](docs/testing.md#verify-the-p22-waiting-lobby)
 4. After repository edits, stop Play, confirm the same Edit document received the expected change through Rojo, and start fresh Play. If the server restarted or the plugin disconnected, reconnect the existing document in Edit mode. [MCP, sync and troubleshooting](docs/development.md#sync-this-repository-with-studio)
 
 ## Run local automated tests
@@ -117,6 +119,8 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 For rebalancing, run the [P18 three-client harness](docs/testing.md#run-the-p18-rebalancing-harness) and the adapted [P05 two-client gunship harness](docs/testing.md#run-the-p05-gunship-combat-harness). P18 checks shared roster health, panel openings, camera frames, thermal state, contested Seedship pickup, recovery and replay. P05 exercises actual client fire, physical flights and a one-howitzer opening replicated to both clients. Its P19 case also checks four distinct empty-ground surfaces, ground strikes beside all five buildings and a direct roof hit. Native keyboard/touch, avatar navigation and rendered contrast need their separate focused review. P03/P04 retain lifecycle/orbit checks; pre-P18 balance/camera harnesses are archived and reject on current source. Their reports remain historical. Live capacity, performance and soak validation remains unverified in the future release checklist. Stop Play and confirm source reached the same document before collecting fresh evidence. [Compatibility and procedures](docs/testing.md)
 
 For P19, run the two-client gunship regression and the impact acceptance scenarios. The five-minute `P19Profile` workload measures both roles and the server. Its Replay scenario exercises five resets and an empty-air rocket expiry. Review rendered impacts and listen to weapons in a separate operated session. [P19 Studio procedure](docs/testing.md#run-p19-weapon-impact-checks)
+
+For P22, check the furnished lobby in a solo development build and run two rounds with two actual test clients. Verify the portraits and both routes, then confirm that both players return and can walk through the rooms after each reset. [P22 Studio procedure](docs/testing.md#verify-the-p22-waiting-lobby)
 
 ## Inspect the Blender outpost
 
