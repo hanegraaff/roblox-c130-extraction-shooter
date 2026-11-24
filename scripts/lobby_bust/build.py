@@ -1,16 +1,17 @@
-"""Author the P20 limestone portrait and render its three Blender inspection cameras.
+"""Author the P20 limestone portrait and render its four Blender inspection cameras.
 
 Run from the repository root with Blender in background mode and --python-exit-code 1.
-The sculpt uses hand-placed anatomical landmarks measured in the front reference.
+The portrait uses hand-placed landmarks from the bust photograph. Portrait 1 guides the backward hair flow, gathered brow and downward eye line.
 Coordinates below are a local sculpting grid, with positive depth toward the viewer.
 One grid unit becomes 0.02 Blender units (studs). The reference guides shape only.
 """
 
 import bmesh
 import openvdb
+from bisect import bisect_right
 from hashlib import sha256
 import json
-from math import cos, exp, pi, sin, sqrt
+from math import atan2, cos, exp, hypot, pi, sin, sqrt
 from pathlib import Path
 import sys
 
@@ -187,14 +188,15 @@ def shirt_front(x, row, back=False):
     return -point[1] / SCALE
 
 
-def sheet(name, nu, nv, point, mat, thickness):
+def sheet(name, nu, nv, point, mat, thickness, inward=None):
     """Close a hand-shaped fabric slab with a second surface behind the face."""
     front, rear, faces = [], [], []
     for j in range(nv + 1):
         for i in range(nu + 1):
             x, depth, row = point(i / nu, j / nv)
             front.append(world(x, depth, row))
-            rear.append(world(x, depth - thickness, row))
+            dx, dd = inward(j/nv) if inward else (0, -1)
+            rear.append(world(x + thickness*dx, depth + thickness*dd, row))
     width, offset = nu + 1, len(front)
     for j in range(nv):
         for i in range(nu):
@@ -322,7 +324,11 @@ def facial_relief(x, row):
     d -= 14 * gauss(ax - 115, 28) * gauss(row - 467, 55)
     d += 15 * gauss(ax - 108, 35) * gauss(row - 526, 41)
     # Sweeping arches of the superciliary ridge, gathered above the glabella.
-    brow_y = 290 - 13 * sin(pi * min(1, ax / 124)) + 0.25 * max(0, ax - 90)
+    brow_y = 300 - 25*sin(pi*min(1, ax/147)) + .10*max(0, ax-94) + 1.65*sin(.044*x)
+    # Paired glabellar pads squeeze together over the depressed inner brows.
+    crease = 8 + .0033*(row-292)**2
+    d += 6.3*gauss(ax-crease-7.5, 9.8)*gauss(row-271, 24)
+    d -= 4.3*gauss(ax-crease, 4.9)*gauss(row-268, 26)
     d += 17 * gauss(row - brow_y, 12) * gauss(ax - 64, 54)
     d += 11 * gauss(row - brow_y - 9, 15) * gauss(ax - 37, 32)
     d -= 5 * gauss(row - brow_y - 14, 5.5) * gauss(ax - 72, 42)
@@ -456,12 +462,31 @@ mesh("05b | Dorsum, alae and nose tip", [world(*(p*spacing+origin)) for p in ver
      list(tris)+list(quads), stone)
 
 
-def eye_surface(x, row):
+def corneal_depth(x, row):
     upper, lower, t = eye_edges(x)
     center = .5 * (upper+lower)
     r2 = t*t + ((row-center) / 18.7)**2
     base = head_depth(x, row)
     return base + 8 + 18.5 * max(0, 1 - .90 * r2)
+
+
+# Seat each carved iris low in its aperture and tip the corneal tangent
+# toward the across-room camera, about 16.5 degrees below the eyes.
+gaze_row = 345.3
+gaze_x = 68.1
+gaze_slope = {}
+for side in (-1, 1):
+    x = side*gaze_x
+    slope_x = (corneal_depth(x+.15, gaze_row)-corneal_depth(x-.15, gaze_row))/.30
+    slope_row = (corneal_depth(x, gaze_row+.15)-corneal_depth(x, gaze_row-.15))/.30
+    gaze_slope[side] = ((x*SCALE+1.6)/42-slope_x, -.296-slope_row)
+
+
+def eye_surface(x, row):
+    side = -1 if x < 0 else 1
+    dx, dr = x-side*gaze_x, row-gaze_row
+    correction = gaze_slope[side][0]*dx + gaze_slope[side][1]*dr
+    return corneal_depth(x, row) + correction*gauss(dx, 26)*gauss(dr, 18)
 
 
 for side in (-1, 1):
@@ -508,7 +533,7 @@ for side in (-1, 1):
             after = (j+1) % len(lid)
             faces.append((j*n+i, j*n+k, after*n+k, after*n+i))
     mesh(f"06 | Upper and lower lid {side:+d}", [p for loop in lid for p in loop], faces, stone)
-    x0, row0 = side*69.3, 338.4
+    x0, row0 = side*gaze_x, gaze_row
     for label, profile, mat in [
         ("Limbus", [(13.8, .12), (13.1, .56), (12.4, .85)], frame_stone),
         ("Iris", [(12.6, .66), (11.1, 1.65), (10, 1.2), (6.85, 1.35)], iris),
@@ -518,8 +543,11 @@ for side in (-1, 1):
             loop = []
             for i in range(64):
                 a = TAU*i/64
-                x, row = x0+radius*sin(a), row0-radius*cos(a)
-                loop.append(world(x, eye_surface(x, row)+offset, row))
+                x, row = x0+radius*sin(a), row0-.96*radius*cos(a)
+                # Roll the submerged portion under the actual lower lid.
+                _, lower, _ = eye_edges(x)
+                buried = 2.6*max(0, row-lower+1.25)
+                loop.append(world(x, eye_surface(x, row)+offset-buried, row))
             loops.append(loop)
         rings(f"06 | {label} {side:+d}", loops, mat, reverse=True)
 
@@ -545,49 +573,95 @@ for side in (-1, 1):
             d += 11 * gauss(v + .67, .32) * gauss(u + .05, .68)
             loop.append(world(side * x, d, row))
         loops.append(loop)
-    for shrink, inset in ((.90, 9), (.60, 13), (.1, 14)):
-        loops.append([world(side * (166 + (abs(p[0]) / SCALE - 166) * shrink),
-                            -p[1] / SCALE - inset, 403 + (1060 - p[2] / SCALE - 403) * shrink)
-                      for p in loops[61]])
+    # Keep the rear shell behind the deepest concha at the same projected
+    # landmark. Contracting only the rim to form the back crosses the cavity.
+    for j in range(20, -1, -1):
+        r = .003 + .997*j/20
+        loop = []
+        for i in range(112):
+            a = TAU*i/112
+            u, v = sin(a)*r, cos(a)*r
+            x = 161 + 30*u*(1+.13*v) + 6*v
+            row = 403 - 66*v
+            depth = 16 - 30*u - 10*v - (19 + 7*(1-r*r))
+            loop.append(world(side*x, depth, row))
+        loops.append(loop)
     rings(f"07 | Modeled ear {'L' if side < 0 else 'R'}", loops, stone, reverse=(side < 0))
 
 
 # Combed shell. Meridians of an asymmetric displaced dome spiral back from a
 # scalloped hairline into a crown behind the skull. The same waves wrap the nape.
-def hair_point(t, a, inset=0):
+# The broad, unequal locks are divided at the hairline, like the front
+# reference. Their roots lie on the scalp. Each forelock first rises out
+# over the forehead, then folds back onto the crown. The temple locks
+# travel toward the back of the head; the nape follows the opposite arc.
+lock_divisions = [-pi, -2.79, -2.39, -2.07, -1.76, -1.54, -1.32, -1.07, -.81,
+                  -.55, -.29, -.055, .21, .47, .76, 1.04, 1.30, 1.55, 1.83,
+                  2.15, 2.48, 2.78, pi]
+
+
+def lock_fraction(root_angle):
+    signed = (root_angle+pi) % TAU-pi
+    index = min(len(lock_divisions)-2, bisect_right(lock_divisions, signed)-1)
+    low, high = lock_divisions[index:index+2]
+    return index, (signed-low)/(high-low)
+
+
+def hair_point(t, root_angle, inset=0):
+    progress = 1-t
+    root_cos = cos(root_angle)
+    front = max(0, root_cos)
+    index, fraction = lock_fraction(root_angle)
+    # Bend entire sheaves backward at the temples and break the forelock's
+    # symmetry with a shallow S from the hairline to the off-center whorl.
+    a = root_angle + (.36*sin(root_angle)+.20*front)*sin(pi*progress)
+    a += (.13*sin(2*root_angle+.4)+.085*front)*sin(TAU*progress)
+    a += .32*front**3*sin(TAU*progress+.25)*sin(pi*progress)
+    a += .11*sin(3*root_angle-.45)*sin(pi*progress)
     co, si = cos(a), sin(a)
-    boundary = hair_bound(a)
-    phi = boundary * t
-    sweep = .50 * sin(1.8 * phi + .3) + .14 * sin(4.8 * phi + a) + .18 * sin(a * 2 - phi * 2)
-    phase = 21 * (a + sweep + .17*sin(4.5*phi+1.3*a)*max(0, co)) + .7 * \
-        sin(3 * a + phi * 2) + .45 * sin(5 * a - phi)
-    envelope = smooth(phi / .42) * (.60 + .4 * max(0, co)) * smooth((1.05 - t) / .10)
-    wave = (6.4 * cos(phase) + 1.65 * sin(phase * 2 + .8)
-            + 2.4 * sin(4 * phase + 1.1 * sin(phi * 5 + a))
-            + 1.35 * cos(7 * phase - phi * 4)) * envelope - inset
-    # Crown slightly overhangs the forehead; temples taper down into the scalp.
-    radius = 177 + 5 * max(co, 0) * sin(phi)
-    x = (radius + wave) * sin(phi) * si - 22 * cos(phi) ** 3
-    depth = (159 + wave) * sin(phi) * co - 10 - 36 * cos(phi) ** 3
-    row = 259 - (188 + wave) * cos(phi) - 5 * si * sin(phi) + 3 * sin(3*a) * envelope
-    row += smooth((t-.63)/.37) * max(0, co) * (3*cos(phase)+4*sin(3*a))
-    puff = max(0, co) * gauss(t-.80, .18)
-    depth += (14+5*cos(phase))*puff
-    row -= (9+3*cos(phase))*puff
-    # Seat each combed lock against the skin, completely around the head.
+    phi = hair_bound(root_angle)*t
+    bulge = sin(pi*fraction)**.72
+    channel = gauss(min(fraction, 1-fraction), .072)
+    comb = .8*sin(TAU*4*fraction+.75*sin(TAU*progress+root_angle))
+    comb += .42*sin(TAU*8*fraction-2*progress)
+    shoulder = .5+.5*sin(index*1.77)
+    weight = smooth(phi/.28)*smooth((progress+.012)/.10)
+    relief = ((5.0+4.2*shoulder)*bulge-2.0*channel+comb)*weight
+    r = 177 + 5*front*sin(phi)
+    x = r*sin(phi)*si-14*cos(phi)**3
+    depth = 159*sin(phi)*co-10-45*cos(phi)**3
+    row = 259-188*cos(phi)-5*si*sin(phi)
+    # A broad front crest rises before the whorl, which turns down at the back.
+    row += 17*smooth((progress-.65)/.35)
+    row -= 10*gauss(progress-.56, .22)*front
+    depth -= 9*smooth((progress-.66)/.34)
+
+    # Fit the root ring to each actual forehead and temple landmark.
     rx, center, radius = [interp(k, row) for k in head_channels]
-    transition = smooth((t-.83)/.17)
-    seam_x = (rx + 2 - inset) * si
-    seam_d = center + (radius + 2 - inset) * (max(0, co)**.73 if co > 0 else co)
-    ridge = (5.3 + 4.4*cos(phase) + 1.2*sin(4*phase+.8*sin(phi*5)))*smooth((1.025-t)/.11)
-    x = x*(1-transition) + (seam_x+ridge*si)*transition
-    depth = depth*(1-transition) + (seam_d+ridge*co)*transition
+    seat = smooth((t-.71)/.29)
+    scalp_depth = center+radius*(max(0, co)**.73 if co > 0 else co)
+    x = x*(1-seat)+(rx+1.4)*si*seat
+    depth = depth*(1-seat)+(scalp_depth+1.4*co)*seat
+
+    # The lifted front has an intentional forward overhang above its roots.
+    # The wider upper arc carries that volume back into the crown.
+    roll = gauss(progress-.21, .21)*smooth(progress/.16)*front**.58
+    depth += 48*roll + 18*gauss(progress-.37, .20)*front*smooth(progress/.18)
+    row -= 16*roll + 8*gauss(progress-.39, .20)*front*smooth(progress/.18)
+    x += 4.6*si*roll
+    root_wave = gauss(progress, .12)*(2.7*cos(TAU*fraction)+2.4*sin(3*root_angle))
+    row += root_wave*front
+    x += (relief-inset)*si*sin(phi)
+    depth += (relief-inset)*co*sin(phi)
+    row -= (relief-inset)*cos(phi)
     return world(x, depth, row)
 
 
-hair_loops = [[hair_point(1, TAU * i / 720, 13) for i in range(720)]]
-hair_loops += [[hair_point(1 - .9998 * j / 98, TAU * i / 720) for i in range(720)]
-               for j in range(99)]
+hair_loops = [[hair_point(1, TAU*i/720, 13) for i in range(720)]]
+hair_loops += [[hair_point(1-.9998*j/98, TAU*i/720) for i in range(720)] for j in range(99)]
+# Preserve the approved overall bust height while redistributing hair volume.
+height_adjustment = 19.824-max(p[2] for row in hair_loops for p in row)
+hair_loops = [[(x, y, z+height_adjustment*smooth((z-17.0)/2.6)) for x, y, z in row] for row in hair_loops]
 rings("08 | Swept hair · crown, temples and nape", hair_loops, hair_stone)
 
 
@@ -668,41 +742,55 @@ inner = [(5, 744), (21, 721), (55, 684), (93, 657), (115, 627),
          (126, 597), (130, 584), (133, 570), (130, 559), (127, 552)]
 
 
+# Parameterize both edges by the same angle about the throat. Matching edges
+# by control-point number can fold a triangle back across the collar point.
+def radial_guide(points):
+    return [(atan2(x, row-516), hypot(x, row-516)) for x, row in points]
+
+
+inside_edge, outside_edge = radial_guide(inner), radial_guide(outer)
+start_angle = max(inside_edge[0][0], outside_edge[0][0])
+end_angle = min(inside_edge[-1][0], outside_edge[-1][0])
 for side in (-1, 1):
     def collar(u, v):
-        xi, yi = catmull(inner, v)
-        xo, yo = catmull(outer, v)
-        x, row = xi + (xo - xi) * u, yi + (yo - yi) * u
+        angle = start_angle + (end_angle-start_angle)*v
+        inner_radius = interp(inside_edge, angle)
+        outer_radius = max(inner_radius+1.8, interp(outside_edge, angle))
+        r = inner_radius + (outer_radius-inner_radius)*u
+        x, row = r*sin(angle), 516+r*cos(angle)
         chest = shirt_front(x, row)
-        neck = head_depth(min(x, interp(head_channels[0], row) * .996), row)
-        inner_depth = max(chest + 3, neck + 2) if v < .72 else chest + 4
-        d = inner_depth * (1 - u) + (chest + 5.5) * u
-        d += (8 + 5 * sin(v * pi)) * sin(u * pi) * sin(v * pi)
-        return side * x, d, row + (3 * sin(v * pi) if side < 0 else 0)
+        neck = head_depth(min(x, interp(head_channels[0], row)*.996), row)
+        taper = smooth((.90-v)/.23)
+        inner_depth = chest+4 + max(0, neck-chest-2)*taper
+        depth = (1-u)*inner_depth + u*(chest+5.5)
+        depth += (8+5*sin(v*pi))*sin(pi*u)*sin(pi*v)
+        return side*x, depth, row + (3*sin(v*pi) if side < 0 else 0)
+
     sheet(f"10 | Point collar {'L' if side < 0 else 'R'}", 15, 80, collar, shirt_stone, 3.5)
 
 
 # The folded back collar joins the two front leaves and follows the nape.
 # A shallow yoke seam and central box pleat finish the walk-around view.
 def back_collar(u, v):
-    a = .91 + (TAU-1.82)*v
-    q = max(0, cos(a))
-    side_turn = smooth((abs(sin(a))-.47)/.50)
-    upper_row = 545 + 63*side_turn + 35*q*q
-    x, y, z = head_point(upper_row, a)
-    upper = Vector((x/SCALE + 3.4*sin(a), -y/SCALE + 3.4*cos(a), upper_row))
-    x, y, z = shirt_point(.955+q*.035, a)
-    lower = Vector((x/SCALE+2.8*sin(a), -y/SCALE+2.8*cos(a), max(upper_row+10,1060-z/SCALE)))
-    # The back leaf narrows and slips under the side leaves toward the front.
-    edge = smooth(min(v, 1-v)/.17)
-    inside = upper.lerp(lower, u*(.03+.97*edge))
-    inside.x *= (.95+.05*edge)*(1-.13*side_turn)
-    inside.y *= (.95+.05*edge)*(1-.06*side_turn)
-    fold = 4.5*sin(pi*u)*edge
-    return inside.x+fold*sin(a), inside.y+fold*cos(a), inside.z
+    a = 1.04 + (TAU-2.08)*v
+    front = max(0, cos(a))
+    side = smooth((abs(sin(a))-.47)/.5)
+    taper = .35+.65*smooth(min(v, 1-v)/.17)
+    # Use one elliptic radial coordinate for both leaf thickness and drape.
+    # Radius and height then stay single-valued at every angle, including
+    # the tapered tips tucked underneath the two point leaves.
+    top_row = 545 + 63*side + 35*front*front
+    row = top_row + u*taper*(46-19*side)
+    r = (145-18*side-12*front) + taper*((24-3*side)*u+4.5*sin(pi*u))
+    return r*sin(a), 10+.91*r*cos(a), row
 
 
-sheet("10 | Collar leaf at the nape", 12, 112, back_collar, shirt_stone, 2.8)
+def nape_inward(v):
+    a = 1.04 + (TAU-2.08)*v
+    return -sin(a), -.91*cos(a)
+
+
+sheet("10 | Collar leaf at the nape", 12, 112, back_collar, shirt_stone, 2.8, nape_inward)
 
 
 def yoke_curve(t):
@@ -763,6 +851,10 @@ for obj in sculpt.objects:
     bm = bmesh.new()
     bm.from_mesh(data)
     bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+    # Recalculation makes neighbors consistent, but very thin closed shells
+    # also need the unambiguous signed-volume test for the exterior direction.
+    if bm.calc_volume(signed=True) < 0:
+        bmesh.ops.reverse_faces(bm, faces=list(bm.faces))
     bm.to_mesh(data)
     bm.free()
     uv = data.uv_layers.new(name="Stone projection")
@@ -792,10 +884,11 @@ a = TAU*uu/width
 t = vv/height
 boundary = np.array([hair_bound(theta) for theta in a[0]])[None, :]
 phi = boundary*t
-wave_phase = 21*(a+.50*np.sin(1.8*phi+.3)+.14*np.sin(4.8*phi+a)
-                 + .18*np.sin(2*a-2*phi)+.17*np.sin(4.5*phi+1.3*a)*np.maximum(0, np.cos(a)))
-wave_phase += .7*np.sin(3*a+2*phi)+.45*np.sin(5*a-phi)
-strand = 7*wave_phase+.53*np.sin(wave_phase+3*phi)+.42*np.sin(4*a-phi)
+# The secondary chisel grooves share the lock coordinates of the sculpt.
+# Their direction follows the modeled outward roll and rearward sweep.
+fraction = np.array([lock_fraction(theta)[1] for theta in a[0]])[None, :]
+strand = TAU*6*fraction + .57*np.sin(2*phi+a) + .60*np.sin(2*TAU*fraction-phi)
+strand += .48*np.sin(TAU*3*fraction+3*phi)*np.cos(2*a-phi)
 envelope = np.clip(t*5, 0, 1)*np.clip((1.06-t)*7, 0, 1)
 grooves = (.60*np.sin(strand)+.22*np.sin(1.999*strand+.65*np.cos(a+phi))
            + .18*np.cos(3*strand+2*phi))*envelope
@@ -819,7 +912,7 @@ normal_tex.image = normal_img
 links.new(uv_node.outputs['UV'], normal_tex.inputs['Vector'])
 normal_node = nodes.new('ShaderNodeNormalMap')
 normal_node.uv_map = flow_uv.name
-normal_node.inputs['Strength'].default_value = .65
+normal_node.inputs['Strength'].default_value = .34
 links.new(normal_tex.outputs['Color'], normal_node.inputs['Color'])
 links.new(normal_node.outputs['Normal'], nodes.get('Principled BSDF').inputs['Normal'])
 
@@ -894,6 +987,7 @@ def camera(name, location, target, lens, ortho=None):
 
 front = camera("A1 · Portrait", (-4.8, -54, 12.3), (0, 0, 9.95), 70, 22.3)
 quarter = camera("A1 · Three quarters", (28, -40, 14), (0, 0, 10), 70, 22.4)
+detail = camera("A1 · Hair roll and downward gaze", (-15.5, -38, 17.9), (0, -.55, 16.35), 84, 8.9)
 arrival = camera("A2 · Player eye 4.5 studs above floor", (-1.6, -45, floor_z+4.5), (0, 0, 8.85), 38)
 
 
@@ -972,7 +1066,7 @@ print("P20_SOURCE_AND_EXPORT_READY", flush=True)
 
 if "--no-render" not in sys.argv:
     for cam, name, size in [(front, "front", (800, 1000)), (quarter, "three-quarter", (800, 1000)),
-                            (arrival, "player-eye", (1120, 740))]:
+                            (arrival, "player-eye", (1120, 740)), (detail, "hair-and-gaze", (920, 880))]:
         scene.camera = cam
         scene.render.resolution_x, scene.render.resolution_y = size
         if "--preview" in sys.argv:
