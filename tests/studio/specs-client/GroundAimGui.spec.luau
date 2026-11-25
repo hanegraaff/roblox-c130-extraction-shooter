@@ -668,7 +668,31 @@ return function()
                                     if mode then
                                         table.insert(items, child(groundViewport, "Fire"))
                                         if weapon == "M7" then
-                                            table.insert(items, child(groundViewport, "Reload"))
+                                            local reload = child(groundViewport, "Reload")
+                                            assert(
+                                                reload:IsA("TextButton") and reload.Visible,
+                                                "equipped M-7 lacks a visible touch reload button"
+                                            )
+                                            local buttonSize, textSize =
+                                                reload.AbsoluteSize, reload.TextBounds
+                                            assert(
+                                                buttonSize.X >= 44 and buttonSize.Y >= 44,
+                                                "touch reload target below 44×44 pixels"
+                                            )
+                                            assert(
+                                                reload.TextFits
+                                                    and textSize.X > 0
+                                                    and textSize.Y > 0
+                                                    and textSize.X + 8 <= buttonSize.X
+                                                    and textSize.Y + 8 <= buttonSize.Y,
+                                                string.format(
+                                                    "touch RELOAD text %s exceeds button %s at %s",
+                                                    tostring(textSize),
+                                                    tostring(buttonSize),
+                                                    tostring(size)
+                                                )
+                                            )
+                                            table.insert(items, reload)
                                         end
                                     end
                                     if scenario == "Available" then

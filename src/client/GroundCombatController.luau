@@ -461,7 +461,9 @@ function GroundCombatController.new(
                     fireButton.Position = if touch
                         then UDim2.new(1, -24 - origin.X - layoutInset.X, 0, 126 - origin.Y)
                         else UDim2.new(1, -24, 1, -130)
-                    reloadButton.Size = UDim2.fromOffset(if touch then 54 else 90, if touch then 42 else 54)
+                    -- Leave room for the rendered RELOAD text and a 44px
+                    -- touch target while keeping the existing gap to Fire.
+                    reloadButton.Size = if touch then UDim2.fromOffset(78, 44) else UDim2.fromOffset(90, 54)
                     reloadButton.Position = if touch
                         then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 128 - origin.Y)
                         else UDim2.new(1, -24, 1, -210)
