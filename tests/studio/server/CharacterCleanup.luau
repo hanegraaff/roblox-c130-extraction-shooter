@@ -32,9 +32,21 @@ function CharacterCleanup.run()
     }
     local runtime, reason = GameRuntime.start(settings)
     assert(runtime, reason)
-    local pending = runtime.rounds.resources().spawnTasks
+    local pending = false
+    local deadline = os.clock() + 5
+    repeat
+        for _, player in Players:GetPlayers() do
+            if player:GetAttribute("RoundCharacterLoad") ~= nil then
+                pending = true
+                break
+            end
+        end
+        if not pending then
+            task.wait()
+        end
+    until pending or os.clock() >= deadline
     runtime.stop()
-    assert(pending > 0, "fixture did not exercise pending actual LoadCharacterAsync")
+    assert(pending, "fixture did not observe an in-flight LoadCharacterAsync lease")
     assert(runtime.rounds.resources().spawnTasks > 0, "stopped owner falsely reported zero pending loads")
     assert(not Players.CharacterAutoLoads, "automatic spawning restored before old loads drained")
     assert(Players:GetAttribute("RoundCharacterTeardown"), "global teardown lease missing during drain")

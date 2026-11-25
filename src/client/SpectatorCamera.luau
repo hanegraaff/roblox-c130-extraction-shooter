@@ -6,6 +6,8 @@
     Public calls are nonyielding and cleanup removes the owned fallback subject.
 ]=]
 local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
 local Shared = game:GetService("ReplicatedStorage").Shared
 local PlayerPresentation = require(Shared.PlayerPresentation)
 local MapRules = require(Shared.MapRules)
@@ -32,6 +34,43 @@ function SpectatorCamera.new(player: Player): Controller
     local selected: number? = nil
     local overview: Part? = nil
     local round = -1
+    local following = false
+    local shakeBinding = "RoundResultShake-" .. HttpService:GenerateGUID(false)
+    local shaking = false
+    local shockAge, shockStrength = 0, 0
+
+    local function releaseShake()
+        if shaking then
+            shaking = false
+            RunService:UnbindFromRenderStep(shakeBinding)
+        end
+    end
+
+    local function shakeLobbyCamera(age: number?, strength: number)
+        if not age or age >= 0.65 or strength <= 0 then
+            releaseShake()
+            return
+        end
+        shockAge, shockStrength = age, strength
+        if not shaking then
+            shaking = true
+            RunService:BindToRenderStep(shakeBinding, Enum.RenderPriority.Camera.Value + 1, function()
+                local camera = workspace.CurrentCamera
+                if
+                    camera
+                    and camera.CameraType == Enum.CameraType.Custom
+                    and camera.CameraSubject == liveHumanoid(player)
+                then
+                    local amplitude = (1 - shockAge / 0.65) * shockStrength
+                    camera.CFrame *= CFrame.Angles(
+                        math.sin(shockAge * 33) * amplitude * 0.008,
+                        0,
+                        math.sin(shockAge * 47) * amplitude * 0.013
+                    )
+                end
+            end)
+        end
+    end
 
     local function clearOverview()
         if overview then
@@ -40,20 +79,32 @@ function SpectatorCamera.new(player: Player): Controller
         end
     end
 
-    local function overviewFrame(camera: Camera, destructionAge: number?, shake: number)
+    local function restoreLocalCamera(camera: Camera, releaseForeignSubject: boolean)
+        local subject: (Humanoid | BasePart)? = liveHumanoid(player)
+        if not subject and releaseForeignSubject then
+            -- The protected lobby anchor remains a local point of reference
+            -- during the native avatar-loading gap after a reset or round end.
+            local world = workspace:FindFirstChild("World")
+            local battlefield = if world then world:FindFirstChild("Battlefield") else nil
+            local anchors = if battlefield then battlefield:FindFirstChild("Anchors") else nil
+            local lobby = if anchors then anchors:FindFirstChild("Lobby") else nil
+            if lobby and lobby:IsA("BasePart") then
+                subject = lobby
+            end
+        end
+        if subject then
+            camera.CameraSubject = subject
+            camera.CameraType = Enum.CameraType.Custom
+        elseif releaseForeignSubject then
+            camera.CameraType = Enum.CameraType.Scriptable
+        end
+        clearOverview()
+    end
+
+    local function overviewFrame(camera: Camera)
         local map = MapRules.defaults
         local center = Vector3.new(map.centerX, map.groundY, map.centerZ)
         local position = center + Vector3.new(0, map.radiusStuds * 0.55, map.radiusStuds * 0.7)
-        if destructionAge then
-            local aircraft = workspace:FindFirstChild("Aircraft")
-            local anchor = if aircraft then aircraft:FindFirstChild("Hitbox") else nil
-            if anchor and anchor:IsA("BasePart") then
-                center = anchor.Position
-                local radial = Vector3.new(center.X - map.centerX, 0, center.Z - map.centerZ)
-                local outward = if radial.Magnitude > 1 then radial.Unit else Vector3.zAxis
-                position = center + outward * 100 + Vector3.new(0, 34, 0)
-            end
-        end
         local neutral: Part
         if overview then
             neutral = overview
@@ -73,10 +124,7 @@ function SpectatorCamera.new(player: Player): Controller
         camera.CameraType = Enum.CameraType.Scriptable
         camera.CameraSubject = neutral
         camera.Focus = CFrame.new(center)
-        local amplitude = if destructionAge then math.max(0, 1 - destructionAge / 0.65) * shake else 0
-        local age = destructionAge or 0
         camera.CFrame = CFrame.lookAt(position, center)
-            * CFrame.Angles(math.sin(age * 33) * amplitude * 0.008, 0, math.sin(age * 47) * amplitude * 0.013)
     end
 
     local function update(
@@ -91,6 +139,9 @@ function SpectatorCamera.new(player: Player): Controller
             round = roundId
         end
         local camera = workspace.CurrentCamera
+        local leavingSpectator = following and view ~= "Spectator"
+        following = view == "Spectator"
+        shakeLobbyCamera(if view == "Results" then destructionAge else nil, shake)
         if not camera then
             return nil, nil, 0
         end
@@ -126,18 +177,9 @@ function SpectatorCamera.new(player: Player): Controller
                 clearOverview()
                 return targetId, names[targetId], #candidates
             end
-            overviewFrame(camera, nil, 0)
-        elseif view == "Results" then
-            overviewFrame(camera, destructionAge, shake)
+            overviewFrame(camera)
         else
-            local humanoid = liveHumanoid(player)
-            if humanoid then
-                camera.CameraSubject = humanoid
-                camera.CameraType = Enum.CameraType.Custom
-                clearOverview()
-            elseif overview then
-                overviewFrame(camera, nil, 0)
-            end
+            restoreLocalCamera(camera, leavingSpectator or overview ~= nil or view == "Results")
         end
         return nil, nil, 0
     end
@@ -145,14 +187,12 @@ function SpectatorCamera.new(player: Player): Controller
     return {
         update = update,
         stop = function()
+            releaseShake()
             local camera = workspace.CurrentCamera
             if camera then
-                local humanoid = liveHumanoid(player)
-                if humanoid then
-                    camera.CameraSubject = humanoid
-                end
-                camera.CameraType = Enum.CameraType.Custom
+                restoreLocalCamera(camera, following or overview ~= nil)
             end
+            following = false
             clearOverview()
         end,
     }

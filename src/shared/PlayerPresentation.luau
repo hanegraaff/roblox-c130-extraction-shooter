@@ -12,6 +12,7 @@ export type View =
     | "Ground"
     | "Operator"
     | "Spectator"
+    | "RoundLobby"
     | "Results"
     | "Resetting"
     | "GroundPreview"
@@ -49,7 +50,13 @@ local reasons: { [string]: string } = {
 }
 
 -- Resolves round ownership and Studio preview without granting any action permission.
-function PlayerPresentation.view(phase: unknown, role: unknown, life: unknown, previewRole: unknown): View
+function PlayerPresentation.view(
+    phase: unknown,
+    role: unknown,
+    life: unknown,
+    previewRole: unknown,
+    watching: boolean?
+): View
     if phase == "Deploying" then
         return "Deploying"
     elseif phase == "Results" then
@@ -66,7 +73,7 @@ function PlayerPresentation.view(phase: unknown, role: unknown, life: unknown, p
         elseif life == "Alive" and role == "Gunship" then
             return "Operator"
         end
-        return "Spectator"
+        return if watching then "Spectator" else "RoundLobby"
     end
     return "Waiting"
 end
@@ -152,6 +159,7 @@ local titles: { [View]: string } = table.freeze({
     Deploying = "DEPLOYING",
     Results = "ROUND RESULTS",
     Resetting = "RESTORING BATTLEFIELD",
+    RoundLobby = "ROUND IN PROGRESS",
     GroundPreview = "STUDIO GROUND PREVIEW",
     OperatorPreview = "STUDIO OPERATOR PREVIEW",
     Waiting = "WAITING FOR PLAYERS",
@@ -161,6 +169,9 @@ local titles: { [View]: string } = table.freeze({
 function PlayerPresentation.title(view: View, eliminated: boolean): string
     if view == "Spectator" then
         return if eliminated then "ELIMINATED • SPECTATING" else "SPECTATING"
+    end
+    if view == "RoundLobby" and eliminated then
+        return "ELIMINATED • BACK IN THE LOBBY"
     end
     return titles[view]
 end

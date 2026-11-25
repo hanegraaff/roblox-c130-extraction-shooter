@@ -27,6 +27,9 @@ The integrated source on `main` includes the development shell, verification too
 | Lobby redesign | [P20 · Sculpt the oversized bust](plans/20-lobby-bust.md) | Complete | Supplied bust and room references | Inspect the sculpture in Blender and approve its likeness, scale and expression |
 | Lobby redesign | [P21 · Build the complete lobby in Blender](plans/21-lobby-interior.md) | Complete | P20 visual approval | Inspect and approve the connected main room, theater and gallery with all six portraits hung as paintings |
 | Lobby redesign | [P22 · Replace the protected Roblox lobby](plans/22-integrate-lobby.md) | Complete | P20 and P21 visual approvals, P02, P03 | Spawn facing the bust, walk through both wings and return to the lobby after a round |
+| Gameplay iteration | [P23 · Lobby return, theater spectating and intermission](plans/23-lobby-return-and-intermission.md) | Blocked | P03, P09, P10, P22 | Return to the lobby on death, walk up to the TV to enter spectator mode, and spend two minutes together in the lobby after each round |
+| Gameplay iteration | [P24 · Ground head start and C-130 arrival](plans/24-ground-scatter-and-aircraft-arrival.md) | Planned | P03, P04, P09, P23 | Scatter for 20 seconds while the operator sees a countdown on black, then fight when the aircraft arrives |
+| Gameplay iteration | [P25 · Weapon cooldowns, rocket damage and rifle ammunition](plans/25-weapon-cooldowns-and-rifle-ammo.md) | Ready | P05, P06, P08, P18, P19 | Fire the M102 every 12 seconds, launch a 150-damage rocket every 15 seconds per launcher and reload the M-7 from unlimited reserve |
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 

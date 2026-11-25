@@ -8,7 +8,7 @@ Read `Players.LocalPlayer.PlayerScripts.ClientTests:GetAttribute("ClientTestRepo
 
 Use the [Studio procedure](../../../docs/testing.md#run-the-studio-smoke-suites) to collect both context reports and stop/restart. A server report cannot replace client GUI/replication assertions. This runner and its dependencies never enter the release mapping.
 
-After the foundational specs, `RoundHarness.run()` starts a bounded discovery task for the test-only P03 transport. Automated probes observe the actual LocalPlayer role/life/deadline, RoundHUD and spectator/lobby CameraSubject, send production surrender intent and disconnect through StudioTestService. The listener disconnects when its transport is removed. These observations supplement the source-specific client TestEZ cases; they are not additional foundation-case counts.
+After the foundational specs, `RoundHarness.run()` discovers the test-only round transport for P03 and P23. Probes compare the actual local role, life, combat and intermission deadlines, HUD, and camera subject. They exercise the production TV prompt and exit control, send surrender intent and use StudioTestService for test departure. The listener disconnects when the transport is removed. [P23 procedure and operated checks](../../../docs/testing.md#run-the-p23-lobby-and-intermission-harness)
 
 `MatchOutcomeHarness.run()` discovers the test-only P09 transport after ordinary TestEZ. It sends production weapon and launcher intent and checks the current client's result payload, HUD text, camera mode and subject, loadout and aircraft zoom through replay. It disconnects when the transport is removed. Manual P09 selects this listener alone. [P09 scenario procedure](../../../docs/testing.md#run-the-p09-match-outcome-harness)
 

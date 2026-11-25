@@ -245,7 +245,12 @@ function Harness.run()
                 for _, player in Players:GetPlayers() do
                     if player:GetAttribute("Role") == "Spectator" then
                         spectators += 1
-                        assert(player.Character == nil, "late spectator gained character")
+                        awaitCondition(function()
+                            local character = player.Character
+                            return character ~= nil
+                                and character:FindFirstChild("StationProtection") ~= nil
+                                and player:GetAttribute("Life") == "Spectating"
+                        end, "late arrival has a protected lobby avatar and no active life")
                     end
                 end
                 assert(spectators == 1, "late join did not stay spectator")

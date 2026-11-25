@@ -59,7 +59,7 @@ return function()
                 and type(player:GetAttribute("Role")) == "string"
         end)
         local avatarStarted = os.clock()
-        awaitReady("actual avatar or late spectator", 25, function()
+        awaitReady("battlefield or protected lobby avatar", 25, function()
             local state = replicated:FindFirstChild("RoundState")
             if not state then
                 return false
@@ -68,7 +68,8 @@ return function()
             if player:GetAttribute("Role") == "Spectator" then
                 return state:GetAttribute("Phase") ~= "Lobby"
                     and player:GetAttribute("Life") == "Spectating"
-                    and character == nil
+                    and character ~= nil
+                    and character:FindFirstChild("StationProtection") ~= nil
                     and player:GetAttribute("RoundCharacterLoad") == nil
             end
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
@@ -83,7 +84,11 @@ return function()
             local state = replicated:FindFirstChild("RoundState")
             assert(state and state:GetAttribute("Phase") ~= "Lobby", "spectator without active round")
             assert(player:GetAttribute("Life") == "Spectating", "late spectator life not explicit")
-            assert(not character, "late spectator gained a character")
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            assert(
+                root and root:IsA("BasePart") and not root.Anchored,
+                "late arrival lacks a movable lobby avatar"
+            )
         else
             local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
             assert(

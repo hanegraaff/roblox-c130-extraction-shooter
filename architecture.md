@@ -2,7 +2,7 @@
 
 `main` includes integrated P18 rebalancing: deployment Ground-roster health, one-howitzer/two-earned-second panel destruction, square camera bounds, four landmark launchers and white Ground targets against a darker fully desaturated world. The [P18 record](plans/18-game-rebalancing.md) identifies verification and integration source separately; local implementation does not establish future Roblox publication or live capacity/performance acceptance.
 
-The P19 branch adds a 25-stud howitzer blast around confirmed contacts and a client presentation stream for gunship shells and Ground rockets. Its gameplay and presentation contracts below describe the local candidate. [P19 source and acceptance record](plans/19-weapon-impacts.md)
+The integrated gunship uses a 25-stud howitzer blast around confirmed contacts. Clients receive a presentation stream for gunship shells and Ground rockets. This branch adds the P23 lobby flow and theater interaction. Its ownership contracts are documented below, with Studio acceptance in the plan record. [P19 weapon impacts](plans/19-weapon-impacts.md) · [P23 round flow](plans/23-lobby-return-and-intermission.md)
 
 ## Current state and target
 
@@ -73,17 +73,21 @@ Pure `BuildingLayout` validates the primitive two-large/one-small building contr
 
 Server-only `TerrainRecipe` validates and restores the authored material/relief rasters from `Battlefield.TerrainRecipe` at four-stud voxel resolution. The level owns a bounded terrain volume, palette and deterministic recipe; invalid authoring rejects before writes and terrain outside that volume stays untouched. Terrain operations do not yield, while collision/query updates may converge afterward. The engine suite uses bounded readiness waits. See the current [world contract](assets/world/README.md#terrain-authoring-and-restoration) for recipe version and regeneration commands.
 
-`start()` validates, reconstructs terrain, decorates identities and connects containment. `stop()` disconnects Heartbeat while retaining the map and snapshot for restart. `rebuild()` restores the terrain recipe, replaces Battlefield from the pristine clone, decorates and validates; `MatchRuntime` invokes it during Resetting. `destroy()` idempotently stops containment, restores pristine geometry/terrain and releases the private snapshot; a destroyed owner cannot restart. Consumers must reacquire Instances after replacement. See the [server package](src/server/README.md), [world contract](assets/world/README.md) and [P13 record](plans/13-terrain-and-buildings.md).
+`start()` validates, reconstructs terrain, decorates identities and connects containment. `stop()` disconnects Heartbeat while retaining the map and snapshot for restart. `rebuild(preserveLobby?)` restores the terrain recipe, replaces Battlefield from the pristine clone, decorates and validates. P23 round reset preserves the live `LobbyStation` subtree by reparenting it within Workspace while the surrounding map is replaced. Battlefield consumers reacquire the new Instances. `destroy()` idempotently stops containment, restores pristine geometry and terrain, and releases the private snapshot. [Server package](src/server/README.md) · [World contract](assets/world/README.md) · [P13 record](plans/13-terrain-and-buildings.md)
+
+## Planned round and combat changes
+
+P24 will separate deployment readiness, the 20-second Ground scatter interval and combat activation. P25 will update M102 and per-launcher readiness, direct rocket damage and the rifle reserve. Each plan identifies the server and client boundaries and acceptance checks for its change. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 ## Implemented round ownership
 
 `RoleService` selects one operator from unique eligible UserIds, excluding the previous operator when alternatives exist. It prefers the largest completed-round wait counter and breaks sorted ties deterministically from a seed. `RoundRules` owns legal phase edges and result ordering. `MatchService` composes them with injected monotonic time and life-cleanup callbacks; it has no Instances or network access. Snapshots copy members and results so callers cannot mutate authority.
 
-The phase loop is Lobby → Deploying → Active → Results → Resetting → Lobby. Deployment waits for assigned character loads and cancels to Lobby if an assigned player leaves. On activation, a reported body loss for a still-connected participant aborts to Results without a competitive winner. Setup failure and deployment timeout also abort. Active membership stays keyed by UserId. Departure removes the life, reconnect preserves its tombstone, and late arrivals spectate.
+The phase loop is Lobby → Deploying → Active → Results → Resetting → Lobby. Deployment waits for assigned character loads and cancels to Lobby if an assigned player leaves. On activation, a reported body loss for a still-connected participant aborts to Results without a competitive winner. Setup failure and deployment timeout also abort. P23 retains the committed result and absolute intermission deadline through battlefield reset. The production 120-second timer starts at result commit. Redeployment requires expiry, a ready map and eligible population. A departure or late arrival does not change the deadline. Active membership and consumed lives stay keyed by UserId.
 
-`MatchRuntime` owns teams, noncolliding character groups and the `RoundState.Surrender` RemoteEvent. `CharacterOwner` serializes avatar loads and uses request tokens and a per-player lease to invalidate stale work. Death and owned-body removal revoke one active ground life. If a departure also arrives in the same step, `MatchService` can attribute the body removal to that departure while preserving a confirmed death. Internal replacement disconnects character signals before destroying the old body. Operator reset replaces the protected station body while aircraft health persists. `GameRuntime` composes the owners and disconnects its combat frame before stopping them in reverse acquisition order. [Server package contracts](src/server/README.md)
+`MatchRuntime` owns teams, noncolliding character groups and the `RoundState.Surrender` RemoteEvent. Death and owned-body removal revoke one active Ground life. If a departure also arrives in the same step, `MatchService` can attribute the body removal to that departure while preserving a confirmed death. P23 gives eliminated players, reconnecting players and late arrivals a protected lobby body. Results sends the remaining players to the lobby and keeps existing lobby bodies in place. `CharacterOwner` coalesces identical placement requests and uses request tokens and a per-player lease to invalidate stale avatar loads. It defers physical placement until combat and launcher cleanup for the frame. Operator reset during Active replaces only the protected station body. `GameRuntime` disconnects its combat frame before stopping owners in reverse acquisition order. [Server package contracts](src/server/README.md)
 
-`RoundPanel` computes its timer from the replicated deadline using `GetServerTimeNow`. A single `RoundState.Result` JSON attribute carries `roundId`, `winner`, `reason` and optional `userId`, `weapon` and `shotId`. The client displays winning team and reason as readable text only for the matching round. Aircraft destruction credits the server-resolved lethal shot, and C-130 wins credit the assigned operator. Forfeit and abort results carry their own reasons without impact credit.
+`RoundPanel` computes its timers from `RoundState.DeadlineSeconds` and `IntermissionUntil` using `GetServerTimeNow`. A single `RoundState.Result` JSON attribute carries `roundId`, `winner`, `reason` and optional `userId`, `weapon` and `shotId`. The client displays the matching round's winning team and reason through intermission. Aircraft destruction credits the server-resolved lethal shot, and C-130 wins credit the assigned operator. Forfeit and abort results carry their own reasons without impact credit.
 
 ### Player presentation
 
@@ -94,18 +98,20 @@ aircraft health bar and routes desktop settings and spectator controls. The
 settings panel blocks combat input while open. The server validates gameplay
 actions.
 
+`TheaterSpectating` attaches a local proximity prompt to the existing TV. In P23 an eligible lobby player opts in during combat. The controller suspends movement of the lobby avatar while watching and releases it on exit or loss of eligibility. It owns no server transport or combat authority.
+
 `SpectatorCamera` filters targets to living Ground players in the current round
 with a live Humanoid in Workspace. It retains the selected target when eligible
 and cycles by UserId. With no eligible target it owns a local inert camera
 subject for the neutral overview. The living operator and labelled solo
 Operator preview use `ThermalCameraController`. Results releases the active
-role camera, and Lobby restores the local character camera.
+role or spectator camera and returns to the local character as its lobby body becomes ready.
 
 `PresentationEffects` reads the replicated warning, impact and result facts.
 It owns temporary local effects and two Roblox-bundled sound references. The
 effect level scales audible cues and optional pulse and flash intensity. The
-independent shake level applies after the aircraft destruction result, when
-the client owns the Results overview. Readable warning and result text stays
+independent shake level briefly affects the local lobby camera after aircraft destruction.
+Readable warning and result text stays
 available at each setting. Phase and round changes clear transient effects.
 The P19 `WeaponImpactEffects` client also uses that setting for impact bursts and rocket smoke.
 It owns up to 12 anchored local impact bursts and eight smoke trails. A heavy burst can replace an older light burst at capacity. Full M102 uses an expanding fireball and a longer plume. Reduced uses a shorter, smaller effect. Distance and the thermal view trim particle counts while keeping the Full blast readable. Existing trails stop emitting when flight ends and fade, and accepted impact bursts can finish into Results. Round changes, resetting and muting clear active effects. `WeaponAudio` owns delayed positional playback with per-weapon and per-surface mixes, four preloaded samples, a bundled fallback and bounded voice and queue counts. At Results entrance it clears muzzle cues and admits fresh impacts for 0.75 seconds so the shot that ended the round can be heard. Both owners use server facts. The local settings record is session-scoped. [Client package contracts](src/client/README.md) · [Asset provenance](assets/manifest.json)
@@ -228,7 +234,7 @@ Use a small named RemoteEvent surface, not an unrestricted generic RPC dispatche
 | Client → M-7 reload (implemented) | exactly `roundId`, `sequence` | Active equipped ground life, readiness, bounded sequence and request budget; gunship reload is automatic |
 | Client → launcher Pickup / Drop | exactly round ID, sequence, launcher ID | Current identity, increasing sequence, live connected Ground membership and request budget. Pickup also shares movement/origin authority, 8-stud reach and solid-world sight line |
 | Client → launcher Fire | exactly round ID, sequence, launcher ID, finite x/y/z target | Same authority plus held/equipped Tool, reload deadline and bounded server-head-to-target range. Server sweeps the resulting flight |
-| Server → result | `RoundState.Result` JSON with round ID, winner, reason and optional attribution | Committed once by `MatchService` and cleared on replay. Clients display results for the matching round |
+| Server → result and timing | `RoundState.Result` JSON with round ID, winner, reason and optional attribution. `IntermissionUntil` is an absolute server-clock deadline in seconds | `MatchService` commits both on the result update. Clients display the matching result through intermission. New deployment clears the previous result and intermission deadline |
 | Client → sync request (target) | bounded request token | Per-player rate budget; return only that role's permitted snapshot |
 | Server → snapshot/update | round ID, revision, permitted state | Immutable view model; client discards stale rounds/revisions |
 | Server → weapon audio | round ID, cue ID, origin, server time, optional shooter and optional surface kind | `RoundState.WeaponAudio` sends unreliable presentation cues after accepted shots and resolved impacts. Clients cap and expire the queue, apply a local propagation delay and clear playback on mute or reset. Results prunes muzzle cues and admits impact cues for 0.75 seconds |

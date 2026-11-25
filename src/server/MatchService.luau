@@ -32,10 +32,17 @@ export type Snapshot = {
     revision: number,
     phase: Phase,
     deadlineSeconds: number,
+    intermissionUntil: number,
     members: { [number]: Member },
     result: Result?,
 }
-export type Settings = { minimumPlayers: number, durationSeconds: number, seed: number }
+-- An omitted intermission is for fast standalone service and Studio fixtures.
+export type Settings = {
+    minimumPlayers: number,
+    durationSeconds: number,
+    seed: number,
+    intermissionSeconds: number?,
+}
 -- releaseLife runs at most once per active life, with false for terminal/reset cleanup.
 export type Adapters = { now: () -> number, releaseLife: (number, number, boolean) -> () }
 export type Controller = {
@@ -54,7 +61,8 @@ export type Controller = {
     abort: (number, string) -> boolean,
     step: (((number) -> ())?, number?) -> (),
     beginReset: () -> boolean,
-    finishReset: () -> boolean,
+    -- Normal cleanup retains the result/deadline. Runtime teardown alone clears them.
+    finishReset: (boolean?) -> boolean,
     command: (number, unknown) -> (boolean, string?),
     snapshot: () -> Snapshot,
 }
@@ -65,6 +73,8 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     assert(settings.minimumPlayers >= 2 and settings.minimumPlayers <= 10, "invalid minimum")
     assert(settings.minimumPlayers % 1 == 0, "minimum must be integral")
     assert(settings.durationSeconds >= 1 and settings.durationSeconds <= 3600, "invalid duration")
+    local intermissionSeconds = settings.intermissionSeconds or 0
+    assert(intermissionSeconds >= 0 and intermissionSeconds <= 3600, "invalid intermission duration")
     assert(
         settings.seed >= 0 and settings.seed <= 2147483647 and settings.seed % 1 == 0,
         "seed must be a safe nonnegative integer"
@@ -74,6 +84,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
         revision = 0,
         phase = "Lobby",
         deadlineSeconds = 0,
+        intermissionUntil = 0,
         members = {},
         result = nil,
     }
@@ -119,11 +130,12 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             member.life = "Eliminated"
         end
     end
-    local function commit(result: Result): boolean
+    local function commit(result: Result, atSeconds: number?): boolean
         if state.result or not transition("Results") then
             return false
         end
         state.result = result
+        state.intermissionUntil = if intermissionSeconds > 0 then now(atSeconds) + intermissionSeconds else 0
         table.clear(departingGround)
         table.clear(removedCharacters)
         for _, member in state.members do
@@ -172,6 +184,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             revision = state.revision,
             phase = state.phase,
             deadlineSeconds = state.deadlineSeconds,
+            intermissionUntil = state.intermissionUntil,
             members = members,
             result = if state.result then table.clone(state.result) else nil,
         }
@@ -229,6 +242,9 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             if state.phase ~= "Lobby" then
                 return false, "not in lobby"
             end
+            if state.intermissionUntil > 0 and now() < state.intermissionUntil then
+                return false, "intermission has not elapsed"
+            end
             local candidates: { { userId: number, waitedRounds: number } } = {}
             for id in connected do
                 table.insert(candidates, { userId = id, waitedRounds = waited[id] or 0 })
@@ -246,6 +262,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             table.clear(state.members)
             state.result = nil
             state.deadlineSeconds = 0
+            state.intermissionUntil = 0
             aircraftDestroyed = false
             aircraftCredit = nil
             for _, candidate in candidates do
@@ -388,7 +405,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                 elseif result.winner == "Gunship" then
                     result.userId = operatorId
                 end
-                commit(result)
+                commit(result, stepSeconds)
             else
                 table.clear(departingGround)
                 table.clear(removedCharacters)
@@ -401,15 +418,24 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
         beginReset = function()
             return transition("Resetting")
         end,
-        finishReset = function()
-            if state.phase ~= "Resetting" then
+        finishReset = function(teardown)
+            if state.phase ~= "Resetting" and not (teardown and state.phase == "Lobby") then
                 return false
             end
             table.clear(state.members)
-            state.result = nil
+            if teardown then
+                state.intermissionUntil = 0
+            end
+            if state.intermissionUntil == 0 then
+                state.result = nil
+            end
             state.deadlineSeconds = 0
             aircraftDestroyed = false
             aircraftCredit = nil
+            if state.phase == "Lobby" then
+                changed()
+                return true
+            end
             return transition("Lobby")
         end,
         command = function(id, value)

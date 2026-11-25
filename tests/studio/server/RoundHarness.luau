@@ -13,6 +13,7 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
 local MatchService = require(game:GetService("ServerScriptService").Server.MatchService)
+local MatchRuntime = require(game:GetService("ServerScriptService").Server.MatchRuntime)
 local RoundHarness = {}
 
 type Probe = {
@@ -22,6 +23,7 @@ type Probe = {
     life: string?,
     phase: string?,
     deadlineSeconds: number?,
+    intermissionUntil: number?,
     targetId: number?,
     sequence: number?,
 }
@@ -299,7 +301,14 @@ function RoundHarness.run()
         StudioTestService:EndTest(require(script.Parent.HumanTestCheck).run())
         return
     end
-    local automated = type(args) == "table" and args.kind == "P03"
+    local verifyIntermission = type(args) == "table" and args.kind == "P23"
+    local automated = verifyIntermission or (type(args) == "table" and args.kind == "P03")
+    if verifyIntermission then
+        assert(
+            MatchRuntime.defaults.intermissionSeconds == 120,
+            "production intermission must be 120 seconds"
+        )
+    end
     if automated then
         awaitCondition(function()
             return #Players:GetPlayers() == 3
@@ -308,10 +317,11 @@ function RoundHarness.run()
     local runtime, reason = GameRuntime.start({
         automaticDeployment = automated,
         minimumPlayers = 2,
-        durationSeconds = if automated then 30 else 60,
+        durationSeconds = if verifyIntermission then 45 elseif automated then 30 else 60,
         lobbySeconds = if automated then 8 else 0,
         deploymentSeconds = 25,
         resultsSeconds = if automated then 2 else 3,
+        intermissionSeconds = if verifyIntermission then MatchRuntime.defaults.intermissionSeconds else nil,
         seed = 1,
     })
     assert(runtime, reason)
@@ -341,6 +351,9 @@ function RoundHarness.run()
         return table.concat(parts, "|")
     end
     local initialMap = mapSignature()
+    local lobbyStation = workspace.World.Battlefield.LobbyStation
+    local theaterFloor =
+        assert(lobbyStation:FindFirstChild("LobbyFloorTheater", true), "theater floor missing")
     local initialConnections = 0
     -- Change real map Instances so an unchanged signature after reset proves rebuild,
     -- rather than merely observing a map which was never modified.
@@ -443,10 +456,28 @@ function RoundHarness.run()
                 life = if member then member.life else "Waiting",
                 phase = state.phase,
                 deadlineSeconds = state.deadlineSeconds,
+                intermissionUntil = state.intermissionUntil,
             })
         end
     end
+    local function waitingAvatar(player: Player, previous: Model?): Model
+        awaitCondition(function()
+            local avatar = player.Character
+            local root = if avatar then avatar:FindFirstChild("HumanoidRootPart") else nil
+            return avatar ~= nil
+                and avatar ~= previous
+                and avatar:FindFirstChild("StationProtection") ~= nil
+                and root ~= nil
+                and root:IsA("BasePart")
+                and not root.Anchored
+        end, "protected, movable lobby avatar")
+        return assert(player.Character, "lobby avatar disappeared")
+    end
+    local returnedAvatars: { [Player]: Model } = {}
     local firstRound, secondRound, thirdRound = 0, 0, 0
+    local function placeAtTelevision(avatar: Model)
+        avatar:PivotTo(CFrame.lookAt(Vector3.new(472.5, 3, -37), Vector3.new(472.5, 3, -43.815)))
+    end
     local ok, failure = pcall(function()
         check("A5 three actual clients receive assigned roles, phase, deadline and UI", function()
             assert(#clients == 3, "P03 harness requires exactly three actual clients")
@@ -462,7 +493,7 @@ function RoundHarness.run()
             assert(character:FindFirstChild("StationProtection"), "operator station protection missing")
             perturbMap()
         end)
-        check("A3/A4 actual late join remains a characterless spectator and cannot act", function()
+        check("P23 A4 actual late arrival receives a protected lobby avatar and cannot act", function()
             StudioTestService:AddPlayers(1)
             awaitCondition(function()
                 return #Players:GetPlayers() == 4
@@ -482,7 +513,7 @@ function RoundHarness.run()
                 member and member.role == "Spectator" and member.life == "Spectating",
                 "late join gained an active role"
             )
-            assert(late.Character == nil, "late join gained a character")
+            waitingAvatar(late, nil)
             probe(late, {
                 kind = "Observe",
                 roundId = state.roundId,
@@ -496,38 +527,62 @@ function RoundHarness.run()
             task.wait(0.3)
             assert(runtime.rounds.match.snapshot().revision == before, "late spectator command mutated state")
         end)
-        check("A3/A4 death does not respawn; teammate spectating and command rejection", function()
-            local state = runtime.rounds.match.snapshot()
-            local operator, ground = roles(state)
-            local dead, survivor = ground[1], ground[2]
-            local original = dead.Character
-            assert(original, "ground character missing")
-            local humanoid = original:FindFirstChildOfClass("Humanoid")
-            assert(humanoid, "ground humanoid missing")
-            humanoid.Health = 0
-            awaitCondition(function()
-                local member = runtime.rounds.match.snapshot().members[dead.UserId]
-                return member.life == "Eliminated"
-            end, "ground death elimination")
-            probe(dead, { kind = "Spectate", targetId = survivor.UserId, roundId = state.roundId })
-            task.wait(1)
-            assert(dead.Character == original or dead.Character == nil, "death created a fresh character")
-            local revision = runtime.rounds.match.snapshot().revision
-            probe(operator, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
-            probe(dead, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
-            probe(survivor, { kind = "SendRejected", roundId = state.roundId - 1, sequence = 1 })
-            task.wait(0.3)
-            assert(runtime.rounds.match.snapshot().revision == revision, "rejected remote mutated match")
-            probe(survivor, { kind = "Surrender", roundId = state.roundId, sequence = 2 })
-            awaitCondition(function()
-                return runtime.rounds.match.snapshot().phase == "Results"
-            end, "elimination result")
-            local result = runtime.rounds.match.snapshot().result
-            assert(
-                result and result.winner == "Gunship" and result.reason == "GroundEliminated",
-                "wrong elimination result"
-            )
-        end)
+        check(
+            "P23 A1/A2 death returns Ground to lobby and the theater enables optional spectating",
+            function()
+                local state = runtime.rounds.match.snapshot()
+                local operator, ground = roles(state)
+                local dead, survivor = ground[1], ground[2]
+                local original = dead.Character
+                assert(original, "ground character missing")
+                probe(operator, { kind = "NoTheaterPrompt" })
+                probe(survivor, { kind = "NoTheaterPrompt" })
+                local humanoid = original:FindFirstChildOfClass("Humanoid")
+                assert(humanoid, "ground humanoid missing")
+                humanoid.Health = 0
+                awaitCondition(function()
+                    local member = runtime.rounds.match.snapshot().members[dead.UserId]
+                    return member.life == "Eliminated"
+                end, "ground death elimination")
+                local lobby = waitingAvatar(dead, original)
+                probe(dead, { kind = "LobbyCamera" })
+                probe(dead, { kind = "DistantTheater" })
+                placeAtTelevision(lobby)
+                probe(dead, { kind = "EnterTheater", targetId = survivor.UserId, roundId = state.roundId })
+                probe(dead, { kind = "ExitTheater" })
+                assert(dead.Character == lobby, "leaving spectator mode replaced the lobby avatar")
+                local revision = runtime.rounds.match.snapshot().revision
+                probe(operator, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
+                probe(dead, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
+                probe(survivor, { kind = "SendRejected", roundId = state.roundId - 1, sequence = 1 })
+                task.wait(0.3)
+                assert(runtime.rounds.match.snapshot().revision == revision, "rejected remote mutated match")
+                probe(dead, { kind = "EnterTheater", targetId = survivor.UserId, roundId = state.roundId })
+                probe(survivor, { kind = "Surrender", roundId = state.roundId, sequence = 2 })
+                awaitCondition(function()
+                    return runtime.rounds.match.snapshot().phase == "Results"
+                end, "elimination result")
+                local terminal = runtime.rounds.match.snapshot()
+                local result = terminal.result
+                assert(
+                    result and result.winner == "Gunship" and result.reason == "GroundEliminated",
+                    "wrong elimination result"
+                )
+                probe(dead, { kind = "LobbyCamera" })
+                assert(dead.Character == lobby, "results respawned a player already in the theater")
+                if verifyIntermission then
+                    -- Observe lobby arrival as soon as the result commits. Avatar
+                    -- loading may still be in flight when the battlefield resets.
+                    for _, player in Players:GetPlayers() do
+                        returnedAvatars[player] = waitingAvatar(player, nil)
+                        probe(
+                            player,
+                            { kind = "Intermission", intermissionUntil = terminal.intermissionUntil }
+                        )
+                    end
+                end
+            end
+        )
         check("A6 first reset restores lobby camera, roster and perturbed map", function()
             awaitCondition(function()
                 return runtime.rounds.match.snapshot().phase == "Lobby"
@@ -539,12 +594,45 @@ function RoundHarness.run()
             assert(workspace.World:FindFirstChild("Battlefield"), "map lost on reset")
             assert(mapSignature() == initialMap, "first reset changed authored map")
         end)
+        if verifyIntermission then
+            check("P23 A4 production-length intermission keeps all clients in the protected lobby", function()
+                local result = runtime.rounds.match.snapshot()
+                local deadline = result.intermissionUntil
+                assert(
+                    deadline > workspace:GetServerTimeNow() + 90,
+                    "production countdown did not start at result"
+                )
+                assert(
+                    not runtime.rounds.match.deploy(),
+                    "manual deployment bypassed production intermission"
+                )
+                while workspace:GetServerTimeNow() + 0.1 < deadline do
+                    local current = runtime.rounds.match.snapshot()
+                    assert(
+                        current.roundId == firstRound and current.phase == "Lobby",
+                        "deployed before countdown ended"
+                    )
+                    assert(
+                        workspace.World.Battlefield.LobbyStation == lobbyStation,
+                        "reset replaced the occupied lobby"
+                    )
+                    assert(
+                        theaterFloor:IsDescendantOf(lobbyStation),
+                        "theater floor was replaced during reset"
+                    )
+                    for player, avatar in returnedAvatars do
+                        assert(player.Character == avatar, "intermission replaced a lobby avatar")
+                    end
+                    task.wait(0.05)
+                end
+            end)
+        end
         check("A5/A6 operator reset retains assignment and timeout is authoritative", function()
             local state = activeAfter(firstRound)
             secondRound = state.roundId
             initialConnections = runtime.rounds.resources().connections
             perturbMap()
-            local operator = roles(state)
+            local operator, ground = roles(state)
             local original = operator.Character
             assert(original, "operator character missing")
             local humanoid = original:FindFirstChildOfClass("Humanoid")
@@ -568,9 +656,32 @@ function RoundHarness.run()
                 "operator reset changed deadline"
             )
             replicated(runtime.rounds.match.snapshot())
+            if verifyIntermission then
+                local watcher, currentTarget, nextTarget = ground[3], ground[1], ground[2]
+                assert(watcher and currentTarget and nextTarget, "late client not included in the new roster")
+                local oldWatcher = assert(watcher.Character, "watcher not deployed")
+                local watcherBody =
+                    assert(oldWatcher:FindFirstChildOfClass("Humanoid"), "watcher body missing")
+                watcherBody.Health = 0
+                placeAtTelevision(waitingAvatar(watcher, oldWatcher))
+                probe(
+                    watcher,
+                    { kind = "EnterTheater", targetId = currentTarget.UserId, roundId = state.roundId }
+                )
+                local targetBody = assert(
+                    currentTarget.Character and currentTarget.Character:FindFirstChildOfClass("Humanoid"),
+                    "first target body missing"
+                )
+                targetBody.Health = 0
+                probe(watcher, { kind = "FollowTheater", targetId = nextTarget.UserId })
+                assert(
+                    runtime.rounds.match.snapshot().phase == "Active",
+                    "losing one theater target ended the round"
+                )
+            end
             awaitCondition(function()
                 return runtime.rounds.match.snapshot().phase == "Results"
-            end, "round timeout", 35)
+            end, "round timeout", if verifyIntermission then 50 else 35)
             local result = runtime.rounds.match.snapshot().result
             assert(
                 result and result.winner == "Gunship" and result.reason == "Timeout",
@@ -586,7 +697,15 @@ function RoundHarness.run()
                 probe(player, { kind = "LobbyCamera" })
             end
             assert(mapSignature() == initialMap, "second reset changed authored map")
+            assert(theaterFloor:IsDescendantOf(lobbyStation), "second reset replaced the theater floor")
+            assert(
+                workspace.World.Battlefield.LobbyStation == lobbyStation,
+                "second reset replaced the occupied lobby"
+            )
         end)
+        if verifyIntermission then
+            return true
+        end
         check("A6 actual ground departure removes life; operator departure forfeits", function()
             local state = activeAfter(secondRound)
             thirdRound = state.roundId
@@ -636,6 +755,7 @@ function RoundHarness.run()
         check("A6 pending actual avatar loads retain ownership and accounting until drained", function()
             require(script.Parent.CharacterCleanup).run()
         end)
+        return true
     end)
     if not ok then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })
@@ -650,18 +770,23 @@ function RoundHarness.run()
         end
     end
     local report = {
-        suite = "P03-multiplayer",
+        suite = if verifyIntermission then "P23-multiplayer" else "P03-multiplayer",
         environment = "Studio",
         clientCount = peakClientCount,
         initialClientCount = #clients,
-        completedRoundIds = { firstRound, secondRound, thirdRound },
+        completedRoundIds = if verifyIntermission
+            then { firstRound, secondRound }
+            else { firstRound, secondRound, thirdRound },
         discovered = #cases,
         passed = passed,
         failed = #cases - passed,
         skipped = 0,
         cases = cases,
     }
-    workspace:SetAttribute("P03MultiplayerReport", HttpService:JSONEncode(report))
+    workspace:SetAttribute(
+        if verifyIntermission then "P23MultiplayerReport" else "P03MultiplayerReport",
+        HttpService:JSONEncode(report)
+    )
     StudioTestService:EndTest(report)
 end
 

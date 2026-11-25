@@ -4,21 +4,21 @@
 
 *User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
-One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. The ground team starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. Aircraft health starts at **1,000 per Ground player** in the deployment roster. Rockets deal 100 damage and rifles deal 5 to the same health pool; deaths and departures do not shrink or refill it.
+One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. The ground team starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. Aircraft health starts at **1,000 per Ground player** in the deployment roster and stays fixed for the round. Rockets deal 100 damage and rifles deal 5 to the same health pool.
 
 ## Play a round
 
 Rounds start in the protected, walkable lobby. With 2–10 players, the server assigns one operator and deploys everyone else as one ground team. The C-130 automatically circles the edge of the 720-stud battlefield. The default round lasts ten minutes, and friendly fire is off.
 
-In the furnished P22 lobby, the stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits. Both roles return to the lobby after a round. [P22 local build and acceptance record](plans/22-integrate-lobby.md)
+The stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits. The lobby return, theater controls and intermission below describe the P23 candidate. [P23 candidate and acceptance](plans/23-lobby-return-and-intermission.md)
 
 - **Ground team.** Follow the trails from any Sandbreak exit. Pick up a launcher inside the Salt Flats hangar, outside Vesper Radar’s south gate, outside the military depot by the parking lot, or inside the Prism Seedship on its lower deck. Buildings and large rock formations provide cover. Lead the moving plane when firing a rocket. The carrier keeps their M-7, and the launcher's four-second reload continues through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect while the round is active. If the drop position is invalid, the launcher returns to its original anchor.
 - **C-130 operator.** Scan for bright white Ground silhouettes against dark grayscale terrain and scenery in the thermal view. The aircraft body is hidden from its operator’s targeting view while remaining visible to Ground players. The 30mm GAU-23/A Chain Gun gives a tighter view, and the 105mm M102 Howitzer gives a wider view and blast. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. WASD or touch arrows pan across the level’s 720 × 720-stud square. The square edges stop movement on that axis while allowing movement along the edge and immediate reversal. Releasing the controls holds the target point on the map as the plane continues its orbit.
-- **Spectating.** Ground death, character reset or surrender consumes your round life. The camera follows a living Ground player and switches to the battlefield overview if no target is available. Late arrivals and reconnecting players can watch until the next round. Operator reset replaces the protected station body and preserves aircraft health.
+- **After elimination.** Ground death, character reset or surrender consumes your round life and sends you back to the lobby. Players joining or reconnecting during combat also start in the lobby. To watch an active round, walk up to the theater TV and choose **Spectate**. The still image stays on the TV while your camera follows a living Ground player. Choose **Exit spectating** to take control of your avatar at the TV. An active operator who resets gets a new protected station body and keeps the same aircraft health.
 
 The ground team wins when it destroys the plane. The C-130 wins by eliminating every ground player or surviving until time runs out. A lethal impact must land before the deadline. The ground team wins if the plane is destroyed and the last ground player is eliminated in the same pre-deadline step. A rocket already in flight can still hit after its shooter dies while the round remains active.
 
-If the operator leaves while a ground player is alive, the ground team wins by forfeit. If the last ground player leaves while the operator remains, the C-130 wins by departure. An empty match or failed deployment can end without a winner. All remaining players see the same result and reason. After Results, the lobby camera returns and the battlefield, aircraft and equipment reset for the next round.
+If the operator leaves while a ground player is alive, the ground team wins by forfeit. If the last ground player leaves while the operator remains, the C-130 wins by departure. An empty match or failed deployment can end without a winner. At the result, surviving players return to the lobby and spectator mode closes. Everyone can walk around while the HUD shows the result and the **two-minute intermission**. The battlefield resets during that time. The next match can deploy after the countdown if at least two players are eligible.
 
 ## Controls
 
@@ -30,11 +30,11 @@ If the operator leaves while a ground player is alive, the ground team wins by f
 | Fire | Hold left mouse / FIRE while equipped | Hold left mouse / FIRE at a valid surface |
 | Reload | M-7 with R / RELOAD, launcher reloads automatically | Automatic for each weapon |
 | Pick up or drop launcher | E / PICK UP within reach, G / DROP while carrying | — |
-| Surrender | Surrender / spectate button during an active life | — |
+| Surrender | **Surrender to lobby** during an active life | — |
 
-On desktop, while spectating, press **[** or **]**, or select **Previous** or **Next**, to switch among living Ground players when more than one is available. The spectator view lets you watch until the round resets.
+At the theater TV, use the displayed **Spectate** prompt on keyboard or touch. While watching, select **Previous** or **Next**, or press **[** or **]** on desktop, to switch among living Ground players when more than one is available.
 
-Press **P** or select **Settings** to adjust **Effects** and **Camera shake**. Use **↑/↓** to select a setting and **←/→** to change it, or click the setting to cycle through **Off**, **Reduced** and **Full**. Effects start at Full and camera shake at Reduced. Your choices last for the play session. The Effects setting controls cue sounds, HUD pulses, the aircraft destruction flash, impact bursts and rocket smoke. Shake applies to the results camera after aircraft destruction.
+Press **P** or select **Settings** to adjust **Effects** and **Camera shake**. Use **↑/↓** to select a setting and **←/→** to change it, or click the setting to cycle through **Off**, **Reduced** and **Full**. Effects start at Full and camera shake at Reduced. Your choices last for the play session. The Effects setting controls cue sounds, HUD pulses, the aircraft destruction flash, impact bursts and rocket smoke. Shake briefly affects the lobby camera after aircraft destruction.
 
 Both roles see the timer, remaining Ground lives and aircraft health during play. Ground players see their equipped weapon's ammunition and reload, launcher ownership or recovery, and health on the desktop HUD. The operator sees the selected weapon's name, zoom and readiness. Incoming fire, impacts and round results have text cues at every effects setting. The aircraft health bar shrinks from green through amber to red as damage accumulates, with numeric health for both roles. Gunship reports and impact sounds arrive with a distance delay. The M-7 has a positional report, and rockets have a launch rush, exhaust trail and separate impact sound.
 
@@ -52,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-Play the integrated game locally in Roblox Studio from `main`, including the furnished waiting lobby verified in Studio. The same rooms and paintings are available in Blender. [P22 verification record](plans/22-integrate-lobby.md#completion-record) · [Blender lobby](assets/blender/lobby-interior/README.md)
+Play the integrated game locally in Roblox Studio from `main`, including the furnished waiting lobby verified in Studio. For the theater interaction and two-minute intermission, build the P23 candidate branch. Its multiplayer Studio acceptance is pending. The 20-second Ground head start and weapon balance changes are planned. [P22 verification](plans/22-integrate-lobby.md#completion-record) · [P23 verification](plans/23-lobby-return-and-intermission.md#completion-record) · [P24 head start](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
@@ -72,6 +72,8 @@ rojo plugin install
 ```
 
 On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
+
+To test P23, select `plan/23-lobby-return-and-intermission` in the existing clone and run setup and verification from that branch before connecting its build.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
@@ -96,7 +98,7 @@ rojo serve default.project.json --address 127.0.0.1 --port 34873
 
 1. In Studio, use **File → Open from File** to open `build/game.rbxlx` as a local document. Reuse the document if it is already open.
 2. In Edit mode, open **Plugins → Rojo** and connect to `localhost:34873`. Confirm the **PlayersVsC130** mapping before applying it. If a newly installed plugin's toolbar button is absent, save work and restart Studio once.
-3. Click **Play** to check the walkable lobby and the HUD waiting for two players. On P22, take either doorway to the theater or gallery and walk back to the entrance. Use **Server & Clients** with two clients to start a match. The separate test mapping offers solo exploration and explicit role and round controls. Check the native mesh identities before exercising the P22 lobby after live sync. [P22 Studio procedure](docs/testing.md#verify-the-p22-waiting-lobby)
+3. Click **Play** to check the walkable lobby and the HUD waiting for two players. Take either doorway to the theater or gallery and walk back to the entrance. Use **Server & Clients** with two clients to start a match. The separate test mapping offers solo exploration and explicit role and round controls. [Lobby and theater checks](docs/testing.md#run-the-p23-lobby-and-intermission-harness)
 4. After repository edits, stop Play, confirm the same Edit document received the expected change through Rojo, and start fresh Play. If the server restarted or the plugin disconnected, reconnect the existing document in Edit mode. [MCP, sync and troubleshooting](docs/development.md#sync-this-repository-with-studio)
 
 ## Run local automated tests
@@ -113,14 +115,14 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 1. Reuse the existing **local** test document; for its first setup, open `build/tests.rbxlx` separately from the game/cloud document. With Play stopped, connect **Plugins → Rojo** to `localhost:34872` and confirm **PlayersVsC130Tests**. Use this mapping only in the local test document.
 2. Click **Play**. Expect automatic TestEZ reports in Studio **Output** and a **Test** bootstrap panel while the test runtime starts. Require nonzero discovery in the server report and every actual client report, with all cases passing and zero failures, skips or errors. Take expected counts from the current source and its verification record. The server waits up to 60 seconds for the first client. Stop and start fresh Play to confirm fresh reports, one bootstrap status owner and one visible round HUD after startup. [Collect Studio smoke reports](docs/testing.md#run-the-studio-smoke-suites)
 3. With one client, Play opens the labelled Ground preview. Use the **STUDIO TESTING** panel to cycle **Role** through Auto, Ground and Operator, or move between **Explore map (solo)** and **Return to lobby**. Preview lets you walk the map or use the thermal camera and both zooms while waiting for a match.
-4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** to exercise launcher transfer and teammate spectating, or **4** to give an eliminated player two targets to cycle through. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
-5. Play through Results and wait for the lobby to return. Start the next round to inspect restored equipment and cover. **Reset test / apply settings** returns to the lobby or solo preview. Test-panel role and duration choices apply to the next explicit start. Use **End Session** when finished.
+4. For an active local match, use Studio **Server & Clients** with **2 clients**. On the P23 candidate, use **3** so an eliminated player can enter spectator mode at the theater TV, or **4** to give that player two targets to cycle through. Set roles and **Next round** duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message.
+5. Play through Results and inspect the lobby return and restored cover. **Reset test / apply settings** returns to the lobby or solo preview. The ordinary test panel supports quick replay, and the P23 harness checks the full intermission. Use **End Session** when finished. [P23 Studio procedure](docs/testing.md#run-the-p23-lobby-and-intermission-harness)
 
 For rebalancing, run the [P18 three-client harness](docs/testing.md#run-the-p18-rebalancing-harness) and the adapted [P05 two-client gunship harness](docs/testing.md#run-the-p05-gunship-combat-harness). P18 checks shared roster health, panel openings, camera frames, thermal state, contested Seedship pickup, recovery and replay. P05 exercises actual client fire, physical flights and a one-howitzer opening replicated to both clients. Its P19 case also checks four distinct empty-ground surfaces, ground strikes beside all five buildings and a direct roof hit. Native keyboard/touch, avatar navigation and rendered contrast need their separate focused review. P03/P04 retain lifecycle/orbit checks; pre-P18 balance/camera harnesses are archived and reject on current source. Their reports remain historical. Live capacity, performance and soak validation remains unverified in the future release checklist. Stop Play and confirm source reached the same document before collecting fresh evidence. [Compatibility and procedures](docs/testing.md)
 
 For P19, run the two-client gunship regression and the impact acceptance scenarios. The five-minute `P19Profile` workload measures both roles and the server. Its Replay scenario exercises five resets and an empty-air rocket expiry. Review rendered impacts and listen to weapons in a separate operated session. [P19 Studio procedure](docs/testing.md#run-p19-weapon-impact-checks)
 
-For P22, check the furnished lobby in a solo development build and run two rounds with two actual test clients. Verify the portraits and both routes, then confirm that both players return and can walk through the rooms after each reset. [P22 Studio procedure](docs/testing.md#verify-the-p22-waiting-lobby)
+For lobby art and collision regression, verify the portraits and both lobby routes, then confirm players can walk through the rooms after each reset. [Furnished lobby checks](docs/testing.md#verify-the-p22-waiting-lobby)
 
 ## Inspect the Blender outpost
 

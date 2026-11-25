@@ -70,10 +70,20 @@ return function()
             local owner = CharacterOwner.new(player, match)
             owned = owner
             local roundId = match.snapshot().roundId
-            owner.request("Ground01", "Ground", roundId)
+            owner.request("Lobby", "Waiting", roundId - 1)
+            local superseded = false
+            task.defer(function()
+                superseded = player:GetAttribute("RoundCharacterLoad") ~= nil
+                owner.request("Ground01", "Ground", roundId)
+            end)
             waitFor(function()
                 return owner.resources().spawnTasks == 0 and player.Character ~= nil
-            end, "first owned avatar")
+            end, "deployment replaces in-flight lobby avatar")
+            local deployed = assert(player.Character, "deployed avatar missing")
+            assert(
+                superseded and not deployed:FindFirstChild("StationProtection"),
+                "stale lobby load was not exercised or won over deployment"
+            )
             for _, id in dummyIds do
                 assert(match.ready(id, roundId), "dummy ready")
             end

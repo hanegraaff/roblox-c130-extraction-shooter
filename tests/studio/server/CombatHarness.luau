@@ -425,10 +425,13 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             probe(ground, "Observe", observed)
             task.wait(0.5)
             assert(runtime.rounds.match.snapshot().revision == revision, "result committed more than once")
-            assert(
-                ground.Character == nil or ground.Character == character,
-                "eliminated ground respawned during results"
-            )
+            waitFor(function()
+                local lobby = ground.Character
+                return lobby ~= nil
+                    and lobby ~= character
+                    and lobby:FindFirstChild("StationProtection") ~= nil
+            end, "eliminated player returned to the protected lobby")
+            assert(ground:GetAttribute("Life") == "Eliminated", "lobby avatar restored a battlefield life")
         end)
         check("A5 terminal and next-round cleanup invalidate outstanding and stale shots", function()
             waitFor(function()
