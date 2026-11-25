@@ -33,7 +33,7 @@ The integrated source on `main` includes the development shell, verification too
 | M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
 | Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
 
-2026-11-25 P25 delivery. The full host gate, three-client combat and replay, two-client gunship and arrival regressions, and desktop and simulated phone readiness review passed. PR #73 delivers the new weapon settings for review. [PR #73](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/73) · [P25 verification](plans/25-weapon-cooldowns-and-rifle-ammo.md#completion-record)
+2026-11-25 P25 integration. The full host gate, three-client combat and replay, two-client gunship and arrival regressions, and desktop and simulated phone readiness review passed. PR #73 brings the new weapon settings to `main`. [PR #73](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/73) · [P25 verification](plans/25-weapon-cooldowns-and-rifle-ammo.md#completion-record)
 
 2026-11-25 P23 integration. Host verification, the four-client full replay, launcher and combat regressions, operated phone input and the focused final theater regression passed. The P23 integration on `main` supplies the dependency source for P24. [PR #71 and merge record](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/71) · [P23 verification](plans/23-lobby-return-and-intermission.md#completion-record)
 

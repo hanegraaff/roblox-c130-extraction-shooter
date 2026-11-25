@@ -4,7 +4,7 @@
 
 *User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
-One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. Ground starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. Aircraft health starts at **1,000 per Ground player** in the deployment roster. That maximum stays fixed for the round. On the P25 branch, direct rockets deal **150 damage** and M-7 hits deal **5** to the same health pool.
+One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. Ground starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. Aircraft health starts at **1,000 per Ground player** in the deployment roster. That maximum stays fixed for the round. Direct rockets deal **150 damage** and M-7 hits deal **5** to the same health pool.
 
 ## Play a round
 
@@ -52,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-`main` includes the furnished lobby, theater spectating, two-minute intermission and 20-second Ground head start. Use `plan/25-weapon-cooldowns-and-rifle-ammo` to try the weapon settings described here in Roblox Studio. On `main`, the howitzer reload takes six seconds, launchers reload in four seconds and deal 100 direct damage, and the rifle has 120 reserve rounds. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+Use `main` to play the experience described here in Roblox Studio, including the furnished lobby, theater spectating, two-minute intermission, 20-second Ground head start and current weapon settings. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
@@ -60,7 +60,7 @@ The legacy P12 implementation handoff is closed by user direction. A future Robl
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Use `main` for the integrated game. For the P25 weapon settings, substitute `plan/25-weapon-cooldowns-and-rifle-ammo` for `main` in the clone or update commands.
+Use `main` for the integrated game.
 
 ```sh
 git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
@@ -116,7 +116,7 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** clients for launcher handover or theater spectating after elimination, or **4** to give the viewer two living targets to cycle through. Set roles and **Next round** combat duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message. The 20-second head start precedes the selected combat duration.
 5. Play through Results and inspect the lobby return and restored cover. **Reset test / apply settings** returns to the lobby or solo preview. The ordinary test panel supports quick replay, and the P23 harness checks the full intermission. Use **End Session** when finished. [P23 Studio procedure](docs/testing.md#run-the-p23-lobby-and-intermission-harness)
 
-On the P25 branch, use the three-client weapon balance procedure to test howitzer switching, launcher handover and shared damage, rifle reload feedback and equipment reset. Run the two-client gunship and aircraft-arrival regressions for impact behavior and pre-arrival fire gating. Stop Play and confirm source reached the same document before collecting fresh evidence. [Weapon balance checks](docs/testing.md#verify-p25-weapon-balance) · [Gunship checks](docs/testing.md#run-the-p05-gunship-combat-harness) · [Aircraft arrival checks](docs/testing.md#run-the-p24-aircraft-arrival-harness)
+Use the three-client weapon balance procedure to test howitzer switching, launcher handover and shared damage, rifle reload feedback and equipment reset. Run the two-client gunship and aircraft-arrival regressions for impact behavior and pre-arrival fire gating. Stop Play and confirm source reached the same document before collecting fresh evidence. [Weapon balance checks](docs/testing.md#verify-p25-weapon-balance) · [Gunship checks](docs/testing.md#run-the-p05-gunship-combat-harness) · [Aircraft arrival checks](docs/testing.md#run-the-p24-aircraft-arrival-harness)
 
 For P19, run the two-client gunship regression and the impact acceptance scenarios. The five-minute `P19Profile` workload measures both roles and the server. Its Replay scenario exercises five resets and an empty-air rocket expiry. Review rendered impacts and listen to weapons in a separate operated session. [P19 Studio procedure](docs/testing.md#run-p19-weapon-impact-checks)
 

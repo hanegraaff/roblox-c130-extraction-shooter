@@ -65,3 +65,7 @@ The final `P18` SDK run passed 13/13 with three actual clients, two remaining af
 In an ordinary two-client round, the iPhone 17 Pro simulator showed the 66×18-pixel Reload text within its 78×44-pixel button and readable health, launcher and rifle readiness at logical 750×381 and 568×320. Operating the rendered Fire control spent three rounds. Pressing **R** on that same emulated client triggered production reload, displayed `27 / ∞` with a countdown and restored `30 / ∞`. The simulator mouse injection reached the Reload button but did not emit its activation event. Physical touchscreen activation remains unverified. The tester left the original document in Edit, stopped the simulator, and cleared temporary run attributes. [Phone observations](../docs/evidence/p25/phone-hud-5270dc0.json) · [Reload countdown](../docs/evidence/p25/phone-rifle-reloading.jpg) · [Compact layout](../docs/evidence/p25/phone-rifle-568x320.jpg) · [Studio cleanup](../docs/evidence/p25/studio-cleanup-5270dc0.json)
 
 The documentation review updated the player guide, branch and Studio setup, weapon and readiness contracts, and package/test references. The root guide retains the selected P16 Blender viewport as its only image.
+
+### Main integration
+
+The integration update points routine setup to `main` and records the final checks and merge commit on the pull request. The gameplay source and Studio evidence are carried forward from the tested P25 candidate above. [PR #73](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/73)
