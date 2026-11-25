@@ -314,14 +314,20 @@ function RoundHarness.run()
             return #Players:GetPlayers() == 3
         end, "three actual clients join", 30)
     end
+    local combatSeconds = if verifyIntermission then 85 elseif automated then 30 else 60
     local runtime, reason = GameRuntime.start({
         automaticDeployment = automated,
         minimumPlayers = 2,
-        durationSeconds = if verifyIntermission then 45 elseif automated then 30 else 60,
-        lobbySeconds = if automated then 8 else 0,
+        durationSeconds = combatSeconds,
+        -- The first automated deployment follows actual client smoke readiness.
+        -- This is only a guard against an automatic start during that handshake.
+        lobbySeconds = if automated then 180 else 0,
         deploymentSeconds = 25,
         resultsSeconds = if automated then 2 else 3,
-        intermissionSeconds = if verifyIntermission then MatchRuntime.defaults.intermissionSeconds else nil,
+        intermissionSeconds = if verifyIntermission
+            then MatchRuntime.defaults.intermissionSeconds
+            elseif automated then 10
+            else nil,
         seed = 1,
     })
     assert(runtime, reason)
@@ -404,9 +410,12 @@ function RoundHarness.run()
         assert(ok, tostring(message))
     end
     local function probe(player: Player, request: Probe)
+        -- A new Studio client loads the native battlefield and runs its smoke
+        -- suites before acknowledging the harness transport.
+        local readinessSeconds = if verifyIntermission and slots[player] == 4 then 45 else 15
         awaitCondition(function()
             return readyClients[player] == true
-        end, "client harness ready " .. tostring(slots[player]), 15)
+        end, "client harness ready " .. tostring(slots[player]), readinessSeconds)
         serial += 1
         local token = serial
         replies[token] = {}
@@ -481,6 +490,15 @@ function RoundHarness.run()
     local ok, failure = pcall(function()
         check("A5 three actual clients receive assigned roles, phase, deadline and UI", function()
             assert(#clients == 3, "P03 harness requires exactly three actual clients")
+            awaitCondition(function()
+                for _, player in clients do
+                    if not readyClients[player] then
+                        return false
+                    end
+                end
+                return true
+            end, "all initial clients completed their smoke suites", 90)
+            assert(runtime.rounds.match.deploy(), "first deployment rejected after client smoke")
             local state = activeAfter(0)
             firstRound = state.roundId
             local operator, ground = roles(state)
@@ -681,7 +699,7 @@ function RoundHarness.run()
             end
             awaitCondition(function()
                 return runtime.rounds.match.snapshot().phase == "Results"
-            end, "round timeout", if verifyIntermission then 50 else 35)
+            end, "round timeout", combatSeconds + 5)
             local result = runtime.rounds.match.snapshot().result
             assert(
                 result and result.winner == "Gunship" and result.reason == "Timeout",

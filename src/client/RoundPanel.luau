@@ -382,7 +382,15 @@ function RoundPanel.new(
                 end
                 health:SetAttribute("Fraction", fraction)
 
-                if (active and view ~= "RoundLobby") or thermal.ownsCamera() then
+                if view == "RoundLobby" then
+                    -- Leave the middle of the theater view clear for Roblox's
+                    -- world-positioned television prompt.
+                    label.AnchorPoint = Vector2.zero
+                    label.Position = UDim2.fromOffset(12, 8)
+                    label.Size = UDim2.fromOffset(if touch then 230 else 260, 42)
+                    label.TextSize = 14
+                    label.Text = title .. "\nVisit the theater TV to spectate"
+                elseif active or thermal.ownsCamera() then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
                     label.Size = if compact then UDim2.new(1, -180, 0, 22) else UDim2.fromOffset(300, 38)
@@ -396,9 +404,8 @@ function RoundPanel.new(
                     label.Position = UDim2.new(0.5, 0, 0, 112)
                     label.Size = UDim2.new(0.5, 0, 0, 76)
                     label.TextSize = 19
-                    label.Text = if nextView == "RoundLobby"
-                        then title .. "\nVisit the theater TV to spectate"
-                        elseif nextView == "Waiting" then title .. "\nWaiting for " .. tostring(
+                    label.Text = if nextView == "Waiting"
+                        then title .. "\nWaiting for " .. tostring(
                             state:GetAttribute("MinimumPlayers") or "enough"
                         ) .. " players"
                         else title

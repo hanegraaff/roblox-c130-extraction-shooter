@@ -9,6 +9,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StudioTestService = game:GetService("StudioTestService")
 local GuiService = game:GetService("GuiService")
+local ProximityPromptService = game:GetService("ProximityPromptService")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local RoundHarness = {}
@@ -25,8 +26,8 @@ type Probe = {
     sequence: number?,
 }
 
-local function awaitCondition(predicate: () -> boolean, label: string)
-    local deadline = os.clock() + 8
+local function awaitCondition(predicate: () -> boolean, label: string, seconds: number?)
+    local deadline = os.clock() + (seconds or 8)
     while not predicate() and os.clock() < deadline do
         task.wait(0.05)
     end
@@ -82,6 +83,15 @@ function RoundHarness.run()
             return
         end
         local player = Players.LocalPlayer
+        local shown: { [ProximityPrompt]: boolean } = {}
+        local promptShown = ProximityPromptService.PromptShown:Connect(function(prompt)
+            if prompt.Name == "TheaterSpectate" then
+                shown[prompt] = true
+            end
+        end)
+        local promptHidden = ProximityPromptService.PromptHidden:Connect(function(prompt)
+            shown[prompt] = nil
+        end)
         local connection: RBXScriptConnection? = nil
         local removal: RBXScriptConnection? = nil
         connection = remote.OnClientEvent:Connect(function(token: number, request: Probe)
@@ -114,34 +124,66 @@ function RoundHarness.run()
                             and screen.TextureID == "rbxassetid://97488158099796",
                         "theater image changed"
                     )
-                    local currentCamera = assert(workspace.CurrentCamera, "missing client camera")
-                    if request.kind == "EnterTheater" then
-                        local root = assert(
-                            player.Character and player.Character:FindFirstChild("HumanoidRootPart"),
-                            "missing lobby root"
-                        )
-                        assert(root:IsA("BasePart"), "expected a lobby root part")
-                        currentCamera.CFrame =
-                            CFrame.lookAt(root.Position + Vector3.new(0, 3, 5), screen.Position)
+                    local input =
+                        assert(UserInputService:CreateVirtualInput(), "Studio VirtualInput unavailable")
+                    local function pressPromptKey()
+                        input:SendKey(true, prompt.KeyboardKeyCode)
                         RunService.RenderStepped:Wait()
+                        input:SendKey(false, prompt.KeyboardKeyCode)
                     end
-                    prompt:InputHoldBegin()
-                    RunService.RenderStepped:Wait()
-                    prompt:InputHoldEnd()
                     if request.kind == "DistantTheater" then
+                        assert(not shown[prompt], "theater prompt visible outside its range")
+                        pressPromptKey()
+                        RunService.Heartbeat:Wait()
                         assert(
                             ownCamera(player) and roundHud(player):GetAttribute("View") == "RoundLobby",
                             "out-of-range entry took camera"
                         )
                         return true
                     end
+                    local root = assert(
+                        player.Character and player.Character:FindFirstChild("HumanoidRootPart"),
+                        "missing lobby root"
+                    )
+                    assert(root:IsA("BasePart"), "expected a lobby root part")
+                    awaitCondition(function()
+                        return (root.Position - screen.Position).Magnitude < prompt.MaxActivationDistance
+                    end, "replicated lobby avatar entered TV prompt range at " .. tostring(
+                        root.Position
+                    ), 3)
+                    local currentCamera = assert(workspace.CurrentCamera, "missing client camera")
+                    local binding = "P23TheaterProbe-" .. tostring(token)
+                    -- Keep the TV centered for native prompt visibility while the
+                    -- stock camera settles after the replicated fixture move.
+                    RunService:BindToRenderStep(binding, Enum.RenderPriority.Camera.Value + 1, function()
+                        currentCamera.CFrame =
+                            CFrame.lookAt(root.Position + Vector3.new(0, 3, 5), screen.Position)
+                    end)
+                    local triggered = false
+                    local promptTrigger = prompt.Triggered:Connect(function(actor)
+                        triggered = actor == player
+                    end)
+                    local entered, problem = pcall(function()
+                        awaitCondition(function()
+                            return shown[prompt] == true
+                        end, "native theater prompt visibility", 3)
+                        pressPromptKey()
+                        awaitCondition(function()
+                            return triggered
+                        end, "native theater prompt activation from keyboard", 2)
+                        return true
+                    end)
+                    promptTrigger:Disconnect()
+                    RunService:UnbindFromRenderStep(binding)
+                    assert(entered, tostring(problem))
+                    awaitCondition(function()
+                        return roundHud(player):GetAttribute("View") == "Spectator"
+                    end, "theater accepted activation", 2)
                     expectTheaterTarget(player, request.targetId)
                     local movement = assert(
                         player.Character and player.Character:FindFirstChildOfClass("Humanoid"),
                         "missing lobby humanoid"
                     )
-                    local input =
-                        assert(UserInputService:CreateVirtualInput(), "Studio VirtualInput unavailable")
                     input:SendKey(true, Enum.KeyCode.W)
                     RunService.RenderStepped:Wait()
                     RunService.RenderStepped:Wait()
@@ -228,6 +270,8 @@ function RoundHarness.run()
         remote:FireServer(0, { passed = true })
         removal = remote.AncestryChanged:Connect(function()
             if not remote:IsDescendantOf(ReplicatedStorage) then
+                promptShown:Disconnect()
+                promptHidden:Disconnect()
                 if connection then
                     connection:Disconnect()
                 end
