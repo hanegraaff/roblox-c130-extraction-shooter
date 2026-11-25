@@ -52,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-Play the integrated game locally in Roblox Studio from `main`, including the furnished waiting lobby verified in Studio. For the theater interaction and two-minute intermission, build the P23 candidate branch. Its multiplayer Studio acceptance is pending. The 20-second Ground head start and weapon balance changes are planned. [P22 verification](plans/22-integrate-lobby.md#completion-record) · [P23 verification](plans/23-lobby-return-and-intermission.md#completion-record) · [P24 head start](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+Play the integrated game locally in Roblox Studio from `main`, including the furnished waiting lobby verified in Studio. For the theater interaction and two-minute intermission, build the P23 candidate branch. The P23 branch passed local multiplayer acceptance. The 20-second Ground head start and weapon balance changes are planned. [P22 verification](plans/22-integrate-lobby.md#completion-record) · [P23 verification](plans/23-lobby-return-and-intermission.md#completion-record) · [P24 head start](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
