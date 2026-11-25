@@ -1,0 +1,181 @@
+{
+  "sourceCommit": "70084b89b99f5c730f50e4fa2155385ba67fc3cf",
+  "tree": "d4344ceab98aa9a0dfed6ea4523c47aa7983f181",
+  "buildSha256": "ee627b3727fc18122b4580f40e4543d000dee06537e8a9f01b0b12711b09a846",
+  "version": "0.748.0.7481526",
+  "report": {
+    "initialClientCount": 2,
+    "skipped": 0,
+    "passed": 9,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A3 round 1 replicates scatter on both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A2 round 1 permits movement and launcher transfers but blocks all fire"
+      },
+      {
+        "passed": true,
+        "name": "A1 A3 round 1 reveals once at canonical start and preserves Ground"
+      },
+      {
+        "passed": true,
+        "name": "A2 A3 round 1 fires fresh rocket and gunship intents on the real map"
+      },
+      {
+        "passed": true,
+        "name": "A3 round 2 replicates scatter on both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A2 round 2 permits movement and launcher transfers but blocks all fire"
+      },
+      {
+        "passed": true,
+        "name": "A1 A3 round 2 reveals once at canonical start and preserves Ground"
+      },
+      {
+        "passed": true,
+        "name": "A2 A3 round 2 fires fresh rocket and gunship intents on the real map"
+      },
+      {
+        "passed": true,
+        "name": "A2 actual Scatter death cancels arrival, consumes one life and returns both avatars to lobby"
+      }
+    ],
+    "observations": [
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795618767.651623
+      },
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795618767.651623
+      },
+      {
+        "groundDisplacementStuds": 10.347640037536621,
+        "operatorId": -1,
+        "roundId": 1
+      },
+      {
+        "blackout": {
+          "leaks": 0,
+          "thermalFrames": 0,
+          "frames": 303,
+          "aircraftFrames": 0
+        },
+        "projection": {
+          "originErrorStuds": 0,
+          "projectionFrame": 1,
+          "replicaErrorStuds": 0
+        }
+      },
+      {
+        "ground": true
+      },
+      {
+        "revealLateSeconds": 0.0059740543365478516,
+        "poseErrorStuds": 0,
+        "roundId": 1
+      },
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795618792.716644
+      },
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795618792.716644
+      },
+      {
+        "groundDisplacementStuds": 9.547639846801758,
+        "operatorId": -2,
+        "roundId": 2
+      },
+      {
+        "blackout": {
+          "leaks": 0,
+          "thermalFrames": 0,
+          "frames": 1170,
+          "aircraftFrames": 0
+        },
+        "projection": {
+          "originErrorStuds": 0,
+          "projectionFrame": 1,
+          "replicaErrorStuds": 0
+        }
+      },
+      {
+        "ground": true
+      },
+      {
+        "revealLateSeconds": 0.006510019302368164,
+        "poseErrorStuds": 0,
+        "roundId": 2
+      }
+    ],
+    "clientSmoke": {
+      "-1": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 23,
+        "userId": -1,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 23
+      },
+      "-2": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 23,
+        "userId": -2,
+        "environment": "Studio",
+        "seed": 1,
+        "suite": "P01-client",
+        "failed": 0,
+        "discovered": 23
+      }
+    },
+    "completedRoundIds": [
+      1,
+      2
+    ],
+    "serverSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 207,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 207
+    },
+    "suite": "P24-multiplayer",
+    "failed": 0,
+    "discovered": 9
+  }
+}

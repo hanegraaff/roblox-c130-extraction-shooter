@@ -24,4 +24,14 @@ Run `python3 scripts/verify.py` and the affected Studio round, aircraft and comb
 
 ## Completion record
 
-Planning only. Implementation and acceptance checks are unrun.
+### Verification on 2026-11-25
+
+The tested source is `70084b89b99f5c730f50e4fa2155385ba67fc3cf`, tree `d4344ceab98aa9a0dfed6ea4523c47aa7983f181`. The GitHub source commit `e0a7dfadfbb7b0c5a5f19f4a15693e8d51aba619` has the same tree. `python3 scripts/verify.py` passed on macOS arm64 with Python 3.15. It ran 85 unit, 85 integration, 26 tooling and 70 asset tests, plus strict analysis, format, lint, expected rejection probes, both Rojo builds, authored geometry and release isolation. The test build SHA-256 is `ee627b3727fc18122b4580f40e4543d000dee06537e8a9f01b0b12711b09a846`. The Studio Edit comparison matched 183 scripts and five authored poses. [PR #72](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/72)
+
+| Criterion | Observed verification |
+| --- | --- |
+| A1 | `RoundRules.spec.luau` and `MatchService.spec.luau` cover delayed readiness, 19.999/20.000 seconds, a delayed server step, stale readiness and one reveal with a full combat interval. The native P24 harness observed both actual clients at the same deadlines, a canonical phase-zero arrival and 600 combat seconds twice. |
+| A2 | `MatchService.spec.luau` covers a consumed scatter life, protected late join and reconnect, operator forfeit, last Ground departure, terminal elimination and intermission recovery. Native P24 checked movement, launcher pickup/drop/recovery, no early aircraft or fire mutations, retained position and equipment, fresh rocket damage and gunship fire twice. The third scatter ended on actual Ground death with both players returned to protected lobby bodies. |
+| A3 | `PlayerPresentation.spec.luau` covers role views and delayed first countdown paint. Native P24 passed 9/9 with two actual clients and rotated roles. It sampled 1,473 pre-arrival operator frames with zero view leaks, early thermal frames or visible aircraft. Operated desktop and iPhone 17 Pro landscape checks verified readable countdowns and the correct view transition. |
+
+The independent tester caught two smoke fixture mismatches, a stale blackout render binding, Ground countdown overlap with native chat and an early camera sample timing defect. The corrected candidate passed the two-client P24 suite with 207 server and 23 per-client smoke cases. The documentation reviewer verified the player and contributor guides, phase and camera contracts and the local test procedure. [Studio evidence and earlier runs](../docs/evidence/p24/studio.md)
