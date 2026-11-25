@@ -1,0 +1,373 @@
+{
+  "suite": "P18-rebalancing",
+  "environment": "Studio",
+  "clientIds": [
+    -1,
+    -2,
+    -3
+  ],
+  "actualClients": 3,
+  "finalClients": 2,
+  "discovered": 13,
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "passed": true,
+      "name": "Three actual clients connect"
+    },
+    {
+      "passed": true,
+      "name": "A1 roster excludes operator and all clients share 2000 health"
+    },
+    {
+      "passed": true,
+      "name": "A2 native wall roof Sandbreak Seedship openings replicate"
+    },
+    {
+      "passed": true,
+      "name": "A3 square camera and two weapon profiles remain finite across orbit"
+    },
+    {
+      "passed": true,
+      "name": "A6 white-hot targets contrast with dark monochrome terrain and native occlusion"
+    },
+    {
+      "passed": true,
+      "name": "A4 four sites and raced Seedship pickup retain one owner"
+    },
+    {
+      "passed": true,
+      "name": "P25 A4 howitzer countdown survives switching through the chain gun"
+    },
+    {
+      "passed": true,
+      "name": "P25 A4 real rocket hit and handover preserve cooldown, damage and HUD"
+    },
+    {
+      "passed": true,
+      "name": "P25 A4 native M-7 partial magazine reads unlimited reserve during and after reload"
+    },
+    {
+      "passed": true,
+      "name": "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup"
+    },
+    {
+      "passed": true,
+      "name": "A1 A4 reset restores four pristine sites and next deployment health"
+    },
+    {
+      "passed": true,
+      "name": "A1 A4 actual carrier departure recovers equipment without health resize"
+    },
+    {
+      "passed": true,
+      "name": "A3 A6 client owners clean up after replay and departure"
+    }
+  ],
+  "smoke": {
+    "clients": {
+      "-3": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -3,
+        "discovered": 23,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 23
+      },
+      "-2": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -2,
+        "discovered": 23,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 23
+      },
+      "-1": {
+        "errors": 0,
+        "skipped": 0,
+        "userId": -1,
+        "discovered": 23,
+        "seed": 1,
+        "environment": "Studio",
+        "suite": "P01-client",
+        "failed": 0,
+        "passed": 23
+      }
+    },
+    "server": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 208,
+      "clientCount": 3,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 208
+    }
+  },
+  "observations": [
+    {
+      "action": "WeaponHUD",
+      "userId": -2,
+      "detail": {
+        "size": [
+          580,
+          66
+        ],
+        "touch": false,
+        "text": "105mm M102 Howitzer  •  Wide zoom 40°\nReload 11.9s  ·  Aim on battlefield",
+        "bounds": [
+          292,
+          34
+        ]
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -2,
+      "detail": {
+        "size": [
+          580,
+          66
+        ],
+        "touch": false,
+        "text": "105mm M102 Howitzer  •  Wide zoom 40°\nReload 11.6s  ·  Aim on battlefield",
+        "bounds": [
+          292,
+          34
+        ]
+      }
+    },
+    {
+      "durationSeconds": 12,
+      "kind": "howitzer-cooldown"
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -3,
+      "detail": {
+        "ammo": 0,
+        "deadline": 1795630186.864803,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "ROCKET • Reload 15.0s",
+        "bounds": [
+          150,
+          16
+        ]
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -1,
+      "detail": {
+        "ammo": 0,
+        "deadline": 1795630186.864803,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "ROCKET • Reload 14.9s",
+        "bounds": [
+          151,
+          16
+        ]
+      }
+    },
+    {
+      "unchangedReadyAt": 1795630186.864803,
+      "aimAgeAtAcceptanceSeconds": 0.0326840877532959,
+      "estimatedFlightSeconds": 0.4125155766805013,
+      "kind": "moving-aircraft-rocket",
+      "launcherId": "launcher:1:Seedship",
+      "impact": {
+        "y": 135,
+        "x": 340.1314697265625,
+        "z": 112.71160125732422,
+        "aircraftHit": true,
+        "roundId": 1,
+        "userId": -3,
+        "shotId": "rocket:1:1:Seedship"
+      }
+    },
+    {
+      "action": "Observe",
+      "userId": -1,
+      "detail": {
+        "maximum": 2000,
+        "text": "C-130 HEALTH  1850 / 2000",
+        "health": 1850
+      }
+    },
+    {
+      "action": "Observe",
+      "userId": -2,
+      "detail": {
+        "maximum": 2000,
+        "text": "C-130 HEALTH  1850 / 2000",
+        "health": 1850
+      }
+    },
+    {
+      "action": "Observe",
+      "userId": -3,
+      "detail": {
+        "maximum": 2000,
+        "text": "C-130 HEALTH  1850 / 2000",
+        "health": 1850
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -3,
+      "detail": {
+        "ammo": 30,
+        "deadline": 0,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "M-7 • 30 / ∞ • R reload",
+        "bounds": [
+          145,
+          16
+        ]
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -3,
+      "detail": {
+        "ammo": 29,
+        "deadline": 1795630174.714544,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "M-7 • 29 / ∞ • Reload 1.9s",
+        "bounds": [
+          161,
+          16
+        ]
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -3,
+      "detail": {
+        "ammo": 30,
+        "deadline": 0,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "M-7 • 30 / ∞ • R reload",
+        "bounds": [
+          145,
+          16
+        ]
+      }
+    },
+    {
+      "action": "Observe",
+      "userId": -1,
+      "detail": {
+        "maximum": 2000,
+        "text": "C-130 HEALTH  2000 / 2000",
+        "health": 2000
+      }
+    },
+    {
+      "action": "Observe",
+      "userId": -2,
+      "detail": {
+        "maximum": 2000,
+        "text": "C-130 HEALTH  2000 / 2000",
+        "health": 2000
+      }
+    },
+    {
+      "action": "Observe",
+      "userId": -3,
+      "detail": {
+        "maximum": 2000,
+        "text": "C-130 HEALTH  2000 / 2000",
+        "health": 2000
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -1,
+      "detail": {
+        "ammo": 30,
+        "deadline": 0,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "M-7 • 30 / ∞ • R reload",
+        "bounds": [
+          145,
+          16
+        ]
+      }
+    },
+    {
+      "action": "WeaponHUD",
+      "userId": -2,
+      "detail": {
+        "ammo": 30,
+        "deadline": 0,
+        "size": [
+          330,
+          36
+        ],
+        "touch": false,
+        "text": "M-7 • 30 / ∞ • R reload",
+        "bounds": [
+          145,
+          16
+        ]
+      }
+    },
+    {
+      "method": "server-Kick",
+      "kind": "actual-carrier-departure",
+      "userId": -1,
+      "remainingClients": 2
+    },
+    {
+      "action": "Cleanup",
+      "userId": -2,
+      "detail": {
+        "restoredAircraftParts": 15,
+        "cleanup": true
+      }
+    },
+    {
+      "action": "Cleanup",
+      "userId": -3,
+      "detail": {
+        "restoredAircraftParts": 15,
+        "cleanup": true
+      }
+    }
+  ]
+}

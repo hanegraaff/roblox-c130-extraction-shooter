@@ -1,6 +1,6 @@
 # Client TestEZ runner
 
-For the P18 candidate, the active focused scenario is `RebalanceHarness` with `{ kind = "P18" }` and three actual clients. Adapted P05 remains current for actual gunship fire/flight evidence, alongside compatible P03/P04 paths. Pre-P18 balance/camera selectors below are archived and reject before runtime/listener allocation; reproduce their evidence from the recorded revision. Historical passes are not reused as current passes. [P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness)
+`RebalanceHarness` uses `{ kind = "P18" }` and three actual clients for P18 rebalancing and P25 weapon checks. P05 covers gunship flight and impacts, and P24 covers aircraft arrival and fire gating. Pre-P18 balance and camera selectors are archived. Reproduce their reports from the recorded revisions. [P25 procedure](../../../docs/testing.md#verify-p25-weapon-balance)
 
 This package’s `init.client.luau` maps to the test-only `StarterPlayerScripts.ClientTests` LocalScript and runs the [client specs](../specs-client/README.md) automatically during Play.
 
@@ -64,4 +64,4 @@ The P17 `P17MaterialHarness.run()` listener responds to the server-only coordina
 
 ## P18 client observations
 
-`RebalanceHarness.run()` discovers only the selected P18 transport after ordinary TestEZ. Its bounded probes use the actual LocalPlayer and production remotes to observe replicated aircraft health, panel state/solids, camera frames and lenses, thermal colors/cover configuration, launcher ownership/readiness and cleanup. Removing the transport releases its listener. Injected camera/frame checks do not replace native keyboard/touch or rendered contrast review. [Launch and evidence](../../../docs/testing.md#run-the-p18-rebalancing-harness)
+`RebalanceHarness.run()` discovers the selected P18 transport after ordinary TestEZ. Its bounded probes use the actual LocalPlayer and production remotes to observe replicated aircraft health, panel state and solids, camera frames and lenses, thermal cover, launcher ownership and cleanup. It owns a production RoundPanel and GroundCombatController for the test. P25 uses these HUDs to check fit and text for the howitzer and launcher countdowns, the shared health value, and the M-7's loaded count and ∞. Removing the transport releases the listener. The testing guide includes separate desktop and touch control and rendering procedures. [P18 launch and parity](../../../docs/testing.md#run-the-p18-rebalancing-harness) · [P25 HUD review](../../../docs/testing.md#verify-p25-weapon-balance)

@@ -9,8 +9,9 @@
 `PanelDamageRules.spec.luau` targets P18/R09: one-howitzer Total, exact one/two-earned-second 30mm boundaries, fractional surplus, persistent interrupted/mixed credit, invalid elapsed time and irreversible Pristine/Light/Heavy/Total appearance. It does not establish collision, physical fragments or rendered distinction.
 
 `PlayerPresentation.spec.luau` covers role and phase, result reasons, empty
-and changing spectator targets, launcher/readiness feedback, rejected actions
-and effects settings. `WeaponSoundRules.spec.luau` covers positional playback
+and changing spectator targets, launcher readiness, rejected actions and
+effects settings. P25 also checks loaded rounds, ∞ and reload feedback on
+desktop and touch. `WeaponSoundRules.spec.luau` covers positional playback
 timing and stale or out-of-range cue rejection. Native layout, targeting and
 keyboard behavior have separate Studio checks. [Player experience harness](../../docs/testing.md#run-the-player-experience-harness)
 

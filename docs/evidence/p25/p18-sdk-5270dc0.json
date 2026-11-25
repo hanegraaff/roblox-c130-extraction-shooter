@@ -1,0 +1,552 @@
+{
+  "launched": true,
+  "report": {
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        }
+      },
+      "server": "{\"errors\":0,\"skipped\":0,\"passed\":208,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":208}"
+    },
+    "passed": 13,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Three actual clients connect"
+      },
+      {
+        "passed": true,
+        "name": "A1 roster excludes operator and all clients share 2000 health"
+      },
+      {
+        "passed": true,
+        "name": "A2 native wall roof Sandbreak Seedship openings replicate"
+      },
+      {
+        "passed": true,
+        "name": "A3 square camera and two weapon profiles remain finite across orbit"
+      },
+      {
+        "passed": true,
+        "name": "A6 white-hot targets contrast with dark monochrome terrain and native occlusion"
+      },
+      {
+        "passed": true,
+        "name": "A4 four sites and raced Seedship pickup retain one owner"
+      },
+      {
+        "passed": true,
+        "name": "P25 A4 howitzer countdown survives switching through the chain gun"
+      },
+      {
+        "passed": true,
+        "name": "P25 A4 real rocket hit and handover preserve cooldown, damage and HUD"
+      },
+      {
+        "passed": true,
+        "name": "P25 A4 native M-7 partial magazine reads unlimited reserve during and after reload"
+      },
+      {
+        "passed": true,
+        "name": "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup"
+      },
+      {
+        "passed": true,
+        "name": "A1 A4 reset restores four pristine sites and next deployment health"
+      },
+      {
+        "passed": true,
+        "name": "A1 A4 actual carrier departure recovers equipment without health resize"
+      },
+      {
+        "passed": true,
+        "name": "A3 A6 client owners clean up after replay and departure"
+      }
+    ],
+    "actualClients": 3,
+    "observations": [
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "SquareFrames",
+        "userId": -2,
+        "detail": "{\"minimumUpY\":-0.7290420532226563,\"samples\":730}"
+      },
+      {
+        "action": "Camera",
+        "userId": -2,
+        "detail": "{\"fov\":30,\"start\":[0,0],\"finish\":[15.876481056213379,-78.1521224975586]}"
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Camera",
+        "userId": -2,
+        "detail": "{\"fov\":40,\"start\":[0,0],\"finish\":[-78.75331115722656,-13.8748779296875]}"
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Thermal",
+        "userId": -2,
+        "detail": "{\"sand\":[0.3490196168422699,0.2980392277240753,0.2078431397676468],\"grading\":{\"brightness\":-0.019999999552965165,\"saturation\":-1,\"contrast\":-0.15000000596046449},\"targets\":2,\"hiddenAircraftParts\":15,\"backdrop\":[0.14901961386203767,0.16470588743686677,0.1764705926179886],\"palette\":\"white-hot\"}"
+      },
+      {
+        "action": "AircraftMask",
+        "userId": -1,
+        "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+      },
+      {
+        "action": "AircraftMask",
+        "userId": -2,
+        "detail": "{\"aircraftParts\":15,\"hidden\":true}"
+      },
+      {
+        "action": "AircraftMask",
+        "userId": -3,
+        "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "ownerId": -3,
+        "launcherId": "launcher:1:Seedship",
+        "position": [
+          0,
+          5.599999904632568,
+          214
+        ]
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Combat",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -2,
+        "detail": "{\"size\":[580,66],\"touch\":false,\"text\":\"105mm M102 Howitzer  •  Wide zoom 40°\\nReload 11.9s  ·  Aim on battlefield\",\"bounds\":[292,34]}"
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Combat",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Combat",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -2,
+        "detail": "{\"size\":[580,66],\"touch\":false,\"text\":\"105mm M102 Howitzer  •  Wide zoom 40°\\nReload 11.6s  ·  Aim on battlefield\",\"bounds\":[292,34]}"
+      },
+      {
+        "durationSeconds": 12,
+        "kind": "howitzer-cooldown"
+      },
+      {
+        "action": "EquipLauncher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -3,
+        "detail": "{\"ammo\":0,\"deadline\":1795630186.864803,\"size\":[330,36],\"touch\":false,\"text\":\"ROCKET • Reload 15.0s\",\"bounds\":[150,16]}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "EquipLauncher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -1,
+        "detail": "{\"ammo\":0,\"deadline\":1795630186.864803,\"size\":[330,36],\"touch\":false,\"text\":\"ROCKET • Reload 14.9s\",\"bounds\":[151,16]}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "unchangedReadyAt": 1795630186.864803,
+        "aimAgeAtAcceptanceSeconds": 0.0326840877532959,
+        "estimatedFlightSeconds": 0.4125155766805013,
+        "kind": "moving-aircraft-rocket",
+        "launcherId": "launcher:1:Seedship",
+        "impact": {
+          "y": 135,
+          "x": 340.1314697265625,
+          "z": 112.71160125732422,
+          "aircraftHit": true,
+          "roundId": 1,
+          "userId": -3,
+          "shotId": "rocket:1:1:Seedship"
+        }
+      },
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"text\":\"C-130 HEALTH  1850 / 2000\",\"health\":1850}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"text\":\"C-130 HEALTH  1850 / 2000\",\"health\":1850}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"text\":\"C-130 HEALTH  1850 / 2000\",\"health\":1850}"
+      },
+      {
+        "action": "EquipRifle",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -3,
+        "detail": "{\"ammo\":30,\"deadline\":0,\"size\":[330,36],\"touch\":false,\"text\":\"M-7 • 30 / ∞ • R reload\",\"bounds\":[145,16]}"
+      },
+      {
+        "action": "Combat",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Combat",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -3,
+        "detail": "{\"ammo\":29,\"deadline\":1795630174.714544,\"size\":[330,36],\"touch\":false,\"text\":\"M-7 • 29 / ∞ • Reload 1.9s\",\"bounds\":[161,16]}"
+      },
+      {
+        "action": "Combat",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -3,
+        "detail": "{\"ammo\":30,\"deadline\":0,\"size\":[330,36],\"touch\":false,\"text\":\"M-7 • 30 / ∞ • R reload\",\"bounds\":[145,16]}"
+      },
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"health\":1850}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":1850}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":1850}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"text\":\"C-130 HEALTH  2000 / 2000\",\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"text\":\"C-130 HEALTH  2000 / 2000\",\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"text\":\"C-130 HEALTH  2000 / 2000\",\"health\":2000}"
+      },
+      {
+        "action": "EquipRifle",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -1,
+        "detail": "{\"ammo\":30,\"deadline\":0,\"size\":[330,36],\"touch\":false,\"text\":\"M-7 • 30 / ∞ • R reload\",\"bounds\":[145,16]}"
+      },
+      {
+        "action": "EquipRifle",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "WeaponHUD",
+        "userId": -2,
+        "detail": "{\"ammo\":30,\"deadline\":0,\"size\":[330,36],\"touch\":false,\"text\":\"M-7 • 30 / ∞ • R reload\",\"bounds\":[145,16]}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "method": "server-Kick",
+        "kind": "actual-carrier-departure",
+        "userId": -1,
+        "remainingClients": 2
+      },
+      {
+        "action": "Cleanup",
+        "userId": -2,
+        "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+      },
+      {
+        "action": "Cleanup",
+        "userId": -3,
+        "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+      }
+    ],
+    "finalClients": 2,
+    "environment": "Studio",
+    "clientIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "suite": "P18-rebalancing",
+    "failed": 0,
+    "discovered": 13
+  }
+}

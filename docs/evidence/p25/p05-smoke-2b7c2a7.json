@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "2b7c2a7ab2d6171bfa3b9358b12e02b72c629d28",
+  "studioVersion": "0.748.0.7481526",
+  "server": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 208,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 208
+  },
+  "client1": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 23,
+    "userId": -1,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-client",
+    "failed": 0,
+    "discovered": 23
+  },
+  "client2": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 23,
+    "userId": -2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-client",
+    "failed": 0,
+    "discovered": 23
+  }
+}

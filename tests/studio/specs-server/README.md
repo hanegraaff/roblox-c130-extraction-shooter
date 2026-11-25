@@ -2,7 +2,7 @@
 
 The P18 ordinary smoke mapping exercises the current source. Dated discovery counts and reports below remain historical; they do not establish acceptance of revised health, destruction, square camera bounds or thermal contrast. See the [P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness) for fresh evidence requirements.
 
-The test project maps these specs to `ServerStorage.Tests.Studio`; the automatic server runner discovers them through TestEZ. They are absent from the release mapping.
+The test project maps these specs to `ServerStorage.Tests.Studio` for automatic TestEZ discovery. On P25, `Launcher.spec.luau` checks native solid cover and misses against the 150-damage rocket rule, including one result from seven hits on a 1,000-health aircraft. `MatchOutcome.spec.luau` checks the native deadline and mixed-damage ordering with the current damage values. Multiplayer HUD evidence uses the three-client harness. [P25 procedure](../../../docs/testing.md#verify-p25-weapon-balance)
 
 `Foundation.spec.luau` registers shared rule cases plus server-only RoleService/RoundRules/MatchService cases through actual Instance-loaded modules. It adds repeated bootstrap start/stop ownership and the anchored/collidable GroundSpawn raycast. It temporarily renames the entrypoint status while exercising an independent runtime, then restores it.
 
