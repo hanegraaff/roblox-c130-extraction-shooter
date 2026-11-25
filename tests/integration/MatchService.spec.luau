@@ -37,10 +37,15 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(not ok, "unsafe service seed accepted")
         end
     end)
-    local function fixture(count: number?)
+    local function fixture(count: number?, intermissionSeconds: number?)
         local seconds = 100
         local released: { { id: number, roundId: number, recover: boolean } } = {}
-        local service = Match.new({ minimumPlayers = 2, durationSeconds = 10, seed = 1 }, {
+        local service = Match.new({
+            minimumPlayers = 2,
+            durationSeconds = 10,
+            seed = 1,
+            intermissionSeconds = intermissionSeconds,
+        }, {
             now = function()
                 return seconds
             end,
@@ -64,6 +69,103 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             seconds = value
         end, released
     end
+    test(
+        "P23 committed round outcomes gate deployment until exactly 120 server seconds have elapsed",
+        function()
+            for _, ending in
+                { "GroundEliminated", "Timeout", "OperatorForfeit", "AircraftDestroyed", "FixtureAbort" }
+            do
+                local service, active, setTime = fixture(2, 120)
+                local state = active()
+                local groundId, operatorId = 0, 0
+                for id, member in state.members do
+                    if member.role == "Ground" then
+                        groundId = id
+                    else
+                        operatorId = id
+                    end
+                end
+                local finishAt = if ending == "Timeout" then 110 else 105
+                setTime(finishAt)
+                if ending == "GroundEliminated" then
+                    assert(service.eliminate(groundId, state.roundId), "fixture elimination failed")
+                elseif ending == "OperatorForfeit" then
+                    service.leave(operatorId)
+                elseif ending == "AircraftDestroyed" then
+                    assert(
+                        service.proposeAircraftDestroyed(state.roundId),
+                        "fixture destruction was not accepted"
+                    )
+                elseif ending == "FixtureAbort" then
+                    assert(service.abort(state.roundId, ending), "fixture abort was not accepted")
+                end
+                service.step(nil, finishAt)
+                local terminal = service.snapshot()
+                assert(
+                    terminal.phase == "Results" and terminal.result and terminal.result.reason == ending,
+                    "incorrect fixture result"
+                )
+                assert(terminal.intermissionUntil == finishAt + 120, "deadline differs from result time")
+                assert(not service.abort(state.roundId, "Duplicate"), "duplicate result was accepted")
+                assert(service.beginReset() and service.finishReset(), "fixture reset failed")
+                assert(
+                    service.snapshot().result and service.snapshot().intermissionUntil == finishAt + 120,
+                    "reset discarded intermission result or deadline"
+                )
+                service.leave(groundId)
+                setTime(finishAt + 60)
+                service.join(3)
+                assert(not service.deploy(), "late join bypassed intermission")
+                setTime(finishAt + 119.999)
+                assert(not service.deploy(), "deployed before the exact deadline")
+                setTime(finishAt + 120)
+                if ending == "OperatorForfeit" then
+                    assert(not service.deploy(), "deployed with one eligible player")
+                    setTime(finishAt + 135)
+                    service.join(groundId)
+                end
+                assert(service.deploy(), "wait continued after deadline and sufficient population")
+                local nextState = service.snapshot()
+                assert(
+                    nextState.result == nil
+                        and nextState.intermissionUntil == 0
+                        and nextState.roundId > state.roundId,
+                    "previous intermission leaked into next deployment"
+                )
+            end
+        end
+    )
+    test("P23 canceled deployment without a result leaves no intermission", function()
+        local service = fixture(2, 120)
+        assert(service.deploy())
+        service.leave(1)
+        local waiting = service.snapshot()
+        assert(
+            waiting.phase == "Lobby" and waiting.intermissionUntil == 0 and waiting.result == nil,
+            "cancel left an intermission"
+        )
+        service.join(3)
+        assert(service.deploy(), "canceled deployment set a post-round wait")
+    end)
+    test("P23 owner teardown clears both active-abort and post-result intermissions", function()
+        for _, alreadyInLobby in { false, true } do
+            local service, active = fixture(2, 120)
+            local state = active()
+            assert(service.abort(state.roundId, "RuntimeStopped"), "test abort failed")
+            assert(service.beginReset(), "test reset failed")
+            if alreadyInLobby then
+                assert(service.finishReset(), "test normal reset failed")
+                assert(not service.deploy(), "test finite intermission did not gate deployment")
+            end
+            assert(service.finishReset(true), "runtime teardown failed")
+            local stopped = service.snapshot()
+            assert(
+                stopped.phase == "Lobby" and stopped.result == nil and stopped.intermissionUntil == 0,
+                "runtime teardown retained a stale result or intermission"
+            )
+            assert(service.deploy(), "stale intermission blocked restart")
+        end
+    end)
     local function ground(state: Snapshot): number
         for id, member in state.members do
             if member.role == "Ground" then

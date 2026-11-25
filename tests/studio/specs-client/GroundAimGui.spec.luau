@@ -400,7 +400,7 @@ return function()
                 player:SetAttribute("Life", "Alive")
                 local character = player.Character
                 if not character then
-                    -- Late spectators have no server-owned avatar. Use an
+                    -- During asynchronous avatar startup, use an
                     -- inert local body inside PlayerScripts for the HUD only.
                     -- No spawn call or fixture geometry enters Workspace.
                     local body = Instance.new("Model")

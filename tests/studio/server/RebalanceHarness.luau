@@ -499,16 +499,35 @@ function Harness.run(finish: ((unknown) -> ())?)
                     held.ownerId and Players:GetPlayerByUserId(held.ownerId),
                     "recovered carrier missing"
                 )
-                local body = holder.Character and holder.Character:FindFirstChildOfClass("Humanoid")
+                local formerAvatar = holder.Character
+                local body = formerAvatar and formerAvatar:FindFirstChildOfClass("Humanoid")
+                local formerRoot = formerAvatar and formerAvatar:FindFirstChild("HumanoidRootPart")
                 assert(body, "carrier body missing")
+                assert(formerRoot and formerRoot:IsA("BasePart"), "carrier root missing")
+                local carrierPosition = formerRoot.Position
                 body.Health = 0
                 waitFor(function()
                     return match.snapshot().members[holder.UserId].life == "Eliminated"
                         and owned.launcher.snapshot("Seedship").state == "Available"
                 end, "carrier death recovery")
+                waitFor(function()
+                    local lobbyAvatar = holder.Character
+                    return lobbyAvatar ~= nil
+                        and lobbyAvatar ~= formerAvatar
+                        and lobbyAvatar:FindFirstChild("StationProtection") ~= nil
+                end, "carrier returned to protected lobby")
                 assert(owned.launcher.snapshot("Seedship").readyAt == held.readyAt, "death reset reload")
                 observe(1900, 2000)
                 local before = owned.launcher.snapshot("Seedship")
+                local floorDrop = Vector3.new(before.position.x, before.position.y, before.position.z)
+                assert(
+                    (Vector3.new(floorDrop.X, 0, floorDrop.Z) - Vector3.new(
+                        carrierPosition.X,
+                        0,
+                        carrierPosition.Z
+                    )).Magnitude <= 3,
+                    "carrier launcher did not recover at its last valid battlefield pose"
+                )
                 probe(holder, "Launcher", {
                     action = "Pickup",
                     payload = { roundId = round, sequence = 99, launcherId = before.launcherId },

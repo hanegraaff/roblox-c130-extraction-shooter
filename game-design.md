@@ -22,10 +22,10 @@ There are no collectible mission items, item quotas, escape zones or dwell count
 - Prefer the longest-waiting eligible operator who did not just operate when alternatives exist, with a seeded tie-break.
 - The local Studio test mapping provides explicit role and round controls. Release builds exclude those controls and the development fixtures.
 - Waiting players can walk around the protected lobby; only the assigned operator is locked at its placeholder station.
-- The furnished P22 lobby places an oversized sculpted bust in the entrance hall. Its hair is combed back and its eyes look down toward arriving players. Facing the bust, players can walk left to the movie theater or right to the art gallery. The six frames hold original photographs for portraits 1 and 5 and approved oil renditions for 2, 3, 4, and 6. The theater television displays a static aerial scene. The lobby's occupants are players. [Roblox lobby plan and acceptance](plans/22-integrate-lobby.md)
+- The furnished lobby has an oversized sculpted bust in the entrance hall. Facing the bust, players can walk left to the movie theater or right to the art gallery. The six frames hold original photographs for portraits 1 and 5 and approved oil renditions for 2, 3, 4, and 6. The theater television displays a still aerial scene. [Roblox lobby plan and acceptance](plans/22-integrate-lobby.md)
 - Local Studio tests may offer single-player map exploration without granting an active role or starting a competitive round. Human testers can select a solo preview role or request a role for a real local test round, choose the next test duration, start immediately and reset through a test-only panel. Conflicting requested roles must be explained rather than silently overridden. These conveniences are excluded from release builds; production population and fair rotation rules remain unchanged.
-- Late joins spectate until the next lobby. Retain round membership by UserId so disconnect/rejoin cannot restore an active life or equipment.
-- Eliminated ground players spectate living teammates and cannot fire, pick up or transfer equipment. Friendly fire is off. Player body collision cannot be used to block a teammate from the launcher or cover.
+- Late arrivals and eliminated Ground players enter the protected lobby and can walk around. Round membership and consumed lives stay keyed by UserId through lobby arrival and reconnect.
+- Lobby players choose whether to spectate. Interacting at the TV follows a living Ground player, with target cycling when several remain and an exit to the same lobby avatar. Round actions are available only to eligible combat lives. Friendly fire is off, and teammates have noncolliding characters. [P23 lobby flow](plans/23-lobby-return-and-intermission.md)
 
 ## Circular battlefield, orbit and view
 
@@ -48,16 +48,18 @@ space for both avatar movement and the ordinary third-person camera.
 
 ## Weapons and aircraft health
 
+The table describes the planned P24 arrival and P25 balance. The integrated build still starts combat at deployment and uses the earlier weapon settings. [P24 head start](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+
 | Weapon | Role and availability | Rules |
 | --- | --- | --- |
-| 30mm GAU-23/A Chain Gun | C-130; available from deployment | Faster precise fire, tight view, bounded damage and cadence |
-| 105mm M102 Howitzer | C-130; available from deployment | Slower heavy shell, wider view, larger bounded blast, readable impact delay |
-| M-7 rifle | Every living ground player starts with one | Small server-authoritative aircraft damage; ordinary magazine/reload rules |
-| Rocket launcher | Four map-placed launchers, one per carrier | Direct-fire rockets deal a fixed 100 health units per direct impact |
+| 30mm GAU-23/A Chain Gun | C-130 at aircraft arrival | Faster precise fire, tight view, bounded damage and cadence |
+| 105mm M102 Howitzer | C-130 at aircraft arrival | One shell every 12 seconds, wider view, bounded blast and readable impact delay |
+| M-7 rifle | Every living ground player starts with one | 5 aircraft damage per hit, unlimited reserve, 30-round magazine and two-second reload |
+| Rocket launcher | Four map-placed launchers, one per carrier | 150 damage per direct aircraft hit, 15 seconds between shots from each launcher |
 
 Each aircraft weapon retains its own cadence/cooldown/reload state across switches. Switching cannot refill ammunition, cancel a reload advantageously or reset a timer. It changes presentation and the active weapon, not the legality of firing. Weapon names identify game equipment; damage, ballistics and fire rates are gameplay configuration.
 
-P18 replaces the former three-rocket guarantee: aircraft maximum health is **1,000 × the Ground-player count in the deployment roster**, excluding the operator. Lock that maximum for the round; deaths, departures and late arrivals do not resize or heal it. A direct rocket deals the existing fixed **100** health units once; M-7 hits retain **5** units. Misses and near-miss splash do not count as direct hits. Reset derives fresh maximum health from the next deployment roster. These requested values and their verification are tracked in [P18](plans/18-game-rebalancing.md).
+P18 replaces the former three-rocket guarantee: aircraft maximum health is **1,000 × the Ground-player count in the deployment roster**, excluding the operator. Lock that maximum for the round; deaths, departures and late arrivals do not resize or heal it. P25 raises direct rocket damage from 100 to **150** health units per hit. M-7 hits retain **5** units. Misses and near-miss splash do not count as direct hits. Reset derives fresh maximum health from the next deployment roster. The [P18 record](plans/18-game-rebalancing.md) covers the implemented health rule and original 100-damage rockets.
 
 At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-team win through MatchService in that step. Cancel outstanding damage work and freeze the orbit. The entire ground team receives the win, including eliminated teammates. The results view shows an aircraft destruction cue and optional local audiovisual effects. [Combat presentation and spectating](plans/10-player-experience.md)
 
@@ -65,7 +67,7 @@ At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-t
 
 Spawn one launcher at each of four validated sites at deployment. The hangar pickup sits inside a bay door. The Vesper Radar and military depot pickups sit outside their entrances. The fourth pickup is inside the Prism Seedship, accessible through its entrance without demolishing a panel. It is not part of the initial player loadout. The ground team can see its available/carried state. A living ground player within reach can acquire it atomically; a second simultaneous claim must fail without creating another launcher. Keep a stable launcher identity for the whole round.
 
-Initial handling defaults: the carrier retains their M-7 and can switch weapons or voluntarily drop the launcher. While the round remains Active, death, character reset or disconnect drops it at the last valid ground position so a teammate can recover it. Terminal-round cleanup takes precedence over recovery. An unreachable/out-of-bounds drop is relocated to the original anchor. Carrying, dropping, rejoining and re-picking cannot clone it or reset its reload progress.
+Initial handling defaults: the carrier retains their M-7 and can switch weapons or voluntarily drop the launcher. During combat, and during scatter under P24, death, character reset or disconnect drops it at the last valid ground position so a teammate can recover it. Terminal-round cleanup takes precedence over recovery. An unreachable/out-of-bounds drop is relocated to the original anchor. Carrying, dropping, rejoining and re-picking cannot clone it or reset its reload progress.
 
 The launcher holds one ready rocket and automatically replenishes after a configured reload delay; reserve supply is not depleted. This is a provisional balance choice to let missed shots be retried without adding ammo pickups. There are no separate ammunition/weapon items. Validate reload timing against the configured round duration and roster-scaled aircraft durability. Reset destroys any old held/dropped representation and creates one fresh launcher at each site.
 
@@ -81,7 +83,7 @@ P18 replaces the old three-plus-three howitzer and nine-second-per-stage thresho
 
 Interruptions, misses, obstruction, reloads and changing target or weapon break timing continuity while preserving earned per-panel damage. The first impact after a break earns zero elapsed time. Only server-resolved direct 30mm impacts earn time on a panel. Duplicate, stale and unauthorized requests cannot advance destruction.
 
-In the P19 candidate, every confirmed M102 impact on the playable battlefield produces an explosion, including a hit on empty ground. A **25-stud radius** around the contact applies to exposed Ground players and registered building panels. A road or terrain strike beside a building can open several exposed panels in one shot. A panel is in range when the closest point on a surviving solid piece is in range and visible from the impact. Evaluate all cover against the geometry present before the combat batch. The panel directly struck by the howitzer also reaches Total. The Salt Flats walk-in aircraft wreck retains its separate direct-hit rules. The M102 holds one shell and reloads in six seconds. Its one-second minimum cadence still applies to eligible fire. [P19 candidate and acceptance](plans/19-weapon-impacts.md)
+In the P19 candidate, every confirmed M102 impact on the playable battlefield produces an explosion, including a hit on empty ground. A **25-stud radius** around the contact applies to exposed Ground players and registered building panels. A road or terrain strike beside a building can open several exposed panels in one shot. A panel is in range when the closest point on a surviving solid piece is in range and visible from the impact. Evaluate all cover against the geometry present before the combat batch. The panel directly struck by the howitzer also reaches Total. The Salt Flats walk-in aircraft wreck retains its separate direct-hit rules. P19 shipped a single-shell six-second reload. P25 extends that reload to 12 seconds from the accepted shot. [P19 candidate and acceptance](plans/19-weapon-impacts.md)
 
 P19 uses an expanding fireball, sparks and a lingering smoke plume for a Full M102 contact, a smaller burst for a 30mm contact, and a smoke trail and burst for a rocket. An expired flight in empty space produces no impact burst. Reduced trims the flash and smoke, and Off clears local effects. Thermal Full uses fewer particles than nearby Ground Full and keeps grayscale smoke visible at orbit distance. Gunship reports and contact audio originate in the world and use distance-based delays. Rockets and the rifle retain their aircraft damage rules. [Presentation defaults](docs/decisions.md) · [Asset provenance](assets/manifest.json)
 
@@ -100,8 +102,8 @@ The current P18 presentation uses white occluded highlights and full world desat
 ```mermaid
 stateDiagram-v2
     [*] --> Lobby
-    Lobby --> Deploying: roster ready
-    Deploying --> Active: map and players ready
+    Lobby --> Deploying: roster ready and any post-round wait elapsed
+    Deploying --> Active: map and assigned players ready
     Deploying --> Lobby: assigned player leaves
     Deploying --> Results: setup fails or deployment times out
     Active --> Results: plane destroyed / ground eliminated / deadline / forfeit / abort
@@ -109,7 +111,11 @@ stateDiagram-v2
     Resetting --> Lobby
 ```
 
-Player states are Waiting → ActiveGround / ActiveGunship → Eliminated / Spectating → Waiting. Disable default automatic respawns; manual character reset eliminates a ground player. Operator character reset cannot reset aircraft health or escape an assigned role.
+The diagram describes P23. A consumed Ground life stays consumed when the server loads a protected lobby avatar. Manual reset consumes a Ground life. Operator character reset during combat preserves the role and aircraft health.
+
+At a committed result, return everyone to the protected lobby and begin a 120-second intermission. Show the winner and countdown there, with map cleanup inside the wait. At expiry deploy if at least two players are eligible and the map is ready. A new server still uses its first-match startup timing. [Lobby and intermission](plans/23-lobby-return-and-intermission.md)
+
+The planned P24 Scatter phase gives deployed Ground players 20 seconds to move and collect launchers. Ground will see the countdown over the world and the operator will see it on black. At zero the aircraft will appear, weapons will unlock and the full combat clock will start. [Aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md)
 
 | Situation | Required outcome |
 | --- | --- |
@@ -148,12 +154,11 @@ On desktop, the Ground HUD shows personal health, the equipped M-7 or
 launcher's ammunition and readiness, aircraft health, launcher status,
 surviving teammates and time. The operator HUD shows the selected named
 weapon, zoom and readiness, aircraft health, surviving opponents and time.
-Both see the winner and reason. Spectators can cycle among living Ground
-targets and fall back to a battlefield overview when no eligible target remains.
+Both see the winner and reason. The P23 results HUD shows the countdown alongside the result in the lobby. Spectator mode closes when the result is committed.
 
 Text identifies warnings, impacts and results alongside optional audio and
 motion. Desktop settings adjust effect intensity and aircraft destruction
-shake. The shake is confined to Results. The local options carry through
+shake. In P23 the shake briefly affects the lobby camera during Results. The local options carry through
 the current play session. [Presentation defaults](docs/decisions.md)
 
 MVP readiness also requires walking every authored floor of all three buildings on the expanded terrain, panning across the full battlefield at both weapon zooms, demonstrating the one-heavy-hit and two-earned-second 30mm panel rules, real damaged-state openings, bounded physical debris and repeated pristine reconstruction. MVP readiness requires complete 6- and 10-player rounds for aircraft destruction, ground elimination and timeout; correct launcher recovery and weapon switching; rejection of invalid input; repeated clean resets; and readable counterplay. Automated checks prove rules, while operated multiplayer sessions assess feel, balance and performance.

@@ -17,6 +17,7 @@ local PresentationEffects = require(script.Parent.PresentationEffects)
 local WeaponAudio = require(script.Parent.WeaponAudio)
 local WeaponImpactEffects = require(script.Parent.WeaponImpactEffects)
 local SpectatorCamera = require(script.Parent.SpectatorCamera)
+local TheaterSpectating = require(script.Parent.TheaterSpectating)
 
 local RoundPanel = {}
 type View = PlayerPresentation.View
@@ -160,7 +161,7 @@ function RoundPanel.new(
             local surrender = makeButton(
                 gui,
                 "Surrender",
-                "Surrender / spectate",
+                "Surrender to lobby",
                 UDim2.new(1, -12, 0, 8),
                 UDim2.fromOffset(150, 36)
             )
@@ -176,24 +177,32 @@ function RoundPanel.new(
             settingsButton.AnchorPoint = Vector2.new(1, 0)
 
             local spectatorLabel =
-                makeLabel(gui, "SpectatorStatus", UDim2.new(0.5, 0, 1, -82), UDim2.fromOffset(364, 42))
+                makeLabel(gui, "SpectatorStatus", UDim2.new(0.5, 0, 1, -112), UDim2.new(0.82, 0, 0, 42))
             spectatorLabel.AnchorPoint = Vector2.new(0.5, 1)
             local previous = makeButton(
                 gui,
                 "PreviousTarget",
                 "[  Previous",
-                UDim2.new(0.5, -112, 1, -42),
-                UDim2.fromOffset(138, 34)
+                UDim2.new(0.5, -74, 1, -67),
+                UDim2.fromOffset(136, 38)
             )
             local nextTarget = makeButton(
                 gui,
                 "NextTarget",
                 "]  Next",
-                UDim2.new(0.5, 112, 1, -42),
-                UDim2.fromOffset(138, 34)
+                UDim2.new(0.5, 74, 1, -67),
+                UDim2.fromOffset(136, 38)
             )
             previous.AnchorPoint = Vector2.new(0.5, 1)
             nextTarget.AnchorPoint = Vector2.new(0.5, 1)
+            local exitSpectating = makeButton(
+                gui,
+                "ExitSpectating",
+                "Exit spectating",
+                UDim2.new(0.5, 0, 1, -14),
+                UDim2.fromOffset(180, 42)
+            )
+            exitSpectating.AnchorPoint = Vector2.new(0.5, 1)
 
             local settingsContent = makeMenu(gui, "SettingsContent", 223)
             local settingsHeader =
@@ -226,6 +235,7 @@ function RoundPanel.new(
 
             local thermal = ThermalCameraController.new(player, playerGui, state, inputProvider)
             local spectator = SpectatorCamera.new(player)
+            local theater = TheaterSpectating.new(player)
             local effects = PresentationEffects.new(player)
             local weaponAudio = WeaponAudio.new(state, player)
             local weaponImpacts = WeaponImpactEffects.new(state)
@@ -293,9 +303,13 @@ function RoundPanel.new(
                 local preview = if player:GetAttribute("LocalMapPreview") == true
                     then player:GetAttribute("LocalPreviewRole")
                     else nil
-                local nextView: View = PlayerPresentation.view(phase, role, life, preview)
                 local round = state:GetAttribute("RoundId")
                 local roundId = if type(round) == "number" then round else -1
+                local inLobbyDuringRound = phase == "Active"
+                    and ((role == "Spectator" and life == "Spectating") or life == "Eliminated")
+                    and player:GetAttribute("RoundId") == roundId
+                local watching, theaterInReach = theater.update(roundId, inLobbyDuringRound)
+                local nextView: View = PlayerPresentation.view(phase, role, life, preview, watching)
                 local touch = touchEnabled()
                 if roundId ~= oldRoundId then
                     oldRoundId = roundId
@@ -309,11 +323,14 @@ function RoundPanel.new(
                 end
                 view = nextView
                 gui:SetAttribute("View", view)
+                label.Visible = not (view == "RoundLobby" and theaterInReach)
                 settingsButton.Visible = not touch
                 local title = PlayerPresentation.title(view, life == "Eliminated")
 
                 local active = phase == "Active"
                 local serverSeconds = workspace:GetServerTimeNow()
+                local intermission =
+                    PlayerPresentation.remaining(state:GetAttribute("IntermissionUntil"), serverSeconds)
                 local effectScale = PlayerPresentation.intensity(options.effects)
                 local audioPhase = if type(phase) == "string" then phase else ""
                 weaponAudio.update(roundId, audioPhase, effectScale, serverSeconds)
@@ -335,7 +352,7 @@ function RoundPanel.new(
                 local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
                 local aircraftText: string? = nil
                 local fraction: number? = nil
-                if (active or phase == "Results") and aircraftState then
+                if (view == "Ground" or view == "Operator" or view == "Spectator") and aircraftState then
                     local current = aircraftState:GetAttribute("Health")
                     local maximum = aircraftState:GetAttribute("MaxHealth")
                     local destroyed = aircraftState:GetAttribute("Destroyed") == true
@@ -366,7 +383,15 @@ function RoundPanel.new(
                 end
                 health:SetAttribute("Fraction", fraction)
 
-                if active or thermal.ownsCamera() then
+                if view == "RoundLobby" then
+                    -- Leave the middle of the theater view clear for Roblox's
+                    -- world-positioned television prompt.
+                    label.AnchorPoint = Vector2.zero
+                    label.Position = UDim2.fromOffset(12, 8)
+                    label.Size = UDim2.fromOffset(if touch then 230 else 260, 42)
+                    label.TextSize = 14
+                    label.Text = title .. "\nVisit the theater TV to spectate"
+                elseif active or thermal.ownsCamera() then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
                     label.Size = if compact then UDim2.new(1, -180, 0, 22) else UDim2.fromOffset(300, 38)
@@ -380,7 +405,7 @@ function RoundPanel.new(
                     label.Position = UDim2.new(0.5, 0, 0, 112)
                     label.Size = UDim2.new(0.5, 0, 0, 76)
                     label.TextSize = 19
-                    label.Text = if view == "Waiting"
+                    label.Text = if nextView == "Waiting"
                         then title .. "\nWaiting for " .. tostring(
                             state:GetAttribute("MinimumPlayers") or "enough"
                         ) .. " players"
@@ -390,7 +415,7 @@ function RoundPanel.new(
                 surrender.Size = UDim2.fromOffset(150, if compact then 32 else 36)
 
                 local reason: string? = nil
-                if view == "Results" then
+                if view == "Results" or (intermission and intermission > 0) then
                     local value = state:GetAttribute("Result")
                     local encoded = if type(value) == "string" then value else nil
                     if encoded ~= seenResult then
@@ -401,6 +426,14 @@ function RoundPanel.new(
                         reason = result.reason
                     end
                     label.Text = PlayerPresentation.resultText(result, roundId)
+                    if intermission and intermission > 0 then
+                        label.Size = UDim2.new(0.82, 0, 0, 100)
+                        label.Text ..= string.format(
+                            "\nIntermission  %d:%02d",
+                            math.floor(intermission / 60),
+                            intermission % 60
+                        )
+                    end
                 else
                     seenResult, result = nil, nil
                 end
@@ -424,7 +457,8 @@ function RoundPanel.new(
                 spectatorLabel.Text = if targetName
                     then "WATCHING  " .. targetName
                     else "No living Ground players • Battlefield overview"
-                previous.Visible, nextTarget.Visible = not touch and canCycle, not touch and canCycle
+                previous.Visible, nextTarget.Visible = watching and canCycle, watching and canCycle
+                exitSpectating.Visible = watching
             end
 
             table.insert(
@@ -457,6 +491,7 @@ function RoundPanel.new(
                     cycle(1)
                 end)
             )
+            table.insert(connections, exitSpectating.Activated:Connect(theater.exit))
             table.insert(
                 connections,
                 surrender.Activated:Connect(function()
@@ -514,6 +549,7 @@ function RoundPanel.new(
                 weaponAudio.stop()
                 weaponImpacts.stop()
                 thermal.stop()
+                theater.stop()
                 spectator.stop()
                 gui:Destroy()
             end

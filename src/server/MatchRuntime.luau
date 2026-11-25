@@ -26,6 +26,7 @@ export type Settings = {
     lobbySeconds: number,
     deploymentSeconds: number,
     resultsSeconds: number,
+    intermissionSeconds: number?,
     seed: number,
 }
 MatchRuntime.defaults = table.freeze({
@@ -35,6 +36,7 @@ MatchRuntime.defaults = table.freeze({
     lobbySeconds = 8,
     deploymentSeconds = 15,
     resultsSeconds = 5,
+    intermissionSeconds = 120,
     seed = 1,
 })
 export type Controller = {
@@ -133,6 +135,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         status:SetAttribute("RoundId", state.roundId)
         status:SetAttribute("Phase", state.phase)
         status:SetAttribute("DeadlineSeconds", state.deadlineSeconds)
+        status:SetAttribute("IntermissionUntil", state.intermissionUntil)
         status:SetAttribute("Winner", if state.result then state.result.winner else "")
         status:SetAttribute("Reason", if state.result then state.result.reason else "")
         if state.result then
@@ -165,19 +168,28 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             local life = if member then member.life else "Waiting"
             player:SetAttribute("RoundId", state.roundId)
             player:SetAttribute("Role", role)
-            local previousLife = player:GetAttribute("Life")
             player:SetAttribute("Life", life)
-            if life == "Eliminated" and previousLife == "Alive" then
-                owners[player].characters.clear()
-            end
             player:SetAttribute("RoundRevision", state.revision)
-            local team = teamFor(if role == "Ground" or role == "Gunship" then role else "Waiting")
+            local inRound = life == "Alive" or life == "Deploying"
+            local team =
+                teamFor(if inRound and (role == "Ground" or role == "Gunship") then role else "Waiting")
             assert(team, "runtime teams missing")
             player.Team = team
         end
         -- Revision is written last as the presentation commit marker.
         status:SetAttribute("Revision", state.revision)
         lastRevision = state.revision
+    end
+    -- Membership and physical placement have separate lifetimes. An outstanding
+    -- lobby request survives Results, battlefield replacement and intermission.
+    local function syncLobbyCharacters(state: MatchService.Snapshot)
+        local deployed = state.phase == "Deploying" or state.phase == "Active"
+        for player, owner in owners do
+            local member = state.members[player.UserId]
+            if not deployed or not member or member.role == "Spectator" or member.life == "Eliminated" then
+                owner.characters.request("Lobby", "Waiting", state.roundId)
+            end
+        end
     end
     local function addPlayer(player: Player)
         if owners[player] then
@@ -188,12 +200,8 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         owners[player] = { characters = CharacterOwner.new(player, match), bucket = bucket }
         match.join(player.UserId)
         local state = match.snapshot()
-        if state.phase == "Lobby" then
-            owners[player].characters.request("Lobby", "Waiting", state.roundId)
-        else
-            owners[player].characters.clear()
-        end
         publish(state)
+        syncLobbyCharacters(state)
     end
     local function applyPhase(state: MatchService.Snapshot, time: number)
         phase = state.phase
@@ -217,15 +225,8 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
                     owners[player].characters.request(anchor, member.role, state.roundId)
                 end
             end
-        elseif state.phase == "Lobby" then
-            for player in owners do
-                owners[player].characters.request("Lobby", "Waiting", state.roundId)
-            end
         elseif state.phase == "Resetting" then
-            for _, owner in owners do
-                owner.characters.clear()
-            end
-            local ok, reason = map.rebuild()
+            local ok, reason = map.rebuild(true)
             if not ok then
                 warn("Round map reset failed: " .. tostring(reason))
                 if folder then
@@ -249,7 +250,11 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         if
             state.phase == "Lobby"
             and settings.automaticDeployment ~= false
-            and elapsed >= settings.lobbySeconds
+            and (
+                if state.intermissionUntil > 0
+                    then time >= state.intermissionUntil
+                    else elapsed >= settings.lobbySeconds
+            )
         then
             match.deploy()
         elseif state.phase == "Deploying" then
@@ -270,6 +275,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         if state.revision ~= lastRevision then
             publish(state)
         end
+        syncLobbyCharacters(state)
     end
     local function stop()
         if not running then
@@ -284,9 +290,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         if match.snapshot().phase == "Results" then
             match.beginReset()
         end
-        if match.snapshot().phase == "Resetting" then
-            match.finishReset()
-        end
+        match.finishReset(true)
         for player, owner in owners do
             retire(owner.characters)
             match.leave(player.UserId)

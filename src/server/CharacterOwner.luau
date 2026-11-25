@@ -12,6 +12,7 @@ local MatchService = require(script.Parent.MatchService)
 local HttpService = game:GetService("HttpService")
 local CharacterOwner = {}
 export type Controller = {
+    -- Requests anchor/role/round placement, coalescing repeated placement for the same generation.
     request: (string, string, number) -> (),
     clear: () -> (),
     stop: () -> (),
@@ -25,6 +26,8 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
     local running = true
     local token = 0
     local queued: Request? = nil
+    local desired: Request? = nil
+    local lobbyRetryAt = 0
     local loading = false
     local connections: { RBXScriptConnection } = {}
     local lease = HttpService:GenerateGUID(false)
@@ -42,6 +45,7 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
     local function clear()
         token += 1
         queued = nil
+        desired = nil
         clearExisting()
     end
     owner = {
@@ -50,13 +54,28 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
             if not running then
                 return
             end
+            if
+                desired
+                and desired.anchor == anchor
+                and desired.role == role
+                and desired.roundId == roundId
+            then
+                return
+            end
+            if role == "Waiting" and workspace:GetServerTimeNow() < lobbyRetryAt then
+                return
+            end
             token += 1
-            queued = { token = token, roundId = roundId, anchor = anchor, role = role }
+            local placement: Request = { token = token, roundId = roundId, anchor = anchor, role = role }
+            desired = placement
+            queued = desired
             if loading then
                 return
             end
             loading = true
-            task.spawn(function()
+            -- Defer engine loads until the current frame finishes releasing the
+            -- life and recovering any carried launcher from its battlefield pose.
+            task.defer(function()
                 -- Only one LoadCharacterAsync may be in flight for this Player. New
                 -- requests replace queued intent while the old load finishes safely.
                 while running and queued do
@@ -83,7 +102,12 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                     end
                     if not ok then
                         warn("Character deployment failed: " .. tostring(reason))
-                        match.abort(request.roundId, "CharacterLoadFailed")
+                        desired = nil
+                        if request.role ~= "Waiting" then
+                            match.abort(request.roundId, "CharacterLoadFailed")
+                        else
+                            lobbyRetryAt = workspace:GetServerTimeNow() + 2
+                        end
                         break
                     end
                     local character = player.Character
@@ -98,11 +122,21 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                         or not anchorPart
                         or not anchorPart:IsA("BasePart")
                     then
-                        match.abort(request.roundId, "CharacterIncomplete")
+                        desired = nil
+                        if request.role ~= "Waiting" then
+                            match.abort(request.roundId, "CharacterIncomplete")
+                        else
+                            lobbyRetryAt = workspace:GetServerTimeNow() + 2
+                        end
                         break
                     end
                     if humanoid.Health <= 0 then
-                        match.abort(request.roundId, "DeadDeploymentCharacter")
+                        desired = nil
+                        if request.role ~= "Waiting" then
+                            match.abort(request.roundId, "DeadDeploymentCharacter")
+                        else
+                            lobbyRetryAt = workspace:GetServerTimeNow() + 2
+                        end
                         break
                     end
                     character:PivotTo(anchorPart.CFrame)
@@ -151,7 +185,14 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                             return
                         end
                         characterLost = true
-                        if state.phase == "Deploying" then
+                        if
+                            request.role == "Waiting"
+                            or (request.role == "Gunship" and state.phase == "Active")
+                        then
+                            -- Protected body replacement preserves the current round life state.
+                            desired = nil
+                            owner.request(request.anchor, request.role, request.roundId)
+                        elseif state.phase == "Deploying" then
                             if died then
                                 match.abort(request.roundId, deploymentReason)
                             else
@@ -160,11 +201,6 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                                 -- reason while the roster is still deploying.
                                 characterLost = false
                             end
-                        elseif
-                            request.role ~= "Ground" and (state.phase == "Lobby" or state.phase == "Active")
-                        then
-                            -- Operator reset rebuilds only the protected placeholder body.
-                            owner.request(request.anchor, request.role, request.roundId)
                         end
                     end
                     table.insert(
@@ -190,7 +226,9 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                             loseCharacter("CharacterRemovedDuringDeployment", false)
                         end)
                     )
-                    match.ready(player.UserId, request.roundId)
+                    if request.role ~= "Waiting" then
+                        match.ready(player.UserId, request.roundId)
+                    end
                 end
                 loading = false
             end)

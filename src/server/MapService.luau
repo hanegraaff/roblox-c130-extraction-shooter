@@ -2,7 +2,7 @@
 --[=[
     MapService: server-only ownership of the expanded authored map and bounded terrain and ground containment.
     Depends on shared MapRules, Workspace queries, and injected characters/Heartbeat.
-    Retains a private pristine clone; rebuild removes all runtime descendants and restores it.
+    Retains a private pristine clone and can preserve the occupied lobby during round reset.
     Does not spawn roles, weapons, aircraft, or round state. All public calls are nonyielding.
 ]=]
 local MapRules = require(game:GetService("ReplicatedStorage").Shared.MapRules)
@@ -22,7 +22,8 @@ export type Adapters = {
 export type Controller = {
     start: () -> (boolean, string?),
     stop: () -> (),
-    rebuild: () -> (boolean, string?),
+    -- Optionally keep the existing protected lobby, including its occupied floor.
+    rebuild: (boolean?) -> (boolean, string?),
     enforce: () -> (),
     destroy: () -> (),
     validate: () -> (boolean, string?),
@@ -297,7 +298,7 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
         validate = function()
             return MapService.validateMap(map, settings)
         end,
-        rebuild = function()
+        rebuild = function(preserveLobby)
             if destroyed then
                 return false, "map owner destroyed"
             end
@@ -306,9 +307,21 @@ function MapService.new(world: Instance, adapters: Adapters): (Controller?, stri
             if not terrainValid then
                 return false, terrainReason
             end
-            map:Destroy()
-            map = snapshot:Clone()
-            map.Parent = world
+            local replacement = snapshot:Clone()
+            if preserveLobby then
+                local lobby = assert(map:FindFirstChild("LobbyStation"), "protected lobby disappeared")
+                local copy = assert(replacement:FindFirstChild("LobbyStation"), "lobby snapshot disappeared")
+                copy:Destroy()
+                -- Reparent within Workspace so the occupied floor and TV keep their identities.
+                lobby.Parent = world
+                map:Destroy()
+                replacement.Parent = world
+                lobby.Parent = replacement
+            else
+                map:Destroy()
+                replacement.Parent = world
+            end
+            map = replacement
             decorate()
             return MapService.validateMap(map, settings)
         end,

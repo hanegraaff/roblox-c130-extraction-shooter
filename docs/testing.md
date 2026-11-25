@@ -1,6 +1,6 @@
 # Testing and acceptance
 
-Current P18 regression checks use the ordinary smoke suites, deterministic/asset gates, the [three-client rebalancing harness](#run-the-p18-rebalancing-harness) and adapted [two-client P05 gunship harness](#run-the-p05-gunship-combat-harness), plus native input, traversal and rendered review. P03/P04 retain their compatible lifecycle/orbit paths. Pre-P18 staged balance/camera fixtures are explicitly archived; `HarnessCompatibility` rejects them before runtime/listener allocation. Reproduce their evidence only from the recorded Git revision. A compatibility rejection is failed/unavailable validation, never a pass or skipped required test.
+The [P23 lobby harness](#run-the-p23-lobby-and-intermission-harness) exercises lobby return, theater interaction and the two-minute intermission. Collect native evidence from the synced source under test. Core regression paths still cover smoke, deterministic and asset gates, [P18 rebalancing](#run-the-p18-rebalancing-harness), [P05 gunship combat](#run-the-p05-gunship-combat-harness), and P03/P04 lifecycle and orbit. Use the recorded Git revision to reproduce earlier evidence. `HarnessCompatibility` rejects archived balance and camera selectors before allocating the runtime or listeners.
 
 P12’s legacy implementation handoff is closed by user direction. Live platform/access, capacity, performance and soak checks remain unverified in the [future release checklist](release.md).
 
@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P23` | 3 initially, 4 after late join | Protected lobby return, theater interaction, result and production-length intermission, and two battlefield resets |
 | `P18` | 3 | Roster health, current panel/thermal/camera state, four-site ownership/recovery and replay |
 | `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds four empty-ground surface witnesses, exposed, shielded and out-of-range player checks, ground contacts beside all five buildings and a direct roof hit |
 | `P19Profile` | 2 | Candidate-branch five-minute mixed weapon workload, render and scheduler frame timing, local impact readiness and resource peaks. SDK scenario `Replay` runs five resets and observes empty-air rocket expiry |
@@ -393,6 +394,27 @@ For the focused review, walk from the southern shelter along the teal west route
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
 
+## Run the P23 lobby and intermission harness
+
+From the source under test, run `python3 scripts/verify.py` and sync `test.project.json` to the confirmed local `PlayersVsC130Tests` document on port 34872. With Play stopped, use the connected Studio MCP Edit context to launch three actual Studio clients. The harness starts the first deployment after the initial clients pass their smoke suites. It uses 85-second combat rounds and adds one actual late-arriving client during the first round. Automatic replay uses the production 120-second intermission from result commit.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(3, { kind = "P23" })
+    workspace:SetAttribute("P23LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P23 multiplayer test started"
+```
+
+Read `workspace:GetAttribute("P23LastReport")` in Edit after the session ends. The server also writes `P23MultiplayerReport` during the run. Expect the suite `P23-multiplayer`, three initial and four peak clients, two distinct completed round IDs, seven passing cases, and zero failures or skips. Capture the separate server smoke report and each actual client's report. Allow time for the full intermission and the second round and reset.
+
+The harness checks assigned roles and shared HUD state, the late player's protected body, lobby return after Ground death, an out-of-range interaction, theater entry and exit, and rejected combat commands. It checks spectator target loss, restored desktop movement, the winner, a single theater prompt, the preserved lobby floor and avatar identities, and the deployment block before the deadline. The second round exercises operator reset, timeout and another map reset. Current launcher regression checks cover drop location when a carrier returns to the lobby. The deterministic `MatchService` integration suite covers the clock boundary, changing population, departures, aborts, and same-identity reconnect. The [P23 plan record](../plans/23-lobby-return-and-intermission.md#completion-record) tracks actual acceptance evidence.
+
+For a focused theater regression, use `{ kind = "P23Theater" }` with the same three initial clients. Expect suite `P23-theater`, three cases and one completed round. It exercises replicated roles, actual Ground elimination, the native prompt and guidance visibility, entry and exit, lobby return and the first reset. The full `P23` selector provides the actual late join, complete intermission and second-round evidence. [P23 run evidence](evidence/p23/studio.md)
+
+For operated review, use a fresh **Server & Clients** session with an operator and two Ground players. Eliminate one Ground player. Confirm arrival at the lobby with the normal camera. Walk past the TV without interacting, then walk up and press the prompt to follow the surviving Ground player. Confirm that the TV still shows its aerial image, and that **Exit spectating** restores movement to the same avatar. Exercise entry and exit on a touch layout. With a fourth initial client, try cycling between two living targets and removing the current target. End a round while a client is watching and check that the local lobby view resumes, the result stays readable while walking, and the theater floor still supports players through reset. The ordinary test panel uses short replay timing. Use a development build with production defaults or the P23 selector for the actual two-minute interval.
+
 ## Run the P03 multiplayer harness
 
 Use the same confirmed local test document in Edit, with `test.project.json` fully synced and Play stopped. The normal MCP Play tool starts one client. For the P03 scenario, use `StudioTestService.ExecuteMultiplayerTestAsync` from MCP's Edit/plugin context to start **three actual clients** with arguments `{ kind = "P03" }`. It yields until the server calls `EndTest`, so launch it in a task and preserve its return value in the Edit DataModel:
@@ -408,9 +430,9 @@ return "P03 multiplayer test started"
 
 Inspect Studio state and Output while it runs. After it ends, read `workspace:GetAttribute("P03LastReport")` in Edit. Missing evidence, timeout, failure or a client that never acknowledges is incomplete acceptance. The return report identifies `P03-multiplayer`, initial/peak client counts, completed round IDs and nine named case outcomes. Check that every case passes, no case is skipped and all three round IDs are nonzero/distinct. Capture the separate baseline server/client TestEZ reports as well.
 
-The test-only server [RoundHarness](../tests/studio/server/RoundHarness.luau) starts the actual `GameRuntime` with a two-player minimum, 30-second rounds, eight-second lobby and two-second results. Three initial clients provide an operator and two ground players, allowing one eliminated player to follow a living teammate. `AddPlayers(1)` adds a fourth actual client during Active to test late-join spectating. The client [RoundHarness](../tests/studio/client/RoundHarness.luau) reports its actual attributes, round HUD and CameraSubject, sends production surrender requests and uses `LeaveTest` for real disconnects. Its separate transport is excluded from release artifacts.
+The test-only server harness starts `GameRuntime` with a two-player minimum and 30-second rounds. Three initial clients provide an operator and two Ground players. The harness waits for all three to pass their smoke suites, then explicitly starts the first deployment. `AddPlayers(1)` adds a fourth actual client during combat. Automatic replay uses a test-only ten-second wait from result commit, including the two-second Results phase. The client harness reports its actual attributes, round HUD and CameraSubject, sends production surrender requests and uses `LeaveTest` for real disconnects. The separate transport is excluded from release artifacts. [Server RoundHarness](../tests/studio/server/RoundHarness.luau) · [Client RoundHarness](../tests/studio/client/RoundHarness.luau)
 
-The named scenarios target replicated roles/phase/deadline/UI; characterless late-join spectating; death without respawn and teammate camera; wrong-role/stale/eliminated command rejection; protected operator reset; elimination, timeout and operator-forfeit outcomes; ground departure while a teammate remains; three map/camera/roster resets; stable connections and draining-load teardown. Each round perturbs cover and adds transient map content before checking pristine restoration. Deterministic service tests separately cover deployment departures, reconnect tombstones, exact deadlines and result conflicts. The [P03 record](../plans/03-rounds-and-roles.md) distinguishes which engine scenarios actually ran and any open gaps.
+The scenarios check replicated roles, phase, timer and HUD, late-join lobby return, Ground elimination and theater camera flow, and rejection of stale or ineligible combat commands. They also cover protected operator reset, elimination, timeout, actual departures, three map and character resets, and teardown while avatar loads drain. Each round perturbs cover and adds transient map content before checking pristine restoration. The [P03 record](../plans/03-rounds-and-roles.md) describes previously executed checks and their source.
 
 For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 30°/40° profiles, then confirm role loss restores the normal camera. Exercise active gunship and M-7 firing and cover separately; launcher gameplay is available in the P08 candidate during a real active round. Record readability and camera observations separately from automated pass counts. End the test session when finished.
 
