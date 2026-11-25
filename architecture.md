@@ -2,7 +2,7 @@
 
 `main` includes integrated P18 rebalancing: deployment Ground-roster health, one-howitzer/two-earned-second panel destruction, square camera bounds, four landmark launchers and white Ground targets against a darker fully desaturated world. The [P18 record](plans/18-game-rebalancing.md) identifies verification and integration source separately; local implementation does not establish future Roblox publication or live capacity/performance acceptance.
 
-The integrated gunship uses a 25-stud howitzer blast around confirmed contacts. Clients receive a presentation stream for gunship shells and Ground rockets. This branch adds the P23 lobby flow and theater interaction. Its ownership contracts are documented below, with Studio acceptance in the plan record. [P19 weapon impacts](plans/19-weapon-impacts.md) · [P23 round flow](plans/23-lobby-return-and-intermission.md)
+The integrated gunship uses a 25-stud howitzer blast around confirmed contacts. Clients receive a presentation stream for gunship shells and Ground rockets. The lobby provides protected return after elimination, opt-in theater spectating and a two-minute intermission. [P19 weapon impacts](plans/19-weapon-impacts.md) · [P23 round flow](plans/23-lobby-return-and-intermission.md)
 
 ## Current state and target
 
