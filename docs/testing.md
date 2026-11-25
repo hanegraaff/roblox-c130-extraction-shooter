@@ -1,6 +1,6 @@
 # Testing and acceptance
 
-The [P23 lobby harness](#run-the-p23-lobby-and-intermission-harness) exercises lobby return, theater interaction and the two-minute intermission. Collect native evidence from the synced source under test. Core regression paths still cover smoke, deterministic and asset gates, [P18 rebalancing](#run-the-p18-rebalancing-harness), [P05 gunship combat](#run-the-p05-gunship-combat-harness), and P03/P04 lifecycle and orbit. Use the recorded Git revision to reproduce earlier evidence. `HarnessCompatibility` rejects archived balance and camera selectors before allocating the runtime or listeners.
+The [P24 aircraft arrival harness](#run-the-p24-aircraft-arrival-harness) exercises the Ground head start and transition to combat. The [P23 lobby harness](#run-the-p23-lobby-and-intermission-harness) exercises lobby return, theater interaction and the two-minute intermission. Collect native evidence from the synced source under test. Core regression paths still cover smoke, deterministic and asset gates, [P18 rebalancing](#run-the-p18-rebalancing-harness), [P05 gunship combat](#run-the-p05-gunship-combat-harness), and P03/P04 lifecycle and orbit. Use the recorded Git revision to reproduce earlier evidence. `HarnessCompatibility` rejects archived balance and camera selectors before allocating the runtime or listeners.
 
 P12’s legacy implementation handoff is closed by user direction. Live platform/access, capacity, performance and soak checks remain unverified in the [future release checklist](release.md).
 
@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P24` | 2 | Production-length Scatter, both countdown views, real launcher transfers and fire gating, aircraft reveal, role rotation and canceled arrival |
 | `P23` | 3 initially, 4 after late join | Protected lobby return, theater interaction, result and production-length intermission, and two battlefield resets |
 | `P18` | 3 | Roster health, current panel/thermal/camera state, four-site ownership/recovery and replay |
 | `P05` | 2 | Actual client fire/remotes and physical flights, both weapons, one-howitzer native opening, authority and cleanup. P19 adds four empty-ground surface witnesses, exposed, shielded and out-of-range player checks, ground contacts beside all five buildings and a direct roof hit |
@@ -17,6 +18,8 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | `P06`, `P06Team`, `P07`, `Sandbreak`, `P08`, `P09`, `P10`, `P11`, `P14`, `P14ArrivalRegression`, `P17` | Historical only | Explicit pre-P18 version rejection; run the recorded source to reproduce prior evidence |
 
 `Workspace.HarnessCompatibilityReport` identifies a rejected selector, reason and replacement before the archived server coordinator starts. The shared test-only compatibility guard also protects direct fixture entry. No archived gameplay assertion is relabelled as passing current behavior. P17 asset reconstruction/provenance checks remain active; its frozen old staged body is preserved separately.
+
+Ordinary multiplayer test rounds and the P24 selector exercise the 20-second head start. The named P03, P04, P05, P18 and P23 regressions use zero Scatter time to isolate their existing checks.
 
 ## Current host checks
 
@@ -393,6 +396,27 @@ The [P06 startup record](evidence/p06-ground-combat.md) distinguishes its contam
 For the focused review, walk from the southern shelter along the teal west route and ochre east route to the gold center marker, inspect the orange boundary, and review exposed sight lines toward sampled perimeter positions. Record whether routes are understandable, cover is readable and movement feels usable, with viewport/graphics settings and actual observations. Watch the perimeter aircraft from the ground and inspect the inward thermal view in solo Operator preview or a real two-client round. The P08 candidate provides launcher pickup during a real active round; solo preview remains noncompetitive. The P06 implementation supplies active-round M-7 ground fire; gunship combat also requires an active round.
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
+
+## Run the P24 aircraft arrival harness
+
+On the P24 branch, run `python3 scripts/verify.py`. Sync `test.project.json` to the confirmed local **PlayersVsC130Tests** document on port 34872. With Play stopped, run the following in the connected Studio MCP Edit context.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(2, { kind = "P24" })
+    workspace:SetAttribute("P24LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P24 multiplayer test started"
+```
+
+Read `workspace:GetAttribute("P24LastReport")` in Edit when the run ends. For manual launch, set the `ManualHarness` attribute on `ServerStorage.DevelopmentSettings` to `P24` while in Edit, then start **Server & Clients** with **two** clients. Read `Workspace.P24MultiplayerReport` in the server context before ending the session. Restore the previous selector in Edit.
+
+Expect `P24-multiplayer` with two actual initial clients, two completed round IDs, nine passing cases and zero failures or skips. Keep the server and both client smoke results with the report. Each complete round uses the full 20-second Scatter interval and checks the fresh ten-minute clock at reveal. The second round rotates roles. The third cancels arrival after a Ground death. The harness uses a short test intermission to reach those replays. P23 separately checks the full intermission.
+
+The harness checks elapsed readiness time, matching client countdowns, opaque operator cover, inactive thermal and fire controls, and missing aircraft ray surfaces. It moves the real Ground avatar and tests launcher transfers through production remotes. It checks that early rifle, launcher and operator requests leave combat state untouched. After reveal it verifies the orbit start, the same Ground avatar and equipment, a direct rocket collision and a fresh operator shot. Controlled-time tests cover the boundary at 19.999 and 20 seconds, operator and last-Ground departure, late entry and reset authority. [Plan acceptance](../plans/24-ground-scatter-and-aircraft-arrival.md#acceptance)
+
+For operated review, start two actual clients through ordinary **Server & Clients** and use **Start round now** from the Studio testing panel. Check both countdown views on desktop and under phone emulation. Move as Ground while reading the timer and check for overlap with chat and touch controls. On the operator client, confirm the black cover fills the viewport and that thermal controls only appear at arrival. Then confirm both players can use their normal combat controls. Record viewport and input mode with the observations, and restore the emulator and test place to their original settings.
 
 ## Run the P23 lobby and intermission harness
 

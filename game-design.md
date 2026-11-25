@@ -25,7 +25,7 @@ There are no collectible mission items, item quotas, escape zones or dwell count
 - The furnished lobby has an oversized sculpted bust in the entrance hall. Facing the bust, players can walk left to the movie theater or right to the art gallery. The six frames hold original photographs for portraits 1 and 5 and approved oil renditions for 2, 3, 4, and 6. The theater television displays a still aerial scene. [Roblox lobby plan and acceptance](plans/22-integrate-lobby.md)
 - Local Studio tests may offer single-player map exploration without granting an active role or starting a competitive round. Human testers can select a solo preview role or request a role for a real local test round, choose the next test duration, start immediately and reset through a test-only panel. Conflicting requested roles must be explained rather than silently overridden. These conveniences are excluded from release builds; production population and fair rotation rules remain unchanged.
 - Late arrivals and eliminated Ground players enter the protected lobby and can walk around. Round membership and consumed lives stay keyed by UserId through lobby arrival and reconnect.
-- Lobby players choose whether to spectate. Interacting at the TV follows a living Ground player, with target cycling when several remain and an exit to the same lobby avatar. Round actions are available only to eligible combat lives. Friendly fire is off, and teammates have noncolliding characters. [P23 lobby flow](plans/23-lobby-return-and-intermission.md)
+- Lobby players can opt in to spectating after aircraft arrival. Interacting at the TV follows a living Ground player, with target cycling when several remain and an exit to the same lobby avatar. Friendly fire is off, and teammates have noncolliding characters. [Lobby flow](plans/23-lobby-return-and-intermission.md)
 
 ## Circular battlefield, orbit and view
 
@@ -48,14 +48,14 @@ space for both avatar movement and the ordinary third-person camera.
 
 ## Weapons and aircraft health
 
-The table describes the planned P24 arrival and P25 balance. The integrated build still starts combat at deployment and uses the earlier weapon settings. [P24 head start](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+On the P24 branch, both sides can fire once the aircraft arrives. The table distinguishes current and planned weapon settings. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 | Weapon | Role and availability | Rules |
 | --- | --- | --- |
 | 30mm GAU-23/A Chain Gun | C-130 at aircraft arrival | Faster precise fire, tight view, bounded damage and cadence |
-| 105mm M102 Howitzer | C-130 at aircraft arrival | One shell every 12 seconds, wider view, bounded blast and readable impact delay |
-| M-7 rifle | Every living ground player starts with one | 5 aircraft damage per hit, unlimited reserve, 30-round magazine and two-second reload |
-| Rocket launcher | Four map-placed launchers, one per carrier | 150 damage per direct aircraft hit, 15 seconds between shots from each launcher |
+| 105mm M102 Howitzer | C-130 at aircraft arrival | Wider view, bounded blast and readable impact delay. Six seconds between shells, with 12 seconds planned for P25 |
+| M-7 rifle | Every living Ground player starts with one | 5 aircraft damage per hit, 30-round magazine, 120 reserve rounds and two-second reload. Unlimited reserve is planned for P25 |
+| Rocket launcher | Four map-placed launchers, one per carrier | 100 damage per direct aircraft hit and four seconds between shots from each launcher. P25 plans 150 damage and 15 seconds between shots |
 
 Each aircraft weapon retains its own cadence/cooldown/reload state across switches. Switching cannot refill ammunition, cancel a reload advantageously or reset a timer. It changes presentation and the active weapon, not the legality of firing. Weapon names identify game equipment; damage, ballistics and fire rates are gameplay configuration.
 
@@ -67,7 +67,7 @@ At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-t
 
 Spawn one launcher at each of four validated sites at deployment. The hangar pickup sits inside a bay door. The Vesper Radar and military depot pickups sit outside their entrances. The fourth pickup is inside the Prism Seedship, accessible through its entrance without demolishing a panel. It is not part of the initial player loadout. The ground team can see its available/carried state. A living ground player within reach can acquire it atomically; a second simultaneous claim must fail without creating another launcher. Keep a stable launcher identity for the whole round.
 
-Initial handling defaults: the carrier retains their M-7 and can switch weapons or voluntarily drop the launcher. During combat, and during scatter under P24, death, character reset or disconnect drops it at the last valid ground position so a teammate can recover it. Terminal-round cleanup takes precedence over recovery. An unreachable/out-of-bounds drop is relocated to the original anchor. Carrying, dropping, rejoining and re-picking cannot clone it or reset its reload progress.
+The carrier retains their M-7 and can switch weapons or voluntarily drop the launcher. During Scatter and Active, death, character reset or disconnect drops it at the last valid ground position so a teammate can recover it. Terminal-round cleanup takes precedence over recovery. An unreachable or out-of-bounds drop is relocated to the original anchor. Carrying, dropping, rejoining and re-picking cannot clone it or reset its reload progress.
 
 The launcher holds one ready rocket and automatically replenishes after a configured reload delay; reserve supply is not depleted. This is a provisional balance choice to let missed shots be retried without adding ammo pickups. There are no separate ammunition/weapon items. Validate reload timing against the configured round duration and roster-scaled aircraft durability. Reset destroys any old held/dropped representation and creates one fresh launcher at each site.
 
@@ -103,36 +103,38 @@ The current P18 presentation uses white occluded highlights and full world desat
 stateDiagram-v2
     [*] --> Lobby
     Lobby --> Deploying: roster ready and any post-round wait elapsed
-    Deploying --> Active: map and assigned players ready
+    Deploying --> Scatter: map and assigned players ready
     Deploying --> Lobby: assigned player leaves
     Deploying --> Results: setup fails or deployment times out
+    Scatter --> Active: head start expires and combat can proceed
+    Scatter --> Results: ground eliminated / departure / forfeit / abort
     Active --> Results: plane destroyed / ground eliminated / deadline / forfeit / abort
     Results --> Resetting
     Resetting --> Lobby
 ```
 
-The diagram describes P23. A consumed Ground life stays consumed when the server loads a protected lobby avatar. Manual reset consumes a Ground life. Operator character reset during combat preserves the role and aircraft health.
+The diagram describes the P24 branch. A consumed Ground life stays consumed when the server loads a protected lobby avatar. Manual reset consumes a Ground life. Operator character reset during Scatter or Active preserves the role and aircraft health.
 
 At a committed result, return everyone to the protected lobby and begin a 120-second intermission. Show the winner and countdown there, with map cleanup inside the wait. At expiry deploy if at least two players are eligible and the map is ready. A new server still uses its first-match startup timing. [Lobby and intermission](plans/23-lobby-return-and-intermission.md)
 
-The planned P24 Scatter phase gives deployed Ground players 20 seconds to move and collect launchers. Ground will see the countdown over the world and the operator will see it on black. At zero the aircraft will appear, weapons will unlock and the full combat clock will start. [Aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md)
+Scatter gives Ground 20 seconds to move and transfer launchers once deployment is ready. Ground sees the arrival countdown over the battlefield and the operator sees it on black. If play continues, the aircraft starts its orbit when the countdown expires. The server opens combat and starts the full ten-minute clock. A result during Scatter cancels the reveal and begins the lobby intermission. [Aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md)
 
 | Situation | Required outcome |
 | --- | --- |
 | Aircraft destroyed strictly before deadline | Ground team wins once |
 | All active ground players eliminated before aircraft destruction | C-130 wins once |
-| Deadline reached with no earlier committed ground win | C-130 wins once; an impact at exactly the deadline is too late |
+| Combat deadline reached with no earlier committed ground win | C-130 wins once. An impact at exactly the deadline is too late |
 | Aircraft and last ground player reach zero in the same pre-deadline simulation step | Ground win takes precedence (documented tie default) |
-| Operator disconnects during Active, with ground players remaining | Ground win by forfeit with aircraft health preserved |
-| Ground player leaves during Active | Remove their life and recover any held launcher if play continues. Rejoin preserves the consumed life |
+| Operator disconnects during Scatter or Active, with Ground players remaining | Ground win by forfeit with aircraft health preserved |
+| Ground player leaves during Scatter or Active | Remove their life and recover any held launcher if play continues. Rejoin preserves the consumed life |
 | Last ground player leaves | C-130 wins by departure if the operator remains |
 | Both sides depart in one step, or nobody remains on the server | End without a competitive winner if the damage and deadline checks did not already settle the result |
 | Deployment loses a valid roster | Cancel deployment and return to lobby |
 | Invalid map or unrecoverable setup error | Abort with a reason and no competitive winner, then reset |
 
-Each server step samples server time. At or after the deadline the C-130 wins by timeout and the damage batch is skipped. Before the deadline, accepted gunship impacts, M-7 rays and rocket sweeps use the cover present at the start of the batch. The server applies structural changes, evaluates aircraft destruction before total ground elimination, then considers departures. Pickup, drop, recovery and launcher fire proceed only if play continues. A rocket already in flight can finish after its shooter dies while the round remains active.
+Each server step samples server time. During Scatter it resolves life and departure outcomes before checking whether to start combat. Fire requests during Scatter are discarded. At or after the combat deadline the C-130 wins by timeout and the damage batch is skipped. Before that deadline, accepted gunship impacts, M-7 rays and rocket sweeps use the cover present at the start of the batch. The server applies structural changes, evaluates aircraft destruction before total ground elimination, then considers departures. Pickup, drop and recovery proceed if play continues. A rocket already in flight can finish after its shooter dies while combat continues.
 
-The server commits one result for the round. Aircraft destruction records the lethal shot's shooter, weapon and shot ID. C-130 wins credit the assigned operator. Departure and abort reasons remain distinct from aircraft destruction. Results freezes aircraft health and orbit, cancels outstanding damage work and clears active equipment. Reset restores pristine cover, weapon readiness, launcher state and the lobby camera before the next deployment.
+The server commits one result for the round. Aircraft destruction records the lethal shot's shooter, weapon and shot ID. C-130 wins credit the assigned operator. Departure and abort reasons remain distinct from aircraft destruction. Results freezes aircraft health and any orbit already in progress, cancels outstanding damage work and clears active equipment. Reset restores pristine cover, weapon readiness, launcher state and the lobby camera before the next deployment.
 
 ## Presentation and readiness
 
