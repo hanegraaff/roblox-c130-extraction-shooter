@@ -117,6 +117,8 @@ function RoundHarness.run()
                         return prompt ~= nil and prompt.Enabled
                     end, "eligible theater prompt mounted")
                     local prompt = assert(theaterPrompt())
+                    local roundLabel = roundHud(player):FindFirstChild("Round")
+                    assert(roundLabel and roundLabel:IsA("TextLabel"), "missing round guidance label")
                     local screen = prompt.Parent
                     assert(
                         screen
@@ -133,6 +135,7 @@ function RoundHarness.run()
                     end
                     if request.kind == "DistantTheater" then
                         assert(not shown[prompt], "theater prompt visible outside its range")
+                        assert(roundLabel.Visible, "lobby guidance hidden outside theater interaction range")
                         pressPromptKey()
                         RunService.Heartbeat:Wait()
                         assert(
@@ -167,6 +170,9 @@ function RoundHarness.run()
                         awaitCondition(function()
                             return shown[prompt] == true
                         end, "native theater prompt visibility", 3)
+                        awaitCondition(function()
+                            return not roundLabel.Visible
+                        end, "lobby guidance cleared the native theater prompt", 1)
                         pressPromptKey()
                         awaitCondition(function()
                             return triggered

@@ -308,7 +308,7 @@ function RoundPanel.new(
                 local inLobbyDuringRound = phase == "Active"
                     and ((role == "Spectator" and life == "Spectating") or life == "Eliminated")
                     and player:GetAttribute("RoundId") == roundId
-                local watching = theater.update(roundId, inLobbyDuringRound)
+                local watching, theaterInReach = theater.update(roundId, inLobbyDuringRound)
                 local nextView: View = PlayerPresentation.view(phase, role, life, preview, watching)
                 local touch = touchEnabled()
                 if roundId ~= oldRoundId then
@@ -323,6 +323,7 @@ function RoundPanel.new(
                 end
                 view = nextView
                 gui:SetAttribute("View", view)
+                label.Visible = not (view == "RoundLobby" and theaterInReach)
                 settingsButton.Visible = not touch
                 local title = PlayerPresentation.title(view, life == "Eliminated")
 

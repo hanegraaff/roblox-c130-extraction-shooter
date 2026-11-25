@@ -10,8 +10,8 @@ local TheaterSpectating = {}
 type Controls = { Disable: (Controls) -> (), Enable: (Controls) -> () }
 type PlayerModule = { GetControls: (PlayerModule) -> Controls }
 export type Controller = {
-    -- Refreshes eligibility and returns true while watching the supplied round.
-    update: (number, boolean) -> boolean,
+    -- Returns whether the client is watching and whether it can reach the TV prompt.
+    update: (number, boolean) -> (boolean, boolean),
     -- Releases the movement lock, without replacing or moving the lobby avatar.
     exit: () -> (),
     -- Idempotently releases controls, prompt, listener and pending initialization.
@@ -49,6 +49,10 @@ local function lobbyRoot(player: Player): BasePart?
         return root
     end
     return nil
+end
+
+local function inReach(root: BasePart?, screen: BasePart?): boolean
+    return root ~= nil and screen ~= nil and (root.Position - screen.Position).Magnitude <= activationDistance
 end
 
 -- Creates a nonyielding owner. A bounded task acquires Roblox's stock desktop
@@ -94,7 +98,7 @@ function TheaterSpectating.new(player: Player): Controller
     return {
         update = function(nextRound, nextEligible)
             if not running then
-                return false
+                return false, false
             end
             local root = lobbyRoot(player)
             local screen = if nextEligible then findTelevision() else nil
@@ -121,7 +125,7 @@ function TheaterSpectating.new(player: Player): Controller
                             and controls
                             and not watchingRoot
                             and currentRoot
-                            and (currentRoot.Position - screen.Position).Magnitude <= activationDistance
+                            and inReach(currentRoot, screen)
                         then
                             watchingRoot = currentRoot
                             controls:Disable()
@@ -133,7 +137,7 @@ function TheaterSpectating.new(player: Player): Controller
             if prompt then
                 prompt.Enabled = running and root ~= nil and watchingRoot == nil and controls ~= nil
             end
-            return watchingRoot ~= nil
+            return watchingRoot ~= nil, prompt ~= nil and prompt.Enabled and inReach(root, screen)
         end,
         exit = exit,
         stop = function()
