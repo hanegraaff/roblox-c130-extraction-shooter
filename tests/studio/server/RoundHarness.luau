@@ -495,8 +495,14 @@ function RoundHarness.run()
     end
     local returnedAvatars: { [Player]: Model } = {}
     local firstRound, secondRound, thirdRound = 0, 0, 0
-    local function placeAtTelevision(avatar: Model)
-        avatar:PivotTo(CFrame.lookAt(Vector3.new(472.5, 3, -37), Vector3.new(472.5, 3, -43.815)))
+    local function placeAtTelevision(player: Player, avatar: Model)
+        local root = avatar:FindFirstChild("HumanoidRootPart")
+        assert(
+            player.Character == avatar and root and root:IsA("BasePart") and not root.Anchored,
+            "theater placement requires the actual movable lobby avatar"
+        )
+        avatar:PivotTo(CFrame.lookAt(Vector3.new(472.5, 3, -40), Vector3.new(472.5, 3, -43.815)))
+        root.AssemblyLinearVelocity, root.AssemblyAngularVelocity = Vector3.zero, Vector3.zero
     end
     local ok, failure = pcall(function()
         check("A5 three actual clients receive assigned roles, phase, deadline and UI", function()
@@ -581,7 +587,7 @@ function RoundHarness.run()
                 local lobby = waitingAvatar(dead, original)
                 probe(dead, { kind = "LobbyCamera" })
                 probe(dead, { kind = "DistantTheater" })
-                placeAtTelevision(lobby)
+                placeAtTelevision(dead, lobby)
                 probe(dead, { kind = "EnterTheater", targetId = survivor.UserId, roundId = state.roundId })
                 probe(dead, { kind = "ExitTheater" })
                 assert(dead.Character == lobby, "leaving spectator mode replaced the lobby avatar")
@@ -591,6 +597,9 @@ function RoundHarness.run()
                 probe(survivor, { kind = "SendRejected", roundId = state.roundId - 1, sequence = 1 })
                 task.wait(0.3)
                 assert(runtime.rounds.match.snapshot().revision == revision, "rejected remote mutated match")
+                -- Exit deliberately walks the avatar away from the screen.
+                -- Start the second native entry check back in prompt range.
+                placeAtTelevision(dead, lobby)
                 probe(dead, { kind = "EnterTheater", targetId = survivor.UserId, roundId = state.roundId })
                 probe(survivor, { kind = "Surrender", roundId = state.roundId, sequence = 2 })
                 awaitCondition(function()
@@ -700,7 +709,7 @@ function RoundHarness.run()
                 local watcherBody =
                     assert(oldWatcher:FindFirstChildOfClass("Humanoid"), "watcher body missing")
                 watcherBody.Health = 0
-                placeAtTelevision(waitingAvatar(watcher, oldWatcher))
+                placeAtTelevision(watcher, waitingAvatar(watcher, oldWatcher))
                 probe(
                     watcher,
                     { kind = "EnterTheater", targetId = currentTarget.UserId, roundId = state.roundId }
