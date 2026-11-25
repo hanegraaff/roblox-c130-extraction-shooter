@@ -1,0 +1,459 @@
+{
+  "sourceCommit": "70084b89b99f5c730f50e4fa2155385ba67fc3cf",
+  "tree": "d4344ceab98aa9a0dfed6ea4523c47aa7983f181",
+  "buildSha256": "ee627b3727fc18122b4580f40e4543d000dee06537e8a9f01b0b12711b09a846",
+  "version": "0.748.0.7481526",
+  "invocation": "ExecuteMultiplayerTestAsync(3,{kind=\"P18\"})",
+  "fallbackArmed": false,
+  "attempt": 1,
+  "samples": [
+    {
+      "args": {
+        "kind": "P18"
+      },
+      "ordinary": false,
+      "clients": 3,
+      "impact": false
+    },
+    {
+      "args": {
+        "kind": "P18"
+      },
+      "ordinary": false,
+      "phase": "Lobby",
+      "round": 0,
+      "clients": 3,
+      "stage": "A1 roster excludes operator and all clients share 2000 health",
+      "impact": false
+    },
+    {
+      "args": {
+        "kind": "P18"
+      },
+      "ordinary": false,
+      "phase": "Results",
+      "round": 1,
+      "clients": 3,
+      "stage": "A1 A4 reset restores four pristine sites and next deployment health",
+      "impact": false
+    }
+  ],
+  "report": {
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        }
+      },
+      "server": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    "passed": 11,
+    "cases": [
+      {
+        "passed": true,
+        "name": "Three actual clients connect"
+      },
+      {
+        "passed": true,
+        "name": "A1 roster excludes operator and all clients share 2000 health"
+      },
+      {
+        "passed": true,
+        "name": "A2 native wall roof Sandbreak Seedship openings replicate"
+      },
+      {
+        "passed": true,
+        "name": "A3 square camera and two weapon profiles remain finite across orbit"
+      },
+      {
+        "passed": true,
+        "name": "A6 white-hot targets contrast with dark monochrome terrain and native occlusion"
+      },
+      {
+        "passed": true,
+        "name": "A4 four sites and raced Seedship pickup retain one owner"
+      },
+      {
+        "passed": true,
+        "name": "A4 fired drop recovery preserves reload and fixed damage"
+      },
+      {
+        "passed": true,
+        "name": "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup"
+      },
+      {
+        "passed": true,
+        "name": "A1 A4 reset restores four pristine sites and next deployment health"
+      },
+      {
+        "passed": true,
+        "name": "A1 A4 actual carrier departure recovers equipment without health resize"
+      },
+      {
+        "passed": true,
+        "name": "A3 A6 client owners clean up after replay and departure"
+      }
+    ],
+    "actualClients": 3,
+    "observations": [
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Skirt_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Prism_Roof_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.W.SE.02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"SB.R.06.03\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S02_Roof_01_01\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Heavy\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -1,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -2,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "Panel",
+        "userId": -3,
+        "detail": "{\"appearance\":\"Total\",\"id\":\"Outpost_S01_North_02\"}"
+      },
+      {
+        "action": "SquareFrames",
+        "userId": -2,
+        "detail": "{\"minimumUpY\":-0.7290420532226563,\"samples\":730}"
+      },
+      {
+        "action": "Camera",
+        "userId": -2,
+        "detail": "{\"fov\":30,\"start\":[0,0],\"finish\":[13.596169471740723,-70.67650604248047]}"
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Camera",
+        "userId": -2,
+        "detail": "{\"fov\":40,\"start\":[0,0],\"finish\":[-71.02383422851563,-12.097809791564942]}"
+      },
+      {
+        "action": "Select",
+        "userId": -2,
+        "detail": "[]"
+      },
+      {
+        "action": "Thermal",
+        "userId": -2,
+        "detail": "{\"sand\":[0.3490196168422699,0.2980392277240753,0.2078431397676468],\"grading\":{\"brightness\":-0.019999999552965165,\"saturation\":-1,\"contrast\":-0.15000000596046449},\"targets\":2,\"hiddenAircraftParts\":15,\"backdrop\":[0.14901961386203767,0.16470588743686677,0.1764705926179886],\"palette\":\"white-hot\"}"
+      },
+      {
+        "action": "AircraftMask",
+        "userId": -1,
+        "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+      },
+      {
+        "action": "AircraftMask",
+        "userId": -2,
+        "detail": "{\"aircraftParts\":15,\"hidden\":true}"
+      },
+      {
+        "action": "AircraftMask",
+        "userId": -3,
+        "detail": "{\"aircraftParts\":15,\"hidden\":false}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "ownerId": -3,
+        "launcherId": "launcher:1:Seedship",
+        "position": [
+          0,
+          5.599999904632568,
+          214
+        ]
+      },
+      {
+        "action": "EquipLauncher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -3,
+        "detail": "[]"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"health\":1900}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":1900}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":1900}"
+      },
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"health\":1900}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":1900}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":1900}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Observe",
+        "userId": -1,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Launcher",
+        "userId": -1,
+        "detail": "[]"
+      },
+      {
+        "action": "Observe",
+        "userId": -2,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "action": "Observe",
+        "userId": -3,
+        "detail": "{\"maximum\":2000,\"health\":2000}"
+      },
+      {
+        "method": "server-Kick",
+        "kind": "actual-carrier-departure",
+        "userId": -1,
+        "remainingClients": 2
+      },
+      {
+        "action": "Cleanup",
+        "userId": -2,
+        "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+      },
+      {
+        "action": "Cleanup",
+        "userId": -3,
+        "detail": "{\"restoredAircraftParts\":15,\"cleanup\":true}"
+      }
+    ],
+    "finalClients": 2,
+    "environment": "Studio",
+    "clientIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "suite": "P18-rebalancing",
+    "failed": 0,
+    "discovered": 11
+  },
+  "lastState": {
+    "phase": "Results",
+    "round": 1,
+    "clients": 3,
+    "args": {
+      "kind": "P18"
+    },
+    "ordinary": false,
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+    "stage": "A1 A4 reset restores four pristine sites and next deployment health",
+    "impact": false
+  }
+}

@@ -14,6 +14,8 @@ local CharacterOwner = {}
 export type Controller = {
     -- Requests anchor/role/round placement, coalescing repeated placement for the same generation.
     request: (string, string, number) -> (),
+    -- Releases the current Ground body after the roster is ready.
+    releaseGround: (number) -> (),
     clear: () -> (),
     stop: () -> (),
     resources: () -> { connections: number, spawnTasks: number },
@@ -50,6 +52,17 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
     end
     owner = {
         clear = clear,
+        releaseGround = function(roundId)
+            local request = desired
+            if not running or not request or request.roundId ~= roundId or request.role ~= "Ground" then
+                return
+            end
+            local character = player.Character
+            local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
+            if root and root:IsA("BasePart") then
+                root.Anchored = false
+            end
+        end,
         request = function(anchor, role, roundId)
             if not running then
                 return
@@ -150,10 +163,10 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                         collision(item)
                     end
                     table.insert(connections, character.DescendantAdded:Connect(collision))
+                    root.Anchored = request.role == "Gunship"
+                        or (request.role == "Ground" and match.snapshot().phase == "Deploying")
                     if request.role ~= "Ground" then
-                        -- Waiting players can walk around the protected lobby. Only
-                        -- the assigned operator is fixed at the placeholder station.
-                        root.Anchored = request.role == "Gunship"
+                        -- Waiting players can walk around the protected lobby.
                         local protection = Instance.new("ForceField")
                         protection.Name = "StationProtection"
                         protection.Visible = false
@@ -173,7 +186,8 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                         if state.roundId ~= request.roundId then
                             return
                         end
-                        if state.phase == "Active" and request.role == "Ground" then
+                        local inPlay = state.phase == "Scatter" or state.phase == "Active"
+                        if inPlay and request.role == "Ground" then
                             if died then
                                 match.eliminate(player.UserId, request.roundId)
                             else
@@ -185,10 +199,7 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                             return
                         end
                         characterLost = true
-                        if
-                            request.role == "Waiting"
-                            or (request.role == "Gunship" and state.phase == "Active")
-                        then
+                        if request.role == "Waiting" or (request.role == "Gunship" and inPlay) then
                             -- Protected body replacement preserves the current round life state.
                             desired = nil
                             owner.request(request.anchor, request.role, request.roundId)

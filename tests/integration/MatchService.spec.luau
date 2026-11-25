@@ -17,7 +17,7 @@ type Member = {
 type Snapshot = {
     roundId: number,
     revision: number,
-    phase: "Lobby" | "Deploying" | "Active" | "Results" | "Resetting",
+    phase: "Lobby" | "Deploying" | "Scatter" | "Active" | "Results" | "Resetting",
     deadlineSeconds: number,
     members: { [number]: Member },
     result: { winner: string, reason: string, userId: number?, weapon: string?, shotId: string? }?,
@@ -37,7 +37,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(not ok, "unsafe service seed accepted")
         end
     end)
-    local function fixture(count: number?, intermissionSeconds: number?)
+    local function fixture(count: number?, intermissionSeconds: number?, scatterSeconds: number?)
         local seconds = 100
         local released: { { id: number, roundId: number, recover: boolean } } = {}
         local service = Match.new({
@@ -45,6 +45,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             durationSeconds = 10,
             seed = 1,
             intermissionSeconds = intermissionSeconds,
+            scatterSeconds = scatterSeconds,
         }, {
             now = function()
                 return seconds
@@ -69,6 +70,130 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             seconds = value
         end, released
     end
+    test("P24 delayed readiness starts a full scatter clock and reveals exactly once at equality", function()
+        local service, _, setTime = fixture(2, 120, 20)
+        assert(service.deploy(), "deployment unavailable")
+        local roundId = service.snapshot().roundId
+        assert(service.ready(1, roundId), "first avatar not ready")
+        setTime(140)
+        assert(not service.activate(), "unready roster began scattering")
+        service.step()
+        assert(service.snapshot().deadlineSeconds == 0, "loading consumed the scatter interval")
+
+        assert(service.ready(2, roundId) and service.activate(), "ready roster did not begin scattering")
+        assert(
+            service.snapshot().phase == "Scatter" and service.snapshot().deadlineSeconds == 160,
+            "scatter did not begin at final readiness"
+        )
+        local function unexpectedDamage()
+            error("pre-arrival damage callback fired")
+        end
+        setTime(159.999)
+        assert(
+            not service.damageAllowed(roundId) and not service.proposeAircraftDestroyed(roundId),
+            "combat accepted before arrival"
+        )
+        service.step(unexpectedDamage)
+        assert(service.snapshot().phase == "Scatter", "arrival preceded the deadline")
+
+        setTime(160)
+        service.step(unexpectedDamage)
+        local revealed = service.snapshot()
+        assert(revealed.phase == "Active" and revealed.deadlineSeconds == 170, "full combat clock missing")
+        assert(service.damageAllowed(roundId), "fresh combat intent was blocked")
+        assert(not service.ready(2, roundId) and not service.activate(), "stale readiness reactivated roster")
+        service.step()
+        assert(service.snapshot().revision == revealed.revision, "second step revealed again")
+    end)
+    test("P24 a delayed arrival step still grants the full combat duration", function()
+        local service, deploy, setTime = fixture(2, nil, 20)
+        local scattering = deploy()
+        assert(scattering.phase == "Scatter" and scattering.deadlineSeconds == 120, "scatter did not start")
+        setTime(123.5)
+        service.step()
+        assert(service.snapshot().deadlineSeconds == 133.5, "delayed frame shortened combat")
+    end)
+    test("P24 a scatter reset drops one recoverable life and reconnect or late join cannot deploy", function()
+        local service, deploy, setTime, released = fixture(3, 120, 20)
+        local state = deploy()
+        local groundId = 0
+        for id, member in state.members do
+            if member.role == "Ground" then
+                groundId = id
+                break
+            end
+        end
+        setTime(105)
+        assert(service.characterRemoved(groundId, state.roundId), "reset did not consume a Ground life")
+        assert(service.eliminate(groundId, state.roundId), "confirmed death did not refine reset")
+        assert(not service.eliminate(groundId, state.roundId), "duplicate death consumed another life")
+        service.step()
+        service.step()
+        assert(#released == 1 and released[1].id == groundId and released[1].recover, "wrong recovery")
+        service.leave(groundId)
+        service.join(groundId)
+        service.join(4)
+        local after = service.snapshot()
+        assert(after.phase == "Scatter" and after.deadlineSeconds == 120, "roster changes moved arrival")
+        assert(
+            after.members[groundId].life == "Eliminated" and after.members[4].role == "Spectator",
+            "roster changes granted a new life"
+        )
+        assert(not service.ready(4, after.roundId), "late join accepted readiness")
+        assert(
+            not service.command(4, { action = "Surrender", roundId = after.roundId, sequence = 1 }),
+            "late join gained an action"
+        )
+        setTime(120)
+        service.step()
+        assert(service.snapshot().phase == "Active", "surviving roster did not reveal")
+        assert(#released == 1, "reveal released the same life again")
+    end)
+    test("P24 losing either side at arrival cancels reveal and permits a clean later round", function()
+        for _, expected in { "OperatorForfeit", "GroundDeparted", "GroundEliminated" } do
+            local service, deploy, setTime = fixture(2, 120, 20)
+            local state = deploy()
+            local role = if expected == "OperatorForfeit" then "Gunship" else "Ground"
+            local subject = 0
+            for id, member in state.members do
+                if member.role == role then
+                    subject = id
+                end
+            end
+            setTime(120)
+            if expected == "GroundEliminated" then
+                assert(service.eliminate(subject, state.roundId), "pre-arrival death was rejected")
+            else
+                service.leave(subject)
+            end
+            service.step(function()
+                error("terminal scatter ran damage")
+            end)
+            local ended = service.snapshot()
+            assert(
+                ended.phase == "Results" and ended.result and ended.result.reason == expected,
+                "scatter did not commit " .. expected
+            )
+            assert(ended.intermissionUntil == 240, "intermission was not anchored to the result")
+            assert(not service.damageAllowed(state.roundId), "canceled reveal opened combat")
+            assert(service.beginReset() and service.finishReset(), "reset failed")
+            service.join(subject)
+            setTime(239.999)
+            assert(not service.deploy(), "intermission was bypassed")
+            setTime(240)
+            local nextRound = deploy()
+            assert(
+                nextRound.roundId > state.roundId and nextRound.deadlineSeconds == 260,
+                "next scatter reused the old countdown"
+            )
+            service.step()
+            assert(
+                not service.abort(state.roundId, "Stale") and not service.ready(subject, state.roundId),
+                "old callbacks were accepted"
+            )
+            assert(service.snapshot().phase == "Scatter", "old-round work exposed the next aircraft")
+        end
+    end)
     test(
         "P23 committed round outcomes gate deployment until exactly 120 server seconds have elapsed",
         function()

@@ -23,6 +23,7 @@ if game:GetService("RunService"):IsStudio() then
         or manualMode == "Sandbreak"
         or manualMode == "P05"
         or manualMode == "P14"
+        or manualMode == "P24"
     then
         selectedClientMode = manualMode
     else
@@ -35,6 +36,7 @@ if game:GetService("RunService"):IsStudio() then
                 or args.kind == "P11"
                 or args.kind == "P19Profile"
                 or args.kind == "Sandbreak"
+                or args.kind == "P24"
             )
         then
             selectedClientMode = args.kind

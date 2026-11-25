@@ -1,0 +1,282 @@
+{
+  "sourceCommit": "6db1823fd151fa3b6cb487c60250f0da6745be2c",
+  "tree": "fa615c9783d26b402d7d6dc7cef4f6934b171787",
+  "buildSha256": "8838895d14ae4329ff42c3d58907f5f806770b62c4f4f7880bbbb3438a8f0a4b",
+  "version": "0.748.0.7481526",
+  "invocation": "ExecuteMultiplayerTestAsync(2,{kind=\"P24PhoneMotion\"})",
+  "motionPath": "real native avatar via local Humanoid:Move for 0.9s, in Studio iPhone 17 Pro emulation",
+  "ready": [
+    {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "player": -2,
+      "orientation": "Enum.ScreenOrientation.LandscapeSensor",
+      "phase": "Lobby",
+      "ready": true
+    },
+    {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "player": -1,
+      "orientation": "Enum.ScreenOrientation.LandscapeSensor",
+      "phase": "Lobby",
+      "ready": true
+    }
+  ],
+  "devices": [
+    {
+      "initial": "default",
+      "touch": true,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "logical": "750, 381",
+      "device": "iphone_17_pro"
+    },
+    {
+      "initial": "default",
+      "touch": true,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "logical": "750, 381",
+      "device": "iphone_17_pro"
+    }
+  ],
+  "scatter": [
+    {
+      "view": "OperatorArrival",
+      "textBounds": {
+        "1": 42.8800048828125,
+        "2": 154.5,
+        "3": 664.239990234375,
+        "4": 52
+      },
+      "blackout": true,
+      "role": "Gunship",
+      "deadline": 1795620378.601328,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Scatter",
+      "text": "C-130 arrives in 19",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -2,
+      "generation": 2,
+      "position": {
+        "1": 520,
+        "2": 3,
+        "3": -15
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": false,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    },
+    {
+      "view": "GroundScatter",
+      "textBounds": {
+        "1": 291,
+        "2": 66,
+        "3": 168,
+        "4": 24
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795620378.601328,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Scatter",
+      "text": "C-130 arrives in 19",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -1,
+      "generation": 2,
+      "position": {
+        "1": -20.000146865844727,
+        "2": 2.9980251789093018,
+        "3": 108.0000228881836
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": false,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    }
+  ],
+  "movement": {
+    "to": "C-130 arrives in 18",
+    "studs": 13.947632789611816,
+    "phase": "Scatter",
+    "frames": 13,
+    "readableFrames": 13,
+    "from": "C-130 arrives in 19",
+    "minimumDisplayedSeconds": 18,
+    "sameAvatar": true,
+    "touchEnabled": true
+  },
+  "active": [
+    {
+      "view": "Operator",
+      "textBounds": {
+        "1": 12,
+        "2": 66,
+        "3": 300,
+        "4": 38
+      },
+      "blackout": false,
+      "role": "Gunship",
+      "deadline": 1795620438.612713,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Active",
+      "text": "C-130 OPERATOR\n1:00 remaining • 1 Ground alive",
+      "aircraft": true,
+      "camera": "Enum.CameraType.Scriptable",
+      "feedback": "Starting the chosen roles.",
+      "player": -2,
+      "generation": 2,
+      "position": {
+        "1": 520,
+        "2": 3,
+        "3": -15
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": true,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    },
+    {
+      "view": "Ground",
+      "textBounds": {
+        "1": 12,
+        "2": 66,
+        "3": 570,
+        "4": 22
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795620438.612713,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Active",
+      "text": "1:00 remaining • 1 Ground alive",
+      "aircraft": true,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -1,
+      "generation": 2,
+      "position": {
+        "1": -6.000434875488281,
+        "2": 2.9980251789093018,
+        "3": 108.00047302246094
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": true,
+      "thermal": false,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    }
+  ],
+  "deviceRestore": [
+    {
+      "viewport": "1081, 653",
+      "touch": false,
+      "ok": true
+    },
+    {
+      "viewport": "1081, 653",
+      "touch": false,
+      "ok": true
+    }
+  ],
+  "cleanup": {
+    "smoke": {
+      "errors": 0,
+      "clientCount": 2,
+      "passed": 207,
+      "environment": "Studio",
+      "seed": 1,
+      "discovered": 207,
+      "suite": "P01-server",
+      "failed": 0,
+      "skipped": 0
+    },
+    "clients": 2,
+    "reason": "P24 phone movement inspection completed"
+  }
+}

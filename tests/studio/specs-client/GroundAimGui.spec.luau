@@ -260,15 +260,20 @@ return function()
         local owner = controllerModule.new(player, player.PlayerGui, state, function()
             return touch
         end)
-        local started, reason = owner.start()
-        assert(started, reason)
+        local originalRole = player:GetAttribute("Role")
+        local originalLife = player:GetAttribute("Life")
         local owned: ScreenGui? = nil
-        for _, child in player.PlayerGui:GetChildren() do
-            if not before[child] and child.Name == "GroundCombatHUD" and child:IsA("ScreenGui") then
-                owned = child
-            end
-        end
         local ok, failure = pcall(function()
+            state:SetAttribute("Phase", "Active")
+            player:SetAttribute("Role", "Ground")
+            player:SetAttribute("Life", "Alive")
+            local started, reason = owner.start()
+            assert(started, reason)
+            for _, child in player.PlayerGui:GetChildren() do
+                if not before[child] and child.Name == "GroundCombatHUD" and child:IsA("ScreenGui") then
+                    owned = child
+                end
+            end
             assert(owned, "controller did not create HUD")
             local status = owned:FindFirstChild("RifleStatus")
             local fire = owned:FindFirstChild("Fire")
@@ -305,11 +310,75 @@ return function()
                     "launcher status failed to follow input mode"
                 )
             end
+            touch = true
+            state:SetAttribute("Phase", "Scatter")
+            runService.RenderStepped:Wait()
+            runService.RenderStepped:Wait()
+            assert(owned.Enabled and launcherStatus.Visible, "Scatter hid the launcher HUD")
+            assert(not fire.Visible and not reload.Visible, "Scatter exposed weapon controls")
+            assert(status.Text == "Weapons unlock at aircraft arrival", "Scatter readiness text missing")
         end)
         owner.stop()
         owner.stop()
+        player:SetAttribute("Role", originalRole)
+        player:SetAttribute("Life", originalLife)
         state:Destroy()
         assert(not owned or owned.Parent == nil, "controller stop retained HUD")
+        assert(ok, tostring(failure))
+    end)
+    test("P24 stopping a temporary arrival owner leaves the existing countdown rendering", function()
+        local player = game:GetService("Players").LocalPlayer
+        local runService = game:GetService("RunService")
+        local arrival = require(player.PlayerScripts.Client.AircraftArrival)
+        local oldMarker = player:GetAttribute("OperatorArrivalRoundId")
+        local state = Instance.new("Folder")
+        local first: arrival.Controller? = nil
+        local temporary: arrival.Controller? = nil
+        local ok, failure = pcall(function()
+            local previous: { [Instance]: boolean } = {}
+            for _, child in player.PlayerGui:GetChildren() do
+                previous[child] = true
+            end
+            local roundId = 7924
+            state:SetAttribute("RoundId", roundId)
+            state:SetAttribute("Phase", "Deploying")
+            player:SetAttribute("OperatorArrivalRoundId", roundId)
+            local function pending(): boolean
+                return false
+            end
+            first = arrival.start(player, player.PlayerGui, state, pending)
+            local source: ScreenGui? = nil
+            for _, child in player.PlayerGui:GetChildren() do
+                if not previous[child] and child.Name == "AircraftArrival" and child:IsA("ScreenGui") then
+                    source = child
+                end
+            end
+            assert(source and source.Enabled, "original arrival screen did not arm")
+            local cover = assert(source:FindFirstChild("Blackout"), "original blackout missing")
+            local label = cover:FindFirstChild("Countdown")
+            assert(label and label:IsA("TextLabel"), "original countdown missing")
+            assert(label.Text == "Preparing deployment", "assignment cover did not paint immediately")
+            local overlapping = arrival.start(player, player.PlayerGui, state, pending)
+            temporary = overlapping
+            overlapping.stop()
+            state:SetAttribute("DeadlineSeconds", workspace:GetServerTimeNow() + 8)
+            state:SetAttribute("Phase", "Scatter")
+            runService.RenderStepped:Wait()
+            runService.RenderStepped:Wait()
+            local rendered = tonumber(label.Text:match("^C%-130 arrives in (%d+)$"))
+            assert(
+                rendered and rendered >= 7 and rendered <= 8,
+                "stopping a temporary HUD stopped the first countdown"
+            )
+        end)
+        if temporary then
+            temporary.stop()
+        end
+        if first then
+            first.stop()
+        end
+        player:SetAttribute("OperatorArrivalRoundId", oldMarker)
+        state:Destroy()
         assert(ok, tostring(failure))
     end)
     test(

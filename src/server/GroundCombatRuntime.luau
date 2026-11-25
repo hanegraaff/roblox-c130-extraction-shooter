@@ -64,6 +64,7 @@ export type Controller = {
     -- Synchronizes equipment, cosmetics and health with the committed phase.
     maintain: (number) -> (),
     -- Shared movement/origin authority for equipped launcher fire and pickup.
+    -- Validates a living Ground body in Scatter or before the combat deadline.
     validateGround: (Player) -> boolean,
     -- Only a trusted server owner may acknowledge its own spawn/correction.
     trustCorrection: (Player) -> boolean,
@@ -163,13 +164,15 @@ function GroundCombatRuntime.start(
         aircraftState:SetAttribute("MaxHealth", state.maximum)
         aircraftState:SetAttribute("Destroyed", state.destroyed)
     end
-    local function active(player: Player, now: number): boolean
+    local function eligible(player: Player, now: number, allowScatter: boolean): boolean
         local state = match.snapshot()
         local member = state.members[player.UserId]
         local character = player.Character
         local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
-        return state.phase == "Active"
-            and now < state.deadlineSeconds
+        return (
+            (allowScatter and state.phase == "Scatter")
+            or (state.phase == "Active" and now < state.deadlineSeconds)
+        )
             and member ~= nil
             and member.connected
             and member.role == "Ground"
@@ -300,6 +303,7 @@ function GroundCombatRuntime.start(
     ): (Vector3?, boolean, Vector3?, Enum.Material?, boolean?)
         if
             not running
+            or not match.damageAllowed(roundId)
             or displacement.Magnitude <= 0
             or displacement.Magnitude > 1200
             or origin.Magnitude ~= origin.Magnitude
@@ -452,7 +456,7 @@ function GroundCombatRuntime.start(
                 observe(player, "rate", now)
                 return
             end
-            if not active(player, now) or #pendingRifles >= GroundCombatRuntime.queueCapacity then
+            if not eligible(player, now, false) or #pendingRifles >= GroundCombatRuntime.queueCapacity then
                 observe(player, "inactive", now)
                 return
             end
@@ -507,7 +511,7 @@ function GroundCombatRuntime.start(
             local now = workspace:GetServerTimeNow()
             if
                 spendBudget(player, now)
-                and active(player, now)
+                and eligible(player, now, false)
                 and ownedEquipped(player)
                 and rifles.reload(player.UserId, payload, true, now)
             then
@@ -579,13 +583,13 @@ function GroundCombatRuntime.start(
             if
                 member
                 and member.role == "Ground"
-                and (state.phase == "Deploying" or state.phase == "Active")
+                and (state.phase == "Deploying" or state.phase == "Scatter" or state.phase == "Active")
             then
                 track(player, now, false)
             else
                 movement[player] = nil
             end
-            if active(player, now) then
+            if eligible(player, now, true) then
                 ensureTool(player)
                 publishRifle(player, now)
             else
@@ -618,7 +622,7 @@ function GroundCombatRuntime.start(
         end,
         validateGround = function(player)
             local now = workspace:GetServerTimeNow()
-            if not running or not active(player, now) or not track(player, now, false) then
+            if not running or not eligible(player, now, true) or not track(player, now, false) then
                 return false
             end
             local character = player.Character

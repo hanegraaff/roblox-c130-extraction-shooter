@@ -12,6 +12,7 @@ local UserInputService = game:GetService("UserInputService")
 local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
+local AircraftArrival = require(script.Parent.AircraftArrival)
 local ThermalCameraController = require(script.Parent.ThermalCameraController)
 local PresentationEffects = require(script.Parent.PresentationEffects)
 local WeaponAudio = require(script.Parent.WeaponAudio)
@@ -234,6 +235,7 @@ function RoundPanel.new(
                 "↑ ↓ select  •  ← → change  •  P close\n\nEffects change cue motion and sound. Shake applies only after aircraft destruction."
 
             local thermal = ThermalCameraController.new(player, playerGui, state, inputProvider)
+            local arrival = AircraftArrival.start(player, playerGui, state, thermal.ready)
             local spectator = SpectatorCamera.new(player)
             local theater = TheaterSpectating.new(player)
             local effects = PresentationEffects.new(player)
@@ -270,7 +272,7 @@ function RoundPanel.new(
             end
 
             local function toggleSettings()
-                if touchEnabled() then
+                if touchEnabled() or arrival.blocking() then
                     return
                 end
                 settingsOpen = not settingsOpen
@@ -324,7 +326,7 @@ function RoundPanel.new(
                 view = nextView
                 gui:SetAttribute("View", view)
                 label.Visible = not (view == "RoundLobby" and theaterInReach)
-                settingsButton.Visible = not touch
+                settingsButton.Visible = not touch and not arrival.blocking()
                 local title = PlayerPresentation.title(view, life == "Eliminated")
 
                 local active = phase == "Active"
@@ -332,10 +334,13 @@ function RoundPanel.new(
                 local intermission =
                     PlayerPresentation.remaining(state:GetAttribute("IntermissionUntil"), serverSeconds)
                 local effectScale = PlayerPresentation.intensity(options.effects)
-                local audioPhase = if type(phase) == "string" then phase else ""
+                local audioPhase = if active and arrival.blocking()
+                    then "Scatter"
+                    elseif type(phase) == "string" then phase
+                    else ""
                 weaponAudio.update(roundId, audioPhase, effectScale, serverSeconds)
                 weaponImpacts.update(roundId, audioPhase, effectScale, view == "Operator", serverSeconds)
-                local compact = touch and view == "Ground"
+                local compact = touch and (view == "Ground" or view == "GroundScatter")
                 local activeDetail = ""
                 if active then
                     local seconds =
@@ -390,7 +395,16 @@ function RoundPanel.new(
                     label.Position = UDim2.fromOffset(12, 8)
                     label.Size = UDim2.fromOffset(if touch then 230 else 260, 42)
                     label.TextSize = 14
-                    label.Text = title .. "\nVisit the theater TV to spectate"
+                    label.Text = if active then title .. "\nVisit the theater TV to spectate" else title
+                elseif view == "GroundScatter" then
+                    -- Keep the arrival clock between native team chat and
+                    -- the right-aligned Surrender action in the HUD safe area.
+                    label.AnchorPoint = Vector2.new(0.5, 0)
+                    label.Position = UDim2.new(0.5, 0, 0, 8)
+                    label.Size = UDim2.fromOffset(if compact then 168 else 184, if compact then 24 else 36)
+                    label.TextSize = if compact then 14 else 16
+                    label.Text =
+                        PlayerPresentation.arrivalText(state:GetAttribute("DeadlineSeconds"), serverSeconds)
                 elseif active or thermal.ownsCamera() then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
@@ -411,7 +425,7 @@ function RoundPanel.new(
                         ) .. " players"
                         else title
                 end
-                surrender.Visible = view == "Ground"
+                surrender.Visible = view == "Ground" or view == "GroundScatter"
                 surrender.Size = UDim2.fromOffset(150, if compact then 32 else 36)
 
                 local reason: string? = nil
@@ -496,7 +510,12 @@ function RoundPanel.new(
                 connections,
                 surrender.Activated:Connect(function()
                     local remote = state:FindFirstChild("Surrender")
-                    if view == "Ground" and not settingsOpen and remote and remote:IsA("RemoteEvent") then
+                    if
+                        (view == "Ground" or view == "GroundScatter")
+                        and not settingsOpen
+                        and remote
+                        and remote:IsA("RemoteEvent")
+                    then
                         sequence += 1
                         remote:FireServer({ roundId = oldRoundId, sequence = sequence, action = "Surrender" })
                     end
@@ -548,6 +567,7 @@ function RoundPanel.new(
                 effects.stop()
                 weaponAudio.stop()
                 weaponImpacts.stop()
+                arrival.stop()
                 thermal.stop()
                 theater.stop()
                 spectator.stop()

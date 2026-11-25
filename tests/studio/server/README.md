@@ -8,7 +8,9 @@ Read `workspace:GetAttribute("ServerTestReport")` in the **server** context. Its
 
 Follow the [run and restart procedure](../../../docs/testing.md#run-the-studio-smoke-suites). The release mapping excludes this runner, all specs, fixtures and TestEZ.
 
-After TestEZ passes, `RoundHarness.run()` starts the actual GameRuntime. Without automation args it starts the human test session (default next duration: 60 seconds, explicit start, solo previews). With StudioTestService args `{ kind = "P03" }`, it drives the three-round multiplayer scenario and returns structured evidence through `EndTest`. Its test transport and shortened settings never enter release artifacts. See the [harness instructions](../../../docs/testing.md#run-the-p03-multiplayer-harness) for required actual clients and reports.
+After TestEZ passes, `RoundHarness.run()` starts the actual GameRuntime. Without automation args it starts the human test session with explicit starts, solo previews, 20 seconds of Scatter and a default 60-second combat duration. With StudioTestService args `{ kind = "P03" }`, it drives the three-round multiplayer scenario and returns structured evidence through `EndTest`. Its test transport and shortened settings are excluded from release artifacts. [P03 harness instructions](../../../docs/testing.md#run-the-p03-multiplayer-harness)
+
+`{ kind = "P24" }` or the local Edit `ManualHarness = "P24"` delegates to `AircraftArrivalHarness.run(automated)`. It waits for two actual clients and both smoke reports, then exercises the production 20-second Scatter interval twice with roles reversed. It observes world queries, launcher transfer, rejected early requests, a fresh 600-second combat clock, a direct rocket collision and fresh operator fire. A third deployment checks that a Ground death cancels arrival. It publishes `Workspace.P24MultiplayerReport` and returns it through `EndTest` in SDK mode. [P24 launch and reports](../../../docs/testing.md#run-the-p24-aircraft-arrival-harness)
 
 P10 selects `PlayerExperienceHarness.run()` through SDK args
 `{ kind = "P10" }` or the local Edit `ManualHarness` selector. It requires

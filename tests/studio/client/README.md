@@ -10,6 +10,8 @@ Use the [Studio procedure](../../../docs/testing.md#run-the-studio-smoke-suites)
 
 After the foundational specs, `RoundHarness.run()` discovers the test-only round transport for P03 and P23. Probes compare the actual local role, life, combat and intermission deadlines, HUD, and camera subject. They exercise the production TV prompt and exit control, send surrender intent and use StudioTestService for test departure. The listener disconnects when the transport is removed. [P23 procedure and operated checks](../../../docs/testing.md#run-the-p23-lobby-and-intermission-harness)
 
+`AircraftArrivalHarness.run()` reports each actual P24 client's role, countdown, HUD and camera against server timing. It samples the operator's blackout every frame from assignment through Scatter and checks viewport coverage in native GUI coordinates. Probes move the Ground avatar, send production remote requests and observe the matching aircraft and role presentation at reveal. Owned render bindings and the listener release with the transport. An operated session separately checks the rendered countdown and native controls on desktop and touch. [P24 procedure](../../../docs/testing.md#run-the-p24-aircraft-arrival-harness)
+
 `MatchOutcomeHarness.run()` discovers the test-only P09 transport after ordinary TestEZ. It sends production weapon and launcher intent and checks the current client's result payload, HUD text, camera mode and subject, loadout and aircraft zoom through replay. It disconnects when the transport is removed. Manual P09 selects this listener alone. [P09 scenario procedure](../../../docs/testing.md#run-the-p09-match-outcome-harness)
 
 `PlayerExperienceHarness.run()` starts after passing client TestEZ when the

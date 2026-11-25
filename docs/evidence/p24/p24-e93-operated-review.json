@@ -1,0 +1,1089 @@
+{
+  "sourceCommit": "e93ae0eb1fb529ab67ad49f1f82aff4c31b8359b",
+  "version": "0.748.0.7481526",
+  "scenario": "two actual Studio clients, ordinary StudioTestPanel round and production UI, desktop then iPhone 17 Pro landscape",
+  "sdk": "ExecuteMultiplayerTestAsync(2,{kind='P24Operated'})",
+  "desktopStart": {
+    "click": {
+      "y": 491,
+      "x": 926,
+      "button": "Start round now (2+ clients)"
+    }
+  },
+  "desktopScatter": [
+    {
+      "view": "GroundScatter",
+      "textBounds": {
+        "1": 448.5,
+        "2": 66,
+        "3": 184,
+        "4": 36
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795618661.322171,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": false,
+      "phase": "Scatter",
+      "text": "C-130 arrives in 19",
+      "life": "Alive",
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -1,
+      "aircraft": false,
+      "generation": 2,
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": 0,
+        "2": 0,
+        "3": 1081,
+        "4": 653,
+        "5": 0
+      }
+    },
+    {
+      "view": "OperatorArrival",
+      "textBounds": {
+        "1": 129.72000122070312,
+        "2": 300.5,
+        "3": 821.5599975585938,
+        "4": 52
+      },
+      "blackout": true,
+      "role": "Gunship",
+      "deadline": 1795618661.322171,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": false,
+      "phase": "Scatter",
+      "text": "C-130 arrives in 19",
+      "life": "Alive",
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -2,
+      "aircraft": false,
+      "generation": 2,
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": 0,
+        "2": 0,
+        "3": 1081,
+        "4": 653,
+        "5": 0
+      }
+    }
+  ],
+  "desktopMovement": {
+    "phase": "Scatter",
+    "studs": 8.525773048400879,
+    "key": "Enum.KeyCode.W",
+    "label": "C-130 arrives in 18"
+  },
+  "desktopAfterMove": [
+    {
+      "view": "GroundScatter",
+      "textBounds": {
+        "1": 448.5,
+        "2": 66,
+        "3": 184,
+        "4": 36
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795618661.322171,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": false,
+      "life": "Alive",
+      "phase": "Scatter",
+      "text": "C-130 arrives in 17",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -1,
+      "generation": 2,
+      "position": {
+        "1": -19.381078720092773,
+        "2": 2.9980251789093018,
+        "3": 99.50511932373047
+      },
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": 0,
+        "2": 0,
+        "3": 1081,
+        "4": 653,
+        "5": 0
+      }
+    },
+    {
+      "view": "OperatorArrival",
+      "textBounds": {
+        "1": 129.72000122070312,
+        "2": 300.5,
+        "3": 821.5599975585938,
+        "4": 52
+      },
+      "blackout": true,
+      "role": "Gunship",
+      "deadline": 1795618661.322171,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": false,
+      "life": "Alive",
+      "phase": "Scatter",
+      "text": "C-130 arrives in 17",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -2,
+      "generation": 2,
+      "position": {
+        "1": 520,
+        "2": 3,
+        "3": -15
+      },
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": 0,
+        "2": 0,
+        "3": 1081,
+        "4": 653,
+        "5": 0
+      }
+    }
+  ],
+  "desktopActive": [
+    {
+      "view": "Ground",
+      "textBounds": {
+        "1": 12,
+        "2": 66,
+        "3": 300,
+        "4": 38
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795618721.331617,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": false,
+      "life": "Alive",
+      "phase": "Active",
+      "text": "GROUND TEAM\n1:00 remaining • 1 Ground alive",
+      "aircraft": true,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -1,
+      "generation": 2,
+      "position": {
+        "1": -19.381078720092773,
+        "2": 2.9980251789093018,
+        "3": 99.50511932373047
+      },
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": 0,
+        "2": 0,
+        "3": 1081,
+        "4": 653,
+        "5": 0
+      }
+    },
+    {
+      "view": "Operator",
+      "textBounds": {
+        "1": 12,
+        "2": 66,
+        "3": 300,
+        "4": 38
+      },
+      "blackout": false,
+      "role": "Gunship",
+      "deadline": 1795618721.331617,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": false,
+      "life": "Alive",
+      "phase": "Active",
+      "text": "C-130 OPERATOR\n1:00 remaining • 1 Ground alive",
+      "aircraft": true,
+      "camera": "Enum.CameraType.Scriptable",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -2,
+      "generation": 2,
+      "position": {
+        "1": 520,
+        "2": 3,
+        "3": -15
+      },
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "fire": false,
+      "thermal": true,
+      "cover": {
+        "1": 0,
+        "2": 0,
+        "3": 1081,
+        "4": 653,
+        "5": 0
+      }
+    }
+  ],
+  "poseSamples": [
+    {
+      "cameraPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "currentDelta": 0,
+      "blackout": true,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 1,
+      "partPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "projectionAge": 0.00006312500045169145
+    },
+    {
+      "cameraPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0,
+      "frame": 1,
+      "partPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "projectionAge": 0.022745833335648058
+    },
+    {
+      "cameraPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 2,
+      "partPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "projectionAge": 0.000011208332580281422
+    },
+    {
+      "cameraPosition": [
+        359.9997253417969,
+        140,
+        0.4369567036628723
+      ],
+      "currentDelta": 2.9334304332733154,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 2.9334304332733154,
+      "frame": 2,
+      "partPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "projectionAge": 0.006933791668416234
+    },
+    {
+      "cameraPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 3,
+      "partPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "projectionAge": 0.000012416665413184091
+    },
+    {
+      "cameraPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0,
+      "frame": 3,
+      "partPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "projectionAge": 0.008199791664083023
+    },
+    {
+      "cameraPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 4,
+      "partPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "projectionAge": 0.000011249998351559043
+    },
+    {
+      "cameraPosition": [
+        359.9842224121094,
+        140,
+        3.3703463077545166
+      ],
+      "currentDelta": 0.8308899998664856,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0.8308899998664856,
+      "frame": 4,
+      "partPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "projectionAge": 0.013481999998475658
+    },
+    {
+      "cameraPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 5,
+      "partPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "projectionAge": 0.000012041666195727885
+    },
+    {
+      "cameraPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0,
+      "frame": 5,
+      "partPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "projectionAge": 0.015638291668437887
+    },
+    {
+      "cameraPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 6,
+      "partPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "projectionAge": 0.000010083334927912802
+    },
+    {
+      "cameraPosition": [
+        359.9754943847656,
+        140,
+        4.20119047164917
+      ],
+      "currentDelta": 0.82817542552948,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0.82817542552948,
+      "frame": 6,
+      "partPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "projectionAge": 0.01765483333656448
+    },
+    {
+      "cameraPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 7,
+      "partPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "projectionAge": 0.000013124998076818883
+    },
+    {
+      "cameraPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0,
+      "frame": 7,
+      "partPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "projectionAge": 0.016364958330086665
+    },
+    {
+      "cameraPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 8,
+      "partPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "projectionAge": 0.000011583331797737628
+    },
+    {
+      "cameraPosition": [
+        359.9648742675781,
+        140,
+        5.029297828674316
+      ],
+      "currentDelta": 0.843755304813385,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0.843755304813385,
+      "frame": 8,
+      "partPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "projectionAge": 0.015656291663617594
+    },
+    {
+      "cameraPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 9,
+      "partPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "projectionAge": 0.00001183333370136097
+    },
+    {
+      "cameraPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0,
+      "frame": 9,
+      "partPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "projectionAge": 0.017208375000336673
+    },
+    {
+      "cameraPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 10,
+      "partPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "projectionAge": 0.0000117083327495493
+    },
+    {
+      "cameraPosition": [
+        359.95208740234375,
+        140,
+        5.872956275939941
+      ],
+      "currentDelta": 0.8464457392692566,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0.8464457392692566,
+      "frame": 10,
+      "partPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "projectionAge": 0.01681987499978277
+    },
+    {
+      "cameraPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 11,
+      "partPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "projectionAge": 0.000012458331184461713
+    },
+    {
+      "cameraPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0,
+      "frame": 11,
+      "partPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "projectionAge": 0.016540791664738208
+    },
+    {
+      "cameraPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "currentDelta": 0,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "renderEvent",
+      "sampleDelta": 0,
+      "frame": 12,
+      "partPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "projectionAge": 0.00001049999991664663
+    },
+    {
+      "cameraPosition": [
+        359.9372863769531,
+        140,
+        6.719272613525391
+      ],
+      "currentDelta": 0.8397825956344604,
+      "blackout": false,
+      "frameAgreement": true,
+      "where": "lateBind",
+      "sampleDelta": 0.8397825956344604,
+      "frame": 12,
+      "partPosition": [
+        359.9206237792969,
+        140,
+        7.558889865875244
+      ],
+      "projectionAge": 0.015520458335231524
+    }
+  ],
+  "mobileDevice": [
+    {
+      "initial": "default",
+      "touch": true,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "logical": "750, 381",
+      "device": "iphone_17_pro"
+    },
+    {
+      "initial": "default",
+      "touch": true,
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "logical": "750, 381",
+      "device": "iphone_17_pro"
+    }
+  ],
+  "phoneStart": {
+    "click": {
+      "y": 219,
+      "x": 595,
+      "button": "Start round now (2+ clients)"
+    },
+    "fallback": {
+      "sent": true
+    }
+  },
+  "phoneScatter": [
+    {
+      "view": "GroundScatter",
+      "textBounds": {
+        "1": 291,
+        "2": 66,
+        "3": 168,
+        "4": 24
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795618694.323143,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "phase": "Scatter",
+      "text": "C-130 arrives in 19",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -1,
+      "generation": 3,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      }
+    },
+    {
+      "view": "OperatorArrival",
+      "textBounds": {
+        "1": 42.8800048828125,
+        "2": 154.5,
+        "3": 664.239990234375,
+        "4": 52
+      },
+      "blackout": true,
+      "role": "Gunship",
+      "deadline": 1795618694.323143,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "phase": "Scatter",
+      "text": "C-130 arrives in 19",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -2,
+      "generation": 3,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": false,
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      }
+    }
+  ],
+  "phoneMovement": {
+    "error": "sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Tools.ExecuteLuauTool:101: sabuiltin_Assistant.rbxm.Assistant.Packages._Index.AssistantUI.AssistantUI.Util.CommandExecution:54: AssistantCommand:1: attempt to index nil with 'HumanoidRootPart'"
+  },
+  "phoneAfterMove": [
+    {
+      "view": "GroundScatter",
+      "textBounds": {
+        "1": 291,
+        "2": 66,
+        "3": 168,
+        "4": 24
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795618694.323143,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Scatter",
+      "text": "C-130 arrives in 18",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -1,
+      "generation": 3,
+      "position": {
+        "1": -20,
+        "2": 2.9980251789093018,
+        "3": 108
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": false,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    },
+    {
+      "view": "OperatorArrival",
+      "textBounds": {
+        "1": 42.8800048828125,
+        "2": 154.5,
+        "3": 664.239990234375,
+        "4": 52
+      },
+      "blackout": true,
+      "role": "Gunship",
+      "deadline": 1795618694.323143,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Scatter",
+      "text": "C-130 arrives in 18",
+      "aircraft": false,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -2,
+      "generation": 3,
+      "position": {
+        "1": 520,
+        "2": 3,
+        "3": -15
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": false,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    }
+  ],
+  "phoneActive": [
+    {
+      "view": "Ground",
+      "textBounds": {
+        "1": 12,
+        "2": 66,
+        "3": 570,
+        "4": 22
+      },
+      "blackout": false,
+      "role": "Ground",
+      "deadline": 1795618874.330853,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Active",
+      "text": "3:00 remaining • 1 Ground alive",
+      "aircraft": true,
+      "camera": "Enum.CameraType.Custom",
+      "feedback": "Starting the chosen roles.",
+      "player": -1,
+      "generation": 3,
+      "position": {
+        "1": -20,
+        "2": 2.9980251789093018,
+        "3": 108
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": true,
+      "thermal": false,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    },
+    {
+      "view": "Operator",
+      "textBounds": {
+        "1": 12,
+        "2": 66,
+        "3": 300,
+        "4": 38
+      },
+      "blackout": false,
+      "role": "Gunship",
+      "deadline": 1795618874.330853,
+      "fits": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "touch": true,
+      "life": "Alive",
+      "cover": {
+        "1": -62,
+        "2": -20,
+        "3": 874,
+        "4": 401,
+        "5": 0
+      },
+      "phase": "Active",
+      "text": "C-130 OPERATOR\n3:00 remaining • 1 Ground alive",
+      "aircraft": true,
+      "camera": "Enum.CameraType.Scriptable",
+      "feedback": "Solo Play previews the map. Real rounds need two clients.",
+      "player": -2,
+      "generation": 3,
+      "position": {
+        "1": 520,
+        "2": 3,
+        "3": -15
+      },
+      "viewport": {
+        "1": 750,
+        "2": 381
+      },
+      "fire": false,
+      "thermal": true,
+      "thumb": {
+        "1": -100,
+        "2": 165.6666717529297,
+        "3": 400,
+        "4": 315.3333435058594
+      }
+    }
+  ],
+  "deviceRestore": [
+    {
+      "viewport": "1081, 653",
+      "touch": false,
+      "ok": true
+    },
+    {
+      "viewport": "1081, 653",
+      "touch": false,
+      "ok": true
+    }
+  ],
+  "cleanup": {
+    "serverSmoke": {
+      "errors": 0,
+      "clientCount": 2,
+      "passed": 207,
+      "environment": "Studio",
+      "seed": 1,
+      "discovered": 207,
+      "suite": "P01-server",
+      "failed": 0,
+      "skipped": 0
+    },
+    "clients": 2,
+    "reason": "P24 operated review complete"
+  }
+}

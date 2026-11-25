@@ -3,7 +3,8 @@
     LauncherRuntime: server engine/network owner of the four landmark launchers.
     Depends on MatchService, P06 ground movement/origin/rocket authority, level geometry
     and LauncherService. Intents are bounded/rate-limited, then processed atomically
-    after the authoritative frame's outcome commit. Results/deadline beat transfers.
+    after the authoritative frame's outcome commit. Scatter permits transfers
+    while only Active admits and resolves Fire. Results/deadline beat transfers.
     Rockets sweep pre-impact solids and may outlive their shooter only while the
     round remains Active. stop invalidates work and destroys all owned
     transport, tools, pickup and flights. No gameplay callback yields.
@@ -119,15 +120,15 @@ function LauncherRuntime.start(
         local item = if anchors then anchors:FindFirstChild("Launcher" .. slot.site) else nil
         return if item and item:IsA("BasePart") then item.Position else nil
     end
-    local function active(now: number): boolean
-        local round = match.snapshot()
-        return running and round.phase == "Active" and now < round.deadlineSeconds
+    local function combatOpen(round: MatchService.Snapshot, now: number): boolean
+        return round.phase == "Active" and now < round.deadlineSeconds
     end
-    local function eligible(player: Player, now: number): boolean
+    local function eligible(player: Player, now: number, allowScatter: boolean): boolean
         local round = match.snapshot()
         local member = round.members[player.UserId]
         local humanoid = if player.Character then player.Character:FindFirstChildOfClass("Humanoid") else nil
-        return active(now)
+        return running
+            and ((allowScatter and round.phase == "Scatter") or combatOpen(round, now))
             and player.Parent == Players
             and member ~= nil
             and member.connected
@@ -214,7 +215,7 @@ function LauncherRuntime.start(
         if
             not slot.held
             or slot.held.Parent ~= player.Character
-            or not slot.rules.preflight(player.UserId, payload, "Fire", eligible(player, now), now)
+            or not slot.rules.preflight(player.UserId, payload, "Fire", eligible(player, now, false), now)
             or not ground.validateGround(player)
         then
             return
@@ -272,7 +273,7 @@ function LauncherRuntime.start(
     end
     local function process(slot: Slot, request: Request, now: number)
         local player, action, payload = request.player, request.action, request.payload
-        if not eligible(player, now) then
+        if not eligible(player, now, action ~= "Fire") then
             return
         end
         if action == "Pickup" then
@@ -322,6 +323,7 @@ function LauncherRuntime.start(
         represent(slot, now)
     end
     for _, action in { "Pickup", "Drop", "Fire" } do
+        local fireOnly = action == "Fire"
         local remote = Instance.new("RemoteEvent")
         remote.Name, remote.Parent = action, state
         table.insert(
@@ -333,10 +335,13 @@ function LauncherRuntime.start(
                     bucket = assert(RateLimit.new(8, 6, now))
                     buckets[player] = bucket
                 end
+                -- Pre-arrival Fire cannot enter the queue and become valid
+                -- when this frame's Scatter step opens combat.
                 if
                     not RateLimit.take(bucket, now)
                     or not Validation.flatPayload(payload, 6, 64)
                     or #pending >= LauncherRuntime.queueCapacity
+                    or (fireOnly and not combatOpen(match.snapshot(), now))
                 then
                     return
                 end
@@ -358,7 +363,7 @@ function LauncherRuntime.start(
         local round = match.snapshot()
         for index = #flights, 1, -1 do
             local flight = flights[index]
-            if not active(now) or round.roundId ~= flight.roundId then
+            if not combatOpen(round, now) or round.roundId ~= flight.roundId then
                 flight.part:Destroy()
                 table.remove(flights, index)
             else
@@ -428,7 +433,11 @@ function LauncherRuntime.start(
             return
         end
         local current = match.snapshot()
-        if current.phase ~= "Deploying" and not active(tickNow) then
+        if
+            current.phase ~= "Deploying"
+            and current.phase ~= "Scatter"
+            and not combatOpen(current, tickNow)
+        then
             for _, slot in slots do
                 slot.rules.clear()
                 destroyRepresentation(slot)
@@ -457,7 +466,7 @@ function LauncherRuntime.start(
         for _, slot in slots do
             local snapshot = slot.rules.snapshot(tickNow)
             local carrier = if snapshot.ownerId then Players:GetPlayerByUserId(snapshot.ownerId) else nil
-            if snapshot.ownerId and (not carrier or not eligible(carrier, tickNow)) then
+            if snapshot.ownerId and (not carrier or not eligible(carrier, tickNow, true)) then
                 recover(slot, snapshot.ownerId)
             elseif carrier and tickNow - slot.lastSample >= 0.1 then
                 slot.lastSample = tickNow

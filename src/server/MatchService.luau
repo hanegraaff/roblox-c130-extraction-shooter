@@ -3,6 +3,7 @@
     MatchService: server-only deterministic round/roster owner. Depends on RoleService,
     RoundRules and an injected monotonic clock. No Instances, transport or yielding.
     All queued work carries round IDs. State leaves this module only as fresh snapshots.
+    Ready deployments start the Ground scatter clock separately from combat.
     The adapter submits damage in step. Deadline, damage, outcomes and cleanup use
     one captured server time; departures become competitive facts after damage.
 ]=]
@@ -13,7 +14,7 @@ local RoundRules = (
 ) :: typeof(require(script.Parent.RoundRules))
 local MatchService = {}
 
-export type Phase = "Lobby" | "Deploying" | "Active" | "Results" | "Resetting"
+export type Phase = "Lobby" | "Deploying" | "Scatter" | "Active" | "Results" | "Resetting"
 -- Optional server-derived credit identifies the operator or lethal aircraft hit.
 export type Result = { winner: string, reason: string, userId: number?, weapon: string?, shotId: string? }
 -- Server-resolved attribution for the direct hit that reduced aircraft health to zero.
@@ -26,7 +27,8 @@ export type Member = {
     ready: boolean,
     sequence: number,
 }
--- Round IDs never repeat within one owner; revisions increase on every accepted mutation.
+-- Round IDs never repeat within one owner; revisions increase on accepted mutation.
+-- DeadlineSeconds holds the current phase's deadline in monotonic server seconds.
 export type Snapshot = {
     roundId: number,
     revision: number,
@@ -36,25 +38,27 @@ export type Snapshot = {
     members: { [number]: Member },
     result: Result?,
 }
--- An omitted intermission is for fast standalone service and Studio fixtures.
+-- Omitted intermission and scatter durations are for short standalone fixtures.
 export type Settings = {
     minimumPlayers: number,
     durationSeconds: number,
     seed: number,
     intermissionSeconds: number?,
+    scatterSeconds: number?,
 }
--- releaseLife runs at most once per active life, with false for terminal/reset cleanup.
+-- releaseLife runs at most once per deployed life, with false for terminal/reset cleanup.
 export type Adapters = { now: () -> number, releaseLife: (number, number, boolean) -> () }
 export type Controller = {
     join: (number) -> (),
     leave: (number) -> (),
     deploy: () -> (boolean, string?),
     ready: (number, number) -> boolean,
-    activate: () -> (boolean, string?),
+    -- Activates the ready roster and begins scatter (or combat in a zero-length fixture).
+    activate: (number?) -> (boolean, string?),
     -- Confirmed grounded death/surrender. Can refine a pending character loss.
     eliminate: (number, number) -> boolean,
-    -- Revokes life immediately or defers an ambiguous deployment failure until
-    -- activation. A same-step departure can explain the model removal.
+    -- Revokes a deployed life or holds an ambiguous model loss for readiness
+    -- processing. A same-step departure can explain the model removal.
     characterRemoved: (number, number) -> boolean,
     damageAllowed: (number) -> boolean,
     proposeAircraftDestroyed: (number, AircraftCredit?) -> boolean,
@@ -75,6 +79,8 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     assert(settings.durationSeconds >= 1 and settings.durationSeconds <= 3600, "invalid duration")
     local intermissionSeconds = settings.intermissionSeconds or 0
     assert(intermissionSeconds >= 0 and intermissionSeconds <= 3600, "invalid intermission duration")
+    local scatterSeconds = settings.scatterSeconds or 0
+    assert(scatterSeconds >= 0 and scatterSeconds <= 3600, "invalid scatter duration")
     assert(
         settings.seed >= 0 and settings.seed <= 2147483647 and settings.seed % 1 == 0,
         "seed must be a safe nonnegative integer"
@@ -108,6 +114,9 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     end
     local function damageAllowed(roundId: number): boolean
         return state.phase == "Active" and roundId == state.roundId and now() < state.deadlineSeconds
+    end
+    local function lifeInPlay(roundId: number): boolean
+        return roundId == state.roundId and (state.phase == "Scatter" or damageAllowed(roundId))
     end
     local function changed()
         state.revision += 1
@@ -145,7 +154,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
     end
     local function loseGround(id: number, roundId: number, confirmed: boolean): boolean
         local member = state.members[id]
-        if not damageAllowed(roundId) or not member or not member.connected or member.role ~= "Ground" then
+        if not lifeInPlay(roundId) or not member or not member.connected or member.role ~= "Ground" then
             return false
         end
         if member.life ~= "Alive" then
@@ -220,7 +229,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             local member = state.members[id]
             if member then
                 member.connected = false
-                if state.phase == "Active" then
+                if state.phase == "Scatter" or state.phase == "Active" then
                     if member.life == "Alive" or removedCharacters[id] then
                         if member.role == "Ground" then
                             departingGround[id] = true
@@ -294,12 +303,12 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             changed()
             return true
         end,
-        activate = function()
+        activate = function(atSeconds)
             if state.phase ~= "Deploying" then
                 return false, "not deploying"
             end
             if next(removedCharacters) then
-                commit({ winner = "None", reason = "CharacterRemovedDuringDeployment" })
+                commit({ winner = "None", reason = "CharacterRemovedDuringDeployment" }, atSeconds)
                 return false, "deployed character removed"
             end
             for _, member in state.members do
@@ -317,8 +326,14 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                     end
                 end
             end
-            state.deadlineSeconds = now() + settings.durationSeconds
-            transition("Active")
+            local seconds = now(atSeconds)
+            if scatterSeconds > 0 then
+                state.deadlineSeconds = seconds + scatterSeconds
+                transition("Scatter")
+            else
+                state.deadlineSeconds = seconds + settings.durationSeconds
+                transition("Active")
+            end
             return true, nil
         end,
         eliminate = function(id, roundId)
@@ -353,19 +368,24 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             return true
         end,
         abort = function(roundId, reason)
-            if roundId ~= state.roundId or (state.phase ~= "Deploying" and state.phase ~= "Active") then
+            if
+                roundId ~= state.roundId
+                or (state.phase ~= "Deploying" and state.phase ~= "Scatter" and state.phase ~= "Active")
+            then
                 return false
             end
             return commit({ winner = "None", reason = reason })
         end,
         -- The optional server callback must not yield, reenter step or throw.
-        -- The callback runs strictly before expiry and may submit only damage facts.
+        -- Damage can run only in Active and strictly before expiry. Scatter
+        -- resolves life/departure outcomes before opening combat at the deadline.
         step = function(resolveDamage, atSeconds)
-            if state.phase ~= "Active" or damageSeconds ~= nil then
+            local scatter = state.phase == "Scatter"
+            if (not scatter and state.phase ~= "Active") or damageSeconds ~= nil then
                 return
             end
             local stepSeconds = now(atSeconds)
-            if resolveDamage and stepSeconds < state.deadlineSeconds then
+            if not scatter and resolveDamage and stepSeconds < state.deadlineSeconds then
                 damageSeconds = stepSeconds
                 resolveDamage(stepSeconds)
                 damageSeconds = nil
@@ -389,7 +409,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             end
             local outcome = RoundRules.outcome({
                 nowSeconds = stepSeconds,
-                deadlineSeconds = state.deadlineSeconds,
+                deadlineSeconds = if scatter then nil else state.deadlineSeconds,
                 aircraftDestroyed = aircraftDestroyed,
                 groundAlive = groundAlive,
                 groundEliminated = groundAlive == 0 and groundDeparted == 0,
@@ -412,6 +432,10 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                 for id in pendingRelease do
                     local member = state.members[id]
                     release(member, true)
+                end
+                if scatter and stepSeconds >= state.deadlineSeconds then
+                    state.deadlineSeconds = stepSeconds + settings.durationSeconds
+                    transition("Active")
                 end
             end
         end,
@@ -466,7 +490,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             end
             local member = state.members[id]
             if
-                state.phase ~= "Active"
+                (state.phase ~= "Active" and state.phase ~= "Scatter")
                 or roundId ~= state.roundId
                 or not member
                 or not member.connected

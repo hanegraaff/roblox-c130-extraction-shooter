@@ -5,11 +5,11 @@
     Membership/departures are evaluated by MatchService and supplied as facts here.
 ]=]
 local RoundRules = {}
-export type Phase = "Lobby" | "Deploying" | "Active" | "Results" | "Resetting"
+export type Phase = "Lobby" | "Deploying" | "Scatter" | "Active" | "Results" | "Resetting"
 export type Result = { winner: string, reason: string }
 export type Facts = {
     nowSeconds: number,
-    deadlineSeconds: number,
+    deadlineSeconds: number?,
     aircraftDestroyed: boolean,
     groundAlive: number,
     groundEliminated: boolean,
@@ -17,18 +17,21 @@ export type Facts = {
     connectedCount: number,
 }
 
--- Reports legal lifecycle edges without mutation. Cancellation is Deploying -> Lobby.
+-- Reports legal edges. A zero-duration test fixture can deploy straight into
+-- combat. Cancellation before the roster is ready returns to Lobby.
 function RoundRules.canTransition(from: Phase, to: Phase): boolean
     return (from == "Lobby" and to == "Deploying")
-        or (from == "Deploying" and (to == "Active" or to == "Lobby" or to == "Results"))
+        or (from == "Deploying" and (to == "Scatter" or to == "Active" or to == "Lobby" or to == "Results"))
+        or (from == "Scatter" and (to == "Active" or to == "Results"))
         or (from == "Active" and to == "Results")
         or (from == "Results" and to == "Resetting")
         or (from == "Resetting" and to == "Lobby")
 end
 
--- Returns a terminal proposal, or nil while play continues. Caller commits it once.
+-- Returns a terminal proposal, or nil while play continues. Scatter supplies
+-- no combat deadline so the aircraft's arrival cannot itself end the round.
 function RoundRules.outcome(facts: Facts): Result?
-    if facts.nowSeconds >= facts.deadlineSeconds then
+    if facts.deadlineSeconds and facts.nowSeconds >= facts.deadlineSeconds then
         return { winner = "Gunship", reason = "Timeout" }
     end
     if facts.aircraftDestroyed then

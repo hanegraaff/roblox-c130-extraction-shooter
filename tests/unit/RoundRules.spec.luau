@@ -2,7 +2,7 @@
 -- P03 A2/R03: phase edges, exact deadline and pre-deadline outcome ordering.
 type Facts = {
     nowSeconds: number,
-    deadlineSeconds: number,
+    deadlineSeconds: number?,
     aircraftDestroyed: boolean,
     groundAlive: number,
     groundEliminated: boolean,
@@ -18,15 +18,17 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     test("only documented phase edges and deployment cancellation are legal", function()
         local legal = {
             ["Lobby>Deploying"] = true,
+            ["Deploying>Scatter"] = true,
             ["Deploying>Active"] = true,
             ["Deploying>Lobby"] = true,
             ["Deploying>Results"] = true,
+            ["Scatter>Active"] = true,
+            ["Scatter>Results"] = true,
             ["Active>Results"] = true,
             ["Results>Resetting"] = true,
             ["Resetting>Lobby"] = true,
         }
-        local phases: { "Lobby" | "Deploying" | "Active" | "Results" | "Resetting" } =
-            { "Lobby", "Deploying", "Active", "Results", "Resetting" }
+        local phases = { "Lobby", "Deploying", "Scatter", "Active", "Results", "Resetting" }
         for _, from in phases do
             for _, to in phases do
                 assert(
@@ -35,6 +37,22 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                 )
             end
         end
+    end)
+    test("P24 Scatter has no combat timeout and still recognizes a lost side", function()
+        local facts: Facts = {
+            nowSeconds = 20,
+            deadlineSeconds = nil,
+            aircraftDestroyed = false,
+            groundAlive = 1,
+            groundEliminated = false,
+            operatorConnected = true,
+            connectedCount = 2,
+        }
+        assert(not Rules.outcome(facts), "arrival was interpreted as combat expiry")
+        facts.operatorConnected = false
+        facts.connectedCount = 1
+        local result = Rules.outcome(facts)
+        assert(result and result.reason == "OperatorForfeit", "Scatter did not recognize forfeit")
     end)
     test("deadline equality beats destruction and last ground elimination", function()
         local result = Rules.outcome({

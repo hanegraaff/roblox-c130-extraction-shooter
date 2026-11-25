@@ -57,7 +57,7 @@ return function()
             seed = 1,
         })
         assert(runtime, reason)
-        session = Session.start(runtime)
+        session = Session.start(runtime, 0)
         waitFor(function()
             return player.Character ~= nil and not player:GetAttribute("RoundCharacterLoad")
         end)

@@ -123,7 +123,7 @@ end
 local function eligibleMode(player: Player, state: Instance): Mode?
     local phase = state:GetAttribute("Phase")
     local role = player:GetAttribute("Role")
-    if phase == "Active" then
+    if phase == "Scatter" or phase == "Active" then
         return if role == "Ground" and player:GetAttribute("Life") == "Alive" then "Ground" else nil
     end
     if phase ~= "Lobby" then

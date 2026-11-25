@@ -45,6 +45,29 @@ local function theaterPrompt(): ProximityPrompt?
     return if prompt and prompt:IsA("ProximityPrompt") then prompt else nil
 end
 
+-- Wait for the live, locally replicated lobby body and include the final
+-- positions in a failure. The native prompt still decides when it shows.
+local function theaterRange(player: Player, screen: BasePart, range: number): BasePart
+    local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    assert(root and root:IsA("BasePart"), "missing lobby root")
+    local deadline = os.clock() + 3
+    repeat
+        if (root.Position - screen.Position).Magnitude < range then
+            return root
+        end
+        task.wait(0.05)
+    until os.clock() >= deadline
+    error(
+        string.format(
+            "replicated lobby root %s is %.2f studs from TV %s (range %.2f)",
+            tostring(root.Position),
+            (root.Position - screen.Position).Magnitude,
+            tostring(screen.Position),
+            range
+        )
+    )
+end
+
 local function expectTheaterTarget(player: Player, targetId: number?)
     awaitCondition(function()
         local target = Players:GetPlayerByUserId(targetId or 0)
@@ -144,16 +167,7 @@ function RoundHarness.run()
                         )
                         return true
                     end
-                    local root = assert(
-                        player.Character and player.Character:FindFirstChild("HumanoidRootPart"),
-                        "missing lobby root"
-                    )
-                    assert(root:IsA("BasePart"), "expected a lobby root part")
-                    awaitCondition(function()
-                        return (root.Position - screen.Position).Magnitude < prompt.MaxActivationDistance
-                    end, "replicated lobby avatar entered TV prompt range at " .. tostring(
-                        root.Position
-                    ), 3)
+                    local root = theaterRange(player, screen, prompt.MaxActivationDistance)
                     local currentCamera = assert(workspace.CurrentCamera, "missing client camera")
                     local binding = "P23TheaterProbe-" .. tostring(token)
                     -- Keep the TV centered for native prompt visibility while the

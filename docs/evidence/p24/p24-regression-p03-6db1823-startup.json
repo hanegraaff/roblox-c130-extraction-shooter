@@ -1,0 +1,103 @@
+{
+  "sourceCommit": "6db1823fd151fa3b6cb487c60250f0da6745be2c",
+  "tree": "fa615c9783d26b402d7d6dc7cef4f6934b171787",
+  "buildSha256": "8838895d14ae4329ff42c3d58907f5f806770b62c4f4f7880bbbb3438a8f0a4b",
+  "version": "0.748.0.7481526",
+  "invocation": "ExecuteMultiplayerTestAsync(3,{kind=\"P03\"})",
+  "peakCount": 3,
+  "observed": [
+    {
+      "kind": "P03",
+      "count": 3,
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+      "ordinary": false,
+      "round": 0,
+      "positions": {
+        "1": {
+          "life": "Waiting",
+          "position": "519.9923095703125, 3.0000457763671875, 0",
+          "id": -1,
+          "range": 65.31525421142578,
+          "role": "Waiting"
+        },
+        "2": {
+          "life": "Waiting",
+          "position": "519.9923095703125, 3.0000457763671875, 0",
+          "id": -2,
+          "range": 65.31525421142578,
+          "role": "Waiting"
+        },
+        "3": {
+          "life": "Waiting",
+          "position": "519.9923095703125, 3.0000457763671875, 0",
+          "id": -3,
+          "range": 65.31525421142578,
+          "role": "Waiting"
+        }
+      },
+      "phase": "Lobby"
+    },
+    {
+      "kind": "P03",
+      "count": 3,
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+      "ordinary": false,
+      "round": 1,
+      "positions": {
+        "1": {
+          "life": "Alive",
+          "position": "0, 2.9980926513671875, 107.99969482421875",
+          "id": -1,
+          "range": 495.6268615722656,
+          "role": "Ground"
+        },
+        "2": {
+          "life": "Alive",
+          "position": "520, 3, -15",
+          "id": -2,
+          "range": 56.36820602416992,
+          "role": "Gunship"
+        },
+        "3": {
+          "life": "Alive",
+          "position": "-20.00030517578125, 2.9980926513671875, 107.99969482421875",
+          "id": -3,
+          "range": 514.7013549804688,
+          "role": "Ground"
+        }
+      },
+      "phase": "Active"
+    }
+  ],
+  "result": {
+    "initialClientCount": 3,
+    "skipped": 0,
+    "passed": 1,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A5 three actual clients receive assigned roles, phase, deadline and UI"
+      },
+      {
+        "name": "P23 A4 actual late arrival receives a protected lobby avatar and cannot act",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.RoundHarness:38: timeout: actual late client joins"
+      },
+      {
+        "name": "Harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.RoundHarness:421: ServerScriptService.ServerTests.RoundHarness:38: timeout: actual late client joins"
+      }
+    ],
+    "clientCount": 3,
+    "environment": "Studio",
+    "completedRoundIds": [
+      1,
+      0,
+      0
+    ],
+    "suite": "P03-multiplayer",
+    "failed": 2,
+    "discovered": 3
+  }
+}

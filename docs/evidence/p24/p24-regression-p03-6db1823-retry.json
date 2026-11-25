@@ -1,0 +1,149 @@
+{
+  "sourceCommit": "6db1823fd151fa3b6cb487c60250f0da6745be2c",
+  "tree": "fa615c9783d26b402d7d6dc7cef4f6934b171787",
+  "buildSha256": "8838895d14ae4329ff42c3d58907f5f806770b62c4f4f7880bbbb3438a8f0a4b",
+  "version": "0.748.0.7481526",
+  "invocation": "ExecuteMultiplayerTestAsync(3,{kind=\"P03\"})",
+  "observed": [
+    {
+      "count": 3,
+      "kind": "P03"
+    },
+    {
+      "count": 3,
+      "phase": "Lobby",
+      "round": 0,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 3,
+      "phase": "Deploying",
+      "round": 1,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 3,
+      "phase": "Active",
+      "round": 1,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 4,
+      "phase": "Active",
+      "round": 1,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 4,
+      "phase": "Results",
+      "round": 1,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 4,
+      "phase": "Lobby",
+      "round": 1,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 4,
+      "phase": "Active",
+      "round": 2,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 4,
+      "phase": "Results",
+      "round": 2,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 4,
+      "phase": "Lobby",
+      "round": 2,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 2,
+      "phase": "Results",
+      "round": 3,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "count": 2,
+      "phase": "Lobby",
+      "round": 3,
+      "kind": "P03",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}"
+    },
+    {
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+      "kind": "P03",
+      "count": 2
+    }
+  ],
+  "rescue": null,
+  "result": {
+    "initialClientCount": 3,
+    "skipped": 0,
+    "passed": 9,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A5 three actual clients receive assigned roles, phase, deadline and UI"
+      },
+      {
+        "passed": true,
+        "name": "P23 A4 actual late arrival receives a protected lobby avatar and cannot act"
+      },
+      {
+        "passed": true,
+        "name": "P23 A1/A2 death returns Ground to lobby and the theater enables optional spectating"
+      },
+      {
+        "passed": true,
+        "name": "A6 first reset restores lobby camera, roster and perturbed map"
+      },
+      {
+        "passed": true,
+        "name": "A5/A6 operator reset retains assignment and timeout is authoritative"
+      },
+      {
+        "passed": true,
+        "name": "A6 second reset restores roster, camera and map"
+      },
+      {
+        "passed": true,
+        "name": "A6 actual ground departure removes life; operator departure forfeits"
+      },
+      {
+        "passed": true,
+        "name": "A6 third reset restores camera, map and complete runtime teardown"
+      },
+      {
+        "passed": true,
+        "name": "A6 pending actual avatar loads retain ownership and accounting until drained"
+      }
+    ],
+    "clientCount": 4,
+    "environment": "Studio",
+    "completedRoundIds": [
+      1,
+      2,
+      3
+    ],
+    "suite": "P03-multiplayer",
+    "failed": 0,
+    "discovered": 9
+  }
+}

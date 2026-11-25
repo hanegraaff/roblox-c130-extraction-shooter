@@ -23,6 +23,7 @@ export type Settings = {
     automaticDeployment: boolean?,
     minimumPlayers: number,
     durationSeconds: number,
+    scatterSeconds: number?,
     lobbySeconds: number,
     deploymentSeconds: number,
     resultsSeconds: number,
@@ -33,6 +34,7 @@ MatchRuntime.defaults = table.freeze({
     automaticDeployment = true,
     minimumPlayers = Config.defaults.minPlayers,
     durationSeconds = Config.defaults.roundDurationSeconds,
+    scatterSeconds = 20,
     lobbySeconds = 8,
     deploymentSeconds = 15,
     resultsSeconds = 5,
@@ -43,9 +45,10 @@ export type Controller = {
     start: () -> (boolean, string?),
     stop: () -> (),
     match: MatchService.Controller,
-    -- Owned GameRuntime frame, in server seconds. Only a live pre-deadline round
-    -- invokes resolveDamage. Publishes the resulting state before returning.
-    step: (number, (number) -> ()) -> (),
+    -- The owned GameRuntime frame invokes resolveDamage only in live combat.
+    -- syncPhase updates aircraft presence on a phase change before publication.
+    -- Both callbacks are nonyielding and take monotonic server seconds.
+    step: (number, (number) -> (), (number) -> ()) -> (),
     resources: () -> { connections: number, spawnTasks: number },
 }
 type PlayerOwner = { characters: CharacterOwner.Controller, bucket: RateLimit.Bucket }
@@ -166,6 +169,11 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             local member = state.members[player.UserId]
             local role = if member then member.role else "Waiting"
             local life = if member then member.life else "Waiting"
+            local operatorArrival = role == "Gunship"
+                and (state.phase == "Deploying" or state.phase == "Scatter" or state.phase == "Active")
+            -- A single per-player marker arms the black cover as soon as the
+            -- assignment replicates, even before public phase or roles converge.
+            player:SetAttribute("OperatorArrivalRoundId", if operatorArrival then state.roundId else nil)
             player:SetAttribute("RoundId", state.roundId)
             player:SetAttribute("Role", role)
             player:SetAttribute("Life", life)
@@ -183,7 +191,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
     -- Membership and physical placement have separate lifetimes. An outstanding
     -- lobby request survives Results, battlefield replacement and intermission.
     local function syncLobbyCharacters(state: MatchService.Snapshot)
-        local deployed = state.phase == "Deploying" or state.phase == "Active"
+        local deployed = state.phase == "Deploying" or state.phase == "Scatter" or state.phase == "Active"
         for player, owner in owners do
             local member = state.members[player.UserId]
             if not deployed or not member or member.role == "Spectator" or member.life == "Eliminated" then
@@ -204,6 +212,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         syncLobbyCharacters(state)
     end
     local function applyPhase(state: MatchService.Snapshot, time: number)
+        local previousPhase = phase
         phase = state.phase
         phaseStarted = time
         if state.phase == "Deploying" then
@@ -225,6 +234,14 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
                     owners[player].characters.request(anchor, member.role, state.roundId)
                 end
             end
+        elseif state.phase == "Scatter" or (state.phase == "Active" and previousPhase == "Deploying") then
+            for id, member in state.members do
+                local player = Players:GetPlayerByUserId(id)
+                local owner = if player then owners[player] else nil
+                if owner and member.role == "Ground" and member.life == "Alive" then
+                    owner.characters.releaseGround(state.roundId)
+                end
+            end
         elseif state.phase == "Resetting" then
             local ok, reason = map.rebuild(true)
             if not ok then
@@ -237,12 +254,13 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             match.finishReset()
         end
     end
-    local function step(time: number, resolveDamage: (number) -> ())
+    local function step(time: number, resolveDamage: (number) -> (), syncPhase: (number) -> ())
         if not running then
             return
         end
         local state = match.snapshot()
         if state.phase ~= phase then
+            syncPhase(time)
             applyPhase(state, time)
             state = match.snapshot()
         end
@@ -258,17 +276,18 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         then
             match.deploy()
         elseif state.phase == "Deploying" then
-            local active = match.activate()
+            local active = match.activate(time)
             if not active and elapsed >= settings.deploymentSeconds then
                 match.abort(state.roundId, "DeploymentTimeout")
             end
-        elseif state.phase == "Active" then
+        elseif state.phase == "Scatter" or state.phase == "Active" then
             match.step(resolveDamage, time)
         elseif state.phase == "Results" and elapsed >= settings.resultsSeconds then
             match.beginReset()
         end
         state = match.snapshot()
         if state.phase ~= phase then
+            syncPhase(time)
             applyPhase(state, time)
             state = match.snapshot()
         end
@@ -284,7 +303,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         running = false
         disconnect(connections)
         local state = match.snapshot()
-        if state.phase == "Deploying" or state.phase == "Active" then
+        if state.phase == "Deploying" or state.phase == "Scatter" or state.phase == "Active" then
             match.abort(state.roundId, "RuntimeStopped")
         end
         if match.snapshot().phase == "Results" then
@@ -295,7 +314,7 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             retire(owner.characters)
             match.leave(player.UserId)
             player.Neutral = true
-            for _, key in { "RoundId", "Role", "Life", "RoundRevision" } do
+            for _, key in { "RoundId", "Role", "Life", "RoundRevision", "OperatorArrivalRoundId" } do
                 player:SetAttribute(key, nil)
             end
         end
