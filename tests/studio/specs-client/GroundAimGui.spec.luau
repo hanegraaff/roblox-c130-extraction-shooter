@@ -202,7 +202,7 @@ return function()
         status.AnchorPoint = Vector2.new(0.5, 1)
         status.Position, status.Size = controller.statusLayout(true)
         status.TextSize, status.Font = 14, Enum.Font.Gotham
-        status.Text, status.Parent = "M-7 • 30 / 120 • R reload • HIT", viewport
+        status.Text, status.Parent = "M-7 • 29 / ∞ • Reload 2.0s • HIT", viewport
         local health = Instance.new("Frame")
         health.Position, health.Size, health.Parent =
             UDim2.fromOffset(12, 44), UDim2.fromOffset(240, 22), viewport
@@ -426,6 +426,7 @@ return function()
             local fixtureBody: Model? = nil
             local renamedTool: Tool? = nil
             local oldToolName: string? = nil
+            local restoreReadiness: (() -> ())? = nil
             local observations: { unknown } = {}
             local function frames()
                 runService.RenderStepped:Wait()
@@ -504,6 +505,18 @@ return function()
                     fixtureTool = tool
                 end
                 renamedTool, oldToolName = tool, tool.Name
+                local readinessAttributes =
+                    { "Ammo", "NextFire", "MaxAmmo", "ReloadUntil", "UnlimitedReserve" }
+                local oldReadiness = tool:GetAttributes()
+                restoreReadiness = function()
+                    for _, attribute in readinessAttributes do
+                        tool:SetAttribute(attribute, oldReadiness[attribute])
+                    end
+                end
+                tool:SetAttribute("Ammo", 29)
+                tool:SetAttribute("NextFire", 0)
+                tool:SetAttribute("MaxAmmo", 30)
+                tool:SetAttribute("UnlimitedReserve", true)
                 local before: { [Instance]: boolean } = {}
                 for _, item in player.PlayerGui:GetChildren() do
                     before[item] = true
@@ -567,13 +580,17 @@ return function()
                         sourceGround.IgnoreGuiInset = ignoreInset
                         for _, weapon in { "M7", "Rocket" } do
                             tool.Name = if weapon == "M7" then "M-7 rifle" else "Rocket launcher"
+                            local remaining = if weapon == "M7" then 2 else 15
+                            tool:SetAttribute("ReloadUntil", workspace:GetServerTimeNow() + remaining)
                             frames()
                             local sourceStatus = child(sourceGround, "RifleStatus")
                             assert(sourceStatus:IsA("TextLabel"), "readiness label missing")
-                            local weaponText = if weapon == "M7" then "M-7 • " else "ROCKET • "
+                            local weaponText = if weapon == "M7"
+                                then "M-7 • 29 / ∞ • Reload "
+                                else "ROCKET • Reload "
                             assert(
                                 string.find(sourceStatus.Text, weaponText, 1, true) == 1,
-                                "layout did not observe the equipped tool"
+                                "layout did not reproduce the equipped weapon reload text"
                             )
                             assert(
                                 sourceGround:FindFirstChild("AircraftHit") == nil,
@@ -744,6 +761,9 @@ return function()
             end
             if roundOwner then
                 roundOwner.stop()
+            end
+            if restoreReadiness then
+                restoreReadiness()
             end
             if renamedTool and oldToolName then
                 renamedTool.Name = oldToolName

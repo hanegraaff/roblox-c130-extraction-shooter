@@ -23,7 +23,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     test("Landmark launchers isolate owners, shot credits, transfers and round identities", function()
         local ids: { [string]: boolean } = {}
         local credits: { [string]: boolean } = {}
-        for i, site in { "Hangar", "Radar", "Depot" } do
+        for i, site in { "Hangar", "Radar", "Depot", "Seedship" } do
             local service = rules.new(site)
             service.reset(1, anchor)
             local id = service.snapshot(0).launcherId
@@ -98,21 +98,42 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         assert(not service.fire(1, shot(2), false, 0, anchor), "ineligible fire")
         assert(service.snapshot(0).ammo == 1, "rejection spent ammunition")
     end)
-    test("P08 A3 drop transfers preserve exact reload deadline and no reserve items", function()
-        local service = owner()
-        assert(service.pickup(1, request(1), true, true, 0), "claim")
-        local _, first = service.fire(1, shot(2), true, 0, anchor)
-        assert(first and service.snapshot(0).ammo == 0, "shot")
-        assert(service.drop(1, request(3), true, 0.1), "drop")
-        assert(service.snapshot(1).state == "Recovering" and service.snapshot(1).ownerId == nil, "recovering")
-        assert(not service.pickup(2, request(1), true, true, 1), "claim before placement")
-        assert(service.place({ x = 10, y = 3, z = 0 }), "place")
-        assert(service.pickup(2, request(1), true, true, 1), "teammate claim")
-        assert(service.snapshot(1).readyAt == rules.reloadSeconds, "transfer refreshed reload")
-        assert(not service.fire(2, shot(2), true, rules.reloadSeconds - 1e-6, anchor), "early shot")
-        local _, second = service.fire(2, shot(2), true, rules.reloadSeconds, anchor)
-        assert(second and second ~= first, "reload boundary/shot identity")
-    end)
+    test(
+        "P25 A1 transfers preserve the exact 15-second launcher cooldown independently of other sites",
+        function()
+            local service = owner()
+            local other = rules.new("Radar")
+            other.reset(1, anchor)
+            assert(service.pickup(1, request(1), true, true, 0), "claim")
+            local _, first = service.fire(1, shot(2), true, 0, anchor)
+            assert(first and service.snapshot(0).ammo == 0, "shot")
+            assert(service.drop(1, request(3), true, 0.1), "drop")
+            assert(
+                service.snapshot(1).state == "Recovering" and service.snapshot(1).ownerId == nil,
+                "recovering"
+            )
+            assert(not service.pickup(2, request(1), true, true, 1), "claim before placement")
+            assert(service.place({ x = 10, y = 3, z = 0 }), "place")
+            assert(service.pickup(2, request(1), true, true, 1), "teammate claim")
+            assert(other.snapshot(1).ammo == 1 and other.snapshot(1).readyAt == 0, "other site cooled down")
+            local otherPickup, otherShot = request(1), shot(2)
+            otherPickup.launcherId, otherShot.launcherId =
+                other.snapshot(1).launcherId, other.snapshot(1).launcherId
+            assert(other.pickup(1, otherPickup, true, true, 1), "other site pickup rejected")
+            assert(
+                other.fire(1, otherShot, true, 1, anchor),
+                "other site could not fire during first cooldown"
+            )
+            assert(not service.fire(2, shot(2), true, 14.999, anchor), "early shot")
+            assert(not service.fire(2, shot(1), true, 15, anchor), "duplicate accepted after ready")
+            assert(not service.fire(2, shot(100, 2), true, 15, anchor), "stale round accepted after ready")
+            assert(service.snapshot(14.999).readyAt == 15, "transfer or rejected shot changed reload")
+            local _, second = service.fire(2, shot(2), true, 15, anchor)
+            assert(second and second ~= first, "reload boundary/shot identity")
+            assert(service.snapshot(15).readyAt == 30, "second shot failed to set its own deadline")
+            assert(other.snapshot(15).readyAt == 16, "other site deadline changed")
+        end
+    )
     test("P08 A3 death reset and disconnect recovery is idempotent and preserves per-user replay", function()
         local service = owner()
         assert(service.pickup(1, request(1), true, true, 0), "claim")
@@ -139,7 +160,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         assert(service.recover(1) and service.place(anchor), "recover")
         assert(not service.pickup(1, request(1), true, true, 1), "old holder sequence replay")
         assert(service.pickup(1, request(3), true, true, 1), "new holder sequence")
-        assert(not service.fire(1, shot(4), true, 3.9, anchor), "switch/re-pick bypass")
+        assert(not service.fire(1, shot(4), true, 14.9, anchor), "switch/re-pick bypass")
     end)
     test("P08 A4 fire preflight and exact range are nonmutating until accepted", function()
         local service = owner()
@@ -155,7 +176,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local payload = shot(2)
         payload.x, payload.y, payload.z = 1200, 3, 0
         assert(service.fire(1, payload, true, 0, anchor), "exact range rejected")
-        assert(not service.fire(1, payload, true, 4, anchor), "duplicate shot accepted")
+        assert(not service.fire(1, payload, true, 15, anchor), "duplicate shot accepted")
     end)
     test("P08 A4 replenishment permits three shots well within the normal round", function()
         local service = owner()

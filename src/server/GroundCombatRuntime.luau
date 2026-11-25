@@ -206,6 +206,7 @@ function GroundCombatRuntime.start(
         tool.RequiresHandle = true
         tool.CanBeDropped = false
         tool.ToolTip = "M-7 rifle"
+        tool:SetAttribute("UnlimitedReserve", true)
         -- Primitive server-owned rifle; pieces are cosmetic and cannot block
         -- collision or queries. Roblox's Tool grip owns the equipped Handle.
         local handle = Instance.new("Part")
@@ -260,7 +261,6 @@ function GroundCombatRuntime.start(
         tool:SetAttribute("Ammo", state.ammo)
         tool:SetAttribute("MaxAmmo", GroundCombatService.capacity)
         tool:SetAttribute("NextFire", state.nextFire)
-        tool:SetAttribute("Reserve", state.reserve)
         tool:SetAttribute("ReloadUntil", state.reloadUntil)
     end
     local function spendBudget(player: Player, now: number): boolean
@@ -522,6 +522,7 @@ function GroundCombatRuntime.start(
     table.insert(
         connections,
         Players.PlayerRemoving:Connect(function(player)
+            rifles.cancelReload(player.UserId)
             removeTool(player)
             buckets[player] = nil
             movement[player] = nil
@@ -592,7 +593,8 @@ function GroundCombatRuntime.start(
             if eligible(player, now, true) then
                 ensureTool(player)
                 publishRifle(player, now)
-            else
+            elseif tools[player] then
+                rifles.cancelReload(player.UserId)
                 removeTool(player)
             end
         end

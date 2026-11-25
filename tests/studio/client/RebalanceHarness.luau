@@ -1,5 +1,5 @@
 --!strict
--- P18 actual-client observations and ordinary launcher intents. The test mapping
+-- P18/P25 actual-client observations and ordinary combat intents. The test mapping
 -- alone supplies this transport. Camera probes replace one production owner
 -- through its teardown and reuse its public input boundary; native input and
 -- rendered contrast review are recorded separately from injected-axis checks.
@@ -7,6 +7,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 local Harness = {}
 type Record = { [string]: unknown }
 type AircraftFacts = {
@@ -40,6 +41,7 @@ function Harness.run()
         assert(entry, "production client missing")
         local Panel = require(player.PlayerScripts.Client.RoundPanel)
         local Camera = require(player.PlayerScripts.Client.ThermalCameraController)
+        local GroundCombat = require(player.PlayerScripts.Client.GroundCombatController)
         local Map = require(ReplicatedStorage.Shared.MapRules)
         local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
         entry:Destroy()
@@ -106,6 +108,15 @@ function Harness.run()
         end
         local panel = Panel.new(player, player.PlayerGui, round, provider)
         assert(panel.start(), "P18 assertion: panel.start()")
+        local ground = GroundCombat.new(player, player.PlayerGui, round)
+        assert(ground.start(), "P25 Ground HUD start")
+        local groundOwners = 0
+        for _, child in player.PlayerGui:GetChildren() do
+            if child.Name == "GroundCombatHUD" then
+                groundOwners += 1
+            end
+        end
+        assert(groundOwners == 1, "staged client started more than one Ground HUD")
         local function hud(): ScreenGui?
             local item = player.PlayerGui:FindFirstChild("ThermalHUD")
             return if item and item:IsA("ScreenGui") then item else nil
@@ -115,6 +126,32 @@ function Harness.run()
             local value = if gui then gui:GetAttribute("PanLocalFocus") else nil
             assert(typeof(value) == "Vector2", "thermal focus missing")
             return value
+        end
+        local function observeText(
+            guiName: string,
+            labelName: string,
+            prefix: string,
+            contains: string?
+        ): TextLabel
+            local function find(): TextLabel?
+                local gui = player.PlayerGui:FindFirstChild(guiName)
+                local label = if gui
+                        and gui:IsA("ScreenGui")
+                        and gui.Enabled
+                    then gui:FindFirstChild(labelName)
+                    else nil
+                return if label and label:IsA("TextLabel") then label else nil
+            end
+            waitFor(function()
+                local label = find()
+                return label ~= nil
+                    and label.Visible
+                    and string.sub(label.Text, 1, #prefix) == prefix
+                    and (not contains or string.find(label.Text, contains, 1, true) ~= nil)
+                    and label.TextBounds.Y > 0
+                    and label.TextFits
+            end, guiName .. "." .. labelName .. " visible and legible: " .. prefix, 4)
+            return assert(find(), "readiness label disappeared")
         end
         local function number(fields: Record, key: string): number
             local value = fields[key]
@@ -135,11 +172,16 @@ function Harness.run()
                             and state:GetAttribute("MaxHealth") == maximum
                     end, "health replication")
                     detail.health, detail.maximum = health, maximum
-                elseif action == "Launcher" then
-                    local state = ReplicatedStorage:WaitForChild("LauncherState", 10)
-                    assert(state, "launcher state missing")
+                    if fields.display == true then
+                        local text = string.format("C-130 HEALTH  %d / %d", health, maximum)
+                        local label = observeText("RoundHUD", "AircraftHealth", text)
+                        detail.text = label.Text
+                    end
+                elseif action == "Launcher" or action == "Combat" then
+                    local folder = if action == "Launcher" then "LauncherState" else "AircraftState"
+                    local state = assert(ReplicatedStorage:WaitForChild(folder, 10), folder .. " missing")
                     local target = state:FindFirstChild(tostring(fields.action))
-                    assert(target and target:IsA("RemoteEvent"), "launcher remote missing")
+                    assert(target and target:IsA("RemoteEvent"), "production combat remote missing")
                     target:FireServer(fields.payload)
                 elseif action == "Select" then
                     local state = ReplicatedStorage:WaitForChild("AircraftState", 10)
@@ -155,19 +197,60 @@ function Harness.run()
                         local selected = HttpService:JSONDecode(encoded)
                         return selected.weapon == fields.weapon
                     end, "acknowledged selection")
-                elseif action == "EquipLauncher" then
-                    local backpack = player:FindFirstChildOfClass("Backpack")
-                    local tool = if backpack then backpack:FindFirstChild("Rocket launcher") else nil
-                    if not tool and player.Character then
-                        tool = player.Character:FindFirstChild("Rocket launcher")
-                    end
-                    assert(tool and tool:IsA("Tool"), "rocket tool missing")
+                elseif action == "EquipLauncher" or action == "EquipRifle" then
+                    local name = if action == "EquipLauncher" then "Rocket launcher" else "M-7 rifle"
                     local body = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
                     assert(body, "body missing")
+                    local backpack = player:FindFirstChildOfClass("Backpack")
+                    local tool: Instance? = nil
+                    waitFor(function()
+                        tool = (if backpack then backpack:FindFirstChild(name) else nil)
+                            or (if player.Character then player.Character:FindFirstChild(name) else nil)
+                        return tool ~= nil
+                    end, "owned " .. name, 4)
+                    assert(tool and tool:IsA("Tool"), "combat Tool missing: " .. name)
                     body:EquipTool(tool)
                     waitFor(function()
                         return tool.Parent == player.Character
-                    end, "launcher equip")
+                    end, "combat Tool equipped", 4)
+                elseif action == "WeaponHUD" then
+                    local kind = fields.kind
+                    local prefix = fields.prefix
+                    assert(type(prefix) == "string", "weapon HUD prefix missing")
+                    local label: TextLabel
+                    if kind == "Howitzer" then
+                        local operatorPrefix = if UserInputService.TouchEnabled
+                            then "105mm M102"
+                            else "105mm M102 Howitzer"
+                        label = observeText("ThermalHUD", "Profile", operatorPrefix, prefix)
+                    else
+                        label = observeText("GroundCombatHUD", "RifleStatus", prefix)
+                        local name = if kind == "Rifle" then "M-7 rifle" else "Rocket launcher"
+                        local tool = player.Character and player.Character:FindFirstChild(name)
+                        assert(tool and tool:IsA("Tool"), "HUD Tool not equipped")
+                        if kind == "Rifle" then
+                            assert(
+                                tool:GetAttribute("UnlimitedReserve") == true,
+                                "unlimited supply not replicated"
+                            )
+                            assert(
+                                tool:GetAttribute("Ammo") == number(fields, "ammo"),
+                                "HUD ammo differs from Tool"
+                            )
+                        else
+                            local deadline = number(fields, "deadline")
+                            assert(
+                                tool:GetAttribute("ReloadUntil") == deadline,
+                                "HUD Tool changed launcher deadline"
+                            )
+                        end
+                        detail.ammo = tool:GetAttribute("Ammo")
+                        detail.deadline = tool:GetAttribute("ReloadUntil")
+                    end
+                    detail.text = label.Text
+                    detail.bounds = { label.TextBounds.X, label.TextBounds.Y }
+                    detail.size = { label.AbsoluteSize.X, label.AbsoluteSize.Y }
+                    detail.touch = UserInputService.TouchEnabled
                 elseif action == "Panel" then
                     local id, expected = tostring(fields.id), tostring(fields.appearance)
                     waitFor(function()
@@ -380,6 +463,9 @@ function Harness.run()
                     end
                 elseif action == "Cleanup" then
                     axes = Vector2.zero
+                    ground.stop()
+                    ground.stop()
+                    assert(not player.PlayerGui:FindFirstChild("GroundCombatHUD"), "Ground HUD leaked")
                     panel.stop()
                     panel.stop()
                     assert(not hud(), "thermal GUI leaked")

@@ -772,7 +772,7 @@ local function runScenario(rawMode: unknown, rawExpected: unknown, finish: ((Rep
                         })
                     else
                         local rifle = runtime.groundCombat.readiness(player)
-                        if rifle.ammo == 0 and rifle.reserve > 0 and rifle.reloadUntil == 0 then
+                        if rifle.ammo == 0 and rifle.reloadUntil == 0 then
                             send(player, {
                                 {
                                     owner = air,

@@ -2,7 +2,7 @@
 --[=[
     GroundCombatService: server-only deterministic M-7 ammunition and request validation.
     Depends on Validation and injected server time/origin; no Instances or yielding.
-    Each user has independent magazine, reserve, reload and replay state per round.
+    Each user has independent magazine, reload and replay state per round. Reserve is unlimited.
 ]=]
 local loadPath = (require :: unknown) :: (string) -> unknown
 local Validation = (
@@ -12,11 +12,11 @@ local Validation = (
 ) :: typeof(require(game:GetService("ReplicatedStorage").Shared.Validation))
 local GroundCombatService = {}
 GroundCombatService.capacity = 30
-GroundCombatService.reserve = 120
 GroundCombatService.cadence = 0.15
 GroundCombatService.reloadSeconds = 2
 GroundCombatService.range = 1200
-export type Readiness = { ammo: number, reserve: number, nextFire: number, reloadUntil: number }
+-- Magazine rounds and the next fire/reload deadlines in server-clock seconds.
+export type Readiness = { ammo: number, nextFire: number, reloadUntil: number }
 export type Intent = { x: number, y: number, z: number, sequence: number }
 export type Controller = {
     reset: (number) -> (),
@@ -32,6 +32,7 @@ export type Controller = {
     ) -> ({ x: number, y: number, z: number, sequence: number }?, string?),
     preflight: (number, unknown, boolean, number, number, number, number) -> boolean,
     reload: (number, unknown, boolean, number) -> boolean,
+    cancelReload: (number) -> (),
 }
 -- All times are monotonic seconds, target and server origin are studs. Callers
 -- establish active round, life, role and exact Tool ownership before invoking.
@@ -43,15 +44,12 @@ function GroundCombatService.new(): Controller
         local old = states[userId]
             or {
                 ammo = GroundCombatService.capacity,
-                reserve = GroundCombatService.reserve,
                 nextFire = 0,
                 reloadUntil = 0,
             }
         local state = table.clone(old)
         if state.reloadUntil > 0 and now >= state.reloadUntil then
-            local taken = math.min(GroundCombatService.capacity - state.ammo, state.reserve)
-            state.ammo += taken
-            state.reserve -= taken
+            state.ammo = GroundCombatService.capacity
             state.reloadUntil = 0
         end
         return state
@@ -180,13 +178,20 @@ function GroundCombatService.new(): Controller
                 or not sequence
                 or state.reloadUntil > 0
                 or state.ammo >= GroundCombatService.capacity
-                or state.reserve <= 0
             then
                 return false
             end
             state.reloadUntil = now + GroundCombatService.reloadSeconds
             states[userId], sequences[userId] = state, sequence
             return true
+        end,
+        -- Retirement (death, departure or round end) discards the pending
+        -- reload without crediting rounds or clearing the replay guard.
+        cancelReload = function(userId)
+            local state = states[userId]
+            if state then
+                state.reloadUntil = 0
+            end
         end,
     }
 end

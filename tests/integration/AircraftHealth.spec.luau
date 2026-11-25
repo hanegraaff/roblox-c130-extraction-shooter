@@ -12,10 +12,10 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
                 state.maximum == count * 1000 and state.health == state.maximum and not state.destroyed,
                 "P18 assertion: state.maximum == count * 1000 and state.health == state.maximum and not state.destroyed"
             )
-            assert(owner.impact(count, "rocket", "RocketLauncher", true) == 100, "rocket damage scaled")
+            assert(owner.impact(count, "rocket", "RocketLauncher", true) == 150, "rocket damage scaled")
             assert(owner.impact(count, "rifle", "M7", true) == 5, "rifle damage scaled")
             assert(not owner.reset(count, 9), "same-round resize admitted")
-            assert(owner.snapshot().health == count * 1000 - 105, "same-round reset healed damage")
+            assert(owner.snapshot().health == count * 1000 - 155, "same-round reset healed damage")
         end
     end)
     test("P18 invalid round/count resets reject without health or identity mutation", function()
@@ -41,19 +41,16 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         snapshot.health = 0
         assert(owner.snapshot().health == 1995, "snapshot aliases authority")
     end)
-    test("P18 fixed rockets require ten hits per pristine Ground-player health share", function()
+    test("P25 A2 six rockets leave 100 health and the seventh destroys once", function()
         local owner = rules.new()
         assert(owner.reset(1, 1), "P18 assertion: owner.reset(1, 1)")
-        for i = 1, 10 do
+        for i = 1, 7 do
             local amount, lethal = owner.impact(1, tostring(i), "RocketLauncher", true)
             assert(
-                amount == 100 and lethal == (i == 10),
-                "P18 assertion: amount == 100 and lethal == (i == 10)"
+                amount == (if i == 7 then 100 else 150) and lethal == (i == 7),
+                "wrong rocket award or destruction boundary"
             )
-            assert(
-                owner.snapshot().health == 1000 - i * 100,
-                "P18 assertion: owner.snapshot().health == 1000 - i * 100"
-            )
+            assert(owner.snapshot().health == math.max(0, 1000 - i * 150), "wrong remaining aircraft health")
             assert(not owner.impact(1, tostring(i), "RocketLauncher", true), "duplicate rocket")
         end
         assert(
@@ -61,40 +58,47 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             'P18 assertion: owner.snapshot().destroyed and not owner.impact(1, "extra", "M7", true)'
         )
     end)
-    test("P18 misses mixed damage terminal clamps and next roster reset are authoritative", function()
-        local owner = rules.new()
-        assert(owner.reset(7, 1), "P18 assertion: owner.reset(7, 1)")
-        assert(
-            not owner.impact(7, "miss", "RocketLauncher", false),
-            'P18 assertion: not owner.impact(7, "miss", "RocketLauncher", false)'
-        )
-        assert(
-            not owner.impact(8, "stale", "M7", true),
-            'P18 assertion: not owner.impact(8, "stale", "M7", true)'
-        )
-        for i = 1, 181 do
+    test(
+        "P25 A2 rocket then rifle, misses, terminal clamps and next roster reset are authoritative",
+        function()
+            local owner = rules.new()
+            assert(owner.reset(7, 1), "P18 assertion: owner.reset(7, 1)")
             assert(
-                owner.impact(7, tostring(i), "M7", true) == 5,
-                'P18 assertion: owner.impact(7, tostring(i), "M7", true) == 5'
+                not owner.impact(7, "miss", "RocketLauncher", false),
+                'P18 assertion: not owner.impact(7, "miss", "RocketLauncher", false)'
+            )
+            assert(
+                not owner.impact(8, "stale", "M7", true),
+                'P18 assertion: not owner.impact(8, "stale", "M7", true)'
+            )
+            assert(owner.impact(7, "first rocket", "RocketLauncher", true) == 150, "initial rocket damage")
+            assert(owner.snapshot().health == 850, "rocket did not leave 850")
+            assert(owner.impact(7, "first rifle", "M7", true) == 5, "rifle damage")
+            assert(owner.snapshot().health == 845, "rifle did not leave 845")
+            for i = 1, 150 do
+                assert(
+                    owner.impact(7, tostring(i), "M7", true) == 5,
+                    'P18 assertion: owner.impact(7, tostring(i), "M7", true) == 5'
+                )
+            end
+            local amount, lethal = owner.impact(7, "last", "RocketLauncher", true)
+            assert(
+                amount == 95 and lethal and owner.snapshot().health == 0,
+                "P18 assertion: amount == 95 and lethal and owner.snapshot().health == 0"
+            )
+            assert(owner.reset(8, 3), "P18 assertion: owner.reset(8, 3)")
+            assert(
+                owner.snapshot().health == 3000 and owner.snapshot().maximum == 3000,
+                "P18 assertion: owner.snapshot().health == 3000 and owner.snapshot().maximum == 3000"
+            )
+            assert(
+                owner.impact(8, "last", "RocketLauncher", true) == 150,
+                "new generation retained shot identity"
+            )
+            assert(
+                not owner.impact(7, "late", "M7", true),
+                'P18 assertion: not owner.impact(7, "late", "M7", true)'
             )
         end
-        local amount, lethal = owner.impact(7, "last", "RocketLauncher", true)
-        assert(
-            amount == 95 and lethal and owner.snapshot().health == 0,
-            "P18 assertion: amount == 95 and lethal and owner.snapshot().health == 0"
-        )
-        assert(owner.reset(8, 3), "P18 assertion: owner.reset(8, 3)")
-        assert(
-            owner.snapshot().health == 3000 and owner.snapshot().maximum == 3000,
-            "P18 assertion: owner.snapshot().health == 3000 and owner.snapshot().maximum == 3000"
-        )
-        assert(
-            owner.impact(8, "last", "RocketLauncher", true) == 100,
-            "new generation retained shot identity"
-        )
-        assert(
-            not owner.impact(7, "late", "M7", true),
-            'P18 assertion: not owner.impact(7, "late", "M7", true)'
-        )
-    end)
+    )
 end

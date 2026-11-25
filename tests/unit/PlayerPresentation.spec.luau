@@ -145,18 +145,34 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         )
         expect(rules.groundRejection("Drop", true, "Held", true, false, nil, 0), nil)
         expect(rules.groundRejection("Reload", true, nil, false, false, nil, 0), "Equip the M-7 to reload.")
-        local reloading = { ammo = 29, reserve = 120, capacity = 30, reloadUntil = 4 }
+        local reloading = { ammo = 29, unlimitedReserve = true, capacity = 30, reloadUntil = 4 }
         expect(
             rules.groundRejection("Reload", true, nil, false, false, reloading, 3),
             "M-7 reload is already in progress."
         )
         expect(rules.groundRejection("Reload", true, nil, false, false, reloading, 4), nil)
-        expect((reloading.ammo == 29 and reloading.reloadUntil == 4 and reloading.reserve == 120), true)
+        expect((reloading.ammo == 29 and reloading.reloadUntil == 4 and reloading.unlimitedReserve), true)
         reloading.ammo = 30
         expect(
             rules.groundRejection("Reload", true, nil, false, false, reloading, 4),
             "The M-7 magazine is full."
         )
+    end)
+
+    test("P25 A3 both HUD layouts display unlimited reserve during readiness and reload", function()
+        local readiness = { ammo = 30, reloadUntil = 0, nextFire = 0, unlimitedReserve = true }
+        expect(rules.rifleText(readiness, 0, false), "M-7 • 30 / ∞ • R reload")
+        expect(rules.rifleText(readiness, 0, true), "M-7 • 30 / ∞")
+        readiness.ammo = 29
+        readiness.nextFire = 0.125
+        expect(rules.rifleText(readiness, 0, false), "M-7 • 29 / ∞ • Cooldown 0.1s")
+        expect(rules.rifleText(readiness, 0, true), "M-7 • 29 / ∞")
+        readiness.reloadUntil = 3
+        expect(rules.rifleText(readiness, 1, false), "M-7 • 29 / ∞ • Reload 2.0s")
+        expect(rules.rifleText(readiness, 1, true), "M-7 • 29 / ∞ • Reload 2.0s")
+        expect(rules.rifleText(nil, 1, true), "M-7 • Readiness updating")
+        readiness.unlimitedReserve = false
+        expect(rules.rifleText(readiness, 1, false), "M-7 • Readiness updating")
     end)
 
     test("Per-weapon cooldown and reload are visible at the server-clock boundary", function()

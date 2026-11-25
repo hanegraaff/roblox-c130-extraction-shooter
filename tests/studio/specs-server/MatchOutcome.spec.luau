@@ -46,17 +46,14 @@ local function checkImpact(atSeconds: number, expectedReason: string)
             ReplicatedStorage.AircraftState:GetAttribute("MaxHealth") == maximum,
             "roster health not initialized"
         )
-        local remaining = AircraftHealth.rocketDamage
-        local preDamageHits = (maximum - remaining) / AircraftHealth.rocketDamage
-        assert(preDamageHits >= 0 and preDamageHits % 1 == 0, "fixture needs an integral fixed-rocket prefix")
-        for index = 1, preDamageHits do
+        for index = 1, 6 do
             local id = "pre-damage:" .. tostring(index)
             local hit, applied = ground.rocketCast(state.roundId, id, origin, down, player)
             assert(hit and applied, "real rocket collision unavailable")
         end
         assert(
-            ReplicatedStorage.AircraftState:GetAttribute("Health") == remaining and remaining == 100,
-            "roster-derived direct hits did not leave exactly one fixed 100-unit rocket"
+            ReplicatedStorage.AircraftState:GetAttribute("Health") == 100,
+            "six direct rockets did not leave exactly 100 health"
         )
         seconds = atSeconds
         local damageBatchRan = false

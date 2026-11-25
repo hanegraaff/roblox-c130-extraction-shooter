@@ -48,23 +48,33 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         end
         assert(assert(owner.readiness("GAU23", 9.1), "readiness").ammo == 39, "combat invariant")
     end)
-    test("P19 six-second heavy reload survives selection changes and opens at the exact boundary", function()
-        local owner = fixture()
-        assert(owner.fire(1, request(1, "M102"), "M102", true, 0, 360, 140, 0))
-        assert(owner.fire(1, request(2, "GAU23"), "GAU23", true, 1, 360, 140, 0))
-        local spent = assert(owner.readiness("M102", 5.999), "spent howitzer readiness missing")
-        assert(spent.ammo == 0 and spent.reloadUntil == 6, "spent shell did not start a six-second reload")
-        assert(
-            not owner.fire(1, request(3, "M102"), "M102", true, 5.999, 360, 140, 0),
-            "howitzer reloaded early"
-        )
-        assert(
-            owner.fire(1, request(3, "M102"), "M102", true, 6, 360, 140, 0),
-            "howitzer missed reload boundary"
-        )
-        local spentAgain = assert(owner.readiness("M102", 11.999), "second spent howitzer readiness missing")
-        assert(spentAgain.ammo == 0 and spentAgain.reloadUntil == 12, "second shot lost independent reload")
-    end)
+    test(
+        "P25 A1 howitzer reload survives selection, stale and duplicate fire and opens at exactly 12 seconds",
+        function()
+            local owner = fixture()
+            assert(owner.fire(1, request(1, "M102"), "M102", true, 0, 360, 140, 0))
+            assert(owner.fire(1, request(2, "GAU23"), "GAU23", true, 1, 360, 140, 0))
+            local early = 11.999
+            local replay = request(1, "M102")
+            local stale = { roundId = 2, sequence = 100, weapon = "M102", x = 0, y = 0, z = 0 }
+            assert(not owner.fire(1, replay, "M102", true, early, 360, 140, 0), "duplicate accepted")
+            assert(not owner.fire(1, stale, "M102", true, early, 360, 140, 0), "stale round accepted")
+            assert(not owner.fire(1, request(3, "M102"), "M102", true, early, 360, 140, 0), "early fire")
+            local spent = assert(owner.readiness("M102", early), "spent howitzer readiness missing")
+            assert(spent.ammo == 0 and spent.reloadUntil == 12, "rejected fire changed reload deadline")
+            assert(not owner.fire(1, replay, "M102", true, 12, 360, 140, 0), "duplicate fired after reload")
+            assert(not owner.fire(1, stale, "M102", true, 12, 360, 140, 0), "stale round fired after reload")
+            assert(owner.fire(1, request(3, "M102"), "M102", true, 12, 360, 140, 0), "missed boundary")
+            local spentAgain =
+                assert(owner.readiness("M102", 23.999), "second spent howitzer readiness missing")
+            assert(
+                spentAgain.ammo == 0 and spentAgain.reloadUntil == 24,
+                "second shot lost independent reload"
+            )
+            local chain = assert(owner.readiness("GAU23", 12), "chain-gun readiness missing")
+            assert(chain.ammo == 99 and chain.reloadUntil == 0, "howitzer fire changed chain-gun readiness")
+        end
+    )
     test("P05 forged, stale, nonfinite and unauthorized fire reject without spending", function()
         local owner = fixture()
         local bad: { unknown } = {

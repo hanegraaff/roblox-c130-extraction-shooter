@@ -26,7 +26,7 @@ export type Readiness = {
     reloadUntil: number,
     nextFire: number?,
     capacity: number?,
-    reserve: number?,
+    unlimitedReserve: boolean?,
 }
 export type GroundAction = "Pickup" | "Drop" | "Reload"
 
@@ -246,11 +246,26 @@ function PlayerPresentation.groundRejection(
             return "M-7 reload is already in progress."
         elseif rifle.capacity and rifle.ammo >= rifle.capacity then
             return "The M-7 magazine is full."
-        elseif rifle.reserve == 0 then
-            return "No M-7 reserve ammunition remains."
         end
     end
     return nil
+end
+
+-- Formats the equipped M-7's loaded rounds and explicit reserve marker on
+-- both input layouts, including while the server reload timer is running.
+function PlayerPresentation.rifleText(readiness: Readiness?, now: number, touch: boolean): string
+    if not readiness or not readiness.unlimitedReserve then
+        return "M-7 • Readiness updating"
+    end
+    local magazine = string.format("M-7 • %d / ∞", readiness.ammo)
+    local reload = readiness.reloadUntil - now
+    local cooldown = (readiness.nextFire or 0) - now
+    if reload > 0 then
+        return string.format("%s • Reload %.1fs", magazine, reload)
+    elseif cooldown > 0 and not touch then
+        return string.format("%s • Cooldown %.1fs", magazine, cooldown)
+    end
+    return if touch then magazine else magazine .. " • R reload"
 end
 
 -- Replicated ammunition and per-weapon timers are rendered in text so

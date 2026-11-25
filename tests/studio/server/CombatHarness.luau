@@ -14,6 +14,7 @@ local BlastGeometry = require(game:GetService("ServerScriptService").Server.Blas
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local CombatHarness = {}
+local howitzerReloadTimeout = CombatService.profiles.M102.reload + 3
 type Case = { name: string, passed: boolean, detail: string? }
 export type Report = {
     suite: string,
@@ -378,7 +379,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             )
             waitFor(function()
                 return ammo("M102") == 1
-            end, "heavy reload after airburst", 8)
+            end, "heavy reload after airburst", howitzerReloadTimeout)
         end)
         check("A2 switching preserves heavy reload and A5 lethal hit ends once", function()
             local op, ground = roles()
@@ -410,7 +411,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             assert(ammo("M102") == 0, "switch refilled reloading heavy weapon")
             waitFor(function()
                 return ammo("M102") == 1
-            end, "heavy reload completion", 8)
+            end, "heavy reload completion", howitzerReloadTimeout)
             wall:Destroy()
             probe(op, "Fire", payload(5, "M102", root.Position))
             waitFor(function()
@@ -794,7 +795,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             fireAndObserve("M102", slope("M102"), nil)
             waitFor(function()
                 return ammo("M102") == 1
-            end, "heavy geometry reload", 8)
+            end, "heavy geometry reload", howitzerReloadTimeout)
             point, panelId = upper("M102")
             fireAndObserve("M102", point, panelId)
         end)
@@ -802,7 +803,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             local op, ground = roles()
             waitFor(function()
                 return ammo("M102") == 1
-            end, "heavy reload before overlapping-muzzle case", 8)
+            end, "heavy reload before overlapping-muzzle case", howitzerReloadTimeout)
             local muzzle = runtime.aircraft.muzzle("M102")
             assert(muzzle, "muzzle missing for overlap case")
             local character = ground.Character
@@ -1118,7 +1119,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
                 local function awaitReload()
                     waitFor(function()
                         return ammo("M102") == 1
-                    end, "P19 heavy readiness", 8)
+                    end, "P19 heavy readiness", howitzerReloadTimeout)
                 end
                 local function awaitWitness(label: string, choose: () -> Witness?): Witness
                     awaitReload()

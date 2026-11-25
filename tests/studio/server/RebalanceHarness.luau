@@ -1,5 +1,5 @@
 --!strict
--- P18 native integration coordinator: three actual clients, source-owned game
+-- P18/P25 native integration coordinator: three actual clients, source-owned game
 -- runtime, real cover queries, ordinary launcher remotes, replicated observations
 -- and replay cleanup. Trusted structural fixtures enter at the accepted-outcome
 -- boundary; they do not claim to test the gunship input/flight path.
@@ -7,7 +7,11 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local StudioTestService = game:GetService("StudioTestService")
-local GameRuntime = require(game:GetService("ServerScriptService").Server.GameRuntime)
+local Server = game:GetService("ServerScriptService").Server
+local GameRuntime = require(Server.GameRuntime)
+local CombatService = require(Server.CombatService)
+local LauncherService = require(Server.LauncherService)
+local CombatFixture = require(script.Parent.P11CombatFixture)
 local Harness = {}
 type Record = { [string]: unknown }
 type Ticket = { player: Player, ok: boolean?, detail: string? }
@@ -149,9 +153,24 @@ function Harness.run(finish: ((unknown) -> ())?)
         local observation: Record = { userId = player.UserId, action = action, detail = ticket.detail }
         table.insert(observations, observation)
     end
-    local function observe(health: number, maximum: number)
+    local function combatIntent(player: Player, request: CombatFixture.Intent)
+        probe(player, "Combat", { action = request.remote, payload = request.body })
+    end
+    local function stateRecord(name: string, attribute: string): Record?
+        local state = ReplicatedStorage:FindFirstChild(name)
+        local encoded = if state then state:GetAttribute(attribute) else nil
+        if type(encoded) ~= "string" then
+            return nil
+        end
+        return HttpService:JSONDecode(encoded)
+    end
+    local function gunshipReadiness(weapon: string): CombatService.Readiness
+        local state = assert(stateRecord("AircraftState", "Readiness"), "gunship readiness missing")
+        return state[weapon] :: CombatService.Readiness
+    end
+    local function observe(health: number, maximum: number, display: boolean?)
         for _, player in Players:GetPlayers() do
-            probe(player, "Observe", { health = health, maximum = maximum })
+            probe(player, "Observe", { health = health, maximum = maximum, display = display })
         end
     end
     local operator: Player? = nil
@@ -431,26 +450,99 @@ function Harness.run(finish: ((unknown) -> ())?)
             }
             table.insert(observations, observation)
         end)
+        check("P25 A4 howitzer countdown survives switching through the chain gun", function()
+            local gunner = assert(operator, "gunship operator missing")
+            local function selectWeapon(weapon: string, sequence: number)
+                probe(gunner, "Select", { roundId = round, sequence = sequence, weapon = weapon })
+            end
+            local function terrainFire(weapon: string, sequence: number)
+                local intent = assert(CombatFixture.terrainShot(owned, weapon, sequence), "valid terrain aim")
+                combatIntent(gunner, intent)
+            end
+            selectWeapon("M102", 3)
+            terrainFire("M102", 1)
+            waitFor(function()
+                return gunshipReadiness("M102").ammo == 0
+            end, "howitzer accepted", 4)
+            local spent = gunshipReadiness("M102")
+            local duration = spent.reloadUntil - spent.nextFire + CombatService.profiles.M102.cadence
+            assert(math.abs(duration - 12) < 1e-6, "M102 reload is not measured from accepted shot")
+            probe(gunner, "WeaponHUD", { kind = "Howitzer", prefix = "Reload " })
+            selectWeapon("GAU23", 4)
+            terrainFire("GAU23", 2)
+            waitFor(function()
+                return gunshipReadiness("GAU23").ammo == 99
+            end, "independent chain-gun readiness", 4)
+            selectWeapon("M102", 5)
+            terrainFire("M102", 3)
+            task.wait(0.15)
+            local after = gunshipReadiness("M102")
+            assert(
+                after.ammo == 0 and after.reloadUntil == spent.reloadUntil,
+                "switch or early fire refilled M102"
+            )
+            probe(gunner, "WeaponHUD", { kind = "Howitzer", prefix = "Reload " })
+            local timing: Record = { kind = "howitzer-cooldown", durationSeconds = duration }
+            table.insert(observations, timing)
+        end)
         if carrier then
-            check("A4 fired drop recovery preserves reload and fixed damage", function()
-                local player = assert(carrier, "P18 assertion: carrier")
+            check("P25 A4 real rocket hit and handover preserve cooldown, damage and HUD", function()
+                local player = assert(carrier, "Seedship carrier missing")
                 local held = owned.launcher.snapshot("Seedship")
                 probe(player, "EquipLauncher", {})
+                local body = assert(player.Character, "rocket carrier has no avatar")
+                local root = body:FindFirstChild("HumanoidRootPart")
+                local head = body:FindFirstChild("Head")
+                assert(
+                    root and root:IsA("BasePart") and head and head:IsA("BasePart"),
+                    "carrier body missing"
+                )
+                local originPose, anchored = body:GetPivot(), root.Anchored
+                local aircraft = owned.aircraft.position()
+                local radial = Vector3.new(aircraft.X, 0, aircraft.Z).Unit
+                CombatFixture.pose(owned, player, radial * 330 + Vector3.yAxis * 45)
+                local status =
+                    assert(ReplicatedStorage:FindFirstChild("AircraftState"), "aircraft state missing")
+                local epoch = status:GetAttribute("EpochSeconds")
+                assert(type(epoch) == "number", "orbit epoch missing")
+                -- Lead the live orbit with a short allowance for local remote
+                -- transit. The production projectile still decides the contact.
+                local sentAt = workspace:GetServerTimeNow()
+                local elapsed = sentAt - epoch
+                local flightSeconds, target = 0.5, Vector3.zero
+                for _ = 1, 5 do
+                    target = owned.aircraft.sample(elapsed + flightSeconds + 0.10).Position
+                    flightSeconds = (target - head.Position).Magnitude / LauncherService.speedStudsPerSecond
+                end
                 probe(player, "Launcher", {
                     action = "Fire",
                     payload = {
                         roundId = round,
                         sequence = 2,
                         launcherId = held.launcherId,
-                        x = 0,
-                        y = 300,
-                        z = 214,
+                        x = target.X,
+                        y = target.Y,
+                        z = target.Z,
                     },
                 })
                 waitFor(function()
                     return owned.launcher.snapshot("Seedship").readyAt > workspace:GetServerTimeNow()
-                end, "rocket reload")
+                end, "real rocket accepted", 4)
                 local readyAt = owned.launcher.snapshot("Seedship").readyAt
+                local acceptedDelay = readyAt - sentAt - 15
+                assert(
+                    acceptedDelay >= 0 and acceptedDelay < 0.75,
+                    "rocket deadline not 15 seconds from actual fire"
+                )
+                local lastShot = assert(stateRecord("LauncherState", "LastShot"), "accepted rocket identity")
+                probe(
+                    player,
+                    "WeaponHUD",
+                    { kind = "Rocket", prefix = "ROCKET • Reload ", deadline = readyAt }
+                )
+                body:PivotTo(originPose)
+                root.Anchored, root.AssemblyLinearVelocity = anchored, Vector3.zero
+                assert(owned.groundCombat.trustCorrection(player), "return from controlled rocket aim failed")
                 probe(player, "Launcher", {
                     action = "Drop",
                     payload = { roundId = round, sequence = 3, launcherId = held.launcherId },
@@ -468,28 +560,97 @@ function Harness.run(finish: ((unknown) -> ())?)
                 waitFor(function()
                     return owned.launcher.snapshot("Seedship").ownerId == recovering.UserId
                 end, "teammate recovery")
-                assert(owned.launcher.snapshot("Seedship").readyAt == readyAt, "transfer reset reload")
-                local root = assert(
-                    workspace:FindFirstChild("Aircraft"),
-                    'P18 assertion: workspace:FindFirstChild("Aircraft")'
-                ):FindFirstChild("Hitbox")
-                assert(root and root:IsA("BasePart"), 'P18 assertion: root and root:IsA("BasePart")')
-                local collision, applied = owned.groundCombat.rocketCast(
-                    round,
-                    "P18-fixed",
-                    root.Position + Vector3.yAxis * 50,
-                    -Vector3.yAxis * 65
+                probe(recovering, "EquipLauncher", {})
+                probe(
+                    recovering,
+                    "WeaponHUD",
+                    { kind = "Rocket", prefix = "ROCKET • Reload ", deadline = readyAt }
                 )
-                assert(collision and applied, "native direct rocket ray missed")
-                observe(1900, 2000)
-                local _, duplicateApplied = owned.groundCombat.rocketCast(
-                    round,
-                    "P18-fixed",
-                    root.Position + Vector3.yAxis * 50,
-                    -Vector3.yAxis * 65
+                probe(recovering, "Launcher", {
+                    action = "Fire",
+                    payload = {
+                        roundId = round,
+                        sequence = 3,
+                        launcherId = held.launcherId,
+                        x = 0,
+                        y = 300,
+                        z = 214,
+                    },
+                })
+                task.wait(0.15)
+                local inherited = owned.launcher.snapshot("Seedship")
+                assert(
+                    inherited.readyAt == readyAt and inherited.ammo == 0,
+                    "transfer or early fire reset reload"
                 )
-                assert(not duplicateApplied, "duplicate awarded")
+                local radar = owned.launcher.snapshot("Radar")
+                assert(
+                    radar.ammo == 1 and radar.readyAt == 0,
+                    "unfired Radar launcher not independently loaded"
+                )
+                waitFor(function()
+                    local impact = stateRecord("LauncherState", "LastImpact")
+                    return impact ~= nil and impact.shotId == lastShot.shotId
+                end, "native trajectory impact", 6)
+                local impact = assert(stateRecord("LauncherState", "LastImpact"), "native impact missing")
+                local trace: Record = {
+                    kind = "moving-aircraft-rocket",
+                    impact = impact,
+                    aimAgeAtAcceptanceSeconds = acceptedDelay,
+                    estimatedFlightSeconds = flightSeconds,
+                    launcherId = held.launcherId,
+                    unchangedReadyAt = readyAt,
+                }
+                table.insert(observations, trace)
+                assert(
+                    impact.aircraftHit == true and impact.shotId == lastShot.shotId,
+                    "moving aircraft rocket missed"
+                )
+                observe(1850, 2000, true)
             end)
+            check(
+                "P25 A4 native M-7 partial magazine reads unlimited reserve during and after reload",
+                function()
+                    local player = assert(carrier, "first Ground player missing")
+                    local character = assert(player.Character, "rifle fixture character missing")
+                    local head = character:FindFirstChild("Head")
+                    assert(head and head:IsA("BasePart"), "rifle fixture head missing")
+                    probe(player, "EquipRifle", {})
+                    probe(player, "WeaponHUD", { kind = "Rifle", prefix = "M-7 • 30 / ∞", ammo = 30 })
+                    local target = head.Position + Vector3.yAxis * 300
+                    combatIntent(player, CombatFixture.rifle(round, 1, target))
+                    waitFor(function()
+                        return owned.groundCombat.readiness(player).ammo == 29
+                    end, "M-7 round spent", 4)
+                    combatIntent(player, {
+                        owner = "AircraftState",
+                        remote = "GroundReload",
+                        body = {
+                            roundId = round,
+                            sequence = 2,
+                        },
+                    })
+                    waitFor(function()
+                        return owned.groundCombat.readiness(player).reloadUntil > workspace:GetServerTimeNow()
+                    end, "M-7 reload accepted", 4)
+                    probe(
+                        player,
+                        "WeaponHUD",
+                        { kind = "Rifle", prefix = "M-7 • 29 / ∞ • Reload ", ammo = 29 }
+                    )
+                    combatIntent(player, CombatFixture.rifle(round, 3, target))
+                    task.wait(0.2)
+                    local pending = owned.groundCombat.readiness(player)
+                    assert(
+                        pending.ammo == 29 and pending.reloadUntil > workspace:GetServerTimeNow(),
+                        "M-7 fired during reload"
+                    )
+                    waitFor(function()
+                        return owned.groundCombat.readiness(player).ammo == 30
+                    end, "M-7 reload refills", 4)
+                    probe(player, "WeaponHUD", { kind = "Rifle", prefix = "M-7 • 30 / ∞", ammo = 30 })
+                end
+            )
         end
         check(
             "A1 A4 carrier death drops one launcher without resizing health or granting spectator pickup",
@@ -517,7 +678,7 @@ function Harness.run(finish: ((unknown) -> ())?)
                         and lobbyAvatar:FindFirstChild("StationProtection") ~= nil
                 end, "carrier returned to protected lobby")
                 assert(owned.launcher.snapshot("Seedship").readyAt == held.readyAt, "death reset reload")
-                observe(1900, 2000)
+                observe(1850, 2000)
                 local before = owned.launcher.snapshot("Seedship")
                 local floorDrop = Vector3.new(before.position.x, before.position.y, before.position.z)
                 assert(
@@ -549,8 +710,17 @@ function Harness.run(finish: ((unknown) -> ())?)
             waitFor(function()
                 return match.snapshot().phase == "Active"
             end, "next round", 40)
-            assert(match.snapshot().roundId > round, "P18 assertion: match.snapshot().roundId > round")
-            observe(2000, 2000)
+            local freshRound = match.snapshot()
+            assert(freshRound.roundId > round, "P18 assertion: match.snapshot().roundId > round")
+            observe(2000, 2000, true)
+            local heavy = gunshipReadiness("M102")
+            assert(heavy.ammo == 1 and heavy.reloadUntil == 0, "new round did not reset howitzer")
+            for _, player in Players:GetPlayers() do
+                if freshRound.members[player.UserId].role == "Ground" then
+                    probe(player, "EquipRifle", {})
+                    probe(player, "WeaponHUD", { kind = "Rifle", prefix = "M-7 • 30 / ∞", ammo = 30 })
+                end
+            end
             for _, site in { "Radar", "Hangar", "Depot", "Seedship" } do
                 local state = owned.launcher.snapshot(site)
                 assert(
