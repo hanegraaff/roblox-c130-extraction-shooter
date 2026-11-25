@@ -731,12 +731,18 @@ return function()
                                             )
                                         end
                                         for other = index + 1, #items do
+                                            local neighbor = items[other]
                                             assert(
-                                                not overlaps(item, items[other]),
-                                                "cross-GUI intersection "
-                                                    .. detail
-                                                    .. " / "
-                                                    .. items[other].Name
+                                                not overlaps(item, neighbor),
+                                                string.format(
+                                                    "cross-GUI intersection %s at %s size %s / %s at %s size %s",
+                                                    detail,
+                                                    tostring(item.AbsolutePosition),
+                                                    tostring(item.AbsoluteSize),
+                                                    neighbor.Name,
+                                                    tostring(neighbor.AbsolutePosition),
+                                                    tostring(neighbor.AbsoluteSize)
+                                                )
                                             )
                                         end
                                         if item:IsA("TextButton") then

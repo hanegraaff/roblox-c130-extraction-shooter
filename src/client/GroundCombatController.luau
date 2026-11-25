@@ -461,11 +461,11 @@ function GroundCombatController.new(
                     fireButton.Position = if touch
                         then UDim2.new(1, -24 - origin.X - layoutInset.X, 0, 126 - origin.Y)
                         else UDim2.new(1, -24, 1, -130)
-                    -- Leave room for the rendered RELOAD text and a 44px
-                    -- touch target while keeping the existing gap to Fire.
+                    -- Keep the 44px touch target in the gap between readiness
+                    -- and the equipment row at the compact landscape height.
                     reloadButton.Size = if touch then UDim2.fromOffset(78, 44) else UDim2.fromOffset(90, 54)
                     reloadButton.Position = if touch
-                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 128 - origin.Y)
+                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 116 - origin.Y)
                         else UDim2.new(1, -24, 1, -210)
                     reloadButton.TextSize = if touch then 12 else 16
                     local roundId = roundState:GetAttribute("RoundId")
