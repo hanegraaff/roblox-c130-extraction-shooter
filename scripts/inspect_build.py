@@ -941,6 +941,7 @@ def main() -> None:
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("VesperReconstruction", "VesperNavigation", "VesperPanelGeometry", "SaltFlatsReconstruction", "SandbreakReconstruction", "SeedshipReconstruction")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("RoleService", "RoundRules", "MatchService", "MatchRuntime", "GameRuntime", "CharacterOwner")}
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/RoundPanel")
+    expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/AircraftArrival")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCameraController")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/ThermalCosmetics")
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/GroundCombatController")
@@ -970,6 +971,12 @@ def main() -> None:
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P19 impact fixture missing from tests or leaked to release: {name}")
+    for name in (
+        "ServerScriptService/ServerTests/AircraftArrivalHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/AircraftArrivalHarness",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P24 arrival fixture missing from tests or leaked to release: {name}")
     for name in ("ServerStorage/Tests/Studio/LobbyGeometry.spec", "ReplicatedStorage/ClientSpecs/GroundIndoorCamera.spec"):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P22 camera or lobby fixture missing from tests or leaked to release: {name}")

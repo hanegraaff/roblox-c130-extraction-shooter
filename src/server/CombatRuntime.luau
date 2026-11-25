@@ -508,10 +508,10 @@ function CombatRuntime.start(
         local previousPhase = lastPhase
         lastPhase = state.phase
         if state.phase ~= "Active" or time >= state.deadlineSeconds then
-            if structure then
-                if state.phase ~= "Deploying" then
-                    structure.cancel()
-                end
+            -- The structural ledger already owns this round during preparation.
+            -- Preserve it through Scatter so the first real flight can score.
+            if structure and state.phase ~= "Deploying" and state.phase ~= "Scatter" then
+                structure.cancel()
             end
             lastAcceptedShotId = 0
             lastAcceptedAt = -math.huge

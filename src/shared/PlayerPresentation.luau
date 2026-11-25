@@ -9,6 +9,8 @@ local PlayerPresentation = {}
 export type View =
     "Waiting"
     | "Deploying"
+    | "GroundScatter"
+    | "OperatorArrival"
     | "Ground"
     | "Operator"
     | "Spectator"
@@ -67,6 +69,13 @@ function PlayerPresentation.view(
         return "OperatorPreview"
     elseif phase == "Lobby" and previewRole == "Ground" then
         return "GroundPreview"
+    elseif phase == "Scatter" then
+        if life == "Alive" and role == "Ground" then
+            return "GroundScatter"
+        elseif life == "Alive" and role == "Gunship" then
+            return "OperatorArrival"
+        end
+        return "RoundLobby"
     elseif phase == "Active" then
         if life == "Alive" and role == "Ground" then
             return "Ground"
@@ -96,6 +105,15 @@ function PlayerPresentation.remaining(deadline: unknown, now: number): number?
         return nil
     end
     return math.max(0, math.ceil(deadline - now))
+end
+
+-- Reads the shared arrival deadline on the current frame, including a delayed
+-- first render. The deadline can be missing while assignment is replicating.
+function PlayerPresentation.arrivalText(deadline: unknown, now: number): string
+    local seconds = if type(deadline) == "number" and deadline > 0
+        then PlayerPresentation.remaining(deadline, now)
+        else nil
+    return if seconds then string.format("C-130 arrives in %d", seconds) else "Preparing deployment"
 end
 
 -- Returns the share of aircraft health in [0, 1] or nil while state is incomplete.
@@ -155,7 +173,9 @@ end
 
 local titles: { [View]: string } = table.freeze({
     Ground = "GROUND TEAM",
+    GroundScatter = "GROUND TEAM",
     Operator = "C-130 OPERATOR",
+    OperatorArrival = "C-130 OPERATOR",
     Deploying = "DEPLOYING",
     Results = "ROUND RESULTS",
     Resetting = "RESTORING BATTLEFIELD",

@@ -199,6 +199,8 @@ function GameRuntime.start(
     -- One ordered frame owns match damage and interactions. All casts observe
     -- the same pre-impact cover and deadline. Phase publication and equipment
     -- cleanup follow the result commit, before launcher intent is processed.
+    -- The phase callback attaches the aircraft at reveal before clients are
+    -- given the Active phase. Activation cannot resolve an earlier fire intent.
     local frame = RunService.Heartbeat:Connect(function(dt)
         local time = workspace:GetServerTimeNow()
         aircraft.step(time)
@@ -207,7 +209,7 @@ function GameRuntime.start(
             groundCombat.resolveRifles()
             launcher.advance(batchSeconds)
             destruction.flush(batchSeconds)
-        end)
+        end, aircraft.step)
         if rounds.match.snapshot().phase ~= "Active" then
             destruction.flush(time)
         end

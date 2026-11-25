@@ -11,10 +11,11 @@ local AircraftHealth = require(Server.AircraftHealth)
 -- Production aircraft/ground adapters run against actual world and a pure match clock.
 local function checkImpact(atSeconds: number, expectedReason: string)
     local seconds = 100
+    local function now(): number
+        return seconds
+    end
     local match = MatchService.new({ minimumPlayers = 2, durationSeconds = 10, seed = 1 }, {
-        now = function()
-            return seconds
-        end,
+        now = now,
         releaseLife = function() end,
     })
     match.join(101)
@@ -23,7 +24,7 @@ local function checkImpact(atSeconds: number, expectedReason: string)
     local state = match.snapshot()
     assert(match.ready(101, state.roundId) and match.ready(102, state.roundId) and match.activate(), "active")
     local player = if state.members[101].role == "Ground" then 101 else 102
-    local aircraft, aircraftReason = AircraftService.start(match, nil, true)
+    local aircraft, aircraftReason = AircraftService.start(match, now, true)
     assert(aircraft, aircraftReason)
     local ground, groundReason = GroundCombatRuntime.start(match, nil, true)
     if not ground then
@@ -31,7 +32,7 @@ local function checkImpact(atSeconds: number, expectedReason: string)
         error(tostring(groundReason))
     end
     local ok, problem = pcall(function()
-        ground.maintain(workspace:GetServerTimeNow())
+        ground.maintain(now())
         local origin = aircraft.position() + Vector3.yAxis * 50
         local down = -Vector3.yAxis * 60
         local groundCount = 0

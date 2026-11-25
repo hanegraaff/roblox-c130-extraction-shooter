@@ -81,6 +81,10 @@ function RoundHarness.run()
         return
     end
     local args = StudioTestService:GetTestArgs()
+    if kind == "P24" then
+        require(script.Parent.AircraftArrivalHarness).run(type(args) == "table")
+        return
+    end
     -- A trusted, temporary server-only invocation marker supports Studio's native
     -- Server & Clients UI when the SDK spawn path is unavailable. It is absent from
     -- Git defaults and the release mapping; no client remote can set it. Dispatch
@@ -325,6 +329,7 @@ function RoundHarness.run()
         automaticDeployment = automated,
         minimumPlayers = 2,
         durationSeconds = combatSeconds,
+        scatterSeconds = if automated then 0 else MatchRuntime.defaults.scatterSeconds,
         -- The first automated deployment follows actual client smoke readiness.
         -- This is only a guard against an automatic start during that handshake.
         lobbySeconds = if automated then 180 else 0,

@@ -244,10 +244,11 @@ function GroundCombatController.new(
                 local item = if aircraftState then aircraftState:FindFirstChild(name) else nil
                 return if item and item:IsA("RemoteEvent") then item else nil
             end
-            local function activeGround(): boolean
+            local function eligibleGround(allowScatter: boolean): boolean
+                local phase = roundState:GetAttribute("Phase")
                 return player:GetAttribute("Role") == "Ground"
                     and player:GetAttribute("Life") == "Alive"
-                    and roundState:GetAttribute("Phase") == "Active"
+                    and (phase == "Active" or (allowScatter and phase == "Scatter"))
             end
             local function overlayOpen(): boolean
                 local hud = playerGui:FindFirstChild("RoundHUD")
@@ -274,7 +275,7 @@ function GroundCombatController.new(
                 end
             end
             local function sendLauncher(action: "Pickup" | "Drop")
-                if overlayOpen() or not activeGround() then
+                if overlayOpen() or not eligibleGround(true) then
                     return
                 end
                 local phase, owns, near = launcherFacts()
@@ -330,7 +331,7 @@ function GroundCombatController.new(
                 end)
             )
             local function sendReload()
-                if overlayOpen() or not activeGround() then
+                if overlayOpen() or not eligibleGround(false) then
                     return
                 end
                 local tool = selected
@@ -387,7 +388,7 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 fireButton.MouseButton1Down:Connect(function()
-                    held = true
+                    held = eligibleGround(false)
                 end)
             )
             table.insert(
@@ -399,7 +400,11 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 fireButton.InputBegan:Connect(function(input)
-                    if input.UserInputType == Enum.UserInputType.Touch and not fireTouch then
+                    if
+                        input.UserInputType == Enum.UserInputType.Touch
+                        and not fireTouch
+                        and eligibleGround(false)
+                    then
                         fireTouch = input
                         held = true
                     end
@@ -481,7 +486,7 @@ function GroundCombatController.new(
                             table.insert(
                                 toolConnections,
                                 equipped.Activated:Connect(function()
-                                    held = true
+                                    held = eligibleGround(false)
                                 end)
                             )
                             table.insert(
@@ -492,12 +497,15 @@ function GroundCombatController.new(
                             )
                         end
                     end
-                    local visible = activeGround()
+                    local canFire = eligibleGround(false)
+                    local visible = canFire or eligibleGround(true)
                     local overlay = overlayOpen()
                     gui.Enabled = visible
-                    fireButton.Visible = touch
-                    reloadButton.Visible = touch and (selected == nil or selected.Name == "M-7 rifle")
-                    reticle.Visible = selected ~= nil
+                    fireButton.Visible = canFire and touch
+                    reloadButton.Visible = canFire
+                        and touch
+                        and (selected == nil or selected.Name == "M-7 rifle")
+                    reticle.Visible = canFire and selected ~= nil
                     local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
                     local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
                     local closest = math.huge
@@ -551,10 +559,15 @@ function GroundCombatController.new(
                             math.ceil(humanoid.MaxHealth)
                         )
                     end
-                    if not visible or overlay then
+                    if not canFire or overlay then
                         held = false
+                        fireTouch = nil
                     end
                     if not visible then
+                        return
+                    end
+                    if not canFire then
+                        label.Text = "Weapons unlock at aircraft arrival"
                         return
                     end
                     local ammo = selected and selected:GetAttribute("Ammo") or 0

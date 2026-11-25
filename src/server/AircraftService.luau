@@ -25,7 +25,7 @@ export type Controller = {
     sample: (number) -> CFrame,
     -- Server-only finite disk/height and solid-world sight-line check; never fires.
     aimAllowed: (Vector3) -> boolean,
-    -- Server-owned selected weapon and muzzle position, never supplied by a client.
+    -- Server-owned selected weapon and muzzle position. An absent plane has no muzzle.
     weapon: () -> string,
     muzzle: (string) -> Vector3?,
     -- Current canonical camera origin used to bound client pose replication age.
@@ -36,8 +36,9 @@ export type Controller = {
     resources: () -> { connections: number },
 }
 
--- Starts from phase zero. Orbit runs in lobby for solo inspection, resets at each
--- deployment/lobby transition, and freezes in Results. Model pivot/Hitbox is the sole
+-- Orbit runs in Lobby for inspection. The model is detached during deployment
+-- and scatter, starts at phase zero on arrival, and freezes in Results if it arrived.
+-- Model pivot/Hitbox is the sole
 -- gameplay pose; visible parts participate in shot queries but do not collide or
 -- touch. No smoothing shell.
 -- Optional clock supplies finite monotonic seconds for engine fixtures; production
@@ -121,25 +122,41 @@ function AircraftService.start(
     local epoch = now()
     local previousPhase = ""
     local previousRound = -1
+    local arrivedRound = -1
     local function step(time: number)
         if not running then
             return
         end
         local state = match.snapshot()
-        if state.roundId ~= previousRound or (state.phase ~= previousPhase and state.phase == "Lobby") then
-            epoch = time
+        local newLobby = state.phase == "Lobby" and previousPhase ~= "Lobby"
+        local arrival = state.phase == "Active"
+            and (previousPhase ~= "Active" or state.roundId ~= previousRound)
+        if state.roundId ~= previousRound or newLobby then
             selection.reset(state.roundId, state.phase == "Lobby")
             publish()
         end
+        if newLobby or arrival then
+            epoch = time
+            status:SetAttribute("EpochSeconds", epoch)
+        end
+        if arrival then
+            arrivedRound = state.roundId
+        end
         previousRound = state.roundId
         previousPhase = state.phase
-        status:SetAttribute("EpochSeconds", epoch)
         if
-            state.phase ~= "Results"
-            and state.phase ~= "Resetting"
-            and (state.phase ~= "Active" or time < state.deadlineSeconds)
+            state.phase == "Deploying"
+            or state.phase == "Scatter"
+            or state.phase == "Resetting"
+            or (state.phase == "Results" and arrivedRound ~= state.roundId)
         then
+            model.Parent = nil
+        elseif state.phase == "Lobby" or (state.phase == "Active" and time < state.deadlineSeconds) then
             model:PivotTo(sample(time - epoch))
+            model:SetAttribute("RoundId", state.roundId)
+            if not model.Parent then
+                model.Parent = workspace
+            end
         end
     end
     table.insert(
@@ -175,8 +192,6 @@ function AircraftService.start(
             buckets[player] = nil
         end)
     )
-    model:PivotTo(sample(0))
-    model.Parent = workspace
     step(epoch)
     status.Parent = ReplicatedStorage
     if not externallyStepped then
@@ -197,7 +212,7 @@ function AircraftService.start(
             return hitbox.Position
         end,
         muzzle = function(weapon)
-            if weapon ~= "GAU23" and weapon ~= "M102" then
+            if model.Parent ~= workspace or (weapon ~= "GAU23" and weapon ~= "M102") then
                 return nil
             end
             local attachment = hitbox:FindFirstChild(if weapon == "M102" then "M102Muzzle" else "GAU23Muzzle")
@@ -207,7 +222,10 @@ function AircraftService.start(
             return table.clone(map), minimumY, maximumY
         end,
         aimAllowed = function(endpoint)
-            if not AircraftRules.aimAllowed(map, endpoint.X, endpoint.Y, endpoint.Z, minimumY, maximumY) then
+            if
+                model.Parent ~= workspace
+                or not AircraftRules.aimAllowed(map, endpoint.X, endpoint.Y, endpoint.Z, minimumY, maximumY)
+            then
                 return false
             end
             local parameters = RaycastParams.new()

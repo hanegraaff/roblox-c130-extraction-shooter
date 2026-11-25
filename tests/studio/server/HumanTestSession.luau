@@ -10,6 +10,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local GameRuntime = require(game.ServerScriptService.Server.GameRuntime)
+local MatchRuntime = require(game.ServerScriptService.Server.MatchRuntime)
 local RoleService = require(game.ServerScriptService.Server.RoleService)
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
 local LocalTestControls = require(script.Parent.LocalTestControls)
@@ -19,8 +20,9 @@ type Preference = { role: string, sequence: number, bucket: RateLimit.Bucket }
 export type Controller = { stop: () -> (), request: (Player, unknown) -> (boolean, string?) }
 
 -- Takes ownership of an already-started runtime. All callbacks are server-owned.
--- Settings apply to the next explicit start/reset, not the current round's deadline.
-function Session.start(initial: GameRuntime.Controller): Controller
+-- Settings apply at the next explicit start/reset. Focused control fixtures
+-- can skip the head start; operated rounds use the production duration.
+function Session.start(initial: GameRuntime.Controller, scatterSeconds: number?): Controller
     assert(RunService:IsStudio(), "human test session requires Studio")
     assert(not ReplicatedStorage:FindFirstChild("StudioTestControls"), "test controls already owned")
     local runtime = initial
@@ -101,7 +103,7 @@ function Session.start(initial: GameRuntime.Controller): Controller
                 -- Use the real reset path to restore the owned pristine map before
                 -- replacing a runtime which has entered a competitive round.
                 local state = runtime.rounds.match.snapshot()
-                if state.phase == "Active" or state.phase == "Deploying" then
+                if state.phase == "Active" or state.phase == "Scatter" or state.phase == "Deploying" then
                     runtime.rounds.match.abort(state.roundId, "HumanTestReset")
                 end
                 if runtime.rounds.match.snapshot().phase == "Results" then
@@ -129,6 +131,7 @@ function Session.start(initial: GameRuntime.Controller): Controller
                     automaticDeployment = false,
                     minimumPlayers = 2,
                     durationSeconds = durationSeconds,
+                    scatterSeconds = scatterSeconds or MatchRuntime.defaults.scatterSeconds,
                     lobbySeconds = 0,
                     deploymentSeconds = 25,
                     resultsSeconds = 3,
