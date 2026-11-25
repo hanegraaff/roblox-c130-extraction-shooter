@@ -1,0 +1,1437 @@
+{
+  "sourceCommit": "6db1823fd151fa3b6cb487c60250f0da6745be2c",
+  "tree": "fa615c9783d26b402d7d6dc7cef4f6934b171787",
+  "buildSha256": "8838895d14ae4329ff42c3d58907f5f806770b62c4f4f7880bbbb3438a8f0a4b",
+  "version": "0.748.0.7481526",
+  "invocation": "ExecuteMultiplayerTestAsync(2,{kind=\"P04\"})",
+  "added": null,
+  "observed": [
+    {
+      "ordinary": false,
+      "kind": "P04",
+      "count": 2,
+      "harness": false
+    },
+    {
+      "ordinary": false,
+      "kind": "P04",
+      "count": 2,
+      "harness": false
+    },
+    {
+      "ordinary": false,
+      "harness": true,
+      "phase": "Lobby",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+      "round": 0,
+      "kind": "P04",
+      "count": 2
+    },
+    {
+      "ordinary": false,
+      "harness": true,
+      "phase": "Active",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+      "round": 1,
+      "kind": "P04",
+      "count": 2
+    },
+    {
+      "ordinary": false,
+      "harness": true,
+      "phase": "Active",
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+      "round": 2,
+      "kind": "P04",
+      "count": 2
+    }
+  ],
+  "result": {
+    "serverBaseline": "{\"errors\":0,\"skipped\":0,\"passed\":207,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":207}",
+    "skipped": 0,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A2/A4 initial canonical pose and both acknowledged zoom profiles stay inward"
+      },
+      {
+        "passed": true,
+        "name": "A4 stale malformed wrong-role duplicate and unknown selections preserve acknowledged view"
+      },
+      {
+        "passed": true,
+        "name": "A5 exposed and covered real geometry uses occluded thermal rendering"
+      },
+      {
+        "passed": true,
+        "name": "A2/A3 two actual clients converge at nine samples spanning a complete production orbit"
+      },
+      {
+        "passed": true,
+        "name": "A2/A5 result and reset restore initial profile camera input and effects"
+      },
+      {
+        "passed": true,
+        "name": "A5 actual operator disconnect forfeits and server teardown removes all aircraft ownership"
+      }
+    ],
+    "passed": 6,
+    "clientBaselines": [
+      {
+        "passed": true,
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}"
+      },
+      {
+        "passed": true,
+        "baseline": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}"
+      }
+    ],
+    "orbitSeconds": 90,
+    "observations": [
+      {
+        "observations": {
+          "baselineReadiness": {
+            "latest": {
+              "fieldOfView": 70,
+              "phase": "Lobby",
+              "backdrop": false,
+              "ownHumanoid": true,
+              "camera": "Workspace.Camera",
+              "mouseBehavior": "Default",
+              "role": "Waiting",
+              "time": 28.88644700000077,
+              "thermalEffect": false,
+              "thermalHud": false,
+              "cameraType": "Custom",
+              "mouseIconEnabled": true,
+              "ownSubject": true
+            }
+          },
+          "baseline": {
+            "mouseBehavior": "Default",
+            "fieldOfView": 70,
+            "cameraType": "Custom",
+            "mouseIconEnabled": true,
+            "capturedAt": 28.88644700000077,
+            "camera": "Workspace.Camera"
+          }
+        },
+        "passed": true,
+        "kind": "CaptureBaseline",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "baselineReadiness": {
+            "latest": {
+              "fieldOfView": 70,
+              "phase": "Lobby",
+              "backdrop": false,
+              "ownHumanoid": true,
+              "camera": "Workspace.Camera",
+              "mouseBehavior": "Default",
+              "role": "Waiting",
+              "time": 28.02945970833389,
+              "thermalEffect": false,
+              "thermalHud": false,
+              "cameraType": "Custom",
+              "mouseIconEnabled": true,
+              "ownSubject": true
+            }
+          },
+          "baseline": {
+            "mouseBehavior": "Default",
+            "fieldOfView": 70,
+            "cameraType": "Custom",
+            "mouseIconEnabled": true,
+            "capturedAt": 28.02945970833389,
+            "camera": "Workspace.Camera"
+          }
+        },
+        "passed": true,
+        "kind": "CaptureBaseline",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 30.299904666666407,
+          "drawnCenter": [
+            404,
+            400
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 30.33424391666631,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 22,
+          "reticlePixels": [
+            404,
+            400
+          ],
+          "cameraSameAsBaseline": true,
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            653
+          ],
+          "crossAbsolutePosition": [
+            387,
+            325
+          ],
+          "weapon": "GAU23",
+          "drawnPixelError": 0,
+          "projectionViewport": "1081, 653",
+          "crossOffset": [
+            404,
+            400
+          ],
+          "fov": 30,
+          "viewport": [
+            1081,
+            653
+          ],
+          "life": "Alive",
+          "projectionFrame": "1",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 30.436295999999857,
+          "drawnCenter": [
+            404,
+            400
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 30.469666333334317,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 24,
+          "reticlePixels": [
+            404,
+            400
+          ],
+          "cameraSameAsBaseline": true,
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            653
+          ],
+          "crossAbsolutePosition": [
+            387,
+            325
+          ],
+          "weapon": "M102",
+          "drawnPixelError": 0,
+          "projectionViewport": "1081, 653",
+          "crossOffset": [
+            404,
+            400
+          ],
+          "fov": 40,
+          "viewport": [
+            1081,
+            653
+          ],
+          "life": "Alive",
+          "projectionFrame": "3",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.40649914741516113,
+          "predictedPhaseRadians": 0.02594404878397466,
+          "predictedPosition": [
+            359.87884521484375,
+            140,
+            9.338809967041016
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.0161740779876709,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619924.800434,
+          "snapshotPhaseRadians": 0.024814885126537876,
+          "actualRole": "Ground",
+          "position": [
+            359.88916015625,
+            140,
+            8.932441711425781
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.4061216115951538,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619924.78426,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            359.88916015625,
+            140,
+            8.932441711425781
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 30.969611208332935,
+          "drawnCenter": [
+            404,
+            400
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 31.035957666666945,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 32,
+          "reticlePixels": [
+            404,
+            400
+          ],
+          "cameraSameAsBaseline": true,
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            653
+          ],
+          "crossAbsolutePosition": [
+            387,
+            325
+          ],
+          "weapon": "M102",
+          "drawnPixelError": 0,
+          "projectionViewport": "1081, 653",
+          "crossOffset": [
+            404,
+            400
+          ],
+          "fov": 40,
+          "viewport": [
+            1081,
+            653
+          ],
+          "life": "Alive",
+          "projectionFrame": "11",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 31.636573875002796,
+          "drawnCenter": [
+            404,
+            400
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 31.668785041667434,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 42,
+          "reticlePixels": [
+            404,
+            400
+          ],
+          "cameraSameAsBaseline": true,
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            653
+          ],
+          "crossAbsolutePosition": [
+            387,
+            325
+          ],
+          "weapon": "GAU23",
+          "drawnPixelError": 0,
+          "projectionViewport": "1081, 653",
+          "crossOffset": [
+            404,
+            400
+          ],
+          "fov": 30,
+          "viewport": [
+            1081,
+            653
+          ],
+          "life": "Alive",
+          "projectionFrame": "21",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "highlights": 3
+        },
+        "passed": true,
+        "kind": "Thermal",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.5895392298698425,
+          "predictedPhaseRadians": 0.11135731632932842,
+          "predictedPosition": [
+            357.7702331542969,
+            140,
+            40.00583267211914
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.023457050323486328,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619926.024835,
+          "snapshotPhaseRadians": 0.10971970528552508,
+          "actualRole": "Gunship",
+          "position": [
+            357.83526611328125,
+            140,
+            39.419891357421875
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.5891339778900146,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619926.001378,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            357.83526611328125,
+            140,
+            39.419891357421875
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.3815898895263672,
+          "predictedPhaseRadians": 0.11312442358113688,
+          "predictedPosition": [
+            357.698974609375,
+            140,
+            40.63798904418945
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.04876899719238281,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619926.050147,
+          "snapshotPhaseRadians": 0.10971970528552508,
+          "actualRole": "Ground",
+          "position": [
+            357.7418518066406,
+            140,
+            40.25881576538086
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.3813135325908661,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619926.001378,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            357.83526611328125,
+            140,
+            39.419891357421875
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.590394139289856,
+          "predictedPhaseRadians": 0.8979004116416334,
+          "predictedPosition": [
+            224.3711700439453,
+            140,
+            281.5272216796875
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.02349090576171875,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619937.291035,
+          "snapshotPhaseRadians": 0.8962604370423626,
+          "actualRole": "Gunship",
+          "position": [
+            224.8325653076172,
+            140,
+            281.15887451171875
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.5900581479072571,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619937.267544,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            224.8325653076172,
+            140,
+            281.15887451171875
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.8086627721786499,
+          "predictedPhaseRadians": 0.900842838461521,
+          "predictedPosition": [
+            223.5418243408203,
+            140,
+            282.1861877441406
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.06563806533813477,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619937.333182,
+          "snapshotPhaseRadians": 0.8962604370423626,
+          "actualRole": "Ground",
+          "position": [
+            224.17514038085938,
+            140,
+            281.683349609375
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.8083267211914062,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619937.267544,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            224.8325653076172,
+            140,
+            281.15887451171875
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.17351290583610535,
+          "predictedPhaseRadians": 1.683282940928411,
+          "predictedPosition": [
+            -40.40983581542969,
+            140,
+            357.7248229980469
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.006903886795043945,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619948.540253,
+          "snapshotPhaseRadians": 1.682800958705377,
+          "actualRole": "Gunship",
+          "position": [
+            -40.2374153137207,
+            140,
+            357.7442626953125
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.17319107055664062,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619948.533349,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -40.2374153137207,
+            140,
+            357.7442626953125
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.8079156875610352,
+          "predictedPhaseRadians": 1.6873982238923695,
+          "predictedPosition": [
+            -41.881629943847656,
+            140,
+            357.5555114746094
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.06585097312927246,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619948.5992,
+          "snapshotPhaseRadians": 1.682800958705377,
+          "actualRole": "Ground",
+          "position": [
+            -41.07909393310547,
+            140,
+            357.6485900878906
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.8074914813041687,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619948.533349,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -40.2374153137207,
+            140,
+            357.7442626953125
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.1814338117837906,
+          "predictedPhaseRadians": 2.467547299588204,
+          "predictedPosition": [
+            -281.2691345214844,
+            140,
+            224.6946258544922
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.007219076156616211,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619959.773534,
+          "snapshotPhaseRadians": 2.4670433129966636,
+          "actualRole": "Gunship",
+          "position": [
+            -281.1558532714844,
+            140,
+            224.8363494873047
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.1811407059431076,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619959.766315,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -281.1558532714844,
+            140,
+            224.8363494873047
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.8184998035430908,
+          "predictedPhaseRadians": 2.471648684180224,
+          "predictedPosition": [
+            -282.1883239746094,
+            140,
+            223.5391387939453
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.06596708297729492,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619959.832282,
+          "snapshotPhaseRadians": 2.4670433129966636,
+          "actualRole": "Ground",
+          "position": [
+            -281.6793518066406,
+            140,
+            224.18014526367188
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.8181638121604919,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619959.766315,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -281.1558532714844,
+            140,
+            224.8363494873047
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.18910175561904907,
+          "predictedPhaseRadians": 3.254042896356185,
+          "predictedPosition": [
+            -357.7262878417969,
+            140,
+            -40.396827697753906
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.007524013519287109,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619971.039759,
+          "snapshotPhaseRadians": 3.25351762112068,
+          "actualRole": "Gunship",
+          "position": [
+            -357.7474670410156,
+            140,
+            -40.20891571044922
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.18882539868354797,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619971.032235,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -357.7474670410156,
+            140,
+            -40.20891571044922
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.8259156942367554,
+          "predictedPhaseRadians": 3.258145129830802,
+          "predictedPosition": [
+            -357.55755615234375,
+            140,
+            -41.86396026611328
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.0662841796875,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619971.098519,
+          "snapshotPhaseRadians": 3.25351762112068,
+          "actualRole": "Ground",
+          "position": [
+            -357.65264892578125,
+            140,
+            -41.04353713989258
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.8255828022956848,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619971.032235,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -357.7474670410156,
+            140,
+            -40.20891571044922
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Send",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 76.9010657083345,
+          "drawnCenter": [
+            404,
+            400
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 76.91772920833318,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 721,
+          "reticlePixels": [
+            404,
+            400
+          ],
+          "cameraSameAsBaseline": true,
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            653
+          ],
+          "crossAbsolutePosition": [
+            387,
+            325
+          ],
+          "weapon": "M102",
+          "drawnPixelError": 0,
+          "projectionViewport": "1081, 653",
+          "crossOffset": [
+            404,
+            400
+          ],
+          "fov": 40,
+          "viewport": [
+            1081,
+            653
+          ],
+          "life": "Alive",
+          "projectionFrame": "700",
+          "roundId": 1
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.16371364891529083,
+          "predictedPhaseRadians": 4.038192090118196,
+          "predictedPosition": [
+            -224.73724365234375,
+            140,
+            -281.2350769042969
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.006514072418212891,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619982.271784,
+          "snapshotPhaseRadians": 4.037737322072552,
+          "actualRole": "Gunship",
+          "position": [
+            -224.8651123046875,
+            140,
+            -281.1328430175781
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.16342054307460785,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619982.26527,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -224.8651123046875,
+            140,
+            -281.1328430175781
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.8225007653236389,
+          "predictedPhaseRadians": 4.042360003803198,
+          "predictedPosition": [
+            -223.56312561035156,
+            140,
+            -282.1693115234375
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.06621503829956055,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619982.331485,
+          "snapshotPhaseRadians": 4.037737322072552,
+          "actualRole": "Ground",
+          "position": [
+            -224.2072296142578,
+            140,
+            -281.6578063964844
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.82216477394104,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619982.26527,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            -224.8651123046875,
+            140,
+            -281.1328430175781
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.18711084127426147,
+          "predictedPhaseRadians": 4.82480535781823,
+          "predictedPosition": [
+            40.38471221923828,
+            140,
+            -357.7276611328125
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.007444858551025391,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619993.538971,
+          "snapshotPhaseRadians": 4.824285608641987,
+          "actualRole": "Gunship",
+          "position": [
+            40.19877624511719,
+            140,
+            -357.74859619140625
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.18683448433876038,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795619993.531526,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            40.19877624511719,
+            140,
+            -357.74859619140625
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.3863922953605652,
+          "predictedPhaseRadians": 4.827693539375664,
+          "predictedPosition": [
+            41.417724609375,
+            140,
+            -357.6095275878906
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.048815011978149414,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795619993.580341,
+          "snapshotPhaseRadians": 4.824285608641987,
+          "actualRole": "Ground",
+          "position": [
+            41.03387451171875,
+            140,
+            -357.6537780761719
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.3860856294631958,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795619993.531526,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            40.19877624511719,
+            140,
+            -357.74859619140625
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.6058765649795532,
+          "predictedPhaseRadians": 5.610163015510632,
+          "predictedPosition": [
+            281.4988708496094,
+            140,
+            -224.40675354003906
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.024106979370117188,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795620004.788379,
+          "snapshotPhaseRadians": 5.608480030859756,
+          "actualRole": "Gunship",
+          "position": [
+            281.12078857421875,
+            140,
+            -224.88018798828125
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.6055095791816711,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795620004.764272,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            281.12078857421875,
+            140,
+            -224.88018798828125
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.4109373092651367,
+          "predictedPhaseRadians": 5.611944936596004,
+          "predictedPosition": [
+            281.8982849121094,
+            140,
+            -223.90478515625
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.04963111877441406,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795620004.813903,
+          "snapshotPhaseRadians": 5.608480030859756,
+          "actualRole": "Ground",
+          "position": [
+            281.64251708984375,
+            140,
+            -224.22642517089844
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.41063225269317627,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795620004.764272,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            281.12078857421875,
+            140,
+            -224.88018798828125
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.6014285087585449,
+          "predictedPhaseRadians": 0.113506031863048,
+          "predictedPosition": [
+            357.6834411621094,
+            140,
+            40.77448654174805
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.023930072784423828,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795620016.054578,
+          "snapshotPhaseRadians": 0.11183539762172767,
+          "actualRole": "Gunship",
+          "position": [
+            357.7510681152344,
+            140,
+            40.17687225341797
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.6010729074478149,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795620016.030648,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            357.7510681152344,
+            140,
+            40.17687225341797
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.39481502771377563,
+          "predictedPhaseRadians": 0.11526699719959246,
+          "predictedPosition": [
+            357.611083984375,
+            140,
+            41.404293060302734
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.049154043197631836,
+          "actualRoundId": 1,
+          "sampleServerTime": 1795620016.079802,
+          "snapshotPhaseRadians": 0.11183539762172767,
+          "actualRole": "Ground",
+          "position": [
+            357.6562805175781,
+            140,
+            41.0120735168457
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.39445939660072327,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795620016.030648,
+          "expectedRoundId": 1,
+          "snapshotPosition": [
+            357.7510681152344,
+            140,
+            40.17687225341797
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "restoration": {
+            "baseline": {
+              "mouseBehavior": "Default",
+              "fieldOfView": 70,
+              "mouseIconEnabled": true,
+              "capturedAt": 28.88644700000077,
+              "camera": "Workspace.Camera"
+            },
+            "latest": {
+              "sameCamera": true,
+              "backdrop": false,
+              "phase": "Lobby",
+              "camera": "Workspace.Camera",
+              "ownHumanoid": true,
+              "cameraType": "Custom",
+              "mouseBehavior": "Default",
+              "role": "Waiting",
+              "time": 125.46562145833377,
+              "thermalEffect": false,
+              "thermalHud": false,
+              "fieldOfView": 70,
+              "mouseIconEnabled": true,
+              "ownSubject": true
+            }
+          }
+        },
+        "passed": true,
+        "kind": "Restored",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "restoration": {
+            "baseline": {
+              "mouseBehavior": "Default",
+              "fieldOfView": 70,
+              "mouseIconEnabled": true,
+              "capturedAt": 28.02945970833389,
+              "camera": "Workspace.Camera"
+            },
+            "latest": {
+              "sameCamera": true,
+              "backdrop": false,
+              "phase": "Lobby",
+              "camera": "Workspace.Camera",
+              "ownHumanoid": true,
+              "cameraType": "Custom",
+              "mouseBehavior": "Default",
+              "role": "Waiting",
+              "time": 124.49176491666731,
+              "thermalEffect": false,
+              "thermalHud": false,
+              "fieldOfView": 70,
+              "mouseIconEnabled": true,
+              "ownSubject": true
+            }
+          }
+        },
+        "passed": true,
+        "kind": "Restored",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "lastRenderSeconds": 125.61109266666608,
+          "drawnCenter": [
+            318,
+            288
+          ],
+          "role": "Gunship",
+          "sampleSeconds": 125.63570245833398,
+          "guiInset": [
+            0,
+            58
+          ],
+          "renderedFrames": 6262,
+          "reticlePixels": [
+            318,
+            288
+          ],
+          "cameraSameAsBaseline": true,
+          "phase": "Active",
+          "guiAbsoluteSize": [
+            1081,
+            653
+          ],
+          "crossAbsolutePosition": [
+            301,
+            213
+          ],
+          "weapon": "GAU23",
+          "drawnPixelError": 0,
+          "projectionViewport": "1081, 653",
+          "crossOffset": [
+            318,
+            288
+          ],
+          "fov": 30,
+          "viewport": [
+            1081,
+            653
+          ],
+          "life": "Alive",
+          "projectionFrame": "1",
+          "roundId": 2
+        },
+        "passed": true,
+        "kind": "Profile",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.15446484088897705,
+          "predictedPhaseRadians": 0.013612881091850246,
+          "predictedPosition": [
+            359.9666442871094,
+            140,
+            4.900485992431641
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.006145954132080078,
+          "actualRoundId": 2,
+          "sampleServerTime": 1795620020.953573,
+          "snapshotPhaseRadians": 0.013183812550724856,
+          "actualRole": "Ground",
+          "position": [
+            359.9687194824219,
+            140,
+            4.746035099029541
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.15408721566200256,
+          "expectedRole": "Ground",
+          "snapshotServerTime": 1795620020.947427,
+          "expectedRoundId": 2,
+          "snapshotPosition": [
+            359.9687194824219,
+            140,
+            4.746035099029541
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -1,
+        "detail": "observed"
+      },
+      {
+        "observations": {
+          "modelPresent": true,
+          "poseErrorStuds": 0.8108102679252625,
+          "predictedPhaseRadians": 0.01777465286158751,
+          "predictedPosition": [
+            359.9431457519531,
+            140,
+            6.398538112640381
+          ],
+          "actualPhase": "Active",
+          "sampleCount": 2,
+          "snapshotAgeSeconds": 0.06575894355773926,
+          "actualRoundId": 2,
+          "sampleServerTime": 1795620021.013186,
+          "snapshotPhaseRadians": 0.013183812550724856,
+          "actualRole": "Gunship",
+          "position": [
+            359.9566345214844,
+            140,
+            5.5878400802612305
+          ],
+          "predictionError": "none",
+          "closestPoseErrorStuds": 0.8104870319366455,
+          "expectedRole": "Gunship",
+          "snapshotServerTime": 1795620020.947427,
+          "expectedRoundId": 2,
+          "snapshotPosition": [
+            359.9687194824219,
+            140,
+            4.746035099029541
+          ],
+          "predictionSelfTest": "passed",
+          "periodSeconds": 90
+        },
+        "passed": true,
+        "kind": "Pose",
+        "userId": -2,
+        "detail": "observed"
+      },
+      {
+        "observations": [],
+        "passed": true,
+        "kind": "Leave",
+        "userId": -2,
+        "detail": "observed"
+      }
+    ],
+    "clientCount": 2,
+    "environment": "Studio",
+    "poseToleranceStuds": 8,
+    "suite": "P04-multiplayer",
+    "failed": 0,
+    "discovered": 6
+  }
+}

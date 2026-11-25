@@ -23,3 +23,19 @@ Both clients displayed the same deadline. Reveals occurred 5.97 and 6.51 millise
 ## Operated layout review
 
 On `e93ae0e`, the actual Ground client moved 8.53 studs with W while the centered desktop countdown advanced from 19 to 18. The countdown was clear of native chat and the surrender control. On the iPhone 17 Pro landscape simulator at 750 × 381 logical pixels, both actual clients saw 19 against the same deadline. Ground retained its normal view and the operator's opaque cover extended through the device insets. On arrival the phone HUD unlocked and each role retained the expected camera. The final candidate retains the same countdown layout and orders the thermal render before releasing blackout. [Desktop Ground](p24-e93-operated-desktop-scatter-ground.jpg) · [Desktop operator](p24-e93-operated-desktop-scatter-gunship.jpg) · [Phone Ground](p24-e93-operated-phone-scatter-ground.jpg) · [Phone operator](p24-e93-operated-phone-scatter-gunship.jpg) · [Operated observations](p24-e93-operated-review.json)
+
+On `6db1823`, the same phone layout stayed readable for all 13 sampled movement frames as the actual Ground avatar moved 13.95 studs through local `Humanoid:Move`. Ground kept its position and gained the Fire control at arrival. The operator switched from full black to thermal with touch controls. Studio returned to the original Edit document with the default viewport and the temporary selector cleared. [Ground moving](phone-ground-moving.jpg) · [Operator before arrival](phone-operator-blackout.jpg) · [Operator after arrival](phone-operator-active.jpg) · [Motion measurements](p24-phone-motion-6db1823.json) · [Studio cleanup](p24-studio-final-cleanup.json)
+
+## Combat and launcher regressions
+
+On `70084b8`, P05 passed **9/9** with two actual clients and no failures or skips. It exercised both aircraft weapons, upper-floor panel openings, the P19 native impact matrix and projectile expiry. An earlier launch lost its SDK arguments, and another reached the third round but was ended before the impact matrix finished. The successful run was given the full configured window. [P05 report](p24-regression-p05-70084b8.json)
+
+P18 passed **11/11** with three initial actual clients and two after intentional carrier departure. There were no failures or skips. Launcher recovery and contested ownership, deployment-roster health, panel damage, thermal and camera controls, and replay all passed. [P18 report](p24-regression-p18-70084b8.json)
+
+## Orbit and lobby regressions
+
+P04 passed **6/6** on `6db1823` with two actual clients and no failures or skips. It sampled the full 90-second orbit, checked both zooms, thermal occlusion, pose convergence, round reset and teardown after actual operator disconnect. Two earlier attempts only connected one of two requested clients. Both clients joined directly in the passing run. [P04 report](p24-regression-p04-6db1823.json) · [Edit source parity](studio-parity-6db1823.json)
+
+The earlier P03 run on `70084b8` verified role replication and an actual fourth client joining mid-round with a protected lobby body. The theater fixture then timed out on its repeated entry. The exit check walks the same avatar away from the TV. The corrected fixture positions that avatar in range before reentry and retains native E, camera, exit and movement checks. [Earlier P03 report](p24-regression-p03-70084b8.json)
+
+On `6db1823` the first P03 attempt timed out waiting for the fourth client. A fresh invocation passed **9/9** with three initial and four peak actual clients, completed rounds 1, 2 and 3, and zero failures or skips. It verified the actual late arrival, both native theater entries around a movement-tested exit, three resets, Ground and operator departures, and avatar-load drainage. [Startup timeout](p24-regression-p03-6db1823-startup.json) · [Passing P03 report](p24-regression-p03-6db1823-retry.json)
