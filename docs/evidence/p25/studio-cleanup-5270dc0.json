@@ -1,0 +1,25 @@
+{
+  "simulatorActive": false,
+  "temporaryReportsRemaining": {
+    "P25QA_P24": false,
+    "P25QA_P18": false,
+    "P25QA_PhoneCorrected": false,
+    "P25QA_Phone": false,
+    "P25QA_P05": false,
+    "P25QA_P18Final": false,
+    "P25QA_P18Corrected": false
+  },
+  "isRunning": false,
+  "orientation": "LandscapeRight",
+  "olderP18ReportPreserved": true,
+  "ownedPhoneRun": {
+    "launched": true,
+    "report": {
+      "clientCount": 2,
+      "reason": "P25 operated phone HUD samples complete"
+    }
+  },
+  "remainingSdkChildren": {
+    "clients": []
+  }
+}

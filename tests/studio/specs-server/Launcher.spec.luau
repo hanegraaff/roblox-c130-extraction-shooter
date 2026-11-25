@@ -85,7 +85,7 @@ return function()
         model:Destroy()
         assert(ok, tostring(failure))
     end)
-    test("P08 first solid sweep blocks rockets; three deduplicated direct impacts destroy once", function()
+    test("P25 A2 native cover and misses prevent damage; seven deduplicated impacts destroy once", function()
         local match = MatchService.new({ minimumPlayers = 2, durationSeconds = 600, seed = 1 }, {
             now = function()
                 return workspace:GetServerTimeNow()
@@ -149,11 +149,11 @@ return function()
                 not ground.rocketSweep(id, "P08nearMiss", origin + Vector3.xAxis * 100, -Vector3.yAxis * 60),
                 "near miss counted"
             )
-            for index = 1, 10 do
+            for index = 1, 7 do
                 local shot = "P08direct" .. tostring(index)
                 assert(ground.rocketSweep(id, shot, origin, -Vector3.yAxis * 60), "direct rocket missed")
                 assert(
-                    ReplicatedStorage.AircraftState:GetAttribute("Health") == 1000 - index * 100,
+                    ReplicatedStorage.AircraftState:GetAttribute("Health") == math.max(0, 1000 - index * 150),
                     "fixed rocket damage against roster health"
                 )
                 assert(
@@ -163,7 +163,7 @@ return function()
             end
             match.step()
             local result = match.snapshot().result
-            assert(result and result.winner == "Ground", "tenth impact result")
+            assert(result and result.winner == "Ground", "seventh impact result")
             RunService.Heartbeat:Wait()
             task.wait()
             assert(

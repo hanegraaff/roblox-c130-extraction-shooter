@@ -1,0 +1,837 @@
+{
+  "sourceCommit": "5270dc04b42dd25ff88e52d0bc7e4c9dcfbfb65a",
+  "sourceTree": "b34d3958c8a5f6ff634def7c59b41dd94a342435",
+  "studioVersion": "0.748.0.7481526",
+  "platform": "macOS arm64",
+  "sdkKind": "P25Visual",
+  "actualClients": 2,
+  "device": "iPhone 17 Pro",
+  "orientation": "LandscapeRight",
+  "serverSmoke": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 208,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 208
+  },
+  "clientSmoke": [
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23,
+      "userId": -1,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 23
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23,
+      "userId": -2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0,
+      "discovered": 23
+    }
+  ],
+  "initialGround": {
+    "touch": true,
+    "user": -1,
+    "phase": "Active",
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+    "preferred": "Touch",
+    "role": "Ground",
+    "rifle": {
+      "ammo": 30,
+      "deadline": 0,
+      "unlimited": true
+    },
+    "viewport": [
+      750,
+      381
+    ],
+    "round": 1,
+    "inset": [
+      0,
+      58
+    ],
+    "ui": {
+      "GroundCombatHUD": {
+        "LauncherStatus": {
+          "textBounds": [
+            202,
+            14
+          ],
+          "position": [
+            12,
+            70
+          ],
+          "text": "LAUNCHER • available on the map",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Fire": {
+          "textBounds": [
+            55,
+            27
+          ],
+          "position": [
+            648,
+            70
+          ],
+          "text": "FIRE",
+          "fits": true,
+          "size": [
+            78,
+            56
+          ]
+        },
+        "RifleStatus": {
+          "textBounds": [
+            68,
+            14
+          ],
+          "position": [
+            498,
+            44
+          ],
+          "text": "M-7 • 30 / ∞",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Reticle": {
+          "textBounds": [
+            20,
+            39
+          ],
+          "position": [
+            363,
+            121
+          ],
+          "text": "+",
+          "fits": true,
+          "size": [
+            24,
+            24
+          ]
+        },
+        "Reload": {
+          "textBounds": [
+            66,
+            18
+          ],
+          "position": [
+            552,
+            72
+          ],
+          "text": "RELOAD",
+          "fits": true,
+          "size": [
+            78,
+            44
+          ]
+        }
+      },
+      "RoundHUD": {
+        "AircraftHealth": {
+          "textBounds": [
+            148,
+            13
+          ],
+          "position": [
+            12,
+            44
+          ],
+          "text": "C-130 HEALTH  1000 / 1000",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Round": {
+          "textBounds": [
+            190,
+            14
+          ],
+          "position": [
+            12,
+            8
+          ],
+          "text": "10:00 remaining • 1 Ground alive",
+          "fits": true,
+          "size": [
+            570,
+            22
+          ]
+        },
+        "Surrender": {
+          "textBounds": [
+            106,
+            13
+          ],
+          "position": [
+            588,
+            8
+          ],
+          "text": "Surrender to lobby",
+          "fits": true,
+          "size": [
+            150,
+            32
+          ]
+        }
+      }
+    }
+  },
+  "partialGround": {
+    "touch": true,
+    "user": -1,
+    "phase": "Active",
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+    "preferred": "Touch",
+    "role": "Ground",
+    "rifle": {
+      "ammo": 27,
+      "deadline": 0,
+      "unlimited": true
+    },
+    "viewport": [
+      750,
+      381
+    ],
+    "round": 1,
+    "inset": [
+      0,
+      58
+    ],
+    "ui": {
+      "GroundCombatHUD": {
+        "LauncherStatus": {
+          "textBounds": [
+            202,
+            14
+          ],
+          "position": [
+            12,
+            70
+          ],
+          "text": "LAUNCHER • available on the map",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Fire": {
+          "textBounds": [
+            55,
+            27
+          ],
+          "position": [
+            648,
+            70
+          ],
+          "text": "FIRE",
+          "fits": true,
+          "size": [
+            78,
+            56
+          ]
+        },
+        "RifleStatus": {
+          "textBounds": [
+            67,
+            14
+          ],
+          "position": [
+            498,
+            44
+          ],
+          "text": "M-7 • 27 / ∞",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Reticle": {
+          "textBounds": [
+            20,
+            39
+          ],
+          "position": [
+            363,
+            121
+          ],
+          "text": "+",
+          "fits": true,
+          "size": [
+            24,
+            24
+          ]
+        },
+        "Reload": {
+          "textBounds": [
+            66,
+            18
+          ],
+          "position": [
+            552,
+            72
+          ],
+          "text": "RELOAD",
+          "fits": true,
+          "size": [
+            78,
+            44
+          ]
+        }
+      },
+      "RoundHUD": {
+        "AircraftHealth": {
+          "textBounds": [
+            148,
+            13
+          ],
+          "position": [
+            12,
+            44
+          ],
+          "text": "C-130 HEALTH  1000 / 1000",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Round": {
+          "textBounds": [
+            183,
+            14
+          ],
+          "position": [
+            12,
+            8
+          ],
+          "text": "9:22 remaining • 1 Ground alive",
+          "fits": true,
+          "size": [
+            570,
+            22
+          ]
+        },
+        "Surrender": {
+          "textBounds": [
+            106,
+            13
+          ],
+          "position": [
+            588,
+            8
+          ],
+          "text": "Surrender to lobby",
+          "fits": true,
+          "size": [
+            150,
+            32
+          ]
+        }
+      }
+    }
+  },
+  "reloadingGround": {
+    "touch": true,
+    "user": -1,
+    "phase": "Active",
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+    "preferred": "KeyboardAndMouse",
+    "role": "Ground",
+    "rifle": {
+      "ammo": 27,
+      "deadline": 1795630329.736668,
+      "unlimited": true
+    },
+    "viewport": [
+      750,
+      381
+    ],
+    "round": 1,
+    "inset": [
+      0,
+      58
+    ],
+    "ui": {
+      "GroundCombatHUD": {
+        "LauncherStatus": {
+          "textBounds": [
+            202,
+            14
+          ],
+          "position": [
+            12,
+            70
+          ],
+          "text": "LAUNCHER • available on the map",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Fire": {
+          "textBounds": [
+            55,
+            27
+          ],
+          "position": [
+            648,
+            70
+          ],
+          "text": "FIRE",
+          "fits": true,
+          "size": [
+            78,
+            56
+          ]
+        },
+        "RifleStatus": {
+          "textBounds": [
+            141,
+            14
+          ],
+          "position": [
+            498,
+            44
+          ],
+          "text": "M-7 • 27 / ∞ • Reload 1.9s",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Reticle": {
+          "textBounds": [
+            20,
+            39
+          ],
+          "position": [
+            363,
+            121
+          ],
+          "text": "+",
+          "fits": true,
+          "size": [
+            24,
+            24
+          ]
+        },
+        "Reload": {
+          "textBounds": [
+            66,
+            18
+          ],
+          "position": [
+            552,
+            72
+          ],
+          "text": "RELOAD",
+          "fits": true,
+          "size": [
+            78,
+            44
+          ]
+        }
+      },
+      "RoundHUD": {
+        "AircraftHealth": {
+          "textBounds": [
+            148,
+            13
+          ],
+          "position": [
+            12,
+            44
+          ],
+          "text": "C-130 HEALTH  1000 / 1000",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Round": {
+          "textBounds": [
+            184,
+            14
+          ],
+          "position": [
+            12,
+            8
+          ],
+          "text": "8:42 remaining • 1 Ground alive",
+          "fits": true,
+          "size": [
+            570,
+            22
+          ]
+        },
+        "Surrender": {
+          "textBounds": [
+            106,
+            13
+          ],
+          "position": [
+            588,
+            8
+          ],
+          "text": "Surrender to lobby",
+          "fits": true,
+          "size": [
+            150,
+            32
+          ]
+        }
+      }
+    }
+  },
+  "refilledGround": {
+    "touch": true,
+    "user": -1,
+    "phase": "Active",
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+    "preferred": "KeyboardAndMouse",
+    "role": "Ground",
+    "rifle": {
+      "ammo": 30,
+      "deadline": 0,
+      "unlimited": true
+    },
+    "viewport": [
+      750,
+      381
+    ],
+    "round": 1,
+    "inset": [
+      0,
+      58
+    ],
+    "ui": {
+      "GroundCombatHUD": {
+        "LauncherStatus": {
+          "textBounds": [
+            202,
+            14
+          ],
+          "position": [
+            12,
+            70
+          ],
+          "text": "LAUNCHER • available on the map",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Fire": {
+          "textBounds": [
+            55,
+            27
+          ],
+          "position": [
+            648,
+            70
+          ],
+          "text": "FIRE",
+          "fits": true,
+          "size": [
+            78,
+            56
+          ]
+        },
+        "RifleStatus": {
+          "textBounds": [
+            68,
+            14
+          ],
+          "position": [
+            498,
+            44
+          ],
+          "text": "M-7 • 30 / ∞",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Reticle": {
+          "textBounds": [
+            20,
+            39
+          ],
+          "position": [
+            363,
+            121
+          ],
+          "text": "+",
+          "fits": true,
+          "size": [
+            24,
+            24
+          ]
+        },
+        "Reload": {
+          "textBounds": [
+            66,
+            18
+          ],
+          "position": [
+            552,
+            72
+          ],
+          "text": "RELOAD",
+          "fits": true,
+          "size": [
+            78,
+            44
+          ]
+        }
+      },
+      "RoundHUD": {
+        "AircraftHealth": {
+          "textBounds": [
+            148,
+            13
+          ],
+          "position": [
+            12,
+            44
+          ],
+          "text": "C-130 HEALTH  1000 / 1000",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Round": {
+          "textBounds": [
+            183,
+            14
+          ],
+          "position": [
+            12,
+            8
+          ],
+          "text": "8:27 remaining • 1 Ground alive",
+          "fits": true,
+          "size": [
+            570,
+            22
+          ]
+        },
+        "Surrender": {
+          "textBounds": [
+            106,
+            13
+          ],
+          "position": [
+            588,
+            8
+          ],
+          "text": "Surrender to lobby",
+          "fits": true,
+          "size": [
+            150,
+            32
+          ]
+        }
+      }
+    }
+  },
+  "compactGround": {
+    "touch": true,
+    "user": -1,
+    "phase": "Active",
+    "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+    "preferred": "KeyboardAndMouse",
+    "role": "Ground",
+    "rifle": {
+      "ammo": 30,
+      "deadline": 0,
+      "unlimited": true
+    },
+    "viewport": [
+      568,
+      320
+    ],
+    "round": 1,
+    "inset": [
+      0,
+      58
+    ],
+    "ui": {
+      "GroundCombatHUD": {
+        "LauncherStatus": {
+          "textBounds": [
+            202,
+            14
+          ],
+          "position": [
+            12,
+            70
+          ],
+          "text": "LAUNCHER • available on the map",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Fire": {
+          "textBounds": [
+            55,
+            27
+          ],
+          "position": [
+            466,
+            70
+          ],
+          "text": "FIRE",
+          "fits": true,
+          "size": [
+            78,
+            56
+          ]
+        },
+        "RifleStatus": {
+          "textBounds": [
+            68,
+            14
+          ],
+          "position": [
+            316,
+            44
+          ],
+          "text": "M-7 • 30 / ∞",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Reticle": {
+          "textBounds": [
+            20,
+            39
+          ],
+          "position": [
+            272,
+            90
+          ],
+          "text": "+",
+          "fits": true,
+          "size": [
+            24,
+            24
+          ]
+        },
+        "Reload": {
+          "textBounds": [
+            66,
+            18
+          ],
+          "position": [
+            370,
+            72
+          ],
+          "text": "RELOAD",
+          "fits": true,
+          "size": [
+            78,
+            44
+          ]
+        }
+      },
+      "RoundHUD": {
+        "AircraftHealth": {
+          "textBounds": [
+            148,
+            13
+          ],
+          "position": [
+            12,
+            44
+          ],
+          "text": "C-130 HEALTH  1000 / 1000",
+          "fits": true,
+          "size": [
+            240,
+            22
+          ]
+        },
+        "Round": {
+          "textBounds": [
+            181,
+            14
+          ],
+          "position": [
+            12,
+            8
+          ],
+          "text": "8:19 remaining • 1 Ground alive",
+          "fits": true,
+          "size": [
+            388,
+            22
+          ]
+        },
+        "Surrender": {
+          "textBounds": [
+            106,
+            13
+          ],
+          "position": [
+            406,
+            8
+          ],
+          "text": "Surrender to lobby",
+          "fits": true,
+          "size": [
+            150,
+            32
+          ]
+        }
+      }
+    }
+  },
+  "shotSetup": "Equipped existing M-7 Tool on the actual Ground avatar with Humanoid:EquipTool. A calibrated MCP mouse press on the rendered FIRE button triggered MouseButton1Down and production ammo spent 30 to 27. No server state was set directly.",
+  "reloadSetup": "A native R key press injected into the phone-emulated client invoked the production controller and yielded real replicated ReloadUntil, 27 rounds during reload, and 30 after completion.",
+  "reloadPointerLimitation": "Mouse press on RELOAD reached MouseButton1Down but did not emit GuiButton.Activated on this emulator-injection route. Direct virtual touch requires RobloxScript capability unavailable to the execution context; physical touchscreen RELOAD activation unverified.",
+  "reloadPointerProbe": {
+    "mouse": "591, 152",
+    "reload": "[{\"kind\":\"MouseButton1Down\"},{\"kind\":\"MouseButton1Down\"}]"
+  },
+  "fireProbe": {
+    "loc": "687, 156",
+    "ammo": 27,
+    "events": "[{\"kind\":\"MouseButton1Down\"}]"
+  }
+}

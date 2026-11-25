@@ -330,25 +330,28 @@ function GroundCombatController.new(
                     equip("Rocket launcher")
                 end)
             )
+            local function rifleReadiness(tool: Tool?): PlayerPresentation.Readiness?
+                if not tool or tool.Name ~= "M-7 rifle" then
+                    return nil
+                end
+                local ammo = tool:GetAttribute("Ammo")
+                local deadline = tool:GetAttribute("ReloadUntil")
+                if type(ammo) ~= "number" or type(deadline) ~= "number" then
+                    return nil
+                end
+                local capacity = tool:GetAttribute("MaxAmmo")
+                local readyAt = tool:GetAttribute("NextFire")
+                return {
+                    ammo = ammo,
+                    reloadUntil = deadline,
+                    capacity = if type(capacity) == "number" then capacity else nil,
+                    nextFire = if type(readyAt) == "number" then readyAt else nil,
+                    unlimitedReserve = tool:GetAttribute("UnlimitedReserve") == true,
+                }
+            end
             local function sendReload()
                 if overlayOpen() or not eligibleGround(false) then
                     return
-                end
-                local tool = selected
-                local rifle: PlayerPresentation.Readiness? = nil
-                if tool and tool.Name == "M-7 rifle" then
-                    local ammo = tool:GetAttribute("Ammo")
-                    local deadline = tool:GetAttribute("ReloadUntil")
-                    if type(ammo) == "number" and type(deadline) == "number" then
-                        local capacity = tool:GetAttribute("MaxAmmo")
-                        local reserve = tool:GetAttribute("Reserve")
-                        rifle = {
-                            ammo = ammo,
-                            reloadUntil = deadline,
-                            capacity = if type(capacity) == "number" then capacity else nil,
-                            reserve = if type(reserve) == "number" then reserve else nil,
-                        }
-                    end
                 end
                 local reason = PlayerPresentation.groundRejection(
                     "Reload",
@@ -356,7 +359,7 @@ function GroundCombatController.new(
                     nil,
                     false,
                     false,
-                    rifle,
+                    rifleReadiness(selected),
                     workspace:GetServerTimeNow()
                 )
                 if reason then
@@ -458,9 +461,11 @@ function GroundCombatController.new(
                     fireButton.Position = if touch
                         then UDim2.new(1, -24 - origin.X - layoutInset.X, 0, 126 - origin.Y)
                         else UDim2.new(1, -24, 1, -130)
-                    reloadButton.Size = UDim2.fromOffset(if touch then 54 else 90, if touch then 42 else 54)
+                    -- Keep the 44px touch target in the gap between readiness
+                    -- and the equipment row at the compact landscape height.
+                    reloadButton.Size = if touch then UDim2.fromOffset(78, 44) else UDim2.fromOffset(90, 54)
                     reloadButton.Position = if touch
-                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 128 - origin.Y)
+                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 116 - origin.Y)
                         else UDim2.new(1, -24, 1, -210)
                     reloadButton.TextSize = if touch then 12 else 16
                     local roundId = roundState:GetAttribute("RoundId")
@@ -570,35 +575,19 @@ function GroundCombatController.new(
                         label.Text = "Weapons unlock at aircraft arrival"
                         return
                     end
-                    local ammo = selected and selected:GetAttribute("Ammo") or 0
-                    local reserve = selected and selected:GetAttribute("Reserve") or 0
-                    local reloadUntil = selected and selected:GetAttribute("ReloadUntil") or 0
                     local serverTime = workspace:GetServerTimeNow()
-                    local remaining = if type(reloadUntil) == "number"
-                        then math.max(0, reloadUntil - serverTime)
-                        else 0
-                    local readyAt = selected and selected:GetAttribute("NextFire") or 0
-                    local cooldown = if type(readyAt) == "number"
-                        then math.max(0, readyAt - serverTime)
-                        else 0
-                    local rocketSelected = selected ~= nil and selected.Name == "Rocket launcher"
-                    label.Text = if rocketSelected
-                        then (if remaining > 0
-                            then string.format("ROCKET • Reload %.1fs", remaining)
-                            else "ROCKET • 1 ready • G drop")
-                        elseif not selected then "Equip M-7 / launcher to fire"
-                        elseif remaining > 0 then string.format("M-7 • Reload %.1fs", remaining)
-                        elseif cooldown > 0 and not touch then string.format(
-                            "M-7 • %s / %s • Cooldown %.1fs",
-                            tostring(ammo),
-                            tostring(reserve),
-                            cooldown
-                        )
-                        else string.format(
-                            "M-7 • %s / %s • R reload",
-                            tostring(ammo),
-                            tostring(reserve)
-                        )
+                    local rocket = if selected and selected.Name == "Rocket launcher" then selected else nil
+                    if rocket then
+                        local reloadUntil = rocket:GetAttribute("ReloadUntil")
+                        label.Text = if type(reloadUntil) == "number" and reloadUntil > serverTime
+                            then string.format("ROCKET • Reload %.1fs", reloadUntil - serverTime)
+                            elseif touch then "ROCKET • 1 ready"
+                            else "ROCKET • 1 ready • G drop"
+                    elseif selected then
+                        label.Text = PlayerPresentation.rifleText(rifleReadiness(selected), serverTime, touch)
+                    else
+                        label.Text = "Equip M-7 / launcher to fire"
+                    end
                     local camera = workspace.CurrentCamera
                     if not camera then
                         return
@@ -648,20 +637,20 @@ function GroundCombatController.new(
                         end
                     end
                     local rocketRemote = if launcherState then launcherState:FindFirstChild("Fire") else nil
-                    local event = if rocketSelected
+                    local event = if rocket
                         then (if rocketRemote and rocketRemote:IsA("RemoteEvent") then rocketRemote else nil)
                         else remote("GroundFire")
                     if not event then
                         return
                     end
-                    nextAttempt = now + (if rocketSelected then 0.25 else 0.15)
+                    nextAttempt = now + (if rocket then 0.25 else 0.15)
                     local ray = camera:ViewportPointToRay(point.X, point.Y)
                     local params = RaycastParams.new()
                     params.FilterType = Enum.RaycastFilterType.Exclude
                     params.FilterDescendantsInstances = if character then { character } else {}
                     local result = workspace:Raycast(ray.Origin, ray.Direction * 950, params)
                     local target = if result then result.Position else ray.Origin + ray.Direction * 950
-                    if rocketSelected and launcher then
+                    if rocket and launcher then
                         launcherSequence += 1
                         event:FireServer({
                             roundId = round,
@@ -671,7 +660,7 @@ function GroundCombatController.new(
                             y = target.Y,
                             z = target.Z,
                         })
-                    elseif not rocketSelected then
+                    elseif not rocket then
                         sequence += 1
                         event:FireServer({
                             roundId = round,

@@ -1,0 +1,160 @@
+{
+  "sourceCommit": "e175ab8833f6a2db3e62123dc794a26fe7fcbcde",
+  "device": "iPhone 17 Pro",
+  "orientation": "LandscapeRight",
+  "viewport": [
+    750,
+    381
+  ],
+  "touch": true,
+  "activeRifleText": "M-7 • 30 / ∞",
+  "statusFits": true,
+  "reloadButton": {
+    "text": "RELOAD",
+    "textBounds": [
+      66,
+      18
+    ],
+    "size": [
+      54,
+      42
+    ],
+    "textFits": false
+  },
+  "nativeOperatorM102Select": true,
+  "nativeGroundFireObserved": false,
+  "note": "MCP mouse click aimed by instance path left actual Ground ammunition at 30 in this run. Studio's explicit touch API rejected the MCP execution identity. Reload button overhang was visible in the live capture independently of input.",
+  "smoke": {
+    "states": [
+      [
+        "1183d33f-5f7f-419a-9721-5f881193877f",
+        {
+          "touch": false,
+          "user": -1,
+          "phase": "Lobby",
+          "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+          "preferred": "KeyboardAndMouse",
+          "role": "Waiting",
+          "viewport": [
+            1081,
+            653
+          ],
+          "round": 0,
+          "inset": [
+            0,
+            58
+          ],
+          "ui": {
+            "RoundHUD": {
+              "Settings": {
+                "textBounds": [
+                  75,
+                  16
+                ],
+                "position": [
+                  961,
+                  52
+                ],
+                "text": "P  Settings",
+                "fits": true,
+                "size": [
+                  108,
+                  34
+                ]
+              },
+              "Round": {
+                "textBounds": [
+                  192,
+                  38
+                ],
+                "position": [
+                  270.25,
+                  112
+                ],
+                "text": "WAITING FOR PLAYERS\nWaiting for 2 players",
+                "fits": true,
+                "size": [
+                  540.5,
+                  76
+                ]
+              }
+            }
+          }
+        }
+      ],
+      [
+        "f8a9a0c9-fbbf-403e-8b82-5d3b2772c016",
+        {
+          "touch": false,
+          "user": -2,
+          "phase": "Lobby",
+          "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+          "preferred": "KeyboardAndMouse",
+          "role": "Waiting",
+          "viewport": [
+            1081,
+            653
+          ],
+          "round": 0,
+          "inset": [
+            0,
+            58
+          ],
+          "ui": {
+            "RoundHUD": {
+              "Settings": {
+                "textBounds": [
+                  75,
+                  16
+                ],
+                "position": [
+                  961,
+                  52
+                ],
+                "text": "P  Settings",
+                "fits": true,
+                "size": [
+                  108,
+                  34
+                ]
+              },
+              "Round": {
+                "textBounds": [
+                  192,
+                  38
+                ],
+                "position": [
+                  270.25,
+                  112
+                ],
+                "text": "WAITING FOR PLAYERS\nWaiting for 2 players",
+                "fits": true,
+                "size": [
+                  540.5,
+                  76
+                ]
+              }
+            }
+          }
+        }
+      ]
+    ],
+    "serverSmoke": {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 208,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 208
+    },
+    "operatorChoice": "automatic",
+    "duration": 180
+  },
+  "roles": {
+    "ground": "1183d33f-5f7f-419a-9721-5f881193877f",
+    "gun": "f8a9a0c9-fbbf-403e-8b82-5d3b2772c016"
+  }
+}

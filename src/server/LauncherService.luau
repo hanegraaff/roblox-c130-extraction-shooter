@@ -13,7 +13,7 @@ local Validation = (
         else loadPath("../shared/Validation")
 ) :: typeof(require(game:GetService("ReplicatedStorage").Shared.Validation))
 local LauncherService = {}
-LauncherService.reloadSeconds = 4
+LauncherService.reloadSeconds = 15
 LauncherService.pickupStuds = 8
 LauncherService.rangeStuds = 1200
 LauncherService.speedStudsPerSecond = 240

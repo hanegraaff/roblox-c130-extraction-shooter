@@ -1,12 +1,12 @@
 --!strict
--- P06 A1/A3: rifle cadence, reload, ammo and adversarial request boundaries.
+-- P06 and P25 A3: rifle cadence, unlimited reserve, reload and request boundaries.
 type API = typeof(require(game:GetService("ServerScriptService").Server.GroundCombatService))
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local rules = candidate :: API
     local function shot(n: number)
         return { roundId = 1, sequence = n, weapon = "M7", x = 0, y = 140, z = 0 }
     end
-    test("rifle cadence magazine reserve and reload boundaries", function()
+    test("P25 A3 empty magazine and exact rifle cadence and reload boundaries", function()
         local owner = rules.new()
         owner.reset(1)
         assert(owner.fire(1, shot(1), true, 0, 0, 0, 0), "P06 invariant")
@@ -18,7 +18,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         assert(not owner.fire(1, shot(31), true, 5, 0, 0, 0), "P06 invariant")
         assert(owner.reload(1, { roundId = 1, sequence = 31 }, true, 5), "P06 invariant")
         assert(not owner.fire(1, shot(32), true, 6.999, 0, 0, 0), "P06 invariant")
-        assert(owner.readiness(1, 7).ammo == 30 and owner.readiness(1, 7).reserve == 90, "P06 invariant")
+        assert(owner.readiness(1, 7).ammo == 30, "P06 invariant")
         assert(owner.fire(1, shot(32), true, 7, 0, 0, 0), "P06 invariant")
     end)
     test("forged invalid stale or unowned requests do not spend ammunition", function()
@@ -69,37 +69,57 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         assert(not owner.fire(1, shot(2), true, 2, 0, 0, 0), "P06 invariant")
         assert(owner.readiness(1, 2).ammo == 30, "P06 invariant")
     end)
-    test("finite reserve exhausts without affecting another ground player", function()
+    test("P25 A3 repeated legal reloads permit more than 150 shots from an independent magazine", function()
         local owner = rules.new()
         owner.reset(1)
         local nextSequence = 0
         local time = 0
-        for magazine = 1, 5 do
+        for _ = 1, 6 do
             for _ = 1, 30 do
                 nextSequence += 1
                 assert(owner.fire(1, shot(nextSequence), true, time, 0, 0, 0), "shot should be ready")
                 time += 0.151
             end
-            if magazine < 5 then
-                nextSequence += 1
-                assert(
-                    owner.reload(1, { roundId = 1, sequence = nextSequence }, true, time),
-                    "reload should begin"
-                )
-                time += 2
-            end
+            assert(owner.readiness(1, time).ammo == 0, "empty magazine expected")
+            assert(not owner.fire(1, shot(nextSequence + 1), true, time, 0, 0, 0), "empty magazine fired")
+            nextSequence += 1
+            assert(owner.reload(1, { roundId = 1, sequence = nextSequence }, true, time), "reload rejected")
+            time += 2
+            assert(owner.readiness(1, time).ammo == 30, "reload failed to refill magazine")
         end
-        local exhausted = owner.readiness(1, time)
-        assert(exhausted.ammo == 0 and exhausted.reserve == 0, "reserve should be exhausted")
-        assert(
-            not owner.reload(1, { roundId = 1, sequence = nextSequence + 1 }, true, time),
-            "empty reserve reloaded"
-        )
-        assert(
-            owner.readiness(2, time).ammo == 30 and owner.readiness(2, time).reserve == 120,
-            "another player changed"
-        )
+        assert(owner.readiness(2, time).ammo == 30, "another player changed")
     end)
+    test(
+        "P25 A3 partial reload fills only at deadline and retirement cancels without replay credit",
+        function()
+            local owner = rules.new()
+            owner.reset(1)
+            assert(owner.fire(1, shot(1), true, 0, 0, 0, 0), "first shot")
+            assert(owner.reload(1, { roundId = 1, sequence = 2 }, true, 1), "partial reload")
+            assert(owner.readiness(1, 2.999).ammo == 29, "partial reload credited early")
+            assert(not owner.fire(1, shot(3), true, 2.999, 0, 0, 0), "partial magazine fired during reload")
+            assert(owner.readiness(1, 3).ammo == 30, "partial magazine failed to refill")
+            assert(owner.fire(1, shot(3), true, 3, 0, 0, 0), "fire rejected when reload completed")
+            assert(owner.reload(1, { roundId = 1, sequence = 4 }, true, 4), "second partial reload")
+            owner.cancelReload(1)
+            assert(not owner.fire(1, shot(5), false, 6, 0, 0, 0), "eliminated player fired")
+            assert(not owner.reload(1, { roundId = 1, sequence = 5 }, false, 6), "eliminated player reloaded")
+            assert(not owner.fire(1, shot(4), true, 6, 0, 0, 0), "cancellation discarded replay guard")
+            local retired = owner.readiness(1, 6)
+            assert(retired.ammo == 29 and retired.reloadUntil == 0, "retirement completed a canceled reload")
+            assert(owner.reload(2, { roundId = 1, sequence = 2 }, true, 7) == false, "full magazine reloaded")
+            assert(owner.fire(2, shot(1), true, 7, 0, 0, 0), "another player could not fire")
+            assert(owner.reload(2, { roundId = 1, sequence = 2 }, true, 8), "previous-round reload setup")
+            owner.reset(2)
+            assert(not owner.reload(2, { roundId = 1, sequence = 3 }, true, 9), "stale reload on new round")
+            assert(not owner.fire(2, shot(3), true, 10, 0, 0, 0), "stale fire on new round")
+            local fresh = owner.readiness(2, 10)
+            assert(
+                fresh.ammo == 30 and fresh.reloadUntil == 0 and fresh.nextFire == 0,
+                "new round inherited reload"
+            )
+        end
+    )
     test("preflight rejects bad or cooldown requests without spending readiness or sequence", function()
         local owner = rules.new()
         owner.reset(1)

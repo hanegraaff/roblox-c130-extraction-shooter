@@ -5,6 +5,10 @@ local loadModule = (require :: unknown) :: (string) -> unknown
 local Config = if script
     then require(game:GetService("ReplicatedStorage").Shared.Config)
     else loadModule("../../src/shared/Config") :: ConfigModule
+type HealthModule = typeof(require(game:GetService("ServerScriptService").Server.AircraftHealth))
+local AircraftHealth = if script
+    then require(game:GetService("ServerScriptService").Server.AircraftHealth)
+    else loadModule("../../src/server/AircraftHealth") :: HealthModule
 type API = typeof(require(game:GetService("ServerScriptService").Server.MatchService))
 type Member = {
     userId: number,
@@ -433,11 +437,19 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(not release.recover, "expected not release.recover")
         end
     end)
-    test("one pre-deadline damage batch preserves lethal rocket credit across clock rollover", function()
+    test("P25 A2 lethal mixed-damage batch preserves rocket credit across clock rollover", function()
         local service, active, advance = fixture(2)
         local state = active()
         local id = ground(state)
-        local credit = { userId = id, weapon = "RocketLauncher", shotId = "rocket:1:3" }
+        local credit = { userId = id, weapon = "RocketLauncher", shotId = "rocket:1:7" }
+        local health = AircraftHealth.new()
+        assert(health.reset(state.roundId, 1), "one-Ground roster health")
+        for index = 1, 6 do
+            assert(
+                health.impact(state.roundId, "rocket:1:" .. index, "RocketLauncher", true) == 150,
+                "rocket prefix"
+            )
+        end
         advance(109.999)
         service.step(function(seconds)
             assert(seconds == 109.999, "batch time differs from deadline sample")
@@ -445,6 +457,13 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             advance(110)
             assert(service.damageAllowed(state.roundId), "clock rollover rejected valid damage")
             assert(service.eliminate(id, state.roundId), "same-step ground elimination rejected")
+            assert(health.impact(state.roundId, "rifle:1", "M7", true) == 5, "rifle failed in batch")
+            local amount, lethal = health.impact(state.roundId, credit.shotId, "RocketLauncher", true)
+            assert(amount == 95 and lethal, "rocket failed to finish the mixed-damage batch")
+            assert(
+                not health.impact(state.roundId, credit.shotId, "RocketLauncher", true),
+                "duplicate damage"
+            )
             assert(service.proposeAircraftDestroyed(state.roundId, credit), "valid lethal rocket rejected")
             assert(not service.proposeAircraftDestroyed(state.roundId), "duplicate destruction accepted")
             credit.userId = 99
@@ -453,7 +472,7 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         local result = assert(resolved.result, "the pre-deadline batch did not commit")
         assert(result.winner == "Ground" and result.reason == "AircraftDestroyed", "wrong tie result")
         assert(
-            result.userId == id and result.weapon == "RocketLauncher" and result.shotId == "rocket:1:3",
+            result.userId == id and result.weapon == "RocketLauncher" and result.shotId == "rocket:1:7",
             "lethal hit attribution changed"
         )
         service.step(function()

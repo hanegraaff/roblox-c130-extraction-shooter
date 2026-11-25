@@ -1,0 +1,51 @@
+{
+  "sourceCommit": "560215734b748e0782cbe1f1ef35e0d0dac697c6",
+  "studioVersion": "0.748.0.7481526",
+  "clientIds": [
+    -3,
+    -2,
+    -1
+  ],
+  "eachClient": {
+    "discovered": 23,
+    "passed": 22,
+    "failed": 1,
+    "skipped": 0,
+    "errors": 1
+  },
+  "failure": "ReplicatedStorage.ClientSpecs.GroundAimGui.spec:734: cross-GUI intersection touch M7 Held 568x320 inset(0,58) origin(0,-58): Reload / Drop",
+  "sdk": {
+    "launched": true,
+    "report": {
+      "skipped": 0,
+      "smoke": {
+        "clients": [],
+        "server": "{\"errors\":0,\"skipped\":0,\"passed\":208,\"clientCount\":3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":208}"
+      },
+      "passed": 1,
+      "cases": [
+        {
+          "passed": true,
+          "name": "Three actual clients connect"
+        },
+        {
+          "name": "A1 roster excludes operator and all clients share 2000 health",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.RebalanceHarness:27: P18 timeout: all client smoke"
+        }
+      ],
+      "actualClients": 3,
+      "observations": [],
+      "finalClients": 3,
+      "environment": "Studio",
+      "clientIds": [
+        -1,
+        -2,
+        -3
+      ],
+      "suite": "P18-rebalancing",
+      "failed": 1,
+      "discovered": 2
+    }
+  }
+}

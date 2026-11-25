@@ -3,11 +3,11 @@
     AircraftHealth: server-only round-scoped aircraft health and shot deduplication.
     Maximum is 1,000 game health units per deployment Ground player, excluding
     the operator. Counts are locked at reset; later roster changes never resize
-    or heal the current aircraft. Fixed rockets deal 100 units and M-7 hits 5.
+    or heal the current aircraft. Fixed rockets deal 150 units and M-7 hits 5.
     Pure finite-scalar rules: no Instances, transport, clock or yielding.
 ]=]
 local AircraftHealth = {}
-AircraftHealth.rocketDamage = 100
+AircraftHealth.rocketDamage = 150
 AircraftHealth.rifleDamage = 5
 AircraftHealth.healthPerGroundPlayer = 1000
 -- One-Ground-player preview/Lobby baseline; active rounds use maximumFor(count).

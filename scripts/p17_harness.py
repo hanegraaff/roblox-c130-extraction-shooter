@@ -39,7 +39,7 @@ def production_path(path: str) -> bool:
     item = Path(path)
     return (path.startswith("src/") and item.suffix == ".luau") or (
         path.startswith("assets/") and item.suffix != ".md" and "__pycache__" not in item.parts
-        and item.suffix != ".pyc"
+        and item.suffix != ".pyc" and item.name != ".DS_Store"
     ) or path == "default.project.json"
 
 

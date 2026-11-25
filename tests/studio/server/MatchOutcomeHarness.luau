@@ -403,7 +403,7 @@ function Harness.run(scenario: string, finish: ((Report) -> ())?)
         for _, player in grounds do
             assert(player.Team == grounds[1].Team and player.Team ~= operator.Team, "split ground team")
             local rifle = runtime.groundCombat.readiness(player)
-            assert(rifle.ammo == 30 and rifle.reserve == 120, "pristine rifle readiness")
+            assert(rifle.ammo == 30, "pristine rifle readiness")
             probe(player, "Ground", { roundId = roundId })
         end
     end

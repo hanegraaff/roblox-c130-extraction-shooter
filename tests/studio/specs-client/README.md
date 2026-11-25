@@ -2,7 +2,7 @@
 
 The P18 ordinary smoke mapping exercises the current source. Dated discovery counts and reports below remain historical; they do not establish acceptance of revised health, destruction, square camera bounds or thermal contrast. See the [P18 procedure](../../../docs/testing.md#run-the-p18-rebalancing-harness) for fresh evidence requirements.
 
-This package is mapped to `ReplicatedStorage.ClientSpecs` only in the test place, so the automatic client runner can load its specs through TestEZ.
+This package is mapped to `ReplicatedStorage.ClientSpecs` only in the test place, so the automatic client runner can load its specs through TestEZ. P25 adds M-7 text with loaded rounds, ∞ and reload time, and launcher countdown text to the `GroundAimGui.spec.luau` desktop and phone layout fixtures. The P18 harness exercises live weapon state on three actual clients. [P25 procedure](../../../docs/testing.md#verify-p25-weapon-balance)
 
 It checks real replicated **Test** status, character/HumanoidRootPart availability and environment text in the status GUI. It exercises two explicit start/stop cycles of an independent StatusPanel while preserving the entrypoint panel, then restores the original name. Readiness is staged: successful server fixture completion within 60 seconds, RoundState/role rendezvous within 35 seconds, then a real ready avatar within 25 seconds, including a protected lobby avatar when the client arrives mid-round. This avoids racing character creation against server-owned fixtures. Timeout diagnostics preserve phase/role/life/load-lease and character/root presence; `ClientTests.StartupReadiness` records actual elapsed and avatar-stage time. These are test-only budgets, not production timing changes.
 

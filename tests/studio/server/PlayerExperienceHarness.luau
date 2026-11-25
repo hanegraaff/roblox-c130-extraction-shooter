@@ -224,9 +224,7 @@ function Harness.run(finish: ((Report) -> ())?)
             probe(first, "RejectFullReload", {})
             local after = runtime.groundCombat.readiness(first)
             assert(
-                after.ammo == rifle.ammo
-                    and after.reserve == rifle.reserve
-                    and after.reloadUntil == rifle.reloadUntil,
+                after.ammo == rifle.ammo and after.reloadUntil == rifle.reloadUntil,
                 "rejected reload changed authoritative readiness"
             )
             probe(gunship, "View", {
@@ -278,7 +276,6 @@ function Harness.run(finish: ((Report) -> ())?)
                     and after.ownerId == launcher.ownerId
                     and after.readyAt == launcher.readyAt
                     and rifleAfter.ammo == rifle.ammo
-                    and rifleAfter.reserve == rifle.reserve
                     and match.snapshot().phase == "Active"
                     and match.snapshot().roundId == roundId,
                 "local preferences mutated authoritative state"

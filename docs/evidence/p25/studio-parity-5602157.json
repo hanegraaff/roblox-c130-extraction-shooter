@@ -1,0 +1,13 @@
+{
+  "mismatches": [],
+  "comparedScripts": 183,
+  "comparedGeometry": 5,
+  "passed": true,
+  "receipt": {
+    "scriptCount": 183,
+    "buildSha256": "00d654176cc66d170b6f5c9cd5d5d941c2157a149bc8a01e1b0e6cf24429a3a2",
+    "sourceComparison": "UTF-8 byte lengths and djb2 checksums; not cryptographic loaded-source proof",
+    "geometryCount": 5,
+    "sourceCommit": "560215734b748e0782cbe1f1ef35e0d0dac697c6"
+  }
+}

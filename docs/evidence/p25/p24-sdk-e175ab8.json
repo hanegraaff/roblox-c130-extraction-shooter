@@ -1,0 +1,148 @@
+{
+  "launched": true,
+  "report": {
+    "initialClientCount": 2,
+    "skipped": 0,
+    "passed": 9,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A3 round 1 replicates scatter on both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A2 round 1 permits movement and launcher transfers but blocks all fire"
+      },
+      {
+        "passed": true,
+        "name": "A1 A3 round 1 reveals once at canonical start and preserves Ground"
+      },
+      {
+        "passed": true,
+        "name": "A2 A3 round 1 fires fresh rocket and gunship intents on the real map"
+      },
+      {
+        "passed": true,
+        "name": "A3 round 2 replicates scatter on both actual clients"
+      },
+      {
+        "passed": true,
+        "name": "A2 round 2 permits movement and launcher transfers but blocks all fire"
+      },
+      {
+        "passed": true,
+        "name": "A1 A3 round 2 reveals once at canonical start and preserves Ground"
+      },
+      {
+        "passed": true,
+        "name": "A2 A3 round 2 fires fresh rocket and gunship intents on the real map"
+      },
+      {
+        "passed": true,
+        "name": "A2 actual Scatter death cancels arrival, consumes one life and returns both avatars to lobby"
+      }
+    ],
+    "observations": [
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795629693.832239
+      },
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795629693.832239
+      },
+      {
+        "groundDisplacementStuds": 10.347640991210938,
+        "operatorId": -1,
+        "roundId": 1
+      },
+      {
+        "blackout": {
+          "leaks": 0,
+          "thermalFrames": 0,
+          "frames": 304,
+          "aircraftFrames": 0
+        },
+        "projection": {
+          "originErrorStuds": 0,
+          "projectionFrame": 1,
+          "replicaErrorStuds": 0
+        }
+      },
+      {
+        "ground": true
+      },
+      {
+        "revealLateSeconds": 0.0038590431213378906,
+        "poseErrorStuds": 0,
+        "roundId": 1
+      },
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795629719.44771
+      },
+      {
+        "viewport": [
+          1081,
+          653
+        ],
+        "touch": false,
+        "seconds": 20,
+        "deadline": 1795629719.44771
+      },
+      {
+        "groundDisplacementStuds": 10.614307403564453,
+        "operatorId": -2,
+        "roundId": 2
+      },
+      {
+        "blackout": {
+          "leaks": 0,
+          "thermalFrames": 0,
+          "frames": 1171,
+          "aircraftFrames": 0
+        },
+        "projection": {
+          "originErrorStuds": 0,
+          "projectionFrame": 2,
+          "replicaErrorStuds": 0
+        }
+      },
+      {
+        "ground": true
+      },
+      {
+        "revealLateSeconds": 0.0037000179290771484,
+        "poseErrorStuds": 0.4173266291618347,
+        "roundId": 2
+      }
+    ],
+    "clientSmoke": {
+      "-1": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "-2": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}"
+    },
+    "completedRoundIds": [
+      1,
+      2
+    ],
+    "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":208,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":208}",
+    "suite": "P24-multiplayer",
+    "failed": 0,
+    "discovered": 9
+  }
+}
