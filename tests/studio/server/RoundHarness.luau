@@ -302,8 +302,10 @@ function RoundHarness.run()
         return
     end
     local verifyIntermission = type(args) == "table" and args.kind == "P23"
-    local automated = verifyIntermission or (type(args) == "table" and args.kind == "P03")
-    if verifyIntermission then
+    local theaterOnly = type(args) == "table" and args.kind == "P23Theater"
+    local productionIntermission = verifyIntermission or theaterOnly
+    local automated = productionIntermission or (type(args) == "table" and args.kind == "P03")
+    if productionIntermission then
         assert(
             MatchRuntime.defaults.intermissionSeconds == 120,
             "production intermission must be 120 seconds"
@@ -314,7 +316,11 @@ function RoundHarness.run()
             return #Players:GetPlayers() == 3
         end, "three actual clients join", 30)
     end
-    local combatSeconds = if verifyIntermission then 85 elseif automated then 30 else 60
+    local combatSeconds = if verifyIntermission
+        then 85
+        elseif theaterOnly then 45
+        elseif automated then 30
+        else 60
     local runtime, reason = GameRuntime.start({
         automaticDeployment = automated,
         minimumPlayers = 2,
@@ -324,7 +330,7 @@ function RoundHarness.run()
         lobbySeconds = if automated then 180 else 0,
         deploymentSeconds = 25,
         resultsSeconds = if automated then 2 else 3,
-        intermissionSeconds = if verifyIntermission
+        intermissionSeconds = if productionIntermission
             then MatchRuntime.defaults.intermissionSeconds
             elseif automated then 10
             else nil,
@@ -511,40 +517,45 @@ function RoundHarness.run()
             assert(character:FindFirstChild("StationProtection"), "operator station protection missing")
             perturbMap()
         end)
-        check("P23 A4 actual late arrival receives a protected lobby avatar and cannot act", function()
-            StudioTestService:AddPlayers(1)
-            awaitCondition(function()
-                return #Players:GetPlayers() == 4
-            end, "actual late client joins")
-            peakClientCount = #Players:GetPlayers()
-            local late: Player? = nil
-            for _, player in Players:GetPlayers() do
-                if not slots[player] then
-                    late = player
-                    slots[player] = 4
+        if not theaterOnly then
+            check("P23 A4 actual late arrival receives a protected lobby avatar and cannot act", function()
+                StudioTestService:AddPlayers(1)
+                awaitCondition(function()
+                    return #Players:GetPlayers() == 4
+                end, "actual late client joins")
+                peakClientCount = #Players:GetPlayers()
+                local late: Player? = nil
+                for _, player in Players:GetPlayers() do
+                    if not slots[player] then
+                        late = player
+                        slots[player] = 4
+                    end
                 end
-            end
-            assert(late, "late client identity missing")
-            local state = runtime.rounds.match.snapshot()
-            local member = state.members[late.UserId]
-            assert(
-                member and member.role == "Spectator" and member.life == "Spectating",
-                "late join gained an active role"
-            )
-            waitingAvatar(late, nil)
-            probe(late, {
-                kind = "Observe",
-                roundId = state.roundId,
-                role = "Spectator",
-                life = "Spectating",
-                phase = "Active",
-                deadlineSeconds = state.deadlineSeconds,
-            })
-            local before = runtime.rounds.match.snapshot().revision
-            probe(late, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
-            task.wait(0.3)
-            assert(runtime.rounds.match.snapshot().revision == before, "late spectator command mutated state")
-        end)
+                assert(late, "late client identity missing")
+                local state = runtime.rounds.match.snapshot()
+                local member = state.members[late.UserId]
+                assert(
+                    member and member.role == "Spectator" and member.life == "Spectating",
+                    "late join gained an active role"
+                )
+                waitingAvatar(late, nil)
+                probe(late, {
+                    kind = "Observe",
+                    roundId = state.roundId,
+                    role = "Spectator",
+                    life = "Spectating",
+                    phase = "Active",
+                    deadlineSeconds = state.deadlineSeconds,
+                })
+                local before = runtime.rounds.match.snapshot().revision
+                probe(late, { kind = "SendRejected", roundId = state.roundId, sequence = 1 })
+                task.wait(0.3)
+                assert(
+                    runtime.rounds.match.snapshot().revision == before,
+                    "late spectator command mutated state"
+                )
+            end)
+        end
         check(
             "P23 A1/A2 death returns Ground to lobby and the theater enables optional spectating",
             function()
@@ -588,7 +599,7 @@ function RoundHarness.run()
                 )
                 probe(dead, { kind = "LobbyCamera" })
                 assert(dead.Character == lobby, "results respawned a player already in the theater")
-                if verifyIntermission then
+                if productionIntermission then
                     -- Observe lobby arrival as soon as the result commits. Avatar
                     -- loading may still be in flight when the battlefield resets.
                     for _, player in Players:GetPlayers() do
@@ -612,6 +623,9 @@ function RoundHarness.run()
             assert(workspace.World:FindFirstChild("Battlefield"), "map lost on reset")
             assert(mapSignature() == initialMap, "first reset changed authored map")
         end)
+        if theaterOnly then
+            return true
+        end
         if verifyIntermission then
             check("P23 A4 production-length intermission keeps all clients in the protected lobby", function()
                 local result = runtime.rounds.match.snapshot()
@@ -788,12 +802,16 @@ function RoundHarness.run()
         end
     end
     local report = {
-        suite = if verifyIntermission then "P23-multiplayer" else "P03-multiplayer",
+        suite = if theaterOnly
+            then "P23-theater"
+            elseif verifyIntermission then "P23-multiplayer"
+            else "P03-multiplayer",
         environment = "Studio",
         clientCount = peakClientCount,
         initialClientCount = #clients,
-        completedRoundIds = if verifyIntermission
-            then { firstRound, secondRound }
+        completedRoundIds = if theaterOnly
+            then (if ok then { firstRound } else {})
+            elseif verifyIntermission then { firstRound, secondRound }
             else { firstRound, secondRound, thirdRound },
         discovered = #cases,
         passed = passed,
@@ -802,7 +820,10 @@ function RoundHarness.run()
         cases = cases,
     }
     workspace:SetAttribute(
-        if verifyIntermission then "P23MultiplayerReport" else "P03MultiplayerReport",
+        if theaterOnly
+            then "P23TheaterReport"
+            elseif verifyIntermission then "P23MultiplayerReport"
+            else "P03MultiplayerReport",
         HttpService:JSONEncode(report)
     )
     StudioTestService:EndTest(report)
