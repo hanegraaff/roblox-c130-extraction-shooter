@@ -432,7 +432,7 @@ function AircraftArrivalHarness.run(automated: boolean)
                     end
                     launcherIntent(ground, "Fire", 4, lead)
                     waitFor(function()
-                        return aircraftState:GetAttribute("Health") == 900
+                        return aircraftState:GetAttribute("Health") == 850
                     end, "fresh real direct rocket hit")
                     local wireReadiness = aircraftState:GetAttribute("Readiness")
                     intent(

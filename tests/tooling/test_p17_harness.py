@@ -151,6 +151,11 @@ print("PASS actual Luau runner preflight rejects stale roster/owners without res
                 with self.assertRaisesRegex(ValueError, "frozen gameplay body differs"):
                     HARNESS.check_frozen_body(altered, expected)
 
+    def test_finder_cache_is_outside_production_inputs(self):
+        self.assertTrue(HARNESS.production_path("assets/imports/hangar/native.rbxm"))
+        self.assertFalse(HARNESS.production_path("assets/.DS_Store"))
+        self.assertFalse(HARNESS.production_path("assets/imports/hangar/.DS_Store"))
+
     def test_bound_runtime_native_bank_and_fixture_drift_reject(self):
         with tempfile.TemporaryDirectory(prefix="p17-inputs-") as directory:
             root = Path(directory)
