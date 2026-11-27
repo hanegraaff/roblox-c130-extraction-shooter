@@ -1,0 +1,1 @@
+{"sdk":true,"result":{"cases":[{"name":"P26 harness","passed":false,"detail":"ServerScriptService.ServerTests.BalanceHarness:33: P26 timeout: two real clients after smoke"}],"initialClientCount":0,"discovered":1,"skipped":0,"suite":"P26-multiplayer","passed":0,"failed":1}}

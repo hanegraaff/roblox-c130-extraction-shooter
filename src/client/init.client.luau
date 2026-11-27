@@ -5,6 +5,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StatusPanel = require(script.StatusPanel)
 local RoundPanel = require(script.RoundPanel)
 local GroundCombatController = require(script.GroundCombatController)
+local BalancePanel = require(script.BalancePanel)
+local stopBalance: (() -> ())? = nil
 local GroundIndoorCamera = require(script.GroundIndoorCamera)
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui", 10)
 local status = ReplicatedStorage:WaitForChild("BootstrapStatus", 10)
@@ -23,6 +25,10 @@ local stopIndoor: (() -> ())? = nil
 local activeRoundState: Instance? = nil
 local function stopRoundOwners()
     activeRoundState = nil
+    if stopBalance then
+        stopBalance()
+        stopBalance = nil
+    end
     if stopIndoor then
         stopIndoor()
         stopIndoor = nil
@@ -48,6 +54,7 @@ local function attach(instance: Instance)
     assert(panel.start(), "expected panel.start()")
     rounds = panel
     stopIndoor = GroundIndoorCamera.start(Players.LocalPlayer, instance)
+    stopBalance = BalancePanel.start(Players.LocalPlayer, playerGui, instance)
     activeRoundState = instance
 end
 local added = ReplicatedStorage.ChildAdded:Connect(attach)

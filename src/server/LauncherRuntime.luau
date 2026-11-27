@@ -18,6 +18,7 @@ local Validation = require(ReplicatedStorage.Shared.Validation)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local MatchService = require(script.Parent.MatchService)
 local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
+local BalanceSchema = require(game:GetService("ReplicatedStorage").Shared.BalanceSchema)
 local LauncherService = require(script.Parent.LauncherService)
 local Geometry = require(script.Parent.LauncherGeometry)
 local LauncherRuntime = {}
@@ -81,7 +82,8 @@ function LauncherRuntime.start(
     ground: GroundCombatRuntime.Controller,
     externallyStepped: boolean?,
     emitSound: WeaponSoundRules.Emit?,
-    emitImpact: WeaponImpactRules.Emit?
+    emitImpact: WeaponImpactRules.Emit?,
+    getBalance: (() -> BalanceSchema.Values)?
 ): (Controller?, string?)
     if ReplicatedStorage:FindFirstChild("LauncherState") then
         return nil, "launcher already owned"
@@ -164,6 +166,10 @@ function LauncherRuntime.start(
         end
         if slot.held then
             slot.held:SetAttribute("Ammo", snapshot.ammo)
+            slot.held:SetAttribute(
+                "ShotInterval",
+                if getBalance then getBalance().launcherReload else LauncherService.reloadSeconds
+            )
             slot.held:SetAttribute("ReloadUntil", snapshot.readyAt)
         end
     end
@@ -332,7 +338,7 @@ function LauncherRuntime.start(
                 local now = workspace:GetServerTimeNow()
                 local bucket = buckets[player]
                 if not bucket then
-                    bucket = assert(RateLimit.new(8, 6, now))
+                    bucket = assert(RateLimit.new(10, 8, now))
                     buckets[player] = bucket
                 end
                 -- Pre-arrival Fire cannot enter the queue and become valid
@@ -460,7 +466,11 @@ function LauncherRuntime.start(
                 destroyRepresentation(slot)
                 slot.lastRoot, slot.lastSample = nil, 0
                 local initial = assert(anchor(slot), "validated landmark launcher anchor missing")
-                slot.rules.reset(current.roundId, scalar(initial))
+                slot.rules.reset(
+                    current.roundId,
+                    scalar(initial),
+                    if getBalance then getBalance().launcherReload else nil
+                )
             end
         end
         for _, slot in slots do

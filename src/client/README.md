@@ -4,6 +4,10 @@ Rojo maps this package to `StarterPlayer.StarterPlayerScripts.Client`. The entry
 
 `StatusPanel.new(playerGui, status)` returns an idempotent lifecycle controller. It owns one `FoundationStatus` ScreenGui and listeners for environment/running state and round HUD ownership. The panel hides while `RoundHUD` exists. Stop disconnects its listeners and destroys its GUI. `ResetOnSpawn = false` preserves ownership through character replacement. [Shared lifecycle](../shared/README.md)
 
+## Lobby balance panel
+
+`BalancePanel.start(player, playerGui, roundState)` mounts the editor for the current round owner and returns its cleanup function. In the lobby, an owner or trusted tester with the server’s access hint sees **Balance**. The panel builds fields from the shared schema, holds unsaved edits locally and sends explicit save, apply or restore requests. Only the owner sees tester management. Closing the panel or leaving the lobby discards its draft. [Owner guide](../../docs/balance.md)
+
 ## Round HUD, settings and spectator camera
 
 `RoundPanel.new(player, playerGui, state, inputProvider?, touchProvider?, settings?)` returns a nonyielding lifecycle controller. Production samples `UserInputService`. Tests can provide input and touch capability. `newSettings()` returns a fresh session record with Full effects and Reduced camera shake. The entrypoint passes the same record to later round owners so choices persist during the play session.

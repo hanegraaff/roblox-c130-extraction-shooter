@@ -32,7 +32,7 @@ export type Snapshot = {
 }
 export type Intent = { sequence: number, x: number?, y: number?, z: number? }
 export type Controller = {
-    reset: (number, Position) -> (),
+    reset: (number, Position, number?) -> (),
     clear: () -> (),
     snapshot: (number) -> Snapshot,
     preflight: (number, unknown, string, boolean, number) -> Intent?,
@@ -52,6 +52,7 @@ end
 -- recover removes an owner before the engine chooses a supported drop or anchor;
 -- place completes that transient Recovering state atomically at the adapter boundary.
 function LauncherService.new(site: string?): Controller
+    local reloadSeconds = LauncherService.reloadSeconds
     local suffix = if site then ":" .. site else ""
     local roundId, launcherId, state = 0, "", "Inactive"
     local ownerId: number? = nil
@@ -129,11 +130,12 @@ function LauncherService.new(site: string?): Controller
         return { sequence = sequence }
     end
     return {
-        reset = function(id, anchor)
+        reset = function(id, anchor, tunedReload)
             if id == roundId then
                 return
             end
             assert(id > 0 and id % 1 == 0 and positionValid(anchor), "invalid internal launcher round")
+            reloadSeconds = tunedReload or LauncherService.reloadSeconds
             roundId, launcherId, state, ownerId = id, "launcher:" .. tostring(id) .. suffix, "Available", nil
             position, readyAt, shotSerial = table.clone(anchor), 0, 0
             revision += 1
@@ -205,7 +207,7 @@ function LauncherService.new(site: string?): Controller
             if not Validation.inRange(distanceSquared, 1, LauncherService.rangeStuds ^ 2) then
                 return nil, nil
             end
-            readyAt, sequences[userId] = now + LauncherService.reloadSeconds, intent.sequence
+            readyAt, sequences[userId] = now + reloadSeconds, intent.sequence
             shotSerial += 1
             revision += 1
             return intent, "rocket:" .. tostring(roundId) .. ":" .. tostring(shotSerial) .. suffix

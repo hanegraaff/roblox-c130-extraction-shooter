@@ -47,7 +47,15 @@ export type Settings = {
     scatterSeconds: number?,
 }
 -- releaseLife runs at most once per deployed life, with false for terminal/reset cleanup.
-export type Adapters = { now: () -> number, releaseLife: (number, number, boolean) -> () }
+export type Adapters = {
+    now: () -> number,
+    releaseLife: (number, number, boolean) -> (),
+    -- All four hooks are nonyielding. A stale storage cache delays ordinary deployment.
+    minimumPlayers: (() -> number)?,
+    beforeDeployment: (() -> boolean)?,
+    captureDuration: (() -> number)?,
+    intermission: (() -> number)?,
+}
 export type Controller = {
     join: (number) -> (),
     leave: (number) -> (),
@@ -85,6 +93,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
         settings.seed >= 0 and settings.seed <= 2147483647 and settings.seed % 1 == 0,
         "seed must be a safe nonnegative integer"
     )
+    local roundDuration = settings.durationSeconds
     local state: Snapshot = {
         roundId = 0,
         revision = 0,
@@ -144,7 +153,8 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             return false
         end
         state.result = result
-        state.intermissionUntil = if intermissionSeconds > 0 then now(atSeconds) + intermissionSeconds else 0
+        local waitSeconds = if adapters.intermission then adapters.intermission() else intermissionSeconds
+        state.intermissionUntil = if waitSeconds > 0 then now(atSeconds) + waitSeconds else 0
         table.clear(departingGround)
         table.clear(removedCharacters)
         for _, member in state.members do
@@ -260,13 +270,19 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
             end
             local assignment, reason = RoleService.assign(
                 candidates,
-                settings.minimumPlayers,
+                if adapters.minimumPlayers then adapters.minimumPlayers() else settings.minimumPlayers,
                 previousOperator,
                 (settings.seed + state.roundId) % 2147483648
             )
             if not assignment then
                 return false, reason
             end
+            if adapters.beforeDeployment and not adapters.beforeDeployment() then
+                return false, "refreshing balance settings"
+            end
+            roundDuration = if adapters.captureDuration
+                then adapters.captureDuration()
+                else settings.durationSeconds
             state.roundId += 1
             table.clear(state.members)
             state.result = nil
@@ -331,7 +347,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                 state.deadlineSeconds = seconds + scatterSeconds
                 transition("Scatter")
             else
-                state.deadlineSeconds = seconds + settings.durationSeconds
+                state.deadlineSeconds = seconds + roundDuration
                 transition("Active")
             end
             return true, nil
@@ -434,7 +450,7 @@ function MatchService.new(settings: Settings, adapters: Adapters): Controller
                     release(member, true)
                 end
                 if scatter and stepSeconds >= state.deadlineSeconds then
-                    state.deadlineSeconds = stepSeconds + settings.durationSeconds
+                    state.deadlineSeconds = stepSeconds + roundDuration
                     transition("Active")
                 end
             end

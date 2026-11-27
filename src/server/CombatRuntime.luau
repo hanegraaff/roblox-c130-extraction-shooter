@@ -17,7 +17,7 @@ local CombatService = require(script.Parent.CombatService)
 local CombatViewRules = require(script.Parent.CombatViewRules)
 local DamageRules = require(script.Parent.DamageRules)
 local DestructionRuntime = require(script.Parent.DestructionRuntime)
-local DestructionService = require(script.Parent.DestructionService)
+local BalanceSchema = require(game:GetService("ReplicatedStorage").Shared.BalanceSchema)
 local BlastGeometry = require(script.Parent.BlastGeometry)
 local CombatRuntime = {}
 local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
@@ -116,14 +116,16 @@ function CombatRuntime.start(
     structure: DestructionRuntime.Controller?,
     externallyStepped: boolean?,
     emitSound: WeaponSoundRules.Emit?,
-    emitImpact: WeaponImpactRules.Emit?
+    emitImpact: WeaponImpactRules.Emit?,
+    getBalance: (() -> BalanceSchema.Values)?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("FireWeapon") then
         return nil, "aircraft fire transport unavailable or owned"
     end
     local map, minimumY, maximumY = aircraft.level()
-    local combat = CombatService.new(map, minimumY, maximumY)
+    local profiles = CombatService.profiles
+    local combat = CombatService.new(map, minimumY, maximumY, profiles)
     local remote = Instance.new("RemoteEvent")
     remote.Name = "FireWeapon"
     remote.Parent = aircraftState
@@ -232,7 +234,7 @@ function CombatRuntime.start(
         then
             return false
         end
-        local profile = CombatService.profiles[projectile.shot.weapon]
+        local profile = profiles[projectile.shot.weapon]
         if not profile then
             return false
         end
@@ -428,7 +430,7 @@ function CombatRuntime.start(
             marker:SetAttribute("Weapon", weapon)
             marker:SetAttribute("Stage", "Warning")
             marker.Shape = Enum.PartType.Cylinder
-            local blastRadius = CombatService.profiles[weapon].radius
+            local blastRadius = profiles[weapon].radius
             marker.Size = if weapon == "M102"
                 then Vector3.new(0.2, blastRadius * 2, blastRadius * 2)
                 else Vector3.new(0.2, 5, 5)
@@ -451,7 +453,7 @@ function CombatRuntime.start(
                 -- Camera raycast endpoints lie on surfaces. Allow a small bounded
                 -- continuation so floating-point rounding does not end the server
                 -- sweep just short of that surface; only actual hits can detonate.
-                remaining = math.min(delta.Magnitude + 0.25, CombatService.profiles[weapon].range),
+                remaining = math.min(delta.Magnitude + 0.25, profiles[weapon].range),
                 visual = visual,
                 marker = marker,
                 awards = DamageRules.new(),
@@ -499,9 +501,18 @@ function CombatRuntime.start(
             lastRound = state.roundId
             lastAcceptedShotId = 0
             lastAcceptedAt = -math.huge
-            if state.phase == "Lobby" then
-                combat = CombatService.new(map, minimumY, maximumY)
+            if getBalance then
+                local preset = getBalance()
+                local gau = table.clone(CombatService.profiles.GAU23)
+                gau.cadence, gau.reload, gau.damage = preset.gauCadence, preset.gauReload, preset.gauDamage
+                local m102 = table.clone(CombatService.profiles.M102)
+                m102.cadence, m102.reload, m102.damage =
+                    preset.m102Cadence, preset.m102Reload, preset.m102Damage
+                profiles = { GAU23 = gau, M102 = m102 }
             end
+            aircraftState:SetAttribute("GAU23Interval", profiles.GAU23.cadence)
+            aircraftState:SetAttribute("M102Interval", math.max(profiles.M102.cadence, profiles.M102.reload))
+            combat = CombatService.new(map, minimumY, maximumY, profiles)
             combat.reset(lastRound)
             publish(time)
         end
@@ -536,7 +547,7 @@ function CombatRuntime.start(
                 structure.interrupt(lastAcceptedShotId)
             end
             lastSelected = selected
-            if time - lastAcceptedAt > DestructionService.gapSeconds + 1e-7 then
+            if time - lastAcceptedAt > profiles.GAU23.cadence * 1.5 + 1e-7 then
                 structure.interrupt(lastAcceptedShotId)
             end
         end
@@ -558,7 +569,7 @@ function CombatRuntime.start(
                 table.remove(projectiles, i)
                 continue
             end
-            local profile = CombatService.profiles[projectile.shot.weapon]
+            local profile = profiles[projectile.shot.weapon]
             local distance, expired = 0, true
             if profile then
                 distance, expired =

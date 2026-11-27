@@ -22,6 +22,7 @@ local VesperReconstruction = require(script.Parent.VesperReconstruction)
 local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
 local SandbreakReconstruction = require(script.Parent.SandbreakReconstruction)
 local SeedshipReconstruction = require(script.Parent.SeedshipReconstruction)
+local BalanceRuntime = require(script.Parent.BalanceRuntime)
 local GameRuntime = {}
 export type Controller = {
     rounds: MatchRuntime.Controller,
@@ -37,7 +38,8 @@ export type Controller = {
 -- Starts one map/round runtime or rejects startup without leaked ownership.
 function GameRuntime.start(
     settings: MatchRuntime.Settings,
-    groundDependencies: GroundCombatRuntime.Dependencies?
+    groundDependencies: GroundCombatRuntime.Dependencies?,
+    balanceDependencies: BalanceRuntime.Dependencies?
 ): (Controller?, string?)
     local assets = game:GetService("ServerStorage").Assets
     local installation, installReason = OutpostReconstruction.install(workspace.World, assets)
@@ -111,9 +113,31 @@ function GameRuntime.start(
         map.destroy()
         return nil, startReason
     end
-    local rounds = MatchRuntime.new(map, settings)
+    local matchRoster: MatchRuntime.Controller? = nil
+    local balance, balanceReason = BalanceRuntime.start(balanceDependencies, function()
+        if matchRoster then
+            local state = matchRoster.match.snapshot()
+            if state.phase == "Deploying" or state.phase == "Scatter" or state.phase == "Active" then
+                local count = 0
+                for _, member in state.members do
+                    if member.role == "Ground" then
+                        count += 1
+                    end
+                end
+                return count
+            end
+        end
+        return math.clamp(#Players:GetPlayers() - 1, 0, 9)
+    end)
+    if not balance then
+        map.destroy()
+        return nil, balanceReason
+    end
+    local rounds = MatchRuntime.new(map, settings, balance)
+    matchRoster = rounds
     local started, roundReason = rounds.start()
     if not started then
+        balance.stop()
         map.destroy()
         return nil, roundReason
     end
@@ -140,44 +164,59 @@ function GameRuntime.start(
     local aircraft, aircraftReason = AircraftService.start(rounds.match, nil, true)
     if not aircraft then
         rounds.stop()
+        balance.stop()
         map.destroy()
         return nil, aircraftReason
     end
-    local destruction, destructionReason = DestructionRuntime.start(workspace.World)
+    local destruction, destructionReason = DestructionRuntime.start(workspace.World, nil, balance.getBalance)
     if not destruction then
         aircraft.stop()
         rounds.stop()
+        balance.stop()
         map.destroy()
         return nil, destructionReason
     end
     destruction.sync(rounds.match.snapshot().roundId)
-    local combat, combatReason =
-        CombatRuntime.start(rounds.match, aircraft, nil, nil, nil, destruction, true, emitSound, emitImpact)
+    local combat, combatReason = CombatRuntime.start(
+        rounds.match,
+        aircraft,
+        nil,
+        nil,
+        nil,
+        destruction,
+        true,
+        emitSound,
+        emitImpact,
+        balance.getBalance
+    )
     if not combat then
         destruction.stop()
         aircraft.stop()
         rounds.stop()
+        balance.stop()
         map.destroy()
         return nil, combatReason
     end
     local groundCombat, groundReason =
-        GroundCombatRuntime.start(rounds.match, groundDependencies, true, emitSound)
+        GroundCombatRuntime.start(rounds.match, groundDependencies, true, emitSound, balance.getBalance)
     if not groundCombat then
         combat.stop()
         destruction.stop()
         aircraft.stop()
         rounds.stop()
+        balance.stop()
         map.destroy()
         return nil, groundReason
     end
     local launcher, launcherReason =
-        LauncherRuntime.start(rounds.match, groundCombat, true, emitSound, emitImpact)
+        LauncherRuntime.start(rounds.match, groundCombat, true, emitSound, emitImpact, balance.getBalance)
     if not launcher then
         groundCombat.stop()
         combat.stop()
         destruction.stop()
         aircraft.stop()
         rounds.stop()
+        balance.stop()
         map.destroy()
         return nil, launcherReason
     end
@@ -240,6 +279,7 @@ function GameRuntime.start(
             destruction.stop()
             aircraft.stop()
             rounds.stop()
+            balance.stop()
             map.destroy()
         end,
     },

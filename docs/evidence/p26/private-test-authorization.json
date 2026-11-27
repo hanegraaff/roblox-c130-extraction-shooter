@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-27",
+  "scope": "Private P26 two-server test. Invited testers only.",
+  "experience": "C130 P17 Import",
+  "universe_id": 10776653720,
+  "place_id": 72732833195348,
+  "release_mapping": "default.project.json",
+  "approved_candidates": [
+    {
+      "source": "cb163089307e3f0ce80e4d1a5e4fd5547541abbc",
+      "sha256": "703be162401e6bdd1dc706065350efb35e02806cf7adcfdb81ea72168f3d2e56",
+      "bytes": 157122566,
+      "user_response": "Authorize private test",
+      "disposition": "Superseded before upload after a Studio panel damage failure."
+    },
+    {
+      "source": "55650a414373b9108a0a978f7e251b06b081c361",
+      "sha256": "e5ae85eb1599481c50a461ebc1fe76cd605dc4c0e23465baf84018659dd793da",
+      "bytes": 157122691,
+      "user_response": "Use the corrected build",
+      "disposition": "Authorized. Destination verified private. Publication and live two-server test remain pending."
+    }
+  ],
+  "destination_preflight": {
+    "method": "GET",
+    "endpoint": "/cloud/v2/universes/10776653720",
+    "required_scope": "universe:read",
+    "before_and_after_corrected_build_approval": "Studio MCP could not acquire an Open Cloud token because the creator has not granted universe:read.",
+    "followup": {
+      "cloud_studio_id": "44b84a0d-ef67-42c9-ab84-81117fe073be",
+      "result": "200 OK",
+      "visibility": "PRIVATE",
+      "place_id": 72732833195348,
+      "universe_id": 10776653720,
+      "owner_id": 2227341845,
+      "previous_place_version": 58,
+      "current_max_players": 60,
+      "diagnosis": "Permissions are per place. The prior denied requests targeted the local test document. universe:read succeeds in the cloud destination.",
+      "remaining": "Release artifact opened as a separate local document, balance module present and DevelopmentSettings absent. Native Studio window access repeatedly timed out, preventing Publish As. No new published version observed. Capacity must be set to ten and destination asset/access checks completed before the live test."
+    }
+  },
+  "published_version": null
+}

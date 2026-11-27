@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P26` | 2 | Owner and tester permissions, all four weapons, both health pools, panel damage, minimum players and consecutive intermissions. Use `P26Panel` for the hands-on lobby preview |
 | `P24` | 2 | Production-length Scatter, both countdown views, real launcher transfers and fire gating, aircraft reveal, role rotation and canceled arrival |
 | `P23` | 3 initially, 4 after late join | Protected lobby return, theater interaction, result and production-length intermission, and two battlefield resets |
 | `P18` | 3 initially, 2 after intentional departure | Roster health, panel/thermal/camera state, four-site ownership/recovery and replay. On P25, this selector also exercises weapon cooldowns, launcher damage and M-7 magazine feedback |
@@ -55,6 +56,23 @@ Artifact inspection parses the generated XML, checks the runtime-script allowlis
 Five deliberate corruptions check rejection of a pose alias, wrong pose, wrong size, nonfinite pose component and missing CFrame. A separate building-surface guard checks visible-part pairs for exposed coplanar faces. It allows ordinary edge/contact joins and intersections hidden inside opaque supports. Its three corruption probes reject a floor on the battlefield plane, an overlapping floor/frame face and a duplicate wall panel. These are artifact probes outside Luau suite totals.
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
+
+## Verify the live balance panel
+
+From the candidate checkout run `python3 scripts/verify.py`. The balance schema, record and service suites exercise field bounds, permissions, concurrent edits, rollback and storage failure. The match, weapon, health and panel suites exercise the gameplay effects of changing settings. Use the [panel plan](../plans/26-live-balance-panel.md) for acceptance criteria and observed results.
+
+To use the panel yourself, follow the [local walkthrough](balance.md#try-it-in-studio). To run the two-client acceptance fixture, sync the local test document to `PlayersVsC130Tests` on port 34872. With Play stopped, run this from Studio’s Edit context.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService"):ExecuteMultiplayerTestAsync(2, {kind = "P26"})
+    workspace:SetAttribute("P26LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+```
+
+Read `workspace:GetAttribute("P26LastReport")` after the run. For manual **Server & Clients**, set `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26")` in Edit, start two clients and read the server’s `Workspace.P26MultiplayerReport` attribute before stopping. Clear the selector in Edit afterward. The fixture exercises real Roblox clients and game systems with a session-only settings store.
+
+For the published check, use an authorized private experience containing this candidate. Start two Roblox servers and use the owner, a trusted tester and an ordinary account. Save and apply a distinctive preset on one server. Record the revision and measure the effect on the next round in both servers. Start a fresh server, check it loads the same settings, then restore the previous preset and repeat. Verify that only the owner manages tester access and that an ordinary player cannot edit settings. Record anonymous roles, server and build versions, observed values and rollback results. [Operating the panel](balance.md)
 
 ## Verify P25 weapon balance
 

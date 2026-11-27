@@ -189,4 +189,32 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             )
         )
     end)
+    test("P26 custom aircraft profiles keep separate server readiness", function()
+        local profiles = table.clone(combat.profiles)
+        local heavy, light = table.clone(profiles.M102), table.clone(profiles.GAU23)
+        heavy.cadence, heavy.reload = 4, 3
+        light.cadence, light.reload, light.capacity = 0.5, 1.25, 2
+        profiles.M102, profiles.GAU23 = heavy, light
+        local owner = combat.new(defaults, -1, 32, profiles)
+        owner.reset(1)
+        assert(owner.fire(1, request(1, "M102"), "M102", true, 0, 360, 140, 0), "first 105mm rejected")
+        assert(owner.fire(1, request(2, "GAU23"), "GAU23", true, 0, 360, 140, 0), "first 30mm rejected")
+        assert(
+            not owner.fire(1, request(3, "GAU23"), "GAU23", true, 0.49, 360, 140, 0),
+            "early 30mm shot accepted"
+        )
+        assert(owner.fire(1, request(3, "GAU23"), "GAU23", true, 0.5, 360, 140, 0), "30mm rejected on time")
+        assert(
+            assert(owner.readiness("GAU23", 1), "missing 30mm state").reloadUntil == 1.75,
+            "incorrect empty-magazine deadline"
+        )
+        assert(
+            not owner.fire(1, request(4, "M102"), "M102", true, 3, 360, 140, 0),
+            "105mm ignored its longer cadence"
+        )
+        assert(
+            owner.fire(1, request(4, "M102"), "M102", true, 4, 360, 140, 0),
+            "105mm rejected at ready time"
+        )
+    end)
 end

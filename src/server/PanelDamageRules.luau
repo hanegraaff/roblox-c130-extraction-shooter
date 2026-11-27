@@ -41,16 +41,19 @@ end
 -- advances Heavy at one second and Total at two, retaining fractional overflow
 -- across the intermediate transition so cadence never discards earned time.
 -- Returns true iff structural stage changes. Invalid elapsed time rejects.
-function PanelDamageRules.apply(state: State, heavy: boolean, seconds: number): boolean
+function PanelDamageRules.apply(state: State, heavy: boolean, seconds: number, panelDamage: string?): boolean
     if state.stage == 2 or seconds ~= seconds or seconds < 0 or seconds == math.huge then
         return false
     end
     local before = state.stage
+    -- Store all credits in Medium-equivalent seconds, so mixed impacts follow
+    -- the same persistent Light/Heavy/Total progression at every setting.
     if heavy then
-        state.stage, state.heavySeconds, state.sustainedSeconds = 2, 0, 0
-        return true
+        state.heavySeconds += if panelDamage == "Low" then 1 else 2
+    else
+        local multiplier = if panelDamage == "Low" then 0.5 elseif panelDamage == "High" then 2 else 1
+        state.sustainedSeconds += seconds * multiplier
     end
-    state.sustainedSeconds += seconds
     while
         state.stage < 2
         and state.heavySeconds + state.sustainedSeconds + PanelDamageRules.epsilonSeconds

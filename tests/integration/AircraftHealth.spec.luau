@@ -101,4 +101,11 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             )
         end
     )
+    test("P26 aircraft uses the round's HP per teammate and per-weapon damage", function()
+        local tuned = rules.new(160, 8, 80)
+        assert(tuned.reset(7, 3) and tuned.snapshot().maximum == 480, "wrong deployment HP")
+        assert(tuned.impact(7, "r1", "M7", true) == 8, "wrong tuned M-7 damage")
+        assert(tuned.impact(7, "r2", "RocketLauncher", true) == 80, "wrong tuned rocket damage")
+        assert(not tuned.reset(7, 2) and tuned.snapshot().health == 392, "round reset changed live HP")
+    end)
 end

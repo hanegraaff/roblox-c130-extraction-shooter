@@ -341,4 +341,20 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         shot(owner, 35, 8, "wall", "M102")
         assert(state(owner, "wall").appearance == "Total", "building howitzer rule changed")
     end)
+    test("P26 one ledger follows the new round and rejects contacts from the old one", function()
+        local owner = Service.new()
+        local resolve, snapshot = owner.resolve, owner.snapshot
+        for round, mode in { "Low", "High" } do
+            owner.reset(round, { "wall" }, nil, { gauCadence = 0.4, panelDamage = mode })
+            local function hit(id: number): boolean
+                local applied =
+                    resolve({ roundId = id, shotId = 1, weapon = "M102", firedAt = 1, panelId = "wall" })
+                return applied
+            end
+            assert(not hit(round - 1), "old impact changed the new generation")
+            assert(hit(round), "current impact missed registered panel")
+            local panelState = assert(snapshot("wall"), "missing current wall")
+            assert(panelState.stage == (if mode == "Low" then 1 else 2), "wrong preset after deployment")
+        end
+    end)
 end

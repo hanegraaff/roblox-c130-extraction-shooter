@@ -1,9 +1,9 @@
 --!strict
 --[=[
     AircraftHealth: server-only round-scoped aircraft health and shot deduplication.
-    Maximum is 1,000 game health units per deployment Ground player, excluding
+    Maximum scales with the locked health per deployment Ground player, excluding
     the operator. Counts are locked at reset; later roster changes never resize
-    or heal the current aircraft. Fixed rockets deal 150 units and M-7 hits 5.
+    or heal the current aircraft. Weapon damage is fixed for each controller.
     Pure finite-scalar rules: no Instances, transport, clock or yielding.
 ]=]
 local AircraftHealth = {}
@@ -21,24 +21,24 @@ export type Controller = {
 
 -- Valid deployment teams contain 1–9 Ground players. Reject nonfinite/fractional
 -- or out-of-range counts without creating authority state.
-function AircraftHealth.maximumFor(groundPlayers: number): number?
+function AircraftHealth.maximumFor(groundPlayers: number, perPlayer: number?): number?
     if groundPlayers ~= groundPlayers or groundPlayers % 1 ~= 0 or groundPlayers < 1 or groundPlayers > 9 then
         return nil
     end
-    return groundPlayers * AircraftHealth.healthPerGroundPlayer
+    return groundPlayers * (perPlayer or AircraftHealth.healthPerGroundPlayer)
 end
 
 -- Creates an independent owner. reset accepts a newer positive integral round
 -- and optional deployment Ground count (default one for deterministic fixtures).
 -- Same/stale/invalid resets reject without clearing damage or deduplication.
 -- impact returns applied units and whether this call alone destroyed the plane.
-function AircraftHealth.new(): Controller
-    local roundId, maximum = 0, AircraftHealth.maximum
+function AircraftHealth.new(perPlayer: number?, rifleDamage: number?, rocketDamage: number?): Controller
+    local roundId, maximum = 0, perPlayer or AircraftHealth.maximum
     local health = maximum
     local seen: { [string]: boolean } = {}
     return {
         reset = function(id, groundPlayers)
-            local nextMaximum = AircraftHealth.maximumFor(groundPlayers or 1)
+            local nextMaximum = AircraftHealth.maximumFor(groundPlayers or 1, perPlayer)
             if id ~= id or id % 1 ~= 0 or id <= roundId or id > 2147483647 or not nextMaximum then
                 return false
             end
@@ -59,8 +59,10 @@ function AircraftHealth.new(): Controller
                 return nil, false
             end
             local damage = if weapon == "M7"
-                then AircraftHealth.rifleDamage
-                elseif weapon == "RocketLauncher" and direct then AircraftHealth.rocketDamage
+                then (rifleDamage or AircraftHealth.rifleDamage)
+                elseif weapon == "RocketLauncher" and direct then (
+                    rocketDamage or AircraftHealth.rocketDamage
+                )
                 else 0
             if damage <= 0 or not direct then
                 return nil, false

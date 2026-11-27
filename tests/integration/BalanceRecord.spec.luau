@@ -1,0 +1,49 @@
+--!strict
+-- P26 A1. Tests the exact decoder and transaction transform sent to UpdateAsync.
+type API = typeof(require(game:GetService("ServerScriptService").Server.BalanceRecord))
+return function(test: (string, () -> ()) -> (), raw: unknown)
+    local rules = raw :: API
+    test("P26 admin requests reject unknown fields, actors, malformed collections and names", function()
+        local invalid: { unknown } = {
+            { action = "read", userId = 1 },
+            { action = "save", name = "x", revision = 0, settings = {} },
+            { action = "grant", revision = 0, userId = 0 },
+            { action = "grant", revision = 0, userId = math.huge },
+            { action = "grant", revision = 0, userId = 3, owner = true },
+            { action = "revoke", revision = 0.25, userId = 3 },
+            { action = "apply", revision = 0, name = string.rep("a", 33) },
+            { action = "restore", revision = -1 },
+        }
+        for _, request in invalid do
+            assert(not rules.request(request), "invalid command was accepted")
+        end
+        local initial = rules.initial()
+        assert(not rules.decode({ version = 2 }), "unknown storage schema accepted")
+        assert(rules.decode(nil))
+        local broken = table.clone(initial)
+        broken.trusted = { [2] = 8 }
+        assert(not rules.decode(broken), "sparse trust list accepted")
+        broken.trusted = { 8, 8 }
+        assert(not rules.decode(broken), "duplicate tester accepted")
+    end)
+    test("P26 permissions and compare-and-swap reject stale or revoked testers without mutation", function()
+        local base = rules.initial()
+        local grant = assert(rules.request({ action = "grant", revision = 0, userId = 2 }))
+        assert(not rules.apply(base, grant, 2, 1), "tester granted their own access")
+        local granted = assert(rules.apply(base, grant, 1, 1))
+        assert(
+            granted.revision == 1 and #base.trusted == 0 and rules.allowed(granted, 2, 1),
+            "grant changed its source or lost its revision"
+        )
+        assert(not rules.apply(granted, grant, 1, 1), "stale owner command accepted")
+        local revoke = assert(rules.request({ action = "revoke", revision = 1, userId = 2 }))
+        assert(not rules.apply(granted, revoke, 2, 1), "tester revoked access")
+        local revoked = assert(rules.apply(granted, revoke, 1, 1))
+        local apply = assert(rules.request({ action = "apply", revision = 2, name = "Shipped" }))
+        assert(
+            not rules.apply(revoked, apply, 2, 1) and revoked.revision == 2,
+            "revoked actor wrote settings"
+        )
+        assert(not rules.allowed(revoked, 1, 3), "former owner retained access")
+    end)
+end

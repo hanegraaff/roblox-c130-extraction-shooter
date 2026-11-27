@@ -33,7 +33,12 @@ while ReplicatedStorage:GetAttribute("ManualClientHarness") == nil and os.clock(
 end
 local manualMode = ReplicatedStorage:GetAttribute("ManualClientHarness")
 assert(type(manualMode) == "string", "server manual-client dispatch readiness timeout")
-if manualMode == "P24" then
+if manualMode == "P26" then
+    require(script.BalanceHarness).run()
+    return
+elseif manualMode == "P26Panel" then
+    return
+elseif manualMode == "P24" then
     require(script.AircraftArrivalHarness).run()
     return
 elseif manualMode == "P18" then
