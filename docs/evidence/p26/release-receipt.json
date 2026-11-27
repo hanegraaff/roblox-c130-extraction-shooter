@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "source": {
+    "commit": "55650a414373b9108a0a978f7e251b06b081c361",
+    "tree": "57e93faeda0b17dbebd24e41bf69bd3b11a14a15"
+  },
+  "environment": {
+    "machine": "arm64",
+    "python": "3.15.2",
+    "system": "Darwin"
+  },
+  "host_gate": {
+    "command": "python3 scripts/verify.py",
+    "result": "passed",
+    "runtime_scripts_matched": 75
+  },
+  "release": {
+    "bytes": 157122691,
+    "instances": 27284,
+    "mapping": {
+      "bytes": 1547,
+      "path": "default.project.json",
+      "sha256": "f7ede7a5c1efa03a182f8b4e80ef0400de1767fce4ed256564f95d7cfb3504bc"
+    },
+    "path": "build/game.rbxlx",
+    "sha256": "e5ae85eb1599481c50a461ebc1fe76cd605dc4c0e23465baf84018659dd793da"
+  },
+  "studio_test": {
+    "bytes": 158855255,
+    "instances": 27505,
+    "mapping": {
+      "bytes": 3013,
+      "path": "test.project.json",
+      "sha256": "a757d7b6846b406c6b3d7e33e6283bdcc400c24f8f9717e638ebb2cc86c94100"
+    },
+    "path": "build/tests.rbxlx",
+    "sha256": "d78037f1427dac59f10440dd18c15c83c1cd8613cb672bbe2e29948f416e694a"
+  },
+  "asset_manifest": {
+    "bytes": 153186,
+    "path": "assets/manifest.json",
+    "schema_version": 1,
+    "sha256": "5ce6fabc32d1164c907b8c5456f7500ce8ec1768215874aec9efe41a9eb847ad"
+  },
+  "full_generated_receipt_sha256": "e71db35cb51f6bbc35190404924cf8a0bf345965f9fce55503618ecc75ec50c0",
+  "reproduce": "python3 scripts/prepare_release.py at the recorded source commit"
+}

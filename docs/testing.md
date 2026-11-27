@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P26` | 2 | Owner and tester permissions, all four weapons, both health pools, panel damage, minimum players and consecutive intermissions. Use `P26Panel` for the hands-on lobby preview |
 | `P24` | 2 | Production-length Scatter, both countdown views, real launcher transfers and fire gating, aircraft reveal, role rotation and canceled arrival |
 | `P23` | 3 initially, 4 after late join | Protected lobby return, theater interaction, result and production-length intermission, and two battlefield resets |
 | `P18` | 3 initially, 2 after intentional departure | Roster health, panel/thermal/camera state, four-site ownership/recovery and replay. On P25, this selector also exercises weapon cooldowns, launcher damage and M-7 magazine feedback |

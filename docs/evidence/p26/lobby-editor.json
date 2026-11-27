@@ -1,0 +1,16 @@
+{
+  "environment": "Roblox Studio 0.748.0.7481526, macOS, real local Play client, P26Panel selector",
+  "adapters": "Isolated in-memory storage, synthetic owner permission, production balance UI and remote",
+  "capture_method": "Studio MCP get/execute Luau sampled live ScreenGui and button state. Studio MCP native mouse and keyboard operated the panel.",
+  "play_source": "Production GUI and server in the test project from commit 38d2cb7, live-synced to the same local Edit document.",
+  "clients": 1,
+  "account_identifiers": "omitted",
+  "observations": [
+    {"interaction":"OpenBalance clicked","sheet_visible":true,"scroll_children":58,"initial_aircraft_hp_per_ground":"1000"},
+    {"interaction":"Entered preset name and aircraft health using focused TextBoxes","name":"QA Editor","hp":"840"},
+    {"interaction":"Scrolled down and clicked Save named preset","feedback":"Preset saved. Choose Apply to use it.","saved_button":"QA Editor"},
+    {"interaction":"Clicked Apply saved preset","live_name":"QA Editor","live_revision":2,"round_revision":0,"hp":"840"},
+    {"interaction":"Clicked Restore previous live preset","live_name":"Shipped","live_revision":3,"round_revision":0,"hp":"1000"}
+  ],
+  "scope":"Lobby panel interactions. Native multiplayer timing and gameplay have separate reports."
+}

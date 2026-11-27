@@ -1,0 +1,80 @@
+{
+  "commit": "37ef530ff8099e20205e3f155ebfa78711a24e0b",
+  "tree": "29412c345f7b28b6d49e38e32ec6ffe743fc3212",
+  "environment": "Roblox Studio 0.748.0.7481526, macOS",
+  "smoke": [
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23,
+      "discovered": 23,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23,
+      "discovered": 23,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 215,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 215
+    }
+  ],
+  "sdk": true,
+  "result": {
+    "cases": [
+      {
+        "passed": true,
+        "name": "A1 Owner and ordinary player have different access in the waiting lobby"
+      },
+      {
+        "passed": true,
+        "name": "A1 A2 A4 Trusted tester lowers waiting minimum and deploys the saved preset"
+      },
+      {
+        "passed": true,
+        "name": "A2 Low panel damage keeps interrupted credit and replicates openings"
+      },
+      {
+        "passed": true,
+        "name": "A2 A5 Four tuned weapons change damage, cooldowns, held tools and both health HUDs"
+      },
+      {
+        "passed": true,
+        "name": "A2 A4 Change settings during combat and intermission; both clients agree on replay"
+      },
+      {
+        "passed": true,
+        "name": "A5 High and Medium panel settings change native damage after replay"
+      }
+    ],
+    "discovered": 6,
+    "initialClientCount": 2,
+    "timing": {
+      "populationGateSecondsAfterDeadline": 1.1981589794158936,
+      "secondCombatDeadline": 1795812384.603985,
+      "lastActiveSample": 1795812384.619954,
+      "nextIntermissionDeadline": 1795812387.619974,
+      "firstResultSample": 1795812384.702514
+    },
+    "skipped": 0,
+    "suite": "P26-multiplayer",
+    "passed": 6,
+    "failed": 0
+  }
+}

@@ -1,0 +1,1 @@
+{"value":{"clients":2,"cases":[{"passed":true,"name":"Owner and ordinary player see correct UI in a waiting lobby"},{"passed":true,"name":"Grant trusted tester, save next round and lower waiting minimum to two"},{"passed":true,"name":"Mid-round edits preserve health and deadline and change the next intermission"}],"suite":"P26Studio","passed":3,"failed":0},"sdkOk":true}

@@ -1,0 +1,88 @@
+{
+  "commit": "55650a414373b9108a0a978f7e251b06b081c361",
+  "sourceTree": "57e93faeda0b17dbebd24e41bf69bd3b11a14a15",
+  "environment": "Roblox Studio 0.748.0.7481526, macOS",
+  "smoke": [
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23,
+      "discovered": 23,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 23,
+      "discovered": 23,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-client",
+      "failed": 0
+    },
+    {
+      "errors": 0,
+      "skipped": 0,
+      "passed": 215,
+      "clientCount": 2,
+      "environment": "Studio",
+      "seed": 1,
+      "suite": "P01-server",
+      "failed": 0,
+      "discovered": 215
+    }
+  ],
+  "sdk": true,
+  "result": {
+    "skipped": 0,
+    "passed": 9,
+    "cases": [
+      {
+        "passed": true,
+        "name": "A3 rejected client traffic leaves readiness intact"
+      },
+      {
+        "passed": true,
+        "name": "A4 swept muzzle path hits thin cover before the visible target"
+      },
+      {
+        "passed": true,
+        "name": "A3 forged airborne endpoint cannot create damage or an impact"
+      },
+      {
+        "passed": true,
+        "name": "A2 switching preserves heavy reload and A5 lethal hit ends once"
+      },
+      {
+        "passed": true,
+        "name": "A5 terminal and next-round cleanup invalidate outstanding and stale shots"
+      },
+      {
+        "passed": true,
+        "name": "A4 both profiles strike real terrain slopes and authored second-story panels"
+      },
+      {
+        "passed": true,
+        "name": "A4 muzzle starting inside solid cover resolves that cover before flight"
+      },
+      {
+        "passed": true,
+        "name": "P19 A2 actual howitzer contacts across districts, beside each building and on a roof"
+      },
+      {
+        "passed": true,
+        "name": "A1 actual projectile survives exact lifetime and expires cleanly afterward"
+      }
+    ],
+    "environment": "Studio",
+    "clientCount": 2,
+    "suite": "P05-multiplayer",
+    "failed": 0,
+    "discovered": 9
+  },
+  "recordedObservations": 25,
+  "fullReportSha256": "80daf4530133e3e0c095a0c3366ac2c405cbfef47fc4545b4e39366f1da55bd5"
+}

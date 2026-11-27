@@ -6,7 +6,7 @@ Start with **P26**. The owner and trusted testers must be able to tune the publi
 
 | Plan | Status | Depends on | Outcome |
 | --- | --- | --- | --- |
-| [P26 · Live balance panel](plans/26-live-balance-panel.md) | In progress | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
+| [P26 · Live balance panel](plans/26-live-balance-panel.md) | Blocked | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
 | [P27 · Mouse aiming and mobile controls](plans/27-ground-aim-and-mobile-controls.md) | Ready | P24, P25 | Aim by moving the mouse and play both roles on a phone. |
 | [P28 · C-130 model in flight](plans/28-c130-model.md) | Planned | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
 | [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Planned | P25 and launcher images | Find, carry and fire the modeled launcher. |
