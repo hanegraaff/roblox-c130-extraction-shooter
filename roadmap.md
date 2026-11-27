@@ -1,8 +1,29 @@
 # Roadmap to MVP
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P08 and the approved P16 source/export package are now integrated on `main` through PRs #34 → #33 → #32; the [main integration record](docs/evidence/p08-p16-main-integration.md) identifies matching trees and fresh host verification. PR #39 integrates the detailed Outpost, indoor Ground camera and two asset skills. The user approved the oversized waiting-lobby bust at `62cd82c` and the furnished entrance hall, movie theater and portrait gallery at `ec43139`. P22 integrates the furnished lobby and four approved oil paintings, with passing Studio acceptance. [P22 pull request](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/70) [Bust approval](plans/20-lobby-bust.md#completion-record) · [Lobby approval and verification](plans/21-lobby-interior.md#completion-record) Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
+## Public MVP launch
+
+Start with **P26**. The owner and trusted testers must be able to tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P32 sets the launch balance after players have tried the finished controls, models and medkits.
+
+| Plan | Status | Depends on | Outcome |
+| --- | --- | --- | --- |
+| [P26 · Live balance panel](plans/26-live-balance-panel.md) | Ready | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
+| [P27 · Mouse aiming and mobile controls](plans/27-ground-aim-and-mobile-controls.md) | Ready | P24, P25 | Aim by moving the mouse and play both roles on a phone. |
+| [P28 · C-130 model in flight](plans/28-c130-model.md) | Planned | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
+| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Planned | P25 and launcher images | Find, carry and fire the modeled launcher. |
+| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Planned | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing and reuse. |
+| [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
+| [P32 · Choose the launch balance](plans/32-balance-playtests.md) | Planned | P26–P31 | Choose a launch preset after testing small and full teams. |
+| [P33 · Rewrite the README guides](plans/33-rewrite-readmes.md) | Planned | P26–P32 | Run and understand the game using plain-language guides. |
+| [P34 · Fast-paced arcade game page](plans/34-arcade-game-page.md) | Planned | P27–P32 | Preview the arcade listing, screenshots, icon and banners. |
+| [P35 · Verify and open the public MVP](plans/35-public-launch.md) | Planned | P32–P34 | Pass the live release checks and open the approved public experience. |
+
+**Image drop-off.** Put an inspiration image in each folder. One three-quarter view per asset is enough to start. Each plan delivers its own editable Blender master and a version integrated into the game. [C-130](src/images/c130/) · [Launcher](src/images/rocket-launcher/) · [Medkit](src/images/medkit/)
+
+**After launch.** Controller support can follow. Map movement, aiming, fire, reload, weapon selection, pickups and menu navigation, then test both roles through a full round with a physical controller.
 
 ## Milestones and plans
+
+The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P08 and the approved P16 source/export package are now integrated on `main` through PRs #34 → #33 → #32; the [main integration record](docs/evidence/p08-p16-main-integration.md) identifies matching trees and fresh host verification. PR #39 integrates the detailed Outpost, indoor Ground camera and two asset skills. The user approved the oversized waiting-lobby bust at `62cd82c` and the furnished entrance hall, movie theater and portrait gallery at `ec43139`. P22 integrates the furnished lobby and four approved oil paintings, with passing Studio acceptance. [P22 pull request](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/70) [Bust approval](plans/20-lobby-bust.md#completion-record) · [Lobby approval and verification](plans/21-lobby-interior.md#completion-record) Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
 
 | Milestone | Plan / capability | Status | Depends on | What a human can experience afterward |
 | --- | --- | --- | --- | --- |
@@ -402,7 +423,7 @@ unmerged. No Roblox publication occurred.
 
 ## How plans move
 
-`Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. Only this table owns status; individual plans own implementation/evidence records.
+`Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. Only the roadmap tables own status; individual plans own implementation/evidence records.
 
 Plan IDs remain stable; table/dependency order places the later-added P13/P14 before P05 and P16/P17 between P07 and P08 rather than renumbering delivered plans. Resume an In progress plan before starting another. Follow the explicit user-directed priority above; otherwise select the lowest-numbered Ready plan whose dependencies are Complete. Ensure those dependencies' source is present on the implementation branch before coding. Resolve an open dependency PR's branch when main lacks that source. Reassess a Blocked plan when new evidence shows its blocker may have cleared; elapsed time alone is not resolution. If no Ready plan exists, the coordinator may promote the first Planned plan whose dependencies are complete, respecting the explicit priority. An unresolved Blocked prerequisite cannot be skipped to claim its dependent capability.
 
@@ -414,7 +435,7 @@ A Complete plan has all required automated and Studio evidence, resolved materia
 
 P01 establishes the full non-Studio `python3 scripts/verify.py` gate. Every later plan must preserve it and add its own acceptance suites. Studio is a distinct required gate when the plan changes engine/player behavior. A green CI badge cannot substitute for it.
 
-Only P12 requires cloud publication and real 10-player acceptance. Prepare the candidate first, then use existing explicit authorization or request it for the actual experience/place/audience. Local feature testing and GitHub delivery can proceed before those IDs are known. No source or documentation task implicitly authorizes a Roblox release.
+P12 closed the legacy implementation handoff. P26 needs a private published test for cross-server settings. P32 uses private playtests to choose the launch preset. P35 owns live 6- and 10-player qualification and the public launch. Each cloud action uses authorization for its named destination and audience. [Release runbook](docs/release.md)
 
 ## First meaningful review points
 
@@ -425,7 +446,7 @@ Only P12 requires cloud publication and real 10-player acceptance. Prepare the c
 - After **P16**, the user must inspect the saved Blender scene, furnished interior/exterior and every material's damage gallery and explicitly like/approve the identified revision before P17 starts.
 - After **P17**, review the approved smaller Outpost in actual gameplay, including both floors, normal/thermal damage, real openings, fragments and pristine reset.
 - After **P09**, play the complete team-versus-plane loop and inspect destruction/elimination/timeout conflicts.
-- After **P12**, the MVP is ready only with the recorded gates and authorized publication; “code written” is not release completion.
+- After **P35**, use its release record for the public version, audience, play link and live verification.
 
 ## Later asset refinement and other proposals
 
@@ -435,8 +456,7 @@ P16 delivered the approved military-outpost Blender kit. P17 integrated it as
 the smaller Outpost, with material-specific damage and debris under the shared
 panel rules, and added the indoor Ground camera. The game has one level. P10
 retains its UI, effects and audio scope. P11 and P12 must profile and verify the
-integrated Outpost in their candidates. Terrain-wide dressing and equipment
-refinement are future proposals.
+integrated Outpost in their candidates. P28–P30 cover the aircraft, launcher and medkit art for public launch.
 
 ## Initial delivery record
 
