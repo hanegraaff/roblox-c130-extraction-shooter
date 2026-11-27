@@ -391,6 +391,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     local draft: Fields = {}
     local selectedTab = 1
     local loadedPreset: string? = nil
+    local originalName = ""
     local cleanups: { () -> () } = {}
     local connections: { RBXScriptConnection } = {}
     local scale = Instance.new("UIScale")
@@ -405,7 +406,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     table.insert(connections, gui:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit))
     fit()
     local function canApply(): boolean
-        if busy or not current or not loadedPreset or nameBox.Text ~= loadedPreset then
+        if busy or not current or not loadedPreset or nameBox.Text ~= Schema.presetLabel(loadedPreset) then
             return false
         end
         local saved = current.presets[loadedPreset]
@@ -419,18 +420,27 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         end
         return true
     end
+    local function canSave(): boolean
+        return not busy and current ~= nil and Schema.canSavePresetName(nameBox.Text, originalName)
+    end
     local function updateActions()
+        local saveReady = canSave()
+        save.Active = saveReady
+        save.Selectable = saveReady
+        save.AutoButtonColor = saveReady
+        save.TextColor3 = if saveReady then accent else muted
         local ready = canApply()
         apply.BackgroundColor3 = if ready then accent else surface
         apply.TextColor3 = if ready then dark else muted
         apply.Active = ready
         apply.Selectable = ready
-        local removable = not busy and loadedPreset ~= nil and loadedPreset ~= "Shipped"
+        local removable = not busy and loadedPreset ~= nil and loadedPreset ~= Schema.builtinPresetKey
         delete.Active = removable
         delete.Selectable = removable
         delete.TextColor3 = if removable then Color3.fromRGB(239, 164, 151) else muted
         footer.Text = if ready
             then "Editing saved values · Combat changes start next round."
+            elseif not saveReady then "Change the preset name to save a copy."
             else "Unsaved values · Save the preset, then apply it."
     end
     local request: (string, Edit?) -> ()
@@ -639,21 +649,23 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             end
             current = reply.view :: View
             local view = current :: View
-            live.Text = "Live in game · " .. view.activeName
+            live.Text = "Live in game · " .. Schema.presetLabel(view.activeName)
             if verb == "delete" then
                 loadedPreset = nil
                 draft = (table.clone(Schema.defaults) :: unknown) :: Fields
-                nameBox.Text = "New Preset"
+                originalName = ""
+                nameBox.Text = ""
             else
                 local name = if verb == "save" then tostring(args.name) else view.activeName
                 loadedPreset = if view.presets[name] then name else nil
                 draft = table.clone(if verb == "save" then view.presets[name] else view.settings)
-                nameBox.Text = if loadedPreset then name else "New Preset"
+                originalName = if loadedPreset then Schema.presetLabel(name) else ""
+                nameBox.Text = originalName
             end
             status.Text = if verb == "delete"
-                then "Preset deleted. Create a new one or close the editor."
+                then "Preset deleted. Enter a name to save a copy, or close."
                 elseif verb == "save" then "Saved. Select Apply saved to use it."
-                elseif verb == "apply" then "Applied · " .. view.activeName
+                elseif verb == "apply" then "Applied · " .. Schema.presetLabel(view.activeName)
                 elseif verb == "read" then "Choose a preset to edit. Live settings are shown above."
                 else "Tester access updated."
             render()
@@ -684,7 +696,6 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             table.insert(names, name)
         end
         table.sort(names)
-        table.insert(names, 1, "")
         if presetMenu.Visible then
             presetMenu.Visible = false
             return
@@ -695,16 +706,18 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             end
         end
         for _, name in names do
-            local choice = button(presetMenu, if name == "" then "New Preset" else name)
-            choice.Name = if name == "" then "NewPresetOption" else name
+            local caption = if name == Schema.builtinPresetKey then "Default · read only" else name
+            local choice = button(presetMenu, caption)
+            choice.Name = name
             choice.ZIndex = 11
             choice.Activated:Connect(function()
                 if busy or not current then
                     return
                 end
-                loadedPreset = if name == "" then nil else name
-                draft = table.clone(if loadedPreset then current.presets[name] else Schema.defaults) :: Fields
-                nameBox.Text = if name == "" then "New Preset" else name
+                loadedPreset = name
+                draft = table.clone(current.presets[name])
+                originalName = Schema.presetLabel(name)
+                nameBox.Text = originalName
                 status.Text = "Loaded into editor · " .. nameBox.Text
                 render()
             end)
@@ -713,6 +726,9 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         presetMenu.Visible = true
     end)
     save.Activated:Connect(function()
+        if not canSave() then
+            return
+        end
         draft.medkitSingleUse = true
         draft.medkitRespawn = Schema.defaults.medkitRespawn
         draft.m102Cadence = draft.m102Reload
@@ -724,7 +740,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         end
     end)
     delete.Activated:Connect(function()
-        if loadedPreset and loadedPreset ~= "Shipped" then
+        if loadedPreset and loadedPreset ~= Schema.builtinPresetKey then
             request("delete", { name = loadedPreset })
         end
     end)

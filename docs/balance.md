@@ -21,18 +21,18 @@ The experience owner controls the tester list. For a group-owned experience, sig
 ## Change a setting
 
 1. Check **Live in game** at the top. This names the settings currently selected for the game.
-2. In **Saved presets**, open **Load Settings** and choose a preset or **New Preset**. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
-3. Enter a preset name and select **Save preset**. This stores the values you edited. **Apply saved** becomes available when the editor matches the saved preset.
+2. In **Saved presets**, open **Load Settings** and choose a saved preset. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
+3. Change the loaded preset’s name and select **Save preset**. Save stays disabled until you enter a different valid name. This stores the values you edited. **Apply saved** becomes available when the editor matches the saved preset.
 4. Select **Apply saved** to use that preset in the game. The live name at the top updates. Combat changes start next round.
-5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name becomes **New Preset**, ready for you to edit and save, or close. **Shipped** remains available as the built-in starting point.
+5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name field clears. Enter a name to save another copy, or close. **Default** remains available as the built-in starting point.
 
-To return to the original settings, load **Shipped** and select **Apply saved**.
+To return to the original settings, load **Default** and select **Apply saved**.
 
 If another tester edits while your panel is open, select **Refresh**, review their values and re-enter your change. If a save cannot be confirmed, refresh before trying again. Servers keep their last confirmed settings when storage is unavailable. A new server can start with the shipped defaults.
 
 ## What you can tune
 
-| Setting | Shipped preset |
+| Setting | Default preset |
 | --- | --- |
 | Aircraft health | 1,000 HP per deployed Ground player. Three Ground players give the aircraft 3,000 HP. |
 | Aircraft weapon damage | 25 HP for the 30mm and 100 HP for the 105mm. |

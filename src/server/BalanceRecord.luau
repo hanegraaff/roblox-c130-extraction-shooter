@@ -35,7 +35,7 @@ local function integer(value: unknown, low: number, high: number): boolean
     return type(value) == "number" and value >= low and value <= high and value % 1 == 0
 end
 local function validName(value: unknown): boolean
-    return type(value) == "string" and #value >= 1 and #value <= 32 and value:match("^[%w][%w _%-]*$") ~= nil
+    return Schema.validPresetName(value)
 end
 
 -- Initial state for an absent key. A corrupt existing key must never be overwritten with these defaults.
@@ -246,8 +246,8 @@ function BalanceRecord.apply(
         nextRecord.trusted = list
     elseif action == "save" then
         local name = req.name :: string
-        if name == "Shipped" then
-            return nil, "Choose a name other than Shipped."
+        if name == Schema.builtinPresetKey or name == Schema.builtinPresetName then
+            return nil, "Change the preset name to save a copy of Default."
         end
         local presets = table.clone(current.presets)
         local count = 0
@@ -262,7 +262,7 @@ function BalanceRecord.apply(
     elseif action == "delete" then
         local name = req.name :: string
         if name == "Shipped" then
-            return nil, "Shipped is the built-in preset."
+            return nil, "Default is the built-in preset."
         end
         if not current.presets[name] then
             return nil, "Preset unavailable."
