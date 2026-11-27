@@ -18,7 +18,7 @@ There are no collectible mission items, item quotas, escape zones or dwell count
 
 ## Public launch additions
 
-The owner and trusted testers need an in-game panel to tune the published game. The numerical combat values below are the starting preset. Servers take a snapshot of the selected preset at deployment. Ground health, aircraft health per teammate, weapon damage and readiness, panel damage, medkit healing and combat duration all use that round’s settings. At result commit, the server uses the latest saved intermission length for the upcoming lobby countdown. The panel also sets the minimum lobby population from 2 to 10. A waiting lobby can apply a new minimum before deployment. [Live balance panel](plans/26-live-balance-panel.md)
+The launch candidate includes an in-game balance panel for the experience owner and trusted testers. They can save named presets, apply one across servers and restore the previous live settings. The numerical combat values below are the starting preset. Servers take a snapshot of the selected preset at deployment. Ground health, aircraft health per teammate, weapon damage and readiness, panel damage, medkit healing and combat duration all use that round’s settings. At result commit, the server uses the latest saved intermission length for the upcoming lobby countdown. The panel also sets the minimum lobby population from 2 to 10. A waiting lobby can apply a new minimum before deployment. [Owner guide](docs/balance.md) · [Live balance panel](plans/26-live-balance-panel.md)
 
 Ground players aim by moving the mouse. A centered reticle guides the view and the character turns to face it. Touch players must be able to move, aim, fight and interact throughout a match. Controller support can follow launch. [Ground and touch controls](plans/27-ground-aim-and-mobile-controls.md)
 
@@ -56,7 +56,7 @@ space for both avatar movement and the ordinary third-person camera.
 
 ## Weapons and aircraft health
 
-Both sides can fire once the aircraft arrives. The table gives the settings implemented by P25. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+Both sides can fire once the aircraft arrives. The table gives the shipped preset. The owner and trusted testers can tune each weapon in the balance panel. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 | Weapon | Role and availability | Rules |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ Both sides can fire once the aircraft arrives. The table gives the settings impl
 
 Each aircraft weapon retains its own cadence/cooldown/reload state across switches. Switching cannot refill ammunition, cancel a reload advantageously or reset a timer. It changes presentation and the active weapon, not the legality of firing. Weapon names identify game equipment; damage, ballistics and fire rates are gameplay configuration.
 
-Aircraft maximum health is **1,000 × the Ground-player count in the deployment roster**, excluding the operator. That maximum stays fixed through deaths, departures and late arrivals. A direct rocket deals up to **150** health units, and a rifle hit deals up to **5**, capped at the aircraft's remaining health and awarded once per shot. Only direct contacts award rocket damage. Reset derives fresh maximum health from the next deployment roster. [Roster scaling](plans/18-game-rebalancing.md) · [Weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+At deployment, multiply the preset’s aircraft HP per Ground player by the Ground roster size. The shipped value is **1,000 HP per Ground player**, excluding the operator. That maximum stays fixed through deaths, departures and late arrivals. With shipped settings, a direct rocket deals up to **150** health units, and a rifle hit deals up to **5**, capped at the aircraft's remaining health and awarded once per shot. Only direct contacts award rocket damage. Reset derives fresh maximum health from the next deployment roster. [Roster scaling](plans/18-game-rebalancing.md) · [Weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
 
 At zero aircraft health, mark the aircraft **Destroyed** and commit the ground-team win through MatchService in that step. Cancel outstanding damage work and freeze the orbit. The entire ground team receives the win, including eliminated teammates. The results view shows an aircraft destruction cue and optional local audiovisual effects. [Combat presentation and spectating](plans/10-player-experience.md)
 
@@ -77,7 +77,7 @@ Spawn one launcher at each of four validated sites at deployment. The hangar pic
 
 The carrier retains their M-7 and can switch weapons or voluntarily drop the launcher. During Scatter and Active, death, character reset or disconnect drops it at the last valid ground position so a teammate can recover it. Terminal-round cleanup takes precedence over recovery. An unreachable or out-of-bounds drop is relocated to the original anchor. Carrying, dropping, rejoining and re-picking cannot clone it or reset its reload progress.
 
-Each launcher starts loaded and holds one rocket. Its server-owned 15-second deadline stays with its round identity through a handover. The M-7 refills an equipped living player's partial or empty magazine from unlimited reserve. The desktop and touch HUDs show the loaded rounds, ∞, and any active reload timer. Elimination or round teardown discards a pending reload. Reset removes the old equipment and creates one loaded launcher at each site and a full magazine for each newly deployed Ground player.
+Each launcher starts loaded and holds one rocket. Its server-owned reload deadline stays with its round identity through a handover. The shipped wait is 15 seconds. The M-7 refills an equipped living player's partial or empty magazine from unlimited reserve. The desktop and touch HUDs show the loaded rounds, ∞, and any active reload timer. Elimination or round teardown discards a pending reload. Reset removes the old equipment and creates one loaded launcher at each site and a full magazine for each newly deployed Ground player.
 
 ## Combat, cover and destruction
 
@@ -87,7 +87,7 @@ In the C-130 view, exposed Ground players stand out as **white silhouettes again
 
 An impact resolves damage using pre-impact geometry; a new opening benefits subsequent shots. Building surfaces are divided into large, independently identified panels. An average room spans approximately two panels in width and one panel in height; 16×8-stud panels and a 32-stud room width are initial greybox defaults, subject to avatar/route checks. Each building must contain destructible exterior wall panels on all stories and panelized roofs, so aircraft fire can open overhead cover too. The proposed MVP default keeps stairs, floors and the supporting frame stable. Full structural collapse is separate scope.
 
-P18 replaces the old three-plus-three howitzer and nine-second-per-stage thresholds. **One direct 105mm M102 Howitzer impact destroys a panel completely. Two earned seconds of valid same-panel 30mm impacts destroy a pristine panel.** The shorter 30mm progression retains distinct persistent Light/Heavy/Total visuals and physical openings. Intermediate visual thresholds are implementation defaults.
+P18 replaces the old three-plus-three howitzer and nine-second-per-stage thresholds. At the default Medium panel damage setting, **one direct 105mm impact or two earned seconds of valid same-panel 30mm hits destroy a fresh panel**. Low takes two 105mm hits or four earned seconds. High takes one 105mm hit or one earned second. The shorter 30mm progression retains distinct persistent Light/Heavy/Total visuals and physical openings. Intermediate visual thresholds are implementation defaults.
 
 Interruptions, misses, obstruction, reloads and changing target or weapon break timing continuity while preserving earned per-panel damage. The first impact after a break earns zero elapsed time. Only server-resolved direct 30mm impacts earn time on a panel. Duplicate, stale and unauthorized requests cannot advance destruction.
 

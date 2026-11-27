@@ -56,6 +56,23 @@ Five deliberate corruptions check rejection of a pose alias, wrong pose, wrong s
 
 Update the allowlist deliberately when adding runtime modules and keep canonical authoring rules in the [asset guide](../assets/README.md). Build success, byte-identical reconstruction and serialized-property checks do not establish actual engine-loaded geometry, navigation or raycasts. The Studio map suite separately asserts the loaded disk, spawn and roof transforms before testing world behavior.
 
+## Verify the live balance panel
+
+From the candidate checkout run `python3 scripts/verify.py`. The balance schema, record and service suites exercise field bounds, permissions, concurrent edits, rollback and storage failure. The match, weapon, health and panel suites exercise the gameplay effects of changing settings. Use the [panel plan](../plans/26-live-balance-panel.md) for acceptance criteria and observed results.
+
+To use the panel yourself, follow the [local walkthrough](balance.md#try-it-in-studio). To run the two-client acceptance fixture, sync the local test document to `PlayersVsC130Tests` on port 34872. With Play stopped, run this from Studio’s Edit context.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService"):ExecuteMultiplayerTestAsync(2, {kind = "P26"})
+    workspace:SetAttribute("P26LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+```
+
+Read `workspace:GetAttribute("P26LastReport")` after the run. For manual **Server & Clients**, set `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26")` in Edit, start two clients and read the server’s `Workspace.P26MultiplayerReport` attribute before stopping. Clear the selector in Edit afterward. The fixture exercises real Roblox clients and game systems with a session-only settings store.
+
+For the published check, use an authorized private experience containing this candidate. Start two Roblox servers and use the owner, a trusted tester and an ordinary account. Save and apply a distinctive preset on one server. Record the revision and measure the effect on the next round in both servers. Start a fresh server, check it loads the same settings, then restore the previous preset and repeat. Verify that only the owner manages tester access and that an ordinary player cannot edit settings. Record anonymous roles, server and build versions, observed values and rollback results. [Operating the panel](balance.md)
+
 ## Verify P25 weapon balance
 
 Run `python3 scripts/verify.py` on the P25 source. The deterministic combat and launcher specs check rejection just before 12 and 15 seconds, acceptance at the exact deadlines, independent readiness, and stale and duplicate rejection. Aircraft health and match specs cover 1,000 → 850 → 845 health, the seventh rocket destroying a pristine 1,000-health aircraft, roster scaling, and mixed damage at the deadline. The rifle and presentation specs cover repeated reloads beyond the former 150 rounds, partial and empty magazine behavior, cancellation, and desktop and touch copy. The ordinary server smoke also exercises native cover and damage gates. [P25 acceptance criteria](../plans/25-weapon-cooldowns-and-rifle-ammo.md#acceptance)

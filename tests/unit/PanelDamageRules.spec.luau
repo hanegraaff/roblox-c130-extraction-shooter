@@ -79,14 +79,14 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         for tier, duration in { Low = 4, Medium = 2, High = 1 } do
             local state = rules.new()
             rules.apply(state, false, duration / 2, tier)
-            assert(rules.appearance(state) == "Heavy")
+            assert(rules.appearance(state) == "Heavy", "missing intermediate opening")
             rules.apply(state, false, duration / 2, tier)
-            assert(rules.appearance(state) == "Total")
+            assert(rules.appearance(state) == "Total", "missing sustained-fire opening")
             state = rules.new()
             rules.apply(state, true, 0, tier)
-            assert(state.stage == (if tier == "Low" then 1 else 2))
+            assert(state.stage == (if tier == "Low" then 1 else 2), "incorrect first 105mm result")
             rules.apply(state, true, 0, tier)
-            assert(state.stage == 2)
+            assert(state.stage == 2, "second 105mm failed to open panel")
         end
     end)
 end

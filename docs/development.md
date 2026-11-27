@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `main` for integrated play and the current weapon settings. Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. The P25 test mapping uses the `P18` selector for three-client weapon balance checks and includes the two-client gunship and aircraft-arrival regressions. [Local setup](../README.md#set-up-locally) · [P25 verification procedure](testing.md#verify-p25-weapon-balance)
+Use `main` for integrated play. Use `plan/26-live-balance-panel` for the live settings candidate. Its ordinary Studio session plays with offline defaults. [Balance owner guide](balance.md) Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. The P25 test mapping uses the `P18` selector for three-client weapon balance checks and includes the two-client gunship and aircraft-arrival regressions. [Local setup](../README.md#set-up-locally) · [P25 verification procedure](testing.md#verify-p25-weapon-balance)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 

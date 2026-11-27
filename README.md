@@ -4,11 +4,11 @@
 
 *User-provided P16 Blender authoring viewport, selected 2026-11-13. [Editable source and review views](assets/blender/military-outpost/README.md).*
 
-One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. Ground starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. Aircraft health starts at **1,000 per Ground player** in the deployment roster. That maximum stays fixed for the round. Direct rockets deal **150 damage** and M-7 hits deal **5** to the same health pool.
+One player operates a circling C-130 while a team of 1–9 Ground players tries to bring it down. Ground starts with M-7 rifles and can recover four rocket launchers from the map, carrying one per player. With the shipped settings, aircraft health starts at **1,000 per Ground player** in the deployment roster. That maximum stays fixed for the round. Direct rockets deal **150 damage** and M-7 hits deal **5** to the same health pool.
 
 ## Play a round
 
-Rounds start in the protected, walkable lobby. With 2–10 players, the server assigns one operator and deploys everyone else as one ground team. Once the deployed avatars are ready, Ground gets **20 seconds** to spread out, take cover or pick up and drop a launcher. Ground sees **C-130 arrives in 20** over the battlefield. The operator sees the same countdown on black. Both sides can fire when the aircraft appears and begins to circle the edge of the 720-stud battlefield. The ten-minute combat clock starts at that moment. Friendly fire is off.
+Rounds start in the protected, walkable lobby. By default, with 2–10 players, the server assigns one operator and deploys everyone else as one ground team. Once the deployed avatars are ready, Ground gets **20 seconds** to spread out, take cover or pick up and drop a launcher. Ground sees **C-130 arrives in 20** over the battlefield. The operator sees the same countdown on black. Both sides can fire when the aircraft appears and begins to circle the edge of the 720-stud battlefield. The ten-minute combat clock starts at that moment. Friendly fire is off.
 
 The stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits.
 
@@ -18,7 +18,7 @@ The stone bust faces you as you arrive. Turn left for the theater and its televi
 
 The ground team wins when it destroys the plane. The C-130 wins by eliminating every ground player or surviving until time runs out. A lethal impact must land before the deadline. The ground team wins if the plane is destroyed and the last ground player is eliminated in the same pre-deadline step. A rocket already in flight can still hit after its shooter dies while the round remains active.
 
-If the operator leaves while a ground player is alive, the ground team wins by forfeit. If the last ground player leaves while the operator remains, the C-130 wins by departure. An empty match or failed deployment can end without a winner. An ending during the head start cancels aircraft arrival. At the result, surviving players return to the lobby and spectator mode closes. Everyone can walk around while the HUD shows the result and the **two-minute intermission**. The battlefield resets during that time. The next match can deploy after the countdown if at least two players are eligible.
+If the operator leaves while a ground player is alive, the ground team wins by forfeit. If the last ground player leaves while the operator remains, the C-130 wins by departure. An empty match or failed deployment can end without a winner. An ending during the head start cancels aircraft arrival. At the result, surviving players return to the lobby and spectator mode closes. Everyone can walk around while the HUD shows the result and the **two-minute intermission**. The battlefield resets during that time. The next match can deploy after the countdown when the lobby meets its player minimum.
 
 ## Controls
 
@@ -46,13 +46,15 @@ Salt Flats Hangar occupies the former Foundry site. The full-size hangar has twi
 
 Ground players deploy inside the Sandbreak bunker at the original spawn site. Four entrances lead out past the roof breach, nearby vehicle wrecks, and radio relay. [Sandbreak import and review](assets/blender/spawn-bunker/IMPORT.md)
 
-Solid walls hide Ground thermal highlights and block shots and blasts. One direct 105mm hit destroys a wall or roof panel. Two earned seconds of valid same-panel 30mm hits destroy it too: earlier hits show Light damage, and one earned second opens the Heavy damage variant. Interruptions preserve earned damage and pause its timing. The same rules apply to Sandbreak, the hangar, radar, depot and Seedship. A new opening benefits later impacts. Debris falls against scenery, and floors, stairs, supports and the outside lobby stay intact. [Destruction rules](architecture.md#progressive-panel-destruction-p07)
+Solid walls hide Ground thermal highlights and block shots and blasts. With the default Medium panel damage, one direct 105mm hit destroys a wall or roof panel. Two earned seconds of valid same-panel 30mm hits destroy it too: earlier hits show Light damage, and one earned second opens the Heavy damage variant. Interruptions preserve earned damage and pause its timing. The same rules apply to Sandbreak, the hangar, radar, depot and Seedship. A new opening benefits later impacts. Debris falls against scenery, and floors, stairs, supports and the outside lobby stay intact. [Destruction rules](architecture.md#progressive-panel-destruction-p07)
 
 A howitzer shell bursts wherever it first hits the battlefield, including empty ground. A shell that lands next to a building can open several exposed panels within **25 studs** of the contact point. Solid cover at the start of the combat step still shields players and panels. With Effects set to Full, the howitzer burst has a brighter expanding fireball and a more visible smoke plume. Reduced uses a smaller, shorter burst, and Off clears the local effects. The 30mm uses a smaller burst, and rockets leave smoke and burst on contact. The howitzer has a deep thump, while 30mm impacts are shorter. Ground and metal contacts sound different. [Weapon impacts plan](plans/19-weapon-impacts.md)
 
 ## Availability
 
-Use `main` to play the experience described here in Roblox Studio, including the furnished lobby, theater spectating, two-minute intermission, 20-second Ground head start and current weapon settings. [P24 aircraft arrival](plans/24-ground-scatter-and-aircraft-arrival.md) · [P25 weapon balance](plans/25-weapon-cooldowns-and-rifle-ammo.md)
+The integrated game is on `main`. The `plan/26-live-balance-panel` branch adds the lobby’s **Balance** panel for the experience owner and trusted testers. Once deployed, it lets them adjust health, damage, weapon timing, panel durability, round length, lobby intermission and minimum players across servers. The values in this guide are the shipped defaults. Medkit settings can be saved now for the planned pickups. [Owner guide](docs/balance.md)
+
+Ordinary local Studio Play uses the shipped defaults. Verification of the balance panel in a published private experience is pending. [Panel verification record](plans/26-live-balance-panel.md#completion-record)
 
 The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
 
@@ -60,10 +62,10 @@ The legacy P12 implementation handoff is closed by user direction. A future Robl
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Use `main` for the integrated game.
+Use `plan/26-live-balance-panel` for this candidate. To build the integrated game, substitute `main` in the branch commands.
 
 ```sh
-git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch plan/26-live-balance-panel https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 python3 scripts/setup.py
 python3 scripts/verify.py
@@ -71,7 +73,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only origin main` to update it, then run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch plan/26-live-balance-panel`. Run `git pull --ff-only` to update it, then run the same setup and verification commands from the repository root.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
@@ -115,6 +117,8 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 3. With one client, Play opens the labelled Ground preview. Use the **STUDIO TESTING** panel to cycle **Role** through Auto, Ground and Operator, or move between **Explore map (solo)** and **Return to lobby**. Preview lets you walk the map or use the thermal camera and both zooms while waiting for a match.
 4. For an active local match, use Studio **Server & Clients** with **2 clients**. Use **3** clients for launcher handover or theater spectating after elimination, or **4** to give the viewer two living targets to cycle through. Set roles and **Next round** combat duration, then click **Start round now**. Leave an **Auto** choice if nobody selects Operator. Two Operator choices or all Ground choices are rejected with a message. The 20-second head start precedes the selected combat duration.
 5. Play through Results and inspect the lobby return and restored cover. **Reset test / apply settings** returns to the lobby or solo preview. The ordinary test panel supports quick replay, and the P23 harness checks the full intermission. Use **End Session** when finished. [P23 Studio procedure](docs/testing.md#run-the-p23-lobby-and-intermission-harness)
+
+To try the live settings controls locally, stop Play in the test document and enter `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26Panel")` in Studio’s Command Bar. Click **Play**, open **Balance** in the lobby, then save and apply a named preset. The first client is the test owner. Stop the session and clear the selector with `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", nil)`. [Test with a second player](docs/balance.md#try-it-in-studio) · [Automated panel check](docs/testing.md#verify-the-live-balance-panel)
 
 Use the three-client weapon balance procedure to test howitzer switching, launcher handover and shared damage, rifle reload feedback and equipment reset. Run the two-client gunship and aircraft-arrival regressions for impact behavior and pre-arrival fire gating. Stop Play and confirm source reached the same document before collecting fresh evidence. [Weapon balance checks](docs/testing.md#verify-p25-weapon-balance) · [Gunship checks](docs/testing.md#run-the-p05-gunship-combat-harness) · [Aircraft arrival checks](docs/testing.md#run-the-p24-aircraft-arrival-harness)
 
