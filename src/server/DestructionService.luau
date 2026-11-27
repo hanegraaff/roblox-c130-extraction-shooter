@@ -41,7 +41,7 @@ export type Snapshot = {
     appearance: DamageAppearance,
 }
 export type Controller = {
-    reset: (number, { string }, string?) -> (),
+    reset: (number, { string }, string?, { gauCadence: number, panelDamage: string }?) -> (),
     cancel: () -> (),
     resolve: (Outcome) -> (boolean, string?),
     interrupt: (number?) -> (),
@@ -56,14 +56,11 @@ export type Controller = {
 -- by active flights rather than all shots in a long match. No pre-first-hit credit.
 -- interrupt(afterShotId?) queues a bounded accepted-shot barrier; nil breaks continuity now
 -- for synchronous rule adapters. Neither API yields. Reset clears queued barriers.
-function DestructionService.new(gapSeconds: number?, panelDamage: string?, cadence: number?): Controller
-    local gap = gapSeconds or DestructionService.gapSeconds
-    assert(
-        gap == gap
-            and gap >= (cadence or Combat.profiles.GAU23.cadence)
-            and gap <= (if cadence then cadence * 1.5 else 1),
-        "invalid sustained-fire gap"
-    )
+function DestructionService.new(gapSeconds: number?): Controller
+    local defaultGap = gapSeconds or DestructionService.gapSeconds
+    assert(defaultGap >= Combat.profiles.GAU23.cadence and defaultGap <= 1, "invalid sustained-fire gap")
+    local gap = defaultGap
+    local panelDamage = "Medium"
     local roundId, frontier = 0, 1
     local panels: { [string]: PanelState } = {}
     local pending: { [number]: Outcome } = {}
@@ -165,7 +162,10 @@ function DestructionService.new(gapSeconds: number?, panelDamage: string?, caden
         changes[id] = true
     end
     return {
-        reset = function(id, ids, wreckId)
+        reset = function(id, ids, wreckId, preset)
+            -- Reset the same ledger so callers holding its methods always see this generation.
+            gap = if preset then preset.gauCadence * 1.5 else defaultGap
+            panelDamage = if preset then preset.panelDamage else "Medium"
             assert(id >= 0 and id % 1 == 0, "invalid round generation")
             roundId, frontier = id, 1
             breakContinuity()

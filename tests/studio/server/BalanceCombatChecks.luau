@@ -35,15 +35,18 @@ function Checks.panels(ctx: Context)
     local firedAt = workspace:GetServerTimeNow()
     local function impact(panel: Instance, weapon: string)
         shot += 1
+        local panelId = panel:GetAttribute("PanelId")
+        assert(type(panelId) == "string", "missing registered panel ID")
+        local accepted, rejection = runtime.destruction.resolve({
+            roundId = round,
+            shotId = shot,
+            weapon = weapon,
+            firedAt = firedAt,
+            panelId = panelId,
+        })
         assert(
-            runtime.destruction.resolve({
-                roundId = round,
-                shotId = shot,
-                weapon = weapon,
-                firedAt = firedAt,
-                panelId = panel.Name,
-            }),
-            "panel contact rejected"
+            accepted,
+            string.format("round %d shot %d %s at %s: %s", round, shot, weapon, panelId, tostring(rejection))
         )
         runtime.destruction.flush(workspace:GetServerTimeNow())
     end
@@ -64,11 +67,15 @@ function Checks.panels(ctx: Context)
     firedAt += values.gauCadence
     impact(roof, "GAU23")
     clients(roof, "Light")
-    local before = assert(runtime.destruction.snapshot(roof.Name), "missing damaged panel")
+    local before =
+        assert(runtime.destruction.snapshot(roof:GetAttribute("PanelId") :: string), "missing damaged panel")
     runtime.destruction.interrupt()
     firedAt += 10
     impact(roof, "GAU23")
-    local after = assert(runtime.destruction.snapshot(roof.Name), "missing interrupted panel")
+    local after = assert(
+        runtime.destruction.snapshot(roof:GetAttribute("PanelId") :: string),
+        "missing interrupted panel"
+    )
     assert(after.sustainedSeconds == before.sustainedSeconds, "interruption healed or credited paused time")
     for interval = 2, math.ceil(fullSeconds / values.gauCadence) do
         firedAt += values.gauCadence

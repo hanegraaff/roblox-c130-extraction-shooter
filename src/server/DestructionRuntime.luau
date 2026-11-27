@@ -324,12 +324,12 @@ function DestructionRuntime.start(
                 if wreck then
                     table.insert(ids, "HerculesWreck")
                 end
-                if getBalance then
-                    local preset = getBalance()
-                    rules =
-                        DestructionService.new(preset.gauCadence * 1.5, preset.panelDamage, preset.gauCadence)
-                end
-                rules.reset(ledgerRound, ids, if wreck then "HerculesWreck" else nil)
+                rules.reset(
+                    ledgerRound,
+                    ids,
+                    if wreck then "HerculesWreck" else nil,
+                    if getBalance then getBalance() else nil
+                )
                 flush(workspace:GetServerTimeNow())
             end
         end,
