@@ -182,11 +182,11 @@ function Harness.run(automated: boolean)
         values.minimumPlayers, values.roundDuration, values.intermission = 2, 90, 5
         values.groundHealth, values.aircraftHealthPerGround = 123, 777
         values.gauCadence, values.gauReload, values.gauDamage = 0.33, 2.4, 35
-        values.m102Damage, values.m102Reload, values.m102Cadence = 75, 4, 0.6
+        values.m102Damage, values.m102Reload, values.m102Cadence = 75, 4, 4
         values.m7Damage, values.m7Cadence, values.m7Reload = 13, 0.27, 1.7
         values.rocketDamage, values.launcherReload = 270, 6
         values.medkitHeal, values.medkitSingleUse, values.medkitRespawn, values.panelDamage =
-            31, false, 9, "Low"
+            31, true, Schema.defaults.medkitRespawn, "Low"
         local revision = 0
         local function apply(player: Player, name: string)
             local saved =

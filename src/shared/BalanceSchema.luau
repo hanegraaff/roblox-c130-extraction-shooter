@@ -45,7 +45,7 @@ BalanceSchema.defaults = table.freeze({
     m102Damage = 100,
     gauCadence = 0.15,
     gauReload = 5,
-    m102Cadence = 1,
+    m102Cadence = 12,
     m102Reload = 12,
     groundHealth = 100,
     m7Damage = 5,
@@ -85,7 +85,7 @@ local fields: { Field } = {
     numeric("m102Damage", "105mm damage", "HP", 1, 1000, true),
     numeric("gauCadence", "30mm shot interval", "s", 0.15, 5, false),
     numeric("gauReload", "30mm reload", "s", 0.15, 120, false),
-    numeric("m102Cadence", "105mm shot interval", "s", 0.15, 60, false),
+    numeric("m102Cadence", "105mm shot interval", "s", 0.15, 120, false),
     numeric("m102Reload", "105mm reload", "s", 0.15, 120, false),
     numeric("groundHealth", "Ground health", "HP", 1, 1000, true),
     numeric("m7Damage", "M-7 damage", "HP", 1, 1000, true),
@@ -149,6 +149,11 @@ function BalanceSchema.validate(raw: unknown): (Values?, string?)
         end
         result[field.key] = value
     end
+    -- Keep v1 storage readable. Old presets may contain a second howitzer timer
+    -- or reusable kits. The current rules normalize those legacy fields.
+    result.m102Cadence = result.m102Reload
+    result.medkitSingleUse = true
+    result.medkitRespawn = BalanceSchema.defaults.medkitRespawn
     return (table.freeze(result) :: unknown) :: Values, nil
 end
 

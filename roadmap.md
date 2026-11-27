@@ -10,7 +10,7 @@ Start with **P26**. The owner and trusted testers must be able to tune the publi
 | [P27 · Mouse aiming and mobile controls](plans/27-ground-aim-and-mobile-controls.md) | Ready | P24, P25 | Aim by moving the mouse and play both roles on a phone. |
 | [P28 · C-130 model in flight](plans/28-c130-model.md) | Planned | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
 | [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Planned | P25 and launcher images | Find, carry and fire the modeled launcher. |
-| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Planned | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing and reuse. |
+| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Planned | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
 | [P32 · Choose the launch balance](plans/32-balance-playtests.md) | Planned | P26–P31 | Choose a launch preset after testing small and full teams. |
 | [P33 · Rewrite the README guides](plans/33-rewrite-readmes.md) | Planned | P26–P32 | Run and understand the game using plain-language guides. |

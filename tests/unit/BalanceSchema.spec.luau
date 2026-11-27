@@ -28,6 +28,19 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             end
         end
     )
+    test("Legacy presets use one howitzer reload and single-use medkits", function()
+        local values = edit("m102Reload", 0.5)
+        values.m102Cadence = 60
+        values.medkitSingleUse = false
+        values.medkitRespawn = 600
+        local decoded = assert(schema.validate(values))
+        assert(decoded.m102Cadence == 0.5 and decoded.m102Reload == 0.5, "legacy timer overrides reload")
+        assert(
+            decoded.medkitSingleUse and decoded.medkitRespawn == schema.defaults.medkitRespawn,
+            "legacy kit reuse survived"
+        )
+        assert(values.m102Cadence == 60 and values.medkitSingleUse == false, "mutated stored input")
+    end)
     test("P26 durable preset and kit modes accept only known complete snapshots", function()
         for _, mode in { "Low", "Medium", "High" } do
             assert(schema.validate(edit("panelDamage", mode)))

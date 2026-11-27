@@ -172,3 +172,5 @@ shake. In P23 the shake briefly affects the lobby camera during Results. The loc
 the current play session. [Presentation defaults](docs/decisions.md)
 
 MVP readiness also requires walking every authored floor of all three buildings on the expanded terrain, panning across the full battlefield at both weapon zooms, demonstrating the one-heavy-hit and two-earned-second 30mm panel rules, real damaged-state openings, bounded physical debris and repeated pristine reconstruction. MVP readiness requires complete 6- and 10-player rounds for aircraft destruction, ground elimination and timeout; correct launcher recovery and weapon switching; rejection of invalid input; repeated clean resets; and readable counterplay. Automated checks prove rules, while operated multiplayer sessions assess feel, balance and performance.
+
+The owner balance panel groups Player, C-130, Buildings and Game & lobby controls with sliders and exact entry. Medkits are single-use per round, with healing amount configurable. The howitzer uses its reload time as the only delay between shells. Existing presets adopt these rules when decoded. [Owner controls](docs/balance.md)

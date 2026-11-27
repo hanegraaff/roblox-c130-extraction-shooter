@@ -121,3 +121,5 @@ with the five compiled native attributes, without reading opaque payloads or
 loading cloud content. The managed compiler preserves genuine engine payloads;
 client metadata/intrinsic validity alone does not establish rendered bounds,
 UVs, contact behavior or replication acceptance.
+
+The lobby balance editor groups its draft into Player, C-130, Buildings and Game & lobby tabs. Numeric fields support mouse/touch dragging, arrow keys and exact entry. Each tab change disconnects its global drag listeners. Closing or stopping the editor also invalidates pending responses. Save persists the shared draft, while Apply selects the named saved preset.

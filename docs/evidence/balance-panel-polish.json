@@ -1,0 +1,83 @@
+{
+  "source": {
+    "commit": "9b6dd182bf894ef6bea07afb2ca2252d28e0b6d8",
+    "tree": "10ce284c7cbdfe6b566bee3b64e7b845596053a1"
+  },
+  "environment": "macOS, Roblox Studio 0.748.0.7481526, isolated local test mapping",
+  "preview": {
+    "clients": 1,
+    "storage": "Isolated in-memory P26Panel fixture",
+    "native_pointer": "Clicked health slider midpoint, observed 501 HP. Clicked tabs, Save and Apply.",
+    "exact_entry": "Studio Instance focus test supplied 321, invalid text, 0, 5000 and 321.4. FocusLost preserved the last good value, clamped bounds and rounded whole HP. Tab changes retained 321. Virtual keyboard input did not enter text, so physical keyboard typing was not established by that tool.",
+    "saved_and_applied": "Simple controls preset stored 321 HP, single-use kits and a 12-second howitzer reload through the actual remote. Apply selected it.",
+    "howitzer": "C-130 tab includes m102ReloadRow and excludes m102CadenceRow.",
+    "building_copy": "Inspected native render showing 1 howitzer hit or 2 seconds of 30mm hits on the same panel for Medium, with retained damage explanation.",
+    "phone": "Inspected the open editor on iPhone 17 Pro landscape. Viewport 750x381 and safe area 750x323. Fitted panel 620x303 with a positive scroll area, visible tabs and footer buttons. Physical touch gestures unverified. Simulation reset before multiplayer testing.",
+    "screenshots": "Studio MCP capture IDs BalancePolishPlayer, BalancePolishBuildings, BalancePolishPhoneLayout. These were viewed in the session, not retained as image files."
+  },
+  "host": {
+    "command": "python3 scripts/verify.py",
+    "result": "passed",
+    "test_suites": {
+      "unit": 90,
+      "integration": 96,
+      "tooling": 27,
+      "assets": 70
+    }
+  },
+  "publication": "This follow-up build has not been published. Original P26 live two-server acceptance remains pending.",
+  "builds": {
+    "game": {
+      "sha256": "9087b9500b309bd15be8e089fabdd926029d0b030a7d5ff959263ba429385e79",
+      "bytes": 157133695
+    },
+    "tests": {
+      "sha256": "39603f7927ffd2108ed32c5080c5d9421062822ace43afec76fc1970f7913ce5",
+      "bytes": 158869658
+    }
+  },
+  "multiplayer": {
+    "result": {
+      "passed": 6,
+      "failed": 0,
+      "initialClientCount": 2,
+      "suite": "P26-multiplayer",
+      "skipped": 0,
+      "discovered": 6,
+      "cases": {
+        "1": {
+          "name": "A1 Owner and ordinary player have different access in the waiting lobby",
+          "passed": true
+        },
+        "2": {
+          "name": "A1 A2 A4 Trusted tester lowers waiting minimum and deploys the saved preset",
+          "passed": true
+        },
+        "3": {
+          "name": "A2 Low panel damage keeps interrupted credit and replicates openings",
+          "passed": true
+        },
+        "4": {
+          "name": "A2 A5 Four tuned weapons change damage, cooldowns, held tools and both health HUDs",
+          "passed": true
+        },
+        "5": {
+          "name": "A2 A4 Change settings during combat and intermission; both clients agree on replay",
+          "passed": true
+        },
+        "6": {
+          "name": "A5 High and Medium panel settings change native damage after replay",
+          "passed": true
+        }
+      },
+      "timing": {
+        "populationGateSecondsAfterDeadline": 1.214547872543335,
+        "secondCombatDeadline": 1795815547.940165,
+        "lastActiveSample": 1795815547.888668,
+        "nextIntermissionDeadline": 1795815550.955554,
+        "firstResultSample": 1795815547.972598
+      }
+    },
+    "sdk": true
+  }
+}
