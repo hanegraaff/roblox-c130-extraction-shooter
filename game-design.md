@@ -18,7 +18,7 @@ There are no collectible mission items, item quotas, escape zones or dwell count
 
 ## Public launch additions
 
-The owner and trusted testers need an in-game panel to tune the published game. The numerical combat values below are the starting preset. Servers take a snapshot of the selected preset at deployment. Ground health, aircraft health per teammate, weapon damage and readiness, panel damage, medkit healing and combat duration all use that round’s settings. The panel also sets the minimum lobby population from 2 to 10. A waiting lobby can apply a new minimum before deployment. [Live balance panel](plans/26-live-balance-panel.md)
+The owner and trusted testers need an in-game panel to tune the published game. The numerical combat values below are the starting preset. Servers take a snapshot of the selected preset at deployment. Ground health, aircraft health per teammate, weapon damage and readiness, panel damage, medkit healing and combat duration all use that round’s settings. At result commit, the server uses the latest saved intermission length for the upcoming lobby countdown. The panel also sets the minimum lobby population from 2 to 10. A waiting lobby can apply a new minimum before deployment. [Live balance panel](plans/26-live-balance-panel.md)
 
 Ground players aim by moving the mouse. A centered reticle guides the view and the character turns to face it. Touch players must be able to move, aim, fight and interact throughout a match. Controller support can follow launch. [Ground and touch controls](plans/27-ground-aim-and-mobile-controls.md)
 

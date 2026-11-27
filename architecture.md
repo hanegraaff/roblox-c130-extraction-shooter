@@ -30,7 +30,7 @@ Pure modules with dependencies choose an explicit Instance require when `script`
 
 ## Planned live balance settings
 
-The release panel will send bounded edit requests to a server-owned settings service. The service checks the editor’s permissions, validates the preset and stores a numbered revision. Waiting servers use the latest minimum player count. At deployment each server locks one preset for health, weapon timing and damage, panel damage, medkits and the combat clock. Gameplay services read that snapshot and clients receive the values they need for their HUD. The Studio test panel keeps its separate test-only controls. [Live balance panel and acceptance](plans/26-live-balance-panel.md)
+The release panel will send bounded edit requests to a server-owned settings service. The service checks the editor’s permissions, validates the preset and stores a numbered revision. Waiting servers use the latest minimum player count. At deployment each server locks one preset for health, weapon timing and damage, panel damage, medkits and the combat clock. Gameplay services read that snapshot and clients receive the values they need for their HUD. At result commit the server takes the latest confirmed intermission length and sets one shared deadline. The Studio test panel keeps its separate test-only controls. [Live balance panel and acceptance](plans/26-live-balance-panel.md)
 
 ## Implemented map and terrain ownership
 
