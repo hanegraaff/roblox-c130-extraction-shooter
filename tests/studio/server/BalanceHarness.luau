@@ -156,9 +156,8 @@ function Harness.run(automated: boolean)
     local clients = 0
     local ok, failure = pcall(function()
         waitFor(function()
-            local all = Players:GetPlayers()
-            return #all == 2 and ready[all[1]] == true and ready[all[2]] == true
-        end, "two real clients after smoke", 90)
+            return #Players:GetPlayers() == 2
+        end, "two actual clients", 90)
         local pair = Players:GetPlayers()
         table.sort(pair, function(a, b)
             return a.UserId < b.UserId
@@ -167,6 +166,11 @@ function Harness.run(automated: boolean)
         clients = #pair
         local runtime = start(owner, 3)
         owned = runtime
+        -- Client smoke observes the normal RoundState and a protected avatar.
+        -- Its acknowledgements can only arrive after the runtime has started.
+        waitFor(function()
+            return ready[owner] == true and ready[tester] == true
+        end, "both actual clients finished smoke", 90)
         local state = assert(ReplicatedStorage:FindFirstChild("RoundState"), "round state missing")
         local function both(predicate: (Bag) -> boolean, why: string)
             waitFor(function()

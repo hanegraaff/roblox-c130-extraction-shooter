@@ -76,7 +76,8 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         )
     end)
     test("P26 Low Medium High preserve intermediate openings at tuned times", function()
-        for tier, duration in { Low = 4, Medium = 2, High = 1 } do
+        local durations: { [string]: number } = { Low = 4, Medium = 2, High = 1 }
+        for tier, duration in durations do
             local state = rules.new()
             rules.apply(state, false, duration / 2, tier)
             assert(rules.appearance(state) == "Heavy", "missing intermediate opening")
