@@ -74,7 +74,7 @@ function BalanceRecord.decode(raw: unknown): (Record?, string?)
     then
         return nil, "Invalid stored revision."
     end
-    local values, err = Schema.validate(t.settings)
+    local values, err = Schema.decodeStored(t.settings)
     if not values then
         return nil, err
     end
@@ -83,7 +83,7 @@ function BalanceRecord.decode(raw: unknown): (Record?, string?)
         if not validName(t.previousName) then
             return nil, "Invalid rollback name."
         end
-        previous = Schema.validate(t.previousSettings)
+        previous = Schema.decodeStored(t.previousSettings)
         if not previous then
             return nil, "Invalid rollback values."
         end
@@ -95,14 +95,14 @@ function BalanceRecord.decode(raw: unknown): (Record?, string?)
         if count > maxPresets or not validName(name) then
             return nil, "Invalid stored preset list."
         end
-        local preset = Schema.validate(value)
+        local preset = Schema.decodeStored(value)
         if not preset then
             return nil, "Invalid stored preset."
         end
         presets[name :: string] = preset
     end
-    if not presets.Shipped or not presets[t.activeName :: string] then
-        return nil, "Missing built-in or active preset."
+    if not presets.Shipped then
+        return nil, "Missing built-in preset."
     end
     local trusted: { number } = {}
     local seen: { [number]: boolean } = {}
@@ -156,6 +156,7 @@ function BalanceRecord.request(raw: unknown): (Request?, string?)
         action ~= "read"
         and action ~= "save"
         and action ~= "apply"
+        and action ~= "delete"
         and action ~= "restore"
         and action ~= "grant"
         and action ~= "revoke"
@@ -171,7 +172,7 @@ function BalanceRecord.request(raw: unknown): (Request?, string?)
         req.revision = t.revision :: number
         expected += 1
     end
-    if action == "save" or action == "apply" then
+    if action == "save" or action == "apply" or action == "delete" then
         if not validName(t.name) then
             return nil, "Use 1–32 letters, numbers, spaces, hyphens or underscores for the name."
         end
@@ -258,6 +259,19 @@ function BalanceRecord.apply(
         end
         presets[name] = req.settings :: Values
         nextRecord.presets = presets
+    elseif action == "delete" then
+        local name = req.name :: string
+        if name == "Shipped" then
+            return nil, "Shipped is the built-in preset."
+        end
+        if not current.presets[name] then
+            return nil, "Preset unavailable."
+        end
+        local presets = table.clone(current.presets)
+        presets[name] = nil
+        nextRecord.presets = presets
+        -- Live settings and rollback are independent snapshots. Deleting a name
+        -- removes it from the library while preserving the confirmed live rules.
     elseif action == "apply" or action == "restore" then
         local name = if action == "restore" then current.previousName else req.name
         local values = if action == "restore"

@@ -67,4 +67,41 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             "decoded snapshot aliases mutable input"
         )
     end)
+    test("Stored earlier ranges clamp while new edits reject out-of-range values", function()
+        local stored = edit("m7Damage", 1000)
+        stored.m7Cadence, stored.m7Reload, stored.rocketDamage = 5, 120, 10000
+        stored.gauReload, stored.m102Reload, stored.intermission = 120, 120, 0
+        assert(not schema.validate(stored), "new edit accepted old limits")
+        local decoded = assert(schema.decodeStored(stored))
+        assert(
+            decoded.m7Damage == 50 and decoded.m7Cadence == 1 and decoded.m7Reload == 10,
+            "rifle limits not migrated"
+        )
+        assert(
+            decoded.rocketDamage == 5000 and decoded.gauReload == 30 and decoded.m102Reload == 30,
+            "damage or reload migration"
+        )
+        assert(decoded.m102Cadence == 30 and decoded.intermission == 1, "clock migration")
+        assert(stored.m7Damage == 1000 and table.isfrozen(decoded), "migration mutated input")
+        stored.m7Damage = 1001
+        assert(not schema.decodeStored(stored), "corrupt historical value accepted")
+    end)
+    test("Requested slider limits include zero aircraft reload and reject adjacent values", function()
+        local bounds: { [string]: { number } } = {
+            m7Damage = { 1, 50 },
+            m7Cadence = { 0.15, 1 },
+            m7Reload = { 0.15, 10 },
+            rocketDamage = { 1, 5000 },
+            intermission = { 1, 300 },
+            gauReload = { 0, 30 },
+            m102Reload = { 0, 30 },
+        }
+        for key, range in bounds do
+            for _, value in range do
+                assert(schema.validate(edit(key, value)), key)
+            end
+            assert(not schema.validate(edit(key, range[1] - 0.01)), key)
+            assert(not schema.validate(edit(key, range[2] + 0.01)), key)
+        end
+    end)
 end

@@ -4,6 +4,8 @@
 
 Start with **P26**. The owner and trusted testers must be able to tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P32 sets the launch balance after players have tried the finished controls, models and medkits.
 
+**Publishing throughout the MVP.** Always publish from `build/game.rbxlx`. Use `build/tests.rbxlx` for local tests. Reuse both filenames and Studio documents, with the matching Rojo connection bringing in changes. Verify the open game document contains the latest source before publishing to the same approved Roblox place. [Build and publish guide](README.md#the-two-studio-files)
+
 | Plan | Status | Depends on | Outcome |
 | --- | --- | --- | --- |
 | [P26 · Live balance panel](plans/26-live-balance-panel.md) | Blocked | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |

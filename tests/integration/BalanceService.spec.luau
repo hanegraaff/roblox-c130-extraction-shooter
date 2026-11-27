@@ -118,4 +118,43 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             )
         end
     )
+    test(
+        "Deleted preset remains deleted across another server and restart without changing the round",
+        function()
+            local stored: unknown = nil
+            local deps = {
+                read = function(): unknown
+                    return stored
+                end,
+                update = function(change: (unknown) -> unknown): unknown
+                    local nextValue = change(stored)
+                    if nextValue ~= nil then
+                        stored = nextValue
+                    end
+                    return nextValue
+                end,
+            }
+            local a, b = api.new(deps), api.new(deps)
+            local function write(service: typeof(a), action: string, revision: number, name: string)
+                local payload: { [string]: unknown } = { action = action, revision = revision, name = name }
+                if action == "save" then
+                    payload.settings = service.latest().settings
+                end
+                return service.write(assert(Record.request(payload)), 1, 1, online)
+            end
+            assert(write(a, "save", 0, "Trial"), "save failed")
+            assert(write(a, "apply", 1, "Trial"), "apply failed")
+            assert(b.refresh(), "second server refresh")
+            b.capture()
+            assert(write(a, "delete", 2, "Trial"), "delete failed")
+            assert(not write(b, "apply", 2, "Trial"), "stale apply after deletion")
+            assert(b.refresh() and b.latest().presets.Trial == nil, "second server retained deleted preset")
+            assert(b.round().activeName == "Trial", "delete changed running round")
+            local restarted = api.new(deps)
+            assert(
+                restarted.refresh() and restarted.latest().presets.Trial == nil,
+                "restart revived deleted preset"
+            )
+        end
+    )
 end

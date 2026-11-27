@@ -217,4 +217,24 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             "105mm rejected at ready time"
         )
     end)
+    test("Zero aircraft reload works at clock zero while the 30mm still respects shot spacing", function()
+        local profiles = table.clone(combat.profiles)
+        local heavy, light = table.clone(profiles.M102), table.clone(profiles.GAU23)
+        heavy.cadence, heavy.reload = 0, 0
+        light.cadence, light.reload, light.capacity = 0.15, 0, 1
+        profiles.M102, profiles.GAU23 = heavy, light
+        local owner = combat.new(defaults, -1, 32, profiles)
+        owner.reset(1)
+        assert(owner.fire(1, request(1, "M102"), "M102", true, 0, 360, 140, 0), "initial shell")
+        assert(owner.fire(1, request(2, "M102"), "M102", true, 0, 360, 140, 0), "zero reload wedged at epoch")
+        assert(owner.fire(1, request(3, "GAU23"), "GAU23", true, 0, 360, 140, 0), "initial light shot")
+        assert(
+            not owner.fire(1, request(4, "GAU23"), "GAU23", true, 0.14, 360, 140, 0),
+            "zero reload bypassed cadence"
+        )
+        assert(
+            owner.fire(1, request(4, "GAU23"), "GAU23", true, 0.15, 360, 140, 0),
+            "zero light reload wedged"
+        )
+    end)
 end

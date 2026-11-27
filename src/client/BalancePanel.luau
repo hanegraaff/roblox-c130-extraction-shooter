@@ -294,47 +294,80 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     local close = button(sheet, "Close")
     close.Position = UDim2.new(1, -80, 0, 10)
     close.Size = UDim2.fromOffset(62, 32)
-    local status = label(sheet, "", 30)
-    status.Position = UDim2.fromOffset(18, 46)
-    status.Size = UDim2.new(1, -36, 0, 30)
-    status.TextColor3 = muted
-    status.TextSize = 13
-    local preset = button(sheet, "Shipped")
+    local live = label(sheet, "Loading live settings…", 28)
+    live.Name = "LiveSettings"
+    live.Position = UDim2.fromOffset(18, 46)
+    live.Size = UDim2.new(1, -128, 0, 28)
+    live.TextColor3 = accent
+    live.TextSize = 14
+    local refresh = button(sheet, "Refresh")
+    refresh.Position = UDim2.new(1, -100, 0, 46)
+    refresh.Size = UDim2.fromOffset(82, 28)
+    local library = Instance.new("Frame")
+    library.Name = "PresetLibrary"
+    library.Position = UDim2.fromOffset(18, 84)
+    library.Size = UDim2.new(1, -36, 0, 140)
+    library.BackgroundColor3 = Color3.fromRGB(28, 42, 44)
+    library.BorderSizePixel = 0
+    roundCorners(library, 8)
+    library.Parent = sheet
+    local libraryTitle = label(library, "Saved presets", 26)
+    libraryTitle.Position = UDim2.fromOffset(10, 3)
+    libraryTitle.Font = Enum.Font.BuilderSansBold
+    local preset = button(library, "Load preset v")
     preset.Name = "ChoosePreset"
-    preset.Position = UDim2.fromOffset(18, 80)
-    preset.Size = UDim2.new(0.5, -23, 0, 36)
-    local nameBox = input(sheet, "Name your preset")
+    preset.Position = UDim2.fromOffset(10, 34)
+    preset.Size = UDim2.new(0.5, -15, 0, 32)
+    local nameBox = input(library, "Preset name")
     nameBox.Name = "PresetName"
-    nameBox.Position = UDim2.new(0.5, 5, 0, 80)
-    nameBox.Size = UDim2.new(0.5, -23, 0, 36)
-    local presetMenu = Instance.new("ScrollingFrame")
-    presetMenu.Name = "PresetMenu"
-    presetMenu.Position = UDim2.fromOffset(18, 120)
-    presetMenu.Size = UDim2.new(1, -36, 0, 160)
-    presetMenu.BackgroundColor3 = dark
-    presetMenu.BorderSizePixel = 0
-    presetMenu.ScrollBarThickness = 4
-    presetMenu.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    presetMenu.CanvasSize = UDim2.fromOffset(0, 0)
-    presetMenu.ZIndex = 10
-    presetMenu.Visible = false
-    presetMenu.Parent = sheet
-    local menuRows = Instance.new("UIListLayout")
-    menuRows.Padding = UDim.new(0, 4)
-    menuRows.Parent = presetMenu
-    local tabs: { TextButton } = {}
-    for index, group in groups do
-        local tab = button(sheet, group.name)
-        tab.Name = "Tab" .. tostring(index)
-        tab.Position = UDim2.new((index - 1) / 4, 18 - (index - 1) * 7, 0, 128)
-        tab.Size = UDim2.new(0.25, -16, 0, 38)
-        tab.TextSize = 14
-        table.insert(tabs, tab)
+    nameBox.Position = UDim2.new(0.5, 5, 0, 34)
+    nameBox.Size = UDim2.new(0.5, -15, 0, 32)
+    local save = button(library, "Save preset")
+    save.Name = "SavePreset"
+    save.Position = UDim2.fromOffset(10, 74)
+    save.Size = UDim2.new(1 / 3, -13, 0, 32)
+    local apply = button(library, "Apply saved")
+    apply.Name = "ApplyPreset"
+    apply.Position = UDim2.new(1 / 3, 3, 0, 74)
+    apply.Size = UDim2.new(1 / 3, -13, 0, 32)
+    local delete = button(library, "Delete preset")
+    delete.Name = "DeletePreset"
+    delete.Position = UDim2.new(2 / 3, -3, 0, 74)
+    delete.Size = UDim2.new(1 / 3, -13, 0, 32)
+    local status = label(library, "Loading saved presets…", 26)
+    status.Name = "PresetFeedback"
+    status.Position = UDim2.fromOffset(10, 110)
+    status.Size = UDim2.new(1, -20, 0, 26)
+    status.TextSize = 13
+    status.TextColor3 = muted
+    local function menu(name: string, y: number): ScrollingFrame
+        local list = Instance.new("ScrollingFrame")
+        list.Name = name
+        list.Position = UDim2.fromOffset(18, y)
+        list.Size = UDim2.new(1, -36, 0, 160)
+        list.BackgroundColor3 = dark
+        list.BorderSizePixel = 0
+        list.ScrollBarThickness = 4
+        list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+        list.CanvasSize = UDim2.fromOffset(0, 0)
+        list.ZIndex = 10
+        list.Visible = false
+        list.Parent = sheet
+        local layout = Instance.new("UIListLayout")
+        layout.Padding = UDim.new(0, 4)
+        layout.Parent = list
+        return list
     end
+    local presetMenu = menu("PresetMenu", 152)
+    local categoryMenu = menu("CategoryMenu", 272)
+    local category = button(sheet, "Settings · Player v")
+    category.Name = "ChooseCategory"
+    category.Position = UDim2.fromOffset(18, 236)
+    category.Size = UDim2.new(1, -36, 0, 36)
     local scroll = Instance.new("ScrollingFrame")
     scroll.Name = "Settings"
-    scroll.Position = UDim2.fromOffset(18, 180)
-    scroll.Size = UDim2.new(1, -36, 1, -318)
+    scroll.Position = UDim2.fromOffset(18, 284)
+    scroll.Size = UDim2.new(1, -36, 1, -324)
     scroll.BackgroundTransparency = 1
     scroll.BorderSizePixel = 0
     scroll.ScrollBarThickness = 4
@@ -346,32 +379,18 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     rows.SortOrder = Enum.SortOrder.LayoutOrder
     rows.Padding = UDim.new(0, 8)
     rows.Parent = scroll
-    local footer = label(sheet, "Combat changes start next round.", 26)
-    footer.Position = UDim2.new(0, 18, 1, -132)
-    footer.Size = UDim2.new(1, -36, 0, 26)
+    local footer = label(sheet, "Combat changes start next round.", 28)
+    footer.Name = "EditingSettings"
+    footer.Position = UDim2.new(0, 18, 1, -34)
+    footer.Size = UDim2.new(1, -36, 0, 28)
     footer.TextColor3 = muted
     footer.TextSize = 13
-    local save = button(sheet, "Save preset")
-    save.Name = "SavePreset"
-    save.Position = UDim2.new(0, 18, 1, -102)
-    save.Size = UDim2.new(0.5, -23, 0, 36)
-    local apply = button(sheet, "Apply saved preset")
-    apply.Name = "ApplyPreset"
-    apply.Position = UDim2.new(0.5, 5, 1, -102)
-    apply.Size = UDim2.new(0.5, -23, 0, 36)
-    apply.BackgroundColor3 = accent
-    apply.TextColor3 = dark
-    local restore = button(sheet, "Undo last apply")
-    restore.Position = UDim2.new(0, 18, 1, -58)
-    restore.Size = UDim2.new(0.5, -23, 0, 32)
-    local refresh = button(sheet, "Refresh")
-    refresh.Position = UDim2.new(0.5, 5, 1, -58)
-    refresh.Size = UDim2.new(0.5, -23, 0, 32)
     local alive, busy = true, false
     local generation = 0
     local current: View? = nil
     local draft: Fields = {}
     local selectedTab = 1
+    local loadedPreset: string? = nil
     local cleanups: { () -> () } = {}
     local connections: { RBXScriptConnection } = {}
     local scale = Instance.new("UIScale")
@@ -385,10 +404,40 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     end
     table.insert(connections, gui:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit))
     fit()
+    local function canApply(): boolean
+        if busy or not current or not loadedPreset or nameBox.Text ~= loadedPreset then
+            return false
+        end
+        local saved = current.presets[loadedPreset]
+        if not saved then
+            return false
+        end
+        for key, value in draft do
+            if saved[key] ~= value then
+                return false
+            end
+        end
+        return true
+    end
+    local function updateActions()
+        local ready = canApply()
+        apply.BackgroundColor3 = if ready then accent else surface
+        apply.TextColor3 = if ready then dark else muted
+        apply.Active = ready
+        apply.Selectable = ready
+        local removable = not busy and loadedPreset ~= nil and loadedPreset ~= "Shipped"
+        delete.Active = removable
+        delete.Selectable = removable
+        delete.TextColor3 = if removable then Color3.fromRGB(239, 164, 151) else muted
+        footer.Text = if ready
+            then "Editing saved values · Combat changes start next round."
+            else "Unsaved values · Save the preset, then apply it."
+    end
     local request: (string, Edit?) -> ()
     local render: () -> ()
     local function clear()
         presetMenu.Visible = false
+        categoryMenu.Visible = false
         for _, cleanup in cleanups do
             cleanup()
         end
@@ -426,10 +475,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         end
         clear()
         scroll.CanvasPosition = Vector2.zero
-        for index, tab in tabs do
-            tab.BackgroundColor3 = if index == selectedTab then accent else surface
-            tab.TextColor3 = if index == selectedTab then dark else muted
-        end
+        category.Text = "Settings · " .. groups[selectedTab].name .. " v"
         for _, key in groups[selectedTab].keys do
             if subheads[key] then
                 local caption = label(scroll, subheads[key], 28)
@@ -454,6 +500,10 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                     cleanups,
                     slider(scroll, field, draft[key] :: number, function(value)
                         draft[key] = value
+                        if key == "m102Reload" then
+                            draft.m102Cadence = value
+                        end
+                        updateActions()
                         if summary and current then
                             summary.Text = string.format(
                                 "%d ground players × %g HP = %g plane health",
@@ -467,9 +517,26 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             elseif key == "panelDamage" then
                 label(scroll, "Damage needed to break a wall or roof", 32).Font = Enum.Font.BuilderSansBold
                 local info = label(scroll, "", 78)
-                local choices: { TextButton } = {}
+                local choiceRow = Instance.new("Frame")
+                choiceRow.Name = "PanelDamageChoice"
+                choiceRow.Size = UDim2.new(1, -6, 0, 36)
+                choiceRow.BackgroundTransparency = 1
+                choiceRow.Parent = scroll
+                local control = button(choiceRow, "")
+                control.Name = "PanelDamage"
+                local options = Instance.new("Frame")
+                options.Name = "Options"
+                options.Position = UDim2.fromOffset(0, 40)
+                options.Size = UDim2.new(1, 0, 0, 120)
+                options.BackgroundTransparency = 1
+                options.Visible = false
+                options.Parent = choiceRow
+                local layout = Instance.new("UIListLayout")
+                layout.Padding = UDim.new(0, 4)
+                layout.Parent = options
                 local function selectTier(tier: string)
                     draft.panelDamage = tier
+                    control.Text = tier .. " damage v"
                     local hits = if tier == "Low" then 2 else 1
                     local seconds = if tier == "Low" then 4 elseif tier == "High" then 1 else 2
                     info.Text = string.format(
@@ -478,16 +545,18 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                         if hits == 1 then "" else "s",
                         seconds
                     )
-                    for _, choice in choices do
-                        choice.BackgroundColor3 = if choice.Name == tier then accent else surface
-                        choice.TextColor3 = if choice.Name == tier then dark else ink
-                    end
+                    options.Visible = false
+                    choiceRow.Size = UDim2.new(1, -6, 0, 36)
+                    updateActions()
                 end
+                control.Activated:Connect(function()
+                    options.Visible = not options.Visible
+                    choiceRow.Size = UDim2.new(1, -6, 0, if options.Visible then 160 else 36)
+                end)
                 for _, tier in { "Low", "Medium", "High" } do
-                    local control = button(scroll, tier .. " damage")
-                    control.Name = tier
-                    table.insert(choices, control)
-                    control.Activated:Connect(function()
+                    local option = button(options, tier .. " damage")
+                    option.Name = tier
+                    option.Activated:Connect(function()
                         selectTier(tier)
                     end)
                 end
@@ -531,6 +600,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                     muted
             end
         end
+        updateActions()
     end
     request = function(verb, fields)
         if busy or not alive or not gui.Enabled then
@@ -548,7 +618,8 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         end
         local stamp = generation
         busy = true
-        status.Text = "Saving…"
+        status.Text = if verb == "read" then "Loading saved presets…" else "Saving…"
+        updateActions()
         task.spawn(function()
             local ok, reply = pcall(function()
                 return remote:InvokeServer(args)
@@ -557,6 +628,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                 return
             end
             busy = false
+            updateActions()
             if not ok or type(reply) ~= "table" then
                 status.Text = "Connection failed. Try Refresh."
                 return
@@ -567,24 +639,44 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             end
             current = reply.view :: View
             local view = current :: View
-            local name = if verb == "save" then tostring(args.name) else view.activeName
-            draft = table.clone(if verb == "save" then view.presets[name] else view.settings)
-            nameBox.Text = name
-            preset.Text = "Choose preset · " .. name
-            status.Text = if verb == "save"
-                then "Saved. Select Apply saved preset to use it."
-                elseif verb == "apply" or verb == "restore" then "Applied · " .. view.activeName
-                elseif verb == "read" then "Live preset · " .. view.activeName
+            live.Text = "Live in game · " .. view.activeName
+            if verb == "delete" then
+                loadedPreset = nil
+                draft = (table.clone(Schema.defaults) :: unknown) :: Fields
+                nameBox.Text = "New Preset"
+                preset.Text = "Load · New Preset v"
+            else
+                local name = if verb == "save" then tostring(args.name) else view.activeName
+                loadedPreset = if view.presets[name] then name else nil
+                draft = table.clone(if verb == "save" then view.presets[name] else view.settings)
+                nameBox.Text = if loadedPreset then name else "New Preset"
+                preset.Text = "Load · " .. (loadedPreset or "New Preset") .. " v"
+            end
+            status.Text = if verb == "delete"
+                then "Preset deleted. Create a new one or close the editor."
+                elseif verb == "save" then "Saved. Select Apply saved to use it."
+                elseif verb == "apply" then "Applied · " .. view.activeName
+                elseif verb == "read" then "Choose a preset to edit. Live settings are shown above."
                 else "Tester access updated."
             render()
         end)
     end
-    for index, tab in tabs do
-        tab.Activated:Connect(function()
+    for index, group in groups do
+        local option = button(categoryMenu, group.name)
+        option.Name = "Category" .. tostring(index)
+        option.ZIndex = 11
+        option.Activated:Connect(function()
             selectedTab = index
             render()
         end)
     end
+    category.Activated:Connect(function()
+        if not busy and current then
+            categoryMenu.Visible = not categoryMenu.Visible
+            presetMenu.Visible = false
+        end
+    end)
+    nameBox:GetPropertyChangedSignal("Text"):Connect(updateActions)
     preset.Activated:Connect(function()
         if busy or not current then
             return
@@ -594,6 +686,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             table.insert(names, name)
         end
         table.sort(names)
+        table.insert(names, 1, "")
         if presetMenu.Visible then
             presetMenu.Visible = false
             return
@@ -604,19 +697,22 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             end
         end
         for _, name in names do
-            local choice = button(presetMenu, name)
+            local choice = button(presetMenu, if name == "" then "New Preset" else name)
+            choice.Name = if name == "" then "NewPresetOption" else name
             choice.ZIndex = 11
             choice.Activated:Connect(function()
                 if busy or not current then
                     return
                 end
-                draft = table.clone(current.presets[name])
-                nameBox.Text = name
-                preset.Text = "Choose preset · " .. name
-                status.Text = "Editing · " .. name
+                loadedPreset = if name == "" then nil else name
+                draft = table.clone(if loadedPreset then current.presets[name] else Schema.defaults) :: Fields
+                nameBox.Text = if name == "" then "New Preset" else name
+                preset.Text = "Load · " .. nameBox.Text .. " v"
+                status.Text = "Loaded into editor · " .. nameBox.Text
                 render()
             end)
         end
+        categoryMenu.Visible = false
         presetMenu.Visible = true
     end)
     save.Activated:Connect(function()
@@ -626,10 +722,14 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         request("save", { name = nameBox.Text, settings = table.clone(draft) })
     end)
     apply.Activated:Connect(function()
-        request("apply", { name = nameBox.Text })
+        if canApply() then
+            request("apply", { name = loadedPreset })
+        end
     end)
-    restore.Activated:Connect(function()
-        request("restore", nil)
+    delete.Activated:Connect(function()
+        if loadedPreset and loadedPreset ~= "Shipped" then
+            request("delete", { name = loadedPreset })
+        end
     end)
     refresh.Activated:Connect(function()
         request("read", nil)

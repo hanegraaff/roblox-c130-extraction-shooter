@@ -312,3 +312,5 @@ Light clones the intact solid, Heavy uses the fitted residual, and Total
 clears all owned parts. Decks and stair supports are outside the damage
 registry. Cleanup rolls back the mounted roots and descriptor if map
 validation fails. [Import pipeline and site](../../assets/blender/alien-spaceship/IMPORT.md)
+
+Balance preset deletion removes a library entry atomically at the expected revision. Live settings and the running round remain independent snapshots, so deleting their name keeps their values active. Stored older numeric ranges are validated against the earlier bounds and clamped to current limits. New remote saves use the current strict ranges.
