@@ -87,6 +87,9 @@ local function gunship(
     return nil
 end
 
+-- Aim a fixture shot at an exposed avatar using the same validated camera search.
+CombatFixture.pointShot = gunship
+
 -- Stable ordered registry for deterministic panel preferences. Compatible with
 -- stage swaps because panel identity Models persist until a map reset.
 function CombatFixture.outpost(): { Instance }

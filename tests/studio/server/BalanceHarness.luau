@@ -14,7 +14,7 @@ local Runtime = require(Server.GameRuntime)
 local Match = require(Server.MatchRuntime)
 local Balance = require(Server.BalanceRuntime)
 local Schema = require(ReplicatedStorage.Shared.BalanceSchema)
-local CombatFixture = require(script.Parent.P11CombatFixture)
+local CombatChecks = require(script.Parent.BalanceCombatChecks)
 local Harness = {}
 
 type Bag = { [string]: unknown }
@@ -178,7 +178,7 @@ function Harness.run(automated: boolean)
             end, why)
         end
         local values = table.clone(Schema.defaults)
-        values.minimumPlayers, values.roundDuration, values.intermission = 2, 60, 5
+        values.minimumPlayers, values.roundDuration, values.intermission = 2, 90, 5
         values.groundHealth, values.aircraftHealthPerGround = 123, 777
         values.gauCadence, values.gauReload, values.gauDamage = 0.33, 2.4, 35
         values.m102Damage, values.m102Reload, values.m102Cadence = 75, 4, 0.6
@@ -191,6 +191,11 @@ function Harness.run(automated: boolean)
             local saved =
                 accept(player, { action = "save", revision = revision, name = name, settings = values })
             local live = accept(player, { action = "apply", revision = saved.revision, name = name })
+            local wanted = (values :: unknown) :: Bag
+            local actual = (live.settings :: unknown) :: Bag
+            for _, field in Schema.fields do
+                assert(actual[field.key] == wanted[field.key], "round-trip mismatch: " .. field.label)
+            end
             revision = live.revision
             assert(live.activeRevision == revision, "apply missed live revision")
         end
@@ -221,7 +226,7 @@ function Harness.run(automated: boolean)
                 return state:GetAttribute("Phase") == "Active"
             end, "first deployment", 55)
             local left = (state:GetAttribute("DeadlineSeconds") :: number) - workspace:GetServerTimeNow()
-            assert(left > 55 and left <= 60, "combat clock did not start at arrival")
+            assert(left > 85 and left <= 90, "combat clock did not start at arrival")
             both(function(d)
                 return d.phase == "Active"
                     and d.aircraftHP == 777
@@ -229,65 +234,20 @@ function Harness.run(automated: boolean)
                     and (d.role ~= "Ground" or d.groundHP == 123)
             end, "locked client health")
         end)
-        check(
-            "A2 A5 Low panels need two contacts, aircraft takes tuned rocket damage and howitzer readiness is tuned",
-            function()
-                local round = runtime.rounds.match.snapshot().roundId
-                local panel = assert(CombatFixture.outpost()[1], "Outpost panel missing")
-                for shot = 1, 2 do
-                    assert(
-                        runtime.destruction.resolve({
-                            roundId = round,
-                            shotId = shot,
-                            weapon = "M102",
-                            firedAt = workspace:GetServerTimeNow(),
-                            panelId = panel.Name,
-                        }),
-                        "panel contact rejected"
-                    )
-                    runtime.destruction.flush(workspace:GetServerTimeNow())
-                    assert(
-                        panel:GetAttribute("DamageAppearance") == if shot == 1 then "Heavy" else "Total",
-                        "wrong panel damage at contact"
-                    )
-                end
-                local pos = runtime.aircraft.position()
-                assert(
-                    runtime.groundCombat.rocketSweep(
-                        round,
-                        "p26-rocket",
-                        pos + Vector3.yAxis * 50,
-                        -Vector3.yAxis * 100
-                    ),
-                    "native aircraft sweep missed"
-                )
-                both(function(d)
-                    return d.aircraftCurrent == 507
-                end, "replicated tuned rocket damage")
-                local gunner = if owner:GetAttribute("Role") == "Gunship" then owner else tester
-                probe(
-                    gunner,
-                    "Weapon",
-                    { remote = "SelectWeapon", body = { roundId = round, sequence = 1, weapon = "M102" } }
-                )
-                waitFor(function()
-                    return runtime.aircraft.weapon() == "M102"
-                end, "howitzer selection")
-                local shot =
-                    assert(CombatFixture.terrainShot(runtime, "M102", 1), "no valid gunship terrain shot")
-                probe(gunner, "Weapon", { remote = shot.remote, body = shot.body })
-                local air = ReplicatedStorage.AircraftState
-                waitFor(function()
-                    local data = air:GetAttribute("Readiness")
-                    if type(data) ~= "string" then
-                        return false
-                    end
-                    local status = HttpService:JSONDecode(data).M102
-                    return status.ammo == 0
-                        and math.abs(status.reloadUntil - status.nextFire + 0.6 - 4) < 1e-5
-                end, "native accepted M102 fire and reload")
-            end
-        )
+        local ctx = {
+            runtime = runtime,
+            owner = owner,
+            tester = tester,
+            probe = probe,
+            waitFor = waitFor,
+            values = values,
+        }
+        check("A2 Low panel damage keeps interrupted credit and replicates openings", function()
+            CombatChecks.panels(ctx)
+        end)
+        check("A2 A5 Four tuned weapons change damage, cooldowns, held tools and both health HUDs", function()
+            CombatChecks.weapons(ctx)
+        end)
         check("A2 A4 Change settings during combat and intermission; both clients agree on replay", function()
             local deadline = state:GetAttribute("DeadlineSeconds")
             values.minimumPlayers, values.groundHealth, values.aircraftHealthPerGround = 3, 193, 901
@@ -321,6 +281,19 @@ function Harness.run(automated: boolean)
                     and (d.role ~= "Ground" or d.groundHP == 193)
                     and d.revision == revision
             end, "replay settings")
+        end)
+        check("A5 High and Medium panel settings change native damage after replay", function()
+            CombatChecks.panels(ctx)
+            values.panelDamage = "Medium"
+            values.intermission = 2
+            apply(owner, "QA medium")
+            local prior = runtime.rounds.match.snapshot().roundId
+            assert(runtime.rounds.match.abort(prior, "P26NextTier"), "fixture replay rejected")
+            waitFor(function()
+                local match = runtime.rounds.match.snapshot()
+                return match.roundId > prior and match.phase == "Active"
+            end, "third tier deployment", 45)
+            CombatChecks.panels(ctx)
         end)
     end)
     if not ok and (#cases == 0 or cases[#cases].passed) then

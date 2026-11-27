@@ -22,16 +22,38 @@ function Harness.run()
         local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
         if kind == "Weapon" then
             local name = payload.remote
-            assert(name == "SelectWeapon" or name == "FireWeapon", "unrecognized test weapon remote")
-            local event = aircraft:FindFirstChild(name)
+            local launcher = name == "Pickup" or name == "Fire"
+            assert(
+                launcher
+                    or name == "SelectWeapon"
+                    or name == "FireWeapon"
+                    or name == "GroundFire"
+                    or name == "GroundReload",
+                "unrecognized test weapon remote"
+            )
+            local parent = if launcher then ReplicatedStorage.LauncherState else aircraft
+            local event = parent:FindFirstChild(name :: string)
             assert(event and event:IsA("RemoteEvent"), "weapon remote missing")
             event:FireServer(payload.body)
             return true
         end
+        if kind == "Panel" then
+            local name = payload.name
+            assert(type(name) == "string", "panel name missing")
+            local panel = workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels:FindFirstChild(name)
+            return if panel then panel:GetAttribute("DamageAppearance") else nil
+        end
         assert(kind == "Observe", "unknown client operation")
         local gui = player.PlayerGui:FindFirstChild("BalancePanel")
         local button = if gui then gui:FindFirstChild("OpenBalance") else nil
+        local hud = player.PlayerGui:FindFirstChild("RoundHUD")
+        local hpLabel = if hud then hud:FindFirstChild("AircraftHealth") else nil
         return {
+            aircraftHUD = if hpLabel
+                    and hpLabel:IsA("TextLabel")
+                    and hpLabel.Visible
+                then hpLabel.Text
+                else nil,
             phase = state:GetAttribute("Phase"),
             revision = state:GetAttribute("BalanceRoundRevision"),
             intermission = state:GetAttribute("IntermissionUntil"),
