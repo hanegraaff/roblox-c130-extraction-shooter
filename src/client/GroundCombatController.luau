@@ -15,6 +15,7 @@ local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local Validation = require(ReplicatedStorage.Shared.Validation)
+local GroundInput = require(script.Parent.GroundInput)
 local GroundCombatController = {}
 local renderOwnerCount = 0
 type LauncherView = {
@@ -27,53 +28,26 @@ type LauncherView = {
     position: { x: number, y: number, z: number },
 }
 
--- Mouse and touch-center inputs use viewport pixels. GUI layout uses its
--- measured content origin plus the current inset. One rounded viewport pixel
--- drives both the reticle and the ray.
--- Pure and nonyielding; all arguments are sampled by the caller each frame.
+-- One rounded center pixel drives both the reticle and the ray on desktop
+-- and touch. The measured GUI origin plus inset converts into local pixels.
 function GroundCombatController.projectAim(
     viewport: Vector2,
-    mouse: Vector2,
-    touch: boolean,
     inset: Vector2,
     origin: Vector2
 ): (Vector2, UDim2)
-    local input = if touch then viewport * 0.5 else mouse
-    local pixels = Vector2.new(math.floor(input.X + 0.5), math.floor(input.Y + 0.5))
+    local pixels = Vector2.new(math.floor(viewport.X * 0.5 + 0.5), math.floor(viewport.Y * 0.5 + 0.5))
     local guiOrigin = origin + inset
     return pixels,
         UDim2.fromOffset(math.floor(pixels.X - guiOrigin.X + 0.5), math.floor(pixels.Y - guiOrigin.Y + 0.5))
 end
 
--- Weapon readiness layout in GUI-content pixels. Touch shares a compact
--- header with RoundPanel: health left/readiness right, then ownership left.
--- origin is this ScreenGui's measured content origin; unlike viewport rays,
--- readouts must share coordinates with the normal-inset RoundHUD. No yielding.
-function GroundCombatController.statusLayout(
-    touch: boolean,
-    origin: Vector2?,
-    inset: Vector2?
-): (UDim2, UDim2)
-    local offset = origin or Vector2.zero
-    local safeInset = inset or Vector2.zero
+-- Returns position/size in the owning ScreenGui's content coordinates.
+-- On a phone readiness sits below the right-aligned surrender control.
+function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
     if touch then
-        return UDim2.new(1, -132 - offset.X - safeInset.X, 0, 66 - offset.Y), UDim2.fromOffset(240, 22)
+        return UDim2.new(1, -8, 0, 52), UDim2.fromOffset(178, 20)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
-end
-
--- Bottom touch actions leave a 96px native inventory band clear. Narrower
--- equipment buttons also keep the minimum landscape thumbstick region clear.
-local function pickupPosition(touch: boolean, origin: Vector2?, inset: Vector2?): UDim2
-    local offset, safeInset = origin or Vector2.zero, inset or Vector2.zero
-    return if touch
-        then UDim2.new(0.5, -offset.X - safeInset.X, 1, -104 - offset.Y - safeInset.Y)
-        else UDim2.new(0.5, 0, 1, -160)
-end
-
-local function launcherStatusPosition(touch: boolean, origin: Vector2?): UDim2
-    local offset = origin or Vector2.zero
-    return if touch then UDim2.fromOffset(132 - offset.X, 92 - offset.Y) else UDim2.new(0.5, 0, 1, -204)
 end
 
 -- Copies the bounded presentation fields before using positions or ownership.
@@ -133,8 +107,7 @@ function GroundCombatController.new(
             local function touchEnabled(): boolean
                 return if touchProvider then touchProvider() else UserInputService.TouchEnabled
             end
-            local lastTouch = touchEnabled()
-            label.Position, label.Size = GroundCombatController.statusLayout(lastTouch)
+            label.Position, label.Size = GroundCombatController.statusLayout(touchEnabled())
             label.BackgroundColor3 = Color3.fromRGB(16, 23, 31)
             label.BackgroundTransparency = 0.2
             label.TextColor3 = Color3.new(1, 1, 1)
@@ -173,9 +146,8 @@ function GroundCombatController.new(
             reloadButton.Parent = gui
             local launcherLabel = label:Clone()
             launcherLabel.Name = "LauncherStatus"
-            launcherLabel.Position = launcherStatusPosition(lastTouch)
-            launcherLabel.Size =
-                UDim2.fromOffset(if lastTouch then 240 else 360, if lastTouch then 22 else 28)
+            launcherLabel.Position = UDim2.new(0.5, 0, 1, -204)
+            launcherLabel.Size = UDim2.fromOffset(360, 28)
             launcherLabel.TextSize = 14
             launcherLabel.Parent = gui
             local healthLabel = label:Clone()
@@ -199,9 +171,6 @@ function GroundCombatController.new(
                 button.Name = name
                 button.AnchorPoint = Vector2.new(0.5, 1)
                 button.Position = UDim2.new(0.5, if name == "Pickup" then 0 else (index - 2) * 90, 1, -104)
-                if name == "Pickup" then
-                    button.Position = pickupPosition(lastTouch)
-                end
                 button.Size = UDim2.fromOffset(if name == "Pickup" then 130 else 84, 32)
                 button.Text = if name == "M7"
                     then "M-7"
@@ -216,9 +185,9 @@ function GroundCombatController.new(
             end
             gui.Parent = playerGui
             local selected: Tool? = nil
-            local toolConnections: { RBXScriptConnection } = {}
             local connections: { RBXScriptConnection } = {}
             local held = false
+            local windowFocused = true
             local fireTouch: InputObject? = nil
             local sequence = 0
             local launcherSequence = 0
@@ -233,10 +202,6 @@ function GroundCombatController.new(
             local function clearTool()
                 held = false
                 fireTouch = nil
-                for _, connection in toolConnections do
-                    connection:Disconnect()
-                end
-                table.clear(toolConnections)
                 selected = nil
             end
             local function remote(name: string): RemoteEvent?
@@ -251,8 +216,7 @@ function GroundCombatController.new(
                     and (phase == "Active" or (allowScatter and phase == "Scatter"))
             end
             local function overlayOpen(): boolean
-                local hud = playerGui:FindFirstChild("RoundHUD")
-                return hud ~= nil and hud:GetAttribute("InputOverlayOpen") == true
+                return not windowFocused or GroundInput.menuOpen(playerGui) or GroundInput.pointerRequested()
             end
             local function launcherFacts(): (string?, boolean, boolean)
                 local current = launcher
@@ -274,8 +238,12 @@ function GroundCombatController.new(
                     feedbackUntil = os.clock() + 2.2
                 end
             end
-            local function sendLauncher(action: "Pickup" | "Drop")
-                if overlayOpen() or not eligibleGround(true) then
+            local function sendLauncher(action: "Pickup" | "Drop", fromButton: boolean?)
+                if
+                    GroundInput.menuOpen(playerGui)
+                    or (not fromButton and overlayOpen())
+                    or not eligibleGround(true)
+                then
                     return
                 end
                 local phase, owns, near = launcherFacts()
@@ -299,6 +267,9 @@ function GroundCombatController.new(
                 })
             end
             local function equip(name: string)
+                if overlayOpen() or not eligibleGround(true) then
+                    return
+                end
                 local character, backpack = player.Character, player:FindFirstChildOfClass("Backpack")
                 local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
                 local tool = if backpack then backpack:FindFirstChild(name) else nil
@@ -309,13 +280,13 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 launcherButtons.Pickup.Activated:Connect(function()
-                    sendLauncher("Pickup")
+                    sendLauncher("Pickup", true)
                 end)
             )
             table.insert(
                 connections,
                 launcherButtons.Drop.Activated:Connect(function()
-                    sendLauncher("Drop")
+                    sendLauncher("Drop", true)
                 end)
             )
             table.insert(
@@ -376,10 +347,15 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 UserInputService.InputBegan:Connect(function(input, processed)
-                    if processed or UserInputService:GetFocusedTextBox() then
+                    if input.UserInputType == Enum.UserInputType.Touch then
+                        windowFocused = true
+                    end
+                    if processed or overlayOpen() then
                         return
                     end
-                    if input.KeyCode == Enum.KeyCode.R then
+                    if input.UserInputType == Enum.UserInputType.MouseButton1 and not touchEnabled() then
+                        held = selected ~= nil and eligibleGround(false)
+                    elseif input.KeyCode == Enum.KeyCode.R then
                         sendReload()
                     elseif input.KeyCode == Enum.KeyCode.E then
                         sendLauncher("Pickup")
@@ -390,22 +366,15 @@ function GroundCombatController.new(
             )
             table.insert(
                 connections,
-                fireButton.MouseButton1Down:Connect(function()
-                    held = eligibleGround(false)
-                end)
-            )
-            table.insert(
-                connections,
-                fireButton.MouseButton1Up:Connect(function()
-                    held = false
-                end)
-            )
-            table.insert(
-                connections,
                 fireButton.InputBegan:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.Touch then
+                        windowFocused = true
+                    end
                     if
                         input.UserInputType == Enum.UserInputType.Touch
                         and not fireTouch
+                        and selected
+                        and not overlayOpen()
                         and eligibleGround(false)
                     then
                         fireTouch = input
@@ -416,7 +385,10 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 UserInputService.InputEnded:Connect(function(input)
-                    if input == fireTouch then
+                    if
+                        input == fireTouch
+                        or (not touchEnabled() and input.UserInputType == Enum.UserInputType.MouseButton1)
+                    then
                         fireTouch = nil
                         held = false
                     end
@@ -426,48 +398,47 @@ function GroundCombatController.new(
             table.insert(
                 connections,
                 UserInputService.WindowFocusReleased:Connect(function()
+                    windowFocused = false
                     held = false
                     fireTouch = nil
                 end)
             )
+            table.insert(
+                connections,
+                UserInputService.WindowFocused:Connect(function()
+                    windowFocused = true
+                end)
+            )
+            local lastTouch: boolean? = nil
             -- Aim from the displayed camera after Roblox and the indoor modifier commit it.
             do
                 local function renderAim()
                     local touch = touchEnabled()
-                    local origin = projectionOrigin.AbsolutePosition
                     local layoutInset = GuiService:GetGuiInset()
-                    label.Position, label.Size =
-                        GroundCombatController.statusLayout(touch, origin, layoutInset)
-                    label.TextSize = if touch then 14 else 16
-                    healthLabel.Position = UDim2.fromOffset(12, 169 + layoutInset.Y - origin.Y)
-                    feedback.Position = UDim2.new(1, -12, 0, 95 + layoutInset.Y - origin.Y)
-                    launcherButtons.Pickup.Position = pickupPosition(touch, origin, layoutInset)
-                    launcherLabel.Position = launcherStatusPosition(touch, origin)
-                    launcherLabel.Size =
-                        UDim2.fromOffset(if touch then 240 else 360, if touch then 22 else 28)
-                    for index, name in { "M7", "Rocket", "Drop" } do
-                        local button = launcherButtons[name]
-                        button.Size = UDim2.fromOffset(if touch then 68 else 84, 32)
-                        button.Position = if touch
-                            then UDim2.new(
-                                0.5,
-                                (index - 2) * 74 - origin.X - layoutInset.X,
-                                1,
-                                -104 - origin.Y - layoutInset.Y
-                            )
-                            else UDim2.new(0.5, (index - 2) * 90, 1, -104)
+                    if touch ~= lastTouch then
+                        lastTouch = touch
+                        gui.ScreenInsets = if touch
+                            then Enum.ScreenInsets.CoreUISafeInsets
+                            else Enum.ScreenInsets.DeviceSafeInsets
+                        label.AnchorPoint = if touch then Vector2.new(1, 0) else Vector2.new(0.5, 1)
+                        label.Position, label.Size = GroundCombatController.statusLayout(touch)
+                        label.TextSize = if touch then 13 else 16
+                        healthLabel.Size =
+                            UDim2.fromOffset(if touch then 124 else 188, if touch then 20 else 28)
+                        healthLabel.TextSize = if touch then 13 else 14
+                        fireButton.AnchorPoint = Vector2.new(1, 0)
+                        fireButton.Position = UDim2.new(1, -8, 0, 76)
+                        fireButton.Size = UDim2.fromOffset(64, 52)
+                        reloadButton.AnchorPoint = Vector2.new(1, 0)
+                        reloadButton.Position = UDim2.new(1, -80, 0, 80)
+                        reloadButton.Size = UDim2.fromOffset(66, 44)
+                        reloadButton.TextSize = 12
                     end
-                    fireButton.Size = UDim2.fromOffset(if touch then 78 else 90, if touch then 56 else 70)
-                    fireButton.Position = if touch
-                        then UDim2.new(1, -24 - origin.X - layoutInset.X, 0, 126 - origin.Y)
-                        else UDim2.new(1, -24, 1, -130)
-                    -- Keep the 44px touch target in the gap between readiness
-                    -- and the equipment row at the compact landscape height.
-                    reloadButton.Size = if touch then UDim2.fromOffset(78, 44) else UDim2.fromOffset(90, 54)
-                    reloadButton.Position = if touch
-                        then UDim2.new(1, -120 - origin.X - layoutInset.X, 0, 116 - origin.Y)
-                        else UDim2.new(1, -24, 1, -210)
-                    reloadButton.TextSize = if touch then 12 else 16
+                    if not touch then
+                        local origin = projectionOrigin.AbsolutePosition
+                        healthLabel.Position = UDim2.fromOffset(12, 169 + layoutInset.Y - origin.Y)
+                        feedback.Position = UDim2.new(1, -12, 0, 95 + layoutInset.Y - origin.Y)
+                    end
                     local roundId = roundState:GetAttribute("RoundId")
                     if type(roundId) == "number" and roundId ~= round then
                         round = roundId
@@ -487,30 +458,17 @@ function GroundCombatController.new(
                     if equipped ~= selected then
                         clearTool()
                         selected = equipped
-                        if equipped then
-                            table.insert(
-                                toolConnections,
-                                equipped.Activated:Connect(function()
-                                    held = eligibleGround(false)
-                                end)
-                            )
-                            table.insert(
-                                toolConnections,
-                                equipped.Deactivated:Connect(function()
-                                    held = false
-                                end)
-                            )
-                        end
                     end
                     local canFire = eligibleGround(false)
                     local visible = canFire or eligibleGround(true)
                     local overlay = overlayOpen()
                     gui.Enabled = visible
-                    fireButton.Visible = canFire and touch
-                    reloadButton.Visible = canFire
-                        and touch
-                        and (selected == nil or selected.Name == "M-7 rifle")
-                    reticle.Visible = canFire and selected ~= nil
+                    label.Visible = not touch or canFire
+                    fireButton.Visible = canFire and touch and selected ~= nil and not overlay
+                    reloadButton.Visible = fireButton.Visible
+                        and selected ~= nil
+                        and selected.Name == "M-7 rifle"
+                    reticle.Visible = canFire and not overlay
                     local launcherState = ReplicatedStorage:FindFirstChild("LauncherState")
                     local root = if character then character:FindFirstChild("HumanoidRootPart") else nil
                     local closest = math.huge
@@ -541,25 +499,53 @@ function GroundCombatController.new(
                         end
                     end
                     local launcherPhase, owns, near = launcherFacts()
-                    for name, button in launcherButtons do
-                        button.Visible = if name == "Pickup" then near else owns and touch
+                    local backpack = player:FindFirstChildOfClass("Backpack")
+                    launcherButtons.Pickup.Visible = near and not owns and not GroundInput.menuOpen(playerGui)
+                    launcherButtons.Drop.Visible = owns and touch and not overlay
+                    launcherButtons.M7.Visible = touch
+                        and not overlay
+                        and backpack ~= nil
+                        and backpack:FindFirstChild("M-7 rifle") ~= nil
+                    launcherButtons.Rocket.Visible = owns
+                        and touch
+                        and not overlay
+                        and backpack ~= nil
+                        and backpack:FindFirstChild("Rocket launcher") ~= nil
+                    local actions: { TextButton } = {}
+                    for _, name in { "M7", "Rocket", "Drop", "Pickup" } do
+                        local action = launcherButtons[name]
+                        if action.Visible then
+                            table.insert(actions, action)
+                        end
                     end
-                    local ownerId = if launcher then launcher.ownerId else nil
-                    local carrier = if ownerId
-                        then game:GetService("Players"):GetPlayerByUserId(ownerId)
-                        else nil
-                    launcherLabel.Text = PlayerPresentation.launcherText(
-                        launcherPhase,
-                        owns,
-                        near,
-                        if carrier then string.sub(carrier.DisplayName, 1, if touch then 12 else 18) else nil
-                    )
+                    for index, action in actions do
+                        local offset = (index - (#actions + 1) * 0.5) * 76
+                        action.Position =
+                            UDim2.new(0.5, if touch then offset else 0, 1, if touch then -98 else -160)
+                        action.Size = UDim2.fromOffset(if touch then 74 else 130, if touch then 44 else 32)
+                    end
+                    launcherLabel.Visible = not touch
+                    if not touch then
+                        local ownerId = if launcher then launcher.ownerId else nil
+                        local carrier = if ownerId
+                            then game:GetService("Players"):GetPlayerByUserId(ownerId)
+                            else nil
+                        launcherLabel.Text = PlayerPresentation.launcherText(
+                            launcherPhase,
+                            owns,
+                            near,
+                            if carrier then string.sub(carrier.DisplayName, 1, 18) else nil
+                        )
+                    end
                     feedback.Visible = visible and not touch and not overlay and os.clock() < feedbackUntil
                     local humanoid = if character then character:FindFirstChildOfClass("Humanoid") else nil
-                    healthLabel.Visible = visible and not touch and humanoid ~= nil
+                    healthLabel.Visible = visible and humanoid ~= nil
+                    if touch then
+                        healthLabel.Position = UDim2.fromOffset(8, if canFire then 56 else 6)
+                    end
                     if humanoid then
                         healthLabel.Text = string.format(
-                            "YOUR HEALTH  %d / %d",
+                            if touch then "HP  %d / %d" else "YOUR HEALTH  %d / %d",
                             math.ceil(humanoid.Health),
                             math.ceil(humanoid.MaxHealth)
                         )
@@ -572,7 +558,7 @@ function GroundCombatController.new(
                         return
                     end
                     if not canFire then
-                        label.Text = "Weapons unlock at aircraft arrival"
+                        label.Text = if touch then "" else "Weapons unlock at aircraft arrival"
                         return
                     end
                     local serverTime = workspace:GetServerTimeNow()
@@ -586,7 +572,8 @@ function GroundCombatController.new(
                     elseif selected then
                         label.Text = PlayerPresentation.rifleText(rifleReadiness(selected), serverTime, touch)
                     else
-                        label.Text = "Equip M-7 / launcher to fire"
+                        label.Text = if touch then "" else "Equip M-7 / launcher to fire"
+                        label.Visible = not touch
                     end
                     local camera = workspace.CurrentCamera
                     if not camera then
@@ -594,9 +581,7 @@ function GroundCombatController.new(
                     end
                     local point, offset = GroundCombatController.projectAim(
                         camera.ViewportSize,
-                        UserInputService:GetMouseLocation(),
-                        touch,
-                        GuiService:GetGuiInset(),
+                        layoutInset,
                         projectionOrigin.AbsolutePosition
                     )
                     reticle.Position = offset
@@ -621,20 +606,13 @@ function GroundCombatController.new(
                         then Color3.fromRGB(255, 205, 55)
                         else Color3.new(1, 1, 1)
                     if
-                        not selected
+                        overlay
+                        or not selected
                         or not held
                         or now < nextAttempt
                         or UserInputService:GetFocusedTextBox()
                     then
                         return
-                    end
-                    if not touch then
-                        local pointInGui = UserInputService:GetMouseLocation() - layoutInset
-                        for _, object in playerGui:GetGuiObjectsAtPosition(pointInGui.X, pointInGui.Y) do
-                            if object:IsA("GuiButton") or object:IsA("TextBox") or object.Active then
-                                return
-                            end
-                        end
                     end
                     local rocketRemote = if launcherState then launcherState:FindFirstChild("Fire") else nil
                     local event = if rocket

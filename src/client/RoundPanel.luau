@@ -19,6 +19,7 @@ local WeaponAudio = require(script.Parent.WeaponAudio)
 local WeaponImpactEffects = require(script.Parent.WeaponImpactEffects)
 local SpectatorCamera = require(script.Parent.SpectatorCamera)
 local TheaterSpectating = require(script.Parent.TheaterSpectating)
+local GroundInput = require(script.Parent.GroundInput)
 
 local RoundPanel = {}
 type View = PlayerPresentation.View
@@ -235,7 +236,7 @@ function RoundPanel.new(
                 "↑ ↓ select  •  ← → change  •  P close\n\nEffects change cue motion and sound. Shake applies only after aircraft destruction."
 
             local thermal = ThermalCameraController.new(player, playerGui, state, inputProvider)
-            local arrival = AircraftArrival.start(player, playerGui, state, thermal.ready)
+            local arrival = AircraftArrival.start(player, playerGui, state, thermal.ready, touchProvider)
             local spectator = SpectatorCamera.new(player)
             local theater = TheaterSpectating.new(player)
             local effects = PresentationEffects.new(player)
@@ -340,7 +341,7 @@ function RoundPanel.new(
                     else ""
                 weaponAudio.update(roundId, audioPhase, effectScale, serverSeconds)
                 weaponImpacts.update(roundId, audioPhase, effectScale, view == "Operator", serverSeconds)
-                local compact = touch and (view == "Ground" or view == "GroundScatter")
+                local compactStats = touch and (view == "Ground" or view == "Operator" or view == "Spectator")
                 local activeDetail = ""
                 if active then
                     local seconds =
@@ -349,10 +350,10 @@ function RoundPanel.new(
                     local timer = if seconds
                         then string.format("%d:%02d", math.floor(seconds / 60), seconds % 60)
                         else "—"
-                    activeDetail = timer
-                        .. " remaining • "
-                        .. (if type(count) == "number" then tostring(count) else "—")
-                        .. " Ground alive"
+                    local alive = if type(count) == "number" then tostring(count) else "—"
+                    activeDetail = if compactStats
+                        then timer .. "  •  " .. alive .. " Ground"
+                        else timer .. " remaining • " .. alive .. " Ground alive"
                 end
                 local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
                 local aircraftText: string? = nil
@@ -366,10 +367,10 @@ function RoundPanel.new(
                 end
                 health.Visible = fraction ~= nil
                 health.Text = aircraftText or ""
-                health.Position = UDim2.fromOffset(12, if compact then 44 else 55)
-                health.Size = UDim2.fromOffset(if compact then 240 else 250, if compact then 22 else 34)
-                health.TextSize = if compact then 13 else 16
-                local thickness = if compact then 3 else 6
+                health.Position = if compactStats then UDim2.fromOffset(8, 30) else UDim2.fromOffset(12, 55)
+                health.Size = if compactStats then UDim2.fromOffset(160, 22) else UDim2.fromOffset(250, 34)
+                health.TextSize = if compactStats then 12 else 16
+                local thickness = if compactStats then 3 else 6
                 meter.Position = UDim2.new(0, 4, 1, -thickness - 1)
                 meter.Size = UDim2.new(1, -8, 0, thickness)
                 if fraction then
@@ -388,45 +389,59 @@ function RoundPanel.new(
                 end
                 health:SetAttribute("Fraction", fraction)
 
-                if view == "RoundLobby" then
-                    -- Leave the middle of the theater view clear for Roblox's
-                    -- world-positioned television prompt.
-                    label.AnchorPoint = Vector2.zero
-                    label.Position = UDim2.fromOffset(12, 8)
-                    label.Size = UDim2.fromOffset(if touch then 230 else 260, 42)
-                    label.TextSize = 14
-                    label.Text = if active then title .. "\nVisit the theater TV to spectate" else title
-                elseif view == "GroundScatter" then
-                    -- Keep the arrival clock between native team chat and
-                    -- the right-aligned Surrender action in the HUD safe area.
+                label.TextWrapped = true
+                if view == "GroundScatter" then
                     label.AnchorPoint = Vector2.new(0.5, 0)
-                    label.Position = UDim2.new(0.5, 0, 0, 8)
-                    label.Size = UDim2.fromOffset(if compact then 168 else 184, if compact then 24 else 36)
-                    label.TextSize = if compact then 14 else 16
-                    label.Text =
-                        PlayerPresentation.arrivalText(state:GetAttribute("DeadlineSeconds"), serverSeconds)
+                    label.Position = UDim2.new(0.5, 0, 0, if touch then 4 else 8)
+                    label.Size = if touch then UDim2.new(0.25, 0, 0, 24) else UDim2.fromOffset(184, 36)
+                    label.TextSize = if touch then 13 else 16
+                    label.TextWrapped = false
+                    label.Text = PlayerPresentation.arrivalText(
+                        state:GetAttribute("DeadlineSeconds"),
+                        serverSeconds,
+                        touch
+                    )
+                elseif view == "RoundLobby" then
+                    -- Keep the middle of the theater view clear for the native
+                    -- world-positioned proximity prompt.
+                    label.AnchorPoint = if touch then Vector2.new(0.5, 0) else Vector2.zero
+                    label.Position = if touch then UDim2.new(0.5, 0, 0, 4) else UDim2.fromOffset(12, 8)
+                    label.Size = UDim2.fromOffset(if touch then 242 else 260, if touch then 24 else 42)
+                    label.TextSize = if touch then 13 else 14
+                    label.Text = if active
+                        then (if touch
+                            then "Visit the theater TV to spectate"
+                            else title .. "\nVisit the theater TV to spectate")
+                        else title
+                elseif compactStats then
+                    label.AnchorPoint = Vector2.zero
+                    label.Position = UDim2.fromOffset(8, 4)
+                    label.Size = UDim2.fromOffset(150, 22)
+                    label.TextSize = 13
+                    label.TextWrapped = false
+                    label.Text = activeDetail
                 elseif active or thermal.ownsCamera() then
                     label.AnchorPoint = Vector2.zero
                     label.Position = UDim2.fromOffset(12, 8)
-                    label.Size = if compact then UDim2.new(1, -180, 0, 22) else UDim2.fromOffset(300, 38)
+                    label.Size = UDim2.fromOffset(300, 38)
                     label.TextSize = 14
-                    label.Text = if compact
-                        then activeDetail
-                        elseif active then title .. "\n" .. activeDetail
-                        else title
+                    label.Text = if active then title .. "\n" .. activeDetail else title
                 else
                     label.AnchorPoint = Vector2.new(0.5, 0)
-                    label.Position = UDim2.new(0.5, 0, 0, 112)
-                    label.Size = UDim2.new(0.5, 0, 0, 76)
-                    label.TextSize = 19
+                    label.Position = UDim2.new(0.5, 0, 0, if touch then 4 else 112)
+                    label.Size = UDim2.new(0.5, 0, 0, if touch then 24 else 76)
+                    label.TextSize = if touch then 13 else 19
+                    local waiting = "Waiting for "
+                        .. tostring(state:GetAttribute("MinimumPlayers") or "enough")
+                        .. " players"
                     label.Text = if nextView == "Waiting"
-                        then title .. "\nWaiting for " .. tostring(
-                            state:GetAttribute("MinimumPlayers") or "enough"
-                        ) .. " players"
+                        then (if touch then waiting else title .. "\n" .. waiting)
                         else title
                 end
-                surrender.Visible = view == "Ground" or view == "GroundScatter"
-                surrender.Size = UDim2.fromOffset(150, if compact then 32 else 36)
+                surrender.Visible = (view == "Ground" or view == "GroundScatter") and not settingsOpen
+                surrender.Position = UDim2.new(1, if touch then -8 else -12, 0, if touch then 4 else 8)
+                surrender.Size = UDim2.fromOffset(if touch then 124 else 150, if touch then 44 else 36)
+                surrender.Text = if touch then "Surrender" else "Surrender to lobby"
 
                 local reason: string? = nil
                 if view == "Results" or (intermission and intermission > 0) then
@@ -441,18 +456,31 @@ function RoundPanel.new(
                     end
                     label.Text = PlayerPresentation.resultText(result, roundId)
                     if intermission and intermission > 0 then
-                        label.Size = UDim2.new(0.82, 0, 0, 100)
+                        if not touch then
+                            label.Size = UDim2.new(0.82, 0, 0, 100)
+                        end
                         label.Text ..= string.format(
                             "\nIntermission  %d:%02d",
                             math.floor(intermission / 60),
                             intermission % 60
                         )
                     end
+                    if touch then
+                        label.AnchorPoint = Vector2.new(0.5, 0)
+                        label.Position = UDim2.new(0.5, 0, 0, 4)
+                        label.Size =
+                            UDim2.new(0.62, 0, 0, if intermission and intermission > 0 then 58 else 42)
+                        label.TextSize = 13
+                        label.TextWrapped = true
+                    end
                 else
                     seenResult, result = nil, nil
                 end
 
                 local frame = effects.update(view, roundId, reason, os.clock(), effectScale)
+                cue.Position = UDim2.new(0.5, 0, 0, if touch then 62 else 8)
+                cue.Size = UDim2.fromOffset(if touch then 180 else 252, if touch then 22 else 34)
+                cue.TextSize = if touch then 12 else 16
                 cue.Text = frame.text or ""
                 cue.Visible = frame.text ~= nil
                 cue.BackgroundTransparency = 0.19 - frame.pulse * 0.13
@@ -467,6 +495,16 @@ function RoundPanel.new(
                 direction = 0
                 canCycle = count > 1
                 gui:SetAttribute("SpectatorUserId", targetId)
+                spectatorLabel.AnchorPoint = if touch then Vector2.new(1, 0) else Vector2.new(0.5, 1)
+                spectatorLabel.Position = if touch then UDim2.new(1, -8, 0, 4) else UDim2.new(0.5, 0, 1, -112)
+                spectatorLabel.Size = if touch then UDim2.fromOffset(198, 46) else UDim2.new(0.82, 0, 0, 42)
+                spectatorLabel.TextSize = if touch then 13 else 16
+                for _, action in { previous, nextTarget, exitSpectating } do
+                    action.Size = UDim2.fromOffset(
+                        if action == exitSpectating then 180 else 136,
+                        if touch then 44 elseif action == exitSpectating then 42 else 38
+                    )
+                end
                 spectatorLabel.Visible = view == "Spectator"
                 spectatorLabel.Text = if targetName
                     then "WATCHING  " .. targetName
@@ -512,7 +550,7 @@ function RoundPanel.new(
                     local remote = state:FindFirstChild("Surrender")
                     if
                         (view == "Ground" or view == "GroundScatter")
-                        and not settingsOpen
+                        and not GroundInput.menuOpen(playerGui)
                         and remote
                         and remote:IsA("RemoteEvent")
                     then

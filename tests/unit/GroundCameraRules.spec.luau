@@ -5,6 +5,23 @@ type API = typeof(require(game:GetService("ReplicatedStorage").Shared.GroundCame
 return function(test: (string, () -> ()) -> (), candidate: unknown)
     local rules = candidate :: API
 
+    test("P27 avatar yaw follows the view through a full turn and rejects invalid headings", function()
+        for degree = -180, 180 do
+            local expected = math.rad(degree)
+            local x, z = -math.sin(expected), -math.cos(expected)
+            local yaw = assert(rules.yaw(x, z), "finite aim lost its heading")
+            assert(
+                math.abs(math.sin(yaw) + x) < 1e-10 and math.abs(math.cos(yaw) + z) < 1e-10,
+                "yaw left the view heading"
+            )
+        end
+        assert(rules.yaw(0, 0) == nil and rules.yaw(1e-8, 1e-8) == nil, "vertical aim made up a heading")
+        assert(
+            rules.yaw(0 / 0, -1) == nil and rules.yaw(0, math.huge) == nil,
+            "nonfinite heading was accepted"
+        )
+    end)
+
     test("Ground camera uses the avatar root and applies doorway hysteresis", function()
         assert(rules.contains(0, 0, 4.79, 4, 3, 5, false), "root inside the room was excluded")
         assert(not rules.contains(0, 0, 4.9, 4, 3, 5, false), "entered too close to the threshold")

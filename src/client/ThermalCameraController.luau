@@ -24,6 +24,7 @@ local AircraftPanRules = require(ReplicatedStorage.Shared.AircraftPanRules)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local Validation = require(ReplicatedStorage.Shared.Validation)
+local GroundInput = require(script.Parent.GroundInput)
 local ThermalCosmetics = require(script.Parent.ThermalCosmetics)
 local ThermalCameraController = {}
 export type Controller = {
@@ -226,6 +227,7 @@ function ThermalCameraController.new(
     local sequence = 0
     local fireSequence = 0
     local fireHeld = false
+    local fireTouch: InputObject? = nil
     local nextFireRequest = 0
     local lastRound = -1
     local renderedRound = -1
@@ -271,9 +273,8 @@ function ThermalCameraController.new(
         return frame
     end
     local function overlayOpen(): boolean
-        local hud = playerGui:FindFirstChild("RoundHUD")
         local arrival = playerGui:FindFirstChild("AircraftArrival")
-        return (hud ~= nil and hud:GetAttribute("InputOverlayOpen") == true)
+        return GroundInput.menuOpen(playerGui)
             or (arrival ~= nil and arrival:IsA("ScreenGui") and arrival.Enabled)
     end
     local function eligible(): boolean
@@ -303,6 +304,7 @@ function ThermalCameraController.new(
             cosmetics = nil
         end
         fireHeld = false
+        fireTouch = nil
         for _, connection in buttons do
             connection:Disconnect()
         end
@@ -432,7 +434,7 @@ function ThermalCameraController.new(
             local safeControls = Instance.new("ScreenGui")
             safeControls.Name = "OperatorTouchControls"
             safeControls.DisplayOrder = 1
-            safeControls.ScreenInsets = Enum.ScreenInsets.DeviceSafeInsets
+            safeControls.ScreenInsets = Enum.ScreenInsets.CoreUISafeInsets
             safeControls.ClipToDeviceSafeArea = true
             safeControls.ResetOnSpawn = false
             safeControls.Parent = playerGui
@@ -449,8 +451,8 @@ function ThermalCameraController.new(
             local fire = Instance.new("TextButton")
             fire.Name = "Fire"
             fire.AnchorPoint = Vector2.new(1, 1)
-            fire.Position = UDim2.new(1, -24, 1, -96)
-            fire.Size = UDim2.fromOffset(76, 76)
+            fire.Position = UDim2.new(1, -12, 1, -68)
+            fire.Size = UDim2.fromOffset(64, 64)
             fire.Text = "FIRE"
             fire.Font = Enum.Font.GothamBold
             fire.TextSize = 18
@@ -460,17 +462,19 @@ function ThermalCameraController.new(
             table.insert(
                 buttons,
                 fire.InputBegan:Connect(function(event)
-                    if event.UserInputType == Enum.UserInputType.Touch then
-                        fireHeld = true
+                    if event.UserInputType ~= Enum.UserInputType.Touch or fireTouch or overlayOpen() then
+                        return
                     end
-                end)
-            )
-            table.insert(
-                buttons,
-                fire.InputEnded:Connect(function(event)
-                    if event.UserInputType == Enum.UserInputType.Touch then
-                        fireHeld = false
+                    windowFocused = true
+                    -- A GuiButton and the global touch listener can run in
+                    -- either order. FIRE never claims or moves the aim point.
+                    if aimTouch == event then
+                        aimTouch = nil
+                        touchAim = touchAimBeforeCapture
+                        touchAimBeforeCapture = nil
                     end
+                    fireTouch = event
+                    fireHeld = true
                 end)
             )
         end
@@ -478,12 +482,12 @@ function ThermalCameraController.new(
         caption.Name = "Profile"
         caption.AnchorPoint = if touchControls then Vector2.new(0.5, 0) else Vector2.new(0.5, 1)
         caption.Position = if touchControls then UDim2.new(0.5, 0, 0, 8) else UDim2.new(0.5, 0, 1, -72)
-        caption.Size = if touchControls then UDim2.fromOffset(260, 42) else UDim2.fromOffset(580, 66)
+        caption.Size = if touchControls then UDim2.fromOffset(166, 24) else UDim2.fromOffset(580, 66)
         caption.BackgroundColor3 = Color3.fromRGB(12, 15, 16)
         caption.BackgroundTransparency = 0.15
         caption.TextColor3 = Color3.new(1, 1, 1)
         caption.TextSize = if touchControls then 12 else 17
-        caption.TextWrapped = true
+        caption.TextWrapped = not touchControls
         caption.Font = Enum.Font.Gotham
         caption.Parent = screen
         label = caption
@@ -497,9 +501,9 @@ function ThermalCameraController.new(
             local button = Instance.new("TextButton")
             button.Name = weapon
             button.AnchorPoint = Vector2.new(0.5, 1)
-            button.Position = UDim2.new(0.5, (index - 1.5) * (if touchControls then 144 else 290), 1, -28)
+            button.Position = UDim2.new(0.5, (index - 1.5) * (if touchControls then 90 else 290), 1, -28)
             button.Size =
-                UDim2.fromOffset(if touchControls then 136 else 280, if touchControls then 44 else 36)
+                UDim2.fromOffset(if touchControls then 82 else 280, if touchControls then 44 else 36)
             button.Text = if touchControls
                 then (if weapon == "GAU23" then "30mm" else "105mm")
                 else tostring(index) .. " • " .. AircraftRules.names[weapon]
@@ -519,7 +523,7 @@ function ThermalCameraController.new(
         recenter.Name = "Recenter"
         recenter.AnchorPoint = Vector2.new(1, 0)
         recenter.Position = UDim2.new(1, -16, 0, 16)
-        recenter.Size = UDim2.fromOffset(if touchControls then 96 else 150, if touchControls then 42 else 32)
+        recenter.Size = UDim2.fromOffset(if touchControls then 82 else 150, if touchControls then 44 else 32)
         recenter.Text = if touchControls then "Recenter" else "R • Recenter"
         recenter.Font = Enum.Font.Gotham
         recenter.TextSize = 16
@@ -540,16 +544,16 @@ function ThermalCameraController.new(
             -- allow a held pan direction and a separate aiming finger at once.
             for _, control in
                 {
-                    { name = "PanUp", glyph = "▲", x = 84, y = -180, right = 0, up = 1 },
-                    { name = "PanLeft", glyph = "◀", x = 24, y = -120, right = -1, up = 0 },
-                    { name = "PanDown", glyph = "▼", x = 84, y = -120, right = 0, up = -1 },
-                    { name = "PanRight", glyph = "▶", x = 144, y = -120, right = 1, up = 0 },
+                    { name = "PanUp", glyph = "▲", x = 64, y = -158, right = 0, up = 1 },
+                    { name = "PanLeft", glyph = "◀", x = 12, y = -106, right = -1, up = 0 },
+                    { name = "PanDown", glyph = "▼", x = 64, y = -106, right = 0, up = -1 },
+                    { name = "PanRight", glyph = "▶", x = 116, y = -106, right = 1, up = 0 },
                 }
             do
                 local button = Instance.new("TextButton")
                 button.Name = control.name
                 button.Position = UDim2.new(0, control.x, 1, control.y)
-                button.Size = UDim2.fromOffset(56, 56)
+                button.Size = UDim2.fromOffset(48, 48)
                 button.Text = control.glyph
                 button.Font = Enum.Font.GothamBold
                 button.TextSize = 28
@@ -587,6 +591,10 @@ function ThermalCameraController.new(
                 buttons,
                 UserInputService.InputEnded:Connect(function(event)
                     heldPad[event] = nil
+                    if event == fireTouch then
+                        fireTouch = nil
+                        fireHeld = false
+                    end
                     if event == aimTouch then
                         aimTouch = nil
                         touchAimBeforeCapture = nil
@@ -600,6 +608,8 @@ function ThermalCameraController.new(
                         event.UserInputType ~= Enum.UserInputType.Touch
                         or aimTouch ~= nil
                         or heldPad[event]
+                        or event == fireTouch
+                        or overlayOpen()
                     then
                         return
                     end
@@ -643,7 +653,7 @@ function ThermalCameraController.new(
             buttons,
             UserInputService.InputBegan:Connect(function(event, processed)
                 if not processed and eligible() and not overlayOpen() then
-                    if event.UserInputType == Enum.UserInputType.MouseButton1 then
+                    if event.UserInputType == Enum.UserInputType.MouseButton1 and not touchControls then
                         fireHeld = true
                     elseif event.KeyCode == Enum.KeyCode.One then
                         selectWeapon("GAU23")
@@ -658,7 +668,7 @@ function ThermalCameraController.new(
         table.insert(
             buttons,
             UserInputService.InputEnded:Connect(function(event)
-                if event.UserInputType == Enum.UserInputType.MouseButton1 then
+                if event.UserInputType == Enum.UserInputType.MouseButton1 and not touchControls then
                     fireHeld = false
                 end
             end)
@@ -785,6 +795,10 @@ function ThermalCameraController.new(
         local blocked = input.blocked or not pointerValid or overlay
         if overlay then
             fireHeld = false
+            fireTouch = nil
+            table.clear(heldPad)
+            aimTouch = nil
+            touchAimBeforeCapture = nil
             recenterRequested = false
         end
         local aircraftPosition = hitbox.Position
@@ -818,7 +832,7 @@ function ThermalCameraController.new(
         camera.CFrame = cameraFrame
         camera.FieldOfView = fov
         UserInputService.MouseBehavior = Enum.MouseBehavior.Default
-        UserInputService.MouseIconEnabled = false
+        UserInputService.MouseIconEnabled = overlay and not UserInputService.TouchEnabled
         local mouse = pointer
         -- Aim input is independent of pan; the displayed reticle is central-70%.
         local pixels = AircraftPanRules.raster(mouse.X, mouse.Y, viewport.X, viewport.Y)
@@ -922,15 +936,25 @@ function ThermalCameraController.new(
             local zoom = if weapon == "GAU23" then "Close" else "Wide"
             local info = weaponReadiness[weapon]
             local now = workspace:GetServerTimeNow()
-            if touch then
-                local name = if weapon == "GAU23" then "30mm GAU-23/A" else "105mm M102"
+            if touch and controlCanvas then
+                -- Profile remains in the projection screen for observers but
+                -- uses the shared safe content rectangle for actual placement.
+                local safeOffset = controlCanvas.AbsolutePosition - origin.AbsolutePosition
+                caption.Position =
+                    UDim2.fromOffset(safeOffset.X + controlCanvas.AbsoluteSize.X * 0.5, safeOffset.Y + 4)
+                local name = if weapon == "GAU23" then "30mm" else "105mm"
                 local detail = if preview
                     then "Studio preview"
                     elseif info then (if info.reloadUntil > now
                         then string.format("Reload %.1fs", info.reloadUntil - now)
+                        elseif info.nextFire > now then string.format(
+                            "%d rounds · %.1fs",
+                            info.ammo,
+                            info.nextFire - now
+                        )
                         else string.format("%d rounds", info.ammo))
-                    else "Readiness updating"
-                caption.Text = string.format("%s • %s • %d° FOV", name, detail, fov)
+                    else "Updating"
+                caption.Text = name .. " • " .. detail
             else
                 local aim = if validAim then "Aim on battlefield" else "Aim outside firing area"
                 local readiness = if preview
@@ -1015,6 +1039,7 @@ function ThermalCameraController.new(
     local unfocused = UserInputService.WindowFocusReleased:Connect(function()
         windowFocused = false
         fireHeld = false
+        fireTouch = nil
         table.clear(heldPad)
         aimTouch = nil
         touchAimBeforeCapture = nil

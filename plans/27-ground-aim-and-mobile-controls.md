@@ -28,4 +28,6 @@ Replace the Ground and operator control tables and add a touch diagram only if i
 
 ## Completion record
 
-Planned checks have no results yet.
+The same test run may cover more than one criterion or plan. Link the original report when its source and observations cover the requirement. The P26 private balance test is recorded in P26. The P27 session covers the changed client controls, HUD and arrival behavior together.
+
+The pre-change comparison uses two Studio clients on `91880ae`. The Ground countdown is 168×24 UI pixels on both simulated phones, with a separate 240×22 weapons-unlock notice. [Baseline measurements and source binding](../docs/evidence/p27/scatter-baseline.json) · [Compact phone](../docs/evidence/p27/scatter-before-compact.jpg) · [Phone with cutout](../docs/evidence/p27/scatter-before-cutout.jpg)
