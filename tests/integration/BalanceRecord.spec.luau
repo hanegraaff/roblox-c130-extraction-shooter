@@ -101,4 +101,19 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             )
         end
     )
+    test("Default is read only and legacy stored presets retain their active selection", function()
+        local initial = rules.initial()
+        for _, name in { "Shipped", "Default" } do
+            local request = assert(
+                rules.request({ action = "save", revision = 0, name = name, settings = initial.settings })
+            )
+            assert(not rules.apply(initial, request, 1, 1), "built-in name overwritten")
+        end
+        local stored = table.clone(initial)
+        stored.presets = table.clone(initial.presets)
+        stored.presets.Production = initial.settings
+        stored.activeName = "Production"
+        local decoded = assert(rules.decode(stored))
+        assert(decoded.activeName == "Production" and decoded.presets.Shipped ~= nil, "legacy selection lost")
+    end)
 end

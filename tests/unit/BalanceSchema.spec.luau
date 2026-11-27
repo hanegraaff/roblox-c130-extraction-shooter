@@ -104,4 +104,26 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             assert(not schema.validate(edit(key, range[2] + 0.01)), key)
         end
     end)
+    test("Default label keeps legacy preset identifiers compatible", function()
+        assert(schema.presetLabel("Shipped") == "Default", "built-in label did not change")
+        assert(schema.presetLabel("Production Settings") == "Production Settings", "custom name changed")
+    end)
+    test("Save remains disabled until the loaded name changes to a valid custom name", function()
+        for _, pair in
+            {
+                { "Default", "Default" },
+                { "Shipped", "Default" },
+                { "", "Default" },
+                { "Own preset", "Own preset" },
+                { "", "" },
+                { "bad!", "Default" },
+            }
+        do
+            assert(not schema.canSavePresetName(pair[1], pair[2]), pair[1])
+        end
+        assert(schema.canSavePresetName("Own preset", "Default"), "renamed default cannot save")
+        assert(schema.canSavePresetName("Copy", "Own preset"), "renamed custom cannot save")
+        assert(schema.canSavePresetName("After deletion", ""), "blank editor cannot create a named copy")
+        assert(not schema.canSavePresetName("Copy", "Copy"), "saved name should disable save again")
+    end)
 end

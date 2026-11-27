@@ -4,6 +4,28 @@
     and the server decoder. No engine services, storage, authority or yielding.
 ]=]
 local BalanceSchema = {}
+-- Keep the stored key stable for existing servers and records. UI uses its label.
+BalanceSchema.builtinPresetKey = "Shipped"
+BalanceSchema.builtinPresetName = "Default"
+
+-- Human-readable name for a stored preset identifier. No storage mutation.
+function BalanceSchema.presetLabel(name: string): string
+    return if name == BalanceSchema.builtinPresetKey then BalanceSchema.builtinPresetName else name
+end
+
+-- Shared naming contract. The server still validates every remote request.
+function BalanceSchema.validPresetName(value: unknown): boolean
+    return type(value) == "string" and #value >= 1 and #value <= 32 and value:match("^[%w][%w _%-]*$") ~= nil
+end
+
+-- Save creates a named copy of the loaded values. The name must differ from the
+-- name originally loaded and from either spelling of the protected built-in.
+function BalanceSchema.canSavePresetName(name: string, originalName: string): boolean
+    return BalanceSchema.validPresetName(name)
+        and name ~= originalName
+        and name ~= BalanceSchema.builtinPresetName
+        and name ~= BalanceSchema.builtinPresetKey
+end
 
 -- One full preset. Durations are seconds and damage/healing are game health units.
 export type Values = {
