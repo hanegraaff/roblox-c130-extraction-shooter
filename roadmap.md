@@ -2,20 +2,20 @@
 
 ## Public MVP launch
 
-Start with **P26**. The owner and trusted testers must be able to tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P32 sets the launch balance after players have tried the finished controls, models and medkits.
+Start with **P26**. The owner and trusted testers must be able to tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P27 delivers the compact mobile HUD before the guides and game-page copy in P33 and P34. P32 sets the launch balance after players have tried the finished controls, models and medkits.
 
 **Publishing throughout the MVP.** Always publish from `build/game.rbxlx`. Use `build/tests.rbxlx` for local tests. Reuse both filenames and Studio documents, with the matching Rojo connection bringing in changes. Verify the open game document contains the latest source before publishing to the same approved Roblox place. [Build and publish guide](README.md#the-two-studio-files)
 
 | Plan | Status | Depends on | Outcome |
 | --- | --- | --- | --- |
 | [P26 · Live balance panel](plans/26-live-balance-panel.md) | Blocked | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
-| [P27 · Mouse aiming and mobile controls](plans/27-ground-aim-and-mobile-controls.md) | Ready | P24, P25 | Aim by moving the mouse and play both roles on a phone. |
+| [P27 · Mouse aiming, mobile controls and compact HUD](plans/27-ground-aim-and-mobile-controls.md) | Ready | P24, P25 | Aim by moving the mouse and play both roles on a phone with a clear battlefield view and a compact arrival timer. |
 | [P28 · C-130 model in flight](plans/28-c130-model.md) | Planned | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
 | [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Planned | P25 and launcher images | Find, carry and fire the modeled launcher. |
 | [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Planned | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
 | [P32 · Choose the launch balance](plans/32-balance-playtests.md) | Planned | P26–P31 | Choose a launch preset after testing small and full teams. |
-| [P33 · Rewrite the README guides](plans/33-rewrite-readmes.md) | Planned | P26–P32 | Run and understand the game using plain-language guides. |
+| [P33 · Rewrite the README guides](plans/33-rewrite-readmes.md) | Planned | P26–P32 | Run and understand the game using plain-language guides. Explore its art in a linked gallery of in-game and Blender views. |
 | [P34 · Fast-paced arcade game page](plans/34-arcade-game-page.md) | Planned | P27–P32 | Preview the arcade listing, screenshots, icon and banners. |
 | [P35 · Verify and open the public MVP](plans/35-public-launch.md) | Planned | P32–P34 | Pass the live release checks and open the approved public experience. |
 
