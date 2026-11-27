@@ -162,3 +162,5 @@ The 2026-11-11 correction selects a plane-relative held camera angle and a whole
 On 2026-11-12 the user approved the orbit behavior and asked to see slightly past all four level edges, suggesting a 25% viewport allowance. D41 replaces D40's whole-viewport restriction and keeps its orbit-relative framing.
 
 The user then requested that A move the camera left and D move it right. D42 records that screen-relative convention for keyboard and touch controls; the aircraft's orbit and held camera angle remain as selected.
+
+| D112 | Owner panel usability, 2026-11-27 | Group settings into Player, C-130, Buildings and Game & lobby with numeric sliders and exact entry. Explain building damage as howitzer hits or seconds of 30mm hits per panel. Medkits are single-use per round with only healing configurable. The howitzer uses one reload timer. Normalize legacy saved presets on read while retaining the v1 fields for existing storage. Supersedes the optional kit reuse and separate howitzer shot interval in D111/P26. |

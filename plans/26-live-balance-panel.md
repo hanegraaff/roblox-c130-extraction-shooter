@@ -10,7 +10,7 @@ You and trusted testers can save balance changes from inside the published game.
 | --- | --- |
 | Airplane health | Health per deployed Ground player. Show the total for the current roster. The starting value is 1,000 per player. |
 | Airplane damage | Separate damage to Ground players for the 30mm and 105mm. |
-| Airplane weapon cooldown | Time between shots and reload time for each aircraft weapon. Show the resulting wait to fire. |
+| Airplane weapon cooldown | Time between shots and reload time for the 30mm. Show only reload time for the howitzer. |
 | Player health | Starting and maximum health for a deployed Ground player. |
 | Player damage | Separate damage to the aircraft for the M-7 and the rocket launcher. Start at 5 and 150. |
 | Player weapon cooldown | M-7 shot interval and magazine reload, plus launcher reload per launcher. Start at 0.15, 2 and 15 seconds respectively. |
@@ -22,8 +22,9 @@ You and trusted testers can save balance changes from inside the published game.
 
 ## Work
 
+- Group controls under Player, C-130, Buildings and Game & lobby. Use sliders with exact number entry, simple labels and clear panel hit/time requirements. Keep Save and Apply visible while scrolling.
 - Put the panel in the lobby. Let the owner manage trusted Roblox user IDs. Both the owner and trusted testers can save, apply and restore named presets. Show units, allowed ranges, who saved a change, and the active and pending revisions.
-- Start from the shipped settings. Wire all eleven controls to the server systems that use them. Include single-use mode and optional respawn delay alongside the medkit heal amount for P30. Keep the four launcher identities and their independent clocks.
+- Start from the shipped settings. Wire all eleven controls to the server systems that use them. Expose only the medkit healing amount for P30. Kits are single-use per round. Keep the four launcher identities and their independent clocks.
 - The server checks permissions on every read of private admin data and every write. Validate finite values, bounds and relationships, including panel stage order and durations. Keep ordinary players’ HUD values in sync with the server. Ship the restricted panel separately from the Studio-only test controls.
 - Save versioned settings with a conditional DataStore update. Detect concurrent edits, retain the last good preset and make rollback a new revision. Notify other servers after saving and refresh from storage during lobby waits and before deployment to recover missed messages, including a lowered minimum in a waiting server. Capture one validated preset for the whole round. If storage is unavailable, show the last confirmed revision and retry. New servers can fall back to the shipped values. [Roblox data stores](https://create.roblox.com/docs/cloud-services/data-stores) · [Cross-server messaging](https://create.roblox.com/docs/cloud-services/cross-server-messaging)
 

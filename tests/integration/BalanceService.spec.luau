@@ -59,7 +59,7 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             assert(restarted.refresh())
             restarted.capture()
             assert(
-                restarted.round().settings.medkitHeal == 55 and not restarted.round().settings.medkitSingleUse,
+                restarted.round().settings.medkitHeal == 55 and restarted.round().settings.medkitSingleUse,
                 "restart lost medkit settings"
             )
             assert(a.write(assert(Record.request({ action = "restore", revision = 3 })), 1, 1, online))

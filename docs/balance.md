@@ -16,17 +16,17 @@ After the build containing the balance panel is published, join the experience i
 
 ## Give a tester access
 
-The experience owner controls the tester list. For a group-owned experience, sign in as the group owner. In **Balance**, enter the tester’s numeric Roblox user ID and select **Grant tester access**. Select **Revoke tester access** with the same ID to remove them. The owner and trusted testers can save presets, apply them across the game and restore the previous live settings. For a private experience, testers also need permission to join it.
+The experience owner controls the tester list. For a group-owned experience, sign in as the group owner. In **Balance → Game & lobby**, enter the tester’s numeric Roblox user ID and select **Give panel access**. Select **Remove panel access** with the same ID to remove them. The owner and trusted testers can save presets, apply them across the game and restore the previous live settings. For a private experience, testers also need permission to join it.
 
 ## Change a setting
 
-1. Choose a saved preset. **Shipped** contains the original values. Enter a new preset name to save your own copy.
-2. Edit the fields. The panel shows valid ranges and units, plus the resulting aircraft health for the current roster and the time or hits needed to destroy a fresh panel.
-3. Select **Save named preset** to store the values. Select **Apply saved preset** to make that saved version live. For example, give a preset a 30-second lobby intermission, save it as `Short breaks`, then apply it before the next result.
-4. Check **Live revision** and **Round revision**. Live identifies the selected settings. Round identifies the settings the current deployment captured. Each server picks up the change when it receives the update or next refreshes its settings.
-5. To undo an applied change, select **Restore previous live preset**. To return to the original values, select **Shipped**, then **Apply saved preset**.
+1. Use **Choose preset** to pick a saved preset. **Shipped** contains the original values. Enter a new preset name to save your own copy.
+2. Choose **Player**, **C-130**, **Buildings** or **Game & lobby**. Drag a slider or type an exact number beside it. Values stay in your draft when you switch tabs. Building damage shows the hits or firing time needed to break a wall or roof panel.
+3. Select **Save preset** to store the values. Select **Apply saved preset** to make that saved version live. For example, give a preset a 30-second lobby intermission, save it as `Short breaks`, then apply it before the next result.
+4. Check the live preset shown at the top. **Game & lobby** also shows the saved change number and the change used by the current round. Each server picks up changes when notified or when it next checks storage.
+5. To undo an applied change, select **Undo last apply**. To return to the original values, select **Shipped**, then **Apply saved preset**.
 
-If another tester edits while your panel is open, select **Refresh saved settings**, review their values and re-enter your change. If a save cannot be confirmed, refresh before trying again. Servers keep their last confirmed settings when storage is unavailable. A new server can start with the shipped defaults.
+If another tester edits while your panel is open, select **Refresh**, review their values and re-enter your change. If a save cannot be confirmed, refresh before trying again. Servers keep their last confirmed settings when storage is unavailable. A new server can start with the shipped defaults.
 
 ## What you can tune
 
@@ -34,12 +34,12 @@ If another tester edits while your panel is open, select **Refresh saved setting
 | --- | --- |
 | Aircraft health | 1,000 HP per deployed Ground player. Three Ground players give the aircraft 3,000 HP. |
 | Aircraft weapon damage | 25 HP for the 30mm and 100 HP for the 105mm. |
-| Aircraft weapon timing | The 30mm fires every 0.15 seconds and reloads in 5. The 105mm has a 1-second shot interval and takes 12 seconds to reload its single shell. Both timers must be ready. |
+| Aircraft weapon timing | The 30mm fires every 0.15 seconds and reloads in 5. The howitzer fires one shell, then takes 12 seconds to reload. |
 | Ground player health | 100 starting and maximum HP. |
 | Ground weapon damage | Each M-7 hit deals 5 HP to the aircraft. A direct rocket deals 150 HP. |
 | Ground weapon timing | M-7 shots are 0.15 seconds apart with a 2-second magazine reload. Each launcher has its own 15-second reload. |
-| Medkit healing and reuse | Saves 25 HP per kit, single-use on, and a 30-second delay if reuse is enabled. The pickup arrives with P30. |
-| Building panel damage | Medium. Low takes 2 direct 105mm hits or 4 earned seconds of 30mm fire. Medium takes 1 hit or 2 seconds. High takes 1 hit or 1 second. |
+| Medkit healing | 25 HP per kit. Each kit can be used once per round. The pickup arrives with P30. |
+| Building panel damage | Medium. A panel breaks after 2 howitzer hits or 4 seconds of 30mm hits on Low, 1 hit or 2 seconds on Medium, and 1 hit or 1 second on High. |
 | Combat duration | 600 seconds, starting when the aircraft arrives. |
 | Lobby intermission | 120 seconds, starting when the result is announced. |
 | Minimum players | 2, including the operator. The supported range is 2–10. |

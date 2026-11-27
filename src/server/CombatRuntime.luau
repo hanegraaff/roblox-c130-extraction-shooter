@@ -507,7 +507,7 @@ function CombatRuntime.start(
                 gau.cadence, gau.reload, gau.damage = preset.gauCadence, preset.gauReload, preset.gauDamage
                 local m102 = table.clone(CombatService.profiles.M102)
                 m102.cadence, m102.reload, m102.damage =
-                    preset.m102Cadence, preset.m102Reload, preset.m102Damage
+                    preset.m102Reload, preset.m102Reload, preset.m102Damage
                 profiles = { GAU23 = gau, M102 = m102 }
             end
             aircraftState:SetAttribute("GAU23Interval", profiles.GAU23.cadence)
