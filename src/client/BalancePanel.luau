@@ -314,7 +314,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     local libraryTitle = label(library, "Saved presets", 26)
     libraryTitle.Position = UDim2.fromOffset(10, 3)
     libraryTitle.Font = Enum.Font.BuilderSansBold
-    local preset = button(library, "Load preset v")
+    local preset = button(library, "Load Settings")
     preset.Name = "ChoosePreset"
     preset.Position = UDim2.fromOffset(10, 34)
     preset.Size = UDim2.new(0.5, -15, 0, 32)
@@ -644,13 +644,11 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                 loadedPreset = nil
                 draft = (table.clone(Schema.defaults) :: unknown) :: Fields
                 nameBox.Text = "New Preset"
-                preset.Text = "Load · New Preset v"
             else
                 local name = if verb == "save" then tostring(args.name) else view.activeName
                 loadedPreset = if view.presets[name] then name else nil
                 draft = table.clone(if verb == "save" then view.presets[name] else view.settings)
                 nameBox.Text = if loadedPreset then name else "New Preset"
-                preset.Text = "Load · " .. (loadedPreset or "New Preset") .. " v"
             end
             status.Text = if verb == "delete"
                 then "Preset deleted. Create a new one or close the editor."
@@ -707,7 +705,6 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                 loadedPreset = if name == "" then nil else name
                 draft = table.clone(if loadedPreset then current.presets[name] else Schema.defaults) :: Fields
                 nameBox.Text = if name == "" then "New Preset" else name
-                preset.Text = "Load · " .. nameBox.Text .. " v"
                 status.Text = "Loaded into editor · " .. nameBox.Text
                 render()
             end)
