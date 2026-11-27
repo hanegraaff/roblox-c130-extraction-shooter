@@ -7,6 +7,7 @@
     then flush only after ALL collision and player damage queries have completed.
     All APIs are nonyielding; stop restores captured panels and owns all cleanup.
 ]=]
+local BalanceSchema = require(game:GetService("ReplicatedStorage").Shared.BalanceSchema)
 local DestructionService = require(script.Parent.DestructionService)
 local PanelGeometry = require(script.Parent.PanelGeometry)
 local BuildingGeometry = require(script.Parent.BuildingGeometry)
@@ -34,7 +35,11 @@ export type Controller = {
 -- building's explicit *_Panels folder; generic breakable cover/static supports
 -- never enter the ledger. Map replacement is detected by Instance identity even
 -- when reset retains the same roundId. Optional fragment settings are test tuning.
-function DestructionRuntime.start(world: Instance, settings: PanelFragments.Settings?): (Controller?, string?)
+function DestructionRuntime.start(
+    world: Instance,
+    settings: PanelFragments.Settings?,
+    getBalance: (() -> BalanceSchema.Values)?
+): (Controller?, string?)
     local candidateMap = world:FindFirstChild("Battlefield")
     if not candidateMap or not candidateMap:IsA("Model") then
         return nil, "missing active battlefield"
@@ -318,6 +323,11 @@ function DestructionRuntime.start(world: Instance, settings: PanelFragments.Sett
                 end
                 if wreck then
                     table.insert(ids, "HerculesWreck")
+                end
+                if getBalance then
+                    local preset = getBalance()
+                    rules =
+                        DestructionService.new(preset.gauCadence * 1.5, preset.panelDamage, preset.gauCadence)
                 end
                 rules.reset(ledgerRound, ids, if wreck then "HerculesWreck" else nil)
                 flush(workspace:GetServerTimeNow())

@@ -36,6 +36,8 @@ do
                         ) :: unknown
                     ) :: ((string, () -> ()) -> (), unknown) -> ()
                     local serverModules = {
+                        BalanceRecord = true,
+                        BalanceService = true,
                         PanelDamageRules = true,
                         PanelAssetRules = true,
                         DestructionService = true,

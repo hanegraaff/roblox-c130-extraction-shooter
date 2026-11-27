@@ -643,7 +643,17 @@ function GroundCombatController.new(
                     if not event then
                         return
                     end
-                    nextAttempt = now + (if rocket then 0.25 else 0.15)
+                    local interval = selected:GetAttribute("ShotInterval")
+                    local reloadUntil = selected:GetAttribute("ReloadUntil")
+                    local readyAt = selected:GetAttribute("NextFire")
+                    if
+                        (type(reloadUntil) == "number" and serverTime < reloadUntil)
+                        or (type(readyAt) == "number" and serverTime < readyAt)
+                    then
+                        return
+                    end
+                    nextAttempt = now
+                        + (if type(interval) == "number" then math.min(0.25, interval) else 0.15)
                     local ray = camera:ViewportPointToRay(point.X, point.Y)
                     local params = RaycastParams.new()
                     params.FilterType = Enum.RaycastFilterType.Exclude

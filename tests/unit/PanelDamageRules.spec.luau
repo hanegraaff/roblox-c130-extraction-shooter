@@ -75,4 +75,18 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             "P18 assertion: rules.apply(state, false, 100) and state.stage == 2 and state.sustainedSeconds == 0"
         )
     end)
+    test("P26 Low Medium High preserve intermediate openings at tuned times", function()
+        for tier, duration in { Low = 4, Medium = 2, High = 1 } do
+            local state = rules.new()
+            rules.apply(state, false, duration / 2, tier)
+            assert(rules.appearance(state) == "Heavy")
+            rules.apply(state, false, duration / 2, tier)
+            assert(rules.appearance(state) == "Total")
+            state = rules.new()
+            rules.apply(state, true, 0, tier)
+            assert(state.stage == (if tier == "Low" then 1 else 2))
+            rules.apply(state, true, 0, tier)
+            assert(state.stage == 2)
+        end
+    end)
 end

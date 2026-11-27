@@ -13,6 +13,7 @@ local HttpService = game:GetService("HttpService")
 local Debris = game:GetService("Debris")
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
 local MatchService = require(script.Parent.MatchService)
+local BalanceSchema = require(game:GetService("ReplicatedStorage").Shared.BalanceSchema)
 local AircraftHealth = require(script.Parent.AircraftHealth)
 local GroundCombatService = require(script.Parent.GroundCombatService)
 local GroundMovementGuard = require(script.Parent.GroundMovementGuard)
@@ -81,7 +82,8 @@ function GroundCombatRuntime.start(
     match: MatchService.Controller,
     dependencies: Dependencies?,
     externallyStepped: boolean?,
-    emitSound: WeaponSoundRules.Emit?
+    emitSound: WeaponSoundRules.Emit?,
+    getBalance: (() -> BalanceSchema.Values)?
 ): (Controller?, string?)
     local aircraftState = ReplicatedStorage:FindFirstChild("AircraftState")
     if not aircraftState or aircraftState:FindFirstChild("GroundFire") then
@@ -260,6 +262,10 @@ function GroundCombatRuntime.start(
         local state = rifles.readiness(player.UserId, now)
         tool:SetAttribute("Ammo", state.ammo)
         tool:SetAttribute("MaxAmmo", GroundCombatService.capacity)
+        tool:SetAttribute(
+            "ShotInterval",
+            if getBalance then getBalance().m7Cadence else GroundCombatService.cadence
+        )
         tool:SetAttribute("NextFire", state.nextFire)
         tool:SetAttribute("ReloadUntil", state.reloadUntil)
     end
@@ -572,6 +578,12 @@ function GroundCombatRuntime.start(
                 if member.role == "Ground" then
                     groundCount += 1
                 end
+            end
+            if getBalance then
+                local preset = getBalance()
+                health =
+                    AircraftHealth.new(preset.aircraftHealthPerGround, preset.m7Damage, preset.rocketDamage)
+                rifles = GroundCombatService.new(preset.m7Cadence, preset.m7Reload)
             end
             health.reset(lastRound, if groundCount > 0 then groundCount else 1)
             rifles.reset(lastRound)

@@ -846,7 +846,16 @@ function ThermalCameraController.new(
                 if type(minimum) == "number" then minimum else nil,
                 if type(maximum) == "number" then maximum else nil
             )
-        if fireHeld and not preview and validAim and not blocked and os.clock() >= nextFireRequest then
+        local known = weaponReadiness[weapon]
+        local readyAt = if known then math.max(known.nextFire or 0, known.reloadUntil or 0) else 0
+        if
+            fireHeld
+            and not preview
+            and validAim
+            and not blocked
+            and os.clock() >= nextFireRequest
+            and workspace:GetServerTimeNow() >= readyAt
+        then
             local remote = state:FindFirstChild("FireWeapon")
             if remote and remote:IsA("RemoteEvent") then
                 fireSequence += 1
@@ -863,7 +872,10 @@ function ThermalCameraController.new(
                     cameraX = aircraftPosition.X,
                     cameraZ = aircraftPosition.Z,
                 })
-                nextFireRequest = os.clock() + (if weapon == "GAU23" then 0.16 else 0.2)
+                local interval =
+                    state:GetAttribute(if weapon == "GAU23" then "GAU23Interval" else "M102Interval")
+                nextFireRequest = os.clock()
+                    + (if type(interval) == "number" then math.min(0.2, interval) else 0.15)
             end
         end
         frameNumber += 1

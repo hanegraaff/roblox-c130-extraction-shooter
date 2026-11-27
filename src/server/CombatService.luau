@@ -118,7 +118,13 @@ end
 -- owner. Input coordinates are studs. now is monotonic server time in seconds.
 -- Requests are exactly six scalar fields; the caller establishes role/deadline and
 -- selection from authoritative state. Rejected requests never spend ammo or sequence.
-function CombatService.new(map: typeof(MapRules.defaults), minimumY: number, maximumY: number): Controller
+function CombatService.new(
+    map: typeof(MapRules.defaults),
+    minimumY: number,
+    maximumY: number,
+    roundProfiles: { [string]: Profile }?
+): Controller
+    local profiles = roundProfiles or CombatService.profiles
     assert(MapRules.validate(map), "valid active-level bounds required")
     assert(
         Validation.isFinite(minimumY) and Validation.isFinite(maximumY) and minimumY < maximumY,
@@ -132,7 +138,7 @@ function CombatService.new(map: typeof(MapRules.defaults), minimumY: number, max
     local function clear()
         table.clear(sequences)
         table.clear(weapons)
-        for id, profile in CombatService.profiles do
+        for id, profile in profiles do
             weapons[id] = { ammo = profile.capacity, nextFire = 0, reloadUntil = 0 }
         end
     end
@@ -140,7 +146,7 @@ function CombatService.new(map: typeof(MapRules.defaults), minimumY: number, max
     -- Computes completed reload without modifying stored state on a rejected request.
     local function current(weapon: string, now: number): Readiness?
         local state = weapons[weapon]
-        local profile = CombatService.profiles[weapon]
+        local profile = profiles[weapon]
         if not state or not profile or not Validation.isFinite(now) then
             return nil
         end
@@ -197,7 +203,7 @@ function CombatService.new(map: typeof(MapRules.defaults), minimumY: number, max
             if type(weapon) ~= "string" or weapon ~= selected then
                 return nil, "invalid selection"
             end
-            local profile = CombatService.profiles[weapon]
+            local profile = profiles[weapon]
             if not profile or type(x) ~= "number" or type(y) ~= "number" or type(z) ~= "number" then
                 return nil, "invalid weapon or target"
             end

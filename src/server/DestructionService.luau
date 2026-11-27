@@ -56,9 +56,14 @@ export type Controller = {
 -- by active flights rather than all shots in a long match. No pre-first-hit credit.
 -- interrupt(afterShotId?) queues a bounded accepted-shot barrier; nil breaks continuity now
 -- for synchronous rule adapters. Neither API yields. Reset clears queued barriers.
-function DestructionService.new(gapSeconds: number?): Controller
+function DestructionService.new(gapSeconds: number?, panelDamage: string?, cadence: number?): Controller
     local gap = gapSeconds or DestructionService.gapSeconds
-    assert(gap == gap and gap >= Combat.profiles.GAU23.cadence and gap <= 1, "invalid sustained-fire gap")
+    assert(
+        gap == gap
+            and gap >= (cadence or Combat.profiles.GAU23.cadence)
+            and gap <= (if cadence then cadence * 1.5 else 1),
+        "invalid sustained-fire gap"
+    )
     local roundId, frontier = 0, 1
     local panels: { [string]: PanelState } = {}
     local pending: { [number]: Outcome } = {}
@@ -112,7 +117,7 @@ function DestructionService.new(gapSeconds: number?): Controller
     local function destroy(id: string)
         local panel = panels[id]
         if panel and panel.stage < 2 then
-            Rules.apply(panel, true, 0)
+            Rules.apply(panel, true, 0, if id == fragileId then "Medium" else panelDamage)
             changes[id] = true
         end
     end
@@ -154,7 +159,7 @@ function DestructionService.new(gapSeconds: number?): Controller
                 breakContinuity()
                 elapsed = 0
             end
-            Rules.apply(panel, false, elapsed)
+            Rules.apply(panel, false, elapsed, panelDamage)
             target, lastFire = id, outcome.firedAt
         end
         changes[id] = true

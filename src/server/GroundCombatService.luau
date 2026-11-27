@@ -36,7 +36,7 @@ export type Controller = {
 }
 -- All times are monotonic seconds, target and server origin are studs. Callers
 -- establish active round, life, role and exact Tool ownership before invoking.
-function GroundCombatService.new(): Controller
+function GroundCombatService.new(cadence: number?, reloadSeconds: number?): Controller
     local round = 0
     local states: { [number]: Readiness } = {}
     local sequences: { [number]: number } = {}
@@ -148,7 +148,7 @@ function GroundCombatService.new(): Controller
                 return nil, reason
             end
             state.ammo -= 1
-            state.nextFire = now + GroundCombatService.cadence
+            state.nextFire = now + (cadence or GroundCombatService.cadence)
             states[userId], sequences[userId] = state, intent.sequence
             return intent, nil
         end,
@@ -181,7 +181,7 @@ function GroundCombatService.new(): Controller
             then
                 return false
             end
-            state.reloadUntil = now + GroundCombatService.reloadSeconds
+            state.reloadUntil = now + (reloadSeconds or GroundCombatService.reloadSeconds)
             states[userId], sequences[userId] = state, sequence
             return true
         end,

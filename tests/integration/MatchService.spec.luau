@@ -41,6 +41,76 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
             assert(not ok, "unsafe service seed accepted")
         end
     end)
+    test(
+        "P26 live lobby minimum, combat snapshot and independently committed intermission deadline",
+        function()
+            local time = 0
+            local minimum, duration, intermission = 3, 10, 30
+            local fresh = false
+            local captures = 0
+            local match = Match.new(
+                { minimumPlayers = 2, durationSeconds = 600, scatterSeconds = 20, seed = 1 },
+                {
+                    now = function()
+                        return time
+                    end,
+                    releaseLife = function() end,
+                    minimumPlayers = function()
+                        return minimum
+                    end,
+                    beforeDeployment = function()
+                        return fresh
+                    end,
+                    captureDuration = function()
+                        captures += 1
+                        return duration
+                    end,
+                    intermission = function()
+                        return intermission
+                    end,
+                }
+            )
+            match.join(1)
+            match.join(2)
+            assert(not match.deploy(), "roster below tuned minimum deployed")
+            minimum = 2
+            assert(not match.deploy() and captures == 0, "stale cache was captured")
+            fresh = true
+            assert(match.deploy() and captures == 1, "eligible deployment did not lock settings once")
+            duration = 3
+            minimum = 3
+            assert(
+                match.ready(1, 1) and match.ready(2, 1) and match.activate(),
+                "first roster could not activate"
+            )
+            time = 20
+            match.step(nil, time)
+            assert(match.snapshot().deadlineSeconds == 30, "combat duration changed during Scatter")
+            time = 30
+            match.step(nil, time)
+            assert(match.snapshot().intermissionUntil == 60, "intermission was not measured from result")
+            intermission = 1
+            assert(match.beginReset() and match.finishReset(), "reset failed")
+            assert(
+                not match.deploy() and match.snapshot().intermissionUntil == 60,
+                "existing countdown was shortened"
+            )
+            time = 60
+            assert(not match.deploy(), "new minimum did not gate deployment")
+            minimum = 2
+            assert(match.deploy() and captures == 2, "second snapshot missing")
+            assert(
+                match.ready(1, 2) and match.ready(2, 2) and match.activate(),
+                "second roster could not activate"
+            )
+            time = 80
+            match.step(nil, time)
+            assert(match.snapshot().deadlineSeconds == 83, "next combat duration missing")
+            time = 83
+            match.step(nil, time)
+            assert(match.snapshot().intermissionUntil == 84, "next intermission missing")
+        end
+    )
     local function fixture(count: number?, intermissionSeconds: number?, scatterSeconds: number?)
         local seconds = 100
         local released: { { id: number, roundId: number, recover: boolean } } = {}

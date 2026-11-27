@@ -16,6 +16,7 @@ local MapService = require(script.Parent.MapService)
 local CharacterOwner = require(script.Parent.CharacterOwner)
 local Config = require(ReplicatedStorage.Shared.Config)
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
+local BalanceRuntime = require(script.Parent.BalanceRuntime)
 local MatchRuntime = {}
 
 -- Times are monotonic server-clock seconds. Test-only callers may shorten these settings.
@@ -55,7 +56,11 @@ type PlayerOwner = { characters: CharacterOwner.Controller, bucket: RateLimit.Bu
 
 -- Creates an inactive adapter. Caller owns the supplied map; stop does not destroy it.
 -- releaseLife clears equipment. The frame owner runs launcher recovery after results.
-function MatchRuntime.new(map: MapService.Controller, settings: Settings): Controller
+function MatchRuntime.new(
+    map: MapService.Controller,
+    settings: Settings,
+    balance: BalanceRuntime.Controller?
+): Controller
     assert(
         settings.automaticDeployment == nil or type(settings.automaticDeployment) == "boolean",
         "invalid deployment mode"
@@ -77,7 +82,30 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
     local phase = "Lobby"
     local lastRevision = -1
     local collisionOwned = false
+    local function minimumPlayers(): number
+        if balance and balance.latest().activeRevision > 0 then
+            return balance.latest().settings.minimumPlayers
+        end
+        return settings.minimumPlayers
+    end
     local match = MatchService.new(settings, {
+        minimumPlayers = minimumPlayers,
+        beforeDeployment = if balance then balance.beforeDeployment else nil,
+        captureDuration = function()
+            if balance then
+                balance.capture()
+                if balance.roundRevision() > 0 then
+                    return balance.getBalance().roundDuration
+                end
+            end
+            return settings.durationSeconds
+        end,
+        intermission = function()
+            if balance and balance.latest().activeRevision > 0 then
+                return balance.latest().settings.intermission
+            end
+            return settings.intermissionSeconds or 0
+        end,
         now = function()
             return workspace:GetServerTimeNow()
         end,
@@ -157,7 +185,8 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         else
             status:SetAttribute("Result", nil)
         end
-        status:SetAttribute("MinimumPlayers", settings.minimumPlayers)
+        status:SetAttribute("MinimumPlayers", minimumPlayers())
+        status:SetAttribute("BalanceRoundRevision", if balance then balance.roundRevision() else 0)
         local alive = 0
         for _, member in state.members do
             if member.role == "Ground" and member.life == "Alive" then
@@ -205,7 +234,10 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
         end
         local bucket = RateLimit.new(4, 2, workspace:GetServerTimeNow())
         assert(bucket, "valid fixed remote budget")
-        owners[player] = { characters = CharacterOwner.new(player, match), bucket = bucket }
+        owners[player] = {
+            characters = CharacterOwner.new(player, match, if balance then balance.getBalance else nil),
+            bucket = bucket,
+        }
         match.join(player.UserId)
         local state = match.snapshot()
         publish(state)
@@ -291,7 +323,10 @@ function MatchRuntime.new(map: MapService.Controller, settings: Settings): Contr
             applyPhase(state, time)
             state = match.snapshot()
         end
-        if state.revision ~= lastRevision then
+        if
+            state.revision ~= lastRevision
+            or (folder and folder:GetAttribute("MinimumPlayers") ~= minimumPlayers())
+        then
             publish(state)
         end
         syncLobbyCharacters(state)

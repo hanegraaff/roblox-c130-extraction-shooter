@@ -8,6 +8,7 @@
     disconnects first. Operator loss requests a replacement protected placeholder.
     All public calls are nonyielding; stop is idempotent and invalidates queued work.
 ]=]
+local BalanceSchema = require(game:GetService("ReplicatedStorage").Shared.BalanceSchema)
 local MatchService = require(script.Parent.MatchService)
 local HttpService = game:GetService("HttpService")
 local CharacterOwner = {}
@@ -24,7 +25,11 @@ type Request = { token: number, roundId: number, anchor: string, role: string }
 
 -- Creates an owner with no character/listeners. Call stop before releasing the Player.
 -- The caller has already checked there is no previous RoundCharacterLoad lease.
-function CharacterOwner.new(player: Player, match: MatchService.Controller): Controller
+function CharacterOwner.new(
+    player: Player,
+    match: MatchService.Controller,
+    getBalance: (() -> BalanceSchema.Values)?
+): Controller
     local running = true
     local token = 0
     local queued: Request? = nil
@@ -151,6 +156,10 @@ function CharacterOwner.new(player: Player, match: MatchService.Controller): Con
                             lobbyRetryAt = workspace:GetServerTimeNow() + 2
                         end
                         break
+                    end
+                    if request.role == "Ground" and getBalance then
+                        humanoid.MaxHealth = getBalance().groundHealth
+                        humanoid.Health = humanoid.MaxHealth
                     end
                     character:PivotTo(anchorPart.CFrame)
                     root.AssemblyLinearVelocity = Vector3.zero

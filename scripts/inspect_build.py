@@ -926,6 +926,11 @@ def main() -> None:
         "StarterPlayer/StarterPlayerScripts/Client/StatusPanel": "ModuleScript",
         "Workspace/World/Battlefield/GroundSpawn": "SpawnLocation",
         "ServerScriptService/Server/BlastGeometry": "ModuleScript",
+        "ReplicatedStorage/Shared/BalanceSchema": "ModuleScript",
+        "StarterPlayer/StarterPlayerScripts/Client/BalancePanel": "ModuleScript",
+        "ServerScriptService/Server/BalanceRecord": "ModuleScript",
+        "ServerScriptService/Server/BalanceService": "ModuleScript",
+        "ServerScriptService/Server/BalanceRuntime": "ModuleScript",
         "ReplicatedStorage/Shared/WeaponImpactRules": "ModuleScript",
         "StarterPlayer/StarterPlayerScripts/Client/WeaponImpactEffects": "ModuleScript",
     }
