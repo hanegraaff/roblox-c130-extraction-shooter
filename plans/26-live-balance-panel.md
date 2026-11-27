@@ -77,3 +77,13 @@ The tested source is `9b6dd182bf894ef6bea07afb2ca2252d28e0b6d8`, tree `10ce284c7
 The local preview exercised the health slider, exact-value focus parsing, input bounds, tab retention and saving/applying 321 HP through the production UI and remote. Desktop and simulated iPhone 17 Pro landscape renders were reviewed. Physical keyboard typing and touch gestures remain unverified by the available input tools. The device simulator was reset.
 
 The updated release is `build/balance-panel-polish.rbxlx`, SHA-256 `9087b9500b309bd15be8e089fabdd926029d0b030a7d5ff959263ba429385e79`. This follow-up has no observed published version. P26 A3 remains pending. [Follow-up evidence](../docs/evidence/balance-panel-polish.json)
+
+### 2026-11-27 · Final settings and merge authorization
+
+The owner requested the final tuning ranges, preset deletion, dropdowns, separate live/editor presentation, and merging the changes. [PR #79](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/79) targets main after dependency PRs #74, #75, #77 and #78 were merged.
+
+Tested source `d8ac680155a48a2d180d6de1d09c6663cfa11ef1`, tree `63728b7fffe14555e3ccb94458bab44207294deb`, passed `python3 scripts/verify.py` with 92 unit, 99 integration, 27 tooling and 70 asset tests. Strict types, lint, formatting, reconstruction, failure probes and release isolation passed. A fresh two-client P26 Studio run passed six cases across three rounds with zero failures or skips.
+
+The new regression cases cover requested endpoints, migration from earlier stored ranges, deletion permission/revision rejection, deletion across two independent services and restart, live snapshot retention, and zero aircraft reload at clock zero. The preview showed the separate live heading and preset library. Editing 321 HP disabled Apply, and Save enabled it while the live preset stayed Shipped. Later pointer requests stalled, including after restarting the preview, and Computer Use returned `cgWindowNotFound`. Full manual Apply/Delete/New Preset and dropdown interaction checks remain unverified. The test document returned to Edit with its selector cleared.
+
+The stable release is `build/game.rbxlx`, SHA-256 `842b78e12f1c30093bfda2e35d2d6e38265e02e0108c7ca5a6029b352d2f9e67`. README and the public MVP roadmap explicitly identify it as the file for publication. `build/tests.rbxlx` remains the local test mapping. These checks grant no new publication facts, and A3 remains pending. [Final settings evidence](../docs/evidence/balance-settings-final.json)

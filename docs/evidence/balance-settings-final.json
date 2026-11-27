@@ -1,0 +1,81 @@
+{
+  "source": {
+    "commit": "d8ac680155a48a2d180d6de1d09c6663cfa11ef1",
+    "tree": "63728b7fffe14555e3ccb94458bab44207294deb"
+  },
+  "environment": "macOS arm64, Roblox Studio 0.748.0.7481526, isolated test mapping",
+  "host": {
+    "command": "python3 scripts/verify.py",
+    "result": "passed",
+    "unit": 92,
+    "integration": 99,
+    "tooling": 27,
+    "assets": 70,
+    "strictTypes": true,
+    "lint": true,
+    "format": true,
+    "releaseIsolation": true
+  },
+  "multiplayer": {
+    "result": {
+      "passed": 6,
+      "failed": 0,
+      "initialClientCount": 2,
+      "suite": "P26-multiplayer",
+      "skipped": 0,
+      "discovered": 6,
+      "cases": {
+        "1": {
+          "name": "A1 Owner and ordinary player have different access in the waiting lobby",
+          "passed": true
+        },
+        "2": {
+          "name": "A1 A2 A4 Trusted tester lowers waiting minimum and deploys the saved preset",
+          "passed": true
+        },
+        "3": {
+          "name": "A2 Low panel damage keeps interrupted credit and replicates openings",
+          "passed": true
+        },
+        "4": {
+          "name": "A2 A5 Four tuned weapons change damage, cooldowns, held tools and both health HUDs",
+          "passed": true
+        },
+        "5": {
+          "name": "A2 A4 Change settings during combat and intermission; both clients agree on replay",
+          "passed": true
+        },
+        "6": {
+          "name": "A5 High and Medium panel settings change native damage after replay",
+          "passed": true
+        }
+      },
+      "timing": {
+        "populationGateSecondsAfterDeadline": 1.2147371768951416,
+        "secondCombatDeadline": 1795817941.370623,
+        "lastActiveSample": 1795817941.351657,
+        "nextIntermissionDeadline": 1795817944.385486,
+        "firstResultSample": 1795817941.435582
+      }
+    },
+    "sdk": true
+  },
+  "preview": {
+    "render": "Reviewed separate live heading, preset library, grouped Save/Apply/Delete, and settings category dropdown.",
+    "passed": [
+      "Changed draft to 321 HP and verified Apply was disabled.",
+      "Clicked Save. Apply became enabled while the live heading stayed Shipped."
+    ],
+    "unavailable": "Subsequent native pointer requests stalled. A restarted preview did not recover pointer interaction. Computer Use returned cgWindowNotFound. Full manual Apply/Delete/New Preset and dropdown interaction checks remain unverified.",
+    "deterministic": "Preset deletion, active-name deletion, stale and unauthorized deletion, protected Shipped preset, two-server cache/restart, earlier-range migration and zero aircraft reload are covered by named host tests."
+  },
+  "release": {
+    "path": "build/game.rbxlx",
+    "sha256": "842b78e12f1c30093bfda2e35d2d6e38265e02e0108c7ca5a6029b352d2f9e67"
+  },
+  "testBuild": {
+    "path": "build/tests.rbxlx",
+    "sha256": "e161919ac1ef88046a2adbad8c13767dfff82fcac83a14ab4ba0f4fa58ceb9f2"
+  },
+  "publication": "No publication of this final build observed. P26 published two-server acceptance remains pending."
+}
