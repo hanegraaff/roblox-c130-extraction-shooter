@@ -11,7 +11,7 @@ For scale, fit the replacement airframe to the existing [C-130 model](../../../a
 <details>
 <summary>Image generation prompts</summary>
 
-Edited with the built-in ImageGen tool from the approved C-130 renders in commit `fbdb7d0`.
+Edited with the built-in ImageGen tool from the first approved charcoal C-130 renders. The front three-quarter view guided the overhead and starboard edits.
 
 **Front three-quarter**
 
