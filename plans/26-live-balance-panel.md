@@ -66,3 +66,14 @@ Add a short owner guide covering tester access, live edits, when changes apply, 
 **Shipped preset regression.** On the corrected gameplay source, two Studio clients ran the existing P05 weapon and cover regression using shipped values. All nine cases passed. The server also passed 215 smoke checks and each client passed 23. [Regression report](../docs/evidence/p26/shipped-preset-regression.json)
 
 **Corrections.** Early testing identified a request interval that limited fast launcher and howitzer presets. The clients now use server readiness, and the launcher request budget admits the supported cadence. The initial tracked fixture also waited for client reports before creating their round state. After that boot-order fix, native panel impacts exposed callbacks bound to an obsolete ledger. Deployment now refreshes settings on the existing ledger. The corrected native run above exercised the resulting openings. [First fixture failure](../docs/evidence/p26/initial-selector-failure.json) · [Panel regression](../docs/evidence/p26/panel-regression-before-fix.json) · [Initial isolated two-client timing check](../docs/evidence/p26/initial-two-client.json)
+
+
+### 2026-11-27 · Owner panel follow-up
+
+[PR #77](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/77) adds the requested simple wording, Player/C-130/Buildings/Game & lobby tabs, sliders with exact entry and persistent Save/Apply buttons. Building damage shows the howitzer hits or seconds of 30mm hits needed to break one panel. Medkits have one healing control and are single-use per round. The howitzer has one reload control. Legacy presets normalize to these rules.
+
+The tested source is `9b6dd182bf894ef6bea07afb2ca2252d28e0b6d8`, tree `10ce284c7cbdfe6b566bee3b64e7b845596053a1`. `python3 scripts/verify.py` passed 90 unit, 96 integration, 27 tooling and 70 asset tests, formatting, lint, strict types, reconstruction, rejection probes and release isolation. A fresh two-client P26 run passed all six cases across three rounds with zero failures or skips.
+
+The local preview exercised the health slider, exact-value focus parsing, input bounds, tab retention and saving/applying 321 HP through the production UI and remote. Desktop and simulated iPhone 17 Pro landscape renders were reviewed. Physical keyboard typing and touch gestures remain unverified by the available input tools. The device simulator was reset.
+
+The updated release is `build/balance-panel-polish.rbxlx`, SHA-256 `9087b9500b309bd15be8e089fabdd926029d0b030a7d5ff959263ba429385e79`. This follow-up has no observed published version. P26 A3 remains pending. [Follow-up evidence](../docs/evidence/balance-panel-polish.json)
