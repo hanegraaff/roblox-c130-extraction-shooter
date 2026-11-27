@@ -186,7 +186,7 @@ function Harness.run(automated: boolean)
         values.m7Damage, values.m7Cadence, values.m7Reload = 13, 0.27, 1.7
         values.rocketDamage, values.launcherReload = 270, 6
         values.medkitHeal, values.medkitSingleUse, values.medkitRespawn, values.panelDamage =
-            31, false, 9, "Low"
+            31, true, Schema.defaults.medkitRespawn, "Low"
         local revision = 0
         local function apply(player: Player, name: string)
             local saved =
