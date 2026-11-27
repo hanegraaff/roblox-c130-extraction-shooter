@@ -55,6 +55,8 @@ function Harness.run()
                 then hpLabel.Text
                 else nil,
             phase = state:GetAttribute("Phase"),
+            minimum = state:GetAttribute("MinimumPlayers"),
+            roundId = state:GetAttribute("RoundId"),
             revision = state:GetAttribute("BalanceRoundRevision"),
             intermission = state:GetAttribute("IntermissionUntil"),
             role = player:GetAttribute("Role"),

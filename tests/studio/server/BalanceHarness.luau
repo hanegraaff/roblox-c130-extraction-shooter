@@ -144,6 +144,7 @@ function Harness.run(automated: boolean)
         return probe(player, "Observe", {}) :: Bag
     end
     local cases: { Case } = {}
+    local timing: { [string]: number } = {}
     local function check(name: string, fn: () -> ())
         local ok, why = pcall(function()
             fn()
@@ -269,9 +270,27 @@ function Harness.run(automated: boolean)
             both(function(d)
                 return d.intermission == untilTime
             end, "shared countdown")
-            values.minimumPlayers, values.intermission = 2, 3
-            apply(owner, "QA replay")
+            local prior = runtime.rounds.match.snapshot().roundId
+            values.intermission = 3
+            apply(owner, "QA delayed replay")
             assert(state:GetAttribute("IntermissionUntil") == untilTime, "ongoing intermission changed")
+            waitFor(function()
+                return workspace:GetServerTimeNow() >= untilTime + 1
+            end, "first countdown fully elapsed", 35)
+            assert(
+                #Players:GetPlayers() == 2 and runtime.rounds.match.snapshot().roundId == prior,
+                "underfilled lobby deployed after countdown"
+            )
+            both(function(d)
+                return d.phase == "Lobby"
+                    and d.minimum == 3
+                    and d.roundId == prior
+                    and d.intermission == untilTime
+            end, "both clients remain gated after countdown")
+            timing.populationGateSecondsAfterDeadline = workspace:GetServerTimeNow() - untilTime
+            values.minimumPlayers = 2
+            values.roundDuration = 35
+            apply(owner, "QA replay")
             waitFor(function()
                 return state:GetAttribute("Phase") == "Active"
             end, "second active round", 65)
@@ -285,10 +304,37 @@ function Harness.run(automated: boolean)
         check("A5 High and Medium panel settings change native damage after replay", function()
             CombatChecks.panels(ctx)
             values.panelDamage = "Medium"
-            values.intermission = 2
             apply(owner, "QA medium")
             local prior = runtime.rounds.match.snapshot().roundId
-            assert(runtime.rounds.match.abort(prior, "P26NextTier"), "fixture replay rejected")
+            -- Let the production combat clock end round two. Bracket the commit
+            -- on the real server clock, then verify the shared deadline is three
+            -- seconds after it. The first countdown ran for its original 30.
+            assert(state:GetAttribute("Phase") == "Active", "second round ended before timing sample")
+            local combatDeadline = state:GetAttribute("DeadlineSeconds") :: number
+            local lastActive = workspace:GetServerTimeNow()
+            waitFor(function()
+                if state:GetAttribute("Phase") == "Active" then
+                    lastActive = workspace:GetServerTimeNow()
+                    return false
+                end
+                return state:GetAttribute("Phase") == "Results"
+            end, "natural combat timeout", 40)
+            local firstResult = workspace:GetServerTimeNow()
+            local nextDeadline = state:GetAttribute("IntermissionUntil") :: number
+            assert(state:GetAttribute("Reason") == "Timeout", "second result was not a timeout")
+            assert(firstResult - lastActive < 0.75, "timing samples too far apart")
+            assert(
+                nextDeadline - 3 >= math.max(lastActive, combatDeadline) - 0.02
+                    and nextDeadline - 3 <= firstResult + 0.02,
+                "second countdown deadline was not three seconds after the result"
+            )
+            timing.secondCombatDeadline = combatDeadline
+            timing.lastActiveSample = lastActive
+            timing.firstResultSample = firstResult
+            timing.nextIntermissionDeadline = nextDeadline
+            both(function(d)
+                return d.intermission == nextDeadline and d.roundId == prior
+            end, "both clients receive next three-second deadline")
             waitFor(function()
                 local match = runtime.rounds.match.snapshot()
                 return match.roundId > prior and match.phase == "Active"
@@ -318,6 +364,7 @@ function Harness.run(automated: boolean)
         failed = #cases - passed,
         skipped = 0,
         cases = cases,
+        timing = timing,
     }
     workspace:SetAttribute("P26MultiplayerReport", HttpService:JSONEncode(report))
     if automated then
