@@ -40,6 +40,10 @@ two-player minimum and ten-minute rounds. The host checks establish release
 isolation. Destination permissions, live asset loading and play are separate
 checks below.
 
+Use the two stable filenames above for every candidate. Keep one game document and one local test document open with their matching Rojo connections. Track candidates with source commits, build hashes and Roblox versions. The earlier one-off P26 filenames are historical snapshots.
+
+Before upload, confirm the open game document received the candidate through Rojo. A build on disk does not update an already-open Studio document. Reconnect sync or reopen the same `build/game.rbxlx` after preserving unsaved work. Compare its scripts and world with the tested candidate before publication.
+
 ## Verify the destination and prepare rollback
 
 1. Record the candidate commit, release SHA-256, manifest fingerprint, owner
@@ -65,8 +69,8 @@ checks below.
 
 ## Publish and smoke-test the exact build
 
-Recheck the release file's SHA-256 immediately before publication. Open that
-artifact as a local release document in Studio and publish it to the authorized
+Recheck the release file's SHA-256 immediately before publication. Use the existing game document once it matches that
+artifact, or open `build/game.rbxlx` if needed, and publish to the authorized
 place. Enter the candidate commit in the version notes. Use Studio for the
 Outpost's `SurfaceAppearance` instances because the Open Cloud place publishing
 guide lists limitations for that type. [Studio publishing](https://create.roblox.com/docs/production/publishing/publish-games-and-places), [Open Cloud place publishing limitations](https://create.roblox.com/docs/cloud/guides/usage-place-publishing#limitations)

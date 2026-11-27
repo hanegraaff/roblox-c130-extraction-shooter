@@ -52,7 +52,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-The integrated game is on `main`. The `plan/26-live-balance-panel` branch adds the lobby’s **Balance** panel for the experience owner and trusted testers. Once deployed, it lets them adjust health, damage, weapon timing, panel durability, round length, lobby intermission and minimum players across servers. The values in this guide are the shipped defaults. Medkit settings can be saved now for the planned pickups. [Owner guide](docs/balance.md)
+The integrated game is on `main`. The `fix/balance-panel-usability` branch includes the lobby’s **Balance** panel for the experience owner and trusted testers. Once deployed, it lets them adjust health, damage, weapon timing, panel durability, round length, lobby intermission and minimum players across servers. The values in this guide are the shipped defaults. Medkit settings can be saved now for the planned pickups. [Owner guide](docs/balance.md)
 
 Ordinary local Studio Play uses the shipped defaults. Verification of the balance panel in a published private experience is pending. [Panel verification record](plans/26-live-balance-panel.md#completion-record)
 
@@ -62,10 +62,10 @@ The legacy P12 implementation handoff is closed by user direction. A future Robl
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Use `plan/26-live-balance-panel` for this candidate. To build the integrated game, substitute `main` in the branch commands.
+Use `fix/balance-panel-usability` for the slider-panel candidate. To build the integrated game, substitute `main` in the branch commands.
 
 ```sh
-git clone --branch plan/26-live-balance-panel https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
+git clone --branch fix/balance-panel-usability https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
 cd roblox-c130-extraction-shooter
 python3 scripts/setup.py
 python3 scripts/verify.py
@@ -73,11 +73,24 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch plan/26-live-balance-panel`. Run `git pull --ff-only` to update it, then run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch fix/balance-panel-usability`. Run `git pull --ff-only` to update it, then run the same setup and verification commands from the repository root.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
 Setup installs the pinned tools and dependencies. Install the matching Rojo Studio plugin once. The verifier runs host unit and service tests, static checks, asset reconstruction and release isolation, and builds `build/game.rbxlx` and `build/tests.rbxlx`. Create a dedicated task branch before contributor edits. [Branch rules](docs/development.md#branches-ci-and-review)
+
+## The two Studio files
+
+Use the same two filenames for every update.
+
+| File | Purpose | Rojo connection |
+| --- | --- | --- |
+| `build/game.rbxlx` | Play the game and publish it to Roblox | **PlayersVsC130**, port **34873** |
+| `build/tests.rbxlx` | Run local tests and use the test controls | **PlayersVsC130Tests**, port **34872** |
+
+The build commands update these files in place. Keep their Studio documents open and use the matching Rojo connection to bring source changes into them. Before publishing, stop Play and confirm the game document contains the latest changes. Rebuilding a file on disk does not refresh a document already open in Studio. If live sync is disconnected, reconnect it or reopen the same file after preserving any unsaved work.
+
+Publish updates from the same game document to the same Roblox place. **Publish As** chooses the destination the first time. Once that document is linked to the correct place, use **Publish** for later updates. Build hashes and Roblox version numbers identify releases in the verification records.
 
 ## Publish and play privately
 
