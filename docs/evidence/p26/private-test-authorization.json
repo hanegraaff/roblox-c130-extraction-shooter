@@ -18,14 +18,26 @@
       "sha256": "e5ae85eb1599481c50a461ebc1fe76cd605dc4c0e23465baf84018659dd793da",
       "bytes": 157122691,
       "user_response": "Use the corrected build",
-      "disposition": "Authorized for the same invite-only test. The cloud destination and publication are unverified."
+      "disposition": "Authorized. Destination verified private. Publication and live two-server test remain pending."
     }
   ],
   "destination_preflight": {
     "method": "GET",
     "endpoint": "/cloud/v2/universes/10776653720",
     "required_scope": "universe:read",
-    "before_and_after_corrected_build_approval": "Studio MCP could not acquire an Open Cloud token because the creator has not granted universe:read."
+    "before_and_after_corrected_build_approval": "Studio MCP could not acquire an Open Cloud token because the creator has not granted universe:read.",
+    "followup": {
+      "cloud_studio_id": "44b84a0d-ef67-42c9-ab84-81117fe073be",
+      "result": "200 OK",
+      "visibility": "PRIVATE",
+      "place_id": 72732833195348,
+      "universe_id": 10776653720,
+      "owner_id": 2227341845,
+      "previous_place_version": 58,
+      "current_max_players": 60,
+      "diagnosis": "Permissions are per place. The prior denied requests targeted the local test document. universe:read succeeds in the cloud destination.",
+      "remaining": "Release artifact opened as a separate local document, balance module present and DevelopmentSettings absent. Native Studio window access repeatedly timed out, preventing Publish As. No new published version observed. Capacity must be set to ten and destination asset/access checks completed before the live test."
+    }
   },
   "published_version": null
 }
