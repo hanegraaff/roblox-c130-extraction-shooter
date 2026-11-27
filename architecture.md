@@ -28,6 +28,10 @@ The client entrypoint waits for PlayerGui and server status, then starts `Status
 
 Pure modules with dependencies choose an explicit Instance require when `script` exists and a relative filesystem require under Lune. Standalone specs receive the actual rule module as a parameter; TestEZ wrappers pass actual mapped ModuleScripts to the same cases. This keeps one implementation usable in both runtimes without a virtual filesystem. See the [shared package](src/shared/README.md) for contracts.
 
+## Planned live balance settings
+
+The release panel will send bounded edit requests to a server-owned settings service. The service checks the editor’s permissions, validates the preset and stores a numbered revision. Waiting servers use the latest minimum player count. At deployment each server locks one preset for health, weapon timing and damage, panel damage, medkits and the combat clock. Gameplay services read that snapshot and clients receive the values they need for their HUD. The Studio test panel keeps its separate test-only controls. [Live balance panel and acceptance](plans/26-live-balance-panel.md)
+
 ## Implemented map and terrain ownership
 
 `Workspace.World.Battlefield` comes entirely from the versioned [world definition](assets/world/Battlefield.model.json). `MapRules` validates finite coordinates, radius greater than eight studs, altitude greater than sixteen studs, kill threshold below ground, matching map/orbit centers and radii, and ground-level center focus. Defaults are center `(0,0,0)`, radius 360 studs, altitude 140 studs and recovery Y=−30. `orbit(settings, phaseRadians)` supplies the common perimeter geometry; `AircraftService` owns the actual moving model.
