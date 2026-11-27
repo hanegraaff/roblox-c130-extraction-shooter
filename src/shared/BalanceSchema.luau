@@ -84,14 +84,14 @@ local fields: { Field } = {
     numeric("gauDamage", "30mm damage", "HP", 1, 1000, true),
     numeric("m102Damage", "105mm damage", "HP", 1, 1000, true),
     numeric("gauCadence", "30mm shot interval", "s", 0.15, 5, false),
-    numeric("gauReload", "30mm reload", "s", 0.15, 120, false),
-    numeric("m102Cadence", "105mm shot interval", "s", 0.15, 120, false),
-    numeric("m102Reload", "105mm reload", "s", 0.15, 120, false),
+    numeric("gauReload", "30mm reload", "s", 0, 30, false),
+    numeric("m102Cadence", "105mm shot interval", "s", 0, 120, false),
+    numeric("m102Reload", "105mm reload", "s", 0, 30, false),
     numeric("groundHealth", "Ground health", "HP", 1, 1000, true),
-    numeric("m7Damage", "M-7 damage", "HP", 1, 1000, true),
-    numeric("rocketDamage", "Rocket damage", "HP", 1, 10000, true),
-    numeric("m7Cadence", "M-7 shot interval", "s", 0.15, 5, false),
-    numeric("m7Reload", "M-7 reload", "s", 0.15, 120, false),
+    numeric("m7Damage", "M-7 damage", "HP", 1, 50, true),
+    numeric("rocketDamage", "Rocket damage", "HP", 1, 5000, true),
+    numeric("m7Cadence", "M-7 shot interval", "s", 0.15, 1, false),
+    numeric("m7Reload", "M-7 reload", "s", 0.15, 10, false),
     numeric("launcherReload", "Launcher reload", "s", 0.15, 120, false),
     numeric("medkitHeal", "Medkit healing", "HP", 1, 1000, true),
     { key = "medkitSingleUse", label = "Single-use kits", unit = "", kind = "boolean" },
@@ -108,14 +108,23 @@ local fields: { Field } = {
         },
     },
     numeric("roundDuration", "Combat duration", "s", 1, 3600, true),
-    numeric("intermission", "Lobby intermission", "s", 0, 3600, true),
+    numeric("intermission", "Lobby intermission", "s", 1, 300, true),
     numeric("minimumPlayers", "Minimum players", "players", 2, 10, true),
 }
 BalanceSchema.fields = table.freeze(fields)
 
--- Accepts exactly the published schema, including all fields. Copies the input
--- into a frozen snapshot so a running round never shares mutable UI/storage state.
-function BalanceSchema.validate(raw: unknown): (Values?, string?)
+-- Earlier valid stored values are clamped to current limits during decoding.
+-- New requests remain strict, including finite numbers and complete snapshots.
+local previousBounds: { [string]: { number } } = {
+    m7Damage = { 1, 1000 },
+    m7Cadence = { 0.15, 5 },
+    m7Reload = { 0.15, 120 },
+    rocketDamage = { 1, 10000 },
+    intermission = { 0, 3600 },
+    gauReload = { 0, 120 },
+    m102Reload = { 0, 120 },
+}
+local function decode(raw: unknown, stored: boolean): (Values?, string?)
     if type(raw) ~= "table" then
         return nil, "Expected a full preset."
     end
@@ -131,11 +140,14 @@ function BalanceSchema.validate(raw: unknown): (Values?, string?)
     for _, field in fields do
         local value = input[field.key]
         if field.kind == "number" then
+            local legacy = if stored then previousBounds[field.key] else nil
+            local low = if legacy then legacy[1] else field.minimum :: number
+            local high = if legacy then legacy[2] else field.maximum :: number
             if
                 type(value) ~= "number"
                 or value ~= value
-                or value < (field.minimum :: number)
-                or value > (field.maximum :: number)
+                or value < low
+                or value > high
                 or (field.integer and value % 1 ~= 0)
             then
                 return nil, "Invalid " .. field.label .. "."
@@ -147,7 +159,9 @@ function BalanceSchema.validate(raw: unknown): (Values?, string?)
         elseif type(value) ~= "boolean" then
             return nil, "Invalid " .. field.label .. "."
         end
-        result[field.key] = value
+        result[field.key] = if field.kind == "number"
+            then math.clamp(value :: number, field.minimum :: number, field.maximum :: number)
+            else value
     end
     -- Keep v1 storage readable. Old presets may contain a second howitzer timer
     -- or reusable kits. The current rules normalize those legacy fields.
@@ -155,6 +169,17 @@ function BalanceSchema.validate(raw: unknown): (Values?, string?)
     result.medkitSingleUse = true
     result.medkitRespawn = BalanceSchema.defaults.medkitRespawn
     return (table.freeze(result) :: unknown) :: Values, nil
+end
+
+-- Validate an untrusted new preset against the current ranges. Never mutates input.
+function BalanceSchema.validate(raw: unknown): (Values?, string?)
+    return decode(raw, false)
+end
+
+-- Decode previously stored presets, accepting only earlier supported bounds and
+-- returning a frozen snapshot clamped to current ranges. Malformed data rejects.
+function BalanceSchema.decodeStored(raw: unknown): (Values?, string?)
+    return decode(raw, true)
 end
 
 return BalanceSchema

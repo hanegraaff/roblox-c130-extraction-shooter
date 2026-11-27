@@ -151,7 +151,7 @@ function CombatService.new(
             return nil
         end
         local copy = table.clone(state)
-        if copy.reloadUntil > 0 and now >= copy.reloadUntil then
+        if (copy.reloadUntil > 0 or copy.ammo == 0) and now >= copy.reloadUntil then
             copy.ammo = profile.capacity
             copy.reloadUntil = 0
         end

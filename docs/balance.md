@@ -16,15 +16,17 @@ After the build containing the balance panel is published, join the experience i
 
 ## Give a tester access
 
-The experience owner controls the tester list. For a group-owned experience, sign in as the group owner. In **Balance → Game & lobby**, enter the tester’s numeric Roblox user ID and select **Give panel access**. Select **Remove panel access** with the same ID to remove them. The owner and trusted testers can save presets, apply them across the game and restore the previous live settings. For a private experience, testers also need permission to join it.
+The experience owner controls the tester list. For a group-owned experience, sign in as the group owner. In **Balance → Settings → Game & lobby**, enter the tester’s numeric Roblox user ID and select **Give panel access**. Select **Remove panel access** with the same ID to remove them. The owner and trusted testers can save presets, apply them across the game and delete saved presets. For a private experience, testers also need permission to join it.
 
 ## Change a setting
 
-1. Use **Choose preset** to pick a saved preset. **Shipped** contains the original values. Enter a new preset name to save your own copy.
-2. Choose **Player**, **C-130**, **Buildings** or **Game & lobby**. Drag a slider or type an exact number beside it. Values stay in your draft when you switch tabs. Building damage shows the hits or firing time needed to break a wall or roof panel.
-3. Select **Save preset** to store the values. Select **Apply saved preset** to make that saved version live. For example, give a preset a 30-second lobby intermission, save it as `Short breaks`, then apply it before the next result.
-4. Check the live preset shown at the top. **Game & lobby** also shows the saved change number and the change used by the current round. Each server picks up changes when notified or when it next checks storage.
-5. To undo an applied change, select **Undo last apply**. To return to the original values, select **Shipped**, then **Apply saved preset**.
+1. Check **Live in game** at the top. This names the settings currently selected for the game.
+2. In **Saved presets**, open **Load** and choose a preset or **New Preset**. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
+3. Enter a preset name and select **Save preset**. This stores the values you edited. **Apply saved** becomes available when the editor matches the saved preset.
+4. Select **Apply saved** to use that preset in the game. The live name at the top updates. Combat changes start next round.
+5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name becomes **New Preset**, ready for you to edit and save, or close. **Shipped** remains available as the built-in starting point.
+
+To return to the original settings, load **Shipped** and select **Apply saved**.
 
 If another tester edits while your panel is open, select **Refresh**, review their values and re-enter your change. If a save cannot be confirmed, refresh before trying again. Servers keep their last confirmed settings when storage is unavailable. A new server can start with the shipped defaults.
 
@@ -45,3 +47,17 @@ If another tester edits while your panel is open, select **Refresh**, review the
 | Minimum players | 2, including the operator. The supported range is 2–10. |
 
 **When changes take effect.** A waiting lobby uses the latest minimum player count. At deployment, the server locks combat duration, health, damage, weapon timing, panel damage and medkit settings for that round. At the result, it sets a deadline using the latest intermission length. Changing that length during a countdown takes effect at the following result.
+
+## Slider ranges
+
+| Setting | Allowed values |
+| --- | --- |
+| Rifle damage per hit | 1–50 HP |
+| Time between rifle shots | 0.15–1 second |
+| Rifle reload | 0.15–10 seconds |
+| Rocket damage per hit | 1–5,000 HP |
+| Wait between rounds | 1–300 seconds |
+| Howitzer reload | 0–30 seconds |
+| 30mm reload | 0–30 seconds |
+
+Earlier saved presets load within these limits. Values outside the new ranges move to the nearest allowed value. Every new save must satisfy the current ranges.

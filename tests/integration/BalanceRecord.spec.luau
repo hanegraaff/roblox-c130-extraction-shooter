@@ -46,4 +46,59 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
         )
         assert(not rules.allowed(revoked, 1, 3), "former owner retained access")
     end)
+    test(
+        "Preset deletion preserves live rules and rejects stale, unauthorized and built-in deletion",
+        function()
+            local base = rules.initial()
+            local save = assert(
+                rules.request({ action = "save", revision = 0, name = "Trial", settings = base.settings })
+            )
+            local saved = assert(rules.apply(base, save, 1, 1))
+            local live = assert(
+                rules.apply(
+                    saved,
+                    assert(rules.request({ action = "apply", revision = 1, name = "Trial" })),
+                    1,
+                    1
+                )
+            )
+            local request = assert(rules.request({ action = "delete", revision = 2, name = "Trial" }))
+            assert(not rules.apply(live, request, 2, 1), "ordinary player deleted a preset")
+            local deleted = assert(rules.apply(live, request, 1, 1))
+            assert(
+                deleted.presets.Trial == nil and live.presets.Trial ~= nil,
+                "delete mutated prior snapshot"
+            )
+            assert(
+                deleted.revision == 3
+                    and deleted.activeRevision == live.activeRevision
+                    and deleted.settings == live.settings,
+                "delete changed live rules"
+            )
+            assert(rules.decode(deleted), "deleted active name broke stored state")
+            assert(not rules.apply(deleted, request, 1, 1), "stale deletion replay accepted")
+            assert(
+                not rules.apply(
+                    deleted,
+                    assert(rules.request({ action = "delete", revision = 3, name = "Shipped" })),
+                    1,
+                    1
+                ),
+                "built-in deleted"
+            )
+            assert(
+                not rules.apply(
+                    deleted,
+                    assert(rules.request({ action = "delete", revision = 3, name = "Missing" })),
+                    1,
+                    1
+                ),
+                "missing preset deleted"
+            )
+            assert(
+                not rules.request({ action = "delete", revision = 3, name = "Trial", settings = {} }),
+                "delete accepted extra payload"
+            )
+        end
+    )
 end
