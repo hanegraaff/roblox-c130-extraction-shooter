@@ -81,6 +81,13 @@ function RoundHarness.run()
         return
     end
     local args = StudioTestService:GetTestArgs()
+    if kind == "P26" then
+        require(script.Parent.BalanceHarness).run(type(args) == "table")
+        return
+    elseif kind == "P26Panel" and args == nil then
+        require(script.Parent.BalanceHarness).preview()
+        return
+    end
     if kind == "P24" then
         require(script.Parent.AircraftArrivalHarness).run(type(args) == "table")
         return

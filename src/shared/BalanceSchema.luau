@@ -69,7 +69,15 @@ local function numeric(
     maximum: number,
     integer: boolean
 ): Field
-    return { key = key, label = label, kind = "number", unit = unit, minimum = minimum, maximum = maximum, integer = integer }
+    return {
+        key = key,
+        label = label,
+        kind = "number",
+        unit = unit,
+        minimum = minimum,
+        maximum = maximum,
+        integer = integer,
+    }
 end
 local fields: { Field } = {
     numeric("aircraftHealthPerGround", "Aircraft health per Ground player", "HP", 1, 10000, true),
@@ -88,11 +96,17 @@ local fields: { Field } = {
     numeric("medkitHeal", "Medkit healing", "HP", 1, 1000, true),
     { key = "medkitSingleUse", label = "Single-use kits", unit = "", kind = "boolean" },
     numeric("medkitRespawn", "Reusable kit respawn", "s", 1, 600, true),
-    { key = "panelDamage", label = "Panel damage", unit = "", kind = "choice", options = {
-        "Low",
-        "Medium",
-        "High",
-    } },
+    {
+        key = "panelDamage",
+        label = "Panel damage",
+        unit = "",
+        kind = "choice",
+        options = {
+            "Low",
+            "Medium",
+            "High",
+        },
+    },
     numeric("roundDuration", "Combat duration", "s", 1, 3600, true),
     numeric("intermission", "Lobby intermission", "s", 0, 3600, true),
     numeric("minimumPlayers", "Minimum players", "players", 2, 10, true),
