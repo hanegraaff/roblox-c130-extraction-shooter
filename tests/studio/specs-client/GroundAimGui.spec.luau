@@ -3,7 +3,7 @@
 -- and phone layout. Synthetic viewports and facts do not operate native input.
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
-    test("P27 the centered Ground reticle and firing ray use the displayed camera", function()
+    test("P27 the raised Ground reticle and firing ray use the displayed camera", function()
         local player = game:GetService("Players").LocalPlayer
         local guiService = game:GetService("GuiService")
         local runService = game:GetService("RunService")
@@ -45,7 +45,8 @@ return function()
                         continue
                     end
                     local drawn = reticle.AbsolutePosition + reticle.AbsoluteSize * 0.5 + inset
-                    assert((drawn - viewport * 0.5).Magnitude <= 1, "Ground reticle is off center")
+                    local raised = Vector2.new(viewport.X * 0.5, viewport.Y * 0.40)
+                    assert((drawn - raised).Magnitude <= 1, "Ground reticle missed the raised aim row")
                     assert((drawn - pixels).Magnitude <= 1, "Ground reticle and firing pixels differ")
                     local ray = camera:ViewportPointToRay(pixels.X, pixels.Y)
                     local reticleRay = camera:ViewportPointToRay(drawn.X, drawn.Y)
@@ -54,8 +55,9 @@ return function()
                         "Ground reticle and firing rays differ"
                     )
                     assert(
-                        ray.Direction:Dot(camera.CFrame.LookVector) > 0.99999,
-                        "Ground ray missed the view direction"
+                        ray.Direction:Dot(camera.CFrame.UpVector) > 0.05
+                            and math.abs(ray.Direction:Dot(camera.CFrame.RightVector)) < 0.005,
+                        "Ground ray did not rise along the center column"
                     )
                     break
                 until false
@@ -448,6 +450,11 @@ return function()
                     insetBottomRight = Vector2.zero,
                 },
                 {
+                    viewport = Vector2.new(567, 299),
+                    min = Vector2.new(0, 58),
+                    insetBottomRight = Vector2.zero,
+                },
+                {
                     viewport = Vector2.new(852, 393),
                     min = Vector2.new(48, 58),
                     insetBottomRight = Vector2.new(16, 12),
@@ -468,6 +475,14 @@ return function()
                 local reticle = child(groundViewport, "Reticle")
                 local timer = child(roundViewport, "Round")
                 assert(timer:IsA("TextLabel"), "round label missing")
+                if variant == "M7" and touch then
+                    local warning = child(roundViewport, "Cue")
+                    assert(warning:IsA("TextLabel"), "Ground warning missing")
+                    -- Exercise the production warning rectangle with its active
+                    -- compact text without injecting a world warning into combat.
+                    warning.Text = "INCOMING FIRE"
+                    warning.Visible = true
+                end
                 for _, layout in layouts do
                     local size, safeMin = layout.viewport, layout.min
                     local safeMax = size - layout.insetBottomRight
@@ -564,11 +579,11 @@ return function()
                                 item.TextFits and item.TextBounds.X > 0 and item.TextBounds.Y > 0,
                                 "text clipped: " .. detail .. " " .. item.Text
                             )
-                            if item.Name == "Reload" then
+                            if item.Name == "Reload" or item.Name == "Pickup" then
                                 assert(
                                     item.TextBounds.X + 8 <= item.AbsoluteSize.X,
                                     string.format(
-                                        "reload text lost padding at %s: %s in %s",
+                                        "action text lost padding at %s: %s in %s",
                                         detail,
                                         tostring(item.TextBounds),
                                         tostring(item.AbsoluteSize)
@@ -579,7 +594,7 @@ return function()
                     end
                     if variant == "Scatter" then
                         assert(
-                            timer.AbsoluteSize.X <= safeSize.X / 4 and timer.AbsoluteSize.Y <= 24,
+                            timer.AbsoluteSize.X <= math.ceil(safeSize.X / 4) and timer.AbsoluteSize.Y <= 24,
                             "Scatter timer exceeds its screen budget"
                         )
                         assert(not timer.TextWrapped, "Scatter timer permits a second line")

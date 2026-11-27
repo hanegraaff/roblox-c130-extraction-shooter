@@ -478,10 +478,14 @@ function RoundPanel.new(
                 end
 
                 local frame = effects.update(view, roundId, reason, os.clock(), effectScale)
-                cue.Position = UDim2.new(0.5, 0, 0, if touch then 62 else 8)
-                cue.Size = UDim2.fromOffset(if touch then 180 else 252, if touch then 22 else 34)
+                local groundPhone = touch and view == "Ground"
+                cue.Position = UDim2.new(0.5, 0, 0, if groundPhone then 28 elseif touch then 62 else 8)
+                cue.Size = UDim2.fromOffset(
+                    if touch then 180 else 252,
+                    if groundPhone then 20 elseif touch then 22 else 34
+                )
                 cue.TextSize = if touch then 12 else 16
-                cue.Text = frame.text or ""
+                cue.Text = if groundPhone and frame.text then "INCOMING FIRE" else frame.text or ""
                 cue.Visible = frame.text ~= nil
                 cue.BackgroundTransparency = 0.19 - frame.pulse * 0.13
                 gui:SetAttribute("CuePulse", frame.pulse)

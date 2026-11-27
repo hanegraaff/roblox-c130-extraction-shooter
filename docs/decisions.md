@@ -127,6 +127,7 @@ The 2026-11-23 P18 revision supersedes prior health, destruction and camera-boun
 | D114 | Default preset and named copies, 2026-11-27 | Display the built-in preset as Default and require a changed name before Save is enabled. Remove the generated New Preset entry. After deletion, clear the name field. Keep the stored Shipped identifier for compatibility with existing servers and saved selections. Default is a protected display name for new saves. Supersedes D113’s New Preset reset. |
 | D115 | User-selected mobile screen space, 2026-11-27 | Free up the mobile play view before the text work, starting with the C-130 countdown. P27 carries the mobile HUD work ahead of P33 and P34. The operator blackout remains part of P24’s arrival sequence. |
 | D116 | Proposed P27 layout targets | Put one readable Ground Scatter timer at the safe top edge. At 568×320, aim for a single line no wider than one quarter of the safe area and no taller than 24 UI pixels. Review the layout and touch controls on a wider phone with a cutout as well. |
+| D117 | User-selected Ground reticle height, 2026-11-27 | Raise the horizontally centered Ground reticle so the avatar does not obscure it in normal third-person play. Rifle and launcher aim use that same point. The vertical offset is a tuning value. |
 
 ## Open details that do not block initial implementation
 

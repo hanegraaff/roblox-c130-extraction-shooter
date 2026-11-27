@@ -1,8 +1,8 @@
 --!strict
 --[=[
-    GroundCameraRules: engine-independent distance and room-boundary math for the
-    local Ground presentation. All lengths are studs and frame intervals are
-    seconds. No camera, world, gameplay authority, side effects, or yielding.
+    GroundCameraRules: engine-independent indoor framing, heading and reticle placement
+    for local Ground presentation. Distances are studs, frame intervals are
+    seconds, and reticle coordinates are viewport pixels. No camera, world, gameplay authority, side effects, or yielding.
 ]=]
 local Validation = if script then require(script.Parent.Validation) else require("./Validation")
 local GroundCameraRules = {}
@@ -59,6 +59,12 @@ function GroundCameraRules.ceilingDistance(
         return stockDistance
     end
     return (clearance - focusHeight) / (cameraHeight - focusHeight) * stockDistance
+end
+
+-- Rounds the fixed above-center aim row to the same pixel used by both
+-- the rendered crosshair and the camera ray. Avatar animation cannot move it.
+function GroundCameraRules.reticleY(viewportHeight: number): number
+    return math.floor(viewportHeight * 0.40 + 0.5)
 end
 
 -- Converts a projected view direction into a Roblox yaw in [-π, π].

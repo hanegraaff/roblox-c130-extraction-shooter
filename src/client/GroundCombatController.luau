@@ -16,6 +16,7 @@ local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
 local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local Validation = require(ReplicatedStorage.Shared.Validation)
 local GroundInput = require(script.Parent.GroundInput)
+local GroundCameraRules = require(ReplicatedStorage.Shared.GroundCameraRules)
 local GroundCombatController = {}
 local renderOwnerCount = 0
 type LauncherView = {
@@ -28,24 +29,24 @@ type LauncherView = {
     position: { x: number, y: number, z: number },
 }
 
--- One rounded center pixel drives both the reticle and the ray on desktop
--- and touch. The measured GUI origin plus inset converts into local pixels.
+-- One rounded viewport pixel drives both the raised reticle and either
+-- weapon's ray. The measured GUI origin plus inset converts into local pixels.
 function GroundCombatController.projectAim(
     viewport: Vector2,
     inset: Vector2,
     origin: Vector2
 ): (Vector2, UDim2)
-    local pixels = Vector2.new(math.floor(viewport.X * 0.5 + 0.5), math.floor(viewport.Y * 0.5 + 0.5))
+    local pixels = Vector2.new(math.floor(viewport.X * 0.5 + 0.5), GroundCameraRules.reticleY(viewport.Y))
     local guiOrigin = origin + inset
     return pixels,
         UDim2.fromOffset(math.floor(pixels.X - guiOrigin.X + 0.5), math.floor(pixels.Y - guiOrigin.Y + 0.5))
 end
 
 -- Returns position/size in the owning ScreenGui's content coordinates.
--- On a phone readiness sits below the right-aligned surrender control.
+-- Phone readiness shares the compact top strip with the round clock.
 function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
     if touch then
-        return UDim2.new(1, -8, 0, 52), UDim2.fromOffset(178, 20)
+        return UDim2.new(0.5, 0, 0, 4), UDim2.fromOffset(178, 20)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
 end
@@ -177,6 +178,7 @@ function GroundCombatController.new(
                     elseif name == "Rocket" then "ROCKET"
                     elseif name == "Drop" then "DROP"
                     else "PICK UP"
+                button.Font = Enum.Font.GothamMedium
                 button.TextSize = 14
                 button.BackgroundColor3 = Color3.fromRGB(61, 65, 38)
                 button.TextColor3 = Color3.new(1, 1, 1)
@@ -420,17 +422,17 @@ function GroundCombatController.new(
                         gui.ScreenInsets = if touch
                             then Enum.ScreenInsets.CoreUISafeInsets
                             else Enum.ScreenInsets.DeviceSafeInsets
-                        label.AnchorPoint = if touch then Vector2.new(1, 0) else Vector2.new(0.5, 1)
+                        label.AnchorPoint = Vector2.new(0.5, if touch then 0 else 1)
                         label.Position, label.Size = GroundCombatController.statusLayout(touch)
                         label.TextSize = if touch then 13 else 16
                         healthLabel.Size =
                             UDim2.fromOffset(if touch then 124 else 188, if touch then 20 else 28)
                         healthLabel.TextSize = if touch then 13 else 14
                         fireButton.AnchorPoint = Vector2.new(1, 0)
-                        fireButton.Position = UDim2.new(1, -8, 0, 76)
+                        fireButton.Position = UDim2.new(1, -8, 0, 50)
                         fireButton.Size = UDim2.fromOffset(64, 52)
                         reloadButton.AnchorPoint = Vector2.new(1, 0)
-                        reloadButton.Position = UDim2.new(1, -80, 0, 80)
+                        reloadButton.Position = UDim2.new(1, -80, 0, 54)
                         reloadButton.Size = UDim2.fromOffset(78, 44)
                         reloadButton.TextSize = 12
                     end
@@ -512,17 +514,24 @@ function GroundCombatController.new(
                         and backpack ~= nil
                         and backpack:FindFirstChild("Rocket launcher") ~= nil
                     local actions: { TextButton } = {}
+                    local actionWidth = 0
+                    local gap = 2
                     for _, name in { "M7", "Rocket", "Drop", "Pickup" } do
                         local action = launcherButtons[name]
                         if action.Visible then
+                            local width = if not touch then 130 elseif name == "Pickup" then 102 else 74
+                            action.Size = UDim2.fromOffset(width, if touch then 44 else 32)
+                            actionWidth += width + gap
                             table.insert(actions, action)
                         end
                     end
-                    for index, action in actions do
-                        local offset = (index - (#actions + 1) * 0.5) * 76
-                        action.Position =
-                            UDim2.new(0.5, if touch then offset else 0, 1, if touch then -98 else -160)
-                        action.Size = UDim2.fromOffset(if touch then 74 else 130, if touch then 44 else 32)
+                    -- Wider pickup caption still leaves separate targets for
+                    -- any equipment actions offered in the same bottom row.
+                    local left = -(actionWidth - gap) * 0.5
+                    for _, action in actions do
+                        local width = action.Size.X.Offset
+                        action.Position = UDim2.new(0.5, left + width * 0.5, 1, if touch then -98 else -160)
+                        left += width + gap
                     end
                     launcherLabel.Visible = not touch
                     if not touch then
