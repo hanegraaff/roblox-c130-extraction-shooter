@@ -6,7 +6,7 @@ The same original launcher is recognizable on the ground and in a player’s han
 
 ## Work
 
-- Work from the [rocket launcher references](../src/images/rocket-launcher/). Save one editable master at `assets/blender/rocket-launcher/rocket-launcher.blend`. Create pickup and equipped presentations from it with an avatar-sized grip and a consistent visual firing point.
+- Use the approved [depot launcher references](../src/images/rocket-launcher/). Match the muted sand, graphite and teal exterior. Use the carried view to judge the prop's size against a Roblox avatar. Save one editable master at `assets/blender/rocket-launcher/rocket-launcher.blend`. Create pickup and equipped presentations from it with an avatar-sized grip and a consistent visual firing point.
 - Use LauncherRuntime and LauncherGeometry for placement, equipping and transfer. Each of the four existing sites keeps its own identity, ready time and drop/recovery behavior. Register the export, materials and managed source in the manifest.
 
 ## Acceptance
