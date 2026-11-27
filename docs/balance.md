@@ -21,7 +21,7 @@ The experience owner controls the tester list. For a group-owned experience, sig
 ## Change a setting
 
 1. Check **Live in game** at the top. This names the settings currently selected for the game.
-2. In **Saved presets**, open **Load** and choose a preset or **New Preset**. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
+2. In **Saved presets**, open **Load Settings** and choose a preset or **New Preset**. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
 3. Enter a preset name and select **Save preset**. This stores the values you edited. **Apply saved** becomes available when the editor matches the saved preset.
 4. Select **Apply saved** to use that preset in the game. The live name at the top updates. Combat changes start next round.
 5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name becomes **New Preset**, ready for you to edit and save, or close. **Shipped** remains available as the built-in starting point.
