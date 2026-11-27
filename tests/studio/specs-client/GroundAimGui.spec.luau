@@ -567,7 +567,12 @@ return function()
                             if item.Name == "Reload" then
                                 assert(
                                     item.TextBounds.X + 8 <= item.AbsoluteSize.X,
-                                    "reload text lost padding"
+                                    string.format(
+                                        "reload text lost padding at %s: %s in %s",
+                                        detail,
+                                        tostring(item.TextBounds),
+                                        tostring(item.AbsoluteSize)
+                                    )
                                 )
                             end
                         end

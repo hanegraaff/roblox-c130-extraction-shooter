@@ -431,7 +431,7 @@ function GroundCombatController.new(
                         fireButton.Size = UDim2.fromOffset(64, 52)
                         reloadButton.AnchorPoint = Vector2.new(1, 0)
                         reloadButton.Position = UDim2.new(1, -80, 0, 80)
-                        reloadButton.Size = UDim2.fromOffset(66, 44)
+                        reloadButton.Size = UDim2.fromOffset(78, 44)
                         reloadButton.TextSize = 12
                     end
                     if not touch then
