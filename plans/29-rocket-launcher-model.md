@@ -11,6 +11,8 @@ The same original launcher is recognizable on the ground and in a player’s han
 
 ## Acceptance
 
+The owner’s 2026-11-28 direction moves the multi-client portions of A2 and A3 to the final MVP test. Record those results against the final candidate. The separate desktop and phone fit review in A1 remains pending.
+
 1. **A1 · Asset and fit.** Verify a clean build and inspect all four pickup placements. Check grip, clipping, floor contact, scale and muzzle effect alignment from desktop and phone views.
 2. **A2 · Transfer and fire.** Use three Studio clients to pick up, aim, fire, hand off while cooling, lose a carrier and recover a launcher. Check the visible held/dropped state on both Ground clients, one owner, the correct firing origin and independent readiness.
 3. **A3 · Replay.** Check that each site resets with one loaded launcher and that old held models and effects disappear.
@@ -51,3 +53,9 @@ The owner reported poor ground rendering while the carried model worked. Studio 
 In a one-client local `game.rbxlx` Play session, the production `LauncherGeometry` loaded the corrected Rojo-built template as a temporary fixture. At Radar, Hangar, Depot and Seedship, the visible bottom moved from 1.111 studs below the floor to 0.012 studs above it. The teal plate rose to about 1.095 studs above the floor, and the gameplay pivot stayed at the original site. A desktop client capture showed the corrected Radar pickup. The session returned to Edit. The three-client scenario and phone review remain open. [Studio procedure](../docs/testing.md#verify-the-depot-launcher-model)
 
 `python3 scripts/verify.py` passed on the corrected source tree `4e6c003dff2d43500b4f19c9fcaeb740aa4c79e7`, with 97 unit, 102 integration, 27 tooling and 78 asset tests. Blender 5.3.0 reopened and reimported all 126 meshes. The rebuilt `build/tests.rbxlx` has SHA-256 `3d574a35374e6586a1a4678789b17c33a7c79fcbdf9a7e61e54202bb9d4ba9fa`. The rebuilt `build/game.rbxlx` has SHA-256 `6245a043dcde6d3da3f26efd478b016b9fd1625bc4f123439cffa5b0ff51f334`.
+
+### 2026-11-28 · Final MVP test deferral
+
+The owner directed that multi-client testing happen during the final MVP test. Carry the three-client pickup, aim/fire, held and dropped replication, cooldown handoff, carrier loss/recovery and replay/cleanup cases into that session. Run the existing P29 scenario against the final candidate and record the source, client count and results here.
+
+PR #89 merged the implementation into main at `896902594c5a483eb41e79e2d942fc2fc51a6d53`. The historical automated and one-client floor-fit results above remain the available evidence. The multi-client cases await the final MVP test. Desktop and phone grip, clipping, scale and muzzle presentation review also remains pending.

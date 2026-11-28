@@ -135,6 +135,8 @@ The 2026-11-23 P18 revision supersedes prior health, destruction and camera-boun
 | D121 | User-selected learning guide, 2026-11-28 | P33 delivers one root README for developers new to Roblox and game development. Put Game, Project / Development Setup and Game Design in that order, with gameplay screenshots and a Blender model showcase embedded in their respective sections. This replaces the earlier single-image and linked-gallery direction. |
 | D122 | User-selected listing title and banner art, 2026-11-28 | Title the game **C-130 Assault**. P34 delivers a polished arcade listing preview with AI-generated banners alongside actual gameplay screenshots. |
 
+| D123 | User-directed P29 test deferral, 2026-11-28 | Run P29’s multi-client transfer, firing, replication, recovery and replay checks during the final MVP test. Keep the checks pending against the final candidate. The separate desktop and phone fit review remains open. |
+
 ## Open details that do not block initial implementation
 
 | Detail | Needed by | Proposed approach |
