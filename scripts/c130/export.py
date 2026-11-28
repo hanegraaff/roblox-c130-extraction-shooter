@@ -5,7 +5,7 @@ review camera using the saved stage. Native meshes use the supported stock Roblo
 shapes tagged in the Blender master and inherit its dimensions, pose and colors.
 """
 from pathlib import Path
-from math import isfinite
+from math import cos, isfinite, pi, sqrt
 import hashlib
 import json
 import struct
@@ -63,6 +63,39 @@ def base_part(name, size, placement, color, *, shape="Block", query=False, trans
     return {"Name": name, "ClassName": "WedgePart" if shape == "Wedge" else "Part", "Properties": props}
 
 
+def ellipsoid_queries(name, origin, rotation, size):
+    """Conservative engine-native cylinders contained in an authored ellipsoid."""
+    semi_axes = [extent / 2 for extent in size]
+    along, wide, narrow = sorted(range(3), key=lambda axis: -semi_axes[axis])
+    length, major, minor = (semi_axes[axis] for axis in (along, wide, narrow))
+    axis, across = rotation.col[along], rotation.col[wide]
+    cylinder_frame = Matrix((axis, across, axis.cross(across))).transposed()
+    bands = 15 if length > 8 else 11
+    length_planes = [-length * cos(pi * i / bands) for i in range(bands + 1)]
+    result = []
+    for index in range(1, bands - 1):
+        low, high = length_planes[index:index + 2]
+        edge = max(abs(low), abs(high))
+        profile = sqrt(1 - (edge / length) ** 2)
+        # Select the narrower end of each band, so it stays inside the globe.
+        # Strongly elliptical bands add circles tangent to the wide ends. The
+        # maximum inscribed tangent radius is b²/a for ellipse semiaxes a,b.
+        circles = [(0, minor)]
+        if major - minor > 0.18:
+            side_radius = minor ** 2 / major
+            side_offset = major - side_radius
+            circles.extend(((-side_offset, side_radius), (side_offset, side_radius)))
+        for circle, (offset, radius) in enumerate(circles, 1):
+            center = origin + axis * ((low + high) / 2) + across * (offset * profile)
+            diameter = 2 * radius * profile - 0.02
+            result.append(base_part(
+                f"{name} query {index}.{circle}", values((high - low, diameter, diameter)),
+                frame(center, cylinder_frame), [0, 0, 0],
+                shape="Cylinder", query=True, transparency=1,
+            ))
+    return result
+
+
 def export_part(obj):
     shape = obj["NativeShape"]
     if shape not in SHAPES or obj.type != "MESH" or len(obj.data.materials) != 1 or obj.modifiers:
@@ -74,11 +107,25 @@ def export_part(obj):
     if any(abs(max(vertex[axis] for vertex in local_points) - 0.5) > 0.003 or
            abs(min(vertex[axis] for vertex in local_points) + 0.5) > 0.003 for axis in range(3)):
         raise ValueError(f"{obj.name}: native shape editing requires object-level transforms")
-    return base_part(
-        obj.name, values(scale), frame(origin, rotation),
+    if shape == "Cylinder" and abs(scale.y - scale.z) > 0.0001:
+        raise ValueError(f"{obj.name}: native cylinders require a circular radial profile")
+    rounded = shape == "Ball"
+    wants_query = bool(obj["NativeQuery"])
+    part = base_part(
+        obj.name, [1, 1, 1] if rounded else values(scale), frame(origin, rotation),
         values(srgb(channel) for channel in shader.inputs["Base Color"].default_value[:3]),
-        shape=shape, query=bool(obj["NativeQuery"]), transparency=obj["NativeTransparency"],
+        shape="Block" if rounded else shape, query=wants_query and not rounded,
+        transparency=obj["NativeTransparency"],
     )
+    if rounded:
+        # Ball parts use their smallest axis. The built-in Sphere mesh scales
+        # independently via the 1-stud carrier, with no asset ID or hidden box query.
+        part["Children"] = [{
+            "Name": "RoundedVisual", "ClassName": "SpecialMesh",
+            "Properties": {"MeshType": "Sphere", "Scale": values(scale)},
+        }]
+    queries = ellipsoid_queries(obj.name, origin, rotation, scale) if rounded and wants_query else []
+    return part, queries
 
 
 def write_json(path, value):
@@ -110,9 +157,10 @@ def main():
     rotors = {name: {"Name": name, "ClassName": "Model", "Children": [
         base_part("Hub", [0.1] * 3, frame(*transform(markers[name])[:2]), [0, 0, 0], transparency=1)
     ]} for name in ROTORS}
-    visual = []
+    visual, queries = [], []
     for obj in objects:
-        part = export_part(obj)
+        part, rounded_queries = export_part(obj)
+        queries.extend(rounded_queries)
         if obj.get("Rotor"):
             if part["Properties"]["CanQuery"]:
                 raise ValueError("Spinning geometry cannot participate in server queries")
@@ -125,6 +173,7 @@ def main():
         "ClassName": "Model", "Children": [
             hitbox, {"Name": "Airframe", "ClassName": "Model", "Children": visual},
             {"Name": "Propellers", "ClassName": "Folder", "Children": list(rotors.values())},
+            {"Name": "RoundedQueries", "ClassName": "Folder", "Children": queries},
         ],
     }
     write_json(NATIVE, model)
@@ -163,7 +212,8 @@ def main():
         "blenderScaleLengthMeters": bpy.context.scene.unit_settings.scale_length,
         "externalAssetDependencies": [],
         "meshObjects": len(objects),
-        "nativeQueryableObjects": sum(bool(obj["NativeQuery"]) for obj in objects),
+        "nativeQueryableObjects": sum(item["Properties"]["CanQuery"] for item in visual) + len(queries),
+        "nativeRoundedQueryVolumes": len(queries),
         "triangles": triangle_count,
         "boundsStuds": {"minimum": values(minimum), "maximum": values(maximum)},
         "muzzlesStuds": {name: values(transform(markers[name])[0]) for name in MUZZLES},

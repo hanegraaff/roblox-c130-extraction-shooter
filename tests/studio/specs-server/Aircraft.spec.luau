@@ -60,6 +60,8 @@ return function()
                     hitbox.Anchored and hitbox.Transparency == 1 and not hitbox.CanQuery,
                     "canonical root must never extend the shootable silhouette"
                 )
+                local roundedQueries = model:FindFirstChild("RoundedQueries")
+                assert(roundedQueries and roundedQueries:IsA("Folder"), "missing rounded query volumes")
                 local queryable = 0
                 for _, item in model:GetDescendants() do
                     if item:IsA("BasePart") then
@@ -71,7 +73,10 @@ return function()
                             assert(not item.Anchored and item.Massless, "flight root must be the only anchor")
                         end
                         if item.CanQuery then
-                            assert(item.Transparency == 0, "only visible solids participate in queries")
+                            assert(
+                                item.Transparency == (if item:IsDescendantOf(roundedQueries) then 1 else 0),
+                                "only native solids and their dedicated rounded proxies participate in queries"
+                            )
                             queryable += 1
                         end
                     end
@@ -104,6 +109,40 @@ return function()
                         "solid visible airframe surface missed: " .. sample.prefix .. " / " .. tostring(hit)
                     )
                 end
+                for _, sample in
+                    {
+                        {
+                            prefix = "Rounded flight deck",
+                            from = Vector3.new(6, 0, -24.5),
+                            toward = Vector3.new(3.35, 0, -24.5),
+                            outside = Vector3.new(4.9, 0, -24.5),
+                        },
+                        {
+                            prefix = "Port2 nacelle",
+                            from = Vector3.new(-17.5, -1, -10.4),
+                            toward = Vector3.new(-17.5, 2.83, -10.4),
+                            outside = Vector3.new(-17.5, 1.38, -10.4),
+                        },
+                        {
+                            prefix = "Tapered tail cone",
+                            from = Vector3.new(0, -8, 29.22),
+                            toward = Vector3.new(0, 2.2, 29.22),
+                            outside = Vector3.new(0, 1.11, 29.22),
+                        },
+                    }
+                do
+                    local hit = cast(sample.from, sample.toward)
+                    assert(
+                        hit
+                            and hit.Instance:IsDescendantOf(roundedQueries)
+                            and string.sub(hit.Instance.Name, 1, #sample.prefix) == sample.prefix,
+                        "rounded visual mantle must support a matching native query: " .. sample.prefix
+                    )
+                    assert(
+                        not cast(sample.from, sample.outside),
+                        "rounded query escaped the authored visual shell: " .. sample.prefix
+                    )
+                end
                 assert(
                     not cast(Vector3.new(29.3, -12, -4), Vector3.new(29.3, 12, -4)),
                     "shot outside the wingtips must miss"
@@ -114,6 +153,28 @@ return function()
                 )
                 local airframe = model:FindFirstChild("Airframe")
                 assert(airframe and airframe:IsA("Model"), "managed aircraft visual missing")
+                for _, shape in
+                    {
+                        { name = "Rounded flight deck", scale = Vector3.new(11.3, 9, 17.2) },
+                        { name = "Port2 nacelle", scale = Vector3.new(3.77, 3.48, 10.2) },
+                        { name = "Tapered tail cone", scale = Vector3.new(6.83, 4.23, 16) },
+                    }
+                do
+                    local visual = airframe:FindFirstChild(shape.name)
+                    assert(
+                        visual and visual:IsA("Part") and not visual.CanQuery and visual.Size == Vector3.one,
+                        "rounded shape uses a strictly visual mesh carrier"
+                    )
+                    local sphere = visual:FindFirstChild("RoundedVisual")
+                    assert(
+                        sphere
+                            and sphere:IsA("SpecialMesh")
+                            and sphere.MeshType == Enum.MeshType.Sphere
+                            and (sphere.Scale - shape.scale).Magnitude < 0.001
+                            and sphere.MeshId == "",
+                        "built-in ellipse lost its independent visual scale: " .. shape.name
+                    )
+                end
                 for _, weapon in { "GAU23", "M102" } do
                     local attachment = hitbox:FindFirstChild(weapon .. "Muzzle")
                     local bore = airframe:FindFirstChild(weapon .. " dark bore")

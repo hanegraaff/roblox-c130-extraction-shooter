@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P28` | 2 | Aircraft reveal, full orbit and rotor movement, weapon zoom masks and firing origins, visible hit surfaces and replay after destruction |
 | `P26` | 2 | Owner and tester permissions, all four weapons, both health pools, panel damage, minimum players and consecutive intermissions. Use `P26Panel` for the hands-on lobby preview |
 | `P24` | 2 | Production-length Scatter, both countdown views, real launcher transfers and fire gating, aircraft reveal, role rotation and canceled arrival |
 | `P23` | 3 initially, 4 after late join | Protected lobby return, theater interaction, result and production-length intermission, and two battlefield resets |
@@ -20,7 +21,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 
 `Workspace.HarnessCompatibilityReport` identifies a rejected selector, reason and replacement before the archived server coordinator starts. The shared test-only compatibility guard also protects direct fixture entry. No archived gameplay assertion is relabelled as passing current behavior. P17 asset reconstruction/provenance checks remain active; its frozen old staged body is preserved separately.
 
-Ordinary multiplayer test rounds and the P24 selector exercise the 20-second head start. The named P03, P04, P05, P18 and P23 regressions use zero Scatter time to isolate their existing checks.
+Ordinary multiplayer test rounds and the P24 and P28 selectors exercise the 20-second head start. The named P03, P04, P05, P18 and P23 regressions use zero Scatter time to isolate their existing checks.
 
 ## Current host checks
 
@@ -437,6 +438,25 @@ Use one operated match and its replays to collect the observations shared by the
 4. Operate the controls on a phone. On Ground, combine the stick, world drag and fire, then use a launcher pickup, switch weapons, reload and drop. On the operator, combine direction, aim and fire, then switch profiles and return to the lobby. Record the device and actual simultaneous gestures separately from simulator layout observations.
 
 Record the source, Studio or Roblox client version, actual client count, device and viewport with the shared evidence. Restore the device preview and return the owned Studio session to Edit when finished.
+
+## Verify the C-130 flight model
+
+From a clean checkout of the candidate, run `python3 scripts/verify.py` to audit the committed aircraft package and rebuild both places. Open the editable master and run the Blender reopen and reimport audit. Check the recorded axes, size and muzzle locations against the loaded Roblox template. `Aircraft.spec.luau` checks one anchored flight assembly, the loaded muzzle positions and the native query behavior at solid and empty parts of the silhouette. [Blender commands and package contract](../assets/blender/c130/README.md)
+
+Sync `test.project.json` to the confirmed local **PlayersVsC130Tests** document. Keep the release document separate. With Play stopped, use the Studio MCP Edit context to start two actual clients.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(2, { kind = "P28" })
+    workspace:SetAttribute("P28LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P28 multiplayer test started"
+```
+
+Allow about three minutes for the initial head start, a full 90-second orbit and replay. Read `workspace:GetAttribute("P28LastReport")` in Edit when the run ends. Preserve the `P28-multiplayer` report, the server smoke report and both client reports. Check the actual client and completed round counts, nonzero discovery and zero failures or skips. The scenario checks all four rotating hubs, both weapon zoom masks and firing origins, an authoritative rifle hit and miss, direct rocket sweeps to destruction, and a single correctly posed replica at full roster health in the replay.
+
+Capture the first reveal and representative angles through the orbit from the Ground client. The fixture provides a view that follows the aircraft from the avatar's eye height. Check heading, the charcoal silhouette, slate and crimson markings, and propeller motion at gameplay distance. Inspect the operator at both zooms for an unobstructed targeting view. Keep the camera method and viewport with the captures. Use the native report for firing, query and replay results. [P28 acceptance](../plans/28-c130-model.md#acceptance) · [P24 arrival and fire gating regression](#run-the-p24-aircraft-arrival-harness)
 
 ## Run the P24 aircraft arrival harness
 

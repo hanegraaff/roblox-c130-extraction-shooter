@@ -22,7 +22,9 @@ The launch candidate includes an in-game balance panel for the experience owner 
 
 Ground players aim by moving the mouse. A reticle sits horizontally centered above the avatar so it stays visible. The character turns toward the aim direction, and both Ground weapons use that reticle. Touch players must be able to move, aim, fight and interact throughout a match. Keep persistent mobile HUD information at the edges so the center stays available for play. During Scatter, show Ground one compact arrival timer near the top edge and keep launcher actions available. Controller support can follow launch. [Ground and touch controls](plans/27-ground-aim-and-mobile-controls.md)
 
-Use a separate editable Blender master for the C-130, rocket launcher and medkit. Put a kit in or near each of the five battlefield buildings. It heals up to maximum health and is spent for the round by default. The panel controls healing and reuse. The operator should see the starting bunker as dark cover matching the other buildings. [Public MVP plans](roadmap.md#public-mvp-launch)
+Use a separate editable Blender master for the C-130, rocket launcher and medkit. The flying C-130 keeps the charcoal high wing, four spinning propellers, slate military markings, crimson shark face and lower starboard howitzer. Ground shots hit the visible solid airframe. The operator's thermal view hides the aircraft model at both zooms. [Aircraft asset guide](assets/blender/c130/README.md) · [Public MVP plans](roadmap.md#public-mvp-launch)
+
+Put a kit in or near each of the five battlefield buildings. It heals up to maximum health and is spent for the round by default. The panel controls healing and reuse. The operator should see the starting bunker as dark cover matching the other buildings.
 
 ## Roles and population
 

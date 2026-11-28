@@ -237,7 +237,7 @@
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/models/C130.model.json",
-      "sha256": "65b2bc0bfda86f22051ac4415ab7f03dbbe79099d24b012c63890cc6c805f21f",
+      "sha256": "15795f822101c80827c231b0db5983bbf9253b5749bcd3b6c1a75ca91d4f4c31",
       "roblox_asset_id": null,
       "upload_owner": null
     },
@@ -248,7 +248,7 @@
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/blender/c130/c130.blend",
-      "sha256": "82209cb81aed72b9a7003ae30f452c3cffcf4b7b013ae66bf5be7c098c215d70",
+      "sha256": "19576d908f74aa8d618cb324be378089e7cab599ad45cbfeb267b92b9c2c7e1b",
       "roblox_asset_id": null,
       "upload_owner": null
     },
@@ -259,7 +259,7 @@
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/exports/c130/c130.glb",
-      "sha256": "87ece3cad1d89799c1aec25ab1f6dd17e03af0b64aeda887d907faacdf4dc5a7",
+      "sha256": "e669d156e6819d0b272500d42b2362a37e61b2b338b4c507243f77118e975c97",
       "roblox_asset_id": null,
       "upload_owner": null
     },
@@ -270,7 +270,7 @@
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/exports/c130/package-audit.json",
-      "sha256": "dd80cafa8eb41a9f94022a258a0b9b5ac71e0173edec68fb26b5a8a645b47089",
+      "sha256": "2677b5d12d78dcee6163058c25b1292f8c601b388282f8184302f78b484014da",
       "roblox_asset_id": null,
       "upload_owner": null
     },
@@ -281,7 +281,7 @@
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/exports/c130/ground-approach.png",
-      "sha256": "1e0484460765edc6b81dab02fb23a06a760599a5651c1a46fbc46595dcc51f51",
+      "sha256": "395d6d97b39d39f7c0920572686d056005ed9a1f4b174662e0ecec5d23919108",
       "roblox_asset_id": null,
       "upload_owner": null
     },

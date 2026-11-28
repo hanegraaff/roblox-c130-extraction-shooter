@@ -1,6 +1,6 @@
 # Authored assets
 
-The current runtime assets are the original primitive [expanded terrain/building battlefield](world/Battlefield.model.json), [C-130 template](models/C130.model.json) and [cover panel template](models/CoverPanel.model.json) and [normalized panel residual](models/PanelResidual.model.json), recorded in [manifest.json](manifest.json). Those primitive assets require no cloud asset IDs or external scripts. The P17 candidate also uses managed imported [Outpost/material templates](models/README.md#imported-outpost-and-material-templates), with actual mesh/texture references and receipts under [imports](imports/military-outpost/README.md). `world/` maps to `Workspace.World` and `models/` maps to server-only `ServerStorage.Assets`. The operator's shared material palette lives under `presentation/`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under `world/`, `models/`, `blender/`, `exports/`, `imports/` and `presentation/`, excluding Markdown. The Blender source/export package below remains outside runtime mappings.
+Runtime assets include the original battlefield and panel primitives, the C-130 compiled from Blender into native Roblox shapes, and compiled Outpost meshes and materials. `world/` maps to `Workspace.World` and `models/` maps to server-only `ServerStorage.Assets`. The operator's shared material palette lives under `presentation/`. Keep game-critical source here so a clean Git checkout can rebuild the place. The repository checker requires the manifest to cover every authored file under `world/`, `models/`, `blender/`, `exports/`, `imports/` and `presentation/`, excluding Markdown. Editable Blender files, portable exports and review renders stay outside the runtime mappings. [Manifest](manifest.json) · [Server templates](models/README.md) · [Outpost import receipts](imports/military-outpost/README.md)
 
 Prefer `.model.json` for simple primitives and text `.rbxmx` exports for Studio-authored models. Export only authored objects after stopping play mode. Keep scripts in `src/`; inspect imported models for unintended scripts. For meshes, textures, animations and audio, retain original sources when rights and size permit, and record uploaded asset references and ownership.
 
@@ -35,6 +35,10 @@ Generated place builds belong in ignored `build/`. Do not blanket-ignore authore
 ## Furnished waiting lobby
 
 The furnished P22 lobby places the approved P20 bust on a stepped dais between the theater and gallery. The gallery displays two supplied photographs and four approved oil renditions. The editable Blender scene packs all images. The GLB includes 15 embedded textures and links the four oil PNGs by relative path. P22's Rojo mappings use an engine-exported visual model alongside the lobby's authored collision. [Blender review and rebuild](blender/lobby-interior/README.md) · [Native import and placement](imports/lobby-interior/README.md)
+
+## Flying C-130
+
+The editable master contains the original geometry, gunmetal and slate materials, crimson shark-face markings, four rotors and starboard M102. The export pipeline builds the server-only native template and a portable GLB from the same source. Native Roblox shapes and authored colors supply the flying model without external texture or mesh IDs. Use the managed template when rebuilding the place. [Editable package and rebuild steps](blender/c130/README.md) · [Export files](exports/c130/README.md)
 
 ## Weapon presentation assets
 

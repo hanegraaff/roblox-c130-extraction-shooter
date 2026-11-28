@@ -8,9 +8,10 @@
   "blenderUnitsPerStud": 1,
   "blenderScaleLengthMeters": 0.2800000011920929,
   "externalAssetDependencies": [],
-  "meshObjects": 314,
-  "nativeQueryableObjects": 83,
-  "triangles": 43884,
+  "meshObjects": 316,
+  "nativeQueryableObjects": 269,
+  "nativeRoundedQueryVolumes": 194,
+  "triangles": 44260,
   "boundsStuds": {
     "minimum": [
       -29.010313,
@@ -58,8 +59,8 @@
     ]
   },
   "sha256": {
-    "assets/blender/c130/c130.blend": "82209cb81aed72b9a7003ae30f452c3cffcf4b7b013ae66bf5be7c098c215d70",
-    "assets/exports/c130/c130.glb": "87ece3cad1d89799c1aec25ab1f6dd17e03af0b64aeda887d907faacdf4dc5a7",
-    "assets/models/C130.model.json": "65b2bc0bfda86f22051ac4415ab7f03dbbe79099d24b012c63890cc6c805f21f"
+    "assets/blender/c130/c130.blend": "19576d908f74aa8d618cb324be378089e7cab599ad45cbfeb267b92b9c2c7e1b",
+    "assets/exports/c130/c130.glb": "e669d156e6819d0b272500d42b2362a37e61b2b338b4c507243f77118e975c97",
+    "assets/models/C130.model.json": "15795f822101c80827c231b0db5983bbf9253b5749bcd3b6c1a75ca91d4f4c31"
   }
 }

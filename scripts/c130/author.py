@@ -35,6 +35,24 @@ PALETTE = {
 # Convert Roblox local points to right-handed Blender coordinates.
 TO_BLENDER = Matrix(((1, 0, 0), (0, 0, -1), (0, 1, 0)))
 
+# The cabin uses overlapping true circular profiles. Roblox's cylinders
+# clamp a nonuniform radial scale, so each authored section is circular.
+CABIN_HALF_WIDTH, CABIN_HALF_HEIGHT = 5.65, 4.5
+CABIN_SIDE_RADIUS = CABIN_HALF_HEIGHT ** 2 / CABIN_HALF_WIDTH
+CABIN_SIDE_OFFSET = CABIN_HALF_WIDTH - CABIN_SIDE_RADIUS
+CABIN_PROFILES = ((0, CABIN_HALF_HEIGHT), (-CABIN_SIDE_OFFSET, CABIN_SIDE_RADIUS),
+                  (CABIN_SIDE_OFFSET, CABIN_SIDE_RADIUS))
+
+
+def cabin_side_at(height):
+    """Starboard extent of the exact union of the three circular sections."""
+    return max(
+        offset + sqrt(max(0, radius ** 2 - height ** 2))
+        for offset, radius in CABIN_PROFILES
+        if abs(height) <= radius
+    )
+
+
 
 def linear(value):
     return ((value + 0.055) / 1.055) ** 2.4 if value > 0.04045 else value / 12.92
@@ -198,7 +216,10 @@ class Aircraft:
         obj["NativeMarker"] = True
 
     def add_airframe(self):
-        self.tube("Cargo cabin", (0, 0, -2), (34, 9, 11.3), "Charcoal", query=True)
+        for name, (offset, radius) in zip(
+            ("Cargo cabin", "Cargo cabin port shoulder", "Cargo cabin starboard shoulder"), CABIN_PROFILES
+        ):
+            self.tube(name, (offset, 0, -2), (34, radius * 2, radius * 2), "Charcoal", query=True)
         self.ball("Rounded flight deck", (0, 0, -19), (11.3, 9, 17.2), "Charcoal", query=True)
         self.ball("Cargo rear shell", (0, 0.42, 12.0), (11.25, 8.7, 31.6), "Charcoal", query=True)
         self.ball("Tapered tail cone", (0, 2.12, 22.0), (6.83, 4.23, 16.0), "Charcoal", query=True)
@@ -249,7 +270,7 @@ class Aircraft:
                 front = -11.1 if index == 1 else -10.88
                 self.ball(f"{label} nacelle", (x, y, front + 3.8), (3.77, 3.48, 10.2),
                           "Upper panels", query=True)
-                self.tube(f"{label} intake ring", (x, y, front + 0.16), (0.48, 2.36, 2.55), "Engine seams")
+                self.tube(f"{label} intake ring", (x, y, front + 0.16), (0.48, 2.36, 2.36), "Engine seams")
                 self.ball(f"{label} spinner", (x, y, front - 0.31), (1.66, 1.62, 1.85), "Graphite")
                 self.tube(f"{label} translucent sweep", (x, y, front - 0.56), (0.065, 8.2, 8.2),
                           "Propeller sweep")
@@ -279,7 +300,7 @@ class Aircraft:
         ):
             mount_x = 5.2 if side == 1 else 5.55
             self.primitive(f"{name} recessed mount", "Block", (side * (mount_x - 0.06), y, z),
-                           (0.44, 1.8, 2.2), "Graphite")
+                           (0.68, 1.8, 2.2), "Graphite")
             self.tube(f"{name} barrel", (side * (mount_x + span * 0.45), y, z),
                       (span * 0.90, tube_radius * 2, tube_radius * 2), "Graphite",
                       axis=(1, 0, 0), query=True)
@@ -295,8 +316,9 @@ class Aircraft:
     def nose_point(side, z, degrees, surface=0.065):
         angle = degrees * pi / 180
         scale = sqrt(max(0.01, 1 - ((z + 19) / 8.6) ** 2)) if z < -19 else 1
-        return (side * (5.65 * scale + surface) * cos(angle),
-                (4.5 * scale + surface) * sin(angle), z)
+        height = 4.5 * scale * sin(angle)
+        half_width = 5.65 * scale * cos(angle) if z < -19 else cabin_side_at(height)
+        return (side * (half_width + surface * cos(angle)), height + surface * sin(angle), z)
 
     def add_livery(self):
         for side in (-1, 1):
@@ -339,7 +361,7 @@ class Aircraft:
             def side_mark(u, v):
                 # Side paint follows the side of the cabin. The lateral
                 # surface remains nearly flat at this angular range.
-                return (side * (sqrt(max(0.05, 1 - (v / 4.5) ** 2)) * 5.65 + 0.10), v, 9.4 + u)
+                return (side * (cabin_side_at(v) + 0.10), v, 9.4 + u)
 
             self.insignia(f"{label} fuselage insignia", side_mark, 1.52)
         self.insignia("Port upper wing insignia", lambda u, v: (-22.3 + u, 4.48, -3.83 + v), 1.52)

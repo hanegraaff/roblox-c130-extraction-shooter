@@ -1,6 +1,7 @@
 """R27/P28 A1 package invariants for the editable and source-managed aircraft."""
 import hashlib
 import json
+from math import cos, sin, tau
 from pathlib import Path
 import struct
 import unittest
@@ -15,7 +16,7 @@ class AircraftPackageTests(unittest.TestCase):
     def setUpClass(cls):
         cls.model = json.loads(NATIVE.read_text())
         cls.audit = json.loads((EXPORTS / "package-audit.json").read_text())
-        cls.root, cls.airframe, cls.rotors = cls.model["Children"]
+        cls.root, cls.airframe, cls.rotors, cls.rounded_queries = cls.model["Children"]
 
     def test_managed_export_has_bound_blender_source_and_no_remote_dependencies(self):
         self.assertEqual(self.audit["externalAssetDependencies"], [])
@@ -62,7 +63,8 @@ class AircraftPackageTests(unittest.TestCase):
             self.assertEqual(parts[0]["Properties"]["CFrame"][:3], self.audit["rotorAxesStuds"][rotor_name])
             self.assertEqual(len(parts), 9)
             self.assertTrue(all(not part["Properties"]["CanQuery"] for part in parts))
-        self.assertEqual(sum(item["Properties"]["CanQuery"] for item in visual),
+        self.assertEqual(sum(item["Properties"]["CanQuery"] for item in visual)
+                         + len(self.rounded_queries["Children"]),
                          self.audit["nativeQueryableObjects"])
         self.assertTrue(all(item["Properties"]["Transparency"] == 0 for item in visual
                             if item["Properties"]["CanQuery"]))
@@ -74,6 +76,49 @@ class AircraftPackageTests(unittest.TestCase):
             properties = item["Properties"]
             self.assertFalse(properties["CanTouch"])
             self.assertFalse(properties["CanCollide"])
+
+    def test_rounded_render_meshes_and_engines_use_only_inscribed_native_queries(self):
+        visual = {item["Name"]: item for item in self.airframe["Children"] if item.get("Children")}
+        queries = self.rounded_queries["Children"]
+        self.assertEqual(len(queries), self.audit["nativeRoundedQueryVolumes"])
+        self.assertLessEqual(len(queries), 200)
+        for name in ("Rounded flight deck", "Cargo rear shell", "Tapered tail cone",
+                     "Port1 nacelle", "Port2 nacelle", "Starboard1 nacelle", "Starboard2 nacelle"):
+            self.assertTrue(any(item["Name"].startswith(name + " query ") for item in queries), name)
+        for item in visual.values():
+            mesh, = item["Children"]
+            self.assertEqual(mesh["ClassName"], "SpecialMesh")
+            self.assertEqual(mesh["Properties"]["MeshType"], "Sphere")
+            self.assertNotIn("MeshId", mesh["Properties"])
+            self.assertEqual(item["Properties"]["Size"], [1, 1, 1])
+            self.assertFalse(item["Properties"]["CanQuery"])
+        for query in queries:
+            props = query["Properties"]
+            name, _ = query["Name"].rsplit(" query ", 1)
+            source = visual[name]
+            mesh, = source["Children"]
+            source_frame = source["Properties"]["CFrame"]
+            frame = props["CFrame"]
+            length, width, depth = props["Size"]
+            self.assertEqual(width, depth)
+            self.assertEqual(props["Shape"], "Cylinder")
+            self.assertTrue(props["CanQuery"])
+            self.assertFalse(props["CanCollide"] or props["CanTouch"])
+            self.assertEqual(props["Transparency"], 1)
+            semiaxes = [axis * 0.5 for axis in mesh["Properties"]["Scale"]]
+            # Cylinder volume is convex. Both sampled end circles must fit
+            # the visible ellipsoid, which also contains the volume between.
+            for end in (-0.5, 0.5):
+                for spoke in range(128):
+                    angle = spoke * tau / 128
+                    point = [length * end, width * 0.5 * cos(angle), depth * 0.5 * sin(angle)]
+                    world = [frame[row] + sum(frame[3 + row * 3 + col] * point[col] for col in range(3))
+                             for row in range(3)]
+                    local = [sum(source_frame[3 + row * 3 + col] * (world[row] - source_frame[row])
+                                 for row in range(3)) for col in range(3)]
+                    distance_squared = sum((axis / semiaxis) ** 2 for axis, semiaxis in zip(local, semiaxes))
+                    self.assertLessEqual(distance_squared, 1, query["Name"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -10,6 +10,8 @@ One player operates a circling C-130 while a team of 1–9 Ground players tries 
 
 Rounds start in the protected, walkable lobby. By default, with 2–10 players, the server assigns one operator and deploys everyone else as one ground team. Once the deployed avatars are ready, Ground gets **20 seconds** to spread out, take cover or pick up and drop a launcher. Ground sees **C-130 arrives in 20** on desktop or the compact **C-130 in 20s** on touch. The operator sees the same time on a full black screen that clears when the thermal view is ready. Both sides can fire when the aircraft appears and begins to circle the edge of the 720-stud battlefield. The ten-minute combat clock starts at that moment. Friendly fire is off.
 
+From the ground, look for the charcoal high-wing C-130 with a crimson shark face, four spinning propellers and a howitzer on its right side. Hits on the solid airframe reduce the aircraft’s shared health. [Blender preview from below](assets/exports/c130/ground-approach.png)
+
 The stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits.
 
 - **Ground team.** Follow the trails from any Sandbreak exit. Pick up a launcher inside the Salt Flats hangar, outside Vesper Radar’s south gate, outside the military depot by the parking lot, or inside the Prism Seedship on its lower deck. Buildings and large rock formations provide cover. Keep your M-7 when you pick up a launcher. The rifle has a **30-round magazine**, **unlimited reserve** and a **two-second reload**. Each launcher reloads automatically in **15 seconds** after firing. Its timer follows the launcher through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect if the round continues. If the drop position is invalid, the launcher returns to its original anchor. All four launchers start loaded each round.
@@ -67,7 +69,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-The integrated game and balance editor are on `main`. This P27 branch has the Ground mouse look, raised crosshair and compact touch HUD described here. Play the candidate locally in Studio. Its verification record tracks desktop, simulator and phone checks. Controller support and medkit pickups are planned. [P27 controls](plans/27-ground-aim-and-mobile-controls.md) · [Roadmap](roadmap.md)
+The integrated game on `main` includes the balance editor, Ground mouse look, raised crosshair and compact touch HUD. Play the new C-130 model locally in Studio on the P28 branch. Controller support and medkit pickups are planned for future work. [C-130 model](plans/28-c130-model.md) · [Ground and touch controls](plans/27-ground-aim-and-mobile-controls.md) · [Roadmap](roadmap.md)
 
 The lobby **Balance** panel lets the experience owner and trusted testers adjust health, damage, weapon timing, panel durability, round length, intermission and minimum players. Ordinary local Studio Play uses the defaults in this guide. The balance panel's private Roblox verification and the future live release checks are pending. [Owner guide](docs/balance.md) · [Panel verification](plans/26-live-balance-panel.md#completion-record) · [Future release checklist](docs/release.md)
 
@@ -75,7 +77,7 @@ The lobby **Balance** panel lets the experience owner and trusted testers adjust
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Clone `main` for the integrated build. To try the P27 controls and HUD, use `--branch plan/27-ground-aim-and-mobile-controls` in the clone command and run the same setup steps.
+Clone `main` for the integrated build. To try the new C-130 model, use `--branch plan/28-c130-model` in the clone command and run the same setup steps.
 
 ```sh
 git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
@@ -86,7 +88,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch plan/27-ground-aim-and-mobile-controls` for the P27 candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
+On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch plan/28-c130-model` for the aircraft candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
@@ -146,7 +148,7 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 
 To try the live settings controls locally, stop Play in the test document and enter `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26Panel")` in Studio’s Command Bar. Click **Play**, open **Balance** in the lobby, then save and apply a named preset. The first client is the test owner. Stop the session and clear the selector with `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", nil)`. [Test with a second player](docs/balance.md#try-it-in-studio) · [Automated panel check](docs/testing.md#verify-the-live-balance-panel)
 
-For P27, use one operated match and its replays to check Ground mouse look, indoor zoom, both touch roles and the arrival HUD. Record the shared observations once and link them from the relevant checks. [P27 Studio procedure](docs/testing.md#verify-p27-aim-and-mobile-hud)
+Use two Studio clients to verify the C-130's reveal, full orbit, four propellers, gunship views, hit surfaces and appearance on replay. To check Ground mouse look, indoor zoom, both touch roles and the arrival HUD, run an operated match and its replays. [Aircraft model checks](docs/testing.md#verify-the-c-130-flight-model) · [Ground and touch controls](docs/testing.md#verify-p27-aim-and-mobile-hud)
 
 Use the three-client weapon balance procedure to test howitzer switching, launcher handover and shared damage, rifle reload feedback and equipment reset. Run the two-client gunship and aircraft-arrival regressions for impact behavior and pre-arrival fire gating. Stop Play and confirm source reached the same document before collecting fresh evidence. [Weapon balance checks](docs/testing.md#verify-p25-weapon-balance) · [Gunship checks](docs/testing.md#run-the-p05-gunship-combat-harness) · [Aircraft arrival checks](docs/testing.md#run-the-p24-aircraft-arrival-harness)
 
@@ -154,9 +156,11 @@ For P19, run the two-client gunship regression and the impact acceptance scenari
 
 For lobby art and collision regression, verify the portraits and both lobby routes, then confirm players can walk through the rooms after each reset. [Furnished lobby checks](docs/testing.md#verify-the-p22-waiting-lobby)
 
-## Inspect the Blender outpost
+## Inspect the Blender assets
 
 Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend) in **Blender 5.3.0** to explore the exterior, furnished rooms, saved views and six material and shape damage families. Run `python3 scripts/p16_audit.py` to check the committed package without launching Blender. [Asset review guide](assets/blender/military-outpost/README.md), [in-game Outpost record](plans/17-integrate-military-outpost.md)
+
+Open the C-130 master in **Blender 5.3.0** to inspect the airframe, livery and saved camera below the right side of the nose. The review render uses translucent propeller sweeps. [Editable C-130](assets/blender/c130/c130.blend) · [Aircraft asset guide](assets/blender/c130/README.md)
 
 ## Follow development or contribute
 

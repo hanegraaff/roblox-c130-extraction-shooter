@@ -1,7 +1,7 @@
 --!strict
 --[=[
     AircraftRig binds the managed C-130 template to one anchored server root.
-    Its authored solids keep their native query shapes. Massless, noncolliding
+    Its authored solids and inset rounded proxies keep native query shapes. Massless, noncolliding
     art follows the root through rigid joints. Rotor motors have no query authority.
 ]=]
 local AircraftRig = {}
@@ -11,7 +11,15 @@ local AircraftRig = {}
 function AircraftRig.bind(model: Model, root: BasePart): (boolean, string?)
     local airframe = model:FindFirstChild("Airframe")
     local propellers = model:FindFirstChild("Propellers")
-    if not airframe or not airframe:IsA("Model") or not propellers or not propellers:IsA("Folder") then
+    local roundedQueries = model:FindFirstChild("RoundedQueries")
+    if
+        not airframe
+        or not airframe:IsA("Model")
+        or not propellers
+        or not propellers:IsA("Folder")
+        or not roundedQueries
+        or not roundedQueries:IsA("Folder")
+    then
         return false, "missing authored aircraft rig"
     end
     local rotors = propellers:GetChildren()
@@ -31,6 +39,20 @@ function AircraftRig.bind(model: Model, root: BasePart): (boolean, string?)
     for _, item in airframe:GetChildren() do
         if not item:IsA("BasePart") or item.CanCollide or item.CanTouch then
             return false, "invalid aircraft airframe part"
+        end
+        rigidlyAttach(item, root)
+    end
+    for _, item in roundedQueries:GetChildren() do
+        if
+            not item:IsA("Part")
+            or item.Shape ~= Enum.PartType.Cylinder
+            or item.CanCollide
+            or item.CanTouch
+            or not item.CanQuery
+            or item.Transparency ~= 1
+            or math.abs(item.Size.Y - item.Size.Z) > 0.001
+        then
+            return false, "invalid aircraft rounded query volume"
         end
         rigidlyAttach(item, root)
     end
