@@ -72,6 +72,26 @@ local removed = ReplicatedStorage.ChildRemoved:Connect(function(instance)
         stopRoundOwners()
     end
 end)
+local guiRemoved = playerGui.ChildRemoved:Connect(function(child)
+    local state = activeRoundState
+    if child.Name ~= "BalancePanel" or not state then
+        return
+    end
+    -- Finish the respawn's GUI changes before replacing the editor. Round
+    -- teardown clears activeRoundState, so it cannot remount a retired panel.
+    task.defer(function()
+        if
+            activeRoundState == state
+            and state.Parent == ReplicatedStorage
+            and not playerGui:FindFirstChild("BalancePanel")
+        then
+            if stopBalance then
+                stopBalance()
+            end
+            stopBalance = BalancePanel.start(Players.LocalPlayer, playerGui, state)
+        end
+    end)
+end)
 local current = ReplicatedStorage:FindFirstChild("RoundState")
 if current then
     attach(current)
@@ -79,5 +99,6 @@ end
 script.Destroying:Connect(function()
     added:Disconnect()
     removed:Disconnect()
+    guiRemoved:Disconnect()
     stopRoundOwners()
 end)

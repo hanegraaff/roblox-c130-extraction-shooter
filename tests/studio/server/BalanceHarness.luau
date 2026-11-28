@@ -232,6 +232,7 @@ function Harness.run(automated: boolean)
                 return d.phase == "Active"
                     and d.aircraftHP == 777
                     and d.revision == revision
+                    and d.panelVisible == false
                     and (d.role ~= "Ground" or d.groundHP == 123)
             end, "locked client health")
         end)
@@ -286,11 +287,15 @@ function Harness.run(automated: boolean)
                     and d.minimum == 3
                     and d.roundId == prior
                     and d.intermission == untilTime
-            end, "both clients remain gated after countdown")
+                    and d.panelVisible == true
+            end, "both clients return to lobby with the Balance button")
             timing.populationGateSecondsAfterDeadline = workspace:GetServerTimeNow() - untilTime
-            values.minimumPlayers = 2
-            values.roundDuration = 35
-            apply(owner, "QA replay")
+            probe(owner, "RemoveBalanceGui", {})
+            waitFor(function()
+                return observe(owner).panelVisible == true
+            end, "Balance button restored after GUI removal")
+            probe(owner, "EditLobbyPreset", {})
+            revision += 1
             waitFor(function()
                 return state:GetAttribute("Phase") == "Active"
             end, "second active round", 65)
@@ -300,6 +305,16 @@ function Harness.run(automated: boolean)
                     and (d.role ~= "Ground" or d.groundHP == 193)
                     and d.revision == revision
             end, "replay settings")
+            local replay = accept(owner, { action = "read" })
+            assert(
+                replay.activeRevision == revision
+                    and replay.settings.minimumPlayers == 2
+                    and replay.settings.roundDuration == 35,
+                "editor changes were not applied"
+            )
+            -- Use the values submitted by the client editor for later rounds.
+            values.minimumPlayers = replay.settings.minimumPlayers
+            values.roundDuration = replay.settings.roundDuration
         end)
         check("A5 High and Medium panel settings change native damage after replay", function()
             CombatChecks.panels(ctx)

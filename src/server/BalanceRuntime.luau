@@ -111,17 +111,25 @@ function BalanceRuntime.start(injected: Dependencies?, groundCount: () -> number
     end
     local function currentOwner(): number?
         local ok, value = pcall(deps.ownerId)
-        return if ok and type(value) == "number" and value > 0 then value else nil
+        if not ok then
+            -- Keep the last confirmed UI hint during an owner lookup outage.
+            -- A request still needs fresh ownership or a stored tester grant.
+            return nil
+        end
+        local owner = if type(value) == "number" and value > 0 then value else nil
+        if active then
+            cachedOwner = owner
+        end
+        return owner
     end
     local function refresh()
         if refreshing or not active or offline then
             return
         end
         refreshing = true
-        local owner = currentOwner()
+        currentOwner()
         service.refresh()
         if active then
-            cachedOwner = owner
             hints()
         end
         refreshing = false
@@ -167,7 +175,6 @@ function BalanceRuntime.start(injected: Dependencies?, groundCount: () -> number
         if not connected() then
             return { ok = false, error = "Session ended." }
         end
-        cachedOwner = owner
         hints()
         local record = service.latest()
         if not Record.allowed(record, actor, owner) then
