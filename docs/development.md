@@ -2,20 +2,9 @@
 
 ## Install and build from a clean clone
 
-Use `main` for integrated play or `plan/30-single-use-medkits` for the local medkit candidate. Ordinary Studio sessions use offline balance defaults. Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. [Local setup](../README.md#set-up-locally) · [Balance owner guide](balance.md) · [Medkit verification](testing.md#verify-single-use-medkits)
+Follow the root walkthrough to install the tools, build both place files and connect Rojo. For test evidence, use a clean checkout of the exact candidate commit. [Local setup](../README.md#set-up-locally)
 
-Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
-
-Prerequisites are Git, Python 3.10 or newer, system `curl`, and network access to GitHub tool releases and the Wally registry/CDN. The setup script supports macOS and Linux on arm64/aarch64 and x86_64. Roblox Studio itself runs on supported Mac/Windows computers; the repository’s automated setup does not currently support Windows.
-
-From the repository root:
-
-```sh
-python3 scripts/setup.py
-python3 scripts/verify.py
-```
-
-Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, installs TestEZ 0.4.1 through Wally with the committed lockfile, generates Lune type definitions, and downloads hash-checked Roblox engine definitions from the pinned luau-lsp release. It needs no Roblox account. Generated `.tools/`, `Packages/` and `build/` content stays out of Git. Rokit and Lune also maintain normal user-level tool/type caches.
+Setup downloads hash-checked Rokit 1.2.0, installs the tool versions below, resolves TestEZ 0.4.1 from the committed Wally lockfile, generates Lune type definitions and fetches hash-checked Roblox engine definitions. It supports macOS and Linux on arm64/aarch64 and x86_64. The generated `.tools/`, `Packages/` and `build/` directories stay out of Git.
 
 | Tool | Pin | Purpose |
 | --- | --- | --- |
@@ -28,21 +17,7 @@ Setup downloads hash-checked Rokit 1.2.0, installs the exact tools below, instal
 
 [rokit.toml](../rokit.toml) owns the six tool pins; [wally.toml](../wally.toml) and [wally.lock](../wally.lock) own TestEZ. The verifier rejects missing or mismatched tool versions, missing packages and changed engine definitions. If these checks fail, rerun setup and inspect its error rather than skipping the gate.
 
-The full gate runs asset provenance and reconstruction, formatting, lint, strict type analysis, deterministic unit and service tests, intentional rejection probes, both builds, canonical geometry checks and artifact isolation. For initial setup, open `build/game.rbxlx` (release mapping) and `build/tests.rbxlx` (test mapping) as separate local Studio documents. Reuse those documents with Rojo for later source iterations. The verifier refreshes neither Studio document automatically. [Verification commands and coverage](testing.md#current-host-checks)
-
-For direct tool commands in a shell, add Rokit’s tool shims to PATH:
-
-```sh
-export PATH="$HOME/.rokit/bin:$PATH"
-```
-
-For documentation-only changes:
-
-```sh
-python3 scripts/check_repository.py
-```
-
-This checks local file links, JSON, mapped paths, asset-manifest references and coverage of every authored file under `assets/world`, `assets/models`, `assets/blender`, `assets/exports` and `assets/imports`. Blender source/export entries require matching SHA-256 content hashes and stay within the documented ordinary-Git file budget. It does not check remote URLs or heading anchors. See the [testing guide](testing.md) for individual commands, report interpretation and separate required Studio runs.
+The repository checker validates local file links, JSON, mapped paths and asset-manifest coverage. Blender source and export entries require matching SHA-256 hashes within the ordinary Git file budget. Check remote URLs and headings independently. The full verifier also runs Luau formatting, lint, strict typing, asset reconstruction, deterministic suites and rejection probes, then inspects both built places. [Host gates and coverage](testing.md#current-host-checks)
 
 ## Connect Roblox Studio MCP
 
@@ -57,19 +32,7 @@ Signing in gives Studio the account context; the MCP connection is to a local op
 
 ## Sync this repository with Studio
 
-For iterative source synchronization, keep one local development document and one separate local test document. Use Rojo live sync to update their managed content rather than opening a new hash-named build after each edit. Install the plugin from the pinned CLI once:
-
-```sh
-rojo plugin install
-```
-
-After setup, add Rokit’s tools to PATH as above. For the local test document, start:
-
-```sh
-rojo serve test.project.json --address 127.0.0.1 --port 34872
-```
-
-Stop Play in the intended local test document. Open **Plugins → Rojo**, connect to `localhost:34872`, and verify the project is **PlayersVsC130Tests** before applying its mapping. For a development document instead, serve `default.project.json` on a different explicit port, such as `34873`. Keep test and development connections separate; never connect the test mapping to the cloud/release place. If the Rojo panel is hidden in Edit mode, reopen it with the Rojo toolbar button; a hidden panel does not mean the plugin is missing. On first plugin installation, save work and restart Studio only if the toolbar button/plugin is absent in Edit mode. Load the plugin in Edit before connecting.
+Use the root guide’s [two Studio files](../README.md#the-two-studio-files) for the commands and mapping checks. Leave the existing Edit documents open during source iterations. A hidden Rojo panel can be reopened from the Plugins toolbar.
 
 If a Rojo server stops or restarts, reconnect the plugin in the existing Edit document and verify **PlayersVsC130Tests** on port **34872** before testing revised source. A running CLI server does not by itself reconnect a disconnected plugin or prove that source synced. If Connect fails, preserve the error and inspect delivered module/template identities; no successful connection fix is inferred from an HTTP response on the Rojo port.
 
@@ -89,13 +52,9 @@ On this Mac, even an Open Documents request addressed to an existing Studio PID 
 
 See the official [Rojo live-sync workflow](https://rojo.space/docs/v7/getting-started/new-game/#live-syncing-into-studio) and [plugin installation](https://rojo.space/docs/v7/getting-started/installation/#installing-the-plugin).
 
-The development mapping uses a two-player minimum, 600 seconds of combat and a 120-second intermission from each committed result. The development mapping and ordinary multiplayer test rounds both use 20 seconds of Scatter after the roster is ready. The ordinary test mapping uses quick replay. The P23 SDK selector checks the full intermission. [P24 aircraft arrival procedure](testing.md#run-the-p24-aircraft-arrival-harness) · [P23 lobby procedure](testing.md#run-the-p23-lobby-and-intermission-harness)
+For ordinary settings and the in-game test panel, follow the root’s [local play walkthrough](../README.md#play-both-roles-and-sync-an-edit). Use three Studio clients for launcher transfer, or four for spectator cycling between two living players after a third Ground player is eliminated. A separate harness tests the full intermission. [Lobby and intermission checks](testing.md#run-the-p23-lobby-and-intermission-harness)
 
-A solo Play session in the development mapping waits in the protected lobby. The bootstrap panel shows **Development** or **Test** during startup, then the round HUD takes over. The test mapping runs server and client TestEZ automatically. After the server suite finishes, an ordinary test session opens the map preview for one client or supports explicit starts with at least two. The next combat duration defaults to 60 seconds. Use **Server & Clients** with two clients to exercise both roles, three for launcher transfer, or four for spectator cycling between two living targets after one Ground player is eliminated. Test controls exist only in the test mapping. [Studio smoke and local play](testing.md#run-the-studio-smoke-suites)
-
-Follow the [Studio suite instructions](testing.md#run-the-studio-smoke-suites), [expanded-map harness](testing.md#run-the-p13-expanded-map-harness), [aircraft harness](testing.md#run-the-p04-aircraft-harness) and [three-round harness](testing.md#run-the-p03-multiplayer-harness) to collect actual reports. Studio being installed does not mean MCP is connected; verify the handshake above. Keep Rojo as the synchronization mechanism for managed instances; do not also enable Script Sync on those same instances without an explicit migration and ownership decision.
-
-For the P19 candidate, sync the branch's test build into the same local `PlayersVsC130Tests` document. Start two actual clients for normal-control impact review and use the `P19Profile` selector for the matched five-minute workload. The SDK's separate Replay scenario checks five resets on the same source. Keep baseline and candidate source identities with their separate Studio reports. [P19 checks and profile commands](testing.md#run-p19-weapon-impact-checks)
+Treat source, loaded Instance identity and test reports as separate observations. Confirm the source reached the relevant Studio context before taking a report. Where a native model depends on mesh or appearance properties Rojo cannot write, use the Git-managed archive and compare the instance properties before testing. [Native world-load probe](testing.md#check-a-fresh-native-world-load)
 
 Source files drive managed scripts. Studio-built models/world changes must be exported into `assets/` and entered in the manifest, then rebuilt from a clean checkout. Stop simulation before authoring/exporting. Do not preserve transient playtest objects as authored assets.
 
@@ -290,12 +249,10 @@ After verifying the final candidate, commit and push the source and evidence. Ma
 
 ## Release preparation and publication
 
-P12’s legacy implementation handoff is closed by user direction. Its original live platform/access, capacity, performance and soak observations remain unverified and are retained in the future release checklist, separately from completed local implementation. Closing that handoff grants no new publication authorization.
+The root guide covers the publication and audience steps. Keep the generated release receipt with its host and Studio evidence. Record the destination, prior version, cloud asset permissions and fresh Roblox-client results for each release. [Publish to Roblox](../README.md#publish-to-roblox) · [Release runbook](release.md)
 
-Run `python3 scripts/prepare_release.py` after setup in a clean checkout of the candidate commit. It runs the full verifier, checks the runtime script sources in both builds and writes `build/release-receipt.json` with the source identity, artifact hashes, tool pins and cloud asset inventory. Use the release artifact `build/game.rbxlx` for an explicitly authorized Roblox destination and `build/tests.rbxlx` for local Studio acceptance. Record the exact place, audience, rollback version and actual live test evidence separately. [Release runbook](release.md)
-
-Player data is not stored in Git. The MVP has no persistent inventory/progression and needs no DataStore access. Future persistence must add isolated test data and migration/failure tests before use.
+Player data stays out of Git. The game has no persistent player inventory or progression. For persistent owner presets, use the access and apply procedures for the lobby balance panel. [Balance owner guide](balance.md)
 
 ### One-client map exploration
 
-For solo inspection, use the test mapping on port 34872 and ordinary **Play** in the existing document. After foundational suites, the single client automatically previews the map with normal walking; choosing Operator in the test panel enters the thermal view and allows cosmetic profile switching. A solo production session waits for the second player. The isolated test preview keeps the round in Lobby. Use the root README's [human testing instructions](../README.md#run-local-automated-tests) for the in-game role/duration/start/reset/preview panel. No Command Bar workflow is required.
+Solo Studio Play in the test mapping keeps the match in Lobby while the preview grants an explicit local role. That role lets you navigate or inspect the thermal view. Use multiple clients to exercise live round authority. [Solo preview and lobby movement regression](testing.md#solo-exploration-and-lobby-movement-regression)

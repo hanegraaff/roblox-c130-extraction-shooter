@@ -1,520 +1,68 @@
-# Roadmap to MVP
+# C-130 Assault roadmap
+
+Roblox development began with a small circular arena that could prove the central matchup. A single operator needed to see and engage the same battlefield that a Ground team was crossing. Once both sides could fight and finish a round, the map grew into a 720-stud warzone with multi-story landmarks, cover that opens under fire, and reusable rules for restoring the world between matches.
+
+The focus then shifted to how a match feels from either side. A protected lobby and an aircraft arrival countdown give players time to orient themselves. Custom Blender environments, aircraft and equipment make the battlefield readable from the ground and through thermal sights. Mobile controls and a live balance panel make the same game easier to play and tune across devices and team sizes. [Game overview](README.md#game) · [Design contract](game-design.md)
 
 <a name="public-mvp-launch"></a>
 
 ## MVP completion
 
-The owner can declare **C-130 Assault** MVP complete when P26–P31, the illustrated root README (P33) and the Roblox listing preview (P34) meet their acceptance criteria. The experience can stay private at that milestone. The candidate can use its existing balance settings.
+The owner can declare the MVP complete with the game, illustrated README and Roblox listing preview accepted. Access may stay private, and the candidate can use its existing balance settings. The final MVP test includes the deferred three-client launcher transfer, firing, recovery and replay cases. The launcher model's desktop and phone fit review also remains open. [Launcher evidence](plans/29-rocket-launcher-model.md#completion-record)
 
-**Publishing throughout the MVP.** Always publish from `build/game.rbxlx`. Use `build/tests.rbxlx` for local tests. Reuse both filenames and Studio documents, with the matching Rojo connection bringing in changes. Verify the open game document contains the latest source before publishing to the same approved Roblox place. [Build and publish guide](README.md#the-two-studio-files)
-
-| Plan | Status | Depends on | Outcome |
-| --- | --- | --- | --- |
-| [P26 · Live balance panel](plans/26-live-balance-panel.md) | Complete | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
-| [P27 · Mouse aiming, mobile controls and compact HUD](plans/27-ground-aim-and-mobile-controls.md) | Complete | P24, P25 | Aim by moving the mouse and play both roles on a phone with a clear battlefield view and a compact arrival timer. |
-| [P28 · C-130 model in flight](plans/28-c130-model.md) | Complete | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
-| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Deferred | P25 and launcher images | Implementation merged. Multi-client acceptance moves to the final MVP test. Desktop and phone fit review remains pending. |
-| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Complete | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
-| [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Complete | P18, Sandbreak | Sandbreak reads as dark cover at both thermal zooms. Native cover, Ground colors and replay pass with two clients. |
-| [P33 · Write the C-130 Assault README](plans/33-rewrite-readmes.md) | Planned | P26–P31 | Learn to play, develop and publish from one root guide with gameplay screenshots and a Blender model showcase. |
-| [P34 · Prepare the C-130 Assault Roblox page](plans/34-arcade-game-page.md) | Planned | P27–P31 | Review the full arcade listing with real screenshots, an icon, AI-generated banners and thumbnails on desktop and phone. |
-
-**Image drop-off.** Put an inspiration image in each folder. One three-quarter view per asset is enough to start. Each plan delivers its own editable Blender master and a version integrated into the game. [C-130](src/images/c130/) · [Launcher](src/images/rocket-launcher/) · [Medkit](src/images/medkit/)
+| Plan | Status | Depends on |
+| --- | --- | --- |
+| [P26 · Live balance panel](plans/26-live-balance-panel.md) | Complete | P25 |
+| [P27 · Mouse aiming, mobile controls and compact HUD](plans/27-ground-aim-and-mobile-controls.md) | Complete | P24, P25 |
+| [P28 · C-130 model in flight](plans/28-c130-model.md) | Complete | P24, P25, aircraft references |
+| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Deferred | P25, launcher references |
+| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Complete | P26, P27, medkit references |
+| [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Complete | P18, Sandbreak |
+| [P33 · Write the C-130 Assault README](plans/33-rewrite-readmes.md) | In progress | Integrated P26–P31 source |
+| [P34 · Prepare the C-130 Assault Roblox page](plans/34-arcade-game-page.md) | Planned | P27–P31 |
 
 ### After MVP completion
 
-Tester availability determines when to revisit the P32 balance study. The owner can schedule P35 when ready to open the game to the public.
+The owner can schedule larger-roster balance trials when testers are available. A public release adds live capacity, performance, asset and audience verification on the selected candidate. The legacy handoff closed with the game reconstructable from source. The live 6- and 10-player, performance and public access checks await a named release. Controller support remains a future enhancement. [Legacy handoff](plans/12-mvp-release.md#user-directed-implementation-closeout) · [Release runbook](docs/release.md)
 
-| Plan | Status | Depends on | Outcome |
-| --- | --- | --- | --- |
-| [P32 · Compare balance across team sizes](plans/32-balance-playtests.md) | Deferred | MVP completion and testers for 2-, 6- and 10-player matches | Record paired trials and select a reproducible preset for a future iteration. |
-| [P35 · Verify and open the public experience](plans/35-public-launch.md) | Deferred | MVP completion and owner request for public release | Qualify the release candidate at 6 and 10 players, then verify the authorized public listing and join. |
+| Plan | Status | Depends on |
+| --- | --- | --- |
+| [P32 · Compare balance across team sizes](plans/32-balance-playtests.md) | Deferred | MVP completion and testers for 2-, 6- and 10-player matches |
+| [P35 · Verify and open the public experience](plans/35-public-launch.md) | Deferred | MVP completion and owner request for public release |
 
-**After launch.** Controller support can follow. Map movement, aiming, fire, reload, weapon selection, pickups and menu navigation, then test both roles through a full round with a physical controller.
+## Plan index
 
-## Milestones and plans
+Plan records hold acceptance criteria, tested revisions and evidence. The index also retains the cancelled level-selection proposal. [Evidence archive](docs/evidence/README.md) · [Earlier roadmap records](https://github.com/hanegraaff/roblox-c130-extraction-shooter/blob/fc8febb13d25189d21d9c28a42f9f4525af5990d/roadmap.md)
 
-The integrated source on `main` includes the development shell, verification tooling, 720-stud circular battlefield with bounded terrain and three two-story buildings, authoritative roles/rounds, perimeter aircraft, verified WASD/mobile panning with weapon-linked zoom, gunship combat, M-7 fire and aircraft destruction. [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27) integrates P06; its [integration record](docs/evidence/p06-integration.md) identifies the exact merge and fresh host gate. P13 map acceptance is integrated through [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16). The P14 stack is integrated through [PRs #18–#22](docs/evidence/p14-integration.md); its two-client, mobile touch, full-orbit, rendered-cover and layout checks pass. [P14 acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) and the [integration record](docs/evidence/p14-integration.md) identify tested source and merge facts. P05 is integrated through [PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25); P07 persistent panel damage, real openings, physical fragments and starting-shelter destruction are integrated through [PRs #30 and #29](docs/evidence/p07-integration.md), with a matching accepted tree and fresh main host gate. P08 and the approved P16 source/export package are now integrated on `main` through PRs #34 → #33 → #32; the [main integration record](docs/evidence/p08-p16-main-integration.md) identifies matching trees and fresh host verification. PR #39 integrates the detailed Outpost, indoor Ground camera and two asset skills. The user approved the oversized waiting-lobby bust at `62cd82c` and the furnished entrance hall, movie theater and portrait gallery at `ec43139`. P22 integrates the furnished lobby and four approved oil paintings, with passing Studio acceptance. [P22 pull request](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/70) [Bust approval](plans/20-lobby-bust.md#completion-record) · [Lobby approval and verification](plans/21-lobby-interior.md#completion-record) Build one complete, tested capability at a time. See [game design](game-design.md) for the complete intended game.
-
-| Milestone | Plan / capability | Status | Depends on | What a human can experience afterward |
-| --- | --- | --- | --- | --- |
-| M1 — Playable foundation | [P01: Executable foundation and tests](plans/01-foundation.md) | Complete | — | Open a development place, spawn, and see an explicit test/boot status |
-| M1 | [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Complete | P01 | Walk the circular warzone and both approaches to the launcher anchor |
-| M1 | [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Complete | P02 | Join a lobby, receive a role, enter a round, spectate and return |
-| M2 — Gunship | [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Complete | P03 | Ground sees the orbit; operator looks inward with distinct 30mm/105mm zoom profiles |
-| M2 — Level revision | [P13: Expanded terrain and multi-story buildings](plans/13-terrain-and-buildings.md) | Complete | P04 | Walk a 720-stud-diameter terrain map with two large buildings and one smaller one, each at least two stories |
-| M2 — View revision | [P14: Directional aircraft targeting](plans/14-aircraft-panning.md) | Complete | P13 | Pan the aircraft view with WASD or mobile arrows, aim independently and retain the view through the orbit |
-| M3 — Combat slice | [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 | Operator fires both named weapons through the panned view while cover protects players |
-| M3 | [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 | M-7-equipped teammates damage the plane; destroying it wins the round |
-| M4 — Changing cover | [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 | See persistent Light/Heavy/Total damage on every battlefield building, including the starting shelter, with real openings and falling fragments |
-| M4 — Blender assets | [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 | Inspect the complete furnished outpost and material-specific damage variants in Blender, then approve the result |
-| M4 — Outpost integration | [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Complete | P16, P07, P13, P14 | Walk and demolish the approved detailed smaller Outpost in the existing battlefield |
-| M5 — Team battle loop | [P08: Recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 | Acquire, fire, drop and recover a launcher; P18 revises distribution and aircraft durability |
-| M5 | [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 | Win by plane destruction, ground elimination or timeout, then replay cleanly |
-| M6 — MVP readiness | [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 | See aircraft health fall through a green-to-red bar, hear distinct weapon effects and follow living teammates |
-| M6 | [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 | Play repeated stable rounds with readable counterplay |
-| M6 | [P12: Reconstructable implementation handoff](plans/12-mvp-release.md) | Complete | P11 | Reconstruct the integrated local game; legacy handoff closed by user direction, with live-release checks separately unverified |
-| Gameplay revision | [P18: Game rebalancing](plans/18-game-rebalancing.md) | Complete | P07, P08, P14, P17, Seedship PR #62 | Fight a roster-scaled aircraft, demolish panels quickly, pan across square bounds, recover the Seedship launcher and see white Ground targets clearly against dark black-and-white scenery |
-| Combat presentation | [P19: Weapon impacts, blast radius and audio](plans/19-weapon-impacts.md) | Complete | P05, P07, P08, P10, P11, P18 | See a howitzer explode anywhere on the battlefield and open nearby panels even on a ground strike, distinguish 30mm bursts and follow a smoking rocket to impact by sight and sound. Client frame-time verification carries to the future release under D99. |
-| Lobby redesign | [P20 · Sculpt the oversized bust](plans/20-lobby-bust.md) | Complete | Supplied bust and room references | Inspect the sculpture in Blender and approve its likeness, scale and expression |
-| Lobby redesign | [P21 · Build the complete lobby in Blender](plans/21-lobby-interior.md) | Complete | P20 visual approval | Inspect and approve the connected main room, theater and gallery with all six portraits hung as paintings |
-| Lobby redesign | [P22 · Replace the protected Roblox lobby](plans/22-integrate-lobby.md) | Complete | P20 and P21 visual approvals, P02, P03 | Spawn facing the bust, walk through both wings and return to the lobby after a round |
-| Gameplay iteration | [P23 · Lobby return, theater spectating and intermission](plans/23-lobby-return-and-intermission.md) | Complete | P03, P09, P10, P22 | Return to the lobby on death, walk up to the TV to enter spectator mode, and spend two minutes together in the lobby after each round |
-| Gameplay iteration | [P24 · Ground head start and C-130 arrival](plans/24-ground-scatter-and-aircraft-arrival.md) | Complete | P03, P04, P09, P23 | Scatter for 20 seconds while the operator sees a countdown on black, then fight when the aircraft arrives |
-| Gameplay iteration | [P25 · Weapon cooldowns, rocket damage and rifle ammunition](plans/25-weapon-cooldowns-and-rifle-ammo.md) | Complete | P05, P06, P08, P18, P19 | Fire the M102 every 12 seconds, launch a 150-damage rocket every 15 seconds per launcher and reload the M-7 from unlimited reserve |
-| M7 | [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — | Archived proposal |
-| Battlefield art | [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 | Traverse the open radar courtyard and gallery at the Warehouse site and demolish its wall and roof panels |
-
-2026-11-25 P25 integration. The full host gate, three-client combat and replay, two-client gunship and arrival regressions, and desktop and simulated phone readiness review passed. PR #73 brings the new weapon settings to `main`. [PR #73](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/73) · [P25 verification](plans/25-weapon-cooldowns-and-rifle-ammo.md#completion-record)
-
-2026-11-25 P23 integration. Host verification, the four-client full replay, launcher and combat regressions, operated phone input and the focused final theater regression passed. The P23 integration on `main` supplies the dependency source for P24. [PR #71 and merge record](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/71) · [P23 verification](plans/23-lobby-return-and-intermission.md#completion-record)
-
-2026-11-25 P24 delivery. The host gate, nine two-client arrival cases, four native regression suites and desktop and phone layout reviews passed. The feature branch supplies the 20-second Ground head start, synchronized operator blackout and canonical aircraft reveal. [PR #72](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/72) · [P24 verification](plans/24-ground-scatter-and-aircraft-arrival.md#completion-record)
-
-2026-11-24 integration and legacy closeout. [PR #63](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/63) is merged into `main` at `7e1c1d2`, with a tree identical to accepted head `bb904dd` and passing [Verify #563](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/45314961247). P18's 79 unit / 76 integration / 26 tooling / 58 asset cases, native P18 11/11 (three initial clients), P05 8/8 (two clients), six white-hot scenes and source-bound controls/navigation evidence retain their recorded scope. Clean merged-source builds reproduce both accepted artifacts exactly. The user closes old P12's implementation handoff under D94; its original publication, real 6-/10-player and live performance/soak checks remain unverified in the [future release checklist](docs/release.md). At the P12 closeout, all then-active feature milestones were complete and P15 remained cancelled. [P12 closeout](plans/12-mvp-release.md#user-directed-implementation-closeout), [P18 integration](plans/18-game-rebalancing.md#main-integration). No new Roblox publication occurred.
-
-On 2026-11-22 the user replaced the remaining P15 feature with a radar building for the existing level. This increment delivers the editable asset and local art exports. Placing the building in the playable map is a separate task.
-
-**Implementation order selected in D63: P17 → P09.** P16 and P17 retain
-their original plan numbers. P16 received Blender approval before P17.
-P17 and the completed P08 launcher are both on `main`, which supplies the
-dependency source for P09. [P08 and P16 integration](docs/evidence/p08-p16-main-integration.md),
-[P17 integration and acceptance](plans/17-integrate-military-outpost.md#final-native-outpost-acceptance-2026-11-20)
-
-2026-11-20 P09 delivery. The round commits one result with a team, reason
-and server-derived credit where applicable. Four native Studio sessions
-passed all 12 multiplayer cases on `a1b0af0`, with three or two actual
-clients as required. An ordinary two-client review exercised all three
-competitive endings. [PR #41](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/41)
-integrated P09 into `main` at `c4698cd`, which supplies the dependency source
-for P10. [P09 completion record](plans/09-match-outcomes.md#completion-record)
-
-2026-11-20 original P10 delivery. Launcher and weapon readiness, teammate
-spectating and local presentation settings passed the full host gate, eight
-native four-client cases, both exact desktop layouts and a seven-case panel
-regression. A narrow final ammo-copy correction passed its focused Studio
-retest at both resolutions. P10 is ready for review in
-[PR #42](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/42).
-[P10 completion record](plans/10-player-experience.md#completion-record)
-
-2026-11-21 P10 presentation revision. The in-round Help panel is removed,
-and aircraft hits update a shared green-to-red health bar. Both gunship
-weapons have delayed positional reports. Ground rifles and the launcher
-have distinct shot sounds, and rockets leave an exhaust trail and make a
-separate impact sound. The host gate and two-client Studio revision checks
-passed. P10 and its revision were integrated into `main` through PRs #42 and
-#43; integrated `main` supplies P11's dependency source. [Revision PR #43](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/43),
-[revision evidence](docs/evidence/p10/combat-presentation-revision.json)
-
-2026-11-22 P11 delivery. Replay, the 30-minute loaded soak, two-client latency
-convergence and local balance review passed. The repeated five-minute
-1080p profile at quality 8 passed with 18.1 ms and 18.3 ms client p95 and
-0.6 ms server scheduler p95. After the Studio restart, P13 passed 5/5,
-P10 passed 8/8 with four actual clients, and P03 passed 9/9 after the GUI
-fixture fix. Both live late-join checks passed. PR #45 merged P11 into `main`
-at `5fa47e8`, which supplies the P12 dependency source.
-[PR #45](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/45),
-[P11 evidence](plans/11-balance-and-performance.md#completion-record)
-
-2026-11-22 P12 handoff. A clean checkout reproduced the authorized release
-artifact. Studio passed fresh smoke, match outcomes and departures, panning
-and Outpost scenarios. The multiplayer SDK repeatedly stalled during startup,
-leaving parts of the final Studio gate open. The user authorized invited
-playtester publication on C130 P17 Import. The current Studio connection is
-local and lacks cloud read access for destination verification. Publication,
-the live six- and ten-player rounds, and the live performance and soak checks
-are pending. [Draft PR #46](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/46),
-[P12 evidence](plans/12-mvp-release.md#completion-record)
-
-2026-11-14 P17 preparation: `plan/17-integrate-military-outpost` adds the
-validated shared material-panel boundary and approved-source generation gate.
-Final code/tooling `03c9c06` passes 59 unit / 65 integration, 27 asset
-regressions, ten manifest cases and all host gates. The independent reviewer
-found and rechecked an approved-export provenance defect; the correction pins
-the exact approved package lock. Fresh local Studio fixtures and source-bound
-primitive regressions are recorded in the [P17 record](plans/17-integrate-military-outpost.md).
-The playable Outpost remains primitive; no cloud assets or replacement are
-delivered. P17 is Blocked on a cloud-saved import workspace and asset upload
-authorization/access: Studio requires saving to Roblox before managing MCP
-permissions, and both required asset scopes are ungranted. Local tests can run
-in the separate Rojo-connected test document. Actual import/reconstruction,
-integrated-art acceptance/performance and human in-game approval remain open.
-P09 stays Planned. No cloud save, asset upload, merge or Roblox publication
-has occurred.
-
-P17 preparation is delivered for review in [draft PR #39](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39),
-targeting `main`. Initial evidence delivery `916713e` passes
-[GitHub Verify #335](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43605942429).
-The code/tooling source remains `03c9c06`; the plan records source-bound
-Studio results and remaining evidence limitations. This draft does not complete
-P17. The user's subsequent authorization below covers its private cloud
-workspace/assets.
-
-2026-11-14 private-upload authorization: the user explicitly approved uploading
-the identified release build and approved assets while keeping the experience
-private. The [P17 authorization record](docs/evidence/p17/private-upload-authorization.json)
-preserves the response, build hash, owner and scope. Consent is resolved and
-must not be requested again. The access blocker remains: the current document
-is local, MCP's publishing scope is ungranted, and the initial private cloud
-save requires the user to complete Studio's dialog. The release build matches
-the authorized hash and passes artifact isolation; tests remain local. No cloud
-upload or private-audience verification was claimed at that checkpoint.
-
-2026-11-14 private upload completed: **C130 P17 Import**, universe
-`10776653720` / place `72732833195348`, is verified `PRIVATE` and owned by user
-`2227341845`. The initial cloud document had the test mapping; all matching
-test-only trees were removed after release-artifact comparison. Clean place
-revision **5** is verified published/Approved, with 47 runtime script fingerprints
-and 422 authored Parts checked. The approved assembly and library packages
-uploaded successfully with actual IDs in the manifest. The access blocker is
-cleared and P17 resumes. Native FBX import preserved 2,225 / 260 meshes but
-dropped all colors/textures; source-bound normalization/material repair and
-actual replacement/acceptance continue. The playable building remains primitive.
-See the [cloud receipt](docs/evidence/p17/cloud-import-progress.json). P09 remains
-Planned; this private upload is not P12 multiplayer/release acceptance.
-
-2026-11-14 integrated candidate: source `f378733` replaces the smaller Outpost
-through managed imported templates, retaining 25 panel identity pivots and
-registering 26 Outpost / 188 battlefield panels. The material-preserving library
-revision and twelve actual color-map references are recorded in Git. Both
-developer and independent macOS host gates pass. Fresh Linux CI exposes a
-reconstruction portability failure; independent review also identifies pivot
-preflight and thermal-fragment defects. Corrections and the integrated native
-acceptance are underway. P17 remains In progress; A1–A6, performance and human
-in-game approval are still open. The private published version remains the older
-primitive source. The [P17 record](plans/17-integrate-military-outpost.md) preserves
-exact source/build identities, evidence and historical failures. P09 has not
-started.
-
-Correction `b1a6734` preserves the managed art bytes while making float reduction
-portable and adding pivot/thermal-fragment preflight regressions. Its macOS full
-host gate and independent focused review pass; Linux CI confirmation and actual
-integrated Studio acceptance remain pending. The test mapping now expects
-169 server / nine per actual client, with no passing native result claimed.
-
-Fresh [Verify #343](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/43624006036)
-passes on Linux / Python 3.12 for documentation delivery `821bfd5`, with the
-same `b1a6734` runtime/test source. The portability failure is closed. The fresh
-local test document still awaits opening; integrated native/performance and
-human acceptance remain open, so P17 stays In progress and PR #39 stays draft.
-
-The local test document is now open and source-verified. Native testing exposed
-ordinary-script texture-property restrictions; correction `010289d` introduces
-compiled material metadata and passes macOS plus Linux Verify #347. Actual Edit
-inspection matches 132 scripts, 2,332 imported mesh identities and 9,328 texture
-slot/metadata comparisons. A second ordinary run passes the new metadata case
-but still blocks startup on two approved roof attachments and a client fixture
-readiness race. Those corrections are in progress; no integrated native pass
-is claimed. An accidental cloud test sync was stopped, the six test-only trees
-removed and clean unpublished draft 11 saved; the universe remains Private.
-P17 remains In progress, PR #39 stays draft and P09 has not started. Exact
-failed/passing scopes are preserved in the [plan record](plans/17-integrate-military-outpost.md).
-
-Current source `48eae4b` preserves product `51f8440` byte-for-byte and corrects
-two client fixtures. Native baselines now pass 171 server and ten on each of
-two actual clients; actual mesh loading and controlled internal/external avatar
-navigation also pass. Full material/native-fire/reset, rendered views, current
-regressions, performance and A6 remain open. Corrected catalog-based material
-rays await execution after an SDK startup failure and closure of both local
-test documents; the unchanged clean test file is ready to reopen once. P17
-stays In progress and the PR stays draft; P09 remains unstarted.
-
-2026-11-19 P17 checkpoint. The managed harness and its test-source binding
-pass the full host gate and GitHub Verify #365. A fresh local Studio Edit
-audit confirms the candidate's source, native mesh properties, material slots
-and geometry. The current multiplayer runs, operated review, performance
-comparison and human approval remain open. See the
-[P17 completion record](plans/17-integrate-military-outpost.md#reopened-local-test-place--2026-11-19).
-
-Later native P17 work passes the ten-case Outpost suite with two actual
-clients, including navigation, damage, replication and live-work resets.
-P08, P07, P05 and P14 native regressions pass on the same production source.
-Both completed performance scenes exceed the client frame-time budget.
-At that checkpoint, P17 was still in progress for the measured budget and
-operated and human review.
-
-2026-11-20 P17 checkpoint. Operated desktop and simulated-touch review is
-recorded. The user waived the paired two-client performance gate under D67.
-P17 remains In progress in draft PR #39 pending explicit in-game Outpost
-approval. The two requested skills follow P17 under D66. See the
-[P17 evidence record](plans/17-integrate-military-outpost.md#performance-acceptance-revision-2026-11-20).
-
-Later on 2026-11-20, the user added automatic Ground interior zoom and both
-reusable asset skills to P17 under D68. The existing Outpost is the first
-configured building. The revised scope is in progress in PR #39. See the
-[P17 camera and skills revision](plans/17-integrate-military-outpost.md#indoor-camera-and-reusable-skills-scope-revision-2026-11-20).
-Both skills passed an independent trial, and the revised camera passed the
-solo Studio walkthrough on both Outpost floors. The current-source active
-round and native regressions await a Studio session with the required clients.
-
-Later on 2026-11-20, the owner approved P17 and authorized the [PR #39 merge](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/39).
-The detailed Outpost, indoor camera and both asset skills ship in the source
-on `main`. The remaining current-source native verification is tracked by
-[P17](plans/17-integrate-military-outpost.md#owner-approval-and-merge-2026-11-20). The three-client
-[active-round camera review](plans/17-integrate-military-outpost.md#active-round-ground-camera-acceptance-2026-11-20)
-passed indoor aim, spectating and reset on the merged source.
-The current-source launcher, destruction, gunship combat and panning regressions
-then passed. The [final managed Outpost suite](plans/17-integrate-military-outpost.md#final-native-outpost-acceptance-2026-11-20)
-passed all ten cases with two actual clients. P17 is Complete. P09 is Ready.
-
-2026-11-13 main integration: under the user's merge request, PR #34 merged
-into #33, #33 into #32, and #32 into `main` at `87df925`. Every merge tree
-equals the combined passing candidate `537a2ce` /
-`bf7338aa50b15df6e1dbef605ff0ea73b965ed49`. A fresh full local gate passes
-55 unit / 65 integration, seven asset suites, 22 asset regressions, ten manifest
-regressions and all existing static/type/build/geometry/isolation checks.
-Main includes the recoverable launcher, supported-Studio acceptance revision,
-approved Blender source/exports and user-selected `blender_outpost.png`.
-Routine setup now selects `main`; P08/P16 stay Complete, P17 stays Ready and
-unstarted, and P09 waits for P17. Historical failed evidence and prior merge
-checkpoints below remain unchanged. No Roblox publication occurred.
-
-2026-11-13 Blender planning: P16 creates a detailed, editable indoor/outdoor
-asset set closely matching all three references in
-`src/images/military-outpost/`, with material-specific Pristine/Light/Heavy/Total
-variants and a saved Blender review scene. The user selected the smaller
-Outpost for P17 replacement and confirmed a close match to all three images.
-P16 requires explicit human approval of the actual asset revision; P17 consumes
-that approved revision and separately verifies in-game demolition, replication,
-reset and presentation. These plans do not depend on P12 publication or P15
-level selection. The user's subsequent sequencing revision places them next,
-before continuing P09 and the remaining MVP work, as recorded in D63 above.
-At that planning checkpoint neither asset plan had started. The current P16
-candidate and evidence are recorded below; P17 has not replaced the building.
-
-2026-11-13 P16 review delivery: [draft PR #35](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/35)
-contains editable source, furnished exterior/workshop/command-room assets,
-material-specific variants, proxies/fragments and 29 saved-scene renders.
-Final authored source `e8fb840` passes 55 unit / 65 integration, seven asset
-audits, 22 asset regression cases, 10 manifest cases and all existing host
-gates. The independent reviewer resolved initial navigation/proof gaps and
-the intermediate missing garage Light appearance; historical failures remain
-preserved. Current source has measured routes and distinct two-sided scars
-for every family. The [P16 plan](plans/16-blender-military-outpost-assets.md)
-and [acceptance ledger](docs/evidence/p16/acceptance.md) identify exact hashes,
-commands and limits. At that delivery checkpoint A4 was pending, P17 had not
-started and no merge or Roblox publication had occurred.
-
-2026-11-13 P16 human acceptance: the user explicitly answered **“Approve this
-asset revision”** for source `e8fb840` and `.blend` SHA-256
-`4c1c5264020616b1af3b36c9dd37442919b386655149ee207591cd37da041d8c`.
-The [approval record](docs/evidence/p16/human-approval.json) preserves the exact
-response, date, reviewed scope and asset identity; no conditions were specified.
-A1–A4 now pass, all material tester findings are resolved, documentation/source/
-evidence are pushed and GitHub Verify passes on delivery `8b469e2`. P16 is
-Complete; dependency-complete P17 is Ready and remains unstarted. PR #35 is
-ready for review, with integration separate. P09 waits for P17. No merge or
-Roblox publication is authorized by asset approval or performed here.
-
-2026-11-13 subsequent showcase request: a new AI-generated illustration based
-on the approved Blender renders was added to the README, with clear labelling
-and exact prompt/provenance. The user explicitly authorized PR #35's merge;
-it merged at `3f1116a` into its configured planning-branch base after passing
-CI, with an identical candidate/merge tree. The
-[integration record](docs/evidence/p16/showcase-integration.md) distinguishes
-this from the remaining parent-stack integration into `main`. P16 remains
-Complete, P17 remains Ready/unstarted, and no Roblox publication occurred.
-
-2026-11-12 P05 delivery: source `232889f` passes the 50-unit / 33-integration
-host gate, 104 server and 3 per-client Studio smoke, and the eight-case
-two-client P05 harness. Operated desktop and simulated-phone checks verify
-firing, panning and simultaneous touch controls; the independent review's
-material presentation and collision findings were fixed and rechecked.
-[PR #25](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/25)
-is integrated on `main` at `5cc7de8`; P06 used updated main including those records.
-The [P05 plan](plans/05-gunship-combat.md) and [evidence](docs/evidence/p05-gunship-combat.md)
-record tested source, remaining limitations and prior failures; the
-[integration record](docs/evidence/p05-integration.md) records the matching tree
-and fresh main gate.
-
-2026-11-12 P06 delivery: tested runtime/test source `0ab3607`, tree
-`3d6bb3fd49629f66d12e31f921975a151607714f`, passes the final 50-unit /
-43-integration host gate, fresh native two-client P06 10/10 with 118 server
-and 6 per-client smoke, controlled three-client P06Team 7/7, and current
-two-client P05/P14 regressions 8/8 and 6/6. The user accepted corrected
-crosshair/tracer/damage feedback; simulated-phone controls and current gameplay
-captures are recorded. Earlier failed launches and the contaminated Run probe
-remain separately preserved. Final evidence and documentation were pushed at
-`d72fc6764ac89f2313addc94ba9f1077ca5d5068`; [PR #27](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/27)
-is ready for review. See the [P06 record](plans/06-ground-combat.md) and
-[final independent QA](docs/evidence/p06-final-review.md). P07 is eligible but
-unstarted; it must include the P06 branch source or its eventual merge. No P06
-merge or Roblox publication occurred.
-
-2026-11-12 P06 main integration: with user authorization, PR #27 merged into
-`main` at `1d71c63a4d8daea5d3f1526f3e02e6be6de6d2c6`, with a tree identical
-to verified final head `dce058d`. The fresh integrated full host gate passes
-50 unit / 43 integration and all build/geometry/isolation gates. The
-[integration record](docs/evidence/p06-integration.md) preserves merge, build
-and existing Studio evidence. Routine setup selects `main`; P07 can branch
-from it and remains unstarted. No Roblox publication occurred.
-
-2026-11-13 P07 main integration: with the user's authorization, PR #30 merged
-into the P07 branch at `6336830`, then PR #29 merged it into `main` at
-`3c0cfab`. Both merge trees exactly match accepted final head `15b362f`.
-A fresh full gate on integrated main passes 55 unit / 55 integration and all
-build/reconstruction/isolation checks. The [integration record](docs/evidence/p07-integration.md)
-preserves exact hashes, commands, prior Studio evidence and scope. Routine
-setup now selects main. P07 stays Complete; P08 stays Ready and unstarted,
-with its dependency source now integrated. No Roblox publication occurred.
-
-2026-11-13 accepted P07 revision (pre-integration): the user removed a real late-joining-client
-scenario from current acceptance (D50). That old unavailable capability no
-longer blocks P07; runtime spectator restrictions remain. Dedicated
-`fix/p07-progressive-persistent-damage` and dependent
-[PR #30](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/30)
-preserve earned 30mm damage, distinguish Light/Heavy/Total and make the starting
-battlefield shelter destructible under the same rules as the other buildings.
-Final source `8053c8f` passes the independent 55-unit / 55-integration host gate
-and GitHub CI; the unchanged production core's fresh Studio baseline passes
-142 server / 6 client. Final actual two-client P07 passes 7/7, including both
-live-work resets with all 187 panels verified on server and each client. P05
-passes 8/8. Actual native-fired normal/thermal Warehouse and shelter reviews
-show persistent Light scars, Heavy's real half opening and Total removal;
-stopped/resumed native GAU fire credits no paused time. Final P14 regression
-passes 6/6, including both full orbits and actual operator departure. The
-separate visual falling-fragment observation also passes: in an additional
-ordinary live-orbit two-player round, the user confirms “Yes, I saw pieces
-fall” after the third native M102 target hit in a labelled Ground close-up.
-Actual recorded gravity/contact agrees; earlier settled GPU captures are not
-relabelled as airborne proof. The
-[revision record](docs/evidence/p07-damage-revision.md) separates current proof
-from earlier failed runs. P07 acceptance is complete on this branch and P08
-is Ready, without starting implementation. P08 must include this dependency
-source until integration. No P07 integration or Roblox
-publication occurred.
-
-2026-11-13 earlier P07 candidate (historical): [draft PR #29](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/29)
-contains progressive panels, real openings and bounded physical fragments on
-`plan/07-destruction`, based on integrated main `e4c6e3a`. The final executable
-candidate `873f0f6` passes 54 unit / 53 integration and all host gates;
-unchanged core `cb530a0` passed clean Studio 137 server / 6 client tests.
-Actual two-client checks prove heavy/30mm progression, wall traversal,
-state agreement and debris expiry. Separate actual-player blast checks pass
-2/2, P05 regression 8/8, reset-only two-round checks 2/2 and P14 regression
-6/6. These separate results do not turn the failed full P07 late-join run
-into a pass. The [plan record](plans/07-destruction.md) and
-[verification evidence](docs/evidence/p07-destruction.md) retain exact scopes,
-source hashes, failures, cleanup and the current QA opening capture.
-
-At that earlier checkpoint, acceptance still needed a genuinely new post-damage client: the installed
-Studio 0.747 manual session disables both client count and Quick Open Actions
-Start, and the previously unavailable SDK/manual-session AddPlayers routes
-were not retried without changed conditions. Clean rendered thermal-hole
-comparison, Destroyed/falling-fragment visual review and native firing /
-complete operated readability also remain open after bounded review attempts.
-That checkpoint's late-join requirement is superseded by D50 and the active
-revision above. P08 remained Planned; no later plan started. Main was unchanged,
-and no P07 merge or Roblox publication occurred.
-
-2026-11-13 P08 delivery: [draft PR #32](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/32)
-contains the recoverable launcher, production/UI `ef7826b` and corrected
-test-only harness `07e77ea`. Full host passes 55 unit / 65 integration and all
-gates. Fresh native three-client P08 passes **11/11**, with 156 server / seven
-on each actual client, 150 retained traces and zero dropped. Real rockets
-produce 300→200→100→0/Ground victory; mixed rifle/rocket damage, in-flight
-post-death impact, recovery, rejection and reset all pass. Initial/peak count
-is three, final two after the intentional carrier Kick. Actual phone/input
-checks and source-bound P06/P05/P14 regressions (10/10, 8/8, 6/6) pass.
-At this delivery checkpoint, A5's actual same-identity reconnect evidence was
-still required and unverified. The following user revision supersedes that
-acceptance blocker; historical reports remain unchanged.
-
-2026-11-13 Studio acceptance revision (D59): the user explicitly requested
-removal of unsupported Studio acceptance scenarios. Actual same-identity
-reconnect is excluded; runtime no-respawn/rejoin authority and service tests
-remain. Supported late joins, three-client sessions and explicit Roblox-client
-6/10-player release checks stay required. All revised P08 criteria pass using
-the source-bound evidence above. P08 is Complete on the combined
-`docs/studio-supported-acceptance` branch, P09 is Ready and unstarted. The
-[revision record](docs/evidence/p08/studio-acceptance-revision.md) records
-verification and GitHub delivery; PR #32 and stacked
-[PR #33](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/33) remain
-unmerged. No Roblox publication occurred.
+| Plan | Status | Depends on |
+| --- | --- | --- |
+| [P01: Executable foundation and tests](plans/01-foundation.md) | Complete | — |
+| [P02: Circular greybox battlefield](plans/02-warzone-map.md) | Complete | P01 |
+| [P03: Roles and round lifecycle](plans/03-rounds-and-roles.md) | Complete | P02 |
+| [P04: Perimeter aircraft and inward thermal view](plans/04-aircraft-and-thermal.md) | Complete | P03 |
+| [P13: Expanded terrain and multi-story buildings](plans/13-terrain-and-buildings.md) | Complete | P04 |
+| [P14: Directional aircraft targeting](plans/14-aircraft-panning.md) | Complete | P13 |
+| [P05: 30mm and 105mm gunship combat](plans/05-gunship-combat.md) | Complete | P04, P14 |
+| [P06: M-7 fire and aircraft destruction](plans/06-ground-combat.md) | Complete | P05 |
+| [P07: Progressive building-panel destruction and physics](plans/07-destruction.md) | Complete | P06, P13, P14 |
+| [P16: Detailed military-outpost assets](plans/16-blender-military-outpost-assets.md) | Complete | P07, P13 |
+| [P17: Replace the smaller Outpost](plans/17-integrate-military-outpost.md) | Complete | P16, P07, P13, P14 |
+| [P08: Recoverable map rocket launcher](plans/08-rocket-launcher.md) | Complete | P07 |
+| [P09: Complete team win/loss and replay loop](plans/09-match-outcomes.md) | Complete | P08, P17 |
+| [P10: Combat presentation and spectating](plans/10-player-experience.md) | Complete | P09 |
+| [P11: Balance, performance and resilience](plans/11-balance-and-performance.md) | Complete | P10 |
+| [P12: Reconstructable implementation handoff](plans/12-mvp-release.md) | Complete | P11 |
+| [P18: Game rebalancing](plans/18-game-rebalancing.md) | Complete | P07, P08, P14, P17, Seedship PR #62 |
+| [P19: Weapon impacts, blast radius and audio](plans/19-weapon-impacts.md) | Complete | P05, P07, P08, P10, P11, P18 |
+| [P20 · Sculpt the oversized bust](plans/20-lobby-bust.md) | Complete | Supplied bust and room references |
+| [P21 · Build the complete lobby in Blender](plans/21-lobby-interior.md) | Complete | P20 visual approval |
+| [P22 · Replace the protected Roblox lobby](plans/22-integrate-lobby.md) | Complete | P20 and P21 visual approvals, P02, P03 |
+| [P23 · Lobby return, theater spectating and intermission](plans/23-lobby-return-and-intermission.md) | Complete | P03, P09, P10, P22 |
+| [P24 · Ground head start and C-130 arrival](plans/24-ground-scatter-and-aircraft-arrival.md) | Complete | P03, P04, P09, P23 |
+| [P25 · Weapon cooldowns, rocket damage and rifle ammunition](plans/25-weapon-cooldowns-and-rifle-ammo.md) | Complete | P05, P06, P08, P18, P19 |
+| [P15: Interchangeable levels](plans/15-interchangeable-levels.md) | Cancelled | — |
+| [Vesper Array radar outpost](docs/evidence/vesper-import-preflight.md) | Complete | P13 site dimensions, P07 |
 
 ## How plans move
 
-`Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. A Deferred plan sits outside automatic selection until the owner schedules that work. Only the roadmap tables own status; individual plans own implementation/evidence records.
-
-Plan IDs remain stable; table/dependency order places the later-added P13/P14 before P05 and P16/P17 between P07 and P08 rather than renumbering delivered plans. Resume an In progress plan before starting another. Follow the explicit user-directed priority above; otherwise select the lowest-numbered Ready plan whose dependencies are Complete. Ensure those dependencies' source is present on the implementation branch before coding. Resolve an open dependency PR's branch when main lacks that source. Reassess a Blocked plan when new evidence shows its blocker may have cleared; elapsed time alone is not resolution. If no Ready plan exists, the coordinator may promote the first Planned plan whose dependencies are complete, respecting the explicit priority. An unresolved Blocked prerequisite cannot be skipped to claim its dependent capability.
-
-Use the [feature-loop skill](.agents/skills/implement-next-plan/SKILL.md) for one plan. Split a plan here before implementation if it is no longer a coherent increment; preserve IDs and requirement links. Do not implement the entire roadmap in one invocation.
-
-## Completion versus release
-
-The final MVP test includes P29’s deferred three-client transfer, firing, recovery and replay cases against the final candidate. Record the results in P29 before declaring its multiplayer acceptance verified.
-
-A Complete plan has all required automated and Studio evidence, resolved material tester findings, current documentation, and source pushed to GitHub. Its completion record identifies the tested source and PR; PR integration may still await the human's decision. Dependent work must include that source, rather than starting from stale main.
-
-P01 establishes the full non-Studio `python3 scripts/verify.py` gate. Every later plan must preserve it and add its own acceptance suites. Studio is a distinct required gate when the plan changes engine/player behavior. A green CI badge cannot substitute for it.
-
-P12 closed the legacy implementation handoff. The owner confirmed that updated settings took effect over multiple rounds with two players on a published server and accepted that scope for P26. Broader live balance checks remain part of R25 public release verification. P32 preserves the paired balance study for a future iteration. P35 owns live 6- and 10-player qualification and the public launch, which can follow a private MVP. Each cloud action uses authorization for its named destination and audience. [P26 playtest record](plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest) · [Release runbook](docs/release.md)
-
-## First meaningful review points
-
-- After **P04**, check the two-role experience: both views describe the same world and cover works visually.
-- After **P13/P14**, review terrain/building traversal and full-orbit pan reach at both zooms before combat depends on them.
-- After **P06**, test attacking and counterattacking on the revised map.
-- After **P07**, demonstrate the complete panel progression and physical fragments with simple graphics; art refinement cannot substitute for missing mechanics.
-- After **P16**, the user must inspect the saved Blender scene, furnished interior/exterior and every material's damage gallery and explicitly like/approve the identified revision before P17 starts.
-- After **P17**, review the approved smaller Outpost in actual gameplay, including both floors, normal/thermal damage, real openings, fragments and pristine reset.
-- After **P09**, play the complete team-versus-plane loop and inspect destruction/elimination/timeout conflicts.
-- After **P35**, use its release record for the public version, audience, play link and live verification.
-
-## Later asset refinement and other proposals
-
-Other future ideas belong in separate proposals: additional weapons, gamepad, progression, matchmaking, vehicles or full structural collapse. Operator touch panning belongs to P14. Progressive panel destruction and bounded physical fragments are required MVP scope, not deferred ideas.
-
-P16 delivered the approved military-outpost Blender kit. P17 integrated it as
-the smaller Outpost, with material-specific damage and debris under the shared
-panel rules, and added the indoor Ground camera. The game has one level. P10
-retains its UI, effects and audio scope. P11 and P12 must profile and verify the
-integrated Outpost in their candidates. P28–P30 cover the aircraft, launcher and medkit art for public launch.
-
-## Initial delivery record
-
-2026-11-07: established design, architecture, requirements, twelve plans, repository-local feature loop, role instructions, source/test/asset boundaries and build verification. [Scaffold evidence](docs/evidence/bootstrap.md) records checks. No gameplay plan is complete.
-
-2026-11-07 gameplay revision: changed the design to Players vs C-130, a circular battlefield/perimeter orbit, inward weapon-linked camera zoom, 30mm/105mm aircraft weapons, M-7 rifles and one recoverable launcher. P08/P09 replace their previous collection/escape scope while retaining IDs; no implementation status changes. The user confirmed rifle chip damage plus three direct rockets from full aircraft health.
-
-2026-11-08: P01 delivered the executable shell with passing clean-install, static/unit/service/build/isolation gates, independent Studio server/client restart evidence and current documentation. [PR #3](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/3) was merged into `main` with user authorization at `b62f6132ea0998d880daab2d1a5d86b7ab6cd95d`, including the main README’s Studio play/test instructions. See the [P01 completion record](plans/01-foundation.md). P02’s prerequisite source is now on `main`; its subsequent implementation record follows. No Roblox publication occurred.
-
-2026-11-08: P02 source implementation and independent host verification are delivered in [draft PR #4](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4). The full host gate passes (14 unit / 2 integration), and clean reconstruction matches both candidate build hashes. Required Studio map/route/cover/boundary/rebuild and walking evidence is blocked: MCP lists null-name instances but reports **Place is not open** after local-file open attempts and a dialog recheck. See the [P02 record](plans/02-warzone-map.md). P02 is not Complete; P03 remains Planned. No merge or Roblox publication occurred.
-
-2026-11-08 resumption: the user opened the exact P02 local test document, clearing the open-place blocker. Engine inspection found a material asset serialization defect: authored Position/Orientation values were absent from the loaded CFrames. P02 is resumed for correction and required engine validation; the existing host checks did not detect this defect. P03 remains Planned.
-
-2026-11-08 correction: `8147d1c` replaces all 112 authored part poses with canonical CFrame and adds artifact geometry comparisons plus five corruption probes. Independent full host verification and GitHub Verify pass. The old candidate’s actual Studio startup failure is preserved in evidence. Corrected engine acceptance is blocked until `p02-tests-5c809beff70b.rbxlx` is accessible; automated open still yields an unnamed/unavailable instance and the user has been asked to open it manually. PR #4 stays draft; P03 remains Planned.
-
-2026-11-08 completion: P02’s corrected source `8147d1c` passes independent host gates and two fresh Studio sessions (23 server / 2 client cases each, one actual client, no failures/skips/errors), actual walking on both approaches, physical boundary contact/recovery and clean rebuild/restart checks. Material serialization findings are resolved. Evidence and documentation are pushed in `7ac678e`; [PR #4](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/4) is ready for review and remains unmerged. The [P02 record](plans/02-warzone-map.md) links exact source/build/report facts. P03 is Ready but has not been implemented; its future branch must include the open P02 source. No Roblox publication occurred.
-
-2026-11-08 integration: PR #4 merged into `main` with user authorization at `6c919de9990bcc1379bb7e52e67f9805e0abb683`, after its final head passed GitHub Verify. P02 remains Complete and its dependency source is integrated; P03 remains Ready and has not been implemented. The root-guide/steering follow-up in PR #5 is retargeted to `main`. No Roblox publication occurred.
-
-2026-11-08 P03 delivery: authoritative roles/rounds, explicit no-respawn characters, reconnect/late-join restrictions, teammate spectating, basic results and map/camera reset pass independent host verification (24 unit / 14 integration), six adversarial probes, Studio baseline (45 server / 2 per actual client), nine multiplayer scenarios over three rounds with initial three / peak four clients, and focused two-client review. Unsafe seed and asynchronous teardown findings are resolved. Tested source is `e0d2857`; source, documentation and durable evidence are pushed in `b798a02`. [PR #6](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/6) is open for review, unmerged; [GitHub Verify run 42518634591](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42518634591) passes on that candidate. See the [P03 record](plans/03-rounds-and-roles.md). P04 is Ready but has not been implemented; its source must include the open P03 branch until integration. No Roblox publication occurred.
-
-2026-11-08 human-testing follow-up: the user requested lobby walking, solo exploration and role/settings controls. [PR #7](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/7) delivers a test-only panel, chosen solo/real-round roles, duration/start/reset controls and unlocked Waiting movement on `fix/human-test-controls`, stacked on open P03 PR #6. Full host verification (24 unit/14 integration), Studio baseline (45 server / 2 client), four movement cases, six solo human-control cases and four actual two-client role cases pass; [GitHub Verify](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42523454928) also passes. [Evidence](docs/evidence/lobby-preview.md) records tested source `b243090`, pushed candidate `bbe2c94`, captures and limits. Existing roadmap statuses are unchanged; P04 has not been implemented. Neither PR was merged and no Roblox publication occurred.
-
-2026-11-08 integration completion: with explicit user authorization, P03 [PR #6](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/6) merged at `031c7dc1735b3ed6f0f8a2ed49a8d042576e23cc`, then the human-testing [PR #7](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/7) was retargeted to `main` and merged at `6cf0f1ee29e4c122f2d7d68164a2d93ff2408238`. Integrated content is identical to checked PR #7 head `939e890`; a fresh full host gate passes 24 unit/14 integration with matching builds. [Integration evidence](docs/evidence/p03-integration.md) records the verification. Routine local setup now uses `main`. P03 stays Complete, P04 stays Ready and unimplemented; no dependency branch is needed for their integrated source. No Roblox publication occurred.
-
-2026-11-08 P04 delivery: the canonical perimeter aircraft, inward thermal camera, bounded reticle and acknowledged 35°/60° named weapon profiles pass independent host verification (30 unit / 18 integration), five adversarial probes and six two-client Studio scenarios spanning a full 90-second orbit and two rounds. Baseline reports pass 57 server / 2 per actual client; maximum observed pose difference is 0.424 studs against the declared eight-stud bound. Final operated controls/rendered cover occlusion/cleanup review passes. The stale aircraft-planned label is resolved; prototype HUD overlap and a wide-view aircraft strip in the upper-left sky remain documented presentation limits. Tested logic is `33e7b1d`; final label/comment source is `b27f738`; documentation and durable evidence are pushed in `7d9e200`. [PR #9](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/9) is ready for review and unmerged. See the [P04 record](plans/04-aircraft-and-thermal.md). P05 is Ready but has not been implemented; its branch must include the open P04 source until integration. No merge or Roblox publication occurred.
-
-2026-11-08 P04 integration: with explicit user authorization, [PR #9](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/9) merged into `main` at `da1327ac60425c544b7f2804107bb318fe9490dd`. Its tree is identical to checked final head `2f6432f`, which passed [GitHub Verify 42526346654](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42526346654). A fresh integrated full host gate passes 30 unit / 18 integration tests and both build hashes match the final Studio-reviewed candidate. [Integration evidence](docs/evidence/p04-integration.md) records exact source/build and validation scope. Routine local setup now uses `main`; P04 stays Complete and P05 stays Ready/unimplemented, with no unmerged dependency branch required. No Roblox publication occurred.
-
-2026-11-08 MVP level steering revision: selected twice the implemented diameter (360 → 720 studs), terrain, two large buildings plus one smaller building (all at least two stories), mouse panning with weapon zoom, and visible progressive panel destruction with real bounded fragment physics. Added P13 (construction) and P14 (panning) ahead of P05; existing plan IDs and completed P01–P04 evidence are preserved. P07 now requires 3 + 3 direct heavy hits, roughly 50%-open damaged geometry and nine seconds of sustained on-panel 30mm fire to damage a panel, even with primitive assets. R16 adds terrain/building traceability. D31 records the user's confirmation to keep the existing 105mm M102 and apply the new panel-damage rules; interruption/mixing/debris details are labeled defaults. This is documentation/steering only: no new gameplay, engine evidence or completion claim. Later asset refinement is separately scoped. No merge or Roblox publication occurred.
-
-2026-11-08 P13 candidate delivery: [draft PR #12](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/12) contains a 720-stud battlefield, deterministic terrain, two large and one smaller two-story buildings, usable upper floors and 111 registered wall/roof/interior panels. Tested source `ea9cd4e` passes independent/current host gates (33 unit / 18 integration, 351 authored transforms), clean reconstruction and Studio baseline (67 server / 2 client). Two actual clients agree initially and after two perturbed resets; an actual Humanoid reaches all three upper floors; focused routes/hill movement and single-client controls pass. P13 remains Blocked: third-client late join times out, a subsequent Studio server launch encounters Roblox metadata/sign-in timeouts, the P04 reticle assertion/full-orbit regression remains unresolved, and fresh serialized-place loading was rejected before launch by automatic approval review because of duplicate-instance/unsaved-work risk. The [P13 record](plans/13-terrain-and-buildings.md) and [evidence](docs/evidence/p13-terrain-and-buildings.md) preserve exact results and next checks. Documentation and a real Studio Edit overview describe the current candidate. [GitHub Verify 42533469132](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42533469132) passes on the tested source; acceptance is incomplete and PR stays draft. P14 remains Planned; no merge or Roblox publication occurred.
-
-2026-11-08 building-flicker integration: with user authorization, [PR #13](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/13) merged into `plan/13-terrain-and-buildings` at `4d329a0c28e33a709321755b89a7a46af2d362b3`. Its tree matches reviewed/CI-passing head `3f949c7`; a fresh integrated full host gate passes 33 unit / 18 integration, 351 transforms per artifact and 7,146 surface-pair checks. The [fix integration record](docs/evidence/building-flicker.md#merge-and-integration--2026-11-08) links source/build/CI facts and the existing unchanged-source Studio evidence. Routine candidate setup now selects the P13 branch containing the fix. P13 remains Blocked and PR #12 stays draft with its recorded acceptance gaps; P14 remains Planned. No Roblox publication occurred.
-
-2026-11-08 P13 main integration: with explicit user authorization, [PR #12](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/12) merged into `main` at `19b70082b69f00f3901359403f39ba51b67a0506`, including the surface-flicker fix and its records. Its tree is identical to reviewed head `2e3e4d5`, which passed [GitHub Verify 42536588227](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42536588227). A fresh main full host gate passes 33 unit / 18 integration, 351 authored transforms per artifact, 111 panel pivots and 7,146 surface-pair checks. [Main integration evidence](docs/evidence/p13-integration.md) preserves hashes and verification scope. Routine setup now selects `main`. P13 remains Blocked with late-join/final teardown, P04 reticle/full-orbit, two-client human-controls and fresh-file acceptance open; P14 remains Planned and has not started. No Roblox publication occurred.
-
-2026-11-08 P13 acceptance closure: source `e2e4e5` on `fix/p13-engine-acceptance` passes fresh native-world reconstruction (5/5), expanded-map multiplayer (5/5, two initial / three actual peak clients), full 90-second P04 aircraft regression (6/6) and two-client human controls (4/4). Baselines pass 67 server / 2 per actual client with zero failures/errors/skips. Current host gate passes 33 unit / 18 integration and all build/static/geometry checks; [CI Verify 42540612044](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42540612044) passes. The independent tester has no remaining material findings; final docs match the current experience. [Acceptance evidence](docs/evidence/p13-acceptance.md) and the [plan record](plans/13-terrain-and-buildings.md) preserve source identity, failed launch history, actual reports and limitations. P13 is Complete; P14 is Ready but has not started. [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16) delivers the acceptance tooling and records separately from unchanged main; no merge or Roblox publication occurred.
-
-2026-11-08 P13 acceptance integration: with explicit user authorization, [PR #16](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/16) merged into `main` at `de1eb9b3bcf400dc0168067a1e2d9694e26ca22f`. Its tree equals reviewed head `545e6cd`, which passed [GitHub Verify 42544610250](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42544610250). A fresh integrated host gate passes 33 unit / 18 integration and every build/static/geometry gate. The [integration record](docs/evidence/p13-acceptance-integration.md) preserves exact hashes and the verification log. Passing engine evidence remains applicable to identical source; routine setup now uses main for the game, test-startup corrections and native-world probe. P13 stays Complete; P14 stays Ready/unimplemented. No Roblox publication occurred.
-
-2026-11-09 P14 candidate delivery: `a326133` implements bounded mouse edge panning, persistent world-space focus through orbit/zoom, R recenter, geometry-aware reticle rays and authored-height/selected-muzzle aim validation. Full host gate passes 43 unit / 18 integration and every static/build/geometry/release-isolation gate; [CI Verify 42720211427](https://github.com/hanegraaff/roblox-c130-extraction-shooter/actions/runs/42720211427) passes. Independent source review finds no material defect; a 73,205-case clamp probe produces no nonfinite output. [Draft PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18) preserves the source. P14 is Blocked: the original Studio document disconnected, and MCP exposes only an unnamed instance reporting Place is not open despite confirmed Rojo service. Required actual two-client/full-orbit projections, native input, rendered thermal/layout/comfort, lifecycle regressions and gameplay capture are unrun. The [P14 record](plans/14-aircraft-panning.md) and [evidence](docs/evidence/p14-aircraft-panning.md) retain exact facts and recovery steps. P05 remains Planned and unstarted; no merge or Roblox publication occurred.
-
-2026-11-09 P14 engine follow-up: current source `8bbab8e` resolves fixture steering/pointing sequencing, real GUI-inset hover blocking and a reproduced fractional reticle raster mismatch. Full host gate passes 46 unit / 18 integration; current ordinary Studio smoke passes 82 server / 3 client. Earlier two-client arrival regression passes 2/2 and 585 native camera samples pass; native input, numeric layout at both resolutions and repeated preview cleanup have focused positive evidence. Full current P14 acceptance is Blocked: native UI requests two clients but only one connects; manual sequential AddPlayers is rejected outside an SDK-owned session. Complete rendered thermal/both-FOV orbit comfort review is also unavailable after native viewport-focus loss. All owned simulations are ended, the original document is Edit and the temporary selector is nil. [PR #18](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/18) stays draft; [evidence](docs/evidence/p14-aircraft-panning.md) preserves failures and exact verification limits. P05 remains Planned; main is unchanged and no publication occurred.
-
-2026-11-12 P14 acceptance completion: the horizontal control and touch-aim source `ca1d91a`, P04 fixture revision `64e6a18`, and operated evidence `8cec062` pass the 50 unit / 18 integration host gate; 86 server / 3 per-client Studio smoke; P14 6/6, P04 6/6 and HumanTestMultiplayer 4/4 with two actual clients; native desktop/mobile full orbits at both FOVs, simultaneous arrows and independent touch aiming; actual 1280×720 / 1920×1080 layout; and rendered slope/upper-floor cover comparisons. The independent tester confirmed the remaining validation gaps were closed and Studio returned to Edit. [PR #22](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/22) delivers the unmerged change on a branch stacked on PR #21; [the P14 record](plans/14-aircraft-panning.md) and [acceptance evidence](docs/evidence/p14-horizontal-acceptance.md) identify tested source and reports. P05 is Ready but has not been started; its branch must include the unmerged P14 source. No merge or Roblox publication occurred.
-
-2026-11-12 P14 main integration: with user authorization, PRs #18–#22 merged into `main` in dependency order, ending at `169cecd6f10f82569526c57d5c1aa30c178e3ffe`. Its tree is identical to tested PR #22 head `50236e6`; a fresh integrated host gate passes 50 unit / 18 integration and all static/build/geometry/isolation checks. The [integration record](docs/evidence/p14-integration.md) records each merge and links the independently verified Studio acceptance. P14 stays Complete and P05 remains Ready but unstarted; future work can branch from integrated `main`. No Roblox publication occurred.
+Resume an in-progress plan or select one ready plan with complete prerequisites and the required source on its branch. Planned work awaits sequencing, blocked work has a concrete missing prerequisite, and deferred work awaits owner scheduling. A complete plan has its required verification, current documentation and source pushed for review. Record acceptance and integration in the plan. [Feature workflow](.agents/skills/implement-next-plan/SKILL.md)
