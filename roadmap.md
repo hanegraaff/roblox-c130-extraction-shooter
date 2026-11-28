@@ -2,17 +2,17 @@
 
 ## Public MVP launch
 
-Start with **P26**. The owner and trusted testers must be able to tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P27 delivers the compact mobile HUD before the guides and game-page copy in P33 and P34. P32 sets the launch balance after players have tried the finished controls, models and medkits.
+P26 lets the owner and trusted testers tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P27 delivers the compact mobile HUD before the guides and game-page copy in P33 and P34. P32 sets the launch balance after players have tried the finished controls, models and medkits.
 
 **Publishing throughout the MVP.** Always publish from `build/game.rbxlx`. Use `build/tests.rbxlx` for local tests. Reuse both filenames and Studio documents, with the matching Rojo connection bringing in changes. Verify the open game document contains the latest source before publishing to the same approved Roblox place. [Build and publish guide](README.md#the-two-studio-files)
 
 | Plan | Status | Depends on | Outcome |
 | --- | --- | --- | --- |
-| [P26 · Live balance panel](plans/26-live-balance-panel.md) | Blocked | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
+| [P26 · Live balance panel](plans/26-live-balance-panel.md) | Complete | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
 | [P27 · Mouse aiming, mobile controls and compact HUD](plans/27-ground-aim-and-mobile-controls.md) | Complete | P24, P25 | Aim by moving the mouse and play both roles on a phone with a clear battlefield view and a compact arrival timer. |
 | [P28 · C-130 model in flight](plans/28-c130-model.md) | Complete | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
 | [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Ready | P25 and launcher images | Find, carry and fire the modeled launcher. |
-| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Planned | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
+| [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Ready | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
 | [P32 · Choose the launch balance](plans/32-balance-playtests.md) | Planned | P26–P31 | Choose a launch preset after testing small and full teams. |
 | [P33 · Rewrite the README guides](plans/33-rewrite-readmes.md) | Planned | P26–P32 | Run and understand the game using plain-language guides. Explore its art in a linked gallery of in-game and Blender views. |
@@ -437,7 +437,7 @@ A Complete plan has all required automated and Studio evidence, resolved materia
 
 P01 establishes the full non-Studio `python3 scripts/verify.py` gate. Every later plan must preserve it and add its own acceptance suites. Studio is a distinct required gate when the plan changes engine/player behavior. A green CI badge cannot substitute for it.
 
-P12 closed the legacy implementation handoff. The owner reported a passing two-player Roblox playtest for P26. Its remaining evidence is confirmation of preset propagation across two published servers, persistence on a fresh server, and rollback. P32 uses private playtests to choose the launch preset. P35 owns live 6- and 10-player qualification and the public launch. Each cloud action uses authorization for its named destination and audience. [P26 playtest record](plans/26-live-balance-panel.md#2026-11-28--owner-playtest) · [Release runbook](docs/release.md)
+P12 closed the legacy implementation handoff. The owner confirmed that updated settings took effect over multiple rounds with two players on a published server and accepted that scope for P26. Broader live balance checks remain part of R25 public release verification. P32 uses private playtests to choose the launch preset. P35 owns live 6- and 10-player qualification and the public launch. Each cloud action uses authorization for its named destination and audience. [P26 playtest record](plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest) · [Release runbook](docs/release.md)
 
 ## First meaningful review points
 

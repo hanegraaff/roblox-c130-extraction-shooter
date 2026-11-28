@@ -12,7 +12,7 @@ Release the tested candidate to the named Roblox audience and verify that new pl
 
 ## Acceptance
 
-1. **A1 · Private qualification.** Run the complete release preparation gate. In real 6- and 10-player sessions exercise aircraft destruction, Ground elimination and timeout, with resets. Use the actual launch preset for expected damage, durability and healing.
+1. **A1 · Private qualification.** Run the complete release preparation gate. In real 6- and 10-player sessions exercise aircraft destruction, Ground elimination and timeout, with resets. Use the actual launch preset for expected damage, durability and healing. Verify published preset propagation, restart persistence and rollback for R25. [Live balance verification](../docs/testing.md#verify-the-live-balance-panel)
 2. **A2 · Performance.** Meet the runbook’s two-role frame-time, server, latency/convergence and 30-minute memory/replay gates on the named candidate. Record counts, devices, measurements and resolution of failures.
 3. **A3 · Public launch.** Record the approved destination, public place version, enabled devices, listing and preset revision. Verify a fresh account can discover or open the page, join and play. Verify a trusted tester can access the panel and an ordinary player cannot change settings. Record the observed result and rollback outcome if needed.
 

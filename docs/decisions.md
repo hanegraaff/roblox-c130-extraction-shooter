@@ -130,6 +130,7 @@ The 2026-11-23 P18 revision supersedes prior health, destruction and camera-boun
 | D116 | Proposed P27 layout targets | Put one readable Ground Scatter timer at the safe top edge. At 568×320, aim for a single line no wider than one quarter of the safe area and no taller than 24 UI pixels. Review the layout and touch controls on a wider phone with a cutout as well. |
 | D117 | User-selected Ground reticle height, 2026-11-27 | Raise the horizontally centered Ground reticle so the avatar does not obscure it in normal third-person play. Rifle and launcher aim use that same point. The vertical offset is a tuning value. |
 | D118 | User-selected Ground HUD, 2026-11-27 | Remove the Surrender button from the desktop and touch Ground HUD. |
+| D119 | Owner-accepted P26 playtest scope, 2026-11-28 | Accept the owner's published playtest with two players, multiple rounds on one new server and observed application of updated balance settings. The earlier two-server, restart persistence and rollback checks remain in R25 public release verification. [P26 playtest](../plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest) |
 
 ## Open details that do not block initial implementation
 
