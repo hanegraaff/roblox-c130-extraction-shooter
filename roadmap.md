@@ -18,7 +18,7 @@ The owner can declare the MVP complete with the game, illustrated README and Rob
 | [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Deferred | P25, launcher references |
 | [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Complete | P26, P27, medkit references |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Complete | P18, Sandbreak |
-| [P33 · Write the C-130 Assault README](plans/33-rewrite-readmes.md) | In progress | Integrated P26–P31 source |
+| [P33 · Write the C-130 Assault README](plans/33-rewrite-readmes.md) | Complete | Integrated P26–P31 source |
 | [P34 · Prepare the C-130 Assault Roblox page](plans/34-arcade-game-page.md) | Planned | P27–P31 |
 
 ### After MVP completion

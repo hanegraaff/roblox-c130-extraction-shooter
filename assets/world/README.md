@@ -2,11 +2,11 @@
 
 Rojo maps the battlefield model and the stock district assembly to `Workspace.World.Battlefield`. [`Battlefield.model.json`](Battlefield.model.json) reconstructs the expanded primitive map, three multi-story buildings, starting shelter, invisible terrain recipe and anchors without cloud assets or unsaved Studio edits. [`manifest.json`](../manifest.json) records provenance and terrain ownership. Every authored part uses a twelve-component canonical `CFrame`; `Position`/`Orientation` aliases are forbidden. Artifact reconstruction and actual Studio loaded-transform/world checks remain separate gates.
 
-This folder currently authors one level. The future [level contract](../../architecture.md#level-interchange-boundary-target-architecture) will package each level's footprint, orbit, aim envelope, world/terrain, anchors and panel identities separately while reusing core pan, zoom, combat and demolition rules. No second playable level or level switch is implemented yet.
+This folder authors the single circular level. The proposed level contract keeps the footprint, orbit, aim envelope, terrain, anchors and panel identities together so pan, zoom, combat and demolition can stay shared if a second level is commissioned. [Level contract](../../architecture.md#level-interchange-boundary-target-architecture)
 
 ## Coordinates and anchors
 
-Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P18 initializes/recenters focus at map center and holds it in world-aligned coordinates. WASD/touch movement uses rendered directions and clamps independently at the overall 720 × 720-stud square edges. The combat disk remains separate. Playable/orbit radius is 360, diameter 720, aircraft altitude 140 and recovery threshold Y=−30. These construction defaults live in `MapRules.defaults`; change matching geometry/settings together. The orange boundary is 24 studs high.
+Distances are studs, with Y up. Ground and map center are `(0,0,0)`. The operator's focus starts and recenters at map center and stays in world-aligned coordinates. WASD and touch movement use rendered directions and clamp independently at the 720 × 720-stud square edges. The combat disk and orbit have a radius of 360. Aircraft altitude is 140 and the recovery threshold is Y=−30. Change the geometry and its settings in `MapRules.defaults` together. The orange boundary is 24 studs high.
 
 | Authored object | Contract |
 | --- | --- |
@@ -15,7 +15,7 @@ Distances are studs, with Y up. Ground and map center are `(0,0,0)`. P18 initial
 | `Anchors/Ground01`–`Ground09` | Invisible, noncolliding/nonqueryable 3×3 grid: X=−20/0/20, Z=108/120/132, Y=3. Ground05 is the safe return pose. |
 | `Anchors/LauncherHangar`, `LauncherRadar`, `LauncherDepot`, `LauncherSeedship` | One weapon inside the eastern hangar door, one outside each radar/depot entrance and one inside the Seedship. Seedship pickup center is `(0, 5.6, 214)`. |
 | `Anchors/Lobby`, `Anchors/Operator` | `(520,3,0)` and `(520,3,−15)` on the separate protected deck. Both anchors and the entire deck must remain outside the combat disk. |
-| `Permanent`, `Breakable` | Unique names become runtime `CoverId` and folder kind becomes `CoverKind`. Both remain solid and do not take damage yet. |
+| `Permanent`, `Breakable` | Unique names become runtime `CoverId` and folder kind becomes `CoverKind`. Solid cover in these groups sits outside the structural panel registry. |
 | `SpawnShelterPanels`, `PanelRegistries/SpawnShelter` | Revised candidate: 42 roof and 34 wall panels replace the seven old Permanent shelter colliders, preserving their union, entrances and anchors. The descriptor points to the direct `SpawnShelterPanels` Folder. Pristine geometry must protect all nine spawn anchors; later damage can open it. |
 | `Routes` | Stock-material parking stripes and faded road dashes. |
 | `MarsBoulders` | Native boulders and small scree at the southern crater and ridges. Larger boulders supply cover. |
