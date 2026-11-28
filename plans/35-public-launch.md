@@ -1,12 +1,12 @@
-# P35 — Verify and open the public MVP
+# P35 — Verify and open the public experience
 
-**Depends on** P32–P34. **Requirements** R14, R25–R31. [Roadmap](../roadmap.md#public-mvp-launch) · [Requirements](../requirements.md)
+**Depends on** MVP completion and an owner request for public release. **Requirements** R14, R25–R28, R30, R31. [Roadmap](../roadmap.md#after-mvp-completion) · [Requirements](../requirements.md)
 
-Release the tested candidate to the named Roblox audience and verify that new players can join and finish a match.
+The MVP can remain private for as long as the owner chooses. When a public release is requested, qualify the named candidate, apply the P34 listing and verify that new players can join and finish a match.
 
 ## Work
 
-- Follow the [release runbook](../docs/release.md). Pin the build, place ID, asset permissions and launch preset. Prepare a rollback for the place, listing and balance revision. Use a named, authorized private audience for preflight and the owner’s explicit authorization for the public switch.
+- Follow the [release runbook](../docs/release.md). Pin the build, place ID, asset permissions and the preset actually selected for this release. Record its values and revision so qualification can proceed even if P32’s paired trials are still pending. Prepare a rollback for the place, listing and balance revision. Use a named, authorized private audience for preflight and the owner’s explicit authorization for the public switch.
 - Test the release artifact with ordinary accounts and actual Roblox clients. Check platform access, asset loading, panel restrictions, both roles, mobile controls, kits and replay. Record the prior version and exact launch candidate.
 - Apply the reviewed listing and audience, smoke-test a fresh public join and a complete match, verify the listing on desktop and phone, and update the root guide with the verified play link and limitations.
 

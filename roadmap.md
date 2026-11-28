@@ -1,8 +1,10 @@
 # Roadmap to MVP
 
-## Public MVP launch
+<a name="public-mvp-launch"></a>
 
-P26 lets the owner and trusted testers tune the published game from inside Roblox. The art plans can use their reference folders as soon as images arrive. P27 delivers the compact mobile HUD before the guides and game-page copy in P33 and P34. P32 sets the launch balance after players have tried the finished controls, models and medkits.
+## MVP completion
+
+The owner can declare **C-130 Assault** MVP complete when P26–P31, the illustrated root README (P33) and the Roblox listing preview (P34) meet their acceptance criteria. The experience can stay private at that milestone. The candidate can use its existing balance settings.
 
 **Publishing throughout the MVP.** Always publish from `build/game.rbxlx`. Use `build/tests.rbxlx` for local tests. Reuse both filenames and Studio documents, with the matching Rojo connection bringing in changes. Verify the open game document contains the latest source before publishing to the same approved Roblox place. [Build and publish guide](README.md#the-two-studio-files)
 
@@ -14,12 +16,19 @@ P26 lets the owner and trusted testers tune the published game from inside Roblo
 | [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Ready | P25 and launcher images | Find, carry and fire the modeled launcher. |
 | [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Ready | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
-| [P32 · Choose the launch balance](plans/32-balance-playtests.md) | Planned | P26–P31 | Choose a launch preset after testing small and full teams. |
-| [P33 · Rewrite the README guides](plans/33-rewrite-readmes.md) | Planned | P26–P32 | Run and understand the game using plain-language guides. Explore its art in a linked gallery of in-game and Blender views. |
-| [P34 · Fast-paced arcade game page](plans/34-arcade-game-page.md) | Planned | P27–P32 | Preview the arcade listing, screenshots, icon and banners. |
-| [P35 · Verify and open the public MVP](plans/35-public-launch.md) | Planned | P32–P34 | Pass the live release checks and open the approved public experience. |
+| [P33 · Write the C-130 Assault README](plans/33-rewrite-readmes.md) | Planned | P26–P31 | Learn to play, develop and publish from one root guide with gameplay screenshots and a Blender model showcase. |
+| [P34 · Prepare the C-130 Assault Roblox page](plans/34-arcade-game-page.md) | Planned | P27–P31 | Review the full arcade listing with real screenshots, an icon, AI-generated banners and thumbnails on desktop and phone. |
 
 **Image drop-off.** Put an inspiration image in each folder. One three-quarter view per asset is enough to start. Each plan delivers its own editable Blender master and a version integrated into the game. [C-130](src/images/c130/) · [Launcher](src/images/rocket-launcher/) · [Medkit](src/images/medkit/)
+
+### After MVP completion
+
+Tester availability determines when to revisit the P32 balance study. The owner can schedule P35 when ready to open the game to the public.
+
+| Plan | Status | Depends on | Outcome |
+| --- | --- | --- | --- |
+| [P32 · Compare balance across team sizes](plans/32-balance-playtests.md) | Deferred | MVP completion and testers for 2-, 6- and 10-player matches | Record paired trials and select a reproducible preset for a future iteration. |
+| [P35 · Verify and open the public experience](plans/35-public-launch.md) | Deferred | MVP completion and owner request for public release | Qualify the release candidate at 6 and 10 players, then verify the authorized public listing and join. |
 
 **After launch.** Controller support can follow. Map movement, aiming, fire, reload, weapon selection, pickups and menu navigation, then test both roles through a full round with a physical controller.
 
@@ -425,7 +434,7 @@ unmerged. No Roblox publication occurred.
 
 ## How plans move
 
-`Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. Only the roadmap tables own status; individual plans own implementation/evidence records.
+`Planned` → `Ready` → `In progress` → `Complete`. Use `Blocked` only for a concrete missing decision, access or dependency, with the reason in the plan record. Dependency sequencing alone is represented by Planned. A Deferred plan sits outside automatic selection until the owner schedules that work. Only the roadmap tables own status; individual plans own implementation/evidence records.
 
 Plan IDs remain stable; table/dependency order places the later-added P13/P14 before P05 and P16/P17 between P07 and P08 rather than renumbering delivered plans. Resume an In progress plan before starting another. Follow the explicit user-directed priority above; otherwise select the lowest-numbered Ready plan whose dependencies are Complete. Ensure those dependencies' source is present on the implementation branch before coding. Resolve an open dependency PR's branch when main lacks that source. Reassess a Blocked plan when new evidence shows its blocker may have cleared; elapsed time alone is not resolution. If no Ready plan exists, the coordinator may promote the first Planned plan whose dependencies are complete, respecting the explicit priority. An unresolved Blocked prerequisite cannot be skipped to claim its dependent capability.
 
@@ -437,7 +446,7 @@ A Complete plan has all required automated and Studio evidence, resolved materia
 
 P01 establishes the full non-Studio `python3 scripts/verify.py` gate. Every later plan must preserve it and add its own acceptance suites. Studio is a distinct required gate when the plan changes engine/player behavior. A green CI badge cannot substitute for it.
 
-P12 closed the legacy implementation handoff. The owner confirmed that updated settings took effect over multiple rounds with two players on a published server and accepted that scope for P26. Broader live balance checks remain part of R25 public release verification. P32 uses private playtests to choose the launch preset. P35 owns live 6- and 10-player qualification and the public launch. Each cloud action uses authorization for its named destination and audience. [P26 playtest record](plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest) · [Release runbook](docs/release.md)
+P12 closed the legacy implementation handoff. The owner confirmed that updated settings took effect over multiple rounds with two players on a published server and accepted that scope for P26. Broader live balance checks remain part of R25 public release verification. P32 preserves the paired balance study for a future iteration. P35 owns live 6- and 10-player qualification and the public launch, which can follow a private MVP. Each cloud action uses authorization for its named destination and audience. [P26 playtest record](plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest) · [Release runbook](docs/release.md)
 
 ## First meaningful review points
 
