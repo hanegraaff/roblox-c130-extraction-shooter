@@ -22,6 +22,9 @@ local BalanceSchema = require(game:GetService("ReplicatedStorage").Shared.Balanc
 local LauncherService = require(script.Parent.LauncherService)
 local Geometry = require(script.Parent.LauncherGeometry)
 local LauncherRuntime = {}
+-- Distance over which the visible launch converges from the held prop's muzzle
+-- to the server's head-origin sweep. This is presentation only (studs).
+local MUZZLE_BLEND_STUDS = 16
 local WeaponSoundRules = require(game:GetService("ReplicatedStorage").Shared.WeaponSoundRules)
 local WeaponImpactRules = require(ReplicatedStorage.Shared.WeaponImpactRules)
 -- Shared bound for waiting pickup, drop and fire intents across the roster.
@@ -63,6 +66,7 @@ type Flight = {
     userId: number,
     position: Vector3,
     direction: Vector3,
+    visualOffset: Vector3,
     lastTime: number,
     expires: number,
     remaining: number,
@@ -194,7 +198,8 @@ function LauncherRuntime.start(
             if not correctHeld then
                 destroyRepresentation(slot)
                 if snapshot.state == "Available" then
-                    local model = Geometry.pickup(snapshot.launcherId, vector(snapshot.position))
+                    local map = assert(battlefield(), "validated launcher battlefield disappeared")
+                    local model = Geometry.pickup(snapshot.launcherId, vector(snapshot.position), map)
                     model.Parent = effects
                     slot.available = model
                 elseif snapshot.state == "Held" and backpack then
@@ -237,6 +242,8 @@ function LauncherRuntime.start(
             return
         end
         local direction = (Vector3.new(intent.x, intent.y, intent.z) - origin).Unit
+        local map = assert(battlefield(), "validated firing battlefield disappeared")
+        local visualOrigin = Geometry.visualOrigin(map, slot.held, origin)
         local part = Instance.new("Part")
         part.Name = "Rocket"
         part:SetAttribute("FlightRoundId", match.snapshot().roundId)
@@ -253,9 +260,9 @@ function LauncherRuntime.start(
         trail.Transparency = NumberSequence.new(0.25, 1)
         trail.Lifetime, trail.MinLength = 0.32, 0.05
         trail.Parent = part
-        part.CFrame, part.Parent = CFrame.lookAt(origin, origin + direction), effects
+        part.CFrame, part.Parent = CFrame.lookAt(visualOrigin, visualOrigin + direction), effects
         if emitSound then
-            emitSound("RocketLaunch", match.snapshot().roundId, origin, now, player.UserId)
+            emitSound("RocketLaunch", match.snapshot().roundId, visualOrigin, now, player.UserId)
         end
         table.insert(flights, {
             roundId = match.snapshot().roundId,
@@ -263,6 +270,7 @@ function LauncherRuntime.start(
             userId = player.UserId,
             position = origin,
             direction = direction,
+            visualOffset = visualOrigin - origin,
             lastTime = now,
             expires = now + LauncherService.lifetimeSeconds,
             remaining = LauncherService.rangeStuds,
@@ -429,7 +437,10 @@ function LauncherRuntime.start(
                     flight.position += displacement
                     flight.remaining -= distance
                     flight.lastTime = now
-                    flight.part.CFrame = CFrame.lookAt(flight.position, flight.position + flight.direction)
+                    local traveled = LauncherService.rangeStuds - flight.remaining
+                    local blend = math.max(0, 1 - traveled / MUZZLE_BLEND_STUDS)
+                    local visiblePosition = flight.position + flight.visualOffset * blend
+                    flight.part.CFrame = CFrame.lookAt(visiblePosition, visiblePosition + flight.direction)
                 end
             end
         end

@@ -11,7 +11,7 @@ P26 lets the owner and trusted testers tune the published game from inside Roblo
 | [P26 · Live balance panel](plans/26-live-balance-panel.md) | Complete | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
 | [P27 · Mouse aiming, mobile controls and compact HUD](plans/27-ground-aim-and-mobile-controls.md) | Complete | P24, P25 | Aim by moving the mouse and play both roles on a phone with a clear battlefield view and a compact arrival timer. |
 | [P28 · C-130 model in flight](plans/28-c130-model.md) | Complete | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
-| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Ready | P25 and launcher images | Find, carry and fire the modeled launcher. |
+| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | In progress | P25 and launcher images | Find, carry and fire the modeled launcher. |
 | [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Ready | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
 | [P32 · Choose the launch balance](plans/32-balance-playtests.md) | Planned | P26–P31 | Choose a launch preset after testing small and full teams. |

@@ -108,7 +108,7 @@ def paths(path: Path) -> dict[str, str]:
 
 
 CFRAME_COMPONENTS = ("X", "Y", "Z", "R00", "R01", "R02", "R10", "R11", "R12", "R20", "R21", "R22")
-PART_CLASSES = {"Part", "SpawnLocation", "MeshPart"}
+PART_CLASSES = {"Part", "SpawnLocation", "MeshPart", "WedgePart"}
 
 
 def instance_nodes(path: Path) -> dict[str, ET.Element]:
@@ -392,6 +392,10 @@ def check_authored_geometry(path: Path) -> int:
                 if item.findtext("Properties/token[@name='shape']", "1") != expected_shape:
                     raise RuntimeError(f"Authored shape reconstruction mismatch: {full}")
             count += 1
+        if source["ClassName"] == "Attachment" and full.startswith("ServerStorage/Assets/DepotLauncher/"):
+            actual = numeric_property(item, "CoordinateFrame", "CFrame", CFRAME_COMPONENTS, full)
+            if any(abs(a - b) > 1e-4 for a, b in zip(actual, source["Properties"]["CFrame"])):
+                raise RuntimeError(f"Depot launcher attachment reconstruction mismatch: {full}")
         if source["ClassName"] == "SurfaceAppearance":
             check_surface_material(item, source, full)
         for child in source.get("Children", []):
@@ -991,6 +995,12 @@ def main() -> None:
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P28 artwork fixture missing from tests or leaked to release: {name}")
+    for name in (
+        "ServerScriptService/ServerTests/DepotLauncherHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/DepotLauncherHarness",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P29 launcher fixture missing from tests or leaked to release: {name}")
     for name in ("ServerStorage/Tests/Studio/LobbyGeometry.spec", "ReplicatedStorage/ClientSpecs/GroundIndoorCamera.spec"):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P22 camera or lobby fixture missing from tests or leaked to release: {name}")

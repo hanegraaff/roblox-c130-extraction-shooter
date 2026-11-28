@@ -231,6 +231,62 @@
       "upload_owner": null
     },
     {
+      "id": "depot-launcher-master",
+      "kind": "blender-source",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/blender/rocket-launcher/rocket-launcher.blend",
+      "sha256": "977b51fda5695a12f665e16d13a04994212eedd424fbef564654fdd41929fcae",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "depot-launcher-glb",
+      "kind": "model-export",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/exports/rocket-launcher/rocket-launcher.glb",
+      "sha256": "8ac158df01968b5fdf0c174be227d612273b73eddeff3678b58258676496cb01",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "depot-launcher-native",
+      "kind": "model",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/models/DepotLauncher.model.json",
+      "sha256": "8960379e57531b08081824fb73c4eacc95a36b8cd74c63e7d63fc0d739c03758",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "studio_path": "ServerStorage.Assets.DepotLauncher"
+    },
+    {
+      "id": "depot-launcher-audit",
+      "kind": "asset-inventory",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/exports/rocket-launcher/package-audit.json",
+      "sha256": "4375d24febc308aef19e4e5c8cd530ab0907194e6bfa65b1d1c1b8ec840537be",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "depot-launcher-three-quarter",
+      "kind": "art-preview",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/exports/rocket-launcher/three-quarter.png",
+      "sha256": "30ca344e97d6fbdbabc6f00e0b57d9cbb5b50d5edf389c0074ab697e54b8bbdb",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
       "id": "c130-managed-airframe",
       "kind": "model",
       "source": "Original aircraft compiled from the editable P28 Blender master using native Roblox shape profiles and geometric livery",

@@ -1,10 +1,11 @@
 --!strict
 --[=[
-    LauncherGeometry: server-only primitive launcher presentation and recovery queries.
+    LauncherGeometry: server-only depot launcher presentation and recovery queries.
     Depends on the active level's Battlefield/MapRules settings and Workspace queries.
     Models are noncolliding/nonqueryable cosmetics; ownership belongs to LauncherService.
     All calls are nonyielding. Callers destroy returned representations on transfer/reset.
 ]=]
+local ServerStorage = game:GetService("ServerStorage")
 local MapRules = require(game:GetService("ReplicatedStorage").Shared.MapRules)
 local LauncherGeometry = {}
 local function finite(vector: Vector3): boolean
@@ -73,48 +74,86 @@ function LauncherGeometry.reachable(
     return delta.Magnitude > 0
         and workspace:Raycast(head.Position, delta, LauncherGeometry.parameters(battlefield)) == nil
 end
-local function tube(parent: Instance, anchored: boolean): BasePart
-    local handle = Instance.new("Part")
-    handle.Name = "Handle"
-    handle.Size = Vector3.new(0.75, 0.75, 4)
-    handle.Color = Color3.fromRGB(100, 111, 53)
-    handle.Material = Enum.Material.Metal
-    handle.Anchored = anchored
-    handle.CanCollide, handle.CanQuery, handle.CanTouch = false, false, false
-    handle.Massless = true
-    handle.Parent = parent
-    for _, offset in { -1.65, 1.65 } do
-        local band = handle:Clone()
-        band.Name = "TubeBand"
-        band.Size = Vector3.new(0.95, 0.95, 0.25)
-        band.Color = Color3.fromRGB(226, 165, 55)
-        band.CFrame = handle.CFrame * CFrame.new(0, 0, offset)
-        band.Parent = parent
-        if not anchored then
-            local weld = Instance.new("WeldConstraint")
-            weld.Part0, weld.Part1, weld.Parent = handle, band, band
+-- Every representation clones the same source-managed, inert assembly. The handle
+-- is a hidden pivot with CarryGrip, Muzzle and GroundContact attachment frames.
+local function assembly(): (Model, BasePart)
+    local assets = ServerStorage:FindFirstChild("Assets")
+    local template = if assets then assets:FindFirstChild("DepotLauncher") else nil
+    assert(template and template:IsA("Model"), "managed DepotLauncher template is missing")
+    local model = template:Clone()
+    local handle = model:FindFirstChild("Handle")
+    assert(handle and handle:IsA("BasePart"), "DepotLauncher requires Handle")
+    model.PrimaryPart = handle
+    for _, part in model:GetChildren() do
+        if part:IsA("BasePart") then
+            part:SetAttribute("ThermalNonCover", true)
         end
     end
-    return handle
+    return model, handle
 end
--- Creates exactly one held Tool. Backpack parenting/equipping is the caller's
--- responsibility. Native backspace dropping is disabled in favor of server intent.
+local function attachment(handle: BasePart, name: string): Attachment
+    local item = handle:FindFirstChild(name)
+    assert(item and item:IsA("Attachment"), "DepotLauncher requires " .. name)
+    return item
+end
+-- Creates one Tool with its native right-hand joint aligned to CarryGrip. The
+-- caller owns backpack parenting and equip; manual native drop stays disabled.
 function LauncherGeometry.tool(launcherId: string): Tool
+    local model, handle = assembly()
     local tool = Instance.new("Tool")
     tool.Name, tool.ToolTip = "Rocket launcher", "Direct hits damage the C-130 • G drops for a teammate"
     tool.RequiresHandle, tool.CanBeDropped = true, false
+    tool.Grip = attachment(handle, "CarryGrip").CFrame
     tool:SetAttribute("LauncherId", launcherId)
-    tube(tool, false)
+    for _, part in model:GetChildren() do
+        if part:IsA("BasePart") then
+            part.Anchored, part.Parent = false, tool
+            if part ~= handle then
+                local weld = Instance.new("WeldConstraint")
+                weld.Part0, weld.Part1, weld.Parent = handle, part, part
+            end
+        end
+    end
+    model:Destroy()
     return tool
 end
--- Creates one visible pickup with a stable ID. It cannot obstruct either route.
-function LauncherGeometry.pickup(launcherId: string, position: Vector3): Model
-    local model = Instance.new("Model")
+-- Finds the launch presentation point on an equipped model. The character's
+-- validated head remains the sweep and aim origin. Hide the muzzle offset when
+-- the hand moved too far or solid level geometry separates it from the head.
+function LauncherGeometry.visualOrigin(battlefield: Instance, tool: Tool, head: Vector3): Vector3
+    local handle = tool:FindFirstChild("Handle")
+    if not handle or not handle:IsA("BasePart") then
+        return head
+    end
+    local muzzle = attachment(handle, "Muzzle").WorldPosition
+    local offset = muzzle - head
+    if not finite(offset) or offset.Magnitude > 4 or offset.Magnitude < 0.01 then
+        return head
+    end
+    local params = LauncherGeometry.parameters(battlefield)
+    if workspace:Raycast(head, offset, params) or workspace:Raycast(muzzle, -offset, params) then
+        return head
+    end
+    return muzzle
+end
+-- Places the authored side against the current support floor. The public
+-- model pivot remains the gameplay anchor used by reach and round recovery.
+function LauncherGeometry.pickup(launcherId: string, position: Vector3, battlefield: Instance): Model
+    local model, handle = assembly()
     model.Name = "MapRocketLauncher"
     model:SetAttribute("LauncherId", launcherId)
-    local handle = tube(model, true)
-    model.PrimaryPart = handle
-    model:PivotTo(CFrame.new(position))
+    local floor = workspace:Raycast(
+        position + Vector3.yAxis * 0.1,
+        -Vector3.yAxis * 6,
+        LauncherGeometry.parameters(battlefield)
+    )
+    local support = CFrame.new(position - Vector3.yAxis * 1.1)
+    if floor and floor.Normal.Y >= 0.6 then
+        local right = floor.Normal:Cross(Vector3.zAxis).Unit
+        support = CFrame.fromMatrix(floor.Position + floor.Normal * 0.012, right, floor.Normal)
+    end
+    model:PivotTo(support * attachment(handle, "GroundContact").CFrame:Inverse())
+    handle.PivotOffset = handle.CFrame:ToObjectSpace(CFrame.new(position))
     local sign = Instance.new("BillboardGui")
     sign.Name, sign.Adornee = "PickupLabel", handle
     sign.Size = UDim2.fromOffset(180, 44)

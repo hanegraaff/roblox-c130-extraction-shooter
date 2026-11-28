@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "blenderVersion": "5.3.0",
+  "blenderUnitsPerStud": 1,
+  "blenderUnitLengthMeters": 0.2800000011920929,
+  "axisConvention": {
+    "blender": "+X right, +Y front, +Z up",
+    "robloxAndGlb": "+X right, -Z front, +Y up"
+  },
+  "externalAssetDependencies": [],
+  "meshObjects": 126,
+  "triangles": 1288,
+  "materials": [
+    "Graphite",
+    "Graphite edge",
+    "Grip rubber",
+    "Pad rubber",
+    "Sand armor",
+    "Sand edge",
+    "Slate edge",
+    "Slate shell",
+    "Teal edge",
+    "Teal enamel"
+  ],
+  "boundsStuds": {
+    "minimum": [
+      -0.559,
+      -0.998827,
+      -1.836
+    ],
+    "maximum": [
+      0.559,
+      0.9725,
+      1.841
+    ]
+  },
+  "attachments": {
+    "CarryGrip": [
+      0,
+      -0.699,
+      0.164,
+      1.0,
+      0,
+      0,
+      0,
+      1.0,
+      0,
+      0,
+      0,
+      1.0
+    ],
+    "Muzzle": [
+      0,
+      0,
+      -1.849,
+      1.0,
+      0,
+      0,
+      0,
+      1.0,
+      0,
+      0,
+      0,
+      1.0
+    ],
+    "GroundContact": [
+      -0.559,
+      0,
+      0,
+      0,
+      -1.0,
+      0,
+      1.0,
+      0,
+      0,
+      0,
+      0,
+      1.0
+    ]
+  },
+  "sha256": {
+    "assets/blender/rocket-launcher/rocket-launcher.blend": "977b51fda5695a12f665e16d13a04994212eedd424fbef564654fdd41929fcae",
+    "assets/exports/rocket-launcher/rocket-launcher.glb": "8ac158df01968b5fdf0c174be227d612273b73eddeff3678b58258676496cb01",
+    "assets/models/DepotLauncher.model.json": "8960379e57531b08081824fb73c4eacc95a36b8cd74c63e7d63fc0d739c03758"
+  }
+}
