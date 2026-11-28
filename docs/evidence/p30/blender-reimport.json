@@ -1,0 +1,21 @@
+{
+  "case": "P30BlenderReopen",
+  "blender": "5.3.0",
+  "passed": true,
+  "masterMeshObjects": 120,
+  "glbMeshObjects": 120,
+  "materials": [
+    "Graphite bevel",
+    "Ivory marking",
+    "Medical enamel",
+    "Molded graphite",
+    "Rubber and seams",
+    "Stone bevel",
+    "Stone polymer",
+    "Stone recess"
+  ],
+  "maximumBoundErrorStuds": 4.168289180483953e-08,
+  "maximumLandmarkErrorStuds": 0.0,
+  "externalDependencies": 0,
+  "outwardNormals": true
+}

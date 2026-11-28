@@ -1,0 +1,357 @@
+{
+  "sourceCommit": "cbe28d471759f4821b98a8f690a3e0d5747f33fa",
+  "sourceTree": "08ab48cd3128b41179e7a051a47bb5b46a488c0d",
+  "studioVersion": "0.748.0.7481526",
+  "testPlace": "build/tests.rbxlx",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(3, {kind='P30', touchReview=true})",
+  "syncedEdit": {
+    "scripts": {
+      "ServerScriptService.ServerTests": {
+        "digest": 2594113815,
+        "length": 4872
+      },
+      "StarterPlayer.StarterPlayerScripts.Client.GroundCombatController": {
+        "digest": 1102721419,
+        "length": 33830
+      },
+      "StarterPlayer.StarterPlayerScripts.ClientTests.BalanceHarness": {
+        "digest": 880807273,
+        "length": 8907
+      },
+      "StarterPlayer.StarterPlayerScripts.ClientTests.MedkitHarness": {
+        "digest": 1035923860,
+        "length": 11258
+      },
+      "ServerScriptService.Server.GameRuntime": {
+        "digest": 1551689208,
+        "length": 10858
+      },
+      "ServerScriptService.Server.MedkitRuntime": {
+        "digest": 1437548125,
+        "length": 11880
+      },
+      "ServerScriptService.ServerTests.MedkitHarness": {
+        "digest": 3137927966,
+        "length": 24689
+      },
+      "ServerScriptService.Server.MedkitService": {
+        "digest": 1802466970,
+        "length": 3245
+      },
+      "ServerScriptService.ServerTests.P17Metadata": {
+        "digest": 2495027991,
+        "length": 62605
+      },
+      "StarterPlayer.StarterPlayerScripts.ClientTests": {
+        "digest": 1383116326,
+        "length": 3593
+      },
+      "StarterPlayer.StarterPlayerScripts.Client.BalancePanel": {
+        "digest": 2216111930,
+        "length": 31019
+      },
+      "ServerScriptService.ServerTests.RoundHarness": {
+        "digest": 4013731080,
+        "length": 39482
+      }
+    },
+    "name": "tests.rbxlx",
+    "artParts": 120,
+    "worldAnchors": 5,
+    "placeId": 0,
+    "version": "0.748.0.7481526"
+  },
+  "actualChildSource": {
+    "studioId": "8e332f53-80c6-4176-b71e-2d11c2da063e",
+    "balance": {
+      "len": 8907,
+      "digest": 880807273
+    },
+    "clients": 3,
+    "args": {
+      "touchReview": true,
+      "kind": "P30"
+    },
+    "client": {
+      "len": 11258,
+      "digest": 1035923860
+    },
+    "system": {
+      "len": 24689,
+      "digest": 3137927966
+    },
+    "metadata": {
+      "len": 62605,
+      "digest": 2495027991
+    }
+  },
+  "device": {
+    "name": "iPhone 17 Pro",
+    "orientation": "LandscapeLeft",
+    "nativeResolution": [
+      874,
+      402
+    ],
+    "observedViewport": [
+      750,
+      381
+    ]
+  },
+  "operatedTap": {
+    "removed": true,
+    "touch": true,
+    "after": 49.017120361328125,
+    "user": -1,
+    "device": "874, 402",
+    "board": {
+      "enabled": true,
+      "sizeOffset": "0, 0",
+      "maxDistance": {
+        "m": null,
+        "t": "numeric",
+        "v": "inf"
+      },
+      "active": true,
+      "worldOffset": "0, 0, 0",
+      "localOffset": "0, 0, 0",
+      "alwaysOnTop": true,
+      "size": "{0, 132}, {0, 72}"
+    },
+    "inputs": [
+      {
+        "loc": "435, 227, 0",
+        "kind": "Enum.UserInputType.Touch",
+        "processed": true
+      }
+    ],
+    "buttonInputs": [
+      "Enum.UserInputType.Touch",
+      "native PromptTriggered"
+    ],
+    "before": 22,
+    "observed": {
+      "MedkitHangar": "Enum.ProximityPromptInputType.Touch",
+      "MedkitSandbreak": "Enum.ProximityPromptInputType.Touch"
+    },
+    "timerAfter": 1795876501.249773,
+    "amount": 25,
+    "viewport": "750, 381",
+    "method": "VirtualInput viewport pointer translated by iPhone simulator into Touch",
+    "attempts": [
+      {
+        "ok": true,
+        "kind": "mouse"
+      }
+    ]
+  },
+  "report": {
+    "cases": [
+      {
+        "passed": true,
+        "name": "Three actual clients passed smoke and loaded five supported kits"
+      },
+      {
+        "passed": true,
+        "name": "A1 Full health and inaccessible attempts preserve the bunker kit"
+      },
+      {
+        "passed": true,
+        "name": "A1–A2 Nearby damage preserves the bunker kit and two contenders earn one heal"
+      },
+      {
+        "passed": true,
+        "name": "A2 Ground walks to the hangar, radar and depot to use the other cases"
+      },
+      {
+        "passed": true,
+        "name": "A2–A3 An eliminated owner edits healing and the surviving teammate gets the original Seedship amount"
+      },
+      {
+        "passed": true,
+        "name": "A2–A3 Next round recreates all five kits and uses the revised amount once"
+      }
+    ],
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        }
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 219,
+        "clientCount": 3,
+        "seed": 1,
+        "discovered": 219,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    "passed": 6,
+    "completedRounds": [
+      1,
+      2
+    ],
+    "actualClients": 3,
+    "observations": [
+      {
+        "site": "MedkitSandbreak",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitHangar",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitRadar",
+        "floorGap": 0.01799994707107544,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitDepot",
+        "floorGap": 0.01800006628036499,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitSeedship",
+        "floorGap": 0.01799982786178589,
+        "roundId": 1
+      },
+      {
+        "serverRangeStuds": 6.857386112213135,
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "serverRangeStuds": 6.912204265594482,
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "serverRangeStuds": 6.9458184242248535,
+        "site": "MedkitSandbreak",
+        "userId": -1,
+        "walkedStuds": 5.7875142097473145
+      },
+      {
+        "feedback": "YOUR HEALTH  60 / 100  +25 HP",
+        "touch": false,
+        "healed": 25,
+        "userId": -3,
+        "site": "MedkitSandbreak"
+      },
+      {
+        "serverRangeStuds": 6.962686538696289,
+        "site": "MedkitHangar",
+        "userId": -1,
+        "walkedStuds": 5.804462909698486
+      },
+      {
+        "feedback": "HP 50/100  +25 HP",
+        "touch": true,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitHangar"
+      },
+      {
+        "serverRangeStuds": 6.843428611755371,
+        "site": "MedkitRadar",
+        "userId": -1,
+        "walkedStuds": 5.737674713134766
+      },
+      {
+        "feedback": "HP 100/100  +8 HP",
+        "touch": true,
+        "healed": 8,
+        "userId": -1,
+        "site": "MedkitRadar"
+      },
+      {
+        "serverRangeStuds": 6.923815727233887,
+        "site": "MedkitDepot",
+        "userId": -1,
+        "walkedStuds": 5.771970748901367
+      },
+      {
+        "feedback": "HP 47/100  +25 HP",
+        "touch": true,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitDepot"
+      },
+      {
+        "serverRangeStuds": 6.800324440002441,
+        "site": "MedkitSeedship",
+        "userId": -1,
+        "walkedStuds": 5.804430961608887
+      },
+      {
+        "feedback": "HP 22/100  +25 HP",
+        "touch": true,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitSeedship"
+      },
+      {
+        "serverRangeStuds": 6.857967376708984,
+        "site": "MedkitSandbreak",
+        "userId": -1,
+        "walkedStuds": 5.587562084197998
+      },
+      {
+        "feedback": "HP 65/100  +43 HP",
+        "touch": true,
+        "healed": 43,
+        "userId": -1,
+        "site": "MedkitSandbreak"
+      }
+    ],
+    "clientIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "environment": "Studio",
+    "touchReview": true,
+    "suite": "P30-medkits",
+    "failed": 0,
+    "discovered": 6
+  }
+}

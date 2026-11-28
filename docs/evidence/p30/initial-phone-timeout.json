@@ -1,0 +1,77 @@
+{
+  "sourceHashes": {
+    "ServerScriptService.Server.GameRuntime": [
+      10858,
+      1551689208,
+      "c58c75671df1fc4530f76f8f3e533dc96a7b8641967bab25cce57361de412043",
+      "src/server/GameRuntime.luau"
+    ],
+    "ServerScriptService.Server.MedkitRuntime": [
+      11880,
+      1437548125,
+      "e50117ced53855a41b08ec950373ad2082323fe6df50188a24b56aab152cd334",
+      "src/server/MedkitRuntime.luau"
+    ],
+    "ServerScriptService.Server.MedkitService": [
+      3245,
+      1802466970,
+      "3858ff1876c628038d308b64af3bdd225aca08135d76d8e66935658ee326c81e",
+      "src/server/MedkitService.luau"
+    ],
+    "StarterPlayer.StarterPlayerScripts.Client.GroundCombatController": [
+      33830,
+      1102721419,
+      "9d8d713b02ea81cbcc40630499f5eee13ebc93619adfd81e6df0135238017046",
+      "src/client/GroundCombatController.luau"
+    ],
+    "StarterPlayer.StarterPlayerScripts.Client.BalancePanel": [
+      31019,
+      2216111930,
+      "a255c7a1a88f6c94a79a5fe46f61b6996de6be2fac75a450ba16aacbb7c7c264",
+      "src/client/BalancePanel.luau"
+    ],
+    "StarterPlayer.StarterPlayerScripts.ClientTests": [
+      3593,
+      1383116326,
+      "477355c3bc3c6e2bf046a9860d78ecd6dae0967f6f07c43599c42b8b890d6e7c",
+      "tests/studio/client/init.client.luau"
+    ],
+    "StarterPlayer.StarterPlayerScripts.ClientTests.MedkitHarness": [
+      8534,
+      1618641298,
+      "94eb9a58e0f469c9cc64be1b06c0a8dcc88d02b601155376cbb37319b0df5f01",
+      "tests/studio/client/MedkitHarness.luau"
+    ],
+    "StarterPlayer.StarterPlayerScripts.ClientTests.BalanceHarness": [
+      6401,
+      3466621208,
+      "a5e1dcb2f093eb3448d4eafde14f9dc9f496708504a7a0ffc76dcbe871fce1e2",
+      "tests/studio/client/BalanceHarness.luau"
+    ],
+    "ServerScriptService.ServerTests": [
+      4872,
+      2594113815,
+      "5f2e8e840fcf2d8b7acb0a16ae6249f56590988f5d4926e8869eac4bdf6d768b",
+      "tests/studio/server/init.server.luau"
+    ],
+    "ServerScriptService.ServerTests.MedkitHarness": [
+      23113,
+      2096036300,
+      "356ef74e6ce91de868bab03b3329e5145a3abf8b4509e000b6c0146e881371c3",
+      "tests/studio/server/MedkitHarness.luau"
+    ],
+    "ServerScriptService.ServerTests.RoundHarness": [
+      39482,
+      4013731080,
+      "3f1256cdabb42dfe02e759e9f0806036fd6bd179c3b7146026998cfe1f2d0dc9",
+      "tests/studio/server/RoundHarness.luau"
+    ],
+    "ServerScriptService.ServerTests.P17Metadata": [
+      62605,
+      1864624206,
+      "cfb51a2a1adff9e8dc3b39d1551c2377d7351e590566c7263b284d1659aad687",
+      "tests/studio/server/P17Metadata.luau"
+    ]
+  },
+  "report": "Failed to start the test because a previous one is still in progress."
+}
