@@ -66,7 +66,7 @@ local captions = {
     m7Reload = "Rifle reload time",
     rocketDamage = "Rocket damage per hit",
     launcherReload = "Rocket launcher reload time",
-    medkitHeal = "Planned health restored by a medkit",
+    medkitHeal = "Maximum health restored by a medkit",
     aircraftHealthPerGround = "Plane health per ground player",
     gauDamage = "30mm damage per hit",
     gauCadence = "Time between 30mm shots",
@@ -81,7 +81,7 @@ local subheads = {
     groundHealth = "Health",
     m7Damage = "Rifle",
     rocketDamage = "Rocket launcher",
-    medkitHeal = "Planned medkit · one use per round",
+    medkitHeal = "Medkit · one use per round",
     aircraftHealthPerGround = "Plane health",
     gauDamage = "30mm gun",
     m102Damage = "Howitzer",
@@ -591,9 +591,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                 selectTier(tostring(draft.panelDamage))
             end
         end
-        if selectedTab == 1 then
-            label(scroll, "Medkit pickups arrive in the medkit update.", 36).TextColor3 = muted
-        elseif selectedTab == 4 then
+        if selectedTab == 4 then
             label(
                 scroll,
                 "The player minimum updates while waiting. A new wait length starts after the next result.",

@@ -231,6 +231,85 @@
       "upload_owner": null
     },
     {
+      "id": "field-medkit-master",
+      "kind": "source",
+      "source": "Original field rescue case modeled from the supplied artwork in src/images/medkit. The portable and native exports preserve the authored shapes and colors.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/blender/medkit/medkit.blend",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "fc9133a7aac1324de5b4909c1743f11ee6a773702334acee99ae918a3f995c60"
+    },
+    {
+      "id": "field-medkit-glb",
+      "kind": "export",
+      "source": "Original field rescue case modeled from the supplied artwork in src/images/medkit. The portable and native exports preserve the authored shapes and colors.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/medkit/field-medkit.glb",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "e41aa273df47551dc3663ee9fd820aa4ab1897fefea6c0fb5792d40637cbbfb4"
+    },
+    {
+      "id": "field-medkit-native",
+      "kind": "model",
+      "source": "Original field rescue case modeled from the supplied artwork in src/images/medkit. The portable and native exports preserve the authored shapes and colors.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/medkit/field-medkit.rbxmx",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "ed0be1a81f4753244a6523c36fc2bf623b881d9ac504c6608b7e6f8d26aa3a44",
+      "studio_path": "ServerStorage.Assets.FieldMedkit"
+    },
+    {
+      "id": "field-medkit-audit",
+      "kind": "validation",
+      "source": "Original field rescue case modeled from the supplied artwork in src/images/medkit. The portable and native exports preserve the authored shapes and colors.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/medkit/package-audit.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "a47e103d396dd5e89fc18e9010d9f28fdd1065d72eac33a211a6680f5616905d"
+    },
+    {
+      "id": "field-medkit-front-review",
+      "kind": "review",
+      "source": "Original field rescue case modeled from the supplied artwork in src/images/medkit. The portable and native exports preserve the authored shapes and colors.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/medkit/front-three-quarter.png",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "997eaa9897eba3a5c09130f138d91396ef8cf03ab40080258ef8dfffe05719c1"
+    },
+    {
+      "id": "field-medkit-rear-review",
+      "kind": "review",
+      "source": "Original field rescue case modeled from the supplied artwork in src/images/medkit. The portable and native exports preserve the authored shapes and colors.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/medkit/rear-three-quarter.png",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "5ce8f729c1b8421da1b576380d10b69192d92bd51d0e788fb16194263603e96a"
+    },
+    {
+      "id": "sandbreak-medkit-sites",
+      "kind": "world",
+      "source": "Original spawn poses for five battlefield medkits, each over stable support and facing the nearby approach.",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/world/MedkitAnchors.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "5b650cfc0c916748cfb59949ce7aeb83d0c8c32cd775f130fe2fbb4d64bed811",
+      "studio_path": "Workspace.World.Battlefield.MedkitAnchors"
+    },
+    {
       "id": "depot-launcher-master",
       "kind": "blender-source",
       "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",

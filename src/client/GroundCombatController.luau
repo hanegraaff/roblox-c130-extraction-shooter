@@ -426,7 +426,7 @@ function GroundCombatController.new(
                         label.Position, label.Size = GroundCombatController.statusLayout(touch)
                         label.TextSize = if touch then 13 else 16
                         healthLabel.Size =
-                            UDim2.fromOffset(if touch then 124 else 188, if touch then 20 else 28)
+                            UDim2.fromOffset(if touch then 144 else 218, if touch then 20 else 28)
                         healthLabel.TextSize = if touch then 13 else 14
                         fireButton.AnchorPoint = Vector2.new(1, 0)
                         fireButton.Position = UDim2.new(1, -8, 0, 50)
@@ -553,11 +553,25 @@ function GroundCombatController.new(
                         healthLabel.Position = UDim2.fromOffset(8, if canFire then 56 else 6)
                     end
                     if humanoid then
-                        healthLabel.Text = string.format(
+                        local text = string.format(
                             if touch then "HP %d/%d" else "YOUR HEALTH  %d / %d",
                             math.ceil(humanoid.Health),
                             math.ceil(humanoid.MaxHealth)
                         )
+                        local restored = humanoid:GetAttribute("MedkitHealAmount")
+                        local untilSeconds = humanoid:GetAttribute("MedkitHealUntil")
+                        if
+                            type(restored) == "number"
+                            and type(untilSeconds) == "number"
+                            and workspace:GetServerTimeNow() < untilSeconds
+                        then
+                            healthLabel.Text = text
+                                .. string.format("  +%g HP", math.round(restored * 10) / 10)
+                            healthLabel.TextColor3 = Color3.fromRGB(158, 241, 175)
+                        else
+                            healthLabel.Text = text
+                            healthLabel.TextColor3 = label.TextColor3
+                        end
                     end
                     if not canFire or overlay then
                         held = false

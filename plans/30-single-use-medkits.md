@@ -12,7 +12,7 @@ An injured Ground player can find and use a medkit in or near each battlefield b
 
 ## Acceptance
 
-1. **A1 · Healing rules.** Test partial and capped heals, zero missing health, raced uses, out-of-range or through-wall requests, death, spectator and stale requests. Two players using one kit can earn only one heal. Test the exact respawn boundary in optional timed mode and reset before a timer expires.
+1. **A1 · Healing rules.** Test partial and capped heals, zero missing health, raced uses, out-of-range or through-wall requests, death, spectator and stale requests. Two players using one kit can earn only one heal. Verify that spent kits remain unavailable for the rest of the round, including when a legacy preset contains a respawn interval, and return for the next round. [Single-use decision D112](../docs/decisions.md)
 2. **A2 · World placement.** In three-client Studio play, walk to each of the five kits, use one while injured, and verify health, disappearance and replay on both Ground clients. Exercise at least one pickup on phone. Check that damage to nearby cover leaves a reachable pickup.
 3. **A3 · Live tuning.** Set a different heal amount through the panel. Verify the current round finishes on its original preset, measure the new heal amount in the next round and confirm each kit can only be used once per round.
 

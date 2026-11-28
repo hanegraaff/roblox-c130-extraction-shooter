@@ -413,7 +413,48 @@ def check_authored_geometry(path: Path) -> int:
         source = json.loads((ROOT / local).read_text())
         base = "Workspace/World" if asset["kind"] == "world" else "ServerStorage/Assets"
         name = Path(local).name.removesuffix(".model.json")
-        walk(source, base + "/" + name)
+        target = asset.get("studio_path", base + "." + name).replace(".", "/")
+        walk(source, target)
+
+    medkit_path = "ServerStorage/Assets/FieldMedkit"
+    source_medkit = ET.parse(ROOT / "assets/exports/medkit/field-medkit.rbxmx").find("Item")
+    assert source_medkit is not None
+    compiled_medkit = nodes[medkit_path]
+    pivot_path = "Properties/OptionalCoordinateFrame[@name='WorldPivotData']/CFrame"
+    expected_pivot = source_medkit.find(pivot_path)
+    actual_pivot = compiled_medkit.find(pivot_path)
+    if expected_pivot is None or actual_pivot is None or any(
+        not math.isclose(float(expected_pivot.findtext(axis, "nan")), float(actual_pivot.findtext(axis, "nan")), abs_tol=1e-6)
+        for axis in CFRAME_COMPONENTS
+    ):
+        raise RuntimeError("Field medkit lost its authored floor-center model pivot")
+    for piece in source_medkit.findall("Item"):
+        name = piece.findtext("Properties/string[@name='Name']")
+        full = f"{medkit_path}/{name}"
+        compiled = nodes.get(full)
+        if compiled is None or compiled.attrib["class"] != piece.attrib["class"]:
+            raise RuntimeError(f"Field medkit piece did not reconstruct: {full}")
+        for tag, prop, axes in (
+            ("Vector3", "size", ("X", "Y", "Z")),
+            ("CoordinateFrame", "CFrame", CFRAME_COMPONENTS),
+        ):
+            expected = numeric_property(piece, tag, prop, axes, full)
+            actual = numeric_property(compiled, tag, prop, axes, full)
+            if any(abs(a - b) > 1e-5 for a, b in zip(expected, actual)):
+                raise RuntimeError(f"Field medkit {prop} did not reconstruct: {full}")
+        for tag, prop in (("bool", "Anchored"), ("bool", "CanCollide"), ("bool", "CanQuery"),
+                          ("bool", "CanTouch"), ("token", "Material")):
+            property_path = f"Properties/{tag}[@name='{prop}']"
+            if piece.findtext(property_path) != compiled.findtext(property_path):
+                raise RuntimeError(f"Field medkit {prop} did not reconstruct: {full}")
+        # Color3 has three channels. Rojo drops the unused high byte on rebuild.
+        color_path = "Properties/Color3uint8[@name='Color3uint8']"
+        expected_color, actual_color = piece.findtext(color_path), compiled.findtext(color_path)
+        if expected_color is None or actual_color is None or (
+            int(expected_color) & 0xFFFFFF != int(actual_color) & 0xFFFFFF
+        ):
+            raise RuntimeError(f"Field medkit RGB did not reconstruct: {full}")
+        count += 1
 
     fixture = "ServerStorage/Tests/Fixtures/LobbyCollision"
     collision = json.loads(LOBBY_COLLISION.read_text())
@@ -939,13 +980,15 @@ def main() -> None:
         "ServerScriptService/Server/BalanceRuntime": "ModuleScript",
         "ReplicatedStorage/Shared/WeaponImpactRules": "ModuleScript",
         "StarterPlayer/StarterPlayerScripts/Client/WeaponImpactEffects": "ModuleScript",
+        "ServerStorage/Assets/FieldMedkit": "Model",
+        "Workspace/World/Battlefield/MedkitAnchors": "Folder",
     }
     for name, class_name in expected.items():
         if release.get(name) != class_name or tests.get(name) != class_name:
             raise RuntimeError(f"Missing mapped runtime Instance: {name}")
     # Only runtime-authored modules/scripts may occur in the release mapping.
     allowed_scripts = {name for name, kind in release.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
-    expected_scripts = set(expected) - {"Workspace/World/Battlefield/GroundSpawn"}
+    expected_scripts = {name for name, kind in expected.items() if kind in {"Script", "LocalScript", "ModuleScript"}}
     expected_scripts.add("ServerScriptService/Server/MapService")
     expected_scripts.add("ServerScriptService/Server/LobbyGeometry")
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("ApprovedOutpost", "PanelAssetRules", "PanelAssetCatalog", "MaterialPanelGeometry", "OutpostReconstruction")}
@@ -961,6 +1004,7 @@ def main() -> None:
     expected_scripts.add("StarterPlayer/StarterPlayerScripts/Client/TheaterSpectating")
     expected_scripts |= {f"StarterPlayer/StarterPlayerScripts/Client/{name}" for name in ("PresentationEffects", "SpectatorCamera", "WeaponAudio")}
     expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("AircraftService", "AircraftSelection", "TerrainRecipe", "BuildingGeometry", "CombatService", "CombatRuntime", "DamageRules", "CombatViewRules", "AircraftHealth", "GroundCombatService", "GroundCombatRuntime", "GroundMovementGuard", "GroundOriginGeometry", "LauncherService", "LauncherGeometry", "LauncherRuntime", "PanelDamageRules", "DestructionService", "PanelGeometry", "PanelFragments", "DestructionRuntime")}
+    expected_scripts |= {f"ServerScriptService/Server/{name}" for name in ("MedkitRuntime", "MedkitService")}
     expected_scripts.add("ReplicatedStorage/Shared/AircraftRules")
     expected_scripts.add("ReplicatedStorage/Shared/AircraftPanRules")
     expected_scripts.add("ReplicatedStorage/Shared/GroundCameraRules")
@@ -1001,6 +1045,12 @@ def main() -> None:
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P29 launcher fixture missing from tests or leaked to release: {name}")
+    for name in (
+        "ServerScriptService/ServerTests/MedkitHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/MedkitHarness",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P30 medkit fixture missing from tests or leaked to release: {name}")
     for name in ("ServerStorage/Tests/Studio/LobbyGeometry.spec", "ReplicatedStorage/ClientSpecs/GroundIndoorCamera.spec"):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P22 camera or lobby fixture missing from tests or leaked to release: {name}")

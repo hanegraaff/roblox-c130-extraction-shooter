@@ -38,7 +38,10 @@
     },
     "ServerStorage": {
       "Assets": {
-        "$path": "assets/models"
+        "$path": "assets/models",
+        "FieldMedkit": {
+          "$path": "assets/exports/medkit/field-medkit.rbxmx"
+        }
       },
       "Tests": {
         "$className": "Folder",
@@ -100,6 +103,9 @@
         "$className": "Folder",
         "Battlefield": {
           "$path": "assets/world/Battlefield.model.json",
+          "MedkitAnchors": {
+            "$path": "assets/world/MedkitAnchors.model.json"
+          },
           "DistrictScenery": {
             "$path": "assets/imports/districts/DistrictScenery.rbxm"
           },

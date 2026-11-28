@@ -8,8 +8,9 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Harness = {}
 
--- Interact with the production editor from the local test client.
-local function editLobbyPreset(gui: Instance)
+-- Set the supplied exact-value fields in one category of the real production
+-- editor and apply the draft. The test client must be allowed to edit in its lobby.
+function Harness.editLobbyPreset(gui: Instance, category: number, values: { [string]: string })
     local function click(name: string)
         local button = gui:FindFirstChild(name, true)
         assert(
@@ -40,9 +41,10 @@ local function editLobbyPreset(gui: Instance)
         task.wait()
     end
     click("ChooseCategory")
-    click("Category4")
-    edit("minimumPlayers", "2")
-    edit("roundDuration", "35")
+    click("Category" .. category)
+    for name, value in values do
+        edit(name, value)
+    end
     assert(apply.Text == "Save & apply", "edited preset cannot be applied directly")
     click("ApplyPreset")
 end
@@ -87,7 +89,7 @@ function Harness.run()
         end
         if kind == "EditLobbyPreset" then
             local gui = assert(player.PlayerGui:FindFirstChild("BalancePanel"), "balance panel missing")
-            editLobbyPreset(gui)
+            Harness.editLobbyPreset(gui, 4, { minimumPlayers = "2", roundDuration = "35" })
             return true
         end
         if kind == "RemoveBalanceGui" then

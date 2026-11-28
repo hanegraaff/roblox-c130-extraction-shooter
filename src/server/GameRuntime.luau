@@ -17,6 +17,7 @@ local CombatRuntime = require(script.Parent.CombatRuntime)
 local GroundCombatRuntime = require(script.Parent.GroundCombatRuntime)
 local DestructionRuntime = require(script.Parent.DestructionRuntime)
 local LauncherRuntime = require(script.Parent.LauncherRuntime)
+local MedkitRuntime = require(script.Parent.MedkitRuntime)
 local OutpostReconstruction = require(script.Parent.OutpostReconstruction)
 local VesperReconstruction = require(script.Parent.VesperReconstruction)
 local SaltFlatsReconstruction = require(script.Parent.SaltFlatsReconstruction)
@@ -220,6 +221,19 @@ function GameRuntime.start(
         map.destroy()
         return nil, launcherReason
     end
+    local medkits, medkitReason =
+        MedkitRuntime.start(workspace.World, assets, rounds.match, groundCombat, balance.getBalance)
+    if not medkits then
+        launcher.stop()
+        groundCombat.stop()
+        combat.stop()
+        destruction.stop()
+        aircraft.stop()
+        rounds.stop()
+        balance.stop()
+        map.destroy()
+        return nil, medkitReason
+    end
     local roundState = assert(ReplicatedStorage:FindFirstChild("RoundState"), "round state missing")
     local transport = Instance.new("UnreliableRemoteEvent")
     transport.Name = "WeaponAudio"
@@ -237,7 +251,7 @@ function GameRuntime.start(
     end
     -- One ordered frame owns match damage and interactions. All casts observe
     -- the same pre-impact cover and deadline. Phase publication and equipment
-    -- cleanup follow the result commit, before launcher intent is processed.
+    -- cleanup follow the result commit, before launcher and medkit intent is processed.
     -- The phase callback attaches the aircraft at reveal before clients are
     -- given the Active phase. Activation cannot resolve an earlier fire intent.
     local frame = RunService.Heartbeat:Connect(function(dt)
@@ -255,6 +269,7 @@ function GameRuntime.start(
         combat.maintain(time)
         groundCombat.maintain(time)
         launcher.interact(time)
+        medkits.interact(time)
     end)
     return {
         launcher = launcher,
@@ -273,6 +288,7 @@ function GameRuntime.start(
             impactEvent = nil
             contactTransport:Destroy()
             onCorrection = nil
+            medkits.stop()
             launcher.stop()
             groundCombat.stop()
             combat.stop()

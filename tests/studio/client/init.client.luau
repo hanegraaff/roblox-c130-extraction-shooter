@@ -44,6 +44,9 @@ elseif manualMode == "P24" or manualMode == "P28" then
 elseif manualMode == "P29" then
     require(script.DepotLauncherHarness).run()
     return
+elseif manualMode == "P30" then
+    require(script.MedkitHarness).run()
+    return
 elseif manualMode == "P18" then
     require(script.RebalanceHarness).run()
     return
