@@ -119,8 +119,14 @@ function LauncherGeometry.tool(launcherId: string): Tool
 end
 -- Finds the launch presentation point on an equipped model. The character's
 -- validated head remains the sweep and aim origin. Hide the muzzle offset when
--- the hand moved too far or solid level geometry separates it from the head.
-function LauncherGeometry.visualOrigin(battlefield: Instance, tool: Tool, head: Vector3): Vector3
+-- the hand moved too far, or solid level geometry blocks either the connection
+-- to the head or the visible rocket's path to the server sweep.
+function LauncherGeometry.visualOrigin(
+    battlefield: Instance,
+    tool: Tool,
+    head: Vector3,
+    sweepConvergence: Vector3
+): Vector3
     local handle = tool:FindFirstChild("Handle")
     if not handle or not handle:IsA("BasePart") then
         return head
@@ -131,7 +137,11 @@ function LauncherGeometry.visualOrigin(battlefield: Instance, tool: Tool, head: 
         return head
     end
     local params = LauncherGeometry.parameters(battlefield)
-    if workspace:Raycast(head, offset, params) or workspace:Raycast(muzzle, -offset, params) then
+    if
+        workspace:Raycast(head, offset, params)
+        or workspace:Raycast(muzzle, -offset, params)
+        or workspace:Spherecast(muzzle, 0.2, sweepConvergence - muzzle, params)
+    then
         return head
     end
     return muzzle

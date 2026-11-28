@@ -243,7 +243,8 @@ function LauncherRuntime.start(
         end
         local direction = (Vector3.new(intent.x, intent.y, intent.z) - origin).Unit
         local map = assert(battlefield(), "validated firing battlefield disappeared")
-        local visualOrigin = Geometry.visualOrigin(map, slot.held, origin)
+        local visualOrigin =
+            Geometry.visualOrigin(map, slot.held, origin, origin + direction * MUZZLE_BLEND_STUDS)
         local part = Instance.new("Part")
         part.Name = "Rocket"
         part:SetAttribute("FlightRoundId", match.snapshot().roundId)

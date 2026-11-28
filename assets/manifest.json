@@ -3225,13 +3225,12 @@
       "upload_owner": null
     },
     {
-      "id": "launcher-primitives",
+      "id": "launcher-presentation",
       "kind": "runtime-model",
-      "source": "Original three-part launcher tube/bands and pickup label authored entirely in first-party Luau; no external assets or scripts",
+      "source": "First-party Luau clones the managed DepotLauncher template for pickup and held presentations. It fits the authored floor and grip attachments, builds the pickup label, and gives each representation the current launcher identity.",
       "author": "Project contributors",
       "license": "Project license",
-      "local_path": "src/server/LauncherGeometry.luau",
-      "parts_per_representation": 3
+      "local_path": "src/server/LauncherGeometry.luau"
     },
     {
       "id": "rocket-presentation",

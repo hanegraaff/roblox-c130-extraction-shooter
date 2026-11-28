@@ -85,7 +85,7 @@ return function()
         model:Destroy()
         assert(ok, tostring(failure))
     end)
-    test("P29 A2 muzzle presentation falls back across cover and implausible hand separation", function()
+    test("P29 A2 muzzle presentation falls back when cover blocks either segment", function()
         local map = Instance.new("Model")
         map.Name, map.Parent = "P29MuzzleFixture", workspace
         local wall = Instance.new("Part")
@@ -98,15 +98,39 @@ return function()
         local ok, failure = pcall(function()
             handle.CFrame = CFrame.new(0, 100, 0)
             local head = Vector3.new(0, 100, 0)
+            local convergence = head - Vector3.zAxis * 16
             assert(
-                (Geometry.visualOrigin(map, tool, head) - muzzle.WorldPosition).Magnitude < 0.001,
+                (Geometry.visualOrigin(map, tool, head, convergence) - muzzle.WorldPosition).Magnitude < 0.001,
                 "clear muzzle origin not returned"
             )
             wall.Position, wall.Parent = (head + muzzle.WorldPosition) * 0.5, map
-            assert(Geometry.visualOrigin(map, tool, head) == head, "muzzle effects appeared across cover")
+            assert(
+                Geometry.visualOrigin(map, tool, head, convergence) == head,
+                "muzzle effects appeared across cover"
+            )
+
+            handle.Position = head + Vector3.xAxis - muzzle.Position
+            wall.Size, wall.Position = Vector3.new(0.5, 4, 0.12), head + Vector3.new(0.65, 0, -5)
+            local params = Geometry.parameters(map)
+            assert(
+                not workspace:Spherecast(head, 0.2, convergence - head, params)
+                    and not workspace:Raycast(head, muzzle.WorldPosition - head, params),
+                "offset wall fixture blocked the server sweep or head-to-muzzle segment"
+            )
+            assert(
+                Geometry.visualOrigin(map, tool, head, convergence) == head,
+                "visual rocket path crossed offset cover"
+            )
             wall.Parent = nil
+            assert(
+                (Geometry.visualOrigin(map, tool, head, convergence) - muzzle.WorldPosition).Magnitude < 0.001,
+                "unobstructed offset did not use the authored muzzle"
+            )
             handle.Position += Vector3.xAxis * 6
-            assert(Geometry.visualOrigin(map, tool, head) == head, "distant hand moved launch effects")
+            assert(
+                Geometry.visualOrigin(map, tool, head, convergence) == head,
+                "distant hand moved launch effects"
+            )
         end)
         tool:Destroy()
         wall:Destroy()
