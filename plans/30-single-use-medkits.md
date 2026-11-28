@@ -49,3 +49,7 @@ Roblox Studio `0.748.0.7481526` ran `StudioTestService:ExecuteMultiplayerTestAsy
 | A3 · Live tuning | An eliminated owner used the real lobby balance panel to save and apply 43 HP. The surviving teammate's Seedship pickup still healed for 25 HP in round one. Sandbreak healed for 43 HP in round two, once for the team. |
 
 The technical writer reviewed the player controls, owner instructions, Blender rebuild, test procedure and runtime contracts against the candidate. [Player guide](../README.md) · [Owner guide](../docs/balance.md#set-medkit-healing) · [Studio procedure](../docs/testing.md#verify-single-use-medkits)
+
+### 2026-11-28 · Owner playtest
+
+The owner confirmed the medkit playtest in the open Roblox Studio candidate. This records the owner's hands-on check alongside the three-client acceptance reports.
