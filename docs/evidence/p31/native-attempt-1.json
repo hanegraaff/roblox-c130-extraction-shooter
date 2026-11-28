@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "candidateBase": "db2ccbe25c37eb6143afce9e120cfffc283f9a5f",
+  "candidateBaseTree": "c8ed636f4800643960569a90d73a3a503e9de177",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, { kind = \"P31\" })",
+  "studioVersion": "0.748.0.7481526",
+  "studioDocument": "tests.rbxlx",
+  "placeId": 0,
+  "gameId": 0,
+  "sourceFingerprints": {
+    "ServerScriptService.Server.SandbreakReconstruction": {
+      "file": "src/server/SandbreakReconstruction.luau",
+      "bytes": 8021,
+      "djb2": 50975813,
+      "sha256": "60546a406a2671fd66823e336b80da60e7d4f545c858a0bf72e7afc4e2da7670"
+    },
+    "StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics": {
+      "file": "src/client/ThermalCosmetics.luau",
+      "bytes": 11402,
+      "djb2": 4128909246,
+      "sha256": "84bbd604496ac6242c44999378c236ddb6a66449248280d03ac1c526362e9c4e"
+    },
+    "ServerScriptService.ServerTests.CombatHarness": {
+      "file": "tests/studio/server/CombatHarness.luau",
+      "bytes": 83985,
+      "djb2": 1777447945,
+      "sha256": "9c2f356121d150c0736973d6aec1bcaa4a1be4e3a2e6864952423c08fe840e38"
+    },
+    "ServerScriptService.ServerTests.P17Metadata": {
+      "file": "tests/studio/server/P17Metadata.luau",
+      "bytes": 62730,
+      "djb2": 322124199,
+      "sha256": "11a9b2d3d8fa39301ad9ebc10736b7a8879412f08aaae604c199c264d06712b3"
+    },
+    "ServerScriptService.ServerTests.RoundHarness": {
+      "file": "tests/studio/server/RoundHarness.luau",
+      "bytes": 39795,
+      "djb2": 3683736893,
+      "sha256": "0bd17fad93455c7d368fed394c8cf0ec1bef31a71d1b0a0bd56b4a333ef75df5"
+    },
+    "ServerScriptService.ServerTests": {
+      "file": "tests/studio/server/init.server.luau",
+      "bytes": 4941,
+      "djb2": 4093153013,
+      "sha256": "537bc4ebdf02ec0db0f15a5cbd23b8023cf7b815afe827c8d79f60c958c54066"
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests.CombatHarness": {
+      "file": "tests/studio/client/CombatHarness.luau",
+      "bytes": 16942,
+      "djb2": 1558894351,
+      "sha256": "b2a8c1b9d06ba6892e2b61e81cb308ca7b92615611329b77eb6b3a4e019a83b9"
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests": {
+      "file": "tests/studio/client/init.client.luau",
+      "bytes": 3616,
+      "djb2": 1866266620,
+      "sha256": "f2a92ce89f9a3626aa87274489a4a356403c0464880d52fa37041e95fd224683"
+    },
+    "ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec": {
+      "file": "tests/studio/specs-client/ThermalCosmetics.spec.luau",
+      "bytes": 27066,
+      "djb2": 2430071161,
+      "sha256": "c8ac0503cec331d4a889062957dec75a729c8507b6cf343060abe27e60cb66ed"
+    }
+  },
+  "liveFingerprints": {
+    "StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics": {
+      "bytes": 11402,
+      "djb2": 4128909246,
+      "match": true
+    },
+    "ServerScriptService.ServerTests.CombatHarness": {
+      "bytes": 83985,
+      "djb2": 1777447945,
+      "match": true
+    },
+    "ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec": {
+      "bytes": 27066,
+      "djb2": 2430071161,
+      "match": true
+    },
+    "ServerScriptService.ServerTests.P17Metadata": {
+      "bytes": 62730,
+      "djb2": 322124199,
+      "match": true
+    },
+    "ServerScriptService.ServerTests": {
+      "bytes": 4941,
+      "djb2": 4093153013,
+      "match": true
+    },
+    "ServerScriptService.ServerTests.RoundHarness": {
+      "bytes": 39795,
+      "djb2": 3683736893,
+      "match": true
+    },
+    "ServerScriptService.Server.SandbreakReconstruction": {
+      "bytes": 8021,
+      "djb2": 50975813,
+      "match": true
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests.CombatHarness": {
+      "bytes": 16942,
+      "djb2": 1558894351,
+      "match": true
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests": {
+      "bytes": 3616,
+      "djb2": 1866266620,
+      "match": true
+    }
+  },
+  "paletteChildren": {
+    "1": {
+      "colorMap": "rbxassetid://100729618362891",
+      "name": "100729618362891",
+      "white": true
+    },
+    "2": {
+      "colorMap": "rbxassetid://101290149345747",
+      "name": "101290149345747",
+      "white": true
+    },
+    "3": {
+      "colorMap": "rbxassetid://105064525943954",
+      "name": "105064525943954",
+      "white": true
+    },
+    "4": {
+      "colorMap": "rbxassetid://109061811131021",
+      "name": "109061811131021",
+      "white": true
+    },
+    "5": {
+      "colorMap": "rbxassetid://110312287678337",
+      "name": "110312287678337",
+      "white": true
+    },
+    "6": {
+      "colorMap": "rbxassetid://111340361902704",
+      "name": "111340361902704",
+      "white": true
+    },
+    "7": {
+      "colorMap": "rbxassetid://113652875898001",
+      "name": "113652875898001",
+      "white": true
+    },
+    "8": {
+      "colorMap": "rbxassetid://113758393273310",
+      "name": "113758393273310",
+      "white": true
+    },
+    "9": {
+      "colorMap": "rbxassetid://116051257072664",
+      "name": "116051257072664",
+      "white": true
+    },
+    "10": {
+      "colorMap": "rbxassetid://120157266188884",
+      "name": "120157266188884",
+      "white": true
+    },
+    "11": {
+      "colorMap": "rbxassetid://121778721348549",
+      "name": "121778721348549",
+      "white": true
+    },
+    "12": {
+      "colorMap": "rbxassetid://122221070242349",
+      "name": "122221070242349",
+      "white": true
+    },
+    "13": {
+      "colorMap": "rbxassetid://126114951839968",
+      "name": "126114951839968",
+      "white": true
+    },
+    "14": {
+      "colorMap": "rbxassetid://127256754883340",
+      "name": "127256754883340",
+      "white": true
+    },
+    "15": {
+      "colorMap": "rbxassetid://127315322698158",
+      "name": "127315322698158",
+      "white": true
+    },
+    "16": {
+      "colorMap": "rbxassetid://129091268841538",
+      "name": "129091268841538",
+      "white": true
+    },
+    "17": {
+      "colorMap": "rbxassetid://130249872910494",
+      "name": "130249872910494",
+      "white": true
+    },
+    "18": {
+      "colorMap": "rbxassetid://131984147230114",
+      "name": "131984147230114",
+      "white": true
+    },
+    "19": {
+      "colorMap": "rbxassetid://138123921057806",
+      "name": "138123921057806",
+      "white": true
+    },
+    "20": {
+      "colorMap": "rbxassetid://138509237421497",
+      "name": "138509237421497",
+      "white": true
+    },
+    "21": {
+      "colorMap": "rbxassetid://138751825096184",
+      "name": "138751825096184",
+      "white": true
+    },
+    "22": {
+      "colorMap": "rbxassetid://70682684234583",
+      "name": "70682684234583",
+      "white": true
+    },
+    "23": {
+      "colorMap": "rbxassetid://70685142292496",
+      "name": "70685142292496",
+      "white": true
+    },
+    "24": {
+      "colorMap": "rbxassetid://72908397511924",
+      "name": "72908397511924",
+      "white": true
+    },
+    "25": {
+      "colorMap": "rbxassetid://73157595027579",
+      "name": "73157595027579",
+      "white": true
+    },
+    "26": {
+      "colorMap": "rbxassetid://78826208424899",
+      "name": "78826208424899",
+      "white": true
+    },
+    "27": {
+      "colorMap": "rbxassetid://79038606427475",
+      "name": "79038606427475",
+      "white": true
+    },
+    "28": {
+      "colorMap": "rbxassetid://79886260208642",
+      "name": "79886260208642",
+      "white": true
+    },
+    "29": {
+      "colorMap": "rbxassetid://81422203634773",
+      "name": "81422203634773",
+      "white": true
+    },
+    "30": {
+      "colorMap": "rbxassetid://83131066415773",
+      "name": "83131066415773",
+      "white": true
+    },
+    "31": {
+      "colorMap": "rbxassetid://86205833459568",
+      "name": "86205833459568",
+      "white": true
+    },
+    "32": {
+      "colorMap": "rbxassetid://95863555393770",
+      "name": "95863555393770",
+      "white": true
+    },
+    "33": {
+      "colorMap": "rbxassetid://97341549405748",
+      "name": "97341549405748",
+      "white": true
+    }
+  },
+  "report": {
+    "result": {
+      "skipped": 0,
+      "passed": 0,
+      "observations": [
+        {
+          "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":219,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":219}",
+          "clientSmoke": []
+        }
+      ],
+      "cases": [
+        {
+          "name": "P31 pristine wall occludes through native cover in both views",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.CombatHarness:35: P05 timeout: client ready"
+        },
+        {
+          "name": "Harness completion",
+          "passed": false,
+          "detail": "ServerScriptService.ServerTests.CombatHarness:119: ServerScriptService.ServerTests.CombatHarness:35: P05 timeout: client ready"
+        }
+      ],
+      "environment": "Studio",
+      "clientCount": 2,
+      "suite": "P31-bunker-thermal",
+      "failed": 2,
+      "discovered": 2
+    },
+    "sdkSuccess": true
+  },
+  "diagnostic": {
+    "client": "Player2",
+    "timeUtc": "2026-11-28T15:24:28.085Z",
+    "source": "GroundAimGui.spec.luau:650",
+    "message": "equipped readiness text missing",
+    "clientSmokeDelivered": 0,
+    "interpretation": "Layout smoke modified client-local role and equipment while the actual match was deploying."
+  }
+}

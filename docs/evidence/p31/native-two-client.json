@@ -1,0 +1,205 @@
+{
+  "candidate": "382ae6f8d564e66c7fc2586d193f1e309d24e37d",
+  "candidateTree": "eb1c389e4749a6f4fc94bfbd2279cb703de72cc2",
+  "command": "StudioTestService:ExecuteMultiplayerTestAsync(2, { kind = \"P31\" })",
+  "damageBoundary": "Deterministic, sequential GAU23 outcomes applied through the production DestructionRuntime by the test server. The smoke and regression exercise live clients, collision and replication. The damage steps are fed at the accepted outcome boundary.",
+  "firstAttempt": "tester-attempt-1.json",
+  "gameId": 0,
+  "githubCandidate": "fb2311626b551ea7667b9a1b02a2db5bba9c210d",
+  "liveFingerprints": {
+    "ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec": {
+      "bytes": 27066,
+      "djb2": 2430071161,
+      "match": true
+    },
+    "ServerScriptService.Server.SandbreakReconstruction": {
+      "bytes": 8021,
+      "djb2": 50975813,
+      "match": true
+    },
+    "ServerScriptService.ServerTests": {
+      "bytes": 4941,
+      "djb2": 4093153013,
+      "match": true
+    },
+    "ServerScriptService.ServerTests.CombatHarness": {
+      "bytes": 85556,
+      "djb2": 2129054823,
+      "match": true
+    },
+    "ServerScriptService.ServerTests.P17Metadata": {
+      "bytes": 62730,
+      "djb2": 3851308206,
+      "match": true
+    },
+    "ServerScriptService.ServerTests.RoundHarness": {
+      "bytes": 39795,
+      "djb2": 3683736893,
+      "match": true
+    },
+    "StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics": {
+      "bytes": 11402,
+      "djb2": 4128909246,
+      "match": true
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests": {
+      "bytes": 3616,
+      "djb2": 1866266620,
+      "match": true
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests.CombatHarness": {
+      "bytes": 16942,
+      "djb2": 1558894351,
+      "match": true
+    }
+  },
+  "palette": {
+    "actualChildren": 33,
+    "exactColorMaps": true,
+    "exactTemplateNames": true,
+    "sourceSha256": "e057eef19a60ea23bd1dcbd3d4cb775f5f57cd78342209f51f32689979e6e740",
+    "whiteColors": true
+  },
+  "placeId": 0,
+  "report": {
+    "cases": [
+      {
+        "name": "P31 both actual clients pass smoke before deployment",
+        "passed": true
+      },
+      {
+        "name": "P31 pristine wall occludes through native cover in both views",
+        "passed": true
+      },
+      {
+        "name": "P31 Light preserves cover and Heavy earns a real opening before Total",
+        "passed": true
+      },
+      {
+        "name": "P31 rebuilt bunker restores pristine cover and both clients switch palettes",
+        "passed": true
+      }
+    ],
+    "clientCount": 2,
+    "discovered": 4,
+    "environment": "Studio",
+    "failed": 0,
+    "observations": [
+      {
+        "ground": -2,
+        "operator": -1,
+        "queryParts": 1,
+        "stage": "Pristine"
+      },
+      {
+        "origin": [
+          315,
+          140,
+          174
+        ],
+        "pristineBlocked": 66
+      },
+      {
+        "ground": -2,
+        "operator": -1,
+        "queryParts": 1,
+        "stage": "Light"
+      },
+      {
+        "ground": -2,
+        "operator": -1,
+        "queryParts": 1,
+        "stage": "Heavy"
+      },
+      {
+        "heavyBlocked": 53,
+        "openingTarget": [
+          22,
+          2.5,
+          136
+        ]
+      },
+      {
+        "ground": -2,
+        "operator": -1,
+        "queryParts": 0,
+        "stage": "Total"
+      },
+      {
+        "ground": -1,
+        "operator": -2,
+        "queryParts": 1,
+        "stage": "Pristine"
+      },
+      {
+        "clientSmoke": {
+          "-1": "{\"errors\":0,\"skipped\":0,\"passed\":24,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":24}",
+          "-2": "{\"errors\":0,\"skipped\":0,\"passed\":24,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":24}"
+        },
+        "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":219,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":219}"
+      }
+    ],
+    "passed": 4,
+    "skipped": 0,
+    "suite": "P31-bunker-thermal"
+  },
+  "schemaVersion": 1,
+  "sourceFingerprints": {
+    "ReplicatedStorage.ClientSpecs.ThermalCosmetics.spec": {
+      "bytes": 27066,
+      "djb2": 2430071161,
+      "file": "tests/studio/specs-client/ThermalCosmetics.spec.luau",
+      "sha256": "c8ac0503cec331d4a889062957dec75a729c8507b6cf343060abe27e60cb66ed"
+    },
+    "ServerScriptService.Server.SandbreakReconstruction": {
+      "bytes": 8021,
+      "djb2": 50975813,
+      "file": "src/server/SandbreakReconstruction.luau",
+      "sha256": "60546a406a2671fd66823e336b80da60e7d4f545c858a0bf72e7afc4e2da7670"
+    },
+    "ServerScriptService.ServerTests": {
+      "bytes": 4941,
+      "djb2": 4093153013,
+      "file": "tests/studio/server/init.server.luau",
+      "sha256": "537bc4ebdf02ec0db0f15a5cbd23b8023cf7b815afe827c8d79f60c958c54066"
+    },
+    "ServerScriptService.ServerTests.CombatHarness": {
+      "bytes": 85556,
+      "djb2": 2129054823,
+      "file": "tests/studio/server/CombatHarness.luau",
+      "sha256": "ec0579ec4e536f3773fd017a4f5cc987ec7085f18da84c3645239b06bdd1f0dc"
+    },
+    "ServerScriptService.ServerTests.P17Metadata": {
+      "bytes": 62730,
+      "djb2": 3851308206,
+      "file": "tests/studio/server/P17Metadata.luau",
+      "sha256": "c1ca554cf8a58a37a47a4387f495176c0efcbd937cde560d4937095825aaa43f"
+    },
+    "ServerScriptService.ServerTests.RoundHarness": {
+      "bytes": 39795,
+      "djb2": 3683736893,
+      "file": "tests/studio/server/RoundHarness.luau",
+      "sha256": "0bd17fad93455c7d368fed394c8cf0ec1bef31a71d1b0a0bd56b4a333ef75df5"
+    },
+    "StarterPlayer.StarterPlayerScripts.Client.ThermalCosmetics": {
+      "bytes": 11402,
+      "djb2": 4128909246,
+      "file": "src/client/ThermalCosmetics.luau",
+      "sha256": "84bbd604496ac6242c44999378c236ddb6a66449248280d03ac1c526362e9c4e"
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests": {
+      "bytes": 3616,
+      "djb2": 1866266620,
+      "file": "tests/studio/client/init.client.luau",
+      "sha256": "f2a92ce89f9a3626aa87274489a4a356403c0464880d52fa37041e95fd224683"
+    },
+    "StarterPlayer.StarterPlayerScripts.ClientTests.CombatHarness": {
+      "bytes": 16942,
+      "djb2": 1558894351,
+      "file": "tests/studio/client/CombatHarness.luau",
+      "sha256": "b2a8c1b9d06ba6892e2b61e81cb308ca7b92615611329b77eb6b3a4e019a83b9"
+    }
+  },
+  "studioDocument": "tests.rbxlx",
+  "studioVersion": "0.748.0.7481526"
+}

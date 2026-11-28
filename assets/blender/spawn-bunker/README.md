@@ -23,9 +23,17 @@ The export bakes procedural base color into repeating 256 × 256 tiles. The sour
 
 ## Native integration checks
 
-- Use `panel-pristine`, `panel-light` and `panel-heavy` for visuals, `query-solid` and `query-residual` for the corresponding query shapes, and clear both at Total. Bind the assets and panel-owned dressing by ID using the receipt. Verify weapon rays and actual walkable openings in Studio. The current runtime expects the primitive shelter's 76 panels, so the candidate's 103 need a separate native binding change.
+- Use `panel-pristine`, `panel-light` and `panel-heavy` for visuals, `query-solid` and `query-residual` for the corresponding query shapes, and clear both at Total. Bind the assets and panel-owned dressing by ID using the receipt. The installed bunker replaces the primitive shelter with 103 registered panels. Verify weapon rays and actual walkable openings in Studio.
 - Stage `structure`, `hall-dressing`, `attached-art` and the `yard` batches separately. Verify the native floor, portal frames, terrain fit and surrounding routes. The salvage and relay art are independent visual props. Use deliberate proxies for any object designated as cover and assign thermal behavior by role.
-- Verify the live camera, spawn protection, thermal sight lines, progressive damage and round reset after binding. The source and staging receipts cover file and geometry verification. Studio import, asset ownership and native gameplay evidence are pending.
+- Verify the live camera, spawn protection, thermal sight lines, progressive damage and round reset after binding. The import guide records the installed model ownership and the original native verification. [Native reconstruction and Studio checks](IMPORT.md)
+
+## Operator thermal materials
+
+The bunker wall and roof use baked color maps on `MeshPart.TextureID`. The maps stayed bright when the earlier thermal view dimmed the part color. The operator now applies a local `SurfaceAppearance` using the same color map. The [Sandbreak thermal palette](../../presentation/SandbreakThermalSurfaces.model.json) keys 33 templates by the numeric texture asset ID. When reimporting the bunker, keep the palette matched to the IDs in the assembly and the damage model bank. The build inspector compares the sets in both Rojo artifacts.
+
+Sandbreak uses a 0.60 multiplier on the standard 0.45 world tint for a combined 0.27 color multiplier before the grayscale grade. The assembly and the registered panel models each carry this setting. Pristine, Light and Heavy meshes inherit it from their panel. In Total, the server removes the panel surfaces and query geometry to open the gap. The operator sees the structural silhouette, roof breach and major attached detail. Marked independent dressing stays out of thermal depth. Ground clients see the authored textures and colors, and the native collision proxies continue to govern server queries. [Building thermal checklist](../../README.md#thermal-presentation-for-buildings)
+
+The reference scene uses the local Studio Operator preview with the camera at `(315, 140, 174)` looking at `(0, 8, 173)` in world studs. Use the same pose and lighting at the 30° chain-gun and 40° howitzer zooms. Compare Sandbreak's wall and roof with Prism Seedship at both zooms. The exposed and doorway targets should appear white, and the target behind the intact wall should remain hidden. Follow the two-client procedure for damage stages and reset. [30° comparison](../../../docs/evidence/p31/thermal-30.jpg) · [40° comparison](../../../docs/evidence/p31/thermal-40.jpg) · [Capture settings and measurements](../../../docs/evidence/p31/rendered-comparison.json) · [P31 Studio procedure](../../../docs/testing.md#verify-sandbreak-thermal-contrast)
 
 ## Pilot evidence
 
@@ -35,4 +43,4 @@ In the local `tests.rbxlx` Edit document, Studio loaded all nine existing deploy
 
 Roblox approved the two-panel pilot as model `136622354216675`. Studio loaded version `63520603501315` in the private import place. All five mesh pieces and three unique baked color maps loaded successfully. The two asymmetric panel positions confirmed a 180-degree correction around Roblox +Y and one unit per stud. This pilot uses TextureID for the baked maps. The isolated Edit preview displayed the wall stripe and roof breach edge after anchoring and applying the correction. [Pilot receipt](../../../docs/evidence/sandbreak-pilot.json)
 
-A follow-up ray sweep of the temporary query shapes found 26–30% of the wall silhouette open at 0–75° from horizontal. The roof opened 41–50% at 0–75° from vertical. The native tests used those source shapes in isolation. Final playtest evidence needs the assembled bunker.
+A follow-up ray sweep of the temporary query shapes found 26–30% of the wall silhouette open at 0–75° from horizontal. The roof opened 41–50% at 0–75° from vertical. The native tests used those source shapes in isolation. [Assembled bunker verification](IMPORT.md#studio-verification)
