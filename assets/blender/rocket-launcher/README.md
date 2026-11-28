@@ -11,7 +11,7 @@ Change dimensions and orientation at the object level. Each visual piece uses a 
 | Frame on the invisible `Handle` | Use |
 | --- | --- |
 | `CarryGrip` | Positions the lower grip in the native Tool hand joint. |
-| `GroundContact` | Rolls the pickup onto its side against the support surface. The pivot used for pickup remains at the gameplay position. |
+| `GroundContact` | Rests the pickup on its side. Its up axis points from the contact surface toward the body so the artwork sits above the floor. The gameplay pivot stays at the pickup position. |
 | `Muzzle` | Starts the visible rocket at the nose when the nearby path is clear. The effect blends onto the server's head-origin sweep over 16 studs. |
 
 ## Rebuild and verify

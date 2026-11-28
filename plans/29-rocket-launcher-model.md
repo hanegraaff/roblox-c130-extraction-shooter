@@ -43,3 +43,11 @@ The local candidate `22386998e2491b0351ff78e0bd95ce8d673a3077` and GitHub candid
 | `build/tests.rbxlx` | `24720a262a7349f3a110c602d785eae92b50a0579250e3af8cef8c82a9f0b00e` |
 
 For Studio 0.748.0.7481526, MCP reported only the published `C130 P17 Import` place in Edit. The native local file picker stopped responding during the attempt to open `build/tests.rbxlx`. The separate local test document remained unavailable, so the Studio smoke report, three-client result and rendered desktop and phone checks are pending. Resume with the local file in Edit and run the six-case `P29` scenario with three actual clients plus the rendered review. [Studio procedure](../docs/testing.md#verify-the-depot-launcher-model)
+
+### 2026-11-28 · Pickup floor fit correction
+
+The owner reported poor ground rendering while the carried model worked. Studio showed that the original `GroundContact` frame placed the authored body below the surface even though the marker itself appeared 0.012 studs above it. The corrected Blender marker points into the body from its resting side. Regeneration changed the native attachment and retained the visual geometry and held grip. The host package test checks the marker axis. The native harness checks the bottom of the art bounds against the supporting plane at all four sites.
+
+In a one-client local `game.rbxlx` Play session, the production `LauncherGeometry` loaded the corrected Rojo-built template as a temporary fixture. At Radar, Hangar, Depot and Seedship, the visible bottom moved from 1.111 studs below the floor to 0.012 studs above it. The teal plate rose to about 1.095 studs above the floor, and the gameplay pivot stayed at the original site. A desktop client capture showed the corrected Radar pickup. The session returned to Edit. The three-client scenario and phone review remain open. [Studio procedure](../docs/testing.md#verify-the-depot-launcher-model)
+
+`python3 scripts/verify.py` passed on the corrected source tree `4e6c003dff2d43500b4f19c9fcaeb740aa4c79e7`, with 97 unit, 102 integration, 27 tooling and 78 asset tests. Blender 5.3.0 reopened and reimported all 126 meshes. The rebuilt `build/tests.rbxlx` has SHA-256 `3d574a35374e6586a1a4678789b17c33a7c79fcbdf9a7e61e54202bb9d4ba9fa`. The rebuilt `build/game.rbxlx` has SHA-256 `6245a043dcde6d3da3f26efd478b016b9fd1625bc4f123439cffa5b0ff51f334`.
