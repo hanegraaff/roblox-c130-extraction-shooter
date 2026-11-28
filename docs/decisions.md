@@ -131,6 +131,9 @@ The 2026-11-23 P18 revision supersedes prior health, destruction and camera-boun
 | D117 | User-selected Ground reticle height, 2026-11-27 | Raise the horizontally centered Ground reticle so the avatar does not obscure it in normal third-person play. Rifle and launcher aim use that same point. The vertical offset is a tuning value. |
 | D118 | User-selected Ground HUD, 2026-11-27 | Remove the Surrender button from the desktop and touch Ground HUD. |
 | D119 | Owner-accepted P26 playtest scope, 2026-11-28 | Accept the owner's published playtest with two players, multiple rounds on one new server and observed application of updated balance settings. The earlier two-server, restart persistence and rollback checks remain in R25 public release verification. [P26 playtest](../plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest) |
+| D120 | User-selected MVP milestone, 2026-11-28 | Tester availability moves P32’s paired 2-, 6- and 10-player balance study to a future iteration. The owner can declare the MVP complete after P26–P31, P33 and P34 and keep it private. P35 retains public release qualification and the audience decision for later. |
+| D121 | User-selected learning guide, 2026-11-28 | P33 delivers one root README for developers new to Roblox and game development. Put Game, Project / Development Setup and Game Design in that order, with gameplay screenshots and a Blender model showcase embedded in their respective sections. This replaces the earlier single-image and linked-gallery direction. |
+| D122 | User-selected listing title and banner art, 2026-11-28 | Title the game **C-130 Assault**. P34 delivers a polished arcade listing preview with AI-generated banners alongside actual gameplay screenshots. |
 
 ## Open details that do not block initial implementation
 
@@ -138,7 +141,7 @@ The 2026-11-23 P18 revision supersedes prior health, destruction and camera-boun
 | --- | --- | --- |
 | Roblox owner/group, universe ID, development/release place IDs | P12; earlier if cloud testing requested | Record actual values/access; never invent them |
 | Named reference desktop and graphics setting | P11 | Record before profiling against testing.md budgets |
-| Final title, art direction and approved assets | P10 | Working title: Players vs C-130; original greybox assets |
+| Final listing artwork and copy | P34 | Review the icon, AI-generated banners, thumbnails and screenshots together under the selected title, **C-130 Assault** |
 | Desired release audience | P12 | Prepare private test candidate; publish only with explicit authorization |
 
 ## Design change record

@@ -43,10 +43,10 @@ return WeaponRules
 
 Use Luau block comments for module and API contracts; Moonwave-style tags may be added if generated API docs become useful, but a documentation generator is not required for MVP. Document exported records/unions and their invariants. For stateful objects, document construction, start/stop/destroy behavior, event ownership and idempotency.
 
-Private functions need comments when they contain a non-obvious algorithm, timing rule, coordinate conversion, security assumption or cleanup requirement. Avoid comments that restate a name or syntax. Package READMEs explain responsibilities, allowed dependencies, public entrypoints and test locations.
+Private functions need comments when they contain a non-obvious algorithm, timing rule, coordinate conversion, security assumption or cleanup requirement. Avoid comments that restate a name or syntax. The root README maps the main packages to their responsibilities and tests. Keep detailed dependency and API contracts close to the source.
 
 ## Tests and prose
 
 Give every suite a short purpose/requirement header. Names describe observations such as “rejects a rocket hit at the round deadline” rather than “test 4.” Explain tolerances and fixture seeds. Group setup so the action and expected result remain easy to see.
 
-Keep the player README cohesive: update current behavior in place, remove stale descriptions, and label unimplemented targets. Include one real, representative screenshot of current progress and a practical local setup/Rojo/play/test how-to. Keep advanced contributor details in the development guide. History, check outputs and feature-specific completion facts belong in plans, not a growing list of README announcements.
+The root README teaches the current game to software developers new to Roblox and game development. Follow the [P33 outline](../plans/33-rewrite-readmes.md#required-readme-outline), including both illustrated sections and the self-contained setup walkthrough. Label planned features clearly. Keep advanced contributor details in the development guide and dated test results in the plan records.

@@ -22,7 +22,7 @@ These requirements describe the MVP target and future level boundary. Integrated
 | R11 | Ground wins on plane destruction. C-130 wins on all-Ground elimination or combat timeout. A committed Scatter result cancels arrival | P03, P06, P09, P24 | Single committed result and credit, deadline and mutual-kill rules, distinct forfeit and abort reasons, and Studio win, loss and replay with the same result on all clients |
 | R12 | Both roles and spectators receive understandable controls, panning/zoom, HUD, visible panel progression and results. The lobby shows an intermission clock and theater entry/exit controls. The arrival countdown appears over the Ground view and on black for the operator. On touch, use a single compact Ground arrival timer and keep the center clear for play. The readiness HUD shows current cooldowns, and the M-7 shows loaded rounds and unlimited reserve through reload | P04, P14, P07, P08, P10, P23–P25, P27 | UI state, role-specific input, synchronized countdown, desktop/touch readiness and cleanup. Measure phone HUD bounds and operate both roles on touch |
 | R13 | Remotes reject malformed, stale, unauthorized and excessive requests. Fire requests received before arrival cannot spend ammunition, start a cooldown or fire at reveal | P01, P03–P09, P14, P24, P25 | Table-driven negative inputs, finite-number checks, replay and rate tests, and early or stale combat rejection without gameplay mutation |
-| R14 | Game supports repeated 6- and 10-player rounds within measured budgets | P11, P12 | Seeded soak/load fixtures, cleanup/resource invariants, recorded multiplayer metrics |
+| R14 | Game supports repeated 6- and 10-player rounds within measured budgets | P11, P12, P35 | Seeded soak/load fixtures and cleanup/resource invariants. P35 measures real multiplayer sessions for public release |
 | R15 | Code, tests and documentation are human-readable and kept current | Every plan | Format/lint/type checks, documentation link gate and named reviewer evidence |
 | R16 | Desert, forest, urban and Mars-inspired southern districts use connected bunker trails. The southern Seedship site includes red terrain, boulders, low ridges and an impact crater, with transitions to surrounding districts. The three original landmarks and the Seedship have accessible upper floors and panelized walls and roofs | P13, P07, P11, P12, P17 | Reconstructable terrain/manifest, building count/story/footprint/panel-ID checks; real walking/stair/clearance, supported spawns, connected approaches to all four launchers and full-orbit cover/sight-line checks |
 | R17 | Operator WASD/touch panning reaches the overall level square smoothly throughout the orbit; independent aiming, selection and recenter remain usable without changing ground movement | P14, P10, P12, P18 | Pure axis/edge/corner/reversal/frame-time and full-orbit tests; native camera/input, near-overhead stability, multitouch, role isolation, GUI/layout and cleanup tests |
@@ -36,7 +36,7 @@ These requirements describe the MVP target and future level boundary. Integrated
 
 ## Public launch requirements
 
-R07–R10 describe the shipped combat defaults. P26 makes their numerical settings tunable. Each round uses one revision. Historical tests retain their original expected values.
+The MVP milestone covers P26–P31, P33 and P34. The owner may keep the completed MVP private. R29 belongs to a future balance iteration, and P35 qualifies the candidate for a later public release. R07–R10 describe the shipped combat defaults. P26 makes their numerical settings tunable. Each round uses one revision. Historical tests retain their original expected values.
 
 | ID | Requirement | Plans | Required evidence |
 | --- | --- | --- | --- |
@@ -44,9 +44,9 @@ R07–R10 describe the shipped combat defaults. P26 makes their numerical settin
 | R26 | Desktop Ground players aim and turn without right-click. Desktop and mobile players can complete a match in either role. | P27, P30, P35 | Avatar facing on a second client, both weapon rays, operated phone controls, menu and camera restoration |
 | R27 | The C-130, launcher and medkit each have their own editable Blender master based on supplied art. Git reconstructs the integrated models. | P28–P30 | Source and export audit, clean build, in-game fit, visibility and lifecycle checks |
 | R28 | Every battlefield building has a reachable healing kit that can be used once per round. The panel controls the healing amount. | P26, P30, P32 | Five-site traversal, contested use, full health, next-round restoration and tuned behavior |
-| R29 | Test the launch balance at small, middle and full rosters and record the chosen settings. | P32, P35 | Paired games, observed outcomes and a reproducible preset |
-| R30 | The root and package README guides teach a software developer new to Roblox how to run and understand the game. The root links to a graphics and models gallery with labeled in-game and Blender views. | P33 | Tracked README inventory, clean-checkout walkthrough, link checks and desktop/phone gallery review |
-| R31 | The public game page presents the two roles in a fast-paced arcade style with gameplay screenshots, banner art and short copy. | P34, P35 | Candidate captures, listing package, phone and desktop previews and live page verification |
+| R29 | In a future iteration, test balance at 2, 6 and 10 players and record the chosen settings. | P32 | Paired games, observed outcomes by roster and a reproducible preset |
+| R30 | One illustrated root README teaches a software developer new to Roblox and game development. It covers the game and access, setup through publishing and tester invitations, then platform anatomy, architecture, packages, key scripts and Blender models. | P33 | Editorial review against the P33 outline, clean-checkout walkthrough, checked publishing and invitation steps, working links and inline gameplay and Blender sections on desktop and phone |
+| R31 | The Roblox page uses the title **C-130 Assault** and presents the two roles with arcade copy, real gameplay screenshots, an icon, AI-generated banners and thumbnails. | P34, P35 | P34 delivers the polished desktop and phone previews and art package. P35 verifies the live page at public release |
 
 `main` includes the P23 lobby flow, P24 aircraft arrival and P25 weapon settings. Earlier acceptance records apply to their tested settings and round flow.
 
@@ -70,4 +70,4 @@ material-aware destruction.
 
 ## Release boundaries
 
-A future MVP release requires a 10-player session in the Roblox client in addition to Studio tests. Local test capacity is not assumed to equal production capacity. Publishing and cloud playtests use only an explicitly authorized experience, place, and audience. D94 closes P12's legacy implementation/handoff scope by user direction; it does not verify these future release checks or authorize publication of a new candidate.
+A future public release requires 6- and 10-player sessions in the Roblox client in addition to Studio tests. Local test capacity is not assumed to equal production capacity. Publishing and cloud playtests use only an explicitly authorized experience, place, and audience. D94 closes P12's legacy implementation/handoff scope by user direction; it does not verify these future release checks or authorize publication of a new candidate.
