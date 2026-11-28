@@ -243,6 +243,18 @@ function Harness.run(automated: boolean, reviewSeconds: number)
                     contact.WorldCFrame.UpVector:Dot(support.Normal) >= 0.999,
                     "pickup not aligned to floor"
                 )
+                local bounds, size = model:GetBoundingBox()
+                local axis = bounds:VectorToObjectSpace(support.Normal)
+                local radius = (
+                    math.abs(axis.X) * size.X
+                    + math.abs(axis.Y) * size.Y
+                    + math.abs(axis.Z) * size.Z
+                ) / 2
+                local bottomGap = (bounds.Position - support.Position):Dot(support.Normal) - radius
+                assert(
+                    math.abs(bottomGap - floorGap) < 0.004,
+                    "launcher art penetrates the floor at " .. site
+                )
                 assert(
                     (model:GetPivot().Position - anchor(site).Position).Magnitude < 0.001,
                     "model altered the gameplay anchor " .. site
@@ -255,10 +267,12 @@ function Harness.run(automated: boolean, reviewSeconds: number)
                     assert(not table.find(previous, model), "old pickup reused at replay")
                 end
                 observe(snapshot.launcherId, 0)
-                table.insert(
-                    observations,
-                    { site = site, floorGapStuds = floorGap, support = support.Instance.Name }
-                )
+                table.insert(observations, {
+                    site = site,
+                    floorGapStuds = floorGap,
+                    artGapStuds = bottomGap,
+                    support = support.Instance.Name,
+                })
                 table.insert(result, model)
                 if not previous and reviewSeconds > 0 then
                     CombatFixture.pose(owned, ground[1], anchor(site).Position + Vector3.new(0, 0, 4))

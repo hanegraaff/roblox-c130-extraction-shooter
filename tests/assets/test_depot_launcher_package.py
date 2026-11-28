@@ -64,7 +64,8 @@ class DepotLauncherPackageTests(unittest.TestCase):
         for axis, measured in enumerate((1.12, 1.97, 3.68)):
             self.assertAlmostEqual(high[axis] - low[axis], measured, delta=.02)
         self.assertAlmostEqual(self.markers["GroundContact"][0], low[0], delta=.001)
-        self.assertAlmostEqual(self.markers["GroundContact"][4], -1, delta=.001)
+        # Aligning this marker to the floor must place all authored X extents above it.
+        self.assertAlmostEqual(self.markers["GroundContact"][4], 1, delta=.001)
         self.assertAlmostEqual(self.markers["Muzzle"][2], low[2], delta=.02)
         self.assertLess(self.markers["Muzzle"][2], low[2])
         self.assertLess(self.parts["Diagonal teal paint"]["CFrame"][2], -1.8)

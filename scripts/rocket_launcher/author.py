@@ -176,7 +176,8 @@ class DepotProp:
                            Matrix.Rotation(radians(17), 3, "X"))
         self.marker("CarryGrip", (0, -.699, .164))
         self.marker("Muzzle", (0, 0, -1.849))
-        self.marker("GroundContact", (-.559, 0, 0), Matrix.Rotation(radians(90), 3, "Z"))
+        # +X points from the resting side into the body and becomes floor up.
+        self.marker("GroundContact", (-.559, 0, 0), Matrix.Rotation(radians(-90), 3, "Z"))
 
 
 def stage(scene):

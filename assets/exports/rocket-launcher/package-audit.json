@@ -68,9 +68,9 @@
       0,
       0,
       0,
-      -1.0,
-      0,
       1.0,
+      0,
+      -1.0,
       0,
       0,
       0,
@@ -79,8 +79,8 @@
     ]
   },
   "sha256": {
-    "assets/blender/rocket-launcher/rocket-launcher.blend": "977b51fda5695a12f665e16d13a04994212eedd424fbef564654fdd41929fcae",
+    "assets/blender/rocket-launcher/rocket-launcher.blend": "3d1d02cbfc5ab1527ee429eaf5ec1c7cfb63c96450edf76cc5c0f1c87829b082",
     "assets/exports/rocket-launcher/rocket-launcher.glb": "8ac158df01968b5fdf0c174be227d612273b73eddeff3678b58258676496cb01",
-    "assets/models/DepotLauncher.model.json": "8960379e57531b08081824fb73c4eacc95a36b8cd74c63e7d63fc0d739c03758"
+    "assets/models/DepotLauncher.model.json": "aed7bc71057151cf81e2f00fc2a8b59a3a27afd95aa099c2fbcbef151593ee32"
   }
 }
