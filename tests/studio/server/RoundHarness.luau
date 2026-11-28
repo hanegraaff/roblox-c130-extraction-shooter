@@ -88,6 +88,17 @@ function RoundHarness.run()
         require(script.Parent.BalanceHarness).preview()
         return
     end
+    if kind == "P29" then
+        local review = if type(args) == "table"
+            then args.reviewSeconds
+            elseif settings then settings:GetAttribute("P29ReviewSeconds")
+            else nil
+        require(script.Parent.DepotLauncherHarness).run(
+            type(args) == "table",
+            if type(review) == "number" and review == review then math.clamp(review, 0, 25) else 0
+        )
+        return
+    end
     if kind == "P24" or kind == "P28" then
         require(script.Parent.AircraftArrivalHarness).run(type(args) == "table", kind == "P28")
         return

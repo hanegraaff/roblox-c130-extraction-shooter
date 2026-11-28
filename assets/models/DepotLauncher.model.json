@@ -1,0 +1,4893 @@
+{
+  "ClassName": "Model",
+  "Children": [
+    {
+      "Name": "Handle",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "CFrame": [
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0,
+          0,
+          0
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 1,
+        "CastShadow": false
+      },
+      "Children": [
+        {
+          "Name": "CarryGrip",
+          "ClassName": "Attachment",
+          "Properties": {
+            "CFrame": [
+              0,
+              -0.699,
+              0.164,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ]
+          }
+        },
+        {
+          "Name": "Muzzle",
+          "ClassName": "Attachment",
+          "Properties": {
+            "CFrame": [
+              0,
+              0,
+              -1.849,
+              1.0,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              0,
+              0,
+              1.0
+            ]
+          }
+        },
+        {
+          "Name": "GroundContact",
+          "ClassName": "Attachment",
+          "Properties": {
+            "CFrame": [
+              -0.559,
+              0,
+              0,
+              0,
+              1.0,
+              0,
+              -1.0,
+              0,
+              0,
+              0,
+              0,
+              1.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Aft lower shoe left face",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.161,
+          0.525
+        ],
+        "CFrame": [
+          -0.489,
+          -0.354,
+          0.732,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Aft lower shoe left front",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.161,
+          0.095
+        ],
+        "CFrame": [
+          -0.489,
+          -0.354,
+          0.422,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Aft lower shoe left rear",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.161,
+          0.095
+        ],
+        "CFrame": [
+          -0.489,
+          -0.354,
+          1.042,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Aft lower shoe right face",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.161,
+          0.525
+        ],
+        "CFrame": [
+          0.489,
+          -0.354,
+          0.732,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Aft lower shoe right front",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.161,
+          0.095
+        ],
+        "CFrame": [
+          0.489,
+          -0.354,
+          0.422,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Aft lower shoe right rear",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.161,
+          0.095
+        ],
+        "CFrame": [
+          0.489,
+          -0.354,
+          1.042,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.27,
+          0.144,
+          1.03
+        ],
+        "CFrame": [
+          0,
+          0.879,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge front arm",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.272,
+          0.147,
+          0.42655
+        ],
+        "CFrame": [
+          0,
+          0.7035,
+          -0.622,
+          1.0,
+          0,
+          0,
+          0,
+          0.525144,
+          0.851014,
+          0,
+          -0.851014,
+          0.525144
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge front saddle",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.477,
+          0.126,
+          0.391
+        ],
+        "CFrame": [
+          0,
+          0.473,
+          -0.734,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.482353,
+          0.47451,
+          0.462745
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge molded pad 1",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.306,
+          0.121,
+          0.25
+        ],
+        "CFrame": [
+          0,
+          0.912,
+          -0.296,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge molded pad 2",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.306,
+          0.121,
+          0.25
+        ],
+        "CFrame": [
+          0,
+          0.912,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge molded pad 3",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.306,
+          0.121,
+          0.25
+        ],
+        "CFrame": [
+          0,
+          0.912,
+          0.296,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge rear arm",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.272,
+          0.147,
+          0.42655
+        ],
+        "CFrame": [
+          0,
+          0.7035,
+          0.619,
+          1.0,
+          0,
+          0,
+          0,
+          -0.525143,
+          0.851014,
+          0,
+          -0.851014,
+          -0.525143
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Carry bridge rear saddle",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.477,
+          0.126,
+          0.391
+        ],
+        "CFrame": [
+          0,
+          0.473,
+          0.731,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.482353,
+          0.47451,
+          0.462745
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.822,
+          0.944,
+          0.51
+        ],
+        "CFrame": [
+          0,
+          0,
+          -1.55,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.124,
+          0.696,
+          0.51
+        ],
+        "CFrame": [
+          -0.473,
+          0,
+          -1.55,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.51,
+          0.124,
+          0.124
+        ],
+        "CFrame": [
+          -0.473,
+          -0.41,
+          -1.55,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.51,
+          0.124,
+          0.124
+        ],
+        "CFrame": [
+          -0.473,
+          0.41,
+          -1.55,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.124,
+          0.696,
+          0.51
+        ],
+        "CFrame": [
+          0.473,
+          0,
+          -1.55,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.51,
+          0.124,
+          0.124
+        ],
+        "CFrame": [
+          0.473,
+          -0.41,
+          -1.55,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Closed graphite cap right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.51,
+          0.124,
+          0.124
+        ],
+        "CFrame": [
+          0.473,
+          0.41,
+          -1.55,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Diagonal teal paint",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.145,
+          0.891,
+          0.006
+        ],
+        "CFrame": [
+          0,
+          0,
+          -1.833,
+          0.809017,
+          0.587785,
+          0,
+          -0.587785,
+          0.809017,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.156863,
+          0.501961,
+          0.478431
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Forward armor left face",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.31,
+          0.35
+        ],
+        "CFrame": [
+          -0.489,
+          0.05,
+          -0.875,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Forward armor left front",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.31,
+          0.12
+        ],
+        "CFrame": [
+          -0.489,
+          0.05,
+          -1.11,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Forward armor left rear",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.31,
+          0.12
+        ],
+        "CFrame": [
+          -0.489,
+          0.05,
+          -0.64,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Forward armor right face",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.31,
+          0.35
+        ],
+        "CFrame": [
+          0.489,
+          0.05,
+          -0.875,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Forward armor right front",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.31,
+          0.12
+        ],
+        "CFrame": [
+          0.489,
+          0.05,
+          -1.11,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Forward armor right rear",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.31,
+          0.12
+        ],
+        "CFrame": [
+          0.489,
+          0.05,
+          -0.64,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Graphite left lower rail",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.094,
+          0.101,
+          2.34
+        ],
+        "CFrame": [
+          -0.512,
+          -0.219,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Graphite left upper rail",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.094,
+          0.101,
+          2.34
+        ],
+        "CFrame": [
+          -0.512,
+          0.217,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Graphite right lower rail",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.094,
+          0.101,
+          2.34
+        ],
+        "CFrame": [
+          0.512,
+          -0.219,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Graphite right upper rail",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.094,
+          0.101,
+          2.34
+        ],
+        "CFrame": [
+          0.512,
+          0.217,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.3,
+          0.396,
+          0.488038
+        ],
+        "CFrame": [
+          0,
+          -0.707,
+          0.1645,
+          1.0,
+          0,
+          0,
+          0,
+          0.297108,
+          -0.954844,
+          0,
+          0.954844,
+          0.297108
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip left inset 1",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.012,
+          0.059,
+          0.236
+        ],
+        "CFrame": [
+          -0.153,
+          -0.596,
+          0.129961,
+          1.0,
+          0,
+          0,
+          0,
+          0.956305,
+          -0.292372,
+          0,
+          0.292372,
+          0.956305
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip left inset 2",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.012,
+          0.059,
+          0.236
+        ],
+        "CFrame": [
+          -0.153,
+          -0.711,
+          0.165745,
+          1.0,
+          0,
+          0,
+          0,
+          0.956305,
+          -0.292372,
+          0,
+          0.292372,
+          0.956305
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip left inset 3",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.012,
+          0.059,
+          0.236
+        ],
+        "CFrame": [
+          -0.153,
+          -0.826,
+          0.201528,
+          1.0,
+          0,
+          0,
+          0,
+          0.956305,
+          -0.292372,
+          0,
+          0.292372,
+          0.956305
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip mount",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.465,
+          0.122,
+          0.57
+        ],
+        "CFrame": [
+          0,
+          -0.447,
+          0.06,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip right inset 1",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.012,
+          0.059,
+          0.236
+        ],
+        "CFrame": [
+          0.153,
+          -0.596,
+          0.129961,
+          1.0,
+          0,
+          0,
+          0,
+          0.956305,
+          -0.292372,
+          0,
+          0.292372,
+          0.956305
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip right inset 2",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.012,
+          0.059,
+          0.236
+        ],
+        "CFrame": [
+          0.153,
+          -0.711,
+          0.165745,
+          1.0,
+          0,
+          0,
+          0,
+          0.956305,
+          -0.292372,
+          0,
+          0.292372,
+          0.956305
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Lower grip right inset 3",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.012,
+          0.059,
+          0.236
+        ],
+        "CFrame": [
+          0.153,
+          -0.826,
+          0.201528,
+          1.0,
+          0,
+          0,
+          0,
+          0.956305,
+          -0.292372,
+          0,
+          0.292372,
+          0.956305
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Offset teal plate face",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.204,
+          0.802
+        ],
+        "CFrame": [
+          0.524,
+          0.003,
+          0.591,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.156863,
+          0.501961,
+          0.478431
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Offset teal plate front",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.204,
+          0.119
+        ],
+        "CFrame": [
+          0.524,
+          0.003,
+          0.1305,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.156863,
+          0.501961,
+          0.478431
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Offset teal plate rear",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.204,
+          0.119
+        ],
+        "CFrame": [
+          0.524,
+          0.003,
+          1.0515,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0
+        ],
+        "Color": [
+          0.156863,
+          0.501961,
+          0.478431
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Offset teal plate rim face",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.248,
+          0.852
+        ],
+        "CFrame": [
+          0.506,
+          -0.003,
+          0.59,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Offset teal plate rim front",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.248,
+          0.128
+        ],
+        "CFrame": [
+          0.506,
+          -0.003,
+          0.1,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Offset teal plate rim rear",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.028,
+          0.248,
+          0.128
+        ],
+        "CFrame": [
+          0.506,
+          -0.003,
+          1.08,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rail left lower bevel",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.012,
+          2.28
+        ],
+        "CFrame": [
+          -0.523,
+          -0.167,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rail left upper bevel",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.012,
+          2.28
+        ],
+        "CFrame": [
+          -0.523,
+          0.269,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rail right lower bevel",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.012,
+          2.28
+        ],
+        "CFrame": [
+          0.523,
+          -0.167,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rail right upper bevel",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.012,
+          2.28
+        ],
+        "CFrame": [
+          0.523,
+          0.269,
+          0.04,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.317647,
+          0.305882,
+          0.305882
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad bridge",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.87,
+          0.845,
+          0.109
+        ],
+        "CFrame": [
+          0,
+          0,
+          1.382,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.172549,
+          0.164706,
+          0.168627
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.858,
+          0.282,
+          0.435
+        ],
+        "CFrame": [
+          0,
+          -0.292,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.782,
+          0.238,
+          0.07
+        ],
+        "CFrame": [
+          0,
+          -0.292,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.126,
+          0.07
+        ],
+        "CFrame": [
+          -0.419,
+          -0.292,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          -0.419,
+          -0.383,
+          1.806,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          -0.419,
+          -0.201,
+          1.806,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.126,
+          0.07
+        ],
+        "CFrame": [
+          0.419,
+          -0.292,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          0.419,
+          -0.383,
+          1.806,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower inset right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          0.419,
+          -0.201,
+          1.806,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.075,
+          0.132,
+          0.435
+        ],
+        "CFrame": [
+          -0.4665,
+          -0.292,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          -0.4665,
+          -0.3955,
+          1.567,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          -0.4665,
+          -0.1885,
+          1.567,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.075,
+          0.132,
+          0.435
+        ],
+        "CFrame": [
+          0.4665,
+          -0.292,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          0.4665,
+          -0.3955,
+          1.567,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad lower right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          0.4665,
+          -0.1885,
+          1.567,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.858,
+          0.282,
+          0.435
+        ],
+        "CFrame": [
+          0,
+          0,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.782,
+          0.238,
+          0.07
+        ],
+        "CFrame": [
+          0,
+          0,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.126,
+          0.07
+        ],
+        "CFrame": [
+          -0.419,
+          0,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          -0.419,
+          -0.091,
+          1.806,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          -0.419,
+          0.091,
+          1.806,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.126,
+          0.07
+        ],
+        "CFrame": [
+          0.419,
+          0,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          0.419,
+          -0.091,
+          1.806,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle inset right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          0.419,
+          0.091,
+          1.806,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.075,
+          0.132,
+          0.435
+        ],
+        "CFrame": [
+          -0.4665,
+          0,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          -0.4665,
+          -0.1035,
+          1.567,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          -0.4665,
+          0.1035,
+          1.567,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.075,
+          0.132,
+          0.435
+        ],
+        "CFrame": [
+          0.4665,
+          0,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          0.4665,
+          -0.1035,
+          1.567,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad middle right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          0.4665,
+          0.1035,
+          1.567,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.858,
+          0.282,
+          0.435
+        ],
+        "CFrame": [
+          0,
+          0.292,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.782,
+          0.238,
+          0.07
+        ],
+        "CFrame": [
+          0,
+          0.292,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.126,
+          0.07
+        ],
+        "CFrame": [
+          -0.419,
+          0.292,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          -0.419,
+          0.201,
+          1.806,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          -0.419,
+          0.383,
+          1.806,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.056,
+          0.126,
+          0.07
+        ],
+        "CFrame": [
+          0.419,
+          0.292,
+          1.806,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          0.419,
+          0.201,
+          1.806,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper inset right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.07,
+          0.056,
+          0.056
+        ],
+        "CFrame": [
+          0.419,
+          0.383,
+          1.806,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.075,
+          0.132,
+          0.435
+        ],
+        "CFrame": [
+          -0.4665,
+          0.292,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          -0.4665,
+          0.1885,
+          1.567,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          -0.4665,
+          0.3955,
+          1.567,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.075,
+          0.132,
+          0.435
+        ],
+        "CFrame": [
+          0.4665,
+          0.292,
+          1.567,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          0.4665,
+          0.1885,
+          1.567,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Rear pad upper right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.435,
+          0.075,
+          0.075
+        ],
+        "CFrame": [
+          0.4665,
+          0.3955,
+          1.567,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.211765,
+          0.196078,
+          0.2
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.752,
+          0.836,
+          0.04
+        ],
+        "CFrame": [
+          0,
+          0,
+          -1.81,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.105,
+          0.626,
+          0.04
+        ],
+        "CFrame": [
+          -0.4285,
+          0,
+          -1.81,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.04,
+          0.105,
+          0.105
+        ],
+        "CFrame": [
+          -0.4285,
+          -0.3655,
+          -1.81,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.04,
+          0.105,
+          0.105
+        ],
+        "CFrame": [
+          -0.4285,
+          0.3655,
+          -1.81,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.105,
+          0.626,
+          0.04
+        ],
+        "CFrame": [
+          0.4285,
+          0,
+          -1.81,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.04,
+          0.105,
+          0.105
+        ],
+        "CFrame": [
+          0.4285,
+          -0.3655,
+          -1.81,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Recessed end face right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.04,
+          0.105,
+          0.105
+        ],
+        "CFrame": [
+          0.4285,
+          0.3655,
+          -1.81,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.231373,
+          0.227451,
+          0.239216
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.812,
+          0.936,
+          0.34
+        ],
+        "CFrame": [
+          0,
+          0,
+          1.193,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.109,
+          0.718,
+          0.34
+        ],
+        "CFrame": [
+          -0.4605,
+          0,
+          1.193,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.34,
+          0.109,
+          0.109
+        ],
+        "CFrame": [
+          -0.4605,
+          -0.4135,
+          1.193,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.34,
+          0.109,
+          0.109
+        ],
+        "CFrame": [
+          -0.4605,
+          0.4135,
+          1.193,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.733333,
+          0.623529,
+          0.470588
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.109,
+          0.718,
+          0.34
+        ],
+        "CFrame": [
+          0.4605,
+          0,
+          1.193,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.34,
+          0.109,
+          0.109
+        ],
+        "CFrame": [
+          0.4605,
+          -0.4135,
+          1.193,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand aft collar right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.34,
+          0.109,
+          0.109
+        ],
+        "CFrame": [
+          0.4605,
+          0.4135,
+          1.193,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.733333,
+          0.623529,
+          0.470588
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.794,
+          0.94,
+          0.49
+        ],
+        "CFrame": [
+          0,
+          0,
+          -1.095,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.116,
+          0.708,
+          0.49
+        ],
+        "CFrame": [
+          -0.455,
+          0,
+          -1.095,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.49,
+          0.116,
+          0.116
+        ],
+        "CFrame": [
+          -0.455,
+          -0.412,
+          -1.095,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.49,
+          0.116,
+          0.116
+        ],
+        "CFrame": [
+          -0.455,
+          0.412,
+          -1.095,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.733333,
+          0.623529,
+          0.470588
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.116,
+          0.708,
+          0.49
+        ],
+        "CFrame": [
+          0.455,
+          0,
+          -1.095,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.49,
+          0.116,
+          0.116
+        ],
+        "CFrame": [
+          0.455,
+          -0.412,
+          -1.095,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand forward collar right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          0.49,
+          0.116,
+          0.116
+        ],
+        "CFrame": [
+          0.455,
+          0.412,
+          -1.095,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.733333,
+          0.623529,
+          0.470588
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand nose buffer left lower",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.13,
+          0.094,
+          0.322
+        ],
+        "CFrame": [
+          -0.389,
+          -0.406,
+          -1.599,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand nose buffer left upper",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.13,
+          0.094,
+          0.322
+        ],
+        "CFrame": [
+          -0.389,
+          0.402,
+          -1.599,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand nose buffer right lower",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.13,
+          0.094,
+          0.322
+        ],
+        "CFrame": [
+          0.389,
+          -0.406,
+          -1.599,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Sand nose buffer right upper",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.13,
+          0.094,
+          0.322
+        ],
+        "CFrame": [
+          0.389,
+          0.402,
+          -1.599,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.65098,
+          0.54902,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body center",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.74,
+          0.886,
+          2.985
+        ],
+        "CFrame": [
+          0,
+          0,
+          -0.035,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.403922,
+          0.403922,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body left",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.113,
+          0.66,
+          2.985
+        ],
+        "CFrame": [
+          -0.4265,
+          0,
+          -0.035,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.403922,
+          0.403922,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body left lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          2.985,
+          0.113,
+          0.113
+        ],
+        "CFrame": [
+          -0.4265,
+          -0.3865,
+          -0.035,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.403922,
+          0.403922,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body left upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          2.985,
+          0.113,
+          0.113
+        ],
+        "CFrame": [
+          -0.4265,
+          0.3865,
+          -0.035,
+          0,
+          -1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.482353,
+          0.47451,
+          0.462745
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body right",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.113,
+          0.66,
+          2.985
+        ],
+        "CFrame": [
+          0.4265,
+          0,
+          -0.035,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.403922,
+          0.403922,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body right lower",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          2.985,
+          0.113,
+          0.113
+        ],
+        "CFrame": [
+          0.4265,
+          -0.3865,
+          -0.035,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.403922,
+          0.403922,
+          0.411765
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Slate body right upper",
+      "ClassName": "WedgePart",
+      "Properties": {
+        "Size": [
+          2.985,
+          0.113,
+          0.113
+        ],
+        "CFrame": [
+          0.4265,
+          0.3865,
+          -0.035,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          -1.0,
+          -1.0,
+          0,
+          0
+        ],
+        "Color": [
+          0.482353,
+          0.47451,
+          0.462745
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    },
+    {
+      "Name": "Teal plate catchlight",
+      "ClassName": "Part",
+      "Properties": {
+        "Size": [
+          0.006,
+          0.012,
+          0.73
+        ],
+        "CFrame": [
+          0.539,
+          0.104,
+          0.591,
+          1.0,
+          0,
+          0,
+          0,
+          1.0,
+          0,
+          0,
+          0,
+          1.0
+        ],
+        "Color": [
+          0.258824,
+          0.584314,
+          0.537255
+        ],
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Massless": true,
+        "Material": "SmoothPlastic",
+        "Transparency": 0,
+        "CastShadow": true
+      }
+    }
+  ]
+}

@@ -231,6 +231,62 @@
       "upload_owner": null
     },
     {
+      "id": "depot-launcher-master",
+      "kind": "blender-source",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/blender/rocket-launcher/rocket-launcher.blend",
+      "sha256": "3d1d02cbfc5ab1527ee429eaf5ec1c7cfb63c96450edf76cc5c0f1c87829b082",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "depot-launcher-glb",
+      "kind": "model-export",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/exports/rocket-launcher/rocket-launcher.glb",
+      "sha256": "8ac158df01968b5fdf0c174be227d612273b73eddeff3678b58258676496cb01",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "depot-launcher-native",
+      "kind": "model",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/models/DepotLauncher.model.json",
+      "sha256": "aed7bc71057151cf81e2f00fc2a8b59a3a27afd95aa099c2fbcbef151593ee32",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "studio_path": "ServerStorage.Assets.DepotLauncher"
+    },
+    {
+      "id": "depot-launcher-audit",
+      "kind": "asset-inventory",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/exports/rocket-launcher/package-audit.json",
+      "sha256": "809b6ac34e240a713993c2491bf246fd71b1887df63ccf9cf8bdc2b82565ca94",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "depot-launcher-three-quarter",
+      "kind": "art-preview",
+      "source": "Original sealed depot launcher art based on the three approved concepts in src/images/rocket-launcher. The native model and GLB carry the editable master geometry and palette.",
+      "author": "Project contributors",
+      "license": "Project-authored geometry and solid colors. Reference pixels are excluded from the exports.",
+      "local_path": "assets/exports/rocket-launcher/three-quarter.png",
+      "sha256": "30ca344e97d6fbdbabc6f00e0b57d9cbb5b50d5edf389c0074ab697e54b8bbdb",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
       "id": "c130-managed-airframe",
       "kind": "model",
       "source": "Original aircraft compiled from the editable P28 Blender master using native Roblox shape profiles and geometric livery",
@@ -3169,13 +3225,12 @@
       "upload_owner": null
     },
     {
-      "id": "launcher-primitives",
+      "id": "launcher-presentation",
       "kind": "runtime-model",
-      "source": "Original three-part launcher tube/bands and pickup label authored entirely in first-party Luau; no external assets or scripts",
+      "source": "First-party Luau clones the managed DepotLauncher template for pickup and held presentations. It fits the authored floor and grip attachments, builds the pickup label, and gives each representation the current launcher identity.",
       "author": "Project contributors",
       "license": "Project license",
-      "local_path": "src/server/LauncherGeometry.luau",
-      "parts_per_representation": 3
+      "local_path": "src/server/LauncherGeometry.luau"
     },
     {
       "id": "rocket-presentation",

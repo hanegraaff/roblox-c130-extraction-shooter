@@ -61,7 +61,7 @@ return function()
     )
     test("P08 held and map representations keep one ID and cannot collide or enter combat queries", function()
         local tool = Geometry.tool("launcher:7")
-        local model = Geometry.pickup("launcher:7", Vector3.new(2, 3, 4))
+        local model = Geometry.pickup("launcher:7", Vector3.new(2, 3, 4), workspace.World.Battlefield)
         local ok, failure = pcall(function()
             assert(tool:GetAttribute("LauncherId") == model:GetAttribute("LauncherId"), "identity drift")
             assert(not tool.CanBeDropped and tool.RequiresHandle, "native drop not disabled")
@@ -78,11 +78,63 @@ return function()
                         )
                     end
                 end
-                assert(count == 3, "unbounded launcher representation")
+                assert(count >= 100 and count <= 130, "missing or unbounded launcher representation")
             end
         end)
         tool:Destroy()
         model:Destroy()
+        assert(ok, tostring(failure))
+    end)
+    test("P29 A2 muzzle presentation falls back when cover blocks either segment", function()
+        local map = Instance.new("Model")
+        map.Name, map.Parent = "P29MuzzleFixture", workspace
+        local wall = Instance.new("Part")
+        wall.Anchored, wall.Size = true, Vector3.new(1, 4, 0.2)
+        local tool = Geometry.tool("launcher:fixture")
+        local handle = tool:FindFirstChild("Handle")
+        assert(handle and handle:IsA("BasePart"), "missing launcher Handle")
+        local muzzle = handle:FindFirstChild("Muzzle")
+        assert(muzzle and muzzle:IsA("Attachment"), "missing launcher Muzzle")
+        local ok, failure = pcall(function()
+            handle.CFrame = CFrame.new(0, 100, 0)
+            local head = Vector3.new(0, 100, 0)
+            local convergence = head - Vector3.zAxis * 16
+            assert(
+                (Geometry.visualOrigin(map, tool, head, convergence) - muzzle.WorldPosition).Magnitude < 0.001,
+                "clear muzzle origin not returned"
+            )
+            wall.Position, wall.Parent = (head + muzzle.WorldPosition) * 0.5, map
+            assert(
+                Geometry.visualOrigin(map, tool, head, convergence) == head,
+                "muzzle effects appeared across cover"
+            )
+
+            handle.Position = head + Vector3.xAxis - muzzle.Position
+            wall.Size, wall.Position = Vector3.new(0.5, 4, 0.12), head + Vector3.new(0.65, 0, -5)
+            local params = Geometry.parameters(map)
+            assert(
+                not workspace:Spherecast(head, 0.2, convergence - head, params)
+                    and not workspace:Raycast(head, muzzle.WorldPosition - head, params),
+                "offset wall fixture blocked the server sweep or head-to-muzzle segment"
+            )
+            assert(
+                Geometry.visualOrigin(map, tool, head, convergence) == head,
+                "visual rocket path crossed offset cover"
+            )
+            wall.Parent = nil
+            assert(
+                (Geometry.visualOrigin(map, tool, head, convergence) - muzzle.WorldPosition).Magnitude < 0.001,
+                "unobstructed offset did not use the authored muzzle"
+            )
+            handle.Position += Vector3.xAxis * 6
+            assert(
+                Geometry.visualOrigin(map, tool, head, convergence) == head,
+                "distant hand moved launch effects"
+            )
+        end)
+        tool:Destroy()
+        wall:Destroy()
+        map:Destroy()
         assert(ok, tostring(failure))
     end)
     test("P25 A2 native cover and misses prevent damage; seven deduplicated impacts destroy once", function()
@@ -129,7 +181,8 @@ return function()
                 local marker =
                     workspace.World.Battlefield.Anchors:FindFirstChild("Launcher" .. site) :: BasePart
                 assert(
-                    stand.state == "Available" and placed[stand.launcherId] == marker.Position,
+                    stand.state == "Available"
+                        and (placed[stand.launcherId] - marker.Position).Magnitude < 0.001,
                     "missing landmark pickup: " .. site
                 )
             end

@@ -41,6 +41,9 @@ elseif manualMode == "P26Panel" then
 elseif manualMode == "P24" or manualMode == "P28" then
     require(script.AircraftArrivalHarness).run()
     return
+elseif manualMode == "P29" then
+    require(script.DepotLauncherHarness).run()
+    return
 elseif manualMode == "P18" then
     require(script.RebalanceHarness).run()
     return

@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P29` | 3 | Four supported pickups, equipped model and muzzle, timed handoff, recovery after carrier death and replay cleanup |
 | `P28` | 2 | Aircraft reveal, full orbit and rotor movement, weapon zoom masks and firing origins, visible hit surfaces and replay after destruction |
 | `P26` | 2 | Owner and tester permissions, all four weapons, both health pools, panel damage, minimum players and consecutive intermissions. Use `P26Panel` for the hands-on lobby preview |
 | `P24` | 2 | Production-length Scatter, both countdown views, real launcher transfers and fire gating, aircraft reveal, role rotation and canceled arrival |
@@ -459,6 +460,27 @@ return "P28 multiplayer test started"
 Allow about three minutes for the initial head start, a full 90-second orbit and replay. Read `workspace:GetAttribute("P28LastReport")` in Edit when the run ends. Preserve the `P28-multiplayer` report, the server smoke report and both client reports. Check the actual client and completed round counts, nonzero discovery and zero failures or skips. The scenario checks all four rotating hubs, both weapon zoom masks and firing origins, an authoritative rifle hit and miss, direct rocket sweeps to destruction, and a single correctly posed replica at full roster health in the replay.
 
 Capture the first reveal and representative angles through the orbit from the Ground client. The fixture follows the aircraft from the avatar's eye position. If a tall accessory obscures the view, use a temporary upward offset for the capture and record it with the viewport. Check heading, propeller motion and camouflage readability at gameplay distance. Review the painted teeth and mouth on both sides of the nose from close enough to see how they follow the skin. Inspect the operator at both zooms for an unobstructed targeting view. Use the native report for firing, query and replay results. [P28 acceptance](../plans/28-c130-model.md#acceptance) · [P24 arrival and fire gating regression](#run-the-p24-aircraft-arrival-harness)
+
+## Verify the depot launcher model
+
+From a clean candidate checkout, run `python3 scripts/verify.py` to audit the launcher package, rebuild both places and check test isolation. Reopen the Blender master and reimport the portable GLB. The package guide gives the commands and the three attachment frames to compare against the native template. [Blender rebuild and audit](../assets/blender/rocket-launcher/README.md) · [P29 acceptance](../plans/29-rocket-launcher-model.md#acceptance)
+
+Sync `test.project.json` on port 34872 to the confirmed local **PlayersVsC130Tests** document. With Play stopped, run the following through Studio MCP in its Edit context.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(3, { kind = "P29", reviewSeconds = 0 })
+    workspace:SetAttribute("P29LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P29 multiplayer test started"
+```
+
+Read `workspace:GetAttribute("P29LastReport")` in Edit after the run. For manual **Server & Clients**, set the local Edit `ServerStorage.DevelopmentSettings` attributes `ManualHarness` to `P29` and `P29ReviewSeconds` to a number from 0 to 25. Start **three** clients and read `workspace:GetAttribute("P29Report")` in the Server context before ending the session. Restore both attributes to their previous values in Edit.
+
+Collect the `P29-depot-launcher` report and its server and three client smoke reports. Require all six cases, three actual clients and two completed rounds, with zero failures and skips. The cases exercise floor support at Radar, Hangar, Depot and Seedship, the held model seen by both Ground clients, firing, a handoff during cooldown, carrier death and teammate recovery. Replay checks one loaded launcher at each site and removal of prior held models and projectiles. Launch trace and damage assertions exercise the visual muzzle and server sweep separately. The `Launcher.spec.luau` smoke fixture also checks the presentation fallback when cover blocks the short cosmetic path.
+
+For the rendered review, use a positive `reviewSeconds` or `P29ReviewSeconds` up to 25. `Workspace.P29ReviewStage` identifies pauses at all four pickup sites and the equipped Radar launcher. Use both desktop and simulated landscape phone views. Inspect floor contact and any clipping against surrounding scenery at each pickup, and body clipping, grip and proportion while equipped. In an operated match, fire into clear space and watch the effect start at the modeled nose, then compare the held and dropped views on both Ground clients. Save the source and build identifiers, Studio version, actual client count, viewports and observations with the report. Restore device simulation and return the local test place to Edit.
 
 ## Run the P24 aircraft arrival harness
 

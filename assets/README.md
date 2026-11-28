@@ -42,6 +42,8 @@ The editable master contains the original geometry, gunmetal and slate materials
 
 ## Weapon presentation assets
 
+The depot launcher uses one Blender master and a native template assembled from Roblox Parts and WedgeParts. The server clones it for all four pickups and the equipped tool, using named attachments for the resting face, lower grip and visible launch effect. [Launcher master and rebuild](blender/rocket-launcher/README.md) · [Portable exports](exports/rocket-launcher/README.md)
+
 P19 pairs original emitter settings with the Roblox-bundled smoke, fire and spark textures. The positional mix reuses the existing Creator Store reports and bundled explosion with different timing, speed and equalization by weapon and surface. It falls back to that bundled sample when a source is unavailable. The [runtime recipe entries](manifest.json) record source paths, references and attribution. Preload uses temporary Sound and ParticleEmitter instances. Test actual loading, sound and visible rendering in Studio and check asset access in the intended experience before citing release evidence. [P19 acceptance procedure](../docs/testing.md#run-p19-weapon-impact-checks)
 
 ## Thermal presentation for buildings
