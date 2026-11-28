@@ -8,8 +8,16 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Harness = {}
 
--- Interact with the production editor from the local test client.
-local function editLobbyPreset(gui: Instance)
+-- Set the supplied exact-value fields in one category of the real production
+-- editor and apply the draft. The test client must be allowed to edit in its lobby.
+function Harness.editLobbyPreset(gui: Instance, category: number, values: { [string]: string })
+    local function waitFor(ready: () -> boolean, message: string)
+        local deadline = os.clock() + 5
+        while not ready() do
+            assert(os.clock() < deadline, message)
+            task.wait()
+        end
+    end
     local function click(name: string)
         local button = gui:FindFirstChild(name, true)
         assert(
@@ -18,14 +26,45 @@ local function editLobbyPreset(gui: Instance)
         )
         local position = button.AbsolutePosition + button.AbsoluteSize / 2 + GuiService:GetGuiInset()
         local input = assert(UserInputService:CreateVirtualInput(), "Studio VirtualInput unavailable")
+        input:SendMousePosition(position)
+        -- After a role transition Studio can still report the last locked
+        -- pointer for the first input event. Let the native cursor settle
+        -- at the visible button before pressing it.
+        local deadline = os.clock() + 2
+        local settledFrames = 0
+        repeat
+            RunService.RenderStepped:Wait()
+            local arrived = UserInputService.MouseBehavior == Enum.MouseBehavior.Default
+                and (UserInputService:GetMouseLocation() - position).Magnitude <= 2
+            settledFrames = if arrived then settledFrames + 1 else 0
+        until settledFrames == 2 or os.clock() >= deadline
+        assert(
+            settledFrames == 2,
+            string.format(
+                "%s virtual cursor did not settle (target %s, observed %s, mode %s)",
+                name,
+                tostring(position),
+                tostring(UserInputService:GetMouseLocation()),
+                tostring(UserInputService.MouseBehavior)
+            )
+        )
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, true)
         RunService.RenderStepped:Wait()
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, false)
         RunService.RenderStepped:Wait()
     end
+    local editor = gui:FindFirstChild("Editor")
+    assert(editor and editor:IsA("GuiObject"), "balance editor missing")
+    local scroll = editor:FindFirstChild("Settings")
+    assert(scroll and scroll:IsA("ScrollingFrame"), "balance settings missing")
+    local scale = editor:FindFirstChildWhichIsA("UIScale")
     local function edit(name: string, value: string)
-        local box = gui:FindFirstChild(name, true)
+        local box = scroll:FindFirstChild(name, true)
         assert(box and box:IsA("TextBox"), name .. " field missing")
+        local relativeY = box.AbsolutePosition.Y - scroll.AbsolutePosition.Y
+        local factor = if scale then scale.Scale else 1
+        scroll.CanvasPosition = Vector2.new(0, math.max(0, scroll.CanvasPosition.Y + relativeY / factor))
+        RunService.RenderStepped:Wait()
         box:CaptureFocus()
         box.Text = value
         box:ReleaseFocus(true)
@@ -34,15 +73,31 @@ local function editLobbyPreset(gui: Instance)
     click("OpenBalance")
     local apply = gui:FindFirstChild("ApplyPreset", true)
     assert(apply and apply:IsA("TextButton"), "apply button missing")
-    local deadline = os.clock() + 5
-    while not apply.Active do
-        assert(os.clock() < deadline, "editor did not load current preset")
-        task.wait()
+    waitFor(function()
+        return editor.Visible and apply.Active and scroll:FindFirstChildWhichIsA("GuiObject") ~= nil
+    end, "editor did not render current preset")
+    local function fieldsReady(): boolean
+        for name in values do
+            local box = scroll:FindFirstChild(name, true)
+            if not box or not box:IsA("TextBox") then
+                return false
+            end
+        end
+        return true
     end
-    click("ChooseCategory")
-    click("Category4")
-    edit("minimumPlayers", "2")
-    edit("roundDuration", "35")
+    if not fieldsReady() then
+        local menu = editor:FindFirstChild("CategoryMenu")
+        assert(menu and menu:IsA("GuiObject"), "balance category menu missing")
+        click("ChooseCategory")
+        waitFor(function()
+            return menu.Visible
+        end, "balance category menu did not open")
+        click("Category" .. category)
+        waitFor(fieldsReady, "requested balance settings did not render")
+    end
+    for name, value in values do
+        edit(name, value)
+    end
     assert(apply.Text == "Save & apply", "edited preset cannot be applied directly")
     click("ApplyPreset")
 end
@@ -87,7 +142,7 @@ function Harness.run()
         end
         if kind == "EditLobbyPreset" then
             local gui = assert(player.PlayerGui:FindFirstChild("BalancePanel"), "balance panel missing")
-            editLobbyPreset(gui)
+            Harness.editLobbyPreset(gui, 4, { minimumPlayers = "2", roundDuration = "35" })
             return true
         end
         if kind == "RemoveBalanceGui" then

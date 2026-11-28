@@ -18,7 +18,9 @@ The stone bust faces you as you arrive. Turn left for the theater and its televi
 - **C-130 operator.** Scan for bright white Ground silhouettes against dark grayscale terrain and scenery in the thermal view. The aircraft body is hidden from its operator’s targeting view while remaining visible to Ground players. The 30mm GAU-23/A Chain Gun gives a tighter view. The 105mm M102 Howitzer gives a wider view and blast, then automatically reloads **12 seconds** after firing. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. WASD or touch arrows pan across the level’s 720 × 720-stud square. The square edges stop movement on that axis while allowing movement along the edge and immediate reversal. Releasing the controls holds the target point on the map as the plane continues its orbit.
 - **After elimination.** Ground death or character reset consumes your round life during the head start or combat and sends you back to the lobby. Players joining or reconnecting mid-round also start in the lobby. Once the aircraft arrives, walk up to the theater TV and choose **Spectate** to follow a living Ground player. The still image stays on the TV. Choose **Exit spectating** to take control of your avatar at the TV. An operator who resets during the head start or combat gets a new protected station body and keeps the role and aircraft health.
 
-In the local P29 candidate, look for the sand-and-graphite launcher with its teal stripe and raised handle. You see the same model in your avatar’s hand and resting on its side after a drop. [Depot launcher preview](assets/exports/rocket-launcher/three-quarter.png)
+Look for the sand-and-graphite launchers with a teal stripe and raised handle. You see the same model in your avatar’s hand and resting on its side after a drop. [Depot launcher preview](assets/exports/rocket-launcher/three-quarter.png)
+
+The local medkit candidate adds an orange rescue case in or near each landmark. When injured, approach a case with a clear view and use its prompt. A kit restores up to **25 HP** with the default preset and shows the amount beside your health. Each case serves one teammate per round and comes back at the next deployment. Full-health players leave it available. [Medkit plan](plans/30-single-use-medkits.md)
 
 The ground team wins when it destroys the plane. The C-130 wins by eliminating every ground player or surviving until time runs out. A lethal impact must land before the deadline. The ground team wins if the plane is destroyed and the last ground player is eliminated in the same pre-deadline step. A rocket already in flight can still hit after its shooter dies while the round remains active.
 
@@ -39,6 +41,7 @@ Mouse movement turns your view and your avatar follows the horizontal aim while 
 | Fire | Hold left mouse with a weapon equipped | Hold **FIRE** with a weapon equipped |
 | Reload | **R** for the M-7 | **RELOAD** for the M-7 |
 | Pick up or drop a launcher | **E** within reach, **G** while carrying | **PICK UP** within reach, **DROP** while carrying |
+| Use a medkit in the local candidate | **F** at the case | Tap **Use** on the medkit prompt |
 | Free the cursor | Hold **Left Alt** to use buttons | — |
 
 ### C-130 operator
@@ -71,7 +74,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-The integrated game on `main` includes the painted C-130, balance editor, Ground mouse look, raised crosshair and compact touch HUD. The depot launcher model is available for local Studio testing on `plan/29-rocket-launcher-model`. Its desktop and phone review and three-client checks are pending. Controller support and medkit pickups are planned. [Depot launcher plan](plans/29-rocket-launcher-model.md) · [Roadmap](roadmap.md)
+The integrated game on `main` includes the painted C-130, depot launcher model, balance editor, Ground mouse look, raised crosshair and compact touch HUD. The launcher model's three-client acceptance and phone review remain open. Use `plan/30-single-use-medkits` to try the medkits in local Studio. Controller support is planned. [Depot launcher plan](plans/29-rocket-launcher-model.md) · [Medkit plan](plans/30-single-use-medkits.md) · [Roadmap](roadmap.md)
 
 The lobby **Balance** panel lets the experience owner and trusted testers adjust health, damage, weapon timing, panel durability, round length, intermission and minimum players. Ordinary local Studio Play uses the defaults in this guide. The owner confirmed balance changes took effect across rounds in the private two-player Roblox playtest. Public release checks are pending. [Owner guide](docs/balance.md) · [Panel verification](plans/26-live-balance-panel.md#completion-record) · [Future release checklist](docs/release.md)
 
@@ -79,7 +82,7 @@ The lobby **Balance** panel lets the experience owner and trusted testers adjust
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Clone `main` for the integrated build. To test the depot launcher model, use `--branch plan/29-rocket-launcher-model` in the clone command and run the same setup steps.
+Clone `main` for the integrated build. To try the medkit candidate, use `--branch plan/30-single-use-medkits` in the clone command and run the same setup steps.
 
 ```sh
 git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
@@ -90,7 +93,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch plan/29-rocket-launcher-model` for the depot launcher candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
+On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch plan/30-single-use-medkits` for the medkit candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
@@ -152,7 +155,7 @@ To try the live settings controls locally, stop Play in the test document and en
 
 Use two Studio clients to verify the C-130's reveal, full orbit, four propellers, gunship views, hit surfaces and appearance on replay. To check Ground mouse look, indoor zoom, both touch roles and the arrival HUD, run an operated match and its replays. [Aircraft model checks](docs/testing.md#verify-the-c-130-flight-model) · [Ground and touch controls](docs/testing.md#verify-p27-aim-and-mobile-hud)
 
-On the depot launcher candidate, use three Studio clients to verify pickup, firing, handoff, recovery and reset. Inspect the model at each site and while equipped from desktop and phone views. [Depot launcher checks](docs/testing.md#verify-the-depot-launcher-model)
+Use three Studio clients to verify launcher pickup, firing, handoff, recovery and reset. Inspect the model at each site and while equipped from desktop and phone views. On the medkit candidate, use three clients to check the five case approaches, shared consumption, phone input and next-round tuning. [Depot launcher checks](docs/testing.md#verify-the-depot-launcher-model) · [Medkit checks](docs/testing.md#verify-single-use-medkits)
 
 Use the three-client weapon balance procedure to test howitzer switching, launcher handover and shared damage, rifle reload feedback and equipment reset. Run the two-client gunship and aircraft-arrival regressions for impact behavior and pre-arrival fire gating. Stop Play and confirm source reached the same document before collecting fresh evidence. [Weapon balance checks](docs/testing.md#verify-p25-weapon-balance) · [Gunship checks](docs/testing.md#run-the-p05-gunship-combat-harness) · [Aircraft arrival checks](docs/testing.md#run-the-p24-aircraft-arrival-harness)
 
@@ -167,6 +170,8 @@ Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.b
 Open the painted C-130 in **Blender 5.3.0** to inspect the UV-mapped skin, swept wings and saved camera below the right side of the nose. The review render uses translucent propeller sweeps. [Editable painted C-130](assets/blender/c130/c130-painted.blend) · [Aircraft asset guide](assets/blender/c130/README.md)
 
 Open the depot launcher master in **Blender 5.3.0** to inspect the grip, ground contact and muzzle marker used by both presentations. [Editable depot launcher](assets/blender/rocket-launcher/rocket-launcher.blend) · [Launcher asset guide](assets/blender/rocket-launcher/README.md)
+
+Open the field medkit master in **Blender 5.3.0** to inspect its modeled cross, latches and hinge plates. The case uses a floor-center pivot so the server can seat the same model at all five landmarks. [Editable field medkit](assets/blender/medkit/medkit.blend) · [Medkit rebuild and review views](assets/blender/medkit/README.md)
 
 ## Follow development or contribute
 

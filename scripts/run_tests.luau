@@ -51,6 +51,7 @@ do
                         AircraftHealth = true,
                         GroundCombatService = true,
                         LauncherService = true,
+                        MedkitService = true,
                         GroundMovementGuard = true,
                     }
                     local area = if serverModules[moduleName] then "server" else "shared"

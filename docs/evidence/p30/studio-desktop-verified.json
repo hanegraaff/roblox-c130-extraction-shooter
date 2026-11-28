@@ -1,0 +1,303 @@
+{
+  "sourceCommit": "cbe28d471759f4821b98a8f690a3e0d5747f33fa",
+  "sourceTree": "08ab48cd3128b41179e7a051a47bb5b46a488c0d",
+  "studioVersion": "0.748.0.7481526",
+  "environment": "macOS 27.2.1 arm64",
+  "testDocument": "e887917e-35ae-4c5d-bfe9-59033309aab0",
+  "liveServerContext": "8d1a1861-782c-46b2-a56f-0d950d3ac7e3",
+  "reportAttribute": "P30De88DesktopResult",
+  "operation": "Independent read-only verification of the running desktop test. The original Edit document returned the report after native teardown.",
+  "binding": {
+    "sourceFiles": {
+      "ServerScriptService.Server.GameRuntime": [
+        10858,
+        1551689208,
+        "c58c75671df1fc4530f76f8f3e533dc96a7b8641967bab25cce57361de412043",
+        "src/server/GameRuntime.luau"
+      ],
+      "ServerScriptService.Server.MedkitRuntime": [
+        11880,
+        1437548125,
+        "e50117ced53855a41b08ec950373ad2082323fe6df50188a24b56aab152cd334",
+        "src/server/MedkitRuntime.luau"
+      ],
+      "ServerScriptService.Server.MedkitService": [
+        3245,
+        1802466970,
+        "3858ff1876c628038d308b64af3bdd225aca08135d76d8e66935658ee326c81e",
+        "src/server/MedkitService.luau"
+      ],
+      "StarterPlayer.StarterPlayerScripts.Client.GroundCombatController": [
+        33830,
+        1102721419,
+        "9d8d713b02ea81cbcc40630499f5eee13ebc93619adfd81e6df0135238017046",
+        "src/client/GroundCombatController.luau"
+      ],
+      "StarterPlayer.StarterPlayerScripts.Client.BalancePanel": [
+        31019,
+        2216111930,
+        "a255c7a1a88f6c94a79a5fe46f61b6996de6be2fac75a450ba16aacbb7c7c264",
+        "src/client/BalancePanel.luau"
+      ],
+      "StarterPlayer.StarterPlayerScripts.ClientTests": [
+        3593,
+        1383116326,
+        "477355c3bc3c6e2bf046a9860d78ecd6dae0967f6f07c43599c42b8b890d6e7c",
+        "tests/studio/client/init.client.luau"
+      ],
+      "StarterPlayer.StarterPlayerScripts.ClientTests.MedkitHarness": [
+        11258,
+        1035923860,
+        "b3eec1569cb90f2728fcdea3716938df30e96081120aff780f20bfd216b5402f",
+        "tests/studio/client/MedkitHarness.luau"
+      ],
+      "StarterPlayer.StarterPlayerScripts.ClientTests.BalanceHarness": [
+        8907,
+        880807273,
+        "37837a5a87657c84ac9c0cb8dba1b5621c40010762519d1db2f2d3cee77e5998",
+        "tests/studio/client/BalanceHarness.luau"
+      ],
+      "ServerScriptService.ServerTests": [
+        4872,
+        2594113815,
+        "5f2e8e840fcf2d8b7acb0a16ae6249f56590988f5d4926e8869eac4bdf6d768b",
+        "tests/studio/server/init.server.luau"
+      ],
+      "ServerScriptService.ServerTests.MedkitHarness": [
+        24689,
+        3137927966,
+        "8b498b16337aa6c6c99d3e5141e54b9a9a2601e5170e4df5839a989477c9a148",
+        "tests/studio/server/MedkitHarness.luau"
+      ],
+      "ServerScriptService.ServerTests.RoundHarness": [
+        39482,
+        4013731080,
+        "3f1256cdabb42dfe02e759e9f0806036fd6bd179c3b7146026998cfe1f2d0dc9",
+        "tests/studio/server/RoundHarness.luau"
+      ],
+      "ServerScriptService.ServerTests.P17Metadata": [
+        62605,
+        2495027991,
+        "15201625f908fc9a58c477b6f91c9c901b0dc329f14047d5e73599c0bb8cf44b",
+        "tests/studio/server/P17Metadata.luau"
+      ]
+    },
+    "liveFingerprintMismatches": [],
+    "observedArgs": {
+      "touchReview": false,
+      "kind": "P30"
+    },
+    "livePlayers": 3,
+    "observedAt": "Three actual clients passed smoke and loaded five supported kits"
+  },
+  "report": {
+    "cases": [
+      {
+        "passed": true,
+        "name": "Three actual clients passed smoke and loaded five supported kits"
+      },
+      {
+        "passed": true,
+        "name": "A1 Full health and inaccessible attempts preserve the bunker kit"
+      },
+      {
+        "passed": true,
+        "name": "A1–A2 Nearby damage preserves the bunker kit and two contenders earn one heal"
+      },
+      {
+        "passed": true,
+        "name": "A2 Ground walks to the hangar, radar and depot to use the other cases"
+      },
+      {
+        "passed": true,
+        "name": "A2–A3 An eliminated owner edits healing and the surviving teammate gets the original Seedship amount"
+      },
+      {
+        "passed": true,
+        "name": "A2–A3 Next round recreates all five kits and uses the revised amount once"
+      }
+    ],
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        }
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 219,
+        "clientCount": 3,
+        "seed": 1,
+        "discovered": 219,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    "passed": 6,
+    "completedRounds": [
+      1,
+      2
+    ],
+    "actualClients": 3,
+    "observations": [
+      {
+        "site": "MedkitSandbreak",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitHangar",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitRadar",
+        "floorGap": 0.01799994707107544,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitDepot",
+        "floorGap": 0.01800006628036499,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitSeedship",
+        "floorGap": 0.01799982786178589,
+        "roundId": 1
+      },
+      {
+        "serverRangeStuds": 6.7656354904174805,
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "serverRangeStuds": 6.935505390167236,
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "serverRangeStuds": 6.992437839508057,
+        "site": "MedkitSandbreak",
+        "userId": -1,
+        "walkedStuds": 5.587562084197998
+      },
+      {
+        "feedback": "YOUR HEALTH  60 / 100  +25 HP",
+        "touch": false,
+        "healed": 25,
+        "userId": -3,
+        "site": "MedkitSandbreak"
+      },
+      {
+        "serverRangeStuds": 6.799511909484863,
+        "site": "MedkitHangar",
+        "userId": -1,
+        "walkedStuds": 5.804485321044922
+      },
+      {
+        "feedback": "YOUR HEALTH  100 / 100  +8 HP",
+        "touch": false,
+        "healed": 8,
+        "userId": -1,
+        "site": "MedkitHangar"
+      },
+      {
+        "serverRangeStuds": 6.756270885467529,
+        "site": "MedkitRadar",
+        "userId": -1,
+        "walkedStuds": 5.804326057434082
+      },
+      {
+        "feedback": "YOUR HEALTH  47 / 100  +25 HP",
+        "touch": false,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitRadar"
+      },
+      {
+        "serverRangeStuds": 6.93657922744751,
+        "site": "MedkitDepot",
+        "userId": -1,
+        "walkedStuds": 5.572749137878418
+      },
+      {
+        "feedback": "YOUR HEALTH  22 / 100  +25 HP",
+        "touch": false,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitDepot"
+      },
+      {
+        "serverRangeStuds": 6.858013153076172,
+        "site": "MedkitSeedship",
+        "userId": -1,
+        "walkedStuds": 5.804430961608887
+      },
+      {
+        "feedback": "YOUR HEALTH  22 / 100  +25 HP",
+        "touch": false,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitSeedship"
+      },
+      {
+        "serverRangeStuds": 6.828557014465332,
+        "site": "MedkitSandbreak",
+        "userId": -1,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "feedback": "YOUR HEALTH  65 / 100  +43 HP",
+        "touch": false,
+        "healed": 43,
+        "userId": -1,
+        "site": "MedkitSandbreak"
+      }
+    ],
+    "clientIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "environment": "Studio",
+    "touchReview": false,
+    "suite": "P30-medkits",
+    "failed": 0,
+    "discovered": 6
+  }
+}

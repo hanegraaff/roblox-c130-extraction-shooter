@@ -26,6 +26,7 @@ if game:GetService("RunService"):IsStudio() then
         or manualMode == "P24"
         or manualMode == "P28"
         or manualMode == "P29"
+        or manualMode == "P30"
         or manualMode == "P26"
         or manualMode == "P26Panel"
     then
@@ -43,6 +44,7 @@ if game:GetService("RunService"):IsStudio() then
                 or args.kind == "P24"
                 or args.kind == "P28"
                 or args.kind == "P29"
+                or args.kind == "P30"
                 or args.kind == "P26"
             )
         then

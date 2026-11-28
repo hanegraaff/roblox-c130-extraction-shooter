@@ -99,6 +99,14 @@ function RoundHarness.run()
         )
         return
     end
+    if kind == "P30" then
+        local touchReview = if type(args) == "table"
+            then args.touchReview
+            elseif settings then settings:GetAttribute("P30TouchReview")
+            else nil
+        require(script.Parent.MedkitHarness).run(type(args) == "table", touchReview == true)
+        return
+    end
     if kind == "P24" or kind == "P28" then
         require(script.Parent.AircraftArrivalHarness).run(type(args) == "table", kind == "P28")
         return

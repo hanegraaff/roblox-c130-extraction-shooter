@@ -1,0 +1,141 @@
+{
+  "sourceCommit": "0292595fcd040c94941e665e49ae032a3ad6c908",
+  "studioVersion": "0.748.0.7481526",
+  "report": {
+    "cases": [
+      {
+        "passed": true,
+        "name": "Three actual clients passed smoke and loaded five supported kits"
+      },
+      {
+        "passed": true,
+        "name": "A1 Full health and inaccessible attempts preserve the bunker kit"
+      },
+      {
+        "passed": true,
+        "name": "A1–A2 Nearby damage preserves the bunker kit and two contenders earn one heal"
+      },
+      {
+        "name": "A2 Ground walks to the hangar, radar and depot to use the other cases",
+        "passed": false,
+        "failure": "ServerScriptService.ServerTests.MedkitHarness:44: P30 server did not observe native prompt consumed MedkitHangar"
+      }
+    ],
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        }
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 219,
+        "clientCount": 3,
+        "seed": 1,
+        "discovered": 219,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    "passed": 3,
+    "completedRounds": [],
+    "actualClients": 3,
+    "observations": [
+      {
+        "site": "MedkitSandbreak",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitHangar",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitRadar",
+        "floorGap": 0.01799994707107544,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitDepot",
+        "floorGap": 0.01800006628036499,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitSeedship",
+        "floorGap": 0.01799982786178589,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.8157525062561035
+      },
+      {
+        "site": "MedkitSandbreak",
+        "userId": -1,
+        "walkedStuds": 5.587562084197998
+      },
+      {
+        "feedback": "YOUR HEALTH  60 / 100  +25 HP",
+        "touch": false,
+        "healed": 25,
+        "userId": -3,
+        "site": "MedkitSandbreak"
+      },
+      {
+        "site": "MedkitHangar",
+        "userId": -1,
+        "walkedStuds": 5.804468154907227
+      }
+    ],
+    "clientIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "environment": "Studio",
+    "touchReview": false,
+    "suite": "P30-medkits",
+    "failed": 1,
+    "discovered": 4
+  }
+}

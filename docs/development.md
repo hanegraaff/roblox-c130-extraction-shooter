@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `main` for integrated play or `plan/29-rocket-launcher-model` for the local depot launcher candidate. Ordinary Studio sessions use offline balance defaults. Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. [Local setup](../README.md#set-up-locally) · [Balance owner guide](balance.md) · [P29 verification](testing.md#verify-the-depot-launcher-model)
+Use `main` for integrated play or `plan/30-single-use-medkits` for the local medkit candidate. Ordinary Studio sessions use offline balance defaults. Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. [Local setup](../README.md#set-up-locally) · [Balance owner guide](balance.md) · [Medkit verification](testing.md#verify-single-use-medkits)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 

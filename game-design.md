@@ -26,7 +26,9 @@ Ground players aim by moving the mouse. A reticle sits horizontally centered abo
 
 Use a separate editable Blender master for the C-130, rocket launcher and medkit. The flying C-130 keeps the charcoal high wing, four spinning propellers, slate military markings, crimson shark face and lower starboard howitzer. Ground shots hit the visible solid airframe. The operator's thermal view hides the aircraft model at both zooms. [Aircraft asset guide](assets/blender/c130/README.md) · [MVP plans](roadmap.md#mvp-completion)
 
-Put a kit in or near each of the five battlefield buildings. It heals up to maximum health and is spent for the round by default. The panel controls healing and reuse. The operator should see the starting bunker as dark cover matching the other buildings.
+The P30 candidate places a field medkit on stable ground in or near each battlefield building. A living Ground player can use the nearby prompt during Scatter or combat if the server confirms a clear line of sight. With the default preset, the kit restores up to 25 HP, capped at the player's maximum health. Full health leaves the case available. Each site provides one use per round for the whole Ground team. The panel controls the healing amount for the next deployment, and older presets keep the same single-use rule. All five cases return on the next deployment. [Medkit plan](plans/30-single-use-medkits.md) · [Single-use decision D112](docs/decisions.md)
+
+The operator should see the starting bunker as dark cover matching the other buildings.
 
 ## Roles and population
 
@@ -144,7 +146,7 @@ Scatter gives Ground 20 seconds to move and transfer launchers once deployment i
 | Deployment loses a valid roster | Cancel deployment and return to lobby |
 | Invalid map or unrecoverable setup error | Abort with a reason and no competitive winner, then reset |
 
-Each server step samples server time. During Scatter it resolves life and departure outcomes before checking whether to start combat. Fire requests during Scatter are discarded. At or after the combat deadline the C-130 wins by timeout and the damage batch is skipped. Before that deadline, accepted gunship impacts, M-7 rays and rocket sweeps use the cover present at the start of the batch. The server applies structural changes, evaluates aircraft destruction before total ground elimination, then considers departures. Pickup, drop and recovery proceed if play continues. A rocket already in flight can finish after its shooter dies while combat continues.
+Each server step samples server time. During Scatter it resolves life and departure outcomes before checking whether to start combat. Fire requests during Scatter are discarded. At or after the combat deadline the C-130 wins by timeout and the damage batch is skipped. Before that deadline, accepted gunship impacts, M-7 rays and rocket sweeps use the cover present at the start of the batch. The server applies structural changes, evaluates aircraft destruction before total ground elimination, then considers departures. Launcher interactions and medkit use proceed for eligible players if play continues. A rocket already in flight can finish after its shooter dies while combat continues.
 
 The server commits one result for the round. Aircraft destruction records the lethal shot's shooter, weapon and shot ID. C-130 wins credit the assigned operator. Departure and abort reasons remain distinct from aircraft destruction. Results freezes aircraft health and any orbit already in progress, cancels outstanding damage work and clears active equipment. Reset restores pristine cover, weapon readiness, launcher state and the lobby camera before the next deployment.
 

@@ -10,7 +10,7 @@
       "Server": {"$path": "src/server"}
     },
     "ServerStorage": {
-      "Assets": {"$path": "assets/models"}
+      "Assets": {"$path": "assets/models", "FieldMedkit": {"$path": "assets/exports/medkit/field-medkit.rbxmx"}}
     },
     "StarterPlayer": {
       "StarterPlayerScripts": {
@@ -22,6 +22,7 @@
       "$properties": {"StreamingEnabled": false},
       "World": {"$className": "Folder", "Battlefield": {
         "$path": "assets/world/Battlefield.model.json",
+        "MedkitAnchors": {"$path": "assets/world/MedkitAnchors.model.json"},
         "DistrictScenery": {"$path": "assets/imports/districts/DistrictScenery.rbxm"},
         "MarsBoulders": {"$path": "assets/imports/districts/MarsBoulders.rbxm"},
         "LobbyStation": {

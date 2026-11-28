@@ -1,0 +1,156 @@
+{
+  "Name": "MedkitAnchors",
+  "ClassName": "Folder",
+  "Children": [
+    {
+      "Name": "MedkitSandbreak",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Transparency": 1,
+        "Size": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "CFrame": [
+          11,
+          3.5,
+          141,
+          1.0,
+          0,
+          0.0,
+          0,
+          1,
+          0,
+          -0.0,
+          0,
+          1.0
+        ]
+      }
+    },
+    {
+      "Name": "MedkitHangar",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Transparency": 1,
+        "Size": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "CFrame": [
+          -119.61,
+          3.5,
+          -138.29,
+          0.5,
+          0,
+          0.8660254,
+          0,
+          1,
+          0,
+          -0.8660254,
+          0,
+          0.5
+        ]
+      }
+    },
+    {
+      "Name": "MedkitRadar",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Transparency": 1,
+        "Size": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "CFrame": [
+          146,
+          3.5,
+          -63,
+          0.0,
+          0,
+          -1.0,
+          0,
+          1,
+          0,
+          1.0,
+          0,
+          0.0
+        ]
+      }
+    },
+    {
+      "Name": "MedkitDepot",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Transparency": 1,
+        "Size": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "CFrame": [
+          157,
+          3.5,
+          181,
+          0.0,
+          0,
+          1.0,
+          0,
+          1,
+          0,
+          -1.0,
+          0,
+          0.0
+        ]
+      }
+    },
+    {
+      "Name": "MedkitSeedship",
+      "ClassName": "Part",
+      "Properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "CanTouch": false,
+        "Transparency": 1,
+        "Size": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "CFrame": [
+          8,
+          6,
+          230,
+          0.0,
+          0,
+          1.0,
+          0,
+          1,
+          0,
+          -1.0,
+          0,
+          0.0
+        ]
+      }
+    }
+  ]
+}

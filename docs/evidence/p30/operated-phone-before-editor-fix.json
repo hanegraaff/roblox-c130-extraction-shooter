@@ -1,0 +1,260 @@
+{
+  "sourceCommit": "55da6edd1a9b96134b09e553217ff671d552c52d",
+  "sourceTree": "b0956d920d771a85c2262e7c9136dcb82dba056c",
+  "studioVersion": "0.748.0.7481526",
+  "studio": {
+    "scripts": {
+      "ServerScriptService.ServerTests": {
+        "digest": 2594113815,
+        "length": 4872
+      },
+      "StarterPlayer.StarterPlayerScripts.Client.GroundCombatController": {
+        "digest": 1102721419,
+        "length": 33830
+      },
+      "StarterPlayer.StarterPlayerScripts.ClientTests.BalanceHarness": {
+        "digest": 1390480288,
+        "length": 7867
+      },
+      "StarterPlayer.StarterPlayerScripts.ClientTests.MedkitHarness": {
+        "digest": 665523561,
+        "length": 10529
+      },
+      "ServerScriptService.Server.GameRuntime": {
+        "digest": 1551689208,
+        "length": 10858
+      },
+      "ServerScriptService.Server.MedkitRuntime": {
+        "digest": 1437548125,
+        "length": 11880
+      },
+      "ServerScriptService.ServerTests.MedkitHarness": {
+        "digest": 3137927966,
+        "length": 24689
+      },
+      "ServerScriptService.Server.MedkitService": {
+        "digest": 1802466970,
+        "length": 3245
+      },
+      "ServerScriptService.ServerTests.P17Metadata": {
+        "digest": 2208815736,
+        "length": 62605
+      },
+      "StarterPlayer.StarterPlayerScripts.ClientTests": {
+        "digest": 1383116326,
+        "length": 3593
+      },
+      "StarterPlayer.StarterPlayerScripts.Client.BalancePanel": {
+        "digest": 2216111930,
+        "length": 31019
+      },
+      "ServerScriptService.ServerTests.RoundHarness": {
+        "digest": 4013731080,
+        "length": 39482
+      }
+    },
+    "name": "tests.rbxlx",
+    "artParts": 120,
+    "worldAnchors": 5,
+    "placeId": 0,
+    "version": "0.748.0.7481526"
+  },
+  "operatedTap": {
+    "removed": true,
+    "touch": true,
+    "method": "VirtualInput mouse converted by Studio device to Touch",
+    "device": "874, 402",
+    "hp": 69.19819641113281,
+    "at": "497.747742, 305.956818",
+    "events": [
+      {
+        "nativeTriggered": true
+      },
+      {
+        "kind": "Enum.UserInputType.Touch",
+        "processed": true,
+        "position": "435, 227, 0"
+      }
+    ],
+    "amount": 25,
+    "viewport": "750, 381"
+  },
+  "report": {
+    "cases": [
+      {
+        "passed": true,
+        "name": "Three actual clients passed smoke and loaded five supported kits"
+      },
+      {
+        "passed": true,
+        "name": "A1 Full health and inaccessible attempts preserve the bunker kit"
+      },
+      {
+        "passed": true,
+        "name": "A1–A2 Nearby damage preserves the bunker kit and two contenders earn one heal"
+      },
+      {
+        "passed": true,
+        "name": "A2 Ground walks to the hangar, radar and depot to use the other cases"
+      },
+      {
+        "name": "A2–A3 An eliminated owner edits healing and the surviving teammate gets the original Seedship amount",
+        "passed": false,
+        "failure": "ServerScriptService.ServerTests.MedkitHarness:113: Players.Player3.PlayerScripts.ClientTests.BalanceHarness:17: editor did not render current preset"
+      }
+    ],
+    "skipped": 0,
+    "smoke": {
+      "clients": {
+        "-3": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -3,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-2": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -2,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        },
+        "-1": {
+          "errors": 0,
+          "skipped": 0,
+          "userId": -1,
+          "discovered": 23,
+          "seed": 1,
+          "environment": "Studio",
+          "suite": "P01-client",
+          "failed": 0,
+          "passed": 23
+        }
+      },
+      "server": {
+        "errors": 0,
+        "skipped": 0,
+        "passed": 219,
+        "clientCount": 3,
+        "seed": 1,
+        "discovered": 219,
+        "suite": "P01-server",
+        "failed": 0,
+        "environment": "Studio"
+      }
+    },
+    "passed": 4,
+    "completedRounds": [],
+    "actualClients": 3,
+    "observations": [
+      {
+        "site": "MedkitSandbreak",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitHangar",
+        "floorGap": 0.018000006675720215,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitRadar",
+        "floorGap": 0.01799994707107544,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitDepot",
+        "floorGap": 0.01800006628036499,
+        "roundId": 1
+      },
+      {
+        "site": "MedkitSeedship",
+        "floorGap": 0.01799982786178589,
+        "roundId": 1
+      },
+      {
+        "serverRangeStuds": 6.903031349182129,
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.587562084197998
+      },
+      {
+        "serverRangeStuds": 6.948541164398193,
+        "site": "MedkitSandbreak",
+        "userId": -3,
+        "walkedStuds": 5.587562084197998
+      },
+      {
+        "serverRangeStuds": 6.775442600250244,
+        "site": "MedkitSandbreak",
+        "userId": -1,
+        "walkedStuds": 5.587562084197998
+      },
+      {
+        "feedback": "HP 60/100  +25 HP",
+        "touch": true,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitSandbreak"
+      },
+      {
+        "serverRangeStuds": 6.82669734954834,
+        "site": "MedkitHangar",
+        "userId": -1,
+        "walkedStuds": 5.804470062255859
+      },
+      {
+        "feedback": "HP 70/100  +25 HP",
+        "touch": true,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitHangar"
+      },
+      {
+        "serverRangeStuds": 6.8632612228393555,
+        "site": "MedkitRadar",
+        "userId": -1,
+        "walkedStuds": 5.804326057434082
+      },
+      {
+        "feedback": "HP 100/100  +8 HP",
+        "touch": true,
+        "healed": 8,
+        "userId": -1,
+        "site": "MedkitRadar"
+      },
+      {
+        "serverRangeStuds": 6.8033576011657715,
+        "site": "MedkitDepot",
+        "userId": -1,
+        "walkedStuds": 5.572749137878418
+      },
+      {
+        "feedback": "HP 47/100  +25 HP",
+        "touch": true,
+        "healed": 25,
+        "userId": -1,
+        "site": "MedkitDepot"
+      }
+    ],
+    "clientIds": [
+      -1,
+      -2,
+      -3
+    ],
+    "environment": "Studio",
+    "touchReview": true,
+    "suite": "P30-medkits",
+    "failed": 1,
+    "discovered": 5
+  }
+}

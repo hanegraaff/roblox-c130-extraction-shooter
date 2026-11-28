@@ -23,12 +23,16 @@ The experience owner controls the tester list. For a group-owned experience, sig
 1. Check **Live in game** at the top. This names the settings currently selected for the game.
 2. In **Saved presets**, open **Load Settings** and choose a saved preset. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
 3. Select **Save & apply** to save your edits and use them in the next round. Keep the custom preset's name to update it, or enter a new name to save a copy. Edits to **Default** require a custom name.
-4. Use **Save preset** to keep a draft for later. To use an existing saved preset, load it and select **Apply preset**. Check **Live in game** to see the selected preset. Medkit healing is reserved for the planned pickup feature.
+4. Use **Save preset** to keep a draft for later. To use an existing saved preset, load it and select **Apply preset**. Check **Live in game** to see the selected preset.
 5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name field clears. Enter a name to save another copy, or close. **Default** remains available as the built-in starting point.
 
 To return to the original settings, load **Default** and select **Apply preset**. The **Balance** button is available again when you return to the lobby after a round.
 
 If another tester edits while your panel is open, select **Refresh**, review their values and re-enter your change. If a save cannot be confirmed, refresh before trying again. Servers keep their last confirmed settings when storage is unavailable. A new server can start with the shipped defaults.
+
+## Set medkit healing
+
+In a build with battlefield medkits, open **Balance → Settings → Player** and set **Medkit healing**, then select **Save & apply**. The round already under way keeps its original value. The next deployment captures the new maximum heal per case. For example, a 25 HP kit restores 8 HP to a teammate at 92 of 100 HP. Each site provides one use for the whole Ground team per round, including when an earlier preset contains a respawn interval. A full-health player leaves the case available. [Medkit plan](../plans/30-single-use-medkits.md)
 
 ## What you can tune
 
@@ -40,7 +44,7 @@ If another tester edits while your panel is open, select **Refresh**, review the
 | Ground player health | 100 starting and maximum HP. |
 | Ground weapon damage | Each M-7 hit deals 5 HP to the aircraft. A direct rocket deals 150 HP. |
 | Ground weapon timing | M-7 shots are 0.15 seconds apart with a 2-second magazine reload. Each launcher has its own 15-second reload. |
-| Medkit healing | 25 HP per kit. Each kit can be used once per round. The pickup arrives with P30. |
+| Medkit healing | Up to 25 HP per kit, capped at the player's missing health. |
 | Building panel damage | Medium. A panel breaks after 2 howitzer hits or 4 seconds of 30mm hits on Low, 1 hit or 2 seconds on Medium, and 1 hit or 1 second on High. |
 | Combat duration | 600 seconds, starting when the aircraft arrives. |
 | Lobby intermission | 120 seconds, starting when the result is announced. |
@@ -56,6 +60,7 @@ If another tester edits while your panel is open, select **Refresh**, review the
 | Time between rifle shots | 0.15–1 second |
 | Rifle reload | 0.15–10 seconds |
 | Rocket damage per hit | 1–5,000 HP |
+| Medkit healing | 1–1,000 HP in whole points |
 | Wait between rounds | 1–300 seconds |
 | Howitzer reload | 0–30 seconds |
 | 30mm reload | 0–30 seconds |

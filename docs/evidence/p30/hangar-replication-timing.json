@@ -1,0 +1,62 @@
+{
+  "sourceCommit": "0292595fcd040c94941e665e49ae032a3ad6c908",
+  "serverReachStuds": 8,
+  "diagnostic": "Temporary Server MCP observation, no managed source changes",
+  "records": [
+    {
+      "ray": false,
+      "health": 35,
+      "reverse": false,
+      "allowed": true,
+      "range": 11.70854663848877,
+      "pos": "-129.5692901611328, 3.243025302886963, -144.0399932861328",
+      "timestamp": "2026-11-28T14:17:57.028Z",
+      "kind": "server sample"
+    },
+    {
+      "ray": false,
+      "health": 35,
+      "reverse": false,
+      "allowed": true,
+      "range": 11.360875129699707,
+      "pos": "-129.28443908691406, 3.1086952686309814, -143.87637329101562",
+      "timestamp": "2026-11-28T14:17:57.244Z",
+      "kind": "server sample"
+    },
+    {
+      "timestamp": "2026-11-28T14:17:57.410Z",
+      "kind": "native Triggered",
+      "player": "Player1"
+    },
+    {
+      "ray": false,
+      "health": 92,
+      "reverse": false,
+      "allowed": true,
+      "range": 8.04328727722168,
+      "pos": "-126.3389892578125, 3.1211414337158203, -142.1754150390625",
+      "timestamp": "2026-11-28T14:17:57.461Z",
+      "kind": "server sample"
+    },
+    {
+      "ray": false,
+      "health": 92,
+      "reverse": false,
+      "allowed": true,
+      "range": 5.9095611572265625,
+      "pos": "-124.40116119384766, 3.1211414337158203, -141.05567932128906",
+      "timestamp": "2026-11-28T14:17:57.678Z",
+      "kind": "server sample"
+    },
+    {
+      "ray": false,
+      "health": 92,
+      "reverse": false,
+      "allowed": true,
+      "range": 6.00615119934082,
+      "pos": "-124.49018096923828, 3.1211414337158203, -141.1076202392578",
+      "timestamp": "2026-11-28T14:17:57.894Z",
+      "kind": "server sample"
+    }
+  ]
+}

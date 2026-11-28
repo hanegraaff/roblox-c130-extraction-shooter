@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "blenderVersion": "5.3.0",
+  "blenderUnitsPerStud": 1,
+  "blenderUnitLengthMeters": 0.2800000011920929,
+  "axisConvention": {
+    "blender": "+X right, +Y front, +Z up",
+    "robloxAndGlb": "+X right, -Z front, +Y up"
+  },
+  "externalAssetDependencies": [],
+  "meshObjects": 120,
+  "triangles": 1264,
+  "materials": [
+    "Graphite bevel",
+    "Ivory marking",
+    "Medical enamel",
+    "Molded graphite",
+    "Rubber and seams",
+    "Stone bevel",
+    "Stone polymer",
+    "Stone recess"
+  ],
+  "boundsStuds": {
+    "minimum": [
+      -1.07,
+      0,
+      -0.539
+    ],
+    "maximum": [
+      1.07,
+      1.7185,
+      0.5215
+    ]
+  },
+  "pivotStuds": [
+    0,
+    0,
+    0
+  ],
+  "sha256": {
+    "assets/blender/medkit/medkit.blend": "fc9133a7aac1324de5b4909c1743f11ee6a773702334acee99ae918a3f995c60",
+    "assets/exports/medkit/field-medkit.glb": "e41aa273df47551dc3663ee9fd820aa4ab1897fefea6c0fb5792d40637cbbfb4",
+    "assets/exports/medkit/field-medkit.rbxmx": "ed0be1a81f4753244a6523c36fc2bf623b881d9ac504c6608b7e6f8d26aa3a44"
+  }
+}
