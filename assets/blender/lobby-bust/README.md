@@ -1,6 +1,6 @@
 # Waiting-lobby bust
 
-Open [lobby-bust.blend](lobby-bust.blend) in Blender 5.3.0 to inspect the limestone bust planned for the center of the waiting lobby. It includes the head, cropped shirt and round foot. The wider platform, lighting and height gauges belong to the review scene. Use the first supplied portrait to judge the facial likeness, furrowed brow and swept-back hair. For the lobby, the eyes should look down toward people on the floor. The bust photograph guides the carved finish, shirt, shoulder crop and small round foot. [Portrait 1](../../../src/images/redesigned-lobby/portrait-1.jpeg) · [Bust photograph](../../../src/images/redesigned-lobby/main-lobby-bust.jpeg)
+Open the Blender 5.3.0 sculpture master to inspect the limestone bust in the waiting lobby. It includes the head, cropped shirt and round foot. The wider platform, lighting and height gauges belong to the review scene. The supplied portrait guides the furrowed brow and swept-back hair. The eyes look down toward players on the lobby floor. The bust photograph guides the carved finish, shirt, shoulder crop and small round foot. [Sculpture master](lobby-bust.blend) · [Portrait 1](../../../src/images/redesigned-lobby/portrait-1.jpeg) · [Bust photograph](../../../src/images/redesigned-lobby/main-lobby-bust.jpeg)
 
 ## Inspect the sculpture
 
@@ -13,7 +13,7 @@ Open [lobby-bust.blend](lobby-bust.blend) in Blender 5.3.0 to inspect the limest
 
 The scene opens with an orbitable front view. Drag with the middle mouse button to orbit and scroll to zoom. On a trackpad, drag the colored axis gizmo at the upper right of the viewport to orbit. To revisit a shot, expand **Atelier · cameras and lights** in the Outliner and select **A1 · Portrait**, **A1 · Three quarters**, **A1 · Hair roll and downward gaze** or **A2 · Player eye 4.5 studs above floor**. With the pointer over the viewport, press **F3** and choose **Set Active Object as Camera**. The front and three-quarter renders use 800 × 1000 pixels. In **Output Properties → Format → Resolution**, use 920 × 880 for the hair and eyes or 1120 × 740 for the floor view. Choose **Render → Render Image** to see the studio lighting and stone finish. [Full-size front render](../../../docs/evidence/p20/front.png)
 
-## Place the bust in the P21 assembly
+## Placement in the waiting lobby
 
 | Measurement or convention | Working value |
 | --- | --- |
@@ -23,7 +23,7 @@ The scene opens with an orbitable front view. Drag with the middle mouse button 
 | Blender axes and scale | +Z up, face toward −Y, 1 Blender unit per stud |
 | GLB axes | +Y up, face toward +Z, same numerical dimensions along the corresponding axes |
 
-For the planned main room, use the user-approved sculpture from `62cd82c`. Place one instance with its pivot on the dais top, facing the arrival route. The staging platform raises the foot 2.65 studs above the review floor. Use that height as a starting point for the room sightline. P21 owns the final dais. The clean [GLB](../../exports/lobby-bust/lobby-bust.glb) contains the **Lobby Bust · export meshes** collection under one pivot. [Lobby assembly plan](../../../plans/21-lobby-interior.md)
+The lobby assembly places one instance of the approved sculpture from `62cd82c` on the dais facing the arrival route. The review platform raises the foot 2.65 studs above its floor for the sightline check. The editable lobby owns the final dais. The GLB contains the **Lobby Bust · export meshes** collection under one pivot. [Lobby assembly](../lobby-interior/README.md) · [Bust GLB](../../exports/lobby-bust/lobby-bust.glb)
 
 The GLB contains 34 meshes with 78,524 triangles in total. The largest mesh has 18,800 triangles. Six materials distinguish honed stone, combed hair, polished spectacle rims, irises, pupil recesses and the shirt. Three original 384 × 384 color maps supply the stone grain, and one 1024 × 512 normal map follows the carved hair. The images are packed into the scene and embedded in the GLB. The authoring script uses light and shadow from the supplied photograph to guide shallow facial folds. The cheeks, eyes, nose, shirt and back of the head are modeled in three dimensions. [Supplied photograph](../../../src/images/redesigned-lobby/main-lobby-bust.jpeg) · [Source and export manifest](../../manifest.json)
 

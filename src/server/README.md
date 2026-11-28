@@ -19,13 +19,10 @@ Rojo maps this package to `ServerScriptService.Server`. Rules and authority stay
 
 The runtime drives match, aircraft and combat through one Heartbeat. It samples synchronized server seconds, advances the aircraft pose and calls `rounds.step(time, resolveDamage, syncPhase)`. The phase callback updates aircraft presence before publishing the transition. The Active damage callback runs gunship sweeps, rifle rays and existing rocket sweeps against pre-impact cover, then flushes structural changes. The round commits its outcome and publishes state before launcher recovery and queued medkit use. Standalone aircraft and combat adapters can own their own Heartbeat for focused tests. Production passes `externallyStepped = true` and drives them from the shared frame.
 
-The current runtime owns one fixed battlefield. The future
-[level contract](../../architecture.md#level-interchange-boundary-target-architecture)
-will make a validated active level definition an explicit input to map, aircraft,
-combat and destruction services. Every level retains one circling C-130; weapon,
-health, panel progress and fragment rules stay shared rather than being copied
-into level scripts. P15 owns selection/switch/reset/late-join behavior for a
-second playable level.
+The runtime owns one fixed battlefield. The proposed level contract gives map,
+aircraft, combat and destruction services a validated level definition as input.
+Each level would supply its geometry and orbit, with shared rules for weapons,
+health, panel progress and fragments. [Level contract](../../architecture.md#level-interchange-boundary-target-architecture)
 
 `MatchRuntime.new(map, settings, balance?)` creates an inactive adapter exposing `start()`, `stop()`, `match`, `step(time, resolveDamage, syncPhase)` and `resources()`. The step callbacks take server-clock seconds and must return without yielding. Production defaults are automatic deployment, a two-player minimum, an eight-second startup lobby, a 15-second deployment limit, 20 seconds of Scatter after readiness, 600 seconds of combat after reveal, five seconds of Results, a 120-second intermission and seed 1. Results begins the intermission. Resetting rebuilds the battlefield inside that time. Start rejects conflicting ownership or character loads still draining. The runtime disables automatic respawns and owns teams, a noncolliding character group, player listeners and `RoundState.Surrender`. Stop clears round and intermission state, invalidates character work and removes owned replication, teams and listeners. `resources()` reports owned connections and load tasks, including in-flight loads draining at teardown.
 
