@@ -56,10 +56,14 @@ function AircraftArtProbe.start(): ((Request) -> unknown, () -> ())
                 local operator = request.role == "Gunship"
                 local correctView = not operator or camera.FieldOfView == request.fov
                 local visible = 0
+                local painted = 0
                 local maskErrors = 0
                 for _, item in model:GetDescendants() do
                     if item:IsA("BasePart") and item.Transparency < 1 then
                         visible += 1
+                        if item:IsA("MeshPart") and item.TextureID ~= "" then
+                            painted += 1
+                        end
                         if item.LocalTransparencyModifier ~= (if operator then 1 else 0) then
                             maskErrors += 1
                         end
@@ -72,7 +76,7 @@ function AircraftArtProbe.start(): ((Request) -> unknown, () -> ())
                         table.insert(hubs, hub)
                     end
                 end
-                if correctView and visible >= 180 and maskErrors == 0 and #hubs == 4 then
+                if correctView and painted == 3 and maskErrors == 0 and #hubs == 4 then
                     if request.track == true and not operator then
                         track(camera)
                     end
@@ -112,6 +116,7 @@ function AircraftArtProbe.start(): ((Request) -> unknown, () -> ())
                         position = { pose.X, pose.Y, pose.Z },
                         heading = { pose.LookVector.X, pose.LookVector.Y, pose.LookVector.Z },
                         visiblePieces = visible,
+                        paintedMeshes = painted,
                         maskErrors = maskErrors,
                         rotating = rotating,
                         aircraftReplicas = replicas,

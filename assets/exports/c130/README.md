@@ -1,5 +1,7 @@
 # C-130 exports
 
+The painted revision adds `c130-painted-skin.glb` with three mesh regions and an embedded 2,048 × 2,048 atlas, the original `c130-camouflage.png`, the `c130-painted-layout.json` source replacement list and `c130-painted-preview.png`. Studio's native import and shared color map are bound in the [native receipt](../../imports/c130/native-receipt.json).
+
 | File | Use |
 | --- | --- |
 | [c130.glb](c130.glb) | Portable geometry and solid-color materials for independent reimport and inspection. The package uses original meshes with no external texture files. |

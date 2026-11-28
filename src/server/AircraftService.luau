@@ -55,9 +55,14 @@ function AircraftService.start(
     if workspace:FindFirstChild("Aircraft") or ReplicatedStorage:FindFirstChild("AircraftState") then
         return nil, "aircraft already owned"
     end
-    local template = game:GetService("ServerStorage").Assets:FindFirstChild("C130")
+    local assets = game:GetService("ServerStorage").Assets
+    local template = assets:FindFirstChild("C130")
     if not template or not template:IsA("Model") then
         return nil, "missing aircraft model template"
+    end
+    local skin = assets:FindFirstChild("C130PaintedSkin")
+    if not skin or not skin:IsA("Model") then
+        return nil, "missing painted aircraft skin template"
     end
     local model = template:Clone()
     model.Name = "Aircraft"
@@ -67,7 +72,9 @@ function AircraftService.start(
         return nil, "missing canonical aircraft hitbox"
     end
     model.PrimaryPart = hitbox
-    local bound, bindReason = AircraftRig.bind(model, hitbox)
+    local paint = skin:Clone()
+    paint.Parent = model
+    local bound, bindReason = AircraftRig.bind(model, hitbox, paint)
     if not bound then
         model:Destroy()
         return nil, bindReason

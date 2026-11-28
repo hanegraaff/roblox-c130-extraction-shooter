@@ -74,8 +74,12 @@ return function()
                         end
                         if item.CanQuery then
                             assert(
-                                item.Transparency == (if item:IsDescendantOf(roundedQueries) then 1 else 0),
-                                "only native solids and their dedicated rounded proxies participate in queries"
+                                not item:IsA("MeshPart")
+                                    and (
+                                        item.Transparency == 0
+                                        or item.Transparency == 1 and not item.CastShadow
+                                    ),
+                                "only native solids and inset volumes participate in queries"
                             )
                             queryable += 1
                         end
@@ -153,27 +157,19 @@ return function()
                 )
                 local airframe = model:FindFirstChild("Airframe")
                 assert(airframe and airframe:IsA("Model"), "managed aircraft visual missing")
-                for _, shape in
-                    {
-                        { name = "Rounded flight deck", scale = Vector3.new(11.3, 9, 17.2) },
-                        { name = "Port2 nacelle", scale = Vector3.new(3.77, 3.48, 10.2) },
-                        { name = "Tapered tail cone", scale = Vector3.new(6.83, 4.23, 16) },
-                    }
-                do
-                    local visual = airframe:FindFirstChild(shape.name)
+                for _, name in { "C130_Fuselage", "C130_WingAndTail", "C130_Nacelles" } do
+                    local visual = airframe:FindFirstChild(name)
                     assert(
-                        visual and visual:IsA("Part") and not visual.CanQuery and visual.Size == Vector3.one,
-                        "rounded shape uses a strictly visual mesh carrier"
+                        visual
+                            and visual:IsA("MeshPart")
+                            and not visual.CanQuery
+                            and visual.TextureID ~= ""
+                            and visual.Transparency == 0,
+                        "native coated skin is missing: " .. name
                     )
-                    local sphere = visual:FindFirstChild("RoundedVisual")
-                    assert(
-                        sphere
-                            and sphere:IsA("SpecialMesh")
-                            and sphere.MeshType == Enum.MeshType.Sphere
-                            and (sphere.Scale - shape.scale).Magnitude < 0.001
-                            and sphere.MeshId == "",
-                        "built-in ellipse lost its independent visual scale: " .. shape.name
-                    )
+                end
+                for _, item in airframe:GetChildren() do
+                    assert(not string.find(item.Name, " shark ", 1, true), "raised shark paint survived")
                 end
                 for _, weapon in { "GAU23", "M102" } do
                     local attachment = hitbox:FindFirstChild(weapon .. "Muzzle")

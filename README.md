@@ -10,7 +10,7 @@ One player operates a circling C-130 while a team of 1–9 Ground players tries 
 
 Rounds start in the protected, walkable lobby. By default, with 2–10 players, the server assigns one operator and deploys everyone else as one ground team. Once the deployed avatars are ready, Ground gets **20 seconds** to spread out, take cover or pick up and drop a launcher. Ground sees **C-130 arrives in 20** on desktop or the compact **C-130 in 20s** on touch. The operator sees the same time on a full black screen that clears when the thermal view is ready. Both sides can fire when the aircraft appears and begins to circle the edge of the 720-stud battlefield. The ten-minute combat clock starts at that moment. Friendly fire is off.
 
-From the ground, look for the charcoal high-wing C-130 with a crimson shark face, four spinning propellers and a howitzer on its right side. Hits on the solid airframe reduce the aircraft’s shared health. [Blender preview from below](assets/exports/c130/ground-approach.png)
+From the ground, look for the high-wing C-130 with olive-and-gray camouflage, a brushed shark face painted across the nose, four spinning propellers and a howitzer on its right side. Hits on the airframe reduce its shared health. [Blender preview from below](assets/exports/c130/c130-painted-preview.png)
 
 The stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits.
 
@@ -69,7 +69,7 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-The integrated game on `main` includes the balance editor, Ground mouse look, raised crosshair and compact touch HUD. Play the new C-130 model locally in Studio on the P28 branch. Controller support and medkit pickups are planned for future work. [C-130 model](plans/28-c130-model.md) · [Ground and touch controls](plans/27-ground-aim-and-mobile-controls.md) · [Roadmap](roadmap.md)
+The integrated game on `main` includes the balance editor, Ground mouse look, raised crosshair and compact touch HUD. Play the painted C-130 model locally in Studio on `fix/c130-painted-livery`. Controller support and medkit pickups are planned for future work. [C-130 model](plans/28-c130-model.md) · [Ground and touch controls](plans/27-ground-aim-and-mobile-controls.md) · [Roadmap](roadmap.md)
 
 The lobby **Balance** panel lets the experience owner and trusted testers adjust health, damage, weapon timing, panel durability, round length, intermission and minimum players. Ordinary local Studio Play uses the defaults in this guide. The balance panel's private Roblox verification and the future live release checks are pending. [Owner guide](docs/balance.md) · [Panel verification](plans/26-live-balance-panel.md#completion-record) · [Future release checklist](docs/release.md)
 
@@ -77,7 +77,7 @@ The lobby **Balance** panel lets the experience owner and trusted testers adjust
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Clone `main` for the integrated build. To try the new C-130 model, use `--branch plan/28-c130-model` in the clone command and run the same setup steps.
+Clone `main` for the integrated build. To try the painted C-130, use `--branch fix/c130-painted-livery` in the clone command and run the same setup steps.
 
 ```sh
 git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
@@ -88,7 +88,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch plan/28-c130-model` for the aircraft candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
+On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch fix/c130-painted-livery` for the painted aircraft candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
@@ -160,7 +160,7 @@ For lobby art and collision regression, verify the portraits and both lobby rout
 
 Open [military-outpost.blend](assets/blender/military-outpost/military-outpost.blend) in **Blender 5.3.0** to explore the exterior, furnished rooms, saved views and six material and shape damage families. Run `python3 scripts/p16_audit.py` to check the committed package without launching Blender. [Asset review guide](assets/blender/military-outpost/README.md), [in-game Outpost record](plans/17-integrate-military-outpost.md)
 
-Open the C-130 master in **Blender 5.3.0** to inspect the airframe, livery and saved camera below the right side of the nose. The review render uses translucent propeller sweeps. [Editable C-130](assets/blender/c130/c130.blend) · [Aircraft asset guide](assets/blender/c130/README.md)
+Open the painted C-130 in **Blender 5.3.0** to inspect the UV-mapped skin, swept wings and saved camera below the right side of the nose. The review render uses translucent propeller sweeps. [Editable painted C-130](assets/blender/c130/c130-painted.blend) · [Aircraft asset guide](assets/blender/c130/README.md)
 
 ## Follow development or contribute
 

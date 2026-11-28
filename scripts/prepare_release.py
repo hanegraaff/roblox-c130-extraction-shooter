@@ -38,6 +38,8 @@ PRISM_RECEIPT = "assets/imports/alien-spaceship/native-receipt.json"
 PRISM_BANKS = ("assets/models/PrismSeedship.rbxm", "assets/models/PrismPanelVariants.rbxm")
 LOBBY_RECEIPT = "docs/evidence/p22/native-oil-assembly.json"
 LOBBY_BANKS = ("assets/imports/lobby-interior/LobbyArt.rbxm",)
+C130_PAINT_RECEIPT = "assets/imports/c130/native-receipt.json"
+C130_PAINT_BANK = "assets/models/C130PaintedSkin.rbxm"
 SCRIPT_CLASSES = {"Script", "LocalScript", "ModuleScript"}
 CLOUD_REFERENCE = re.compile(r"\brbxassetid://([1-9][0-9]*)\b")
 
@@ -219,6 +221,15 @@ def asset_inventory(root: Path, release: dict[str, ET.Element]) -> dict:
         mesh_ids.update(meshes)
         texture_ids.update(textures)
         native_receipts["waiting_lobby_native_receipt"] = fingerprint(root, LOBBY_RECEIPT)
+    if (root / C130_PAINT_BANK).exists():
+        receipt = read_json(root, C130_PAINT_RECEIPT)
+        meshes, textures = native_bank_assets(
+            root, "Painted C-130", (C130_PAINT_BANK,), {C130_PAINT_BANK: receipt["nativeSha256"]},
+            len(receipt["parts"]),
+        )
+        mesh_ids.update(meshes)
+        texture_ids.update(textures)
+        native_receipts["c130_paint_receipt"] = fingerprint(root, C130_PAINT_RECEIPT)
     for asset in manifest["assets"]:
         if asset["id"] == "stock-district-scenery":
             if fingerprint(root, asset["local_path"])["sha256"] != asset["sha256"]:

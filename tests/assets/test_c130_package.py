@@ -52,6 +52,30 @@ class AircraftPackageTests(unittest.TestCase):
             self.assertAlmostEqual(high - low, span, delta=0.1)
         self.assertLess(self.audit["boundsStuds"]["minimum"][2], -27)
 
+    def test_painted_skin_embeds_one_atlas_and_replaces_raised_paint(self):
+        layout = json.loads((EXPORTS / "c130-painted-layout.json").read_text())
+        receipt = json.loads((ROOT / "assets/imports/c130/native-receipt.json").read_text())
+        skin = (ROOT / "assets/models/C130PaintedSkin.rbxm").read_bytes()
+        glb = (EXPORTS / "c130-painted-skin.glb").read_bytes()
+        atlas = (EXPORTS / "c130-camouflage.png").read_bytes()
+        for bytes_, key in ((skin, "nativeSha256"), (glb, "sourceGlbSha256"), (atlas, "textureSha256")):
+            self.assertEqual(hashlib.sha256(bytes_).hexdigest(), receipt[key])
+        self.assertEqual(struct.unpack_from(">2I", atlas, 16), (2048, 2048))
+        json_size, json_type = struct.unpack_from("<2I", glb, 12)
+        self.assertEqual(json_type, 0x4E4F534A)
+        graph = json.loads(glb[20:20 + json_size])
+        self.assertEqual(len(graph["images"]), 1)
+        self.assertNotIn("uri", graph["images"][0])
+        self.assertEqual(set(layout["regions"]), {item["name"] for item in receipt["parts"]})
+        self.assertEqual(len(graph["meshes"]), 3)
+        self.assertTrue(all(0 < data["triangles"] < 20000 for data in layout["regions"].values()))
+        self.assertEqual(len({item["texture"] for item in receipt["parts"]}), 1)
+        source = {item["Name"]: item for item in self.airframe["Children"]}
+        self.assertTrue(set(layout["replacesVisuals"]) <= source.keys())
+        self.assertTrue(all(not source[name]["Properties"]["CanQuery"] for name in layout["removedRaisedPaint"]))
+        self.assertEqual({name for name in source if " shark " in name},
+                         {name for name in layout["removedRaisedPaint"] if " shark " in name})
+
     def test_native_query_shapes_and_cosmetic_rotors_do_not_share_authority(self):
         visual = self.airframe["Children"]
         groups = self.rotors["Children"]

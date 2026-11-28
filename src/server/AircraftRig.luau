@@ -2,13 +2,67 @@
 --[=[
     AircraftRig binds the managed C-130 template to one anchored server root.
     Its authored solids and inset rounded proxies keep native query shapes. Massless, noncolliding
-    art follows the root through rigid joints. Rotor motors have no query authority.
+    imported paint meshes and rotor motors have no query authority.
 ]=]
 local AircraftRig = {}
 
+-- Replace the visible surfaces of the detached airframe using the import's
+-- authored name lists. Keep queryable source pieces as invisible solids.
+local function applyPaint(airframe: Model, paint: Model): boolean
+    local covered = paint:GetAttribute("CoveredPieces")
+    local raised = paint:GetAttribute("RemovedPaint")
+    local meshes = paint:GetChildren()
+    if
+        type(covered) ~= "string"
+        or #covered == 0
+        or type(raised) ~= "string"
+        or #raised == 0
+        or #meshes ~= 3
+    then
+        return false
+    end
+    for _, mesh in meshes do
+        if
+            not mesh:IsA("MeshPart")
+            or mesh.MeshId == ""
+            or mesh.TextureID == ""
+            or mesh.CanQuery
+            or mesh.CanCollide
+            or mesh.CanTouch
+            or #mesh:GetChildren() ~= 0
+        then
+            return false
+        end
+    end
+    for name in string.gmatch(covered, "[^\n]+") do
+        local original = airframe:FindFirstChild(name)
+        if not original or not original:IsA("BasePart") then
+            return false
+        end
+        if original.CanQuery then
+            original.Transparency = 1
+            original.CastShadow = false
+        else
+            original:Destroy()
+        end
+    end
+    for name in string.gmatch(raised, "[^\n]+") do
+        local original = airframe:FindFirstChild(name)
+        if not original or not original:IsA("BasePart") or original.CanQuery then
+            return false
+        end
+        original:Destroy()
+    end
+    for _, mesh in meshes do
+        mesh.Parent = airframe
+    end
+    paint:Destroy()
+    return true
+end
+
 -- Build one joint hierarchy on a detached clone. The caller owns the clone
 -- and discards it on error. No yields, external side effects or live connections.
-function AircraftRig.bind(model: Model, root: BasePart): (boolean, string?)
+function AircraftRig.bind(model: Model, root: BasePart, paint: Model): (boolean, string?)
     local airframe = model:FindFirstChild("Airframe")
     local propellers = model:FindFirstChild("Propellers")
     local roundedQueries = model:FindFirstChild("RoundedQueries")
@@ -21,6 +75,9 @@ function AircraftRig.bind(model: Model, root: BasePart): (boolean, string?)
         or not roundedQueries:IsA("Folder")
     then
         return false, "missing authored aircraft rig"
+    end
+    if not applyPaint(airframe, paint) then
+        return false, "invalid painted aircraft skin"
     end
     local rotors = propellers:GetChildren()
     if #rotors ~= 4 then

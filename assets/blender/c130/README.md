@@ -1,6 +1,14 @@
 # Editable C-130
 
-Open `c130.blend` in Blender 5.3.0. The saved camera looks up from below the starboard nose. The high wing, charcoal finish, slate markings, crimson shark face and lower starboard M102 draw on the project's approved concept art. The model uses original geometry and solid-color materials. Its four translucent propeller sweeps show motion in the still render. [Reference views](../../../src/images/c130/README.md) · [Ground-angle Blender render](../../exports/c130/ground-approach.png)
+Open `c130-painted.blend` in Blender 5.3.0 to inspect the game livery from below the starboard nose. The packed UV atlas carries the olive-and-gray camouflage, panel wear, stencil markings and brushed red shark mouth. Thinner cambered wing sections refine the flight silhouette. The four translucent propeller sweeps show motion in the still render. [Reference views](../../../src/images/c130/README.md) · [Painted Ground-angle render](../../exports/c130/c130-painted-preview.png)
+
+`c130.blend` supplies the original P28 native shape template and flight markers. To regenerate the coating, open that base master and run the following command. This writes a painted Blender master, embedded-texture GLB, atlas, review render and a list of the source pieces replaced by the three skin meshes.
+
+```sh
+blender -b assets/blender/c130/c130.blend --python-exit-code 1 -P scripts/c130/paint_livery.py -- build/c130-livery-upload
+```
+
+The managed skin uses the three Studio-imported MeshParts and their shared texture. A changed atlas or geometry requires an authorized new import and an updated native receipt. Use the recorded per-mesh transforms to convert Blender's stage to the flight frame. The server hides the covered native solids, removes the original raised markings and welds the textured skin to the flight root. [Native receipt](../../imports/c130/native-receipt.json) · [Managed template contract](../../models/README.md)
 
 ## Flight frame and editable parts
 
