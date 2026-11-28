@@ -1,0 +1,1338 @@
+{
+  "result": {
+    "ok": true,
+    "report": {
+      "initialClientCount": 2,
+      "skipped": 0,
+      "passed": 13,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 round 1 replicates scatter on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A2 round 1 permits movement and launcher transfers but blocks all fire"
+        },
+        {
+          "passed": true,
+          "name": "A1 A3 round 1 reveals once at canonical start and preserves Ground"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 authored aircraft reveals once on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 both zooms mask the rig and fire from the matching visible bore"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 real Ground client sees four moving rotors and the entire 90-second orbit"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 real Ground rifle damages a visible solid and misses outside the silhouette"
+        },
+        {
+          "passed": true,
+          "name": "P28 A3 native rocket sweeps destroy the aircraft and commit Ground victory"
+        },
+        {
+          "passed": true,
+          "name": "A3 round 2 replicates scatter on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A2 round 2 permits movement and launcher transfers but blocks all fire"
+        },
+        {
+          "passed": true,
+          "name": "A1 A3 round 2 reveals once at canonical start and preserves Ground"
+        },
+        {
+          "passed": true,
+          "name": "P28 A3 fresh artwork and both roles replay at full health"
+        },
+        {
+          "passed": true,
+          "name": "A2 actual Scatter death cancels arrival, consumes one life and returns both avatars to lobby"
+        }
+      ],
+      "observations": [
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795829644.680302
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795829644.680302
+        },
+        {
+          "groundDisplacementStuds": 9.814579963684082,
+          "operatorId": -1,
+          "roundId": 1
+        },
+        {
+          "projection": {
+            "originErrorStuds": 0,
+            "projectionFrame": 1,
+            "replicaErrorStuds": 0
+          },
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.22763514518737793,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795829644.680302,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.04336214065551758,
+            "preDeadlineFrames": 297
+          },
+          "blackout": {
+            "leaks": 0,
+            "thermalFrames": 0,
+            "frames": 303,
+            "aircraftFrames": 0
+          }
+        },
+        {
+          "ground": true,
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.09917902946472168,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795829644.680302,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.03494405746459961,
+            "preDeadlineFrames": 297
+          }
+        },
+        {
+          "revealLateSeconds": 0.0012362003326416016,
+          "poseErrorStuds": 0.41408491134643555,
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 0.830664873123169,
+          "position": [
+            359.4384460449219,
+            140,
+            20.09992790222168
+          ],
+          "heading": [
+            -0.05582856014370918,
+            0,
+            0.9984403848648071
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 30,
+          "elapsedSeconds": 1.3555657863616943,
+          "position": [
+            358.44189453125,
+            140,
+            33.45758819580078
+          ],
+          "heading": [
+            -0.0929543524980545,
+            0,
+            0.9956703186035156
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 30,
+          "elapsedSeconds": 1.9569358825683594,
+          "position": [
+            356.72430419921875,
+            140,
+            48.453887939453125
+          ],
+          "heading": [
+            -0.1346139758825302,
+            0,
+            0.9908984899520874
+          ],
+          "roundId": 1
+        },
+        {
+          "matchedMuzzleErrorStuds": 0.0029639878775924444,
+          "weapon": "GAU23"
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 40,
+          "elapsedSeconds": 2.6236979961395264,
+          "position": [
+            354.083984375,
+            140,
+            64.99645233154297
+          ],
+          "heading": [
+            -0.1805301159620285,
+            0,
+            0.983569860458374
+          ],
+          "roundId": 1
+        },
+        {
+          "matchedMuzzleErrorStuds": 0.0023977700620889664,
+          "weapon": "M102"
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 15.5310378074646,
+          "position": [
+            169.02243041992188,
+            140,
+            317.8544006347656
+          ],
+          "heading": [
+            -0.8829500079154968,
+            0,
+            0.46946704387664795
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 30.530894994735718,
+          "position": [
+            -191.10047912597656,
+            140,
+            305.0911560058594
+          ],
+          "heading": [
+            -0.8474941849708557,
+            0,
+            -0.5308047533035278
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 45.5297110080719,
+          "position": [
+            -359.7823181152344,
+            140,
+            -12.517120361328125
+          ],
+          "heading": [
+            0.03478250652551651,
+            0,
+            -0.9993948936462402
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 60.52910089492798,
+          "position": [
+            -168.6820068359375,
+            140,
+            -318.0351867675781
+          ],
+          "heading": [
+            0.8834226131439209,
+            0,
+            -0.46857738494873047
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 75.52818894386292,
+          "position": [
+            191.09817504882812,
+            140,
+            -305.09259033203125
+          ],
+          "heading": [
+            0.8474941849708557,
+            0,
+            0.5308048725128174
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 90.52882599830627,
+          "position": [
+            359.7691650390625,
+            140,
+            12.889963150024414
+          ],
+          "heading": [
+            -0.03581789508461952,
+            0,
+            0.9993586540222168
+          ],
+          "roundId": 1
+        },
+        {
+          "health": 0,
+          "reason": "AircraftDestroyed"
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795829760.51999
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795829760.51999
+        },
+        {
+          "groundDisplacementStuds": 9.814579963684082,
+          "operatorId": -2,
+          "roundId": 2
+        },
+        {
+          "projection": {
+            "originErrorStuds": 0,
+            "projectionFrame": 1,
+            "replicaErrorStuds": 0
+          },
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.23609209060668945,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795829760.51999,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.0571749210357666,
+            "preDeadlineFrames": 288
+          },
+          "blackout": {
+            "leaks": 0,
+            "thermalFrames": 0,
+            "frames": 294,
+            "aircraftFrames": 0
+          }
+        },
+        {
+          "ground": true,
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.09777498245239258,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795829760.51999,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 0,
+            "firstAircraftDelaySeconds": 0.09777498245239258,
+            "preDeadlineFrames": 287
+          }
+        },
+        {
+          "revealLateSeconds": 0.007420063018798828,
+          "poseErrorStuds": 0,
+          "roundId": 2
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 0.8244359493255615,
+          "position": [
+            359.41497802734375,
+            140,
+            20.515214920043945
+          ],
+          "heading": [
+            -0.05694941058754921,
+            0,
+            0.9983772039413452
+          ],
+          "roundId": 2
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 314,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 30,
+          "elapsedSeconds": 1.3630719184875488,
+          "position": [
+            358.4415283203125,
+            140,
+            33.461639404296875
+          ],
+          "heading": [
+            -0.0929543524980545,
+            0,
+            0.9956703186035156
+          ],
+          "roundId": 2
+        }
+      ],
+      "clientSmoke": {
+        "-1": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+        "-2": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}"
+      },
+      "completedRoundIds": [
+        1,
+        2
+      ],
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":218,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":218}",
+      "suite": "P28-multiplayer",
+      "failed": 0,
+      "discovered": 13
+    }
+  },
+  "facts": [
+    {
+      "capture": "p28-corrected-scatter-Ground",
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Scatter",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-scatter-Gunship",
+      "view": "Enum.CameraType.Custom",
+      "cover": true,
+      "phase": "Scatter",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-gunship-fov-30",
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 0.2721588611602783,
+      "position": [
+        359.9377136230469,
+        140,
+        6.6971354484558105
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 210.84934997558594,
+      "modelRound": 1,
+      "masked": 314,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 30,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-gunship-fov-40",
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 2.4916629791259766,
+      "position": [
+        354.6743469238281,
+        140,
+        61.693695068359375
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 227.11038208007812,
+      "modelRound": 1,
+      "masked": 314,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 40,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-destroyed-Ground",
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 91.56115889549255,
+      "position": [
+        359.2135009765625,
+        140,
+        23.78342056274414
+      ],
+      "phase": "Results",
+      "pieces": 314,
+      "distance": 211.61668395996094,
+      "modelRound": 1,
+      "masked": 0,
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "model": 1,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-destroyed-Gunship",
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 91.48711490631104,
+      "position": [
+        359.2135009765625,
+        140,
+        23.78342056274414
+      ],
+      "phase": "Results",
+      "pieces": 314,
+      "distance": 211.6146240234375,
+      "modelRound": 1,
+      "masked": 0,
+      "player": "Player1",
+      "health": 0,
+      "fov": 70,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-r2-Gunship-active",
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 0.5472118854522705,
+      "position": [
+        359.7662658691406,
+        140,
+        12.970409393310547
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 211.70571899414062,
+      "modelRound": 2,
+      "masked": 314,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 30,
+      "model": 1,
+      "round": 2,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "capture": "p28-corrected-r2-Ground-active",
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 0.6246650218963623,
+      "position": [
+        359.66668701171875,
+        140,
+        15.487794876098633
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 113.7379150390625,
+      "modelRound": 2,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 2,
+      "role": "Ground",
+      "size": "1081, 653"
+    }
+  ],
+  "states": [
+    {
+      "view": "Enum.CameraType.Custom",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "fov": 70,
+      "model": 0,
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "fov": 70,
+      "model": 0,
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 5.040189027786255,
+      "position": [
+        338.0653991699219,
+        140,
+        123.74083709716797
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 258.4136047363281,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 4.964631080627441,
+      "position": [
+        338.7784118652344,
+        140,
+        121.77519226074219
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 256.9736328125,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 5.624005079269409,
+      "position": [
+        332.74725341796875,
+        140,
+        137.40184020996094
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 268.9052734375,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 5.697908163070679,
+      "position": [
+        331.9462890625,
+        140,
+        139.32571411132812
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 270.4496765136719,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 6.2900590896606445,
+      "position": [
+        325.9967956542969,
+        140,
+        152.7288360595703
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 281.6614074707031,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 3,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 6.364696025848389,
+      "position": [
+        325.27972412109375,
+        140,
+        154.2501220703125
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 282.9822082519531,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 3,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 7.023854970932007,
+      "position": [
+        317.9457092285156,
+        140,
+        168.8505859375
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 296.14764404296875,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 7.097970962524414,
+      "position": [
+        316.9587707519531,
+        140,
+        170.69602966308594
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 297.87554931640625,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 13.222529172897339,
+      "position": [
+        217.81842041015625,
+        140,
+        286.6271667480469
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 437.993896484375,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 13.147294044494629,
+      "position": [
+        219.13169860839844,
+        140,
+        285.6243896484375
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 436.43194580078125,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Waiting",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 13.806863069534302,
+      "position": [
+        205.615234375,
+        140,
+        295.50360107421875
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 452.2493591308594,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Waiting",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 14.54015302658081,
+      "position": [
+        190.2248077392578,
+        140,
+        305.6379089355469
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 469.6202392578125,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 15.189670085906982,
+      "position": [
+        176.5342254638672,
+        140,
+        313.7445983886719
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 484.5382080078125,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Waiting",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 15.26607608795166,
+      "position": [
+        174.7041015625,
+        140,
+        314.767333984375
+      ],
+      "phase": "Lobby",
+      "pieces": 314,
+      "distance": 486.4986267089844,
+      "modelRound": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 0,
+      "role": "Waiting",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Deploying",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": true,
+      "phase": "Deploying",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Scatter",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": true,
+      "phase": "Scatter",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 0.36455678939819336,
+      "position": [
+        359.90252685546875,
+        140,
+        8.376636505126953
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 113.11326599121094,
+      "modelRound": 1,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 0.2721588611602783,
+      "position": [
+        359.9377136230469,
+        140,
+        6.6971354484558105
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 210.84934997558594,
+      "modelRound": 1,
+      "masked": 314,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 30,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 2.4916629791259766,
+      "position": [
+        354.6743469238281,
+        140,
+        61.693695068359375
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 227.11038208007812,
+      "modelRound": 1,
+      "masked": 314,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 40,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 90.89458179473877,
+      "position": [
+        359.3209228515625,
+        140,
+        22.101367950439453
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 98.67695617675781,
+      "modelRound": 1,
+      "masked": 0,
+      "player": "Player2",
+      "health": 995,
+      "fov": 70,
+      "model": 1,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 90.82298994064331,
+      "position": [
+        359.4201965332031,
+        140,
+        20.423778533935547
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 213.08326721191406,
+      "modelRound": 1,
+      "masked": 314,
+      "player": "Player1",
+      "health": 995,
+      "fov": 40,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 91.56115889549255,
+      "position": [
+        359.2135009765625,
+        140,
+        23.78342056274414
+      ],
+      "phase": "Results",
+      "pieces": 314,
+      "distance": 211.61668395996094,
+      "modelRound": 1,
+      "masked": 0,
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "model": 1,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 91.48711490631104,
+      "position": [
+        359.2135009765625,
+        140,
+        23.78342056274414
+      ],
+      "phase": "Results",
+      "pieces": 314,
+      "distance": 211.6146240234375,
+      "modelRound": 1,
+      "masked": 0,
+      "player": "Player1",
+      "health": 0,
+      "fov": 70,
+      "model": 1,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Results",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Results",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 0,
+      "fov": 70,
+      "model": 0,
+      "round": 1,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Scatter",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 2,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": true,
+      "phase": "Scatter",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 2,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Scriptable",
+      "cover": false,
+      "elapsed": 0.5472118854522705,
+      "position": [
+        359.7662658691406,
+        140,
+        12.970409393310547
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 211.70571899414062,
+      "modelRound": 2,
+      "masked": 314,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 30,
+      "model": 1,
+      "round": 2,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 0.6246650218963623,
+      "position": [
+        359.66668701171875,
+        140,
+        15.487794876098633
+      ],
+      "phase": "Active",
+      "pieces": 314,
+      "distance": 113.7379150390625,
+      "modelRound": 2,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 2,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 2.997170925140381,
+      "position": [
+        358.3634948730469,
+        140,
+        34.28718948364258
+      ],
+      "phase": "Results",
+      "pieces": 314,
+      "distance": 213.70872497558594,
+      "modelRound": 2,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 2,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "elapsed": 2.9227209091186523,
+      "position": [
+        358.3634948730469,
+        140,
+        34.28718948364258
+      ],
+      "phase": "Results",
+      "pieces": 314,
+      "distance": 213.70872497558594,
+      "modelRound": 2,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 1,
+      "round": 2,
+      "role": "Ground",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Results",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 2,
+      "role": "Gunship",
+      "size": "1081, 653"
+    },
+    {
+      "view": "Enum.CameraType.Custom",
+      "cover": false,
+      "phase": "Results",
+      "pieces": 0,
+      "masked": 0,
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "model": 0,
+      "round": 2,
+      "role": "Ground",
+      "size": "1081, 653"
+    }
+  ]
+}

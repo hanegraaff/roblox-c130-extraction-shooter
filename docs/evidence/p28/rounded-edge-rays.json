@@ -1,0 +1,57 @@
+{
+  "studio": "0.748.0.7481526",
+  "modelSha256": "15795f822101c80827c231b0db5983bbf9253b5749bcd3b6c1a75ca91d4f4c31",
+  "players": 2,
+  "round": 1,
+  "geometry": [
+    {
+      "outside": {
+        "hit": false
+      },
+      "inside": {
+        "position": [
+          4.1887640953063965,
+          0,
+          -24.5
+        ],
+        "partGroup": "RoundedQueries",
+        "name": "Rounded flight deck query 4.3",
+        "hit": true
+      },
+      "label": "flight deck"
+    },
+    {
+      "outside": {
+        "hit": false
+      },
+      "inside": {
+        "position": [
+          -17.500011444091797,
+          1.524993896484375,
+          -10.399999618530273
+        ],
+        "partGroup": "RoundedQueries",
+        "name": "Port2 nacelle query 3.1",
+        "hit": true
+      },
+      "label": "Port2 nacelle"
+    },
+    {
+      "outside": {
+        "hit": false
+      },
+      "inside": {
+        "position": [
+          -0.00000898220605449751,
+          1.5341339111328125,
+          29.220001220703125
+        ],
+        "partGroup": "RoundedQueries",
+        "name": "Tapered tail cone query 9.1",
+        "hit": true
+      },
+      "label": "tail cone"
+    }
+  ],
+  "phase": "Active"
+}

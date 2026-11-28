@@ -38,7 +38,7 @@ The furnished P22 lobby places the approved P20 bust on a stepped dais between t
 
 ## Flying C-130
 
-The editable master contains the original geometry, gunmetal and slate materials, crimson shark-face markings, four rotors and starboard M102. The export pipeline builds the server-only native template and a portable GLB from the same source. Native Roblox shapes and authored colors supply the flying model without external texture or mesh IDs. Use the managed template when rebuilding the place. [Editable package and rebuild steps](blender/c130/README.md) · [Export files](exports/c130/README.md)
+The editable master contains the original geometry, gunmetal and slate materials, crimson shark-face markings, four rotors and starboard M102. The export pipeline builds the server-only native template and a portable GLB from the same source. Built-in Roblox shapes and Sphere meshes reproduce the artwork without external texture or mesh IDs. Inset circular-cylinder volumes handle queries for the rounded shell pieces. Use the managed template when rebuilding the place. [Editable package and rebuild steps](blender/c130/README.md) · [Export files](exports/c130/README.md)
 
 ## Weapon presentation assets
 

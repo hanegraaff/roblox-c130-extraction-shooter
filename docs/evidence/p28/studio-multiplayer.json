@@ -1,0 +1,2214 @@
+{
+  "report": {
+    "ok": true,
+    "report": {
+      "initialClientCount": 2,
+      "skipped": 0,
+      "passed": 13,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 round 1 replicates scatter on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A2 round 1 permits movement and launcher transfers but blocks all fire"
+        },
+        {
+          "passed": true,
+          "name": "A1 A3 round 1 reveals once at canonical start and preserves Ground"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 authored aircraft reveals once on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 both zooms mask the rig and fire from the matching visible bore"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 real Ground client sees four moving rotors and the entire 90-second orbit"
+        },
+        {
+          "passed": true,
+          "name": "P28 A2 real Ground rifle damages a visible solid and misses outside the silhouette"
+        },
+        {
+          "passed": true,
+          "name": "P28 A3 native rocket sweeps destroy the aircraft and commit Ground victory"
+        },
+        {
+          "passed": true,
+          "name": "A3 round 2 replicates scatter on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A2 round 2 permits movement and launcher transfers but blocks all fire"
+        },
+        {
+          "passed": true,
+          "name": "A1 A3 round 2 reveals once at canonical start and preserves Ground"
+        },
+        {
+          "passed": true,
+          "name": "P28 A3 fresh artwork and both roles replay at full health"
+        },
+        {
+          "passed": true,
+          "name": "A2 actual Scatter death cancels arrival, consumes one life and returns both avatars to lobby"
+        }
+      ],
+      "observations": [
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830430.300215
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830430.300215
+        },
+        {
+          "groundDisplacementStuds": 10.347912788391113,
+          "operatorId": -1,
+          "roundId": 1
+        },
+        {
+          "projection": {
+            "originErrorStuds": 0,
+            "projectionFrame": 1,
+            "replicaErrorStuds": 0
+          },
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.25545692443847656,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830430.300215,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.08534908294677734,
+            "preDeadlineFrames": 297
+          },
+          "blackout": {
+            "leaks": 0,
+            "thermalFrames": 0,
+            "frames": 304,
+            "aircraftFrames": 0
+          }
+        },
+        {
+          "ground": true,
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.18047809600830078,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830430.300215,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 2,
+            "firstAircraftDelaySeconds": 0.04947304725646973,
+            "preDeadlineFrames": 297
+          }
+        },
+        {
+          "revealLateSeconds": 0.005187034606933594,
+          "poseErrorStuds": 0,
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 0.8417949676513672,
+          "position": [
+            359.3902282714844,
+            140,
+            20.944446563720703
+          ],
+          "heading": [
+            -0.05815642699599266,
+            0,
+            0.9983078241348267
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 30,
+          "elapsedSeconds": 1.3778479099273682,
+          "position": [
+            358.40277099609375,
+            140,
+            33.874088287353516
+          ],
+          "heading": [
+            -0.0940728485584259,
+            0,
+            0.9955652952194214
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 30,
+          "elapsedSeconds": 1.9769699573516846,
+          "position": [
+            356.6695556640625,
+            140,
+            48.8551139831543
+          ],
+          "heading": [
+            -0.13572841882705688,
+            0,
+            0.9907464981079102
+          ],
+          "roundId": 1
+        },
+        {
+          "matchedMuzzleErrorStuds": 0.001404352718964219,
+          "weapon": "GAU23"
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 40,
+          "elapsedSeconds": 2.6449060440063477,
+          "position": [
+            354.0061340332031,
+            140,
+            65.41902160644531
+          ],
+          "heading": [
+            -0.18172354996204376,
+            0,
+            0.9833498001098633
+          ],
+          "roundId": 1
+        },
+        {
+          "matchedMuzzleErrorStuds": 0.002358359284698963,
+          "weapon": "M102"
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 15.508477926254272,
+          "position": [
+            169.00668334960938,
+            140,
+            317.8627624511719
+          ],
+          "heading": [
+            -0.8829500079154968,
+            0,
+            0.46946704387664795
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 30.50796890258789,
+          "position": [
+            -190.75686645507812,
+            140,
+            305.30609130859375
+          ],
+          "heading": [
+            -0.8480698466300964,
+            0,
+            -0.5298844575881958
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 45.5070960521698,
+          "position": [
+            -359.7962646484375,
+            140,
+            -12.109883308410645
+          ],
+          "heading": [
+            0.03366081789135933,
+            0,
+            -0.9994333386421204
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 60.505553007125854,
+          "position": [
+            -169.43206787109375,
+            140,
+            -317.63623046875
+          ],
+          "heading": [
+            0.88233482837677,
+            0,
+            -0.4706222414970398
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 75.50671195983887,
+          "position": [
+            190.70858764648438,
+            140,
+            -305.3362731933594
+          ],
+          "heading": [
+            0.8481744527816772,
+            0,
+            0.5297170877456665
+          ],
+          "roundId": 1
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 90.50616192817688,
+          "position": [
+            359.78375244140625,
+            140,
+            12.476381301879883
+          ],
+          "heading": [
+            -0.03469623252749443,
+            0,
+            0.9993982315063477
+          ],
+          "roundId": 1
+        },
+        {
+          "health": 0,
+          "reason": "AircraftDestroyed"
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830545.23041
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830545.23041
+        },
+        {
+          "groundDisplacementStuds": 10.081245422363281,
+          "operatorId": -2,
+          "roundId": 2
+        },
+        {
+          "projection": {
+            "originErrorStuds": 0,
+            "projectionFrame": 1,
+            "replicaErrorStuds": 0
+          },
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.22475600242614746,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830545.23041,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.04815983772277832,
+            "preDeadlineFrames": 287
+          },
+          "blackout": {
+            "leaks": 0,
+            "thermalFrames": 0,
+            "frames": 293,
+            "aircraftFrames": 0
+          }
+        },
+        {
+          "ground": true,
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.1473829746246338,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830545.23041,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.08338284492492676,
+            "preDeadlineFrames": 286
+          }
+        },
+        {
+          "revealLateSeconds": 0.004172801971435547,
+          "poseErrorStuds": 0,
+          "roundId": 2
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Ground",
+          "rotating": 4,
+          "fov": 70,
+          "elapsedSeconds": 0.8109960556030273,
+          "position": [
+            359.46099853515625,
+            140,
+            19.692153930664062
+          ],
+          "heading": [
+            -0.05470767617225647,
+            0,
+            0.9985027313232422
+          ],
+          "roundId": 2
+        },
+        {
+          "maskErrors": 0,
+          "visiblePieces": 316,
+          "aircraftReplicas": 1,
+          "role": "Gunship",
+          "rotating": 4,
+          "fov": 30,
+          "elapsedSeconds": 1.3425540924072266,
+          "position": [
+            358.4425354003906,
+            140,
+            33.45068359375
+          ],
+          "heading": [
+            -0.0929543524980545,
+            0,
+            0.9956703186035156
+          ],
+          "roundId": 2
+        }
+      ],
+      "clientSmoke": {
+        "-1": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+        "-2": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}"
+      },
+      "completedRoundIds": [
+        1,
+        2
+      ],
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":218,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":218}",
+      "suite": "P28-multiplayer",
+      "failed": 0,
+      "discovered": 13
+    }
+  },
+  "facts": [
+    {
+      "capture": "p28-final-ground-reveal",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.49173903465270996,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 112.09925842285156,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          -148.01300048828125,
+          1591.8511962890625,
+          -147.80723571777344
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999719858169556,
+      "aircraftPosition": [
+        359.80889892578125,
+        140,
+        11.728479385375977
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-operator-30",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.4108550548553467,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0.8456134796142578,
+      "wreck": {
+        "viewport": [
+          426.0189208984375,
+          179.49124145507812,
+          519.4921264648438
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 30,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.00109870545566082,
+      "aircraftPosition": [
+        359.859375,
+        140,
+        10.061232566833496
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-operator-40",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 2.6625778675079346,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0.8155504465103149,
+      "wreck": {
+        "viewport": [
+          415.44854736328125,
+          222.42318725585938,
+          510.687255859375
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 40,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.0010547339916229248,
+      "aircraftPosition": [
+        353.8570251464844,
+        140,
+        66.2208251953125
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-5",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 5.626693964004517,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 175.6607666015625,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          15841.9208984375,
+          1636.9610595703125,
+          14.59501838684082
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999946355819702,
+      "aircraftPosition": [
+        332.83837890625,
+        140,
+        137.18092346191406
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-15",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 15.276543855667114,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 370.0216064453125,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          1345.643798828125,
+          515.673095703125,
+          236.7233123779297
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999990463256836,
+      "aircraftPosition": [
+        174.1708526611328,
+        140,
+        315.0627136230469
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-30",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 30.274977922439575,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 612.8167114257812,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          767.58544921875,
+          435.3388366699219,
+          424.9906311035156
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999992847442627,
+      "aircraftPosition": [
+        -185.75601196289062,
+        140,
+        308.3742980957031
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-45",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 45.60754203796387,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 699.9818725585938,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          486.08538818359375,
+          422.1888427734375,
+          470.2177734375
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999992847442627,
+      "aircraftPosition": [
+        -359.7026672363281,
+        140,
+        -14.628602027893066
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-60",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 60.07325291633606,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 608.1939697265625,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          183.4307861328125,
+          439.45330810546875,
+          376.3782958984375
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999991655349731,
+      "aircraftPosition": [
+        -178.94970703125,
+        140,
+        -312.3731689453125
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-75",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 75.2742669582367,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 357.9002990722656,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          -865.740966796875,
+          549.7222290039062,
+          149.88963317871094
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999989867210388,
+      "aircraftPosition": [
+        185.72772216796875,
+        140,
+        -308.3913269042969
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-84",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 84.05625486373901,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 181.0919952392578,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          5207.28369140625,
+          376.952392578125,
+          -47.77639389038086
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 1,
+      "aircraftPosition": [
+        329.1916809082031,
+        140,
+        -145.7148895263672
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-ground-88",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 88.30735802650452,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 118.49185943603516,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          1691.688720703125,
+          1137.016357421875,
+          -150.89324951171875
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 1,
+      "aircraftPosition": [
+        357.458740234375,
+        140,
+        -42.69947052001953
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-results-Ground",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 91.48908400535583,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Results",
+      "distance": 208.47642517089844,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          10140.79296875,
+          243.97555541992188,
+          -32.449466705322266
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.21686460077762604,
+      "aircraftPosition": [
+        359.2406005859375,
+        140,
+        23.370725631713867
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-results-Gunship",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 91.57450795173645,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Results",
+      "distance": 208.47618103027344,
+      "wreck": {
+        "viewport": [
+          10141.7060546875,
+          241.06423950195312,
+          -32.44630432128906
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.21716320514678955,
+      "aircraftPosition": [
+        359.2406005859375,
+        140,
+        23.370725631713867
+      ],
+      "roundId": 1
+    },
+    {
+      "capture": "p28-final-replay-Gunship",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.5755331516265869,
+      "role": "Gunship",
+      "round": 2,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0.8183717727661133,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          421.88543701171875,
+          179.831298828125,
+          518.9523315429688
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 30,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.001040387898683548,
+      "aircraftPosition": [
+        359.7186584472656,
+        140,
+        14.230123519897461
+      ],
+      "roundId": 2
+    },
+    {
+      "capture": "p28-final-replay-Ground",
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.494340181350708,
+      "role": "Ground",
+      "round": 2,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 109.4003677368164,
+      "wreck": {
+        "viewport": [
+          9293.1015625,
+          -264.88995361328125,
+          -25.46978187561035
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.24961525201797485,
+      "aircraftPosition": [
+        359.7952575683594,
+        140,
+        12.140156745910645
+      ],
+      "roundId": 2
+    }
+  ],
+  "phases": [
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 4.204012155532837,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 238.06036376953125,
+      "wreck": {
+        "viewport": [
+          10139.7607421875,
+          237.13565063476562,
+          -32.452735900878906
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.5165140628814697,
+      "aircraftPosition": [
+        344.6709289550781,
+        140,
+        103.93241882324219
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 4.803179025650024,
+      "role": "Waiting",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 247.0477294921875,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.5522381067276001,
+      "aircraftPosition": [
+        340.155029296875,
+        140,
+        117.87517547607422
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 4.889791965484619,
+      "role": "Waiting",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 248.68531799316406,
+      "wreck": {
+        "viewport": [
+          10139.7529296875,
+          237.13717651367188,
+          -32.452762603759766
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.5578662157058716,
+      "aircraftPosition": [
+        339.319091796875,
+        140,
+        120.2603759765625
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 5.420814037322998,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 257.7602844238281,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.5852338671684265,
+      "aircraftPosition": [
+        334.60858154296875,
+        140,
+        132.80474853515625
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 5.338454961776733,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 256.0118408203125,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.5804144144058228,
+      "aircraftPosition": [
+        335.5265808105469,
+        140,
+        130.4680633544922
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 5.87000298500061,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 265.5813903808594,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6045814156532288,
+      "aircraftPosition": [
+        330.4393615722656,
+        140,
+        142.86300659179688
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 5.955986976623535,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 267.4317932128906,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6086868643760681,
+      "aircraftPosition": [
+        329.4377136230469,
+        140,
+        145.15785217285156
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 6.554274082183838,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 278.9482727050781,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6308873295783997,
+      "aircraftPosition": [
+        323.0699768066406,
+        140,
+        158.82630920410156
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 6.471903085708618,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 276.9925537109375,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 3,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6274861097335815,
+      "aircraftPosition": [
+        324.167724609375,
+        140,
+        156.57357788085938
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 6.989104986190796,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 287.2916259765625,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6439529657363892,
+      "aircraftPosition": [
+        318.3105773925781,
+        140,
+        168.16175842285156
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 12.511439085006714,
+      "role": "Waiting",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 412.1818542480469,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.7001996636390686,
+      "aircraftPosition": [
+        231.82254028320312,
+        140,
+        275.42388916015625
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 13.742408037185669,
+      "role": "Waiting",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 441.5534362792969,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.695011556148529,
+      "aircraftPosition": [
+        207.27210998535156,
+        140,
+        294.3437805175781
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 14.170345067977905,
+      "role": "Waiting",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 451.8638610839844,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6922696232795715,
+      "aircraftPosition": [
+        198.27239990234375,
+        140,
+        300.4797058105469
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 14.856714963912964,
+      "role": "Ground",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 468.46002197265625,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 150,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.686960756778717,
+      "aircraftPosition": [
+        183.36964416503906,
+        140,
+        309.79925537109375
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 15.390444040298462,
+      "role": "Waiting",
+      "round": 0,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Lobby",
+      "distance": 481.0631408691406,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.6822388768196106,
+      "aircraftPosition": [
+        171.70941162109375,
+        140,
+        316.4109191894531
+      ],
+      "roundId": 0
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Deploying",
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Deploying",
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Scatter",
+      "wreck": {
+        "viewport": [
+          -324.819091796875,
+          185.4923553466797,
+          71.86726379394531
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Scatter",
+      "wreck": {
+        "viewport": [
+          7176.94921875,
+          226.13404846191406,
+          -46.94110870361328
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.49173903465270996,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 112.09925842285156,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          -148.01300048828125,
+          1591.8511962890625,
+          -147.80723571777344
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9999719858169556,
+      "aircraftPosition": [
+        359.80889892578125,
+        140,
+        11.728479385375977
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.4108550548553467,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0.8456134796142578,
+      "wreck": {
+        "viewport": [
+          426.0189208984375,
+          179.49124145507812,
+          519.4921264648438
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 30,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.00109870545566082,
+      "aircraftPosition": [
+        359.859375,
+        140,
+        10.061232566833496
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 2.6625778675079346,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0.8155504465103149,
+      "wreck": {
+        "viewport": [
+          415.44854736328125,
+          222.42318725585938,
+          510.687255859375
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 40,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.0010547339916229248,
+      "aircraftPosition": [
+        353.8570251464844,
+        140,
+        66.2208251953125
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 90.93938684463501,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 111.03458404541016,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          290.3387451171875,
+          1496.327392578125,
+          -172.72537231445312
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 995,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.9984246492385864,
+      "aircraftPosition": [
+        359.2668151855469,
+        140,
+        22.964040756225586
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 90.85741090774536,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0,
+      "wreck": {
+        "viewport": [
+          447.7765197753906,
+          218.99212646484375,
+          517.9474487304688
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player1",
+      "health": 995,
+      "fov": 40,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": {
+        "m": null,
+        "t": "numeric",
+        "v": "nan"
+      },
+      "aircraftPosition": [
+        359.3948974609375,
+        140,
+        20.8640079498291
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 91.48908400535583,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Results",
+      "distance": 208.47642517089844,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          10140.79296875,
+          243.97555541992188,
+          -32.449466705322266
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.21686460077762604,
+      "aircraftPosition": [
+        359.2406005859375,
+        140,
+        23.370725631713867
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 91.57450795173645,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Results",
+      "distance": 208.47618103027344,
+      "wreck": {
+        "viewport": [
+          10141.7060546875,
+          241.06423950195312,
+          -32.44630432128906
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.21716320514678955,
+      "aircraftPosition": [
+        359.2406005859375,
+        140,
+        23.370725631713867
+      ],
+      "roundId": 1
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Ground",
+      "round": 1,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Results",
+      "cameraClearance": true,
+      "player": "Player2",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Gunship",
+      "round": 1,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Results",
+      "player": "Player1",
+      "health": 0,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Gunship",
+      "round": 2,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Scatter",
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          10141.4794921875,
+          236.51870727539062,
+          -32.446929931640625
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Ground",
+      "round": 2,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Scatter",
+      "wreck": {
+        "viewport": [
+          10141.623046875,
+          236.4672088623047,
+          -32.446441650390625
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.5755331516265869,
+      "role": "Gunship",
+      "round": 2,
+      "masked": 316,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 0.8183717727661133,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          421.88543701171875,
+          179.831298828125,
+          518.9523315429688
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": true
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 30,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": 0.001040387898683548,
+      "aircraftPosition": [
+        359.7186584472656,
+        140,
+        14.230123519897461
+      ],
+      "roundId": 2
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 0.494340181350708,
+      "role": "Ground",
+      "round": 2,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Active",
+      "distance": 109.4003677368164,
+      "wreck": {
+        "viewport": [
+          9293.1015625,
+          -264.88995361328125,
+          -25.46978187561035
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.24961525201797485,
+      "aircraftPosition": [
+        359.7952575683594,
+        140,
+        12.140156745910645
+      ],
+      "roundId": 2
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 2.743391990661621,
+      "role": "Gunship",
+      "round": 2,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Results",
+      "distance": 210.03515625,
+      "cameraClearance": true,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.2651728093624115,
+      "aircraftPosition": [
+        358.36285400390625,
+        140,
+        34.29364776611328
+      ],
+      "roundId": 2
+    },
+    {
+      "visible": 316,
+      "aircraftCount": 1,
+      "meshCount": 21,
+      "elapsed": 2.8278369903564453,
+      "role": "Ground",
+      "round": 2,
+      "masked": 0,
+      "queries": 269,
+      "phase": "Results",
+      "distance": 210.03515625,
+      "wreck": {
+        "viewport": [
+          10139.76171875,
+          237.13534545898438,
+          -32.45273208618164
+        ],
+        "path": "Workspace.World.Battlefield.Buildings.Foundry.HerculesWreck",
+        "onScreen": false
+      },
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ],
+      "pointing": -0.2651728093624115,
+      "aircraftPosition": [
+        358.36285400390625,
+        140,
+        34.29364776611328
+      ],
+      "roundId": 2
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Gunship",
+      "round": 2,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Results",
+      "cameraClearance": true,
+      "player": "Player2",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    },
+    {
+      "visible": 0,
+      "aircraftCount": 0,
+      "meshCount": 0,
+      "role": "Ground",
+      "round": 2,
+      "masked": 0,
+      "queries": 0,
+      "phase": "Results",
+      "player": "Player1",
+      "health": 1000,
+      "fov": 70,
+      "viewport": [
+        1081,
+        653
+      ]
+    }
+  ],
+  "edgeResult": {
+    "players": 2,
+    "round": 1,
+    "geometry": [
+      {
+        "outside": {
+          "hit": false
+        },
+        "inside": {
+          "position": [
+            4.1887640953063965,
+            0,
+            -24.5
+          ],
+          "partGroup": "RoundedQueries",
+          "name": "Rounded flight deck query 4.3",
+          "hit": true
+        },
+        "label": "flight deck"
+      },
+      {
+        "outside": {
+          "hit": false
+        },
+        "inside": {
+          "position": [
+            -17.500011444091797,
+            1.524993896484375,
+            -10.399999618530273
+          ],
+          "partGroup": "RoundedQueries",
+          "name": "Port2 nacelle query 3.1",
+          "hit": true
+        },
+        "label": "Port2 nacelle"
+      },
+      {
+        "outside": {
+          "hit": false
+        },
+        "inside": {
+          "position": [
+            -0.00000898220605449751,
+            1.5341339111328125,
+            29.220001220703125
+          ],
+          "partGroup": "RoundedQueries",
+          "name": "Tapered tail cone query 9.1",
+          "hit": true
+        },
+        "label": "tail cone"
+      }
+    ],
+    "phase": "Active"
+  }
+}

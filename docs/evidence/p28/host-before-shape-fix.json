@@ -1,0 +1,108 @@
+{
+  "source": {
+    "commit": "b0d1de59e395fdda9041fbda79d87bcbd491328f",
+    "tree": "ed2bb0f87e21ece7577392963ca98d3f8665754c"
+  },
+  "githubSource": "cf864e64a90afa7c79509de46434efe8585ebc51",
+  "environment": {
+    "machine": "arm64",
+    "python": "3.15.2",
+    "system": "Darwin"
+  },
+  "toolchain": {
+    "engine_definitions": {
+      "bytes": 851435,
+      "path": ".tools/globalTypes.d.luau",
+      "sha256": "2857efa8245485f8c25c19c018ee1ef9b46afab4efd2ea70fc3257cd3faf7080"
+    },
+    "rokit_pins": {
+      "bytes": 265,
+      "path": "rokit.toml",
+      "sha256": "772b28599dc2178bb6152b036c7a1c6a8e0002db7504dc5bf59faa5ad7584519"
+    },
+    "versions": {
+      "luau-lsp": "1.70.1",
+      "lune": "0.11.1",
+      "rojo": "7.7.1",
+      "selene": "0.32.0",
+      "stylua": "2.6.0",
+      "wally": "0.3.2"
+    },
+    "wally_lock": {
+      "bytes": 294,
+      "path": "wally.lock",
+      "sha256": "1febdf80e7d0d7d3de844aee418e3bb31f21b64bd6da44bd44a8332716c18618"
+    }
+  },
+  "command": "python3 scripts/prepare_release.py",
+  "hostGate": {
+    "command": "python3 scripts/verify.py",
+    "result": "passed",
+    "runtime_scripts_matched": 78
+  },
+  "counts": {
+    "unit": 97,
+    "integration": 100,
+    "tooling": 27,
+    "assets": 73
+  },
+  "verification": [
+    "format",
+    "lint",
+    "strict types",
+    "failure probes",
+    "release and test reconstruction",
+    "release isolation"
+  ],
+  "release": {
+    "bytes": 157546644,
+    "instances": 27600,
+    "mapping": {
+      "bytes": 1547,
+      "path": "default.project.json",
+      "sha256": "f7ede7a5c1efa03a182f8b4e80ef0400de1767fce4ed256564f95d7cfb3504bc"
+    },
+    "path": "build/game.rbxlx",
+    "sha256": "f671c7f69a54ccfc09b3efc1e2515ff0dfb5c280bdee40feb4954518130e0dd8"
+  },
+  "studioTest": {
+    "bytes": 159312675,
+    "instances": 27823,
+    "mapping": {
+      "bytes": 3013,
+      "path": "test.project.json",
+      "sha256": "a757d7b6846b406c6b3d7e33e6283bdcc400c24f8f9717e638ebb2cc86c94100"
+    },
+    "path": "build/tests.rbxlx",
+    "sha256": "1fe7f489a981a3947688597b733a771ba4c19110d53285726c379ae9fe62db98"
+  },
+  "blenderCommand": "blender -b --python-exit-code 1 -P scripts/c130/reimport.py",
+  "blender": {
+    "case": "P28BlenderReopen",
+    "blender": "5.3.0",
+    "masterMeshObjects": 314,
+    "glbMeshObjects": 314,
+    "materials": [
+      "Charcoal",
+      "Collar",
+      "Controls",
+      "Crimson",
+      "Crimson scuff",
+      "Engine seams",
+      "Glazing",
+      "Graphite",
+      "Lower panels",
+      "Port marker",
+      "Propeller",
+      "Propeller sweep",
+      "Slate paint",
+      "Starboard marker",
+      "Tip paint",
+      "Upper panels"
+    ],
+    "maximumBoundErrorStuds": 1.9e-06,
+    "externalDependencies": 0,
+    "outwardNormals": true,
+    "passed": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "studio": "tests.rbxlx",
+  "version": "0.748.0.7481526",
+  "placeId": 0,
+  "platform": "macOS 27.2.1 arm64",
+  "source": "3d3064d555b9376d71f9c160df7c0b4b4c3a8305",
+  "tree": "d06fb35fff45d463dd0aa313fa350138f75f618d",
+  "githubSource": "ee5061e5797466b976d86132a5566e961fe926dd",
+  "method": "SHA-256 comparison of Studio LuaSourceContainer contents with every mapped file in the Rojo test sourcemap. A reversible native Rojo snapshot supplied the differing scripts and C130 definition into this separate local test document. Its live plugin was disconnected.",
+  "scripts": {
+    "tracked": 183,
+    "installedDependencies": 16,
+    "expected": 199,
+    "different": []
+  },
+  "aircraftDefinitionSha256": "15795f822101c80827c231b0db5983bbf9253b5749bcd3b6c1a75ca91d4f4c31",
+  "snapshot": {
+    "bytes": 183621,
+    "sha256": "a76486b6602a90babf004d8886962a1aff280191dee19519c960aefadf27f2fb"
+  }
+}
