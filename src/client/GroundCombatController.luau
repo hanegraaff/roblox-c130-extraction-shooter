@@ -43,10 +43,10 @@ function GroundCombatController.projectAim(
 end
 
 -- Returns position/size in the owning ScreenGui's content coordinates.
--- Phone readiness shares the compact top strip with the round clock.
+-- Phone readiness stays on the top-right edge, clear of the raised aim column.
 function GroundCombatController.statusLayout(touch: boolean): (UDim2, UDim2)
     if touch then
-        return UDim2.new(0.5, 0, 0, 4), UDim2.fromOffset(178, 20)
+        return UDim2.new(1, -8, 0, 4), UDim2.fromOffset(178, 20)
     end
     return UDim2.new(0.5, 0, 1, -100), UDim2.fromOffset(330, 36)
 end
@@ -422,7 +422,7 @@ function GroundCombatController.new(
                         gui.ScreenInsets = if touch
                             then Enum.ScreenInsets.CoreUISafeInsets
                             else Enum.ScreenInsets.DeviceSafeInsets
-                        label.AnchorPoint = Vector2.new(0.5, if touch then 0 else 1)
+                        label.AnchorPoint = if touch then Vector2.new(1, 0) else Vector2.new(0.5, 1)
                         label.Position, label.Size = GroundCombatController.statusLayout(touch)
                         label.TextSize = if touch then 13 else 16
                         healthLabel.Size =
@@ -554,7 +554,7 @@ function GroundCombatController.new(
                     end
                     if humanoid then
                         healthLabel.Text = string.format(
-                            if touch then "HP  %d / %d" else "YOUR HEALTH  %d / %d",
+                            if touch then "HP %d/%d" else "YOUR HEALTH  %d / %d",
                             math.ceil(humanoid.Health),
                             math.ceil(humanoid.MaxHealth)
                         )

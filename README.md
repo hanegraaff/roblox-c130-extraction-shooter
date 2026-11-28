@@ -8,13 +8,13 @@ One player operates a circling C-130 while a team of 1–9 Ground players tries 
 
 ## Play a round
 
-Rounds start in the protected, walkable lobby. By default, with 2–10 players, the server assigns one operator and deploys everyone else as one ground team. Once the deployed avatars are ready, Ground gets **20 seconds** to spread out, take cover or pick up and drop a launcher. Ground sees **C-130 arrives in 20** over the battlefield. The operator sees the same countdown on black. Both sides can fire when the aircraft appears and begins to circle the edge of the 720-stud battlefield. The ten-minute combat clock starts at that moment. Friendly fire is off.
+Rounds start in the protected, walkable lobby. By default, with 2–10 players, the server assigns one operator and deploys everyone else as one ground team. Once the deployed avatars are ready, Ground gets **20 seconds** to spread out, take cover or pick up and drop a launcher. Ground sees **C-130 arrives in 20** on desktop or the compact **C-130 in 20s** on touch. The operator sees the same time on a full black screen that clears when the thermal view is ready. Both sides can fire when the aircraft appears and begins to circle the edge of the 720-stud battlefield. The ten-minute combat clock starts at that moment. Friendly fire is off.
 
 The stone bust faces you as you arrive. Turn left for the theater and its television, or right for the gallery's two photographs and four oil portraits.
 
 - **Ground team.** Follow the trails from any Sandbreak exit. Pick up a launcher inside the Salt Flats hangar, outside Vesper Radar’s south gate, outside the military depot by the parking lot, or inside the Prism Seedship on its lower deck. Buildings and large rock formations provide cover. Keep your M-7 when you pick up a launcher. The rifle has a **30-round magazine**, **unlimited reserve** and a **two-second reload**. Each launcher reloads automatically in **15 seconds** after firing. Its timer follows the launcher through weapon switches, drops and transfers. A living teammate can recover it after a drop, death or disconnect if the round continues. If the drop position is invalid, the launcher returns to its original anchor. All four launchers start loaded each round.
 - **C-130 operator.** Scan for bright white Ground silhouettes against dark grayscale terrain and scenery in the thermal view. The aircraft body is hidden from its operator’s targeting view while remaining visible to Ground players. The 30mm GAU-23/A Chain Gun gives a tighter view. The 105mm M102 Howitzer gives a wider view and blast, then automatically reloads **12 seconds** after firing. Weapon selection changes zoom and preserves the pan, ammunition and reload timing for each weapon. WASD or touch arrows pan across the level’s 720 × 720-stud square. The square edges stop movement on that axis while allowing movement along the edge and immediate reversal. Releasing the controls holds the target point on the map as the plane continues its orbit.
-- **After elimination.** Ground death, character reset or surrender consumes your round life during the head start or combat and sends you back to the lobby. Players joining or reconnecting mid-round also start in the lobby. Once the aircraft arrives, walk up to the theater TV and choose **Spectate** to follow a living Ground player. The still image stays on the TV. Choose **Exit spectating** to take control of your avatar at the TV. An operator who resets during the head start or combat gets a new protected station body and keeps the role and aircraft health.
+- **After elimination.** Ground death or character reset consumes your round life during the head start or combat and sends you back to the lobby. Players joining or reconnecting mid-round also start in the lobby. Once the aircraft arrives, walk up to the theater TV and choose **Spectate** to follow a living Ground player. The still image stays on the TV. Choose **Exit spectating** to take control of your avatar at the TV. An operator who resets during the head start or combat gets a new protected station body and keeps the role and aircraft health.
 
 The ground team wins when it destroys the plane. The C-130 wins by eliminating every ground player or surviving until time runs out. A lethal impact must land before the deadline. The ground team wins if the plane is destroyed and the last ground player is eliminated in the same pre-deadline step. A rocket already in flight can still hit after its shooter dies while the round remains active.
 
@@ -22,27 +22,42 @@ If the operator leaves while a ground player is alive, the ground team wins by f
 
 ## Controls
 
-| Action | Ground player | C-130 operator |
+### Ground
+
+Mouse movement turns your view and your avatar follows the horizontal aim while staying upright. The rifle and launcher both aim through the same raised crosshair, which stays horizontally centered.
+
+| Action | Desktop | Touch |
 | --- | --- | --- |
-| Move and aim | WASD to move, Space to jump, mouse or touch camera to aim | WASD or touch arrows pan, with A left and D right. The mouse or a separate touch aims |
-| Recenter view | — | R / Recenter |
-| Select weapon | Native tool slots or M-7 / ROCKET touch buttons | 1 / 30mm button or 2 / 105mm button |
-| Fire | Hold left mouse / FIRE while equipped | Hold left mouse / FIRE at a valid surface |
-| Reload | M-7 with R / RELOAD, launcher reloads automatically | Automatic for each weapon |
-| Pick up or drop launcher | E / PICK UP within reach, G / DROP while carrying | — |
-| Surrender | **Surrender to lobby** during the head start or combat | — |
+| Move and jump | **WASD** relative to the view, **Space** to jump | Movement stick and jump button |
+| Look and aim | Move the mouse | Drag on the battlefield view |
+| Zoom | Mouse wheel | Roblox camera zoom gesture |
+| Select a weapon | Native tool slots | **M-7** or **ROCKET** when available |
+| Fire | Hold left mouse with a weapon equipped | Hold **FIRE** with a weapon equipped |
+| Reload | **R** for the M-7 | **RELOAD** for the M-7 |
+| Pick up or drop a launcher | **E** within reach, **G** while carrying | **PICK UP** within reach, **DROP** while carrying |
+| Free the cursor | Hold **Left Alt** to use buttons | — |
 
-At the theater TV, use the displayed **Spectate** prompt on keyboard or touch. While watching, select **Previous** or **Next**, or press **[** or **]** on desktop, to switch among living Ground players when more than one is available.
+### C-130 operator
 
-Press **P** or select **Settings** to adjust **Effects** and **Camera shake**. Use **↑/↓** to select a setting and **←/→** to change it, or click the setting to cycle through **Off**, **Reduced** and **Full**. Effects start at Full and camera shake at Reduced. Your choices last for the play session. The Effects setting controls cue sounds, HUD pulses, the aircraft destruction flash, impact bursts and rocket smoke. Shake briefly affects the lobby camera after aircraft destruction.
+| Action | Desktop | Touch |
+| --- | --- | --- |
+| Pan | **WASD**, with **A** left and **D** right | Directional arrows |
+| Aim | Move the mouse | Touch and drag on the battlefield view. Use a separate touch to pan at the same time |
+| Select a weapon | **1** for 30mm, **2** for 105mm | **30mm** or **105mm** |
+| Fire | Hold left mouse at a valid surface | Hold **FIRE** at a valid surface |
+| Recenter | **R** | **Recenter** |
 
-Both roles see the timer, remaining Ground lives and aircraft health during combat. Ground sees the equipped weapon's readiness and launcher ownership or recovery. The rifle shows its loaded rounds and unlimited reserve as **30 / ∞** when full. Desktop and touch both keep the loaded count visible during reload. The desktop HUD also shows personal health. The operator sees the selected weapon's name, zoom and readiness. Incoming fire, impacts and round results have text cues at every effects setting. The aircraft health bar shrinks from green through amber to red as damage accumulates, with numeric health for both roles. Gunship reports and impact sounds arrive with a distance delay. The M-7 has a positional report, and rockets have a launch rush, exhaust trail and separate impact sound.
+The launcher and both aircraft weapons reload automatically. During combat, both roles see the clock, the number of Ground players still alive and the aircraft's health. Ground also sees personal health and the equipped weapon's readiness. The rifle shows **30 / ∞** when full and keeps its loaded count visible during reload. On touch, the HUD keeps status near the edges and shows launcher actions when they become available. The Roblox player list is hidden during touch combat and returns in the lobby. The operator sees the selected weapon and its ammunition or reload status.
+
+At the theater TV, use the **Spectate** prompt. While watching, use **Previous** or **Next** to switch between living Ground players when more than one is available. Desktop players can also press **[** or **]**.
+
+On desktop, press **P** or select **Settings** to adjust **Effects** and **Camera shake**. Use **↑/↓** to select a setting and **←/→** to change it, or click a setting to cycle through **Off**, **Reduced** and **Full**. Ground movement and firing pause while the menu is open. Choices last for the play session and start at Full effects and Reduced shake. Effects change cue sounds, pulses and impact visuals. Shake briefly affects the lobby camera after aircraft destruction.
 
 ## Battlefield cover
 
 Sandbreak and Salt Flats sit in yellow sand among stock boulders, cacti and dry brush. The trail toward Vesper turns to forest soil beneath pines and redwoods. The military depot sits beside worn asphalt, a striped parking lot and a line of telephone poles. South of Sandbreak, rust-red terrain fades into the desert and depot gravel. Follow the south trail to the landed Prism Seedship. Its twin stairs lead up to observation galleries, and the S-4 recovery bay on the lower deck holds the preserved alien. A shallow crater, boulders and low ridges surround the site. [District screenshots](docs/evidence/districts/README.md) · [Southern basin](docs/evidence/seedship-mars/basin.jpg)
 
-Salt Flats Hangar occupies the former Foundry site. The full-size hangar has twin aircraft bays, four accessible levels, and a walk-in C-130 wreck beside the apron. The wreck offers overhead cover until a direct howitzer hit or three uninterrupted seconds of 30mm hits destroy it. Vesper Array occupies the former Warehouse site. Four entrances open onto a courtyard beneath the radar dish. Twin stairs lead to the observation gallery. The dish and the strip beneath the gallery give temporary cover, and the open roof exposes much of the route to the aircraft. The detailed Outpost has a workshop, upstairs command room, balcony and exterior stairs. The ground camera moves closer inside its rooms as needed and restores the previous outdoor zoom at exit. The orange boundary marks the playable disk. Leaving it or falling below the map returns an active ground player to shelter.
+Salt Flats Hangar occupies the former Foundry site. The full-size hangar has twin aircraft bays, four accessible levels, and a walk-in C-130 wreck beside the apron. The wreck offers overhead cover until a direct howitzer hit or three uninterrupted seconds of 30mm hits destroy it. Vesper Array occupies the former Warehouse site. Four entrances open onto a courtyard beneath the radar dish. Twin stairs lead to the observation gallery. The dish and the strip beneath the gallery give temporary cover, and the open roof exposes much of the route to the aircraft. The detailed Outpost has a workshop, upstairs command room, balcony and exterior stairs. The Ground camera automatically moves closer as needed in the Outpost workshop and upstairs command room. It restores your previous zoom when you leave those rooms. The orange boundary marks the playable disk. Leaving it or falling below the map returns an active ground player to shelter.
 
 Ground players deploy inside the Sandbreak bunker at the original spawn site. Four entrances lead out past the roof breach, nearby vehicle wrecks, and radio relay. [Sandbreak import and review](assets/blender/spawn-bunker/IMPORT.md)
 
@@ -52,17 +67,15 @@ A howitzer shell bursts wherever it first hits the battlefield, including empty 
 
 ## Availability
 
-The integrated game is on `main`. The latest panel includes the lobby’s **Balance** panel for the experience owner and trusted testers. Once deployed, it lets them adjust health, damage, weapon timing, panel durability, round length, lobby intermission and minimum players across servers. The values in this guide are the shipped defaults. Medkit settings can be saved now for the planned pickups. [Owner guide](docs/balance.md)
+The integrated game and balance editor are on `main`. This P27 branch has the Ground mouse look, raised crosshair and compact touch HUD described here. Play the candidate locally in Studio. Its verification record tracks desktop, simulator and phone checks. Controller support and medkit pickups are planned. [P27 controls](plans/27-ground-aim-and-mobile-controls.md) · [Roadmap](roadmap.md)
 
-Ordinary local Studio Play uses the shipped defaults. Verification of the balance panel in a published private experience is pending. [Panel verification record](plans/26-live-balance-panel.md#completion-record)
-
-The legacy P12 implementation handoff is closed by user direction. A future Roblox release still needs destination and access checks, publication, real 6- and 10-player sessions, and live performance and soak checks. [P12 record](plans/12-mvp-release.md) · [Future release checklist](docs/release.md) · [Roadmap](roadmap.md)
+The lobby **Balance** panel lets the experience owner and trusted testers adjust health, damage, weapon timing, panel durability, round length, intermission and minimum players. Ordinary local Studio Play uses the defaults in this guide. The balance panel's private Roblox verification and the future live release checks are pending. [Owner guide](docs/balance.md) · [Panel verification](plans/26-live-balance-panel.md#completion-record) · [Future release checklist](docs/release.md)
 
 ## Set up locally
 
 Use macOS with **Git**, **Python 3.10+**, system **curl** and **Roblox Studio** for the complete workflow. Sign in to Studio and keep Play stopped while installing or connecting plugins. Setup requires network access to GitHub releases and the Wally registry. The automated tool setup also supports Linux arm64/x86_64. [Development prerequisites](docs/development.md#install-and-build-from-a-clean-clone)
 
-Use `main` for the integrated game and balance panel.
+Clone `main` for the integrated build. To try the P27 controls and HUD, use `--branch plan/27-ground-aim-and-mobile-controls` in the clone command and run the same setup steps.
 
 ```sh
 git clone --branch main https://github.com/hanegraaff/roblox-c130-extraction-shooter.git
@@ -73,7 +86,7 @@ export PATH="$HOME/.rokit/bin:$PATH"
 rojo plugin install
 ```
 
-On an existing clone, preserve your local edits, run `git fetch origin` and switch with `git switch main`. Run `git pull --ff-only` to update it, then run the same setup and verification commands from the repository root.
+On an existing clone, preserve your local edits and run `git fetch origin`. Switch with `git switch main` for the integrated build or `git switch plan/27-ground-aim-and-mobile-controls` for the P27 candidate. Run `git pull --ff-only` to update the selected branch, then run setup and verification from the repository root.
 
 For the editable lobby assembly, open `assets/blender/lobby-interior/waiting-lobby.blend` in Blender 5.3.0 and choose **Render → Render Image** from the saved arrival camera. [Room views and camera guide](assets/blender/lobby-interior/README.md)
 
@@ -132,6 +145,8 @@ rojo serve test.project.json --address 127.0.0.1 --port 34872
 5. Play through Results and inspect the lobby return and restored cover. **Reset test / apply settings** returns to the lobby or solo preview. The ordinary test panel supports quick replay, and the P23 harness checks the full intermission. Use **End Session** when finished. [P23 Studio procedure](docs/testing.md#run-the-p23-lobby-and-intermission-harness)
 
 To try the live settings controls locally, stop Play in the test document and enter `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26Panel")` in Studio’s Command Bar. Click **Play**, open **Balance** in the lobby, then save and apply a named preset. The first client is the test owner. Stop the session and clear the selector with `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", nil)`. [Test with a second player](docs/balance.md#try-it-in-studio) · [Automated panel check](docs/testing.md#verify-the-live-balance-panel)
+
+For P27, use one operated match and its replays to check Ground mouse look, indoor zoom, both touch roles and the arrival HUD. Record the shared observations once and link them from the relevant checks. [P27 Studio procedure](docs/testing.md#verify-p27-aim-and-mobile-hud)
 
 Use the three-client weapon balance procedure to test howitzer switching, launcher handover and shared damage, rifle reload feedback and equipment reset. Run the two-client gunship and aircraft-arrival regressions for impact behavior and pre-arrival fire gating. Stop Play and confirm source reached the same document before collecting fresh evidence. [Weapon balance checks](docs/testing.md#verify-p25-weapon-balance) · [Gunship checks](docs/testing.md#run-the-p05-gunship-combat-harness) · [Aircraft arrival checks](docs/testing.md#run-the-p24-aircraft-arrival-harness)
 

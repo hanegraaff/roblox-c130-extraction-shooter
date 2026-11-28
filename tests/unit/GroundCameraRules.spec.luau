@@ -6,10 +6,10 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
     local rules = candidate :: API
 
     test("P27 raised reticle uses the same fixed ratio at each viewport height", function()
-        assert(rules.reticleY(320) == 128, "compact aim row did not land at 40 percent")
-        assert(rules.reticleY(299) == 120, "fractional row did not round to a pixel")
-        assert(rules.reticleY(381) == 152, "wide phone aim used a fixed pixel offset")
-        assert(rules.reticleY(1080) == 432, "desktop aim used a fixed pixel offset")
+        assert(rules.reticleY(320) == 96, "compact aim row did not land at 30 percent")
+        assert(rules.reticleY(299) == 90, "fractional row did not round to a pixel")
+        assert(rules.reticleY(381) == 114, "wide phone aim used a fixed pixel offset")
+        assert(rules.reticleY(1080) == 324, "desktop aim used a fixed pixel offset")
     end)
 
     test("P27 avatar yaw follows the view through a full turn and rejects invalid headings", function()

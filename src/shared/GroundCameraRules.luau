@@ -64,7 +64,7 @@ end
 -- Rounds the fixed above-center aim row to the same pixel used by both
 -- the rendered crosshair and the camera ray. Avatar animation cannot move it.
 function GroundCameraRules.reticleY(viewportHeight: number): number
-    return math.floor(viewportHeight * 0.40 + 0.5)
+    return math.floor(viewportHeight * 0.30 + 0.5)
 end
 
 -- Converts a projected view direction into a Roblox yaw in [-π, π].

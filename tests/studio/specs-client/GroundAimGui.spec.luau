@@ -45,7 +45,7 @@ return function()
                         continue
                     end
                     local drawn = reticle.AbsolutePosition + reticle.AbsoluteSize * 0.5 + inset
-                    local raised = Vector2.new(viewport.X * 0.5, viewport.Y * 0.40)
+                    local raised = Vector2.new(viewport.X * 0.5, viewport.Y * 0.30)
                     assert((drawn - raised).Magnitude <= 1, "Ground reticle missed the raised aim row")
                     assert((drawn - pixels).Magnitude <= 1, "Ground reticle and firing pixels differ")
                     local ray = camera:ViewportPointToRay(pixels.X, pixels.Y)
@@ -234,6 +234,10 @@ return function()
         local presentation = require(replicated.Shared.PlayerPresentation)
         local oldRole, oldLife = player:GetAttribute("Role"), player:GetAttribute("Life")
         local backpackEnabled = starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack)
+        local wasPlayerListEnabled = starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.PlayerList)
+        local function playerListEnabled(): boolean
+            return starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.PlayerList)
+        end
         local originalRound = player.PlayerGui:FindFirstChild("RoundHUD")
         local originalRoundName = if originalRound then originalRound.Name else nil
         local camera = workspace.CurrentCamera
@@ -316,6 +320,7 @@ return function()
             if originalRound then
                 originalRound.Name = "P08PreservedRoundHUD"
             end
+            starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, true)
             player:SetAttribute("Role", "Ground")
             player:SetAttribute("Life", "Alive")
             local character = player.Character
@@ -482,6 +487,9 @@ return function()
                     -- compact text without injecting a world warning into combat.
                     warning.Text = "INCOMING FIRE"
                     warning.Visible = true
+                    local health = child(groundViewport, "GroundHealth")
+                    assert(health:IsA("TextLabel"), "Ground health readout missing")
+                    health.Text = "HP 1000/1000"
                 end
                 for _, layout in layouts do
                     local size, safeMin = layout.viewport, layout.min
@@ -643,6 +651,14 @@ return function()
                     assert(sourceGround:FindFirstChild("AircraftHit") == nil, "aircraft hit overlay remains")
                     assert(not string.find(status.Text, "HIT", 1, true), "old hit text remains")
                     assert(child(sourceGround, "Pickup").Visible ~= rocket, "pickup prompt ignores ownership")
+                    assert(
+                        playerListEnabled() ~= mode,
+                        "PlayerList visibility did not follow Ground input mode"
+                    )
+                    assert(
+                        not sourceRound:FindFirstChild("Surrender"),
+                        "Ground combat HUD still shows Surrender"
+                    )
                     if mode then
                         assert(child(sourceGround, "Fire").Visible, "equipped weapon lacks Fire")
                         assert(
@@ -658,16 +674,36 @@ return function()
                 end
             end
 
+            touch = false
+            frames()
+            assert(playerListEnabled(), "changing input mode did not restore the player list")
+
+            touch = true
             state:SetAttribute("Phase", "Scatter")
             state:SetAttribute("DeadlineSeconds", workspace:GetServerTimeNow() + 20)
             tool.Name, alternate.Name = "M-7 rifle", "Rocket launcher"
             setLauncher(false)
             frames()
             assert(child(sourceGround, "Pickup").Visible, "closed combat hid the actionable launcher pickup")
+            assert(not playerListEnabled(), "native player list lies over touch Scatter actions")
+            assert(not sourceRound:FindFirstChild("Surrender"), "Ground Scatter HUD still shows Surrender")
             for _, hidden in { "Reload", "Fire", "RifleStatus", "LauncherStatus", "Reticle" } do
                 assert(not child(sourceGround, hidden).Visible, "Scatter exposed " .. hidden)
             end
             checkLayout("Scatter", phone)
+
+            player:SetAttribute("Role", "Waiting")
+            player:SetAttribute("Life", "Waiting")
+            frames()
+            assert(playerListEnabled(), "leaving Ground did not restore the player list")
+
+            player:SetAttribute("Role", "Gunship")
+            player:SetAttribute("Life", "Alive")
+            frames()
+            assert(not playerListEnabled(), "native player list remained through operator arrival")
+            state:SetAttribute("Phase", "Active")
+            frames()
+            assert(not playerListEnabled(), "native player list lies over touch operator Recenter")
 
             player:SetAttribute("Role", "Waiting")
             player:SetAttribute("Life", "Waiting")
@@ -687,8 +723,17 @@ return function()
                     not sourceGround.Enabled and not child(sourceRound, "AircraftHealth").Visible,
                     "stale HUD in " .. phase
                 )
+                assert(playerListEnabled(), "player list not restored in " .. phase)
                 checkLayout(phase, phone)
             end
+
+            starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+            player:SetAttribute("Role", "Ground")
+            player:SetAttribute("Life", "Alive")
+            state:SetAttribute("Phase", "Scatter")
+            frames()
+            round.stop()
+            assert(not playerListEnabled(), "teardown enabled a previously disabled player list")
         end)
         if groundCopy then
             groundCopy:Destroy()
@@ -702,6 +747,7 @@ return function()
         if roundOwner then
             roundOwner.stop()
         end
+        starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, wasPlayerListEnabled)
         if restoreReadiness then
             restoreReadiness()
         end

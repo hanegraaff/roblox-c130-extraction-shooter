@@ -1,13 +1,14 @@
 --!strict
 --[=[
     RoundPanel: client-owned match HUD, desktop settings and spectator input.
-    Reads RoundState, aircraft public state and player attributes. Only the
-    existing eligible surrender intent is sent to the server. Local options
-    affect feedback and the Results overview. start/stop never yield and own
-    one GUI, subscriptions, camera and transient effects for this state Folder.
+    Reads RoundState, aircraft public state and player attributes. Local
+    options affect feedback and the Results overview. start/stop never yield and own
+    one GUI, subscriptions, camera, transient effects and temporary touch
+    PlayerList visibility for this state Folder.
 ]=]
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
 local UserInputService = game:GetService("UserInputService")
 local HttpService = game:GetService("HttpService")
 local Lifecycle = require(ReplicatedStorage.Shared.Lifecycle)
@@ -19,7 +20,6 @@ local WeaponAudio = require(script.Parent.WeaponAudio)
 local WeaponImpactEffects = require(script.Parent.WeaponImpactEffects)
 local SpectatorCamera = require(script.Parent.SpectatorCamera)
 local TheaterSpectating = require(script.Parent.TheaterSpectating)
-local GroundInput = require(script.Parent.GroundInput)
 
 local RoundPanel = {}
 type View = PlayerPresentation.View
@@ -160,15 +160,6 @@ function RoundPanel.new(
             cue.AnchorPoint = Vector2.new(0.5, 0)
             cue.TextColor3 = attention
             cue.Visible = false
-            local surrender = makeButton(
-                gui,
-                "Surrender",
-                "Surrender to lobby",
-                UDim2.new(1, -12, 0, 8),
-                UDim2.fromOffset(150, 36)
-            )
-            surrender.AnchorPoint = Vector2.new(1, 0)
-            surrender.TextSize = 13
             local settingsButton = makeButton(
                 gui,
                 "Settings",
@@ -243,7 +234,7 @@ function RoundPanel.new(
             local weaponAudio = WeaponAudio.new(state, player)
             local weaponImpacts = WeaponImpactEffects.new(state)
             local connections: { RBXScriptConnection } = {}
-            local sequence, oldRoundId = 0, -1
+            local oldRoundId = -1
             local seenResult: string? = nil
             local result: PlayerPresentation.Result? = nil
             local view: View = "Waiting"
@@ -251,6 +242,21 @@ function RoundPanel.new(
             local canCycle = false
             local settingsOpen = false
             local setting: Setting = "Effects"
+            local previousPlayerList: boolean? = nil
+
+            -- The native player list intercepts upper-right touch actions on
+            -- compact phones. Lease only that CoreGui setting while a living
+            -- touch player's round HUD is active, then restore its prior state.
+            local function setPlayerListSuppressed(suppress: boolean)
+                local priorEnabled = previousPlayerList
+                if suppress and priorEnabled == nil then
+                    previousPlayerList = StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.PlayerList)
+                    StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+                elseif not suppress and priorEnabled ~= nil then
+                    previousPlayerList = nil
+                    StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, priorEnabled)
+                end
+            end
 
             local function touchEnabled(): boolean
                 return if touchProvider then touchProvider() else UserInputService.TouchEnabled
@@ -316,7 +322,6 @@ function RoundPanel.new(
                 local touch = touchEnabled()
                 if roundId ~= oldRoundId then
                     oldRoundId = roundId
-                    sequence = 0
                     displayedHealth = nil
                 end
                 if view ~= nextView or (touch and settingsOpen) then
@@ -325,6 +330,11 @@ function RoundPanel.new(
                     updateMenu()
                 end
                 view = nextView
+                local playing = view == "Ground"
+                    or view == "GroundScatter"
+                    or view == "Operator"
+                    or view == "OperatorArrival"
+                setPlayerListSuppressed(gui.Enabled and touch and playing)
                 gui:SetAttribute("View", view)
                 label.Visible = not (view == "RoundLobby" and theaterInReach)
                 settingsButton.Visible = not touch and not arrival.blocking()
@@ -438,11 +448,6 @@ function RoundPanel.new(
                         then (if touch then waiting else title .. "\n" .. waiting)
                         else title
                 end
-                surrender.Visible = (view == "Ground" or view == "GroundScatter") and not settingsOpen
-                surrender.Position = UDim2.new(1, if touch then -8 else -12, 0, if touch then 4 else 8)
-                surrender.Size = UDim2.fromOffset(if touch then 124 else 150, if touch then 44 else 36)
-                surrender.Text = if touch then "Surrender" else "Surrender to lobby"
-
                 local reason: string? = nil
                 if view == "Results" or (intermission and intermission > 0) then
                     local value = state:GetAttribute("Result")
@@ -479,11 +484,13 @@ function RoundPanel.new(
 
                 local frame = effects.update(view, roundId, reason, os.clock(), effectScale)
                 local groundPhone = touch and view == "Ground"
-                cue.Position = UDim2.new(0.5, 0, 0, if groundPhone then 28 elseif touch then 62 else 8)
-                cue.Size = UDim2.fromOffset(
-                    if touch then 180 else 252,
-                    if groundPhone then 20 elseif touch then 22 else 34
-                )
+                cue.AnchorPoint = if groundPhone then Vector2.new(1, 0) else Vector2.new(0.5, 0)
+                cue.Position = if groundPhone
+                    then UDim2.new(1, -8, 0, 28)
+                    else UDim2.new(0.5, 0, 0, if touch then 62 else 8)
+                cue.Size = if groundPhone
+                    then UDim2.fromOffset(164, 20)
+                    else UDim2.fromOffset(if touch then 180 else 252, if touch then 22 else 34)
                 cue.TextSize = if touch then 12 else 16
                 cue.Text = if groundPhone and frame.text then "INCOMING FIRE" else frame.text or ""
                 cue.Visible = frame.text ~= nil
@@ -550,21 +557,6 @@ function RoundPanel.new(
             table.insert(connections, exitSpectating.Activated:Connect(theater.exit))
             table.insert(
                 connections,
-                surrender.Activated:Connect(function()
-                    local remote = state:FindFirstChild("Surrender")
-                    if
-                        (view == "Ground" or view == "GroundScatter")
-                        and not GroundInput.menuOpen(playerGui)
-                        and remote
-                        and remote:IsA("RemoteEvent")
-                    then
-                        sequence += 1
-                        remote:FireServer({ roundId = oldRoundId, sequence = sequence, action = "Surrender" })
-                    end
-                end)
-            )
-            table.insert(
-                connections,
                 UserInputService.InputBegan:Connect(function(input, processed)
                     if touchEnabled() or UserInputService:GetFocusedTextBox() then
                         return
@@ -596,6 +588,7 @@ function RoundPanel.new(
                 connections,
                 state.Destroying:Connect(function()
                     gui.Enabled = false
+                    setPlayerListSuppressed(false)
                 end)
             )
             table.insert(connections, RunService.Heartbeat:Connect(update))
@@ -606,6 +599,7 @@ function RoundPanel.new(
                 for _, connection in connections do
                     connection:Disconnect()
                 end
+                setPlayerListSuppressed(false)
                 effects.stop()
                 weaponAudio.stop()
                 weaponImpacts.stop()
