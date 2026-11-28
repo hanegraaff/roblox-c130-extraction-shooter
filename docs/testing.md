@@ -425,6 +425,19 @@ For the focused review, walk from the southern shelter along the teal west route
 
 Do not manually invoke another TestEZ run while the automatic runners are active. Rebuild or sync after source changes and run a fresh Play session to avoid require-cache and stale-document ambiguity. Keep engine reports tied to the tested source tree and build hash; required engine gaps remain open even if the host gate passes.
 
+## Verify P27 aim and mobile HUD
+
+Run the host gate from the source under test and collect a passing server report and each client report from the synced local `PlayersVsC130Tests` place. The P27 cases in `GroundAimGui.spec.luau` exercise upright facing and compare the production Ground and round HUDs in common coordinates, including 568×320, 567×299 and an asymmetric cutout fixture. They measure text, control and reticle bounds through phase changes, including every countdown value from 20 through 0. [Studio smoke procedure](#run-the-studio-smoke-suites)
+
+Use one operated match and its replays to collect the observations shared by the P27 criteria. Link each observation where it applies. Reuse a matching P24 report for the same candidate to cover arrival timing and cancellation. [P27 criteria and evidence](../plans/27-ground-aim-and-mobile-controls.md#acceptance) · [P24 arrival harness](#run-the-p24-aircraft-arrival-harness)
+
+1. Begin with two actual clients. On desktop, move the mouse, strafe and check upright facing on the other client. Check yaw wrap, pitch limits and the crosshair above the avatar at ordinary third-person zoom. Match both the M-7 and launcher aim to the raised reticle and check cover rejection.
+2. Open and close Settings and check cursor capture and movement. Use the mouse wheel outdoors, walk into and out of the Outpost workshop or upstairs command room, and verify that the previous zoom returns. Use a replay to switch roles, check independent operator pan and aim, and follow the lobby return and TV interaction.
+3. Use a compact landscape phone layout and a wider one with a cutout. Record the actual safe area, text and control bounds, including chat, inventory and movement. Compare before-and-after Ground Scatter captures. Follow the lobby, Scatter, combat, results and spectator views and check the operator's blackout until the thermal frame is ready.
+4. Operate the controls on a phone. On Ground, combine the stick, world drag and fire, then use a launcher pickup, switch weapons, reload and drop. On the operator, combine direction, aim and fire, then switch profiles and return to the lobby. Record the device and actual simultaneous gestures separately from simulator layout observations.
+
+Record the source, Studio or Roblox client version, actual client count, device and viewport with the shared evidence. Restore the device preview and return the owned Studio session to Edit when finished.
+
 ## Run the P24 aircraft arrival harness
 
 From the source under test, run `python3 scripts/verify.py`. Sync `test.project.json` to the confirmed local **PlayersVsC130Tests** document on port 34872. With Play stopped, run the following in the connected Studio MCP Edit context.
@@ -486,7 +499,7 @@ The test-only server harness starts `GameRuntime` with a two-player minimum and 
 
 The scenarios check replicated roles, phase, timer and HUD, late-join lobby return, Ground elimination and theater camera flow, and rejection of stale or ineligible combat commands. They also cover protected operator reset, elimination, timeout, actual departures, three map and character resets, and teardown while avatar loads drain. Each round perturbs cover and adds transient map content before checking pristine restoration. The [P03 record](../plans/03-rounds-and-roles.md) describes previously executed checks and their source.
 
-For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, countdown, surrender/reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 30°/40° profiles, then confirm role loss restores the normal camera. Exercise active gunship and M-7 firing and cover separately; launcher gameplay is available in the P08 candidate during a real active round. Record readability and camera observations separately from automated pass counts. End the test session when finished.
+For focused player review, use an ordinary three-client **Server & Clients** session without harness args. After the foundational suites, this starts a two-player-minimum loop with 60-second rounds, explicit start and three-second results. Observe both role views, the countdown, character reset, teammate camera, result and fresh lobby. The operator avatar remains at a protected station while its camera uses the inward thermal view. Check keys 1/2 and named buttons for coherent 30°/40° profiles, then confirm role loss restores the normal camera. Exercise active gunship and M-7 firing and cover separately; launcher gameplay is available in the P08 candidate during a real active round. Record readability and camera observations separately from automated pass counts. End the test session when finished.
 
 ## Run the P09 match outcome harness
 

@@ -1,186 +1,63 @@
 --!strict
--- P06: actual GUI layout and camera rays agree with ground aim on both input
--- modes. Uses the measured Studio inset and production projection adapter.
+-- R12/R26: actual Roblox GUI and camera projection for Ground aim, cleanup
+-- and phone layout. Synthetic viewports and facts do not operate native input.
 return function()
     local test = getfenv().it :: (string, () -> ()) -> ()
-    test("P06 ground mouse and touch reticles agree with viewport rays", function()
-        local players = game:GetService("Players")
+    test("P27 the raised Ground reticle and firing ray use the displayed camera", function()
+        local player = game:GetService("Players").LocalPlayer
         local guiService = game:GetService("GuiService")
         local runService = game:GetService("RunService")
-        local input = game:GetService("UserInputService")
-        local player = players.LocalPlayer
         local controller = require(player.PlayerScripts.Client.GroundCombatController)
-        local http = game:GetService("HttpService")
-        local playerGui = player.PlayerGui
         local gui = Instance.new("ScreenGui")
-        gui.Name = "GroundAimProjectionProbe"
-        -- Client smoke starts before the first character spawn can clear
-        -- resettable PlayerGui children. Match the production HUD lifetime.
         gui.ResetOnSpawn = false
-        gui.IgnoreGuiInset = true
+        gui.Name = "GroundAimProjectionProbe"
         local origin = Instance.new("Frame")
         origin.Size = UDim2.fromOffset(0, 0)
-        origin.BackgroundTransparency = 1
         origin.Parent = gui
-        local cross = Instance.new("TextLabel")
-        cross.Size = UDim2.fromOffset(24, 24)
-        cross.AnchorPoint = Vector2.new(0.5, 0.5)
-        cross.Parent = gui
-        gui.Parent = playerGui
+        local reticle = Instance.new("TextLabel")
+        reticle.Size = UDim2.fromOffset(24, 24)
+        reticle.AnchorPoint = Vector2.new(0.5, 0.5)
+        reticle.Parent = gui
+        gui.Parent = player.PlayerGui
         local ok, failure = pcall(function()
-            local deadline = os.clock() + 10
-            local ready = false
-            while os.clock() < deadline do
-                runService.RenderStepped:Wait()
-                local current = workspace.CurrentCamera
-                if current and current.ViewportSize.X >= 200 and current.ViewportSize.Y >= 200 then
-                    ready = true
-                    break
-                end
-            end
-            assert(ready, "camera viewport did not reach 200×200 within 10 seconds")
-            for _, mode in { "world", "native", "touch" } do
-                local layoutDeadline = os.clock() + 5
+            for _, insets in { Enum.ScreenInsets.DeviceSafeInsets, Enum.ScreenInsets.CoreUISafeInsets } do
+                gui.ScreenInsets = insets
+                local deadline = os.clock() + 10
                 repeat
-                    -- This disposable GUI is not driven by the production render
-                    -- callback. Let its origin/layout resolve before sampling it.
                     runService.RenderStepped:Wait()
-                    runService.RenderStepped:Wait()
-                    assert(gui.Parent == playerGui, "aim projection fixture detached before sampling")
                     local camera = workspace.CurrentCamera
-                    assert(camera, "current camera disappeared")
-                    local viewport = camera.ViewportSize
-                    local inset = guiService:GetGuiInset()
-                    local projectedOrigin = origin.AbsolutePosition
-                    local worldPoint = camera.CFrame:PointToWorldSpace(Vector3.new(6, 4, -100))
-                    local projected = camera:WorldToViewportPoint(worldPoint)
-                    local mouse = if mode == "world"
-                        then Vector2.new(projected.X, projected.Y)
-                        else input:GetMouseLocation()
-                    -- Native mouse and its engine UnitRay are sampled together,
-                    -- without rendering waits between them.
-                    local nativeRay = if mode == "native" then player:GetMouse().UnitRay else nil
-                    local pixels, offset =
-                        controller.projectAim(viewport, mouse, mode == "touch", inset, projectedOrigin)
-                    local actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
-                    local diagnostic = {
-                        mode = mode,
-                        viewport = { viewport.X, viewport.Y },
-                        inset = { inset.X, inset.Y },
-                        fov = camera.FieldOfView,
-                        cameraCFrame = { camera.CFrame:GetComponents() },
-                        mouse = { mouse.X, mouse.Y },
-                        pixels = { pixels.X, pixels.Y },
-                        world = { worldPoint.X, worldPoint.Y, worldPoint.Z },
-                        worldProjection = { projected.X, projected.Y, projected.Z },
-                        rayOrigin = { actualRay.Origin.X, actualRay.Origin.Y, actualRay.Origin.Z },
-                        rayDirection = { actualRay.Direction.X, actualRay.Direction.Y, actualRay.Direction.Z },
-                    }
-                    local detail = http:JSONEncode(diagnostic)
-                    if nativeRay then
-                        local rawRay = camera:ViewportPointToRay(mouse.X, mouse.Y)
-                        assert(
-                            rawRay.Direction.Unit:Dot(nativeRay.Direction.Unit) > 0.99999,
-                            "raw viewport ray disagrees with native Mouse.UnitRay: " .. detail
-                        )
-                        local nativePoint = nativeRay.Origin + nativeRay.Direction.Unit * 100
-                        local nativeProjection = camera:WorldToViewportPoint(nativePoint)
-                        local nativePixelError = (
-                            pixels - Vector2.new(nativeProjection.X, nativeProjection.Y)
-                        ).Magnitude
-                        assert(
-                            nativePixelError <= 1,
-                            "production aim differs from native Mouse.UnitRay by "
-                                .. tostring(nativePixelError)
-                                .. " pixels: "
-                                .. detail
-                        )
-                    end
-                    if mode == "world" then
-                        -- Compare the independently projected world point to the
-                        -- reprojected actual production ray in pixels. This tests
-                        -- integer rasterization independently of viewport FOV.
-                        local along = (worldPoint - actualRay.Origin).Magnitude
-                        local actualProjection =
-                            camera:WorldToViewportPoint(actualRay.Origin + actualRay.Direction.Unit * along)
-                        local errorPixels = (Vector2.new(actualProjection.X, actualProjection.Y) - mouse).Magnitude
-                        assert(
-                            errorPixels <= 1,
-                            "ground ray misses independently projected world point by "
-                                .. tostring(errorPixels)
-                                .. " pixels: "
-                                .. detail
-                        )
-                        -- The old double-inset subtraction must fail the same
-                        -- independent projection even on zero-inset machines.
-                        local oldRay = camera:ViewportPointToRay(mouse.X, mouse.Y - 58)
-                        local oldProjection =
-                            camera:WorldToViewportPoint(oldRay.Origin + oldRay.Direction.Unit * along)
-                        assert(
-                            (Vector2.new(oldProjection.X, oldProjection.Y) - mouse).Magnitude > 40,
-                            "old inset error was not detected: " .. detail
-                        )
-                    end
-                    cross.Position = offset
-                    runService.RenderStepped:Wait()
-                    runService.RenderStepped:Wait()
-                    assert(gui.Parent == playerGui, "aim projection fixture detached after moving reticle")
-                    local currentCamera = workspace.CurrentCamera
-                    local currentViewport = if currentCamera then currentCamera.ViewportSize else Vector2.zero
-                    local currentInset = guiService:GetGuiInset()
-                    local currentOrigin = origin.AbsolutePosition
-                    local drawn = cross.AbsolutePosition + cross.AbsoluteSize * 0.5 + currentInset
-                    local expected = if mode == "touch" then viewport * 0.5 else mouse
-                    local concise = string.format(
-                        "m=%s d=%.1f,%.1f e=%.1f,%.1f p=%.1f,%.1f o=%.1f,%.1f>%.1f,%.1f v=%.0f,%.0f>%.0f,%.0f i=%.0f,%.0f>%.0f,%.0f",
-                        mode,
-                        drawn.X,
-                        drawn.Y,
-                        expected.X,
-                        expected.Y,
-                        pixels.X,
-                        pixels.Y,
-                        projectedOrigin.X,
-                        projectedOrigin.Y,
-                        currentOrigin.X,
-                        currentOrigin.Y,
-                        viewport.X,
-                        viewport.Y,
-                        currentViewport.X,
-                        currentViewport.Y,
-                        inset.X,
-                        inset.Y,
-                        currentInset.X,
-                        currentInset.Y
-                    )
-                    diagnostic.drawn = { drawn.X, drawn.Y }
-                    diagnostic.expected = { expected.X, expected.Y }
-                    diagnostic.sampledOrigin = { projectedOrigin.X, projectedOrigin.Y }
-                    diagnostic.currentOrigin = { currentOrigin.X, currentOrigin.Y }
-                    diagnostic.currentViewport = { currentViewport.X, currentViewport.Y }
-                    diagnostic.currentInset = { currentInset.X, currentInset.Y }
-                    script:SetAttribute("P06AimProjectionTelemetry", http:JSONEncode(diagnostic))
-                    if
-                        currentCamera ~= camera
-                        or currentViewport ~= viewport
-                        or currentInset ~= inset
-                        or currentOrigin ~= projectedOrigin
-                    then
-                        -- Retry only a measured coordinate-system change. A stable
-                        -- incorrect reticle still fails the unchanged pixel bounds.
-                        assert(
-                            os.clock() < layoutDeadline,
-                            "reticle layout changed throughout budget: " .. concise
-                        )
+                    if not camera or camera.ViewportSize.X < 200 or camera.ViewportSize.Y < 200 then
+                        assert(os.clock() < deadline, "camera viewport was not ready")
                         continue
                     end
-                    assert((drawn - expected).Magnitude <= 1, "reticle/aim " .. concise)
-                    assert((drawn - pixels).Magnitude <= 1, "reticle/ray " .. concise)
-                    local drawnRay = camera:ViewportPointToRay(drawn.X, drawn.Y)
-                    actualRay = camera:ViewportPointToRay(pixels.X, pixels.Y)
+                    local viewport, inset, anchor =
+                        camera.ViewportSize, guiService:GetGuiInset(), origin.AbsolutePosition
+                    local pixels, position = controller.projectAim(viewport, inset, anchor)
+                    reticle.Position = position
+                    runService.RenderStepped:Wait()
+                    if
+                        workspace.CurrentCamera ~= camera
+                        or camera.ViewportSize ~= viewport
+                        or guiService:GetGuiInset() ~= inset
+                        or origin.AbsolutePosition ~= anchor
+                    then
+                        assert(os.clock() < deadline, "viewport coordinates changed throughout test")
+                        continue
+                    end
+                    local drawn = reticle.AbsolutePosition + reticle.AbsoluteSize * 0.5 + inset
+                    local raised = Vector2.new(viewport.X * 0.5, viewport.Y * 0.30)
+                    assert((drawn - raised).Magnitude <= 1, "Ground reticle missed the raised aim row")
+                    assert((drawn - pixels).Magnitude <= 1, "Ground reticle and firing pixels differ")
+                    local ray = camera:ViewportPointToRay(pixels.X, pixels.Y)
+                    local reticleRay = camera:ViewportPointToRay(drawn.X, drawn.Y)
                     assert(
-                        (actualRay.Direction - drawnRay.Direction).Magnitude < 0.002,
-                        "firing ray/reticle " .. concise
+                        ray.Direction:Dot(reticleRay.Direction) > 0.99999,
+                        "Ground reticle and firing rays differ"
+                    )
+                    assert(
+                        ray.Direction:Dot(camera.CFrame.UpVector) > 0.05
+                            and math.abs(ray.Direction:Dot(camera.CFrame.RightVector)) < 0.005,
+                        "Ground ray did not rise along the center column"
                     )
                     break
                 until false
@@ -189,63 +66,27 @@ return function()
         gui:Destroy()
         assert(ok, tostring(failure))
     end)
-    test("P08 phone readiness text fits beside health and clears centered aim", function()
+    test("P27 facing rotates the root through yaw wrap while leaving the avatar upright", function()
         local player = game:GetService("Players").LocalPlayer
-        local runService = game:GetService("RunService")
-        local controller = require(player.PlayerScripts.Client.GroundCombatController)
-        local gui = Instance.new("ScreenGui")
-        gui.ResetOnSpawn = false
-        gui.Name, gui.IgnoreGuiInset, gui.Parent = "GroundReadinessProbe", true, player.PlayerGui
-        local viewport = Instance.new("Frame")
-        viewport.BackgroundTransparency, viewport.Parent = 1, gui
-        local status = Instance.new("TextLabel")
-        status.AnchorPoint = Vector2.new(0.5, 1)
-        status.Position, status.Size = controller.statusLayout(true)
-        status.TextSize, status.Font = 14, Enum.Font.Gotham
-        status.Text, status.Parent = "M-7 • 29 / ∞ • Reload 2.0s • HIT", viewport
-        local health = Instance.new("Frame")
-        health.Position, health.Size, health.Parent =
-            UDim2.fromOffset(12, 44), UDim2.fromOffset(240, 22), viewport
-        local cross = Instance.new("Frame")
-        cross.AnchorPoint, cross.Position, cross.Size =
-            Vector2.new(0.5, 0.5), UDim2.fromScale(0.5, 0.5), UDim2.fromOffset(24, 24)
-        cross.Parent = viewport
-        local function overlaps(a: GuiObject, b: GuiObject): boolean
-            local a0, b0 = a.AbsolutePosition, b.AbsolutePosition
-            local a1, b1 = a0 + a.AbsoluteSize, b0 + b.AbsoluteSize
-            return a0.X < b1.X and b0.X < a1.X and a0.Y < b1.Y and b0.Y < a1.Y
-        end
-        local ok, failure = pcall(function()
-            for _, size in { Vector2.new(568, 320), Vector2.new(750, 381), Vector2.new(852, 393) } do
-                viewport.Size = UDim2.fromOffset(size.X, size.Y)
-                runService.RenderStepped:Wait()
-                runService.RenderStepped:Wait()
-                assert(
-                    status.TextBounds.X <= status.AbsoluteSize.X
-                        and status.TextBounds.Y <= status.AbsoluteSize.Y,
-                    "readiness/confirmed-hit text clipped"
-                )
-                assert(
-                    not overlaps(status, health) and not overlaps(status, cross),
-                    "readiness obscures health or aim"
-                )
-                local offset = status.AbsolutePosition - viewport.AbsolutePosition
-                assert(
-                    offset.X >= 0
-                        and offset.Y >= 0
-                        and offset.X + status.AbsoluteSize.X <= size.X
-                        and offset.Y + status.AbsoluteSize.Y <= size.Y,
-                    "readiness outside viewport"
-                )
-            end
-            local position, size = controller.statusLayout(false)
+        local input = require(player.PlayerScripts.Client.GroundInput)
+        local origin = Vector3.new(4, 9, -2)
+        local tilted = CFrame.new(origin) * CFrame.Angles(0.4, -0.8, 0.3)
+        local earlier: CFrame? = nil
+        for _, yaw in { math.rad(179), math.rad(-179) } do
+            local camera = CFrame.fromOrientation(math.rad(80), yaw, 0)
+            local facing = input.facingFrame(tilted, camera.LookVector)
             assert(
-                position == UDim2.new(0.5, 0, 1, -100) and size == UDim2.fromOffset(330, 36),
-                "desktop readiness changed"
+                facing.Position == origin and facing.UpVector == Vector3.yAxis,
+                "root position or up changed"
             )
-        end)
-        gui:Destroy()
-        assert(ok, tostring(failure))
+            local horizontal = Vector3.new(camera.LookVector.X, 0, camera.LookVector.Z).Unit
+            assert(facing.LookVector:Dot(horizontal) > 0.99999, "root did not follow horizontal aim")
+            if earlier then
+                assert(earlier.LookVector:Dot(facing.LookVector) > 0.999, "heading snapped at yaw wrap")
+            end
+            earlier = facing
+        end
+        assert(input.facingFrame(tilted, Vector3.yAxis) == tilted, "vertical aim changed yaw")
     end)
     test("P06 existing ground HUD follows input capability changes and cleans up", function()
         local player = game:GetService("Players").LocalPlayer
@@ -283,7 +124,6 @@ return function()
             for _, name in { "M7", "Rocket", "Drop", "Pickup" } do
                 local button = owned:FindFirstChild(name)
                 assert(button and button:IsA("TextButton"), "launcher action missing: " .. name)
-                assert(button.Size.Y.Offset == 32, "launcher action lost readable size")
             end
             assert(status and status:IsA("TextLabel"), "rifle status missing")
             assert(fire and fire:IsA("TextButton") and reload and reload:IsA("TextButton"), "buttons missing")
@@ -291,32 +131,31 @@ return function()
                 touch = mode
                 runService.RenderStepped:Wait()
                 runService.RenderStepped:Wait()
-                local projection = owned:FindFirstChild("ProjectionOrigin")
-                assert(projection and projection:IsA("Frame"), "projection origin missing")
-                local position, size = controllerModule.statusLayout(
-                    mode,
-                    projection.AbsolutePosition,
-                    game:GetService("GuiService"):GetGuiInset()
-                )
+                local position, size = controllerModule.statusLayout(mode)
                 assert(
                     status.Position == position and status.Size == size,
-                    "status failed to follow input mode"
+                    "readiness did not follow input mode"
                 )
-                assert(fire.Visible == mode and reload.Visible == mode, "buttons failed to follow input mode")
                 assert(status.Parent == owned, "input mode rebuilt the status")
-                assert(
-                    launcherStatus.Size
-                        == UDim2.fromOffset(if mode then 240 else 360, if mode then 22 else 28),
-                    "launcher status failed to follow input mode"
-                )
+                assert(launcherStatus.Visible == not mode, "touch retained duplicate launcher text")
+                if not mode then
+                    assert(not fire.Visible and not reload.Visible, "desktop exposed touch buttons")
+                end
             end
             touch = true
             state:SetAttribute("Phase", "Scatter")
             runService.RenderStepped:Wait()
             runService.RenderStepped:Wait()
-            assert(owned.Enabled and launcherStatus.Visible, "Scatter hid the launcher HUD")
+            assert(owned.Enabled and not launcherStatus.Visible, "Scatter did not keep the compact HUD")
             assert(not fire.Visible and not reload.Visible, "Scatter exposed weapon controls")
-            assert(status.Text == "Weapons unlock at aircraft arrival", "Scatter readiness text missing")
+            assert(
+                not status.Visible and status.Text == "",
+                "touch Scatter retained the duplicate unlock notice"
+            )
+            player:SetAttribute("Life", "Eliminated")
+            runService.RenderStepped:Wait()
+            runService.RenderStepped:Wait()
+            assert(not owned.Enabled, "Ground HUD outlived the body")
         end)
         owner.stop()
         owner.stop()
@@ -346,7 +185,9 @@ return function()
             local function pending(): boolean
                 return false
             end
-            first = arrival.start(player, player.PlayerGui, state, pending)
+            first = arrival.start(player, player.PlayerGui, state, pending, function()
+                return false
+            end)
             local source: ScreenGui? = nil
             for _, child in player.PlayerGui:GetChildren() do
                 if not previous[child] and child.Name == "AircraftArrival" and child:IsA("ScreenGui") then
@@ -358,7 +199,9 @@ return function()
             local label = cover:FindFirstChild("Countdown")
             assert(label and label:IsA("TextLabel"), "original countdown missing")
             assert(label.Text == "Preparing deployment", "assignment cover did not paint immediately")
-            local overlapping = arrival.start(player, player.PlayerGui, state, pending)
+            local overlapping = arrival.start(player, player.PlayerGui, state, pending, function()
+                return false
+            end)
             temporary = overlapping
             overlapping.stop()
             state:SetAttribute("DeadlineSeconds", workspace:GetServerTimeNow() + 8)
@@ -381,463 +224,582 @@ return function()
         state:Destroy()
         assert(ok, tostring(failure))
     end)
-    test(
-        "P10 aircraft health and combat HUD fit desktop and touch safe areas without the old hit overlays",
-        function()
-            local players, runService = game:GetService("Players"), game:GetService("RunService")
-            local replicated, guiService = game:GetService("ReplicatedStorage"), game:GetService("GuiService")
-            local starterGui, http = game:GetService("StarterGui"), game:GetService("HttpService")
-            local player = players.LocalPlayer
-            local controller = require(player.PlayerScripts.Client.GroundCombatController)
-            local roundModule = require(player.PlayerScripts.Client.RoundPanel)
-            local oldRole, oldLife = player:GetAttribute("Role"), player:GetAttribute("Life")
-            local backpackEnabled = starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack)
-            local originalRound = player.PlayerGui:FindFirstChild("RoundHUD")
-            local originalRoundName = if originalRound then originalRound.Name else nil
-            local camera = workspace.CurrentCamera
-            local oldCameraType = if camera then camera.CameraType else nil
-            local oldSubject = if camera then camera.CameraSubject else nil
-            local oldCFrame = if camera then camera.CFrame else nil
-            local oldFocus = if camera then camera.Focus else nil
-            local oldFov = if camera then camera.FieldOfView else nil
-            local aircraft = replicated:FindFirstChild("AircraftState")
-            local ownsAircraft = aircraft == nil
-            if not aircraft then
-                aircraft = Instance.new("Folder")
-                aircraft.Name, aircraft.Parent = "AircraftState", replicated
-                aircraft:SetAttribute("Health", 300)
-                aircraft:SetAttribute("MaxHealth", 300)
-            end
-            local oldHealth = aircraft:GetAttribute("Health")
-            local oldMaximum = aircraft:GetAttribute("MaxHealth")
-            local oldDestroyed = aircraft:GetAttribute("Destroyed")
-            local touch = false
-            local state = Instance.new("Folder")
-            state:SetAttribute("RoundId", 7001)
-            state:SetAttribute("Phase", "Active")
-            state:SetAttribute("DeadlineSeconds", workspace:GetServerTimeNow() + 600)
-            state:SetAttribute("GroundAlive", 2)
-            state:SetAttribute("MinimumPlayers", 2)
-            local roundOwner: { start: () -> (boolean, string?), stop: () -> () }? = nil
-            local groundOwner: { start: () -> (boolean, string?), stop: () -> () }? = nil
-            local groundCopy: ScreenGui? = nil
-            local roundCopy: ScreenGui? = nil
-            local fixtureTool: Tool? = nil
-            local fixtureBody: Model? = nil
-            local renamedTool: Tool? = nil
-            local oldToolName: string? = nil
-            local restoreReadiness: (() -> ())? = nil
-            local observations: { unknown } = {}
-            local function frames()
-                runService.RenderStepped:Wait()
-                runService.RenderStepped:Wait()
-            end
-            local function overlaps(a: GuiObject, b: GuiObject): boolean
-                local a0, b0 = a.AbsolutePosition, b.AbsolutePosition
-                local a1, b1 = a0 + a.AbsoluteSize, b0 + b.AbsoluteSize
-                return a0.X < b1.X and b0.X < a1.X and a0.Y < b1.Y and b0.Y < a1.Y
-            end
-            local function child(parent: Instance, name: string): GuiObject
-                local item = parent:FindFirstChild(name)
-                assert(
-                    item and item:IsA("GuiObject"),
-                    "production GUI item missing: " .. name .. " under " .. parent:GetFullName()
-                )
-                return item
-            end
-            local function copyScreen(source: ScreenGui, name: string): (ScreenGui, Frame)
-                local gui = Instance.new("ScreenGui")
-                -- These copies model the production HUD across real avatar
-                -- loads, including while P03 deploys before smoke ends.
-                gui.ResetOnSpawn = false
-                gui.Name, gui.IgnoreGuiInset, gui.ScreenInsets =
-                    name, source.IgnoreGuiInset, source.ScreenInsets
-                gui.ClipToDeviceSafeArea, gui.Parent = source.ClipToDeviceSafeArea, player.PlayerGui
-                local viewport = Instance.new("Frame")
-                viewport.BackgroundTransparency, viewport.Parent = 1, gui
-                for _, item in source:GetChildren() do
-                    if item:IsA("GuiObject") then
-                        item:Clone().Parent = viewport
-                    end
-                end
-                return gui, viewport
-            end
-            local ok, failure = pcall(function()
-                if originalRound then
-                    originalRound.Name = "P08PreservedRoundHUD"
-                end
-                player:SetAttribute("Role", "Ground")
-                player:SetAttribute("Life", "Alive")
-                local character = player.Character
-                if not character then
-                    -- During asynchronous avatar startup, use an
-                    -- inert local body inside PlayerScripts for the HUD only.
-                    -- No spawn call or fixture geometry enters Workspace.
-                    local body = Instance.new("Model")
-                    fixtureBody = body
-                    body.Name = "P10GroundLayoutBody"
-                    for _, name in { "HumanoidRootPart", "Head" } do
-                        local part = Instance.new("Part")
-                        part.Name = name
-                        part.Anchored = true
-                        part.Transparency = 1
-                        part.CanCollide, part.CanQuery, part.CanTouch = false, false, false
-                        part.Parent = body
-                    end
-                    local humanoid = Instance.new("Humanoid")
-                    humanoid.RequiresNeck = false
-                    humanoid.Parent = body
-                    body.Parent = player.PlayerScripts
-                    player.Character = body
-                    assert(
-                        player.Character == body and body.Parent == player.PlayerScripts,
-                        "private layout body unavailable"
-                    )
-                    character = body
-                end
-                local existing = character:FindFirstChild("M-7 rifle")
-                local tool: Tool
-                if existing and existing:IsA("Tool") then
-                    tool = existing
-                else
-                    tool = Instance.new("Tool")
-                    tool.Name, tool.RequiresHandle, tool.Parent = "M-7 rifle", false, character
-                    fixtureTool = tool
-                end
-                renamedTool, oldToolName = tool, tool.Name
-                local readinessAttributes =
-                    { "Ammo", "NextFire", "MaxAmmo", "ReloadUntil", "UnlimitedReserve" }
-                local oldReadiness = tool:GetAttributes()
-                restoreReadiness = function()
-                    for _, attribute in readinessAttributes do
-                        tool:SetAttribute(attribute, oldReadiness[attribute])
-                    end
-                end
-                tool:SetAttribute("Ammo", 29)
-                tool:SetAttribute("NextFire", 0)
-                tool:SetAttribute("MaxAmmo", 30)
-                tool:SetAttribute("UnlimitedReserve", true)
-                local before: { [Instance]: boolean } = {}
-                for _, item in player.PlayerGui:GetChildren() do
-                    before[item] = true
-                end
-                local round = roundModule.new(player, player.PlayerGui, state, nil, function()
-                    return touch
-                end)
-                roundOwner = round
-                assert(round.start(), "production RoundPanel fixture failed")
-                local ground = controller.new(player, player.PlayerGui, state, function()
-                    return touch
-                end)
-                groundOwner = ground
-                assert(ground.start(), "production GroundCombatController fixture failed")
-                local sourceGround: ScreenGui? = nil
-                local sourceRound: ScreenGui? = nil
-                for _, item in player.PlayerGui:GetChildren() do
-                    if not before[item] and item:IsA("ScreenGui") then
-                        if item.Name == "GroundCombatHUD" then
-                            sourceGround = item
-                        elseif item.Name == "RoundHUD" then
-                            sourceRound = item
-                        end
-                    end
-                end
-                assert(sourceGround and sourceRound, "production HUD sources unavailable")
-                aircraft:SetAttribute("MaxHealth", 300)
-                aircraft:SetAttribute("Destroyed", false)
-                local healthLabel = child(sourceRound, "AircraftHealth")
-                local meter = child(healthLabel, "Meter")
-                local fill = child(meter, "Fill")
-                for _, sample in { { 300, 1 }, { 150, 0.5 }, { 3, 0.01 }, { 0, 0 } } do
-                    aircraft:SetAttribute("Health", sample[1])
-                    local deadline = os.clock() + 2
-                    repeat
-                        frames()
-                    until math.abs(fill.Size.X.Scale - sample[2]) <= 0.002 or os.clock() >= deadline
-                    assert(
-                        healthLabel.Visible and healthLabel:GetAttribute("Fraction") == sample[2],
-                        "live health label ratio"
-                    )
-                    assert(
-                        math.abs(fill.Size.X.Scale - sample[2]) <= 0.002,
-                        "health bar width did not settle"
-                    )
-                    if sample[1] == 300 then
-                        assert(fill.BackgroundColor3.G > fill.BackgroundColor3.R, "full bar is not green")
-                    elseif sample[1] < 10 then
-                        assert(fill.BackgroundColor3.R > fill.BackgroundColor3.G, "depleted bar is not red")
-                    end
-                end
-                aircraft:SetAttribute("Health", 150)
-                assert(
-                    sourceRound:FindFirstChild("Help") == nil and sourceRound:FindFirstChild("Guide") == nil,
-                    "in-round guidance remains"
-                )
-                for _, mode in { false, true } do
-                    touch = mode
-                    local insetModes: { boolean } = if mode then { true, false } else { true }
-                    for _, ignoreInset in insetModes do
-                        sourceGround.IgnoreGuiInset = ignoreInset
-                        for _, weapon in { "M7", "Rocket" } do
-                            tool.Name = if weapon == "M7" then "M-7 rifle" else "Rocket launcher"
-                            local remaining = if weapon == "M7" then 2 else 15
-                            tool:SetAttribute("ReloadUntil", workspace:GetServerTimeNow() + remaining)
-                            frames()
-                            local sourceStatus = child(sourceGround, "RifleStatus")
-                            assert(sourceStatus:IsA("TextLabel"), "readiness label missing")
-                            local weaponText = if weapon == "M7"
-                                then "M-7 • 29 / ∞ • Reload "
-                                else "ROCKET • Reload "
-                            assert(
-                                string.find(sourceStatus.Text, weaponText, 1, true) == 1,
-                                "layout did not reproduce the equipped weapon reload text"
-                            )
-                            assert(
-                                sourceGround:FindFirstChild("AircraftHit") == nil,
-                                "aircraft hit overlay remains"
-                            )
-                            assert(
-                                not string.find(sourceStatus.Text, "HIT", 1, true),
-                                "hit text remains in touch readiness"
-                            )
-                            local groundGui, groundViewport =
-                                copyScreen(sourceGround, "P08GroundCrossGuiProbe")
-                            local roundGui, roundViewport = copyScreen(sourceRound, "P08RoundCrossGuiProbe")
-                            groundCopy, roundCopy = groundGui, roundGui
-                            local inset = guiService:GetGuiInset()
-                            local layouts: { Vector2 } = if mode
-                                then { Vector2.new(568, 320), Vector2.new(750, 381), Vector2.new(852, 393) }
-                                else { Vector2.new(1280, 720), Vector2.new(1920, 1080) }
-                            for _, size in layouts do
-                                groundViewport.Size, roundViewport.Size =
-                                    UDim2.fromOffset(size.X, size.Y), UDim2.fromOffset(size.X, size.Y)
-                                frames()
-                                local origin = child(groundViewport, "ProjectionOrigin")
-                                local reticle = child(groundViewport, "Reticle")
-                                local _, position = controller.projectAim(
-                                    size,
-                                    size * 0.5,
-                                    mode,
-                                    inset,
-                                    origin.AbsolutePosition
-                                )
-                                reticle.Position = position
-                                local reserves: { GuiObject } = {}
-                                local function reserve(
-                                    name: string,
-                                    width: UDim2,
-                                    reservedPosition: UDim2,
-                                    anchor: Vector2
-                                )
-                                    local item = Instance.new("Frame")
-                                    item.Name, item.Size, item.Position, item.AnchorPoint =
-                                        name, width, reservedPosition, anchor
-                                    item.BackgroundTransparency, item.Parent = 1, roundViewport
-                                    table.insert(reserves, item)
-                                end
-                                reserve(
-                                    "NativeInventory",
-                                    UDim2.new(1, 0, 0, 96),
-                                    UDim2.new(0.5, 0, 1, -inset.Y),
-                                    Vector2.new(0.5, 1)
-                                )
-                                if mode then
-                                    table.insert(reserves, reticle)
-                                    reserve(
-                                        "NativeThumbstick",
-                                        UDim2.fromOffset(170, 160),
-                                        UDim2.new(0, 0, 1, -inset.Y),
-                                        Vector2.new(0, 1)
-                                    )
-                                    reserve(
-                                        "NativeJump",
-                                        UDim2.fromOffset(120, 130),
-                                        UDim2.new(1, -inset.X, 1, -inset.Y),
-                                        Vector2.new(1, 1)
-                                    )
-                                end
-                                frames()
-                                for _, scenario in { "Available", "Held" } do
-                                    local items = {
-                                        child(groundViewport, "RifleStatus"),
-                                        child(groundViewport, "LauncherStatus"),
-                                        child(roundViewport, "Round"),
-                                        child(roundViewport, "AircraftHealth"),
-                                        child(roundViewport, "Surrender"),
-                                    }
-                                    if mode then
-                                        table.insert(items, child(groundViewport, "Fire"))
-                                        if weapon == "M7" then
-                                            local reload = child(groundViewport, "Reload")
-                                            assert(
-                                                reload:IsA("TextButton") and reload.Visible,
-                                                "equipped M-7 lacks a visible touch reload button"
-                                            )
-                                            local buttonSize, textSize =
-                                                reload.AbsoluteSize, reload.TextBounds
-                                            assert(
-                                                buttonSize.X >= 44 and buttonSize.Y >= 44,
-                                                "touch reload target below 44×44 pixels"
-                                            )
-                                            assert(
-                                                reload.TextFits
-                                                    and textSize.X > 0
-                                                    and textSize.Y > 0
-                                                    and textSize.X + 8 <= buttonSize.X
-                                                    and textSize.Y + 8 <= buttonSize.Y,
-                                                string.format(
-                                                    "touch RELOAD text %s exceeds button %s at %s",
-                                                    tostring(textSize),
-                                                    tostring(buttonSize),
-                                                    tostring(size)
-                                                )
-                                            )
-                                            table.insert(items, reload)
-                                        end
-                                    end
-                                    if scenario == "Available" then
-                                        table.insert(items, child(groundViewport, "Pickup"))
-                                    elseif mode then
-                                        for _, name in { "M7", "Rocket", "Drop" } do
-                                            table.insert(items, child(groundViewport, name))
-                                        end
-                                    end
-                                    for index, item in items do
-                                        local detail = string.format(
-                                            "%s %s %s %dx%d inset(%d,%d) origin(%d,%d): %s",
-                                            if mode then "touch" else "desktop",
-                                            weapon,
-                                            scenario,
-                                            size.X,
-                                            size.Y,
-                                            inset.X,
-                                            inset.Y,
-                                            origin.AbsolutePosition.X,
-                                            origin.AbsolutePosition.Y,
-                                            item.Name
-                                        )
-                                        local point = item.AbsolutePosition - roundViewport.AbsolutePosition
-                                        assert(
-                                            point.X >= -inset.X
-                                                and point.Y >= -inset.Y
-                                                and point.X + item.AbsoluteSize.X <= size.X
-                                                and point.Y + item.AbsoluteSize.Y <= size.Y - inset.Y,
-                                            "HUD outside usable viewport: " .. detail
-                                        )
-                                        for _, reserved in reserves do
-                                            assert(
-                                                not overlaps(item, reserved),
-                                                "HUD intersects " .. reserved.Name .. ": " .. detail
-                                            )
-                                        end
-                                        for other = index + 1, #items do
-                                            local neighbor = items[other]
-                                            assert(
-                                                not overlaps(item, neighbor),
-                                                string.format(
-                                                    "cross-GUI intersection %s at %s size %s / %s at %s size %s",
-                                                    detail,
-                                                    tostring(item.AbsolutePosition),
-                                                    tostring(item.AbsoluteSize),
-                                                    neighbor.Name,
-                                                    tostring(neighbor.AbsolutePosition),
-                                                    tostring(neighbor.AbsoluteSize)
-                                                )
-                                            )
-                                        end
-                                        if item:IsA("TextButton") then
-                                            assert(
-                                                item.AbsoluteSize.Y >= 32,
-                                                "touchable action became too short"
-                                            )
-                                        end
-                                    end
-                                end
-                                table.insert(observations, {
-                                    touch = mode,
-                                    ignoreInset = ignoreInset,
-                                    viewport = { size.X, size.Y },
-                                    inset = { inset.X, inset.Y },
-                                    groundOrigin = {
-                                        origin.AbsolutePosition.X,
-                                        origin.AbsolutePosition.Y,
-                                    },
-                                    roundOrigin = {
-                                        roundViewport.AbsolutePosition.X,
-                                        roundViewport.AbsolutePosition.Y,
-                                    },
-                                })
-                                for _, reserved in reserves do
-                                    if reserved ~= reticle then
-                                        reserved:Destroy()
-                                    end
-                                end
-                            end
-                            groundGui:Destroy()
-                            roundGui:Destroy()
-                            groundCopy, roundCopy = nil, nil
-                        end
-                    end
-                end
-            end)
-            if groundCopy then
-                groundCopy:Destroy()
-            end
-            if roundCopy then
-                roundCopy:Destroy()
-            end
-            if groundOwner then
-                groundOwner.stop()
-            end
-            if roundOwner then
-                roundOwner.stop()
-            end
-            if restoreReadiness then
-                restoreReadiness()
-            end
-            if renamedTool and oldToolName then
-                renamedTool.Name = oldToolName
-            end
-            if fixtureTool then
-                fixtureTool:Destroy()
-            end
-            if fixtureBody then
-                -- A real replication update can replace the local pointer.
-                -- Clear it only while it still identifies our fixture.
-                if player.Character == fixtureBody then
-                    player.Character = nil
-                end
-                fixtureBody:Destroy()
-            end
-            aircraft:SetAttribute("Health", oldHealth)
-            aircraft:SetAttribute("MaxHealth", oldMaximum)
-            aircraft:SetAttribute("Destroyed", oldDestroyed)
-            if ownsAircraft then
-                aircraft:Destroy()
-            end
-            player:SetAttribute("Role", oldRole)
-            player:SetAttribute("Life", oldLife)
-            if originalRound and originalRoundName then
-                originalRound.Name = originalRoundName
-            end
-            if camera and oldCameraType and oldCFrame and oldFocus and oldFov then
-                camera.CameraType, camera.CameraSubject, camera.CFrame, camera.Focus, camera.FieldOfView =
-                    oldCameraType, oldSubject, oldCFrame, oldFocus, oldFov
-            end
-            state:Destroy()
-            local tests = player.PlayerScripts:FindFirstChild("ClientTests")
-            if tests then
-                tests:SetAttribute("P08LayoutInsets", http:JSONEncode(observations))
-            end
-            assert(
-                starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack) == backpackEnabled,
-                "layout fixture changed native inventory state"
-            )
-            assert(
-                not fixtureBody or (player.Character ~= fixtureBody and fixtureBody.Parent == nil),
-                "private layout body survived cleanup"
-            )
-            assert(ok, tostring(failure))
+    test("P27 production Ground HUD clears safe areas through Scatter, combat and lobby", function()
+        local players, runService = game:GetService("Players"), game:GetService("RunService")
+        local replicated = game:GetService("ReplicatedStorage")
+        local starterGui, http = game:GetService("StarterGui"), game:GetService("HttpService")
+        local player = players.LocalPlayer
+        local controller = require(player.PlayerScripts.Client.GroundCombatController)
+        local roundModule = require(player.PlayerScripts.Client.RoundPanel)
+        local presentation = require(replicated.Shared.PlayerPresentation)
+        local oldRole, oldLife = player:GetAttribute("Role"), player:GetAttribute("Life")
+        local backpackEnabled = starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack)
+        local wasPlayerListEnabled = starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.PlayerList)
+        local function playerListEnabled(): boolean
+            return starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.PlayerList)
         end
-    )
+        local originalRound = player.PlayerGui:FindFirstChild("RoundHUD")
+        local originalRoundName = if originalRound then originalRound.Name else nil
+        local camera = workspace.CurrentCamera
+        local oldCameraType = if camera then camera.CameraType else nil
+        local oldSubject = if camera then camera.CameraSubject else nil
+        local oldCFrame = if camera then camera.CFrame else nil
+        local oldFocus = if camera then camera.Focus else nil
+        local oldFov = if camera then camera.FieldOfView else nil
+        local aircraft = replicated:FindFirstChild("AircraftState")
+        local ownsAircraft = aircraft == nil
+        if not aircraft then
+            aircraft = Instance.new("Folder")
+            aircraft.Name, aircraft.Parent = "AircraftState", replicated
+            aircraft:SetAttribute("Health", 300)
+            aircraft:SetAttribute("MaxHealth", 300)
+        end
+        local oldHealth = aircraft:GetAttribute("Health")
+        local oldMaximum = aircraft:GetAttribute("MaxHealth")
+        local oldDestroyed = aircraft:GetAttribute("Destroyed")
+        local launcherState = replicated:FindFirstChild("LauncherState")
+        local ownsLauncherState = launcherState == nil
+        if not launcherState then
+            launcherState = Instance.new("Folder")
+            launcherState.Name, launcherState.Parent = "LauncherState", replicated
+        end
+        local launcher = launcherState
+        local oldLauncher = launcher:GetAttribute("Snapshot")
+        local touch = false
+        local state = Instance.new("Folder")
+        state:SetAttribute("RoundId", 7001)
+        state:SetAttribute("Phase", "Active")
+        state:SetAttribute("DeadlineSeconds", workspace:GetServerTimeNow() + 600)
+        state:SetAttribute("GroundAlive", 2)
+        state:SetAttribute("MinimumPlayers", 2)
+        local roundOwner: { start: () -> (boolean, string?), stop: () -> () }? = nil
+        local groundOwner: { start: () -> (boolean, string?), stop: () -> () }? = nil
+        local groundCopy: ScreenGui? = nil
+        local roundCopy: ScreenGui? = nil
+        local fixtureTool: Tool? = nil
+        local alternateTool: Tool? = nil
+        local fixtureBody: Model? = nil
+        local renamedTool: Tool? = nil
+        local oldToolName: string? = nil
+        local restoreReadiness: (() -> ())? = nil
+        local observations: { unknown } = {}
+        local function frames()
+            runService.RenderStepped:Wait()
+            runService.RenderStepped:Wait()
+        end
+        local function overlaps(a: GuiObject, b: GuiObject): boolean
+            local a0, b0 = a.AbsolutePosition, b.AbsolutePosition
+            local a1, b1 = a0 + a.AbsoluteSize, b0 + b.AbsoluteSize
+            return a0.X < b1.X and b0.X < a1.X and a0.Y < b1.Y and b0.Y < a1.Y
+        end
+        local function child(parent: Instance, name: string): GuiObject
+            local item = parent:FindFirstChild(name)
+            assert(
+                item and item:IsA("GuiObject"),
+                "production GUI item missing: " .. name .. " under " .. parent:GetFullName()
+            )
+            return item
+        end
+        local function copyScreen(source: ScreenGui, name: string): (ScreenGui, Frame)
+            local gui = Instance.new("ScreenGui")
+            -- These copies model the production HUD across real avatar
+            -- loads, including while P03 deploys before smoke ends.
+            gui.ResetOnSpawn = false
+            gui.Name, gui.ScreenInsets = name, Enum.ScreenInsets.None
+            gui.ClipToDeviceSafeArea, gui.Parent = false, player.PlayerGui
+            local viewport = Instance.new("Frame")
+            viewport.BackgroundTransparency, viewport.Parent = 1, gui
+            for _, item in source:GetChildren() do
+                if item:IsA("GuiObject") then
+                    item:Clone().Parent = viewport
+                end
+            end
+            return gui, viewport
+        end
+        local ok, failure = pcall(function()
+            if originalRound then
+                originalRound.Name = "P08PreservedRoundHUD"
+            end
+            starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, true)
+            player:SetAttribute("Role", "Ground")
+            player:SetAttribute("Life", "Alive")
+            local character = player.Character
+            if not character then
+                -- During asynchronous avatar startup, use an
+                -- inert local body inside PlayerScripts for the HUD only.
+                -- No spawn call or fixture geometry enters Workspace.
+                local body = Instance.new("Model")
+                fixtureBody = body
+                body.Name = "P10GroundLayoutBody"
+                for _, name in { "HumanoidRootPart", "Head" } do
+                    local part = Instance.new("Part")
+                    part.Name = name
+                    part.Anchored = true
+                    part.Transparency = 1
+                    part.CanCollide, part.CanQuery, part.CanTouch = false, false, false
+                    part.Parent = body
+                end
+                local humanoid = Instance.new("Humanoid")
+                humanoid.RequiresNeck = false
+                humanoid.Parent = body
+                body.Parent = player.PlayerScripts
+                player.Character = body
+                assert(
+                    player.Character == body and body.Parent == player.PlayerScripts,
+                    "private layout body unavailable"
+                )
+                character = body
+            end
+            local existing = character:FindFirstChild("M-7 rifle")
+            local tool: Tool
+            if existing and existing:IsA("Tool") then
+                tool = existing
+            else
+                tool = Instance.new("Tool")
+                tool.Name, tool.RequiresHandle, tool.Parent = "M-7 rifle", false, character
+                fixtureTool = tool
+            end
+            renamedTool, oldToolName = tool, tool.Name
+            local backpack = player:FindFirstChildOfClass("Backpack")
+            assert(backpack, "missing Backpack in HUD fixture")
+            local alternate = Instance.new("Tool")
+            alternate.RequiresHandle = false
+            alternateTool = alternate
+            alternate.Parent = backpack
+            local bodyRoot = character:FindFirstChild("HumanoidRootPart")
+            assert(bodyRoot and bodyRoot:IsA("BasePart"), "layout body missing root")
+            local function setLauncher(held: boolean)
+                local position = bodyRoot.Position
+                launcher:SetAttribute(
+                    "Snapshot",
+                    http:JSONEncode({
+                        roundId = 7001,
+                        launcherId = "layout-launcher",
+                        state = if held then "Held" else "Available",
+                        ownerId = if held then player.UserId else nil,
+                        readyAt = 0,
+                        ammo = 1,
+                        position = { x = position.X, y = position.Y, z = position.Z },
+                    })
+                )
+            end
+            local readinessAttributes = { "Ammo", "NextFire", "MaxAmmo", "ReloadUntil", "UnlimitedReserve" }
+            local oldReadiness = tool:GetAttributes()
+            restoreReadiness = function()
+                for _, attribute in readinessAttributes do
+                    tool:SetAttribute(attribute, oldReadiness[attribute])
+                end
+            end
+            tool:SetAttribute("Ammo", 29)
+            tool:SetAttribute("NextFire", 0)
+            tool:SetAttribute("MaxAmmo", 30)
+            tool:SetAttribute("UnlimitedReserve", true)
+            local before: { [Instance]: boolean } = {}
+            for _, item in player.PlayerGui:GetChildren() do
+                before[item] = true
+            end
+            local round = roundModule.new(player, player.PlayerGui, state, nil, function()
+                return touch
+            end)
+            roundOwner = round
+            assert(round.start(), "production RoundPanel fixture failed")
+            local ground = controller.new(player, player.PlayerGui, state, function()
+                return touch
+            end)
+            groundOwner = ground
+            assert(ground.start(), "production GroundCombatController fixture failed")
+            local sourceGround: ScreenGui? = nil
+            local sourceRound: ScreenGui? = nil
+            for _, item in player.PlayerGui:GetChildren() do
+                if not before[item] and item:IsA("ScreenGui") then
+                    if item.Name == "GroundCombatHUD" then
+                        sourceGround = item
+                    elseif item.Name == "RoundHUD" then
+                        sourceRound = item
+                    end
+                end
+            end
+            assert(sourceGround and sourceRound, "production HUD sources unavailable")
+            aircraft:SetAttribute("MaxHealth", 300)
+            aircraft:SetAttribute("Destroyed", false)
+            local healthLabel = child(sourceRound, "AircraftHealth")
+            local meter = child(healthLabel, "Meter")
+            local fill = child(meter, "Fill")
+            for _, sample in { { 300, 1 }, { 150, 0.5 }, { 3, 0.01 }, { 0, 0 } } do
+                aircraft:SetAttribute("Health", sample[1])
+                local deadline = os.clock() + 2
+                repeat
+                    frames()
+                until math.abs(fill.Size.X.Scale - sample[2]) <= 0.002 or os.clock() >= deadline
+                assert(
+                    healthLabel.Visible and healthLabel:GetAttribute("Fraction") == sample[2],
+                    "live health label ratio"
+                )
+                assert(math.abs(fill.Size.X.Scale - sample[2]) <= 0.002, "health bar width did not settle")
+                if sample[1] == 300 then
+                    assert(fill.BackgroundColor3.G > fill.BackgroundColor3.R, "full bar is not green")
+                elseif sample[1] < 10 then
+                    assert(fill.BackgroundColor3.R > fill.BackgroundColor3.G, "depleted bar is not red")
+                end
+            end
+            aircraft:SetAttribute("Health", 150)
+            assert(
+                sourceRound:FindFirstChild("Help") == nil and sourceRound:FindFirstChild("Guide") == nil,
+                "in-round guidance remains"
+            )
+            type Layout = { viewport: Vector2, min: Vector2, insetBottomRight: Vector2 }
+            local phone: { Layout } = {
+                {
+                    viewport = Vector2.new(568, 320),
+                    min = Vector2.new(0, 58),
+                    insetBottomRight = Vector2.zero,
+                },
+                {
+                    viewport = Vector2.new(567, 299),
+                    min = Vector2.new(0, 58),
+                    insetBottomRight = Vector2.zero,
+                },
+                {
+                    viewport = Vector2.new(852, 393),
+                    min = Vector2.new(48, 58),
+                    insetBottomRight = Vector2.new(16, 12),
+                },
+            }
+            local desktop: { Layout } = {
+                {
+                    viewport = Vector2.new(1280, 720),
+                    min = Vector2.new(0, 58),
+                    insetBottomRight = Vector2.zero,
+                },
+            }
+
+            local function checkLayout(variant: string, layouts: { Layout })
+                local groundGui, groundViewport = copyScreen(sourceGround, "GroundSafeAreaProbe")
+                local roundGui, roundViewport = copyScreen(sourceRound, "RoundSafeAreaProbe")
+                groundCopy, roundCopy = groundGui, roundGui
+                local reticle = child(groundViewport, "Reticle")
+                local timer = child(roundViewport, "Round")
+                assert(timer:IsA("TextLabel"), "round label missing")
+                if variant == "M7" and touch then
+                    local warning = child(roundViewport, "Cue")
+                    assert(warning:IsA("TextLabel"), "Ground warning missing")
+                    -- Exercise the production warning rectangle with its active
+                    -- compact text without injecting a world warning into combat.
+                    warning.Text = "INCOMING FIRE"
+                    warning.Visible = true
+                    local health = child(groundViewport, "GroundHealth")
+                    assert(health:IsA("TextLabel"), "Ground health readout missing")
+                    health.Text = "HP 1000/1000"
+                end
+                for _, layout in layouts do
+                    local size, safeMin = layout.viewport, layout.min
+                    local safeMax = size - layout.insetBottomRight
+                    local safeSize = safeMax - safeMin
+                    local groundMin = if touch then safeMin else Vector2.zero
+                    local groundSize = if touch then safeSize else size
+                    groundViewport.Position, groundViewport.Size =
+                        UDim2.fromOffset(groundMin.X, groundMin.Y),
+                        UDim2.fromOffset(groundSize.X, groundSize.Y)
+                    roundViewport.Position, roundViewport.Size =
+                        UDim2.fromOffset(safeMin.X, safeMin.Y), UDim2.fromOffset(safeSize.X, safeSize.Y)
+                    local _, position = controller.projectAim(size, Vector2.zero, groundMin)
+                    reticle.Position = position
+                    local reserves: { GuiObject } = {}
+                    local function reserve(name: string, minimum: Vector2, boxSize: Vector2)
+                        local rect = Instance.new("Frame")
+                        rect.Name = name
+                        rect.Position = UDim2.fromOffset(minimum.X, minimum.Y)
+                        rect.Size = UDim2.fromOffset(boxSize.X, boxSize.Y)
+                        rect.BackgroundTransparency = 1
+                        rect.Parent = roundGui
+                        table.insert(reserves, rect)
+                    end
+                    if sourceGround.Enabled then
+                        reserve(
+                            "NativeInventory",
+                            Vector2.new(safeMin.X, safeMax.Y - 96),
+                            Vector2.new(safeSize.X, 96)
+                        )
+                        if touch then
+                            reserve(
+                                "NativeThumbstick",
+                                Vector2.new(safeMin.X, safeMax.Y - 160),
+                                Vector2.new(170, 160)
+                            )
+                            reserve(
+                                "NativeJump",
+                                Vector2.new(safeMax.X - 120, safeMax.Y - 130),
+                                Vector2.new(120, 130)
+                            )
+                            table.insert(reserves, reticle)
+                        end
+                    end
+                    local items: { GuiObject } = {}
+                    for _, canvas in { roundViewport, groundViewport } do
+                        if canvas == groundViewport and not sourceGround.Enabled then
+                            continue
+                        end
+                        for _, item in canvas:GetChildren() do
+                            if
+                                item:IsA("GuiObject")
+                                and item.Visible
+                                and item ~= reticle
+                                and item.Name ~= "ProjectionOrigin"
+                            then
+                                table.insert(items, item)
+                            end
+                        end
+                    end
+                    frames()
+                    local base = roundViewport.AbsolutePosition - safeMin
+                    for index, item in items do
+                        local detail = string.format("%s · %s · %s", variant, tostring(size), item.Name)
+                        local point = item.AbsolutePosition - base
+                        local edge = point + item.AbsoluteSize
+                        assert(
+                            point.X >= safeMin.X
+                                and point.Y >= safeMin.Y
+                                and edge.X <= safeMax.X
+                                and edge.Y <= safeMax.Y,
+                            "outside safe viewport: " .. detail
+                        )
+                        for _, reserved in reserves do
+                            assert(
+                                not overlaps(item, reserved),
+                                "intersects " .. reserved.Name .. ": " .. detail
+                            )
+                        end
+                        for other = index + 1, #items do
+                            local neighbor = items[other]
+                            assert(
+                                not overlaps(item, neighbor),
+                                "intersects " .. neighbor.Name .. ": " .. detail
+                            )
+                        end
+                        if item:IsA("TextButton") and touch then
+                            assert(
+                                item.AbsoluteSize.X >= 44 and item.AbsoluteSize.Y >= 44,
+                                "small touch target: " .. detail
+                            )
+                        end
+                        if (item:IsA("TextButton") or item:IsA("TextLabel")) and item.Text ~= "" then
+                            assert(
+                                item.TextFits and item.TextBounds.X > 0 and item.TextBounds.Y > 0,
+                                "text clipped: " .. detail .. " " .. item.Text
+                            )
+                            if item.Name == "Reload" or item.Name == "Pickup" then
+                                assert(
+                                    item.TextBounds.X + 8 <= item.AbsoluteSize.X,
+                                    string.format(
+                                        "action text lost padding at %s: %s in %s",
+                                        detail,
+                                        tostring(item.TextBounds),
+                                        tostring(item.AbsoluteSize)
+                                    )
+                                )
+                            end
+                        end
+                    end
+                    if variant == "Scatter" then
+                        assert(
+                            timer.AbsoluteSize.X <= math.ceil(safeSize.X / 4) and timer.AbsoluteSize.Y <= 24,
+                            "Scatter timer exceeds its screen budget"
+                        )
+                        assert(not timer.TextWrapped, "Scatter timer permits a second line")
+                        for seconds = 20, 0, -1 do
+                            timer.Text = presentation.arrivalText(120, 120 - seconds, true)
+                            runService.RenderStepped:Wait()
+                            assert(
+                                timer.TextFits and timer.TextBounds.X > 0 and timer.TextBounds.Y <= 24,
+                                "Scatter seconds clipped: " .. tostring(seconds)
+                            )
+                        end
+                    end
+                    table.insert(observations, {
+                        phase = variant,
+                        viewport = { size.X, size.Y },
+                        safeMin = { safeMin.X, safeMin.Y },
+                        safeMax = { safeMax.X, safeMax.Y },
+                        roundLabel = { timer.AbsoluteSize.X, timer.AbsoluteSize.Y },
+                        visible = #items,
+                    })
+                    for _, reserved in reserves do
+                        if reserved ~= reticle then
+                            reserved:Destroy()
+                        end
+                    end
+                end
+                groundGui:Destroy()
+                roundGui:Destroy()
+                groundCopy, roundCopy = nil, nil
+            end
+
+            local status = child(sourceGround, "RifleStatus")
+            assert(status:IsA("TextLabel"), "readiness label missing")
+            for _, mode in { false, true } do
+                touch = mode
+                for _, weapon in { "M7", "Rocket" } do
+                    local rocket = weapon == "Rocket"
+                    tool.Name = if rocket then "Rocket launcher" else "M-7 rifle"
+                    alternate.Name = if rocket then "M-7 rifle" else "Rocket launcher"
+                    local remaining = if rocket then 120 else 10
+                    tool:SetAttribute("ReloadUntil", workspace:GetServerTimeNow() + remaining)
+                    setLauncher(rocket)
+                    frames()
+                    local prefix = if rocket then "ROCKET • Reload " else "M-7 • 29 / ∞ • Reload "
+                    assert(string.find(status.Text, prefix, 1, true) == 1, "equipped readiness text missing")
+                    assert(sourceGround:FindFirstChild("AircraftHit") == nil, "aircraft hit overlay remains")
+                    assert(not string.find(status.Text, "HIT", 1, true), "old hit text remains")
+                    assert(child(sourceGround, "Pickup").Visible ~= rocket, "pickup prompt ignores ownership")
+                    assert(
+                        playerListEnabled() ~= mode,
+                        "PlayerList visibility did not follow Ground input mode"
+                    )
+                    assert(
+                        not sourceRound:FindFirstChild("Surrender"),
+                        "Ground combat HUD still shows Surrender"
+                    )
+                    if mode then
+                        assert(child(sourceGround, "Fire").Visible, "equipped weapon lacks Fire")
+                        assert(
+                            child(sourceGround, "Reload").Visible ~= rocket,
+                            "reload availability ignores weapon"
+                        )
+                        assert(
+                            child(sourceGround, "Drop").Visible == rocket,
+                            "drop availability ignores ownership"
+                        )
+                    end
+                    checkLayout(weapon, if mode then phone else desktop)
+                end
+            end
+
+            touch = false
+            frames()
+            assert(playerListEnabled(), "changing input mode did not restore the player list")
+
+            touch = true
+            state:SetAttribute("Phase", "Scatter")
+            state:SetAttribute("DeadlineSeconds", workspace:GetServerTimeNow() + 20)
+            tool.Name, alternate.Name = "M-7 rifle", "Rocket launcher"
+            setLauncher(false)
+            frames()
+            assert(child(sourceGround, "Pickup").Visible, "closed combat hid the actionable launcher pickup")
+            assert(not playerListEnabled(), "native player list lies over touch Scatter actions")
+            assert(not sourceRound:FindFirstChild("Surrender"), "Ground Scatter HUD still shows Surrender")
+            for _, hidden in { "Reload", "Fire", "RifleStatus", "LauncherStatus", "Reticle" } do
+                assert(not child(sourceGround, hidden).Visible, "Scatter exposed " .. hidden)
+            end
+            checkLayout("Scatter", phone)
+
+            player:SetAttribute("Role", "Waiting")
+            player:SetAttribute("Life", "Waiting")
+            frames()
+            assert(playerListEnabled(), "leaving Ground did not restore the player list")
+
+            player:SetAttribute("Role", "Gunship")
+            player:SetAttribute("Life", "Alive")
+            frames()
+            assert(not playerListEnabled(), "native player list remained through operator arrival")
+            state:SetAttribute("Phase", "Active")
+            frames()
+            assert(not playerListEnabled(), "native player list lies over touch operator Recenter")
+
+            player:SetAttribute("Role", "Waiting")
+            player:SetAttribute("Life", "Waiting")
+            for _, phase in { "Results", "Lobby" } do
+                state:SetAttribute("Phase", phase)
+                state:SetAttribute(
+                    "IntermissionUntil",
+                    if phase == "Results" then workspace:GetServerTimeNow() + 120 else nil
+                )
+                frames()
+                local timer = child(sourceRound, "Round")
+                assert(
+                    timer:IsA("TextLabel") and not timer.Text:find("C%-130 in"),
+                    "arrival timer survived " .. phase
+                )
+                assert(
+                    not sourceGround.Enabled and not child(sourceRound, "AircraftHealth").Visible,
+                    "stale HUD in " .. phase
+                )
+                assert(playerListEnabled(), "player list not restored in " .. phase)
+                checkLayout(phase, phone)
+            end
+
+            starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+            player:SetAttribute("Role", "Ground")
+            player:SetAttribute("Life", "Alive")
+            state:SetAttribute("Phase", "Scatter")
+            frames()
+            round.stop()
+            assert(not playerListEnabled(), "teardown enabled a previously disabled player list")
+        end)
+        if groundCopy then
+            groundCopy:Destroy()
+        end
+        if roundCopy then
+            roundCopy:Destroy()
+        end
+        if groundOwner then
+            groundOwner.stop()
+        end
+        if roundOwner then
+            roundOwner.stop()
+        end
+        starterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, wasPlayerListEnabled)
+        if restoreReadiness then
+            restoreReadiness()
+        end
+        if renamedTool and oldToolName then
+            renamedTool.Name = oldToolName
+        end
+        if alternateTool then
+            alternateTool:Destroy()
+        end
+        if fixtureTool then
+            fixtureTool:Destroy()
+        end
+        if fixtureBody then
+            -- A real replication update can replace the local pointer.
+            -- Clear it only while it still identifies our fixture.
+            if player.Character == fixtureBody then
+                player.Character = nil
+            end
+            fixtureBody:Destroy()
+        end
+        launcher:SetAttribute("Snapshot", oldLauncher)
+        if ownsLauncherState then
+            launcher:Destroy()
+        end
+        aircraft:SetAttribute("Health", oldHealth)
+        aircraft:SetAttribute("MaxHealth", oldMaximum)
+        aircraft:SetAttribute("Destroyed", oldDestroyed)
+        if ownsAircraft then
+            aircraft:Destroy()
+        end
+        player:SetAttribute("Role", oldRole)
+        player:SetAttribute("Life", oldLife)
+        if originalRound and originalRoundName then
+            originalRound.Name = originalRoundName
+        end
+        if camera and oldCameraType and oldCFrame and oldFocus and oldFov then
+            camera.CameraType, camera.CameraSubject, camera.CFrame, camera.Focus, camera.FieldOfView =
+                oldCameraType, oldSubject, oldCFrame, oldFocus, oldFov
+        end
+        state:Destroy()
+        local tests = player.PlayerScripts:FindFirstChild("ClientTests")
+        if tests then
+            tests:SetAttribute("P27GroundLayout", http:JSONEncode(observations))
+        end
+        assert(
+            starterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack) == backpackEnabled,
+            "layout fixture changed native inventory state"
+        )
+        assert(
+            not fixtureBody or (player.Character ~= fixtureBody and fixtureBody.Parent == nil),
+            "private layout body survived cleanup"
+        )
+        assert(ok, tostring(failure))
+    end)
 end

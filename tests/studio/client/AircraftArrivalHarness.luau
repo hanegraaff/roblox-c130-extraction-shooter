@@ -186,13 +186,7 @@ function AircraftArrivalHarness.run()
                 "countdown moved into the native chat lane"
             )
             local hud = assert(screen("RoundHUD"), "round HUD missing")
-            local surrender = hud:FindFirstChild("Surrender")
-            assert(
-                surrender
-                    and surrender:IsA("GuiObject")
-                    and text.AbsolutePosition.X + text.AbsoluteSize.X < surrender.AbsolutePosition.X,
-                "countdown obscures the Surrender action"
-            )
+            assert(not hud:FindFirstChild("Surrender"), "Ground HUD still shows Surrender")
             local ground = assert(screen("GroundCombatHUD"), "Ground HUD missing")
             local fire = ground:FindFirstChild("Fire")
             local reload = ground:FindFirstChild("Reload")

@@ -7,6 +7,7 @@ local RoundPanel = require(script.RoundPanel)
 local GroundCombatController = require(script.GroundCombatController)
 local BalancePanel = require(script.BalancePanel)
 local stopBalance: (() -> ())? = nil
+local GroundInput = require(script.GroundInput)
 local GroundIndoorCamera = require(script.GroundIndoorCamera)
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui", 10)
 local status = ReplicatedStorage:WaitForChild("BootstrapStatus", 10)
@@ -22,9 +23,14 @@ local settings = RoundPanel.newSettings()
 local rounds: { stop: () -> () }? = nil
 local ground: { stop: () -> () }? = nil
 local stopIndoor: (() -> ())? = nil
+local stopGroundInput: (() -> ())? = nil
 local activeRoundState: Instance? = nil
 local function stopRoundOwners()
     activeRoundState = nil
+    if stopGroundInput then
+        stopGroundInput()
+        stopGroundInput = nil
+    end
     if stopBalance then
         stopBalance()
         stopBalance = nil
@@ -55,6 +61,7 @@ local function attach(instance: Instance)
     rounds = panel
     stopIndoor = GroundIndoorCamera.start(Players.LocalPlayer, instance)
     stopBalance = BalancePanel.start(Players.LocalPlayer, playerGui, instance)
+    stopGroundInput = GroundInput.start(Players.LocalPlayer, playerGui, instance)
     activeRoundState = instance
 end
 local added = ReplicatedStorage.ChildAdded:Connect(attach)

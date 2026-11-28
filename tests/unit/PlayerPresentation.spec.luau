@@ -24,6 +24,16 @@ return function(test: (string, () -> ()) -> (), candidate: unknown)
         expect(rules.view("Active", "Spectator", "Spectating", "Gunship"), "RoundLobby")
     end)
 
+    test("P27 desktop and compact phone arrival text share one deadline", function()
+        for seconds = 0, 20 do
+            local now = 120 - seconds
+            expect(rules.arrivalText(120, now), string.format("C-130 arrives in %d", seconds))
+            expect(rules.arrivalText(120, now, true), string.format("C-130 in %ds", seconds))
+        end
+        expect(rules.arrivalText(120, 119.999, true), "C-130 in 1s")
+        expect(rules.arrivalText(nil, 120, true), "Preparing")
+    end)
+
     test("P24 arrival uses a delayed client's current server time and never opens theater early", function()
         expect(rules.view("Scatter", "Ground", "Alive", nil), "GroundScatter")
         expect(rules.view("Scatter", "Gunship", "Alive", nil), "OperatorArrival")

@@ -1,0 +1,20 @@
+[
+  [
+    {
+      "type": "text",
+      "text": "{\"players\":2,\"server\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":217,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":217}\"}"
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "text": "{\"report\":\"{\\\"errors\\\":1,\\\"skipped\\\":0,\\\"passed\\\":22,\\\"userId\\\":-2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":1,\\\"discovered\\\":23}\",\"layout\":\"[{\\\"visible\\\":8,\\\"safeMax\\\":[1280,720],\\\"phase\\\":\\\"M7\\\",\\\"safeMin\\\":[0,58],\\\"roundLabel\\\":[300,38],\\\"viewport\\\":[1280,720]},{\\\"visible\\\":7,\\\"safeMax\\\":[1280,720],\\\"phase\\\":\\\"Rocket\\\",\\\"safeMin\\\":[0,58],\\\"roundLabel\\\":[300,38],\\\"viewport\\\":[1280,720]}]\",\"errors\":\"[\\\"ReplicatedStorage.ClientSpecs.GroundAimGui.spec:737: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:568: reload text lost padding\\\\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:737\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\\\\nPlayers.Player2.PlayerScripts.ClientTests:9\\\\n\\\"]\"}"
+    }
+  ],
+  [
+    {
+      "type": "text",
+      "text": "{\"report\":\"{\\\"errors\\\":1,\\\"skipped\\\":0,\\\"passed\\\":22,\\\"userId\\\":-1,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-client\\\",\\\"failed\\\":1,\\\"discovered\\\":23}\",\"layout\":\"[{\\\"visible\\\":8,\\\"safeMax\\\":[1280,720],\\\"phase\\\":\\\"M7\\\",\\\"safeMin\\\":[0,58],\\\"roundLabel\\\":[300,38],\\\"viewport\\\":[1280,720]},{\\\"visible\\\":7,\\\"safeMax\\\":[1280,720],\\\"phase\\\":\\\"Rocket\\\",\\\"safeMin\\\":[0,58],\\\"roundLabel\\\":[300,38],\\\"viewport\\\":[1280,720]}]\",\"errors\":\"[\\\"ReplicatedStorage.ClientSpecs.GroundAimGui.spec:737: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:568: reload text lost padding\\\\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:737\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\\\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\\\\nPlayers.Player1.PlayerScripts.ClientTests:9\\\\n\\\"]\"}"
+    }
+  ]
+]

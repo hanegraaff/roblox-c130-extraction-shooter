@@ -109,10 +109,14 @@ end
 
 -- Reads the shared arrival deadline on the current frame, including a delayed
 -- first render. The deadline can be missing while assignment is replicating.
-function PlayerPresentation.arrivalText(deadline: unknown, now: number): string
+-- Compact touch displays use the same seconds in a shorter single line.
+function PlayerPresentation.arrivalText(deadline: unknown, now: number, compact: boolean?): string
     local seconds = if type(deadline) == "number" and deadline > 0
         then PlayerPresentation.remaining(deadline, now)
         else nil
+    if compact then
+        return if seconds then string.format("C-130 in %ds", seconds) else "Preparing"
+    end
     return if seconds then string.format("C-130 arrives in %d", seconds) else "Preparing deployment"
 end
 

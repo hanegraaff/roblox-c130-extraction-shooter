@@ -1,0 +1,78 @@
+{
+  "sourceCommit": "91880ae4780070edddcaccbe83a7b8106dc4d2b5",
+  "sourceTree": "39636d37c2473ae70ed90403a30c5097fc45fae9",
+  "artifactSha256": "006fac1ee63d8da02e08dff9abc2ceb822ed9e0997e44eed726e836661b0fba6",
+  "platform": "macOS arm64",
+  "studioVersion": "0.748.0.7481526",
+  "sourceBinding": {
+    "different": [],
+    "version": "0.748.0.7481526",
+    "dependencies": 16,
+    "placeId": 0,
+    "tracked": 178
+  },
+  "place": "Local build/tests.rbxlx",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = \"P27Baseline\"})",
+  "actualClients": 2,
+  "serverSmoke": {
+    "errors": 0,
+    "skipped": 0,
+    "passed": 216,
+    "clientCount": 2,
+    "environment": "Studio",
+    "seed": 1,
+    "suite": "P01-server",
+    "failed": 0,
+    "discovered": 216
+  },
+  "start": "Studio testing remote started ordinary rounds, with panel hidden locally in captures.",
+  "scenarios": [
+    {
+      "device": "Custom compact phone",
+      "orientation": "LandscapeLeft",
+      "devicePixels": [
+        568,
+        320
+      ],
+      "cameraViewport": [
+        567,
+        299
+      ],
+      "timerPixels": [
+        168,
+        24
+      ],
+      "weaponUnlockNotePixels": [
+        240,
+        22
+      ],
+      "screenshot": "scatter-before-compact.jpg"
+    },
+    {
+      "device": "iPhone 17 Pro",
+      "orientation": "LandscapeLeft",
+      "devicePixels": [
+        874,
+        402
+      ],
+      "cameraViewport": [
+        750,
+        381
+      ],
+      "timerPixels": [
+        168,
+        24
+      ],
+      "weaponUnlockNotePixels": [
+        240,
+        22
+      ],
+      "screenshot": "scatter-before-cutout.jpg"
+    }
+  ],
+  "limitations": [
+    "The viewport is Studio's measured camera safe region. The emulated device pixel dimensions are nominal.",
+    "These observations describe the pre-P27 HUD.",
+    "This session exercised live rendering but no operated touch gestures."
+  ]
+}

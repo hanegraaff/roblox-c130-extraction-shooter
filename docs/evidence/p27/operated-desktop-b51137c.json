@@ -1,0 +1,673 @@
+{
+  "source": "b51137c73701b998b6159b80af14821e0aacb620",
+  "studio": "0.748.0.7481526",
+  "clients": 2,
+  "platform": "Darwin arm64",
+  "smoke": [
+    {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "role": "Waiting",
+      "errors": "[]",
+      "controls": {
+        "Busy": false,
+        "Generation": 1,
+        "RoundSeconds": 60
+      },
+      "layout": "[{\"visible\":8,\"safeMax\":[1280,720],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":7,\"safeMax\":[1280,720],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":8,\"safeMax\":[568,320],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":8,\"safeMax\":[836,381],\"phase\":\"M7\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":8,\"safeMax\":[568,320],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":8,\"safeMax\":[836,381],\"phase\":\"Rocket\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":4,\"safeMax\":[568,320],\"phase\":\"Scatter\",\"safeMin\":[0,58],\"roundLabel\":[142,24],\"viewport\":[568,320]},{\"visible\":4,\"safeMax\":[836,381],\"phase\":\"Scatter\",\"safeMin\":[48,58],\"roundLabel\":[197,24],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Results\",\"safeMin\":[0,58],\"roundLabel\":[352.1600036621094,58],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Results\",\"safeMin\":[48,58],\"roundLabel\":[488.55999755859377,58],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Lobby\",\"safeMin\":[0,58],\"roundLabel\":[284,24],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Lobby\",\"safeMin\":[48,58],\"roundLabel\":[394,24],\"viewport\":[852,393]}]",
+      "p": "Player1",
+      "state": "Lobby"
+    },
+    {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "role": "Waiting",
+      "errors": "[]",
+      "controls": {
+        "Busy": false,
+        "Generation": 1,
+        "RoundSeconds": 60
+      },
+      "layout": "[{\"visible\":8,\"safeMax\":[1280,720],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":7,\"safeMax\":[1280,720],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":8,\"safeMax\":[568,320],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":8,\"safeMax\":[836,381],\"phase\":\"M7\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":8,\"safeMax\":[568,320],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":8,\"safeMax\":[836,381],\"phase\":\"Rocket\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":4,\"safeMax\":[568,320],\"phase\":\"Scatter\",\"safeMin\":[0,58],\"roundLabel\":[142,24],\"viewport\":[568,320]},{\"visible\":4,\"safeMax\":[836,381],\"phase\":\"Scatter\",\"safeMin\":[48,58],\"roundLabel\":[197,24],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Results\",\"safeMin\":[0,58],\"roundLabel\":[352.1600036621094,58],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Results\",\"safeMin\":[48,58],\"roundLabel\":[488.55999755859377,58],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Lobby\",\"safeMin\":[0,58],\"roundLabel\":[284,24],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Lobby\",\"safeMin\":[48,58],\"roundLabel\":[394,24],\"viewport\":[852,393]}]",
+      "p": "Player2",
+      "state": "Lobby"
+    }
+  ],
+  "move": {
+    "attrs": {
+      "LocalTestRoleChoice": "Ground",
+      "Role": "Ground",
+      "LocalTestFeedback": "Starting the chosen roles.",
+      "RoundRevision": 6,
+      "Life": "Alive",
+      "BalanceAdminAccess": false,
+      "RoundId": 1
+    },
+    "p": "Player1",
+    "turned": {
+      "up": {
+        "1": 2.3045961583534336e-8,
+        "2": 1,
+        "3": 2.9571209925194353e-9
+      },
+      "c": {
+        "1": 0.000011793898920586798,
+        "2": -0.25881898403167725,
+        "3": -0.965925931930542
+      },
+      "lock": "Enum.MouseBehavior.LockCenter",
+      "phase": "Scatter",
+      "right": false,
+      "facing": {
+        "1": 0.000012389777111820877,
+        "2": 2.9568354431575017e-9,
+        "3": -1
+      },
+      "pos": {
+        "1": -20.000097274780273,
+        "2": 2.9980251789093018,
+        "3": 107.99999237060547
+      }
+    },
+    "old": {
+      "up": {
+        "1": -1.1028548740910082e-8,
+        "2": 1,
+        "3": -1.4151101401793653e-9
+      },
+      "c": {
+        "1": 0.000011793898920586798,
+        "2": -0.25881898403167725,
+        "3": -0.965925931930542
+      },
+      "lock": "Enum.MouseBehavior.LockCenter",
+      "phase": "Scatter",
+      "right": false,
+      "facing": {
+        "1": 0.000012389777111820877,
+        "2": -1.414973471725034e-9,
+        "3": -1
+      },
+      "pos": {
+        "1": -20.000097274780273,
+        "2": 2.9980251789093018,
+        "3": 107.99999237060547
+      }
+    },
+    "camera": "Enum.CameraType.Custom",
+    "role": "Ground",
+    "mouse": {
+      "1": true,
+      "2": "nil"
+    },
+    "last": {
+      "up": {
+        "1": 1.3095484518999e-7,
+        "2": 1,
+        "3": 1.6803673119625273e-8
+      },
+      "c": {
+        "1": 0.6523410081863403,
+        "2": -0.38590601086616516,
+        "3": -0.6523250341415405
+      },
+      "lock": "Enum.MouseBehavior.LockCenter",
+      "phase": "Scatter",
+      "right": false,
+      "facing": {
+        "1": 0.7071154117584229,
+        "2": -8.071835111422843e-8,
+        "3": -0.707098126411438
+      },
+      "pos": {
+        "1": -15.140900611877441,
+        "2": 2.9980251789093018,
+        "3": 111.8126220703125
+      }
+    },
+    "strafe": {
+      "1": true,
+      "2": "nil"
+    }
+  },
+  "replicated": {
+    "observer": "Player2",
+    "role": "Ground",
+    "subject": "Player1",
+    "cam": "Enum.CameraType.Custom",
+    "look": {
+      "1": 0.7071455717086792,
+      "2": 0,
+      "3": -0.7070680856704712
+    },
+    "up": 1,
+    "pos": {
+      "1": -15.14085578918457,
+      "2": 2.9980926513671875,
+      "3": 111.812255859375
+    }
+  },
+  "orientationAndMenu": {
+    "top": {
+      "pitch": 79.99999231501614,
+      "camera": {
+        "1": -0.042011529207229614,
+        "2": 0.9848077297210693,
+        "3": 0.16849015653133392
+      },
+      "yaw": 165.9992908715492,
+      "lock": "Enum.MouseBehavior.LockCenter",
+      "look": "-0.2419338822364807, -8.870570944452538e-09, 0.9702927470207214",
+      "right": false,
+      "open": false,
+      "up": 1
+    },
+    "rows": {
+      "1": {
+        "pitch": -14.615012845729213,
+        "camera": {
+          "1": 0.49836280941963196,
+          "2": -0.2523229122161865,
+          "3": 0.8294382095336914
+        },
+        "yaw": -149.00070785049033,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "0.5150274038314819, -1.4908213330500075e-08, 0.8571737408638",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "2": {
+        "pitch": -13.460013144567352,
+        "camera": {
+          "1": -0.22704492509365082,
+          "2": -0.23276668787002563,
+          "3": 0.9456586241722107
+        },
+        "yaw": 166.49929102093853,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "-0.23345743119716644, 7.744429986189516e-09, 0.9723670482635498",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "3": {
+        "pitch": -12.690012554444943,
+        "camera": {
+          "1": -0.8318188786506653,
+          "2": -0.2196761518716812,
+          "3": 0.5097250938415527
+        },
+        "yaw": 121.49929039524655,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "-0.8526465892791748, 9.302380021836143e-08, 0.5224881172180176",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "4": {
+        "pitch": -12.690014304747132,
+        "camera": {
+          "1": -0.9486149549484253,
+          "2": -0.2196761816740036,
+          "3": -0.22775472700595856
+        },
+        "yaw": 76.49929039288016,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "-0.9723670482635498, 1.181861080112867e-07, -0.23345735669136047",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "5": {
+        "pitch": -12.690014304747132,
+        "camera": {
+          "1": -0.5097251534461975,
+          "2": -0.2196761816740036,
+          "3": -0.8318189382553101
+        },
+        "yaw": 31.499291551001235,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "-0.5224880576133728, 7.789216027731527e-08, -0.8526465892791748",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "6": {
+        "pitch": -12.690014304747132,
+        "camera": {
+          "1": 0.22775471210479736,
+          "2": -0.2196761816740036,
+          "3": -0.9486148953437805
+        },
+        "yaw": -13.500709573393797,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "0.23345741629600525, -1.2696824924773864e-08, -0.9723670482635498",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "7": {
+        "pitch": -12.690014304747132,
+        "camera": {
+          "1": 0.8318188786506653,
+          "2": -0.2196761816740036,
+          "3": -0.5097250938415527
+        },
+        "yaw": -58.50070960475345,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "0.8526465892791748, -9.142780044157917e-08, -0.5224880576133728",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "8": {
+        "pitch": -12.690014304747132,
+        "camera": {
+          "1": 0.9486148357391357,
+          "2": -0.2196761816740036,
+          "3": 0.22775471210479736
+        },
+        "yaw": -103.50071039063585,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "0.9723670482635498, -1.1615837536282925e-07, 0.23345744609832764",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "9": {
+        "pitch": -12.690016055049336,
+        "camera": {
+          "1": 0.5097251534461975,
+          "2": -0.219676211476326,
+          "3": 0.8318189978599548
+        },
+        "yaw": -148.50071027802244,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "0.5224878787994385, -7.655278011498012e-08, 0.8526467084884644",
+        "right": false,
+        "open": false,
+        "up": 1
+      },
+      "10": {
+        "pitch": -12.690014304747132,
+        "camera": {
+          "1": -0.22775469720363617,
+          "2": -0.2196761816740036,
+          "3": 0.9486148357391357
+        },
+        "yaw": 166.49929046033225,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "-0.23345743119716644, 1.2478919231284635e-08, 0.9723670482635498",
+        "right": false,
+        "open": false,
+        "up": 1
+      }
+    },
+    "menu": {
+      "moveWhileOpen": 0,
+      "open": {
+        "pitch": -79.99999231501614,
+        "camera": {
+          "1": -0.042011432349681854,
+          "2": -0.9848077297210693,
+          "3": 0.16848976910114288
+        },
+        "yaw": 165.99929095327053,
+        "lock": "Enum.MouseBehavior.Default",
+        "look": "-0.2419338822364807, -6.2159579705678425e-09, 0.9702927470207214",
+        "right": false,
+        "open": true,
+        "up": 1
+      },
+      "closed": {
+        "pitch": -79.99999231501614,
+        "camera": {
+          "1": -0.042011432349681854,
+          "2": -0.9848077297210693,
+          "3": 0.16848976910114288
+        },
+        "yaw": 165.99929095327053,
+        "lock": "Enum.MouseBehavior.LockCenter",
+        "look": "-0.2419338822364807, -3.974389262140221e-09, 0.9702927470207214",
+        "right": false,
+        "open": false,
+        "up": 1
+      }
+    },
+    "bottom": {
+      "pitch": -79.99999231501614,
+      "camera": {
+        "1": -0.042011432349681854,
+        "2": -0.9848077297210693,
+        "3": 0.16848976910114288
+      },
+      "yaw": 165.99929095327053,
+      "lock": "Enum.MouseBehavior.LockCenter",
+      "look": "-0.2419338822364807, 3.2927571780305698e-09, 0.9702927470207214",
+      "right": false,
+      "open": false,
+      "up": 1
+    }
+  },
+  "rifle": {
+    "point": {
+      "1": 540.5,
+      "2": 326.5
+    },
+    "phase": "Active",
+    "before": {
+      "MaxAmmo": 30,
+      "ShotInterval": 0.15,
+      "NextFire": 0,
+      "Ammo": 30,
+      "ReloadUntil": 0,
+      "UnlimitedReserve": true
+    },
+    "op": true,
+    "shot": "{\"y\":11.449999809265137,\"x\":-15.852676391601563,\"sequence\":3,\"z\":107.33647918701172,\"aircraftHit\":false,\"userId\":-1,\"roundId\":1}",
+    "after": {
+      "MaxAmmo": 30,
+      "ShotInterval": 0.15,
+      "NextFire": 1795823396.3017511,
+      "Ammo": 27,
+      "ReloadUntil": 0,
+      "UnlimitedReserve": true
+    },
+    "tool": "M-7 rifle",
+    "err": "nil",
+    "reticle": {
+      "1": 541,
+      "2": 269,
+      "3": true
+    },
+    "ray": {
+      "tag": "Workspace.World.Battlefield.SpawnShelterPanels.SB.R.07.03.SB_query_solid_062_01_Proxy",
+      "p": {
+        "1": -15.95555591583252,
+        "2": 12.449999809265137,
+        "3": 106.6893081665039
+      }
+    }
+  },
+  "outpost": {
+    "exit": {
+      "root": {
+        "1": 151.31785583496094,
+        "2": 2.9980251789093018,
+        "3": 199.2338104248047
+      },
+      "zoom": 14.344204902648926,
+      "subject": "Workspace.Player1.Humanoid",
+      "fov": 70,
+      "eye": {
+        "1": 151.31785583496094,
+        "2": 8.210578918457031,
+        "3": 213.08924865722656
+      },
+      "mode": "Enum.CameraType.Custom",
+      "focus": {
+        "1": 151.31785583496094,
+        "2": 4.498024940490723,
+        "3": 199.2338104248047
+      },
+      "look": {
+        "1": 0,
+        "2": -0.25881919264793396,
+        "3": -0.9659258127212524
+      }
+    },
+    "path": "{\"endPos\":[150.52566528320313,2.998025894165039,202.6222686767578],\"reached\":32,\"elapsed\":7.283654166665656,\"timeout\":false,\"total\":32}",
+    "phase": "Active",
+    "inside": {
+      "root": {
+        "1": 151.31581115722656,
+        "2": 3.123028039932251,
+        "3": 180.27084350585938
+      },
+      "zoom": 5.000006198883057,
+      "subject": "Workspace.Player1.Humanoid",
+      "fov": 70,
+      "eye": {
+        "1": 151.31581115722656,
+        "2": 5.917123317718506,
+        "3": 185.10047912597656
+      },
+      "mode": "Enum.CameraType.Custom",
+      "focus": {
+        "1": 151.31581115722656,
+        "2": 4.623027801513672,
+        "3": 180.27084350585938
+      },
+      "look": {
+        "1": 0,
+        "2": -0.25881919264793396,
+        "3": -0.9659258127212524
+      }
+    },
+    "threshold": {
+      "root": {
+        "1": 151.2977294921875,
+        "2": 3.0980281829833984,
+        "3": 187.4707489013672
+      },
+      "zoom": 14.344204902648926,
+      "subject": "Workspace.Player1.Humanoid",
+      "fov": 70,
+      "eye": {
+        "1": 151.2977294921875,
+        "2": 8.310582160949707,
+        "3": 201.32618713378906
+      },
+      "mode": "Enum.CameraType.Custom",
+      "focus": {
+        "1": 151.2977294921875,
+        "2": 4.598028182983398,
+        "3": 187.4707489013672
+      },
+      "look": {
+        "1": 0,
+        "2": -0.25881919264793396,
+        "3": -0.9659258127212524
+      }
+    },
+    "role": "Ground",
+    "limits": {
+      "1": 0.5,
+      "2": 400
+    },
+    "life": "Alive",
+    "initial": {
+      "root": {
+        "1": 150.83969116210938,
+        "2": 2.998025894165039,
+        "3": 202.6768341064453
+      },
+      "zoom": 14.344199180603027,
+      "subject": "Workspace.Player1.Humanoid",
+      "fov": 70,
+      "eye": {
+        "1": 139.26756286621094,
+        "2": 5.999107360839844,
+        "3": 194.33485412597656
+      },
+      "mode": "Enum.CameraType.Custom",
+      "focus": {
+        "1": 150.83969116210938,
+        "2": 4.498025894165039,
+        "3": 202.6768341064453
+      },
+      "look": {
+        "1": 0.8067461252212524,
+        "2": -0.10464727133512497,
+        "3": 0.5815580487251282
+      }
+    },
+    "before": {
+      "root": {
+        "1": 150.83969116210938,
+        "2": 2.998025894165039,
+        "3": 202.6768341064453
+      },
+      "zoom": 14.344204902648926,
+      "subject": "Workspace.Player1.Humanoid",
+      "fov": 70,
+      "eye": {
+        "1": 150.83969116210938,
+        "2": 8.210579872131348,
+        "3": 216.5322723388672
+      },
+      "mode": "Enum.CameraType.Custom",
+      "focus": {
+        "1": 150.83969116210938,
+        "2": 4.498025894165039,
+        "3": 202.6768341064453
+      },
+      "look": {
+        "1": 0,
+        "2": -0.25881919264793396,
+        "3": -0.9659258127212524
+      }
+    },
+    "final": {
+      "root": {
+        "1": 151.31785583496094,
+        "2": 2.9980251789093018,
+        "3": 199.2338104248047
+      },
+      "zoom": 14.344204902648926,
+      "subject": "Workspace.Player1.Humanoid",
+      "fov": 70,
+      "eye": {
+        "1": 151.31785583496094,
+        "2": 8.210578918457031,
+        "3": 213.08924865722656
+      },
+      "mode": "Enum.CameraType.Custom",
+      "focus": {
+        "1": 151.31785583496094,
+        "2": 4.498024940490723,
+        "3": 199.2338104248047
+      },
+      "look": {
+        "1": 0,
+        "2": -0.25881919264793396,
+        "3": -0.9659258127212524
+      }
+    }
+  },
+  "operator": {
+    "ok": true,
+    "aim": {
+      "lock": "Enum.MouseBehavior.Default",
+      "role": "Gunship",
+      "camera": {
+        "focus": "-171.971512, 132.751068, 294.876892, 1, 0, 0, 0, 1, 0, 0, 0, 1",
+        "type": "Enum.CameraType.Scriptable",
+        "look": "0.47324132919311523, -0.36244627833366394, -0.8029167652130127",
+        "fov": 30
+      },
+      "gui": {
+        "ThermalHUD": {
+          "enabled": true,
+          "a": {
+            "PanLocalFocus": "0, 0",
+            "RawPointer": "605.5, 326.5",
+            "AimAllowed": true,
+            "ProjectionAircraftPosition": "-182.79615783691406, 140, 310.1379699707031",
+            "AimEndpoint": "17.646713256835938, 0.0000152587890625, 10.90814208984375",
+            "ProjectionTime": 177.6183192916651,
+            "ProjectionCamera": {
+              "Rotation": "0.8614943623542786, 0.18403832614421844, -0.47324132919311523, -1.08017408351202e-08, 0.9320046901702881, 0.36244627833366394, 0.5077671408653259, -0.3122454285621643, 0.8029167652130127",
+              "Position": "-182.79615783691406, 140, 310.1379699707031"
+            },
+            "ProjectionHit": "Workspace.Terrain",
+            "PanDirection": "0, 0",
+            "ReticlePixels": "606, 327",
+            "FOV": 30,
+            "InputBlocked": false,
+            "ProjectionViewport": "1081, 653",
+            "ProjectionGuiOrigin": "0, 0",
+            "PanFocus": "0, 0, 0",
+            "ProjectionFrame": 2966,
+            "Weapon": "GAU23"
+          }
+        }
+      }
+    },
+    "start": {
+      "lock": "Enum.MouseBehavior.Default",
+      "role": "Gunship",
+      "camera": {
+        "focus": "-167.833527, 132.751068, 297.251587, 1, 0, 0, 0, 1, 0, 0, 0, 1",
+        "type": "Enum.CameraType.Scriptable",
+        "look": "0.4620201587677002, -0.36244627833366394, -0.8094257712364197",
+        "fov": 30
+      },
+      "gui": {
+        "ThermalHUD": {
+          "enabled": true,
+          "a": {
+            "PanLocalFocus": "0, 0",
+            "RawPointer": "235, 177",
+            "AimAllowed": true,
+            "ProjectionAircraftPosition": "-178.46182250976562, 140, 312.65216064453125",
+            "AimEndpoint": "-28.177276611328125, 0, -236.027587890625",
+            "ProjectionTime": 177.41818024999884,
+            "ProjectionCamera": {
+              "Rotation": "0.8684782385826111, 0.17967452108860016, -0.4620201587677002, 0, 0.9320046901702881, 0.36244627833366394, 0.4957273006439209, -0.3147767186164856, 0.8094257712364197",
+              "Position": "-178.46182250976562, 140, 312.65216064453125"
+            },
+            "ProjectionHit": "Workspace.Terrain",
+            "PanDirection": "0, 0",
+            "ReticlePixels": "235, 177",
+            "FOV": 30,
+            "InputBlocked": false,
+            "ProjectionViewport": "1081, 653",
+            "ProjectionGuiOrigin": "0, 0",
+            "PanFocus": "0, 0, 0",
+            "ProjectionFrame": 2963,
+            "Weapon": "GAU23"
+          }
+        }
+      }
+    },
+    "pointer": "605.5, 326.5",
+    "err": "nil",
+    "pan": {
+      "lock": "Enum.MouseBehavior.Default",
+      "role": "Gunship",
+      "camera": {
+        "focus": "-187.318878, 132.830704, 285.905975, 1, 0, 0, 0, 1, 0, 0, 0, 1",
+        "type": "Enum.CameraType.Scriptable",
+        "look": "0.6806153059005737, -0.3581480085849762, -0.6391345262527466",
+        "fov": 30
+      },
+      "gui": {
+        "ThermalHUD": {
+          "enabled": true,
+          "a": {
+            "PanLocalFocus": "63.7779541015625, 47.96276092529297",
+            "RawPointer": "605.5, 326.5",
+            "AimAllowed": true,
+            "ProjectionAircraftPosition": "-202.27444458007812, 140, 297.80035400390625",
+            "AimEndpoint": "81.394775390625, 0, 60.46406555175781",
+            "ProjectionTime": 178.55108304166424,
+            "ProjectionCamera": {
+              "Rotation": "0.703214704990387, 0.20555248856544495, -0.6806153059005737, 0.07459653913974762, 0.9306800365447998, 0.3581480085849762, 0.7070532441139221, -0.30262649059295654, 0.6391345262527466",
+              "Position": "-202.27444458007812, 140, 297.80035400390625"
+            },
+            "ProjectionHit": "Workspace.World.Battlefield.GroundDisk",
+            "PanDirection": "0, 0",
+            "ReticlePixels": "606, 327",
+            "FOV": 30,
+            "InputBlocked": false,
+            "ProjectionViewport": "1081, 653",
+            "ProjectionGuiOrigin": "0, 0",
+            "PanFocus": "63.7779541015625, 0, 47.96276092529297",
+            "ProjectionFrame": 2980,
+            "Weapon": "GAU23"
+          }
+        }
+      }
+    }
+  }
+}

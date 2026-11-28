@@ -1,0 +1,748 @@
+{
+  "source": "b51137c73701b998b6159b80af14821e0aacb620",
+  "studio": "0.748.0.7481526",
+  "clients": 2,
+  "platform": "Darwin arm64",
+  "profiles": [
+    "{\"view\":\"567, 299\",\"touch\":true,\"info\":{\"PortraitKeyboardHeight\":0,\"DeviceForm\":\"Enum.DeviceForm.Phone\",\"DeviceId\":\"P27 Acceptance 568x320\",\"IsCustom\":true,\"Name\":\"P27 Acceptance 568x320\",\"Width\":568,\"Height\":320,\"ResolutionScale\":1,\"PixelDensity\":96,\"LandscapeKeyboardHeight\":0},\"device\":\"P27 Acceptance 568x320\"}",
+    "{\"view\":\"750, 381\",\"touch\":true,\"info\":{\"PortraitKeyboardHeight\":306,\"DeviceForm\":\"Enum.DeviceForm.Phone\",\"DeviceId\":\"iphone_17_pro\",\"IsCustom\":false,\"Name\":\"iPhone 17 Pro\",\"Width\":874,\"Height\":402,\"ResolutionScale\":3,\"PixelDensity\":460,\"LandscapeKeyboardHeight\":181},\"device\":\"iphone_17_pro\"}"
+  ],
+  "scatter": [
+    {
+      "dev": "P27 Acceptance 568x320",
+      "me": "Player1",
+      "root": "-20, 2.9980251789093018, 108",
+      "items": {
+        "RoundHUD": {
+          "items": {
+            "1": {
+              "text": "C-130 in 14s",
+              "fit": true,
+              "name": "Round",
+              "bounds": {
+                "1": 212.625,
+                "2": 62,
+                "3": 141.75,
+                "4": 24
+              }
+            },
+            "2": {
+              "text": "Surrender",
+              "fit": true,
+              "name": "Surrender",
+              "bounds": {
+                "1": 435,
+                "2": 62,
+                "3": 124,
+                "4": 44
+              }
+            }
+          },
+          "gui": {
+            "1": 0,
+            "2": 58,
+            "3": 567,
+            "4": 241
+          },
+          "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+        },
+        "TouchGui": {
+          "items": {
+            "1": {
+              "name": "JumpButton",
+              "bounds": {
+                "1": 472,
+                "2": 209,
+                "3": 70,
+                "4": 70
+              }
+            },
+            "2": {
+              "name": "DynamicThumbstickFrame",
+              "bounds": {
+                "1": -100,
+                "2": 138.33334350585938,
+                "3": 326.79998779296875,
+                "4": 260.66668701171875
+              }
+            }
+          },
+          "gui": {
+            "1": 0,
+            "2": 58,
+            "3": 567,
+            "4": 241
+          },
+          "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+        },
+        "GroundCombatHUD": {
+          "items": {
+            "1": {
+              "text": "HP  100 / 100",
+              "fit": true,
+              "name": "GroundHealth",
+              "bounds": {
+                "1": 8,
+                "2": 64,
+                "3": 124,
+                "4": 20
+              }
+            },
+            "2": {
+              "text": "M-7",
+              "fit": true,
+              "name": "M7",
+              "bounds": {
+                "1": 246.5,
+                "2": 157,
+                "3": 74,
+                "4": 44
+              }
+            }
+          },
+          "gui": {
+            "1": 0,
+            "2": 58,
+            "3": 567,
+            "4": 241
+          },
+          "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+        }
+      },
+      "role": "Ground",
+      "camera": {
+        "1": 567,
+        "2": 299
+      },
+      "life": "Alive",
+      "touch": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "phase": "Scatter"
+    },
+    {
+      "dev": "iphone_17_pro",
+      "me": "Player2",
+      "root": "520, 3, -15",
+      "items": {
+        "RoundHUD": {
+          "items": {
+            "1": {
+              "text": "C-130 OPERATOR",
+              "fit": true,
+              "name": "Round",
+              "bounds": {
+                "1": 187.5,
+                "2": 62,
+                "3": 375,
+                "4": 24
+              }
+            }
+          },
+          "gui": {
+            "1": 0,
+            "2": 58,
+            "3": 750,
+            "4": 323
+          },
+          "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+        },
+        "TouchGui": {
+          "items": {
+            "1": {
+              "name": "JumpButton",
+              "bounds": {
+                "1": 655,
+                "2": 291,
+                "3": 70,
+                "4": 70
+              }
+            },
+            "2": {
+              "name": "DynamicThumbstickFrame",
+              "bounds": {
+                "1": -100,
+                "2": 165.6666717529297,
+                "3": 400,
+                "4": 315.3333435058594
+              }
+            }
+          },
+          "gui": {
+            "1": 0,
+            "2": 58,
+            "3": 750,
+            "4": 323
+          },
+          "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+        },
+        "AircraftArrival": {
+          "items": {
+            "1": {
+              "text": "C-130 in 13s",
+              "fit": true,
+              "name": "Countdown",
+              "bounds": {
+                "1": 289,
+                "2": 165.5,
+                "3": 172,
+                "4": 30
+              }
+            }
+          },
+          "gui": {
+            "1": -62,
+            "2": -20,
+            "3": 874,
+            "4": 401
+          },
+          "insets": "Enum.ScreenInsets.None"
+        }
+      },
+      "role": "Gunship",
+      "camera": {
+        "1": 750,
+        "2": 381
+      },
+      "life": "Alive",
+      "touch": true,
+      "inset": {
+        "1": 0,
+        "2": 58
+      },
+      "phase": "Scatter"
+    }
+  ],
+  "cutoutOperator": {
+    "dev": "iphone_17_pro",
+    "me": "Player2",
+    "root": "520, 3, -15",
+    "items": {
+      "OperatorTouchControls": {
+        "items": {
+          "1": {
+            "text": "FIRE",
+            "fit": true,
+            "name": "Fire",
+            "bounds": {
+              "1": 674,
+              "2": 249,
+              "3": 64,
+              "4": 64
+            }
+          },
+          "2": {
+            "text": "30mm",
+            "fit": true,
+            "name": "GAU23",
+            "bounds": {
+              "1": 289,
+              "2": 309,
+              "3": 82,
+              "4": 44
+            }
+          },
+          "3": {
+            "text": "105mm",
+            "fit": true,
+            "name": "M102",
+            "bounds": {
+              "1": 379,
+              "2": 309,
+              "3": 82,
+              "4": 44
+            }
+          },
+          "4": {
+            "text": "Recenter",
+            "fit": true,
+            "name": "Recenter",
+            "bounds": {
+              "1": 652,
+              "2": 74,
+              "3": 82,
+              "4": 44
+            }
+          },
+          "5": {
+            "text": "▲",
+            "fit": true,
+            "name": "PanUp",
+            "bounds": {
+              "1": 64,
+              "2": 223,
+              "3": 48,
+              "4": 48
+            }
+          },
+          "6": {
+            "text": "◀",
+            "fit": true,
+            "name": "PanLeft",
+            "bounds": {
+              "1": 12,
+              "2": 275,
+              "3": 48,
+              "4": 48
+            }
+          },
+          "7": {
+            "text": "▼",
+            "fit": true,
+            "name": "PanDown",
+            "bounds": {
+              "1": 64,
+              "2": 275,
+              "3": 48,
+              "4": 48
+            }
+          },
+          "8": {
+            "text": "▶",
+            "fit": true,
+            "name": "PanRight",
+            "bounds": {
+              "1": 116,
+              "2": 275,
+              "3": 48,
+              "4": 48
+            }
+          }
+        },
+        "gui": {
+          "1": 0,
+          "2": 58,
+          "3": 750,
+          "4": 323
+        },
+        "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+      },
+      "RoundHUD": {
+        "items": {
+          "1": {
+            "text": "9:57  •  1 Ground",
+            "fit": true,
+            "name": "Round",
+            "bounds": {
+              "1": 8,
+              "2": 62,
+              "3": 150,
+              "4": 22
+            }
+          },
+          "2": {
+            "text": "C-130 HEALTH  1000 / 1000",
+            "fit": true,
+            "name": "AircraftHealth",
+            "bounds": {
+              "1": 8,
+              "2": 88,
+              "3": 160,
+              "4": 22
+            }
+          }
+        },
+        "gui": {
+          "1": 0,
+          "2": 58,
+          "3": 750,
+          "4": 323
+        },
+        "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+      },
+      "ThermalHUD": {
+        "items": {
+          "1": {
+            "text": "30mm • 100 rounds",
+            "fit": true,
+            "name": "Profile",
+            "bounds": {
+              "1": 292,
+              "2": 62,
+              "3": 166,
+              "4": 24
+            }
+          },
+          "2": {
+            "text": "+",
+            "fit": true,
+            "name": "Reticle",
+            "bounds": {
+              "1": 358,
+              "2": 174,
+              "3": 34,
+              "4": 34
+            }
+          }
+        },
+        "gui": {
+          "1": -62,
+          "2": -20,
+          "3": 874,
+          "4": 401
+        },
+        "insets": "Enum.ScreenInsets.None"
+      }
+    },
+    "role": "Gunship",
+    "camera": {
+      "1": 750,
+      "2": 381
+    },
+    "life": "Alive",
+    "touch": true,
+    "inset": {
+      "1": 0,
+      "2": 58
+    },
+    "phase": "Active"
+  },
+  "touchOperator": {
+    "pan": {
+      "1": true,
+      "2": "nil",
+      "3": "202, 319"
+    },
+    "fire": {
+      "1": true,
+      "2": "nil",
+      "3": "768, 301"
+    },
+    "events": {
+      "1": {
+        "1": "M102",
+        "2": "Enum.UserInputType.Touch",
+        "3": "420, 273, 0"
+      },
+      "2": {
+        "1": "TouchStarted",
+        "2": "420, 273, 0",
+        "3": true
+      },
+      "3": {
+        "1": "PanRight",
+        "2": "Enum.UserInputType.Touch",
+        "3": "140, 241, 0"
+      },
+      "4": {
+        "1": "TouchStarted",
+        "2": "140, 241, 0",
+        "3": true
+      },
+      "5": {
+        "1": "Fire",
+        "2": "Enum.UserInputType.Touch",
+        "3": "706, 223, 0"
+      },
+      "6": {
+        "1": "TouchStarted",
+        "2": "706, 223, 0",
+        "3": true
+      }
+    },
+    "fired": {
+      "focus": "-26.685646057128906, 0, 125.06555938720703",
+      "fov": 40,
+      "reticle": "637, 281",
+      "inSpec": {
+        "Readiness": "{\"M102\":{\"ammo\":0,\"nextFire\":1795823851.001995,\"reloadUntil\":1795823851.001995},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "M102Interval": 12,
+        "GAU23Interval": 0.15,
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":4,\"weapon\":\"M102\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795823793.719625,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      },
+      "weapon": "M102"
+    },
+    "start": {
+      "focus": "-14.402275085449219, 0, 62.39563751220703",
+      "fov": 30,
+      "reticle": "637, 281",
+      "inSpec": {
+        "Readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "M102Interval": 12,
+        "GAU23Interval": 0.15,
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":3,\"weapon\":\"GAU23\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795823793.719625,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      },
+      "weapon": "GAU23"
+    },
+    "selected": {
+      "focus": "-14.402275085449219, 0, 62.39563751220703",
+      "fov": 40,
+      "reticle": "637, 281",
+      "inSpec": {
+        "Readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "M102Interval": 12,
+        "GAU23Interval": 0.15,
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":4,\"weapon\":\"M102\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795823793.719625,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      },
+      "weapon": "M102"
+    },
+    "select": {
+      "1": true,
+      "2": "nil",
+      "3": "482, 351"
+    },
+    "panned": {
+      "focus": "-26.685646057128906, 0, 125.06555938720703",
+      "fov": 40,
+      "reticle": "637, 281",
+      "inSpec": {
+        "Readiness": "{\"M102\":{\"ammo\":1,\"nextFire\":0,\"reloadUntil\":0},\"GAU23\":{\"ammo\":100,\"nextFire\":0,\"reloadUntil\":0}}",
+        "FOV105mm": 40,
+        "FOV30mm": 30,
+        "Destroyed": false,
+        "M102Interval": 12,
+        "GAU23Interval": 0.15,
+        "AimMaximumY": 64,
+        "Selection": "{\"revision\":4,\"weapon\":\"M102\",\"roundId\":1}",
+        "Health": 1000,
+        "Focus": "0, 0, 0",
+        "AimMinimumY": -1,
+        "EpochSeconds": 1795823793.719625,
+        "MaxHealth": 1000,
+        "PeriodSeconds": 90
+      },
+      "weapon": "M102"
+    }
+  },
+  "compactPickup": {
+    "depot": "{\"state\":\"Held\",\"readyAt\":0,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":2,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+    "point": "283.5, 179",
+    "B": {
+      "fit": false,
+      "vis": false,
+      "pos": "246.5, 157",
+      "tb": "75, 21",
+      "size": "74, 44"
+    },
+    "why": "nil",
+    "events": {
+      "1": {
+        "event": "input",
+        "type": "Enum.UserInputType.Touch",
+        "point": "283, 101, 0",
+        "processed": true
+      },
+      "2": {
+        "event": "start",
+        "type": "Enum.UserInputType.Touch",
+        "point": "283, 101, 0",
+        "processed": true
+      },
+      "3": {
+        "event": "finish",
+        "type": "Enum.UserInputType.Touch",
+        "point": "283, 101, 0",
+        "processed": true
+      }
+    },
+    "A": {
+      "vis": true,
+      "pos": "272, 138",
+      "size": "24, 24"
+    },
+    "call": true
+  },
+  "groundStick": {
+    "touch": {
+      "1": {
+        "1": "start",
+        "2": "350, 117, 0",
+        "3": true
+      },
+      "2": {
+        "1": "moved",
+        "2": "362, 113.19999694824219, 0",
+        "3": false
+      },
+      "3": {
+        "1": "moved",
+        "2": "374, 109.39999389648438, 0",
+        "3": false
+      },
+      "4": {
+        "1": "moved",
+        "2": "386, 105.60000610351562, 0",
+        "3": false
+      },
+      "5": {
+        "1": "moved",
+        "2": "398, 101.80000305175781, 0",
+        "3": false
+      },
+      "6": {
+        "1": "moved",
+        "2": "410, 98, 0",
+        "3": false
+      },
+      "7": {
+        "1": "end_",
+        "2": "410, 98, 0",
+        "3": false
+      },
+      "8": {
+        "1": "start",
+        "2": "65, 170, 0",
+        "3": false
+      },
+      "9": {
+        "1": "moved",
+        "2": "65, 153.60000610351562, 0",
+        "3": true
+      },
+      "10": {
+        "1": "moved",
+        "2": "65, 145.39999389648438, 0",
+        "3": true
+      },
+      "11": {
+        "1": "moved",
+        "2": "65, 137.1999969482422, 0",
+        "3": true
+      },
+      "12": {
+        "1": "moved",
+        "2": "65, 129, 0",
+        "3": true
+      },
+      "13": {
+        "1": "end_",
+        "2": "65, 129, 0",
+        "3": true
+      }
+    },
+    "dist": 8.365188598632812,
+    "look": {
+      "1": true,
+      "2": "nil"
+    },
+    "turn": 0,
+    "walk": {
+      "1": true,
+      "2": "nil"
+    }
+  },
+  "groundDrag": {
+    "ok": false,
+    "after": "0.7527300119400024, -0.1232551857829094, -0.6466882228851318",
+    "events": {
+      "1": {
+        "proc": false,
+        "t": "start",
+        "pos": "340, 157, 0"
+      },
+      "2": {
+        "proc": false,
+        "t": "move",
+        "pos": "352.3333435058594, 154, 0"
+      },
+      "3": {
+        "proc": false,
+        "t": "move",
+        "pos": "364.6666564941406, 151, 0"
+      },
+      "4": {
+        "proc": false,
+        "t": "move",
+        "pos": "377, 148, 0"
+      },
+      "5": {
+        "proc": false,
+        "t": "move",
+        "pos": "389.3333435058594, 145, 0"
+      }
+    },
+    "angle": 48.962436119739436,
+    "err": "VirtualInput::SendMousePosition: position (401.7, 220.0) hits CoreGUI.",
+    "before": "-0, -0.25881919264793396, -0.9659258127212524"
+  },
+  "compactGroundFire": {
+    "ammoBase": 30,
+    "e": {
+      "1": {
+        "button": "M7",
+        "layer": 0,
+        "kind": "Enum.UserInputType.Touch",
+        "pos": "283, 121, 0"
+      },
+      "2": {
+        "proc": true,
+        "name": "touch",
+        "pos": "283, 121, 0"
+      },
+      "3": {
+        "proc": true,
+        "name": "touch",
+        "pos": "527, 102, 0"
+      },
+      "4": {
+        "proc": true,
+        "name": "touch",
+        "pos": "527, 102, 0"
+      },
+      "5": {
+        "proc": true,
+        "name": "touch",
+        "pos": "448, 102, 0"
+      }
+    },
+    "fireBase": {
+      "ok": true,
+      "why": "nil",
+      "q": "527, 180",
+      "v": true
+    },
+    "reload": {
+      "ok": true,
+      "why": "nil",
+      "q": "448, 180",
+      "v": true
+    },
+    "fireTop": {
+      "ok": true,
+      "why": "nil",
+      "q": "527, 180",
+      "v": true
+    },
+    "equip": {
+      "ok": true,
+      "why": "nil",
+      "q": "283.5, 199",
+      "v": true
+    },
+    "rifle": "M-7 rifle",
+    "ammoEnd": 30,
+    "ready": 0
+  }
+}

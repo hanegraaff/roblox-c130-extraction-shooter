@@ -462,6 +462,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         generation += 1
         busy = false
         sheet.Visible = false
+        gui:SetAttribute("InputOverlayOpen", false)
         open.Visible = true
         current = nil
         clear()
@@ -751,6 +752,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         connections,
         open.Activated:Connect(function()
             sheet.Visible, open.Visible = true, false
+            gui:SetAttribute("InputOverlayOpen", true)
             request("read", nil)
         end)
     )

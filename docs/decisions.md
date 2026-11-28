@@ -25,7 +25,7 @@ Updated 2026-11-23. “Selected” records user choices. “Default” records c
 | D19 | Default | Operator disconnect is ground win by forfeit; invalid/empty match aborts | Product changes disconnect policy |
 | D20 | Default | Expanded-map candidate: center/focus (0,0,0), radius 360 studs, altitude 140 studs, recovery Y=−30; lobby anchors at X=520. Prior P02/P04 evidence used radius 180 | Later geometry/balance evidence warrants tuning |
 | D21 | Default | Production lobby waits eight seconds before attempting deployment, deployment has a fifteen-second readiness limit, and results last five seconds; the test mapping uses separate accelerated settings | Multiplayer review warrants timing changes |
-| D22 | Default, expanded by D69 | Spectators initially follow the lowest-UserId living Ground player and use a fixed map overview if no target exists. Ground surrender is an explicit on-screen action | Player experience review warrants a different default |
+| D22 | Default, expanded by D69 and revised by D118 | Spectators initially follow the lowest-UserId living Ground player and use a fixed map overview if no target exists. Ground surrender is an explicit on-screen action | Player experience review warrants a different default |
 | D23 | Selected | Waiting players can walk in the protected lobby; human testing supports solo exploration, role choice, immediate start and settings controls isolated from release builds | User changes human-testing workflow |
 | D24 | Default | Solo test Play opens Ground preview; role cycles Auto/Ground/Operator, next-round durations are 30/60/180/600 seconds (default 60), and preferences last for the local session/reset only | Human testing needs more settings or different defaults |
 | D25 | Default | Orbit period 90 seconds, increasing phase from positive X toward positive Z; use the server canonical anchored model with ordinary replication and no cosmetic shell | Measured visual stepping or balance warrants a bounded smoothing/tuning change |
@@ -127,6 +127,8 @@ The 2026-11-23 P18 revision supersedes prior health, destruction and camera-boun
 | D114 | Default preset and named copies, 2026-11-27 | Display the built-in preset as Default and require a changed name before Save is enabled. Remove the generated New Preset entry. After deletion, clear the name field. Keep the stored Shipped identifier for compatibility with existing servers and saved selections. Default is a protected display name for new saves. Supersedes D113’s New Preset reset. |
 | D115 | User-selected mobile screen space, 2026-11-27 | Free up the mobile play view before the text work, starting with the C-130 countdown. P27 carries the mobile HUD work ahead of P33 and P34. The operator blackout remains part of P24’s arrival sequence. |
 | D116 | Proposed P27 layout targets | Put one readable Ground Scatter timer at the safe top edge. At 568×320, aim for a single line no wider than one quarter of the safe area and no taller than 24 UI pixels. Review the layout and touch controls on a wider phone with a cutout as well. |
+| D117 | User-selected Ground reticle height, 2026-11-27 | Raise the horizontally centered Ground reticle so the avatar does not obscure it in normal third-person play. Rifle and launcher aim use that same point. The vertical offset is a tuning value. |
+| D118 | User-selected Ground HUD, 2026-11-27 | Remove the Surrender button from the desktop and touch Ground HUD. |
 
 ## Open details that do not block initial implementation
 

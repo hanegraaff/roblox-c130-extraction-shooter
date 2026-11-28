@@ -8,6 +8,7 @@
 ]=]
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 local PlayerPresentation = require(ReplicatedStorage.Shared.PlayerPresentation)
 local AircraftArrival = {}
 local renderOwnerCount = 0
@@ -25,7 +26,8 @@ function AircraftArrival.start(
     player: Player,
     playerGui: PlayerGui,
     state: Instance,
-    thermalReady: (number) -> boolean
+    thermalReady: (number) -> boolean,
+    touchProvider: (() -> boolean)?
 ): Controller
     local gui = Instance.new("ScreenGui")
     gui.Name = "AircraftArrival"
@@ -67,12 +69,16 @@ function AircraftArrival.start(
         local phase = if state:GetAttribute("RoundId") == assignedRound
             then state:GetAttribute("Phase")
             else nil
-        countdown.Text = if phase == "Active"
-            then "C-130 arrives in 0"
-            else PlayerPresentation.arrivalText(
-                if phase == "Scatter" then state:GetAttribute("DeadlineSeconds") else nil,
-                workspace:GetServerTimeNow()
-            )
+        local now = workspace:GetServerTimeNow()
+        local touch = if touchProvider then touchProvider() else UserInputService.TouchEnabled
+        local deadline = if phase == "Active"
+            then now
+            elseif phase == "Scatter" then state:GetAttribute("DeadlineSeconds")
+            else nil
+        countdown.Text = PlayerPresentation.arrivalText(deadline, now, touch)
+        countdown.TextWrapped = false
+        countdown.Size = if touch then UDim2.fromOffset(172, 30) else UDim2.new(0.76, 0, 0, 52)
+        textSize.MaxTextSize = if touch then 20 else 34
         gui.Enabled = true
     end
 
