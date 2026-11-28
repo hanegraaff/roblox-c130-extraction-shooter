@@ -13,7 +13,7 @@ The owner can declare **C-130 Assault** MVP complete when P26–P31, the illustr
 | [P26 · Live balance panel](plans/26-live-balance-panel.md) | Complete | P25 | Tune health, damage, weapon timing, kits, panels, round length, intermission and minimum players in the published game. |
 | [P27 · Mouse aiming, mobile controls and compact HUD](plans/27-ground-aim-and-mobile-controls.md) | Complete | P24, P25 | Aim by moving the mouse and play both roles on a phone with a clear battlefield view and a compact arrival timer. |
 | [P28 · C-130 model in flight](plans/28-c130-model.md) | Complete | P24, P25 and aircraft images | See the modeled C-130 arrive and circle overhead. |
-| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Blocked | P25 and launcher images | Find, carry and fire the modeled launcher. |
+| [P29 · Rocket launcher model in play](plans/29-rocket-launcher-model.md) | Deferred | P25 and launcher images | Implementation merged. Multi-client acceptance moves to the final MVP test. Desktop and phone fit review remains pending. |
 | [P30 · Medkits at each battlefield building](plans/30-single-use-medkits.md) | Complete | P26, P27 and medkit images | Use a hidden kit at each building. Tune healing. |
 | [P31 · Darker starting bunker](plans/31-bunker-thermal-contrast.md) | Ready | P18, Sandbreak | Read the starting bunker as dark cover through thermal sights. |
 | [P33 · Write the C-130 Assault README](plans/33-rewrite-readmes.md) | Planned | P26–P31 | Learn to play, develop and publish from one root guide with gameplay screenshots and a Blender model showcase. |
@@ -441,6 +441,8 @@ Plan IDs remain stable; table/dependency order places the later-added P13/P14 be
 Use the [feature-loop skill](.agents/skills/implement-next-plan/SKILL.md) for one plan. Split a plan here before implementation if it is no longer a coherent increment; preserve IDs and requirement links. Do not implement the entire roadmap in one invocation.
 
 ## Completion versus release
+
+The final MVP test includes P29’s deferred three-client transfer, firing, recovery and replay cases against the final candidate. Record the results in P29 before declaring its multiplayer acceptance verified.
 
 A Complete plan has all required automated and Studio evidence, resolved material tester findings, current documentation, and source pushed to GitHub. Its completion record identifies the tested source and PR; PR integration may still await the human's decision. Dependent work must include that source, rather than starting from stale main.
 
