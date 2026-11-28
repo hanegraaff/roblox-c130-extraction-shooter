@@ -1,0 +1,26 @@
+{
+  "source": "9a6d9bb6dfa27a9e973fc5e9c08566fa91fd4085",
+  "tree": "3c53f6cd34b37be1af3805ac4f7ab0153932501d",
+  "studio": "0.748.0.7481526",
+  "disposition": "Before P24 deployment, both actual clients failed the GroundAimGui Scatter timer/raised-reticle clearance assertion.",
+  "reports": [
+    {
+      "role": "Waiting",
+      "smoke": "{\"errors\":1,\"skipped\":0,\"passed\":22,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"discovered\":23}",
+      "name": "Player1",
+      "errors": "[\"ReplicatedStorage.ClientSpecs.GroundAimGui.spec:803: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:567: intersects Reticle: Scatter · 568, 320 · Round\\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:803\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\\nPlayers.Player1.PlayerScripts.ClientTests:9\\n\"]"
+    },
+    {
+      "phase": "Lobby",
+      "role": "Server",
+      "clients": 2,
+      "server": "{\"errors\":0,\"skipped\":0,\"passed\":218,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":218}"
+    },
+    {
+      "role": "Waiting",
+      "smoke": "{\"errors\":1,\"skipped\":0,\"passed\":22,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":1,\"discovered\":23}",
+      "name": "Player2",
+      "errors": "[\"ReplicatedStorage.ClientSpecs.GroundAimGui.spec:803: ReplicatedStorage.ClientSpecs.GroundAimGui.spec:567: intersects Reticle: Scatter · 568, 320 · Round\\nReplicatedStorage.ClientSpecs.GroundAimGui.spec:803\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:86\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:84 function runCallback\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:116 function runNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:153 function runPlanNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:164 function runPlanNode\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestRunner:45 function runPlan\\nReplicatedStorage.TestPackages._Index.roblox_testez@0.4.1.testez.TestBootstrap:127 function run\\nPlayers.Player2.PlayerScripts.ClientTests:9\\n\"]"
+    }
+  ]
+}

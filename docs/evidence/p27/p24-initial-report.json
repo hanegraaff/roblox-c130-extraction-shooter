@@ -1,0 +1,21 @@
+{
+  "report": {
+    "initialClientCount": 2,
+    "skipped": 0,
+    "passed": 0,
+    "cases": [
+      {
+        "name": "P24 harness completion",
+        "passed": false,
+        "detail": "ServerScriptService.ServerTests.AircraftArrivalHarness:30: P24 server timeout: both actual clients finished smoke"
+      }
+    ],
+    "observations": [],
+    "clientSmoke": [],
+    "completedRoundIds": [],
+    "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":217,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":217}",
+    "suite": "P24-multiplayer",
+    "failed": 1,
+    "discovered": 1
+  }
+}

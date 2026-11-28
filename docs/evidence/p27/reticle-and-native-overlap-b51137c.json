@@ -1,0 +1,307 @@
+{
+  "source": "b51137c73701b998b6159b80af14821e0aacb620",
+  "reticleProjection": {
+    "pitch": "-0.8411257863044739, -0.2588190734386444, -0.47488975524902344",
+    "zoom": 14.34420108795166,
+    "root": "-20, 2.9980251789093018, 108",
+    "viewport": {
+      "1": 567,
+      "2": 299
+    },
+    "phase": "Active",
+    "parts": {
+      "1": {
+        "current": true,
+        "name": "Workspace.Player1.HumanoidRootPart",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 267.2184753417969,
+          "2": 144.88465881347656,
+          "3": 299.7815246582031,
+          "4": 179.4459991455078
+        }
+      },
+      "2": {
+        "current": true,
+        "name": "Workspace.Player1.RightLowerArm",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 294.9161376953125,
+          "2": 141.98544311523438,
+          "3": 309.73492431640625,
+          "4": 159.31582641601562
+        }
+      },
+      "3": {
+        "current": true,
+        "name": "Workspace.Player1.RightUpperArm",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 291.2768249511719,
+          "2": 146.64324951171875,
+          "3": 309.64666748046875,
+          "4": 160.5914306640625
+        }
+      },
+      "4": {
+        "current": true,
+        "name": "Workspace.Player1.UpperTorso",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 269.25811767578125,
+          "2": 145.61569213867188,
+          "3": 299.0929260253906,
+          "4": 179.31246948242188
+        }
+      },
+      "5": {
+        "current": true,
+        "name": "Workspace.Player1.LeftUpperArm",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 257.50164794921875,
+          "2": 148.07623291015625,
+          "3": 273.75274658203125,
+          "4": 170.25271606445312
+        }
+      },
+      "6": {
+        "current": true,
+        "name": "Workspace.Player1.Head",
+        "at40": true,
+        "at32": false,
+        "box": {
+          "1": 273.76953125,
+          "2": 127.63113403320312,
+          "3": 293.8458251953125,
+          "4": 151.6045379638672
+        }
+      },
+      "7": {
+        "current": true,
+        "name": "Workspace.Player1.Red_Royal_Cape.Handle",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 246.90570068359375,
+          "2": 136.52432250976562,
+          "3": 324.45001220703125,
+          "4": 222.33895874023438
+        }
+      },
+      "8": {
+        "current": false,
+        "name": "Workspace.Player1.Accessory (Crown).Handle",
+        "at40": true,
+        "at32": false,
+        "box": {
+          "1": 269.6191101074219,
+          "2": 108.96731567382812,
+          "3": 298.0462951660156,
+          "4": 132.44741821289062
+        }
+      },
+      "9": {
+        "current": true,
+        "name": "Workspace.Player1.Accessory (cartoony pixel meme sunglasses).Handle",
+        "at40": false,
+        "at32": false,
+        "box": {
+          "1": 271.8383483886719,
+          "2": 132.17794799804688,
+          "3": 295.68707275390625,
+          "4": 142.740234375
+        }
+      },
+      "10": {
+        "current": true,
+        "name": "Workspace.Player1.MessyHair.Handle",
+        "at40": true,
+        "at32": false,
+        "box": {
+          "1": 272.0215148925781,
+          "2": 120.46041870117188,
+          "3": 295.6507568359375,
+          "4": 147.5407257080078
+        }
+      }
+    }
+  },
+  "operatorRecenterBefore": {
+    "ok": true,
+    "after": "-26.685646057128906, 0, 125.06555938720703",
+    "list": {
+      "1": {
+        "name": "TeamName",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 150,
+          "4": 24
+        }
+      },
+      "2": {
+        "name": "OverlayFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 150,
+          "4": 24
+        }
+      },
+      "3": {
+        "name": "BackgroundFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 150,
+          "4": 24
+        }
+      },
+      "4": {
+        "name": "BGFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 150,
+          "4": 24
+        }
+      },
+      "5": {
+        "name": "NameFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 150,
+          "4": 24
+        }
+      },
+      "6": {
+        "name": "TeamEntry",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 173,
+          "4": 24
+        }
+      },
+      "7": {
+        "name": "TeamList_Ground",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 173,
+          "4": 64
+        }
+      },
+      "8": {
+        "name": "OffsetUndoFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 173,
+          "4": 192
+        }
+      },
+      "9": {
+        "name": "ScrollingFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 161,
+          "4": 182
+        }
+      },
+      "10": {
+        "name": "ScrollingFrameClippingFrame",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 165,
+          "4": 182
+        }
+      },
+      "11": {
+        "name": "Body",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 165,
+          "4": 182
+        }
+      },
+      "12": {
+        "name": "Column",
+        "rect": {
+          "1": 580,
+          "2": 22,
+          "3": 165,
+          "4": 182
+        }
+      },
+      "13": {
+        "name": "SizeOffsetFrame",
+        "rect": {
+          "1": 580,
+          "2": 4,
+          "3": 165,
+          "4": 190.5
+        }
+      },
+      "14": {
+        "name": "PlayerScrollList",
+        "rect": {
+          "1": 580,
+          "2": 4,
+          "3": 165,
+          "4": 190.5
+        }
+      },
+      "15": {
+        "name": "OffsetFrame",
+        "rect": {
+          "1": 580,
+          "2": 4,
+          "3": 166,
+          "4": 190.5
+        }
+      },
+      "16": {
+        "name": "Children",
+        "rect": {
+          "1": 580,
+          "2": 4,
+          "3": 166,
+          "4": 190.5
+        }
+      }
+    },
+    "root": "693, 38",
+    "err": "nil",
+    "before": "-26.685646057128906, 0, 125.06555938720703",
+    "virt": "755, 116"
+  },
+  "operatorRecenterWithListDisabled": {
+    "restored": true,
+    "ending": "0, 0, 0",
+    "start": "-26.685646057128906, 0, 125.06555938720703",
+    "error": "nil",
+    "ok": true
+  },
+  "ended": {
+    "initial": 2,
+    "owned": "P27 operated b51137c",
+    "peak": 3,
+    "server": "{\"errors\":0,\"skipped\":0,\"passed\":217,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":217}"
+  },
+  "deviceRestore": [
+    "{\"device\":\"default\",\"touch\":false,\"player\":\"Player1\",\"list\":true}",
+    "{\"device\":\"default\",\"touch\":false,\"player\":\"Player2\",\"list\":true}",
+    "{\"device\":\"default\",\"touch\":false,\"player\":\"Player3\",\"list\":true}"
+  ]
+}

@@ -1,0 +1,1113 @@
+{
+  "source": "6db7356c6bf2ca4ff9795ba0b773695d87b463fb",
+  "tree": "7ae52dc6d4a76946ae3069de92b09b52a2bbaa57",
+  "studio": "0.748.0.7481526",
+  "os": "Darwin arm64",
+  "invocation": "StudioTestService:ExecuteMultiplayerTestAsync(2,{})",
+  "actualClients": 2,
+  "childMode": "Play Client / Play Server",
+  "method": "Existing Studio test controls reset/deploy. Public VirtualInput produced native Touch input in Studio Device Simulator. Passive server RemoteEvent listeners recorded actual request payloads without changing combat. Tested ordinary physics-driven positioning to Depot launcher using local Humanoid movement; camera bearing set for comparable door-facing view. Server-induced death used for the live role/lobby transition.",
+  "binding": {
+    "different": [],
+    "version": "0.748.0.7481526",
+    "dependencies": 16,
+    "placeId": 0,
+    "tracked": 179
+  },
+  "devicesAndClientSmoke": [
+    {
+      "role": "Waiting",
+      "list": true,
+      "device": {
+        "view": "567, 299",
+        "touch": true,
+        "info": {
+          "PortraitKeyboardHeight": 0,
+          "DeviceForm": "Enum.DeviceForm.Phone",
+          "DeviceId": "P27 Acceptance 568x320",
+          "IsCustom": true,
+          "Name": "P27 Acceptance 568x320",
+          "Width": 568,
+          "Height": 320,
+          "ResolutionScale": 1,
+          "PixelDensity": 96,
+          "LandscapeKeyboardHeight": 0
+        },
+        "device": "P27 Acceptance 568x320"
+      },
+      "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "layout": "[{\"visible\":7,\"safeMax\":[1280,720],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":6,\"safeMax\":[1280,720],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":8,\"safeMax\":[568,320],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":8,\"safeMax\":[567,299],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[567,299]},{\"visible\":8,\"safeMax\":[836,381],\"phase\":\"M7\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":7,\"safeMax\":[568,320],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":7,\"safeMax\":[567,299],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[567,299]},{\"visible\":7,\"safeMax\":[836,381],\"phase\":\"Rocket\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":3,\"safeMax\":[568,320],\"phase\":\"Scatter\",\"safeMin\":[0,58],\"roundLabel\":[142,24],\"viewport\":[568,320]},{\"visible\":3,\"safeMax\":[567,299],\"phase\":\"Scatter\",\"safeMin\":[0,58],\"roundLabel\":[141.75,24],\"viewport\":[567,299]},{\"visible\":3,\"safeMax\":[836,381],\"phase\":\"Scatter\",\"safeMin\":[48,58],\"roundLabel\":[197,24],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Results\",\"safeMin\":[0,58],\"roundLabel\":[352.1600036621094,58],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[567,299],\"phase\":\"Results\",\"safeMin\":[0,58],\"roundLabel\":[351.5400085449219,58],\"viewport\":[567,299]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Results\",\"safeMin\":[48,58],\"roundLabel\":[488.55999755859377,58],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Lobby\",\"safeMin\":[0,58],\"roundLabel\":[284,24],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[567,299],\"phase\":\"Lobby\",\"safeMin\":[0,58],\"roundLabel\":[283.5,24],\"viewport\":[567,299]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Lobby\",\"safeMin\":[48,58],\"roundLabel\":[394,24],\"viewport\":[852,393]}]"
+    },
+    {
+      "role": "Waiting",
+      "list": true,
+      "device": {
+        "view": "750, 381",
+        "touch": true,
+        "info": {
+          "PortraitKeyboardHeight": 306,
+          "DeviceForm": "Enum.DeviceForm.Phone",
+          "DeviceId": "iphone_17_pro",
+          "IsCustom": false,
+          "Name": "iPhone 17 Pro",
+          "Width": 874,
+          "Height": 402,
+          "ResolutionScale": 3,
+          "PixelDensity": 460,
+          "LandscapeKeyboardHeight": 181
+        },
+        "device": "iphone_17_pro"
+      },
+      "smoke": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+      "layout": "[{\"visible\":7,\"safeMax\":[1280,720],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":6,\"safeMax\":[1280,720],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[300,38],\"viewport\":[1280,720]},{\"visible\":8,\"safeMax\":[568,320],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":8,\"safeMax\":[567,299],\"phase\":\"M7\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[567,299]},{\"visible\":8,\"safeMax\":[836,381],\"phase\":\"M7\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":7,\"safeMax\":[568,320],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[568,320]},{\"visible\":7,\"safeMax\":[567,299],\"phase\":\"Rocket\",\"safeMin\":[0,58],\"roundLabel\":[150,22],\"viewport\":[567,299]},{\"visible\":7,\"safeMax\":[836,381],\"phase\":\"Rocket\",\"safeMin\":[48,58],\"roundLabel\":[150,22],\"viewport\":[852,393]},{\"visible\":3,\"safeMax\":[568,320],\"phase\":\"Scatter\",\"safeMin\":[0,58],\"roundLabel\":[142,24],\"viewport\":[568,320]},{\"visible\":3,\"safeMax\":[567,299],\"phase\":\"Scatter\",\"safeMin\":[0,58],\"roundLabel\":[141.75,24],\"viewport\":[567,299]},{\"visible\":3,\"safeMax\":[836,381],\"phase\":\"Scatter\",\"safeMin\":[48,58],\"roundLabel\":[197,24],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Results\",\"safeMin\":[0,58],\"roundLabel\":[352.1600036621094,58],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[567,299],\"phase\":\"Results\",\"safeMin\":[0,58],\"roundLabel\":[351.5400085449219,58],\"viewport\":[567,299]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Results\",\"safeMin\":[48,58],\"roundLabel\":[488.55999755859377,58],\"viewport\":[852,393]},{\"visible\":1,\"safeMax\":[568,320],\"phase\":\"Lobby\",\"safeMin\":[0,58],\"roundLabel\":[284,24],\"viewport\":[568,320]},{\"visible\":1,\"safeMax\":[567,299],\"phase\":\"Lobby\",\"safeMin\":[0,58],\"roundLabel\":[283.5,24],\"viewport\":[567,299]},{\"visible\":1,\"safeMax\":[836,381],\"phase\":\"Lobby\",\"safeMin\":[48,58],\"roundLabel\":[394,24],\"viewport\":[852,393]}]"
+    }
+  ],
+  "scenes": {
+    "compactScatter": [
+      {
+        "dev": "P27 Acceptance 568x320",
+        "me": "Player1",
+        "root": "-20.000146865844727, 2.9980251789093018, 108.0000228881836",
+        "items": {
+          "RoundHUD": {
+            "items": {
+              "1": {
+                "text": "C-130 in 14s",
+                "fit": true,
+                "name": "Round",
+                "bounds": {
+                  "1": 417.25,
+                  "2": 62,
+                  "3": 141.75,
+                  "4": 24
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 567,
+              "4": 241
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          },
+          "TouchGui": {
+            "items": {
+              "1": {
+                "name": "JumpButton",
+                "bounds": {
+                  "1": 472,
+                  "2": 209,
+                  "3": 70,
+                  "4": 70
+                }
+              },
+              "2": {
+                "name": "DynamicThumbstickFrame",
+                "bounds": {
+                  "1": -100,
+                  "2": 138.33334350585938,
+                  "3": 326.79998779296875,
+                  "4": 260.66668701171875
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 567,
+              "4": 241
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          },
+          "GroundCombatHUD": {
+            "items": {
+              "1": {
+                "text": "HP 100/100",
+                "fit": true,
+                "name": "GroundHealth",
+                "bounds": {
+                  "1": 8,
+                  "2": 64,
+                  "3": 124,
+                  "4": 20
+                }
+              },
+              "2": {
+                "text": "M-7",
+                "fit": true,
+                "name": "M7",
+                "bounds": {
+                  "1": 246.5,
+                  "2": 157,
+                  "3": 74,
+                  "4": 44
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 567,
+              "4": 241
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          }
+        },
+        "role": "Ground",
+        "camera": {
+          "1": 567,
+          "2": 299
+        },
+        "life": "Alive",
+        "touch": true,
+        "inset": {
+          "1": 0,
+          "2": 58
+        },
+        "phase": "Scatter"
+      },
+      {
+        "dev": "iphone_17_pro",
+        "me": "Player2",
+        "root": "520, 3, -15",
+        "items": {
+          "RoundHUD": {
+            "items": {
+              "1": {
+                "text": "C-130 OPERATOR",
+                "fit": true,
+                "name": "Round",
+                "bounds": {
+                  "1": 187.5,
+                  "2": 62,
+                  "3": 375,
+                  "4": 24
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 750,
+              "4": 323
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          },
+          "TouchGui": {
+            "items": {
+              "1": {
+                "name": "JumpButton",
+                "bounds": {
+                  "1": 655,
+                  "2": 291,
+                  "3": 70,
+                  "4": 70
+                }
+              },
+              "2": {
+                "name": "DynamicThumbstickFrame",
+                "bounds": {
+                  "1": -100,
+                  "2": 165.6666717529297,
+                  "3": 400,
+                  "4": 315.3333435058594
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 750,
+              "4": 323
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          },
+          "AircraftArrival": {
+            "items": {
+              "1": {
+                "text": "C-130 in 14s",
+                "fit": true,
+                "name": "Countdown",
+                "bounds": {
+                  "1": 289,
+                  "2": 165.5,
+                  "3": 172,
+                  "4": 30
+                }
+              }
+            },
+            "gui": {
+              "1": -62,
+              "2": -20,
+              "3": 874,
+              "4": 401
+            },
+            "insets": "Enum.ScreenInsets.None"
+          }
+        },
+        "role": "Gunship",
+        "camera": {
+          "1": 750,
+          "2": 381
+        },
+        "life": "Alive",
+        "touch": true,
+        "inset": {
+          "1": 0,
+          "2": 58
+        },
+        "phase": "Scatter"
+      }
+    ],
+    "cutoutScatter": [
+      {
+        "dev": "default",
+        "me": "Player1",
+        "root": "520, 3, -15",
+        "items": {
+          "AircraftArrival": {
+            "items": {
+              "1": {
+                "text": "C-130 arrives in 14",
+                "fit": true,
+                "name": "Countdown",
+                "bounds": {
+                  "1": 129.72000122070312,
+                  "2": 300.5,
+                  "3": 821.5599975585938,
+                  "4": 52
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 0,
+              "3": 1081,
+              "4": 653
+            },
+            "insets": "Enum.ScreenInsets.None"
+          },
+          "RoundHUD": {
+            "items": {
+              "1": {
+                "text": "C-130 OPERATOR",
+                "fit": true,
+                "name": "Round",
+                "bounds": {
+                  "1": 270.25,
+                  "2": 170,
+                  "3": 540.5,
+                  "4": 76
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 1081,
+              "4": 595
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          }
+        },
+        "role": "Gunship",
+        "camera": {
+          "1": 1081,
+          "2": 653
+        },
+        "life": "Alive",
+        "touch": false,
+        "inset": {
+          "1": 0,
+          "2": 58
+        },
+        "phase": "Scatter"
+      },
+      {
+        "dev": "iphone_17_pro",
+        "me": "Player2",
+        "root": "-20, 2.9980251789093018, 108",
+        "items": {
+          "RoundHUD": {
+            "items": {
+              "1": {
+                "text": "C-130 in 13s",
+                "fit": true,
+                "name": "Round",
+                "bounds": {
+                  "1": 554.5,
+                  "2": 62,
+                  "3": 187.5,
+                  "4": 24
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 750,
+              "4": 323
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          },
+          "TouchGui": {
+            "items": {
+              "1": {
+                "name": "JumpButton",
+                "bounds": {
+                  "1": 655,
+                  "2": 291,
+                  "3": 70,
+                  "4": 70
+                }
+              },
+              "2": {
+                "name": "DynamicThumbstickFrame",
+                "bounds": {
+                  "1": -100,
+                  "2": 165.6666717529297,
+                  "3": 400,
+                  "4": 315.3333435058594
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 750,
+              "4": 323
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          },
+          "GroundCombatHUD": {
+            "items": {
+              "1": {
+                "text": "HP 100/100",
+                "fit": true,
+                "name": "GroundHealth",
+                "bounds": {
+                  "1": 8,
+                  "2": 64,
+                  "3": 124,
+                  "4": 20
+                }
+              },
+              "2": {
+                "text": "M-7",
+                "fit": true,
+                "name": "M7",
+                "bounds": {
+                  "1": 338,
+                  "2": 239,
+                  "3": 74,
+                  "4": 44
+                }
+              }
+            },
+            "gui": {
+              "1": 0,
+              "2": 58,
+              "3": 750,
+              "4": 323
+            },
+            "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+          }
+        },
+        "role": "Ground",
+        "camera": {
+          "1": 750,
+          "2": 381
+        },
+        "life": "Alive",
+        "touch": true,
+        "inset": {
+          "1": 0,
+          "2": 58
+        },
+        "phase": "Scatter"
+      }
+    ],
+    "compactActive": {
+      "surrender": false,
+      "rayPixel": {
+        "1": 284,
+        "2": 90
+      },
+      "phase": "Active",
+      "pose": {
+        "look": {
+          "1": -0.9510363936424255,
+          "2": -0.2588192820549011,
+          "3": 0.16894467175006866
+        },
+        "zoom": 12.499999046325684,
+        "position": {
+          "1": -20.00014877319336,
+          "2": 2.9980251789093018,
+          "3": 108.0000228881836
+        }
+      },
+      "rayTarget": {
+        "1": -27.40000343322754,
+        "2": 6.796113967895508,
+        "3": 109.27184295654297
+      },
+      "playerList": false,
+      "role": "Ground",
+      "device": "P27 Acceptance 568x320",
+      "nativeHit": "Workspace.World.Battlefield.SpawnShelterPanels.SB.W.W.01.SB_query_solid_101_01_Proxy",
+      "viewport": {
+        "1": 567,
+        "2": 299
+      },
+      "projectedAvatar": {
+        "1": {
+          "n": "Workspace.Player1.RightUpperArm",
+          "r": {
+            "1": 292.31427001953125,
+            "2": 147.69717407226562,
+            "3": 313.425048828125,
+            "4": 163.7037353515625
+          }
+        },
+        "2": {
+          "n": "Workspace.Player1.RightUpperLeg",
+          "r": {
+            "1": 282.3092956542969,
+            "2": 171.5479736328125,
+            "3": 299.75860595703125,
+            "4": 203.18399047851562
+          }
+        },
+        "3": {
+          "n": "Workspace.Player1.RightLowerLeg",
+          "r": {
+            "1": 285.80712890625,
+            "2": 183.99160766601562,
+            "3": 300.7351989746094,
+            "4": 210.93931579589844
+          }
+        },
+        "4": {
+          "n": "Workspace.Player1.RightFoot",
+          "r": {
+            "1": 287.6714172363281,
+            "2": 189.79559326171875,
+            "3": 300.3817138671875,
+            "4": 212.10360717773438
+          }
+        },
+        "5": {
+          "n": "Workspace.Player1.LeftUpperLeg",
+          "r": {
+            "1": 266.7069091796875,
+            "2": 171.46478271484375,
+            "3": 284.7656555175781,
+            "4": 204.83218383789062
+          }
+        },
+        "6": {
+          "n": "Workspace.Player1.LeftLowerLeg",
+          "r": {
+            "1": 265.6531066894531,
+            "2": 186.23777770996094,
+            "3": 281.13214111328125,
+            "4": 212.58026123046875
+          }
+        },
+        "7": {
+          "n": "Workspace.Player1.LeftFoot",
+          "r": {
+            "1": 265.9601135253906,
+            "2": 191.77194213867188,
+            "3": 278.9205322265625,
+            "4": 214.58010864257812
+          }
+        },
+        "8": {
+          "n": "Workspace.Player1.UpperTorso",
+          "r": {
+            "1": 267.07769775390625,
+            "2": 146.53280639648438,
+            "3": 301.4124755859375,
+            "4": 185.18621826171875
+          }
+        },
+        "9": {
+          "n": "Workspace.Player1.LowerTorso",
+          "r": {
+            "1": 268.2382507324219,
+            "2": 168.85667419433594,
+            "3": 298.7615051269531,
+            "4": 186.64138793945312
+          }
+        },
+        "10": {
+          "n": "Workspace.Player1.LeftUpperArm",
+          "r": {
+            "1": 253.19862365722656,
+            "2": 149.22999572753906,
+            "3": 272.8384704589844,
+            "4": 174.82472229003906
+          }
+        },
+        "11": {
+          "n": "Workspace.Player1.Head",
+          "r": {
+            "1": 272.22552490234375,
+            "2": 125.98294067382812,
+            "3": 295.4359436035156,
+            "4": 153.46507263183594
+          }
+        },
+        "12": {
+          "n": "Workspace.Player1.RoWrestler Champion BeltAccessory.Handle",
+          "r": {
+            "1": 264.6917724609375,
+            "2": 169.14779663085938,
+            "3": 302.29449462890625,
+            "4": 190.2371826171875
+          }
+        },
+        "13": {
+          "n": "Workspace.Player1.Red_Royal_Cape.Handle",
+          "r": {
+            "1": 240.42300415039062,
+            "2": 136.17433166503906,
+            "3": 331.44873046875,
+            "4": 235.63551330566406
+          }
+        },
+        "14": {
+          "n": "Workspace.Player1.Accessory (Crown).Handle",
+          "r": {
+            "1": 267.3215637207031,
+            "2": 104.61325073242188,
+            "3": 300.3951110839844,
+            "4": 131.34239196777344
+          }
+        },
+        "15": {
+          "n": "Workspace.Player1.Accessory (cartoony pixel meme sunglasses).Handle",
+          "r": {
+            "1": 270.0624694824219,
+            "2": 131.196533203125,
+            "3": 297.4984436035156,
+            "4": 143.25128173828125
+          }
+        },
+        "16": {
+          "n": "Workspace.Player1.MessyHair.Handle",
+          "r": {
+            "1": 270.15118408203125,
+            "2": 117.82203674316406,
+            "3": 297.573974609375,
+            "4": 148.81117248535156
+          }
+        },
+        "17": {
+          "n": "Workspace.Player1.Brows.Handle",
+          "r": {
+            "1": 275.42327880859375,
+            "2": 132.7738494873047,
+            "3": 292.7385559082031,
+            "4": 136.20849609375
+          }
+        }
+      },
+      "reticle": {
+        "1": 284,
+        "2": 90,
+        "3": true
+      },
+      "overlap": []
+    },
+    "desktopActive": {
+      "surrender": false,
+      "rayPixel": {
+        "1": 541,
+        "2": 196
+      },
+      "phase": "Active",
+      "pose": {
+        "look": {
+          "1": 0,
+          "2": -0.25881919264793396,
+          "3": -0.9659258127212524
+        },
+        "zoom": 12.499994277954102,
+        "position": {
+          "1": 151.20668029785156,
+          "2": 2.9980251789093018,
+          "3": 199.16104125976562
+        }
+      },
+      "rayTarget": {
+        "1": 151.2546844482422,
+        "2": 8.24868106842041,
+        "3": 164.75
+      },
+      "playerList": true,
+      "role": "Ground",
+      "device": "default",
+      "nativeHit": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Static.Outpost_Imported0364",
+      "viewport": {
+        "1": 1081,
+        "2": 653
+      },
+      "projectedAvatar": {
+        "1": {
+          "n": "Workspace.Player1.RightUpperLeg",
+          "r": {
+            "1": 538.0281982421875,
+            "2": 392.38580322265625,
+            "3": 573.747802734375,
+            "4": 456.3897399902344
+          }
+        },
+        "2": {
+          "n": "Workspace.Player1.RightLowerLeg",
+          "r": {
+            "1": 545.1680297851562,
+            "2": 417.3424987792969,
+            "3": 575.7229614257812,
+            "4": 472.33062744140625
+          }
+        },
+        "3": {
+          "n": "Workspace.Player1.RightFoot",
+          "r": {
+            "1": 549.0399780273438,
+            "2": 429.2218322753906,
+            "3": 575.039306640625,
+            "4": 474.8366394042969
+          }
+        },
+        "4": {
+          "n": "Workspace.Player1.LeftUpperLeg",
+          "r": {
+            "1": 506.1412658691406,
+            "2": 392.15631103515625,
+            "3": 543.1265869140625,
+            "4": 459.9731750488281
+          }
+        },
+        "5": {
+          "n": "Workspace.Player1.LeftLowerLeg",
+          "r": {
+            "1": 504.0325622558594,
+            "2": 422.118408203125,
+            "3": 535.691650390625,
+            "4": 475.73162841796875
+          }
+        },
+        "6": {
+          "n": "Workspace.Player1.LeftFoot",
+          "r": {
+            "1": 504.6131286621094,
+            "2": 433.34039306640625,
+            "3": 531.1251831054688,
+            "4": 479.98883056640625
+          }
+        },
+        "7": {
+          "n": "Workspace.Player1.UpperTorso",
+          "r": {
+            "1": 507.48040771484375,
+            "2": 341.2563171386719,
+            "3": 577.8162841796875,
+            "4": 420.3296813964844
+          }
+        },
+        "8": {
+          "n": "Workspace.Player1.LowerTorso",
+          "r": {
+            "1": 509.2642517089844,
+            "2": 386.8294677734375,
+            "3": 571.7363891601562,
+            "4": 423.24554443359375
+          }
+        },
+        "9": {
+          "n": "Workspace.Player1.Head",
+          "r": {
+            "1": 518.01171875,
+            "2": 299.1219787597656,
+            "3": 565.6338500976562,
+            "4": 355.8493347167969
+          }
+        },
+        "10": {
+          "n": "Workspace.Player1.RoWrestler Champion BeltAccessory.Handle",
+          "r": {
+            "1": 502.00555419921875,
+            "2": 387.42266845703125,
+            "3": 578.9674072265625,
+            "4": 430.60345458984375
+          }
+        },
+        "11": {
+          "n": "Workspace.Player1.Red_Royal_Cape.Handle",
+          "r": {
+            "1": 453.521484375,
+            "2": 320.187744140625,
+            "3": 640.0296020507812,
+            "4": 523.565185546875
+          }
+        },
+        "12": {
+          "n": "Workspace.Player1.Accessory (Crown).Handle",
+          "r": {
+            "1": 507.9971923828125,
+            "2": 255.27450561523438,
+            "3": 575.923583984375,
+            "4": 310.7276306152344
+          }
+        },
+        "13": {
+          "n": "Workspace.Player1.Accessory (cartoony pixel meme sunglasses).Handle",
+          "r": {
+            "1": 513.4825439453125,
+            "2": 309.7372741699219,
+            "3": 569.7606201171875,
+            "4": 334.83197021484375
+          }
+        },
+        "14": {
+          "n": "Workspace.Player1.MessyHair.Handle",
+          "r": {
+            "1": 513.8106079101562,
+            "2": 282.3185119628906,
+            "3": 570.094970703125,
+            "4": 346.446044921875
+          }
+        },
+        "15": {
+          "n": "Workspace.Player1.Brows.Handle",
+          "r": {
+            "1": 524.3623046875,
+            "2": 313.0270690917969,
+            "3": 559.8800048828125,
+            "4": 320.2008972167969
+          }
+        }
+      },
+      "reticle": {
+        "1": 541,
+        "2": 196,
+        "3": true
+      },
+      "overlap": []
+    }
+  },
+  "mobileGround": {
+    "shotAndReload": {
+      "surrender": false,
+      "requests": "[{\"kind\":\"rifle\",\"payload\":{\"y\":6.796114921569824,\"x\":-27.40000343322754,\"sequence\":1,\"z\":109.27184295654297,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":6.796113967895508,\"x\":-27.40000343322754,\"sequence\":2,\"z\":109.27184295654297,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"}]",
+      "tool": "M-7 rifle",
+      "ammoAfter": 28,
+      "resolved": "{\"y\":6.796113967895508,\"x\":-27.40000343322754,\"sequence\":2,\"z\":109.27184295654297,\"aircraftHit\":false,\"userId\":-1,\"roundId\":1}",
+      "aim": {
+        "target": {
+          "1": -27.40000343322754,
+          "2": 6.796114444732666,
+          "3": 109.27184295654297
+        },
+        "px": {
+          "1": 284,
+          "2": 90
+        },
+        "hit": "Workspace.World.Battlefield.SpawnShelterPanels.SB.W.W.01.SB_query_solid_101_01_Proxy"
+      },
+      "ammoBefore": 30,
+      "playerList": false,
+      "events": {
+        "1": {
+          "kind": "Enum.UserInputType.Touch",
+          "name": "M7",
+          "pos": "283, 121, 0"
+        },
+        "2": {
+          "kind": "Enum.UserInputType.Touch",
+          "name": "Fire",
+          "pos": "527, 76, 0"
+        },
+        "3": {
+          "kind": "Enum.UserInputType.Touch",
+          "name": "Reload",
+          "pos": "448, 76, 0"
+        }
+      },
+      "reload": {
+        "ok": true,
+        "err": "nil",
+        "textFits": true,
+        "pt": "448, 154"
+      },
+      "equip": {
+        "ok": true,
+        "err": "nil",
+        "textFits": true,
+        "pt": "283.5, 199"
+      },
+      "fire": {
+        "ok": true,
+        "err": "nil",
+        "textFits": true,
+        "pt": "527, 154"
+      },
+      "reloadUntil": 1795824645.608668,
+      "backpack": true
+    },
+    "route": {
+      "r": "151.20668029785156, 2.9980251789093018, 199.16104125976562",
+      "done": "{\"ok\":true,\"err\":\"nil\",\"root\":\"151.14120483398438, 2.9980251789093018, 199.1478271484375\",\"walk\":[{\"dest\":\"-92, 3, 161\",\"last\":\"-92.09678649902344, 2.99802565574646, 160.42807006835938\",\"steps\":37,\"reason\":\"Enum.PathStatus.Success\"},{\"dest\":\"42, 3, 166\",\"last\":\"41.39842224121094, 2.9980251789093018, 166.00262451171875\",\"steps\":39,\"reason\":\"Enum.PathStatus.Success\"},{\"dest\":\"151.39999389648438, 3, 199.1999969482422\",\"last\":\"151.14120483398438, 2.9980251789093018, 199.1478271484375\",\"steps\":37,\"reason\":\"Enum.PathStatus.Success\"}]}",
+      "stage": "[{\"dest\":\"-92, 3, 161\",\"last\":\"-92.09678649902344, 2.99802565574646, 160.42807006835938\",\"steps\":37,\"reason\":\"Enum.PathStatus.Success\"},{\"dest\":\"42, 3, 166\",\"last\":\"41.39842224121094, 2.9980251789093018, 166.00262451171875\",\"steps\":39,\"reason\":\"Enum.PathStatus.Success\"},{\"dest\":\"151.39999389648438, 3, 199.1999969482422\",\"last\":\"151.14120483398438, 2.9980251789093018, 199.1478271484375\",\"steps\":37,\"reason\":\"Enum.PathStatus.Success\"}]",
+      "near": true
+    },
+    "rocket": {
+      "pickup": {
+        "ok": true,
+        "point": "283.5, 199",
+        "textW": 50,
+        "text": "PICK UP",
+        "w": 102,
+        "h": 44,
+        "fit": true,
+        "err": "nil",
+        "vis": true,
+        "pos": "232.5, 157"
+      },
+      "owned": "{\"state\":\"Held\",\"readyAt\":0,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":2,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+      "tool": "Rocket launcher",
+      "target": {
+        "1": 151.3413848876953,
+        "2": 4.730953216552734,
+        "3": 148.5
+      },
+      "accepted": "{\"shotId\":\"rocket:1:1:Depot\",\"userId\":-1,\"roundId\":1}",
+      "before": "{\"state\":\"Available\",\"readyAt\":0,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":1,\"ammo\":1,\"roundId\":1}",
+      "equip": {
+        "ok": true,
+        "point": "245.5, 199",
+        "textW": 51,
+        "text": "ROCKET",
+        "w": 74,
+        "h": 44,
+        "fit": true,
+        "err": "nil",
+        "vis": true,
+        "pos": "208.5, 157"
+      },
+      "events": {
+        "1": {
+          "button": "Pickup",
+          "kind": "Enum.UserInputType.Touch",
+          "pos": "283, 121, 0"
+        },
+        "2": {
+          "button": "Rocket",
+          "kind": "Enum.UserInputType.Touch",
+          "pos": "245, 121, 0"
+        },
+        "3": {
+          "button": "Fire",
+          "kind": "Enum.UserInputType.Touch",
+          "pos": "527, 76, 0"
+        }
+      },
+      "hit": "Workspace.World.Battlefield.Buildings.Outpost.Outpost_Panels.Outpost_v2_Interior01.Outpost_v2_Interior01_Proxy1",
+      "request": "[{\"kind\":\"rifle\",\"payload\":{\"y\":6.796114921569824,\"x\":-27.40000343322754,\"sequence\":1,\"z\":109.27184295654297,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":6.796113967895508,\"x\":-27.40000343322754,\"sequence\":2,\"z\":109.27184295654297,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":382.78985595703127,\"x\":677.9730224609375,\"sequence\":4,\"z\":574.2120361328125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":382.78985595703127,\"x\":677.9730224609375,\"sequence\":5,\"z\":574.2120361328125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":382.78985595703127,\"x\":677.9730224609375,\"sequence\":6,\"z\":574.2120361328125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":404.7701416015625,\"x\":310.17437744140627,\"sequence\":7,\"z\":889.99609375,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":404.7701416015625,\"x\":310.17437744140627,\"sequence\":8,\"z\":889.99609375,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":404.7701416015625,\"x\":310.17437744140627,\"sequence\":9,\"z\":889.99609375,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":404.7701416015625,\"x\":310.17437744140627,\"sequence\":10,\"z\":889.99609375,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":404.7701416015625,\"x\":310.17437744140627,\"sequence\":11,\"z\":889.99609375,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138,\"x\":66.93172454833985,\"sequence\":12,\"z\":375.0965270996094,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138,\"x\":66.93173217773438,\"sequence\":13,\"z\":375.0965576171875,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":488.17572021484377,\"x\":-76.2605972290039,\"sequence\":14,\"z\":926.2550048828125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":488.17572021484377,\"x\":-76.2605972290039,\"sequence\":15,\"z\":926.2550048828125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":488.17572021484377,\"x\":-76.2605972290039,\"sequence\":16,\"z\":926.2550048828125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":488.17572021484377,\"x\":-76.2605972290039,\"sequence\":17,\"z\":926.2550048828125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":488.17572021484377,\"x\":-76.2605972290039,\"sequence\":18,\"z\":926.2550048828125,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1729736328125,\"sequence\":19,\"z\":-265.7348327636719,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1730346679688,\"sequence\":20,\"z\":-265.7348937988281,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1729736328125,\"sequence\":21,\"z\":-265.7348327636719,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1730346679688,\"sequence\":22,\"z\":-265.7348937988281,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1729736328125,\"sequence\":23,\"z\":-265.7348327636719,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1730346679688,\"sequence\":24,\"z\":-265.7348937988281,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1729736328125,\"sequence\":25,\"z\":-265.7348327636719,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1730346679688,\"sequence\":26,\"z\":-265.7348937988281,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":393.08673095703127,\"x\":-858.1729736328125,\"sequence\":27,\"z\":-265.7348327636719,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.65721130371095,\"x\":-354.3838806152344,\"sequence\":28,\"z\":-14.138429641723633,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.5303497314453,\"x\":-354.1326904296875,\"sequence\":29,\"z\":-14.01297378540039,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.4352264404297,\"x\":-353.9443054199219,\"sequence\":30,\"z\":-13.918903350830079,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.36184692382813,\"x\":-353.7990417480469,\"sequence\":31,\"z\":-13.846342086791993,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.3329315185547,\"x\":-353.7417297363281,\"sequence\":32,\"z\":-13.817736625671387,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.32830810546876,\"x\":-353.73260498046877,\"sequence\":33,\"z\":-13.813191413879395,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.35397338867188,\"x\":-353.7834167480469,\"sequence\":34,\"z\":-13.838544845581055,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rifle\",\"payload\":{\"y\":138.40098571777345,\"x\":-353.87652587890627,\"sequence\":35,\"z\":-13.885065078735352,\"roundId\":1,\"weapon\":\"M7\"},\"who\":\"Player1\"},{\"kind\":\"rocket\",\"payload\":{\"y\":4.730953216552734,\"x\":151.3413848876953,\"sequence\":2,\"z\":148.5,\"launcherId\":\"launcher:1:Depot\",\"roundId\":1},\"who\":\"Player1\"}]",
+      "fire": {
+        "ok": true,
+        "point": "527, 154",
+        "textW": 55,
+        "text": "FIRE",
+        "w": 64,
+        "h": 52,
+        "fit": true,
+        "err": "nil",
+        "vis": true,
+        "pos": "495, 108"
+      },
+      "pixel": {
+        "1": 284,
+        "2": 90
+      },
+      "ready": "{\"state\":\"Held\",\"readyAt\":1795824852.550141,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":3,\"ammo\":0,\"ownerId\":-1,\"roundId\":1}"
+    },
+    "drop": {
+      "q": "321.5, 199",
+      "after": "{\"state\":\"Available\",\"readyAt\":1795824852.550141,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":1.100000023841858,\"x\":151.20542907714845,\"z\":199.15928649902345},\"revision\":5,\"ammo\":1,\"roundId\":1}",
+      "shown": false,
+      "before": "{\"state\":\"Held\",\"readyAt\":1795824852.550141,\"launcherId\":\"launcher:1:Depot\",\"position\":{\"y\":3,\"x\":157,\"z\":198},\"revision\":3,\"ammo\":1,\"ownerId\":-1,\"roundId\":1}",
+      "error": "nil",
+      "ok": true
+    },
+    "isolatedFireRelease": {
+      "fireButtonVisible": true,
+      "after": "{\"y\":4.730953216552734,\"x\":151.3413848876953,\"sequence\":38,\"z\":148.5,\"aircraftHit\":false,\"userId\":-1,\"roundId\":1}",
+      "later": 28,
+      "first": "{\"y\":4.730953216552734,\"x\":151.3413848876953,\"sequence\":38,\"z\":148.5,\"aircraftHit\":false,\"userId\":-1,\"roundId\":1}",
+      "fireState": "Enum.UserInputState.End",
+      "events": {
+        "1": {
+          "state": "Enum.UserInputState.Begin",
+          "type": "Enum.UserInputType.Touch",
+          "where": "Fire.InputBegan",
+          "t": 316.47552820833516
+        },
+        "2": {
+          "state": "Enum.UserInputState.End",
+          "type": "Enum.UserInputType.Touch",
+          "where": "Fire.InputEnded",
+          "sameAsFire": true,
+          "t": 316.74124016666974
+        },
+        "3": {
+          "state": "Enum.UserInputState.End",
+          "where": "uEnd",
+          "t": 316.741303625,
+          "sameAsFire": true,
+          "processed": true
+        },
+        "4": {
+          "state": "Enum.UserInputState.End",
+          "where": "tEnd",
+          "t": 316.74131795833455,
+          "sameAsFire": true,
+          "processed": true
+        }
+      },
+      "press": {
+        "visible": true,
+        "up": true,
+        "u": "nil",
+        "d": "nil",
+        "down": true
+      },
+      "pre": 30,
+      "afterRelease": 28,
+      "equip": {
+        "visible": false,
+        "up": true,
+        "u": "nil",
+        "d": "nil",
+        "down": true
+      }
+    },
+    "releaseFinding": "Extra M-7 requests were present during multi-window Studio input/positioning between controlled probes. Isolated repeat on the same candidate delivered identical Begin and End touch InputObject through Fire and UserInputService and remained 28/30 with no new server shot after 1.6 seconds. Production release defect not reproduced in isolation."
+  },
+  "mobileOperator": {
+    "recenter": {
+      "recenter": {
+        "ok": true,
+        "p": "755, 116",
+        "error": "nil"
+      },
+      "playerList": false,
+      "touchGui": false,
+      "afterPan": "14.540446281433105, 0, 45.710140228271484",
+      "input": {
+        "1": {
+          "name": "PanRight",
+          "kind": "Enum.UserInputType.Touch"
+        },
+        "2": {
+          "name": "Recenter",
+          "kind": "Enum.UserInputType.Touch"
+        }
+      },
+      "afterRecenter": "0, 0, 0",
+      "start": "0, 0, 0",
+      "pan": {
+        "ok": true,
+        "p": "202, 319",
+        "error": "nil"
+      }
+    }
+  },
+  "lifecycle": {
+    "restoredOnDesktop": {
+      "restored": true,
+      "touch": false,
+      "viewport": "1081, 653",
+      "mouse": "Enum.MouseBehavior.LockCenter",
+      "initial": false,
+      "role": "Ground"
+    },
+    "realDeath": {
+      "phase": "Results",
+      "life": "Eliminated",
+      "reason": "GroundEliminated"
+    },
+    "lobby": [
+      {
+        "protect": true,
+        "surrender": false,
+        "phase": "Lobby",
+        "role": "Waiting",
+        "arrival": false,
+        "subject": "Workspace.Player1.Humanoid",
+        "list": true,
+        "ground": false,
+        "life": "Waiting",
+        "result": "WAITING FOR PLAYERS\nWaiting for 2 players",
+        "gunship": false
+      },
+      {
+        "protect": true,
+        "surrender": false,
+        "phase": "Lobby",
+        "role": "Waiting",
+        "arrival": false,
+        "subject": "Workspace.Player2.Humanoid",
+        "list": true,
+        "ground": false,
+        "life": "Waiting",
+        "result": "Waiting for 2 players",
+        "gunship": false
+      }
+    ],
+    "finalDeviceAndRoster": [
+      {
+        "touch": false,
+        "name": "Player1",
+        "removedTemporaryProfile": true,
+        "device": "default",
+        "playerList": true
+      },
+      {
+        "touch": false,
+        "name": "Player2",
+        "removedTemporaryProfile": true,
+        "device": "default",
+        "playerList": true
+      }
+    ],
+    "ended": {
+      "report": "{\"errors\":0,\"skipped\":0,\"passed\":218,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":218}",
+      "name": "P27 final focused operated comparison",
+      "actualClients": 2
+    },
+    "edit": {
+      "place": 0,
+      "device": "default",
+      "mode": "Edit",
+      "result": "{\"report\":{\"report\":\"{\\\"errors\\\":0,\\\"skipped\\\":0,\\\"passed\\\":218,\\\"clientCount\\\":2,\\\"environment\\\":\\\"Studio\\\",\\\"seed\\\":1,\\\"suite\\\":\\\"P01-server\\\",\\\"failed\\\":0,\\\"discovered\\\":218}\",\"name\":\"P27 final focused operated comparison\",\"actualClients\":2}}",
+      "build": "PlayersVsC130Tests"
+    }
+  },
+  "captures": [
+    "scatter-after-compact.jpg",
+    "scatter-after-cutout.jpg",
+    "raised-reticle-compact.jpg",
+    "raised-reticle-desktop.jpg"
+  ],
+  "limitations": [
+    "Device Simulator generated real Roblox Touch events from scripted pointer input. No physical handset connected and no independently operated simultaneous movement/pan, aim and fire contacts verified.",
+    "The compact Scatter capture briefly shows native team chat over the upper-left personal HP label. Arrival timer and actions remain separated.",
+    "The screenshots and measurement cover the ordinary third-person camera poses tested."
+  ]
+}

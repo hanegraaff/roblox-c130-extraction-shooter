@@ -1,0 +1,235 @@
+{
+  "source": "b51137c73701b998b6159b80af14821e0aacb620",
+  "studio": "0.748.0.7481526",
+  "initialClients": 2,
+  "peakClients": 3,
+  "device": "P27 Acceptance 568x320",
+  "actualSafeView": [
+    567,
+    299
+  ],
+  "baselineTouchCombat": {
+    "ammoBase": 30,
+    "e": {
+      "1": {
+        "button": "M7",
+        "layer": 0,
+        "kind": "Enum.UserInputType.Touch",
+        "pos": "283, 121, 0"
+      },
+      "2": {
+        "proc": true,
+        "name": "touch",
+        "pos": "283, 121, 0"
+      },
+      "3": {
+        "proc": true,
+        "name": "touch",
+        "pos": "527, 102, 0"
+      },
+      "4": {
+        "proc": true,
+        "name": "touch",
+        "pos": "527, 102, 0"
+      },
+      "5": {
+        "proc": true,
+        "name": "touch",
+        "pos": "448, 102, 0"
+      }
+    },
+    "fireBase": {
+      "ok": true,
+      "why": "nil",
+      "q": "527, 180",
+      "v": true
+    },
+    "reload": {
+      "ok": true,
+      "why": "nil",
+      "q": "448, 180",
+      "v": true
+    },
+    "fireTop": {
+      "ok": true,
+      "why": "nil",
+      "q": "527, 180",
+      "v": true
+    },
+    "equip": {
+      "ok": true,
+      "why": "nil",
+      "q": "283.5, 199",
+      "v": true
+    },
+    "rifle": "M-7 rifle",
+    "ammoEnd": 30,
+    "ready": 0
+  },
+  "playerListAB": {
+    "afterReload": 1795824049.460161,
+    "reload": {
+      "ok": true,
+      "visible": true,
+      "point": "448, 180",
+      "reason": "nil"
+    },
+    "restored": true,
+    "touchEvent": {
+      "kind": "Enum.UserInputType.Touch",
+      "pos": "527, 102, 0"
+    },
+    "disableList": true,
+    "why": "nil",
+    "fire": {
+      "ok": true,
+      "visible": true,
+      "point": "527, 180",
+      "reason": "nil"
+    },
+    "before": {
+      "list": true,
+      "ammo": 30
+    },
+    "afterFire": {
+      "shot": "{\"y\":1.5920300483703614,\"x\":-26.03672981262207,\"sequence\":2,\"z\":104.53672790527344,\"aircraftHit\":false,\"userId\":-1,\"roundId\":1}",
+      "ammo": 28
+    }
+  },
+  "theaterEnter": {
+    "before": {
+      "text": "ROUND IN PROGRESS\nVisit the theater TV to spectate",
+      "type": "Enum.CameraType.Custom",
+      "subject": "Workspace.Player3.Humanoid",
+      "dist": 6.082223415374756,
+      "life": "Spectating",
+      "pointer": "Enum.MouseBehavior.Default",
+      "prompt": true,
+      "role": "Spectator"
+    },
+    "after": {
+      "text": "SPECTATING\n6:52 remaining • 1 Ground alive",
+      "type": "Enum.CameraType.Custom",
+      "subject": "Workspace.Player1.Humanoid",
+      "dist": 6.082223415374756,
+      "life": "Spectating",
+      "pointer": "Enum.MouseBehavior.Default",
+      "prompt": false,
+      "role": "Spectator"
+    },
+    "test": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-3,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+    "error": "nil",
+    "input": true
+  },
+  "spectatingLayout": {
+    "dev": "P27 Acceptance 568x320",
+    "me": "Player3",
+    "root": "472.5, 2.9980251789093018, -40",
+    "items": {
+      "RoundHUD": {
+        "items": {
+          "1": {
+            "text": "6:45  •  1 Ground",
+            "fit": true,
+            "name": "Round",
+            "bounds": {
+              "1": 8,
+              "2": 62,
+              "3": 150,
+              "4": 22
+            }
+          },
+          "2": {
+            "text": "C-130 HEALTH  1000 / 1000",
+            "fit": true,
+            "name": "AircraftHealth",
+            "bounds": {
+              "1": 8,
+              "2": 88,
+              "3": 160,
+              "4": 22
+            }
+          },
+          "3": {
+            "text": "WATCHING  Player1",
+            "fit": true,
+            "name": "SpectatorStatus",
+            "bounds": {
+              "1": 361,
+              "2": 62,
+              "3": 198,
+              "4": 46
+            }
+          },
+          "4": {
+            "text": "Exit spectating",
+            "fit": true,
+            "name": "ExitSpectating",
+            "bounds": {
+              "1": 193.5,
+              "2": 241,
+              "3": 180,
+              "4": 44
+            }
+          }
+        },
+        "gui": {
+          "1": 0,
+          "2": 58,
+          "3": 567,
+          "4": 241
+        },
+        "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+      },
+      "TouchGui": {
+        "items": [],
+        "gui": {
+          "1": 0,
+          "2": 58,
+          "3": 567,
+          "4": 241
+        },
+        "insets": "Enum.ScreenInsets.CoreUISafeInsets"
+      }
+    },
+    "role": "Spectator",
+    "camera": {
+      "1": 567,
+      "2": 299
+    },
+    "life": "Spectating",
+    "touch": true,
+    "inset": {
+      "1": 0,
+      "2": 58
+    },
+    "phase": "Active"
+  },
+  "theaterPhoneExit": {
+    "before": {
+      "exit": true,
+      "text": "6:32  •  1 Ground",
+      "subject": "Workspace.Player1.Humanoid"
+    },
+    "point": "283.5, 283",
+    "input": true,
+    "error": "nil",
+    "after": {
+      "exit": false,
+      "subject": "Workspace.Player3.Humanoid",
+      "text": "Visit the theater TV to spectate",
+      "mode": "Enum.CameraType.Custom",
+      "mouse": "Enum.MouseBehavior.Default",
+      "prompt": true
+    }
+  },
+  "surrenderBase": {
+    "ok": true,
+    "role": "Ground",
+    "result": "Active",
+    "q": "497, 104",
+    "visible": true,
+    "error": "nil",
+    "life": "Alive"
+  }
+}

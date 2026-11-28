@@ -1,0 +1,64 @@
+{
+  "command": "python3 scripts/verify.py",
+  "environment": "Darwin arm64, Python 3.15.2",
+  "sourceCommit": "6db7356c6bf2ca4ff9795ba0b773695d87b463fb",
+  "sourceTree": "7ae52dc6d4a76946ae3069de92b09b52a2bbaa57",
+  "githubCommit": "09509647ae7b6f619aeb64b1a2384c72e730f2c1",
+  "result": "passed",
+  "suites": {
+    "unit": {
+      "discovered": 97,
+      "failed": 0,
+      "passed": 97,
+      "skipped": 0,
+      "suite": "unit"
+    },
+    "integration": {
+      "discovered": 100,
+      "failed": 0,
+      "passed": 100,
+      "skipped": 0,
+      "suite": "integration"
+    },
+    "tooling": {
+      "discovered": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "assets": {
+      "discovered": 70,
+      "passed": 70,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "gates": [
+    "repository",
+    "pinned tools",
+    "format",
+    "lint",
+    "strict types",
+    "asset audits and reconstruction",
+    "expected failure probes",
+    "both Rojo builds",
+    "geometry and release isolation"
+  ],
+  "artifactInspection": {
+    "releaseRuntimeScripts": 76,
+    "releaseInstances": 27285,
+    "testInstances": 27506,
+    "releaseTransforms": 13975,
+    "testTransforms": 14062
+  },
+  "artifacts": {
+    "build/game.rbxlx": {
+      "bytes": 157154956,
+      "sha256": "90560f9a20e4299be8a5df816c6eeda407b1de65b2d9ddc721348ab369389e3c"
+    },
+    "build/tests.rbxlx": {
+      "bytes": 158895407,
+      "sha256": "e5e085f2638ba61812e9c23fb8515383b7a3684e4e086928c797d86933547180"
+    }
+  }
+}
