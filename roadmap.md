@@ -437,7 +437,7 @@ A Complete plan has all required automated and Studio evidence, resolved materia
 
 P01 establishes the full non-Studio `python3 scripts/verify.py` gate. Every later plan must preserve it and add its own acceptance suites. Studio is a distinct required gate when the plan changes engine/player behavior. A green CI badge cannot substitute for it.
 
-P12 closed the legacy implementation handoff. P26 needs a private published test for cross-server settings. P32 uses private playtests to choose the launch preset. P35 owns live 6- and 10-player qualification and the public launch. Each cloud action uses authorization for its named destination and audience. [Release runbook](docs/release.md)
+P12 closed the legacy implementation handoff. The owner reported a passing two-player Roblox playtest for P26. Its remaining evidence is confirmation of preset propagation across two published servers, persistence on a fresh server, and rollback. P32 uses private playtests to choose the launch preset. P35 owns live 6- and 10-player qualification and the public launch. Each cloud action uses authorization for its named destination and audience. [P26 playtest record](plans/26-live-balance-panel.md#2026-11-28--owner-playtest) · [Release runbook](docs/release.md)
 
 ## First meaningful review points
 

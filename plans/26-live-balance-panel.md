@@ -109,3 +109,7 @@ Editing a custom preset enables Save under its existing name. Reopening the pane
 The first Studio run passed the lobby and application checks. The final follow-on match timed out because the fixture reused the pre-edit three-player minimum. The fixture now carries forward the values confirmed after the editor transaction.
 
 `python3 scripts/verify.py` passed on macOS with 97 unit tests and 102 integration tests, zero failures or skips, and both Rojo builds inspected. Roblox Studio 0.748.0.7481526 ran `StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = "P26"})` with two actual clients and isolated storage. The rerun passed all six cases with zero failures or skips. The test document's 199 mapped script checksums matched the source before Play. The release document remained in Edit mode. Published cross-server verification remains pending under A3. [Verified source](https://github.com/hanegraaff/roblox-c130-extraction-shooter/commit/8efdb4da16aff78426e2c87be538e71eb2e5fd58)
+
+### 2026-11-28 · Owner playtest
+
+The owner reported that the balance fix worked in Roblox and that they completed two-player testing after receiving the updated `build/game.rbxlx`. The supplied candidate included **Save & apply** and restoration of the **Balance** button after a round. The candidate file had SHA-256 `b749a75732baa25cb15bbadd7445579d28b721ca1956b3605788f0bc0f4e191d`. [Balance fix PR #87](https://github.com/hanegraaff/roblox-c130-extraction-shooter/pull/87)
