@@ -401,8 +401,8 @@ function RoundPanel.new(
 
                 label.TextWrapped = true
                 if view == "GroundScatter" then
-                    label.AnchorPoint = Vector2.new(0.5, 0)
-                    label.Position = UDim2.new(0.5, 0, 0, if touch then 4 else 8)
+                    label.AnchorPoint = Vector2.new(if touch then 1 else 0.5, 0)
+                    label.Position = if touch then UDim2.new(1, -8, 0, 4) else UDim2.new(0.5, 0, 0, 8)
                     label.Size = if touch then UDim2.new(0.25, 0, 0, 24) else UDim2.fromOffset(184, 36)
                     label.TextSize = if touch then 13 else 16
                     label.TextWrapped = false
