@@ -13,6 +13,9 @@
         },
         "SaltFlatsThermalSurfaces": {
           "$path": "assets/presentation/SaltFlatsThermalSurfaces.model.json"
+        },
+        "SandbreakThermalSurfaces": {
+          "$path": "assets/presentation/SandbreakThermalSurfaces.model.json"
         }
       },
       "TestPackages": {

@@ -224,6 +224,12 @@ function RoundHarness.run()
         end, selector == "Sandbreak")
         return
     end
+    if RunService:IsStudio() and args == nil and selector == "P31" then
+        require(script.Parent.CombatHarness).run(function(report)
+            workspace:SetAttribute("ManualP31Report", HttpService:JSONEncode(report))
+        end, true)
+        return
+    end
     if RunService:IsStudio() and args == nil and selector == "P05" then
         local invocation = {
             mode = "manual-server-clients",
@@ -317,8 +323,8 @@ function RoundHarness.run()
         require(script.Parent.GroundCombatHarness).run(3)
         return
     end
-    if type(args) == "table" and args.kind == "P05" then
-        require(script.Parent.CombatHarness).run()
+    if type(args) == "table" and (args.kind == "P05" or args.kind == "P31") then
+        require(script.Parent.CombatHarness).run(nil, args.kind == "P31")
         return
     end
     if type(args) == "table" and args.kind == "P04" then

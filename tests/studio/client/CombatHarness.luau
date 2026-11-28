@@ -4,12 +4,14 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local CombatHarness = {}
-local function waitFor(predicate: () -> boolean, message: string)
+local function waitFor(predicate: () -> boolean, message: string | (() -> string))
     local deadline = os.clock() + 8
     while not predicate() and os.clock() < deadline do
         task.wait(0.03)
     end
-    assert(predicate(), "client P05 timeout: " .. message)
+    if not predicate() then
+        error("client combat harness timeout: " .. (if type(message) == "string" then message else message()))
+    end
 end
 function CombatHarness.run()
     task.spawn(function()
@@ -81,6 +83,112 @@ function CombatHarness.run()
                             "replicated one-hit opening retains solid"
                         )
                     end
+                elseif kind == "SandbreakThermal" then
+                    assert(type(payload) == "table", "missing Sandbreak witness")
+                    local fields = payload :: { [string]: unknown }
+                    local id, appearance, thermal = fields.id, fields.appearance, fields.thermal
+                    assert(
+                        type(id) == "string" and type(appearance) == "string" and type(thermal) == "boolean",
+                        "invalid Sandbreak panel, damage stage or thermal view"
+                    )
+                    assert(type(fields.visuals) == "table", "missing Sandbreak material witnesses")
+                    local visuals = fields.visuals :: {
+                        [string]: { texture: string, color: Color3, hidden: boolean },
+                    }
+                    local player = Players.LocalPlayer
+                    local camera = assert(workspace.CurrentCamera, "missing local camera")
+                    local detail = "waiting for Sandbreak replication"
+                    local function awaiting(message: string): boolean
+                        detail = message
+                        return false
+                    end
+                    waitFor(function()
+                        local panels = workspace.World.Battlefield:FindFirstChild("SpawnShelterPanels")
+                        local panel = if panels then panels:FindFirstChild(id) else nil
+                        if not panel or panel:GetAttribute("DamageAppearance") ~= appearance then
+                            return awaiting("expected panel appearance has not replicated")
+                        end
+                        if (camera:FindFirstChild("OperatorThermal") ~= nil) ~= thermal then
+                            return awaiting("operator grading did not match the local role")
+                        end
+                        local queryParts, visualParts = 0, 0
+                        for _, mesh in panel:GetChildren() do
+                            if mesh:IsA("MeshPart") and mesh:GetAttribute("PanelProxy") == true then
+                                assert(
+                                    mesh.CanCollide and mesh.CanQuery and mesh.Transparency == 1,
+                                    "replicated cover changed"
+                                )
+                                queryParts += 1
+                            elseif mesh:IsA("MeshPart") and mesh.TextureID ~= "" then
+                                local expected = visuals[mesh.Name]
+                                if not expected or mesh.TextureID ~= expected.texture then
+                                    return awaiting("different texture witness: " .. mesh.Name)
+                                end
+                                local tint = mesh:FindFirstChildWhichIsA("SurfaceAppearance")
+                                visualParts += 1
+                                local transparency = if thermal and expected.hidden then 1 else 0
+                                if
+                                    mesh.Color ~= expected.color
+                                    or mesh.LocalTransparencyModifier ~= transparency
+                                then
+                                    return awaiting(
+                                        `unexpected base color or local transparency: {mesh.Name}`
+                                    )
+                                end
+                                if thermal then
+                                    if
+                                        not expected.hidden
+                                        and (not tint or tint.Color.R >= 0.45 or tint.Color.R <= 0)
+                                    then
+                                        return awaiting("operator tint missing or too bright: " .. mesh.Name)
+                                    end
+                                elseif tint then
+                                    return awaiting(
+                                        "operator tint leaked into the Ground view: " .. mesh.Name
+                                    )
+                                end
+                            end
+                        end
+                        local expectedVisuals = 0
+                        for _ in visuals do
+                            expectedVisuals += 1
+                        end
+                        if
+                            visualParts ~= expectedVisuals
+                            or queryParts ~= (if appearance == "Total" then 0 else 1)
+                        then
+                            return awaiting(
+                                `mesh counts differ: {visualParts}/{expectedVisuals} visuals, {queryParts} proxies`
+                            )
+                        end
+                        if thermal then
+                            for _, child in camera:GetChildren() do
+                                if child:IsA("Highlight") and child.Name == "OperatorThermalTarget" then
+                                    local ground = if child.Adornee and child.Adornee:IsA("Model")
+                                        then Players:GetPlayerFromCharacter(child.Adornee)
+                                        else nil
+                                    if
+                                        ground
+                                        and ground ~= player
+                                        and ground:GetAttribute("Role") == "Ground"
+                                    then
+                                        if
+                                            child.DepthMode == Enum.HighlightDepthMode.Occluded
+                                            and child.FillColor == Color3.new(1, 1, 1)
+                                        then
+                                            return true
+                                        end
+                                        return awaiting("Ground highlight lacks white fill or native depth")
+                                    end
+                                end
+                            end
+                            return awaiting("operator Ground highlight missing")
+                        end
+                        return camera:FindFirstChild("OperatorThermalTarget") == nil
+                            or awaiting("Ground view retained an operator highlight")
+                    end, function()
+                        return `Sandbreak {id} {appearance} palette and cover: {detail}`
+                    end)
                 elseif kind == "OperatorPresentation" then
                     local player = Players.LocalPlayer
                     local gui = player.PlayerGui
@@ -184,7 +292,7 @@ function CombatHarness.run()
                 listener:Disconnect()
             end
         end)
-        remote:FireServer(0, true, "ready", Players.LocalPlayer.UserId)
+        remote:FireServer(0, true, script.Parent:GetAttribute("ClientTestReport"), Players.LocalPlayer.UserId)
     end)
 end
 return CombatHarness

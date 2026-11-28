@@ -4,7 +4,7 @@
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
-      "Shared": {"$path": "src/shared", "VesperThermalSurfaces": {"$path": "assets/presentation/VesperThermalSurfaces.model.json"}, "SaltFlatsThermalSurfaces": {"$path": "assets/presentation/SaltFlatsThermalSurfaces.model.json"}}
+      "Shared": {"$path": "src/shared", "VesperThermalSurfaces": {"$path": "assets/presentation/VesperThermalSurfaces.model.json"}, "SaltFlatsThermalSurfaces": {"$path": "assets/presentation/SaltFlatsThermalSurfaces.model.json"}, "SandbreakThermalSurfaces": {"$path": "assets/presentation/SandbreakThermalSurfaces.model.json"}}
     },
     "ServerScriptService": {
       "Server": {"$path": "src/server"}

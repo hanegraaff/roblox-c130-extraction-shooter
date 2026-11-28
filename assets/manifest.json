@@ -2198,6 +2198,17 @@
       "sha256": "165334b72d9dfef69960aef9be033aef75ab1ab908c2a531d70b943e872c303b"
     },
     {
+      "id": "sandbreak-thermal-palette",
+      "kind": "material",
+      "source": "Native Sandbreak assembly and damage-state TextureID bindings reused for local thermal shading.",
+      "author": "Project contributors",
+      "license": "Project-authored asset",
+      "local_path": "assets/presentation/SandbreakThermalSurfaces.model.json",
+      "roblox_asset_id": null,
+      "upload_owner": null,
+      "sha256": "e057eef19a60ea23bd1dcbd3d4cb775f5f57cd78342209f51f32689979e6e740"
+    },
+    {
       "id": "sandbreak-native-native-receipt",
       "kind": "catalog",
       "source": "Studio-native Sandbreak import from the approved project-authored Blender source.",

@@ -917,7 +917,7 @@ def check_salt_flats_import(path: Path) -> int:
 
 
 def check_sandbreak_import(path: Path) -> int:
-    """Check exact managed panels and ownership of native query MeshParts."""
+    """Check managed panels, native collision and matching thermal color maps."""
     receipt_path = ROOT / "assets/imports/sandbreak/native-receipt.json"
     if not receipt_path.is_file():
         return 0
@@ -934,6 +934,7 @@ def check_sandbreak_import(path: Path) -> int:
         raise RuntimeError("Incomplete Sandbreak panel states")
     mesh_count = 0
     proxies = 0
+    textures: set[str] = set()
     for name, part in nodes.items():
         if not name.startswith((assembly, variants)):
             continue
@@ -951,12 +952,32 @@ def check_sandbreak_import(path: Path) -> int:
             raise RuntimeError(f"Wrong Sandbreak collision ownership: {name}")
         if not part.findtext("Properties/Content[@name='MeshContent']/uri", "").startswith("rbxassetid://"):
             raise RuntimeError(f"Sandbreak mesh is missing native identity: {name}")
+        texture = part.findtext("Properties/Content[@name='TextureContent']/uri")
+        if texture:
+            textures.add(texture)
         if name.rsplit("/", 1)[-1].startswith(("SB_yard_", "SB_hall_dressing_")):
             if compiled_surface_attributes(part).get("ThermalNonCover") is not True:
                 raise RuntimeError(f"Sandbreak dressing is missing its thermal opacity flag: {name}")
     if mesh_count != receipt["managedMeshCount"] or proxies != 3 * receipt["panelCount"]:
         raise RuntimeError(f"Unexpected Sandbreak native counts: {mesh_count} meshes and {proxies} proxies")
-    print(f"Sandbreak native banks passed: {mesh_count} MeshParts, {len(panels)} panel identities.")
+    palette_path = "ReplicatedStorage/Shared/SandbreakThermalSurfaces"
+    palette = nodes.get(palette_path)
+    if palette is None or palette.get("class") != "Folder":
+        raise RuntimeError("Missing Sandbreak thermal color palette")
+    mapped: set[str] = set()
+    for surface in palette.findall("Item"):
+        name = surface.findtext("Properties/string[@name='Name']", "")
+        color_map = surface.findtext("Properties/Content[@name='ColorMapContent']/uri", "")
+        if (surface.get("class") != "SurfaceAppearance" or not re.fullmatch(r"[1-9]\d*", name)
+                or color_map != f"rbxassetid://{name}" or color_map in mapped
+                or numeric_property(surface, "Color3", "Color", ("R", "G", "B"), f"{palette_path}/{name}")
+                != [1, 1, 1]):
+            raise RuntimeError(f"Invalid Sandbreak thermal color map: {name}")
+        mapped.add(color_map)
+    if not textures or mapped != textures:
+        raise RuntimeError("Sandbreak thermal palette differs from the native color maps")
+    print(f"Sandbreak native banks passed: {mesh_count} MeshParts, {len(panels)} panel identities, "
+          f"{len(mapped)} thermal color maps.")
     return mesh_count
 
 

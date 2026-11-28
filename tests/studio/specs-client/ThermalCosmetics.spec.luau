@@ -398,6 +398,115 @@ return function()
             assert(ok, failure)
         end
     )
+    test("P31 Sandbreak dims native wall and roof color maps across a panel replacement", function()
+        local Cosmetics = cosmetics()
+        local deadline = os.clock() + 60
+        local bunker: Instance?, panels: Instance?
+        repeat
+            local world = workspace:FindFirstChild("World")
+            local map = if world then world:FindFirstChild("Battlefield") else nil
+            bunker = if map then map:FindFirstChild("SandbreakBunker") else nil
+            panels = if map then map:FindFirstChild("SpawnShelterPanels") else nil
+            if bunker and bunker:GetAttribute("ThermalSurfacePalette") and panels then
+                local wall = panels:FindFirstChild("SB.W.S.01")
+                local roof = panels:FindFirstChild("SB.R.07.07")
+                if
+                    wall
+                    and wall:FindFirstChild("SB_panel_pristine_013_01")
+                    and roof
+                    and roof:FindFirstChild("SB_panel_pristine_090_02")
+                then
+                    break
+                end
+            end
+            task.wait()
+        until os.clock() >= deadline
+        assert(bunker and panels, "reconstructed native Sandbreak did not replicate")
+        local function checkScope(model: Instance)
+            assert(
+                model:IsA("Model")
+                    and model:GetAttribute("ThermalBrightness") == 0.60
+                    and model:GetAttribute("ThermalSurfacePalette") == "SandbreakThermalSurfaces",
+                "Sandbreak thermal scope missing from " .. model.Name
+            )
+        end
+        checkScope(bunker)
+        local wall = assert(panels:FindFirstChild("SB.W.S.01"), "native Sandbreak wall missing"):Clone()
+        local roof = assert(panels:FindFirstChild("SB.R.07.07"), "native Sandbreak roof missing"):Clone()
+        checkScope(wall)
+        checkScope(roof)
+        -- Clone the replicated Models into an isolated native fixture. Keep the
+        -- production Workspace untouched. Preview may already own the operator
+        -- view, so discard its presentation surfaces from these legacy clones.
+        local root = Instance.new("Folder")
+        wall.Parent, roof.Parent = root, root
+        for _, item in root:GetDescendants() do
+            if item:IsA("SurfaceAppearance") then
+                item:Destroy()
+            end
+        end
+        local wallMesh = wall:FindFirstChild("SB_panel_pristine_013_01")
+        local roofMesh = roof:FindFirstChild("SB_panel_pristine_090_02")
+        assert(
+            wallMesh and wallMesh:IsA("MeshPart") and roofMesh and roofMesh:IsA("MeshPart"),
+            "native Sandbreak wall or roof mesh missing"
+        )
+        local proxy = wall:FindFirstChild("SB_query_solid_092_01_Proxy")
+        assert(proxy and proxy:IsA("MeshPart"), "Sandbreak wall query proxy missing")
+        local replacement = wallMesh:Clone()
+        local unrelated = wallMesh:Clone()
+        unrelated.Parent = root
+        local wallTexture, roofTexture = wallMesh.TextureID, roofMesh.TextureID
+        local function checkDimming(mesh: MeshPart, texture: string): SurfaceAppearance
+            local mapId = assert(texture:match("^rbxassetid://([1-9]%d*)$"), "legacy color map missing")
+            local localSurface = mesh:FindFirstChildOfClass("SurfaceAppearance")
+            assert(localSurface and localSurface.Name == mapId, "tint did not use the original color map")
+            assert(
+                (Vector3.new(localSurface.Color.R, localSurface.Color.G, localSurface.Color.B) - Vector3.new(
+                    0.60,
+                    0.60,
+                    0.60
+                )).Magnitude < 0.01,
+                `incorrect native texture tint for {mesh.Name}: {localSurface.Color}`
+            )
+            assert(
+                mesh.TextureID == texture and mesh.Transparency == 0 and mesh.LocalTransparencyModifier == 0,
+                "legacy texture or structural render depth changed"
+            )
+            return localSurface
+        end
+        local owner = Cosmetics.start(root)
+        local ok, failure = pcall(function()
+            checkDimming(wallMesh, wallTexture)
+            local roofSurface = checkDimming(roofMesh, roofTexture)
+            assert(not unrelated:FindFirstChildOfClass("SurfaceAppearance"), "tint reached an unscoped mesh")
+            assert(
+                proxy.CanCollide and proxy.CanQuery and proxy.Transparency == 1,
+                "server query proxy properties changed"
+            )
+            wallMesh.Parent = nil
+            replacement.Parent = wall
+            task.wait()
+            checkDimming(replacement, wallTexture)
+            assert(
+                checkDimming(roofMesh, roofTexture) == roofSurface,
+                "local palette clone reentered tinting"
+            )
+            assert(not wallMesh:FindFirstChildOfClass("SurfaceAppearance"), "removed panel art kept its tint")
+        end)
+        owner.stop()
+        owner.stop()
+        local restored = owner.resources() == 0
+            and not replacement:FindFirstChildOfClass("SurfaceAppearance")
+            and not roofMesh:FindFirstChildOfClass("SurfaceAppearance")
+            and replacement.TextureID == wallTexture
+            and roofMesh.TextureID == roofTexture
+        replacement:Destroy()
+        wallMesh:Destroy()
+        root:Destroy()
+        assert(ok, failure)
+        assert(restored, "role cleanup did not restore original Sandbreak color maps")
+    end)
     test(
         "P17ThermalNonCover hides marked art restores exact values and retains native solid cover",
         function()

@@ -13,6 +13,13 @@ local panelCount = 103
 local sourceSha256 = "27b825df1b09d7b7ea37d2fb302163ae55efa7b9c55c332ec2a9d86cc4160709"
 local function unchanged() end
 
+-- These presentation attributes are cloned with the pristine map. The operator
+-- shades the native color maps locally; no authored part properties are edited.
+local function configureThermal(model: Model)
+    model:SetAttribute("ThermalBrightness", 0.60)
+    model:SetAttribute("ThermalSurfacePalette", "SandbreakThermalSurfaces")
+end
+
 local function validState(root: Model): boolean
     local proxies, visuals = 0, 0
     for _, part in root:GetChildren() do
@@ -171,6 +178,13 @@ function SandbreakReconstruction.install(world: Instance, assets: Instance): (In
 
     local replacement = source:Clone()
     local replacementPanels = assert(replacement:FindFirstChild("SpawnShelterPanels"))
+    configureThermal(replacement)
+    for _, panel in replacementPanels:GetChildren() do
+        assert(panel:IsA("Model"), "validated Sandbreak panel changed")
+        -- The panel folder moves out of the assembly for the map registry.
+        -- Scope each stable identity so replacement damage meshes inherit it.
+        configureThermal(panel)
+    end
     replacement:PivotTo(CFrame.new(0, 0, 120))
     original.Parent = nil
     replacement.Parent = map
