@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "blenderVersion": "5.3.0",
+  "axisConvention": {
+    "blender": "+X starboard, +Y nose, +Z up",
+    "robloxAndGlb": "+X starboard, -Z nose, +Y up"
+  },
+  "blenderUnitsPerStud": 1,
+  "blenderScaleLengthMeters": 0.2800000011920929,
+  "externalAssetDependencies": [],
+  "meshObjects": 314,
+  "nativeQueryableObjects": 83,
+  "triangles": 43884,
+  "boundsStuds": {
+    "minimum": [
+      -29.010313,
+      -4.500001,
+      -27.6
+    ],
+    "maximum": [
+      29.010313,
+      13.96,
+      30.0
+    ]
+  },
+  "muzzlesStuds": {
+    "GAU23Muzzle": [
+      -7.06,
+      -1.96,
+      -8.9
+    ],
+    "M102Muzzle": [
+      8.46,
+      -2.21,
+      6.65
+    ]
+  },
+  "rotorAxesStuds": {
+    "Port1": [
+      -9.7,
+      2.61,
+      -11.66
+    ],
+    "Port2": [
+      -17.5,
+      2.83,
+      -11.44
+    ],
+    "Starboard1": [
+      9.7,
+      2.61,
+      -11.66
+    ],
+    "Starboard2": [
+      17.5,
+      2.83,
+      -11.44
+    ]
+  },
+  "sha256": {
+    "assets/blender/c130/c130.blend": "82209cb81aed72b9a7003ae30f452c3cffcf4b7b013ae66bf5be7c098c215d70",
+    "assets/exports/c130/c130.glb": "87ece3cad1d89799c1aec25ab1f6dd17e03af0b64aeda887d907faacdf4dc5a7",
+    "assets/models/C130.model.json": "65b2bc0bfda86f22051ac4415ab7f03dbbe79099d24b012c63890cc6c805f21f"
+  }
+}

@@ -14,6 +14,7 @@ local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local AircraftRules = require(ReplicatedStorage.Shared.AircraftRules)
 local RateLimit = require(ReplicatedStorage.Shared.RateLimit)
 local AircraftSelection = require(script.Parent.AircraftSelection)
+local AircraftRig = require(script.Parent.AircraftRig)
 local MatchService = require(script.Parent.MatchService)
 local AircraftService = {}
 export type Controller = {
@@ -38,9 +39,8 @@ export type Controller = {
 
 -- Orbit runs in Lobby for inspection. The model is detached during deployment
 -- and scatter, starts at phase zero on arrival, and freezes in Results if it arrived.
--- Model pivot/Hitbox is the sole
--- gameplay pose; visible parts participate in shot queries but do not collide or
--- touch. No smoothing shell.
+-- The Hitbox anchors the model and supplies the sole gameplay pose. Authored
+-- solid surfaces participate in shot queries without collision or touch.
 -- Optional clock supplies finite monotonic seconds for engine fixtures; production
 -- uses GetServerTimeNow. externallyStepped lets GameRuntime own the frame order.
 -- match remains caller-owned.
@@ -67,6 +67,11 @@ function AircraftService.start(
         return nil, "missing canonical aircraft hitbox"
     end
     model.PrimaryPart = hitbox
+    local bound, bindReason = AircraftRig.bind(model, hitbox)
+    if not bound then
+        model:Destroy()
+        return nil, bindReason
+    end
     local map = MapRules.defaults
     local config = AircraftRules.defaults
     local envelope = workspace.World.Battlefield:FindFirstChild("AimEnvelope")
@@ -138,9 +143,14 @@ function AircraftService.start(
         if newLobby or arrival then
             epoch = time
             status:SetAttribute("EpochSeconds", epoch)
+            model:SetAttribute("PropellersEpochSeconds", epoch)
+            model:SetAttribute("PropellersStoppedSeconds", nil)
         end
         if arrival then
             arrivedRound = state.roundId
+        end
+        if state.phase == "Results" and previousPhase ~= "Results" then
+            model:SetAttribute("PropellersStoppedSeconds", time)
         end
         previousRound = state.roundId
         previousPhase = state.phase
@@ -152,9 +162,14 @@ function AircraftService.start(
         then
             model.Parent = nil
         elseif state.phase == "Lobby" or (state.phase == "Active" and time < state.deadlineSeconds) then
-            model:PivotTo(sample(time - epoch))
-            model:SetAttribute("RoundId", state.roundId)
-            if not model.Parent then
+            local pose = sample(time - epoch)
+            if model.Parent then
+                hitbox.CFrame = pose
+            else
+                -- A detached rig has no joints active in Workspace. Place the
+                -- full authored assembly before its next publication.
+                model:PivotTo(pose)
+                model:SetAttribute("RoundId", state.roundId)
                 model.Parent = workspace
             end
         end

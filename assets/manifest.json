@@ -231,12 +231,57 @@
       "upload_owner": null
     },
     {
-      "id": "c130-greybox",
+      "id": "c130-managed-airframe",
       "kind": "model",
-      "source": "Original C-130-inspired Roblox primitive silhouette authored in this repository; no external assets or scripts",
+      "source": "Original aircraft compiled from the editable P28 Blender master using native Roblox shape profiles and geometric livery",
       "author": "Project contributors",
       "license": "Project license",
       "local_path": "assets/models/C130.model.json",
+      "sha256": "65b2bc0bfda86f22051ac4415ab7f03dbbe79099d24b012c63890cc6c805f21f",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "c130-editable-master",
+      "kind": "blender-source",
+      "source": "Original project C-130 geometry and livery based on project-owned concept references in src/images/c130",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/blender/c130/c130.blend",
+      "sha256": "82209cb81aed72b9a7003ae30f452c3cffcf4b7b013ae66bf5be7c098c215d70",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "c130-airframe-glb",
+      "kind": "model-export",
+      "source": "Original project C-130 geometry and livery based on project-owned concept references in src/images/c130",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/c130/c130.glb",
+      "sha256": "87ece3cad1d89799c1aec25ab1f6dd17e03af0b64aeda887d907faacdf4dc5a7",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "c130-package-audit",
+      "kind": "asset-inventory",
+      "source": "Original project C-130 geometry and livery based on project-owned concept references in src/images/c130",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/c130/package-audit.json",
+      "sha256": "dd80cafa8eb41a9f94022a258a0b9b5ac71e0173edec68fb26b5a8a645b47089",
+      "roblox_asset_id": null,
+      "upload_owner": null
+    },
+    {
+      "id": "c130-ground-approach",
+      "kind": "art-preview",
+      "source": "Original project C-130 geometry and livery based on project-owned concept references in src/images/c130",
+      "author": "Project contributors",
+      "license": "Project license",
+      "local_path": "assets/exports/c130/ground-approach.png",
+      "sha256": "1e0484460765edc6b81dab02fb23a06a760599a5651c1a46fbc46595dcc51f51",
       "roblox_asset_id": null,
       "upload_owner": null
     },
