@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P31` | 2 | Sandbreak panel tint, server cover through damage, normal Ground textures, role switch and pristine reset |
 | `P30` | 3 | Five floor-supported medkits, walking approaches, contested use, nearby destruction, touch activation and next-round healing edits |
 | `P29` | 3 | Four supported pickups, equipped model and muzzle, timed handoff, recovery after carrier death and replay cleanup |
 | `P28` | 2 | Aircraft reveal, full orbit and rotor movement, weapon zoom masks and firing origins, visible hit surfaces and replay after destruction |
@@ -899,6 +900,27 @@ observations and the instrumented workloads supplement the prior engine
 regression suites. The future release checklist retains actual Roblox client sessions at 6 and 10
 players. [P11 plan](../plans/11-balance-and-performance.md),
 [Legacy P12 handoff record](../plans/12-mvp-release.md)
+
+## Verify Sandbreak thermal contrast
+
+Run `python3 scripts/verify.py` from the candidate. The Sandbreak build check compares the native bunker and damage bank texture IDs with the palette mapped into both artifacts. The [Studio client smoke suite](#run-the-studio-smoke-suites) checks the native wall and roof texture tint, replacement meshes and cleanup in `ThermalCosmetics.spec.luau`.
+
+Sync the confirmed local `tests.rbxlx` Edit document to `PlayersVsC130Tests` on port 34872. Check the source identity with Play stopped and run this in the Studio MCP Edit context.
+
+```luau
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(2, { kind = "P31" })
+    workspace:SetAttribute("P31LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P31 Sandbreak thermal test started"
+```
+
+Read `workspace:GetAttribute("P31LastReport")` after Studio returns to Edit. The live server writes the `P31MultiplayerReport` attribute to Workspace. For the manual **Server & Clients** route, set the `ManualHarness` attribute on `ServerStorage.DevelopmentSettings` to `P31` in the confirmed local Edit document. Start two clients. Save `workspace:GetAttribute("ManualP31Report")` from the Server DataModel, stop the session and clear `ManualHarness` in Edit.
+
+Require two actual clients and four passing cases. The first case waits for passing smoke reports from the server and both clients before deployment. The clients inspect wall panel `SB.W.SE.02` in its Pristine, Light, Heavy and Total states. Both roles check the replicated query proxies and their own view of the wall. The server applies test outcomes at the accepted-impact boundary and measures native cover rays as an opening develops. After reset, the two clients trade roles and check the rebuilt pristine panel. Use the [P05 harness](#run-the-p05-gunship-combat-harness) for the end-to-end weapon input and projectile regression.
+
+For the rendered comparison, use the [Sandbreak reference scene](../assets/blender/spawn-bunker/README.md#operator-thermal-materials) in the local Operator preview. Capture both builds at each weapon zoom with a fixed pose and lighting. Compare representative bunker and Seedship wall and roof regions. Inspect the exposed and doorway targets, the concealed target behind the solid wall, and the bunker silhouette, attached detail and roof breach. Record the source, Studio version, view and capture settings with the multiplayer report. [P31 acceptance criteria](../plans/31-bunker-thermal-contrast.md#acceptance)
 
 ## Run the P05 gunship combat harness
 

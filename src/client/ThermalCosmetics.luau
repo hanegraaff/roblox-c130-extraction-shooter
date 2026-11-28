@@ -18,6 +18,7 @@
 ]=]
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local black = Color3.new(0, 0, 0)
+local localPaletteSurface = "ThermalLocalPaletteSurface"
 local ThermalCosmetics = {}
 export type Controller = { stop: () -> (), resources: () -> number }
 type Owned = {
@@ -52,7 +53,9 @@ local function artScope(part: BasePart, root: Instance): (number, Instance?)
 end
 
 -- Use a local SurfaceAppearance for mapped pixels on legacy TextureID meshes.
--- The template references the source color map so its detail survives tinting.
+-- The template references the original map so its detail survives tinting.
+-- Newer imports name templates by ImportMaterialKey; older native banks can
+-- use the numeric TextureID without rewriting their managed mesh assets.
 local function tint(part: BasePart, root: Instance): (() -> ())?
     if part.Transparency >= 1 then
         return nil
@@ -74,14 +77,17 @@ local function tint(part: BasePart, root: Instance): (() -> ())?
         if part.TextureID ~= "" then
             local paletteName = scope:GetAttribute("ThermalSurfacePalette")
             local material = part:GetAttribute("ImportMaterialKey")
+            local templateName = if type(material) == "string"
+                then material
+                else part.TextureID:match("^rbxassetid://([1-9]%d*)$")
             local shared = ReplicatedStorage:FindFirstChild("Shared")
             local palette = if shared and type(paletteName) == "string"
                 then shared:FindFirstChild(paletteName)
                 else nil
             local template = if palette
                     and palette:IsA("Folder")
-                    and type(material) == "string"
-                then palette:FindFirstChild(material)
+                    and templateName
+                then palette:FindFirstChild(templateName)
                 else nil
             if not template or not template:IsA("SurfaceAppearance") then
                 local original = part.Color
@@ -92,6 +98,9 @@ local function tint(part: BasePart, root: Instance): (() -> ())?
             end
             local applied = template:Clone()
             applied.Color = applied.Color:Lerp(black, fade)
+            -- Tag only the client clone, before parenting, so deferred child
+            -- signals can distinguish it from an arriving authored surface.
+            applied:SetAttribute(localPaletteSurface, true)
             applied.Parent = part
             return function()
                 applied:Destroy()
@@ -223,7 +232,7 @@ function ThermalCosmetics.start(root: Instance): Controller
         table.insert(record.connections, part:GetPropertyChangedSignal("CanQuery"):Connect(update))
         if part:IsA("MeshPart") then
             local function surfaceChanged(child: Instance)
-                if child:IsA("SurfaceAppearance") then
+                if child:IsA("SurfaceAppearance") and child:GetAttribute(localPaletteSurface) ~= true then
                     refreshTint()
                 end
             end

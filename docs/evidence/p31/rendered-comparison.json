@@ -1,0 +1,400 @@
+{
+  "baselineSource": "db2ccbe25c37eb6143afce9e120cfffc283f9a5f",
+  "before": {
+    "30": {
+      "focus": "0, 8, 173",
+      "fov": 30,
+      "grade": true,
+      "pose": "315, 140, 174, 0.00317458715, -0.38648206, 0.922291458, 0, 0.922296107, 0.386484027, -0.999994934, -0.00122692727, 0.00292790937",
+      "quality": "Enum.SavedQualitySetting.Automatic",
+      "targets": {
+        "1": {
+          "name": "Exposed",
+          "screen": {
+            "Head": "803.7503051757812, 409.4272155761719, 301.5916748046875",
+            "HumanoidRootPart": "803.1987915039062, 414.9101257324219, 302.1602478027344",
+            "LeftFoot": "799.4376220703125, 423.5746154785156, 303.467529296875",
+            "RightFoot": "804.4192504882812, 423.0802001953125, 303.671875"
+          }
+        },
+        "2": {
+          "name": "Covered",
+          "screen": {
+            "Head": "676.7433471679688, 370.5693359375, 322.7194519042969",
+            "HumanoidRootPart": "676.4512939453125, 375.7622375488281, 323.2880554199219",
+            "LeftFoot": "673.4453735351562, 384.02044677734375, 324.5953063964844",
+            "RightFoot": "678.1821899414062, 383.58306884765625, 324.7996826171875"
+          }
+        },
+        "3": {
+          "name": "Doorway",
+          "screen": {
+            "Head": "740.9002685546875, 370.4837951660156, 322.76922607421875",
+            "HumanoidRootPart": "740.495361328125, 375.6760559082031, 323.33782958984375",
+            "LeftFoot": "737.2320556640625, 383.933349609375, 324.64508056640625",
+            "RightFoot": "741.927978515625, 383.49609375, 324.8494567871094"
+          }
+        }
+      },
+      "view": "1081, 653"
+    },
+    "40": {
+      "focus": "0, 8, 173",
+      "fov": 40,
+      "grade": true,
+      "pose": "315, 140, 174, 0.00317458715, -0.38648206, 0.922291458, 0, 0.922296107, 0.386484027, -0.999994934, -0.00122692727, 0.00292790937",
+      "quality": "Enum.SavedQualitySetting.Automatic",
+      "targets": {
+        "1": {
+          "name": "Exposed",
+          "screen": {
+            "Head": "734.3007202148438, 387.5497131347656, 301.5916748046875",
+            "HumanoidRootPart": "733.8947143554688, 391.58612060546875, 302.1602478027344",
+            "LeftFoot": "731.1257934570312, 397.9648132324219, 303.467529296875",
+            "RightFoot": "734.793212890625, 397.600830078125, 303.671875"
+          }
+        },
+        "2": {
+          "name": "Covered",
+          "screen": {
+            "Head": "640.8002319335938, 358.9431457519531, 322.7194519042969",
+            "HumanoidRootPart": "640.5851440429688, 362.7660827636719, 323.2880554199219",
+            "LeftFoot": "638.3722534179688, 368.84564208984375, 324.5953063964844",
+            "RightFoot": "641.8594360351562, 368.5236511230469, 324.7996826171875"
+          }
+        },
+        "3": {
+          "name": "Doorway",
+          "screen": {
+            "Head": "688.031494140625, 358.88018798828125, 322.76922607421875",
+            "HumanoidRootPart": "687.7333984375, 362.70263671875, 323.33782958984375",
+            "LeftFoot": "685.3310546875, 368.7815246582031, 324.64508056640625",
+            "RightFoot": "688.7881469726562, 368.4596252441406, 324.8494567871094"
+          }
+        }
+      },
+      "view": "1081, 653"
+    }
+  },
+  "cameraFocusStuds": [
+    0,
+    8,
+    173
+  ],
+  "cameraPositionStuds": [
+    315,
+    140,
+    174
+  ],
+  "candidate": {
+    "30": {
+      "focus": "0, 8, 173",
+      "fov": 30,
+      "grade": true,
+      "pose": "315, 140, 174, 0.00317458715, -0.38648206, 0.922291458, 0, 0.922296107, 0.386484027, -0.999994934, -0.00122692727, 0.00292790937",
+      "quality": "Enum.SavedQualitySetting.Automatic",
+      "targets": {
+        "1": {
+          "name": "Exposed",
+          "screen": {
+            "Head": "803.7862548828125, 409.4819641113281, 301.58343505859375",
+            "HumanoidRootPart": "803.1987915039062, 414.9101257324219, 302.1602478027344",
+            "LeftFoot": "799.427490234375, 423.5511169433594, 303.47747802734375",
+            "RightFoot": "804.4095458984375, 423.0451354980469, 303.68255615234375"
+          }
+        },
+        "2": {
+          "name": "Covered",
+          "screen": {
+            "Head": "676.773681640625, 370.6194763183594, 322.71124267578125",
+            "HumanoidRootPart": "676.4512939453125, 375.7622375488281, 323.2880554199219",
+            "LeftFoot": "673.4398193359375, 383.9996643066406, 324.6052551269531",
+            "RightFoot": "678.17724609375, 383.5516052246094, 324.81036376953125"
+          }
+        },
+        "3": {
+          "name": "Doorway",
+          "screen": {
+            "Head": "740.9322509765625, 370.533935546875, 322.7610168457031",
+            "HumanoidRootPart": "740.495361328125, 375.6760559082031, 323.33782958984375",
+            "LeftFoot": "737.2244873046875, 383.9125671386719, 324.655029296875",
+            "RightFoot": "741.9210205078125, 383.4646301269531, 324.860107421875"
+          }
+        }
+      },
+      "view": "1081, 653"
+    },
+    "40": {
+      "focus": "0, 8, 173",
+      "fov": 40,
+      "grade": true,
+      "pose": "315, 140, 174, 0.00317458715, -0.38648206, 0.922291458, 0, 0.922296107, 0.386484027, -0.999994934, -0.00122692727, 0.00292790937",
+      "quality": "Enum.SavedQualitySetting.Automatic",
+      "targets": {
+        "1": {
+          "name": "Exposed",
+          "screen": {
+            "Head": "734.3272094726562, 387.59002685546875, 301.58343505859375",
+            "HumanoidRootPart": "733.8947143554688, 391.58612060546875, 302.1602478027344",
+            "LeftFoot": "731.1183471679688, 397.947509765625, 303.47747802734375",
+            "RightFoot": "734.7860717773438, 397.57501220703125, 303.68255615234375"
+          }
+        },
+        "2": {
+          "name": "Covered",
+          "screen": {
+            "Head": "640.8225708007812, 358.9800720214844, 322.71124267578125",
+            "HumanoidRootPart": "640.5851440429688, 362.7660827636719, 323.2880554199219",
+            "LeftFoot": "638.3681640625, 368.8303527832031, 324.6052551269531",
+            "RightFoot": "641.8558349609375, 368.50048828125, 324.81036376953125"
+          }
+        },
+        "3": {
+          "name": "Doorway",
+          "screen": {
+            "Head": "688.0550537109375, 358.9170837402344, 322.7610168457031",
+            "HumanoidRootPart": "687.7333984375, 362.70263671875, 323.33782958984375",
+            "LeftFoot": "685.325439453125, 368.7662353515625, 324.655029296875",
+            "RightFoot": "688.782958984375, 368.43646240234375, 324.860107421875"
+          }
+        }
+      },
+      "view": "1081, 653"
+    }
+  },
+  "candidateClientSmoke": {
+    "discovered": 24,
+    "environment": "Studio",
+    "errors": 0,
+    "failed": 0,
+    "passed": 24,
+    "seed": 1,
+    "skipped": 0,
+    "suite": "P01-client"
+  },
+  "candidateTree": "eb1c389e4749a6f4fc94bfbd2279cb703de72cc2",
+  "githubCandidate": "fb2311626b551ea7667b9a1b02a2db5bba9c210d",
+  "method": "Roblox Studio MCP screen_capture of local Operator preview after the normal camera owner rendered. A transient render-step override fixed camera pose and vertical FOV. Tagged, inert avatar models use the production native Occluded Highlight.",
+  "metrics": {
+    "30": {
+      "ImageDimensions": [
+        1787,
+        1080
+      ],
+      "regions": {
+        "covered": {
+          "after": 26.0,
+          "before": 116.0,
+          "rect": [
+            1115,
+            620,
+            1125,
+            632
+          ]
+        },
+        "doorway": {
+          "after": 237.0,
+          "before": 237.0,
+          "rect": [
+            1220,
+            625,
+            1228,
+            632
+          ]
+        },
+        "exposed": {
+          "after": 236.0,
+          "before": 236.0,
+          "rect": [
+            1325,
+            682,
+            1332,
+            690
+          ]
+        },
+        "sandbreakRoof": {
+          "after": 53.0,
+          "before": 151.0,
+          "rect": [
+            1090,
+            495,
+            1150,
+            520
+          ]
+        },
+        "sandbreakWall": {
+          "after": 25.0,
+          "before": 113.0,
+          "rect": [
+            1090,
+            621,
+            1138,
+            642
+          ]
+        },
+        "seedshipRoof": {
+          "after": 66.0,
+          "before": 67.0,
+          "rect": [
+            515,
+            490,
+            545,
+            510
+          ]
+        },
+        "seedshipWall": {
+          "after": 37,
+          "before": 36,
+          "rect": [
+            544,
+            670,
+            579,
+            685
+          ]
+        }
+      }
+    },
+    "40": {
+      "ImageDimensions": [
+        1787,
+        1080
+      ],
+      "regions": {
+        "covered": {
+          "after": 26,
+          "before": 116,
+          "rect": [
+            1056,
+            601,
+            1063,
+            608
+          ]
+        },
+        "doorway": {
+          "after": 237,
+          "before": 237,
+          "rect": [
+            1133,
+            602,
+            1140,
+            609
+          ]
+        },
+        "exposed": {
+          "after": 237,
+          "before": 237,
+          "rect": [
+            1210,
+            646,
+            1217,
+            653
+          ]
+        },
+        "sandbreakRoof": {
+          "after": 53.0,
+          "before": 156.0,
+          "rect": [
+            1038,
+            507,
+            1083,
+            525
+          ]
+        },
+        "sandbreakWall": {
+          "after": 25.0,
+          "before": 113.0,
+          "rect": [
+            1038,
+            599,
+            1073,
+            615
+          ]
+        },
+        "seedshipRoof": {
+          "after": 66.0,
+          "before": 66.0,
+          "rect": [
+            615,
+            503,
+            637,
+            518
+          ]
+        },
+        "seedshipWall": {
+          "after": 36.0,
+          "before": 36.0,
+          "rect": [
+            636,
+            636,
+            662,
+            647
+          ]
+        }
+      }
+    }
+  },
+  "pairedCaptureSha256": {
+    "thermal-30.jpg": "b34ebbd6ceb50cdc67bc3a3bc994e8cf473c2fd3a0102ef51762fd2a92395acc",
+    "thermal-40.jpg": "2efa2d831831ae6cdad975393c524ec9866e1495a00869c007feccf6bfb91043"
+  },
+  "pixelUnits": "Medians of 8-bit grayscale display values on raw JPEG pixel rectangles [left, top, right, bottom).",
+  "rawCaptureSha256": {
+    "before-30": "7f07e37398ddf8c83d262ad84d221472d17314416574f35a9601bca2dd35ae5c",
+    "before-40": "76b62bd60de7ed0760d6c6a195c210ec71b33ef21acb9726558cb9d9f2b64717",
+    "candidate-30": "f812a10430691718668dd214aab779695d6ef7a1b82547182ce202b5e290fe4d",
+    "candidate-40": "a9b8bc4a7196584ad03c97c717c9e6cb96b9bac96cdb943f80904a55723aa911"
+  },
+  "source": {
+    "ambient": "0.322, 0.314, 0.298",
+    "brightness": 2.0999999046325684,
+    "camera": {
+      "bytes": 46380,
+      "djb2": "12b903e8"
+    },
+    "clock": 15.399999618530273,
+    "exposure": 0,
+    "gradeBrightness": -0.019999999552965164,
+    "gradeContrast": -0.15000000596046448,
+    "outdoorAmbient": "0.569, 0.573, 0.58",
+    "place": 0,
+    "saturation": -1,
+    "shadows": true,
+    "studio": "0.748.0.7481526",
+    "thermal": {
+      "bytes": 11402,
+      "djb2": "f61a27be"
+    },
+    "universe": 0
+  },
+  "targetPivotStuds": {
+    "Covered": [
+      22,
+      3,
+      137
+    ],
+    "Doorway": [
+      22,
+      3,
+      120
+    ],
+    "Exposed": [
+      45,
+      3,
+      108
+    ]
+  },
+  "targetRays": {
+    "Covered": {
+      "head": "Workspace.World.Battlefield.SpawnShelterPanels.SB.W.SE.02.SB_query_solid_098_01_Proxy",
+      "root": "Workspace.World.Battlefield.SpawnShelterPanels.SB.W.SE.02.SB_query_solid_098_01_Proxy"
+    },
+    "Doorway": {
+      "head": "clear",
+      "root": "clear"
+    },
+    "Exposed": {
+      "head": "clear",
+      "root": "clear"
+    }
+  }
+}

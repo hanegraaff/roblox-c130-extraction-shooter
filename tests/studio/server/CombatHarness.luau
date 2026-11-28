@@ -36,9 +36,11 @@ local function waitFor(predicate: () -> boolean, message: string, timeout: numbe
 end
 -- Manual completion receives the same report after cleanup; SDK mode uses EndTest.
 -- Startup waits are bounded and failure reports the observed client count.
-function CombatHarness.run(finish: ((Report) -> ())?)
+function CombatHarness.run(finish: ((Report) -> ())?, sandbreakThermal: boolean?)
+    local suite = if sandbreakThermal then "P31-bunker-thermal" else "P05-multiplayer"
     local function deliver(report: Report)
-        workspace:SetAttribute("P05MultiplayerReport", HttpService:JSONEncode(report))
+        local attribute = if sandbreakThermal then "P31MultiplayerReport" else "P05MultiplayerReport"
+        workspace:SetAttribute(attribute, HttpService:JSONEncode(report))
         if finish then
             finish(report)
         else
@@ -47,7 +49,7 @@ function CombatHarness.run(finish: ((Report) -> ())?)
     end
     local function startupFailure(detail: string)
         deliver({
-            suite = "P05-multiplayer",
+            suite = suite,
             environment = "Studio",
             clientCount = #Players:GetPlayers(),
             discovered = 1,
@@ -90,14 +92,20 @@ function CombatHarness.run(finish: ((Report) -> ())?)
     local transport = Instance.new("RemoteEvent")
     transport.Name = "P05Harness"
     local ready: { [Player]: boolean } = {}
-    local replies: { [number]: { ok: boolean, message: string } } = {}
+    local clientSmoke: { [string]: string } = {}
+    local pendingClient: Player? = nil
+    local pendingReply: { ok: boolean, message: string }? = nil
     local sequence = 0
     local listener = transport.OnServerEvent:Connect(
         function(player: Player, token: unknown, ok: unknown, message: unknown)
-            if token == 0 then
+            if type(message) ~= "string" or #message > 4096 then
+                return
+            end
+            if token == 0 and ok == true then
                 ready[player] = true
-            elseif type(token) == "number" then
-                replies[token] = { ok = ok == true, message = tostring(message) }
+                clientSmoke[tostring(player.UserId)] = message
+            elseif token == sequence and player == pendingClient and not pendingReply then
+                pendingReply = { ok = ok == true, message = message }
             end
         end
     )
@@ -117,13 +125,13 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             return ready[player] == true
         end, "client ready")
         sequence += 1
-        local token = sequence
-        transport:FireClient(player, token, kind, payload)
+        pendingClient = player
+        transport:FireClient(player, sequence, kind, payload)
         waitFor(function()
-            return replies[token] ~= nil
-        end, "client reply")
-        local reply = replies[token]
-        replies[token] = nil
+            return pendingReply ~= nil
+        end, "client reply from " .. player.Name)
+        local reply = assert(pendingReply, "client reply disappeared")
+        pendingClient, pendingReply = nil, nil
         assert(reply.ok, reply.message)
     end
     local function snapshot(name: string): { [string]: unknown }
@@ -229,7 +237,193 @@ function CombatHarness.run(finish: ((Report) -> ())?)
     local fixture = Instance.new("Folder")
     fixture.Name = "P05Fixture"
     fixture.Parent = workspace.World.Battlefield
-    local ok, failure = pcall(function()
+    local function runSandbreakThermal()
+        check("P31 both actual clients pass smoke before deployment", function()
+            local roster = Players:GetPlayers()
+            assert(#roster == 2, "P31 requires its two-client roster")
+            waitFor(function()
+                for _, player in roster do
+                    if not clientSmoke[tostring(player.UserId)] then
+                        return false
+                    end
+                end
+                return true
+            end, "P31 client smoke reports", 65)
+            assert(#Players:GetPlayers() == 2, "P31 client count changed during startup")
+            for _, player in roster do
+                local report = HttpService:JSONDecode(clientSmoke[tostring(player.UserId)])
+                assert(Players:GetPlayerByUserId(player.UserId) == player, "P31 client identity changed")
+                assert(
+                    type(report) == "table"
+                        and report.userId == player.UserId
+                        and type(report.discovered) == "number"
+                        and report.discovered > 0
+                        and report.passed == report.discovered
+                        and report.failed == 0
+                        and report.errors == 0
+                        and report.skipped == 0,
+                    "P31 smoke was incomplete for " .. player.Name
+                )
+            end
+        end)
+        local gunship, ground: Player
+        local originalPanel: Model
+        local panelId = "SB.W.SE.02"
+        local origin = Vector3.new(315, 140, 174)
+        local covered: { Vector3 } = {}
+        local function livePanel(): Model
+            local panel = workspace.World.Battlefield.SpawnShelterPanels:FindFirstChild(panelId)
+            assert(panel and panel:IsA("Model"), "Sandbreak reference wall missing")
+            return panel
+        end
+        local function coverHit(point: Vector3): RaycastResult?
+            local params = RaycastParams.new()
+            params.FilterType = Enum.RaycastFilterType.Include
+            params.FilterDescendantsInstances = { workspace.World.Battlefield, workspace.Terrain }
+            params.RespectCanCollide = true
+            return workspace:Raycast(origin, point - origin, params)
+        end
+        local function deploy(): (Player, Player)
+            assert(runtime.rounds.match.deploy(), "P31 deployment failed")
+            waitFor(function()
+                return runtime.rounds.match.snapshot().phase == "Active"
+            end, "P31 Active", 35)
+            return roles()
+        end
+        local function inspectPanel(panel: Model, appearance: string, operator: Player, runner: Player)
+            assert(panel:GetAttribute("DamageAppearance") == appearance, "unexpected server panel appearance")
+            local visuals = {}
+            local queryParts = 0
+            for _, part in panel:GetChildren() do
+                if part:IsA("MeshPart") then
+                    assert(not part:FindFirstChildWhichIsA("SurfaceAppearance"), "client tint reached server")
+                    if part:GetAttribute("PanelProxy") == true then
+                        assert(
+                            part.CanCollide and part.CanQuery and part.Transparency == 1,
+                            "cover flags changed"
+                        )
+                        queryParts += 1
+                    elseif part.TextureID ~= "" then
+                        assert(
+                            not part.CanCollide and not part.CanQuery,
+                            "visual acquired authoritative cover"
+                        )
+                        visuals[part.Name] = {
+                            texture = part.TextureID,
+                            color = part.Color,
+                            hidden = part:GetAttribute("ThermalNonCover") == true,
+                        }
+                    end
+                end
+            end
+            if appearance == "Total" then
+                assert(queryParts == 0 and next(visuals) == nil, "Total retained geometry")
+            else
+                assert(queryParts == 1 and next(visuals) ~= nil, "cover or material witness missing")
+            end
+            probe(
+                operator,
+                "SandbreakThermal",
+                { id = panelId, appearance = appearance, visuals = visuals, thermal = true }
+            )
+            probe(
+                runner,
+                "SandbreakThermal",
+                { id = panelId, appearance = appearance, visuals = visuals, thermal = false }
+            )
+            table.insert(observations, {
+                stage = appearance,
+                queryParts = queryParts,
+                operator = operator.UserId,
+                ground = runner.UserId,
+            })
+        end
+        check("P31 pristine wall occludes through native cover in both views", function()
+            gunship, ground = deploy()
+            originalPanel = livePanel()
+            inspectPanel(originalPanel, "Pristine", gunship, ground)
+            for y = 2.5, 5.5, 0.5 do
+                for z = 134, 141, 0.5 do
+                    local point = Vector3.new(22, y, z)
+                    local hit = coverHit(point)
+                    if hit and runtime.destruction.identify(hit.Instance) == panelId then
+                        table.insert(covered, point)
+                    end
+                end
+            end
+            assert(#covered > 0, "pristine witness grid missed its wall")
+            table.insert(
+                observations,
+                { origin = { origin.X, origin.Y, origin.Z }, pristineBlocked = #covered }
+            )
+        end)
+        check("P31 Light preserves cover and Heavy earns a real opening before Total", function()
+            local round = runtime.rounds.match.snapshot().roundId
+            local function earn(first: number, last: number)
+                for shot = first, last do
+                    assert(
+                        runtime.destruction.resolve({
+                            roundId = round,
+                            shotId = shot,
+                            weapon = "GAU23",
+                            firedAt = 100 + (shot - 1) * 0.2,
+                            panelId = panelId,
+                        }),
+                        "registered impact rejected"
+                    )
+                end
+                runtime.destruction.flush(workspace:GetServerTimeNow())
+            end
+            earn(1, 2)
+            inspectPanel(originalPanel, "Light", gunship, ground)
+            for _, point in covered do
+                local hit = coverHit(point)
+                assert(
+                    hit and runtime.destruction.identify(hit.Instance) == panelId,
+                    "Light opened solid cover"
+                )
+            end
+            earn(3, 6)
+            inspectPanel(originalPanel, "Heavy", gunship, ground)
+            local through: Vector3? = nil
+            local blocked = 0
+            for _, point in covered do
+                local hit = coverHit(point)
+                if not hit then
+                    through = through or point
+                elseif runtime.destruction.identify(hit.Instance) == panelId then
+                    blocked += 1
+                end
+            end
+            assert(through and blocked > 0, "Heavy must earn an opening and retain some cover")
+            table.insert(
+                observations,
+                { heavyBlocked = blocked, openingTarget = { through.X, through.Y, through.Z } }
+            )
+            earn(7, 11)
+            inspectPanel(originalPanel, "Total", gunship, ground)
+            assert(coverHit(through) == nil, "Total reclosed the Heavy opening")
+        end)
+        check("P31 rebuilt bunker restores pristine cover and both clients switch palettes", function()
+            assert(runtime.rounds.match.abort(runtime.rounds.match.snapshot().roundId, "P31Replay"))
+            waitFor(function()
+                return runtime.rounds.match.snapshot().phase == "Lobby"
+            end, "P31 reset", 20)
+            local nextGunship, nextGround = deploy()
+            assert(nextGunship == ground and nextGround == gunship, "P31 did not switch actual roles")
+            local rebuilt = livePanel()
+            assert(rebuilt ~= originalPanel and originalPanel.Parent == nil, "reset retained original panel")
+            inspectPanel(rebuilt, "Pristine", nextGunship, nextGround)
+            for _, point in covered do
+                local hit = coverHit(point)
+                assert(
+                    hit and runtime.destruction.identify(hit.Instance) == panelId,
+                    "reset did not restore cover"
+                )
+            end
+        end)
+    end
+    local function runCombat()
         check("A3 rejected client traffic leaves readiness intact", function()
             assert(runtime.rounds.match.deploy(), "deployment failed")
             waitFor(function()
@@ -1398,7 +1592,14 @@ function CombatHarness.run(finish: ((Report) -> ())?)
             assert(not workspace:FindFirstChild("CombatMuzzleProbe"), "muzzle probe survived combat teardown")
             assert(expiryOk, tostring(expiryReason))
         end)
-    end)
+    end
+    local ok, failure = pcall(if sandbreakThermal then runSandbreakThermal else runCombat)
+    if sandbreakThermal then
+        table.insert(
+            observations,
+            { serverSmoke = workspace:GetAttribute("ServerTestReport"), clientSmoke = clientSmoke }
+        )
+    end
     if not ok then
         table.insert(cases, { name = "Harness completion", passed = false, detail = tostring(failure) })
     end
@@ -1413,9 +1614,9 @@ function CombatHarness.run(finish: ((Report) -> ())?)
         end
     end
     local report: Report = {
-        suite = "P05-multiplayer",
+        suite = suite,
         environment = "Studio",
-        clientCount = 2,
+        clientCount = #Players:GetPlayers(),
         discovered = #cases,
         passed = passed,
         failed = #cases - passed,
