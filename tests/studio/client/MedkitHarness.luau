@@ -70,8 +70,22 @@ function Harness.run()
             assert(type(value) == "number", "P30 healing input missing")
             waitFor(function()
                 local panel = gui:FindFirstChild("BalancePanel")
-                return panel ~= nil and panel:IsA("ScreenGui") and panel.Enabled
-            end, "eliminated owner balance access")
+                local open = if panel then panel:FindFirstChild("OpenBalance") else nil
+                local hud = gui:FindFirstChild("RoundHUD")
+                -- The balance gate can update before Ground's render step
+                -- releases mouse lock while returning to the lobby.
+                return panel ~= nil
+                    and panel:IsA("ScreenGui")
+                    and panel.Enabled
+                    and open ~= nil
+                    and open:IsA("GuiButton")
+                    and open.Visible
+                    and open.Active
+                    and hud ~= nil
+                    and hud:GetAttribute("View") == "RoundLobby"
+                    and UserInputService.MouseBehavior == Enum.MouseBehavior.Default
+            end, "eliminated owner's ready lobby balance button")
+            RunService.RenderStepped:Wait()
             local panel = assert(gui:FindFirstChild("BalancePanel"))
             BalanceHarness.editLobbyPreset(panel, 1, { medkitHeal = tostring(value) })
             return true

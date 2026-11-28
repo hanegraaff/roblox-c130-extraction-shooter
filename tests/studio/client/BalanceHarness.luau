@@ -26,6 +26,8 @@ function Harness.editLobbyPreset(gui: Instance, category: number, values: { [str
         )
         local position = button.AbsolutePosition + button.AbsoluteSize / 2 + GuiService:GetGuiInset()
         local input = assert(UserInputService:CreateVirtualInput(), "Studio VirtualInput unavailable")
+        input:SendMousePosition(position)
+        RunService.RenderStepped:Wait()
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, true)
         RunService.RenderStepped:Wait()
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, false)
