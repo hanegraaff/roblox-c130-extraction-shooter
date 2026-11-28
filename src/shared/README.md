@@ -86,4 +86,4 @@ or secrecy boundary.
 
 `WeaponImpactRules.surface(material, terrain, aircraft)` classifies a server-confirmed contact as Ground, Solid or Metal for presentation. `history()` returns a caller-owned bounded history with `admit(weapon, shotId, emittedAt, receivedAt)` and `clear()`; times are synchronized seconds. Admission rejects stale, implausibly future or duplicate identities. The helper performs no collision query or damage award.
 
-The balance schema exposes the Default display label separately from its stable stored identifier. Shared name validation and copy-name eligibility keep client Save state consistent with the server’s protected built-in names. Existing presets and active selections retain their storage identities.
+The balance schema exposes the Default display label separately from its stable stored identifier. The panel uses shared Save eligibility to allow renamed copies and changed custom presets. Both names for the built-in preset are reserved. Existing presets and active selections retain their storage identities.

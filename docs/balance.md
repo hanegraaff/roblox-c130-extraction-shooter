@@ -22,8 +22,8 @@ The experience owner controls the tester list. For a group-owned experience, sig
 
 1. Check **Live in game** at the top. This names the settings currently selected for the game.
 2. In **Saved presets**, open **Load Settings** and choose a saved preset. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
-3. Change the loaded preset’s name and select **Save preset**. Save stays disabled until you enter a different valid name. This stores the values you edited. **Apply saved** becomes available when the editor matches the saved preset.
-4. Select **Apply saved** to use that preset in the game. The live name at the top updates. Combat changes start next round.
+3. Select **Save preset** after editing to update the custom preset under its current name. Enter a new name to save a copy. **Default** requires a custom name. **Apply saved** becomes available once the editor matches a saved preset. Reopening the editor shows the saved values for the active preset, including edits awaiting **Apply saved**.
+4. Select **Apply saved** to use that preset in the game. The live name at the top updates. Combat changes start next round. Medkit healing is saved for the planned pickup feature and currently has no gameplay effect.
 5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name field clears. Enter a name to save another copy, or close. **Default** remains available as the built-in starting point.
 
 To return to the original settings, load **Default** and select **Apply saved**.

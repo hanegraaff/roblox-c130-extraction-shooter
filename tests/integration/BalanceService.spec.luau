@@ -6,11 +6,80 @@ local loadModule = (require :: unknown) :: (string) -> unknown
 local Record = if script
     then require(game:GetService("ServerScriptService").Server.BalanceRecord)
     else loadModule("../../src/server/BalanceRecord") :: RecordAPI
+local AircraftHealth = (
+    if script
+        then require(game:GetService("ServerScriptService").Server.AircraftHealth)
+        else loadModule("../../src/server/AircraftHealth")
+) :: typeof(require(game:GetService("ServerScriptService").Server.AircraftHealth))
 return function(test: (string, () -> ()) -> (), raw: unknown)
     local api = raw :: API
     local function online(): boolean
         return true
     end
+    test("Updated Production Settings persist under the same name and apply on deployment", function()
+        local stored: unknown = nil
+        local storage = {
+            read = function(): unknown
+                return stored
+            end,
+            update = function(change: (unknown) -> unknown): unknown
+                local updated = change(stored)
+                if updated ~= nil then
+                    stored = updated
+                end
+                return updated
+            end,
+        }
+        local server = api.new(storage)
+        local name = "Production Settings"
+        local values = table.clone(server.latest().settings)
+        local function write(service: typeof(server), action: string, revision: number, settings: unknown?)
+            return service.write(
+                assert(
+                    Record.request({ action = action, revision = revision, name = name, settings = settings })
+                ),
+                1,
+                1,
+                online
+            )
+        end
+
+        assert(write(server, "save", 0, values))
+        assert(write(server, "apply", 1))
+        local edited = table.clone(server.latest().presets[name])
+        edited.rocketDamage = 175
+        edited.aircraftHealthPerGround = 900
+        edited.m7Damage = 7
+        assert(write(server, "save", 2, edited))
+
+        local restarted = api.new(storage)
+        assert(restarted.refresh())
+        assert(restarted.latest().presets[name].rocketDamage == 175, "same-name save was lost")
+        assert(
+            restarted.latest().activeName == name and restarted.latest().settings.rocketDamage == 150,
+            "save changed the live snapshot"
+        )
+        restarted.capture()
+        assert(write(restarted, "apply", 3))
+        assert(restarted.round().settings.rocketDamage == 150, "apply changed the captured round")
+        restarted.capture()
+        assert(restarted.round().settings.rocketDamage == 175, "deployment missed the applied values")
+
+        local deployed = restarted.round().settings
+        local aircraft =
+            AircraftHealth.new(deployed.aircraftHealthPerGround, deployed.m7Damage, deployed.rocketDamage)
+        assert(aircraft.reset(1, 2), "aircraft did not initialize for two Ground players")
+        assert(aircraft.snapshot().maximum == 1800, "aircraft did not use the saved health multiplier")
+        assert(aircraft.impact(1, "rocket", "RocketLauncher", true) == 175, "rocket used the wrong damage")
+        assert(aircraft.impact(1, "rifle", "M7", true) == 7, "rifle used the wrong damage")
+        assert(aircraft.snapshot().health == 1618, "aircraft did not retain both hits")
+
+        local anotherServer = api.new(storage)
+        assert(
+            anotherServer.refresh() and anotherServer.latest().settings.rocketDamage == 175,
+            "fresh server missed applied values"
+        )
+    end)
     test(
         "P26 two servers recover missed notifications, keep the round snapshot, restore and survive restart",
         function()
