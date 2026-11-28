@@ -1,0 +1,206 @@
+{
+  "report": {
+    "ok": true,
+    "report": {
+      "initialClientCount": 2,
+      "skipped": 0,
+      "passed": 9,
+      "cases": [
+        {
+          "passed": true,
+          "name": "A3 round 1 replicates scatter on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A2 round 1 permits movement and launcher transfers but blocks all fire"
+        },
+        {
+          "passed": true,
+          "name": "A1 A3 round 1 reveals once at canonical start and preserves Ground"
+        },
+        {
+          "passed": true,
+          "name": "A2 A3 round 1 fires fresh rocket and gunship intents on the real map"
+        },
+        {
+          "passed": true,
+          "name": "A3 round 2 replicates scatter on both actual clients"
+        },
+        {
+          "passed": true,
+          "name": "A2 round 2 permits movement and launcher transfers but blocks all fire"
+        },
+        {
+          "passed": true,
+          "name": "A1 A3 round 2 reveals once at canonical start and preserves Ground"
+        },
+        {
+          "passed": true,
+          "name": "A2 A3 round 2 fires fresh rocket and gunship intents on the real map"
+        },
+        {
+          "passed": true,
+          "name": "A2 actual Scatter death cancels arrival, consumes one life and returns both avatars to lobby"
+        }
+      ],
+      "observations": [
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830621.701085
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830621.701085
+        },
+        {
+          "groundDisplacementStuds": 10.081245422363281,
+          "operatorId": -1,
+          "roundId": 1
+        },
+        {
+          "projection": {
+            "originErrorStuds": 0,
+            "projectionFrame": 1,
+            "replicaErrorStuds": 0
+          },
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.2818758487701416,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830621.701085,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 2,
+            "firstAircraftDelaySeconds": 0.04111289978027344,
+            "preDeadlineFrames": 297
+          },
+          "blackout": {
+            "leaks": 0,
+            "thermalFrames": 0,
+            "frames": 305,
+            "aircraftFrames": 0
+          }
+        },
+        {
+          "ground": true,
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.14226293563842773,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830621.701085,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.07715797424316406,
+            "preDeadlineFrames": 296
+          }
+        },
+        {
+          "revealLateSeconds": 0.007611989974975586,
+          "poseErrorStuds": 0,
+          "roundId": 1
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830647.334751
+        },
+        {
+          "viewport": [
+            1081,
+            653
+          ],
+          "touch": false,
+          "seconds": 20,
+          "deadline": 1795830647.334751
+        },
+        {
+          "groundDisplacementStuds": 10.347911834716797,
+          "operatorId": -2,
+          "roundId": 2
+        },
+        {
+          "projection": {
+            "originErrorStuds": 0,
+            "projectionFrame": 1,
+            "replicaErrorStuds": 0
+          },
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.27298617362976074,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830647.334751,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.09119820594787598,
+            "preDeadlineFrames": 287
+          },
+          "blackout": {
+            "leaks": 0,
+            "thermalFrames": 0,
+            "frames": 295,
+            "aircraftFrames": 0
+          }
+        },
+        {
+          "ground": true,
+          "aircraftReveal": {
+            "firstActiveDelaySeconds": 0.1376500129699707,
+            "preDeadlineAircraftFrames": 0,
+            "preDeadlineVisibleFrames": 0,
+            "deadline": 1795830647.334751,
+            "preDeadlineQueryableFrames": 0,
+            "stalePhaseAircraftFrames": 1,
+            "firstAircraftDelaySeconds": 0.07328319549560547,
+            "preDeadlineFrames": 286
+          }
+        },
+        {
+          "revealLateSeconds": 0.00652003288269043,
+          "poseErrorStuds": 0,
+          "roundId": 2
+        }
+      ],
+      "clientSmoke": {
+        "-1": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-1,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}",
+        "-2": "{\"errors\":0,\"skipped\":0,\"passed\":23,\"userId\":-2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-client\",\"failed\":0,\"discovered\":23}"
+      },
+      "completedRoundIds": [
+        1,
+        2
+      ],
+      "serverSmoke": "{\"errors\":0,\"skipped\":0,\"passed\":218,\"clientCount\":2,\"environment\":\"Studio\",\"seed\":1,\"suite\":\"P01-server\",\"failed\":0,\"discovered\":218}",
+      "suite": "P24-multiplayer",
+      "failed": 0,
+      "discovered": 9
+    }
+  },
+  "liveServerRocketObservations": [
+    {
+      "players": 2,
+      "health": 850,
+      "phase": "Active",
+      "round": 1,
+      "shot": "{\"shotId\":\"rocket:1:1:Radar\",\"userId\":-2,\"roundId\":1}"
+    },
+    {
+      "players": 2,
+      "health": 850,
+      "phase": "Active",
+      "round": 2,
+      "shot": "{\"shotId\":\"rocket:2:1:Radar\",\"userId\":-1,\"roundId\":2}"
+    }
+  ]
+}

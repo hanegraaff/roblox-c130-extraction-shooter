@@ -56,45 +56,141 @@ return function()
                     hitbox and hitbox:IsA("BasePart") and model.PrimaryPart == hitbox,
                     "canonical hitbox missing"
                 )
+                assert(
+                    hitbox.Anchored and hitbox.Transparency == 1 and not hitbox.CanQuery,
+                    "canonical root must never extend the shootable silhouette"
+                )
+                local roundedQueries = model:FindFirstChild("RoundedQueries")
+                assert(roundedQueries and roundedQueries:IsA("Folder"), "missing rounded query volumes")
+                local queryable = 0
                 for _, item in model:GetDescendants() do
                     if item:IsA("BasePart") then
                         assert(
-                            item.Anchored and not item.CanCollide and not item.CanTouch and item.CanQuery,
-                            "aircraft collision/query contract"
+                            not item.CanCollide and not item.CanTouch and item.AssemblyRootPart == hitbox,
+                            "aircraft must remain a single noncolliding rigid assembly"
                         )
+                        if item ~= hitbox then
+                            assert(not item.Anchored and item.Massless, "flight root must be the only anchor")
+                        end
+                        if item.CanQuery then
+                            assert(
+                                not item:IsA("MeshPart")
+                                    and (
+                                        item.Transparency == 0
+                                        or item.Transparency == 1 and not item.CastShadow
+                                    ),
+                                "only native solids and inset volumes participate in queries"
+                            )
+                            queryable += 1
+                        end
                     end
                 end
+                assert(queryable >= 40, "missing solid airframe surfaces")
                 local parameters = RaycastParams.new()
                 parameters.FilterType = Enum.RaycastFilterType.Include
                 parameters.FilterDescendantsInstances = { model }
-                for _, sample in
-                    {
-                        { name = "Wing", point = Vector3.new(20, 2, 0) },
-                        { name = "Tailplane", point = Vector3.new(9, 4, 26) },
-                        { name = "TailFin", point = Vector3.new(0, 12, 27), fromAbove = true },
-                        { name = "EngineL22", point = Vector3.new(-22, 0, -6) },
-                    }
-                do
-                    local part = model:FindFirstChild(sample.name)
-                    assert(part and part:IsA("BasePart"), "visible aircraft part missing")
-                    local at = model:GetPivot():PointToWorldSpace(sample.point)
-                    local direction = model:GetPivot().UpVector
-                    local sign = if sample.fromAbove then -1 else 1
-                    local hit =
-                        workspace:Raycast(at - direction * (18 * sign), direction * (36 * sign), parameters)
-                    assert(
-                        hit and hit.Instance == part,
-                        "visible aircraft surface not ray-queryable: " .. sample.name
+                local function cast(from: Vector3, to: Vector3): RaycastResult?
+                    local frame = model:GetPivot()
+                    return workspace:Raycast(
+                        frame:PointToWorldSpace(from),
+                        frame:VectorToWorldSpace(to - from),
+                        parameters
                     )
                 end
-                for _, name in { "GAU23Muzzle", "M102Muzzle" } do
-                    local attachment = hitbox:FindFirstChild(name)
-                    assert(attachment and attachment:IsA("Attachment"), "missing muzzle " .. name)
+                for _, sample in
+                    {
+                        { prefix = "Cargo cabin", point = Vector3.new(0, 0, -12) },
+                        { prefix = "Starboard wing", point = Vector3.new(26.2, 0, -4) },
+                        { prefix = "Starboard stabilizer", point = Vector3.new(9, 0, 26) },
+                        { prefix = "Dorsal fin", point = Vector3.new(0, 12, 23.8), fromAbove = true },
+                        { prefix = "Port2 nacelle", point = Vector3.new(-17.5, 0, -8.1) },
+                    }
+                do
+                    local span = Vector3.yAxis * (if sample.fromAbove then -18 else 18)
+                    local hit = cast(sample.point - span, sample.point + span)
+                    assert(
+                        hit and string.sub(hit.Instance.Name, 1, #sample.prefix) == sample.prefix,
+                        "solid visible airframe surface missed: " .. sample.prefix .. " / " .. tostring(hit)
+                    )
+                end
+                for _, sample in
+                    {
+                        {
+                            prefix = "Rounded flight deck",
+                            from = Vector3.new(6, 0, -24.5),
+                            toward = Vector3.new(3.35, 0, -24.5),
+                            outside = Vector3.new(4.9, 0, -24.5),
+                        },
+                        {
+                            prefix = "Port2 nacelle",
+                            from = Vector3.new(-17.5, -1, -10.4),
+                            toward = Vector3.new(-17.5, 2.83, -10.4),
+                            outside = Vector3.new(-17.5, 1.38, -10.4),
+                        },
+                        {
+                            prefix = "Tapered tail cone",
+                            from = Vector3.new(0, -8, 29.22),
+                            toward = Vector3.new(0, 2.2, 29.22),
+                            outside = Vector3.new(0, 1.11, 29.22),
+                        },
+                    }
+                do
+                    local hit = cast(sample.from, sample.toward)
+                    assert(
+                        hit
+                            and hit.Instance:IsDescendantOf(roundedQueries)
+                            and string.sub(hit.Instance.Name, 1, #sample.prefix) == sample.prefix,
+                        "rounded visual mantle must support a matching native query: " .. sample.prefix
+                    )
+                    assert(
+                        not cast(sample.from, sample.outside),
+                        "rounded query escaped the authored visual shell: " .. sample.prefix
+                    )
+                end
+                assert(
+                    not cast(Vector3.new(29.3, -12, -4), Vector3.new(29.3, 12, -4)),
+                    "shot outside the wingtips must miss"
+                )
+                assert(
+                    not cast(Vector3.new(10, 4.7, -14), Vector3.new(5.6, 4.7, -14)),
+                    "shot through the old rectangular proxy corner must miss"
+                )
+                local airframe = model:FindFirstChild("Airframe")
+                assert(airframe and airframe:IsA("Model"), "managed aircraft visual missing")
+                for _, name in { "C130_Fuselage", "C130_WingAndTail", "C130_Nacelles" } do
+                    local visual = airframe:FindFirstChild(name)
+                    assert(
+                        visual
+                            and visual:IsA("MeshPart")
+                            and not visual.CanQuery
+                            and visual.TextureID ~= ""
+                            and visual.Transparency == 0,
+                        "native coated skin is missing: " .. name
+                    )
+                end
+                for _, item in airframe:GetChildren() do
+                    assert(not string.find(item.Name, " shark ", 1, true), "raised shark paint survived")
+                end
+                for _, weapon in { "GAU23", "M102" } do
+                    local attachment = hitbox:FindFirstChild(weapon .. "Muzzle")
+                    local bore = airframe:FindFirstChild(weapon .. " dark bore")
+                    assert(attachment and attachment:IsA("Attachment"), "missing muzzle " .. weapon)
+                    assert(bore and bore:IsA("BasePart"), "missing muzzle bore " .. weapon)
+                    assert(
+                        (attachment.WorldPosition - bore.Position).Magnitude < 0.01,
+                        "muzzle effect source does not align with visible bore"
+                    )
                 end
                 for i = 0, 16 do
                     local elapsed = i * 90 / 16
                     setTime(elapsed)
                     local actual = model:GetPivot()
+                    local m102 = assert(owner.muzzle("M102"), "selected muzzle missing in flight")
+                    local bore = airframe:FindFirstChild("M102 dark bore")
+                    assert(
+                        bore and bore:IsA("BasePart") and (bore.Position - m102).Magnitude < 0.02,
+                        "flying rig drifted from muzzle"
+                    )
                     local expected = owner.sample(elapsed)
                     assert(
                         (actual.Position - expected.Position).Magnitude < 0.01,

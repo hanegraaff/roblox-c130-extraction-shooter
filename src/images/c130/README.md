@@ -6,7 +6,7 @@ The approved replacement keeps the high wing, four turboprops, dark gunmetal cha
 - [Starboard side](starboard-side.png) shows the aircraft's right side and the barrel end-on beneath the military stencil.
 - [Overhead](overhead.png) shows the wing stencil, engine spacing and howitzer projecting to the right.
 
-For scale, fit the replacement airframe to the existing [C-130 model](../../../assets/models/C130.model.json), which measures 58 studs across the wings, 57.6 studs nose to tail and 18.5 studs tall. Use the model as the dimensional source and the PNGs as visual references for [P28](../../../plans/28-c130-model.md).
+The flying model follows the earlier template's dimensions of about 58 studs across the wings, 57.6 studs nose to tail and 18.5 studs tall. The PNGs guide the shape and paint of the original geometry. [Editable aircraft and scale](../../../assets/blender/c130/README.md) · [P28](../../../plans/28-c130-model.md)
 
 <details>
 <summary>Image generation prompts</summary>

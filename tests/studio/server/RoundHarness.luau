@@ -88,8 +88,8 @@ function RoundHarness.run()
         require(script.Parent.BalanceHarness).preview()
         return
     end
-    if kind == "P24" then
-        require(script.Parent.AircraftArrivalHarness).run(type(args) == "table")
+    if kind == "P24" or kind == "P28" then
+        require(script.Parent.AircraftArrivalHarness).run(type(args) == "table", kind == "P28")
         return
     end
     -- A trusted, temporary server-only invocation marker supports Studio's native

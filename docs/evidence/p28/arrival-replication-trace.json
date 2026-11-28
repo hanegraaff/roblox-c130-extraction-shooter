@@ -1,0 +1,178 @@
+{
+  "0": [
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829210.050191,
+      "cover": false,
+      "phase": "Scatter",
+      "round": 1,
+      "dead": 1795829215.832524
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829215.918792,
+      "cover": false,
+      "phase": "Scatter",
+      "round": 1,
+      "dead": 1795829215.832524,
+      "modelRound": 1
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829215.982297,
+      "cover": false,
+      "phase": "Active",
+      "round": 1,
+      "dead": 1795829815.839193,
+      "modelRound": 1
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829217.318638,
+      "cover": false,
+      "phase": "Results",
+      "round": 1,
+      "dead": 1795829815.839193,
+      "modelRound": 1
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829220.654958,
+      "cover": false,
+      "phase": "Results",
+      "round": 1,
+      "dead": 1795829815.839193
+    },
+    {
+      "fov": 70,
+      "role": "Gunship",
+      "now": 1795829222.423115,
+      "cover": true,
+      "phase": "Scatter",
+      "round": 2,
+      "dead": 1795829241.995939
+    },
+    {
+      "fov": 30,
+      "role": "Gunship",
+      "now": 1795829242.1944,
+      "cover": false,
+      "phase": "Active",
+      "round": 2,
+      "dead": 1795829842.001565,
+      "modelRound": 2
+    },
+    {
+      "fov": 70,
+      "role": "Gunship",
+      "now": 1795829243.598089,
+      "cover": false,
+      "phase": "Results",
+      "round": 2,
+      "dead": 1795829842.001565,
+      "modelRound": 2
+    },
+    {
+      "fov": 70,
+      "role": "Gunship",
+      "now": 1795829246.925197,
+      "cover": false,
+      "phase": "Results",
+      "round": 2,
+      "dead": 1795829842.001565
+    }
+  ],
+  "1": [
+    {
+      "fov": 70,
+      "role": "Gunship",
+      "now": 1795829210.135762,
+      "cover": true,
+      "phase": "Scatter",
+      "round": 1,
+      "dead": 1795829215.832524
+    },
+    {
+      "fov": 30,
+      "role": "Gunship",
+      "now": 1795829216.066171,
+      "cover": false,
+      "phase": "Active",
+      "round": 1,
+      "dead": 1795829815.839193,
+      "modelRound": 1
+    },
+    {
+      "fov": 70,
+      "role": "Gunship",
+      "now": 1795829217.387596,
+      "cover": false,
+      "phase": "Results",
+      "round": 1,
+      "dead": 1795829815.839193,
+      "modelRound": 1
+    },
+    {
+      "fov": 70,
+      "role": "Gunship",
+      "now": 1795829220.655573,
+      "cover": false,
+      "phase": "Results",
+      "round": 1,
+      "dead": 1795829815.839193
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829222.37741,
+      "cover": false,
+      "phase": "Scatter",
+      "round": 2,
+      "dead": 1795829241.995939
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829242.035921,
+      "cover": false,
+      "phase": "Scatter",
+      "round": 2,
+      "dead": 1795829241.995939,
+      "modelRound": 2
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829242.100313,
+      "cover": false,
+      "phase": "Active",
+      "round": 2,
+      "dead": 1795829842.001565,
+      "modelRound": 2
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829243.504631,
+      "cover": false,
+      "phase": "Results",
+      "round": 2,
+      "dead": 1795829842.001565,
+      "modelRound": 2
+    },
+    {
+      "fov": 70,
+      "role": "Ground",
+      "now": 1795829246.837827,
+      "cover": false,
+      "phase": "Results",
+      "round": 2,
+      "dead": 1795829842.001565
+    }
+  ]
+}

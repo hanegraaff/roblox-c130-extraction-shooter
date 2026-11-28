@@ -1,0 +1,47 @@
+{
+  "method": "Rojo-built detached binary Model and production AircraftRig deserialized with Studio SerializationService. The fixture was temporarily parented above the test world, inspected by native Workspace raycasts, and then destroyed.",
+  "verification": "All BaseParts shared the anchored Hitbox before and after changing only its CFrame. The Cargo cabin was hit, the old rectangular proxy corner missed, and the M102 attachment aligned at both poses.",
+  "candidateSource": "a43967eecbbf85ab1ae6b68d69287ce9be5e4544",
+  "input": {
+    "modelSha256": "65b2bc0bfda86f22051ac4415ab7f03dbbe79099d24b012c63890cc6c805f21f",
+    "rigSha256": "0e2e3db8e1262aa79b37214bc21aae6c4d3aafcbe553154aeca515db372f38eb",
+    "nativeSha256": "da894a2001622df64d6d279195c34831d6e3abe8a76e55b5111663fdbcbdf121",
+    "nativeBytes": 15986
+  },
+  "report": {
+    "cleaned": true,
+    "version": "0.748.0.7481526",
+    "place": "tests.rbxlx",
+    "samples": [
+      {
+        "muzzleErrorStuds": 0,
+        "fuselageHit": "Cargo cabin",
+        "position": [
+          0,
+          2000,
+          0
+        ]
+      },
+      {
+        "muzzleErrorStuds": 0,
+        "fuselageHit": "Cargo cabin",
+        "position": [
+          200,
+          2000,
+          350
+        ]
+      },
+      {
+        "muzzleErrorStuds": 0,
+        "fuselageHit": "Cargo cabin",
+        "position": [
+          200,
+          2000,
+          350
+        ]
+      }
+    ],
+    "passed": true,
+    "parts": 319
+  }
+}

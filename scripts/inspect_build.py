@@ -928,6 +928,8 @@ def main() -> None:
         "ServerScriptService/Server/BlastGeometry": "ModuleScript",
         "ReplicatedStorage/Shared/BalanceSchema": "ModuleScript",
         "StarterPlayer/StarterPlayerScripts/Client/BalancePanel": "ModuleScript",
+        "StarterPlayer/StarterPlayerScripts/Client/AircraftPropellers": "ModuleScript",
+        "ServerScriptService/Server/AircraftRig": "ModuleScript",
         "ServerScriptService/Server/BalanceRecord": "ModuleScript",
         "ServerScriptService/Server/BalanceService": "ModuleScript",
         "ServerScriptService/Server/BalanceRuntime": "ModuleScript",
@@ -983,6 +985,12 @@ def main() -> None:
     ):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P24 arrival fixture missing from tests or leaked to release: {name}")
+    for name in (
+        "ServerScriptService/ServerTests/AircraftArtHarness",
+        "StarterPlayer/StarterPlayerScripts/ClientTests/AircraftArtProbe",
+    ):
+        if tests.get(name) != "ModuleScript" or name in release:
+            raise RuntimeError(f"P28 artwork fixture missing from tests or leaked to release: {name}")
     for name in ("ServerStorage/Tests/Studio/LobbyGeometry.spec", "ReplicatedStorage/ClientSpecs/GroundIndoorCamera.spec"):
         if tests.get(name) != "ModuleScript" or name in release:
             raise RuntimeError(f"P22 camera or lobby fixture missing from tests or leaked to release: {name}")

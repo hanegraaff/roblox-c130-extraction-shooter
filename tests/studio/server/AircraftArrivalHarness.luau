@@ -17,6 +17,7 @@ local LauncherService = require(Server.LauncherService)
 local MapRules = require(ReplicatedStorage.Shared.MapRules)
 local Pan = require(ReplicatedStorage.Shared.AircraftPanRules)
 local CombatViewRules = require(Server.CombatViewRules)
+local AircraftArtHarness = require(script.Parent.AircraftArtHarness)
 local AircraftArrivalHarness = {}
 
 type Case = { name: string, passed: boolean, detail: string? }
@@ -38,7 +39,7 @@ end
 
 -- Runs one isolated Studio session. The SDK variant terminates its own session;
 -- a native UI start writes the same report in the Server DataModel.
-function AircraftArrivalHarness.run(automated: boolean)
+function AircraftArrivalHarness.run(automated: boolean, art: boolean?)
     local cases: { Case } = {}
     local observations: { unknown } = {}
     local completed: { number } = {}
@@ -180,15 +181,21 @@ function AircraftArrivalHarness.run(automated: boolean)
             end
             intent(player, "LauncherState", action, payload)
         end
-        local function operatorPayload(roundId: number, sequence: number, camera: Vector3): Record
+        local function operatorPayload(
+            roundId: number,
+            sequence: number,
+            camera: Vector3,
+            weapon: string?
+        ): Record
             local map = MapRules.defaults
+            local selected = weapon or "GAU23"
             local target = Vector3.new(0, 30, 0)
             local aimFloor = camera + (target - camera) * (map.altitudeStuds / (camera.Y - target.Y))
             local home = assert(Pan.recenter(map, 16 / 9, 40), "canonical view cannot recenter")
             local command: Record = {
                 roundId = roundId,
                 sequence = sequence,
-                weapon = "GAU23",
+                weapon = selected,
                 x = target.X,
                 y = target.Y,
                 z = target.Z,
@@ -202,7 +209,7 @@ function AircraftArrivalHarness.run(automated: boolean)
                 local weight = sample / 100
                 command.focusX = aimFloor.X + (home.x - aimFloor.X) * weight
                 command.focusZ = aimFloor.Z + (home.z - aimFloor.Z) * weight
-                if CombatViewRules.validate(command, map, "GAU23", camera.X, camera.Z) then
+                if CombatViewRules.validate(command, map, selected, camera.X, camera.Z) then
                     return command
                 end
             end
@@ -417,6 +424,31 @@ function AircraftArrivalHarness.run(automated: boolean)
                     })
                 end
             )
+            if art then
+                AircraftArtHarness.run({
+                    runtime = owned,
+                    state = state,
+                    operator = operator,
+                    ground = ground,
+                    equip = equip,
+                    place = place,
+                    probe = probe,
+                    intent = intent,
+                    operatorPayload = operatorPayload,
+                    waitFor = waitFor,
+                    check = check,
+                    observations = observations,
+                }, round == 2)
+                if round == 1 then
+                    waitFor(function()
+                        return match.snapshot().phase == "Lobby"
+                    end, "aircraft destruction reset", 15)
+                    table.insert(completed, state.roundId)
+                else
+                    reset(state.roundId)
+                end
+                continue
+            end
             check(
                 "A2 A3 round " .. tostring(round) .. " fires fresh rocket and gunship intents on the real map",
                 function()
@@ -498,7 +530,11 @@ function AircraftArrivalHarness.run(automated: boolean)
         )
     end)
     if not success and (#cases == 0 or cases[#cases].passed) then
-        table.insert(cases, { name = "P24 harness completion", passed = false, detail = tostring(failure) })
+        table.insert(cases, {
+            name = if art then "P28 harness completion" else "P24 harness completion",
+            passed = false,
+            detail = tostring(failure),
+        })
     end
     listener:Disconnect()
     transport:Destroy()
@@ -512,7 +548,7 @@ function AircraftArrivalHarness.run(automated: boolean)
         end
     end
     local report = {
-        suite = "P24-multiplayer",
+        suite = if art then "P28-multiplayer" else "P24-multiplayer",
         initialClientCount = initialCount,
         completedRoundIds = completed,
         discovered = #cases,
@@ -524,7 +560,10 @@ function AircraftArrivalHarness.run(automated: boolean)
         clientSmoke = smoke,
         serverSmoke = workspace:GetAttribute("ServerTestReport"),
     }
-    workspace:SetAttribute("P24MultiplayerReport", HttpService:JSONEncode(report))
+    workspace:SetAttribute(
+        if art then "P28MultiplayerReport" else "P24MultiplayerReport",
+        HttpService:JSONEncode(report)
+    )
     if automated then
         StudioTestService:EndTest(report)
     end

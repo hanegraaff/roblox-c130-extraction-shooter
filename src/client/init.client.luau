@@ -7,6 +7,7 @@ local RoundPanel = require(script.RoundPanel)
 local GroundCombatController = require(script.GroundCombatController)
 local BalancePanel = require(script.BalancePanel)
 local stopBalance: (() -> ())? = nil
+local AircraftPropellers = require(script.AircraftPropellers)
 local GroundInput = require(script.GroundInput)
 local GroundIndoorCamera = require(script.GroundIndoorCamera)
 local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui", 10)
@@ -17,6 +18,7 @@ local runtime = StatusPanel.new(playerGui, status)
 local ok, reason = runtime.start()
 assert(ok, reason)
 script.Destroying:Connect(runtime.stop)
+script.Destroying:Connect(AircraftPropellers.start())
 -- The test mapping starts rounds after its foundation suites. Reattach when the
 -- explicit server owner is replaced rather than retaining a stale status Folder.
 local settings = RoundPanel.newSettings()

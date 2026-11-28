@@ -44,6 +44,15 @@ Use the two stable filenames above for every candidate. Keep one game document a
 
 Before upload, confirm the open game document received the candidate through Rojo. A build on disk does not update an already-open Studio document. Reconnect sync or reopen the same `build/game.rbxlx` after preserving unsaved work. Compare its scripts and world with the tested candidate before publication.
 
+For the painted C-130 candidate, run this in the open game document's command bar in Edit. It reads the loaded document and catches a stale game window before upload.
+
+```luau
+local storage = game:GetService("ServerStorage")
+local skin = storage.Assets:FindFirstChild("C130PaintedSkin")
+assert(skin and #skin:GetChildren() == 3, "Load the painted C-130 release build")
+assert(not storage:FindFirstChild("DevelopmentSettings"), "Use the game mapping")
+```
+
 ## Verify the destination and prepare rollback
 
 1. Record the candidate commit, release SHA-256, manifest fingerprint, owner

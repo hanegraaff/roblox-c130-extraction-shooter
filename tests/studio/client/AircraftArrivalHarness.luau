@@ -10,11 +10,22 @@ local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
+local AircraftArtProbe = require(script.Parent.AircraftArtProbe)
 local AircraftArrivalHarness = {}
 
 type Request = { [string]: unknown }
 type Trace = { frames: number, leaks: number, thermalFrames: number, aircraftFrames: number }
 type PoseFrame = { projectionFrame: number, originErrorStuds: number, replicaErrorStuds: number }
+type RevealTrace = {
+    deadline: number,
+    preDeadlineFrames: number,
+    preDeadlineAircraftFrames: number,
+    preDeadlineVisibleFrames: number,
+    preDeadlineQueryableFrames: number,
+    stalePhaseAircraftFrames: number,
+    firstAircraftDelaySeconds: number?,
+    firstActiveDelaySeconds: number?,
+}
 
 local function waitFor(predicate: () -> boolean, label: string)
     local deadline = os.clock() + 5
@@ -35,6 +46,7 @@ function AircraftArrivalHarness.run()
     local playerGui = player.PlayerGui
     local traces: { [number]: Trace } = {}
     local poses: { [number]: PoseFrame } = {}
+    local revealTraces: { [number]: RevealTrace } = {}
     local function screen(name: string): ScreenGui?
         local item = playerGui:FindFirstChild(name)
         return if item and item:IsA("ScreenGui") then item else nil
@@ -63,8 +75,51 @@ function AircraftArrivalHarness.run()
             and far.X >= camera.ViewportSize.X - 1
             and far.Y >= camera.ViewportSize.Y - 1
     end
+    local function sampleReveal()
+        local roundId = state:GetAttribute("RoundId")
+        local phase = state:GetAttribute("Phase")
+        local trace = if type(roundId) == "number" then revealTraces[roundId] else nil
+        if not trace or (phase ~= "Scatter" and phase ~= "Active") then
+            return
+        end
+        if trace.firstAircraftDelaySeconds and trace.firstActiveDelaySeconds then
+            return
+        end
+        -- The server commits one deadline. Instance replication and Phase
+        -- attributes can arrive in different packets after that deadline.
+        local delay = workspace:GetServerTimeNow() - trace.deadline
+        local model = workspace:FindFirstChild("Aircraft")
+        if delay < 0 then
+            trace.preDeadlineFrames += 1
+            if model then
+                trace.preDeadlineAircraftFrames += 1
+                local visible, queryable = false, false
+                for _, item in model:GetDescendants() do
+                    if item:IsA("BasePart") then
+                        visible = visible or (item.Transparency < 1 and item.LocalTransparencyModifier < 1)
+                        queryable = queryable or item.CanQuery
+                    end
+                end
+                if visible then
+                    trace.preDeadlineVisibleFrames += 1
+                end
+                if queryable then
+                    trace.preDeadlineQueryableFrames += 1
+                end
+            end
+        elseif model and phase == "Scatter" then
+            trace.stalePhaseAircraftFrames += 1
+        end
+        if model and model:GetAttribute("RoundId") == roundId and not trace.firstAircraftDelaySeconds then
+            trace.firstAircraftDelaySeconds = delay
+        end
+        if phase == "Active" and not trace.firstActiveDelaySeconds then
+            trace.firstActiveDelaySeconds = delay
+        end
+    end
     local traceBinding = "P24ArrivalTrace"
     RunService:BindToRenderStep(traceBinding, Enum.RenderPriority.Last.Value + 1, function()
+        sampleReveal()
         local assignedRound = player:GetAttribute("OperatorArrivalRoundId")
         if type(assignedRound) ~= "number" then
             return
@@ -118,10 +173,17 @@ function AircraftArrivalHarness.run()
         if screen("ThermalHUD") or (camera and camera:FindFirstChild("OperatorThermal")) then
             trace.thermalFrames += 1
         end
-        if phase == "Scatter" and workspace:FindFirstChild("Aircraft") then
+        local reveal = revealTraces[assignedRound]
+        if
+            reveal
+            and phase == "Scatter"
+            and workspace:GetServerTimeNow() < reveal.deadline
+            and workspace:FindFirstChild("Aircraft")
+        then
             trace.aircraftFrames += 1
         end
     end)
+    local aircraftArt, releaseArt = AircraftArtProbe.start()
     local movementBinding = "P24ArrivalMovement"
     local function move(direction: Vector3)
         local character = assert(player.Character, "Ground character missing")
@@ -140,6 +202,7 @@ function AircraftArrivalHarness.run()
     local function scatter(request: Request)
         local role = request.role
         local roundId = request.roundId
+        assert(type(roundId) == "number", "missing Scatter round ID")
         local label: TextLabel? = nil
         waitFor(function()
             if
@@ -164,6 +227,14 @@ function AircraftArrivalHarness.run()
         local seconds = assert(tonumber(text.Text:match("^C%-130 arrives in (%d+)$")), "bad countdown text")
         local deadline = state:GetAttribute("DeadlineSeconds")
         assert(type(deadline) == "number" and deadline == request.deadline, "client deadline diverged")
+        revealTraces[roundId] = {
+            deadline = deadline,
+            preDeadlineFrames = 0,
+            preDeadlineAircraftFrames = 0,
+            preDeadlineVisibleFrames = 0,
+            preDeadlineQueryableFrames = 0,
+            stalePhaseAircraftFrames = 0,
+        }
         local remaining = math.max(0, math.ceil(deadline - workspace:GetServerTimeNow()))
         assert(math.abs(seconds - remaining) <= 1, "countdown did not use synchronized server time")
         assert(text.Visible and text.TextFits, "countdown text clipped")
@@ -223,6 +294,21 @@ function AircraftArrivalHarness.run()
                 and (role ~= "Gunship" or (thermal ~= nil and poses[roundId] ~= nil))
         end, "matching aircraft, view and released blackout")
         local camera = assert(workspace.CurrentCamera, "camera absent at arrival")
+        sampleReveal()
+        local reveal = assert(revealTraces[roundId], "client has no observed Scatter deadline")
+        local aircraftDelay =
+            assert(reveal.firstAircraftDelaySeconds, "client did not observe matching aircraft")
+        local activeDelay = assert(reveal.firstActiveDelaySeconds, "client did not observe Active phase")
+        assert(
+            reveal.preDeadlineFrames > 1
+                and reveal.preDeadlineAircraftFrames == 0
+                and reveal.preDeadlineVisibleFrames == 0
+                and reveal.preDeadlineQueryableFrames == 0
+                and aircraftDelay >= 0
+                and activeDelay >= 0,
+            "aircraft or Active phase arrived before the committed server deadline: "
+                .. game:GetService("HttpService"):JSONEncode(reveal)
+        )
         if role == "Gunship" then
             assert(camera.CameraType == Enum.CameraType.Scriptable, "operator did not acquire thermal camera")
             local pose = assert(poses[roundId], "matching camera and Hitbox frame missing")
@@ -250,11 +336,11 @@ function AircraftArrivalHarness.run()
                     trace.aircraftFrames
                 )
             )
-            return { blackout = trace, projection = pose }
+            return { blackout = trace, projection = pose, aircraftReveal = reveal }
         end
         assert(camera.CameraType == Enum.CameraType.Custom, "Ground camera changed at reveal")
         assert(not screen("ThermalHUD"), "Ground retained former operator thermal presentation")
-        return { ground = true }
+        return { ground = true, aircraftReveal = reveal }
     end
     local listener = transport.OnClientEvent:Connect(function(token: number, kind: string, payload: unknown)
         local ok, result = pcall(function(): unknown
@@ -268,6 +354,11 @@ function AircraftArrivalHarness.run()
                 local direction = request.direction
                 assert(typeof(direction) == "Vector3", "movement direction missing")
                 return move(direction)
+            elseif kind == "AircraftArt" then
+                return aircraftArt(request)
+            elseif kind == "ReleaseAircraftArt" then
+                releaseArt()
+                return true
             elseif kind == "Intent" then
                 local parent = request.parent
                 local name = request.remote
@@ -286,6 +377,7 @@ function AircraftArrivalHarness.run()
         RunService:UnbindFromRenderStep(traceBinding)
         RunService:UnbindFromRenderStep(movementBinding)
         listener:Disconnect()
+        releaseArt()
     end)
     waitFor(function()
         return screen("RoundHUD") ~= nil and screen("AircraftArrival") ~= nil
