@@ -99,3 +99,13 @@ Source `3941aaaadedc66c3c28a0593a3836de1e3ba421b`, tree `a03a2f2346301c4dfc3f399
 Editing a custom preset enables Save under its existing name. Reopening the panel loads the saved values for the selected active preset and prompts the user to apply them when they differ from the live values. The built-in Default remains protected.
 
 `BalanceSchema.spec` covers same-name Save eligibility and protected names. `BalanceService.spec` saves and overwrites Production Settings, reloads it in a new service, applies it and checks round capture. The aircraft health rules then use the captured settings to initialize the aircraft at 1,800 HP for two Ground players and deduct 175 HP for a rocket and 7 HP for a rifle hit. This uses isolated storage and deterministic gameplay rules. Studio pointer input and production DataStore persistence remain unverified for this fix. Medkit healing remains planned under P30.
+
+### 2026-11-28 · Apply edits and restore the lobby button
+
+**Save & apply** stores an edited preset and selects it for live use in one revision. **Save preset** updates the library and **Apply preset** selects a saved snapshot. The client shows Balance on lobby return and rebuilds the editor if its GUI is removed. An owner lookup outage retains the last confirmed button hint. Each request still verifies the sender's authority.
+
+`BalanceService.spec` checks the combined action, including invalid and stale edits, permissions, round capture, restart and rollback. The two-client P26 fixture checks that Balance is hidden during combat, returns in the lobby and recovers after the editor GUI is removed. The owner edits the minimum and duration through the editor. The next round uses the resulting revision with a two-player minimum, 35 seconds of combat, 193 Ground HP and 901 aircraft HP.
+
+The first Studio run passed the lobby and application checks. The final follow-on match timed out because the fixture reused the pre-edit three-player minimum. The fixture now carries forward the values confirmed after the editor transaction.
+
+`python3 scripts/verify.py` passed on macOS with 97 unit tests and 102 integration tests, zero failures or skips, and both Rojo builds inspected. Roblox Studio 0.748.0.7481526 ran `StudioTestService:ExecuteMultiplayerTestAsync(2, {kind = "P26"})` with two actual clients and isolated storage. The rerun passed all six cases with zero failures or skips. The test document's 199 mapped script checksums matched the source before Play. The release document remained in Edit mode. Published cross-server verification remains pending under A3. [Verified source](https://github.com/hanegraaff/roblox-c130-extraction-shooter/commit/8efdb4da16aff78426e2c87be538e71eb2e5fd58)
