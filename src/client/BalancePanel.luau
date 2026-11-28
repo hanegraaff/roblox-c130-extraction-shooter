@@ -2,7 +2,8 @@
 --[=[
     Client lobby editor for server-owned balance presets. Four tabs share one draft.
     Numeric controls support mouse/touch sliders, keyboard arrows and exact entry.
-    Save persists the draft; Apply selects a saved preset. All remote authority
+    Save persists the draft. Apply selects a saved preset or saves and applies an
+    edited draft in one server transaction. All remote authority
     remains on the server. stop/hide disconnect input listeners and invalidate
     yielding requests. No cloud writes occur until an explicit button action.
 ]=]
@@ -292,6 +293,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     heading.Font = Enum.Font.BuilderSansBold
     heading.TextSize = 24
     local close = button(sheet, "Close")
+    close.Name = "CloseEditor"
     close.Position = UDim2.new(1, -80, 0, 10)
     close.Size = UDim2.fromOffset(62, 32)
     local live = label(sheet, "Loading live settings…", 28)
@@ -326,7 +328,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     save.Name = "SavePreset"
     save.Position = UDim2.fromOffset(10, 74)
     save.Size = UDim2.new(1 / 3, -13, 0, 32)
-    local apply = button(library, "Apply saved")
+    local apply = button(library, "Apply preset")
     apply.Name = "ApplyPreset"
     apply.Position = UDim2.new(1 / 3, 3, 0, 74)
     apply.Size = UDim2.new(1 / 3, -13, 0, 32)
@@ -433,7 +435,8 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         save.Selectable = saveReady
         save.AutoButtonColor = saveReady
         save.TextColor3 = if saveReady then accent else muted
-        local ready = canApply()
+        local ready = saveReady or canApply()
+        apply.Text = if saveReady then "Save & apply" else "Apply preset"
         apply.BackgroundColor3 = if ready then accent else surface
         apply.TextColor3 = if ready then dark else muted
         apply.Active = ready
@@ -445,10 +448,10 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         local liveMatches = current ~= nil
             and loadedPreset == current.activeName
             and matchesDraft(current.settings)
-        footer.Text = if ready and liveMatches
-            then "Matches live settings · Combat changes start next round."
-            elseif ready then "Saved preset · Select Apply saved to use these values."
-            elseif saveReady then "Unsaved values · Save the preset, then apply it."
+        footer.Text = if saveReady
+            then "Save & apply to use these changes in the next round."
+            elseif ready and liveMatches then "Matches live settings · Combat changes start next round."
+            elseif ready then "Select Apply preset to use these saved values."
             elseif
                 loadedPreset == Schema.builtinPresetKey
             then "Enter a custom name to save a copy of Default."
@@ -480,12 +483,15 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     end
     local hud = parent:FindFirstChild("RoundHUD")
     local function eligibility()
+        local phase = round:GetAttribute("Phase")
         local view = if hud then hud:GetAttribute("View") else nil
-        local inLobby = view == "Waiting"
-            or view == "RoundLobby"
-            or view == "Results"
-            or view == "Resetting"
-            or (view == nil and round:GetAttribute("Phase") == "Lobby")
+        local inRoundLobby = (phase == "Active" or phase == "Scatter") and view == "RoundLobby"
+        -- Use the current round phase during return. The HUD's last combat
+        -- view may still be visible in the frame that replicates the phase.
+        local inLobby = (phase == "Lobby" and view ~= "GroundPreview" and view ~= "OperatorPreview")
+            or phase == "Results"
+            or phase == "Resetting"
+            or inRoundLobby
         gui.Enabled = player:GetAttribute("BalanceAdminAccess") == true and inLobby
         if not gui.Enabled then
             hide()
@@ -674,8 +680,10 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             end
             status.Text = if verb == "delete"
                 then "Preset deleted. Enter a name to save a copy, or close."
-                elseif verb == "save" then "Saved. Select Apply saved to use it."
-                elseif verb == "apply" then "Applied · " .. Schema.presetLabel(view.activeName)
+                elseif verb == "save" then "Saved. Select Apply preset to use it."
+                elseif verb == "apply" or verb == "saveAndApply" then "Applied · " .. Schema.presetLabel(
+                    view.activeName
+                )
                 elseif verb == "read" then "Choose a preset to edit. Live settings are shown above."
                 else "Tester access updated."
             render()
@@ -734,17 +742,22 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         categoryMenu.Visible = false
         presetMenu.Visible = true
     end)
+    local function saveDraft(action: string)
+        local values = table.clone(draft)
+        values.medkitSingleUse = true
+        values.medkitRespawn = Schema.defaults.medkitRespawn
+        values.m102Cadence = values.m102Reload
+        request(action, { name = nameBox.Text, settings = values })
+    end
     save.Activated:Connect(function()
-        if not canSave() then
-            return
+        if canSave() then
+            saveDraft("save")
         end
-        draft.medkitSingleUse = true
-        draft.medkitRespawn = Schema.defaults.medkitRespawn
-        draft.m102Cadence = draft.m102Reload
-        request("save", { name = nameBox.Text, settings = table.clone(draft) })
     end)
     apply.Activated:Connect(function()
-        if canApply() then
+        if canSave() then
+            saveDraft("saveAndApply")
+        elseif canApply() then
             request("apply", { name = loadedPreset })
         end
     end)
@@ -772,6 +785,9 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     end
     eligibility()
     return function()
+        if not alive then
+            return
+        end
         alive = false
         clear()
         for _, connection in connections do

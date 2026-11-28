@@ -80,6 +80,56 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
             "fresh server missed applied values"
         )
     end)
+    test("Save and apply atomically overwrites the live preset for the next round", function()
+        local stored: unknown = nil
+        local storage = {
+            read = function(): unknown
+                return stored
+            end,
+            update = function(change: (unknown) -> unknown): unknown
+                local replacement = change(stored)
+                if replacement ~= nil then
+                    stored = replacement
+                end
+                return replacement
+            end,
+        }
+        local server = api.new(storage)
+        local function request(revision: number, health: number)
+            local values = table.clone(server.latest().settings)
+            values.groundHealth = health
+            return {
+                action = "saveAndApply",
+                revision = revision,
+                name = "Production Settings",
+                settings = values,
+            }
+        end
+        local first = assert(Record.request(request(0, 123)))
+        assert(not server.write(first, 2, 1, online), "ordinary player could apply a draft")
+        assert(server.write(first, 1, 1, online))
+        server.capture()
+        assert(Record.request(request(1, 0)) == nil, "invalid draft was accepted")
+        local edited = assert(Record.request(request(1, 193)))
+        assert(server.write(edited, 1, 1, online))
+        assert(not server.write(edited, 1, 1, online), "stale draft was accepted twice")
+        local live = server.latest()
+        assert(live.revision == 2 and live.activeRevision == 2, "edit must commit once")
+        assert(live.presets["Production Settings"].groundHealth == 193, "edit did not save")
+        assert(live.settings.groundHealth == 193, "edit did not apply")
+        assert(server.round().settings.groundHealth == 123, "edit changed existing round")
+        server.capture()
+        assert(server.round().settings.groundHealth == 193, "next round missed edit")
+
+        local restarted = api.new(storage)
+        assert(
+            restarted.refresh() and restarted.latest().settings.groundHealth == 193,
+            "restart lost applied edit"
+        )
+        local restore = assert(Record.request({ action = "restore", revision = 2 }))
+        assert(restarted.write(restore, 1, 1, online))
+        assert(restarted.latest().settings.groundHealth == 123, "prior live snapshot was lost")
+    end)
     test(
         "P26 two servers recover missed notifications, keep the round snapshot, restore and survive restart",
         function()

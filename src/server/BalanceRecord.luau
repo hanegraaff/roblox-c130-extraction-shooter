@@ -155,6 +155,7 @@ function BalanceRecord.request(raw: unknown): (Request?, string?)
     if
         action ~= "read"
         and action ~= "save"
+        and action ~= "saveAndApply"
         and action ~= "apply"
         and action ~= "delete"
         and action ~= "restore"
@@ -172,14 +173,15 @@ function BalanceRecord.request(raw: unknown): (Request?, string?)
         req.revision = t.revision :: number
         expected += 1
     end
-    if action == "save" or action == "apply" or action == "delete" then
+    local savesPreset = action == "save" or action == "saveAndApply"
+    if savesPreset or action == "apply" or action == "delete" then
         if not validName(t.name) then
             return nil, "Use 1–32 letters, numbers, spaces, hyphens or underscores for the name."
         end
         req.name = t.name :: string
         expected += 1
     end
-    if action == "save" then
+    if savesPreset then
         local values, err = Schema.validate(t.settings)
         if not values then
             return nil, err
@@ -244,7 +246,7 @@ function BalanceRecord.apply(
             table.remove(list, index)
         end
         nextRecord.trusted = list
-    elseif action == "save" then
+    elseif action == "save" or action == "saveAndApply" then
         local name = req.name :: string
         if name == Schema.builtinPresetKey or name == Schema.builtinPresetName then
             return nil, "Change the preset name to save a copy of Default."
@@ -272,11 +274,16 @@ function BalanceRecord.apply(
         nextRecord.presets = presets
         -- Live settings and rollback are independent snapshots. Deleting a name
         -- removes it from the library while preserving the confirmed live rules.
-    elseif action == "apply" or action == "restore" then
+    elseif action ~= "apply" and action ~= "restore" then
+        return nil, "Expected a write action."
+    end
+    -- Saving and applying an edit uses the replacement preset in this same
+    -- transaction. Rollback still points to the prior live snapshot.
+    if action == "apply" or action == "restore" or action == "saveAndApply" then
         local name = if action == "restore" then current.previousName else req.name
         local values = if action == "restore"
             then current.previousSettings
-            else current.presets[req.name :: string]
+            else nextRecord.presets[req.name :: string]
         if not name or not values then
             return nil, "Preset unavailable."
         end
@@ -285,8 +292,6 @@ function BalanceRecord.apply(
         nextRecord.activeName = name
         nextRecord.settings = values
         nextRecord.activeRevision = current.revision + 1
-    else
-        return nil, "Expected a write action."
     end
     nextRecord.revision = current.revision + 1
     nextRecord.savedBy = actor

@@ -10,7 +10,7 @@ After the build containing the balance panel is published, join the experience i
    game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26Panel")
    ```
 
-2. Click **Play**. The first client is the test owner. Open **Balance** in the lobby, save a preset under a new name and apply it. These settings live only in this Studio session.
+2. Click **Play**. The first client is the test owner. Open **Balance** in the lobby, give your edited preset a name and select **Save & apply**. These settings live only in this Studio session.
 3. To try tester access, use **Server & Clients** with two clients. The test lobby initially waits for three. In the server’s Explorer, select the other Player and read its `BalanceFixtureUserId` attribute. Grant that ID from the owner’s panel. Lower the player minimum to two and apply the preset to start a match.
 4. Stop the session. In Edit mode, run `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", nil)` to return to ordinary tests.
 
@@ -22,11 +22,11 @@ The experience owner controls the tester list. For a group-owned experience, sig
 
 1. Check **Live in game** at the top. This names the settings currently selected for the game.
 2. In **Saved presets**, open **Load Settings** and choose a saved preset. Loading fills the editor. Use **Settings** to choose Player, C-130, Buildings or Game & lobby, then drag sliders or enter exact values.
-3. Select **Save preset** after editing to update the custom preset under its current name. Enter a new name to save a copy. **Default** requires a custom name. **Apply saved** becomes available once the editor matches a saved preset. Reopening the editor shows the saved values for the active preset, including edits awaiting **Apply saved**.
-4. Select **Apply saved** to use that preset in the game. The live name at the top updates. Combat changes start next round. Medkit healing is saved for the planned pickup feature and currently has no gameplay effect.
+3. Select **Save & apply** to save your edits and use them in the next round. Keep the custom preset's name to update it, or enter a new name to save a copy. Edits to **Default** require a custom name.
+4. Use **Save preset** to keep a draft for later. To use an existing saved preset, load it and select **Apply preset**. Check **Live in game** to see the selected preset. Medkit healing is reserved for the planned pickup feature.
 5. Select **Delete preset** to remove the loaded preset. Live settings stay active. The name field clears. Enter a name to save another copy, or close. **Default** remains available as the built-in starting point.
 
-To return to the original settings, load **Default** and select **Apply saved**.
+To return to the original settings, load **Default** and select **Apply preset**. The **Balance** button is available again when you return to the lobby after a round.
 
 If another tester edits while your panel is open, select **Refresh**, review their values and re-enter your change. If a save cannot be confirmed, refresh before trying again. Servers keep their last confirmed settings when storage is unavailable. A new server can start with the shipped defaults.
 

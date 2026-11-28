@@ -6,7 +6,7 @@ Rojo maps this package to `StarterPlayer.StarterPlayerScripts.Client`. The entry
 
 ## Lobby balance panel
 
-`BalancePanel.start(player, playerGui, roundState)` mounts the editor for the current round owner and returns its cleanup function. In the lobby, an owner or trusted tester with the server’s access hint sees **Balance**. The panel builds fields from the shared schema, holds unsaved edits locally and sends explicit save, apply or restore requests. Only the owner sees tester management. Closing the panel or leaving the lobby discards its draft. [Owner guide](../../docs/balance.md)
+`BalancePanel.start(player, playerGui, roundState)` mounts the editor for the current round owner and returns its cleanup function. In the lobby, an owner or trusted tester with the server’s access hint sees **Balance**. The panel builds fields from the shared schema, holds unsaved edits locally and sends explicit save or apply requests. **Save & apply** commits the edited preset and selects it in one server transaction. Only the owner sees tester management. Closing the panel or leaving the lobby discards its draft. The entrypoint remounts the editor if its GUI is removed while the current round owner is still active. [Owner guide](../../docs/balance.md)
 
 ## Round HUD, settings and spectator camera
 
