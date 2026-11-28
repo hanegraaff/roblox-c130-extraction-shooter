@@ -18,11 +18,11 @@ function BalanceSchema.validPresetName(value: unknown): boolean
     return type(value) == "string" and #value >= 1 and #value <= 32 and value:match("^[%w][%w _%-]*$") ~= nil
 end
 
--- Save creates a named copy of the loaded values. The name must differ from the
--- name originally loaded and from either spelling of the protected built-in.
-function BalanceSchema.canSavePresetName(name: string, originalName: string): boolean
+-- Save allows a new name or edits to the loaded custom preset. Both names
+-- for the built-in preset are reserved, even when its draft has changed.
+function BalanceSchema.canSavePresetName(name: string, originalName: string, valuesChanged: boolean): boolean
     return BalanceSchema.validPresetName(name)
-        and name ~= originalName
+        and (name ~= originalName or valuesChanged)
         and name ~= BalanceSchema.builtinPresetName
         and name ~= BalanceSchema.builtinPresetKey
 end

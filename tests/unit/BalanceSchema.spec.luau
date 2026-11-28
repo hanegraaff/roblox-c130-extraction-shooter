@@ -108,22 +108,20 @@ return function(test: (string, () -> ()) -> (), raw: unknown)
         assert(schema.presetLabel("Shipped") == "Default", "built-in label did not change")
         assert(schema.presetLabel("Production Settings") == "Production Settings", "custom name changed")
     end)
-    test("Save remains disabled until the loaded name changes to a valid custom name", function()
-        for _, pair in
-            {
-                { "Default", "Default" },
-                { "Shipped", "Default" },
-                { "", "Default" },
-                { "Own preset", "Own preset" },
-                { "", "" },
-                { "bad!", "Default" },
-            }
-        do
-            assert(not schema.canSavePresetName(pair[1], pair[2]), pair[1])
+    test("Save allows edits to a custom preset in place and protects Default", function()
+        for _, name in { "Default", "Shipped", "", "bad!" } do
+            assert(not schema.canSavePresetName(name, "Default", true), name)
         end
-        assert(schema.canSavePresetName("Own preset", "Default"), "renamed default cannot save")
-        assert(schema.canSavePresetName("Copy", "Own preset"), "renamed custom cannot save")
-        assert(schema.canSavePresetName("After deletion", ""), "blank editor cannot create a named copy")
-        assert(not schema.canSavePresetName("Copy", "Copy"), "saved name should disable save again")
+        assert(
+            not schema.canSavePresetName("Production Settings", "Production Settings", false),
+            "unchanged draft can save"
+        )
+        assert(
+            schema.canSavePresetName("Production Settings", "Production Settings", true),
+            "edited custom preset cannot save in place"
+        )
+        assert(schema.canSavePresetName("Own preset", "Default", false), "renamed default cannot save")
+        assert(schema.canSavePresetName("Copy", "Own preset", false), "renamed custom cannot save")
+        assert(schema.canSavePresetName("After deletion", "", false), "blank editor cannot save a named copy")
     end)
 end

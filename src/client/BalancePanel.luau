@@ -65,7 +65,7 @@ local captions = {
     m7Reload = "Rifle reload time",
     rocketDamage = "Rocket damage per hit",
     launcherReload = "Rocket launcher reload time",
-    medkitHeal = "Health restored by a medkit",
+    medkitHeal = "Planned health restored by a medkit",
     aircraftHealthPerGround = "Plane health per ground player",
     gauDamage = "30mm damage per hit",
     gauCadence = "Time between 30mm shots",
@@ -80,7 +80,7 @@ local subheads = {
     groundHealth = "Health",
     m7Damage = "Rifle",
     rocketDamage = "Rocket launcher",
-    medkitHeal = "Medkit · one use per round",
+    medkitHeal = "Planned medkit · one use per round",
     aircraftHealthPerGround = "Plane health",
     gauDamage = "30mm gun",
     m102Damage = "Howitzer",
@@ -391,7 +391,6 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     local draft: Fields = {}
     local selectedTab = 1
     local loadedPreset: string? = nil
-    local originalName = ""
     local cleanups: { () -> () } = {}
     local connections: { RBXScriptConnection } = {}
     local scale = Instance.new("UIScale")
@@ -405,23 +404,28 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
     end
     table.insert(connections, gui:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit))
     fit()
-    local function canApply(): boolean
-        if busy or not current or not loadedPreset or nameBox.Text ~= Schema.presetLabel(loadedPreset) then
-            return false
-        end
-        local saved = current.presets[loadedPreset]
-        if not saved then
-            return false
-        end
-        for key, value in draft do
-            if saved[key] ~= value then
+    local function matchesDraft(saved: Fields): boolean
+        for key, value in saved do
+            if draft[key] ~= value then
                 return false
             end
         end
         return true
     end
+    local function canApply(): boolean
+        if busy or not current or not loadedPreset or nameBox.Text ~= Schema.presetLabel(loadedPreset) then
+            return false
+        end
+        local saved = current.presets[loadedPreset]
+        return saved ~= nil and matchesDraft(saved)
+    end
     local function canSave(): boolean
-        return not busy and current ~= nil and Schema.canSavePresetName(nameBox.Text, originalName)
+        if busy or not current then
+            return false
+        end
+        local saved = if loadedPreset then current.presets[loadedPreset] else nil
+        local originalName = if loadedPreset then Schema.presetLabel(loadedPreset) else ""
+        return Schema.canSavePresetName(nameBox.Text, originalName, saved ~= nil and not matchesDraft(saved))
     end
     local function updateActions()
         local saveReady = canSave()
@@ -438,10 +442,17 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
         delete.Active = removable
         delete.Selectable = removable
         delete.TextColor3 = if removable then Color3.fromRGB(239, 164, 151) else muted
-        footer.Text = if ready
-            then "Editing saved values · Combat changes start next round."
-            elseif not saveReady then "Change the preset name to save a copy."
-            else "Unsaved values · Save the preset, then apply it."
+        local liveMatches = current ~= nil
+            and loadedPreset == current.activeName
+            and matchesDraft(current.settings)
+        footer.Text = if ready and liveMatches
+            then "Matches live settings · Combat changes start next round."
+            elseif ready then "Saved preset · Select Apply saved to use these values."
+            elseif saveReady then "Unsaved values · Save the preset, then apply it."
+            elseif
+                loadedPreset == Schema.builtinPresetKey
+            then "Enter a custom name to save a copy of Default."
+            else "Enter a valid preset name to save."
     end
     local request: (string, Edit?) -> ()
     local render: () -> ()
@@ -601,7 +612,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                 label(
                     scroll,
                     string.format(
-                        "Saved change %d · Round uses change %d\nStorage: %s",
+                        "Live revision %d · Round uses revision %d\nStorage: %s",
                         current.activeRevision,
                         current.roundRevision,
                         current.storageStatus
@@ -654,14 +665,12 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
             if verb == "delete" then
                 loadedPreset = nil
                 draft = (table.clone(Schema.defaults) :: unknown) :: Fields
-                originalName = ""
                 nameBox.Text = ""
             else
                 local name = if verb == "save" then tostring(args.name) else view.activeName
                 loadedPreset = if view.presets[name] then name else nil
-                draft = table.clone(if verb == "save" then view.presets[name] else view.settings)
-                originalName = if loadedPreset then Schema.presetLabel(name) else ""
-                nameBox.Text = originalName
+                draft = table.clone(view.presets[name] or view.settings)
+                nameBox.Text = if loadedPreset then Schema.presetLabel(name) else ""
             end
             status.Text = if verb == "delete"
                 then "Preset deleted. Enter a name to save a copy, or close."
@@ -717,8 +726,7 @@ function BalancePanel.start(player: Player, parent: PlayerGui, round: Instance):
                 end
                 loadedPreset = name
                 draft = table.clone(current.presets[name])
-                originalName = Schema.presetLabel(name)
-                nameBox.Text = originalName
+                nameBox.Text = Schema.presetLabel(name)
                 status.Text = "Loaded into editor · " .. nameBox.Text
                 render()
             end)
