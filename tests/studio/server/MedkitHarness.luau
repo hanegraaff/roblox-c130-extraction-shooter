@@ -252,8 +252,14 @@ function Harness.run(automated: boolean, touchReview: boolean)
             end
         end
         local function replicas(site: string, first: Player, other: Player, expected: number)
-            local witness =
-                probe(first, "Replica", { site = site, present = false, feedback = true }) :: Fields
+            local feedbackUntil = humanoid(first):GetAttribute("MedkitHealUntil")
+            assert(type(feedbackUntil) == "number", "server heal feedback deadline missing")
+            local witness = probe(first, "Replica", {
+                site = site,
+                present = false,
+                expectedHeal = expected,
+                feedbackUntil = feedbackUntil,
+            }) :: Fields
             local partner = probe(other, "Replica", { site = site, present = false }) :: Fields
             assert(witness.present == false and partner.present == false, "kit removal did not replicate")
             assert(witness.heal == expected, "the recipient's restored HP did not replicate")
@@ -261,9 +267,10 @@ function Harness.run(automated: boolean, touchReview: boolean)
                 type(witness.health) == "number" and witness.health > expected,
                 "the recipient's health did not replicate"
             )
+            local suffix = string.format("  +%g HP", math.round(expected * 10) / 10)
             assert(
-                type(witness.feedback) == "string" and string.find(witness.feedback, "+", 1, true),
-                "the local +HP label was absent"
+                type(witness.feedback) == "string" and witness.feedback:sub(-#suffix) == suffix,
+                "the local +HP label showed the wrong amount"
             )
             if touchReview and site == "MedkitHangar" and activeRound == 1 then
                 assert(witness.touch == true, "Hangar pickup was not activated from a shown phone prompt")
@@ -294,7 +301,10 @@ function Harness.run(automated: boolean, touchReview: boolean)
                 workspace:SetAttribute("P30ReviewStage", "Tap Use at " .. site)
                 workspace:SetAttribute("P30TouchUserId", player.UserId)
             else
-                probe(player, "Activate", { site = site })
+                assert(
+                    probe(player, "Activate", { site = site, requireShown = true }) == true,
+                    "native prompt was not visible for " .. site
+                )
             end
             waitFor(function()
                 return workspace.Medkits:FindFirstChild(site) == nil
@@ -351,7 +361,10 @@ function Harness.run(automated: boolean, touchReview: boolean)
             approach(owner, site)
             local body = humanoid(owner)
             body.Health = body.MaxHealth
-            probe(owner, "Activate", { site = site })
+            assert(
+                probe(owner, "Activate", { site = site, requireShown = true }) == true,
+                "full-health player did not see the prompt"
+            )
             task.wait(0.15)
             assert(
                 body.Health == body.MaxHealth and workspace.Medkits:FindFirstChild(site),
@@ -391,10 +404,12 @@ function Harness.run(automated: boolean, touchReview: boolean)
             local firstBody, secondBody = humanoid(owner), humanoid(ally)
             firstBody.Health, secondBody.Health = 35, 35
             local stamp = workspace:GetServerTimeNow() + 0.5
-            local one = send(owner, "Activate", { site = site, stamp = stamp })
-            local two = send(ally, "Activate", { site = site, stamp = stamp })
-            receive(one)
-            receive(two)
+            local one = send(owner, "Activate", { site = site, stamp = stamp, requireShown = true })
+            local two = send(ally, "Activate", { site = site, stamp = stamp, requireShown = true })
+            assert(
+                receive(one) == true and receive(two) == true,
+                "both contenders must see the native prompt"
+            )
             waitFor(function()
                 return kit.Parent == nil
             end, "contended kit spent")

@@ -136,13 +136,20 @@ function Harness.run()
                 then player.Character:FindFirstChildOfClass("Humanoid")
                 else nil
             local hud = gui:FindFirstChild("GroundHealth", true)
-            if data.feedback == true then
+            local expected, feedbackUntil = data.expectedHeal, data.feedbackUntil
+            if expected ~= nil then
+                assert(type(expected) == "number" and type(feedbackUntil) == "number", "invalid heal sample")
+                local suffix = string.format("  +%g HP", math.round(expected * 10) / 10)
                 waitFor(function()
-                    return hud ~= nil
+                    hud = gui:FindFirstChild("GroundHealth", true)
+                    return humanoid ~= nil
+                        and humanoid:GetAttribute("MedkitHealUntil") == feedbackUntil
+                        and humanoid:GetAttribute("MedkitHealAmount") == expected
+                        and hud ~= nil
                         and hud:IsA("TextLabel")
                         and hud.Visible
-                        and string.find(hud.Text, "+", 1, true) ~= nil
-                end, "medkit health feedback", 2)
+                        and string.sub(hud.Text, -#suffix) == suffix
+                end, "medkit health feedback for " .. site .. suffix, 2)
             end
             return {
                 present = false,
@@ -156,19 +163,48 @@ function Harness.run()
         local model = awaitPickup(site)
         local prompt = model:FindFirstChild("UseMedkit", true)
         assert(prompt and prompt:IsA("ProximityPrompt"), "native prompt unavailable")
-        if data.stamp then
-            local stamp = data.stamp
-            assert(type(stamp) == "number", "activation stamp missing")
-            waitFor(function()
-                return workspace:GetServerTimeNow() >= stamp
-            end, "paired native prompt activation time")
+        local function activate(): boolean
+            if data.stamp then
+                local stamp = data.stamp
+                assert(type(stamp) == "number", "activation stamp missing")
+                waitFor(function()
+                    return workspace:GetServerTimeNow() >= stamp
+                end, "paired native prompt activation time")
+            end
+            local visible = visiblePrompts[prompt] ~= nil
+            -- Activate the actual Roblox prompt through its custom-UI API.
+            -- No test remote requests a heal or supplies health or position to gameplay.
+            prompt:InputHoldBegin()
+            RunService.RenderStepped:Wait()
+            prompt:InputHoldEnd()
+            return visible
         end
-        -- Only use the custom-UI activation API on the actual Roblox prompt.
-        -- No test remote requests a heal or supplies health/position to gameplay.
-        prompt:InputHoldBegin()
-        RunService.RenderStepped:Wait()
-        prompt:InputHoldEnd()
-        return visiblePrompts[prompt] ~= nil
+        if data.requireShown ~= true then
+            return activate()
+        end
+        local camera = assert(workspace.CurrentCamera, "activation camera missing")
+        local character = assert(player.Character, "activation character missing")
+        local head = character:FindFirstChild("Head")
+        local target = prompt.Parent
+        assert(
+            head and head:IsA("BasePart") and target and target:IsA("BasePart"),
+            "activation points missing"
+        )
+        local priorType, priorPose, priorFocus = camera.CameraType, camera.CFrame, camera.Focus
+        -- Look from the live avatar's eyes so the ordinary prompt sees the same
+        -- clear approach a player can use by turning or zooming the camera.
+        camera.CameraType = Enum.CameraType.Scriptable
+        camera.CFrame = CFrame.lookAt(head.Position, target.Position)
+        camera.Focus = target.CFrame
+        local ok, result = pcall(function()
+            waitFor(function()
+                return visiblePrompts[prompt] ~= nil
+            end, "shown native prompt at " .. site, 4)
+            return activate()
+        end)
+        camera.CFrame, camera.Focus, camera.CameraType = priorPose, priorFocus, priorType
+        assert(ok, tostring(result))
+        return result
     end
     local listener = transport.OnClientEvent:Connect(function(token: number, action: string, data: Fields)
         local ok, result = pcall(probe, action, data)

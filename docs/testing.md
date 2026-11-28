@@ -9,6 +9,7 @@ P12’s legacy implementation handoff is closed by user direction. Live platform
 | Current source path | Actual clients | Scope |
 | --- | --- | --- |
 | Ordinary Play smoke | At least 1 | Current deterministic and engine/client baseline; collect every actual client report |
+| `P30` | 3 | Five floor-supported medkits, walking approaches, contested use, nearby destruction, touch activation and next-round healing edits |
 | `P29` | 3 | Four supported pickups, equipped model and muzzle, timed handoff, recovery after carrier death and replay cleanup |
 | `P28` | 2 | Aircraft reveal, full orbit and rotor movement, weapon zoom masks and firing origins, visible hit surfaces and replay after destruction |
 | `P26` | 2 | Owner and tester permissions, all four weapons, both health pools, panel damage, minimum players and consecutive intermissions. Use `P26Panel` for the hands-on lobby preview |
@@ -481,6 +482,28 @@ Read `workspace:GetAttribute("P29LastReport")` in Edit after the run. For manual
 Collect the `P29-depot-launcher` report and its server and three client smoke reports. Require all six cases, three actual clients and two completed rounds, with zero failures and skips. The cases exercise floor support at Radar, Hangar, Depot and Seedship, the held model seen by both Ground clients, firing, a handoff during cooldown, carrier death and teammate recovery. Replay checks one loaded launcher at each site and removal of prior held models and projectiles. Launch trace and damage assertions exercise the visual muzzle and server sweep separately. The `Launcher.spec.luau` smoke fixture also checks the presentation fallback when cover blocks the short cosmetic path.
 
 For the rendered review, use a positive `reviewSeconds` or `P29ReviewSeconds` up to 25. `Workspace.P29ReviewStage` identifies pauses at all four pickup sites and the equipped Radar launcher. Use both desktop and simulated landscape phone views. Inspect floor contact and any clipping against surrounding scenery at each pickup, and body clipping, grip and proportion while equipped. In an operated match, fire into clear space and watch the effect start at the modeled nose, then compare the held and dropped views on both Ground clients. Save the source and build identifiers, Studio version, actual client count, viewports and observations with the report. Restore device simulation and return the local test place to Edit.
+
+## Verify single-use medkits
+
+Run `python3 scripts/verify.py` from the source under test. The medkit unit cases cover partial and capped healing, rejected requests, stale rounds and single-use contention. The medkit integration case checks that lethal damage and committed outcomes take precedence. The asset suite checks the source and exports, and build inspection compares the native parts and site markers in both places. Use Blender to reopen the saved master and reimport the GLB. [Medkit asset workflow](../assets/blender/medkit/README.md) · [P30 acceptance](../plans/30-single-use-medkits.md#acceptance)
+
+Sync `test.project.json` on port 34872 to the local **PlayersVsC130Tests** document. Start the three-client fixture through Studio MCP in its Edit context with Play stopped.
+
+```luau
+assert(game.PlaceId == 0 and game.GameId == 0)
+assert(not game:GetService("RunService"):IsRunning())
+workspace:SetAttribute("P30LastReport", nil)
+task.spawn(function()
+    local report = game:GetService("StudioTestService")
+        :ExecuteMultiplayerTestAsync(3, { kind = "P30" })
+    workspace:SetAttribute("P30LastReport", game:GetService("HttpService"):JSONEncode(report))
+end)
+return "P30 multiplayer test started"
+```
+
+Read `workspace:GetAttribute("P30LastReport")` in Edit once the run ends. Require all six `P30-medkits` cases, three actual clients, two completed rounds, and zero failed or skipped cases. Preserve the server and all three client smoke reports. The fixture places the avatars at the start of short approaches, then uses actual Humanoid movement to reach each case. It checks support, a walk after nearby cover breaks, one heal from contested use, removal on the Ground clients and five restored cases at replay. The owner changes **Medkit healing** through the real panel with isolated local storage. The last case of round one uses 25 HP and the first use in round two uses 43 HP.
+
+For the operated phone check, run the fixture with `touchReview = true` in the SDK arguments or use native **Server & Clients** with **3** clients. For the native route, set `ManualHarness` to `P30` and `P30TouchReview` to `true` on `ServerStorage.DevelopmentSettings` in the local Edit document before starting. On a landscape phone viewport, use the Ground client identified by `Workspace.P30TouchUserId` when `Workspace.P30ReviewStage` says **Tap Use at MedkitHangar**. Tap the visible **Use** prompt and check the `+HP` text, case removal and touch observation in the report. This stage waits up to 40 seconds for the tap. Record the input mode and viewport. For native testing, save `Workspace.P30Report` from the Server context before ending the session and restore the invocation attributes and device settings in Edit.
 
 ## Run the P24 aircraft arrival harness
 

@@ -11,6 +11,13 @@ local Harness = {}
 -- Set the supplied exact-value fields in one category of the real production
 -- editor and apply the draft. The test client must be allowed to edit in its lobby.
 function Harness.editLobbyPreset(gui: Instance, category: number, values: { [string]: string })
+    local function waitFor(ready: () -> boolean, message: string)
+        local deadline = os.clock() + 5
+        while not ready() do
+            assert(os.clock() < deadline, message)
+            task.wait()
+        end
+    end
     local function click(name: string)
         local button = gui:FindFirstChild(name, true)
         assert(
@@ -24,9 +31,18 @@ function Harness.editLobbyPreset(gui: Instance, category: number, values: { [str
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, false)
         RunService.RenderStepped:Wait()
     end
+    local editor = gui:FindFirstChild("Editor")
+    assert(editor and editor:IsA("GuiObject"), "balance editor missing")
+    local scroll = editor:FindFirstChild("Settings")
+    assert(scroll and scroll:IsA("ScrollingFrame"), "balance settings missing")
+    local scale = editor:FindFirstChildWhichIsA("UIScale")
     local function edit(name: string, value: string)
-        local box = gui:FindFirstChild(name, true)
+        local box = scroll:FindFirstChild(name, true)
         assert(box and box:IsA("TextBox"), name .. " field missing")
+        local relativeY = box.AbsolutePosition.Y - scroll.AbsolutePosition.Y
+        local factor = if scale then scale.Scale else 1
+        scroll.CanvasPosition = Vector2.new(0, math.max(0, scroll.CanvasPosition.Y + relativeY / factor))
+        RunService.RenderStepped:Wait()
         box:CaptureFocus()
         box.Text = value
         box:ReleaseFocus(true)
@@ -35,13 +51,28 @@ function Harness.editLobbyPreset(gui: Instance, category: number, values: { [str
     click("OpenBalance")
     local apply = gui:FindFirstChild("ApplyPreset", true)
     assert(apply and apply:IsA("TextButton"), "apply button missing")
-    local deadline = os.clock() + 5
-    while not apply.Active do
-        assert(os.clock() < deadline, "editor did not load current preset")
-        task.wait()
+    waitFor(function()
+        return editor.Visible and apply.Active and scroll:FindFirstChildWhichIsA("GuiObject") ~= nil
+    end, "editor did not render current preset")
+    local function fieldsReady(): boolean
+        for name in values do
+            local box = scroll:FindFirstChild(name, true)
+            if not box or not box:IsA("TextBox") then
+                return false
+            end
+        end
+        return true
     end
-    click("ChooseCategory")
-    click("Category" .. category)
+    if not fieldsReady() then
+        local menu = editor:FindFirstChild("CategoryMenu")
+        assert(menu and menu:IsA("GuiObject"), "balance category menu missing")
+        click("ChooseCategory")
+        waitFor(function()
+            return menu.Visible
+        end, "balance category menu did not open")
+        click("Category" .. category)
+        waitFor(fieldsReady, "requested balance settings did not render")
+    end
     for name, value in values do
         edit(name, value)
     end
