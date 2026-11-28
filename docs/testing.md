@@ -73,7 +73,9 @@ end)
 
 Read `workspace:GetAttribute("P26LastReport")` after the run. For manual **Server & Clients**, set `game.ServerStorage.DevelopmentSettings:SetAttribute("ManualHarness", "P26")` in Edit, start two clients and read the server’s `Workspace.P26MultiplayerReport` attribute before stopping. Clear the selector in Edit afterward. The fixture exercises real Roblox clients and game systems with a session-only settings store.
 
-For the published check, use an authorized private experience containing this candidate. Start two Roblox servers and use the owner, a trusted tester and an ordinary account. Save and apply a distinctive preset on one server. Record the revision and measure the effect on the next round in both servers. Start a fresh server, check it loads the same settings, then restore the previous preset and repeat. Verify that only the owner manages tester access and that an ordinary player cannot edit settings. Record anonymous roles, server and build versions, observed values and rollback results. [Operating the panel](balance.md)
+The P26 published check uses two players in one new Roblox server. Apply a change in the balance panel, play multiple rounds and observe the new values on a subsequent deployment. [Owner playtest](../plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest)
+
+For R25 public release verification, use an authorized private experience containing the release candidate. Start two Roblox servers and use the owner, a trusted tester and an ordinary account. Save and apply a distinctive preset on one server. Record the revision and measure the effect on the next round in both servers. Start a fresh server, check it loads the same settings, then restore the previous preset and repeat. Verify that only the owner manages tester access and that an ordinary player cannot edit settings. Record anonymous roles, server and build versions, observed values and rollback results. [Operating the panel](balance.md)
 
 ## Verify P25 weapon balance
 

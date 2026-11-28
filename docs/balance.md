@@ -1,6 +1,6 @@
 # Tune the game from the lobby
 
-After the build containing the balance panel is published, join the experience in the Roblox app and select **Balance** in the lobby. You can change the game across its servers without editing code or publishing another build. Ordinary Studio Play uses the shipped settings offline. The private two-server release check is tracked in the [panel plan](../plans/26-live-balance-panel.md).
+After the build containing the balance panel is published, join the experience in the Roblox app and select **Balance** in the lobby. You can change the game across its servers without editing code or publishing another build. Ordinary Studio Play uses the shipped settings offline. The owner verified live settings changes in a private two-player playtest. [Panel plan](../plans/26-live-balance-panel.md#2026-11-28--published-owner-playtest)
 
 ## Try it in Studio
 
