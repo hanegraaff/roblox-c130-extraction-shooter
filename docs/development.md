@@ -2,7 +2,7 @@
 
 ## Install and build from a clean clone
 
-Use `main` for integrated play. Use `plan/26-live-balance-panel` for the live settings candidate. Its ordinary Studio session plays with offline defaults. [Balance owner guide](balance.md) Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. The P25 test mapping uses the `P18` selector for three-client weapon balance checks and includes the two-client gunship and aircraft-arrival regressions. [Local setup](../README.md#set-up-locally) · [P25 verification procedure](testing.md#verify-p25-weapon-balance)
+Use `main` for integrated play or `plan/29-rocket-launcher-model` for the local depot launcher candidate. Ordinary Studio sessions use offline balance defaults. Select the exact source commit when collecting evidence. Startup reconstructs managed landmarks before capturing the map reset snapshot. [Local setup](../README.md#set-up-locally) · [Balance owner guide](balance.md) · [P29 verification](testing.md#verify-the-depot-launcher-model)
 
 Build, sync and collect evidence from the same selected source. History and prior integration facts belong in the [plan records](../roadmap.md) and their linked evidence; an older passing report does not validate a new candidate.
 
@@ -254,7 +254,9 @@ Fragment physics owns the `PanelFragments` and `PanelStatic` collision groups ex
 
 `GameRuntime` starts `LauncherRuntime` after `GroundCombatRuntime` and stops it first. The `LauncherState` folder carries independent atomic snapshots for Radar, Hangar, Depot and Seedship, plus Pickup, Drop and Fire RemoteEvents. The server owns each round identity and presents it as an available Model or held Tool. Each accepted shot sets that launcher's deadline 15 seconds ahead. Drop, transfer and recovery preserve the deadline. A new round creates four loaded launchers.
 
-Launcher pickup and fire share the M-7 movement and origin checks. Pickup also needs eight-stud reach and a clear solid-world ray. Recovery uses the last trusted supported position or the launcher's authored site anchor. A flight sweeps through solid cover and Terrain, and only a direct aircraft collision awards damage. Round results take precedence over deferred transfers. Stop and reset clear owned representations, queued requests and flights. The asset manifest records the runtime primitives. Pristine map exports describe the authored world before pickup, projectile or damage state is applied. [Server API](../src/server/README.md#landmark-launchers) · [P25 Studio procedure](testing.md#verify-p25-weapon-balance)
+Launcher pickup and fire share the M-7 movement and origin checks. Pickup also needs eight-stud reach and a clear solid-world ray. Recovery uses the last trusted supported position or the launcher’s authored site anchor. A flight sweeps from the validated head origin through solid cover and Terrain, and only a direct aircraft collision awards damage. Round results take precedence over deferred transfers. Stop and reset clear owned representations, queued requests and flights.
+
+Rojo maps the Blender-generated native template to `ServerStorage.Assets.DepotLauncher`. `LauncherGeometry` places the pickup against its floor and aligns the equipped version’s lower grip with the avatar’s hand. Each representation uses a clone of the same template. When there is room around the muzzle, the visible launch blends onto the server flight path over 16 studs. Preserve the three attachment frames when editing the master and run the export and reimport commands before reviewing the fit in the local test place. [Asset rebuild](../assets/blender/rocket-launcher/README.md) · [Server API](../src/server/README.md#landmark-launchers) · [P29 Studio procedure](testing.md#verify-the-depot-launcher-model)
 
 ## Aircraft model and view contracts
 
