@@ -27,7 +27,27 @@ function Harness.editLobbyPreset(gui: Instance, category: number, values: { [str
         local position = button.AbsolutePosition + button.AbsoluteSize / 2 + GuiService:GetGuiInset()
         local input = assert(UserInputService:CreateVirtualInput(), "Studio VirtualInput unavailable")
         input:SendMousePosition(position)
-        RunService.RenderStepped:Wait()
+        -- After a role transition Studio can still report the last locked
+        -- pointer for the first input event. Let the native cursor settle
+        -- at the visible button before pressing it.
+        local deadline = os.clock() + 2
+        local settledFrames = 0
+        repeat
+            RunService.RenderStepped:Wait()
+            local arrived = UserInputService.MouseBehavior == Enum.MouseBehavior.Default
+                and (UserInputService:GetMouseLocation() - position).Magnitude <= 2
+            settledFrames = if arrived then settledFrames + 1 else 0
+        until settledFrames == 2 or os.clock() >= deadline
+        assert(
+            settledFrames == 2,
+            string.format(
+                "%s virtual cursor did not settle (target %s, observed %s, mode %s)",
+                name,
+                tostring(position),
+                tostring(UserInputService:GetMouseLocation()),
+                tostring(UserInputService.MouseBehavior)
+            )
+        )
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, true)
         RunService.RenderStepped:Wait()
         input:SendMouseButton(position, Enum.UserInputType.MouseButton1, false)
